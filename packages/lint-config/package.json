@@ -1,0 +1,31 @@
+{
+  "name": "@lightbase/lint-config",
+  "version": "0.0.1",
+  "description": "ESLint & Prettier config",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "lightbasejs"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "6.6.0",
+    "prettier": "1.19.1",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-config-prettier": "6.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lightbasejs.git"
+  }
+}

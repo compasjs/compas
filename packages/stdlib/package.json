@@ -1,0 +1,30 @@
+{
+  "name": "@lightbase/stdlib",
+  "version": "0.0.1",
+  "description": "Lightbase standard library",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "bench": "node benchmark/index.js"
+  },
+  "keywords": [
+    "lightbasejs"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/uuid": "3.4.6"
+  },
+  "dependencies": {
+    "uuid": "3.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lightbasejs.git"
+  }
+}

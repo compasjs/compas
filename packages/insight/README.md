@@ -1,0 +1,1 @@
+# @lightbase/insight

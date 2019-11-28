@@ -1,0 +1,4 @@
+{
+  "extends": ["./node_modules/@lightbase/lint-config/dist/index.js"],
+  "root": true
+}

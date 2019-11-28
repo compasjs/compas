@@ -1,0 +1,26 @@
+{
+  "name": "lightbase",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "yarn eslint --fix && yarn prettier --write",
+    "bench": "lerna run bench",
+    "prettier": "prettier -l '*/**/**.{js,ts,json}'",
+    "eslint": "eslint ./packages/*/src/**/*.ts",
+    "test": "jest",
+    "bump": "lerna changed && lerna version",
+    "publish": "yarn build && lerna publish"
+  },
+  "devDependencies": {
+    "@lightbase/lint-config": "0.0.1",
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.8",
+    "jest": "24.9.0",
+    "lerna": "3.18.4",
+    "ts-jest": "24.1.0",
+    "typescript": "3.7.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "__tests__",
+    "**/*.test*",
+    "**/*.spec*"
+  ],
+  "files": [],
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noLib": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "traceResolution": false,
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "pretty": true,
+    "lib": ["esnext"],
+    "types": ["node"],
+    "target": "es2019",
+    "rootDir": ".",
+    "outDir": "dist",
+    "downlevelIteration": true,
+    "removeComments": false,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lightbase/*": ["packages/*/src"]
+    },
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "packages/insight"
+    },
+    {
+      "path": "packages/pkg"
+    },
+    {
+      "path": "packages/lint-config"
+    },
+    {
+      "path": "packages/stdlib"
+    }
+  ]
+}

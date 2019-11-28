@@ -1,0 +1,98 @@
+stages:
+  - install
+  - test
+
+# Supported Node versions
+
+.node10: &node10
+  image: node:10
+
+.node12: &node12
+  image: node:12
+
+.node13: &node13
+  image: node:13
+
+# Install
+
+.install:
+  stage: install
+  script:
+    - yarn install
+  cache:
+    paths:
+      - node_modules
+
+install_node10:
+  <<: [*node10]
+  extends: .install
+  cache:
+    key: lightbase-node10
+
+install_node12:
+  <<: [*node12]
+  extends: .install
+  cache:
+    key: lightbase-node12
+
+install_node13:
+  <<: [*node13]
+  extends: .install
+  cache:
+    key: lightbase-node13
+
+# Test
+
+.lint:
+  stage: test
+  cache:
+    paths:
+      - node_modules
+    policy: pull
+  script:
+    - yarn lint
+
+.test:
+  stage: test
+  cache:
+    paths:
+      - node_modules
+    policy: pull
+  script:
+    - yarn test
+
+lint_node10:
+  <<: [*node10]
+  extends: .lint
+  cache:
+    key: lightbase-node10
+
+test_node10:
+  <<: [*node10]
+  extends: .test
+  cache:
+    key: lightbase-node10
+
+lint_node12:
+  <<: [*node12]
+  extends: .lint
+  cache:
+    key: lightbase-node12
+
+test_node12:
+  <<: [*node12]
+  extends: .test
+  cache:
+    key: lightbase-node12
+
+lint_node13:
+  <<: [*node13]
+  extends: .lint
+  cache:
+    key: lightbase-node13
+
+test_node13:
+  <<: [*node13]
+  extends: .test
+  cache:
+    key: lightbase-node13
