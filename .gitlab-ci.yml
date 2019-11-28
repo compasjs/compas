@@ -43,56 +43,31 @@ install_node13:
 
 # Test
 
-.lint:
+.build_lint_test:
   stage: test
   cache:
     paths:
       - node_modules
     policy: pull
   script:
+    - yarn build
     - yarn lint
-
-.test:
-  stage: test
-  cache:
-    paths:
-      - node_modules
-    policy: pull
-  script:
     - yarn test
 
-lint_node10:
+build_lint_test_node10:
   <<: [*node10]
-  extends: .lint
+  extends: .build_lint_test
   cache:
     key: lightbase-node10
 
-test_node10:
-  <<: [*node10]
-  extends: .test
-  cache:
-    key: lightbase-node10
-
-lint_node12:
+build_lint_test_node12:
   <<: [*node12]
-  extends: .lint
+  extends: .build_lint_test
   cache:
     key: lightbase-node12
 
-test_node12:
-  <<: [*node12]
-  extends: .test
-  cache:
-    key: lightbase-node12
-
-lint_node13:
+build_lint_test_node13:
   <<: [*node13]
-  extends: .lint
-  cache:
-    key: lightbase-node13
-
-test_node13:
-  <<: [*node13]
-  extends: .test
+  extends: .build_lint_test
   cache:
     key: lightbase-node13
