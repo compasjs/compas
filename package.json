@@ -14,11 +14,11 @@
   "devDependencies": {
     "@lightbase/lint-config": "0.0.1",
     "@types/jest": "24.0.23",
-    "@types/node": "12.12.8",
+    "@types/node": "12.12.14",
     "jest": "24.9.0",
-    "lerna": "3.18.4",
-    "ts-jest": "24.1.0",
-    "typescript": "3.7.2"
+    "lerna": "3.19.0",
+    "ts-jest": "24.2.0",
+    "typescript": "3.7.3"
   },
   "workspaces": [
     "packages/*"
