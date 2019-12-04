@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "@lightbase/stdlib";
+import { bytesToHumanReadable, isNil, isPlainObject } from "@lightbase/stdlib";
 import { LogLevel, LogState, TypeFilter } from "./types";
 import { DevWriter, Writer } from "./Writer";
 
@@ -24,6 +24,20 @@ export function addTypeFilter(typeFilter: TypeFilter) {
 
 export function removeTypeFilter(typeFilter: TypeFilter) {
   state.typeFilters = state.typeFilters.filter(it => it !== typeFilter);
+}
+
+/**
+ * Prints the memory usage of the current process to the provided logger
+ * For more info on the printed properties see: https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
+ */
+export function printProcessMemoryUsage(logger: Logger) {
+  const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
+  logger.info({
+    rss: bytesToHumanReadable(rss),
+    heapUsed: bytesToHumanReadable(heapUsed),
+    heapTotal: bytesToHumanReadable(heapTotal),
+    external: bytesToHumanReadable(external),
+  });
 }
 
 export class Logger<T = {}> {
