@@ -26,7 +26,7 @@ export function removeTypeFilter(typeFilter: TypeFilter) {
   state.typeFilters = state.typeFilters.filter(it => it !== typeFilter);
 }
 
-export class Logger<T> {
+export class Logger<T = {}> {
   constructor(private depth: number, private context: T) {}
 
   /**
@@ -114,7 +114,8 @@ export const format = (maxDepth: number, args: any[]): any => {
 /**
  * Recursively copy items from obj to result, while not exceeding the available depth
  */
-export const recursiveCopyObject = (obj: any | any[],
+export const recursiveCopyObject = (
+  obj: any | any[],
   availableDepth: number,
   result: any,
 ) => {
@@ -137,8 +138,9 @@ export const recursiveCopyObject = (obj: any | any[],
   }
 
   // Handle classes & objects, note this also contains Typescript private members
-  const keys: string[] = isPlainObject(obj) ? Object.keys(obj)
-                                            : Object.getOwnPropertyNames(obj);
+  const keys: string[] = isPlainObject(obj)
+    ? Object.keys(obj)
+    : Object.getOwnPropertyNames(obj);
 
   for (const key of keys) {
     if (!Object.hasOwnProperty.call(obj, key)) {
@@ -161,4 +163,3 @@ export const recursiveCopyObject = (obj: any | any[],
     }
   }
 };
-
