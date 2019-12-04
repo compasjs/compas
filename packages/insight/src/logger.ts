@@ -1,4 +1,4 @@
-import { format } from "./formatting";
+import { isNil, isPlainObject } from "@lightbase/stdlib";
 import { LogLevel, LogState, TypeFilter } from "./types";
 import { DevWriter, Writer } from "./Writer";
 
@@ -93,3 +93,72 @@ export class Logger<T> {
     state.writer.write(formatted);
   }
 }
+
+/**
+ * Format the provided items in to a single object
+ * Overrides keys when needed
+ * Does not handle top level arrays
+ */
+export const format = (maxDepth: number, args: any[]): any => {
+  const result = {};
+  for (const arg of args) {
+    if (typeof arg === "object" && Array.isArray(arg)) {
+      throw new TypeError("Toplevel arrays are not supported.");
+    }
+    recursiveCopyObject(arg, maxDepth, result);
+  }
+
+  return result;
+};
+
+/**
+ * Recursively copy items from obj to result, while not exceeding the available depth
+ */
+export const recursiveCopyObject = (obj: any | any[],
+  availableDepth: number,
+  result: any,
+) => {
+  // Depth 0, early return to only print primitives
+  if (availableDepth === 0 && typeof obj === "object") {
+    return;
+  }
+  if (isNil(obj)) {
+    return;
+  }
+
+  // Stringify non object items
+  if (typeof obj !== "object") {
+    if (!result.message) {
+      result.message = String(obj);
+    } else {
+      result.message += " " + String(obj);
+    }
+    return;
+  }
+
+  // Handle classes & objects, note this also contains Typescript private members
+  const keys: string[] = isPlainObject(obj) ? Object.keys(obj)
+                                            : Object.getOwnPropertyNames(obj);
+
+  for (const key of keys) {
+    if (!Object.hasOwnProperty.call(obj, key)) {
+      continue;
+    }
+
+    const val = obj[key];
+    if (typeof val === "object" && Array.isArray(val)) {
+      result[key] = [];
+      for (const it of val as any[]) {
+        const intermediate = {};
+        recursiveCopyObject(it, availableDepth - 1, intermediate);
+        result[key].push(intermediate);
+      }
+    } else if (typeof val === "object") {
+      result[key] = {};
+      recursiveCopyObject(val, availableDepth - 1, result[key]);
+    } else {
+      result[key] = val;
+    }
+  }
+};
+

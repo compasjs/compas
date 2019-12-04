@@ -1,7 +1,7 @@
 import "jest";
-import { format, recursiveFlattenObject } from "../formatting";
+import { format, recursiveCopyObject } from "../logger";
 
-test("recursiveFlattenObject supports base types and converts to message", () => {
+test("recursiveCopyObject supports base types and converts to message", () => {
   const cases: {
     input: any;
     output: any;
@@ -31,14 +31,14 @@ test("recursiveFlattenObject supports base types and converts to message", () =>
 
   for (const test of cases) {
     const result = {};
-    recursiveFlattenObject(test.input, test.depth, result);
+    recursiveCopyObject(test.input, test.depth, result);
     expect(test.output).toEqual(result);
   }
 });
 
-test("recursiveFlattenObject respects depth", () => {
+test("recursiveCopyObject respects depth", () => {
   const result = {};
-  recursiveFlattenObject(
+  recursiveCopyObject(
     {
       foo: {
         bar: {
@@ -55,32 +55,32 @@ test("recursiveFlattenObject respects depth", () => {
   });
 });
 
-test("recursiveFlattenObject overwrites all keys except message", () => {
+test("recursiveCopyObject overwrites all keys except message", () => {
   const result: any = { foo: "bar", message: "Hello" };
-  recursiveFlattenObject(
+  recursiveCopyObject(
     {
       foo: "baz",
     },
     3,
     result,
   );
-  recursiveFlattenObject("World!", 3, result);
+  recursiveCopyObject("World!", 3, result);
 
   expect(result).toEqual({ foo: "baz", message: "Hello World!" });
 });
 
-test("recursiveFlattenObject handles arrays", () => {
+test("recursiveCopyObject handles arrays", () => {
   const result = {};
-  recursiveFlattenObject({ arr: [5, 2, 3, { foo: "bar" }] }, 5, result);
+  recursiveCopyObject({ arr: [5, 2, 3, { foo: "bar" }] }, 5, result);
 
   expect(result).toEqual({
     arr: [{ message: "5" }, { message: "2" }, { message: "3" }, { foo: "bar" }],
   });
 });
 
-test("recursiveFlattenObject handles classes", () => {
+test("recursiveCopyObject handles classes", () => {
   const result = {};
-  recursiveFlattenObject(
+  recursiveCopyObject(
     new (class X {
       private readonly x: number;
       private readonly y: number;
