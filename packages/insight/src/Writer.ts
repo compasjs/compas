@@ -46,9 +46,7 @@ export class DevWriter extends Writer {
       `${DevWriter.formatTime(timestamp)} ${
         DevWriter.COLORED_LEVEL[level as LogLevel]
       }${message ? " " + message : ""}${
-        !hasRestObject
-          ? ""
-          : `: ${inspect(rest, { colors: true, depth: null })}`
+        !hasRestObject ? "" : " " + inspect(rest, { colors: true, depth: null })
       }\n`,
     );
   }

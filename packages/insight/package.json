@@ -21,12 +21,13 @@
   "types": "./dist/index.d.ts",
   "author": "Dirk de Visser <dirkdev98@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "pino": "5.14.0",
-    "fastbench": "1.0.1"
-  },
   "dependencies": {
     "@lightbase/stdlib": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "12.12.14",
+    "pino": "5.14.0",
+    "fastbench": "1.0.1"
   },
   "repository": {
     "type": "git",
