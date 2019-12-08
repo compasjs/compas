@@ -1,3 +1,7 @@
+import { setFlagsFromString } from "v8";
+import { runInNewContext } from "vm";
+import { isNil } from "./lodash";
+
 /**
  * Convert any number to a human readable string.
  * Supports converting up to a pebibyte.
@@ -19,4 +23,23 @@ export function bytesToHumanReadable(bytes: number): string {
  */
 export function getSecondsSinceEpoch(): number {
   return Math.floor(Date.now() / 1000);
+}
+
+/**
+ * Internal gc function reference
+ * Note that this is undefined if the gc function is not called and Node is not running with
+ * --expose-gc on
+ */
+let internalGc = global.gc;
+
+/**
+ * Let V8 know to please run the garbage collector.
+ */
+export function gc() {
+  if (isNil(internalGc)) {
+    setFlagsFromString("--expose_gc");
+    internalGc = runInNewContext("gc");
+  }
+
+  internalGc();
 }

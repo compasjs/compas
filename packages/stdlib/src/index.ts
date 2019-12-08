@@ -1,3 +1,3 @@
-export { isNil, isPlainObject } from "./lodash";
-export { uuid } from "./datastructures";
-export { getSecondsSinceEpoch, bytesToHumanReadable } from "./utils";
+export { isNil, isPlainObject, merge } from "./lodash";
+export { uuid, RingBuffer } from "./datastructures";
+export { getSecondsSinceEpoch, bytesToHumanReadable, gc } from "./utils";

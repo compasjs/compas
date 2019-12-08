@@ -17,11 +17,14 @@
   ],
   "types": "./dist/index.d.ts",
   "license": "MIT",
-  "devDependencies": {
-    "@types/uuid": "3.4.6"
-  },
   "dependencies": {
+    "lodash.merge": "4.6.2",
     "uuid": "3.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "12.12.14",
+    "@types/lodash.merge": "4.6.6",
+    "@types/uuid": "3.4.6"
   },
   "repository": {
     "type": "git",

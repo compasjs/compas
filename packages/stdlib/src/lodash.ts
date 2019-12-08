@@ -1,3 +1,5 @@
+import lodashMerge from "lodash.merge";
+
 /**
  * Check if provided value is null or undefined with a typescript type guard
  * @param value
@@ -18,3 +20,5 @@ export function isPlainObject(obj: any): boolean {
     Object.prototype.toString.call(obj) === "[object Object]"
   );
 }
+
+export const merge = lodashMerge;
