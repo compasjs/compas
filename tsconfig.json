@@ -50,6 +50,15 @@
     },
     {
       "path": "packages/stdlib"
+    },
+    {
+      "path": "packages/cli"
+    },
+    {
+      "path": "packages/config"
+    },
+    {
+      "path": "packages/loader"
     }
   ]
 }
