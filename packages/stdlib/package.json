@@ -22,8 +22,8 @@
     "uuid": "3.3.3"
   },
   "devDependencies": {
-    "@types/node": "12.12.14",
     "@types/lodash.merge": "4.6.6",
+    "@types/node": "12.12.17",
     "@types/uuid": "3.4.6"
   },
   "repository": {

@@ -23,11 +23,12 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@lightbase/code-gen": "0.0.1",
     "@lightbase/insight": "0.0.1",
     "@lightbase/stdlib": "0.0.1"
   },
   "devDependencies": {
-    "@types/node": "12.12.14"
+    "@types/node": "12.12.17"
   },
   "repository": {
     "type": "git",

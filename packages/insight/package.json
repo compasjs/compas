@@ -25,9 +25,9 @@
     "@lightbase/stdlib": "0.0.1"
   },
   "devDependencies": {
-    "@types/node": "12.12.14",
-    "pino": "5.14.0",
-    "fastbench": "1.0.1"
+    "@types/node": "12.12.17",
+    "fastbench": "1.0.1",
+    "pino": "5.14.0"
   },
   "repository": {
     "type": "git",
