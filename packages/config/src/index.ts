@@ -1,22 +1,27 @@
 import { Logger } from "@lightbase/insight";
-import { isNil } from "@lightbase/stdlib";
+import { isNil, merge } from "@lightbase/stdlib";
 import { join } from "path";
 
 let loadedConfig: any = {};
 
+/**
+ * Load base config and config for the current environment in.
+ */
 export function initConfig(logger: Logger) {
+  const env = (process.env.NODE_ENV || "development").toLowerCase();
+
+  loadFile(logger, join(process.cwd(), "src", "config", "config"));
+  loadFile(logger, join(process.cwd(), "src", "config", `config.${env}`));
+}
+
+function loadFile(logger: Logger, path: string) {
   try {
-    const env = (process.env.NODE_ENV || "development").toLowerCase();
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const config = require(join(
-      process.cwd(),
-      "src",
-      "config",
-      `config.${env}`,
-    ));
-    loadedConfig = config.default || config.config || config;
-  } catch {
-    logger.error("No config files present");
+    const conf = require(path);
+    const thisConf = conf.default || conf.config || conf;
+    loadedConfig = merge(loadedConfig, thisConf);
+  } catch (e) {
+    logger.error(`Could not load ${path}`, e);
   }
 }
 
