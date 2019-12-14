@@ -3,10 +3,22 @@
 import { initConfig } from "@lightbase/config";
 import { addTypeFilter, Logger, resetWriter } from "@lightbase/insight";
 
+let isLoaded = false;
 const loggerType = "LOADER";
 addTypeFilter(loggerType);
 
+/**
+ * Run once loader
+ *
+ * Will load .env and config
+ *
+ * If present will try to load ts-node to simplify development
+ */
 export function load() {
+  if (isLoaded) {
+    return;
+  }
+
   const logger = new Logger(3, { type: loggerType });
   logger.info("Loading modules...");
   loadDotenv(logger);
@@ -16,6 +28,8 @@ export function load() {
 
   loadTsNode(logger);
   loadConfig(logger);
+
+  isLoaded = true;
 }
 
 function loadDotenv(logger: Logger) {

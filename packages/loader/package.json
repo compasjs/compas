@@ -19,7 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@lightbase/insight": "0.0.1",
-    "@lightbase/loader": "0.0.1",
     "dotenv": "8.2.0"
   },
   "devDependencies": {
