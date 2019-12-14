@@ -22,7 +22,7 @@ export const uuid = v4;
  *
  * let sum = 0;
  * for (const time of responseTimes) { sum += time }
- * console.log("Last avg:", sum / responseTimes.length()
+ * console.log("Last avg:", sum / responseTimes.length());
  */
 export class RingBuffer<T> {
   private items: T[];
