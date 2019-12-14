@@ -8,5 +8,5 @@ if (module !== require.main) {
     "This can only be executed as `node @lightbase/cli` or `lb` or `lightbase`",
   );
 } else {
-  runCommand(process.argv.slice(2), new Logger(3, {}));
+  runCommand(process.argv.slice(2), new Logger(3, { type: "CLI" }));
 }

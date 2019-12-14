@@ -1,3 +1,4 @@
+import { Logger } from "@lightbase/insight";
 import {
   copyFileSync,
   existsSync,
@@ -6,12 +7,25 @@ import {
   readdirSync,
 } from "fs";
 import { join } from "path";
+import { promiseSpawn } from "./utils";
 
-export function copyTemplate(sourceDir: string, targetDir: string) {
+/**
+ * Recursively copy template over & yarn install dependencies
+ */
+export async function copyTemplate(
+  logger: Logger,
+  sourceDir: string,
+  targetDir: string,
+) {
   recursiveCopyDir(sourceDir, targetDir);
-  // TODO: yarn install
+
+  await promiseSpawn(logger, "yarn", ["install"]);
+  await promiseSpawn(logger, "yarn", ["lint"]);
 }
 
+/**
+ * Recursively copy over sourceDir to targetDir
+ */
 export function recursiveCopyDir(sourceDir: string, targetDir: string) {
   ensureDir(targetDir);
 
@@ -29,8 +43,11 @@ export function recursiveCopyDir(sourceDir: string, targetDir: string) {
   }
 }
 
+/**
+ * Create directory if not exists
+ */
 export function ensureDir(dir: string) {
   if (!existsSync) {
-    mkdirSync(dir);
+    mkdirSync(dir, { recursive: true });
   }
 }
