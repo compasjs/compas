@@ -6,9 +6,5 @@
     "baseUrl": "."
   },
   "include": ["src"],
-  "references": [
-    {
-      "path": "../insight"
-    }
-  ]
+  "references": []
 }

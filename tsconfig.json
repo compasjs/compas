@@ -40,25 +40,28 @@
   },
   "references": [
     {
-      "path": "packages/insight"
-    },
-    {
-      "path": "packages/pkg"
-    },
-    {
-      "path": "packages/lint-config"
-    },
-    {
-      "path": "packages/stdlib"
-    },
-    {
       "path": "packages/cli"
+    },
+    {
+      "path": "packages/code-gen"
     },
     {
       "path": "packages/config"
     },
     {
+      "path": "packages/insight"
+    },
+    {
+      "path": "packages/lint-config"
+    },
+    {
       "path": "packages/loader"
+    },
+    {
+      "path": "packages/pkg"
+    },
+    {
+      "path": "packages/stdlib"
     }
   ]
 }
