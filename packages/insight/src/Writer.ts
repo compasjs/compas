@@ -1,4 +1,5 @@
 import WriteStream = NodeJS.WriteStream;
+import { isNil } from "@lightbase/stdlib";
 import { inspect } from "util";
 import { LogLevel } from "./types";
 
@@ -32,23 +33,47 @@ export class Writer {
  * Pretty print writter, with special handling for logLevel, timestamp and message
  */
 export class DevWriter extends Writer {
-  private static COLORED_LEVEL = {
-    [LogLevel.Info]: `\x1b[34m${LogLevel.Info}\x1b[39m`,
-    [LogLevel.Error]: `\x1b[31m${LogLevel.Error}\x1b[39m`,
-  };
+  private static withColor = (level: LogLevel, message: string) =>
+    level === LogLevel.Info
+      ? `\x1b[34m${message}\x1b[39m`
+      : `\x1b[31m${message}\x1b[39m`;
 
+  /**
+   * Pretty printer
+   * Special case support for:
+   *  - timestamp
+   *  - level
+   *  - type
+   *  - message
+   */
   public write(data: any) {
-    const { level, timestamp, message, ...rest } = data || {};
+    const { level, timestamp, message, type, ...rest } = data || {};
 
-    const hasRestObject = Object.keys(rest).length > 0;
+    this.stream.write(DevWriter.formatTime(timestamp));
 
-    this.stream.write(
-      `${DevWriter.formatTime(timestamp)} ${
-        DevWriter.COLORED_LEVEL[level as LogLevel]
-      }${message ? " " + message : ""}${
-        !hasRestObject ? "" : " " + inspect(rest, { colors: true, depth: null })
-      }\n`,
-    );
+    if (!isNil(type)) {
+      this.stream.write(
+        DevWriter.withColor(level as LogLevel, ` ${level}[${type}]`),
+      );
+    } else {
+      this.stream.write(DevWriter.withColor(level as LogLevel, ` ${level}`));
+    }
+
+    if (!isNil(message)) {
+      this.stream.write(" " + message);
+    }
+
+    if (Object.keys(rest).length > 0) {
+      this.stream.write(
+        " " +
+          inspect(rest, {
+            colors: true,
+            depth: null,
+          }),
+      );
+    }
+
+    this.stream.write("\n");
   }
 
   private static formatTime(input: number): string {

@@ -14,9 +14,6 @@ export const enum LogLevel {
  */
 export type TypeFilterFn = (type: string) => boolean;
 
-/**
- *
- */
 export type TypeFilter = TypeFilterFn | string;
 
 export interface LogState {

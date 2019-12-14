@@ -7,6 +7,9 @@ const state: LogState = {
   typeFilters: [],
 };
 
+/**
+ * Reset writer with a potential new output stream
+ */
 export function resetWriter(stream = process.stdout) {
   state.writer =
     process.env.NODE_ENV === "production"
@@ -14,21 +17,37 @@ export function resetWriter(stream = process.stdout) {
       : new DevWriter(stream);
 }
 
+/**
+ * Remove all type filters
+ */
 export function resetTypeFilters() {
   state.typeFilters = [];
 }
 
+/**
+ * Add a new type filter
+ *
+ * When string: if the input type is equal to typeFilter it is not written
+ * When function: if function returns falsy it is not written
+ *
+ * Note that even when a message is filtered it still has some overhead because the 'final'
+ * type is only known after formatting
+ */
 export function addTypeFilter(typeFilter: TypeFilter) {
   state.typeFilters.push(typeFilter);
 }
 
+/**
+ * Remove the typeFilter works for strings and function references
+ */
 export function removeTypeFilter(typeFilter: TypeFilter) {
   state.typeFilters = state.typeFilters.filter(it => it !== typeFilter);
 }
 
 /**
  * Prints the memory usage of the current process to the provided logger
- * For more info on the printed properties see: https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
+ * For more info on the printed properties see:
+ * https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
  */
 export function printProcessMemoryUsage(logger: Logger) {
   const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
@@ -40,7 +59,15 @@ export function printProcessMemoryUsage(logger: Logger) {
   });
 }
 
+/**
+ * The logger
+ */
 export class Logger<T = {}> {
+  /**
+   *
+   * @param depth The object depth to use before not printing any more
+   * @param context Any object that should be printed with every log
+   */
   constructor(private depth: number, private context: T) {}
 
   /**
@@ -127,6 +154,8 @@ export const format = (maxDepth: number, args: any[]): any => {
 
 /**
  * Recursively copy items from obj to result, while not exceeding the available depth
+ *
+ * Also has special cases to construct a 'message' of non object provided arguments
  */
 export const recursiveCopyObject = (
   obj: any | any[],

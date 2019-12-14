@@ -53,6 +53,12 @@ describe("Writer", () => {
 });
 
 describe("DevWriter", () => {
+  // By improving readability of the DevWriter#write implementation
+  // testing was made a bit harder as it is doing more than a single stream#write
+  // call per log
+  const mockeWriterIndexOf = (value: string): number =>
+    mockWrite.mock.calls.findIndex(it => it[0].includes(value));
+
   it("should write new lines", () => {
     const w = new DevWriter(({
       write: mockWrite,
@@ -60,7 +66,7 @@ describe("DevWriter", () => {
     w.write({ message: "", timestamp: new Date(), level: LogLevel.Error });
 
     expect(mockWrite).toBeCalled();
-    expect(mockWrite.mock.calls[0][0].indexOf("\n")).toBeGreaterThan(-1);
+    expect(mockeWriterIndexOf("\n")).toBeGreaterThan(-1);
   });
 
   it("should format timestamp", () => {
@@ -82,11 +88,9 @@ describe("DevWriter", () => {
     w.write({ message: "", timestamp: new Date(), level: LogLevel.Error });
 
     expect(mockWrite).toBeCalled();
-    const dataInfo = mockWrite.mock.calls[0][0];
-    const dataError = mockWrite.mock.calls[1][0];
 
-    expect(dataInfo.indexOf("info")).toBeGreaterThan(-1);
-    expect(dataError.indexOf("error")).toBeGreaterThan(-1);
+    expect(mockeWriterIndexOf("info")).toBeGreaterThan(-1);
+    expect(mockeWriterIndexOf("error")).toBeGreaterThan(-1);
   });
 
   it("should print rest of values", () => {
@@ -101,7 +105,6 @@ describe("DevWriter", () => {
     });
 
     expect(mockWrite).toBeCalled();
-    const dataInfo = mockWrite.mock.calls[0][0];
-    expect(dataInfo.indexOf("myProp")).toBeGreaterThan(-1);
+    expect(mockeWriterIndexOf("myProp")).toBeGreaterThan(-1);
   });
 });
