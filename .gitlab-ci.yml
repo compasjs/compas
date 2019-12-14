@@ -1,5 +1,4 @@
 stages:
-  - install
   - test
 
 # Supported Node versions
@@ -13,43 +12,12 @@ stages:
 .node13: &node13
   image: node:13
 
-# Install
-
-.install:
-  stage: install
-  script:
-    - yarn install
-  cache:
-    paths:
-      - node_modules
-
-install_node10:
-  <<: [*node10]
-  extends: .install
-  cache:
-    key: lightbase-node10
-
-install_node12:
-  <<: [*node12]
-  extends: .install
-  cache:
-    key: lightbase-node12
-
-install_node13:
-  <<: [*node13]
-  extends: .install
-  cache:
-    key: lightbase-node13
-
 # Test
 
 .build_lint_test:
   stage: test
-  cache:
-    paths:
-      - node_modules
-    policy: pull
   script:
+    - yarn
     - yarn build
     - yarn lint
     - yarn test
