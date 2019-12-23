@@ -1,8 +1,9 @@
-import { getConfigValue } from "@lightbase/config";
+import { CONFIG } from "@lightbase/config";
 import { Logger } from "@lightbase/insight";
 import { isNil } from "@lightbase/stdlib";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { get } from "./util";
 import {
   generateValidator,
   getBaseValidatorOutput,
@@ -32,7 +33,7 @@ const generationStore: Store = {
  * Store at output directory
  */
 export function runCodeGen(logger: Logger) {
-  const { input, output } = getConfigValue("codegen");
+  const { input, output } = get(CONFIG).getConfigValue("codegen");
   if (isNil(input) || isNil(output)) {
     throw new Error(
       `Make sure to set { codegen: {input: "./src/gen/index.ts", output: "./src/generated" in your config files`,

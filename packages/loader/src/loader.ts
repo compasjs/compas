@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { initConfig } from "@lightbase/config";
+import { CONFIG } from "@lightbase/config";
 import { addTypeFilter, Logger, resetWriter } from "@lightbase/insight";
+import { get } from "@lightbase/service-locator";
 
 let isLoaded = false;
 const loggerType = "LOADER";
@@ -27,7 +28,7 @@ export function load() {
   resetWriter();
 
   loadTsNode(logger);
-  loadConfig(logger);
+  loadConfig();
 
   isLoaded = true;
 }
@@ -49,6 +50,7 @@ function loadTsNode(logger: Logger) {
   }
 }
 
-function loadConfig(logger: Logger) {
-  initConfig(logger);
+function loadConfig() {
+  // Use side effects of first call to get that will initialize the config
+  get<any, typeof CONFIG>(CONFIG);
 }

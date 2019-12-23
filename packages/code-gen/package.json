@@ -20,7 +20,8 @@
   "dependencies": {
     "@lightbase/insight": "0.0.1",
     "@lightbase/stdlib": "0.0.1",
-    "@lightbase/config": "0.0.1"
+    "@lightbase/config": "0.0.1",
+    "@lightbase/service-locator": "0.0.1"
   },
   "devDependencies": {
     "@types/node": "12.12.17"

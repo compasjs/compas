@@ -12,6 +12,9 @@
       "path": "../insight"
     },
     {
+      "path": "../service-locator"
+    },
+    {
       "path": "../stdlib"
     }
   ]

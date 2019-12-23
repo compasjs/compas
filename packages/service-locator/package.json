@@ -1,7 +1,7 @@
 {
-  "name": "@lightbase/loader",
+  "name": "@lightbase/service-locator",
   "version": "0.0.1",
-  "description": "Lightbase pkg",
+  "description": "Light weight service locator",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -18,15 +18,10 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lightbase/service-locator": "0.0.1",
-    "@lightbase/config": "0.0.1",
-    "@lightbase/insight": "0.0.1",
-    "dotenv": "8.2.0"
+    "@lightbase/insight": "0.0.1"
   },
   "devDependencies": {
-    "@types/dotenv": "8.2.0",
-    "@types/node": "12.12.17",
-    "ts-node": "8.5.4"
+    "@types/node": "12.12.17"
   },
   "repository": {
     "type": "git",

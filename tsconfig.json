@@ -61,6 +61,9 @@
       "path": "packages/pkg"
     },
     {
+      "path": "packages/service-locator"
+    },
+    {
       "path": "packages/stdlib"
     }
   ]
