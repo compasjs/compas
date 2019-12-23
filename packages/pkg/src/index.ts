@@ -1,4 +1,8 @@
-import { log } from "@lightbase/insight";
+import { Logger } from "@lightbase/insight";
 
-export const foo = 6;
-log.info("foo");
+const loggerType = "PKG";
+// addTypeFilter(loggerType);
+
+const logger = new Logger(3, { type: loggerType });
+
+logger.info("Hello");
