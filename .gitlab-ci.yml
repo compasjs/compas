@@ -16,11 +16,14 @@ stages:
 
 .build_lint_test:
   stage: test
+  cache:
+    paths:
+      - node_modules/
   script:
-    - yarn
-    - yarn build
-    - yarn lint
-    - yarn test
+    - npm i
+    - npm run build
+    - npm run lint
+    - npm run test
 
 build_lint_test_node10:
   <<: [*node10]

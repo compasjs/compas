@@ -1,4 +1,4 @@
-# @lightbase/\*
+# Lightbase backend framework
 
 A lightbase backend framework
 

@@ -1,6 +1,2 @@
-dist
-
-.jest-cache
-.jest-coverage
-
-node_modules
+.jest-*
+dist/
