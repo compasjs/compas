@@ -13,7 +13,8 @@
     "@lightbase/stdlib": "0.0.1",
     "@lightbase/config": "0.0.1",
     "@lightbase/insight": "0.0.1",
-    "@lightbase/loader": "0.0.1"
+    "@lightbase/loader": "0.0.1",
+    "@lightbase/service-locator": "0.0.1"
   },
   "devDependencies": {
     "@lightbase/cli": "0.0.1",
