@@ -7,12 +7,27 @@ import {
 } from "fs";
 import { join } from "path";
 import { Logger } from "../insight";
-import { spawn } from "../stdlib";
+import { isNil, spawn } from "../stdlib";
+
+/**
+ * Initialize a new project by copying the template
+ */
+export async function initCommand(logger: Logger, args: string[]) {
+  const sourceDir = join(__dirname, "..", "..", "template");
+  const targetDir = !isNil(args[0])
+    ? join(process.cwd(), args[0])
+    : process.cwd();
+
+  await copyTemplate(logger, sourceDir, targetDir);
+}
+
+initCommand.help =
+  "lbf init [name] -- Initialize a new project\n\nAny existing file will be overwritten!\nIf [name] is specified a sub directory is created, else the current working directory is used.";
 
 /**
  * Recursively copy template over & npm install dependencies
  */
-export async function copyTemplate(
+async function copyTemplate(
   logger: Logger,
   sourceDir: string,
   targetDir: string,
