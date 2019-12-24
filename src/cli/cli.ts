@@ -63,7 +63,7 @@ export async function printHelp(logger: Logger, args: string[]) {
  * Initialize a new project by copying the template
  */
 export async function initCommand(logger: Logger, args: string[]) {
-  const sourceDir = join(__dirname, "..", "template");
+  const sourceDir = join(__dirname, "..", "..", "template");
   const targetDir = !isNil(args[0])
     ? join(process.cwd(), args[0])
     : process.cwd();

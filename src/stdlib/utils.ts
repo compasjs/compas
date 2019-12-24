@@ -48,7 +48,6 @@ export function gc() {
 }
 
 const promExec = promisify(cpExec);
-const promSpawn = promisify(cpSpawn);
 
 export async function exec(
   logger: Logger,
@@ -64,5 +63,10 @@ export async function spawn(
   args: string[],
 ): Promise<void> {
   logger.info("Spawning", command, args.join(" "));
-  await promSpawn(command, args, { stdio: "inherit" });
+  return new Promise((resolve, reject) => {
+    const sp = cpSpawn(command, args, { stdio: "inherit" });
+
+    sp.once("error", reject);
+    sp.once("exit", resolve);
+  });
 }

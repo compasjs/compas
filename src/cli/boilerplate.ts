@@ -47,7 +47,7 @@ export function recursiveCopyDir(sourceDir: string, targetDir: string) {
  * Create directory if not exists
  */
 export function ensureDir(dir: string) {
-  if (!existsSync) {
+  if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
   }
 }

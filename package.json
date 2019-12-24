@@ -11,7 +11,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "yarn eslint --fix && yarn prettier --write",
-    "prettier": "prettier -l '*/**/**.{js,ts,json}'",
+    "prettier": "prettier --config ./.prettierrc.js -l '*/**/**.{js,ts,json}'",
     "eslint": "eslint ./src/**/*.ts"
   },
   "dependencies": {

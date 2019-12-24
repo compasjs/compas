@@ -1,8 +1,8 @@
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { join } from "path";
 import { CONFIG } from "../config";
 import { Logger } from "../insight";
 import { isNil } from "../stdlib";
-import { writeFileSync } from "fs";
-import { join } from "path";
 import { get } from "./util";
 import {
   generateValidator,
@@ -40,22 +40,28 @@ export function runCodeGen(logger: Logger) {
     );
   }
 
-  require(input);
-  runForValidators(logger, output);
+  require(join(process.cwd(), input));
+
+  const outDir = join(process.cwd(), output);
+  if (!existsSync(outDir)) {
+    mkdirSync(outDir, { recursive: true });
+  }
+
+  runForValidators(logger, outDir);
 }
 
 function runForValidators(logger: Logger, output: string) {
   logger.info(
     "Running generation for",
-    Object.keys(generationStore.validations),
+    Object.keys(generationStore.validations).length,
     "validators",
   );
 
-  const validatorOutput = getBaseValidatorOutput();
+  let validatorOutput = getBaseValidatorOutput();
 
   Object.entries(generationStore.validations).forEach(
     ([key, { opts, schema }]) => {
-      generateValidator(key, schema, opts);
+      validatorOutput += generateValidator(key, schema, opts) + "\n";
     },
   );
 
