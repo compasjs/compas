@@ -15,9 +15,10 @@
     "eslint": "eslint ./src/**/*.ts"
   },
   "dependencies": {
+    "dotenv": "8.2.0",
     "lodash.merge": "4.6.2",
-    "uuid": "3.3.3",
-    "dotenv": "8.2.0"
+    "pg": "7.15.1",
+    "uuid": "3.3.3"
   },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.13.0",
@@ -32,6 +33,7 @@
     "@types/jest": "24.0.24",
     "@types/lodash.merge": "4.6.6",
     "@types/node": "13.1.0",
+    "@types/pg": "7.14.0",
     "@types/uuid": "3.4.6",
     "typescript": "3.7.4",
     "jest": "24.9.0",
