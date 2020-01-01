@@ -7,7 +7,7 @@
     "**/*.test*",
     "**/*.spec*"
   ],
-  "include": ["src"],
+  "files": [],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -23,15 +23,39 @@
     "listEmittedFiles": false,
     "listFiles": false,
     "pretty": true,
-    "lib": ["esnext"],
-    "types": ["node"],
-    "target": "es2020",
-    "rootDir": "src",
+    "lib": [
+      "esnext"
+    ],
+    "types": [
+      "node"
+    ],
+    "target": "ES2020",
+    "rootDir": ".",
     "outDir": "dist",
     "downlevelIteration": true,
     "removeComments": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "."
-  }
+    "baseUrl": ".",
+    "paths": {
+      "@lightbase/*": [
+        "packages/*/src"
+      ]
+    },
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "packages/insight"
+    },
+    {
+      "path": "packages/lint-config"
+    },
+    {
+      "path": "packages/pkg"
+    },
+    {
+      "path": "packages/stdlib"
+    }
+  ]
 }

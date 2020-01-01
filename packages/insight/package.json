@@ -1,0 +1,36 @@
+{
+  "name": "@lightbase/insight",
+  "version": "0.0.1",
+  "description": "Simple logger in NDJSON format",
+  "main": "dist/index.js",
+  "keywords": [
+    "logging",
+    "ndjson",
+    "insight",
+    "lbf",
+    "lightbase",
+    "backend",
+    "framework",
+    "gen",
+    "generate"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "13.1.2"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbf.git"
+  }
+}

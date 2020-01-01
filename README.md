@@ -1,11 +1,11 @@
-# Lightbase backend framework
+# @lightbase/\*
 
 A lightbase backend framework
 
 ## Features
 
 - Utility rich
-- Boilerplate included
+- Generate all the things
 - Decently fast
 
 ## Why

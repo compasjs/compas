@@ -1,70 +1,24 @@
 {
-  "name": "@lightbase/lbf",
-  "version": "0.0.1",
-  "description": "Lightbase backend framework",
-  "main": "dist/index.js",
-  "types": "./dist/index.d.ts",
-  "bin": {
-    "lbf": "./dist/cli/index.js"
-  },
+  "name": "lightbase",
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "test": "jest",
+    "build": "tsc -b",
     "lint": "yarn eslint --fix && yarn prettier --write",
-    "prettier": "prettier --config ./.prettierrc.js -l '*/**/**.{js,ts,json}'",
-    "eslint": "eslint ./src/**/*.ts"
-  },
-  "dependencies": {
-    "dotenv": "8.2.0",
-    "lodash.merge": "4.6.2",
-    "pg": "7.15.1",
-    "uuid": "3.3.3"
-  },
-  "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.13.0",
-    "@typescript-eslint/parser": "^2.13.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1",
-    "ts-node": "^8.5.4"
+    "prettier": "prettier -l '*/**/**.{js,ts,json}'",
+    "eslint": "eslint ./packages/*/src/**/*.ts",
+    "test": "jest",
+    "bump": "lerna changed && lerna version",
+    "publish": "yarn build && lerna publish"
   },
   "devDependencies": {
-    "@types/jest": "24.0.24",
-    "@types/lodash.merge": "4.6.6",
-    "@types/node": "13.1.0",
-    "@types/pg": "7.14.0",
-    "@types/uuid": "3.4.6",
-    "typescript": "3.7.4",
+    "@lightbase/lint-config": "0.0.1",
+    "@types/jest": "24.0.25",
     "jest": "24.9.0",
+    "lerna": "3.20.1",
     "ts-jest": "24.2.0",
-    "@typescript-eslint/eslint-plugin": "2.13.0",
-    "@typescript-eslint/parser": "2.13.0",
-    "eslint": "6.8.0",
-    "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-prettier": "3.1.2",
-    "prettier": "1.19.1",
-    "ts-node": "8.5.4"
+    "typescript": "3.7.4"
   },
-  "keywords": [
-    "lightbase",
-    "backend",
-    "framework",
-    "http",
-    "logger",
-    "validation"
-  ],
-  "author": {
-    "name": "Dirk de Visser",
-    "email": "dirkdev98@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lightbasenl/lbf.git"
-  },
-  "license": "MIT",
-  "files": [
-    "./dist/**",
-    "./template/**"
+  "workspaces": [
+    "packages/*"
   ]
 }

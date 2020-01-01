@@ -1,1 +1,1 @@
-module.exports = require("./dist/lint/prettierrc");
+module.exports = require("@lightbase/lint-config/dist/prettierrc");

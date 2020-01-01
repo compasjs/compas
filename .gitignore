@@ -11,5 +11,4 @@ tsconfig.tsbuildinfo
 *-debug.log
 *-error.log
 .jest-*
-yarn.lock
 package-lock.json

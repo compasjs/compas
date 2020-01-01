@@ -1,0 +1,40 @@
+{
+  "name": "@lightbase/stdlib",
+  "version": "0.0.1",
+  "description": "Lightbase standard library",
+  "main": "dist/index.js",
+  "keywords": [
+    "stdlib",
+    "lbf",
+    "lightbase",
+    "backend",
+    "framework",
+    "gen",
+    "generate"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@lightbase/insight": "0.0.1",
+    "lodash.merge": "4.6.2",
+    "uuid": "3.3.3"
+  },
+  "devDependencies": {
+    "@types/lodash.merge": "4.6.6",
+    "@types/node": "13.1.2",
+    "@types/uuid": "3.4.6"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbf.git"
+  }
+}
