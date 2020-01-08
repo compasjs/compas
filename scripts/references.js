@@ -18,13 +18,16 @@ console.log("Updating", packages.length, "tsconfig.json's");
 for (const pkg of packages) {
   const pkgDir = join(packagesDir, pkg);
 
-  const { dependencies, devDependencies } = require(join(pkgDir, "package.json"));
+  const { dependencies, devDependencies } = require(join(
+    pkgDir,
+    "package.json",
+  ));
 
   // make sure to sort them for easier to review changes
   const allKeys = Object.keys({ ...devDependencies, ...dependencies })
-                        .filter(it => it.startsWith("@lightbase/"))
-                        .map(it => it.split("/")[1])
-                        .sort();
+    .filter(it => it.startsWith("@lightbase/"))
+    .map(it => it.split("/")[1])
+    .sort();
 
   if (allKeys.includes(pkg)) {
     throw new Error(`${pkg} has a dependency on it self`);
@@ -33,7 +36,10 @@ for (const pkg of packages) {
   const tsconfig = require(join(pkgDir, "tsconfig.json"));
   tsconfig.references = allKeys.map(it => ({ path: `../${it}` }));
 
-  writeFileSync(join(pkgDir, "tsconfig.json"), JSON.stringify(tsconfig, null, 2));
+  writeFileSync(
+    join(pkgDir, "tsconfig.json"),
+    JSON.stringify(tsconfig, null, 2),
+  );
 }
 
 console.log("Updating root tsconfig.json");
@@ -41,7 +47,10 @@ console.log("Updating root tsconfig.json");
 const rootConfig = require(join(process.cwd(), "tsconfig.json"));
 // Also sorting for easier change reviews
 rootConfig.references = packages.sort().map(it => ({ path: `packages/${it}` }));
-writeFileSync(join(process.cwd(), "tsconfig.json"), JSON.stringify(rootConfig, null, 2));
+writeFileSync(
+  join(process.cwd(), "tsconfig.json"),
+  JSON.stringify(rootConfig, null, 2),
+);
 
 console.log("Done.\nRunning linter");
-spawnSync("yarn", [ "lint" ], { stdio: "inherit" });
+spawnSync("yarn", ["lint"], { stdio: "inherit" });

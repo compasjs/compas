@@ -33,13 +33,18 @@ export function gc() {
 
 const promExec = promisify(cpExec);
 
-export async function exec(logger: Logger, command: string,
+export async function exec(
+  logger: Logger,
+  command: string,
 ): Promise<{ stdout: string; stderr: string }> {
   logger.info("Executing", command);
   return promExec(command, { encoding: "utf8" });
 }
 
-export async function spawn(logger: Logger, command: string, args: string[],
+export async function spawn(
+  logger: Logger,
+  command: string,
+  args: string[],
 ): Promise<void> {
   logger.info("Spawning", command, args.join(" "));
   return new Promise((resolve, reject) => {

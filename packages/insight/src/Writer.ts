@@ -51,9 +51,11 @@ export class DevWriter extends Writer {
     this.stream.write(DevWriter.formatTime(timestamp));
 
     if (type !== undefined && type !== null) {
-      this.stream.write(DevWriter.withColor(level as LogLevel, ` ${ level }[${ type }]`));
+      this.stream.write(
+        DevWriter.withColor(level as LogLevel, ` ${level}[${type}]`),
+      );
     } else {
-      this.stream.write(DevWriter.withColor(level as LogLevel, ` ${ level }`));
+      this.stream.write(DevWriter.withColor(level as LogLevel, ` ${level}`));
     }
 
     if (message !== undefined && message !== null) {

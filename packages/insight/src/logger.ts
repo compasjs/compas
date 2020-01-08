@@ -56,7 +56,7 @@ export function bytesToHumanReadable(bytes: number): string {
   const idx = Math.floor(Math.log(bytes) / Math.log(1024));
   const value = bytes / Math.pow(1024, idx);
   // Remove any unnecessary trailing 0's
-  return `${ Number(value.toFixed(2)) } ${ sizes[idx] }`;
+  return `${Number(value.toFixed(2))} ${sizes[idx]}`;
 }
 
 /**
@@ -197,9 +197,12 @@ export const recursiveCopyObject = (
   }
 
   // Handle classes & objects, note this also contains Typescript private members
-  const keys: string[] = typeof obj === "object" && obj.constructor === Object &&
-                         Object.prototype.toString.call(obj) === "[object Object]"
-                         ? Object.keys(obj) : Object.getOwnPropertyNames(obj);
+  const keys: string[] =
+    typeof obj === "object" &&
+    obj.constructor === Object &&
+    Object.prototype.toString.call(obj) === "[object Object]"
+      ? Object.keys(obj)
+      : Object.getOwnPropertyNames(obj);
 
   for (const key of keys) {
     if (!Object.hasOwnProperty.call(obj, key)) {

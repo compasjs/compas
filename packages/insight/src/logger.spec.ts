@@ -1,29 +1,25 @@
 import "jest";
 import {
-  bytesToHumanReadable, Logger, printProcessMemoryUsage, resetWriter,
+  bytesToHumanReadable,
+  Logger,
+  printProcessMemoryUsage,
+  resetWriter,
 } from "./logger";
 
 test("correctly format bytes to more human friendly format", () => {
-  expect(bytesToHumanReadable(0))
-  .toBe("0 Byte");
-  expect(bytesToHumanReadable(11))
-  .toBe("11 Bytes");
-  expect(bytesToHumanReadable(1024))
-  .toBe("1 KiB");
-  expect(bytesToHumanReadable(1111))
-  .toBe("1.08 KiB");
-  expect(bytesToHumanReadable(1130))
-  .toBe("1.1 KiB");
+  expect(bytesToHumanReadable(0)).toBe("0 Byte");
+  expect(bytesToHumanReadable(11)).toBe("11 Bytes");
+  expect(bytesToHumanReadable(1024)).toBe("1 KiB");
+  expect(bytesToHumanReadable(1111)).toBe("1.08 KiB");
+  expect(bytesToHumanReadable(1130)).toBe("1.1 KiB");
 });
 
 test("printProcessMemoryUsage", () => {
   const mock = jest.fn();
   const logger = ({ info: mock } as unknown) as Logger;
   printProcessMemoryUsage(logger);
-  expect(mock)
-  .toHaveBeenCalledTimes(1);
-  expect(mock.mock.calls[0][0])
-  .toMatchObject({
+  expect(mock).toHaveBeenCalledTimes(1);
+  expect(mock.mock.calls[0][0]).toMatchObject({
     rss: expect.any(String),
     heapUsed: expect.any(String),
     heapTotal: expect.any(String),

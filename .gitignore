@@ -12,3 +12,6 @@ tsconfig.tsbuildinfo
 *-error.log
 .jest-*
 package-lock.json
+
+# node-clinic
+.clinic
