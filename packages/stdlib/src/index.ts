@@ -1,3 +1,9 @@
 export { isNil, isPlainObject, merge } from "./lodash";
 export { uuid } from "./datatypes";
-export { getSecondsSinceEpoch, gc, exec, spawn } from "./utils";
+export {
+  getSecondsSinceEpoch,
+  gc,
+  exec,
+  spawn,
+  enableOrDisableLBFLogging,
+} from "./utils";

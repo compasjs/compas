@@ -33,7 +33,10 @@ export function resetTypeFilters() {
  * type is only known after formatting
  */
 export function addTypeFilter(typeFilter: TypeFilter) {
-  state.typeFilters.push(typeFilter);
+  // make sure to not add a filter twice
+  if (!state.typeFilters.find(it => it === typeFilter)) {
+    state.typeFilters.push(typeFilter);
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
 # @lightbase/\*
 
-A lightbase backend framework
+A lightbase (mostly) backend utilities
 
 ## Features
 
