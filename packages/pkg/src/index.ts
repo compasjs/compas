@@ -1,6 +1,6 @@
-import { Logger } from "@lightbase/insight";
+import { Logger } from "@lbu/insight";
 
-const loggerType = "LBF:PKG";
+const loggerType = "LBU:PKG";
 
 const logger = new Logger(3, { type: loggerType });
 

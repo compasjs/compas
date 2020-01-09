@@ -1,4 +1,4 @@
-import { addTypeFilter, Logger, removeTypeFilter } from "@lightbase/insight";
+import { addTypeFilter, Logger, removeTypeFilter } from "@lbu/insight";
 import { exec as cpExec, spawn as cpSpawn } from "child_process";
 import { promisify } from "util";
 import { setFlagsFromString } from "v8";
@@ -55,20 +55,20 @@ export async function spawn(
   });
 }
 
-function lbfLogFilter(type: string): boolean {
-  return !type.startsWith("LBF:");
+function lbuLogFilter(type: string): boolean {
+  return !type.startsWith("LBU:");
 }
 
 /**
- * All lbf related packages will use the LBF:* type in the log context, this adds / removes
- * the type filter in @lightbase/insight
+ * All lbu related packages will use the LBU:* type in the log context, this adds / removes
+ * the type filter in @lbu/insight
  * @param enabled
  */
-export function enableOrDisableLBFLogging(enabled: boolean) {
+export function enableOrDisableLBULogging(enabled: boolean) {
   if (enabled) {
-    addTypeFilter(lbfLogFilter);
+    addTypeFilter(lbuLogFilter);
   } else {
-    removeTypeFilter(lbfLogFilter);
+    removeTypeFilter(lbuLogFilter);
   }
 }
 

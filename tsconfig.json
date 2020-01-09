@@ -38,7 +38,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@lightbase/*": [
+      "@lbu/*": [
         "packages/*/src"
       ]
     },

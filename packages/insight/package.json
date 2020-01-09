@@ -1,5 +1,5 @@
 {
-  "name": "@lightbase/insight",
+  "name": "@lbu/insight",
   "version": "0.0.1",
   "description": "Simple logger in NDJSON format",
   "main": "dist/index.js",
@@ -7,10 +7,9 @@
     "logging",
     "ndjson",
     "insight",
-    "lbf",
+    "lbu",
     "lightbase",
     "backend",
-    "framework",
     "gen",
     "generate"
   ],
@@ -31,6 +30,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbf.git"
+    "url": "https://github.com/lightbasenl/lbu.git"
   }
 }

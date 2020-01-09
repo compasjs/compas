@@ -1,4 +1,4 @@
-import { Logger } from "@lightbase/insight";
+import { Logger } from "@lbu/insight";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { makeError } from "./errors";
@@ -11,7 +11,7 @@ import {
   ValidationSchema,
 } from "./util";
 
-const loggerType = "LBF:VALIDATOR";
+const loggerType = "LBU:VALIDATOR";
 
 const logger = new Logger(3, { type: loggerType });
 

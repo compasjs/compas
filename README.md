@@ -1,6 +1,6 @@
-# @lightbase/\*
+# @lbu/\*
 
-A lightbase (mostly) backend utilities
+A lightbase backend utilities
 
 ## Features
 
@@ -13,8 +13,7 @@ A lightbase (mostly) backend utilities
 Here at [lightbase](https://lightbase.nl) we had a constantly growing
 boilerplate for new projects. To facilitate our needs more and to stop copying
 and pasting things around this project was born. This project is for now
-tailored at smaller projects and won't include things like http clustering (if
-needed should be done at hosting level).
+tailored at smaller & monolithic projects.
 
 ## Docs
 

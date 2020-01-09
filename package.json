@@ -1,5 +1,5 @@
 {
-  "name": "lightbase",
+  "name": "lbu",
   "private": true,
   "scripts": {
     "build": "tsc -b",
@@ -11,7 +11,7 @@
     "publish": "yarn build && lerna publish"
   },
   "devDependencies": {
-    "@lightbase/lint-config": "0.0.1",
+    "@lbu/lint-config": "0.0.1",
     "@types/jest": "24.0.25",
     "jest": "24.9.0",
     "lerna": "3.20.1",

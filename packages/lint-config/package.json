@@ -1,13 +1,12 @@
 {
-  "name": "@lightbase/lint-config",
+  "name": "@lbu/lint-config",
   "version": "0.0.1",
   "description": "ESLint & Prettier config",
   "main": "dist/index.js",
   "keywords": [
-    "lbf",
+    "lbu",
     "lightbase",
     "backend",
-    "framework",
     "gen",
     "generate"
   ],
@@ -32,6 +31,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbf.git"
+    "url": "https://github.com/lightbasenl/lbu.git"
   }
 }

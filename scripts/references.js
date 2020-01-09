@@ -25,7 +25,7 @@ for (const pkg of packages) {
 
   // make sure to sort them for easier to review changes
   const allKeys = Object.keys({ ...devDependencies, ...dependencies })
-    .filter(it => it.startsWith("@lightbase/"))
+    .filter(it => it.startsWith("@lbu/"))
     .map(it => it.split("/")[1])
     .sort();
 

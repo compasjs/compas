@@ -5,5 +5,5 @@ export {
   gc,
   exec,
   spawn,
-  enableOrDisableLBFLogging,
+  enableOrDisableLBULogging,
 } from "./utils";
