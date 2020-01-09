@@ -71,3 +71,117 @@ export function enableOrDisableLBFLogging(enabled: boolean) {
     removeTypeFilter(lbfLogFilter);
   }
 }
+
+/**
+ * Run a back-to-back background job, i.e. setInterval with an extra set of options
+ *
+ * Params:
+ * - name: is used in logging, all log statements produced have type 'JOB:BACKGROUND'
+ * - timeout: amount of milliseconds 'between' jobs
+ * - awaitCallback: wait for the callback to finish before calling setTimeout again
+ * - initialRun: run the callback direct when this function is called, however this will
+ * already run in the background, so this function will return immediately
+ *
+ * Returns a stop function to clear any timeout, if a callback is in progress it will still run
+ */
+export function runBackGroundJob(
+  {
+    name,
+    timeout,
+    awaitCallback,
+    initialRun,
+  }: { name: string; timeout: number; awaitCallback?: true; initialRun?: true },
+  cb: (logger: Logger) => Promise<void>,
+) {
+  const logger = new Logger(5, {
+    type: "JOB:BACKGROUND",
+    backgroundJob: name,
+  });
+  let timer: NodeJS.Timeout;
+
+  if (initialRun) {
+    run();
+  } else {
+    timer = setTimeout(run, timeout);
+  }
+
+  return { stop };
+
+  function run() {
+    logger.info("Running job");
+    let p = cb(logger);
+    if (awaitCallback) {
+      p = p.then(() => {
+        timer = setTimeout(run, timeout);
+      });
+    } else {
+      timer = setTimeout(run, timeout);
+    }
+
+    p.then(() => {
+      logger.info("Done running job");
+    }).catch(err => {
+      logger.error("Done running job", err);
+    });
+  }
+
+  function stop() {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Run a daily background job
+ *
+ * Params:
+ * - name: is used in logging, all log statements produced have type 'JOB:BACKGROUND'
+ * - timeToRun: Date with specified hours, minutes, seconds, millieseconds. Note that this
+ * argument will be modified
+ *
+ * Returns a stop function to clear any timeout, if a callback is in progress it will still
+ * run
+ */
+export function runDailyJob(
+  { name, timeToRun }: { name: string; timeToRun: Date },
+  cb: (logger: Logger) => Promise<void>,
+) {
+  const logger = new Logger(5, {
+    type: "JOB:DAILY",
+    backgroundJob: name,
+  });
+  let timer: NodeJS.Timeout;
+
+  scheduleTimeout();
+
+  return { stop };
+
+  function scheduleTimeout() {
+    const now = new Date();
+    timeToRun.setDate(now.getDate());
+    if (now.getTime() > timeToRun.getTime()) {
+      // Schedule for next day
+      timeToRun.setDate(now.getDate() + 1);
+    }
+
+    logger.info("Scheduled timeout", { time: timeToRun.toISOString() });
+    setTimeout(run, timeToRun.getTime() - now.getTime());
+  }
+
+  function run() {
+    logger.info("Running job");
+
+    cb(logger)
+      .then(() => {
+        logger.info("Done running job");
+        scheduleTimeout();
+      })
+      .catch(err => {
+        logger.error("Done running job", err);
+        scheduleTimeout();
+      });
+  }
+
+  function stop() {
+    clearTimeout(timer);
+  }
+}
