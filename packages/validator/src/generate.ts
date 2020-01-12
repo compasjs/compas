@@ -26,13 +26,10 @@ type ValidatorStore = Record<
 const generationStore: ValidatorStore = {};
 
 /**
- * Require input file
  * Generate all data
  * Store at output file
  */
-export function runCodeGen(inputFile: string, outputFile: string) {
-  require(inputFile);
-
+export function runCodeGen(outputFile: string) {
   const outDir = outputFile.substring(0, outputFile.lastIndexOf("/"));
   if (!existsSync(outDir)) {
     mkdirSync(outDir, { recursive: true });

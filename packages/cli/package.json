@@ -1,0 +1,39 @@
+{
+  "name": "@lbu/cli",
+  "version": "0.0.1",
+  "description": "Lightbase backend utilities CLI",
+  "bin": {
+    "lbu": "./dist/index.js"
+  },
+  "keywords": [
+    "lbu",
+    "lightbase",
+    "backend",
+    "gen",
+    "generate"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*",
+    "template/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@lbu/insight": "0.0.1",
+    "@lbu/stdlib": "0.0.1",
+    "@lbu/validator": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "13.1.2"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbu.git"
+  }
+}

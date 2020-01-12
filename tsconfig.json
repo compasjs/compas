@@ -29,7 +29,7 @@
     "types": [
       "node"
     ],
-    "target": "ES2020",
+    "target": "ES2019",
     "rootDir": ".",
     "outDir": "dist",
     "downlevelIteration": true,
@@ -45,6 +45,9 @@
     "composite": true
   },
   "references": [
+    {
+      "path": "packages/cli"
+    },
     {
       "path": "packages/insight"
     },
