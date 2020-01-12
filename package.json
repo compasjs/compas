@@ -8,7 +8,7 @@
     "eslint": "eslint ./packages/*/src/**/*.ts",
     "test": "jest",
     "bump": "lerna changed && lerna version",
-    "publish": "yarn build && lerna publish"
+    "release": "yarn build && lerna publish"
   },
   "devDependencies": {
     "@lbu/lint-config": "0.0.1",
