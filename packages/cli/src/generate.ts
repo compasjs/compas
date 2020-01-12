@@ -1,6 +1,8 @@
 import { Logger } from "@lbu/insight";
-import { runCodeGen } from "@lbu/validator";
+import { runCodeGen as validatorCodeGen } from "@lbu/validator";
+import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
+import { lintCommand } from "./lint";
 import { CliContext, Command } from "./types";
 import { execCommand, getLbuVersion } from "./utils";
 
@@ -43,7 +45,16 @@ async function executeCodegen(
   logger: Logger,
   { inputFile, outputDir }: { inputFile: string; outputDir: string },
 ) {
+  require("@lbu/register");
   require(join(process.cwd(), inputFile));
 
-  runCodeGen(outputDir);
+  const outDir = join(process.cwd(), outputDir);
+  if (!existsSync(outDir)) {
+    mkdirSync(outDir, { recursive: true });
+  }
+
+  const validationOutput = join(outDir, "validator.ts");
+  validatorCodeGen(validationOutput);
+
+  await lintCommand({ logger }, []);
 }

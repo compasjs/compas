@@ -7,7 +7,8 @@
     "lint": "lbu lint",
     "start": "node -r @lbu/register ./dist/index.js",
     "dev": "node -r @lbu/register src/index.ts",
-    "dev:watch": "nodemon --watch src --exec 'yarn dev'"
+    "dev:watch": "nodemon --watch src --ext ts,js,json --exec 'yarn dev'",
+    "generate": "lbu generate"
   },
   "dependencies": {
     "@lbu/insight": "0.0.2",

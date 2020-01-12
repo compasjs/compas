@@ -7,6 +7,23 @@ Development should be pretty straight forward. Run `yarn build --watch` and
 sure to run `yarn lint`. Note that this automatically will try to fix most
 issues that popup.
 
+To test changes to the template, use the following command:
+`../lbu/packages/cli/dist/index.js [command]`
+
+Where the folder structure is something like:
+
+```
+/lbu        -- the lbu checkout
+/lbu-test   -- your test project and also the current working directory
+```
+
+### Scripts
+
+A few development utilities are provided in [./scripts](./scripts):
+
+- `node ./scripts/references.js`: Update all tsconfig references based on the
+  dependencies of the package.
+
 ### Publishing
 
 - Bump versions in [template package.json](./packages/cli/template/package.json)

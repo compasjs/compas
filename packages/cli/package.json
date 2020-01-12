@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "^0.0.2",
+    "@lbu/register": "^0.0.2",
     "@lbu/stdlib": "^0.0.2",
     "@lbu/validator": "^0.0.2"
   },

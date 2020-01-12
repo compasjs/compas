@@ -1,5 +1,5 @@
 import { createValidator } from "@lbu/validator";
 
-createValidator("Test{{template}}", {
+createValidator("TestInterfaceValidation", {
   foo: { type: "string", oneOf: ["bar"] },
 });

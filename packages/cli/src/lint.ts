@@ -6,7 +6,7 @@ const commandMap: Command = {
   help: lintHelpCommand,
 };
 
-export const lintCommand: Command = async (ctx, args) => {
+export const lintCommand = async (ctx: CliContext, args: string[]) => {
   if (args.length === 1) {
     return execCommand(ctx, args, commandMap, "help");
   }
@@ -22,8 +22,8 @@ export const lintCommand: Command = async (ctx, args) => {
 
   await spawn(ctx.logger, "./node_modules/.bin/prettier", [
     "-l",
-    "./**/**.{js,ts,json}",
     "--write",
+    "./!(dist,.jest-cache,.jest-coverage)/**.{js,ts,json}",
   ]);
 
   return;
