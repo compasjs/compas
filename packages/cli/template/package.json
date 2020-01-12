@@ -5,12 +5,13 @@
   "scripts": {
     "build": "tsc",
     "lint": "lbu lint",
-    "start": "node ./dist/index.js",
-    "dev": "nodemon --watch src --exec 'yarn dev:run'",
-    "dev:run": "node -r ts-node/register src/index.ts"
+    "start": "node -r @lbu/register ./dist/index.js",
+    "dev": "node -r @lbu/register src/index.ts",
+    "dev:watch": "nodemon --watch src --exec 'yarn dev'"
   },
   "dependencies": {
     "@lbu/insight": "0.0.1",
+    "@lbu/register": "0.0.1",
     "@lbu/stdlib": "0.0.1"
   },
   "devDependencies": {

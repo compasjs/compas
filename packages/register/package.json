@@ -1,0 +1,39 @@
+{
+  "name": "@lbu/register",
+  "version": "0.0.1",
+  "description": "Lightbase register",
+  "main": "dist/index.js",
+  "keywords": [
+    "lbu",
+    "lightbase",
+    "backend",
+    "gen",
+    "generate"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**/*.*"
+  ],
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@lbu/insight": "^0.0.1",
+    "dotenv": "8.2.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "8.2.0",
+    "@types/node": "13.1.2"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbu.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

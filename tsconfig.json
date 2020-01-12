@@ -58,6 +58,9 @@
       "path": "packages/pkg"
     },
     {
+      "path": "packages/register"
+    },
+    {
       "path": "packages/stdlib"
     },
     {
