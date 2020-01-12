@@ -11,6 +11,8 @@ issues that popup.
 
 - Bump versions in [template package.json](./packages/cli/template/package.json)
   to the new version.
+- Write to the changelog.
+- Commit with `[*] Prepare release for vX.X.X`
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version
   - Check packages it will publish and send `y`

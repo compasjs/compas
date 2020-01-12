@@ -10,14 +10,14 @@
     "dev:watch": "nodemon --watch src --exec 'yarn dev'"
   },
   "dependencies": {
-    "@lbu/insight": "0.0.1",
-    "@lbu/register": "0.0.1",
-    "@lbu/stdlib": "0.0.1"
+    "@lbu/insight": "0.0.2",
+    "@lbu/register": "0.0.2",
+    "@lbu/stdlib": "0.0.2"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.1",
-    "@lbu/lint-config": "0.0.1",
-    "@lbu/validator": "0.0.1",
+    "@lbu/cli": "0.0.2",
+    "@lbu/lint-config": "0.0.2",
+    "@lbu/validator": "0.0.2",
     "@types/node": "13.1.6",
     "eslint": "6.8.0",
     "nodemon": "2.0.2",
