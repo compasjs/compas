@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "@lbu/validator",
   "version": "0.0.1",
   "description": "Lightbase validation code gen",
