@@ -2,6 +2,13 @@
   "private": true,
   "license": "UNLICENSE",
   "name": "{{template}}",
+  "scripts": {
+    "build": "tsc",
+    "lint": "lbu lint",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon --watch src --exec 'yarn dev:run'",
+    "dev:run": "node -r ts-node/register src/index.ts"
+  },
   "dependencies": {
     "@lbu/insight": "0.0.1",
     "@lbu/stdlib": "0.0.1"

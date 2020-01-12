@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "outDir": "dist",
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "declaration": false,
+    "inlineSourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "traceResolution": false,
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "pretty": true,
+    "lib": ["esnext"],
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types", "src/types"]
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules/**", "dist/**"]
+}

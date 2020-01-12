@@ -1,8 +1,9 @@
 import { Logger } from "@lbu/insight";
 import { join } from "path";
 import { generateCommand } from "./generate";
+import { initCommand } from "./init";
+import { lintCommand } from "./lint";
 import { pgCommand } from "./pg";
-import { initCommand } from "./template";
 import { CliContext, Command, Config } from "./types";
 import { execCommand, getLbuVersion } from "./utils";
 
@@ -10,6 +11,7 @@ const commandMap: Command = {
   help: helpCommand,
   init: initCommand,
   generate: generateCommand,
+  lint: lintCommand,
   pg: pgCommand,
 };
 

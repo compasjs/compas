@@ -1,0 +1,17 @@
+# IDE
+.idea
+.vscode
+
+dist
+node_modules
+lib
+tsconfig.tsbuildinfo
+
+# NPM / Yarn / Jest
+*-debug.log
+*-error.log
+.jest-*
+package-lock.json
+
+# node-clinic
+.clinic

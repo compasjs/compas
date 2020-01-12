@@ -1,3 +1,4 @@
+import { spawnSync } from "child_process";
 import {
   existsSync,
   lstatSync,
@@ -32,12 +33,15 @@ Inits a new project in the current working directory. This overwrites all existi
 
 function execInit() {
   const outDir = process.cwd();
-  const projectname = outDir.substring(outDir.lastIndexOf("/"));
-  return copyDirRecursive(
-    join(__dirname, "../template/"),
-    outDir,
-    (input: string) => input.replace(/{{template}}/g, projectname),
+  // Use current directory name as template name
+  const projectName = outDir.substring(outDir.lastIndexOf("/") + 1);
+  copyDirRecursive(join(__dirname, "../template/"), outDir, (input: string) =>
+    input.replace(/{{template}}/g, projectName),
   );
+
+  spawnSync(`yarn`, { stdio: "inherit" });
+  spawnSync(`yarn`, ["lint"], { stdio: "inherit" });
+  spawnSync(`yarn`, ["build"], { stdio: "inherit" });
 }
 
 function copyDirRecursive(
@@ -45,10 +49,10 @@ function copyDirRecursive(
   targetDir: string,
   contentHandler: (input: string) => string,
 ) {
-  ensureDir(targetDir);
-
   const stat = lstatSync(sourceDir);
   if (stat.isDirectory()) {
+    ensureDir(targetDir);
+
     const files = readdirSync(sourceDir);
     for (const file of files) {
       const currentSource = join(sourceDir, file);
