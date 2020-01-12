@@ -1,6 +1,6 @@
 {
   "name": "@lbu/stdlib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightbase standard library",
   "main": "dist/index.js",
   "keywords": [
@@ -19,7 +19,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.1",
+    "@lbu/insight": "^0.0.2",
     "lodash.merge": "4.6.2",
     "uuid": "3.3.3"
   },

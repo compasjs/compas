@@ -1,6 +1,6 @@
 {
   "name": "@lbu/register",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightbase register",
   "main": "dist/index.js",
   "keywords": [
@@ -18,7 +18,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.1",
+    "@lbu/insight": "^0.0.2",
     "dotenv": "8.2.0"
   },
   "devDependencies": {

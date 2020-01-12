@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@lbu/pkg",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightbase pkg",
   "main": "dist/index.js",
   "keywords": [
@@ -19,8 +19,8 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.1",
-    "@lbu/stdlib": "^0.0.1"
+    "@lbu/insight": "^0.0.2",
+    "@lbu/stdlib": "^0.0.2"
   },
   "devDependencies": {
     "@types/node": "13.1.2"
