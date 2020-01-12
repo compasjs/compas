@@ -1,6 +1,5 @@
 import { Logger } from "@lbu/insight";
-import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
+import { writeFileSync } from "fs";
 import { makeError } from "./errors";
 import {
   generators,
@@ -29,16 +28,11 @@ const generationStore: ValidatorStore = {};
  * Generate all data
  * Store at output file
  */
-export function runCodeGen(outputFile: string) {
-  const outDir = outputFile.substring(0, outputFile.lastIndexOf("/"));
-  if (!existsSync(outDir)) {
-    mkdirSync(outDir, { recursive: true });
-  }
-
-  runForValidators(outDir);
+export function runCodeGen(outputPath: string) {
+  runForValidators(outputPath);
 }
 
-function runForValidators(output: string) {
+function runForValidators(outputPath: string) {
   logger.info(
     "Running generation for",
     Object.keys(generationStore).length,
@@ -51,7 +45,7 @@ function runForValidators(output: string) {
     validatorOutput += generateValidator(key, schema, opts) + "\n";
   });
 
-  writeFileSync(join(output, "validator.ts"), validatorOutput);
+  writeFileSync(outputPath, validatorOutput);
 }
 
 /**
