@@ -1,5 +1,5 @@
 import { Logger } from "@lbu/insight";
-import { runCodeGen as validatorCodeGen } from "@lbu/validator";
+import { runGenerators as runValidatorGenerators } from "@lbu/validator";
 import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
 import { lintCommand } from "./lint";
@@ -54,7 +54,7 @@ async function executeCodegen(
   }
 
   const validationOutput = join(outDir, "validator.ts");
-  validatorCodeGen(validationOutput);
+  runValidatorGenerators(validationOutput);
 
   await lintCommand({ logger }, []);
 }
