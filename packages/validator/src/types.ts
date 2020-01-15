@@ -1,3 +1,11 @@
+export const schemaBuildSymbol = Symbol("buildSchema");
+
+export interface SchemaBuilder {
+  [schemaBuildSymbol](): Schema;
+}
+
+export type SchemaLike = Schema | SchemaBuilder;
+
 export type Schema =
   | NumberSchema
   | StringSchema
@@ -24,13 +32,11 @@ export interface NumberSchema extends ConvertibleSchema {
   min?: number;
   max?: number;
   integer?: true;
-  convert?: true;
   oneOf?: number[];
 }
 
 export interface BooleanSchema extends ConvertibleSchema {
   type: "boolean";
-  convert?: true;
   oneOf?: [boolean];
 }
 

@@ -28,6 +28,7 @@ A few development utilities are provided in [./scripts](./scripts):
 
 - Bump versions in [template package.json](./packages/cli/template/package.json)
   to the new version.
+- Bump version in root package.json to new version
 - Write to the changelog.
 - Commit with `[*] Prepare release for vX.X.X`
 - Run `yarn release`. This will build & publish all packages

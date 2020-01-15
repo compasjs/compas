@@ -1,7 +1,8 @@
 import { writeFileSync } from "fs";
 import { generateFromSchemas } from "./generate";
 import { logger } from "./logger";
-import { Schema } from "./types";
+import { Schema, SchemaLike } from "./types";
+import { toSchema } from "./util";
 
 /**
  * Uses a map internally to notify and overwrite schemas
@@ -12,33 +13,33 @@ export function resetSchemas() {
   registry.clear();
 }
 
-export function createSchema(name: string, schema: Schema): void;
-export function createSchema(schema: Schema): void;
+export function createSchema(name: string, schema: SchemaLike): void;
+export function createSchema(schema: SchemaLike): void;
 
-export function createSchema(nameOrSchema: string | Schema, schema?: Schema) {
+export function createSchema(
+  nameOrSchema: string | SchemaLike,
+  schema?: SchemaLike,
+) {
+  let s: Schema | undefined = undefined;
   if (typeof nameOrSchema === "string" && schema !== undefined) {
-    schema.name = nameOrSchema;
-
-    if (registry.has(schema.name)) {
-      logger.info(`Overwriting ${schema.name} in registry.`);
-    }
-
-    registry.set(nameOrSchema, schema);
-  } else if (typeof nameOrSchema !== "string") {
-    if (nameOrSchema.name === undefined) {
-      throw new TypeError("if only a schema is provided, it should have name.");
-    }
-
-    if (registry.has(nameOrSchema.name)) {
-      logger.info(`Overwriting ${nameOrSchema.name} in registry.`);
-    }
-
-    registry.set(nameOrSchema.name, nameOrSchema);
+    s = toSchema(schema);
   } else {
-    throw new TypeError(
-      "Either a schema with name should be provided, or a name and schema should be provided separately",
-    );
+    s = toSchema(nameOrSchema as Schema);
   }
+
+  if (s === undefined) {
+    throw new Error("Unknown. Report bug.");
+  }
+
+  if (typeof nameOrSchema === "string") {
+    s.name = nameOrSchema;
+  }
+
+  if (registry.has(s.name!)) {
+    logger.info(`Overwriting ${s.name} in registry.`);
+  }
+
+  registry.set(s.name!, s);
 }
 
 export function runGenerators(outputFile: string) {
