@@ -4,7 +4,9 @@ import lodashMerge from "lodash.merge";
  * Check if provided value is null or undefined with a typescript type guard
  * @param value
  */
-export function isNil<T>(value: T | null | undefined): value is T {
+export function isNil<T>(
+  value: T | null | undefined,
+): value is null | undefined {
   return value === undefined || value === null;
 }
 
