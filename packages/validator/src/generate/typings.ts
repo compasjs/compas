@@ -23,19 +23,19 @@ export function createTypesForSchemas(mapping: SchemaMapping): string {
 export function createNamedTypeForSchema(s: Schema): string {
   switch (s.type) {
     case "number":
-      return createNamedNumberSchema(s);
+      return createNamedNumberType(s);
     case "string":
-      return createNamedStringSchema(s);
+      return createNamedStringType(s);
     case "boolean":
-      return createNamedBooleanSchema(s);
+      return createNamedBooleanType(s);
     case "object":
-      return createNamedObjectSchema(s);
+      return createNamedObjectType(s);
     case "array":
-      return createNamedArraySchema(s);
+      return createNamedArrayType(s);
     case "oneOf":
-      return createNamedOneOfSchema(s);
+      return createNamedOneOfType(s);
     case "reference":
-      return createNamedReferenceSchema(s);
+      return createNamedReferenceType(s);
     default:
       return "";
   }
@@ -44,53 +44,53 @@ export function createNamedTypeForSchema(s: Schema): string {
 export function createTypeForSchema(s: Schema): string {
   switch (s.type) {
     case "number":
-      return createNumberSchema(s);
+      return createNumberType(s);
     case "string":
-      return createStringSchema(s);
+      return createStringType(s);
     case "boolean":
-      return createBooleanSchema(s);
+      return createBooleanType(s);
     case "object":
-      return createObjectSchema(s);
+      return createObjectType(s);
     case "array":
-      return createArraySchema(s);
+      return createArrayType(s);
     case "oneOf":
-      return createOneOfSchema(s);
+      return createOneOfType(s);
     case "reference":
-      return createReferenceSchema(s);
+      return createReferenceType(s);
     default:
       return "";
   }
 }
 
-export function createNamedNumberSchema(schema: NumberSchema): string {
-  return `export type ${schema.name!} = ${createNumberSchema(schema)};`;
+export function createNamedNumberType(schema: NumberSchema): string {
+  return `export type ${schema.name!} = ${createNumberType(schema)};`;
 }
 
-export function createNamedStringSchema(schema: StringSchema): string {
-  return `export type ${schema.name!} = ${createStringSchema(schema)};`;
+export function createNamedStringType(schema: StringSchema): string {
+  return `export type ${schema.name!} = ${createStringType(schema)};`;
 }
 
-export function createNamedBooleanSchema(schema: BooleanSchema): string {
-  return `export type ${schema.name!} = ${createBooleanSchema(schema)};`;
+export function createNamedBooleanType(schema: BooleanSchema): string {
+  return `export type ${schema.name!} = ${createBooleanType(schema)};`;
 }
 
-export function createNamedObjectSchema(schema: ObjectSchema): string {
-  return `export interface ${schema.name!} ${createObjectSchema(schema)}`;
+export function createNamedObjectType(schema: ObjectSchema): string {
+  return `export type ${schema.name!} = ${createObjectType(schema)};`;
 }
 
-export function createNamedArraySchema(schema: ArraySchema): string {
-  return `export type ${schema.name!} = ${createArraySchema(schema)};`;
+export function createNamedArrayType(schema: ArraySchema): string {
+  return `export type ${schema.name!} = ${createArrayType(schema)};`;
 }
 
-export function createNamedOneOfSchema(schema: OneOfSchema): string {
-  return `export type ${schema.name!} = ${createOneOfSchema(schema)};`;
+export function createNamedOneOfType(schema: OneOfSchema): string {
+  return `export type ${schema.name!} = ${createOneOfType(schema)};`;
 }
 
-export function createNamedReferenceSchema(schema: ReferenceSchema): string {
-  return `export type ${schema.name!} = ${createReferenceSchema(schema)};`;
+export function createNamedReferenceType(schema: ReferenceSchema): string {
+  return `export type ${schema.name!} = ${createReferenceType(schema)};`;
 }
 
-export function createNumberSchema(schema: NumberSchema): string {
+export function createNumberType(schema: NumberSchema): string {
   let result = "";
   if (schema.oneOf) {
     result += schema.oneOf.join(" | ");
@@ -103,7 +103,7 @@ export function createNumberSchema(schema: NumberSchema): string {
   return result;
 }
 
-export function createStringSchema(schema: StringSchema): string {
+export function createStringType(schema: StringSchema): string {
   let result = "";
   if (schema.oneOf) {
     result += schema.oneOf.map(it => `"${it}"`).join(" | ");
@@ -116,7 +116,7 @@ export function createStringSchema(schema: StringSchema): string {
   return result;
 }
 
-export function createBooleanSchema(schema: BooleanSchema): string {
+export function createBooleanType(schema: BooleanSchema): string {
   let result = "";
   if (schema.oneOf) {
     result += String(schema.oneOf[0]);
@@ -131,7 +131,7 @@ export function createBooleanSchema(schema: BooleanSchema): string {
   return result;
 }
 
-export function createObjectSchema(schema: ObjectSchema): string {
+export function createObjectType(schema: ObjectSchema): string {
   let result = "{\n";
 
   if (schema.keys) {
@@ -149,7 +149,7 @@ export function createObjectSchema(schema: ObjectSchema): string {
   return result;
 }
 
-export function createArraySchema(schema: ArraySchema): string {
+export function createArrayType(schema: ArraySchema): string {
   let result = `(${createTypeForSchema(schema.values)})[]`;
 
   if (schema.optional) {
@@ -159,14 +159,11 @@ export function createArraySchema(schema: ArraySchema): string {
   return result;
 }
 
-export function createOneOfSchema(schema: OneOfSchema): string {
-  let result = "";
-  if (schema.schemas) {
-    result += schema.schemas
-      .map(it => createTypeForSchema(it))
-      .map(it => `(${it})`)
-      .join(" | ");
-  }
+export function createOneOfType(schema: OneOfSchema): string {
+  let result = schema.schemas
+    .map(it => createTypeForSchema(it))
+    .map(it => `(${it})`)
+    .join(" | ");
 
   if (schema.optional) {
     result += " | undefined";
@@ -175,7 +172,7 @@ export function createOneOfSchema(schema: OneOfSchema): string {
   return result;
 }
 
-export function createReferenceSchema(schema: ReferenceSchema): string {
+export function createReferenceType(schema: ReferenceSchema): string {
   let result = `${schema.ref}`;
   if (schema.optional) {
     result += " | undefined";

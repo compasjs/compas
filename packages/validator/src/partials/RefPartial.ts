@@ -4,10 +4,12 @@ import { MixedPartial } from "./MixedPartial";
 export class RefPartial extends MixedPartial {
   private _ref?: string;
 
-  constructor(ref: string) {
+  constructor(ref?: string) {
     super();
 
-    this.set(ref);
+    if (ref) {
+      this.set(ref);
+    }
   }
 
   set(ref: string): this {

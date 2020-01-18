@@ -17,6 +17,9 @@ export class OneOfPartial extends MixedPartial {
   }
 
   [schemaBuildSymbol](): Schema {
+    if (this._schemas.length === 0) {
+      throw new TypeError("call .add() with some schema is mandatory");
+    }
     return {
       ...super.partialBuild(),
       type: "oneOf",

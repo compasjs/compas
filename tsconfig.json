@@ -4,8 +4,10 @@
     "dist",
     "lib",
     "__tests__",
+    "src/__fixtures__",
     "**/*.test*",
-    "**/*.spec*"
+    "**/*.spec*",
+    "**/*.test-gen*"
   ],
   "files": [],
   "compilerOptions": {
@@ -23,12 +25,8 @@
     "listEmittedFiles": false,
     "listFiles": false,
     "pretty": true,
-    "lib": [
-      "esnext"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["esnext"],
+    "types": ["node"],
     "target": "ES2019",
     "rootDir": ".",
     "outDir": "dist",
@@ -38,9 +36,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@lbu/*": [
-        "packages/*/src"
-      ]
+      "@lbu/*": ["packages/*/src"]
     },
     "composite": true
   },

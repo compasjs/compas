@@ -53,6 +53,7 @@ export interface StringSchema extends ConvertibleSchema {
 
 export interface ObjectSchema extends MixedSchema {
   type: "object";
+  strict?: true;
   keys?: { [s: string]: Schema };
 }
 
@@ -63,7 +64,7 @@ export interface ArraySchema extends ConvertibleSchema {
 
 export interface OneOfSchema extends MixedSchema {
   type: "oneOf";
-  schemas?: Schema[];
+  schemas: Schema[];
 }
 
 export interface ReferenceSchema extends MixedSchema {

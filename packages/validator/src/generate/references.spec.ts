@@ -72,6 +72,7 @@ test("check schema references recursively", () => {
         foo: {
           type: "oneOf",
           name: "foo",
+          schemas: [{ type: "number" }],
         },
       },
       shouldThrow: false,

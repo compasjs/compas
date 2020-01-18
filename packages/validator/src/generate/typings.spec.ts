@@ -8,18 +8,18 @@ import {
   StringSchema,
 } from "../types";
 import {
-  createArraySchema,
-  createBooleanSchema,
-  createNamedArraySchema,
-  createNamedBooleanSchema,
-  createNamedNumberSchema,
-  createNamedObjectSchema,
-  createNamedOneOfSchema,
-  createNamedStringSchema,
-  createNumberSchema,
-  createObjectSchema,
-  createOneOfSchema,
-  createStringSchema,
+  createArrayType,
+  createBooleanType,
+  createNamedArrayType,
+  createNamedBooleanType,
+  createNamedNumberType,
+  createNamedObjectType,
+  createNamedOneOfType,
+  createNamedStringType,
+  createNumberType,
+  createObjectType,
+  createOneOfType,
+  createStringType,
 } from "./typings";
 
 test("typings - number", () => {
@@ -63,13 +63,13 @@ test("typings - number", () => {
   ];
 
   for (const c of cases) {
-    expect(createNumberSchema(c.input)).toBe(c.output);
+    expect(createNumberType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named number", () => {
   expect(
-    createNamedNumberSchema({
+    createNamedNumberType({
       type: "number",
       name: "Foo",
     }),
@@ -117,13 +117,13 @@ test("typings - string", () => {
   ];
 
   for (const c of cases) {
-    expect(createStringSchema(c.input)).toBe(c.output);
+    expect(createStringType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named string", () => {
   expect(
-    createNamedStringSchema({
+    createNamedStringType({
       type: "string",
       name: "Foo",
     }),
@@ -171,13 +171,13 @@ test("typings - boolean", () => {
   ];
 
   for (const c of cases) {
-    expect(createBooleanSchema(c.input)).toBe(c.output);
+    expect(createBooleanType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named boolean", () => {
   expect(
-    createNamedBooleanSchema({
+    createNamedBooleanType({
       type: "boolean",
       name: "Foo",
     }),
@@ -220,17 +220,17 @@ test("typings - object", () => {
   ];
 
   for (const c of cases) {
-    expect(createObjectSchema(c.input)).toBe(c.output);
+    expect(createObjectType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named object", () => {
   expect(
-    createNamedObjectSchema({
+    createNamedObjectType({
       type: "object",
       name: "Foo",
     }),
-  ).toBe("export interface Foo {\n}");
+  ).toBe("export type Foo = {\n};");
 });
 
 test("typings - array", () => {
@@ -256,13 +256,13 @@ test("typings - array", () => {
   ];
 
   for (const c of cases) {
-    expect(createArraySchema(c.input)).toBe(c.output);
+    expect(createArrayType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named array", () => {
   expect(
-    createNamedArraySchema({
+    createNamedArrayType({
       type: "array",
       name: "Foo",
       values: { type: "number" },
@@ -300,13 +300,13 @@ test("typings - oneOf", () => {
   ];
 
   for (const c of cases) {
-    expect(createOneOfSchema(c.input)).toBe(c.output);
+    expect(createOneOfType(c.input)).toBe(c.output);
   }
 });
 
 test("typings - named oneOf", () => {
   expect(
-    createNamedOneOfSchema({
+    createNamedOneOfType({
       type: "oneOf",
       name: "Foo",
       schemas: [

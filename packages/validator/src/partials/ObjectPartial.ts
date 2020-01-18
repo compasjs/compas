@@ -4,6 +4,7 @@ import { MixedPartial } from "./MixedPartial";
 
 export class ObjectPartial extends MixedPartial {
   private _keys: { [s: string]: Schema } = {};
+  private _strict?: true;
 
   constructor(obj?: { [k: string]: SchemaLike }) {
     super();
@@ -26,11 +27,17 @@ export class ObjectPartial extends MixedPartial {
     return this;
   }
 
+  strict(): this {
+    this._strict = true;
+    return this;
+  }
+
   [schemaBuildSymbol](): Schema {
     return {
       ...super.partialBuild(),
       type: "object",
       keys: this._keys,
+      strict: this._strict,
     };
   }
 }
