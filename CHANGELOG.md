@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.3]()
+### [v0.0.3](a193a6c8c4ae8fa52465e239ecbfdbf22041c47a)
 
 - @lbu/validator refactor and pretty much stable feature wise
 - Various fixes in @lbu/cli and @lbu/stdlib

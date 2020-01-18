@@ -37,4 +37,10 @@ A few development utilities are provided in [./scripts](./scripts):
   - Specify the new version
   - Check packages it will publish and send `y`
   - Give a new OTP every time it is asked.
+
+Everything should be published now. To make the repo ready for more development:
+
 - Bump version in root package.json to new version
+- Run `yarn`
+- Copy SHA of release commit in CHANGELOG.md
+- Commit with `[*] Bump @lbu/* to vX.X.X`
