@@ -23,7 +23,7 @@
     "@lbu/stdlib": "^0.0.2"
   },
   "devDependencies": {
-    "@types/node": "13.1.2"
+    "@types/node": "13.1.8"
   },
   "author": {
     "name": "Dirk de Visser",
