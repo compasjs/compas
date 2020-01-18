@@ -1,6 +1,6 @@
 {
   "name": "@lbu/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Lightbase backend utilities CLI",
   "bin": {
     "lbu": "./dist/index.js"
@@ -21,10 +21,10 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.2",
-    "@lbu/register": "^0.0.2",
-    "@lbu/stdlib": "^0.0.2",
-    "@lbu/validator": "^0.0.2"
+    "@lbu/insight": "^0.0.3",
+    "@lbu/register": "^0.0.3",
+    "@lbu/stdlib": "^0.0.3",
+    "@lbu/validator": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "13.1.8"

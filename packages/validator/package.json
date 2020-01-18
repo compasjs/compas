@@ -1,6 +1,6 @@
 {
   "name": "@lbu/validator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Lightbase validation code gen",
   "main": "dist/index.js",
   "keywords": [
@@ -18,8 +18,8 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.2",
-    "@lbu/stdlib": "^0.0.2"
+    "@lbu/insight": "^0.0.3",
+    "@lbu/stdlib": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "13.1.8"

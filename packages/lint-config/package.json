@@ -1,6 +1,6 @@
 {
   "name": "@lbu/lint-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ESLint & Prettier config",
   "main": "dist/index.js",
   "keywords": [
