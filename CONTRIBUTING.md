@@ -28,10 +28,13 @@ A few development utilities are provided in [./scripts](./scripts):
 
 - Bump versions in [template package.json](./packages/cli/template/package.json)
   to the new version.
-- Bump version in root package.json to new version
-- Write to the changelog.
+- Write to the changelog
+  - New features
+  - Breaking changes
+  - SHA of previous version
 - Commit with `[*] Prepare release for vX.X.X`
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version
   - Check packages it will publish and send `y`
   - Give a new OTP every time it is asked.
+- Bump version in root package.json to new version

@@ -1,6 +1,11 @@
 # CHANGELOG
 
-### [v0.0.2]()
+### [v0.0.3]()
+
+- @lbu/validator refactor and pretty much stable feature wise
+- Various fixes in @lbu/cli and @lbu/stdlib
+
+### [v0.0.2](7f750bb0bf630eac49665f0ee12b03e08181c147)
 
 - Add @lbu/register
 - Add @lbu/cli lint command

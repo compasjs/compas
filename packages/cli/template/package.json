@@ -11,14 +11,14 @@
     "generate": "lbu generate"
   },
   "dependencies": {
-    "@lbu/insight": "0.0.2",
-    "@lbu/register": "0.0.2",
-    "@lbu/stdlib": "0.0.2"
+    "@lbu/insight": "0.0.3",
+    "@lbu/register": "0.0.3",
+    "@lbu/stdlib": "0.0.3"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.2",
-    "@lbu/lint-config": "0.0.2",
-    "@lbu/validator": "0.0.2",
+    "@lbu/cli": "0.0.3",
+    "@lbu/lint-config": "0.0.3",
+    "@lbu/validator": "0.0.3",
     "@types/node": "13.1.8",
     "eslint": "6.8.0",
     "nodemon": "2.0.2",
