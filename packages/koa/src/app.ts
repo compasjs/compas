@@ -1,10 +1,14 @@
 import { createReadStream } from "fs";
 import Koa from "koa";
-import { errorHandler, ErrorHandler } from "./middleware/error";
-import { DefaultHeaders, defaultHeaders } from "./middleware/headers";
-import { healthHandler } from "./middleware/health";
-import { logMiddleware } from "./middleware/log";
-import { notFoundHandler } from "./middleware/notFound";
+import {
+  DefaultHeaders,
+  defaultHeaders,
+  errorHandler,
+  ErrorHandler,
+  healthHandler,
+  logMiddleware,
+  notFoundHandler,
+} from "./middleware";
 import { AppState } from "./types";
 
 export interface AppOpts {

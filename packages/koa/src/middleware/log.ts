@@ -4,7 +4,7 @@ import { Middleware } from "koa";
 import { Transform } from "stream";
 import { AppState, Context } from "../types";
 
-class StreamLength extends Transform {
+export class StreamLength extends Transform {
   length = 0;
 
   public _transform(

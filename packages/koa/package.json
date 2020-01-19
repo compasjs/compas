@@ -21,6 +21,7 @@
     "@lbu/insight": "^0.0.3",
     "@lbu/stdlib": "^0.0.3",
     "koa": "2.11.0",
+    "koa-body": "4.1.1",
     "koa-helmet": "5.2.0",
     "koa2-cors": "2.0.6"
   },
