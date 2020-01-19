@@ -1,5 +1,8 @@
-import { createValidator } from "@lbu/validator";
+import { createSchema, V } from "@lbu/validator";
 
-createValidator("TestInterfaceValidation", {
-  foo: { type: "string", oneOf: ["bar"] },
-});
+createSchema(
+  "TestInterfaceValidation",
+  V.object({
+    foo: V.string().oneOf("bar"),
+  }),
+);

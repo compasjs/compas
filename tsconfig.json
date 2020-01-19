@@ -54,6 +54,9 @@
       "path": "packages/insight"
     },
     {
+      "path": "packages/koa"
+    },
+    {
       "path": "packages/lint-config"
     },
     {
