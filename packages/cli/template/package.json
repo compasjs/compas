@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@lbu/insight": "0.0.3",
+    "@lbu/koa": "0.0.3",
     "@lbu/register": "0.0.3",
     "@lbu/stdlib": "0.0.3"
   },
