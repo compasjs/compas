@@ -1,5 +1,5 @@
 import { Logger } from "@lbu/insight";
-import { runGenerators as runValidatorGenerators } from "@lbu/validator";
+import { runGenerators as runValidatorGenerators } from "@lbu/code-gen";
 import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
 import { lintCommand } from "./lint";

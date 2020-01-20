@@ -1,7 +1,8 @@
 {
-  "name": "@lbu/validator",
+  "private": true,
+  "name": "@lbu/code-gen",
   "version": "0.0.3",
-  "description": "Lightbase validation code gen",
+  "description": "Lightbase code generator",
   "main": "dist/index.js",
   "keywords": [
     "lbu",
