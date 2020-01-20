@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@lbu/cli": "0.0.3",
+    "@lbu/code-gen": "0.0.3",
     "@lbu/lint-config": "0.0.3",
-    "@lbu/validator": "0.0.3",
     "@types/node": "13.1.8",
     "eslint": "6.8.0",
     "nodemon": "2.0.2",

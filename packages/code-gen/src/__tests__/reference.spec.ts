@@ -7,10 +7,6 @@ beforeAll(() => {
   generatedValidators = loadValidators("Reference");
 });
 
-afterAll(() => {
-  // removeValidators("Reference");
-});
-
 test("ReferenceSimple", () => {
   const { err, validator } = getValidator(
     generatedValidators,

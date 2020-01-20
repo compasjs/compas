@@ -1,11 +1,11 @@
-import { Schema, SchemaBuilder, schemaBuildSymbol } from "../types";
+import { Validator, ValidatorBuilder } from "../../types";
 
-export abstract class MixedPartial implements SchemaBuilder {
+export abstract class MixedValidator implements ValidatorBuilder {
   protected _name?: string;
   protected _optional?: true;
   protected _withValidationHooks?: true;
 
-  abstract [schemaBuildSymbol](): Schema;
+  abstract toSchema(): Validator;
 
   name(name: string): this {
     this._name = name;

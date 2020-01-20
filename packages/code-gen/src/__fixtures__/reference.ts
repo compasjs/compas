@@ -1,13 +1,19 @@
-import { V } from "../partials";
-import { createSchema } from "../schemaRegistry";
+import { V } from "../fluent/validator";
 
 export function registerReferenceSchemas() {
-  createSchema("Foo", V.bool());
-  createSchema("ReferenceSimple", V.ref("Foo"));
-  createSchema(
-    "ReferenceOptional",
+  return [
+    V.bool()
+      .name("Foo")
+      .toSchema(),
+
+    V.ref("Foo")
+      .name("ReferenceSimple")
+      .toSchema(),
+
     V.ref()
+      .name("ReferenceOptional")
       .set("Foo")
-      .optional(),
-  );
+      .optional()
+      .toSchema(),
+  ];
 }

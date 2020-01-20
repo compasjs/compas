@@ -1,6 +1,5 @@
 {
   "generate": {
-    "inputFile": "./src/gen/index.ts",
-    "outputDir": "./src/generated"
+    "inputFile": "./src/gen/index.ts"
   }
 }

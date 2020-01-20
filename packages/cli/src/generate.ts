@@ -1,6 +1,4 @@
 import { Logger } from "@lbu/insight";
-import { runGenerators as runValidatorGenerators } from "@lbu/code-gen";
-import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
 import { lintCommand } from "./lint";
 import { CliContext, Command } from "./types";
@@ -15,12 +13,7 @@ export const generateCommand: Command = (ctx, args) => {
     return execCommand(ctx, args, commandMap, "help");
   }
 
-  if (
-    !ctx.config ||
-    !ctx.config.generate ||
-    !ctx.config.generate.inputFile ||
-    !ctx.config.generate.outputDir
-  ) {
+  if (!ctx.config || !ctx.config.generate || !ctx.config.generate.inputFile) {
     ctx.logger.error(
       "Top-level key 'generate' is required in the lbu.json file",
     );
@@ -29,7 +22,6 @@ export const generateCommand: Command = (ctx, args) => {
 
   return executeCodegen(ctx.logger, {
     inputFile: ctx.config.generate.inputFile,
-    outputDir: ctx.config.generate.outputDir,
   });
 };
 
@@ -43,18 +35,10 @@ Run all known generators.`;
 
 async function executeCodegen(
   logger: Logger,
-  { inputFile, outputDir }: { inputFile: string; outputDir: string },
+  { inputFile }: { inputFile: string },
 ) {
   require("@lbu/register");
   require(join(process.cwd(), inputFile));
-
-  const outDir = join(process.cwd(), outputDir);
-  if (!existsSync(outDir)) {
-    mkdirSync(outDir, { recursive: true });
-  }
-
-  const validationOutput = join(outDir, "validator.ts");
-  runValidatorGenerators(validationOutput);
 
   await lintCommand({ logger }, []);
 }

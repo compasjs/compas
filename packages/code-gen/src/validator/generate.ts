@@ -1,10 +1,10 @@
-import { Schema } from "../types";
+import { Validator } from "../types";
 import { getErrorClass } from "./errors";
 import { createFunctionsForSchemas } from "./functions";
 import { checkReferences, createSchemaMapping } from "./references";
 import { createTypesForSchemas } from "./typings";
 
-export function generateFromSchemas(schemas: Schema[]): string {
+export function generateFromSchemas(schemas: Validator[]): string {
   const schemaMap = createSchemaMapping(schemas);
   checkReferences(schemaMap);
 

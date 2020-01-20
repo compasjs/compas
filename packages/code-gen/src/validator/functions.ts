@@ -1,15 +1,15 @@
 import {
-  ArraySchema,
-  BooleanSchema,
-  NumberSchema,
-  ObjectSchema,
-  OneOfSchema,
-  ReferenceSchema,
-  Schema,
-  StringSchema,
+  ArrayValidator,
+  BooleanValidator,
+  NumberValidator,
+  ObjectValidator,
+  OneOfValidator,
+  ReferenceValidator,
+  StringValidator,
+  Validator,
 } from "../types";
 import { buildError } from "./errors";
-import { SchemaMapping } from "./types";
+import { ValidatorMapping } from "./types";
 import {
   createArrayType,
   createBooleanType,
@@ -23,12 +23,12 @@ import {
 interface Context {
   helperFunctions: string[];
   namedFunctions: string[];
-  mapping: SchemaMapping;
+  mapping: ValidatorMapping;
 
   nextFunc(): string;
 }
 
-export function createFunctionsForSchemas(mapping: SchemaMapping) {
+export function createFunctionsForSchemas(mapping: ValidatorMapping) {
   let funcIdx = 0;
   const helperFunctions: string[] = [];
   const namedFunctions: string[] = [];
@@ -54,7 +54,7 @@ function validatorNameForSchema(name: string): string {
   return `validate${name}`;
 }
 
-function createNamedFunctionForSchema(ctx: Context, schema: Schema): string {
+function createNamedFunctionForSchema(ctx: Context, schema: Validator): string {
   const fn = createFunction(ctx, schema);
   return [
     `export function ${validatorNameForSchema(
@@ -65,7 +65,7 @@ function createNamedFunctionForSchema(ctx: Context, schema: Schema): string {
   ].join("\n");
 }
 
-function createFunction(ctx: Context, schema: Schema): { name: string } {
+function createFunction(ctx: Context, schema: Validator): { name: string } {
   switch (schema.type) {
     case "number":
       return createNumberFunction(ctx, schema);
@@ -88,7 +88,7 @@ function createFunction(ctx: Context, schema: Schema): { name: string } {
 
 function createNumberFunction(
   ctx: Context,
-  schema: NumberSchema,
+  schema: NumberValidator,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -162,7 +162,7 @@ function createNumberFunction(
 
 function createStringFunction(
   ctx: Context,
-  schema: StringSchema,
+  schema: StringValidator,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -255,7 +255,7 @@ function createStringFunction(
 
 function createBooleanFunction(
   ctx: Context,
-  schema: BooleanSchema,
+  schema: BooleanValidator,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -311,7 +311,7 @@ function createBooleanFunction(
 
 function createObjectFunction(
   ctx: Context,
-  schema: ObjectSchema,
+  schema: ObjectValidator,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -370,7 +370,7 @@ function createObjectFunction(
   return { name: funcName };
 }
 
-function createArrayFunction(ctx: Context, schema: ArraySchema) {
+function createArrayFunction(ctx: Context, schema: ArrayValidator) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];
@@ -417,7 +417,7 @@ function createArrayFunction(ctx: Context, schema: ArraySchema) {
   return { name: funcName };
 }
 
-function createOneOfFunction(ctx: Context, schema: OneOfSchema) {
+function createOneOfFunction(ctx: Context, schema: OneOfValidator) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];
@@ -440,7 +440,7 @@ function createOneOfFunction(ctx: Context, schema: OneOfSchema) {
 
   result.push(`const errors: ValidationError[] = [];`);
 
-  for (const s of schema.schemas) {
+  for (const s of schema.validators) {
     const { name } = createFunction(ctx, s);
     result.push(`try {`);
     result.push(`return ${name}(value, propertyPath);`);
@@ -459,7 +459,7 @@ function createOneOfFunction(ctx: Context, schema: OneOfSchema) {
   return { name: funcName };
 }
 
-function createReferenceFunction(ctx: Context, schema: ReferenceSchema) {
+function createReferenceFunction(ctx: Context, schema: ReferenceValidator) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];

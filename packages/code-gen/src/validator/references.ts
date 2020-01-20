@@ -1,13 +1,13 @@
 import {
-  ArraySchema,
-  ObjectSchema,
-  OneOfSchema,
-  ReferenceSchema,
-  Schema,
+  ArrayValidator,
+  ObjectValidator,
+  OneOfValidator,
+  ReferenceValidator,
+  Validator,
 } from "../types";
-import { SchemaMapping } from "./types";
+import { ValidatorMapping } from "./types";
 
-export function createSchemaMapping(schemas: Schema[]): SchemaMapping {
+export function createSchemaMapping(schemas: Validator[]): ValidatorMapping {
   const m: any = {};
   for (const s of schemas) {
     m[s.name!] = s;
@@ -16,15 +16,15 @@ export function createSchemaMapping(schemas: Schema[]): SchemaMapping {
   return m;
 }
 
-export function checkReferences(mapping: SchemaMapping) {
+export function checkReferences(mapping: ValidatorMapping) {
   for (const s of Object.values(mapping)) {
     checkSchemaReferences(mapping, s, s.name!);
   }
 }
 
 export function checkSchemaReferences(
-  mapping: SchemaMapping,
-  schema: Schema,
+  mapping: ValidatorMapping,
+  schema: Validator,
   name: string,
 ) {
   switch (schema.type) {
@@ -43,8 +43,8 @@ export function checkSchemaReferences(
 }
 
 export function checkObject(
-  mapping: SchemaMapping,
-  schema: ObjectSchema,
+  mapping: ValidatorMapping,
+  schema: ObjectValidator,
   name: string,
 ) {
   if (schema.keys) {
@@ -55,8 +55,8 @@ export function checkObject(
 }
 
 export function checkArray(
-  mapping: SchemaMapping,
-  schema: ArraySchema,
+  mapping: ValidatorMapping,
+  schema: ArrayValidator,
   name: string,
 ) {
   if (schema.values) {
@@ -65,20 +65,20 @@ export function checkArray(
 }
 
 export function checkOneOf(
-  mapping: SchemaMapping,
-  schema: OneOfSchema,
+  mapping: ValidatorMapping,
+  schema: OneOfValidator,
   name: string,
 ) {
-  if (schema.schemas) {
-    for (let i = 0; i < schema.schemas.length; ++i) {
-      checkSchemaReferences(mapping, schema.schemas[i], `${name}[${i}]`);
+  if (schema.validators) {
+    for (let i = 0; i < schema.validators.length; ++i) {
+      checkSchemaReferences(mapping, schema.validators[i], `${name}[${i}]`);
     }
   }
 }
 
 export function checkReference(
-  mapping: SchemaMapping,
-  schema: ReferenceSchema,
+  mapping: ValidatorMapping,
+  schema: ReferenceValidator,
   name: string,
 ) {
   if (!(schema.ref in mapping)) {

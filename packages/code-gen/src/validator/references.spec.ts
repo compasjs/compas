@@ -1,15 +1,18 @@
 import "jest";
-import { Schema } from "../types";
+import { Validator } from "../types";
 import { checkReferences, createSchemaMapping } from "./references";
-import { SchemaMapping } from "./types";
+import { ValidatorMapping } from "./types";
 
 test("create correct schema mapping", () => {
   expect(createSchemaMapping([])).toEqual({});
-  expect(createSchemaMapping([{ name: "foo" } as Schema])).toEqual({
+  expect(createSchemaMapping([{ name: "foo" } as Validator])).toEqual({
     foo: { name: "foo" },
   });
   expect(
-    createSchemaMapping([{ name: "foo" } as Schema, { name: "bar" } as Schema]),
+    createSchemaMapping([
+      { name: "foo" } as Validator,
+      { name: "bar" } as Validator,
+    ]),
   ).toEqual({
     foo: { name: "foo" },
     bar: { name: "bar" },
@@ -18,7 +21,7 @@ test("create correct schema mapping", () => {
 
 test("check schema references recursively", () => {
   const cases: {
-    input: SchemaMapping;
+    input: ValidatorMapping;
     shouldThrow: boolean;
   }[] = [
     {
@@ -72,7 +75,7 @@ test("check schema references recursively", () => {
         foo: {
           type: "oneOf",
           name: "foo",
-          schemas: [{ type: "number" }],
+          validators: [{ type: "number" }],
         },
       },
       shouldThrow: false,
@@ -163,7 +166,7 @@ test("check schema references recursively", () => {
         foo: {
           type: "oneOf",
           name: "foo",
-          schemas: [
+          validators: [
             {
               type: "reference",
               ref: "bar",
@@ -178,7 +181,7 @@ test("check schema references recursively", () => {
         foo: {
           type: "oneOf",
           name: "foo",
-          schemas: [
+          validators: [
             {
               type: "reference",
               ref: "bar",

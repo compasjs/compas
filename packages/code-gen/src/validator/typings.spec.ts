@@ -1,12 +1,12 @@
 import "jest";
 import {
-  ArraySchema,
-  BooleanSchema,
-  NumberSchema,
-  ObjectSchema,
-  OneOfSchema,
-  StringSchema,
-} from "../types";
+  ArrayValidator,
+  BooleanValidator,
+  NumberValidator,
+  ObjectValidator,
+  OneOfValidator,
+  StringValidator,
+} from "../types/validator";
 import {
   createArrayType,
   createBooleanType,
@@ -24,7 +24,7 @@ import {
 
 test("typings - number", () => {
   const cases: {
-    input: NumberSchema;
+    input: NumberValidator;
     output: string;
   }[] = [
     {
@@ -78,7 +78,7 @@ test("typings - named number", () => {
 
 test("typings - string", () => {
   const cases: {
-    input: StringSchema;
+    input: StringValidator;
     output: string;
   }[] = [
     {
@@ -132,7 +132,7 @@ test("typings - named string", () => {
 
 test("typings - boolean", () => {
   const cases: {
-    input: BooleanSchema;
+    input: BooleanValidator;
     output: string;
   }[] = [
     {
@@ -186,7 +186,7 @@ test("typings - named boolean", () => {
 
 test("typings - object", () => {
   const cases: {
-    input: ObjectSchema;
+    input: ObjectValidator;
     output: string;
   }[] = [
     {
@@ -235,7 +235,7 @@ test("typings - named object", () => {
 
 test("typings - array", () => {
   const cases: {
-    input: ArraySchema;
+    input: ArrayValidator;
     output: string;
   }[] = [
     {
@@ -272,27 +272,27 @@ test("typings - named array", () => {
 
 test("typings - oneOf", () => {
   const cases: {
-    input: OneOfSchema;
+    input: OneOfValidator;
     output: string;
   }[] = [
     {
       input: {
         type: "oneOf",
-        schemas: [{ type: "number" }],
+        validators: [{ type: "number" }],
       },
       output: "(number)",
     },
     {
       input: {
         type: "oneOf",
-        schemas: [{ type: "number" }, { type: "string" }],
+        validators: [{ type: "number" }, { type: "string" }],
       },
       output: "(number) | (string)",
     },
     {
       input: {
         type: "oneOf",
-        schemas: [{ type: "number" }, { type: "string" }],
+        validators: [{ type: "number" }, { type: "string" }],
         optional: true,
       },
       output: "(number) | (string) | undefined",
@@ -309,7 +309,7 @@ test("typings - named oneOf", () => {
     createNamedOneOfType({
       type: "oneOf",
       name: "Foo",
-      schemas: [
+      validators: [
         {
           type: "reference",
           ref: "Bar",

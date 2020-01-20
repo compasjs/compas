@@ -1,7 +1,7 @@
-import { Schema, schemaBuildSymbol } from "../types";
-import { ConvertiblePartial } from "./ConvertiblePartial";
+import { Validator } from "../../types";
+import { ConvertibleValidator } from "./ConvertibleValidator";
 
-export class StringPartial extends ConvertiblePartial {
+export class StringValidator extends ConvertibleValidator {
   private _min?: number;
   private _max?: number;
   private _pattern?: RegExp;
@@ -45,7 +45,7 @@ export class StringPartial extends ConvertiblePartial {
     return this;
   }
 
-  [schemaBuildSymbol](): Schema {
+  toSchema(): Validator {
     return {
       ...super.partialBuild(),
       type: "string",

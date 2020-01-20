@@ -1,19 +1,50 @@
-import { V } from "../partials";
-import { createSchema } from "../schemaRegistry";
+import { V } from "../fluent/validator";
 
 export function registerStringSchemas() {
-  createSchema("StringSimple", V.string());
-  createSchema(
-    "StringMinMax",
+  return [
     V.string()
+      .name("StringSimple")
+      .toSchema(),
+
+    V.string()
+      .name("StringMinMax")
       .min(1)
-      .max(5),
-  );
-  createSchema("StringOneOf", V.string().oneOf("foo", "bar"));
-  createSchema("StringConvert", V.string().convert());
-  createSchema("StringOptional", V.string().optional());
-  createSchema("StringTrim", V.string().trim());
-  createSchema("StringUpperCase", V.string().upperCase());
-  createSchema("StringLowerCase", V.string().lowerCase());
-  createSchema("StringPattern", V.string().pattern(/^[a-z]{4}\d{2}$/i));
+      .max(5)
+      .toSchema(),
+
+    V.string()
+      .name("StringOneOf")
+      .oneOf("foo", "bar")
+      .toSchema(),
+
+    V.string()
+      .name("StringConvert")
+      .convert()
+      .toSchema(),
+
+    V.string()
+      .name("StringOptional")
+      .optional()
+      .toSchema(),
+
+    V.string()
+      .name("StringTrim")
+      .trim()
+      .toSchema(),
+
+    V.string()
+      .name("StringUpperCase")
+      .upperCase()
+      .toSchema(),
+
+    V.string()
+      .name("StringLowerCase")
+      .lowerCase()
+      .toSchema(),
+
+    V.string()
+      .name("StringPattern")
+      .pattern(/^[a-z]{4}\d{2}$/i)
+      .toSchema(),
+  ];
 }

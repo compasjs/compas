@@ -7,10 +7,6 @@ beforeAll(() => {
   generatedValidators = loadValidators("Object");
 });
 
-afterAll(() => {
-  // removeValidators("Object");
-});
-
 test("ObjectSimple", () => {
   const { err, validator } = getValidator(
     generatedValidators,

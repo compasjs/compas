@@ -1,6 +1,6 @@
-import { unlinkSync } from "fs";
+import { writeFileSync } from "fs";
 import { join } from "path";
-import { resetSchemas, runGenerators } from "../schemaRegistry";
+import { generateFromSchemas } from "../validator";
 
 /**
  * Require fixture, run generators and require the resulting file.
@@ -10,16 +10,12 @@ export function loadValidators(name: string): any {
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const generator = require(`./${name.toLowerCase()}`);
-  generator[`register${name}Schemas`]();
+  const validators = generator[`register${name}Schemas`]();
 
-  runGenerators(filePath);
-  resetSchemas();
+  const output = generateFromSchemas(validators);
+  writeFileSync(filePath, output);
+
   return require(filePath);
-}
-
-export function removeValidators(name: string) {
-  const filePath = join(__dirname, name.toLowerCase() + ".test-gen.ts");
-  unlinkSync(filePath);
 }
 
 /**

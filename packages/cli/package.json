@@ -23,8 +23,7 @@
   "dependencies": {
     "@lbu/insight": "^0.0.3",
     "@lbu/register": "^0.0.3",
-    "@lbu/stdlib": "^0.0.3",
-    "@lbu/code-gen": "^0.0.3"
+    "@lbu/stdlib": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "13.1.8"

@@ -1,7 +1,7 @@
-import { Schema, schemaBuildSymbol } from "../types";
-import { MixedPartial } from "./MixedPartial";
+import { Validator } from "../../types";
+import { MixedValidator } from "./MixedValidator";
 
-export class RefPartial extends MixedPartial {
+export class RefValidator extends MixedValidator {
   private _ref?: string;
 
   constructor(ref?: string) {
@@ -17,7 +17,7 @@ export class RefPartial extends MixedPartial {
     return this;
   }
 
-  [schemaBuildSymbol](): Schema {
+  toSchema(): Validator {
     if (this._ref === undefined) {
       throw new TypeError("Call .set() to set a reference");
     }

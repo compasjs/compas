@@ -1,16 +1,35 @@
-import { V } from "../partials";
-import { createSchema } from "../schemaRegistry";
+import { V } from "../fluent/validator";
 
 export function registerNumberSchemas() {
-  createSchema("NumberSimple", V.number());
-  createSchema("NumberInteger", V.number().integer());
-  createSchema(
-    "NumberMinMax",
+  return [
     V.number()
+      .name("NumberSimple")
+      .toSchema(),
+
+    V.number()
+      .name("NumberInteger")
+      .integer()
+      .toSchema(),
+
+    V.number()
+      .name("NumberOneOf")
+      .oneOf(1, 2, 3)
+      .toSchema(),
+
+    V.number()
+      .name("NumberConvert")
+      .convert()
+      .toSchema(),
+
+    V.number()
+      .name("NumberOptional")
+      .optional()
+      .toSchema(),
+
+    V.number()
+      .name("NumberMinMax")
       .min(1)
-      .max(5),
-  );
-  createSchema("NumberOneOf", V.number().oneOf(1, 2, 3));
-  createSchema("NumberConvert", V.number().convert());
-  createSchema("NumberOptional", V.number().optional());
+      .max(5)
+      .toSchema(),
+  ];
 }

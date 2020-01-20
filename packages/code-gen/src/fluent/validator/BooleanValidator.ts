@@ -1,7 +1,7 @@
-import { Schema, schemaBuildSymbol } from "../types";
-import { ConvertiblePartial } from "./ConvertiblePartial";
+import { Validator } from "../../types";
+import { ConvertibleValidator } from "./ConvertibleValidator";
 
-export class BooleanPartial extends ConvertiblePartial {
+export class BooleanValidator extends ConvertibleValidator {
   private _oneOf?: [boolean];
 
   oneOf(value: boolean): this {
@@ -9,7 +9,7 @@ export class BooleanPartial extends ConvertiblePartial {
     return this;
   }
 
-  [schemaBuildSymbol](): Schema {
+  toSchema(): Validator {
     return {
       ...super.partialBuild(),
       type: "boolean",

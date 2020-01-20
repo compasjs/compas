@@ -1,6 +1,6 @@
-import { MixedPartial } from "./MixedPartial";
+import { MixedValidator } from "./MixedValidator";
 
-export abstract class ConvertiblePartial extends MixedPartial {
+export abstract class ConvertibleValidator extends MixedValidator {
   protected _convert?: true;
 
   convert(): this {

@@ -1,18 +1,22 @@
-import { V } from "../partials";
-import { createSchema } from "../schemaRegistry";
+import { V } from "../fluent/validator";
 
 export function registerArraySchemas() {
-  createSchema("ArraySimple", V.array().values(V.bool()));
-  createSchema(
-    "ArrayConvert",
+  return [
     V.array()
+      .name("ArraySimple")
       .values(V.bool())
-      .convert(),
-  );
-  createSchema(
-    "ArrayOptional",
+      .toSchema(),
+
     V.array()
+      .name("ArrayConvert")
       .values(V.bool())
-      .optional(),
-  );
+      .convert()
+      .toSchema(),
+
+    V.array()
+      .name("ArrayOptional")
+      .values(V.bool())
+      .optional()
+      .toSchema(),
+  ];
 }
