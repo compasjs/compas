@@ -2,9 +2,9 @@ import { V } from "../fluent/validator";
 
 export function registerArraySchemas() {
   return [
-    V.array()
-      .name("ArraySimple")
-      .values(V.bool())
+    V("ArraySimple")
+      .array()
+      .values(V.boolean())
       .toSchema(),
 
     V.array()

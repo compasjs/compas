@@ -3,7 +3,10 @@ import { join } from "path";
 import { generateForAppSchema } from "../generate";
 import { logger } from "../logger";
 import { Validator, ValidatorLike } from "../types";
+import { HttpMethod, Route } from "../types/router";
+import { upperCaseFirst } from "../util";
 import { validatorLikeToValidator } from "../validator";
+import { RouteBuilder, RouteBuilderDelegate } from "./RouteBuilder";
 
 /**
  * Initialize the Fluent API
@@ -17,6 +20,7 @@ export function createApp() {
 
 class FluentApp {
   private validatorStore: { [k: string]: ValidatorLike } = {};
+  private routeStore: { [k: string]: RouteBuilder } = {};
 
   constructor(private name: string) {}
 
@@ -34,24 +38,71 @@ class FluentApp {
     return this;
   }
 
+  get(name: string) {
+    return this.addRoute(name, "GET");
+  }
+
+  post(name: string) {
+    return this.addRoute(name, "POST");
+  }
+
+  put(name: string) {
+    return this.addRoute(name, "PUT");
+  }
+
+  delete(name: string) {
+    return this.addRoute(name, "DELETE");
+  }
+
+  head(name: string) {
+    return this.addRoute(name, "HEAD");
+  }
+
+  all(name: string) {
+    const routes = (["GET", "POST", "PUT", "DELETE"] as HttpMethod[]).map(
+      it => {
+        const routeName = `${it.toLowerCase()}${upperCaseFirst(name)}`;
+        return this.addRoute(routeName, it);
+      },
+    );
+
+    return new RouteBuilderDelegate(routes);
+  }
+
   build(outputDir: string) {
-    generateForAppSchema(outputDir, this.toJson());
+    generateForAppSchema(outputDir, this.toSchema());
   }
 
   printSchema() {
-    logger.info(this.toJson());
+    logger.info(this.toSchema());
   }
 
-  private toJson() {
-    const validators: { [k: string]: Validator } = {};
+  private addRoute(name: string, method: HttpMethod): RouteBuilder {
+    if (!isNil(this.routeStore[name])) {
+      logger.info(`Overwriting ${method} ${name}`);
+    }
 
+    const r = new RouteBuilder(name, method);
+    this.routeStore[name] = r;
+
+    return r;
+  }
+
+  private toSchema() {
+    const validators: { [k: string]: Validator } = {};
     for (const key in this.validatorStore) {
       validators[key] = validatorLikeToValidator(this.validatorStore[key]);
+    }
+
+    const routes: { [k: string]: Route } = {};
+    for (const key in this.routeStore) {
+      routes[key] = this.routeStore[key].toSchema();
     }
 
     return {
       name: this.name,
       validators,
+      routes,
     };
   }
 }
