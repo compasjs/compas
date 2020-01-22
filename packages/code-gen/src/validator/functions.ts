@@ -47,22 +47,73 @@ export function createFunctionsForSchemas(mapping: ValidatorMapping) {
     ctx.namedFunctions.push(createNamedFunctionForSchema(ctx, s));
   }
 
-  return ctx.namedFunctions.join("\n") + "\n" + ctx.helperFunctions.join("\n");
+  return [
+    getValidatorHooks(mapping),
+    ctx.namedFunctions.join("\n"),
+    ctx.helperFunctions.join("\n"),
+  ].join("\n");
 }
 
-function validatorNameForSchema(name: string): string {
-  return `validate${name}`;
+/**
+ * I think this part of the codebase generates the most type hacks...
+ * TODO: Maybe someone smarter than me can get some less @ts-ignores in this part of the
+ *  generated code
+ */
+function getValidatorHooks(mapping: ValidatorMapping): string {
+  const header = `
+type GetHookReturnType<TDefault, Key> = Key extends keyof typeof hooks
+  ? ReturnType<ValidationHooks[Key]>
+  : TDefault;
+`;
+
+  const registerFn = `
+export function registerValidatorHook<T extends keyof ValidationHooks>(
+  key: T,
+  cb: ValidationHooks[T],
+): void {
+  hooks[key] = cb;
+}
+`;
+
+  let iface = `export interface ValidationHooks {\n`;
+  let constHooks = `// @ts-ignore\nconst hooks: ValidationHooks = {\n`;
+
+  const keys = Object.keys(mapping);
+
+  for (const key of keys) {
+    iface += `  preValidate${key}(value: unknown): unknown;\n`;
+    constHooks += `  preValidate${key}: (value: unknown): unknown => {return value;},`;
+  }
+
+  iface += "}";
+  constHooks += "};";
+
+  return [header, iface, constHooks, registerFn].join("\n");
 }
 
 function createNamedFunctionForSchema(ctx: Context, schema: Validator): string {
   const fn = createFunction(ctx, schema);
-  return [
-    `export function ${validatorNameForSchema(
-      schema.name!,
-    )}(value: unknown): ${schema.name!} {`,
-    `  return ${fn.name}(value, "");`,
-    `}`,
-  ].join("\n");
+  const name = schema.name!;
+
+  return `
+export function validate${name}(
+  value: unknown,
+): GetHookReturnType<${name}, "postValidate${name}"> {
+  const preValue = hooks.preValidate${name}(value);
+  const validatedValue = ${fn.name}(preValue, "$.");
+
+  if ("postValidate${name}" in hooks) {
+    // @ts-ignore
+    return hooks.postValidate${name}(validatedValue) as GetHookReturnType<
+      ${name},
+      "postValidate${name}"
+    >;
+  } else {
+    // @ts-ignore
+    return validatedValue as ${name};
+  }
+}
+`;
 }
 
 function createFunction(ctx: Context, schema: Validator): { name: string } {
