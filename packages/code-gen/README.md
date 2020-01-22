@@ -1,4 +1,4 @@
-# @lbu/\*
+# @lbu/code-gen
 
 Collection of Lightbase backend utilities
 

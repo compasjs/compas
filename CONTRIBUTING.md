@@ -23,6 +23,8 @@ A few development utilities are provided in [./scripts](./scripts):
 
 - `node ./scripts/references.js`: Update all tsconfig references based on the
   dependencies of the package.
+- `node ./scripts/syncMetadata.js`: Copy and paste the root README.md to all
+  packages
 
 ### Publishing
 
