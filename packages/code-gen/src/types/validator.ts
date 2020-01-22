@@ -16,8 +16,6 @@ export type Validator =
 export interface MixedValidator {
   // name to use for hooks and ts types
   name?: string;
-  // validation hooks are only possible when a name is provided
-  withValidationHooks?: true;
   optional?: true;
 }
 

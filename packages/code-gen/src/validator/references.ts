@@ -5,21 +5,25 @@ import {
   ReferenceValidator,
   Validator,
 } from "../types";
+import { upperCaseFirst } from "../util";
 import { ValidatorMapping } from "./types";
 
-export function createSchemaMapping(schemas: Validator[]): ValidatorMapping {
-  const m: any = {};
-  for (const s of schemas) {
-    m[s.name!] = s;
+/**
+ * Recursively CamelCase all names and check if the references are valid
+ * and returns a ValidatorMapping
+ */
+export function checkReferences(validators: Validator[]): ValidatorMapping {
+  const mapping: ValidatorMapping = {};
+  for (const v of validators) {
+    v.name = upperCaseFirst(v.name!);
+    mapping[v.name] = v;
   }
 
-  return m;
-}
-
-export function checkReferences(mapping: ValidatorMapping) {
-  for (const s of Object.values(mapping)) {
-    checkSchemaReferences(mapping, s, s.name!);
+  for (const v of validators) {
+    checkSchemaReferences(mapping, v, v.name!);
   }
+
+  return mapping;
 }
 
 export function checkSchemaReferences(
@@ -81,6 +85,7 @@ export function checkReference(
   schema: ReferenceValidator,
   name: string,
 ) {
+  schema.ref = upperCaseFirst(schema.ref);
   if (!(schema.ref in mapping)) {
     throw new TypeError(
       `${schema.ref} is referenced by ${name} but is not provided.`,

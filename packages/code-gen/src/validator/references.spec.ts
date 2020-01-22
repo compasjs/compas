@@ -1,111 +1,95 @@
 import "jest";
 import { Validator } from "../types";
-import { checkReferences, createSchemaMapping } from "./references";
-import { ValidatorMapping } from "./types";
-
-test("create correct schema mapping", () => {
-  expect(createSchemaMapping([])).toEqual({});
-  expect(createSchemaMapping([{ name: "foo" } as Validator])).toEqual({
-    foo: { name: "foo" },
-  });
-  expect(
-    createSchemaMapping([
-      { name: "foo" } as Validator,
-      { name: "bar" } as Validator,
-    ]),
-  ).toEqual({
-    foo: { name: "foo" },
-    bar: { name: "bar" },
-  });
-});
+import { checkReferences } from "./references";
 
 test("check schema references recursively", () => {
   const cases: {
-    input: ValidatorMapping;
+    input: Validator[];
     shouldThrow: boolean;
   }[] = [
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "number",
           name: "foo",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "string",
           name: "foo",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "boolean",
           name: "foo",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "object",
           name: "foo",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "array",
           values: { type: "number" },
           name: "foo",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "oneOf",
           name: "foo",
           validators: [{ type: "number" }],
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "reference",
           name: "foo",
           ref: "Bar",
         },
-      },
+      ],
       shouldThrow: true,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "reference",
           name: "foo",
           ref: "bar",
         },
-        bar: {
+        {
           type: "number",
+          name: "Bar",
         },
-      },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "object",
           name: "foo",
           keys: {
@@ -115,12 +99,12 @@ test("check schema references recursively", () => {
             },
           },
         },
-      },
+      ],
       shouldThrow: true,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "object",
           name: "foo",
           keys: {
@@ -130,13 +114,16 @@ test("check schema references recursively", () => {
             },
           },
         },
-        bar: { type: "number" },
-      },
+        {
+          type: "number",
+          name: "Bar",
+        },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "array",
           values: {
             type: "reference",
@@ -144,12 +131,12 @@ test("check schema references recursively", () => {
           },
           name: "foo",
         },
-      },
+      ],
       shouldThrow: true,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "array",
           values: {
             type: "reference",
@@ -157,13 +144,16 @@ test("check schema references recursively", () => {
           },
           name: "foo",
         },
-        bar: { type: "number" },
-      },
+        {
+          type: "number",
+          name: "Bar",
+        },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "oneOf",
           name: "foo",
           validators: [
@@ -173,12 +163,12 @@ test("check schema references recursively", () => {
             },
           ],
         },
-      },
+      ],
       shouldThrow: true,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
           type: "oneOf",
           name: "foo",
           validators: [
@@ -188,35 +178,45 @@ test("check schema references recursively", () => {
             },
           ],
         },
-        bar: { type: "number" },
-      },
+        {
+          type: "number",
+          name: "Bar",
+        },
+      ],
       shouldThrow: false,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
+          name: "foo",
           type: "reference",
           ref: "bar",
         },
-        bar: {
+        {
+          name: "Bar",
           type: "reference",
           ref: "baz",
         },
-      },
+      ],
       shouldThrow: true,
     },
     {
-      input: {
-        foo: {
+      input: [
+        {
+          name: "foo",
           type: "reference",
           ref: "bar",
         },
-        bar: {
+        {
           type: "reference",
           ref: "baz",
+          name: "bar",
         },
-        baz: { type: "number" },
-      },
+        {
+          type: "number",
+          name: "Baz",
+        },
+      ],
       shouldThrow: false,
     },
   ];

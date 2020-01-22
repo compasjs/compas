@@ -1,17 +1,16 @@
 import { Validator } from "../types";
 import { getErrorClass } from "./errors";
 import { createFunctionsForSchemas } from "./functions";
-import { checkReferences, createSchemaMapping } from "./references";
+import { checkReferences } from "./references";
 import { createTypesForSchemas } from "./typings";
 
-export function generateFromSchemas(schemas: Validator[]): string {
-  const schemaMap = createSchemaMapping(schemas);
-  checkReferences(schemaMap);
+export function generateFromSchemas(validators: Validator[]): string {
+  const validatorMap = checkReferences(validators);
 
-  const types = createTypesForSchemas(schemaMap);
-  const validators = createFunctionsForSchemas(schemaMap);
+  const types = createTypesForSchemas(validatorMap);
+  const functions = createFunctionsForSchemas(validatorMap);
 
-  return [getHeader(), getErrorClass(), types, validators].join("\n");
+  return [getHeader(), getErrorClass(), types, functions].join("\n");
 }
 
 function getHeader() {
