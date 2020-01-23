@@ -2,8 +2,13 @@ import { isNil } from "@lbu/stdlib";
 import { join } from "path";
 import { generateForAppSchema } from "../generate";
 import { logger } from "../logger";
-import { Validator, ValidatorLike } from "../types";
-import { HttpMethod, Route } from "../types/router";
+import {
+  AppSchema,
+  HttpMethod,
+  Route,
+  Validator,
+  ValidatorLike,
+} from "../types";
 import { upperCaseFirst } from "../util";
 import { validatorLikeToValidator } from "../validator";
 import { RouteBuilder, RouteBuilderDelegate } from "./RouteBuilder";
@@ -88,15 +93,16 @@ class FluentApp {
     return r;
   }
 
-  private toSchema() {
-    const validators: { [k: string]: Validator } = {};
+  private toSchema(): AppSchema {
+    const validators: Validator[] = [];
+    const routes: Route[] = [];
+
     for (const key in this.validatorStore) {
-      validators[key] = validatorLikeToValidator(this.validatorStore[key]);
+      validators.push(validatorLikeToValidator(this.validatorStore[key]));
     }
 
-    const routes: { [k: string]: Route } = {};
     for (const key in this.routeStore) {
-      routes[key] = this.routeStore[key].toSchema();
+      routes.push(this.routeStore[key].toSchema());
     }
 
     return {

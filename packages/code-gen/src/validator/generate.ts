@@ -4,7 +4,9 @@ import { createFunctionsForSchemas } from "./functions";
 import { checkReferences } from "./references";
 import { createTypesForSchemas } from "./typings";
 
-export function generateFromSchemas(validators: Validator[]): string {
+export function generateValidatorStringFromValidators(
+  validators: Validator[],
+): string {
   const validatorMap = checkReferences(validators);
 
   const types = createTypesForSchemas(validatorMap);

@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
-import { generateFromSchemas } from "../validator";
+import { generateValidatorStringFromValidators } from "../validator";
 
 /**
  * Require fixture, run generators and require the resulting file.
@@ -12,7 +12,7 @@ export function loadValidators(name: string): any {
   const generator = require(`./${name.toLowerCase()}`);
   const validators = generator[`register${name}Schemas`]();
 
-  const output = generateFromSchemas(validators);
+  const output = generateValidatorStringFromValidators(validators);
   writeFileSync(filePath, output);
 
   return require(filePath);

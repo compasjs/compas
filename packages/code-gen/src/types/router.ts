@@ -11,3 +11,19 @@ export interface Route {
   bodyValidator?: Validator;
   response?: Validator;
 }
+
+/**
+ * Lowest prio value means higher priority and should be matched first
+ */
+export enum RoutePrio {
+  STATIC,
+  PARAM,
+  WILDCARD,
+}
+
+export interface RouteTrie {
+  prio: RoutePrio;
+  path: string;
+  children: RouteTrie[];
+  handler?: Route;
+}

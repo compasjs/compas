@@ -1,2 +1,2 @@
-export { generateFromSchemas } from "./generate";
+export { generateValidatorStringFromValidators } from "./generate";
 export { validatorLikeToValidator } from "./util";
