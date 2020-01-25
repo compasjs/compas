@@ -17,7 +17,7 @@ export function generateValidatorStringFromValidators(
 
 function getHeader() {
   return `
-// @lbu/validator
+// @lbu/code-gen
 // GENERATED FILE DO NOT EDIT
 
 import { isNil } from "@lbu/stdlib";

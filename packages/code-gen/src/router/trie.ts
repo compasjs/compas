@@ -10,6 +10,7 @@ export function constructTrieFromRouteList(routes: Route[]): RouteTrie {
   }
 
   sortTrie(trie);
+  cleanTrieFromUnusedHttpMethods(trie);
 
   return trie;
 }
@@ -46,6 +47,9 @@ function addRoute(trie: RouteTrie, path: string[], route: Route) {
   let child = trie.children.find(it => it.path === currentPath);
   if (!child) {
     child = createNode(currentPath, undefined);
+    if (trie.prio === RoutePrio.WILDCARD) {
+      throw new Error("Can't have sub routes on wildcard routes.");
+    }
     trie.children.push(child);
   }
 
@@ -54,6 +58,10 @@ function addRoute(trie: RouteTrie, path: string[], route: Route) {
   } else {
     addRoute(child, path.slice(1), route);
   }
+}
+
+function cleanTrieFromUnusedHttpMethods(trie: RouteTrie) {
+  trie.children = trie.children.filter(it => it.children.length > 0);
 }
 
 function sortTrie(trie: RouteTrie) {

@@ -100,7 +100,7 @@ export function validate${name}(
   value: unknown,
 ): GetHookReturnType<${name}, "postValidate${name}"> {
   const preValue = hooks.preValidate${name}(value);
-  const validatedValue = ${fn.name}(preValue, "$.");
+  const validatedValue = ${fn.name}(preValue, "$");
 
   if ("postValidate${name}" in hooks) {
     // @ts-ignore

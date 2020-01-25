@@ -2,7 +2,7 @@ import { Middleware } from "koa";
 import { AppState, Context } from "../types";
 import { NotFoundError } from "./notFound";
 
-export type ErrorHandler = (ctx: Context, err: ErrorHandler) => boolean;
+export type ErrorHandler = (ctx: Context, err: Error) => boolean;
 
 export function errorHandler(handler?: ErrorHandler): Middleware<{}, AppState> {
   return async (ctx, next) => {

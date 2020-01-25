@@ -78,10 +78,6 @@ class FluentApp {
     generateForAppSchema(outputDir, this.toSchema());
   }
 
-  printSchema() {
-    logger.info(this.toSchema());
-  }
-
   private addRoute(name: string, method: HttpMethod): RouteBuilder {
     if (!isNil(this.routeStore[name])) {
       logger.info(`Overwriting ${method} ${name}`);

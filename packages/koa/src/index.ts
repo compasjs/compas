@@ -1,5 +1,5 @@
 export { getApp, AppOpts } from "./app";
-export { Context } from "./types";
+export { Context, AppState } from "./types";
 export {
   NotFoundError,
   bodyParser,
