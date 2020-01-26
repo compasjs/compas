@@ -33,7 +33,6 @@ A few development utilities are provided in [./scripts](./scripts):
 - Write to the changelog
   - New features
   - Breaking changes
-  - SHA of previous version
 - Commit with `[*] Prepare release for vX.X.X`
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.4]()
+### [v0.0.4](efcd5097edec95c80c2b7f1e637f6a4f401e26f5)
 
 - Replaced @lbu/validator with @lbu/code-gen
 - @lbu/code-gen supports generating validator functions and routers
