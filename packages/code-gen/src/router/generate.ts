@@ -1,5 +1,5 @@
 import { Route } from "../types";
-import { createTypesAndFunctionsForTrie } from "./router";
+import { createRouterSource } from "./router";
 import { constructTrieFromRouteList, printTrie } from "./trie";
 
 export function generateRouterStringFromRoutes(routes: Route[]): string {
@@ -7,7 +7,7 @@ export function generateRouterStringFromRoutes(routes: Route[]): string {
   const routeTrie = constructTrieFromRouteList(routes);
   printTrie(routeTrie);
 
-  return createTypesAndFunctionsForTrie(routes, routeTrie);
+  return createRouterSource(routes, routeTrie);
 }
 
 export function formatPaths(routes: Route[]) {

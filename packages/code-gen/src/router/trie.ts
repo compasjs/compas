@@ -9,8 +9,17 @@ export function constructTrieFromRouteList(routes: Route[]): RouteTrie {
     addRoute(trie, [route.method, ...route.path.split("/")], route);
   }
 
+  // Don't collapse top level
+  for (const child of trie.children) {
+    cleanTrieAndCollapse(child);
+  }
+
+  // Remove unneeded 'HTTP-method' children
+  trie.children = trie.children.filter(
+    it => it.children.length > 0 || it.handler !== undefined,
+  );
+
   sortTrie(trie);
-  cleanTrieFromUnusedHttpMethods(trie);
 
   return trie;
 }
@@ -60,12 +69,41 @@ function addRoute(trie: RouteTrie, path: string[], route: Route) {
   }
 }
 
-function cleanTrieFromUnusedHttpMethods(trie: RouteTrie) {
-  trie.children = trie.children.filter(it => it.children.length > 0);
+function cleanTrieAndCollapse(trie: RouteTrie) {
+  // Remove nodes without handler & without children
+  trie.children = trie.children.filter(
+    it => it.handler !== undefined || it.children.length > 0,
+  );
+
+  for (const child of trie.children) {
+    cleanTrieAndCollapse(child);
+  }
+
+  // Collaps unnecessary STATIC nodes
+  if (
+    trie.children.length === 1 &&
+    trie.handler === undefined &&
+    trie.prio === RoutePrio.STATIC &&
+    trie.children[0].prio === RoutePrio.STATIC
+  ) {
+    const child = trie.children[0];
+    trie.path = trie.path + "/" + child.path;
+    trie.handler = child.handler;
+    trie.children = child.children;
+  }
 }
 
 function sortTrie(trie: RouteTrie) {
-  trie.children = trie.children.sort((a, b) => a.prio - b.prio);
+  trie.children = trie.children.sort((a, b) => {
+    const result = a.prio - b.prio;
+
+    if (result !== 0) {
+      return result;
+    }
+
+    return b.path.length - a.path.length;
+  });
+
   for (const child of trie.children) {
     sortTrie(child);
   }

@@ -1,283 +1,246 @@
 import { Route, RoutePrio, RouteTrie } from "../types";
 import { lowerCaseFirst, upperCaseFirst } from "../util";
 
-type Context = {
-  imports: string[];
-  validatorImports: string[];
-  matchers: string[];
-  routeMatchName(): string;
-};
+export function createRouterSource(routes: Route[], trie: RouteTrie): string {
+  const types = routes.map(it => createTypes(it)).join("\n");
+  const externalHandlers = createExternalHandlers(routes);
+  const internalHandlers = createInternalHandlers(routes);
+  const routeFn = buildRouter(trie);
 
-export function createTypesAndFunctionsForTrie(
-  routes: Route[],
-  trie: RouteTrie,
-): string {
-  let routeMatchIdx = 0;
-  const ctx: Context = {
-    imports: [],
-    validatorImports: [],
-    matchers: [],
-    routeMatchName(): string {
-      return `routeMatch${routeMatchIdx++}`;
-    },
-  };
-
-  const typings = buildTypes(ctx, trie);
-  const handlers = buildNamedHandlers(ctx, routes);
-  const func = buildFunction(ctx, trie);
-  const mountFn = getMountFunction(ctx);
-
-  return [
-    getHeader(),
-    getImports(ctx),
-    typings,
-    mountFn,
-    handlers,
-    func,
-    ctx.matchers.join("\n"),
-  ].join("\n");
+  return [getHeader(), types, externalHandlers, internalHandlers, routeFn].join(
+    "\n",
+  );
 }
 
 function getHeader(): string {
   return `
 // @lbu/code-gen
 // GENERATED FILE DO NOT EDIT
-`;
-}
 
-function getImports(ctx: Context): string {
-  const validators = ctx.validatorImports.join(", ");
-  ctx.imports.push(`import { ${validators} } from "./validators";`);
+import Koa from "koa";
+import { AppState, Context, bodyParser } from "@lbu/koa";
+import * as validators from "./validators";
 
-  return ctx.imports.join("\n");
-}
+const bodyInstance = bodyParser({
+      jsonLimit: 5 * 1024 * 1024, // 5mb
+      multipart: true,
+    });
+const wrappedBodyParser = (ctx: Context) => new Promise(r => bodyInstance(ctx, r as Koa.Next).then(r));
 
-function getMountFunction(ctx: Context): string {
-  ctx.imports.push(`import Koa from "koa";`);
-  ctx.imports.push(`import { AppState, Context, bodyParser } from "@lbu/koa";`);
-
-  return `
 export function mountRouter(app: Koa<AppState>) {
   app.use(routeFn);
 }
 `;
 }
 
-function buildNamedHandlers(ctx: Context, routes: Route[]) {
-  const publicHandlers = [`export const routeHandlers = {`];
-  const privateHandlers = [`const handlers = {`];
-  const bodyParser = `
-    const bodyInstance = bodyParser({
-      jsonLimit: 5 * 1024 * 1024, // 5mb
-      multipart: true,
-    });
-    const wrappedBodyParser = (ctx: Context) => new Promise(r => bodyInstance(ctx, r as Koa.Next));
-  `;
+function createTypes({
+  name,
+  method,
+  queryValidator,
+  bodyValidator,
+  paramsValidator,
+  path,
+}: Route): string {
+  const src = [];
+  src.push("/**");
+  src.push(` * Type for ${name}`);
+  src.push(` * ${method} ${path}`);
+  src.push(` */`);
+  src.push(`export type ${upperCaseFirst(name)} = {`);
+
+  if (queryValidator) {
+    const validator = `validators.validate${queryValidator.name}`;
+    src.push(`validatedQuery: ReturnType<typeof ${validator}>;`);
+  }
+  if (paramsValidator) {
+    const validator = `validators.validate${paramsValidator.name}`;
+    src.push(`validatedParams: ReturnType<typeof ${validator}>;`);
+  }
+  if (bodyValidator) {
+    const validator = `validators.validate${bodyValidator.name}`;
+    src.push(`validatedBody: ReturnType<typeof ${validator}>;`);
+  }
+
+  src.push("}");
+
+  return src.join("\n");
+}
+
+function createInternalHandlers(routes: Route[]): string {
+  const src = [`const handlers = {`];
 
   for (const r of routes) {
-    publicHandlers.push(
-      `${lowerCaseFirst(r.name)}: async (ctx: Context & ${upperCaseFirst(
-        r.name,
-      )}, next: Koa.Next) => { return next(); },`,
-    );
-
-    privateHandlers.push(
+    src.push(
       `${lowerCaseFirst(
         r.name,
       )}: async (params: any, ctx: Context & ${upperCaseFirst(
         r.name,
       )}, next: Koa.Next) => {`,
     );
+    src.push(`// @ts-ignore`);
+    src.push(`ctx.request.params = params;`);
 
-    privateHandlers.push(`// @ts-ignore`);
-    privateHandlers.push(`ctx.request.params = params;`);
     if (r.paramsValidator) {
-      privateHandlers.push(
-        `ctx.validatedParams = validate${r.paramsValidator.name}(params);`,
+      src.push(
+        `ctx.validatedParams = validators.validate${r.paramsValidator.name}(params);`,
       );
     }
+
     if (r.bodyValidator || r.queryValidator) {
-      privateHandlers.push(`await wrappedBodyParser(ctx);`);
+      src.push(`await wrappedBodyParser(ctx);`);
     }
 
     if (r.bodyValidator) {
-      privateHandlers.push(
-        `ctx.validatedBody = validate${r.bodyValidator.name}(ctx.request.body);`,
+      src.push(
+        `ctx.validatedBody = validators.validate${r.bodyValidator.name}(ctx.request.body);`,
       );
     }
     if (r.queryValidator) {
-      privateHandlers.push(
-        `ctx.validatedQuery = validate${r.queryValidator.name}(ctx.request.query);`,
+      src.push(
+        `ctx.validatedQuery = validators.validate${r.queryValidator.name}(ctx.request.query);`,
       );
     }
 
-    privateHandlers.push(
-      `return routeHandlers.${lowerCaseFirst(r.name)}(ctx, next);`,
+    src.push(`return routeHandlers.${lowerCaseFirst(r.name)}(ctx, next);`);
+
+    src.push("},");
+  }
+
+  src.push("};");
+  return src.join("\n");
+}
+
+function createExternalHandlers(routes: Route[]): string {
+  const src = [`export const routeHandlers = {`];
+
+  for (const r of routes) {
+    src.push("/**");
+    src.push(` * ${r.method} ${r.path}`);
+    src.push(` */`);
+    src.push(
+      `${lowerCaseFirst(r.name)}: async (ctx: Context & ${upperCaseFirst(
+        r.name,
+      )}, next: Koa.Next) => { return next(); },`,
     );
-
-    privateHandlers.push("},");
   }
 
-  publicHandlers.push(`};`);
-  privateHandlers.push(`};`);
-
-  return (
-    bodyParser + "\n" + publicHandlers.join("\n") + privateHandlers.join("\n")
-  );
+  src.push("};");
+  return src.join("\n");
 }
 
-function buildTypes(ctx: Context, trie: RouteTrie): string {
-  const childrenArr = [];
-  for (const child of trie.children) {
-    childrenArr.push(buildTypes(ctx, child));
-  }
+type Context = {
+  routerFunctions: string[];
+  nextFn(): string;
+};
 
-  const childrenSrc = childrenArr.join("\n");
-  if (trie.handler === undefined) {
-    return childrenSrc;
-  }
+function buildRouter(trie: RouteTrie): string {
+  let idx = 0;
+  const ctx: Context = {
+    routerFunctions: [],
+    nextFn(): string {
+      return `routeFn${idx++}`;
+    },
+  };
 
-  const { name, queryValidator, paramsValidator, bodyValidator } = trie.handler;
-
-  const src: string[] = [];
-  src.push(`export type ${name} = {`);
-  if (queryValidator) {
-    const validator = `validate${queryValidator.name}`;
-    ctx.validatorImports.push(validator);
-    src.push(`validatedQuery: ReturnType<typeof ${validator}>;`);
-  }
-  if (paramsValidator) {
-    const validator = `validate${paramsValidator.name}`;
-    ctx.validatorImports.push(validator);
-    src.push(`validatedParams: ReturnType<typeof ${validator}>;`);
-  }
-  if (bodyValidator) {
-    const validator = `validate${bodyValidator.name}`;
-    ctx.validatorImports.push(validator);
-    src.push(`validatedBody: ReturnType<typeof ${validator}>;`);
-  }
-  src.push(`};`);
-
-  return src.join("\n") + childrenSrc;
-}
-
-function buildFunction(ctx: Context, trie: RouteTrie): string {
-  const { name } = buildRouteMatcher(ctx, trie);
-
-  // params are lifted up to this generated code, cause they will be added to the object
-  // directly
-  return `
+  const src = [
+    `
 async function routeFn(ctx: Context, next: Koa.Next) {
-  let triePath = (ctx.method + ctx.path);
+  let triePath = ctx.method + ctx.path;
   if (triePath.endsWith("/")) {
-    triePath = triePath.substring(0, triePath.length -2);
+    triePath = triePath.substring(0, triePath.length - 1);
   }
   const params: any = {};
+  let route: any = undefined;
+`,
+  ];
 
-  const route = ${name}(triePath, params);
-  if (route !== undefined) {
-    return route(params, ctx, next);
+  const fns = trie.children.map(it => createRouteFn(ctx, it));
+
+  for (const fn of fns) {
+    src.push(`route = ${fn}(triePath, params, 0);`);
+    src.push(`if (route !== undefined) {`);
+    src.push(`return route(params, ctx, next);`);
+    src.push(`}`);
   }
-      
-  return next();
-}`;
+
+  src.push(`return next();`);
+  src.push(`}`);
+
+  return src.join("\n") + "\n" + ctx.routerFunctions.join("\n");
 }
 
-function buildRouteMatcher(ctx: Context, trie: RouteTrie): { name: string } {
-  const name = ctx.routeMatchName();
+// have a match
+function createRouteFn(ctx: Context, trie: RouteTrie): string {
+  const name = ctx.nextFn();
   const src = [];
+  src.push(`function ${name}(path: string, params: any, currentIdx: number) {`);
 
-  if (trie.children.length === 0) {
-    const handlerName = trie.handler ? trie.handler.name : "__UNKNOWN__";
-    ctx.matchers.push(
-      `function ${name}(path: string, params: any, currentIdx = 0) { return handlers["${lowerCaseFirst(
-        handlerName,
-      )}"]; }`,
-    );
+  if (trie.prio === RoutePrio.STATIC) {
+    src.push(`if (!path.startsWith("${trie.path}", currentIdx)) {`);
+    src.push(`return undefined;`);
+    src.push(`}`);
 
-    return { name };
-  }
+    if (trie.handler !== undefined && trie.children.length === 0) {
+      src.push(`return handlers.${lowerCaseFirst(trie.handler.name)};`);
+    } else {
+      src.push(`const nextIdx = currentIdx + 1 + ${trie.path.length};`);
+      src.push(`let handler: any = undefined;`);
 
-  src.push(`function ${name}(path: string, params: any, currentIdx = 0) {`);
-  src.push(`let nextSlash = path.indexOf("/", currentIdx);`);
-  src.push(`if (nextSlash === -1) { nextSlash = path.length ;}`);
-  src.push(`const subPath = path.substring(currentIdx, nextSlash);`);
-  src.push(`let handler: any = undefined`);
+      const fns = trie.children.map(it => createRouteFn(ctx, it));
 
-  for (const child of trie.children) {
-    const childHasHandler =
-      child.children.length === 0 && child.handler !== undefined;
-
-    // Because the trie is sorted, all prio's should follow each other up
-    if (child.prio === RoutePrio.STATIC) {
-      src.push(`if (subPath === "${child.path}") {`);
-
-      if (childHasHandler && child.children.length === 0) {
-        src.push(`if (subPath.length + 1 + currentIdx === path.length) {`);
-        src.push(`return handlers["${lowerCaseFirst(child.handler!.name)}"];`);
-        src.push(`}`);
-      }
-
-      if (!childHasHandler && child.children.length === 0) {
-        src.push(`return undefined;`);
-      } else {
-        src.push(
-          `handler = ${
-            buildRouteMatcher(ctx, child).name
-          }(path, params, currentIdx + subPath.length + 1);`,
-        );
-        src.push(`if (handler !== undefined) { return handler; }`);
-      }
-      src.push(`}`);
-    } else if (child.prio === RoutePrio.PARAM) {
-      src.push(`if (subPath.length > 0) {`);
-      if (childHasHandler && child.children.length === 0) {
-        src.push(`if (subPath.length + 1 + currentIdx === path.length) {`);
-        src.push(`params["${child.path.substring(1)}"] = subPath;`);
-        src.push(`return handlers["${lowerCaseFirst(child.handler!.name)}"];`);
-        src.push(`}`);
-      }
-
-      if (!childHasHandler && child.children.length === 0) {
-        src.push(`return undefined;`);
-      } else {
-        src.push(
-          `handler = ${
-            buildRouteMatcher(ctx, child).name
-          }(path, params, currentIdx + subPath.length + 1);`,
-        );
-
+      for (const fn of fns) {
+        src.push(`handler = ${fn}(path, params, nextIdx);`);
         src.push(`if (handler !== undefined) {`);
-        src.push(`params["${child.path.substring(1)}"] = subPath;`);
         src.push(`return handler;`);
         src.push(`}`);
       }
-      src.push(`}`);
-    } else if (child.prio === RoutePrio.WILDCARD) {
-      if (trie.children.length === 1) {
-        ctx.matchers.push(`
-          function ${name}(path: string, params: any, currentIdx = 0) {
-            return handlers["${lowerCaseFirst(child.handler!.name)}"];
-          }
-        `);
 
-        return { name };
+      if (trie.handler !== undefined) {
+        // Only if path is correct match
+        src.push(`if (path.length === nextIdx -1) {`);
+        src.push(`return handlers.${lowerCaseFirst(trie.handler.name)};`);
+        src.push(`}`);
       } else {
-        src.push(`return handlers["${lowerCaseFirst(child.handler!.name)}"];`);
+        src.push(`return undefined;`);
       }
     }
+  } else if (trie.prio === RoutePrio.PARAM) {
+    const paramName = trie.path.substring(1);
+    src.push(`let subIdx = path.indexOf("/", currentIdx);`);
+    src.push(`if (subIdx === -1) { subIdx = path.length; }`);
+    src.push(`const subPath = path.substring(currentIdx, subIdx);`);
+
+    if (trie.handler !== undefined && trie.children.length === 0) {
+      src.push(`params["${paramName}"] = subPath`);
+      src.push(`return handlers.${lowerCaseFirst(trie.handler.name)};`);
+    } else {
+      src.push(`const nextIdx = subIdx + 1;`);
+      src.push(`let handler: any = undefined;`);
+
+      const fns = trie.children.map(it => createRouteFn(ctx, it));
+
+      for (const fn of fns) {
+        src.push(`handler = ${fn}(path, params, nextIdx);`);
+        src.push(`if (handler !== undefined) {`);
+        src.push(`params["${paramName}"] = subPath`);
+        src.push(`return handler;`);
+        src.push(`}`);
+      }
+
+      if (trie.handler !== undefined) {
+        src.push(`params["${paramName}"] = subPath`);
+        src.push(`return handlers.${lowerCaseFirst(trie.handler.name)};`);
+      } else {
+        src.push(`return undefined;`);
+      }
+    }
+  } else if (trie.prio === RoutePrio.WILDCARD && trie.handler !== undefined) {
+    src.push(`return handlers.${lowerCaseFirst(trie.handler.name)};`);
   }
 
-  if (trie.handler !== undefined) {
-    src.push(`if (!handler) {`);
-    src.push(`handler = handlers["${lowerCaseFirst(trie.handler!.name)}"];`);
-    src.push("}");
-  }
+  src.push("}");
 
-  src.push(`return handler;`);
-  src.push(`}`);
+  ctx.routerFunctions.push(src.join("\n"));
 
-  ctx.matchers.push(src.join("\n"));
-
-  return { name };
+  return name;
 }
