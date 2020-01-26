@@ -1,6 +1,6 @@
 {
   "name": "@lbu/insight",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple logger in NDJSON format",
   "main": "dist/index.js",
   "keywords": [
