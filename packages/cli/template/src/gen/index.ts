@@ -1,8 +1,12 @@
-import { createSchema, V } from "@lbu/validator";
+import { createApp, V } from "@lbu/code-gen";
+import { join } from "path";
 
-createSchema(
-  "TestInterfaceValidation",
-  V.object({
-    foo: V.string().oneOf("bar"),
+const app = createApp();
+
+app.validator(
+  V("TestType").object({
+    myKey: V.string(),
   }),
 );
+
+app.build(join(process.cwd(), "src/generated"));

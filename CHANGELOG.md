@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.4]()
+
+- Replaced @lbu/validator with @lbu/code-gen
+- @lbu/code-gen supports generating validator functions and routers
+- Add @lbu/koa with some minimal middleware
+
 ### [v0.0.3](a193a6c8c4ae8fa52465e239ecbfdbf22041c47a)
 
 - @lbu/validator refactor and pretty much stable feature wise
