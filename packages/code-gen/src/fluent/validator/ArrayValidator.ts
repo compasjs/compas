@@ -1,16 +1,16 @@
-import { Validator, ValidatorLike } from "../../types";
-import { validatorLikeToValidator } from "../../validator";
+import { ValidatorSchema, ValidatorLikeSchema } from "../types";
+import { validatorLikeToValidator } from "../util";
 import { ConvertibleValidator } from "./ConvertibleValidator";
 
 export class ArrayValidator extends ConvertibleValidator {
-  private _values?: ValidatorLike;
+  private _values?: ValidatorLikeSchema;
 
-  values(validator: ValidatorLike): this {
+  values(validator: ValidatorLikeSchema): this {
     this._values = validator;
     return this;
   }
 
-  toSchema(): Validator {
+  toSchema(): ValidatorSchema {
     if (this._values === undefined) {
       throw new TypeError("call .values() is mandatory.");
     }

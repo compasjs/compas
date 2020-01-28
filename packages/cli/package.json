@@ -21,6 +21,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@lbu/code-gen": "^0.0.4",
     "@lbu/insight": "^0.0.4",
     "@lbu/register": "^0.0.4",
     "@lbu/stdlib": "^0.0.4"

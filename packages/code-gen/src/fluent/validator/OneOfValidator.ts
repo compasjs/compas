@@ -1,22 +1,22 @@
-import { Validator, ValidatorLike } from "../../types";
-import { validatorLikeToValidator } from "../../validator";
+import { ValidatorSchema, ValidatorLikeSchema } from "../types";
+import { validatorLikeToValidator } from "../util";
 import { MixedValidator } from "./MixedValidator";
 
 export class OneOfValidator extends MixedValidator {
-  private _validators: ValidatorLike[] = [];
+  private _validators: ValidatorLikeSchema[] = [];
 
-  constructor(...s: ValidatorLike[]) {
+  constructor(...s: ValidatorLikeSchema[]) {
     super();
 
     this.add(...s);
   }
 
-  add(...validators: ValidatorLike[]): this {
+  add(...validators: ValidatorLikeSchema[]): this {
     this._validators.push(...validators);
     return this;
   }
 
-  toSchema(): Validator {
+  toSchema(): ValidatorSchema {
     if (this._validators.length === 0) {
       throw new TypeError("call .add() with some schema is mandatory");
     }

@@ -1,4 +1,4 @@
-import { Validator } from "../../types";
+import { ValidatorSchema } from "../types";
 import { ConvertibleValidator } from "./ConvertibleValidator";
 
 export class NumberValidator extends ConvertibleValidator {
@@ -27,7 +27,7 @@ export class NumberValidator extends ConvertibleValidator {
     return this;
   }
 
-  toSchema(): Validator {
+  toSchema(): ValidatorSchema {
     return {
       ...super.partialBuild(),
       type: "number",

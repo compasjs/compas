@@ -1,35 +1,23 @@
 import { isNil } from "@lbu/stdlib";
-import { join } from "path";
-import { generateForAppSchema } from "../generate";
 import { logger } from "../logger";
+import { upperCaseFirst } from "../util";
+import { RouteBuilder, RouteBuilderDelegate } from "./RouteBuilder";
 import {
   AppSchema,
   HttpMethod,
-  Route,
-  Validator,
-  ValidatorLike,
-} from "../types";
-import { upperCaseFirst } from "../util";
-import { validatorLikeToValidator } from "../validator";
-import { RouteBuilder, RouteBuilderDelegate } from "./RouteBuilder";
+  RouteSchema,
+  ValidatorSchema,
+  ValidatorLikeSchema,
+} from "./types";
+import { validatorLikeToValidator } from "./util";
 
-/**
- * Initialize the Fluent API
- * Requires the generate process to run in the root of the project
- */
-export function createApp() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { name } = require(join(process.cwd(), "package.json"));
-  return new FluentApp(name);
-}
-
-class FluentApp {
-  private validatorStore: { [k: string]: ValidatorLike } = {};
+export class FluentApp {
+  private validatorStore: { [k: string]: ValidatorLikeSchema } = {};
   private routeStore: { [k: string]: RouteBuilder } = {};
 
   constructor(private name: string) {}
 
-  validator(validator: ValidatorLike) {
+  validator(validator: ValidatorLikeSchema) {
     const name = validatorLikeToValidator(validator).name;
     if (!name) {
       throw new TypeError("Schema should have a name specified");
@@ -74,24 +62,9 @@ class FluentApp {
     return new RouteBuilderDelegate(routes);
   }
 
-  build(outputDir: string) {
-    generateForAppSchema(outputDir, this.toSchema());
-  }
-
-  private addRoute(name: string, method: HttpMethod): RouteBuilder {
-    if (!isNil(this.routeStore[name])) {
-      logger.info(`Overwriting ${method} ${name}`);
-    }
-
-    const r = new RouteBuilder(name, method);
-    this.routeStore[name] = r;
-
-    return r;
-  }
-
-  private toSchema(): AppSchema {
-    const validators: Validator[] = [];
-    const routes: Route[] = [];
+  toSchema(): AppSchema {
+    const validators: ValidatorSchema[] = [];
+    const routes: RouteSchema[] = [];
 
     for (const key in this.validatorStore) {
       validators.push(validatorLikeToValidator(this.validatorStore[key]));
@@ -106,5 +79,16 @@ class FluentApp {
       validators,
       routes,
     };
+  }
+
+  private addRoute(name: string, method: HttpMethod): RouteBuilder {
+    if (!isNil(this.routeStore[name])) {
+      logger.info(`Overwriting ${method} ${name}`);
+    }
+
+    const r = new RouteBuilder(name, method);
+    this.routeStore[name] = r;
+
+    return r;
   }
 }

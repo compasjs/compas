@@ -1,1 +1,0 @@
-export { generateRouterStringFromRoutes } from "./generate";

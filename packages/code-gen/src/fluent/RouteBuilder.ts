@@ -1,13 +1,13 @@
-import { ValidatorLike } from "../types";
-import { HttpMethod, Route } from "../types/router";
-import { validatorLikeToValidator } from "../validator";
+import { ValidatorLikeSchema } from "./types";
+import { HttpMethod, RouteSchema } from "./types";
+import { validatorLikeToValidator } from "./util";
 
 export class RouteBuilder {
   private _path = "";
-  private _query?: ValidatorLike;
-  private _params?: ValidatorLike;
-  private _body?: ValidatorLike;
-  private _response?: ValidatorLike;
+  private _query?: ValidatorLikeSchema;
+  private _params?: ValidatorLikeSchema;
+  private _body?: ValidatorLikeSchema;
+  private _response?: ValidatorLikeSchema;
 
   constructor(private name: string, private method: HttpMethod) {}
 
@@ -17,27 +17,27 @@ export class RouteBuilder {
     return this;
   }
 
-  query(validator: ValidatorLike): this {
+  query(validator: ValidatorLikeSchema): this {
     this._query = validator;
     return this;
   }
 
-  params(validator: ValidatorLike): this {
+  params(validator: ValidatorLikeSchema): this {
     this._params = validator;
     return this;
   }
 
-  body(validator: ValidatorLike): this {
+  body(validator: ValidatorLikeSchema): this {
     this._body = validator;
     return this;
   }
 
-  response(validator: ValidatorLike): this {
+  response(validator: ValidatorLikeSchema): this {
     this._response = validator;
     return this;
   }
 
-  toSchema(): Route {
+  toSchema(): RouteSchema {
     if (this._path === "") {
       throw new TypeError(`call .path("/path/:param") on ${this.name}`);
     }
@@ -73,7 +73,7 @@ export class RouteBuilderDelegate {
     return this;
   }
 
-  query(validator: ValidatorLike): this {
+  query(validator: ValidatorLikeSchema): this {
     for (const r of this.routes) {
       r.query(validator);
     }
@@ -81,7 +81,7 @@ export class RouteBuilderDelegate {
     return this;
   }
 
-  params(validator: ValidatorLike): this {
+  params(validator: ValidatorLikeSchema): this {
     for (const r of this.routes) {
       r.params(validator);
     }
@@ -89,7 +89,7 @@ export class RouteBuilderDelegate {
     return this;
   }
 
-  body(validator: ValidatorLike): this {
+  body(validator: ValidatorLikeSchema): this {
     for (const r of this.routes) {
       r.body(validator);
     }
@@ -97,7 +97,7 @@ export class RouteBuilderDelegate {
     return this;
   }
 
-  response(validator: ValidatorLike): this {
+  response(validator: ValidatorLikeSchema): this {
     for (const r of this.routes) {
       r.response(validator);
     }

@@ -1,6 +1,6 @@
+import { runner } from "@lbu/code-gen";
 import { Logger } from "@lbu/insight";
 import { join } from "path";
-import { lintCommand } from "./lint";
 import { CliContext, Command } from "./types";
 import { execCommand, getLbuVersion } from "./utils";
 
@@ -37,8 +37,5 @@ async function executeCodegen(
   logger: Logger,
   { inputFile }: { inputFile: string },
 ) {
-  require("@lbu/register");
-  require(join(process.cwd(), inputFile));
-
-  await lintCommand({ logger }, []);
+  runner.run(join(process.cwd(), inputFile));
 }

@@ -1,4 +1,4 @@
-import { Validator } from "../../types";
+import { ValidatorSchema } from "../types";
 import { MixedValidator } from "./MixedValidator";
 
 export class RefValidator extends MixedValidator {
@@ -17,7 +17,7 @@ export class RefValidator extends MixedValidator {
     return this;
   }
 
-  toSchema(): Validator {
+  toSchema(): ValidatorSchema {
     if (this._ref === undefined) {
       throw new TypeError("Call .set() to set a reference");
     }

@@ -1,12 +1,12 @@
-import { Validator, ValidatorLike } from "../../types";
-import { validatorLikeToValidator } from "../../validator";
+import { ValidatorSchema, ValidatorLikeSchema } from "../types";
+import { validatorLikeToValidator } from "../util";
 import { MixedValidator } from "./MixedValidator";
 
 export class ObjectValidator extends MixedValidator {
-  private _keys: { [s: string]: ValidatorLike } = {};
+  private _keys: { [s: string]: ValidatorLikeSchema } = {};
   private _strict?: true;
 
-  constructor(obj?: { [k: string]: ValidatorLike }) {
+  constructor(obj?: { [k: string]: ValidatorLikeSchema }) {
     super();
 
     if (obj) {
@@ -14,12 +14,12 @@ export class ObjectValidator extends MixedValidator {
     }
   }
 
-  key(name: string, value: ValidatorLike): this {
+  key(name: string, value: ValidatorLikeSchema): this {
     this._keys[name] = value;
     return this;
   }
 
-  keys(obj: { [k: string]: ValidatorLike }): this {
+  keys(obj: { [k: string]: ValidatorLikeSchema }): this {
     for (const [k, v] of Object.entries(obj)) {
       this._keys[k] = v;
     }
@@ -32,8 +32,8 @@ export class ObjectValidator extends MixedValidator {
     return this;
   }
 
-  toSchema(): Validator {
-    const keys: { [k: string]: Validator } = {};
+  toSchema(): ValidatorSchema {
+    const keys: { [k: string]: ValidatorSchema } = {};
 
     for (const key in this._keys) {
       keys[key] = validatorLikeToValidator(this._keys[key]);
