@@ -18,6 +18,7 @@ export function buildAbstractTree(schema: AppSchema): AbstractTree {
   getAbstractRoutes(router, abstractRoutes);
 
   return {
+    name: schema.name,
     types,
     router,
     abstractRoutes,

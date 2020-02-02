@@ -1,4 +1,5 @@
 export interface AbstractTree {
+  name: string;
   types: AbstractTypeMap;
   router: AbstractRouteTrie;
   abstractRoutes: AbstractRoute[];

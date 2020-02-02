@@ -3,10 +3,12 @@ import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { buildAbstractTree } from "./abstractTree";
 import { FluentApp } from "./fluent/app";
+import { AppSchema } from "./fluent/types";
 import { logger } from "./logger";
 import {
   getCommentPlugin,
   getLintPlugin,
+  getOpenApiPlugin,
   getTsNodePlugin,
   getTypescriptPlugin,
 } from "./plugins";
@@ -25,11 +27,13 @@ export class Runner {
   private static knownPlugins = [
     getTsNodePlugin,
     getTypescriptPlugin,
+    getOpenApiPlugin,
     getCommentPlugin,
     getLintPlugin,
   ];
 
   public app: FluentApp | undefined = undefined;
+  private appSchema: AppSchema | undefined = undefined;
 
   private abstractTree: AbstractTree | undefined = undefined;
   private plugins: PluginMetaData[] = [];
@@ -43,6 +47,8 @@ export class Runner {
     this.initPlugins();
     this.runHook("beforeRequire", []);
     this.loadUserFile();
+    this.saveSchema();
+    this.runHook("mutateAppSchema", [this.appSchema!]);
     this.schemaToAst();
     this.runHook("validateAbstractTree", [this.abstractTree!]);
     this.runBuildHookAndCollect();
@@ -96,8 +102,12 @@ export class Runner {
     require(this.inputFile);
   }
 
+  private saveSchema() {
+    this.appSchema = this.app?.toSchema();
+  }
+
   private schemaToAst() {
-    this.abstractTree = buildAbstractTree(this.app!.toSchema());
+    this.abstractTree = buildAbstractTree(this.appSchema!);
   }
 
   private runBuildHookAndCollect() {
@@ -117,7 +127,14 @@ export class Runner {
   private writeResult() {
     for (const result of this.buildResult) {
       for (const file of result.files) {
-        this.internalWriteFile(file.path, file.source);
+        if (process.env.DRY_RUN !== "true") {
+          this.internalWriteFile(file.path, file.source);
+        } else {
+          logger.info({
+            ...file,
+            plugin: result.name,
+          });
+        }
       }
     }
   }

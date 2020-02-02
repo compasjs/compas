@@ -1,3 +1,4 @@
+import { AppSchema } from "../fluent/types";
 import { AbstractTree } from "./AbstractTree";
 
 export interface PluginMetaData {
@@ -11,6 +12,11 @@ export interface PluginHooks {
    * Runs before any user code will run
    */
   beforeRequire?: () => void;
+
+  /**
+   * Add things to the tree before validation
+   */
+  mutateAppSchema?: (schema: AppSchema) => void;
 
   /**
    * A plugin may have custom limitations, e.g some types can't be generated
