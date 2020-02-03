@@ -1,66 +1,131 @@
+export interface WrappedAbstractTree extends AbstractTree {
+  routeTrie: AbstractRouteTrie;
+  models: TypeMap;
+  validators: TypeMap;
+}
+
 export interface AbstractTree {
   name: string;
-  types: AbstractTypeMap;
-  router: AbstractRouteTrie;
   abstractRoutes: AbstractRoute[];
-  validators: AbstractValidatorMap;
+  types: TypeMap;
 }
 
-export type AbstractTypeMap = Record<string, NamedAbstractType>;
+export type TypeMap = Record<string, NamedType>;
 
-export type NamedAbstractType = { name: string } & AbstractTypeUnion;
+export type NamedType = BaseType & TypeUnion;
 
-export type NamedAbstractT<T extends AbstractTypeUnion> = T & { name: string };
+export type NamedTypeT<T extends TypeUnion> = T & BaseType;
 
-export type AbstractTypeUnion =
-  | AbstractNumberType
-  | AbstractBooleanType
-  | AbstractStringType
-  | AbstractObjectType
-  | AbstractArrayType
-  | AbstractOneOfType
-  | AbstractRefType;
+export type TypeUnion =
+  | BooleanType
+  | NumberType
+  | StringType
+  | ObjectType
+  | ArrayType
+  | AnyOfType
+  | ReferenceType;
 
-export interface AbstractNumberType {
-  type: "number";
-  optional: boolean;
-  oneOf?: number[];
+export interface BaseType {
+  name: string;
+  withValidator: boolean;
+  withModel: boolean;
 }
 
-export interface AbstractBooleanType {
+export interface ModelReference {
+  modelName: string;
+  fieldName: string;
+}
+
+export interface BooleanType {
   type: "boolean";
   optional: boolean;
   oneOf?: [boolean];
+  validator: {
+    convert: boolean;
+  };
+  model: {
+    comparable: boolean;
+  };
 }
 
-export interface AbstractStringType {
+export interface NumberType {
+  type: "number";
+  optional: boolean;
+  oneOf?: number[];
+  validator: {
+    convert: boolean;
+    min?: number;
+    max?: number;
+    integer: boolean;
+  };
+  model: {
+    comparable: boolean;
+    reference?: ModelReference;
+  };
+}
+
+export interface StringType {
   type: "string";
   optional: boolean;
   oneOf?: string[];
+  validator: {
+    convert: boolean;
+    min?: number;
+    max?: number;
+    pattern?: RegExp;
+    trim: boolean;
+    lowerCase: boolean;
+    upperCase: boolean;
+  };
+  model: {
+    comparable: boolean;
+    textSearch: boolean;
+    reference?: ModelReference;
+  };
 }
 
-export interface AbstractObjectType {
+export interface ObjectType {
   type: "object";
   optional: boolean;
-  keys: Record<string, AbstractTypeUnion>;
+  keys: { [key: string]: TypeUnion };
+  validator: {
+    strict: boolean;
+  };
+  model: {};
 }
 
-export interface AbstractArrayType {
+export interface ArrayType {
   type: "array";
   optional: boolean;
-  values: AbstractTypeUnion;
+  values: TypeUnion;
+  validator: {
+    convert: boolean;
+    min?: number;
+    max?: number;
+  };
+  model: {
+    reference?: ModelReference;
+  };
 }
 
-export interface AbstractRefType {
-  type: "ref";
+export interface AnyOfType {
+  type: "anyOf";
   optional: boolean;
-  ref: string;
+  anyOf: TypeUnion[];
+  validator: {};
+  model: {};
 }
 
-export interface AbstractOneOfType {
-  type: "oneOf";
+/**
+ * Note this is not for model reference but only for type reference
+ * Can only reference named types.
+ */
+export interface ReferenceType {
+  type: "reference";
   optional: boolean;
-  oneOf: AbstractTypeUnion[];
+  reference: string;
+  validator: {};
+  model: {};
 }
 
 /**
@@ -84,69 +149,8 @@ export interface AbstractRoute {
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD";
   path: string;
   name: string;
-  queryValidator?: AbstractValidatorReference;
-  paramsValidator?: AbstractValidatorReference;
-  bodyValidator?: AbstractValidatorReference;
-  response?: {
-    typeName: string;
-  };
-}
-
-export interface AbstractValidatorReference {
-  typeName: string;
-  validatorName: string;
-}
-
-export type AbstractValidatorMap = Record<string, NamedAbstractValidator>;
-
-export type NamedAbstractValidator = { name: string } & AbstractValidatorUnion;
-
-export type NamedAbstractValidatorT<T extends AbstractValidatorUnion> = T & {
-  name: string;
-};
-
-export type AbstractValidatorUnion =
-  | AbstractNumberValidator
-  | AbstractBooleanValidator
-  | AbstractStringValidator
-  | AbstractObjectValidator
-  | AbstractArrayValidator
-  | AbstractOneOfValidator
-  | AbstractRefValidator;
-
-export interface AbstractNumberValidator extends AbstractNumberType {
-  convert: boolean;
-  min?: number;
-  max?: number;
-  integer: boolean;
-}
-
-export interface AbstractBooleanValidator extends AbstractBooleanType {
-  convert: boolean;
-}
-
-export interface AbstractStringValidator extends AbstractStringType {
-  convert: boolean;
-  min?: number;
-  max?: number;
-  pattern?: RegExp;
-  trim: boolean;
-  lowerCase: boolean;
-  upperCase: boolean;
-}
-
-export interface AbstractObjectValidator extends AbstractObjectType {
-  strict: boolean;
-  keys: Record<string, AbstractValidatorUnion>;
-}
-
-export interface AbstractArrayValidator extends AbstractArrayType {
-  convert: boolean;
-  values: AbstractValidatorUnion;
-}
-
-export type AbstractRefValidator = AbstractRefType;
-
-export interface AbstractOneOfValidator extends AbstractOneOfType {
-  oneOf: AbstractValidatorUnion[];
+  queryValidator?: string;
+  paramsValidator?: string;
+  bodyValidator?: string;
+  response?: string;
 }

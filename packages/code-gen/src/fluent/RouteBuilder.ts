@@ -1,107 +1,101 @@
-import { ValidatorLikeSchema } from "./types";
-import { HttpMethod, RouteSchema } from "./types";
-import { validatorLikeToValidator } from "./util";
+import { AbstractRoute, AbstractTree } from "../types";
+import { upperCaseFirst } from "../util";
+import { NamedTypeBuilder } from "./TypeBuilder";
 
 export class RouteBuilder {
-  private _path = "";
-  private _query?: ValidatorLikeSchema;
-  private _params?: ValidatorLikeSchema;
-  private _body?: ValidatorLikeSchema;
-  private _response?: ValidatorLikeSchema;
+  private result: AbstractRoute = {
+    name: this.name,
+    method: this.method,
+    path: "",
+  };
 
-  constructor(private name: string, private method: HttpMethod) {}
-
-  path(path: string): this {
-    this._path = path;
-
-    return this;
-  }
-
-  query(validator: ValidatorLikeSchema): this {
-    this._query = validator;
-    return this;
-  }
-
-  params(validator: ValidatorLikeSchema): this {
-    this._params = validator;
-    return this;
-  }
-
-  body(validator: ValidatorLikeSchema): this {
-    this._body = validator;
-    return this;
-  }
-
-  response(validator: ValidatorLikeSchema): this {
-    this._response = validator;
-    return this;
-  }
-
-  toSchema(): RouteSchema {
-    if (this._path === "") {
-      throw new TypeError(`call .path("/path/:param") on ${this.name}`);
+  constructor(
+    private tree: AbstractTree,
+    private name: string,
+    private method: AbstractRoute["method"],
+  ) {
+    for (const r of this.tree.abstractRoutes) {
+      if (r.name === this.name) {
+        throw new Error("Make sure every route has a unique name");
+      }
     }
 
-    return {
-      path: this._path,
-      method: this.method,
-      name: this.name,
-      queryValidator: this._query
-        ? validatorLikeToValidator(this._query)
-        : undefined,
-      paramsValidator: this._params
-        ? validatorLikeToValidator(this._params)
-        : undefined,
-      bodyValidator: this._body
-        ? validatorLikeToValidator(this._body)
-        : undefined,
-      response: this._response
-        ? validatorLikeToValidator(this._response)
-        : undefined,
-    };
+    this.tree.abstractRoutes.push(this.result);
   }
-}
 
-export class RouteBuilderDelegate {
-  constructor(private routes: RouteBuilder[]) {}
+  path(path: string) {
+    this.result.path = path;
 
-  path(path: string): this {
-    for (const r of this.routes) {
-      r.path(path);
+    if (this.result.path.startsWith("/")) {
+      this.result.path = this.result.path.substring(1);
+    }
+    if (this.result.path.endsWith("/")) {
+      this.result.path = this.result.path.substring(
+        0,
+        this.result.path.length - 2,
+      );
     }
 
     return this;
   }
 
-  query(validator: ValidatorLikeSchema): this {
-    for (const r of this.routes) {
-      r.query(validator);
-    }
+  query(cb: (T: NamedTypeBuilder) => void) {
+    const name = `QuerySchema${upperCaseFirst(this.name)}`;
+    this.result.queryValidator = name;
+
+    const builder = new NamedTypeBuilder(this.tree, name);
+    cb(builder.enableValidator());
 
     return this;
   }
 
-  params(validator: ValidatorLikeSchema): this {
-    for (const r of this.routes) {
-      r.params(validator);
-    }
+  params(cb: (T: NamedTypeBuilder) => void) {
+    const name = `ParamsSchema${upperCaseFirst(this.name)}`;
+    this.result.paramsValidator = name;
+
+    const builder = new NamedTypeBuilder(this.tree, name);
+    cb(builder.enableValidator());
 
     return this;
   }
 
-  body(validator: ValidatorLikeSchema): this {
-    for (const r of this.routes) {
-      r.body(validator);
-    }
+  body(cb: (T: NamedTypeBuilder) => void) {
+    const name = `BodySchema${upperCaseFirst(this.name)}`;
+    this.result.bodyValidator = name;
+
+    const builder = new NamedTypeBuilder(this.tree, name);
+    cb(builder.enableValidator());
 
     return this;
   }
 
-  response(validator: ValidatorLikeSchema): this {
-    for (const r of this.routes) {
-      r.response(validator);
-    }
+  response(cb: (T: NamedTypeBuilder) => void) {
+    const name = `${upperCaseFirst(this.name)}Response`;
+    this.result.response = name;
+
+    const builder = new NamedTypeBuilder(this.tree, name);
+    cb(builder);
 
     return this;
+  }
+
+  finalize() {
+    if (this.result.path === "") {
+      throw new Error("Make sure to call this.path() with a valid path");
+    }
+
+    const handlerType = new NamedTypeBuilder(this.tree, `${this.name}Handler`);
+    const obj: any = {};
+    if (this.result.paramsValidator) {
+      obj.validatedParams = handlerType.ref().type(this.result.paramsValidator);
+    }
+    if (this.result.queryValidator) {
+      obj.validatedQuery = handlerType.ref().type(this.result.queryValidator);
+    }
+    if (this.result.bodyValidator) {
+      obj.validatedBody = handlerType.ref().type(this.result.bodyValidator);
+    }
+
+    handlerType.set(handlerType.object().keys(obj));
   }
 }

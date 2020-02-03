@@ -1,4 +1,3 @@
-import { V } from "./fluent/validator";
 import { createApp, runner } from "./runner";
 
 if (require.main === module) {
@@ -7,20 +6,27 @@ if (require.main === module) {
 } else {
   const app = createApp();
 
-  app.validator(
-    V("Point").object({
-      x: V.number().optional(),
-      y: V.number().convert(),
-    }),
-  );
+  app.type("Point", T => {
+    T.enableValidator().set(
+      T.object().keys({
+        x: T.number().convert(),
+        y: T.number()
+          .convert()
+          .optional()
+          .integer(),
+      }),
+    );
+  });
 
-  app
-    .get("postList")
-    .path("/posts")
-    .query(V.ref("Point"));
-
-  app
-    .get("orderList")
-    .path("/orders")
-    .query(V.ref("QuerySchemaPostList"));
+  app.get("getPoint", R => {
+    R.path("/point").query(T =>
+      T.set(
+        T.object().keys({
+          abs: T.boolean()
+            .convert()
+            .optional(),
+        }),
+      ),
+    );
+  });
 }

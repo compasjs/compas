@@ -1,22 +1,22 @@
 import {
   AbstractRoute,
   AbstractRouteTrie,
-  AbstractTree,
   RoutePrio,
+  WrappedAbstractTree,
 } from "../../types";
 import { lowerCaseFirst, upperCaseFirst } from "../../util";
 
-export function buildRouter(tree: AbstractTree): string {
+export function buildRouter(tree: WrappedAbstractTree): string {
   const externalHandlers = createExternalHandlers(tree.abstractRoutes);
   const internalHandlers = createInternalHandlers(tree.abstractRoutes);
-  const routeFn = buildRouterSource(tree.router);
+  const routeFn = buildRouterSource(tree.routeTrie);
 
   return [getHeader(tree), externalHandlers, internalHandlers, routeFn].join(
     "\n",
   );
 }
 
-function getHeader(tree: AbstractTree): string {
+function getHeader(tree: WrappedAbstractTree): string {
   return `
 import Koa from "koa";
 import { AppState, Context, bodyParser } from "@lbu/koa";
@@ -34,7 +34,7 @@ export function mountRouter(app: Koa<AppState>) {
 `;
 }
 
-function getImports(tree: AbstractTree): string {
+function getImports(tree: WrappedAbstractTree): string {
   const validators = [];
   const types = [];
 
@@ -42,13 +42,13 @@ function getImports(tree: AbstractTree): string {
     types.push(upperCaseFirst(route.name) + "Handler");
 
     if (route.queryValidator) {
-      validators.push(route.queryValidator.validatorName);
+      validators.push("validate" + route.queryValidator);
     }
     if (route.paramsValidator) {
-      validators.push(route.paramsValidator.validatorName);
+      validators.push("validate" + route.paramsValidator);
     }
     if (route.bodyValidator) {
-      validators.push(route.bodyValidator.validatorName);
+      validators.push("validate" + route.bodyValidator);
     }
   }
 
@@ -73,9 +73,7 @@ function createInternalHandlers(routes: AbstractRoute[]): string {
     src.push(`ctx.request.params = params;`);
 
     if (r.paramsValidator) {
-      src.push(
-        `ctx.validatedParams = ${r.paramsValidator.validatorName}(params);`,
-      );
+      src.push(`ctx.validatedParams = validate${r.paramsValidator}(params);`);
     }
 
     if (r.bodyValidator || r.queryValidator) {
@@ -84,12 +82,12 @@ function createInternalHandlers(routes: AbstractRoute[]): string {
 
     if (r.bodyValidator) {
       src.push(
-        `ctx.validatedBody = ${r.bodyValidator.validatorName}(ctx.request.body);`,
+        `ctx.validatedBody = validate${r.bodyValidator}(ctx.request.body);`,
       );
     }
     if (r.queryValidator) {
       src.push(
-        `ctx.validatedQuery = ${r.queryValidator.validatorName}(ctx.request.query);`,
+        `ctx.validatedQuery = validate${r.queryValidator}(ctx.request.query);`,
       );
     }
 

@@ -1,9 +1,9 @@
-import { AbstractTree, AbstractValidatorMap } from "../../../types";
+import { TypeMap, WrappedAbstractTree } from "../../../types";
 import { upperCaseFirst } from "../../../util";
 import { getErrorClass } from "./errors";
 import { createFunctionsForSchemas } from "./functions";
 
-export function buildValidator(tree: AbstractTree): string {
+export function buildValidator(tree: WrappedAbstractTree): string {
   return [
     getImports(tree.validators),
     getErrorClass(),
@@ -11,7 +11,7 @@ export function buildValidator(tree: AbstractTree): string {
   ].join("\n");
 }
 
-function getImports(validators: AbstractValidatorMap) {
+function getImports(validators: TypeMap) {
   const types = Object.keys(validators).map(it => upperCaseFirst(it));
 
   return `

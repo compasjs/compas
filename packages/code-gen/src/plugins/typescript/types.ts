@@ -1,17 +1,17 @@
 import {
-  AbstractArrayType,
-  AbstractBooleanType,
-  AbstractNumberType,
-  AbstractObjectType,
-  AbstractOneOfType,
-  AbstractRefType,
-  AbstractStringType,
-  AbstractTree,
-  AbstractTypeUnion,
-  NamedAbstractType,
+  AnyOfType,
+  ArrayType,
+  BooleanType,
+  NamedType,
+  NumberType,
+  ObjectType,
+  ReferenceType,
+  StringType,
+  TypeUnion,
+  WrappedAbstractTree,
 } from "../../types";
 
-export function buildTypes(tree: AbstractTree): string {
+export function buildTypes(tree: WrappedAbstractTree): string {
   const result: string[] = [];
 
   for (const type of Object.values(tree.types)) {
@@ -21,11 +21,11 @@ export function buildTypes(tree: AbstractTree): string {
   return result.join("\n");
 }
 
-export function createNamedType(type: NamedAbstractType): string {
+export function createNamedType(type: NamedType): string {
   return `export type ${type.name} = ${createType(type)};`;
 }
 
-export function createType(type: AbstractTypeUnion): string {
+export function createType(type: TypeUnion): string {
   switch (type.type) {
     case "number":
       return createNumberType(type);
@@ -37,14 +37,14 @@ export function createType(type: AbstractTypeUnion): string {
       return createObjectType(type);
     case "array":
       return createArrayType(type);
-    case "oneOf":
-      return createOneOfType(type);
-    case "ref":
+    case "anyOf":
+      return createAnyOfType(type);
+    case "reference":
       return createReferenceType(type);
   }
 }
 
-export function createNumberType(type: AbstractNumberType): string {
+export function createNumberType(type: NumberType): string {
   let result = "";
   if (type.oneOf) {
     result += type.oneOf.join(" | ");
@@ -57,7 +57,7 @@ export function createNumberType(type: AbstractNumberType): string {
   return result;
 }
 
-export function createStringType(type: AbstractStringType): string {
+export function createStringType(type: StringType): string {
   let result = "";
   if (type.oneOf) {
     result += type.oneOf.map(it => `"${it}"`).join(" | ");
@@ -70,7 +70,7 @@ export function createStringType(type: AbstractStringType): string {
   return result;
 }
 
-export function createBooleanType(type: AbstractBooleanType): string {
+export function createBooleanType(type: BooleanType): string {
   let result = "";
   if (type.oneOf) {
     result += String(type.oneOf[0]);
@@ -85,7 +85,7 @@ export function createBooleanType(type: AbstractBooleanType): string {
   return result;
 }
 
-export function createObjectType(type: AbstractObjectType): string {
+export function createObjectType(type: ObjectType): string {
   let result = "{\n";
 
   if (type.keys) {
@@ -103,7 +103,7 @@ export function createObjectType(type: AbstractObjectType): string {
   return result;
 }
 
-export function createArrayType(type: AbstractArrayType): string {
+export function createArrayType(type: ArrayType): string {
   let result = `(${createType(type.values)})[]`;
 
   if (type.optional) {
@@ -113,8 +113,8 @@ export function createArrayType(type: AbstractArrayType): string {
   return result;
 }
 
-export function createOneOfType(type: AbstractOneOfType): string {
-  let result = type.oneOf
+export function createAnyOfType(type: AnyOfType): string {
+  let result = type.anyOf
     .map(it => createType(it))
     .map(it => `(${it})`)
     .join(" | ");
@@ -126,8 +126,8 @@ export function createOneOfType(type: AbstractOneOfType): string {
   return result;
 }
 
-export function createReferenceType(type: AbstractRefType): string {
-  let result = `${type.ref}`;
+export function createReferenceType(type: ReferenceType): string {
+  let result = `${type.reference}`;
   if (type.optional) {
     result += " | undefined";
   }

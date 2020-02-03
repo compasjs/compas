@@ -1,8 +1,8 @@
 import {
   AbstractRoute,
-  AbstractTree,
-  AbstractTypeUnion,
   PluginMetaData,
+  TypeUnion,
+  WrappedAbstractTree,
 } from "../../types";
 
 export function getPlugin(): PluginMetaData {
@@ -11,12 +11,8 @@ export function getPlugin(): PluginMetaData {
     description:
       "Create an openapi compatible json file and add a route to host it",
     hooks: {
-      mutateAppSchema: schema => {
-        schema.routes.push({
-          name: "getSwagger",
-          method: "GET",
-          path: "/_openapi",
-        });
+      useFluentApi: schema => {
+        schema.get("getSwagger", R => R.path("/_openapi"));
       },
       buildOutput: tree => {
         const asset = buildOpenApiSchema(tree);
@@ -40,8 +36,9 @@ export function getPlugin(): PluginMetaData {
 function buildRouteHandler() {
   return `
   import { join } from "path";
-  import { routeHandlers } from "./router";  
+  import { routeHandlers } from "./router";
   
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const spec = require(join(process.cwd(), "./assets/openapi.json"));
   
   routeHandlers.getSwagger = async (ctx, next) => {
@@ -56,7 +53,7 @@ function buildRouteHandler() {
 `;
 }
 
-function buildOpenApiSchema(tree: AbstractTree): string {
+function buildOpenApiSchema(tree: WrappedAbstractTree): string {
   const result: any = {};
 
   addMetaData(tree, result);
@@ -66,7 +63,7 @@ function buildOpenApiSchema(tree: AbstractTree): string {
   return JSON.stringify(result);
 }
 
-function addMetaData(tree: AbstractTree, result: any) {
+function addMetaData(tree: WrappedAbstractTree, result: any) {
   result.openapi = "3.0.0";
   result.info = {
     title: `${tree.name} API spec`,
@@ -84,35 +81,33 @@ function addMetaData(tree: AbstractTree, result: any) {
   };
 }
 
-function addComponentSchemas(tree: AbstractTree, result: any) {
+function addComponentSchemas(tree: WrappedAbstractTree, result: any) {
   // TODO: This doesn't work as expected, take into account in the refactor
   //  Refs need to be resolved recursively
   //  i.e. Point -> QuerySchema -> ParamsSchema
   for (const route of tree.abstractRoutes) {
     if (route.bodyValidator) {
-      const type = route.bodyValidator.typeName;
-      result.components.schema[type] = buildComponentSchema(
+      result.components.schema[route.bodyValidator] = buildComponentSchema(
         tree,
         result,
-        tree.types[type],
+        tree.types[route.bodyValidator],
       );
     }
 
     if (route.response) {
-      const type = route.response.typeName;
-      result.components.schema[type] = buildComponentSchema(
+      result.components.schema[route.response] = buildComponentSchema(
         tree,
         result,
-        tree.types[type],
+        tree.types[route.response],
       );
     }
   }
 }
 
 function buildComponentSchema(
-  tree: AbstractTree,
+  tree: WrappedAbstractTree,
   result: any,
-  type: AbstractTypeUnion,
+  type: TypeUnion,
 ): any {
   switch (type.type) {
     case "number":
@@ -132,13 +127,13 @@ function buildComponentSchema(
         type: "array",
         items: buildComponentSchema(tree, result, type.values),
       };
-    case "oneOf":
+    case "anyOf":
       return {
-        anyOf: type.oneOf.map(it => buildComponentSchema(tree, result, it)),
+        anyOf: type.anyOf.map(it => buildComponentSchema(tree, result, it)),
       };
-    case "ref":
+    case "reference":
       return {
-        $ref: `#/components/schemas/${type.ref}`,
+        $ref: `#/components/schemas/${type.reference}`,
       };
     case "object": {
       const required: string[] = [];
@@ -168,7 +163,7 @@ function buildComponentSchema(
   }
 }
 
-function addRoutes(tree: AbstractTree, result: any) {
+function addRoutes(tree: WrappedAbstractTree, result: any) {
   result.paths = {};
 
   for (const route of tree.abstractRoutes) {
@@ -200,7 +195,7 @@ function convertPath(path: string): string {
 }
 
 function buildOperation(
-  tree: AbstractTree,
+  tree: WrappedAbstractTree,
   result: any,
   route: AbstractRoute,
 ): any {
@@ -210,7 +205,7 @@ function buildOperation(
   };
 
   if (route.queryValidator) {
-    const type: any = tree.types[route.queryValidator.typeName];
+    const type: any = tree.types[route.queryValidator];
     for (const key in type.keys) {
       if (!Object.prototype.hasOwnProperty.call(type.keys, key)) {
         continue;
@@ -226,7 +221,7 @@ function buildOperation(
   }
 
   if (route.paramsValidator) {
-    const type: any = tree.types[route.paramsValidator.typeName];
+    const type: any = tree.types[route.paramsValidator];
     for (const key in type.keys) {
       if (!Object.prototype.hasOwnProperty.call(type.keys, key)) {
         continue;
@@ -248,7 +243,7 @@ function buildOperation(
         ? {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${route.response.typeName}`,
+                $ref: `#/components/schemas/${route.response}`,
               },
             },
           }
@@ -263,7 +258,7 @@ function buildOperation(
       content: {
         "application/json": {
           schema: {
-            $ref: `#/components/schemas/${route.bodyValidator.typeName}`,
+            $ref: `#/components/schemas/${route.bodyValidator}`,
           },
         },
       },

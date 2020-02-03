@@ -1,9 +1,8 @@
 import { isNil } from "@lbu/stdlib";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { buildAbstractTree } from "./abstractTree";
-import { FluentApp } from "./fluent/app";
-import { AppSchema } from "./fluent/types";
+import { wrapAbstractTree } from "./abstractTree";
+import { FluentApi } from "./fluent";
 import { logger } from "./logger";
 import {
   getCommentPlugin,
@@ -13,10 +12,10 @@ import {
   getTypescriptPlugin,
 } from "./plugins";
 import {
-  AbstractTree,
   PluginBuildResult,
   PluginHooks,
   PluginMetaData,
+  WrappedAbstractTree,
 } from "./types";
 
 type ParametersOrEmpty<
@@ -32,10 +31,8 @@ export class Runner {
     getLintPlugin,
   ];
 
-  public app: FluentApp | undefined = undefined;
-  private appSchema: AppSchema | undefined = undefined;
-
-  private abstractTree: AbstractTree | undefined = undefined;
+  public app: FluentApi | undefined = undefined;
+  private abstractTree: WrappedAbstractTree | undefined = undefined;
   private plugins: PluginMetaData[] = [];
   private inputFile = "";
   private buildResult: PluginBuildResult[] = [];
@@ -47,8 +44,7 @@ export class Runner {
     this.initPlugins();
     this.runHook("beforeRequire", []);
     this.loadUserFile();
-    this.saveSchema();
-    this.runHook("mutateAppSchema", [this.appSchema!]);
+    this.runHook("useFluentApi", [this.app!]);
     this.schemaToAst();
     this.runHook("validateAbstractTree", [this.abstractTree!]);
     this.runBuildHookAndCollect();
@@ -60,7 +56,7 @@ export class Runner {
   private instantiateFluentApp() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { name } = require(join(process.cwd(), "package.json"));
-    this.app = new FluentApp(name);
+    this.app = new FluentApi(name);
   }
 
   private initPlugins() {
@@ -102,12 +98,8 @@ export class Runner {
     require(this.inputFile);
   }
 
-  private saveSchema() {
-    this.appSchema = this.app?.toSchema();
-  }
-
   private schemaToAst() {
-    this.abstractTree = buildAbstractTree(this.appSchema!);
+    this.abstractTree = wrapAbstractTree(this.app!.getTree());
   }
 
   private runBuildHookAndCollect() {

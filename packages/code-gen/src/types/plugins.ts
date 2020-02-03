@@ -1,5 +1,5 @@
-import { AppSchema } from "../fluent/types";
-import { AbstractTree } from "./AbstractTree";
+import { FluentApi } from "../fluent";
+import { WrappedAbstractTree } from "./AbstractTree";
 
 export interface PluginMetaData {
   name: string;
@@ -14,20 +14,20 @@ export interface PluginHooks {
   beforeRequire?: () => void;
 
   /**
-   * Add things to the tree before validation
+   * Add things to the tree before converting and wrapping it as an WrappedAbstractTree
    */
-  mutateAppSchema?: (schema: AppSchema) => void;
+  useFluentApi?: (api: FluentApi) => void;
 
   /**
    * A plugin may have custom limitations, e.g some types can't be generated
    * Please notify the user here in some way or another ;)
    */
-  validateAbstractTree?: (tree: AbstractTree) => void;
+  validateAbstractTree?: (tree: WrappedAbstractTree) => void;
 
   /**
    * The outputted strings and some extra data usefull for debugging or other plugins
    */
-  buildOutput?: (tree: AbstractTree) => PluginBuildResultFile[];
+  buildOutput?: (tree: WrappedAbstractTree) => PluginBuildResultFile[];
 
   /**
    * Before writing the results to disk

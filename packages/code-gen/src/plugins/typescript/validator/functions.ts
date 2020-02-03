@@ -1,21 +1,22 @@
 import {
-  AbstractArrayValidator,
-  AbstractBooleanValidator,
-  AbstractNumberValidator,
-  AbstractObjectValidator,
-  AbstractOneOfValidator,
-  AbstractRefValidator,
-  AbstractStringValidator,
-  AbstractValidatorMap,
-  AbstractValidatorUnion,
-  NamedAbstractValidator,
+  AnyOfType,
+  ArrayType,
+  BooleanType,
+  NamedType,
+  NumberType,
+  ObjectType,
+  ReferenceType,
+  StringType,
+  TypeMap,
+  TypeUnion,
 } from "../../../types";
+import { upperCaseFirst } from "../../../util";
 import {
+  createAnyOfType,
   createArrayType,
   createBooleanType,
   createNumberType,
   createObjectType,
-  createOneOfType,
   createReferenceType,
   createStringType,
 } from "../types";
@@ -24,12 +25,12 @@ import { buildError } from "./errors";
 interface Context {
   helperFunctions: string[];
   namedFunctions: string[];
-  mapping: AbstractValidatorMap;
+  mapping: TypeMap;
 
   nextFunc(): string;
 }
 
-export function createFunctionsForSchemas(mapping: AbstractValidatorMap) {
+export function createFunctionsForSchemas(mapping: TypeMap) {
   let funcIdx = 0;
   const helperFunctions: string[] = [];
   const namedFunctions: string[] = [];
@@ -60,7 +61,7 @@ export function createFunctionsForSchemas(mapping: AbstractValidatorMap) {
  * TODO: Maybe someone smarter than me can get some less @ts-ignores in this part of the
  *  generated code
  */
-function getValidatorHooks(mapping: AbstractValidatorMap): string {
+function getValidatorHooks(mapping: TypeMap): string {
   const header = `
 type GetHookReturnType<TDefault, Key> = Key extends keyof typeof hooks
   ? ReturnType<ValidationHooks[Key]>
@@ -92,12 +93,9 @@ export function registerValidatorHook<T extends keyof ValidationHooks>(
   return [header, iface, constHooks, registerFn].join("\n");
 }
 
-function createNamedFunctionForSchema(
-  ctx: Context,
-  schema: NamedAbstractValidator,
-): string {
+function createNamedFunctionForSchema(ctx: Context, schema: NamedType): string {
   const fn = createFunction(ctx, schema);
-  const name = schema.name!;
+  const name = upperCaseFirst(schema.name);
 
   return `
 export function validate${name}(
@@ -120,10 +118,7 @@ export function validate${name}(
 `;
 }
 
-function createFunction(
-  ctx: Context,
-  schema: AbstractValidatorUnion,
-): { name: string } {
+function createFunction(ctx: Context, schema: TypeUnion): { name: string } {
   switch (schema.type) {
     case "number":
       return createNumberFunction(ctx, schema);
@@ -135,9 +130,9 @@ function createFunction(
       return createObjectFunction(ctx, schema);
     case "array":
       return createArrayFunction(ctx, schema);
-    case "oneOf":
-      return createOneOfFunction(ctx, schema);
-    case "ref":
+    case "anyOf":
+      return createAnyOfFunction(ctx, schema);
+    case "reference":
       return createReferenceFunction(ctx, schema);
   }
 
@@ -146,7 +141,7 @@ function createFunction(
 
 function createNumberFunction(
   ctx: Context,
-  schema: AbstractNumberValidator,
+  schema: NumberType,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -168,7 +163,7 @@ function createNumberFunction(
   }
   result.push("}");
 
-  if (schema.convert) {
+  if (schema.validator.convert) {
     result.push(`if (typeof value !== "number") {`);
     result.push(`  value = Number(value);`);
     result.push("}");
@@ -180,22 +175,22 @@ function createNumberFunction(
   result.push(buildError("number.type"));
   result.push("}");
 
-  if (schema.integer) {
+  if (schema.validator.integer) {
     result.push(`if (!Number.isInteger(value)) {`);
     result.push(buildError("number.integer"));
     result.push("}");
   }
 
-  if (schema.min !== undefined) {
-    result.push(`if (value < ${schema.min}) {`);
-    result.push(`const min = "${schema.min}";`);
+  if (schema.validator.min !== undefined) {
+    result.push(`if (value < ${schema.validator.min}) {`);
+    result.push(`const min = "${schema.validator.min}";`);
     result.push(buildError("number.min"));
     result.push("}");
   }
 
-  if (schema.max !== undefined) {
-    result.push(`if (value > ${schema.max}) {`);
-    result.push(`const max = "${schema.max}";`);
+  if (schema.validator.max !== undefined) {
+    result.push(`if (value > ${schema.validator.max}) {`);
+    result.push(`const max = "${schema.validator.max}";`);
     result.push(buildError("number.max"));
     result.push("}");
   }
@@ -220,7 +215,7 @@ function createNumberFunction(
 
 function createStringFunction(
   ctx: Context,
-  schema: AbstractStringValidator,
+  schema: StringType,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -242,7 +237,7 @@ function createStringFunction(
   }
   result.push("}");
 
-  if (schema.convert) {
+  if (schema.validator.convert) {
     result.push(`if (typeof value !== "string") {`);
     result.push(`  value = String(value);`);
     result.push("}");
@@ -255,35 +250,39 @@ function createStringFunction(
   // Store in intermediate variable so that we don't have to assign to unknown.
   // result has TS type string here, so `result = result.trim()` also keeps it as a
   // string, whereas `value = value.trim()` results in TS type of value -> 'unknown'.
-  if (schema.trim || schema.upperCase || schema.lowerCase) {
+  if (
+    schema.validator.trim ||
+    schema.validator.upperCase ||
+    schema.validator.lowerCase
+  ) {
     result.push("let result = value;");
   } else {
     result.push("const result = value;");
   }
 
-  if (schema.trim) {
+  if (schema.validator.trim) {
     result.push(`result = result.trim();`);
   }
 
-  if (schema.min !== undefined) {
-    result.push(`if (result.length < ${schema.min}) {`);
-    result.push(`const min = "${schema.min}";`);
+  if (schema.validator.min !== undefined) {
+    result.push(`if (result.length < ${schema.validator.min}) {`);
+    result.push(`const min = "${schema.validator.min}";`);
     result.push(buildError("string.min"));
     result.push("}");
   }
 
-  if (schema.max !== undefined) {
-    result.push(`if (result.length > ${schema.max}) {`);
-    result.push(`const max = "${schema.max}";`);
+  if (schema.validator.max !== undefined) {
+    result.push(`if (result.length > ${schema.validator.max}) {`);
+    result.push(`const max = "${schema.validator.max}";`);
     result.push(buildError("string.max"));
     result.push("}");
   }
 
-  if (schema.upperCase) {
+  if (schema.validator.upperCase) {
     result.push(`result = result.toUpperCase();`);
   }
 
-  if (schema.lowerCase) {
+  if (schema.validator.lowerCase) {
     result.push(`result = result.toLowerCase();`);
   }
 
@@ -296,8 +295,8 @@ function createStringFunction(
     result.push("}");
   }
 
-  if (schema.pattern) {
-    const patternSrc = `/${schema.pattern.source}/${schema.pattern.flags}`;
+  if (schema.validator.pattern) {
+    const patternSrc = `/${schema.validator.pattern.source}/${schema.validator.pattern.flags}`;
     result.push(`if (!${patternSrc}.test(result)) {`);
     result.push(buildError("string.pattern"));
     result.push("}");
@@ -313,7 +312,7 @@ function createStringFunction(
 
 function createBooleanFunction(
   ctx: Context,
-  schema: AbstractBooleanValidator,
+  schema: BooleanType,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -335,7 +334,7 @@ function createBooleanFunction(
   }
   result.push("}");
 
-  if (schema.convert) {
+  if (schema.validator.convert) {
     result.push(`if (typeof value !== "boolean") {`);
     {
       result.push(`if (value === "true" || value === 1) {`);
@@ -369,7 +368,7 @@ function createBooleanFunction(
 
 function createObjectFunction(
   ctx: Context,
-  schema: AbstractObjectValidator,
+  schema: ObjectType,
 ): { name: string } {
   const funcName = ctx.nextFunc();
 
@@ -395,7 +394,7 @@ function createObjectFunction(
   result.push("}");
   result.push(`const result: any = {};`);
 
-  if (schema.strict !== undefined) {
+  if (schema.validator.strict) {
     // Not that nice to use a '!' but am done with figuring it out for now...
     result.push(`const keySet = new Set(Object.keys(value!));`);
   }
@@ -406,13 +405,13 @@ function createObjectFunction(
       result.push(
         `result["${key}"] = ${name}((value as any)["${key}"], propertyPath + "." + "${key}");`,
       );
-      if (schema.strict) {
+      if (schema.validator.strict) {
         result.push(`keySet.delete("${key}");`);
       }
     }
   }
 
-  if (schema.strict !== undefined) {
+  if (schema.validator.strict) {
     result.push(`if (keySet.size !== 0) {`);
     result.push(`let extraKeys = "";`);
     result.push(`for (const v of keySet.keys()) { extraKeys += v + ","; }`);
@@ -428,7 +427,7 @@ function createObjectFunction(
   return { name: funcName };
 }
 
-function createArrayFunction(ctx: Context, schema: AbstractArrayValidator) {
+function createArrayFunction(ctx: Context, schema: ArrayType) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];
@@ -451,7 +450,7 @@ function createArrayFunction(ctx: Context, schema: AbstractArrayValidator) {
 
   const { name } = createFunction(ctx, schema.values);
 
-  if (schema.convert) {
+  if (schema.validator.convert) {
     result.push(`if (!Array.isArray(value)) {`);
     result.push(`value = [value]`);
     result.push(`}`);
@@ -475,13 +474,13 @@ function createArrayFunction(ctx: Context, schema: AbstractArrayValidator) {
   return { name: funcName };
 }
 
-function createOneOfFunction(ctx: Context, schema: AbstractOneOfValidator) {
+function createAnyOfFunction(ctx: Context, schema: AnyOfType) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];
 
   result.push(
-    `function ${funcName}(value: unknown, propertyPath: string): ${createOneOfType(
+    `function ${funcName}(value: unknown, propertyPath: string): ${createAnyOfType(
       schema,
     )} {`,
   );
@@ -498,7 +497,7 @@ function createOneOfFunction(ctx: Context, schema: AbstractOneOfValidator) {
 
   result.push(`const errors: ValidationError[] = [];`);
 
-  for (const s of schema.oneOf) {
+  for (const s of schema.anyOf) {
     const { name } = createFunction(ctx, s);
     result.push(`try {`);
     result.push(`return ${name}(value, propertyPath);`);
@@ -517,7 +516,7 @@ function createOneOfFunction(ctx: Context, schema: AbstractOneOfValidator) {
   return { name: funcName };
 }
 
-function createReferenceFunction(ctx: Context, schema: AbstractRefValidator) {
+function createReferenceFunction(ctx: Context, schema: ReferenceType) {
   const funcName = ctx.nextFunc();
 
   const result: string[] = [];
@@ -537,7 +536,7 @@ function createReferenceFunction(ctx: Context, schema: AbstractRefValidator) {
     }
   }
   result.push("}");
-  const { name } = createFunction(ctx, ctx.mapping[schema.ref]);
+  const { name } = createFunction(ctx, ctx.mapping[schema.reference]);
   result.push(`const result = ${name}(value, propertyPath);`);
 
   result.push(`return result as ${createReferenceType(schema)};`);

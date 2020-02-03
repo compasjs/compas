@@ -1,64 +1,7 @@
-import { AppSchema, RoutePrio, RouteSchema } from "../fluent/types";
 import { logger } from "../logger";
-import { AbstractRoute, AbstractRouteTrie } from "../types";
-import { lowerCaseFirst } from "../util";
+import { AbstractRoute, AbstractRouteTrie, RoutePrio } from "../types";
 
-export function extractRouteTrie(schema: AppSchema): AbstractRouteTrie {
-  const abstractRoutes = convertToAbstractRoutes(schema.routes);
-  const routeTrie = convertToAbstractRouteTrie(abstractRoutes);
-  printAbstractRouteTrie(routeTrie);
-
-  return routeTrie;
-}
-
-function convertToAbstractRoutes(routes: RouteSchema[]): AbstractRoute[] {
-  const result: AbstractRoute[] = [];
-
-  for (const route of routes) {
-    let path = route.path;
-    if (path.startsWith("/")) {
-      path = path.substring(1);
-    }
-    if (path.endsWith("/")) {
-      path = path.substring(0, path.length - 2);
-    }
-
-    result.push({
-      path,
-      method: route.method,
-      name: lowerCaseFirst(route.name),
-      queryValidator: route.queryValidator
-        ? {
-            typeName: `QuerySchema${route.name}`,
-            validatorName: `validateQuerySchema${route.name}`,
-          }
-        : undefined,
-      paramsValidator: route.paramsValidator
-        ? {
-            typeName: `ParamsSchema${route.name}`,
-            validatorName: `validateParamsSchema${route.name}`,
-          }
-        : undefined,
-      bodyValidator: route.bodyValidator
-        ? {
-            typeName: `BodySchema${route.name}`,
-            validatorName: `validateBodySchema${route.name}`,
-          }
-        : undefined,
-      response: route.response
-        ? {
-            typeName: `ResponseSchema${route.name}`,
-          }
-        : undefined,
-    });
-  }
-
-  return result;
-}
-
-export function convertToAbstractRouteTrie(
-  routes: AbstractRoute[],
-): AbstractRouteTrie {
+export function buildRouteTrie(routes: AbstractRoute[]): AbstractRouteTrie {
   const trie: AbstractRouteTrie = createNode("", undefined);
   addHttpMethods(trie);
 
