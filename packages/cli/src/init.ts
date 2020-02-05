@@ -39,8 +39,9 @@ function execInit() {
     input.replace(/{{template}}/g, projectName),
   );
 
+  // Install dependencies, generate, lint and build
   spawnSync(`yarn`, { stdio: "inherit" });
-  spawnSync(`yarn`, ["lint"], { stdio: "inherit" });
+  spawnSync(`yarn`, ["generate"], { stdio: "inherit" });
   spawnSync(`yarn`, ["build"], { stdio: "inherit" });
 }
 
