@@ -19,6 +19,7 @@ will be supported:
 - Test coverage (either e2e or unit, but enough to be considered somewhat
   stable)
 - Used in a medium size project @ Lightbase
+- Implement a [Realworld project](https://github.com/gothinkster/realworld)
 
 ## Features
 

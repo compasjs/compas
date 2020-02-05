@@ -42,6 +42,7 @@ export class NamedTypeBuilder {
 
   set(type: TypeUnionBuilder) {
     Object.assign(this.result, type.toTypeUnion());
+    return this;
   }
 
   public boolean(): BooleanTypeBuilder {
@@ -115,6 +116,7 @@ class NumberTypeBuilder implements TypeUnionBuilder {
     type: "number",
     optional: false,
     model: {
+      primaryKey: false,
       comparable: false,
     },
     validator: {
@@ -130,6 +132,12 @@ class NumberTypeBuilder implements TypeUnionBuilder {
 
   convert() {
     this.result.validator.convert = true;
+    return this;
+  }
+
+  primary() {
+    this.result.model.primaryKey = true;
+    this.result.model.comparable = true;
     return this;
   }
 
@@ -176,6 +184,7 @@ class StringTypeBuilder implements TypeUnionBuilder {
     type: "string",
     optional: false,
     model: {
+      primaryKey: false,
       comparable: false,
       textSearch: false,
     },
@@ -194,6 +203,12 @@ class StringTypeBuilder implements TypeUnionBuilder {
 
   oneOf(...values: string[]) {
     this.result.oneOf = values;
+    return this;
+  }
+
+  primary() {
+    this.result.model.primaryKey = true;
+    this.result.model.comparable = true;
     return this;
   }
 

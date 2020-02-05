@@ -1,6 +1,6 @@
 export interface WrappedAbstractTree extends AbstractTree {
   routeTrie: AbstractRouteTrie;
-  models: TypeMap;
+  models: ModelTypeMap;
   validators: TypeMap;
 }
 
@@ -11,6 +11,7 @@ export interface AbstractTree {
 }
 
 export type TypeMap = Record<string, NamedType>;
+export type ModelTypeMap = Record<string, NamedTypeT<ObjectType>>;
 
 export type NamedType = BaseType & TypeUnion;
 
@@ -59,6 +60,7 @@ export interface NumberType {
     integer: boolean;
   };
   model: {
+    primaryKey: boolean;
     comparable: boolean;
     reference?: ModelReference;
   };
@@ -78,6 +80,7 @@ export interface StringType {
     upperCase: boolean;
   };
   model: {
+    primaryKey: boolean;
     comparable: boolean;
     textSearch: boolean;
     reference?: ModelReference;

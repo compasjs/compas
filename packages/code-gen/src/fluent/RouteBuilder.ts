@@ -84,6 +84,7 @@ export class RouteBuilder {
       throw new Error("Make sure to call this.path() with a valid path");
     }
 
+    // May be a bit of a hacky place to do this but should be fine for now.
     const handlerType = new NamedTypeBuilder(this.tree, `${this.name}Handler`);
     const obj: any = {};
     if (this.result.paramsValidator) {

@@ -1,4 +1,9 @@
-import { AbstractTree, TypeMap, WrappedAbstractTree } from "../types";
+import {
+  AbstractTree,
+  ModelTypeMap,
+  TypeMap,
+  WrappedAbstractTree,
+} from "../types";
 import { buildRouteTrie, printAbstractRouteTrie } from "./router";
 import { validateTree } from "./validate";
 
@@ -24,15 +29,20 @@ export function wrapAbstractTree(tree: AbstractTree): WrappedAbstractTree {
   };
 }
 
-function extractModels(map: TypeMap): TypeMap {
-  const result: TypeMap = {};
+function extractModels(map: TypeMap): ModelTypeMap {
+  const result: ModelTypeMap = {};
 
   for (const key in map) {
     if (!Object.prototype.hasOwnProperty.call(map, key)) {
       continue;
     }
+
     if (map[key].withModel) {
-      result[key] = map[key];
+      const type = map[key];
+      if (type.type !== "object") {
+        throw new Error(`${key} should be an object, to be used as a model`);
+      }
+      result[key] = type;
     }
   }
 
