@@ -1,5 +1,0 @@
-{
-  "generate": {
-    "inputFile": "./src/gen/index.ts"
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "extends": [
-    "./node_modules/@lbu/lint-config/dist/index.js"
-  ],
-  "root": true
-}

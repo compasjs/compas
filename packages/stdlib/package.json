@@ -1,32 +1,29 @@
 {
   "name": "@lbu/stdlib",
   "version": "0.0.4",
-  "description": "Lightbase standard library",
-  "main": "dist/index.js",
+  "description": "All kinds of utility functions",
+  "main": "index.js",
   "keywords": [
-    "stdlib",
     "lbu",
     "lightbase",
-    "backend",
-    "gen",
-    "generate"
+    "stdlib",
+    "standard"
   ],
   "files": [
     "README.md",
     "LICENSE",
-    "dist/**/*.*"
+    "index.js",
+    "src/datatypes.js",
+    "src/lodash.js",
+    "src/node.js",
+    "src/template.js",
+    "src/utils.js"
   ],
-  "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.4",
+    "@lbu/insight": "0.0.4",
     "lodash.merge": "4.6.2",
     "uuid": "3.4.0"
-  },
-  "devDependencies": {
-    "@types/lodash.merge": "4.6.6",
-    "@types/node": "13.1.8",
-    "@types/uuid": "3.4.6"
   },
   "author": {
     "name": "Dirk de Visser",
@@ -38,5 +35,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

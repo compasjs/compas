@@ -7,14 +7,14 @@ node_modules
 lib
 tsconfig.tsbuildinfo
 
-# NPM / Yarn / Jest
+# NPM / Yarn
 *-debug.log
 *-error.log
-.jest-*
 package-lock.json
 
 # node-clinic
 .clinic
 
-# Code-gen for tests
+# Tests
 *.test-gen.*
+.nyc_output

@@ -2,15 +2,10 @@
 .idea
 .vscode
 
-dist
+# Modules and package manager
 node_modules
-lib
-tsconfig.tsbuildinfo
-
-# NPM / Yarn / Jest
 *-debug.log
 *-error.log
-.jest-*
 package-lock.json
 
 # node-clinic

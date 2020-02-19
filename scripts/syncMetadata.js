@@ -1,39 +1,49 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
+const { newLogger } = require("@lbu/insight");
+const { mainFn } = require("@lbu/cli");
 const { spawnSync } = require("child_process");
 const { join } = require("path");
 const { readdirSync, readFileSync, writeFileSync } = require("fs");
 
-// Script to copy the root README.md to all packages
+const buildReadmeSource = (pkgName, readmeSource) =>
+  `# @lbu/${pkgName}\n${readmeSource}`;
 
-if (join(process.cwd(), "scripts") !== __dirname) {
-  throw new Error("Wrong directory. Run in root.");
-}
-
-const packagesDir = join(process.cwd(), "packages");
-const packages = readdirSync(packagesDir);
-const readmeSource = getReadmeSource();
-
-console.log("Updating", packages.length, "README.md's");
-
-for (const pkg of packages) {
-  const pkgDir = join(packagesDir, pkg);
-
-  writeFileSync(join(pkgDir, "README.md"), buildReadmeSource(pkg));
-}
-
-console.log("Done.\nRunning linter");
-spawnSync("yarn", ["lint"], { stdio: "inherit" });
-
-function getReadmeSource() {
+const getReadmeSource = () => {
   const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
 
   return src
     .split("\n")
     .slice(1)
     .join("\n");
-}
+};
 
-function buildReadmeSource(pkgName) {
-  return `# @lbu/${pkgName}\n${readmeSource}`;
-}
+const exec = logger => {
+  // Script to copy the root README.md to all packages
+
+  if (join(process.cwd(), "scripts") !== __dirname) {
+    throw new Error("Wrong directory. Run in root.");
+  }
+
+  const packagesDir = join(process.cwd(), "packages");
+  const packages = readdirSync(packagesDir);
+  const readmeSource = getReadmeSource();
+
+  logger.info("Updating", packages.length, "README.md's");
+
+  for (const pkg of packages) {
+    const pkgDir = join(packagesDir, pkg);
+
+    writeFileSync(
+      join(pkgDir, "README.md"),
+      buildReadmeSource(pkg, readmeSource),
+    );
+  }
+
+  logger.info("Done.\nRunning linter");
+  spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
+};
+
+mainFn(module, require, newLogger(), exec);
+
+module.exports = {
+  nodemonArgs: "-w ./README.md",
+};

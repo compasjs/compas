@@ -2,10 +2,9 @@
 
 ### Development
 
-Development should be pretty straight forward. Run `yarn build --watch` and
-`yarn test --watch` both in their own terminal. Before making a commit, make
-sure to run `yarn lint`. Note that this automatically will try to fix most
-issues that popup.
+Development should be pretty straight forward. Run `yarn test --watch` to run
+the test suite. Before making a commit, make sure to run `yarn lint`. Note that
+this automatically will try to fix most issues that popup.
 
 To test changes to the template, use the following command:
 `../lbu/packages/cli/dist/index.js [command]`
@@ -21,10 +20,24 @@ Where the folder structure is something like:
 
 A few development utilities are provided in [./scripts](./scripts):
 
-- `node ./scripts/references.js`: Update all tsconfig references based on the
-  dependencies of the package.
 - `node ./scripts/syncMetadata.js`: Copy and paste the root README.md to all
   packages
+
+### Debugging tests
+
+Add in the test file that you want to debug:
+
+```javascript
+if (require.main === module) {
+  const tape = require("tape");
+  const promiseWrap = require("tape-promise");
+  const test = promiseWrap.default(tape);
+  module.exports(test);
+}
+```
+
+Debug that file as if you debug whatever other Node.js script.
+E.g in Webstorm: (right-mouse click -> Debug `file.test.js`)
 
 ### Publishing
 

@@ -1,30 +1,17 @@
 {
   "private": true,
-  "license": "UNLICENSE",
-  "name": "{{template}}",
+  "license": "MIT",
+  "name": "{{name}}",
   "scripts": {
-    "build": "tsc",
-    "lint": "lbu lint",
-    "start": "node -r @lbu/register ./dist/index.js",
-    "dev": "node -r @lbu/register src/index.ts",
-    "dev:watch": "nodemon --watch src --ext ts,js,json --exec 'yarn dev'",
-    "generate": "lbu generate"
+    "start": "node src/index.js"
   },
   "dependencies": {
-    "@lbu/insight": "0.0.4",
-    "@lbu/koa": "0.0.4",
-    "@lbu/register": "0.0.4",
-    "@lbu/stdlib": "0.0.4"
+    "@lbu/insight": "{{version}}",
+    "@lbu/stdlib": "{{version}}",
+    "dotenv": "8.2.0"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.4",
-    "@lbu/code-gen": "0.0.4",
-    "@lbu/lint-config": "0.0.4",
-    "@types/node": "13.1.8",
-    "eslint": "6.8.0",
-    "nodemon": "2.0.2",
-    "prettier": "1.19.1",
-    "ts-node": "8.6.2",
-    "typescript": "3.7.5"
+    "@lbu/cli": "{{version}}",
+    "@lbu/lint-config": "{{version}}"
   }
 }

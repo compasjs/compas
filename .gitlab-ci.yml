@@ -20,10 +20,9 @@ stages:
     paths:
       - node_modules/
   script:
-    - yarn
-    - yarn build
-    - yarn lint
-    - yarn test
+    - yarn install
+    - yarn lbu lint
+    - yarn lbu test
 
 build_lint_test_node10:
   <<: [*node10]

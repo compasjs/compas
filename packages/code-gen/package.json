@@ -1,28 +1,26 @@
 {
   "name": "@lbu/code-gen",
   "version": "0.0.4",
-  "description": "Lightbase code generator",
-  "main": "dist/index.js",
+  "description": "Generate various boring parts of your server",
+  "main": "index.js",
   "keywords": [
-    "lbu",
     "lightbase",
-    "backend",
-    "gen",
-    "generate"
+    "lbu",
+    "generate",
+    "router",
+    "validation",
+    "code-gen"
   ],
   "files": [
     "README.md",
     "LICENSE",
-    "dist/**/*.*"
+    "index.js"
   ],
-  "types": "./dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.4",
-    "@lbu/stdlib": "^0.0.4"
-  },
-  "devDependencies": {
-    "@types/node": "13.1.8"
+    "@lbu/cli": "0.0.4",
+    "@lbu/insight": "0.0.4",
+    "@lbu/stdlib": "0.0.4"
   },
   "author": {
     "name": "Dirk de Visser",
@@ -34,5 +32,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

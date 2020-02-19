@@ -2,21 +2,19 @@
   "name": "lbu",
   "private": true,
   "scripts": {
-    "build": "tsc -b",
-    "lint": "yarn eslint --fix && yarn prettier --write",
-    "prettier": "prettier -l '*/**/**.{js,ts,json}'",
-    "eslint": "eslint ./packages/*/src/**/*.ts",
-    "test": "jest",
     "bump": "lerna changed && lerna version",
-    "release": "yarn build && lerna publish"
+    "release": "lerna publish"
+  },
+  "engines": {
+    "node": ">=12"
   },
   "devDependencies": {
+    "@lbu/cli": "0.0.4",
+    "@lbu/insight": "0.0.4",
     "@lbu/lint-config": "0.0.4",
-    "@types/jest": "25.1.1",
-    "jest": "25.1.0",
     "lerna": "3.20.2",
-    "ts-jest": "25.1.0",
-    "typescript": "3.7.5"
+    "tape": "4.13.0",
+    "tape-promise": "4.0.0"
   },
   "workspaces": [
     "packages/*"
