@@ -2,10 +2,6 @@ stages:
   - test
 
 # Supported Node versions
-
-.node10: &node10
-  image: node:10
-
 .node12: &node12
   image: node:12
 
@@ -23,12 +19,6 @@ stages:
     - yarn install
     - yarn lbu lint
     - yarn lbu test
-
-build_lint_test_node10:
-  <<: [*node10]
-  extends: .build_lint_test
-  cache:
-    key: lightbase-node10
 
 build_lint_test_node12:
   <<: [*node12]

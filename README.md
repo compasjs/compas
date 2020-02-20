@@ -23,14 +23,20 @@ will be supported:
 
 ## Features
 
-- @lbu/cli: Project template, and useful commands while developing
-- @lbu/code-gen: Flexible code generators. Supports generating Typescript code
-  for validators, http router, postgres queries and OpenAPI schema
+- @lbu/cli: Project template, and simple script runner
+- @lbu/code-gen: Flexible code generators. Supports generating validators,
+  router, SQL and more
 - @lbu/insight: Opinionated logger
-- @lbu/koa: Wrap around Koa and some useful middleware
-- @lbu/register: Load dotenv and if available ts-node
+- @lbu/server: Wrap around Koa and some useful middleware
 - @lbu/stdlib: Growing library with features like uuid generation and background
   jobs
+
+## Roadmap
+
+- [ ] @lbu/store: Common abstraction for FileSystem, Redis, Memory support for
+      queues, KV store etc
+- [ ] @lbu/code-gen: More plugins
+
 
 ## Docs
 

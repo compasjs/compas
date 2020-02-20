@@ -58,3 +58,14 @@ Everything should be published now. To make the repo ready for more development:
 - Run `yarn`
 - Copy SHA of release commit in CHANGELOG.md
 - Commit with `[*] Bump @lbu/* to vX.X.X`
+
+
+### WebStorm
+
+- `Help` > `Edit Custom Properties...` > `idea.javascript.max.evaluation.complexity=80`
+- Open `/.prettierrc.js` > `Find Actions` > `Apply Prettier Code Style Rules`
+- Open `/.eslintrc.js` > `Find Actions` > `Apply ESLint Code Style Rules`
+- `Settings` > `Node.js And NPM` > `Coding assistance for Node.js`
+- `Edit configurations...` > `Templates/Node.js`:
+    - `V8 Profiling` > `Allow taking heap snapshots`
+    - `Configuration` > `Working directory` > `/path/to/checkout/root`
