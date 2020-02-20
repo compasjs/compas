@@ -1,4 +1,5 @@
 const { isNil, spawn } = require("@lbu/stdlib");
+const { join } = require("path");
 const { getKnownScripts } = require("./utils");
 
 /**
@@ -16,6 +17,17 @@ const execScript = (logger, cmd = "help", args = []) => {
   }
 
   const script = getKnownScripts()[cmd];
+
+  // Support plain js files
+  if (isNil(script) && cmd.endsWith(".js")) {
+    return execJsFile(
+      logger,
+      { path: join(process.cwd(), cmd) },
+      "SCRIPT",
+      [],
+      watch,
+    );
+  }
 
   if (isNil(script)) {
     logger.info(`Unknown script: ${cmd} with args: ${args.join(",")}`);
@@ -36,6 +48,7 @@ const execJsFile = (logger, script, cmd, args, watch) => {
     if (opts.disallowNodemon) {
       logger.error(`Cannot execute ${cmd} in watch mode`);
       watch = false;
+      args = [script.path, ...args];
     } else {
       const nodemonArgs =
         typeof opts.nodemonArgs === "string" && opts.nodemonArgs.length > 0
@@ -43,10 +56,13 @@ const execJsFile = (logger, script, cmd, args, watch) => {
           : [];
       args = [...nodemonArgs, script.path, "--", ...args];
     }
+  } else {
+    args = [script.path, ...args];
   }
+
   const executor = watch ? "./node_modules/.bin/nodemon" : "node";
 
-  return spawn(executor, [script.path, ...args]);
+  return spawn(executor, args);
 };
 
 const execYarnScript = (logger, script, cmd, args, watch) => {
