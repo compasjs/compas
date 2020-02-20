@@ -1,3 +1,8 @@
+const {
+  promises: { readFile },
+} = require("fs");
+const path = require("path");
+const { processDirectoryRecursive } = require("./node");
 const { isNil } = require("./lodash");
 
 /**
@@ -91,6 +96,20 @@ const compileTemplate = (name, str, opts = {}) => {
   }
 };
 
+const compileTemplateDirectory = (dir, extension, opts) => {
+  const ext = extension[0] !== "." ? `.${extension}` : extension;
+  return processDirectoryRecursive(dir, async file => {
+    if (!file.endsWith(ext)) {
+      return;
+    }
+
+    const content = await readFile(file, { encoding: "utf-8" });
+    const name = path.parse(file).name;
+
+    compileTemplate(name, content, opts);
+  });
+};
+
 const getExecutionContext = () => {
   const result = {
     ...templateContext,
@@ -137,5 +156,6 @@ const addToTemplateContext = (name, value) => {
 module.exports = {
   addToTemplateContext,
   compileTemplate,
+  compileTemplateDirectory,
   executeTemplate,
 };
