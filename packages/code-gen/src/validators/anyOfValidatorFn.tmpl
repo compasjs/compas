@@ -1,0 +1,25 @@
+{{ for (const v of it.values) { }}
+{{= validatorsAnonFn(v) }}
+{{ } }}
+
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("anyOf.undefined") }}
+    {{ } }}
+  }
+
+  const errors = [];
+  {{ for (const v of values) { }}
+  try {
+    return {{= v.functionName }}(value, propertyPath);
+  } catch (e) {
+    errors.push(e);
+  }
+  {{ } }}
+
+  const stringErrors = errors.map(it => it.message);
+  {{= buildError("anyOf.type") }}
+};

@@ -1,0 +1,32 @@
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("boolean.undefined") }}
+    {{ } }}
+  }
+
+  {{ if (it.convert) { }}
+  if (typeof value !== "boolean") {
+    if (value === "true" || value === 1) {
+      value = true;
+    } else if (value === "false" || value === 0) {
+      value = false;
+    }
+  }
+  {{ } }}
+
+  if (typeof value !== "boolean") {
+    {{= buildError("boolean.type") }}
+  }
+
+  {{ if (it.oneOf !== undefined) { }}
+  if (value !== {{= oneOf }}) {
+    const oneOf = {{= oneOf }};
+    {{= buildError("boolean.oneOf") }}
+  }
+  {{ } }}
+
+  return value;
+};

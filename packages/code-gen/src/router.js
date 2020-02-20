@@ -4,14 +4,14 @@ const init = ({ hasPlugin }) => {
   }
 };
 
-const run = ({ outputDir }) => {
+const generate = ({ outputDir }) => {
   console.log(outputDir);
 };
 
 const getPlugin = () => ({
   name: "router",
   init,
-  run,
+  generate,
 });
 
 module.exports = {

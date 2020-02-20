@@ -1,0 +1,23 @@
+const { isNil } = require("@lbu/stdlib");
+
+const validatorHooks = {};
+
+class ValidationError extends Error {
+  static isValidationError(err) {
+    return err.name === "ValidationError";
+  }
+
+  constructor(key, message) {
+    super(message);
+
+    Object.setPrototypeOf(this, ValidationError.prototype);
+    this.name = this.constructor.name;
+    this.key = key;
+  }
+}
+
+{{ for (const v of it.validators) { }}
+{{= validatorsNamedFn(v) }}
+{{ } }}
+
+{{= validatorsExports(it) }}

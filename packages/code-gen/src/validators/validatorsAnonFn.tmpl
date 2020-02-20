@@ -1,0 +1,15 @@
+{{ if (type === "boolean") { }}
+  {{= booleanValidatorFn(it) }}
+{{ } else if (type === "number") { }}
+  {{= numberValidatorFn(it) }}
+{{ } else if (type === "string") { }}
+  {{= stringValidatorFn(it) }}
+{{ } else if (type === "object") { }}
+  {{= objectValidatorFn(it) }}
+{{ } else if (type === "array") { }}
+  {{= arrayValidatorFn(it) }}
+{{ } else if (type === "anyOf") { }}
+  {{= anyOfValidatorFn(it) }}
+{{ } else if (type === "reference") { }}
+  {{= referenceValidatorFn(it) }}
+{{ } }}

@@ -1,0 +1,11 @@
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("reference.undefined") }}
+    {{ } }}
+  }
+
+  return {{= reference }}(value, propertyPath);
+};

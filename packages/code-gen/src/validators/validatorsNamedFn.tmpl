@@ -1,0 +1,23 @@
+{{= validatorsAnonFn(validator) }}
+
+/**
+ * {{= validatorName }}
+ * @param {*} value
+ */
+const {{= validatorName }} = value => {
+ let result = value;
+
+ {{ const preValidate = quote(preValidateHook); }}
+ {{ const postValidate = quote(postValidateHook); }}
+ if ({{= preValidate }} in validatorHooks) {
+    result = validatorHooks[{{= preValidate }}](result);
+ }
+
+ result = {{= validator.functionName }}(result, "$");
+
+ if ({{= postValidate }} in validatorHooks) {
+    return validatorHooks[{{= postValidate }}](result);
+ } else {
+   return result;
+ }
+};

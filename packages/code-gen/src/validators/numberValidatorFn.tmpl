@@ -1,0 +1,48 @@
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("number.undefined") }}
+    {{ } }}
+  }
+
+  {{ if (it.convert) { }}
+  if (typeof value !== "number") {
+    value = Number(value)
+  }
+  {{ } }}
+
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    {{= buildError("number.type") }}
+  }
+
+  {{ if (it.integer) { }}
+  if (!Number.isInteger(value)) {
+    {{= buildError("number.integer") }}
+  }
+  {{ } }}
+
+  {{ if (it.min !== undefined) { }}
+  if (value < {{= min }}) {
+    const min = {{= min }};
+    {{= buildError("number.min") }}
+  }
+  {{ } }}
+
+  {{ if (it.max !== undefined) { }}
+  if (value > {{= max }}) {
+    const max = {{= max }};
+    {{= buildError("number.max") }}
+  }
+  {{ } }}
+
+  {{ if (it.oneOf !== undefined) { }}
+  if ({{= oneOf.map(it => "value !== " + it).join(" && ") }}) {
+    const oneOf = {{= quote(oneOf.join(", ")) }};
+    {{= buildError("number.oneOf") }}
+  }
+  {{ } }}
+
+  return value;
+};

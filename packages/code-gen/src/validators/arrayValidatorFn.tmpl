@@ -1,0 +1,43 @@
+{{= validatorsAnonFn(values) }}
+
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("array.undefined") }}
+    {{ } }}
+  }
+
+  {{ if (it.convert) { }}
+  if (!Array.isArray(value) {
+    value = [value];
+  }
+  {{ } }}
+
+  if (!Array.isArray(value)) {
+    {{= buildError("array.type") }}
+  }
+
+  {{ if (it.min !== undefined) { }}
+  if (value.length < {{= min }}) {
+    const min = {{= quote(min) }};
+    {{= buildError("array.min") }}
+  }
+  {{ } }}
+
+  {{ if (it.max !== undefined) { }}
+  if (value.length > {{= max}}) {
+    const max = {{= quote(max) }};
+    {{= buildError("array.max") }}
+  }
+  {{ } }}
+
+  const result = [];
+
+  for (let i = 0; i < value.length; ++i) {
+    result.push({{= values.functionName }}(value[i], propertyPath + "[" + i + "]"));
+  }
+
+  return result;
+};

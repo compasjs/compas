@@ -1,0 +1,61 @@
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("string.undefined") }}
+    {{ } }}
+  }
+
+  {{ if (it.convert) { }}
+  if (typeof value !== "string") {
+    value = String(value)
+  }
+  {{ } }}
+
+  if (typeof value !== "string") {
+    {{= buildError("string.type") }}
+  }
+
+  {{ if (it.trim) { }}
+  value = value.trim();
+  {{ } }}
+
+  {{ if (it.min !== undefined) { }}
+  if (value.length < {{= min }}) {
+    const min = {{= min }};
+    {{= buildError("string.min") }}
+  }
+  {{ } }}
+
+  {{ if (it.max !== undefined) { }}
+  if (value.length > {{= max }}) {
+    const max = {{= max }};
+    {{= buildError("string.max") }}
+  }
+  {{ } }}
+
+  {{ if (it.upperCase) { }}
+  value = value.toUpperCase();
+  {{ } }}
+
+  {{ if (it.lowerCase) { }}
+  value = value.toLowerCase();
+  {{ } }}
+
+  {{ if (it.oneOf !== undefined) { }}
+  if ({{= oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
+    const oneOf = {{= quote(oneOf.join(", ")) }};
+    {{= buildError("string.oneOf") }}
+  }
+  {{ } }}
+
+  {{ if (it.pattern !== undefined) { }}
+  {{ const patternSrc = "/" + pattern.source + "/" + pattern.flags; }}
+  if (!{{= patternSrc }}.test(value)) {
+    {{= buildError("string.pattern") }}
+  }
+  {{ } }}
+
+  return value;
+};

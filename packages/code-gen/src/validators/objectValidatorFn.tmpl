@@ -1,0 +1,40 @@
+{{ for (const key of Object.keys(keys)) { }}
+{{= validatorsAnonFn(keys[key]) }}
+{{ } }}
+
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      {{= buildError("object.undefined") }}
+    {{ } }}
+  }
+
+  if (typeof value !== "object") {
+    {{= buildError("object.type") }}
+  }
+  const result = {};
+
+  {{ if (it.strict) { }}
+  const keySet = new Set(Object.keys(value));
+  {{ } }}
+
+  {{ for (const key of Object.keys(keys)) { }}
+    result[{{= quote(key) }}] = {{= keys[key].functionName }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }});
+
+    {{ if (it.strict) { }}
+    keySet.delete({{= quote(key) }});
+    {{ } }}
+  {{ } }}
+
+  {{ if (it.strict) { }}
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) { extraKeys += k + ","; }
+    {{= buildError("object.strict") }}
+  }
+  {{ } }}
+
+  return result;
+};
