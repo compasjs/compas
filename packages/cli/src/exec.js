@@ -73,7 +73,6 @@ const execYarnScript = (logger, script, cmd, args, watch) => {
       logger.error(
         "Can only convert Yarn scripts to enable watch mode if they look like 'node src/script.js --args'",
       );
-      watch = false;
     } else {
       return execJsFile(
         logger,
