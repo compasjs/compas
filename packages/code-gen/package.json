@@ -11,11 +11,6 @@
     "validation",
     "code-gen"
   ],
-  "files": [
-    "README.md",
-    "LICENSE",
-    "index.js"
-  ],
   "license": "MIT",
   "dependencies": {
     "@lbu/cli": "0.0.4",

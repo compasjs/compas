@@ -9,16 +9,6 @@
     "stdlib",
     "standard"
   ],
-  "files": [
-    "README.md",
-    "LICENSE",
-    "index.js",
-    "src/datatypes.js",
-    "src/lodash.js",
-    "src/node.js",
-    "src/template.js",
-    "src/utils.js"
-  ],
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "0.0.4",

@@ -8,14 +8,6 @@
     "lbu",
     "logger"
   ],
-  "files": [
-    "README.md",
-    "LICENSE",
-    "index.js",
-    "src/logger.js",
-    "src/writer.js",
-    "src/memory.js"
-  ],
   "license": "MIT",
   "author": {
     "name": "Dirk de Visser",

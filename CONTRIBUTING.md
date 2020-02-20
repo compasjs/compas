@@ -36,8 +36,8 @@ if (require.main === module) {
 }
 ```
 
-Debug that file as if you debug whatever other Node.js script.
-E.g in Webstorm: (right-mouse click -> Debug `file.test.js`)
+Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
+(right-mouse click -> Debug `file.test.js`)
 
 ### Publishing
 
@@ -59,13 +59,13 @@ Everything should be published now. To make the repo ready for more development:
 - Copy SHA of release commit in CHANGELOG.md
 - Commit with `[*] Bump @lbu/* to vX.X.X`
 
-
 ### WebStorm
 
-- `Help` > `Edit Custom Properties...` > `idea.javascript.max.evaluation.complexity=80`
+- `Help` > `Edit Custom Properties...` >
+  `idea.javascript.max.evaluation.complexity=80`
 - Open `/.prettierrc.js` > `Find Actions` > `Apply Prettier Code Style Rules`
 - Open `/.eslintrc.js` > `Find Actions` > `Apply ESLint Code Style Rules`
 - `Settings` > `Node.js And NPM` > `Coding assistance for Node.js`
 - `Edit configurations...` > `Templates/Node.js`:
-    - `V8 Profiling` > `Allow taking heap snapshots`
-    - `Configuration` > `Working directory` > `/path/to/checkout/root`
+  - `V8 Profiling` > `Allow taking heap snapshots`
+  - `Configuration` > `Working directory` > `/path/to/checkout/root`

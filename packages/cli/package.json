@@ -14,17 +14,6 @@
     "template",
     "boilerplate"
   ],
-  "files": [
-    "README.md",
-    "LICENSE",
-    "index.js",
-    "src/bin.js",
-    "src/exec.js",
-    "src/utils.js",
-    "src/logger.js",
-    "scripts/*.js",
-    "template/**/*.*"
-  ],
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "0.0.4",

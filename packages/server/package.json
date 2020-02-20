@@ -11,19 +11,6 @@
     "http",
     "backend"
   ],
-  "files": [
-    "README.md",
-    "LICENSE",
-    "index.js",
-    "src/app.js",
-    "src/middleware/body.js",
-    "src/middleware/error.js",
-    "src/middleware/headers.js",
-    "src/middleware/health.js",
-    "src/middleware/index.js",
-    "src/middleware/log.js",
-    "src/middleware/notFound.js"
-  ],
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "0.0.4",
