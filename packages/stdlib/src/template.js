@@ -15,6 +15,7 @@ const templateStore = new Map();
 /**
  * Simple template support
  * Unsafe for not trusted inputs
+ * Fields need to be explicitly set to undefined or access them via `it.field`
  * Inspired by:
  * https://johnresig.com/blog/javascript-micro-templating/
  * @param {string} name Name that is exposed in the template it self and to be used with
@@ -30,37 +31,64 @@ const compileTemplate = (name, str, opts = {}) => {
   }
 
   const compiled = str
-    .replace(/[\r\n\t]/g, " ")
-    .split("{{")
-    .join("\t")
-    .replace(/((^|}})[^\t]*)'/g, "$1\r")
-    .replace(/\t=(.*?)}}/g, "',$1,'")
-    .split("\t")
-    .join("');")
-    .split("}}")
-    .join("p.push('")
-    .split("\r")
-    .join("\\'");
+    .split("\n")
+    .map(it => {
+      const cleaned = it.replace(/[\r\n\t]/g, " ");
+      const markStarts = cleaned.split("{{").join("\t");
+      const evaluate = markStarts
+        .replace(/((^|}})[^\t]*)'/g, "$1\r")
+        .replace(/\t=(.*?)}}/g, "',$1,'");
+
+      // Syntax fixes, e.g start new push when necessary
+      return evaluate
+        .split("\t")
+        .join("');")
+        .split("}}")
+        .join("p.push('")
+        .split("\r")
+        .join("\\'");
+    })
+    .join("\\n");
 
   const debugString = opts.debug
-    ? "console.dir({ contextKeys: Object.keys(_ctx), data: _it }, {colors: true, depth: null});"
+    ? "console.dir({ contextKeys: Object.keys(_ctx), data: it }, {colors: true, depth: null});"
     : "";
 
-  templateStore.set(
-    name,
-    new Function(
-      "_ctx",
-      "_it",
-      `
+  try {
+    templateStore.set(
+      name,
+      new Function(
+        "_ctx",
+        "it",
+        `
     const p = [];
     ${debugString}
-    with (_ctx) { with (_it) {
+    with (_ctx) { with (it) {
     p.push('${compiled}');
     }}
-    return p.join('');
+    
+    let hasEmptyLine = false;
+    return p.filter(it => {
+      if (typeof it === "string" && it.trim() === "") {
+        if (hasEmptyLine) {
+          return false;
+        } else {
+          hasEmptyLine = true;
+          return true;
+        }
+      } else {
+        hasEmptyLine = false;
+        return true;
+      }
+    }).join('');
   `,
-    ),
-  );
+      ),
+    );
+  } catch (e) {
+    const err = new Error(`Error while compiling ${name} template`);
+    err.originalErr = e;
+    throw err;
+  }
 };
 
 const getExecutionContext = () => {
