@@ -1,0 +1,14 @@
+{{ /* Preprocess validators, dedupe them */ }}
+{{ const set = new Set(); }}
+{{ for (const r of routes) { }}
+  {{ set.add(r.queryValidator); }}
+  {{ set.add(r.paramsValidator); }}
+  {{ set.add(r.bodyValidator); }}
+{{ } }}
+
+const { getBodyParser } = require("@lbu/server");
+const {
+{{ for (const item of set.values()) { }}
+  {{= item }}
+{{ } }}
+} = require("./validators");

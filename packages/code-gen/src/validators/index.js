@@ -3,7 +3,7 @@ const { addToTemplateContext } = require("@lbu/stdlib");
 const { compileTemplateDirectory } = require("@lbu/stdlib");
 
 const init = async () => {
-  addTemplateUtilities();
+  addBuildErrorUtil();
   await compileTemplateDirectory(__dirname, ".tmpl", { debug: false });
 };
 
@@ -21,13 +21,6 @@ const getPlugin = () => ({
 module.exports = {
   getPlugin,
 };
-
-function addTemplateUtilities() {
-  addToTemplateContext("quote", it => `"${it}"`);
-  addToTemplateContext("singleQuote", it => `'${it}'`);
-
-  addBuildErrorUtil();
-}
 
 function addBuildErrorUtil() {
   // Note when using variables, you have to bring them in scope your self

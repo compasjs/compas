@@ -1,0 +1,39 @@
+const internalBodyParser = getBodyParser();
+const wrappedBodyParser = ctx => new Promise(r => internalBodyParser(ctx, r).then(r));
+
+const handlers = {
+{{ for (const r of routes) { }}
+  {{= r.name }}: async (params, ctx, next) => {
+    ctx.request.params = params;
+
+    {{ if (r.paramsValidator) { }}
+    ctx.validatedParams = {{= r.paramsValidator }}(params);
+    {{ } }}
+
+    {{ if (r.bodyValidator || r.queryValidator) { }}
+    await wrappedBodyParser(ctx);
+    {{ } }}
+
+    {{ if (r.bodyValidator) { }}
+    ctx.validatedBody = {{= r.bodyValidator }}(ctx.request.body);
+    {{ } }}
+
+    {{ if (r.queryValidator) { }}
+    ctx.validatedQuery = {{= r.queryValidator }}(ctx.request.body);
+    {{ } }}
+
+    return routeHandlers.{{= r.name }}(ctx, next);
+  },
+{{ } }}
+};
+
+const routeHandlers = {
+{{ for (const r of routes) { }}
+  /**
+   * {{= r.docs.replace(/\n/g, "\\n  * ") }}
+   * Tags: {{= r.tags.join(", ") }}
+   * {{= r.method}} {{= r.path }}
+  */
+  {{= r.name }}: (ctx, next) => next(),
+{{ } }}
+};

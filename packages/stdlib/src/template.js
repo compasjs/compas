@@ -10,6 +10,8 @@ const { isNil } = require("./lodash");
  */
 const templateContext = {
   isNil,
+  quote: it => `"${it}"`,
+  singleQuote: it => `'${it}'`,
 };
 
 /**

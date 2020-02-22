@@ -2,6 +2,7 @@ const { runCodeGen } = require("./src/core");
 const { mainFn } = require("@lbu/cli");
 const { newLogger } = require("@lbu/insight");
 const { getPlugin: getValidatorsPlugin } = require("./src/validators");
+const { getPlugin: getRouterPlugin } = require("./src/router");
 
 const validators = [
   {
@@ -140,11 +141,62 @@ const validators = [
   },
 ];
 
+const routes = [
+  {
+    name: "getFoo",
+    path: "/foo",
+    method: "GET",
+    tags: ["foo", "bar"],
+    docs: "This is a doc string",
+    queryValidator: "validateMyObject",
+    paramsValidator: "validateMyObject",
+    bodyValidator: "validateMyObject",
+  },
+];
+
+const routeTrie = {
+  children: [
+    {
+      routeName: "getFoo",
+      functionName: "routeMatcher1",
+      prio: "STATIC",
+      staticPath: "GET/foo",
+      children: [
+        {
+          routeName: "getFooBar",
+          functionName: "routeMatcher2",
+          prio: "STATIC",
+          staticPath: "bar",
+        },
+        {
+          routeName: "getFooStaticRoutes",
+          functionName: "routeMatch5",
+          prio: "WILDCARD",
+        },
+      ],
+    },
+    {
+      functionName: "routeMatcher3",
+      prio: "STATIC",
+      staticPath: "GET",
+      children: [
+        {
+          routeName: "getId",
+          functionName: "routeMatcher4",
+          prio: "PARAM",
+          paramName: "id",
+        },
+      ],
+    },
+  ],
+};
+
 mainFn(module, require, newLogger(), async logger => {
   const validator = getValidatorsPlugin();
+  const router = getRouterPlugin();
 
-  await runCodeGen(logger, () => ({ validators })).build({
-    plugins: [validator],
+  await runCodeGen(logger, () => ({ validators, routes, routeTrie })).build({
+    plugins: [validator, router],
     outputDir: "./generated",
   });
 });

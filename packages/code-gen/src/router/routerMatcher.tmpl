@@ -1,0 +1,74 @@
+{{ if (it.children) { }}
+    {{ for (const child of children) { }}
+    {{= routerMatcher(child) }}
+    {{ } }}
+{{ } }}
+
+const {{= functionName }} = (path, params, currentIdx) => {
+
+{{ if (prio === "STATIC") { }}
+
+    if (!path.startsWith({{= quote(staticPath) }}, currentIdx)) {
+      return undefined;
+    }
+    {{ if (it.routeName !== undefined && (it.children === undefined || it.children.length === 0)) { }}
+    return handlers.{{= routeName }};
+    {{ } else { }}
+    const nextIdx = currentIdx + 1 + {{= staticPath.length }};
+    let handler = undefined;
+
+        {{ for (const child of children) { }}
+        handler = {{= child.functionName }}(path, params, nextIdx);
+        if (handler !== undefined) {
+          return handler;
+        }
+        {{ } }}
+
+        {{ if (it.routeName !== undefined) { }}
+        if (path.length === nextIdx - 1) {
+            return handlers.{{= routeName }};
+        }
+        {{ } else { }}
+        return undefined;
+        {{ } }}
+    {{ } }}
+
+{{ } else if (prio === "PARAM") { }}
+
+    let subIdx = path.indexOf("/", currentIdx);
+    if (subIdx === -1) {
+      subIdx = path.length;
+    }
+
+    const subPath = path.substring(currentIdx, subIdx);
+    {{ if (it.routeName !== undefined && (it.children === undefined || it.children.length === 0)) { }}
+    params.{{= paramName }} = subPath;
+    return handlers.{{= routeName }};
+    {{ } else { }}
+    const nextIdx = subIdx + 1;
+    let handler = undefined;
+
+    {{ for (const child of children) { }}
+    handler = {{= child.functionName }}(path, params, nextIdx);
+    if (handler !== undefined) {
+        params.{{= paramName }} = subPath;
+        return handler;
+    }
+    {{ } }}
+
+    {{ if (it.routeName !== undefined) { }}
+    params.{{= paramName }} = subPath;
+    return handlers.{{= routeName }};
+    {{ } else { }}
+    return undefined;
+    {{ } }}
+
+    {{ } }}
+
+{{ } else if (prio === "WILDCARD" && it.routeName !== undefined) { }}
+
+    return handlers.{{= routeName }};
+
+{{ } }}
+
+};
