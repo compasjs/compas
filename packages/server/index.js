@@ -6,8 +6,9 @@ const {
 } = require("./src/middleware");
 
 module.exports = {
-  createBodyParsers,
   getApp,
+
+  createBodyParsers,
   getBodyParser,
   getMultipartBodyParser,
 };

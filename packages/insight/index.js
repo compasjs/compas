@@ -9,8 +9,9 @@ const log = newLogger({
 });
 
 module.exports = {
-  log,
-  newLogger,
   bytesToHumanReadable,
   printProcessMemoryUsage,
+
+  log,
+  newLogger,
 };
