@@ -7,11 +7,13 @@
   },
   "dependencies": {
     "@lbu/insight": "{{version}}",
+    "@lbu/server": "{{version}}",
     "@lbu/stdlib": "{{version}}",
     "dotenv": "8.2.0"
   },
   "devDependencies": {
     "@lbu/cli": "{{version}}",
+    "@lbu/code-gen": "{{version}}",
     "@lbu/lint-config": "{{version}}"
   }
 }

@@ -2,6 +2,8 @@
   "name": "lbu",
   "private": true,
   "scripts": {
+    "link": "lerna exec -- yarn link",
+    "unlink": "lerna exec -- yarn unlink",
     "bump": "lerna changed && lerna version",
     "release": "lerna publish"
   },

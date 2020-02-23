@@ -23,7 +23,28 @@ const gc = () => {
   internalGc();
 };
 
+/**
+ * @callback MainFnCallback
+ * @param {Logger} logger
+ * @returns {Promise.<void>|void}
+ */
+
+/**
+ * Run the provided cb if this file is the process entrypoint
+ * @param {NodeJS.Module} module
+ * @param {NodeJS.Require} require
+ * @param {Logger} logger
+ * @param {MainFnCallback} cb
+ */
+const mainFn = (module, require, logger, cb) => {
+  if (module === require.main) {
+    let result = cb(logger);
+    Promise.resolve(result).catch(e => logger.error(e));
+  }
+};
+
 module.exports = {
   getSecondsSinceEpoch,
   gc,
+  mainFn,
 };

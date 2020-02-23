@@ -12,21 +12,26 @@ const {
   compileTemplateDirectory,
   executeTemplate,
 } = require("./src/template");
-const { getSecondsSinceEpoch, gc } = require("./src/utils");
+const { getSecondsSinceEpoch, gc, mainFn } = require("./src/utils");
 
 module.exports = {
   addToTemplateContext,
   compileTemplate,
   compileTemplateDirectory,
-  exec,
   executeTemplate,
-  getSecondsSinceEpoch,
-  gc,
+
+  exec,
+  spawn,
+
+  processDirectoryRecursive,
+  processDirectoryRecursiveSync,
+
   isNil,
   isPlainObject,
   merge,
-  processDirectoryRecursive,
-  processDirectoryRecursiveSync,
-  spawn,
+
+  getSecondsSinceEpoch,
+  gc,
+  mainFn,
   uuid,
 };

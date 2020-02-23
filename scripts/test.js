@@ -2,8 +2,7 @@ const tape = require("tape");
 const promiseWrap = require("tape-promise");
 const test = promiseWrap.default(tape);
 
-const { processDirectoryRecursiveSync } = require("@lbu/stdlib");
-const { mainFn } = require("@lbu/cli");
+const { mainFn, processDirectoryRecursiveSync } = require("@lbu/stdlib");
 const { newLogger } = require("@lbu/insight");
 
 const contentHandler = file => {

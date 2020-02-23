@@ -16,9 +16,12 @@ const getKnownScripts = () => {
     }
   }
 
-  const pkgJson = require(join(process.cwd(), "package.json"));
-  for (const item of Object.keys(pkgJson.scripts || {})) {
-    result[item] = { type: "YARN", script: pkgJson.scripts[item] };
+  const pkgJsonPath = join(process.cwd(), "package.json");
+  if (existsSync(pkgJsonPath)) {
+    const pkgJson = require(pkgJsonPath);
+    for (const item of Object.keys(pkgJson.scripts || {})) {
+      result[item] = { type: "YARN", script: pkgJson.scripts[item] };
+    }
   }
 
   const cliDir = join(__dirname, "../scripts");
@@ -34,27 +37,6 @@ const getKnownScripts = () => {
   return result;
 };
 
-/**
- * @callback MainFnCallback
- * @param {Logger} logger
- * @returns {Promise.<void>|void}
- */
-
-/**
- * Run the provided cb if this file is the process entrypoint
- * @param {NodeJS.Module} module
- * @param {NodeJS.Require} require
- * @param {Logger} logger
- * @param {MainFnCallback} cb
- */
-const mainFn = (module, require, logger, cb) => {
-  if (module === require.main) {
-    let result = cb(logger);
-    Promise.resolve(result).catch(e => logger.error(e));
-  }
-};
-
 module.exports = {
   getKnownScripts,
-  mainFn,
 };

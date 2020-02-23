@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
+const { mainFn } = require("@lbu/stdlib");
 const { logger } = require("./logger");
-const { mainFn } = require("./utils");
 const { execScript } = require("./exec");
 
 mainFn(module, require, logger, logger => {

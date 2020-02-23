@@ -1,4 +1,4 @@
-const { spawn } = require("@lbu/stdlib");
+const { mainFn, spawn } = require("@lbu/stdlib");
 const {
   existsSync,
   lstatSync,
@@ -9,7 +9,6 @@ const {
 } = require("fs");
 const { join } = require("path");
 const { logger } = require("../src/logger");
-const { mainFn } = require("../src/utils");
 
 const { version } = require("../package");
 

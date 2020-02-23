@@ -1,5 +1,5 @@
 const { isNil, spawn } = require("@lbu/stdlib");
-const { join } = require("path");
+const { join, resolve } = require("path");
 const { getKnownScripts } = require("./utils");
 
 /**
@@ -66,7 +66,7 @@ const execJsFile = (logger, script, cmd, args, watch) => {
 };
 
 const execYarnScript = (logger, script, cmd, args, watch) => {
-  const pattern = /^node ([\w/]*\.js)(.*)$/gi;
+  const pattern = /^node ([.\w/]*\.js)(.*)$/gi;
   if (watch) {
     const patternResult = pattern.exec(script.script);
     if (patternResult === null) {
@@ -76,7 +76,7 @@ const execYarnScript = (logger, script, cmd, args, watch) => {
     } else {
       return execJsFile(
         logger,
-        { path: patternResult[1] },
+        { path: resolve(patternResult[1]) },
         `yarn run ${cmd}`,
         patternResult[2].split(" "),
         true,

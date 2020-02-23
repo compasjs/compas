@@ -2,26 +2,14 @@
 
 ### Development
 
-Development should be pretty straight forward. Run `yarn test --watch` to run
-the test suite. Before making a commit, make sure to run `yarn lint`. Note that
-this automatically will try to fix most issues that popup.
-
-To test changes to the template, use the following command:
-`../lbu/packages/cli/dist/index.js [command]`
-
-Where the folder structure is something like:
-
-```
-/lbu        -- the lbu checkout
-/lbu-test   -- your test project and also the current working directory
-```
+Development should be pretty straight forward. Run `yarn lbu --test watch` to
+run the test suite. Before making a commit, make sure to run `yarn lbu lint`.
+Note that this automatically will try to fix most issues that popup.
 
 ### Scripts
 
-A few development utilities are provided in [./scripts](./scripts):
-
-- `node ./scripts/syncMetadata.js`: Copy and paste the root README.md to all
-  packages
+All commands in this repo can be run via the 'self-hosted' `@lbu/cli`. Run
+`yarn lbu help` for an overview.
 
 ### Debugging tests
 

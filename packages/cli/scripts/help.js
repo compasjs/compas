@@ -1,5 +1,7 @@
+const { mainFn } = require("@lbu/stdlib");
+
 const { logger } = require("../src/logger");
-const { getKnownScripts, mainFn } = require("../src/utils");
+const { getKnownScripts } = require("../src/utils");
 
 const { name, version } = require("../package");
 

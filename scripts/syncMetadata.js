@@ -1,5 +1,5 @@
 const { newLogger } = require("@lbu/insight");
-const { mainFn } = require("@lbu/cli");
+const { mainFn } = require("@lbu/stdlib");
 const { spawnSync } = require("child_process");
 const { join } = require("path");
 const { readdirSync, readFileSync, writeFileSync } = require("fs");
