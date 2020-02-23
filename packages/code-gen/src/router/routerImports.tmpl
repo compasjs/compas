@@ -1,9 +1,9 @@
 {{ /* Preprocess validators, dedupe them */ }}
 {{ const set = new Set(); }}
 {{ for (const r of routes) { }}
-  {{ set.add(r.queryValidator); }}
-  {{ set.add(r.paramsValidator); }}
-  {{ set.add(r.bodyValidator); }}
+  {{ if (r.queryValidator && r.queryValidator.funcName) set.add(r.queryValidator.funcName); }}
+  {{ if (r.paramsValidator && r.paramsValidator.funcName) set.add(r.paramsValidator.funcName); }}
+  {{ if (r.bodyValidator && r.bodyValidator.funcName) set.add(r.bodyValidator.funcName); }}
 {{ } }}
 
 const { getBodyParser } = require("@lbu/server");

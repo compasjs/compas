@@ -89,7 +89,7 @@ class Runner {
  * Entrypoint for code generation needs
  * @param {Logger} logger
  * @param dataLoader
- * @returns {{build: (function(Logger, *): Promise<void>)}}
+ * @returns {{build: Function}}
  */
 const runCodeGen = (logger, dataLoader) => ({
   build: async opts => new Runner(logger, dataLoader, opts).run(),

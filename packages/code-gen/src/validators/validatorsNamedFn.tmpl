@@ -1,8 +1,14 @@
 {{= validatorsAnonFn(validator) }}
 
 /**
- * {{= validatorName }}
+ * {{= docs }}
+ * @typedef { {{= validatorsJsDoc(validator).trim() }} } {{= typeName }}
+ */
+
+/**
+ * {{= docs }}
  * @param {*} value
+ * @returns { {{= typeName }} }
  */
 const {{= validatorName }} = value => {
  let result = value;
