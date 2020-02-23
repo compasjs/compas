@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.5]()
+### [v0.0.5](9e38110ceb9ddfdbf75a0e8300893fc0d4800e7e)
 
 - Rewritten from scratch in plain old JavaScript
 - @lbu/cli is now more a script runner than anything else
