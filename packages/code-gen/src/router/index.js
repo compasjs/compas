@@ -16,6 +16,10 @@ const generate = ({ data }) => ({
   content: executeTemplate("routerFile", data),
 });
 
+/**
+ * Generate a router with params and wildcard support, running validators whenever they
+ * are available
+ */
 const getPlugin = () => ({
   name: "router",
   init,

@@ -41,8 +41,6 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 
 ### Publishing
 
-- Bump versions in [template package.json](./packages/cli/template/package.json)
-  to the new version.
 - Write to the changelog
   - New features
   - Breaking changes

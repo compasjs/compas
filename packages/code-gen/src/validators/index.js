@@ -12,6 +12,9 @@ const generate = ({ data }) => ({
   content: executeTemplate("validatorsFile", data),
 });
 
+/**
+ * Generate validator functions with support for pre & post-validate hooks
+ */
 const getPlugin = () => ({
   name: "validators",
   init,

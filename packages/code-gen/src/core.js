@@ -86,6 +86,7 @@ class Runner {
 }
 
 /**
+ * Entrypoint for code generation needs
  * @param {Logger} logger
  * @param dataLoader
  * @returns {{build: (function(Logger, *): Promise<void>)}}
