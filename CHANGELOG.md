@@ -1,5 +1,16 @@
 # CHANGELOG
 
+### [v0.0.5]()
+
+- Rewritten from scratch in plain old JavaScript
+- @lbu/cli is now more a script runner than anything else
+- @lbu/koa is replaced by @lbu/server
+- @lbu/register is removed
+- @lbu/lint-config drops Typescript support
+- @lbu/stdlib now contains a basic templating functionality
+- @lbu/code-gen is refactored, needs some more thinking before adding a fluent
+  api back
+
 ### [v0.0.4](efcd5097edec95c80c2b7f1e637f6a4f401e26f5)
 
 - Replaced @lbu/validator with @lbu/code-gen
