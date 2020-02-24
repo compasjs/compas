@@ -20,9 +20,12 @@ const isPlainObject = item =>
   Object.prototype.toString.call(item) === "[object Object]";
 
 /**
- * @callback
- * @param {...Object=} Any value
- * @returns {Object}
+ * Re expose lodash.merge
+ * **Note:** This method mutates `object`.
+ *
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @returns {Object} Returns `object`.
  */
 const merge = lodashMerge;
 
