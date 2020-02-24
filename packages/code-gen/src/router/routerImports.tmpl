@@ -9,6 +9,6 @@
 const { getBodyParser } = require("@lbu/server");
 const {
 {{ for (const item of set.values()) { }}
-  {{= item }}
+  {{= item }},
 {{ } }}
 } = require("./validators");

@@ -17,6 +17,12 @@ const {{= functionName }} = (path, params, currentIdx) => {
     const nextIdx = currentIdx + 1 + {{= staticPath.length }};
     let handler = undefined;
 
+        {{ if (it.routeName !== undefined) { }}
+        if (path.length === nextIdx - 1) {
+            return handlers.{{= routeName }};
+        }
+        {{ } }}
+
         {{ for (const child of children) { }}
         handler = {{= child.functionName }}(path, params, nextIdx);
         if (handler !== undefined) {
@@ -24,13 +30,7 @@ const {{= functionName }} = (path, params, currentIdx) => {
         }
         {{ } }}
 
-        {{ if (it.routeName !== undefined) { }}
-        if (path.length === nextIdx - 1) {
-            return handlers.{{= routeName }};
-        }
-        {{ } else { }}
         return undefined;
-        {{ } }}
     {{ } }}
 
 {{ } else if (prio === "PARAM") { }}
@@ -45,23 +45,30 @@ const {{= functionName }} = (path, params, currentIdx) => {
     params.{{= paramName }} = subPath;
     return handlers.{{= routeName }};
     {{ } else { }}
-    const nextIdx = subIdx + 1;
-    let handler = undefined;
+        const nextIdx = subIdx + 1;
+        let handler = undefined;
 
-    {{ for (const child of children) { }}
-    handler = {{= child.functionName }}(path, params, nextIdx);
-    if (handler !== undefined) {
+        {{ if (it.routeName !== undefined) { }}
+        if (path.length === nextIdx - 1) {
+            params.{{= paramName }} = subPath;
+            return handlers.{{= routeName }};
+        }
+        {{ } }}
+
+        {{ for (const child of children) { }}
+        handler = {{= child.functionName }}(path, params, nextIdx);
+        if (handler !== undefined) {
+            params.{{= paramName }} = subPath;
+            return handler;
+        }
+        {{ } }}
+
+        {{ if (it.routeName !== undefined) { }}
         params.{{= paramName }} = subPath;
-        return handler;
-    }
-    {{ } }}
-
-    {{ if (it.routeName !== undefined) { }}
-    params.{{= paramName }} = subPath;
-    return handlers.{{= routeName }};
-    {{ } else { }}
-    return undefined;
-    {{ } }}
+        return handlers.{{= routeName }};
+        {{ } else { }}
+        return undefined;
+        {{ } }}
 
     {{ } }}
 
