@@ -6,7 +6,7 @@
   {{ if (r.bodyValidator && r.bodyValidator.funcName) set.add(r.bodyValidator.funcName); }}
 {{ } }}
 
-const { getBodyParser } = require("@lbu/server");
+const { getBodyParser, compose } = require("@lbu/server");
 const {
 {{ for (const item of set.values()) { }}
   {{= item }},

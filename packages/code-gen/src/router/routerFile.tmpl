@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
-
 {{= routerImports({ routes }) }}
+{{= routerTags({ tags }) }}
 
 {{= routerHandlers({ routes }) }}
 
@@ -10,4 +10,5 @@
 module.exports = {
  routeHandlers,
  router,
+ taggedMiddleware,
 };

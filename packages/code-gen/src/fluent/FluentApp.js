@@ -103,13 +103,11 @@ class FluentApp {
     this.lastAddedItem = undefined;
 
     const validators = processValidators(this.validators);
-    const { routes, routeTrie } = processRoutes(
-      this.routeBuilders.map(it => it.build()),
-    );
+    const routes = processRoutes(this.routeBuilders.map(it => it.build()));
+
     return () => ({
       validators,
       routes,
-      routeTrie,
     });
   }
 }

@@ -8,9 +8,17 @@ const parseBody = ctx => {
     return _internalBodyParser(ctx);
 }
 
+const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
+
+const _composed = {
+{{ for (const r of routes) { }}
+  {{= r.name }}: undefined,
+{{ } }}
+};
+
 const handlers = {
 {{ for (const r of routes) { }}
-  {{= r.name }}: async (params, ctx, next) => {
+  {{= r.name }}: {{ if (r.bodyValidator || r.queryValidator) { }} async {{ } }} (params, ctx, next) => {
     ctx.request.params = params;
 
     {{ if (r.paramsValidator) { }}
@@ -29,7 +37,17 @@ const handlers = {
     ctx.validatedQuery = {{= r.queryValidator.funcName }}(ctx.request.body);
     {{ } }}
 
-    return routeHandlers.{{= r.name }}(ctx, next);
+    if (_composed.{{= r.name}} === undefined) {
+      const curHandler = routeHandlers.{{= r.name }};
+      _composed.{{= r.name}} = filterCompose(
+        {{ for (const t of r.tags) { }}
+          taggedMiddleware.{{= t }},
+        {{ } }}
+        ...(Array.isArray(curHandler) ? curHandler : [curHandler]),
+      );
+    }
+
+    return _composed.{{= r.name }}(ctx, next);
   },
 {{ } }}
 };
