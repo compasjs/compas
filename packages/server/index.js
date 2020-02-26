@@ -4,6 +4,7 @@ const {
   getBodyParser,
   getMultipartBodyParser,
 } = require("./src/middleware");
+const compose = require("koa-compose");
 
 module.exports = {
   getApp,
@@ -11,4 +12,6 @@ module.exports = {
   createBodyParsers,
   getBodyParser,
   getMultipartBodyParser,
+
+  compose,
 };
