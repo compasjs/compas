@@ -11,9 +11,9 @@
     "node": ">=12"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.5",
-    "@lbu/insight": "0.0.5",
-    "@lbu/lint-config": "0.0.5",
+    "@lbu/cli": "0.0.6",
+    "@lbu/insight": "0.0.6",
+    "@lbu/lint-config": "0.0.6",
     "lerna": "3.20.2",
     "tape": "4.13.0",
     "tape-promise": "4.0.0"

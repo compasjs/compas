@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.6]()
+### [v0.0.6](a7b150d9265f449127dc812d4bcef7fb803d6d63)
 
 - @lbu/code-gen: JSDoc generation and router tags support
 - @lbu/*: Various bugs fixed
