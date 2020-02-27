@@ -77,8 +77,13 @@ const formatMessage = (availableDepth, message) => {
     return message;
   }
 
-  if (type === "function" || type === "bigint" || type === "symbol") {
+  if (type === "bigint" || type === "symbol") {
     return message.toString();
+  } else if (type === "function") {
+    return formatMessage(availableDepth, {
+      name: message.name || "fn",
+      length: message.length || 0,
+    });
   }
 
   if (availableDepth === 0) {
