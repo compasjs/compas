@@ -1,6 +1,6 @@
 {
   "name": "@lbu/code-gen",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generate various boring parts of your server",
   "main": "index.js",
   "keywords": [
@@ -13,9 +13,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/cli": "^0.0.5",
-    "@lbu/insight": "^0.0.5",
-    "@lbu/stdlib": "^0.0.5"
+    "@lbu/cli": "^0.0.6",
+    "@lbu/insight": "^0.0.6",
+    "@lbu/stdlib": "^0.0.6"
   },
   "author": {
     "name": "Dirk de Visser",
