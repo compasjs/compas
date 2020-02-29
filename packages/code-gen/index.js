@@ -1,15 +1,15 @@
-const { runCodeGen } = require("./src/core");
-const { FluentApp, V } = require("./src/fluent");
-
-const { getPlugin: getValidatorsPlugin } = require("./src/validators");
-const { getPlugin: getRouterPlugin } = require("./src/router");
+const { App, runCodeGen } = require("./src/core");
+const { M } = require("./src/model");
+const { getPlugin: getValidatorPlugin } = require("./src/validators");
+const { R, getPlugin: getRouterPlugin } = require("./src/router");
 
 module.exports = {
   runCodeGen,
 
-  V,
-  FluentApp,
+  App,
+  M,
+  R,
 
-  getValidatorsPlugin,
+  getValidatorPlugin,
   getRouterPlugin,
 };

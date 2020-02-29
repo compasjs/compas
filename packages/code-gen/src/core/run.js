@@ -86,7 +86,7 @@ class Runner {
 }
 
 /**
- * Entrypoint for code generation needs
+ * Entry point for code generation needs
  * @param {Logger} logger
  * @param dataLoader
  * @returns {{build: Function}}
