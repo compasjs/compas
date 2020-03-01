@@ -10,7 +10,7 @@
  * @param {*} value
  * @returns { {{= typeName }} }
  */
-const {{= validatorName }} = value => {
+export const {{= validatorName }} = value => {
  let result = value;
 
  {{ const preValidate = quote(preValidateHook); }}

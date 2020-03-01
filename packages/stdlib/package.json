@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "All kinds of utility functions",
   "main": "index.js",
+  "type": "module",
   "keywords": [
     "lbu",
     "lightbase",

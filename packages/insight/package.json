@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "Simple logger in NDJSON format",
   "main": "index.js",
+  "type": "module",
   "keywords": [
     "lightbase",
     "lbu",

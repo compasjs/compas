@@ -1,6 +1,6 @@
-const { getSecondsSinceEpoch, gc } = require("./utils");
+import { gc, getSecondsSinceEpoch } from "./utils.js";
 
-module.exports = t => {
+export const test = t => {
   t.test("getSecondsSinceEpoch", t => {
     t.ok(Number.isInteger(getSecondsSinceEpoch()));
 

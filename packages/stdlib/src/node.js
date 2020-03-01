@@ -1,11 +1,9 @@
-const { exec: cpExec, spawn: cpSpawn } = require("child_process");
-const {
-  lstatSync,
-  readdirSync,
-  promises: { lstat, readdir },
-} = require("fs");
-const { join } = require("path");
-const { promisify } = require("util");
+import { exec as cpExec, spawn as cpSpawn } from "child_process";
+import { lstatSync, promises, readdirSync } from "fs";
+import { join } from "path";
+import { promisify } from "util";
+
+const { lstat, readdir } = promises;
 
 const internalExec = promisify(cpExec);
 
@@ -15,7 +13,7 @@ const internalExec = promisify(cpExec);
  * @param {string} command
  * @returns {Promise<Object<{stdout: string, stderr: string}>>}
  */
-const exec = command => internalExec(command, { encoding: "utf8" });
+export const exec = command => internalExec(command, { encoding: "utf8" });
 
 /**
  * A promise wrapper around child_process#spawn
@@ -24,7 +22,7 @@ const exec = command => internalExec(command, { encoding: "utf8" });
  * @param {Object} [opts={}]
  * @returns {Promise<void>}
  */
-const spawn = (command, args, opts = {}) => {
+export const spawn = (command, args, opts = {}) => {
   return new Promise((resolve, reject) => {
     const sp = cpSpawn(command, args, { stdio: "inherit", ...opts });
 
@@ -42,7 +40,7 @@ const spawn = (command, args, opts = {}) => {
  * @param {boolean} [opts.skipNodeModules=true]
  * @param {boolean} [opts.skipDotFiles=true]
  */
-const processDirectoryRecursive = async (
+export const processDirectoryRecursive = async (
   dir,
   cb,
   opts = {
@@ -76,7 +74,7 @@ const processDirectoryRecursive = async (
  * @param {boolean} [opts.skipNodeModules=true]
  * @param {boolean} [opts.skipDotFiles=true]
  */
-const processDirectoryRecursiveSync = (
+export const processDirectoryRecursiveSync = (
   dir,
   cb,
   opts = {
@@ -100,11 +98,4 @@ const processDirectoryRecursiveSync = (
       cb(newPath);
     }
   }
-};
-
-module.exports = {
-  processDirectoryRecursive,
-  processDirectoryRecursiveSync,
-  spawn,
-  exec,
 };

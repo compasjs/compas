@@ -1,6 +1,6 @@
-const { isNil, isPlainObject, merge } = require("./lodash");
+import { isNil, isPlainObject, merge } from "./lodash.js";
 
-module.exports = t => {
+export const test = t => {
   t.test("isNil", t => {
     t.ok(isNil(null));
     t.ok(isNil(undefined));

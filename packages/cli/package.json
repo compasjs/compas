@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "CLI containing utilities and simple script runner",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "lbu": "./src/bin.js"
   },

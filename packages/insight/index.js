@@ -1,17 +1,8 @@
-const {
-  bytesToHumanReadable,
-  printProcessMemoryUsage,
-} = require("./src/memory");
-const { newLogger } = require("./src/logger");
+import { newLogger } from "./src/logger.js";
 
-const log = newLogger({
+export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
+export { newLogger } from "./src/logger.js";
+
+export const log = newLogger({
   depth: 4,
 });
-
-module.exports = {
-  bytesToHumanReadable,
-  printProcessMemoryUsage,
-
-  log,
-  newLogger,
-};

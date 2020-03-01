@@ -52,7 +52,7 @@ const handlers = {
 {{ } }}
 };
 
-const routeHandlers = {
+export const routeHandlers = {
 {{ for (const r of routes) { }}
   /**
    * {{= r.docs.replace(/\n/g, "\\n  * ") }}

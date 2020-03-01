@@ -1,5 +1,5 @@
-const { isNil } = require("@lbu/stdlib");
-const { App } = require("../core");
+import { isNil } from "@lbu/stdlib";
+import { App } from "../core/index.js";
 
 App.withPlugin(appPluginCallback);
 

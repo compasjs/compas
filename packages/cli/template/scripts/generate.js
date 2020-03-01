@@ -1,28 +1,34 @@
-const { mainFn } = require("@lbu/stdlib");
-const {
+import {
+  App,
   getRouterPlugin,
-  getValidatorsPlugin,
+  getTypescriptPlugin,
+  getValidatorPlugin,
+  M,
+  R,
   runCodeGen,
-} = require("@lbu/code-gen");
-const { log } = require("@lbu/insight");
+} from "@lbu/code-gen";
+import { log } from "@lbu/insight";
+import { mainFn } from "@lbu/stdlib";
+
+const app = new App("Test App");
+
+const myBool = M("MyBool")
+  .bool()
+  .convert()
+  .optional();
+
+app.validator(myBool);
+app.route(R("foo", "/foo").get());
 
 const main = async logger => {
-  await runCodeGen(logger, () => {
-    return {
-      validators: [],
-      routes: [],
-      routeTrie: {
-        children: [],
-      },
-    };
-  }).build({
-    plugins: [getValidatorsPlugin(), getRouterPlugin()],
-    outputDir: "./src/generated",
+  logger.info(app.build());
+  // Code gen validators
+  await runCodeGen(logger, () => app.build()).build({
+    plugins: [getValidatorPlugin(), getRouterPlugin(), getTypescriptPlugin()],
+    outputDir: "./generated",
   });
 };
 
-mainFn(module, require, log, main);
+mainFn(import.meta, log, main);
 
-module.exports = {
-  nodemonArgs: "--ignore src/generated",
-};
+export const nodemonArgs = "--ignore generated -e tmpl,js,json";

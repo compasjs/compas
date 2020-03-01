@@ -1,15 +1,20 @@
-const {
+import {
   addToTemplateContext,
   compileTemplateDirectory,
+  dirnameForModule,
   executeTemplate,
-} = require("@lbu/stdlib");
-const path = require("path");
+} from "@lbu/stdlib";
+import { join } from "path";
 
 const init = async () => {
   addBuildErrorUtil();
-  await compileTemplateDirectory(path.join(__dirname, "./templates"), ".tmpl", {
-    debug: false,
-  });
+  await compileTemplateDirectory(
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+    {
+      debug: false,
+    },
+  );
 };
 
 const generate = data => ({
@@ -20,15 +25,11 @@ const generate = data => ({
 /**
  * Generate validator functions with support for pre & post-validate hooks
  */
-const getPlugin = () => ({
+export const getPlugin = () => ({
   name: "validators",
   init,
   generate,
 });
-
-module.exports = {
-  getPlugin,
-};
 
 function addBuildErrorUtil() {
   // Note when using variables, you have to bring them in scope your self

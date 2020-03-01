@@ -1,8 +1,8 @@
-const { newLogger } = require("@lbu/insight");
-const { mainFn } = require("@lbu/stdlib");
-const { spawnSync } = require("child_process");
-const { join } = require("path");
-const { readdirSync, readFileSync, writeFileSync } = require("fs");
+import { newLogger } from "@lbu/insight";
+import { dirnameForModule, mainFn } from "@lbu/stdlib";
+import { spawnSync } from "child_process";
+import { readdirSync, readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 
 const buildReadmeSource = (pkgName, readmeSource) =>
   `# @lbu/${pkgName}\n${readmeSource}`;
@@ -19,7 +19,7 @@ const getReadmeSource = () => {
 const exec = logger => {
   // Script to copy the root README.md to all packages
 
-  if (join(process.cwd(), "scripts") !== __dirname) {
+  if (join(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
     throw new Error("Wrong directory. Run in root.");
   }
 
@@ -42,8 +42,6 @@ const exec = logger => {
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
 };
 
-mainFn(module, require, newLogger(), exec);
+mainFn(import.meta, newLogger(), exec);
 
-module.exports = {
-  nodemonArgs: "-w ./README.md",
-};
+export const nodemonArgs = "-w ./README.md";

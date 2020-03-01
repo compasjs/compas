@@ -1,6 +1,6 @@
-const { uuid } = require("./datatypes");
+import { uuid } from "./datatypes.js";
 
-module.exports = t => {
+export const test = t => {
   t.test("uuid", t => {
     t.notEqual(uuid(), uuid());
 

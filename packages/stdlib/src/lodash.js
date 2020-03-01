@@ -1,11 +1,11 @@
-const lodashMerge = require("lodash.merge");
+import lodashMerge from "lodash.merge";
 
 /**
  * Check if item is null or undefined
  * @param {*=} item
  * @returns {boolean}
  */
-const isNil = item => item === null || item === undefined;
+export const isNil = item => item === null || item === undefined;
 
 /**
  * Check if item is a plain javascript object
@@ -13,7 +13,7 @@ const isNil = item => item === null || item === undefined;
  * @param {*=} item
  * @returns {boolean}
  */
-const isPlainObject = item =>
+export const isPlainObject = item =>
   typeof item === "object" &&
   !isNil(item) &&
   item.constructor === Object &&
@@ -21,16 +21,11 @@ const isPlainObject = item =>
 
 /**
  * Re expose lodash.merge
+ * TODO: Note that lodash.merge is deprecated although it doesnt say so when installing
  * **Note:** This method mutates `object`.
  *
  * @param {Object} object The destination object.
  * @param {...Object} [sources] The source objects.
  * @returns {Object} Returns `object`.
  */
-const merge = lodashMerge;
-
-module.exports = {
-  isNil,
-  isPlainObject,
-  merge,
-};
+export const merge = lodashMerge;

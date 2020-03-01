@@ -1,6 +1,6 @@
-const { isNil, merge } = require("@lbu/stdlib");
+import { isNil, merge } from "@lbu/stdlib";
 
-function M(name) {
+export function M(name) {
   return {
     bool: () => M.bool().name(name),
     boolean: () => M.boolean().name(name),
@@ -517,8 +517,4 @@ M.types = {
   LbuArray,
   LbuAnyOf,
   LbuRef,
-};
-
-module.exports = {
-  M,
 };

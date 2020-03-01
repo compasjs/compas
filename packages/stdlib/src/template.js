@@ -1,9 +1,9 @@
-const {
-  promises: { readFile },
-} = require("fs");
-const path = require("path");
-const { processDirectoryRecursive } = require("./node");
-const { isNil } = require("./lodash");
+import { promises } from "fs";
+import path from "path";
+import { isNil } from "./lodash.js";
+import { processDirectoryRecursive } from "./node.js";
+
+const { readFile } = promises;
 
 /**
  * Global context for template execution
@@ -32,7 +32,7 @@ const templateStore = new Map();
  * @param {boolean} opts.debug Set to true to print context keys and input object before
  *   executing the template
  */
-const compileTemplate = (name, str, opts = {}) => {
+export const compileTemplate = (name, str, opts = {}) => {
   if (isNil(name) || isNil(str)) {
     throw new TypeError("Both name and string are required");
   }
@@ -98,7 +98,7 @@ const compileTemplate = (name, str, opts = {}) => {
   }
 };
 
-const compileTemplateDirectory = (dir, extension, opts) => {
+export const compileTemplateDirectory = (dir, extension, opts) => {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
   return processDirectoryRecursive(dir, async file => {
     if (!file.endsWith(ext)) {
@@ -129,7 +129,7 @@ const getExecutionContext = () => {
  * @param data
  * @returns {string} The resulting string for executing the template
  */
-const executeTemplate = (name, data) => {
+export const executeTemplate = (name, data) => {
   if (!templateStore.has(name)) {
     throw new Error(`Unknown template: ${name}`);
   }
@@ -151,13 +151,6 @@ const executeTemplate = (name, data) => {
  * @param name
  * @param value
  */
-const addToTemplateContext = (name, value) => {
+export const addToTemplateContext = (name, value) => {
   templateContext[name] = value;
-};
-
-module.exports = {
-  addToTemplateContext,
-  compileTemplate,
-  compileTemplateDirectory,
-  executeTemplate,
 };

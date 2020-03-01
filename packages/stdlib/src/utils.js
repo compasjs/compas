@@ -1,8 +1,11 @@
-const { setFlagsFromString } = require("v8");
-const { runInNewContext } = require("vm");
-const { isNil } = require("./lodash");
+import { lstatSync, realpathSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { setFlagsFromString } from "v8";
+import { runInNewContext } from "vm";
+import { isNil } from "./lodash.js";
 
-const getSecondsSinceEpoch = () => Math.floor(Date.now() / 1000);
+export const getSecondsSinceEpoch = () => Math.floor(Date.now() / 1000);
 
 /**
  * Internal gc function reference
@@ -14,13 +17,41 @@ let internalGc = global.gc;
 /**
  * Let V8 know to please run the garbage collector.
  */
-const gc = () => {
+export const gc = () => {
   if (isNil(internalGc)) {
     setFlagsFromString("--expose_gc");
     internalGc = runInNewContext("gc");
   }
 
   internalGc();
+};
+
+/**
+ * @param {ImportMeta} meta
+ * @return {boolean}
+ */
+const isMainFn = meta => {
+  const modulePath = fileURLToPath(meta.url);
+
+  let scriptPath = process.argv[1];
+
+  // Support following symbolic links for node_modules/.bin items
+  const scriptStat = lstatSync(scriptPath);
+  if (scriptStat.isSymbolicLink()) {
+    scriptPath = realpathSync(scriptPath);
+  }
+  const scriptPathExt = path.extname(scriptPath);
+  if (scriptPathExt) {
+    return modulePath === scriptPath;
+  }
+
+  let modulePathWithoutExt = modulePath;
+  const modulePathExt = path.extname(modulePath);
+  if (modulePathExt) {
+    modulePathWithoutExt = modulePathWithoutExt.slice(0, -modulePathExt.length);
+  }
+
+  return modulePathWithoutExt === scriptPath;
 };
 
 /**
@@ -31,20 +62,29 @@ const gc = () => {
 
 /**
  * Run the provided cb if this file is the process entrypoint
- * @param {NodeJS.Module} module
- * @param {NodeJS.Require} require
+ * @param {ImportMeta} meta
  * @param {Logger} logger
  * @param {MainFnCallback} cb
  */
-const mainFn = (module, require, logger, cb) => {
-  if (module === require.main) {
+export const mainFn = (meta, logger, cb) => {
+  if (isMainFn(meta)) {
     let result = cb(logger);
     Promise.resolve(result).catch(e => logger.error(e));
   }
 };
 
-module.exports = {
-  getSecondsSinceEpoch,
-  gc,
-  mainFn,
-};
+/**
+ * Return filename for ES Module
+ * Alternative to CommonJS __filename
+ * @param {ImportMeta} meta
+ * @return {string}
+ */
+export const filenameForModule = meta => fileURLToPath(meta.url);
+
+/**
+ * Return dirname for ES Module
+ * Alternative to CommonJS __dirname
+ * @param {ImportMeta} meta
+ * @return {string}
+ */
+export const dirnameForModule = meta => path.dirname(filenameForModule(meta));

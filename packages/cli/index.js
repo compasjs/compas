@@ -1,5 +1,2 @@
-const { getKnownScripts } = require("./src/utils");
-
-module.exports = {
-  getKnownScripts,
-};
+export { getKnownScripts } from "./src/utils.js";
+export { logger as cliLogger } from "./src/logger.js";

@@ -1,5 +1,5 @@
-const { App } = require("../core");
-const utils = require("../utils");
+import { App } from "../core/index.js";
+import { upperCaseFirst } from "../utils.js";
 
 App.withPlugin(appPluginCallback);
 
@@ -42,7 +42,7 @@ function appPluginCallback(result, store) {
 
 function buildValidator(ctx, key, data) {
   const { docs, ...validator } = data;
-  const typeName = utils.upperCaseFirst(key);
+  const typeName = upperCaseFirst(key);
 
   const result = {
     typeName,
@@ -78,7 +78,7 @@ function processValidator(ctx, validator) {
       break;
     case "reference":
       validator.reference =
-        ctx.mapping[utils.upperCaseFirst(validator.referenceType)];
+        ctx.mapping[upperCaseFirst(validator.referenceType)];
       break;
   }
 

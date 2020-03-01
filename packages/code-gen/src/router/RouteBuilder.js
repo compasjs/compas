@@ -1,14 +1,13 @@
-const { merge } = require("@lbu/stdlib");
-const utils = require("../utils");
+import { merge } from "@lbu/stdlib";
+import { upperCaseFirst } from "../utils.js";
 
 /**
  * Create a new RouteBuilder
  * @param {string} name
  * @param {string} path
- * @constructor
  */
-function R(name, path) {
-  const namePart = utils.upperCaseFirst(name);
+export function R(name, path) {
+  const namePart = upperCaseFirst(name);
   return {
     get: () => new GetBuilder("GET", "get" + namePart, path),
     post: () => new PostBuilder("POST", "post" + namePart, path),
@@ -44,7 +43,7 @@ class RouteBuilder {
   params(model) {
     const result = model.build();
     if (!result.name) {
-      result.name = `${utils.upperCaseFirst(this.item.name)}Params`;
+      result.name = `${upperCaseFirst(this.item.name)}Params`;
       result._addValidator = true;
     }
     this.item.paramsValidator = result;
@@ -59,7 +58,7 @@ class RouteBuilder {
   query(model) {
     const result = model.build();
     if (!result.name) {
-      result.name = `${utils.upperCaseFirst(this.item.name)}Query`;
+      result.name = `${upperCaseFirst(this.item.name)}Query`;
       result._addValidator = true;
     }
     this.item.queryValidator = result;
@@ -74,7 +73,7 @@ class RouteBuilder {
   body(model) {
     const result = model.build();
     if (!result.name) {
-      result.name = `${utils.upperCaseFirst(this.item.name)}Body`;
+      result.name = `${upperCaseFirst(this.item.name)}Body`;
       result._addValidator = true;
     }
     this.item.bodyValidator = result;
@@ -89,7 +88,7 @@ class RouteBuilder {
   response(model) {
     const result = model.build();
     if (!result.name) {
-      result.name = `${utils.upperCaseFirst(this.item.name)}Response`;
+      result.name = `${upperCaseFirst(this.item.name)}Response`;
     }
     this.item.responseModel = result;
   }
@@ -122,8 +121,4 @@ R.types = {
   PutBuilder,
   DeleteBuilder,
   HeadBuilder,
-};
-
-module.exports = {
-  R,
 };

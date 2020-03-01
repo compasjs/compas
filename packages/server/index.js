@@ -1,17 +1,7 @@
-const { getApp } = require("./src/app");
-const {
+export compose from "koa-compose";
+export { getApp } from "./src/app.js";
+export {
   createBodyParsers,
   getBodyParser,
   getMultipartBodyParser,
-} = require("./src/middleware");
-const compose = require("koa-compose");
-
-module.exports = {
-  getApp,
-
-  createBodyParsers,
-  getBodyParser,
-  getMultipartBodyParser,
-
-  compose,
-};
+} from "./src/middleware";

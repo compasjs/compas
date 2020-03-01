@@ -1,4 +1,4 @@
-const { M } = require("../model");
+import { M } from "../model/index.js";
 
 const validatorDefaults = {
   boolean: {

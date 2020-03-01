@@ -4,7 +4,7 @@ const RoutePrio = {
   WILDCARD: 2,
 };
 
-const buildTrie = routes => {
+export const buildTrie = routes => {
   const routeTrieInput = [];
 
   for (const r of routes) {
@@ -14,13 +14,7 @@ const buildTrie = routes => {
     });
   }
 
-  const routeTrie = buildRouteTrie(routeTrieInput);
-
-  return routeTrie;
-};
-
-module.exports = {
-  buildTrie,
+  return buildRouteTrie(routeTrieInput);
 };
 
 function buildRouteTrie(input) {

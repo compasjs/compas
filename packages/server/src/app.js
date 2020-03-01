@@ -1,11 +1,11 @@
-const Koa = require("koa");
-const {
+import Koa from "koa";
+import {
+  defaultHeaders,
   errorHandler,
   healthHandler,
-  notFoundHandler,
   logMiddleware,
-  defaultHeaders,
-} = require("./middleware");
+  notFoundHandler,
+} from "./middleware";
 
 /**
  * Create a new Koa instance with some default middleware
@@ -16,7 +16,7 @@ const {
  * @param {KoaErrorHandler=} opts.onError
  * @param {Object} opts.headers Argument for defaultHeaders middleware
  */
-const getApp = (opts = {}) => {
+export const getApp = (opts = {}) => {
   const app = new Koa();
   app.proxy = opts.proxy === true;
 
@@ -33,8 +33,4 @@ const getApp = (opts = {}) => {
   }
 
   return app;
-};
-
-module.exports = {
-  getApp,
 };

@@ -1,6 +1,6 @@
-const { bytesToHumanReadable, printProcessMemoryUsage } = require("./memory");
+import { bytesToHumanReadable, printProcessMemoryUsage } from "./memory.js";
 
-module.exports = t => {
+export const test = t => {
   t.test("bytesToHumanReadable", t => {
     t.equal(bytesToHumanReadable(0), "0 Byte");
     t.equal(bytesToHumanReadable(11), "11 Bytes");

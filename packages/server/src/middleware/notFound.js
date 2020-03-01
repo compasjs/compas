@@ -1,7 +1,7 @@
 /**
  * Error to be used when a path is not found
  */
-class NotFoundError extends Error {
+export class NotFoundError extends Error {
   constructor() {
     super();
 
@@ -12,15 +12,10 @@ class NotFoundError extends Error {
 /**
  * Middleware that sets a 404 and throws a NotFoundError
  */
-const notFoundHandler = () => async (ctx, next) => {
+export const notFoundHandler = () => async (ctx, next) => {
   await next();
   ctx.status = ctx.status || 404;
   if (ctx.status === 404) {
     throw new NotFoundError();
   }
-};
-
-module.exports = {
-  NotFoundError,
-  notFoundHandler,
 };

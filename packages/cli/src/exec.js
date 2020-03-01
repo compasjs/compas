@@ -1,6 +1,6 @@
-const { isNil, spawn } = require("@lbu/stdlib");
-const { join, resolve } = require("path");
-const { getKnownScripts } = require("./utils");
+import { isNil, spawn } from "@lbu/stdlib";
+import { join, resolve } from "path";
+import { getKnownScripts } from "./utils.js";
 
 /**
  * TODO: Watch docs & nodemon customization
@@ -8,7 +8,7 @@ const { getKnownScripts } = require("./utils");
  * @param {string} cmd
  * @param {string[]} args
  */
-const execScript = (logger, cmd = "help", args = []) => {
+export const execScript = (logger, cmd = "help", args = []) => {
   let watch = false;
   if (cmd === "--watch") {
     watch = true;
@@ -41,9 +41,9 @@ const execScript = (logger, cmd = "help", args = []) => {
   }
 };
 
-const execJsFile = (logger, script, cmd, args, watch) => {
+const execJsFile = async (logger, script, cmd, args, watch) => {
   if (watch) {
-    const opts = require(script.path) || {};
+    const opts = (await import(script.path)) || {};
 
     if (opts.disallowNodemon) {
       logger.error(`Cannot execute ${cmd} in watch mode`);
@@ -85,8 +85,4 @@ const execYarnScript = (logger, script, cmd, args, watch) => {
   }
 
   return spawn(`yarn`, ["run", cmd, ...args]);
-};
-
-module.exports = {
-  execScript,
 };

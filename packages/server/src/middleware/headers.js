@@ -1,5 +1,5 @@
-const koaHelmet = require("koa-helmet");
-const cors = require("koa2-cors");
+import koaHelmet from "koa-helmet";
+import cors from "koa2-cors";
 
 const noop = () => {};
 
@@ -9,7 +9,7 @@ const noop = () => {};
  * @param {Object=} opts.helmet Helmet configuration see koa-helmet
  * @param {Object=} opts.cors Cors configuration see koa2-cors
  */
-const defaultHeaders = (opts = {}) => {
+export const defaultHeaders = (opts = {}) => {
   const helmetExec = koaHelmet(opts.helmet);
   const corsExec = cors(opts.cors);
 
@@ -20,8 +20,4 @@ const defaultHeaders = (opts = {}) => {
 
     return next();
   };
-};
-
-module.exports = {
-  defaultHeaders,
 };

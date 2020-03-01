@@ -1,11 +1,7 @@
-const { newLogger } = require("@lbu/insight");
+import { newLogger } from "@lbu/insight";
 
-const logger = newLogger({
+export const logger = newLogger({
   ctx: {
     type: "CLI",
   },
 });
-
-module.exports = {
-  logger,
-};

@@ -1,3 +1,5 @@
+import { NotFoundError } from "./notFound.js";
+
 /**
  * @callback KoaErrorHandler
  * @param ctx Koa Context
@@ -5,13 +7,12 @@
  * @returns {boolean} Return truthy when handled or falsey when skipped
  */
 
-const { NotFoundError } = require("./notFound");
 /**
  * Handle any upstream errors
  * @param {KoaErrorHandler} onError
  * @returns {function(...[*]=)}
  */
-const errorHandler = onError => async (ctx, next) => {
+export const errorHandler = onError => async (ctx, next) => {
   try {
     await next();
   } catch (error) {
@@ -33,8 +34,4 @@ const errorHandler = onError => async (ctx, next) => {
       };
     }
   }
-};
-
-module.exports = {
-  errorHandler,
 };

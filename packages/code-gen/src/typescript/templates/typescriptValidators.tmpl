@@ -1,5 +1,5 @@
 declare module "./validators" {
-    export declare class ValidationError extends Error {
+    export class ValidationError extends Error {
       static isValidationError(err: Error): err is ValidationError;
 
       constructor(key: string, message: string);

@@ -1,37 +1,21 @@
-const { uuid } = require("./src/datatypes");
-const { isNil, isPlainObject, merge } = require("./src/lodash");
-const {
+export { uuid } from "./src/datatypes.js";
+export { isNil, isPlainObject, merge } from "./src/lodash.js";
+export {
   exec,
+  spawn,
   processDirectoryRecursive,
   processDirectoryRecursiveSync,
-  spawn,
-} = require("./src/node");
-const {
+} from "./src/node.js";
+export {
   addToTemplateContext,
   compileTemplate,
   compileTemplateDirectory,
   executeTemplate,
-} = require("./src/template");
-const { getSecondsSinceEpoch, gc, mainFn } = require("./src/utils");
-
-module.exports = {
-  addToTemplateContext,
-  compileTemplate,
-  compileTemplateDirectory,
-  executeTemplate,
-
-  exec,
-  spawn,
-
-  processDirectoryRecursive,
-  processDirectoryRecursiveSync,
-
-  isNil,
-  isPlainObject,
-  merge,
-
+} from "./src/template.js";
+export {
   getSecondsSinceEpoch,
   gc,
   mainFn,
-  uuid,
-};
+  filenameForModule,
+  dirnameForModule,
+} from "./src/utils.js";

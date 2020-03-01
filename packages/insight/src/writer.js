@@ -1,4 +1,4 @@
-const { inspect } = require("util");
+import { inspect } from "util";
 
 /**
  * @param {Date} date
@@ -118,7 +118,7 @@ const formatMessage = (availableDepth, message) => {
   return result;
 };
 
-const writePretty = (
+export const writePretty = (
   stream,
   depth,
   { level, type, timestamp, message, ...ctx },
@@ -149,15 +149,10 @@ const writePretty = (
   stream.write("\n");
 };
 
-const writeNDJSON = (stream, depth, input) => {
+export const writeNDJSON = (stream, depth, input) => {
   input.timestamp = input.timestamp.toISOString();
   input.message = formatMessage(depth, input.message);
 
   stream.write(JSON.stringify(input));
   stream.write("\n");
-};
-
-module.exports = {
-  writeNDJSON,
-  writePretty,
 };

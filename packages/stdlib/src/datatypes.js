@@ -1,7 +1,7 @@
-const { v4 } = require("uuid");
+import uuidFn from "uuid";
 
-const uuid = v4;
-
-module.exports = {
-  uuid,
-};
+/**
+ * @function
+ * @return {string}
+ */
+export const uuid = uuidFn;

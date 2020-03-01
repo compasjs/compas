@@ -1,10 +1,8 @@
-const { spawn } = require("@lbu/stdlib");
-const { isPlainObject } = require("@lbu/stdlib");
-const {
-  existsSync,
-  promises: { writeFile, mkdir },
-} = require("fs");
-const { join } = require("path");
+import { isPlainObject, spawn } from "@lbu/stdlib";
+import { existsSync, promises } from "fs";
+import { join } from "path";
+
+const { writeFile, mkdir } = promises;
 
 class Runner {
   constructor(logger, dataLoader, { plugins, ...opts }) {
@@ -104,10 +102,6 @@ class Runner {
  * @param dataLoader
  * @returns {{build: Function}}
  */
-const runCodeGen = (logger, dataLoader) => ({
+export const runCodeGen = (logger, dataLoader) => ({
   build: async opts => new Runner(logger, dataLoader, opts).run(),
 });
-
-module.exports = {
-  runCodeGen,
-};

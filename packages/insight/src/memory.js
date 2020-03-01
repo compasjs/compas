@@ -6,7 +6,7 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
  * @param {number} bytes
  * @returns {string}
  */
-const bytesToHumanReadable = bytes => {
+export const bytesToHumanReadable = bytes => {
   if (bytes === 0) {
     return "0 Byte";
   }
@@ -31,7 +31,7 @@ const bytesToHumanReadable = bytes => {
  * https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
  * @param logger
  */
-const printProcessMemoryUsage = logger => {
+export const printProcessMemoryUsage = logger => {
   const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
   logger.info({
     rss: bytesToHumanReadable(rss),
@@ -39,9 +39,4 @@ const printProcessMemoryUsage = logger => {
     heapTotal: bytesToHumanReadable(heapTotal),
     external: bytesToHumanReadable(external),
   });
-};
-
-module.exports = {
-  bytesToHumanReadable,
-  printProcessMemoryUsage,
 };

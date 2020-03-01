@@ -1,8 +1,0 @@
-module.exports = {
-  ValidationError,
-  validatorHooks,
-
-  {{ for (const v of validators) { }}
-  {{= v.validatorName }},
-  {{ } }}
-};

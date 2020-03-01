@@ -2,7 +2,7 @@
 {{= routerMatcher(r) }}
 {{ } }}
 
-const router = (ctx, next) => {
+export const router = (ctx, next) => {
   let triePath = ctx.method + ctx.path;
   if (triePath.endsWith("/")) {
     triePath = triePath.substring(0, triePath.length - 1);

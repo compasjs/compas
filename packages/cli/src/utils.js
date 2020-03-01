@@ -1,7 +1,8 @@
-const { existsSync, readdirSync } = require("fs");
-const { join } = require("path");
+import { dirnameForModule } from "@lbu/stdlib";
+import { existsSync, readdirSync, readFileSync } from "fs";
+import { join } from "path";
 
-const getKnownScripts = () => {
+export const getKnownScripts = () => {
   const result = {};
 
   const userDir = join(process.cwd(), "scripts");
@@ -18,13 +19,13 @@ const getKnownScripts = () => {
 
   const pkgJsonPath = join(process.cwd(), "package.json");
   if (existsSync(pkgJsonPath)) {
-    const pkgJson = require(pkgJsonPath);
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
     for (const item of Object.keys(pkgJson.scripts || {})) {
       result[item] = { type: "YARN", script: pkgJson.scripts[item] };
     }
   }
 
-  const cliDir = join(__dirname, "../scripts");
+  const cliDir = join(dirnameForModule(import.meta), "../scripts");
   for (const item of readdirSync(cliDir)) {
     const name = item.split(".")[0];
 
@@ -35,8 +36,4 @@ const getKnownScripts = () => {
   }
 
   return result;
-};
-
-module.exports = {
-  getKnownScripts,
 };

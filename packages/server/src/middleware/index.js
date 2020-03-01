@@ -1,22 +1,10 @@
-const {
+export {
   createBodyParsers,
   getBodyParser,
   getMultipartBodyParser,
-} = require("./body");
-const { errorHandler } = require("./error");
-const { defaultHeaders } = require("./headers");
-const { healthHandler } = require("./health");
-const { logMiddleware } = require("./log");
-const { NotFoundError, notFoundHandler } = require("./notFound");
-
-module.exports = {
-  createBodyParsers,
-  errorHandler,
-  defaultHeaders,
-  getBodyParser,
-  getMultipartBodyParser,
-  healthHandler,
-  logMiddleware,
-  NotFoundError,
-  notFoundHandler,
-};
+} from "./body.js";
+export { errorHandler } from "./error.js";
+export { defaultHeaders } from "./headers.js";
+export { healthHandler } from "./health.js";
+export { logMiddleware } from "./log.js";
+export { NotFoundError, notFoundHandler } from "./notFound.js";

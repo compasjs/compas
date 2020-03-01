@@ -1,10 +1,18 @@
-const { compileTemplateDirectory, executeTemplate } = require("@lbu/stdlib");
-const path = require("path");
+import {
+  compileTemplateDirectory,
+  dirnameForModule,
+  executeTemplate,
+} from "@lbu/stdlib";
+import { join } from "path";
 
 const init = async () => {
-  await compileTemplateDirectory(path.join(__dirname, "./templates"), ".tmpl", {
-    debug: false,
-  });
+  await compileTemplateDirectory(
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+    {
+      debug: false,
+    },
+  );
 };
 
 const generate = data => ({
@@ -15,12 +23,8 @@ const generate = data => ({
 /**
  * Generate Typescript types for validators & routes
  */
-const getPlugin = () => ({
+export const getPlugin = () => ({
   name: "typescript",
   init,
   generate,
 });
-
-module.exports = {
-  getPlugin,
-};

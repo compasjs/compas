@@ -6,9 +6,9 @@
   {{ if (r.bodyValidator && r.bodyValidator.funcName) set.add(r.bodyValidator.funcName); }}
 {{ } }}
 
-const { getBodyParser, compose } = require("@lbu/server");
-const {
+import { getBodyParser, compose } from "@lbu/server";
+import {
 {{ for (const item of set.values()) { }}
   {{= item }},
 {{ } }}
-} = require("./validators");
+}  from "./validators";

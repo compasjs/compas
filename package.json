@@ -1,6 +1,7 @@
 {
   "name": "lbu",
   "private": true,
+  "type": "module",
   "scripts": {
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
@@ -8,7 +9,7 @@
     "release": "lerna publish"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=13"
   },
   "devDependencies": {
     "@lbu/cli": "0.0.6",
@@ -18,6 +19,7 @@
     "tape": "4.13.0",
     "tape-promise": "4.0.0"
   },
+  "prettier": "@lbu/lint-config/prettierrc",
   "workspaces": [
     "packages/*"
   ]

@@ -1,10 +1,10 @@
-require("dotenv/config");
+import "dotenv/config";
 
-const { mainFn } = require("@lbu/cli");
-const { log } = require("@lbu/insight");
-const { getApp, createBodyParsers } = require("@lbu/server");
+import { mainFn } from "@lbu/stdlib";
+import { log } from "@lbu/insight";
+import { getApp, createBodyParsers } from "@lbu/server";
 
-mainFn(module, require, log, async logger => {
+mainFn(import.meta, log, async logger => {
   logger.info("Hello from my src/index.js");
 
   const app = getApp({

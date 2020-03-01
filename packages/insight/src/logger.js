@@ -1,4 +1,4 @@
-const { writeNDJSON, writePretty } = require("./writer");
+import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
  * @callback LogFn
@@ -20,7 +20,7 @@ const { writeNDJSON, writePretty } = require("./writer");
  * @param {Object} [opts.ctx={}]
  * @param {number} [opts.depth=3]
  */
-const newLogger = opts => {
+export const newLogger = opts => {
   opts = opts || {};
   opts.isProduction =
     typeof opts.isProduction === "boolean"
@@ -92,8 +92,4 @@ const logger = (isProduction, stream, depth, ctx, level, ...args) => {
   } else {
     writePretty(stream, depth, metaData);
   }
-};
-
-module.exports = {
-  newLogger,
 };

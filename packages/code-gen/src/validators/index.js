@@ -1,7 +1,4 @@
-require("./decorateModel");
-require("./decorateApp");
-const { getPlugin } = require("./plugin");
+import "./decorateModel.js";
+import "./decorateApp.js";
 
-module.exports = {
-  getPlugin,
-};
+export { getPlugin } from "./plugin.js";

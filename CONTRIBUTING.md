@@ -16,12 +16,15 @@ All commands in this repo can be run via the 'self-hosted' `@lbu/cli`. Run
 Add in the test file that you want to debug:
 
 ```javascript
-if (require.main === module) {
-  const tape = require("tape");
-  const promiseWrap = require("tape-promise");
-  const test = promiseWrap.default(tape);
-  module.exports(test);
-}
+import { mainFn } from "@lbu/stdlib";
+import { log } from "@lbu/insight";
+import tape from "tape";
+import promiseWrap from "tape-promise";
+
+mainFn(import.meta, log, () => {
+  const tapeTest = promiseWrap.default(tape);
+  test(tapeTest);
+});
 ```
 
 Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
@@ -49,8 +52,8 @@ Everything should be published now. To make the repo ready for more development:
 
 - `Help` > `Edit Custom Properties...` >
   `idea.javascript.max.evaluation.complexity=80`
-- Open `/.prettierrc.js` > `Find Actions` > `Apply Prettier Code Style Rules`
-- Open `/.eslintrc.js` > `Find Actions` > `Apply ESLint Code Style Rules`
+- Open `/package.json` > `Find Actions` > `Apply Prettier Code Style Rules`
+- Open `/.eslintrc.cjs` > `Find Actions` > `Apply ESLint Code Style Rules`
 - `Settings` > `Node.js And NPM` > `Coding assistance for Node.js`
 - `Edit configurations...` > `Templates/Node.js`:
   - `V8 Profiling` > `Allow taking heap snapshots`

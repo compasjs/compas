@@ -1,8 +1,4 @@
-require("./decorateApp");
-const { R } = require("./RouteBuilder");
-const { getPlugin } = require("./plugin");
+import "./decorateApp.js";
 
-module.exports = {
-  R,
-  getPlugin,
-};
+export { R } from "./RouteBuilder.js";
+export { getPlugin } from "./plugin.js";

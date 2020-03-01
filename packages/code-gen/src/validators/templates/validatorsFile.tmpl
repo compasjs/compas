@@ -1,8 +1,8 @@
-const { isNil } = require("@lbu/stdlib");
+import { isNil } from "@lbu/stdlib";
 
-const validatorHooks = {};
+export const validatorHooks = {};
 
-class ValidationError extends Error {
+export class ValidationError extends Error {
   static isValidationError(err) {
     return err.name === "ValidationError";
   }
@@ -19,5 +19,3 @@ class ValidationError extends Error {
 {{ for (const v of it.validators) { }}
 {{= validatorsNamedFn(v) }}
 {{ } }}
-
-{{= validatorsExports(it) }}

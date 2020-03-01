@@ -2,6 +2,7 @@
   "private": true,
   "license": "MIT",
   "name": "{{name}}",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js"
   },
@@ -15,5 +16,6 @@
     "@lbu/cli": "{{version}}",
     "@lbu/code-gen": "{{version}}",
     "@lbu/lint-config": "{{version}}"
-  }
+  },
+  "prettier": "@lbu/lint-config/prettierrc"
 }

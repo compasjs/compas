@@ -1,6 +1,6 @@
 const _plugins = [];
 
-class App {
+export class App {
   /**
    * @param {string} name
    */
@@ -32,7 +32,3 @@ class App {
     return result;
   }
 }
-
-module.exports = {
-  App,
-};

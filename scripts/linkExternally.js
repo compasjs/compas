@@ -1,8 +1,7 @@
-const { mainFn, spawn } = require("@lbu/stdlib");
-const { newLogger } = require("@lbu/insight");
-const { isNil } = require("@lbu/stdlib");
-const { join } = require("path");
-const { readdirSync } = require("fs");
+import { newLogger } from "@lbu/insight";
+import { isNil, mainFn, spawn } from "@lbu/stdlib";
+import { readdirSync } from "fs";
+import { join } from "path";
 
 const main = async logger => {
   const [workingDir] = process.argv.slice(2);
@@ -22,8 +21,6 @@ const main = async logger => {
   }
 };
 
-mainFn(module, require, newLogger(), main);
+mainFn(import.meta, newLogger(), main);
 
-module.exports = {
-  disallowNodemon: true,
-};
+export const disallowNodemon = true;

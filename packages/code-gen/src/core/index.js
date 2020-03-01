@@ -1,7 +1,2 @@
-const { App } = require("./App");
-const { runCodeGen } = require("./run");
-
-module.exports = {
-  App,
-  runCodeGen,
-};
+export { App } from "./App.js";
+export { runCodeGen } from "./run.js";

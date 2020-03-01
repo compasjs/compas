@@ -37,7 +37,6 @@ will be supported:
       queues, KV store etc
 - [ ] @lbu/code-gen: More plugins
 
-
 ## Docs
 
 See [/docs](/docs/README.md)

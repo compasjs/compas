@@ -1,6 +1,6 @@
-const { newLogger } = require("@lbu/insight");
-const { isNil, uuid } = require("@lbu/stdlib");
-const { Transform } = require("stream");
+import { newLogger } from "@lbu/insight";
+import { isNil, uuid } from "@lbu/stdlib";
+import { Transform } from "stream";
 
 /**
  * Wait for the ctx.body stream to finish before resolving
@@ -67,7 +67,7 @@ const logInfo = (ctx, startTime, length) => {
 /**
  * Log basic request and response information
  */
-const logMiddleware = () => async (ctx, next) => {
+export const logMiddleware = () => async (ctx, next) => {
   const startTime = process.hrtime.bigint();
 
   let requestId = ctx.get("X-Request-Id");
@@ -98,8 +98,4 @@ const logMiddleware = () => async (ctx, next) => {
   }
 
   logInfo(ctx, startTime, isNil(counter) ? 0 : counter.length);
-};
-
-module.exports = {
-  logMiddleware,
 };

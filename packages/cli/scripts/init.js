@@ -1,16 +1,18 @@
-const { mainFn, spawn } = require("@lbu/stdlib");
-const {
+import { dirnameForModule, mainFn, spawn } from "@lbu/stdlib";
+import {
   existsSync,
   lstatSync,
   mkdirSync,
   readdirSync,
   readFileSync,
   writeFileSync,
-} = require("fs");
-const { join } = require("path");
-const { logger } = require("../src/logger");
+} from "fs";
+import { join } from "path";
+import { cliLogger } from "../index.js";
 
-const { version } = require("../package");
+const { version } = JSON.parse(
+  readFileSync(join(dirnameForModule(import.meta), "../package.json"), "utf-8"),
+);
 
 const copyDirRecursive = (source, target, contentHandler) => {
   const stat = lstatSync(source);
@@ -31,12 +33,15 @@ const copyDirRecursive = (source, target, contentHandler) => {
   }
 };
 
-mainFn(module, require, logger, async () => {
+mainFn(import.meta, cliLogger, async () => {
   const outDir = process.cwd();
   const projectName = outDir.substring(outDir.lastIndexOf("/") + 1);
 
-  copyDirRecursive(join(__dirname, "../template"), outDir, input =>
-    input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
+  copyDirRecursive(
+    join(dirnameForModule(import.meta), "../template"),
+    outDir,
+    input =>
+      input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
   );
 
   await spawn(`yarn`, []);

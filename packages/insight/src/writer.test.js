@@ -1,7 +1,6 @@
-const { writeNDJSON } = require("./writer");
-const { writePretty } = require("./writer");
+import { writeNDJSON, writePretty } from "./writer.js";
 
-module.exports = t => {
+export const test = t => {
   t.test("writePretty", t => {
     const now = new Date();
     let result = [];
@@ -80,7 +79,7 @@ module.exports = t => {
       "should print nesting according to depth",
     );
     t.ok(
-      result[0].indexOf("{...}" !== -1),
+      result[0].indexOf("{...}") !== -1,
       "should replace too much nesting with visual indicators",
     );
 

@@ -1,14 +1,14 @@
-const { mainFn } = require("@lbu/stdlib");
-const {
-  runCodeGen,
-  getRouterPlugin,
-  getValidatorPlugin,
-  getTypescriptPlugin,
+import {
   App,
+  getRouterPlugin,
+  getTypescriptPlugin,
+  getValidatorPlugin,
   M,
   R,
-} = require("@lbu/code-gen");
-const { log } = require("@lbu/insight");
+  runCodeGen,
+} from "@lbu/code-gen";
+import { log } from "@lbu/insight";
+import { mainFn } from "@lbu/stdlib";
 
 const app = new App("Test App");
 
@@ -29,8 +29,6 @@ const main = async logger => {
   });
 };
 
-mainFn(module, require, log, main);
+mainFn(import.meta, log, main);
 
-module.exports = {
-  nodemonArgs: `--ignore generated -e tmpl,js,json`,
-};
+export const nodemonArgs = "--ignore generated -e tmpl,js,json";
