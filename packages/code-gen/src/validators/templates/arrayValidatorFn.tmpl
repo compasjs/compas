@@ -10,7 +10,7 @@ const {{= functionName }} = (value, propertyPath) => {
   }
 
   {{ if (it.convert) { }}
-  if (!Array.isArray(value) {
+  if (!Array.isArray(value)) {
     value = [value];
   }
   {{ } }}

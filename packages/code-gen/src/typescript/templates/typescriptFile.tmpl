@@ -1,0 +1,7 @@
+{{ if (it.validators && validators.length > 0) { }}
+  {{= typescriptValidators(it) }}
+{{ } }}
+
+{{ if (it.routes && it.routes.length > 0) { }}
+  {{= typescriptRouter(it) }}
+{{ } }}

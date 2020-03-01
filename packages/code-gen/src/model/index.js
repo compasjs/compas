@@ -50,16 +50,6 @@ M.anyOf = (...items) => new LbuAnyOf(...items);
  */
 M.ref = type => new LbuRef(type);
 
-M.types = {
-  LbuBool,
-  LbuNumber,
-  LbuString,
-  LbuObject,
-  LbuArray,
-  LbuAnyOf,
-  LbuRef,
-};
-
 /**
  * Internal delegate for providing a fluent model building experience
  */
@@ -518,6 +508,16 @@ class LbuRef extends ModelBuilder {
     return this;
   }
 }
+
+M.types = {
+  LbuBool,
+  LbuNumber,
+  LbuString,
+  LbuObject,
+  LbuArray,
+  LbuAnyOf,
+  LbuRef,
+};
 
 module.exports = {
   M,

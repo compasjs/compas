@@ -1,0 +1,31 @@
+{{ let result = ""; }}
+{{ if (type === "boolean" && it.oneOf !== undefined) { }}
+    {{ result += String(it.oneOf); }}
+{{ } else if (type === "boolean") { }}
+    {{ result += "boolean"; }}
+{{ } else if (type === "number" && it.oneOf !== undefined) { }}
+    {{ result += it.oneOf.map(it => String(it)).join(" | "); }}
+{{ } else if (type === "number") { }}
+    {{ result += "number"; }}
+{{ } else if (type === "string" && it.oneOf !== undefined) { }}
+    {{ result += it.oneOf.map(it => "\"" + it + "\"").join(" | "); }}
+{{ } else if (type === "string") { }}
+    {{ result += "string"; }}
+{{ } else if (type === "object") { }}
+    {{ result += "{"; }}
+    {{ result += Object.entries(it.keys).map(([k,v]) => k + ": " + typescriptType(v).trim()).join(";\n "); }}
+    {{ result += "}"; }}
+{{ } else if (type === "array") { }}
+    {{ result += typescriptType(it.values).trim() + "[]"; }}
+{{ } else if (type === "anyOf") { }}
+    {{ result += "("; }}
+    {{ result += it.values.map(item => typescriptType(item).trim()).join(" | "); }}
+    {{ result += ")"; }}
+{{ } else if (type === "reference") { }}
+    {{ result += it.referenceType; }}
+{{ } }}
+
+{{ if (it.optional) { }}
+    {{ result += " | undefined"; }}
+{{ } }}
+{{= result }}

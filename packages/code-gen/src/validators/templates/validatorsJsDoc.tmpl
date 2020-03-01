@@ -1,25 +1,25 @@
 {{ let result = ""; }}
 {{ if (type === "boolean") { }}
-{{ result += "boolean"; }}
+    {{ result += "boolean"; }}
 {{ } else if (type === "number") { }}
-{{ result += "number"; }}
+    {{ result += "number"; }}
 {{ } else if (type === "string") { }}
-{{ result += "string"; }}
+    {{ result += "string"; }}
 {{ } else if (type === "object") { }}
-{{ result += "{"; }}
-{{ result += Object.entries(it.keys).map(([k,v]) => k + ": " + validatorsJsDoc(v).trim()).join(", "); }}
-{{ result += "}"; }}
+    {{ result += "{"; }}
+    {{ result += Object.entries(it.keys).map(([k,v]) => k + ": " + validatorsJsDoc(v).trim()).join(", "); }}
+    {{ result += "}"; }}
 {{ } else if (type === "array") { }}
-{{ result += validatorsJsDoc(it.values).trim() + "[]"; }}
+    {{ result += validatorsJsDoc(it.values).trim() + "[]"; }}
 {{ } else if (type === "anyOf") { }}
-{{ result += "("; }}
-{{ result += it.values.map(item => validatorsJsDoc(item).trim()).join("|"); }}
-{{ result += ")"; }}
+    {{ result += "("; }}
+    {{ result += it.values.map(item => validatorsJsDoc(item).trim()).join("|"); }}
+    {{ result += ")"; }}
 {{ } else if (type === "reference") { }}
-{{ result += it.referenceType; }}
+    {{ result += it.referenceType; }}
 {{ } }}
 
 {{ if (it.optional) { }}
-{{ result += "|undefined"; }}
+    {{ result += "|undefined"; }}
 {{ } }}
 {{= result }}

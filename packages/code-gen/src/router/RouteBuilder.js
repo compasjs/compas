@@ -11,21 +11,12 @@ function R(name, path) {
   const namePart = utils.upperCaseFirst(name);
   return {
     get: () => new GetBuilder("GET", "get" + namePart, path),
-    post: () => new PostBuilder("GET", "post" + namePart, path),
-    put: () => new PutBuilder("GET", "put" + namePart, path),
-    delete: () => new DeleteBuilder("GET", "delete" + namePart, path),
-    head: () => new DeleteBuilder("GET", "head" + namePart, path),
+    post: () => new PostBuilder("POST", "post" + namePart, path),
+    put: () => new PutBuilder("PUT", "put" + namePart, path),
+    delete: () => new DeleteBuilder("DELETE", "delete" + namePart, path),
+    head: () => new HeadBuilder("HEAD", "head" + namePart, path),
   };
 }
-
-R.types = {
-  RouteBuilder,
-  GetBuilder,
-  PostBuilder,
-  PutBuilder,
-  DeleteBuilder,
-  HeadBuilder,
-};
 
 /**
  * Internal delegate for providing a fluent route building experience
@@ -123,6 +114,15 @@ class PutBuilder extends RouteBuilder {}
 class DeleteBuilder extends RouteBuilder {}
 
 class HeadBuilder extends RouteBuilder {}
+
+R.types = {
+  RouteBuilder,
+  GetBuilder,
+  PostBuilder,
+  PutBuilder,
+  DeleteBuilder,
+  HeadBuilder,
+};
 
 module.exports = {
   R,

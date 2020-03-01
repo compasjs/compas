@@ -18,10 +18,12 @@ class Runner {
 
   async run() {
     // TODO: Validate plugins
+    await this.pluginsInit();
+
     this.data = await this.dataLoader();
     // TODO: Validate data
+    await this.pluginsTransformData();
 
-    await this.pluginsInit();
     await this.pluginsGenerate();
     await this.pluginsFinalize();
     await this.writeOutputs();
@@ -42,10 +44,21 @@ class Runner {
     }
   }
 
+  async pluginsTransformData() {
+    for (const p of this.plugins) {
+      if ("transformData" in p) {
+        await p.transformData({
+          opts: this.opts,
+          data: this.data,
+        });
+      }
+    }
+  }
+
   async pluginsGenerate() {
     for (const p of this.plugins) {
       if ("generate" in p) {
-        const result = await p.generate({ opts: this.opts, data: this.data });
+        const result = await p.generate(this.data);
         if (!result) {
           continue;
         }

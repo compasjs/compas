@@ -12,18 +12,15 @@ const init = async ({ hasPlugin }) => {
   await compileTemplateDirectory(__dirname, ".tmpl", { debug: false });
 };
 
+const transformData = ({ data }) => {
+  data.routeTrie = buildTrie(data.routes);
+  data.tags = extractTags(data.routes);
+};
+
 const generate = data => {
-  const templateInput = {
-    routes: data.routes,
-    routeTrie: buildTrie(data.routes),
-    tags: extractTags(data.routes),
-  };
-
-  console.log(templateInput.tags);
-
   return {
     path: "./router.js",
-    content: executeTemplate("routerFile", templateInput),
+    content: executeTemplate("routerFile", data),
   };
 };
 
@@ -34,6 +31,7 @@ const generate = data => {
 const getPlugin = () => ({
   name: "router",
   init,
+  transformData,
   generate,
 });
 

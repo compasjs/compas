@@ -25,6 +25,12 @@ function appPluginCallback(result, store) {
     r.queryValidator = addValidator(store, r.queryValidator);
     r.bodyValidator = addValidator(store, r.bodyValidator);
 
+    if (isNil(r.tags)) {
+      r.tags = [];
+    }
+    if (isNil(r.docs)) {
+      r.docs = "";
+    }
     result.routes.push(r);
   }
 }
