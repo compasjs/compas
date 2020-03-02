@@ -50,6 +50,7 @@ export const newLogger = opts => {
     setDepth: setDepth.bind(undefined, opts),
     setCtx: setCtx.bind(undefined, opts),
     getCtx: () => opts.ctx,
+    isProduction: () => opts.isProduction,
   };
 };
 

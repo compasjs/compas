@@ -33,10 +33,19 @@ export const bytesToHumanReadable = bytes => {
  */
 export const printProcessMemoryUsage = logger => {
   const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
-  logger.info({
-    rss: bytesToHumanReadable(rss),
-    heapUsed: bytesToHumanReadable(heapUsed),
-    heapTotal: bytesToHumanReadable(heapTotal),
-    external: bytesToHumanReadable(external),
-  });
+  if (logger.isProduction()) {
+    logger.info({
+      rss,
+      heapUsed,
+      heapTotal,
+      external,
+    });
+  } else {
+    logger.info({
+      rss: bytesToHumanReadable(rss),
+      heapUsed: bytesToHumanReadable(heapUsed),
+      heapTotal: bytesToHumanReadable(heapTotal),
+      external: bytesToHumanReadable(external),
+    });
+  }
 };

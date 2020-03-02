@@ -17,6 +17,7 @@ export const test = t => {
       info: arg => {
         result = arg;
       },
+      isProduction: () => false,
     };
     printProcessMemoryUsage(mock);
 
