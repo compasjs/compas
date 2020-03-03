@@ -4,13 +4,13 @@ import { plugin } from "./builderPlugin.js";
 App.withPlugin(plugin);
 
 /**
- * @name App#route
+ * @name App#validator
  * @function
- * @param {RouteBuilder} route
+ * @param {ModelBuilder} model
  * @return {App}
  */
-App.prototype.route = function(route) {
-  this.callHook("addRoute", true, route);
+App.prototype.validator = function(model) {
+  this.callHook("addValidator", true, model);
 
   return this;
 };

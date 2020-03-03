@@ -19,11 +19,10 @@ class Runner {
     await this.pluginsInit();
 
     this.data = await this.dataLoader();
+    console.dir(this.data, { colors: true, depth: null });
     // TODO: Validate data
-    await this.pluginsTransformData();
 
     await this.pluginsGenerate();
-    await this.pluginsFinalize();
     await this.writeOutputs();
 
     await spawn(`yarn`, ["lbu", "lint"]);
@@ -37,17 +36,6 @@ class Runner {
         await p.init({
           hasPlugin,
           opts: this.opts,
-        });
-      }
-    }
-  }
-
-  async pluginsTransformData() {
-    for (const p of this.plugins) {
-      if ("transformData" in p) {
-        await p.transformData({
-          opts: this.opts,
-          data: this.data,
         });
       }
     }
@@ -68,18 +56,6 @@ class Runner {
           }
         }
         this.outputs = this.outputs.concat(result);
-      }
-    }
-  }
-
-  async pluginsFinalize() {
-    for (const p of this.plugins) {
-      if ("finalize" in p) {
-        await p.finalize({
-          output: this.outputs,
-          opts: this.opts,
-          data: this.data,
-        });
       }
     }
   }

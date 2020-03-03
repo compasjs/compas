@@ -17,11 +17,22 @@ const myBool = M("MyBool")
   .convert()
   .optional();
 
-app.validator(myBool);
-app.route(R("foo", "/foo").get());
+const myRef = M("MyRef").ref("MyBool");
+
+const myObj = M("MyObj").object({
+  bool: myBool,
+  refBool: myRef,
+});
+console.log(myRef.item);
+
+app.validator(myObj);
+app.route(
+  R("foo", "/foo")
+    .get()
+    .tags("foo"),
+);
 
 const main = async logger => {
-  logger.info(app.build());
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
     plugins: [getValidatorPlugin(), getRouterPlugin(), getTypescriptPlugin()],

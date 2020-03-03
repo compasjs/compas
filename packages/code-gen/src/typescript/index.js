@@ -23,7 +23,7 @@ const generate = data => ({
 /**
  * Generate Typescript types for validators & routes
  */
-export const getPlugin = () => ({
+export const getTypescriptPlugin = () => ({
   name: "typescript",
   init,
   generate,

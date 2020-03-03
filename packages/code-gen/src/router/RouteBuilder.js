@@ -22,17 +22,38 @@ export function R(name, path) {
  */
 class RouteBuilder {
   constructor(method, name, path) {
+    this.queryValidator = undefined;
+    this.paramsValidator = undefined;
+    this.bodyValidator = undefined;
+    this.responseModel = undefined;
+
     this.item = {
       name,
       method,
       path,
       tags: undefined,
       docs: undefined,
-      queryValidator: undefined,
-      paramsValidator: undefined,
-      bodyValidator: undefined,
-      responseModel: undefined,
     };
+  }
+
+  /**
+   * @public
+   * @param {...string} tags
+   * @return {RouteBuilder}
+   */
+  tags(...tags) {
+    this.item.tags = tags;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} docs
+   * @return {RouteBuilder}
+   */
+  docs(docs) {
+    this.item.docs = docs;
+    return this;
   }
 
   /**
@@ -41,12 +62,13 @@ class RouteBuilder {
    * @return {RouteBuilder}
    */
   params(model) {
-    const result = model.build();
-    if (!result.name) {
-      result.name = `${upperCaseFirst(this.item.name)}Params`;
-      result._addValidator = true;
+    this.paramsValidator = model;
+    if (!this.paramsValidator.item.name) {
+      this.paramsValidator.item.name = `${upperCaseFirst(
+        this.item.name,
+      )}Params`;
     }
-    this.item.paramsValidator = result;
+
     return this;
   }
 
@@ -56,12 +78,11 @@ class RouteBuilder {
    * @return {RouteBuilder}
    */
   query(model) {
-    const result = model.build();
-    if (!result.name) {
-      result.name = `${upperCaseFirst(this.item.name)}Query`;
-      result._addValidator = true;
+    this.queryValidator = model;
+    if (!this.queryValidator.item.name) {
+      this.queryValidator.item.name = `${upperCaseFirst(this.item.name)}Query`;
     }
-    this.item.queryValidator = result;
+
     return this;
   }
 
@@ -71,12 +92,11 @@ class RouteBuilder {
    * @return {RouteBuilder}
    */
   body(model) {
-    const result = model.build();
-    if (!result.name) {
-      result.name = `${upperCaseFirst(this.item.name)}Body`;
-      result._addValidator = true;
+    this.bodyValidator = model;
+    if (!this.bodyValidator.item.name) {
+      this.bodyValidator.item.name = `${upperCaseFirst(this.item.name)}Body`;
     }
-    this.item.bodyValidator = result;
+
     return this;
   }
 
@@ -86,11 +106,14 @@ class RouteBuilder {
    * @return {RouteBuilder}
    */
   response(model) {
-    const result = model.build();
-    if (!result.name) {
-      result.name = `${upperCaseFirst(this.item.name)}Response`;
+    this.responseModel = model;
+    if (!this.responseModel.item.name) {
+      this.responseModel.item.name = `${upperCaseFirst(
+        this.item.name,
+      )}Response`;
     }
-    this.item.responseModel = result;
+
+    return this;
   }
 
   /**

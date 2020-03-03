@@ -279,9 +279,7 @@ class LbuObject extends ModelBuilder {
    * @return {LbuObject}
    */
   keys(obj) {
-    for (const key of Object.keys(obj)) {
-      this.item.keys[key] = obj[key].build();
-    }
+    this.item.keys = merge(this.item.keys, obj);
     return this;
   }
 
@@ -293,6 +291,20 @@ class LbuObject extends ModelBuilder {
   copy(name) {
     const result = new LbuObject();
     result.item = merge({}, this.item, { name });
+
+    return result;
+  }
+
+  build() {
+    const keys = this.item.keys;
+    this.item.keys = {};
+    const result = super.build();
+
+    for (const key of Object.keys(keys)) {
+      result.keys[key] = keys[key].build();
+    }
+
+    this.item.keys = keys;
 
     return result;
   }
@@ -353,7 +365,7 @@ class LbuArray extends ModelBuilder {
    * @return {LbuArray}
    */
   values(value) {
-    this.item.value = value.build();
+    this.item.values = value;
     return this;
   }
 
@@ -365,6 +377,18 @@ class LbuArray extends ModelBuilder {
   copy(name) {
     const result = new LbuArray();
     result.item = merge({}, this.item, { name });
+
+    return result;
+  }
+
+  build() {
+    const values = this.item.values;
+    this.item.values = undefined;
+    const result = super.build();
+
+    result.values = values.build();
+
+    this.item.values = values;
 
     return result;
   }
@@ -429,9 +453,7 @@ class LbuAnyOf extends ModelBuilder {
       this.item.values = [];
     }
 
-    for (const item of items) {
-      this.item.values.push(item.build());
-    }
+    this.item.values.push(...items);
 
     return this;
   }
@@ -444,6 +466,20 @@ class LbuAnyOf extends ModelBuilder {
   copy(name) {
     const result = new LbuAnyOf();
     result.item = merge({}, this.item, { name });
+
+    return result;
+  }
+
+  build() {
+    const values = this.item.values;
+    this.item.values = [];
+    const result = super.build();
+
+    for (const value of values) {
+      result.values.push(value.build());
+    }
+
+    this.item.values = values;
 
     return result;
   }
@@ -517,4 +553,13 @@ M.types = {
   LbuArray,
   LbuAnyOf,
   LbuRef,
+};
+
+/**
+ * Check if value is instanceof ModelBuilder
+ * @param {*} value
+ * @return {boolean}
+ */
+M.instanceOf = value => {
+  return value instanceof ModelBuilder;
 };

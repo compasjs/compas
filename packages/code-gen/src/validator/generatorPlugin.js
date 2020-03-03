@@ -25,8 +25,8 @@ const generate = data => ({
 /**
  * Generate validator functions with support for pre & post-validate hooks
  */
-export const getPlugin = () => ({
-  name: "validators",
+export const getValidatorPlugin = () => ({
+  name: "validator",
   init,
   generate,
 });
