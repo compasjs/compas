@@ -1,4 +1,4 @@
-import { merge } from "@lbu/stdlib";
+import { isNil, merge } from "@lbu/stdlib";
 import { upperCaseFirst } from "../utils.js";
 
 /**
@@ -7,21 +7,14 @@ import { upperCaseFirst } from "../utils.js";
  * @param {string} path
  */
 export function R(name, path) {
-  const namePart = upperCaseFirst(name);
-  return {
-    get: () => new GetBuilder("GET", "get" + namePart, path),
-    post: () => new PostBuilder("POST", "post" + namePart, path),
-    put: () => new PutBuilder("PUT", "put" + namePart, path),
-    delete: () => new DeleteBuilder("DELETE", "delete" + namePart, path),
-    head: () => new HeadBuilder("HEAD", "head" + namePart, path),
-  };
+  return new RouteBuilder(upperCaseFirst(upperCaseFirst(name)), path);
 }
 
 /**
  * Internal delegate for providing a fluent route building experience
  */
 class RouteBuilder {
-  constructor(method, name, path) {
+  constructor(name, path) {
     this.queryValidator = undefined;
     this.paramsValidator = undefined;
     this.bodyValidator = undefined;
@@ -29,8 +22,8 @@ class RouteBuilder {
 
     this.item = {
       name,
-      method,
       path,
+      method: undefined,
       tags: undefined,
       docs: undefined,
     };
@@ -64,9 +57,7 @@ class RouteBuilder {
   params(model) {
     this.paramsValidator = model;
     if (!this.paramsValidator.item.name) {
-      this.paramsValidator.item.name = `${upperCaseFirst(
-        this.item.name,
-      )}Params`;
+      this.paramsValidator.item.name = `${this.item.name}Params`;
     }
 
     return this;
@@ -80,7 +71,7 @@ class RouteBuilder {
   query(model) {
     this.queryValidator = model;
     if (!this.queryValidator.item.name) {
-      this.queryValidator.item.name = `${upperCaseFirst(this.item.name)}Query`;
+      this.queryValidator.item.name = `${this.item.name}Query`;
     }
 
     return this;
@@ -94,7 +85,7 @@ class RouteBuilder {
   body(model) {
     this.bodyValidator = model;
     if (!this.bodyValidator.item.name) {
-      this.bodyValidator.item.name = `${upperCaseFirst(this.item.name)}Body`;
+      this.bodyValidator.item.name = `${this.item.name}Body`;
     }
 
     return this;
@@ -108,9 +99,7 @@ class RouteBuilder {
   response(model) {
     this.responseModel = model;
     if (!this.responseModel.item.name) {
-      this.responseModel.item.name = `${upperCaseFirst(
-        this.item.name,
-      )}Response`;
+      this.responseModel.item.name = `${this.item.name}Response`;
     }
 
     return this;
@@ -118,24 +107,135 @@ class RouteBuilder {
 
   /**
    * @public
+   * @return {GetBuilder}
+   */
+  get() {
+    return this.constructBuilder(GetBuilder);
+  }
+
+  /**
+   * @public
+   * @return {PostBuilder}
+   */
+  post() {
+    return this.constructBuilder(PostBuilder);
+  }
+
+  /**
+   * @public
+   * @return {PutBuilder}
+   */
+  put() {
+    return this.constructBuilder(PutBuilder);
+  }
+
+  /**
+   * @public
+   * @return {DeleteBuilder}
+   */
+  delete() {
+    return this.constructBuilder(DeleteBuilder);
+  }
+
+  /**
+   * @public
+   * @return {HeadBuilder}
+   */
+  head() {
+    return this.constructBuilder(HeadBuilder);
+  }
+
+  /**
+   * @private
+   * @param {typeof RouteBuilder} Builder
+   * @return {*}
+   */
+  constructBuilder(Builder) {
+    const b = new Builder(this.item.name, this.item.path);
+    if (!isNil(this.item.tags)) {
+      b.tags(...this.item.tags);
+    }
+    if (!isNil(this.docs)) {
+      b.docs(this.item.docs);
+    }
+    if (!isNil(this.queryValidator)) {
+      b.query(this.queryValidator);
+    }
+    if (!isNil(this.paramsValidator)) {
+      b.params(this.paramsValidator);
+    }
+    if (!isNil(this.bodyValidator)) {
+      b.body(this.bodyValidator);
+    }
+    if (!isNil(this.responseModel)) {
+      b.response(this.responseModel);
+    }
+
+    return b;
+  }
+
+  /**
+   * @public
    */
   build() {
-    if (this.item === undefined) {
-      throw new Error("Not implemented");
-    }
+    throw new Error("You forgot to call .get() / .post() / ...");
+  }
+}
+
+class GetBuilder extends RouteBuilder {
+  constructor(name, path) {
+    super(`get${name}`, path);
+    this.item.method = "GET";
+  }
+
+  build() {
     return merge({}, this.item);
   }
 }
 
-class GetBuilder extends RouteBuilder {}
+class PostBuilder extends RouteBuilder {
+  constructor(name, path) {
+    super(`post${name}`, path);
+    this.item.method = "POST";
+  }
 
-class PostBuilder extends RouteBuilder {}
+  build() {
+    return merge({}, this.item);
+  }
+}
 
-class PutBuilder extends RouteBuilder {}
+class PutBuilder extends RouteBuilder {
+  constructor(name, path) {
+    super(`put${name}`, path);
+    this.item.method = "PUT";
+  }
 
-class DeleteBuilder extends RouteBuilder {}
+  build() {
+    return merge({}, this.item);
+  }
+}
 
-class HeadBuilder extends RouteBuilder {}
+class DeleteBuilder extends RouteBuilder {
+  constructor(name, path) {
+    super(`delete${name}`, path);
+    this.item.method = "DELETE";
+  }
+
+  build() {
+    return merge({}, this.item);
+  }
+}
+
+class HeadBuilder extends RouteBuilder {
+  constructor(name, path) {
+    super(`head${name}`, path);
+    this.item.method = "HEAD";
+  }
+
+  build() {
+    return merge({}, this.item);
+  }
+}
 
 R.types = {
   RouteBuilder,

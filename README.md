@@ -36,6 +36,7 @@ will be supported:
 - [ ] @lbu/store: Common abstraction for FileSystem, Redis, Memory support for
       queues, KV store etc
 - [ ] @lbu/code-gen: More plugins
+- [ ] @lbu/features: Feature flag implementation with code generation support
 
 ## Docs
 

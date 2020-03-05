@@ -12,10 +12,19 @@ import { mainFn } from "@lbu/stdlib";
 
 const app = new App("Test App");
 
+const todoRouter = R("todo", "/todo")
+  .tags("todo")
+  .docs("MyDocs");
+
+app.route(todoRouter.get());
+app.route(todoRouter.post());
+
 const myBool = M("MyBool")
   .bool()
   .convert()
   .optional();
+
+app.model(myBool);
 
 const myRef = M("MyRef").ref("MyBool");
 
@@ -29,6 +38,7 @@ app.validator(myObj);
 app.route(
   R("foo", "/foo")
     .get()
+    .query(myObj)
     .tags("foo"),
 );
 

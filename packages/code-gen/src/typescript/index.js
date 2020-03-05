@@ -16,7 +16,7 @@ const init = async () => {
 };
 
 const generate = data => ({
-  path: "./types.d.ts",
+  path: "./types.ts",
   content: executeTemplate("typescriptFile", data),
 });
 

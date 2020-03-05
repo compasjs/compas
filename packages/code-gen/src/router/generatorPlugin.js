@@ -4,6 +4,7 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { buildTrie } from "./trie.js";
 
 const init = async ({ hasPlugin }) => {
   if (!hasPlugin("validator")) {
@@ -20,6 +21,8 @@ const init = async ({ hasPlugin }) => {
 };
 
 const generate = data => {
+  data.stringified = JSON.stringify(data);
+  data.routeTrie = buildTrie(data.routes);
   return {
     path: "./router.js",
     content: executeTemplate("routerFile", data),

@@ -1,7 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 import { upperCaseFirst } from "../utils.js";
 import { R } from "./RouteBuilder.js";
-import { buildTrie } from "./trie.js";
 
 const store = new Set();
 
@@ -24,23 +23,30 @@ const init = app => {
       app.callHook("addValidator", true, route.bodyValidator);
     }
     if (!isNil(route.responseModel)) {
-      app.callHook("addValidator", true, route.responseModel);
+      app.callHook("addModel", true, route.responseModel);
     }
   };
 };
 
-const buildLinkedValidator = validator => {
+const getModelName = validator => {
   if (validator === undefined) {
     return undefined;
   }
-  const typeName = upperCaseFirst(validator.item.name);
-  return {
-    typeName,
-    funcName: `validate${typeName}`,
-  };
+  return upperCaseFirst(validator.item.name);
+};
+
+const registerCodegenRoute = () => {
+  store.add(
+    R("LbuStructure", "_lbu/structure.json")
+      .get()
+      .tags("_lbu")
+      .docs("Return the full generated structure as a json object."),
+  );
 };
 
 const build = result => {
+  registerCodegenRoute();
+
   result.routes = [];
   const tags = new Set();
 
@@ -61,15 +67,14 @@ const build = result => {
       }
     }
 
-    r.paramsValidator = buildLinkedValidator(route.paramsValidator);
-    r.queryValidator = buildLinkedValidator(route.queryValidator);
-    r.bodyValidator = buildLinkedValidator(route.bodyValidator);
-    r.responseModel = buildLinkedValidator(route.responseModel);
+    r.paramsValidator = getModelName(route.paramsValidator);
+    r.queryValidator = getModelName(route.queryValidator);
+    r.bodyValidator = getModelName(route.bodyValidator);
+    r.responseModel = getModelName(route.responseModel);
 
     result.routes.push(r);
   }
 
-  result.routeTrie = buildTrie(result.routes);
   // unique route tags
   result.routeTags = [...tags];
 };

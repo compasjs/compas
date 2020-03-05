@@ -22,7 +22,7 @@ const handlers = {
     ctx.request.params = params;
 
     {{ if (r.paramsValidator) { }}
-    ctx.validatedParams = {{= r.paramsValidator.funcName }}(params);
+    ctx.validatedParams = validate{{= r.paramsValidator }}(params);
     {{ } }}
 
     {{ if (r.bodyValidator || r.queryValidator) { }}
@@ -30,11 +30,11 @@ const handlers = {
     {{ } }}
 
     {{ if (r.bodyValidator) { }}
-    ctx.validatedBody = {{= r.bodyValidator.funcName }}(ctx.request.body);
+    ctx.validatedBody = validate{{= r.bodyValidator }}(ctx.request.body);
     {{ } }}
 
     {{ if (r.queryValidator) { }}
-    ctx.validatedQuery = {{= r.queryValidator.funcName }}(ctx.request.body);
+    ctx.validatedQuery = validate{{= r.queryValidator }}(ctx.request.body);
     {{ } }}
 
     if (_composed.{{= r.name}} === undefined) {
@@ -60,13 +60,13 @@ export const routeHandlers = {
    * {{= r.method}} {{= r.path }}
    * @param {Object} ctx
    {{ if (r.queryValidator) { }}
-   * @param { {{= r.queryValidator.typeName }} } ctx.validatedQuery
+   * @param { {{= r.queryValidator }} } ctx.validatedQuery
    {{ } }}
   {{ if (r.paramsValidator) { }}
-  * @param { {{= r.paramsValidator.typeName }} } ctx.validatedParams
+  * @param { {{= r.paramsValidator }} } ctx.validatedParams
   {{ } }}
   {{ if (r.bodyValidator) { }}
-  * @param { {{= r.bodyValidator.typeName }} } ctx.validatedBody
+  * @param { {{= r.bodyValidator }} } ctx.validatedBody
   {{ } }}
    * @param {Function} next
    * @returns {void|Promise<void>}

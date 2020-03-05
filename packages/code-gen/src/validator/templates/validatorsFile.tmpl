@@ -16,6 +16,6 @@ export class ValidationError extends Error {
   }
 }
 
-{{ for (const v of it.validators) { }}
+{{ for (const v of it.validatorFunctions) { }}
 {{= validatorsNamedFn(v) }}
 {{ } }}

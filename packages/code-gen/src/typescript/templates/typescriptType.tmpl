@@ -22,7 +22,7 @@
     {{ result += it.values.map(item => typescriptType(item).trim()).join(" | "); }}
     {{ result += ")"; }}
 {{ } else if (type === "reference") { }}
-    {{ result += it.referenceType; }}
+    {{ result += it.referenceModel; }}
 {{ } }}
 
 {{ if (it.optional) { }}

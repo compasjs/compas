@@ -1,7 +1,6 @@
-{{ if (it.validators && validators.length > 0) { }}
-  {{= typescriptValidators(it) }}
+{{ if (Object.keys(it.models || {}).length > 0) { }}
+    {{ for (const name of Object.keys(models)) { }}
+      export type {{= name }} = {{= typescriptType(models[name]) }};
+    {{ } }}
 {{ } }}
 
-{{ if (it.routes && it.routes.length > 0) { }}
-  {{= typescriptRouter(it) }}
-{{ } }}
