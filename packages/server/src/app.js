@@ -13,7 +13,7 @@ import {
  * @param {boolean} [opts.proxy=false]
  * @param {boolean} [opts.disableHeaders=false]
  * @param {boolean} [opts.enableHealthRoute=true]
- * @param {KoaErrorHandler=} opts.onError
+ * @param {ErrorHandlerOptions} [opts.errorOptions]
  * @param {Object} opts.headers Argument for defaultHeaders middleware
  */
 export const getApp = (opts = {}) => {
@@ -25,7 +25,7 @@ export const getApp = (opts = {}) => {
   }
 
   app.use(logMiddleware());
-  app.use(errorHandler(opts.onError));
+  app.use(errorHandler(opts.errorOptions || {}));
   app.use(notFoundHandler());
 
   if (!opts.disableHeaders) {
