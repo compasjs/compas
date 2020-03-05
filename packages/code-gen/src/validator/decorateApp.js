@@ -6,11 +6,13 @@ App.withPlugin(plugin);
 /**
  * @name App#validator
  * @function
- * @param {ModelBuilder} model
+ * @param {...ModelBuilder} models
  * @return {App}
  */
-App.prototype.validator = function(model) {
-  this.callHook("addValidator", true, model);
+App.prototype.validator = function(...models) {
+  for (const model of models) {
+    this.callHook("addValidator", true, model);
+  }
 
   return this;
 };

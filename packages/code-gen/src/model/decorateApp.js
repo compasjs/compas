@@ -7,11 +7,13 @@ App.withPlugin(plugin);
 /**
  * @name App#model
  * @function
- * @param {ModelBuilder} model
+ * @param {...ModelBuilder} models
  * @return {App}
  */
-App.prototype.model = function(model) {
-  this.callHook("addModel", true, model);
+App.prototype.model = function(...models) {
+  for (const model of models) {
+    this.callHook("addModel", true, model);
+  }
 
   return this;
 };
