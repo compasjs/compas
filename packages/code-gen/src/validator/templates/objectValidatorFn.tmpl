@@ -7,12 +7,12 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("object.undefined") }}
+      throw AppError.validationError("validator.object.undefined", { propertyPath });
     {{ } }}
   }
 
   if (typeof value !== "object") {
-    {{= buildError("object.type") }}
+    throw AppError.validationError("validator.object.type", { propertyPath });
   }
   const result = {};
 
@@ -32,7 +32,7 @@ const {{= functionName }} = (value, propertyPath) => {
   if (keySet.size !== 0) {
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }
-    {{= buildError("object.strict") }}
+    throw AppError.validationError("validator.object.strict", { propertyPath, extraKeys });
   }
   {{ } }}
 

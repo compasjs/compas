@@ -5,7 +5,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("array.undefined") }}
+      throw AppError.validationError("validator.array.undefined", { propertyPath });
     {{ } }}
   }
 
@@ -16,20 +16,20 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ } }}
 
   if (!Array.isArray(value)) {
-    {{= buildError("array.type") }}
+    throw AppError.validationError("validator.array.type", { propertyPath });
   }
 
   {{ if (it.min !== undefined) { }}
   if (value.length < {{= min }}) {
     const min = {{= quote(min) }};
-    {{= buildError("array.min") }}
+    throw AppError.validationError("validator.array.min", { propertyPath, min });
   }
   {{ } }}
 
   {{ if (it.max !== undefined) { }}
   if (value.length > {{= max}}) {
     const max = {{= quote(max) }};
-    {{= buildError("array.max") }}
+    throw AppError.validationError("validator.array.max", { propertyPath, max });
   }
   {{ } }}
 

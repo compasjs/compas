@@ -71,6 +71,8 @@ export const routeHandlers = {
    * @param {Function} next
    * @returns {void|Promise<void>}
   */
-  {{= r.name }}: (ctx, next) => next(),
+  {{= r.name }}: (ctx, next) => {
+    throw AppError.notImplemented();
+  },
 {{ } }}
 };

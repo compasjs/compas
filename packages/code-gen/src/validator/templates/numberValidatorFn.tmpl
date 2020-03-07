@@ -3,7 +3,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("number.undefined") }}
+      throw AppError.validationError("validator.number.undefined", { propertyPath });
     {{ } }}
   }
 
@@ -14,33 +14,33 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ } }}
 
   if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    {{= buildError("number.type") }}
+      throw AppError.validationError("validator.number.type", { propertyPath });
   }
 
   {{ if (it.integer) { }}
   if (!Number.isInteger(value)) {
-    {{= buildError("number.integer") }}
+      throw AppError.validationError("validator.number.integer", { propertyPath });
   }
   {{ } }}
 
   {{ if (it.min !== undefined) { }}
   if (value < {{= min }}) {
     const min = {{= min }};
-    {{= buildError("number.min") }}
+    throw AppError.validationError("validator.number.min", { propertyPath, min });
   }
   {{ } }}
 
   {{ if (it.max !== undefined) { }}
   if (value > {{= max }}) {
     const max = {{= max }};
-    {{= buildError("number.max") }}
+    throw AppError.validationError("validator.number.max", { propertyPath, max });
   }
   {{ } }}
 
   {{ if (it.oneOf !== undefined) { }}
   if ({{= oneOf.map(it => "value !== " + it).join(" && ") }}) {
     const oneOf = {{= quote(oneOf.join(", ")) }};
-    {{= buildError("number.oneOf") }}
+    throw AppError.validationError("validator.number.oneOf", { propertyPath, oneOf });
   }
   {{ } }}
 

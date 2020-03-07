@@ -16,7 +16,7 @@
     {{ result += it.values.map(item => validatorsJsDoc(item).trim()).join("|"); }}
     {{ result += ")"; }}
 {{ } else if (type === "reference") { }}
-    {{ result += it.referenceType; }}
+    {{ result += it.referenceModel; }}
 {{ } }}
 
 {{ if (it.optional) { }}

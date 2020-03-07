@@ -3,7 +3,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("string.undefined") }}
+      throw AppError.validationError("validator.string.undefined", { propertyPath });
     {{ } }}
   }
 
@@ -14,7 +14,7 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ } }}
 
   if (typeof value !== "string") {
-    {{= buildError("string.type") }}
+    throw AppError.validationError("validator.string.type", { propertyPath });
   }
 
   {{ if (it.trim) { }}
@@ -24,14 +24,14 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ if (it.min !== undefined) { }}
   if (value.length < {{= min }}) {
     const min = {{= min }};
-    {{= buildError("string.min") }}
+    throw AppError.validationError("validator.string.min", { propertyPath, min });
   }
   {{ } }}
 
   {{ if (it.max !== undefined) { }}
   if (value.length > {{= max }}) {
     const max = {{= max }};
-    {{= buildError("string.max") }}
+    throw AppError.validationError("validator.string.max", { propertyPath, max });
   }
   {{ } }}
 
@@ -46,14 +46,14 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ if (it.oneOf !== undefined) { }}
   if ({{= oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
     const oneOf = {{= quote(oneOf.join(", ")) }};
-    {{= buildError("string.oneOf") }}
+    throw AppError.validationError("validator.string.oneOf", { propertyPath, oneOf });
   }
   {{ } }}
 
   {{ if (it.pattern !== undefined) { }}
   {{ const patternSrc = "/" + pattern.source + "/" + pattern.flags; }}
   if (!{{= patternSrc }}.test(value)) {
-    {{= buildError("string.pattern") }}
+    throw AppError.validationError("validator.string.pattern", { propertyPath });
   }
   {{ } }}
 

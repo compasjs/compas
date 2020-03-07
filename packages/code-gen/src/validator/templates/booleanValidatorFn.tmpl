@@ -3,7 +3,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("boolean.undefined") }}
+      throw AppError.validationError("validator.boolean.undefined", { propertyPath });
     {{ } }}
   }
 
@@ -18,13 +18,13 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ } }}
 
   if (typeof value !== "boolean") {
-    {{= buildError("boolean.type") }}
+    throw AppError.validationError("validator.boolean.type", { propertyPath });
   }
 
   {{ if (it.oneOf !== undefined) { }}
   if (value !== {{= oneOf }}) {
     const oneOf = {{= oneOf }};
-    {{= buildError("boolean.oneOf") }}
+    throw AppError.validationError("validator.boolean.oneOf", { propertyPath, oneOf });
   }
   {{ } }}
 

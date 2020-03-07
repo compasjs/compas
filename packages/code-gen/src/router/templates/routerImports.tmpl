@@ -6,7 +6,7 @@
   {{ if (r.bodyValidator) set.add("validate" + r.bodyValidator); }}
 {{ } }}
 
-import { getBodyParser, compose } from "@lbu/server";
+import { getBodyParser, compose, AppError } from "@lbu/server";
 import {
 {{ for (const item of set.values()) { }}
   {{= item }},

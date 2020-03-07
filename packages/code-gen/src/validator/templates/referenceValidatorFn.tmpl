@@ -3,9 +3,11 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("reference.undefined") }}
+      throw AppError.validationError("validator.reference.undefined", { propertyPath });
     {{ } }}
   }
 
   return {{= reference }}(value, propertyPath);
 };
+
+// {{= JSON.stringify(it) }}

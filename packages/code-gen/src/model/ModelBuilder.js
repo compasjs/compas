@@ -18,10 +18,12 @@ export function M(name) {
      * @param {...ModelBuilder} [items]
      */
     anyOf: (...items) => M.anyOf(...items).name(name),
-    /**
-     * @param {string} [type]
-     */
-    ref: type => M.ref(type).name(name),
+
+    // TODO: Buggy when deduping named models
+    // /**
+    //  * @param {string} [type]
+    //  */
+    // ref: type => M.ref(type).name(name),
   };
 }
 

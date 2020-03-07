@@ -19,12 +19,13 @@ app.route(todoRouter.post());
 
 const myBool = M("MyBool")
   .bool()
-  .convert()
-  .optional();
+  .convert();
+
+app.validator(myBool);
 
 app.model(myBool);
 
-const myRef = M("MyRef").ref("MyBool");
+const myRef = M.ref("MyBool");
 
 const myObj = M("MyObj").object({
   bool: myBool,

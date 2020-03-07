@@ -7,7 +7,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      {{= buildError("anyOf.undefined") }}
+      throw AppError.validationError("validator.anyOf.undefined", { propertyPath });
     {{ } }}
   }
 
@@ -16,10 +16,13 @@ const {{= functionName }} = (value, propertyPath) => {
   try {
     return {{= v.functionName }}(value, propertyPath);
   } catch (e) {
-    errors.push(e);
+    if (e intanceof AppError) {
+      errors.push({ key: error.key, info: error.info });
+    } else {
+      errors.push({ name: error.name, message: error.message });
+    }
   }
   {{ } }}
 
-  const stringErrors = errors.map(it => it.message);
-  {{= buildError("anyOf.type") }}
+  throw AppError.validationError("validator.anyOf.type", { propertyPath, errors });
 };
