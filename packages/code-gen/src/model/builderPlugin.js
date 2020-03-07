@@ -92,5 +92,25 @@ function replaceReferences(models, model) {
         }
       }
       break;
+    case "generic":
+      replaceReferences(models, model.keys);
+      if (!isNil(model.keys.name)) {
+        model.keys = {
+          type: "reference",
+          docs: undefined,
+          optional: false,
+          referenceModel: model.keys.name,
+        };
+      }
+      replaceReferences(models, model.values);
+      if (!isNil(model.values.name)) {
+        model.values = {
+          type: "reference",
+          docs: undefined,
+          optional: false,
+          referenceModel: model.values.name,
+        };
+      }
+      break;
   }
 }

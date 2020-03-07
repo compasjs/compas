@@ -1,0 +1,25 @@
+{{= validatorsAnonFn(keys) }}
+{{= validatorsAnonFn(values) }}
+
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      throw AppError.validationError("validator.generic.undefined", { propertyPath });
+    {{ } }}
+  }
+  if (typeof value !== "object") {
+    throw AppError.validationError("validator.generic.type", { propertyPath });
+  }
+
+  const result = {};
+  for (const key of Object.keys(value)) {
+    const validatedKey = {{= it.keys.functionName }}(key, propertyPath + ".$key");
+    const validatedValue = {{= it.values.functionName }}(key, propertyPath + ".$value");
+
+    result[validatedKey] = validatedValue;
+  }
+
+  return result;
+};

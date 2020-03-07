@@ -24,6 +24,9 @@ export function M(name) {
     //  * @param {string} [type]
     //  */
     // ref: type => M.ref(type).name(name),
+
+    any: () => M.any().name(name),
+    generic: () => M.generic().name(name),
   };
 }
 
@@ -51,6 +54,9 @@ M.anyOf = (...items) => new LbuAnyOf(...items);
  * @param {string} [type]
  */
 M.ref = type => new LbuRef(type);
+
+M.any = () => new LbuAny();
+M.generic = () => new LbuGeneric();
 
 /**
  * Internal delegate for providing a fluent model building experience
@@ -547,6 +553,149 @@ class LbuRef extends ModelBuilder {
   }
 }
 
+class LbuAny extends ModelBuilder {
+  constructor() {
+    super();
+
+    this.item = {
+      type: "any",
+      name: undefined,
+      docs: undefined,
+      optional: false,
+      typeOf: undefined,
+    };
+  }
+
+  /**
+   * @public
+   * @param {string} name
+   * @return {LbuAny}
+   */
+  name(name) {
+    this.item.name = name;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} docValue
+   * @return {LbuAny}
+   */
+  docs(docValue) {
+    this.item.docs = docValue;
+    return this;
+  }
+
+  /**
+   * @public
+   * @return {LbuAny}
+   */
+  optional() {
+    this.item.optional = true;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} value
+   * @return {LbuAny}
+   */
+  typeOf(value) {
+    this.item.typeOf = value;
+    return this;
+  }
+}
+
+class LbuGeneric extends ModelBuilder {
+  /**
+   * @param {ModelBuilder} [value]
+   */
+  constructor(value) {
+    super();
+
+    this.item = {
+      type: "generic",
+      name: undefined,
+      docs: undefined,
+      keys: undefined,
+      values: undefined,
+    };
+
+    if (!isNil(value)) {
+      this.values(value);
+    }
+  }
+
+  /**
+   * @public
+   * @param {string} name
+   * @return {LbuGeneric}
+   */
+  name(name) {
+    this.item.name = name;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} docValue
+   * @return {LbuGeneric}
+   */
+  docs(docValue) {
+    this.item.docs = docValue;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {ModelBuilder} [key]
+   * @return {LbuGeneric}
+   */
+  keys(key) {
+    this.item.keys = key;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {ModelBuilder} [value]
+   * @return {LbuGeneric}
+   */
+  values(value) {
+    this.item.values = value;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuGeneric}
+   */
+  copy(name) {
+    const result = new LbuGeneric();
+    result.item = merge({}, this.item, { name });
+
+    return result;
+  }
+
+  build() {
+    const keys = this.item.keys;
+    const values = this.item.values;
+
+    this.item.keys = undefined;
+    this.item.values = undefined;
+
+    const result = super.build();
+    result.keys = keys.build();
+    result.values = values.build();
+
+    this.item.keys = keys;
+    this.item.values = values;
+
+    return result;
+  }
+}
+
 M.types = {
   LbuBool,
   LbuNumber,
@@ -555,6 +704,8 @@ M.types = {
   LbuArray,
   LbuAnyOf,
   LbuRef,
+  LbuAny,
+  LbuGeneric,
 };
 
 /**

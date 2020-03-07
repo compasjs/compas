@@ -17,6 +17,14 @@
     {{ result += ")"; }}
 {{ } else if (type === "reference") { }}
     {{ result += it.referenceModel; }}
+{{ } else if (type === "any") { }}
+    {{ result += "*"; }}
+{{ } else if (type === "generic") { }}
+    {{ result += "Object.<"; }}
+    {{ result += validatorsJsDoc(it.keys); }}
+    {{ result += ","; }}
+    {{ result += validatorsJsDoc(it.values); }}
+    {{ result += ">"; }}
 {{ } }}
 
 {{ if (it.optional) { }}

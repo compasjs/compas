@@ -23,6 +23,14 @@
     {{ result += ")"; }}
 {{ } else if (type === "reference") { }}
     {{ result += it.referenceModel; }}
+{{ } else if (type === "any") { }}
+    {{ result += "any"; }}
+{{ } else if (type === "generic") { }}
+    {{ result += "{ [key: "; }}
+    {{ result += typescriptType(keys); }}
+    {{ result += "]: "; }}
+    {{ result += typescriptType(values); }}
+    {{ result += "}"; }}
 {{ } }}
 
 {{ if (it.optional) { }}

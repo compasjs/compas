@@ -1,0 +1,18 @@
+const {{= functionName }} = (value, propertyPath) => {
+  if (isNil(value)) {
+    {{ if (it.optional) { }}
+      return undefined;
+    {{ } else { }}
+      throw AppError.validationError("validator.any.undefined", { propertyPath });
+    {{ } }}
+  }
+
+  {{ if (it.typeOf !== undefined) { }}
+  if (typeof value !== "{{= typeOf }}") {
+    const typeOf = "{{= typeOf }}";
+    throw AppError.validationError("validator.any.type", { propertyPath, typeOf });
+  }
+  {{ } }}
+
+  return value;
+};

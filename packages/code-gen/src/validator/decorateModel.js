@@ -29,6 +29,8 @@ const validatorDefaults = {
   },
   anyOf: {},
   reference: {},
+  generic: {},
+  any: {},
 };
 
 /**

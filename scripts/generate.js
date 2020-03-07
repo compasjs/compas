@@ -21,6 +21,12 @@ const myBool = M("MyBool")
   .bool()
   .convert();
 
+const myGeneric = M.generic()
+  .keys(M.string())
+  .values(M.bool());
+
+const myAny = M.any().typeOf("boolean");
+
 app.validator(myBool);
 
 app.model(myBool);
@@ -30,6 +36,8 @@ const myRef = M.ref("MyBool");
 const myObj = M("MyObj").object({
   bool: myBool,
   refBool: myRef,
+  boolObject: myGeneric,
+  anyValue: myAny,
 });
 
 app.validator(myObj);

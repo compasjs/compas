@@ -12,4 +12,8 @@
   {{= anyOfValidatorFn(it) }}
 {{ } else if (type === "reference") { }}
   {{= referenceValidatorFn(it) }}
+{{ } else if (type === "any") { }}
+  {{= anyValidatorFn(it) }}
+{{ } else if (type === "generic") { }}
+  {{= genericValidatorFn(it) }}
 {{ } }}

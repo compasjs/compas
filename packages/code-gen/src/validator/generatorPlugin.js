@@ -104,6 +104,10 @@ function processValidator(ctx, validator) {
       validator.reference =
         ctx.mapping[upperCaseFirst(validator.referenceModel)];
       break;
+    case "generic":
+      processValidator(ctx, validator.keys);
+      processValidator(ctx, validator.values);
+      break;
   }
   return validator;
 }
