@@ -5,27 +5,75 @@ import { isNil } from "@lbu/stdlib";
  * status and other meta data directly
  */
 export class AppError extends Error {
+  /**
+   * Create a new AppError
+   * @param {string} key
+   * @param {number} status
+   * @param {Object} [info={}]
+   * @param {Error} [originalError]
+   */
   constructor(key, status, info, originalError) {
     super();
 
-    this.key = key || "error.server.internal";
-    this.status = status || 500;
+    this.key = key;
+    this.status = status;
     this.info = info || {};
     this.originalError = originalError;
 
     Object.setPrototypeOf(this, AppError.prototype);
+
+    if (isNil(key) || isNil(status)) {
+      return AppError.serverError(
+        {
+          appErrorConstruct: {
+            key,
+            status,
+          },
+        },
+        this,
+      );
+    }
   }
 
+  /**
+   * Throw a new 404 not found error
+   * @param {Object} [info={}]
+   * @param {Error} [error]
+   * @return {AppError}
+   */
   static notFound(info = {}, error = undefined) {
     return new AppError("error.server.notFound", 404, info, error);
   }
 
+  /**
+   * Throw a new 405 Not implemented error
+   * @param {Object} [info={}]
+   * @param {Error} [error]
+   * @return {AppError}
+   */
   static notImplemented(info = {}, error = undefined) {
     return new AppError("error.server.notImplemented", 405, info, error);
   }
 
+  /**
+   * Throw a new 500 internal server error
+   * @param {Object} [info={}]
+   * @param {Error} [error]
+   * @return {AppError}
+   */
   static serverError(info = {}, error = undefined) {
     return new AppError("error.server.internal", 500, info, error);
+  }
+
+  /**
+   * Throw a new 400 validation error
+   * @param {string} key
+   * @param {Object} [info={}]
+   * @param {Error} [error]
+   * @return {AppError}
+   */
+  static validationError(key, info = {}, error = undefined) {
+    return new AppError(key, 400, info, error);
   }
 }
 
@@ -62,7 +110,7 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
  *   error is an AppError
  * @property {CustomErrorHandler} [onError] Called before all others to let the user
  *   handle their own errors
- * @property {boolean} [leakError=false] Useful on development and staging environments to
+ * @property {boolean} [leakError] Useful on development and staging environments to
  *   just dump the error to the consumer
  */
 

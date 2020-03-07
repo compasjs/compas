@@ -4,4 +4,5 @@ export {
   createBodyParsers,
   getBodyParser,
   getMultipartBodyParser,
+  AppError,
 } from "./src/middleware";
