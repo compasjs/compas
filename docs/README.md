@@ -1,4 +1,4 @@
-# @lbu/\*
+# @lbu (Lightbase Backend Utilities)
 
 Collection of Lightbase backend utilities
 
@@ -24,19 +24,26 @@ will be supported:
 ## Features
 
 - @lbu/cli: Project template, and simple script runner
-- @lbu/code-gen: Flexible code generators. Supports generating validators,
-  router, SQL and more
+- @lbu/code-gen: Flexible code generators. Supports generating router,
+  validator, basic typescript types
 - @lbu/insight: Opinionated logger
 - @lbu/server: Wrap around Koa and some useful middleware
-- @lbu/stdlib: Growing library with features like uuid generation and background
-  jobs
+- @lbu/stdlib: Growing library of various common utilities like uuid & a basic
+  templating system
 
 ## Roadmap
 
-- [ ] @lbu/store: Common abstraction for FileSystem, Redis, Memory support for
-      queues, KV store etc
-- [ ] @lbu/code-gen: More plugins
-- [ ] @lbu/features: Feature flag implementation with code generation support
+- [ ] @lbu/code-gen: CRUD helpers
+- [ ] @lbu/code-gen: React Query code generator
+- [ ] @lbu/store: Common abstraction for KV-store, FS-Store, Queues, etc...
+      Should at least support memory, fs and Postgres
+- [ ] @lbu/translate: Simple translation system based on @lbu/store
+- [ ] @lbu/code-gen: Mock generator
+- [ ] @lbu/code-gen: OpenAPI importer
+- [ ] @lbu/features: Feature flag implementation based on @lbu/store & support
+      for code-gen
+- [ ] @lbu/code-gen: Postgres query generator
+- [ ] @lbu/code-gen: Advanced Typescript types
 
 ## Docs
 

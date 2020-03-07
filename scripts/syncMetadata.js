@@ -38,6 +38,11 @@ const exec = logger => {
     );
   }
 
+  writeFileSync(
+    join(process.cwd(), "docs/README.md"),
+    `# @lbu (Lightbase Backend Utilities)\n${readmeSource}`,
+  );
+
   logger.info("Done.\nRunning linter");
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
 };
