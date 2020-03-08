@@ -1,11 +1,17 @@
 import { writeNDJSON, writePretty } from "./writer.js";
 
+const defaultOptions = {
+  isProduction: () => process.env.NODE_ENV === "production",
+  stream: () => process.stdout,
+  ctx: () => {},
+  depth: () => 3,
+};
+
 /**
  * @callback LogFn
  * @param {...*} args
  * @returns {void}
  */
-
 /**
  * @typedef Logger
  * @property {LogFn} info
@@ -14,73 +20,43 @@ import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
  * Create a new logger
- * @param {Object=} opts
- * @param {boolean=} opts.isProduction
- * @param {NodeJS.WritableStream} [opts.stream=process.stdout]
- * @param {Object} [opts.ctx={}]
- * @param {number} [opts.depth=3]
+ * @param {Object} [options]
+ * @param {boolean} [options.isProduction]
+ * @param {NodeJS.WritableStream} [options.stream=process.stdout]
+ * @param {Object} [options.ctx]
+ * @param {number} [options.depth]
+ * @return {{isProduction: (function(): boolean), setCtx: (function(Object): void),
+ *   getCtx: (function(): Object|*), error: LogFn, setDepth: (function(number): void),
+ *   info: LogFn}}
  */
-export const newLogger = opts => {
-  opts = opts || {};
-  opts.isProduction =
-    typeof opts.isProduction === "boolean"
-      ? opts.isProduction
-      : process.env.NODE_ENV === "production";
-  opts.stream = opts.stream || process.stdout;
-  opts.ctx = opts.ctx || {};
-  opts.depth = opts.depth || 3;
+export const newLogger = (options = {}) => {
+  const stream = options.stream || defaultOptions.stream();
+  const isProduction =
+    typeof options.isProduction === "boolean"
+      ? options.isProduction
+      : defaultOptions.isProduction();
+  let ctx = options.ctx || defaultOptions.ctx();
+  let depth = options.depth || defaultOptions.depth();
 
   return {
-    info: logger.bind(
-      undefined,
-      opts.isProduction,
-      opts.stream,
-      opts.depth,
-      opts.ctx,
-      "info",
-    ),
-    error: logger.bind(
-      undefined,
-      opts.isProduction,
-      opts.stream,
-      opts.depth,
-      opts.ctx,
-      "error",
-    ),
-    setDepth: setDepth.bind(undefined, opts),
-    setCtx: setCtx.bind(undefined, opts),
-    getCtx: () => opts.ctx,
-    isProduction: () => opts.isProduction,
+    info: (...args) => {
+      logger(isProduction, stream, depth, ctx, "info", ...args);
+    },
+    error: (...args) => {
+      logger(isProduction, stream, depth, ctx, "error", ...args);
+    },
+    setDepth: newDepth => {
+      depth = newDepth;
+    },
+    setCtx: newCtx => {
+      ctx = newCtx;
+    },
+    getCtx: () => ctx,
+    isProduction: () => isProduction,
   };
 };
 
-/**
- * @param opts
- * @param {number} depth
- */
-const setDepth = (opts, depth) => {
-  opts.depth = depth;
-  return newLogger(opts);
-};
-
-/**
- * @param opts
- * @param {Object} ctx
- */
-const setCtx = (opts, ctx) => {
-  opts.ctx = ctx;
-  return newLogger(opts);
-};
-
-/**
- * @param {boolean} isProduction
- * @param {WritableStream} stream
- * @param {number} depth
- * @param {Object} ctx
- * @param {"info", "error"} level
- * @param {*} args
- */
-const logger = (isProduction, stream, depth, ctx, level, ...args) => {
+function logger(isProduction, stream, depth, ctx, level, ...args) {
   const metaData = {
     ...ctx,
     level,
@@ -93,4 +69,4 @@ const logger = (isProduction, stream, depth, ctx, level, ...args) => {
   } else {
     writePretty(stream, depth, metaData);
   }
-};
+}

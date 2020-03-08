@@ -27,7 +27,7 @@
     {{ result += ">"; }}
 {{ } }}
 
-{{ if (it.optional) { }}
+{{ if (it.optional && it.default === undefined) { }}
     {{ result += "|undefined"; }}
 {{ } }}
 {{= result }}

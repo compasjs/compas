@@ -14,16 +14,16 @@ const init = app => {
     store.add(route);
 
     if (!isNil(route.paramsValidator)) {
-      app.callHook("addValidator", true, route.paramsValidator);
+      app.callHook("addValidator", route.paramsValidator);
     }
     if (!isNil(route.queryValidator)) {
-      app.callHook("addValidator", true, route.queryValidator);
+      app.callHook("addValidator", route.queryValidator);
     }
     if (!isNil(route.bodyValidator)) {
-      app.callHook("addValidator", true, route.bodyValidator);
+      app.callHook("addValidator", route.bodyValidator);
     }
     if (!isNil(route.responseModel)) {
-      app.callHook("addModel", true, route.responseModel);
+      app.callHook("addModel", route.responseModel);
     }
   };
 };

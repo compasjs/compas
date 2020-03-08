@@ -11,7 +11,7 @@ App.withPlugin(plugin);
  */
 App.prototype.route = function(...routes) {
   for (const route of routes) {
-    this.callHook("addRoute", true, route);
+    this.callHook("addRoute", route);
   }
 
   return this;

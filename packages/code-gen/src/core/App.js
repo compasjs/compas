@@ -1,7 +1,7 @@
 /**
  * @typedef {{
  *   init?: Function,
- *   finalize?: Function,
+ *   process?: Function,
  *   build?: Function
  * }} AppPlugin
  */
@@ -58,14 +58,11 @@ export class App {
   /**
    * @private
    * @param {string} hookName
-   * @param {boolean} required
    * @param {...*} args
    */
-  callHook(hookName, required, ...args) {
+  callHook(hookName, ...args) {
     if (hookName in this.hooks) {
       this.hooks[hookName](...args);
-    } else if (required) {
-      throw new Error(`Could not find hook ${hookName}`);
     }
   }
 
@@ -78,6 +75,8 @@ export class App {
     const result = {
       name: this.name,
     };
+
+    this.callPlugins("process", this);
 
     this.callPlugins("build", result);
 

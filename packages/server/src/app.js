@@ -5,7 +5,7 @@ import {
   healthHandler,
   logMiddleware,
   notFoundHandler,
-} from "./middleware";
+} from "./middleware/index.js";
 
 /**
  * Create a new Koa instance with some default middleware

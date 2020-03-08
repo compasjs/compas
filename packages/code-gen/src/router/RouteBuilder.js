@@ -1,5 +1,5 @@
 import { isNil, merge } from "@lbu/stdlib";
-import { upperCaseFirst } from "../utils.js";
+import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
 
 /**
  * Create a new RouteBuilder
@@ -7,26 +7,43 @@ import { upperCaseFirst } from "../utils.js";
  * @param {string} path
  */
 export function R(name, path) {
-  return new RouteBuilder(upperCaseFirst(upperCaseFirst(name)), path);
+  const rb = new RouteBuilder(path);
+  rb.item.name = lowerCaseFirst(name);
+
+  return rb;
 }
 
 /**
  * Internal delegate for providing a fluent route building experience
  */
 class RouteBuilder {
-  constructor(name, path) {
+  constructor(path) {
     this.queryValidator = undefined;
     this.paramsValidator = undefined;
     this.bodyValidator = undefined;
     this.responseModel = undefined;
 
     this.item = {
-      name,
       path,
+      name: undefined,
       method: undefined,
       tags: undefined,
       docs: undefined,
     };
+  }
+
+  /**
+   * @public
+   * @param {string} path
+   * @return {RouteBuilder}
+   */
+  path(path) {
+    if (this.item.path.endsWith("/") && path.startsWith("/")) {
+      path = path.substring(1);
+    }
+    this.item.path += path;
+
+    return this;
   }
 
   /**
@@ -107,51 +124,69 @@ class RouteBuilder {
 
   /**
    * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
    * @return {GetBuilder}
    */
-  get() {
-    return this.constructBuilder(GetBuilder);
+  get(name) {
+    return this.constructBuilder(GetBuilder, name || "Get");
   }
 
   /**
    * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
+   * @return {GetBuilder}
+   */
+  getList(name) {
+    return this.constructBuilder(GetBuilder, name || "GetList");
+  }
+
+  /**
+   * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
    * @return {PostBuilder}
    */
-  post() {
-    return this.constructBuilder(PostBuilder);
+  post(name) {
+    return this.constructBuilder(PostBuilder, name || "Post");
   }
 
   /**
    * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
    * @return {PutBuilder}
    */
-  put() {
-    return this.constructBuilder(PutBuilder);
+  put(name) {
+    return this.constructBuilder(PutBuilder, name || "Put");
   }
 
   /**
    * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
    * @return {DeleteBuilder}
    */
-  delete() {
-    return this.constructBuilder(DeleteBuilder);
+  delete(name) {
+    return this.constructBuilder(DeleteBuilder, name || "Delete");
   }
 
   /**
    * @public
+   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
    * @return {HeadBuilder}
    */
-  head() {
-    return this.constructBuilder(HeadBuilder);
+  head(name) {
+    return this.constructBuilder(HeadBuilder, name || "Head");
   }
 
   /**
    * @private
    * @param {typeof RouteBuilder} Builder
+   * @param {string} name
    * @return {*}
    */
-  constructBuilder(Builder) {
-    const b = new Builder(this.item.name, this.item.path);
+  constructBuilder(Builder, name) {
+    const b = new Builder(this.item.path);
+
+    b.item.name = this.item.name + upperCaseFirst(name);
+
     if (!isNil(this.item.tags)) {
       b.tags(...this.item.tags);
     }
@@ -183,8 +218,8 @@ class RouteBuilder {
 }
 
 class GetBuilder extends RouteBuilder {
-  constructor(name, path) {
-    super(`get${name}`, path);
+  constructor(path) {
+    super(path);
     this.item.method = "GET";
   }
 
@@ -194,8 +229,8 @@ class GetBuilder extends RouteBuilder {
 }
 
 class PostBuilder extends RouteBuilder {
-  constructor(name, path) {
-    super(`post${name}`, path);
+  constructor(path) {
+    super(path);
     this.item.method = "POST";
   }
 
@@ -205,8 +240,8 @@ class PostBuilder extends RouteBuilder {
 }
 
 class PutBuilder extends RouteBuilder {
-  constructor(name, path) {
-    super(`put${name}`, path);
+  constructor(path) {
+    super(path);
     this.item.method = "PUT";
   }
 
@@ -216,8 +251,8 @@ class PutBuilder extends RouteBuilder {
 }
 
 class DeleteBuilder extends RouteBuilder {
-  constructor(name, path) {
-    super(`delete${name}`, path);
+  constructor(path) {
+    super(path);
     this.item.method = "DELETE";
   }
 
@@ -227,8 +262,8 @@ class DeleteBuilder extends RouteBuilder {
 }
 
 class HeadBuilder extends RouteBuilder {
-  constructor(name, path) {
-    super(`head${name}`, path);
+  constructor(path) {
+    super(path);
     this.item.method = "HEAD";
   }
 

@@ -82,6 +82,7 @@ class LbuBool extends ModelBuilder {
       name: undefined,
       docs: undefined,
       optional: false,
+      default: undefined,
       oneOf: undefined,
     };
   }
@@ -103,6 +104,18 @@ class LbuBool extends ModelBuilder {
    */
   docs(docValue) {
     this.item.docs = docValue;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {boolean|string} value Value is inline printed
+   * @return {LbuBool}
+   */
+  default(value) {
+    this.item.default = value;
+    this.item.optional = true;
+
     return this;
   }
 
@@ -135,6 +148,7 @@ class LbuNumber extends ModelBuilder {
       name: undefined,
       docs: undefined,
       optional: false,
+      default: undefined,
       oneOf: undefined,
     };
   }
@@ -156,6 +170,18 @@ class LbuNumber extends ModelBuilder {
    */
   docs(docValue) {
     this.item.docs = docValue;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {number|string} value Value is inline printed
+   * @return {LbuNumber}
+   */
+  default(value) {
+    this.item.default = value;
+    this.item.optional = true;
+
     return this;
   }
 
@@ -188,6 +214,7 @@ class LbuString extends ModelBuilder {
       name: undefined,
       docs: undefined,
       optional: false,
+      default: undefined,
       oneOf: undefined,
     };
   }
@@ -209,6 +236,18 @@ class LbuString extends ModelBuilder {
    */
   docs(docValue) {
     this.item.docs = docValue;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} value Value is inline printed
+   * @return {LbuString}
+   */
+  default(value) {
+    this.item.default = value;
+    this.item.optional = true;
+
     return this;
   }
 

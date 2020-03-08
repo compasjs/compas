@@ -5,7 +5,7 @@ const store = new Set();
 const init = app => {
   store.clear();
   app.hooks.addValidator = validator => {
-    app.callHook("addModel", true, validator);
+    app.callHook("addModel", validator);
 
     store.add(validator);
   };

@@ -1,0 +1,128 @@
+import { log } from "@lbu/insight";
+import { AppError, createBodyParsers, getApp } from "@lbu/server";
+import { getSecondsSinceEpoch, isNil, mainFn } from "@lbu/stdlib";
+import { routeHandlers, router } from "../generated/router.js";
+
+process.env.NODE_ENV = "production";
+
+const main = async logger => {
+  const app = getApp({
+    enableHealthRoute: true,
+    errorOptions: {
+      leakError: true,
+    },
+    disableHeaders: true,
+  });
+
+  createBodyParsers();
+
+  app.use(router);
+
+  app.listen(3000, () => {
+    logger.info("Listening...");
+  });
+
+  mount();
+};
+
+mainFn(import.meta, log, main);
+
+function mount() {
+  let nextId = 0;
+  /** @type {Object.<number, Todo>} */
+  let store = {};
+
+  routeHandlers.todoGetList = (ctx, next) => {
+    ctx.body = {
+      data: Object.values(store),
+      pagination: {
+        count: Object.keys(store).length,
+      },
+    };
+
+    return next();
+  };
+
+  routeHandlers.todoPostNew = (ctx, next) => {
+    let id = nextId++;
+    store[id] = {
+      id,
+      name: ctx.validatedBody.name,
+      items: [],
+    };
+
+    ctx.body = {
+      data: store[id],
+    };
+
+    return next();
+  };
+
+  routeHandlers.todoGet = (ctx, next) => {
+    const { id } = ctx.validatedParams;
+    if (isNil(store[id])) {
+      throw AppError.validationError("error.todo.unknown", {
+        id,
+      });
+    }
+
+    ctx.body = {
+      data: store[id],
+    };
+
+    return next();
+  };
+
+  routeHandlers.todoPostItems = (ctx, next) => {
+    const { items } = ctx.validatedBody;
+    const { id } = ctx.validatedParams;
+
+    if (isNil(store[id])) {
+      throw AppError.validationError("error.todo.unknown", {
+        id,
+      });
+    }
+    const data = store[id];
+
+    for (const item of items) {
+      data.items.push({
+        createdAt: getSecondsSinceEpoch(),
+        completedAt: undefined,
+        item,
+      });
+    }
+
+    ctx.body = {
+      data,
+    };
+
+    return next();
+  };
+
+  routeHandlers.todoPostTick = (ctx, next) => {
+    const { index } = ctx.validatedBody;
+    const { id } = ctx.validatedParams;
+
+    if (isNil(store[id])) {
+      throw AppError.validationError("error.todo.unknown", {
+        id,
+      });
+    }
+    const data = store[id];
+    if (data.items.length <= index) {
+      throw AppError.validationError("error.todo.item.unknown", {
+        id,
+      });
+    }
+
+    data.items[index].completedAt = isNil(data.items[index].completedAt)
+      ? getSecondsSinceEpoch()
+      : undefined;
+
+    ctx.body = {
+      data,
+    };
+
+    return next();
+  };
+}

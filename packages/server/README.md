@@ -33,8 +33,7 @@ will be supported:
 
 ## Roadmap
 
-- [ ] @lbu/code-gen: CRUD helpers
-- [ ] @lbu/code-gen: React Query code generator
+- [ ] @lbu/code-gen: Frontend client code generator
 - [ ] @lbu/store: Common abstraction for KV-store, FS-Store, Queues, etc...
       Should at least support memory, fs and Postgres
 - [ ] @lbu/translate: Simple translation system based on @lbu/store

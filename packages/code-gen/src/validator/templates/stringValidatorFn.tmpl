@@ -1,7 +1,7 @@
 const {{= functionName }} = (value, propertyPath) => {
   if (isNil(value)) {
     {{ if (it.optional) { }}
-      return undefined;
+      return {{= it.default }};
     {{ } else { }}
       throw AppError.validationError("validator.string.undefined", { propertyPath });
     {{ } }}

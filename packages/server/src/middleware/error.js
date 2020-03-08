@@ -143,21 +143,26 @@ export const errorHandler = ({ onAppError, onError, leakError }) => {
       ctx.status = err.status;
       ctx.body = onAppError(ctx, err.key, err.info);
 
+      let originalError = undefined;
+      if (err.originalError) {
+        originalError = {
+          name: err.originalError.name,
+          message: err.originalError.message,
+          stack: err.originalError.stack.split("\n"),
+        };
+      }
+
       log({
         type: "API_ERROR",
         status: err.status,
         key: err.key,
         info: err.info,
-        originalError: err.originalError,
+        originalError,
       });
 
       if (!isNil(err.originalError) && leakError) {
         ctx.body.info = ctx.body.info || {};
-        ctx.body.info._error = {
-          name: err.originalError.name,
-          message: err.originalError.message,
-          stack: err.originalError.stack,
-        };
+        ctx.body.info._error = originalError;
       }
     }
   };
