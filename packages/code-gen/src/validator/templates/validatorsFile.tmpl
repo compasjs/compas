@@ -4,5 +4,5 @@ import { AppError } from "@lbu/server";
 export const validatorHooks = {};
 
 {{ for (const v of it.validatorFunctions) { }}
-{{= validatorsNamedFn(v) }}
+{{= validatorsNamedFn({ models, ...v }) }}
 {{ } }}

@@ -21,7 +21,10 @@ const generate = data => {
   const validatorFunctions = transform(data);
   return {
     path: "./validators.js",
-    content: executeTemplate("validatorsFile", { validatorFunctions }),
+    content: executeTemplate("validatorsFile", {
+      models: data.models,
+      validatorFunctions,
+    }),
   };
 };
 

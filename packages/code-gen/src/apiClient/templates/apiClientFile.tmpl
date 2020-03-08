@@ -1,0 +1,27 @@
+import axios from "axios";
+
+let _internalClient = undefined;
+
+const checkApiClient = () => {
+  if (_internalClient === undefined) {
+    throw new Error("Initialize api client with createApiClient");
+  }
+}
+
+/**
+ * @param {AxiosRequestConfig} config
+ *
+ */
+export const createApiClient = config => {
+  _internalClient = axios.create(config);
+}
+
+const setXRequestId = headers => {
+  _internalClient.defaults.headers.common["X-Request-Id"] = headers["x-request-id"];
+}
+
+{{ if (it.routes && it.routes.length > 0) { }}
+    {{ for (const route of routes) { }}
+    {{= apiClientFn({...it, ...route }) }}
+    {{ } }}
+{{ } }}

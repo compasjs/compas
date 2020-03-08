@@ -1,14 +1,13 @@
 {{= validatorsAnonFn(validator) }}
 
 /**
- * {{= docs }}
- * @typedef { {{= validatorsJsDoc(validator).trim() }} } {{= typeName }}
+ * @typedef { {{= generateJsDoc({ models, useDefault: true, value: validator }) }}} {{= typeName }}
  */
 
 /**
  * {{= docs }}
  * @param {*} value
- * @returns { {{= typeName }} }
+ * @returns { {{= typeName }}}
  */
 export const {{= validatorName }} = value => {
  let result = value;

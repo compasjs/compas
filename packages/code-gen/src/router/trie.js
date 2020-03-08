@@ -147,7 +147,7 @@ function collapseStaticChildren(trie) {
   }
 
   for (const child of trie.children) {
-    if (child.prio !== RoutePrio.STATIC) {
+    if (child.prio !== RoutePrio.STATIC || trie.prio !== RoutePrio.STATIC) {
       return;
     }
   }

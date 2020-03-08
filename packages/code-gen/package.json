@@ -20,6 +20,9 @@
     "@lbu/insight": "^0.0.6",
     "@lbu/stdlib": "^0.0.6"
   },
+  "devDependencies": {
+    "axios": "0.19.2"
+  },
   "author": {
     "name": "Dirk de Visser",
     "email": "dirkdev98@gmail.com"

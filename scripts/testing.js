@@ -1,9 +1,15 @@
 import { log } from "@lbu/insight";
 import { AppError, createBodyParsers, getApp } from "@lbu/server";
 import { getSecondsSinceEpoch, isNil, mainFn } from "@lbu/stdlib";
+import {
+  createApiClient,
+  todoGet,
+  todoGetList,
+  todoPostItems,
+  todoPostNew,
+  todoPostTick,
+} from "../generated/apiClient.js";
 import { routeHandlers, router } from "../generated/router.js";
-
-process.env.NODE_ENV = "production";
 
 const main = async logger => {
   const app = getApp({
@@ -23,13 +29,15 @@ const main = async logger => {
   });
 
   mount();
+
+  setTimeout(() => runClient(logger), 500);
 };
 
 mainFn(import.meta, log, main);
 
 function mount() {
   let nextId = 0;
-  /** @type {Object.<number, Todo>} */
+  /** @type {Object.<number, TodoResponse.data>} */
   let store = {};
 
   routeHandlers.todoGetList = (ctx, next) => {
@@ -125,4 +133,24 @@ function mount() {
 
     return next();
   };
+}
+
+async function runClient(logger) {
+  try {
+    createApiClient({
+      baseURL: "http://localhost:3000/",
+      headers: {},
+      timeout: 2400,
+    });
+    logger.info(await todoGetList({}));
+    logger.info(await todoPostNew({ name: "Foo" }));
+    logger.info(await todoGet({ id: 0 }));
+    logger.info(await todoPostItems({ id: 0 }, { items: ["Foo ", " Bar"] }));
+    logger.info(await todoGetList({}));
+    logger.info(await todoPostTick({ id: 0 }, { index: 1 }));
+    logger.info(await todoPostTick({ id: 0 }, { index: 0 }));
+    logger.info(await todoPostTick({ id: 0 }, { index: 0 }));
+  } catch (e) {
+    logger.error(e.toJSON());
+  }
 }

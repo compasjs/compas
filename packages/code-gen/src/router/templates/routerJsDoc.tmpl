@@ -1,0 +1,22 @@
+{{ for (const r of routes) { }}
+    {{ if (r.paramsValidator) { }}
+    /**
+     * @typedef { {{= generateJsDoc({ models, useDefault: true, value: models[r.paramsValidator] }) }}} {{= r.paramsValidator }}
+     */
+    {{ } }}
+    {{ if (r.queryValidator) { }}
+    /**
+     * @typedef { {{= generateJsDoc({ models, useDefault: true, value: models[r.queryValidator] }) }}} {{= r.queryValidator }}
+     */
+    {{ } }}
+    {{ if (r.bodyValidator) { }}
+    /**
+     * @typedef { {{= generateJsDoc({ models, useDefault: true, value: models[r.bodyValidator] }) }}} {{= r.bodyValidator }}
+     */
+    {{ } }}
+    {{ if (r.responseModel) { }}
+    /**
+     * @typedef { {{= generateJsDoc({ models, useDefault: true, value: models[r.responseModel] }) }}} {{= r.responseModel }}
+     */
+    {{ } }}
+{{ } }}

@@ -1,7 +1,7 @@
 import {
   App,
+  getApiClientPlugin,
   getRouterPlugin,
-  getTypescriptPlugin,
   getValidatorPlugin,
   M,
   paginate,
@@ -102,7 +102,7 @@ app
 const main = async logger => {
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
-    plugins: [getValidatorPlugin(), getRouterPlugin(), getTypescriptPlugin()],
+    plugins: [getValidatorPlugin(), getRouterPlugin(), getApiClientPlugin()],
     outputDir: "./generated",
   });
 };

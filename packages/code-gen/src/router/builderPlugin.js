@@ -32,6 +32,9 @@ const getModelName = validator => {
   if (validator === undefined) {
     return undefined;
   }
+  if (Object.keys(validator.item.keys).length === 0) {
+    return undefined;
+  }
   return upperCaseFirst(validator.item.name);
 };
 

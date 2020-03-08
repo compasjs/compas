@@ -59,6 +59,9 @@ export const routeHandlers = {
    * Tags: {{= r.tags.join(", ") }}
    * {{= r.method}} {{= r.path }}
    * @param {Object} ctx
+   {{ if (r.responseModel) { }}
+   * @param { {{= r.responseModel }} } ctx.body
+   {{ } }}
    {{ if (r.queryValidator) { }}
    * @param { {{= r.queryValidator }} } ctx.validatedQuery
    {{ } }}

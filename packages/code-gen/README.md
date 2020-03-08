@@ -24,8 +24,7 @@ will be supported:
 ## Features
 
 - @lbu/cli: Project template, and simple script runner
-- @lbu/code-gen: Flexible code generators. Supports generating router,
-  validator, basic typescript types
+- @lbu/code-gen: Flexible code generators. Supports generating router, validator
 - @lbu/insight: Opinionated logger
 - @lbu/server: Wrap around Koa and some useful middleware
 - @lbu/stdlib: Growing library of various common utilities like uuid & a basic
@@ -33,7 +32,6 @@ will be supported:
 
 ## Roadmap
 
-- [ ] @lbu/code-gen: Frontend client code generator
 - [ ] @lbu/store: Common abstraction for KV-store, FS-Store, Queues, etc...
       Should at least support memory, fs and Postgres
 - [ ] @lbu/translate: Simple translation system based on @lbu/store

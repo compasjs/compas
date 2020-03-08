@@ -16,15 +16,15 @@ const init = async () => {
 };
 
 const generate = data => ({
-  path: "./types.ts",
-  content: executeTemplate("typescriptFile", data),
+  path: "./apiClient.js",
+  content: executeTemplate("apiClientFile", data),
 });
 
 /**
  * Generate Typescript types for validators & routes
  */
-export const getTypescriptPlugin = () => ({
-  name: "typescript",
+export const getApiClientPlugin = () => ({
+  name: "apiClient",
   init,
   generate,
 });

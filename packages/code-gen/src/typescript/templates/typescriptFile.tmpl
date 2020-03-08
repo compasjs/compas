@@ -1,6 +1,0 @@
-{{ if (Object.keys(it.models || {}).length > 0) { }}
-    {{ for (const name of Object.keys(models)) { }}
-      export type {{= name }} = {{= typescriptType(models[name]) }};
-    {{ } }}
-{{ } }}
-

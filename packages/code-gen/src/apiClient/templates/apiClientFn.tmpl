@@ -1,0 +1,44 @@
+/**
+ * Name: {{= name }}
+ * Tags: {{= tags.join(", ") }}
+ * Docs: {{= docs }}
+{{ if (it.paramsValidator) { }}
+ * @param { {{= generateJsDoc({ models, useDefault: false, value: models[paramsValidator] }) }}} params
+{{ } }}
+{{ if (it.queryValidator) { }}
+ * @param { {{= generateJsDoc({ models, useDefault: false, value: models[queryValidator] }) }}} query
+{{ } }}
+{{ if (it.bodyValidator) { }}
+ * @param { {{= generateJsDoc({ models, useDefault: false, value: models[bodyValidator] }) }}} body
+{{ } }}
+{{ if (it.responseModel) { }}
+ * @return {Promise.<{{= generateJsDoc({ models, useDefault: true, value: models[responseModel] }) }}>}
+{{ } else { }}
+ * @return {Promise.<*>}
+{{ } }}
+
+ */
+export const {{= name }} = async (
+{{ if (it.paramsValidator) { }}
+params,
+{{ } }}
+{{ if (it.queryValidator) { }}
+query,
+{{ } }}
+{{ if (it.bodyValidator) { }}
+body,
+{{ } }}
+) => {
+    {{ const url = path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
+    checkApiClient();
+    const response = await _internalClient.request({
+      url: `{{= url }}`,
+      method: "{{= method.toLowerCase() }}",
+      params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
+      data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
+    });
+
+    setXRequestId(response.headers);
+
+    return response.data;
+};
