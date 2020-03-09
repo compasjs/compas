@@ -29,3 +29,52 @@ export const isPlainObject = item =>
  * @returns {Object} Returns `object`.
  */
 export const merge = lodashMerge;
+
+/**
+ * Flattens the given nested object, skipping anything that is not a plain object
+ * @param {Object} data The object to serialize
+ * @param [result]
+ * @param [path]
+ * @return {Object.<string, *>}
+ */
+export const flatten = (data, result = {}, path = "") => {
+  for (const key of Object.keys(data)) {
+    let resultPath = path + "." + key;
+    if (path === "") {
+      resultPath = key;
+    }
+    const value = data[key];
+
+    if (!isPlainObject(value)) {
+      result[resultPath] = value;
+    } else {
+      flatten(value, result, resultPath);
+    }
+  }
+
+  return result;
+};
+
+/**
+ * Opposite of flatten
+ * @param {Object} data
+ * @return {Object}
+ */
+export const unFlatten = data => {
+  const result = {};
+  for (const key of Object.keys(data)) {
+    const value = data[key];
+    const keyParts = key.split(".");
+
+    let tmpObject = result;
+    for (const part of keyParts.slice(0, keyParts.length - 1)) {
+      if (isNil(tmpObject[part]) || !isPlainObject(tmpObject[part])) {
+        tmpObject[part] = {};
+      }
+      tmpObject = tmpObject[part];
+    }
+    tmpObject[keyParts[keyParts.length - 1]] = value;
+  }
+
+  return result;
+};

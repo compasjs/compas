@@ -1,4 +1,4 @@
-import { isNil, isPlainObject, merge } from "./lodash.js";
+import { flatten, isNil, isPlainObject, merge, unFlatten } from "./lodash.js";
 
 export const test = t => {
   t.test("isNil", t => {
@@ -43,6 +43,68 @@ export const test = t => {
     const obj = { foo: true };
     merge(obj, { foo: false });
     t.equal(obj.foo, false);
+
+    t.end();
+  });
+
+  t.test("flatten", t => {
+    t.deepEqual(
+      flatten({
+        foo: {
+          bar: {
+            baz: "foo",
+            bar: 5,
+            quix: [1, 2, 3],
+            suip: { foo: true },
+            soup: [{ foo: "bar" }],
+          },
+        },
+      }),
+      {
+        "foo.bar.baz": "foo",
+        "foo.bar.bar": 5,
+        "foo.bar.quix": [1, 2, 3],
+        "foo.bar.suip.foo": true,
+        "foo.bar.soup": [{ foo: "bar" }],
+      },
+    );
+
+    t.end();
+  });
+
+  t.test("unFlatten", t => {
+    t.deepEqual(
+      unFlatten({
+        "foo.bar.baz": "foo",
+        "foo.bar.bar": 5,
+        "foo.bar.quix": [1, 2, 3],
+        "foo.bar.suip.foo": true,
+        "foo.bar.soup": [{ foo: "bar" }],
+      }),
+      {
+        foo: {
+          bar: {
+            baz: "foo",
+            bar: 5,
+            quix: [1, 2, 3],
+            suip: { foo: true },
+            soup: [{ foo: "bar" }],
+          },
+        },
+      },
+    );
+
+    t.deepEqual(
+      unFlatten({
+        foo: "Overwritten",
+        "foo.baz": "Yep overwritten",
+        str: false,
+      }),
+      {
+        foo: { baz: "Yep overwritten" },
+        str: false,
+      },
+    );
 
     t.end();
   });
