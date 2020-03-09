@@ -32,9 +32,6 @@ will be supported:
 
 ## Roadmap
 
-- [ ] @lbu/store: Common abstraction for KV-store, FS-Store, Queues, etc...
-      Should at least support memory, fs and Postgres
-- [ ] @lbu/translate: Simple translation system based on @lbu/store
 - [ ] @lbu/code-gen: Mock generator
 - [ ] @lbu/code-gen: OpenAPI importer
 - [ ] @lbu/features: Feature flag implementation based on @lbu/store & support
