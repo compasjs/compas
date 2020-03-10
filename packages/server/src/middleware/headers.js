@@ -1,9 +1,6 @@
-import cors from "koa2-cors";
-
-const noop = () => {};
+import { cors } from "./cors.js";
 
 /**
- * TODO: Replace with custom code calling Helmet, and custom cors implementation
  * @param {Object} [opts=]
  * @param {Object=} opts.cors Cors configuration see koa2-cors
  */
@@ -15,12 +12,13 @@ export const defaultHeaders = (opts = {}) => {
     "X-DNS-Prefetch-Control": "off",
     "Strict-Transport-Security": "max-age=5184000; includeSubDomains", // 60 day default
   };
+  const corsOptions = opts.cors || {};
+  corsOptions.returnNext = false;
   const corsExec = cors(opts.cors);
 
-  return async (ctx, next) => {
-    // At the moment, both do not rely on next, so just use a noop
+  return (ctx, next) => {
     ctx.set(standardHeaders);
-    await corsExec(ctx, noop);
+    corsExec(ctx);
 
     return next();
   };

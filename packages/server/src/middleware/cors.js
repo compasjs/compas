@@ -26,42 +26,46 @@
  SOFTWARE.
  */
 
+const defaultOptions = {
+  allowMethods: ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+};
+
 /**
  * CORS middleware for koa2
  *
  * @param {Object} [options]
- *  - {String|Function(ctx)} origin `Access-Control-Allow-Origin`, default is request Origin header
- *  - {Array} exposeHeaders `Access-Control-Expose-Headers`
- *  - {String|Number} maxAge `Access-Control-Max-Age` in seconds
- *  - {Boolean} credentials `Access-Control-Allow-Credentials`
- *  - {Array} allowMethods `Access-Control-Allow-Methods`,
+ * @param {String|Function(ctx)} [options.origin] `Access-Control-Allow-Origin`, default
+ *   is request Origin header
+ * @param {Array} [options.exposeHeaders] `Access-Control-Expose-Headers`
+ * @param {String|Number} [options.maxAge] `Access-Control-Max-Age` in seconds
+ * @param {Boolean} [options.credentials] `Access-Control-Allow-Credentials`
+ * @param {Array} [options.allowMethods] `Access-Control-Allow-Methods`,
  *    default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']
- *  - {Array} allowHeaders `Access-Control-Allow-Headers`
+ * @param {Array} [options.allowHeaders] `Access-Control-Allow-Headers`
+ * @param {boolean} [options.returnNext] By default, and if false, won't call next, but
+ *   just returns undefined
  * @return {Function}
  * @api public
  */
-module.exports = function crossOrigin(options = {}) {
-  const defaultOptions = {
-    allowMethods: ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS"],
-  };
+export const cors = (options = {}) => {
+  const opts = Object.assign({}, defaultOptions, options);
 
-  // set defaultOptions to options
-  options = Object.assign({}, defaultOptions, options); // eslint-disable-line no-param-reassign
+  let originFn = ctx => options.origin || ctx.get("Origin") || "*";
+  if (typeof options.origin === "function") {
+    originFn = options.origin;
+  }
 
   // eslint-disable-next-line consistent-return
-  return async function cors(ctx, next) {
+  return (ctx, next) => {
+    const returnValue = opts.returnNext ? next : () => undefined;
+
     // always set vary Origin Header
     // https://github.com/rs/cors/issues/10
     ctx.vary("Origin");
 
-    let origin;
-    if (typeof options.origin === "function") {
-      origin = options.origin(ctx);
-    } else {
-      origin = options.origin || ctx.get("Origin") || "*";
-    }
+    const origin = originFn(ctx);
     if (!origin) {
-      return await next();
+      return returnValue();
     }
 
     // Access-Control-Allow-Origin
@@ -70,29 +74,29 @@ module.exports = function crossOrigin(options = {}) {
     if (ctx.method === "OPTIONS") {
       // Preflight Request
       if (!ctx.get("Access-Control-Request-Method")) {
-        return await next();
+        return returnValue();
       }
 
       // Access-Control-Max-Age
-      if (options.maxAge) {
-        ctx.set("Access-Control-Max-Age", String(options.maxAge));
+      if (opts.maxAge) {
+        ctx.set("Access-Control-Max-Age", String(opts.maxAge));
       }
 
       // Access-Control-Allow-Credentials
-      if (options.credentials === true) {
+      if (opts.credentials === true) {
         // When used as part of a response to a preflight request,
         // this indicates whether or not the actual request can be made using credentials.
         ctx.set("Access-Control-Allow-Credentials", "true");
       }
 
       // Access-Control-Allow-Methods
-      if (options.allowMethods) {
-        ctx.set("Access-Control-Allow-Methods", options.allowMethods.join(","));
+      if (opts.allowMethods) {
+        ctx.set("Access-Control-Allow-Methods", opts.allowMethods.join(","));
       }
 
       // Access-Control-Allow-Headers
-      if (options.allowHeaders) {
-        ctx.set("Access-Control-Allow-Headers", options.allowHeaders.join(","));
+      if (opts.allowHeaders) {
+        ctx.set("Access-Control-Allow-Headers", opts.allowHeaders.join(","));
       } else {
         ctx.set(
           "Access-Control-Allow-Headers",
@@ -104,7 +108,7 @@ module.exports = function crossOrigin(options = {}) {
     } else {
       // Request
       // Access-Control-Allow-Credentials
-      if (options.credentials === true) {
+      if (opts.credentials === true) {
         if (origin === "*") {
           // `credentials` can't be true when the `origin` is set to `*`
           ctx.remove("Access-Control-Allow-Credentials");
@@ -114,18 +118,11 @@ module.exports = function crossOrigin(options = {}) {
       }
 
       // Access-Control-Expose-Headers
-      if (options.exposeHeaders) {
-        ctx.set(
-          "Access-Control-Expose-Headers",
-          options.exposeHeaders.join(","),
-        );
+      if (opts.exposeHeaders) {
+        ctx.set("Access-Control-Expose-Headers", opts.exposeHeaders.join(","));
       }
 
-      try {
-        await next();
-      } catch (err) {
-        throw err;
-      }
+      return returnValue();
     }
   };
 };
