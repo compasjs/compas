@@ -1,4 +1,4 @@
-routeHandlers.getLbuStructure = (ctx, next) => {
+routeHandlers.lbuStructureGet = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
   ctx.body = "{{= stringified.replace(/"/g, "\\\"") }}";
 

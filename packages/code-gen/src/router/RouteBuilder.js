@@ -73,7 +73,7 @@ class RouteBuilder {
    */
   params(model) {
     this.paramsValidator = model;
-    if (!this.paramsValidator.item.name) {
+    if (this.paramsValidator !== undefined && !this.paramsValidator.item.name) {
       this.paramsValidator.item.name = `${this.item.name}Params`;
     }
 
@@ -87,7 +87,7 @@ class RouteBuilder {
    */
   query(model) {
     this.queryValidator = model;
-    if (!this.queryValidator.item.name) {
+    if (this.queryValidator !== undefined && !this.queryValidator.item.name) {
       this.queryValidator.item.name = `${this.item.name}Query`;
     }
 
@@ -101,7 +101,7 @@ class RouteBuilder {
    */
   body(model) {
     this.bodyValidator = model;
-    if (!this.bodyValidator.item.name) {
+    if (this.bodyValidator !== undefined && !this.bodyValidator.item.name) {
       this.bodyValidator.item.name = `${this.item.name}Body`;
     }
 
@@ -115,7 +115,7 @@ class RouteBuilder {
    */
   response(model) {
     this.responseModel = model;
-    if (!this.responseModel.item.name) {
+    if (this.responseModel !== undefined && !this.responseModel.item.name) {
       this.responseModel.item.name = `${this.item.name}Response`;
     }
 
@@ -213,7 +213,11 @@ class RouteBuilder {
    * @public
    */
   build() {
-    throw new Error("You forgot to call .get() / .post() / ...");
+    if (this.item.method === undefined) {
+      throw new Error("You forgot to call .get() / .post() / ...");
+    }
+
+    return merge({}, this.item);
   }
 }
 
@@ -222,20 +226,12 @@ class GetBuilder extends RouteBuilder {
     super(path);
     this.item.method = "GET";
   }
-
-  build() {
-    return merge({}, this.item);
-  }
 }
 
 class PostBuilder extends RouteBuilder {
   constructor(path) {
     super(path);
     this.item.method = "POST";
-  }
-
-  build() {
-    return merge({}, this.item);
   }
 }
 
@@ -244,10 +240,6 @@ class PutBuilder extends RouteBuilder {
     super(path);
     this.item.method = "PUT";
   }
-
-  build() {
-    return merge({}, this.item);
-  }
 }
 
 class DeleteBuilder extends RouteBuilder {
@@ -255,20 +247,12 @@ class DeleteBuilder extends RouteBuilder {
     super(path);
     this.item.method = "DELETE";
   }
-
-  build() {
-    return merge({}, this.item);
-  }
 }
 
 class HeadBuilder extends RouteBuilder {
   constructor(path) {
     super(path);
     this.item.method = "HEAD";
-  }
-
-  build() {
-    return merge({}, this.item);
   }
 }
 

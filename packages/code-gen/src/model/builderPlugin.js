@@ -47,10 +47,10 @@ export const plugin = {
 function replaceReferences(models, model) {
   if (!isNil(model.name)) {
     model.name = upperCaseFirst(model.name);
-  }
 
-  if (!models[model.name]) {
-    models[model.name] = model;
+    if (!models[model.name]) {
+      models[model.name] = model;
+    }
   }
 
   switch (model.type) {

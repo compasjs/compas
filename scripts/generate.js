@@ -2,6 +2,7 @@ import {
   App,
   getApiClientPlugin,
   getRouterPlugin,
+  getTypesPlugin,
   getValidatorPlugin,
   M,
   paginate,
@@ -53,7 +54,7 @@ app
   .route(
     todoRouter
       .getList()
-      .params(M.object({}))
+      .params()
       .query(paginate.query)
       .response(
         M.object({
@@ -66,7 +67,7 @@ app
   .route(
     todoRouter
       .post("PostNew")
-      .params(M.object({}))
+      .params()
       .body(postTodo),
   )
   .route(
@@ -102,7 +103,12 @@ app
 const main = async logger => {
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
-    plugins: [getValidatorPlugin(), getRouterPlugin(), getApiClientPlugin()],
+    plugins: [
+      getTypesPlugin(),
+      getValidatorPlugin(),
+      getRouterPlugin(),
+      getApiClientPlugin(),
+    ],
     outputDir: "./generated",
   });
 };

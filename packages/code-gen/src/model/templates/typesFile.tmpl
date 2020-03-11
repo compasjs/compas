@@ -1,0 +1,13 @@
+{{ for (const modelName of Object.keys(models)) { }}
+/**
+ * {{= modelName }}
+ {{ if (models[modelName].docs) { }}* Docs: {{= models[modelName].docs }}{{ } }}
+ * @typedef { {{= generateJsDoc(models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
+ */
+
+/**
+ * {{= modelName }}_Optional
+ {{ if (models[modelName].docs) { }}* Docs: {{= models[modelName].docs }}{{ } }}
+ * @typedef { {{= generateJsDoc(models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
+ */
+{{ } }}

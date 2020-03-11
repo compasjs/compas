@@ -12,7 +12,14 @@ const init = app => {
     }
 
     store.add(route);
+  };
+};
 
+const process = app => {
+  // Validators / response can still be swapped out if wanted, so only finalize when no
+  // user code is running
+
+  for (const route of store.values()) {
     if (!isNil(route.paramsValidator)) {
       app.callHook("addValidator", route.paramsValidator);
     }
@@ -25,7 +32,7 @@ const init = app => {
     if (!isNil(route.responseModel)) {
       app.callHook("addModel", route.responseModel);
     }
-  };
+  }
 };
 
 const getModelName = validator => {
@@ -84,5 +91,6 @@ const build = result => {
 
 export const plugin = {
   init,
+  process,
   build,
 };

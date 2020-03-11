@@ -3,16 +3,16 @@
  * Tags: {{= tags.join(", ") }}
  * Docs: {{= docs }}
 {{ if (it.paramsValidator) { }}
- * @param { {{= generateJsDoc({ models, useDefault: false, value: models[paramsValidator] }) }}} params
+ * @param { {{= paramsValidator }}_Optional} params
 {{ } }}
 {{ if (it.queryValidator) { }}
- * @param { {{= generateJsDoc({ models, useDefault: false, value: models[queryValidator] }) }}} query
+ * @param { {{= queryValidator }}_Optional} query
 {{ } }}
 {{ if (it.bodyValidator) { }}
- * @param { {{= generateJsDoc({ models, useDefault: false, value: models[bodyValidator] }) }}} body
+ * @param { {{= bodyValidator }}_Optional} body
 {{ } }}
 {{ if (it.responseModel) { }}
- * @return {Promise.<{{= generateJsDoc({ models, useDefault: true, value: models[responseModel] }) }}>}
+ * @return {Promise.<{{= responseModel }}>}
 {{ } else { }}
  * @return {Promise.<*>}
 {{ } }}

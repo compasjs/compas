@@ -17,7 +17,9 @@ const main = async logger => {
     errorOptions: {
       leakError: true,
     },
-    disableHeaders: true,
+    headers: {
+      origin: "http://localhost:3000",
+    },
   });
 
   createBodyParsers();
