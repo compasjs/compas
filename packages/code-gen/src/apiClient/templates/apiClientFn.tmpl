@@ -31,14 +31,35 @@ body,
 ) => {
     {{ const url = path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
     checkApiClient();
-    const response = await _internalClient.request({
-      url: `{{= url }}`,
-      method: "{{= method.toLowerCase() }}",
-      params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
-      data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
-    });
 
-    setXRequestId(response.headers);
+    {{ if (opts.enableMocks && it.responseModel !== undefined) { }}
+      try {
+        const response = await _internalClient.request({
+          url: `{{= url }}`,
+          method: "{{= method.toLowerCase() }}",
+          params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
+          data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
+        });
 
-    return response.data;
+        setXRequestId(response.headers);
+
+        return response.data;
+      } catch (e) {
+        if (e.response && e.response.status === 405) {
+          return mocks.mock{{= it.responseModel }}();
+        }
+        throw e;
+      }
+    {{ } else { }}
+        const response = await _internalClient.request({
+          url: `{{= url }}`,
+          method: "{{= method.toLowerCase() }}",
+          params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
+          data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
+        });
+
+        setXRequestId(response.headers);
+
+        return response.data;
+    {{ } }}
 };

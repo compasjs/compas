@@ -1,6 +1,7 @@
 import {
   App,
   getApiClientPlugin,
+  getMocksPlugin,
   getRouterPlugin,
   getTypesPlugin,
   getValidatorPlugin,
@@ -13,6 +14,75 @@ import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
 const app = new App("TODO App");
+
+app.model(M("MyBoolean1").bool());
+app.model(
+  M("MyBoolean2")
+    .bool()
+    .oneOf(true),
+);
+app.model(
+  M("MyBoolean3")
+    .bool()
+    .oneOf(true)
+    .optional()
+    .default(true),
+);
+app.model(
+  M("MyBoolean4")
+    .bool()
+    .optional(),
+);
+app.model(
+  M("MyBoolean5")
+    .bool()
+    .optional()
+    .default(true),
+);
+
+app.model(
+  M("MyInteger1")
+    .number()
+    .integer()
+    .min(5),
+);
+app.model(
+  M("MyNumber1")
+    .number()
+    .max(5),
+);
+
+app.model(
+  M("RawMock")
+    .string()
+    .mock(`__.string()`),
+);
+app.model(
+  M("ChanceParagraph")
+    .string()
+    .mock("__.paragraph()"),
+);
+
+app.model(
+  M("MYGeneric")
+    .generic()
+    .keys(M.string().mock("__.first()"))
+    .values(
+      M.array(
+        M.anyOf(
+          M.bool().optional(),
+          M.string()
+            .min(2)
+            .max(20)
+            .upperCase(),
+          M.number()
+            .min(0)
+            .integer()
+            .max(1500),
+        ),
+      ).min(5),
+    ),
+);
 
 const idObject = M("IdObject").object({
   id: M.number()
@@ -107,6 +177,7 @@ const main = async logger => {
       getTypesPlugin(),
       getValidatorPlugin(),
       getRouterPlugin(),
+      getMocksPlugin(),
       getApiClientPlugin(),
     ],
     outputDir: "./generated",

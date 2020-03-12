@@ -1,3 +1,4 @@
+import { merge } from "@lbu/stdlib";
 import { M } from "../model/index.js";
 
 const validatorDefaults = {
@@ -38,7 +39,7 @@ const validatorDefaults = {
  */
 const checkHasValidatorObject = instance => {
   if (!instance.item.validator) {
-    instance.item.validator = validatorDefaults[instance.item.type];
+    instance.item.validator = merge({}, validatorDefaults[instance.item.type]);
   }
 };
 

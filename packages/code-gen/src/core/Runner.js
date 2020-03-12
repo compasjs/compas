@@ -56,8 +56,9 @@ class Runner {
           } else {
             throw new Error("Expecting plain object or array");
           }
+        } else {
+          this.outputs = this.outputs.concat(result);
         }
-        this.outputs = this.outputs.concat(result);
       }
     }
   }

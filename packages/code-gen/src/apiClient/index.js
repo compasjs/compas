@@ -5,7 +5,9 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 
-const init = async () => {
+const init = async (opts, { hasPlugin }) => {
+  opts.enableMocks = hasPlugin("mocks");
+
   await compileTemplateDirectory(
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
@@ -15,16 +17,16 @@ const init = async () => {
   );
 };
 
-const generate = data => ({
+const generate = (opts, data) => ({
   path: "./apiClient.js",
-  content: executeTemplate("apiClientFile", data),
+  content: executeTemplate("apiClientFile", { ...data, opts }),
 });
 
 /**
  * Generate Typescript types for validators & routes
  */
-export const getApiClientPlugin = () => ({
+export const getApiClientPlugin = (opts = {}) => ({
   name: "apiClient",
-  init,
-  generate,
+  init: init.bind(undefined, opts),
+  generate: generate.bind(undefined, opts),
 });

@@ -2,22 +2,31 @@ import { isNil, merge } from "@lbu/stdlib";
 
 export function M(name) {
   return {
+    /**
+     * @return {LbuBool}
+     */
     bool: () => M.bool().name(name),
-    boolean: () => M.boolean().name(name),
-    number: () => M.number().name(name),
-    string: () => M.string().name(name),
+    /**
+     * @return {LbuBool}
+     */ boolean: () => M.boolean().name(name),
+    /**
+     * @return {LbuNumber}
+     */ number: () => M.number().name(name),
+    /**
+     * @return {LbuString}
+     */ string: () => M.string().name(name),
     /**
      * @param {Object<string, ModelBuilder>} [obj]
-     */
-    object: obj => M.object(obj).name(name),
+     * @return {LbuObject}
+     */ object: obj => M.object(obj).name(name),
     /**
      * @param {ModelBuilder} [value]
-     */
-    array: value => M.array(value).name(name),
+     * @return {LbuArray}
+     */ array: value => M.array(value).name(name),
     /**
      * @param {...ModelBuilder} [items]
-     */
-    anyOf: (...items) => M.anyOf(...items).name(name),
+     * @return {LbuAnyOf}
+     */ anyOf: (...items) => M.anyOf(...items).name(name),
 
     // TODO: Buggy when deduping named models
     // /**
@@ -25,8 +34,14 @@ export function M(name) {
     //  */
     // ref: type => M.ref(type).name(name),
 
+    /**
+     * @return {LbuAny}
+     */
     any: () => M.any().name(name),
-    generic: () => M.generic().name(name),
+    /**
+     *
+     * @return {LbuGeneric}
+     */ generic: () => M.generic().name(name),
   };
 }
 
@@ -150,6 +165,7 @@ class LbuNumber extends ModelBuilder {
       optional: false,
       default: undefined,
       oneOf: undefined,
+      references: undefined,
     };
   }
 
@@ -160,6 +176,19 @@ class LbuNumber extends ModelBuilder {
    */
   name(name) {
     this.item.name = name;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} modelName
+   * @param {string} [fieldName]
+   */
+  references(modelName, fieldName) {
+    this.item.references = {
+      modelName,
+      fieldName,
+    };
     return this;
   }
 
@@ -216,6 +245,7 @@ class LbuString extends ModelBuilder {
       optional: false,
       default: undefined,
       oneOf: undefined,
+      references: undefined,
     };
   }
 
@@ -226,6 +256,19 @@ class LbuString extends ModelBuilder {
    */
   name(name) {
     this.item.name = name;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} modelName
+   * @param {string} [fieldName]
+   */
+  references(modelName, fieldName) {
+    this.item.references = {
+      modelName,
+      fieldName,
+    };
     return this;
   }
 
@@ -602,6 +645,7 @@ class LbuAny extends ModelBuilder {
       docs: undefined,
       optional: false,
       typeOf: undefined,
+      instanceOf: undefined,
     };
   }
 
@@ -641,6 +685,15 @@ class LbuAny extends ModelBuilder {
    */
   typeOf(value) {
     this.item.typeOf = value;
+    return this;
+  }
+  /**
+   * @public
+   * @param {string} value
+   * @return {LbuAny}
+   */
+  instanceOf(value) {
+    this.item.instanceOf = value;
     return this;
   }
 }

@@ -14,5 +14,12 @@ const {{= functionName }} = (value, propertyPath) => {
   }
   {{ } }}
 
+  {{ if (it.instanceOf !== undefined) { }}
+    if (!(value instanceOf {{= instanceOf }}) {
+      const instanceOf = "{{= instanceOf }}";
+      throw AppError.validationError("validator.any.instance", { propertyPath, instanceOf });
+    }
+  {{ } }}
+
   return value;
 };

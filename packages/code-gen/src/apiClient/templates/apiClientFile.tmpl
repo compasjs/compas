@@ -1,4 +1,7 @@
 import axios from "axios";
+{{ if (opts.enableMocks) { }}
+import * as mocks from "./mocks.js";
+{{ } }}
 
 let _internalClient = undefined;
 
@@ -22,6 +25,6 @@ const setXRequestId = headers => {
 
 {{ if (it.routes && it.routes.length > 0) { }}
     {{ for (const route of routes) { }}
-    {{= apiClientFn({...it, ...route }) }}
+    {{= apiClientFn({...it, ...route, opts }) }}
     {{ } }}
 {{ } }}
