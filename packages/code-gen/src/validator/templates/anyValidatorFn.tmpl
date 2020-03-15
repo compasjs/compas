@@ -3,21 +3,21 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      throw AppError.validationError("validator.any.undefined", { propertyPath });
+      throw _errorFn("validator.any.undefined", { propertyPath });
     {{ } }}
   }
 
   {{ if (it.typeOf !== undefined) { }}
   if (typeof value !== "{{= typeOf }}") {
     const typeOf = "{{= typeOf }}";
-    throw AppError.validationError("validator.any.type", { propertyPath, typeOf });
+    throw _errorFn("validator.any.type", { propertyPath, typeOf });
   }
   {{ } }}
 
   {{ if (it.instanceOf !== undefined) { }}
     if (!(value instanceOf {{= instanceOf }}) {
       const instanceOf = "{{= instanceOf }}";
-      throw AppError.validationError("validator.any.instance", { propertyPath, instanceOf });
+      throw _errorFn("validator.any.instance", { propertyPath, instanceOf });
     }
   {{ } }}
 

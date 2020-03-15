@@ -17,24 +17,27 @@ const init = async () => {
   );
 };
 
-const generate = data => {
+const generate = (opts, data) => {
   const validatorFunctions = transform(data);
   return {
     path: "./validators.js",
     content: executeTemplate("validatorsFile", {
       models: data.models,
       validatorFunctions,
+      opts,
     }),
   };
 };
 
 /**
  * Generate validator functions with support for pre & post-validate hooks
+ * @param {Object} [opts]
+ * @param {string} [opts.header] Useful for setting extra imports
  */
-export const getValidatorPlugin = () => ({
+export const getValidatorPlugin = (opts = {}) => ({
   name: "validator",
-  init,
-  generate,
+  init: init.bind(undefined, opts),
+  generate: generate.bind(undefined, opts),
 });
 
 function transform({ models, validators }) {
@@ -86,8 +89,7 @@ function processValidator(ctx, validator) {
   if (isNil(validator.functionName)) {
     validator.functionName = `${validator.type}Validator${ctx.counter++}`;
   }
-  Object.assign(validator, validator.validator);
-  delete validator.validator;
+  validator.validator = validator.validator || {};
 
   switch (validator.type) {
     case "object":

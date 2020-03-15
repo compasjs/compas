@@ -3,44 +3,44 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return {{= it.default }};
     {{ } else { }}
-      throw AppError.validationError("validator.number.undefined", { propertyPath });
+      throw _errorFn("validator.number.undefined", { propertyPath });
     {{ } }}
   }
 
-  {{ if (it.convert) { }}
+  {{ if (it.validator.convert) { }}
   if (typeof value !== "number") {
     value = Number(value)
   }
   {{ } }}
 
   if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-      throw AppError.validationError("validator.number.type", { propertyPath });
+      throw _errorFn("validator.number.type", { propertyPath });
   }
 
-  {{ if (it.integer) { }}
+  {{ if (it.validator.integer) { }}
   if (!Number.isInteger(value)) {
-      throw AppError.validationError("validator.number.integer", { propertyPath });
+      throw _errorFn("validator.number.integer", { propertyPath });
   }
   {{ } }}
 
-  {{ if (it.min !== undefined) { }}
-  if (value < {{= min }}) {
-    const min = {{= min }};
-    throw AppError.validationError("validator.number.min", { propertyPath, min });
+  {{ if (it.validator.min !== undefined) { }}
+  if (value < {{= validator.min }}) {
+    const min = {{= validator.min }};
+    throw _errorFn("validator.number.min", { propertyPath, min });
   }
   {{ } }}
 
-  {{ if (it.max !== undefined) { }}
-  if (value > {{= max }}) {
-    const max = {{= max }};
-    throw AppError.validationError("validator.number.max", { propertyPath, max });
+  {{ if (it.validator.max !== undefined) { }}
+  if (value > {{= validator.max }}) {
+    const max = {{= validator.max }};
+    throw _errorFn("validator.number.max", { propertyPath, max });
   }
   {{ } }}
 
   {{ if (it.oneOf !== undefined) { }}
   if ({{= oneOf.map(it => "value !== " + it).join(" && ") }}) {
     const oneOf = {{= quote(oneOf.join(", ")) }};
-    throw AppError.validationError("validator.number.oneOf", { propertyPath, oneOf });
+    throw _errorFn("validator.number.oneOf", { propertyPath, oneOf });
   }
   {{ } }}
 

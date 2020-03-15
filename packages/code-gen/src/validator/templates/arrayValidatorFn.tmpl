@@ -5,31 +5,31 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      throw AppError.validationError("validator.array.undefined", { propertyPath });
+      throw _errorFn("validator.array.undefined", { propertyPath });
     {{ } }}
   }
 
-  {{ if (it.convert) { }}
+  {{ if (it.validator.convert) { }}
   if (!Array.isArray(value)) {
     value = [value];
   }
   {{ } }}
 
   if (!Array.isArray(value)) {
-    throw AppError.validationError("validator.array.type", { propertyPath });
+    throw _errorFn("validator.array.type", { propertyPath });
   }
 
-  {{ if (it.min !== undefined) { }}
-  if (value.length < {{= min }}) {
-    const min = {{= quote(min) }};
-    throw AppError.validationError("validator.array.min", { propertyPath, min });
+  {{ if (it.validator.min !== undefined) { }}
+  if (value.length < {{= validator.min }}) {
+    const min = {{= validator.min }};
+    throw _errorFn("validator.array.min", { propertyPath, min });
   }
   {{ } }}
 
-  {{ if (it.max !== undefined) { }}
-  if (value.length > {{= max}}) {
-    const max = {{= quote(max) }};
-    throw AppError.validationError("validator.array.max", { propertyPath, max });
+  {{ if (it.validator.max !== undefined) { }}
+  if (value.length > {{= validator.max }}) {
+    const max = {{= validator.max }};
+    throw _errorFn("validator.array.max", { propertyPath, max });
   }
   {{ } }}
 

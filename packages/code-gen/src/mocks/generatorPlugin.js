@@ -18,8 +18,8 @@ const init = async () => {
   addToTemplateContext("mockForType", mockForType);
 };
 
-const generate = data => {
-  const mocksContent = executeTemplate("mocksFile", data);
+const generate = (opts, data) => {
+  const mocksContent = executeTemplate("mocksFile", { ...data, opts });
 
   return [
     {
@@ -31,11 +31,13 @@ const generate = data => {
 
 /**
  * Generate mocks
+ * @param {Object} [opts]
+ * @param {string} [opts.header] Useful for setting extra imports
  */
-export const getMocksPlugin = () => {
+export const getMocksPlugin = (opts = {}) => {
   return {
     name: "mocks",
-    init,
-    generate,
+    init: init.bind(undefined, opts),
+    generate: generate.bind(undefined, opts),
   };
 };

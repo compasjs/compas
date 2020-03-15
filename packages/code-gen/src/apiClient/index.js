@@ -23,7 +23,10 @@ const generate = (opts, data) => ({
 });
 
 /**
- * Generate Typescript types for validators & routes
+ * Generate an Axios api client
+ * @param {Object} [opts]
+ * @param {string} [opts.header] Useful for setting extra imports
+ * @param {boolean} [opts.enableMocks] Will try to return mocked value when a 405 error occurs
  */
 export const getApiClientPlugin = (opts = {}) => ({
   name: "apiClient",

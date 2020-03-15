@@ -6,11 +6,11 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      throw AppError.validationError("validator.generic.undefined", { propertyPath });
+      throw _errorFn("validator.generic.undefined", { propertyPath });
     {{ } }}
   }
   if (typeof value !== "object") {
-    throw AppError.validationError("validator.generic.type", { propertyPath });
+    throw _errorFn("validator.generic.type", { propertyPath });
   }
 
   const result = {};

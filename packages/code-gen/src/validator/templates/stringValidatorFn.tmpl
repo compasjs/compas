@@ -3,57 +3,57 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return {{= it.default }};
     {{ } else { }}
-      throw AppError.validationError("validator.string.undefined", { propertyPath });
+      throw _errorFn("validator.string.undefined", { propertyPath });
     {{ } }}
   }
 
-  {{ if (it.convert) { }}
+  {{ if (it.validator.convert) { }}
   if (typeof value !== "string") {
     value = String(value)
   }
   {{ } }}
 
   if (typeof value !== "string") {
-    throw AppError.validationError("validator.string.type", { propertyPath });
+    throw _errorFn("validator.string.type", { propertyPath });
   }
 
-  {{ if (it.trim) { }}
+  {{ if (it.validator.trim) { }}
   value = value.trim();
   {{ } }}
 
-  {{ if (it.min !== undefined) { }}
-  if (value.length < {{= min }}) {
-    const min = {{= min }};
-    throw AppError.validationError("validator.string.min", { propertyPath, min });
+  {{ if (it.validator.min !== undefined) { }}
+  if (value.length < {{= validator.min }}) {
+    const min = {{= validator.min }};
+    throw _errorFn("validator.string.min", { propertyPath, min });
   }
   {{ } }}
 
-  {{ if (it.max !== undefined) { }}
-  if (value.length > {{= max }}) {
-    const max = {{= max }};
-    throw AppError.validationError("validator.string.max", { propertyPath, max });
+  {{ if (it.validator.max !== undefined) { }}
+  if (value.length > {{= validator.max }}) {
+    const max = {{= validator.max }};
+    throw _errorFn("validator.string.max", { propertyPath, max });
   }
   {{ } }}
 
-  {{ if (it.upperCase) { }}
+  {{ if (it.validator.upperCase) { }}
   value = value.toUpperCase();
   {{ } }}
 
-  {{ if (it.lowerCase) { }}
+  {{ if (it.validator.lowerCase) { }}
   value = value.toLowerCase();
   {{ } }}
 
   {{ if (it.oneOf !== undefined) { }}
   if ({{= oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
     const oneOf = {{= quote(oneOf.join(", ")) }};
-    throw AppError.validationError("validator.string.oneOf", { propertyPath, oneOf });
+    throw _errorFn("validator.string.oneOf", { propertyPath, oneOf });
   }
   {{ } }}
 
-  {{ if (it.pattern !== undefined) { }}
-  {{ const patternSrc = "/" + pattern.source + "/" + pattern.flags; }}
+  {{ if (it.validator.pattern !== undefined) { }}
+  {{ const patternSrc = "/" + validator.pattern.source + "/" + validator.pattern.flags; }}
   if (!{{= patternSrc }}.test(value)) {
-    throw AppError.validationError("validator.string.pattern", { propertyPath });
+    throw _errorFn("validator.string.pattern", { propertyPath });
   }
   {{ } }}
 

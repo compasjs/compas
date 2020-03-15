@@ -7,32 +7,32 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      throw AppError.validationError("validator.object.undefined", { propertyPath });
+      throw _errorFn("validator.object.undefined", { propertyPath });
     {{ } }}
   }
 
   if (typeof value !== "object") {
-    throw AppError.validationError("validator.object.type", { propertyPath });
+    throw _errorFn("validator.object.type", { propertyPath });
   }
   const result = {};
 
-  {{ if (it.strict) { }}
+  {{ if (it.validator.strict) { }}
   const keySet = new Set(Object.keys(value));
   {{ } }}
 
   {{ for (const key of Object.keys(keys)) { }}
     result[{{= quote(key) }}] = {{= keys[key].functionName }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }});
 
-    {{ if (it.strict) { }}
+    {{ if (it.validator.strict) { }}
     keySet.delete({{= quote(key) }});
     {{ } }}
   {{ } }}
 
-  {{ if (it.strict) { }}
+  {{ if (it.validator.strict) { }}
   if (keySet.size !== 0) {
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }
-    throw AppError.validationError("validator.object.strict", { propertyPath, extraKeys });
+    throw _errorFn("validator.object.strict", { propertyPath, extraKeys });
   }
   {{ } }}
 

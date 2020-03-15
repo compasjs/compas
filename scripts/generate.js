@@ -63,7 +63,7 @@ app.model(
     .mock("__.paragraph()"),
 );
 
-app.model(
+app.validator(
   M("MYGeneric")
     .generic()
     .keys(M.string().mock("__.first()"))

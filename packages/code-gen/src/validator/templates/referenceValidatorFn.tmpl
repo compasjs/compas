@@ -3,7 +3,7 @@ const {{= functionName }} = (value, propertyPath) => {
     {{ if (it.optional) { }}
       return undefined;
     {{ } else { }}
-      throw AppError.validationError("validator.reference.undefined", { propertyPath });
+      throw _errorFn("validator.reference.undefined", { propertyPath });
     {{ } }}
   }
 

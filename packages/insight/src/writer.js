@@ -102,7 +102,7 @@ const formatMessage = (availableDepth, message) => {
     return result;
   }
 
-  // Handle classes & objects, note this also contains Typescript private members
+  // Handle classes & objects
   const keys =
     typeof message === "object" &&
     message.constructor === Object &&
