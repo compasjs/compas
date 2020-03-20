@@ -1,6 +1,13 @@
 import { isNil, spawn } from "@lbu/stdlib";
-import { join, resolve } from "path";
+import { join } from "path";
 import { getKnownScripts } from "./utils.js";
+
+/**
+ * @typedef {{
+ *   disallowNodemon?: boolean,
+ *   nodemonArgs?: string,
+ * }} ExecOpts
+ */
 
 /**
  * TODO: Watch docs & nodemon customization
@@ -66,22 +73,13 @@ const execJsFile = async (logger, script, cmd, args, watch) => {
 };
 
 const execYarnScript = (logger, script, cmd, args, watch) => {
-  const pattern = /^node ([.\w/]*\.js)(.*)$/gi;
   if (watch) {
-    const patternResult = pattern.exec(script.script);
-    if (patternResult === null) {
-      logger.error(
-        "Can only convert Yarn scripts to enable watch mode if they look like 'node src/script.js --args'",
-      );
-    } else {
-      return execJsFile(
-        logger,
-        { path: resolve(patternResult[1]) },
-        `yarn run ${cmd}`,
-        patternResult[2].split(" "),
-        true,
-      );
-    }
+    return spawn(`./node_modules/.bin/nodemon`, [
+      "--exec",
+      script.script,
+      "--",
+      ...args,
+    ]);
   }
 
   return spawn(`yarn`, ["run", cmd, ...args]);

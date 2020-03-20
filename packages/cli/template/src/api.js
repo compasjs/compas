@@ -1,12 +1,13 @@
 import { log } from "@lbu/insight";
 import { createBodyParsers, getApp } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
-import { router } from "../generated/router.js";
 
 const main = async logger => {
+  logger.info("Hello from my src/api.js");
+
   const app = getApp({
     errorOptions: {
-      leakError: true,
+      leakError: process.env.NODE_ENV === "development",
     },
     headers: {
       cors: {
@@ -15,17 +16,11 @@ const main = async logger => {
     },
   });
 
-  createBodyParsers();
+  createBodyParsers({});
 
-  app.use(router);
-
-  app.listen(3000, () => {
-    logger.info("Listening...");
+  app.listen(process.env.API_PORT, () => {
+    logger.info(`Listening on port ${process.env.API_PORT}`);
   });
-
-  mount();
 };
 
 mainFn(import.meta, log, main);
-
-function mount() {}

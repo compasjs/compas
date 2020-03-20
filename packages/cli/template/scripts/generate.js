@@ -1,30 +1,34 @@
 import {
   App,
+  getApiClientPlugin,
+  getMocksPlugin,
   getRouterPlugin,
-  getTypescriptPlugin,
+  getTypesPlugin,
   getValidatorPlugin,
   M,
-  R,
   runCodeGen,
 } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
-const app = new App("Test App");
+const app = new App("TODO App");
 
-const myBool = M("MyBool")
-  .bool()
-  .convert()
-  .optional();
-
-app.validator(myBool);
-app.route(R("foo", "/foo").get());
+app.model(
+  M("MyObject").object({
+    userName: M.string().mock("__.first"),
+  }),
+);
 
 const main = async logger => {
-  logger.info(app.build());
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
-    plugins: [getValidatorPlugin(), getRouterPlugin(), getTypescriptPlugin()],
+    plugins: [
+      getTypesPlugin(),
+      getValidatorPlugin(),
+      getRouterPlugin(),
+      getMocksPlugin(),
+      getApiClientPlugin(),
+    ],
     outputDir: "./generated",
   });
 };
