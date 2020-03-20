@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { lstatSync, realpathSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -62,12 +63,14 @@ const isMainFn = meta => {
 
 /**
  * Run the provided cb if this file is the process entrypoint
+ * Will also load dotenv before executing the provided callback
  * @param {ImportMeta} meta
  * @param {Logger} logger
  * @param {MainFnCallback} cb
  */
 export const mainFn = (meta, logger, cb) => {
   if (isMainFn(meta)) {
+    dotenv.config();
     let result = cb(logger);
     Promise.resolve(result).catch(e => logger.error(e));
   }
