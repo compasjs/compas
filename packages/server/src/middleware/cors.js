@@ -31,21 +31,23 @@ const defaultOptions = {
 };
 
 /**
+ * @typedef {Object} CorsOptions
+ * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is request Origin header
+ * @property {string[]} [exposeHeaders] `Access-Control-Expose-Headers`
+ * @property {string|number} [maxAge] `Access-Control-Max-Age` in seconds
+ * @property {boolean} [credentials] `Access-Control-Allow-Credentials`
+ * @property {string[]} [allowMethods] `Access-Control-Allow-Methods`,
+ *    default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']
+ * @property {string[]} [allowHeaders] `Access-Control-Allow-Headers`
+ * @property {boolean} [returnNext] By default, and if false, won't call next, but
+ *   just returns undefined
+ */
+
+/**
  * CORS middleware for koa2
  *
- * @param {Object} [options]
- * @param {String|Function(ctx)} [options.origin] `Access-Control-Allow-Origin`, default
- *   is request Origin header
- * @param {Array} [options.exposeHeaders] `Access-Control-Expose-Headers`
- * @param {String|Number} [options.maxAge] `Access-Control-Max-Age` in seconds
- * @param {Boolean} [options.credentials] `Access-Control-Allow-Credentials`
- * @param {Array} [options.allowMethods] `Access-Control-Allow-Methods`,
- *    default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']
- * @param {Array} [options.allowHeaders] `Access-Control-Allow-Headers`
- * @param {boolean} [options.returnNext] By default, and if false, won't call next, but
- *   just returns undefined
+ * @param {CorsOptions} [options]
  * @return {Function}
- * @api public
  */
 export const cors = (options = {}) => {
   const opts = Object.assign({}, defaultOptions, options);
