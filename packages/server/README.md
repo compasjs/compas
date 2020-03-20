@@ -32,12 +32,10 @@ will be supported:
 
 ## Roadmap
 
-- [ ] @lbu/code-gen: Mock generator
 - [ ] @lbu/code-gen: OpenAPI importer
 - [ ] @lbu/features: Feature flag implementation based on @lbu/store & support
       for code-gen
 - [ ] @lbu/code-gen: Postgres query generator
-- [ ] @lbu/code-gen: Advanced Typescript types
 
 ## Docs
 
