@@ -8,12 +8,12 @@
 /**
  * {{= modelName }}
  {{ if (models[modelName].docs) { }}* Docs: {{= models[modelName].docs }}{{ } }}
- * @typedef { {{= generateJsDoc(models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
+ * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
  */
 
 /**
  * {{= modelName }}_Optional
  {{ if (models[modelName].docs) { }}* Docs: {{= models[modelName].docs }}{{ } }}
- * @typedef { {{= generateJsDoc(models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
+ * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
  */
 {{ } }}

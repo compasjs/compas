@@ -41,10 +41,10 @@ export const getValidatorPlugin = (opts = {}) => ({
 });
 
 function transform({ models, validators }) {
-  const result = [];
   const ctx = {
     counter: 0,
     mapping: {},
+    models: {},
   };
 
   for (const validatorName of validators) {
@@ -52,10 +52,11 @@ function transform({ models, validators }) {
   }
 
   for (const validatorName of validators) {
-    result.push(buildValidator(ctx, models[validatorName]));
+    let result = buildValidator(ctx, models[validatorName]);
+    ctx.models[result.typeName] = result;
   }
 
-  return result;
+  return Object.values(ctx.models);
 }
 
 /**
@@ -108,6 +109,12 @@ function processValidator(ctx, validator) {
     case "reference":
       validator.reference =
         ctx.mapping[upperCaseFirst(validator.referenceModel)];
+      if (!isNil(validator.referenceField)) {
+        validator.reference =
+          ctx.models[validator.referenceModel].validator.keys[
+            validator.referenceField
+          ].functionName;
+      }
       break;
     case "generic":
       processValidator(ctx, validator.keys);

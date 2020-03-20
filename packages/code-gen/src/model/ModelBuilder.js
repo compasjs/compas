@@ -28,12 +28,6 @@ export function M(name) {
      * @return {LbuAnyOf}
      */ anyOf: (...items) => M.anyOf(...items).name(name),
 
-    // TODO: Buggy when deduping named models
-    // /**
-    //  * @param {string} [type]
-    //  */
-    // ref: type => M.ref(type).name(name),
-
     /**
      * @return {LbuAny}
      */
@@ -67,8 +61,9 @@ M.anyOf = (...items) => new LbuAnyOf(...items);
 
 /**
  * @param {string} [type]
+ * @param {string} [field]
  */
-M.ref = type => new LbuRef(type);
+M.ref = (type, field) => new LbuRef(type, field);
 
 M.any = () => new LbuAny();
 M.generic = () => new LbuGeneric();
@@ -165,7 +160,6 @@ class LbuNumber extends ModelBuilder {
       optional: false,
       default: undefined,
       oneOf: undefined,
-      references: undefined,
     };
   }
 
@@ -176,19 +170,6 @@ class LbuNumber extends ModelBuilder {
    */
   name(name) {
     this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} modelName
-   * @param {string} [fieldName]
-   */
-  references(modelName, fieldName) {
-    this.item.references = {
-      modelName,
-      fieldName,
-    };
     return this;
   }
 
@@ -245,7 +226,6 @@ class LbuString extends ModelBuilder {
       optional: false,
       default: undefined,
       oneOf: undefined,
-      references: undefined,
     };
   }
 
@@ -256,19 +236,6 @@ class LbuString extends ModelBuilder {
    */
   name(name) {
     this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} modelName
-   * @param {string} [fieldName]
-   */
-  references(modelName, fieldName) {
-    this.item.references = {
-      modelName,
-      fieldName,
-    };
     return this;
   }
 
@@ -578,8 +545,9 @@ class LbuAnyOf extends ModelBuilder {
 class LbuRef extends ModelBuilder {
   /**
    * @param {string} [type]
+   * @param {string} [field]
    */
-  constructor(type) {
+  constructor(type, field) {
     super();
 
     this.item = {
@@ -588,10 +556,13 @@ class LbuRef extends ModelBuilder {
       docs: undefined,
       optional: false,
       referenceModel: undefined,
+      referenceField: undefined,
     };
 
-    if (!isNil(type)) {
-      this.type(type);
+    this.type(type);
+
+    if (!isNil(field)) {
+      this.externalField(field);
     }
   }
 
@@ -631,6 +602,16 @@ class LbuRef extends ModelBuilder {
    */
   type(type) {
     this.item.referenceModel = type;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} field
+   * @return {LbuRef}
+   */
+  externalField(field) {
+    this.item.referenceField = field;
     return this;
   }
 }
@@ -687,6 +668,7 @@ class LbuAny extends ModelBuilder {
     this.item.typeOf = value;
     return this;
   }
+
   /**
    * @public
    * @param {string} value

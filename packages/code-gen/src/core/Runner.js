@@ -1,4 +1,4 @@
-import { addToTemplateContext, isPlainObject, spawn } from "@lbu/stdlib";
+import { addToTemplateContext, isPlainObject } from "@lbu/stdlib";
 import { existsSync, promises } from "fs";
 import { join } from "path";
 import { generateJsDoc } from "./utils.js";
@@ -16,18 +16,23 @@ class Runner {
   }
 
   async run() {
+    this.logger.info("Initializing plugins...");
     // TODO: Validate plugins
     await this.pluginsInit();
 
+    this.logger.info("Awaiting data loader...");
     this.data = await this.dataLoader();
-    console.dir(this.data, { colors: true, depth: null });
+
+    this.logger.info(
+      `Generating for ${Object.keys(this.data.models).length} models`,
+    );
     // TODO: Validate data
 
     this.compileTemplateHelpers();
     await this.pluginsGenerate();
     await this.writeOutputs();
 
-    await spawn(`yarn`, ["lbu", "lint"]);
+    this.logger.info("Done...");
   }
 
   async pluginsInit() {
@@ -74,7 +79,7 @@ class Runner {
     }
   }
 
-  async compileTemplateHelpers() {
+  compileTemplateHelpers() {
     addToTemplateContext("generateJsDoc", generateJsDoc);
   }
 }

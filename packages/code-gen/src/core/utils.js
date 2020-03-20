@@ -1,4 +1,6 @@
-export const generateJsDoc = (value, { ignoreDefaults }) => {
+import { isNil } from "@lbu/stdlib";
+
+export const generateJsDoc = (models, value, { ignoreDefaults }) => {
   let result = "";
   switch (value.type) {
     case "boolean":
@@ -28,7 +30,7 @@ export const generateJsDoc = (value, { ignoreDefaults }) => {
       result += "{";
       result += Object.entries(value.keys)
         .map(([k, v]) => {
-          let rightSide = generateJsDoc(v, { ignoreDefaults }).trim();
+          let rightSide = generateJsDoc(models, v, { ignoreDefaults }).trim();
           let separator = ": ";
           if (rightSide.endsWith("|undefined")) {
             rightSide = rightSide.substring(0, rightSide.length - 10);
@@ -40,7 +42,9 @@ export const generateJsDoc = (value, { ignoreDefaults }) => {
       result += "}";
       break;
     case "array": {
-      const docType = generateJsDoc(value.values, { ignoreDefaults }).trim();
+      const docType = generateJsDoc(models, value.values, {
+        ignoreDefaults,
+      }).trim();
       if (value.convert) {
         result += docType + "|";
       }
@@ -51,21 +55,28 @@ export const generateJsDoc = (value, { ignoreDefaults }) => {
     case "anyOf":
       result += "(";
       result += value.values
-        .map(value => generateJsDoc(value, { ignoreDefaults }).trim())
+        .map(value => generateJsDoc(models, value, { ignoreDefaults }).trim())
         .join("|");
       result += ")";
       break;
     case "reference":
-      result += value.referenceModel;
+      if (!isNil(value.referenceField)) {
+        const refModel = models[value.referenceModel];
+        result += generateJsDoc(models, refModel.keys[value.referenceField], {
+          ignoreDefaults,
+        });
+      } else {
+        result += value.referenceModel;
+      }
       break;
     case "any":
       result += "*";
       break;
     case "generic":
       result += "Object.<";
-      result += generateJsDoc(value.keys, { ignoreDefaults });
+      result += generateJsDoc(models, value.keys, { ignoreDefaults });
       result += ",";
-      result += generateJsDoc(value.values, { ignoreDefaults });
+      result += generateJsDoc(models, value.values, { ignoreDefaults });
       result += ">";
       break;
   }

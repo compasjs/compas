@@ -63,6 +63,7 @@ function replaceReferences(models, model) {
             docs: undefined,
             optional: false,
             referenceModel: model.keys[key].name,
+            referenceField: undefined,
           };
         }
       }
@@ -75,6 +76,7 @@ function replaceReferences(models, model) {
           docs: undefined,
           optional: false,
           referenceModel: model.values.name,
+          referenceField: undefined,
         };
       }
       break;
@@ -88,6 +90,7 @@ function replaceReferences(models, model) {
             docs: undefined,
             optional: false,
             referenceModel: innerValidator.name,
+            referenceField: undefined,
           };
         }
       }
@@ -100,6 +103,7 @@ function replaceReferences(models, model) {
           docs: undefined,
           optional: false,
           referenceModel: model.keys.name,
+          referenceField: undefined,
         };
       }
       replaceReferences(models, model.values);
@@ -109,6 +113,7 @@ function replaceReferences(models, model) {
           docs: undefined,
           optional: false,
           referenceModel: model.values.name,
+          referenceField: undefined,
         };
       }
       break;
