@@ -1,6 +1,6 @@
 {
   "name": "@lbu/cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "CLI containing utilities and simple script runner",
   "main": "index.js",
   "type": "module",
@@ -17,8 +17,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.6",
-    "@lbu/stdlib": "^0.0.6",
+    "@lbu/insight": "^0.0.7",
+    "@lbu/stdlib": "^0.0.7",
     "nodemon": "2.0.2"
   },
   "author": {
