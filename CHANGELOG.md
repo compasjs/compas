@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.7]()
+### [v0.0.7](4c2199aeb1052bab67b3b1355bd648086736abf7)
 
 - BREAKING: export es modules and drop CommonJS support
 - BREAKING: Only supporting >= Node.js 13
