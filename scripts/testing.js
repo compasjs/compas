@@ -1,7 +1,8 @@
 import { log } from "@lbu/insight";
-import { createBodyParsers, getApp } from "@lbu/server";
+import { AppError, createBodyParsers, getApp } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 import { router } from "../generated/router.js";
+import { validatorSetErrorFn } from "../generated/validators.js";
 
 const main = async logger => {
   const app = getApp({
@@ -16,6 +17,7 @@ const main = async logger => {
   });
 
   createBodyParsers();
+  validatorSetErrorFn(AppError.validationError);
 
   app.use(router);
 

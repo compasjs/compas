@@ -16,7 +16,7 @@
     "@lbu/insight": "0.0.7",
     "@lbu/lint-config": "0.0.7",
     "lerna": "3.20.2",
-    "tape": "4.13.0",
+    "tape": "4.13.2",
     "tape-promise": "4.0.0"
   },
   "prettier": "@lbu/lint-config/prettierrc",

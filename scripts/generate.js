@@ -6,6 +6,7 @@ import {
   getTypesPlugin,
   getValidatorPlugin,
   M,
+  R,
   runCodeGen,
 } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
@@ -18,7 +19,8 @@ app.validator(
     id: M.number()
       .integer()
       .min(0)
-      .max(100),
+      .max(100)
+      .convert(),
     name: M.string()
       .min(1)
       .max(15)
@@ -27,6 +29,7 @@ app.validator(
       .integer()
       .min(0)
       .max(150)
+      .convert()
       .mock("__.age"),
   }),
 );
@@ -37,6 +40,12 @@ app.validator(
     name: M.string(),
     count: M.number().integer(),
   }),
+);
+
+app.route(
+  R("test", "/test")
+    .get()
+    .query(M.ref("User")),
 );
 
 const main = async logger => {
