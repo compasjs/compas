@@ -34,7 +34,7 @@ const handlers = {
     {{ } }}
 
     {{ if (r.queryValidator) { }}
-    ctx.validatedQuery = validate{{= r.queryValidator }}(ctx.request.body);
+    ctx.validatedQuery = validate{{= r.queryValidator }}(ctx.request.query);
     {{ } }}
 
     if (_composed.{{= r.name}} === undefined) {

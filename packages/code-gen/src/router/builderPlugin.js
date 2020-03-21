@@ -36,12 +36,10 @@ const process = app => {
 };
 
 const getModelName = validator => {
-  if (validator === undefined) {
+  if (validator === undefined || validator.item === undefined) {
     return undefined;
   }
-  if (Object.keys(validator.item.keys).length === 0) {
-    return undefined;
-  }
+
   return upperCaseFirst(validator.item.name);
 };
 
