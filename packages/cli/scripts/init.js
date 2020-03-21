@@ -45,5 +45,6 @@ mainFn(import.meta, cliLogger, async () => {
   );
 
   await spawn(`yarn`, []);
+  await spawn(`yarn`, [`lbu`, `generate`]);
   await spawn(`yarn`, [`lbu`, `lint`]);
 });

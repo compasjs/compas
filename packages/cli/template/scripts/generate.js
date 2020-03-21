@@ -29,7 +29,7 @@ const main = async logger => {
       getMocksPlugin(),
       getApiClientPlugin(),
     ],
-    outputDir: "./generated",
+    outputDir: "./src/generated",
   });
 };
 
