@@ -1,4 +1,4 @@
-import { log } from "@lbu/insight";
+import { newLogger } from "@lbu/insight";
 import { AppError, createBodyParsers, getApp } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 import { router } from "../generated/router.js";
@@ -28,6 +28,6 @@ const main = async logger => {
   mount();
 };
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, newLogger(), main);
 
 function mount() {}

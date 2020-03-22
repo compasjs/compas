@@ -56,7 +56,7 @@ const logInfo = (ctx, startTime, length) => {
       method: ctx.method,
       path: ctx.path,
     },
-    res: {
+    response: {
       duration,
       length,
       status: ctx.status,
@@ -98,4 +98,44 @@ export const logMiddleware = () => async (ctx, next) => {
   }
 
   logInfo(ctx, startTime, isNil(counter) ? 0 : counter.length);
+};
+
+/**
+ * Basic http log counters
+ * @param store
+ * @return {function(...[*]=)}
+ */
+export const logParser = store => {
+  store.requestCount = 0;
+  store.totalDuration = 0;
+  store.totalResponseLength = 0;
+  store.methodSummary = {};
+  store.statusCodeSummary = {};
+
+  return obj => {
+    if (!obj.type || obj.type !== "HTTP") {
+      return;
+    }
+    if (!obj.message || !obj.message.request || !obj.message.response) {
+      return;
+    }
+
+    handleRequestLog(obj);
+  };
+
+  function handleRequestLog(obj) {
+    store.requestCount++;
+    store.totalDuration += Number(obj.message.response.duration);
+    store.totalResponseLength += obj.message.response.length;
+
+    if (!store.methodSummary[obj.message.request.method]) {
+      store.methodSummary[obj.message.request.method] = 0;
+    }
+    store.methodSummary[obj.message.request.method]++;
+
+    if (!store.statusCodeSummary[obj.message.response.status]) {
+      store.statusCodeSummary[obj.message.response.status] = 0;
+    }
+    store.statusCodeSummary[obj.message.response.status]++;
+  }
 };

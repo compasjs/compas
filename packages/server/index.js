@@ -7,4 +7,5 @@ export {
   getBodyParser,
   getMultipartBodyParser,
   AppError,
+  logParser,
 } from "./src/middleware/index.js";
