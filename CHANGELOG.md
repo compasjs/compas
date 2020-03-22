@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.8]()
+### [v0.0.8](85feb582684f93714a7aad81f2a47883e72bd363)
 
 - Various fixes
 - @lbu/insight: Simple log processing setup
