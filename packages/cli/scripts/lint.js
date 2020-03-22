@@ -5,7 +5,7 @@ mainFn(import.meta, cliLogger, async () => {
   await spawn("./node_modules/.bin/eslint", [
     "./**/*.js",
     "--ignore-pattern",
-    "*/node_modules/*",
+    "node_modules",
     "--fix",
   ]);
   await spawn("./node_modules/.bin/prettier", [
