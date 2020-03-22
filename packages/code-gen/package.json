@@ -1,6 +1,6 @@
 {
   "name": "@lbu/code-gen",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Generate various boring parts of your server",
   "type": "module",
   "exports": {
@@ -16,9 +16,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/cli": "^0.0.7",
-    "@lbu/insight": "^0.0.7",
-    "@lbu/stdlib": "^0.0.7"
+    "@lbu/cli": "^0.0.8",
+    "@lbu/insight": "^0.0.8",
+    "@lbu/stdlib": "^0.0.8"
   },
   "devDependencies": {
     "axios": "0.19.2",
