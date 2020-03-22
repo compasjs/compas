@@ -55,6 +55,10 @@ const isMainFn = meta => {
   return modulePathWithoutExt === scriptPath;
 };
 
+const setupProcessListeners = logger => {
+  process.on("warning", err => logger.error(err));
+};
+
 /**
  * @callback MainFnCallback
  * @param {Logger} logger
@@ -63,7 +67,8 @@ const isMainFn = meta => {
 
 /**
  * Run the provided cb if this file is the process entrypoint
- * Will also load dotenv before executing the provided callback
+ * Will also load dotenv before executing the provided callback.
+ * Another side effect is that a process listener is added for warnings
  * @param {ImportMeta} meta
  * @param {Logger} logger
  * @param {MainFnCallback} cb
@@ -71,6 +76,7 @@ const isMainFn = meta => {
 export const mainFn = (meta, logger, cb) => {
   if (isMainFn(meta)) {
     dotenv.config();
+    setupProcessListeners(logger);
     let result = cb(logger);
     Promise.resolve(result).catch(e => logger.error(e));
   }
