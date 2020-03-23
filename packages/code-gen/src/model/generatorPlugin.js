@@ -1,9 +1,12 @@
 import {
+  addToTemplateContext,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { generateJsDoc } from "./js-templates/generateJsDoc.js";
+import { generateTsType } from "./js-templates/generateTsType.js";
 
 const init = async () => {
   await compileTemplateDirectory(
@@ -13,10 +16,12 @@ const init = async () => {
       debug: false,
     },
   );
+  addToTemplateContext("generateJsDoc", generateJsDoc);
+  addToTemplateContext("generateTsType", generateTsType);
 };
 
 const generate = (opts, data) => ({
-  path: "./types.js",
+  path: opts.emitTypescriptTypes ? "./types.ts" : "./types.js",
   content: executeTemplate("typesFile", { ...data, opts }),
 });
 
@@ -24,6 +29,7 @@ const generate = (opts, data) => ({
  * Generate JsDoc types for validators & routes
  * @param {Object} [opts]
  * @param {string} [opts.header] Useful for setting extra imports
+ * @param {boolean} [opts.emitTypescriptTypes] Generate a .ts file instead of a .js file
  */
 export const getTypesPlugin = (opts = {}) => ({
   name: "types",

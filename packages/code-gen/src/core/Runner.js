@@ -1,7 +1,6 @@
-import { addToTemplateContext, isPlainObject } from "@lbu/stdlib";
+import { isPlainObject } from "@lbu/stdlib";
 import { existsSync, promises } from "fs";
 import { join } from "path";
-import { generateJsDoc } from "./utils.js";
 
 const { writeFile, mkdir } = promises;
 
@@ -28,7 +27,6 @@ class Runner {
     );
     // TODO: Validate data
 
-    this.compileTemplateHelpers();
     await this.pluginsGenerate();
     await this.writeOutputs();
 
@@ -77,10 +75,6 @@ class Runner {
       const path = join(this.opts.outputDir, output.path);
       await writeFile(path, output.content, { encoding: "utf-8" });
     }
-  }
-
-  compileTemplateHelpers() {
-    addToTemplateContext("generateJsDoc", generateJsDoc);
   }
 }
 

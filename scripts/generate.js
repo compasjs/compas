@@ -42,6 +42,14 @@ app.validator(
   }),
 );
 
+app.model(
+  M("MyGeneric")
+    .generic()
+    .keys(M.string())
+    .values(M.anyOf(M.bool().convert(), M.number()))
+    .docs("Foo"),
+);
+
 app.route(
   R("test", "/test")
     .get()
@@ -52,7 +60,7 @@ const main = async logger => {
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
     plugins: [
-      getTypesPlugin(),
+      getTypesPlugin({ emitTypescriptTypes: false }),
       getValidatorPlugin(),
       getRouterPlugin(),
       getMocksPlugin(),
