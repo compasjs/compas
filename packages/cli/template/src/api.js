@@ -3,7 +3,7 @@ import { AppError, createBodyParsers, getApp } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 import { validatorSetErrorFn } from "./generated/validators.js";
 
-const main = async logger => {
+const main = async (logger) => {
   logger.info("Hello from my src/api.js");
 
   const app = getApp({

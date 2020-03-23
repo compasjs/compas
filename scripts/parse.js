@@ -2,7 +2,7 @@ import { addProcessor, newLogger, parseExec } from "@lbu/insight";
 import { logParser } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 
-const main = async logger => {
+const main = async (logger) => {
   const store = {
     httpSummary: {},
     warnings: [],
@@ -18,7 +18,7 @@ const main = async logger => {
   }, 10000);
 
   addProcessor("JSON", logParser(store.httpSummary));
-  addProcessor("TEXT", line => store.warnings.push(line));
+  addProcessor("TEXT", (line) => store.warnings.push(line));
   addProcessor("JSON", () => {
     store.count++;
     storeChanges = true;

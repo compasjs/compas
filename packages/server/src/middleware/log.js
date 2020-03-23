@@ -7,8 +7,8 @@ import { Transform } from "stream";
  * @param ctx
  * @returns {Promise<void>}
  */
-const bodyCloseOrFinish = async ctx => {
-  return new Promise(resolve => {
+const bodyCloseOrFinish = async (ctx) => {
+  return new Promise((resolve) => {
     const onFinish = done.bind(null, "finish");
     const onClose = done.bind(null, "close");
 
@@ -105,14 +105,14 @@ export const logMiddleware = () => async (ctx, next) => {
  * @param store
  * @return {function(...[*]=)}
  */
-export const logParser = store => {
+export const logParser = (store) => {
   store.requestCount = 0;
   store.totalDuration = 0;
   store.totalResponseLength = 0;
   store.methodSummary = {};
   store.statusCodeSummary = {};
 
-  return obj => {
+  return (obj) => {
     if (!obj.type || obj.type !== "HTTP") {
       return;
     }

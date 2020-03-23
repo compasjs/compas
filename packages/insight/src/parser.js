@@ -5,19 +5,19 @@ import { Transform } from "stream";
 const jsonProcessors = new Set();
 const textProcessors = new Set();
 
-const processJson = obj => {
+const processJson = (obj) => {
   for (const p of jsonProcessors) {
     p(obj);
   }
 };
 
-const processText = txt => {
+const processText = (txt) => {
   for (const p of textProcessors) {
     p(txt);
   }
 };
 
-const processLine = line => {
+const processLine = (line) => {
   const l = line.toString();
   let j = undefined;
 

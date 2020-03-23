@@ -21,7 +21,7 @@ export const generateJsDoc = (models, value, { ignoreDefaults }) => {
       break;
     case "string":
       if (value.oneOf) {
-        result += value.oneOf.map(it => `"${it}"`).join("|");
+        result += value.oneOf.map((it) => `"${it}"`).join("|");
       } else {
         result += "string";
       }
@@ -55,7 +55,7 @@ export const generateJsDoc = (models, value, { ignoreDefaults }) => {
     case "anyOf":
       result += "(";
       result += value.values
-        .map(value => generateJsDoc(models, value, { ignoreDefaults }).trim())
+        .map((value) => generateJsDoc(models, value, { ignoreDefaults }).trim())
         .join("|");
       result += ")";
       break;

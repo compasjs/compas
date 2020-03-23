@@ -1,7 +1,7 @@
 import { bytesToHumanReadable, printProcessMemoryUsage } from "./memory.js";
 
-export const test = t => {
-  t.test("bytesToHumanReadable", t => {
+export const test = (t) => {
+  t.test("bytesToHumanReadable", (t) => {
     t.equal(bytesToHumanReadable(0), "0 Byte");
     t.equal(bytesToHumanReadable(11), "11 Bytes");
     t.equal(bytesToHumanReadable(1024), "1 KiB");
@@ -11,10 +11,10 @@ export const test = t => {
     t.end();
   });
 
-  t.test("printProcessMemoryUsage", t => {
+  t.test("printProcessMemoryUsage", (t) => {
     let result = {};
     const mock = {
-      info: arg => {
+      info: (arg) => {
         result = arg;
       },
       isProduction: () => false,

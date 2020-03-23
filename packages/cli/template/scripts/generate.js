@@ -19,7 +19,7 @@ app.model(
   }),
 );
 
-const main = async logger => {
+const main = async (logger) => {
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
     plugins: [

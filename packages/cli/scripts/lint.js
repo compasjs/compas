@@ -11,6 +11,6 @@ mainFn(import.meta, cliLogger, async () => {
   await spawn("./node_modules/.bin/prettier", [
     "--write",
     "--list-different",
-    "./**/**.{js,json}",
+    ".",
   ]);
 });

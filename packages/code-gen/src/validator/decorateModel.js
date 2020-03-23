@@ -37,7 +37,7 @@ const validatorDefaults = {
 /**
  * Add the default validator object for the appropriate Lbu Type
  */
-const checkHasValidatorObject = instance => {
+const checkHasValidatorObject = (instance) => {
   if (!instance.item.validator) {
     instance.item.validator = merge({}, validatorDefaults[instance.item.type]);
   }
@@ -48,7 +48,7 @@ const checkHasValidatorObject = instance => {
  * @function
  * @return {LbuBool}
  */
-M.types.LbuBool.prototype.convert = function() {
+M.types.LbuBool.prototype.convert = function () {
   checkHasValidatorObject(this);
   this.item.validator.convert = true;
 
@@ -60,7 +60,7 @@ M.types.LbuBool.prototype.convert = function() {
  * @function
  * @return {LbuNumber}
  */
-M.types.LbuNumber.prototype.convert = function() {
+M.types.LbuNumber.prototype.convert = function () {
   checkHasValidatorObject(this);
   this.item.validator.convert = true;
 
@@ -72,7 +72,7 @@ M.types.LbuNumber.prototype.convert = function() {
  * @function
  * @return {LbuNumber}
  */
-M.types.LbuNumber.prototype.integer = function() {
+M.types.LbuNumber.prototype.integer = function () {
   checkHasValidatorObject(this);
   this.item.validator.integer = true;
 
@@ -85,7 +85,7 @@ M.types.LbuNumber.prototype.integer = function() {
  * @param {number} min
  * @return {LbuNumber}
  */
-M.types.LbuNumber.prototype.min = function(min) {
+M.types.LbuNumber.prototype.min = function (min) {
   checkHasValidatorObject(this);
   this.item.validator.min = min;
 
@@ -98,7 +98,7 @@ M.types.LbuNumber.prototype.min = function(min) {
  * @param {number} max
  * @return {LbuNumber}
  */
-M.types.LbuNumber.prototype.max = function(max) {
+M.types.LbuNumber.prototype.max = function (max) {
   checkHasValidatorObject(this);
   this.item.validator.max = max;
 
@@ -110,7 +110,7 @@ M.types.LbuNumber.prototype.max = function(max) {
  * @function
  * @return {LbuString}
  */
-M.types.LbuString.prototype.convert = function() {
+M.types.LbuString.prototype.convert = function () {
   checkHasValidatorObject(this);
   this.item.validator.convert = true;
 
@@ -122,7 +122,7 @@ M.types.LbuString.prototype.convert = function() {
  * @function
  * @return {LbuString}
  */
-M.types.LbuString.prototype.trim = function() {
+M.types.LbuString.prototype.trim = function () {
   checkHasValidatorObject(this);
   this.item.validator.trim = true;
 
@@ -134,7 +134,7 @@ M.types.LbuString.prototype.trim = function() {
  * @function
  * @return {LbuString}
  */
-M.types.LbuString.prototype.upperCase = function() {
+M.types.LbuString.prototype.upperCase = function () {
   checkHasValidatorObject(this);
   this.item.validator.upperCase = true;
 
@@ -146,7 +146,7 @@ M.types.LbuString.prototype.upperCase = function() {
  * @function
  * @return {LbuString}
  */
-M.types.LbuString.prototype.lowerCase = function() {
+M.types.LbuString.prototype.lowerCase = function () {
   checkHasValidatorObject(this);
   this.item.validator.lowerCase = true;
 
@@ -159,7 +159,7 @@ M.types.LbuString.prototype.lowerCase = function() {
  * @param {number} min
  * @return {LbuString}
  */
-M.types.LbuString.prototype.min = function(min) {
+M.types.LbuString.prototype.min = function (min) {
   checkHasValidatorObject(this);
   this.item.validator.min = min;
 
@@ -172,7 +172,7 @@ M.types.LbuString.prototype.min = function(min) {
  * @param {number} max
  * @return {LbuString}
  */
-M.types.LbuString.prototype.max = function(max) {
+M.types.LbuString.prototype.max = function (max) {
   checkHasValidatorObject(this);
   this.item.validator.max = max;
 
@@ -185,7 +185,7 @@ M.types.LbuString.prototype.max = function(max) {
  * @param {RegExp} pattern
  * @return {LbuString}
  */
-M.types.LbuString.prototype.pattern = function(pattern) {
+M.types.LbuString.prototype.pattern = function (pattern) {
   checkHasValidatorObject(this);
   this.item.validator.pattern = pattern;
 
@@ -197,7 +197,7 @@ M.types.LbuString.prototype.pattern = function(pattern) {
  * @function
  * @return {LbuObject}
  */
-M.types.LbuObject.prototype.strict = function() {
+M.types.LbuObject.prototype.strict = function () {
   checkHasValidatorObject(this);
   this.item.validator.strict = true;
 
@@ -209,7 +209,7 @@ M.types.LbuObject.prototype.strict = function() {
  * @function
  * @return {LbuArray}
  */
-M.types.LbuArray.prototype.convert = function() {
+M.types.LbuArray.prototype.convert = function () {
   checkHasValidatorObject(this);
   this.item.validator.convert = true;
 
@@ -222,7 +222,7 @@ M.types.LbuArray.prototype.convert = function() {
  * @param {number} min
  * @return {LbuArray}
  */
-M.types.LbuArray.prototype.min = function(min) {
+M.types.LbuArray.prototype.min = function (min) {
   checkHasValidatorObject(this);
   this.item.validator.min = min;
 
@@ -235,7 +235,7 @@ M.types.LbuArray.prototype.min = function(min) {
  * @param {number} max
  * @return {LbuArray}
  */
-M.types.LbuArray.prototype.max = function(max) {
+M.types.LbuArray.prototype.max = function (max) {
   checkHasValidatorObject(this);
   this.item.validator.max = max;
 

@@ -10,7 +10,7 @@ App.withPlugin(plugin);
  * @param {...ModelBuilder} models
  * @return {App}
  */
-App.prototype.model = function(...models) {
+App.prototype.model = function (...models) {
   for (const model of models) {
     this.callHook("addModel", model);
   }

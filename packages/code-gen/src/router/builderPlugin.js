@@ -4,9 +4,9 @@ import { R } from "./RouteBuilder.js";
 
 const store = new Set();
 
-const init = app => {
+const init = (app) => {
   store.clear();
-  app.hooks.addRoute = route => {
+  app.hooks.addRoute = (route) => {
     if (!(route instanceof R.types.RouteBuilder)) {
       throw new Error("Store#addRoute is only accepting RouteBuilder");
     }
@@ -15,7 +15,7 @@ const init = app => {
   };
 };
 
-const process = app => {
+const process = (app) => {
   // Validators / response can still be swapped out if wanted, so only finalize when no
   // user code is running
 
@@ -35,7 +35,7 @@ const process = app => {
   }
 };
 
-const getModelName = validator => {
+const getModelName = (validator) => {
   if (validator === undefined || validator.item === undefined) {
     return undefined;
   }
@@ -52,7 +52,7 @@ const registerCodegenRoute = () => {
   );
 };
 
-const build = result => {
+const build = (result) => {
   registerCodegenRoute();
 
   result.routes = [];

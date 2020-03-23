@@ -13,7 +13,7 @@ const internalExec = promisify(cpExec);
  * @param {string} command
  * @returns {Promise<Object<{stdout: string, stderr: string}>>}
  */
-export const exec = command => internalExec(command, { encoding: "utf8" });
+export const exec = (command) => internalExec(command, { encoding: "utf8" });
 
 /**
  * A promise wrapper around child_process#spawn

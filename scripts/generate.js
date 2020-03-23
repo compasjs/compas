@@ -16,21 +16,9 @@ const app = new App("TODO App");
 
 app.validator(
   M("User").object({
-    id: M.number()
-      .integer()
-      .min(0)
-      .max(100)
-      .convert(),
-    name: M.string()
-      .min(1)
-      .max(15)
-      .mock("__.first"),
-    age: M.number()
-      .integer()
-      .min(0)
-      .max(150)
-      .convert()
-      .mock("__.age"),
+    id: M.number().integer().min(0).max(100).convert(),
+    name: M.string().min(1).max(15).mock("__.first"),
+    age: M.number().integer().min(0).max(150).convert().mock("__.age"),
   }),
 );
 
@@ -50,13 +38,9 @@ app.model(
     .docs("Foo"),
 );
 
-app.route(
-  R("test", "/test")
-    .get()
-    .query(M.ref("User")),
-);
+app.route(R("test", "/test").get().query(M.ref("User")));
 
-const main = async logger => {
+const main = async (logger) => {
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
     plugins: [

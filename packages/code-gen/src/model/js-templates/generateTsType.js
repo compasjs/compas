@@ -21,7 +21,7 @@ export const generateTsType = (models, value, { ignoreDefaults }) => {
       break;
     case "string":
       if (value.oneOf) {
-        result += value.oneOf.map(it => `"${it}"`).join("|");
+        result += value.oneOf.map((it) => `"${it}"`).join("|");
       } else {
         result += "string";
       }
@@ -55,7 +55,9 @@ export const generateTsType = (models, value, { ignoreDefaults }) => {
     case "anyOf":
       result += "(";
       result += value.values
-        .map(value => generateTsType(models, value, { ignoreDefaults }).trim())
+        .map((value) =>
+          generateTsType(models, value, { ignoreDefaults }).trim(),
+        )
         .join("|");
       result += ")";
       break;

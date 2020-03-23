@@ -2,16 +2,16 @@ import { upperCaseFirst } from "../utils.js";
 
 const store = new Set();
 
-const init = app => {
+const init = (app) => {
   store.clear();
-  app.hooks.addValidator = validator => {
+  app.hooks.addValidator = (validator) => {
     app.callHook("addModel", validator);
 
     store.add(validator);
   };
 };
 
-const build = result => {
+const build = (result) => {
   result.validators = [];
 
   for (const v of store.values()) {

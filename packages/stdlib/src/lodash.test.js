@@ -1,7 +1,7 @@
 import { flatten, isNil, isPlainObject, merge, unFlatten } from "./lodash.js";
 
-export const test = t => {
-  t.test("isNil", t => {
+export const test = (t) => {
+  t.test("isNil", (t) => {
     t.ok(isNil(null));
     t.ok(isNil(undefined));
 
@@ -19,7 +19,7 @@ export const test = t => {
     t.end();
   });
 
-  t.test("isPlainObject", t => {
+  t.test("isPlainObject", (t) => {
     t.ok(isPlainObject({}));
     t.ok(isPlainObject({ foo: "bar" }));
 
@@ -30,7 +30,7 @@ export const test = t => {
     t.end();
   });
 
-  t.test("merge", t => {
+  t.test("merge", (t) => {
     let result = merge({}, { foo: true });
     t.equal(result.foo, true);
 
@@ -47,7 +47,7 @@ export const test = t => {
     t.end();
   });
 
-  t.test("flatten", t => {
+  t.test("flatten", (t) => {
     t.deepEqual(
       flatten({
         foo: {
@@ -72,7 +72,7 @@ export const test = t => {
     t.end();
   });
 
-  t.test("unFlatten", t => {
+  t.test("unFlatten", (t) => {
     t.deepEqual(
       unFlatten({
         "foo.bar.baz": "foo",

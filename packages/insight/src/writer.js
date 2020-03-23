@@ -4,23 +4,11 @@ import { inspect } from "util";
  * @param {Date} date
  * @returns {string}
  */
-const formatDate = date => {
-  const h = date
-    .getHours()
-    .toString(10)
-    .padStart(2, "0");
-  const m = date
-    .getMinutes()
-    .toString(10)
-    .padStart(2, "0");
-  const s = date
-    .getSeconds()
-    .toString(10)
-    .padStart(2, "0");
-  const ms = date
-    .getMilliseconds()
-    .toString(10)
-    .padStart(3, "0");
+const formatDate = (date) => {
+  const h = date.getHours().toString(10).padStart(2, "0");
+  const m = date.getMinutes().toString(10).padStart(2, "0");
+  const s = date.getSeconds().toString(10).padStart(2, "0");
+  const ms = date.getMilliseconds().toString(10).padStart(3, "0");
 
   return `${h}:${m}:${s}.${ms}`;
 };
@@ -135,7 +123,7 @@ export const writePretty = (
     stream.write(" ");
     if (Array.isArray(message)) {
       stream.write(
-        message.map(it => formatMessagePretty(depth - 2, it)).join(", "),
+        message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
       );
     } else {
       if (Object.keys(ctx).length > 0) {

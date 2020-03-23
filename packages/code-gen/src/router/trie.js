@@ -4,7 +4,7 @@ const RoutePrio = {
   WILDCARD: 2,
 };
 
-export const buildTrie = routes => {
+export const buildTrie = (routes) => {
   const routeTrieInput = [];
 
   for (const r of routes) {
@@ -24,7 +24,7 @@ function buildRouteTrie(input) {
   for (const r of input) {
     addRoute(
       trie,
-      r.fullPath.split("/").filter(it => it.trim() !== ""),
+      r.fullPath.split("/").filter((it) => it.trim() !== ""),
       r.routeName,
     );
   }
@@ -36,7 +36,7 @@ function buildRouteTrie(input) {
 
   // Remove unneeded 'HTTP-method' children
   trie.children = trie.children.filter(
-    it => it.children.length > 0 || it.routeName !== undefined,
+    (it) => it.children.length > 0 || it.routeName !== undefined,
   );
 
   sortTrie(trie);
@@ -51,7 +51,7 @@ function convertToGeneratorTrie(trie, ctx) {
   let result = {
     routeName: trie.routeName || undefined,
     functionName: `routeMatcher${ctx.counter++}`,
-    children: trie.children.map(it => convertToGeneratorTrie(it, ctx)),
+    children: trie.children.map((it) => convertToGeneratorTrie(it, ctx)),
   };
 
   if (trie.prio === RoutePrio.STATIC) {
@@ -110,7 +110,7 @@ function addHttpMethods(trie) {
 function addRoute(trie, path, routeName) {
   const currentPath = path[0];
 
-  let child = trie.children.find(it => it.path === currentPath);
+  let child = trie.children.find((it) => it.path === currentPath);
   if (!child) {
     child = createNode(currentPath, undefined);
     if (trie.prio === RoutePrio.WILDCARD) {
@@ -129,7 +129,7 @@ function addRoute(trie, path, routeName) {
 function cleanTrieAndCollapse(trie) {
   // Remove nodes without routeName & without children
   trie.children = trie.children.filter(
-    it => it.routeName !== undefined || it.children.length > 0,
+    (it) => it.routeName !== undefined || it.children.length > 0,
   );
 
   for (const child of trie.children) {
@@ -156,7 +156,7 @@ function collapseStaticChildren(trie) {
   const path = trie.path;
 
   // delete latest reference
-  parent.children = parent.children.filter(it => it !== trie);
+  parent.children = parent.children.filter((it) => it !== trie);
   trie.parent = undefined;
 
   for (const child of trie.children) {

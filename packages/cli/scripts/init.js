@@ -40,7 +40,7 @@ mainFn(import.meta, cliLogger, async () => {
   copyDirRecursive(
     join(dirnameForModule(import.meta), "../template"),
     outDir,
-    input =>
+    (input) =>
       input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
   );
 

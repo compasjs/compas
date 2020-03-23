@@ -18,11 +18,11 @@ export function M(name) {
     /**
      * @param {Object<string, ModelBuilder>} [obj]
      * @return {LbuObject}
-     */ object: obj => M.object(obj).name(name),
+     */ object: (obj) => M.object(obj).name(name),
     /**
      * @param {ModelBuilder} [value]
      * @return {LbuArray}
-     */ array: value => M.array(value).name(name),
+     */ array: (value) => M.array(value).name(name),
     /**
      * @param {...ModelBuilder} [items]
      * @return {LbuAnyOf}
@@ -47,12 +47,12 @@ M.string = () => new LbuString();
 /**
  * @param {Object<string, ModelBuilder>} [obj]
  */
-M.object = obj => new LbuObject(obj);
+M.object = (obj) => new LbuObject(obj);
 
 /**
  * @param {ModelBuilder} [value]
  */
-M.array = value => new LbuArray(value);
+M.array = (value) => new LbuArray(value);
 
 /**
  * @param {...ModelBuilder} [items]
@@ -787,6 +787,6 @@ M.types = {
  * @param {*} value
  * @return {boolean}
  */
-M.instanceOf = value => {
+M.instanceOf = (value) => {
   return value instanceof ModelBuilder;
 };

@@ -4,9 +4,9 @@ import { M } from "./ModelBuilder.js";
 
 const store = new Set();
 
-const init = app => {
+const init = (app) => {
   store.clear();
-  app.hooks.addModel = model => {
+  app.hooks.addModel = (model) => {
     if (!M.instanceOf(model)) {
       throw new Error("Model only accpets instances of ModelBuilder. See M");
     }
@@ -21,7 +21,7 @@ const init = app => {
   };
 };
 
-const build = result => {
+const build = (result) => {
   result.models = {};
   for (const model of store.values()) {
     const build = model.build();

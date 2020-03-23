@@ -24,7 +24,7 @@ User: ${result["USER"].join(", ")}
 Package.json: ${result["YARN"].join(", ")}`;
 };
 
-mainFn(import.meta, cliLogger, async logger => {
+mainFn(import.meta, cliLogger, async (logger) => {
   logger.info(
     `${name} -- ${version}\nUsage: lbu [command] [...args]\n\nAvailable commands:\n${formatCommands()}`,
   );

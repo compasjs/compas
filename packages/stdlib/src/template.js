@@ -10,8 +10,8 @@ const { readFile } = promises;
  */
 const templateContext = {
   isNil,
-  quote: it => `"${it}"`,
-  singleQuote: it => `'${it}'`,
+  quote: (it) => `"${it}"`,
+  singleQuote: (it) => `'${it}'`,
 };
 
 /**
@@ -39,7 +39,7 @@ export const compileTemplate = (name, str, opts = {}) => {
 
   const compiled = str
     .split("\n")
-    .map(it => {
+    .map((it) => {
       const cleaned = it.replace(/[\r\n\t]/g, " ");
       const markStarts = cleaned.split("{{").join("\t");
       const evaluate = markStarts
@@ -100,7 +100,7 @@ export const compileTemplate = (name, str, opts = {}) => {
 
 export const compileTemplateDirectory = (dir, extension, opts) => {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
-  return processDirectoryRecursive(dir, async file => {
+  return processDirectoryRecursive(dir, async (file) => {
     if (!file.endsWith(ext)) {
       return;
     }
@@ -135,9 +135,7 @@ export const executeTemplate = (name, data) => {
   }
 
   try {
-    return templateStore
-      .get(name)(getExecutionContext(), data)
-      .trim();
+    return templateStore.get(name)(getExecutionContext(), data).trim();
   } catch (e) {
     const err = new Error(`Error while executing ${name} template`);
     err.originalErr = e;

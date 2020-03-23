@@ -45,10 +45,10 @@ export const newLogger = (options = {}) => {
     error: (...args) => {
       logger(isProduction, stream, depth, ctx, "error", ...args);
     },
-    setDepth: newDepth => {
+    setDepth: (newDepth) => {
       depth = newDepth;
     },
-    setCtx: newCtx => {
+    setCtx: (newCtx) => {
       ctx = newCtx;
     },
     getCtx: () => ctx,

@@ -55,13 +55,9 @@ function readLocaleFiles(locales, localePaths, isProduction) {
   for (let i = 0; i < locales.length; ++i) {
     if (!fs.existsSync(localePaths[i])) {
       if (!isProduction) {
-        fs.mkdirSync(
-          localePaths[i]
-            .split("/")
-            .slice(0, -1)
-            .join("/"),
-          { recursive: true },
-        );
+        fs.mkdirSync(localePaths[i].split("/").slice(0, -1).join("/"), {
+          recursive: true,
+        });
 
         fs.writeFileSync(localePaths[i], "{}", { encoding: "utf-8" });
       }

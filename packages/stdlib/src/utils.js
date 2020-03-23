@@ -31,7 +31,7 @@ export const gc = () => {
  * @param {ImportMeta} meta
  * @return {boolean}
  */
-const isMainFn = meta => {
+const isMainFn = (meta) => {
   const modulePath = fileURLToPath(meta.url);
 
   let scriptPath = process.argv[1];
@@ -55,8 +55,8 @@ const isMainFn = meta => {
   return modulePathWithoutExt === scriptPath;
 };
 
-const setupProcessListeners = logger => {
-  process.on("warning", err => logger.error(err));
+const setupProcessListeners = (logger) => {
+  process.on("warning", (err) => logger.error(err));
 };
 
 /**
@@ -78,7 +78,7 @@ export const mainFn = (meta, logger, cb) => {
     dotenv.config();
     setupProcessListeners(logger);
     let result = cb(logger);
-    Promise.resolve(result).catch(e => logger.error(e));
+    Promise.resolve(result).catch((e) => logger.error(e));
   }
 };
 
@@ -88,7 +88,7 @@ export const mainFn = (meta, logger, cb) => {
  * @param {ImportMeta} meta
  * @return {string}
  */
-export const filenameForModule = meta => fileURLToPath(meta.url);
+export const filenameForModule = (meta) => fileURLToPath(meta.url);
 
 /**
  * Return dirname for ES Module
@@ -96,4 +96,4 @@ export const filenameForModule = meta => fileURLToPath(meta.url);
  * @param {ImportMeta} meta
  * @return {string}
  */
-export const dirnameForModule = meta => path.dirname(filenameForModule(meta));
+export const dirnameForModule = (meta) => path.dirname(filenameForModule(meta));

@@ -17,8 +17,6 @@ export const paginate = {
   }),
   response: M("PaginateOutput").object({
     count: M.number().integer(),
-    nextCursor: M.number()
-      .optional()
-      .integer(),
+    nextCursor: M.number().optional().integer(),
   }),
 };

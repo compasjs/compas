@@ -1,11 +1,11 @@
 import { writeNDJSON, writePretty } from "./writer.js";
 
-export const test = t => {
-  t.test("writePretty", t => {
+export const test = (t) => {
+  t.test("writePretty", (t) => {
     const now = new Date();
     let result = [];
     const mock = {
-      write: arg => {
+      write: (arg) => {
         result.push(arg);
       },
     };
@@ -40,11 +40,11 @@ export const test = t => {
     t.end();
   });
 
-  t.test("writeNDJSON", t => {
+  t.test("writeNDJSON", (t) => {
     const now = new Date();
     let result = [];
     const mock = {
-      write: arg => {
+      write: (arg) => {
         result.push(arg);
       },
     };

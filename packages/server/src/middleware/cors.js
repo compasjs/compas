@@ -52,7 +52,7 @@ const defaultOptions = {
 export const cors = (options = {}) => {
   const opts = Object.assign({}, defaultOptions, options);
 
-  let originFn = ctx => options.origin || ctx.get("Origin") || "*";
+  let originFn = (ctx) => options.origin || ctx.get("Origin") || "*";
   if (typeof options.origin === "function") {
     originFn = options.origin;
   }

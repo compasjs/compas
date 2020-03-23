@@ -10,13 +10,10 @@ const buildReadmeSource = (pkgName, readmeSource) =>
 const getReadmeSource = () => {
   const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
 
-  return src
-    .split("\n")
-    .slice(1)
-    .join("\n");
+  return src.split("\n").slice(1).join("\n");
 };
 
-const exec = logger => {
+const exec = (logger) => {
   // Script to copy the root README.md to all packages
 
   if (join(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {

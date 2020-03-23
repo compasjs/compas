@@ -10,7 +10,7 @@ import promiseWrap from "tape-promise";
 const test = promiseWrap.default(tape);
 const __filename = filenameForModule(import.meta);
 
-const contentHandler = async file => {
+const contentHandler = async (file) => {
   // Skip this index file
   if (file === __filename) {
     return;

@@ -3,7 +3,7 @@ import { isNil, mainFn, spawn } from "@lbu/stdlib";
 import { readdirSync } from "fs";
 import { join } from "path";
 
-const main = async logger => {
+const main = async (logger) => {
   const [workingDir] = process.argv.slice(2);
 
   if (isNil(workingDir)) {

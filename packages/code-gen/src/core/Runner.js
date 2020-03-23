@@ -34,7 +34,7 @@ class Runner {
   }
 
   async pluginsInit() {
-    const hasPlugin = name => !!this.plugins.find(it => it.name === name);
+    const hasPlugin = (name) => !!this.plugins.find((it) => it.name === name);
 
     for (const p of this.plugins) {
       if ("init" in p) {
@@ -85,5 +85,5 @@ class Runner {
  * @returns {{build: Function}}
  */
 export const runCodeGen = (logger, dataLoader) => ({
-  build: async opts => new Runner(logger, dataLoader, opts).run(),
+  build: async (opts) => new Runner(logger, dataLoader, opts).run(),
 });

@@ -5,7 +5,7 @@ import lodashMerge from "lodash.merge";
  * @param {*=} item
  * @returns {boolean}
  */
-export const isNil = item => item === null || item === undefined;
+export const isNil = (item) => item === null || item === undefined;
 
 /**
  * Check if item is a plain javascript object
@@ -13,7 +13,7 @@ export const isNil = item => item === null || item === undefined;
  * @param {*=} item
  * @returns {boolean}
  */
-export const isPlainObject = item =>
+export const isPlainObject = (item) =>
   typeof item === "object" &&
   !isNil(item) &&
   item.constructor === Object &&
@@ -60,7 +60,7 @@ export const flatten = (data, result = {}, path = "") => {
  * @param {Object} data
  * @return {Object}
  */
-export const unFlatten = data => {
+export const unFlatten = (data) => {
   const result = {};
   for (const key of Object.keys(data)) {
     const value = data[key];
