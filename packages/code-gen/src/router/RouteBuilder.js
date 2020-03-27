@@ -1,49 +1,21 @@
-import { isNil, merge } from "@lbu/stdlib";
-import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
+import { merge } from "@lbu/stdlib";
+import { upperCaseFirst } from "../utils.js";
 
-/**
- * Create a new RouteBuilder
- * @param {string} name
- * @param {string} path
- */
-export function R(name, path) {
-  const rb = new RouteBuilder(path);
-  rb.item.name = lowerCaseFirst(name);
-
-  return rb;
-}
-
-/**
- * Internal delegate for providing a fluent route building experience
- */
 class RouteBuilder {
-  constructor(path) {
+  constructor(method, group, name, path) {
     this.queryValidator = undefined;
     this.paramsValidator = undefined;
     this.bodyValidator = undefined;
     this.responseModel = undefined;
 
     this.item = {
+      method,
+      group,
+      name,
       path,
-      name: undefined,
-      method: undefined,
-      tags: undefined,
-      docs: undefined,
+      tags: [],
+      docs: "",
     };
-  }
-
-  /**
-   * @public
-   * @param {string} path
-   * @return {RouteBuilder}
-   */
-  path(path) {
-    if (this.item.path.endsWith("/") && path.startsWith("/")) {
-      path = path.substring(1);
-    }
-    this.item.path += path;
-
-    return this;
   }
 
   /**
@@ -76,7 +48,6 @@ class RouteBuilder {
     if (this.paramsValidator !== undefined && !this.paramsValidator.item.name) {
       this.paramsValidator.item.name = `${this.item.name}Params`;
     }
-
     return this;
   }
 
@@ -90,7 +61,6 @@ class RouteBuilder {
     if (this.queryValidator !== undefined && !this.queryValidator.item.name) {
       this.queryValidator.item.name = `${this.item.name}Query`;
     }
-
     return this;
   }
 
@@ -100,11 +70,14 @@ class RouteBuilder {
    * @return {RouteBuilder}
    */
   body(model) {
+    if (["POST", "PUT", "DELETE"].indexOf(this.item.method) === -1) {
+      throw new Error("Can only use body on POST, PUT or DELETE routes");
+    }
+
     this.bodyValidator = model;
     if (this.bodyValidator !== undefined && !this.bodyValidator.item.name) {
       this.bodyValidator.item.name = `${this.item.name}Body`;
     }
-
     return this;
   }
 
@@ -118,149 +91,133 @@ class RouteBuilder {
     if (this.responseModel !== undefined && !this.responseModel.item.name) {
       this.responseModel.item.name = `${this.item.name}Response`;
     }
-
     return this;
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {GetBuilder}
-   */
-  get(name) {
-    return this.constructBuilder(GetBuilder, name || "Get");
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {GetBuilder}
-   */
-  getList(name) {
-    return this.constructBuilder(GetBuilder, name || "GetList");
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {PostBuilder}
-   */
-  post(name) {
-    return this.constructBuilder(PostBuilder, name || "Post");
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {PutBuilder}
-   */
-  put(name) {
-    return this.constructBuilder(PutBuilder, name || "Put");
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {DeleteBuilder}
-   */
-  delete(name) {
-    return this.constructBuilder(DeleteBuilder, name || "Delete");
-  }
-
-  /**
-   * @public
-   * @param {string} [name] Optional name, concat-ed with the possible RouteBuilderName
-   * @return {HeadBuilder}
-   */
-  head(name) {
-    return this.constructBuilder(HeadBuilder, name || "Head");
-  }
-
-  /**
-   * @private
-   * @param {typeof RouteBuilder} Builder
-   * @param {string} name
-   * @return {*}
-   */
-  constructBuilder(Builder, name) {
-    const b = new Builder(this.item.path);
-
-    b.item.name = this.item.name + upperCaseFirst(name);
-
-    if (!isNil(this.item.tags)) {
-      b.tags(...this.item.tags);
-    }
-    if (!isNil(this.docs)) {
-      b.docs(this.item.docs);
-    }
-    if (!isNil(this.queryValidator)) {
-      b.query(this.queryValidator);
-    }
-    if (!isNil(this.paramsValidator)) {
-      b.params(this.paramsValidator);
-    }
-    if (!isNil(this.bodyValidator)) {
-      b.body(this.bodyValidator);
-    }
-    if (!isNil(this.responseModel)) {
-      b.response(this.responseModel);
-    }
-
-    return b;
   }
 
   /**
    * @public
    */
   build() {
-    if (this.item.method === undefined) {
-      throw new Error("You forgot to call .get() / .post() / ...");
-    }
-
     return merge({}, this.item);
   }
 }
 
-class GetBuilder extends RouteBuilder {
-  constructor(path) {
-    super(path);
-    this.item.method = "GET";
+class RouteConstructor {
+  constructor(group, path) {
+    this.item = {
+      group: upperCaseFirst(group),
+      path,
+    };
+  }
+
+  /**
+   * Create a new route group
+   * Path will be concatenated with the current path of this group
+   * @param {string} name
+   * @param {string} path
+   * @return {RouteConstructor}
+   */
+  group(name, path) {
+    return new RouteConstructor(
+      name,
+      concatenateRoutePaths(this.item.path, path),
+    );
+  }
+
+  /**
+   * GET route
+   * @param {string} [path]
+   * @param {string} [name]
+   * @return {RouteBuilder}
+   */
+  get(path, name) {
+    return new RouteBuilder(
+      "GET",
+      this.item.group,
+      name || "get",
+      concatenateRoutePaths(this.item.path, path || "/"),
+    );
+  }
+
+  /**
+   * POST route
+   * @param {string} [path]
+   * @param {string} [name]
+   * @return {RouteBuilder}
+   */
+  post(path, name) {
+    return new RouteBuilder(
+      "POST",
+      this.item.group,
+      name || "post",
+      concatenateRoutePaths(this.item.path, path || "/"),
+    );
+  }
+
+  /**
+   * PUT route
+   * @param {string} [path]
+   * @param {string} [name]
+   * @return {RouteBuilder}
+   */
+  put(path, name) {
+    return new RouteBuilder(
+      "PUT",
+      this.item.group,
+      name || "put",
+      concatenateRoutePaths(this.item.path, path || "/"),
+    );
+  }
+
+  /**
+   * DELETE route
+   * @param {string} [path]
+   * @param {string} [name]
+   * @return {RouteBuilder}
+   */
+  delete(path, name) {
+    return new RouteBuilder(
+      "DELETE",
+      this.item.group,
+      name || "delete",
+      concatenateRoutePaths(this.item.path, path || "/"),
+    );
+  }
+
+  /**
+   * HEAD route
+   * @param {string} [path]
+   * @param {string} [name]
+   * @return {RouteBuilder}
+   */
+  head(path, name) {
+    return new RouteBuilder(
+      "HEAD",
+      this.item.group,
+      name || "get",
+      concatenateRoutePaths(this.item.path, path || "/"),
+    );
   }
 }
 
-class PostBuilder extends RouteBuilder {
-  constructor(path) {
-    super(path);
-    this.item.method = "POST";
+/**
+ * @param {string} path1
+ * @param {string} path2
+ * @return {string}
+ */
+function concatenateRoutePaths(path1, path2) {
+  if (!path1.endsWith("/")) {
+    path1 += "/";
   }
+  if (path2.startsWith("/")) {
+    path2 = path2.substring(1);
+  }
+
+  return path1 + path2;
 }
 
-class PutBuilder extends RouteBuilder {
-  constructor(path) {
-    super(path);
-    this.item.method = "PUT";
-  }
-}
-
-class DeleteBuilder extends RouteBuilder {
-  constructor(path) {
-    super(path);
-    this.item.method = "DELETE";
-  }
-}
-
-class HeadBuilder extends RouteBuilder {
-  constructor(path) {
-    super(path);
-    this.item.method = "HEAD";
-  }
-}
+export const R = new RouteConstructor("$", "/");
 
 R.types = {
   RouteBuilder,
-  GetBuilder,
-  PostBuilder,
-  PutBuilder,
-  DeleteBuilder,
-  HeadBuilder,
 };

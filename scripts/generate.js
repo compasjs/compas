@@ -37,7 +37,7 @@ app.model(
     .docs("Foo"),
 );
 
-app.route(R("test", "/test").get().query(M.ref("User")));
+app.route(R.get("/foo", "test").query(M.ref("User")));
 
 const main = async (logger) => {
   // Code gen validators

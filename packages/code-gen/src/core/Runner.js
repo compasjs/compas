@@ -16,7 +16,6 @@ class Runner {
 
   async run() {
     this.logger.info("Initializing plugins...");
-    // TODO: Validate plugins
     await this.pluginsInit();
 
     this.logger.info("Awaiting data loader...");
@@ -25,7 +24,6 @@ class Runner {
     this.logger.info(
       `Generating for ${Object.keys(this.data.models).length} models`,
     );
-    // TODO: Validate data
 
     await this.pluginsGenerate();
     await this.writeOutputs();

@@ -43,44 +43,38 @@ const getModelName = (validator) => {
   return upperCaseFirst(validator.item.name);
 };
 
-const registerCodegenRoute = () => {
+const registerLbuRoutes = () => {
+  const group = R.group("LBU", "_lbu/");
+  const tags = ["_lbu"];
+
   store.add(
-    R("LbuStructure", "_lbu/structure.json")
-      .get()
-      .tags("_lbu")
+    group
+      .get("structure.json", "lbuStructure")
+      .tags(...tags)
       .docs("Return the full generated structure as a json object."),
   );
 };
 
 const build = (result) => {
-  registerCodegenRoute();
+  registerLbuRoutes();
 
-  result.routes = [];
+  result.routes = {};
   const tags = new Set();
 
   for (const route of store.values()) {
     const r = route.build();
 
-    // Set docs to empty string, for easier code-gen
-    if (isNil(r.docs)) {
-      r.docs = "";
+    for (const t of r.tags.values()) {
+      tags.add(t);
     }
-
-    if (isNil(r.tags)) {
-      // Set tags to empty array, for easier code-gen
-      r.tags = [];
-    } else {
-      for (const t of r.tags.values()) {
-        tags.add(t);
-      }
-    }
+    result.routes[r.group] = result.routes[r.group] || [];
 
     r.paramsValidator = getModelName(route.paramsValidator);
     r.queryValidator = getModelName(route.queryValidator);
     r.bodyValidator = getModelName(route.bodyValidator);
     r.responseModel = getModelName(route.responseModel);
 
-    result.routes.push(r);
+    result.routes[r.group].push(r);
   }
 
   // unique route tags
