@@ -15,7 +15,7 @@ import { mainFn } from "@lbu/stdlib";
 const app = new App("TODO App");
 
 app.validator(
-  M("User").object({
+  M.object("User", {
     id: M.number().integer().min(0).max(100).convert(),
     name: M.string().min(1).max(15).mock("__.first"),
     age: M.number().integer().min(0).max(150).convert().mock("__.age"),
@@ -23,7 +23,7 @@ app.validator(
 );
 
 app.validator(
-  M("Items").object({
+  M.object("Items", {
     userId: M.ref("User", "id"),
     name: M.string(),
     count: M.number().integer(),
@@ -31,10 +31,9 @@ app.validator(
 );
 
 app.model(
-  M("MyGeneric")
-    .generic()
+  M.generic("MyGeneric")
     .keys(M.string())
-    .values(M.anyOf(M.bool().convert(), M.number()))
+    .values(M.anyOf([M.bool().convert(), M.number()]))
     .docs("Foo"),
 );
 

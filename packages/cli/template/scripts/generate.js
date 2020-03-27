@@ -14,7 +14,7 @@ import { mainFn } from "@lbu/stdlib";
 const app = new App("TODO App");
 
 app.model(
-  M("MyObject").object({
+  M.object("MyObject", {
     userName: M.string().mock("__.first"),
   }),
 );

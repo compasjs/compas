@@ -1,77 +1,59 @@
-import { isNil, merge } from "@lbu/stdlib";
-
-export function M(name) {
-  return {
-    /**
-     * @return {LbuBool}
-     */
-    bool: () => M.bool().name(name),
-    /**
-     * @return {LbuBool}
-     */ boolean: () => M.boolean().name(name),
-    /**
-     * @return {LbuNumber}
-     */ number: () => M.number().name(name),
-    /**
-     * @return {LbuString}
-     */ string: () => M.string().name(name),
-    /**
-     * @param {Object<string, ModelBuilder>} [obj]
-     * @return {LbuObject}
-     */ object: (obj) => M.object(obj).name(name),
-    /**
-     * @param {ModelBuilder} [value]
-     * @return {LbuArray}
-     */ array: (value) => M.array(value).name(name),
-    /**
-     * @param {...ModelBuilder} [items]
-     * @return {LbuAnyOf}
-     */ anyOf: (...items) => M.anyOf(...items).name(name),
-
-    /**
-     * @return {LbuAny}
-     */
-    any: () => M.any().name(name),
-    /**
-     *
-     * @return {LbuGeneric}
-     */ generic: () => M.generic().name(name),
-  };
-}
-
-M.bool = () => new LbuBool();
-M.boolean = () => new LbuBool();
-M.number = () => new LbuNumber();
-M.string = () => new LbuString();
-
-/**
- * @param {Object<string, ModelBuilder>} [obj]
- */
-M.object = (obj) => new LbuObject(obj);
-
-/**
- * @param {ModelBuilder} [value]
- */
-M.array = (value) => new LbuArray(value);
-
-/**
- * @param {...ModelBuilder} [items]
- */
-M.anyOf = (...items) => new LbuAnyOf(...items);
-
-/**
- * @param {string} [type]
- * @param {string} [field]
- */
-M.ref = (type, field) => new LbuRef(type, field);
-
-M.any = () => new LbuAny();
-M.generic = () => new LbuGeneric();
+import { isNil, isPlainObject, merge } from "@lbu/stdlib";
 
 /**
  * Internal delegate for providing a fluent model building experience
  */
 class ModelBuilder {
+  constructor() {
+    this.item = {
+      type: undefined,
+      name: undefined,
+      docs: undefined,
+      optional: false,
+      default: undefined,
+    };
+  }
+
+  /**
+   * @public
+   * @param {string} name
+   * @return {this}
+   */
+  name(name) {
+    this.item.name = name;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string} docs
+   * @return {this}
+   */
+  docs(docs) {
+    this.item.docs = docs;
+    return this;
+  }
+
+  /**
+   * @public
+   * @return {this}
+   */
+  optional() {
+    this.item.optional = true;
+    return this;
+  }
+
+  /**
+   * @public
+   * @param {string|boolean|number} value
+   * @return {this}
+   */
+  default(value) {
+    this.item.default = value;
+    this.item.optional = !isNil(value);
+    return this;
+  }
+
   /**
    * @public
    */
@@ -87,55 +69,8 @@ class LbuBool extends ModelBuilder {
   constructor() {
     super();
 
-    this.item = {
-      type: "boolean",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      default: undefined,
-      oneOf: undefined,
-    };
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuBool}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuBool}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {boolean|string} value Value is inline printed
-   * @return {LbuBool}
-   */
-  default(value) {
-    this.item.default = value;
-    this.item.optional = true;
-
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuBool}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
+    this.item.type = "boolean";
+    this.item.oneOf = undefined;
   }
 
   /**
@@ -153,55 +88,8 @@ class LbuNumber extends ModelBuilder {
   constructor() {
     super();
 
-    this.item = {
-      type: "number",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      default: undefined,
-      oneOf: undefined,
-    };
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuNumber}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuNumber}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {number|string} value Value is inline printed
-   * @return {LbuNumber}
-   */
-  default(value) {
-    this.item.default = value;
-    this.item.optional = true;
-
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuNumber}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
+    this.item.type = "number";
+    this.item.oneOf = undefined;
   }
 
   /**
@@ -218,56 +106,8 @@ class LbuNumber extends ModelBuilder {
 class LbuString extends ModelBuilder {
   constructor() {
     super();
-
-    this.item = {
-      type: "string",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      default: undefined,
-      oneOf: undefined,
-    };
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuString}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuString}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} value Value is inline printed
-   * @return {LbuString}
-   */
-  default(value) {
-    this.item.default = value;
-    this.item.optional = true;
-
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuString}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
+    this.item.type = "string";
+    this.item.oneOf = undefined;
   }
 
   /**
@@ -287,47 +127,12 @@ class LbuObject extends ModelBuilder {
    */
   constructor(obj) {
     super();
-
-    this.item = {
-      type: "object",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      keys: {},
-    };
+    this.item.type = "object";
+    this.item.keys = {};
 
     if (!isNil(obj)) {
       this.keys(obj);
     }
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuObject}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuObject}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuObject}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
   }
 
   /**
@@ -374,46 +179,12 @@ class LbuArray extends ModelBuilder {
   constructor(value) {
     super();
 
-    this.item = {
-      type: "array",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      values: undefined,
-    };
+    this.item.type = "array";
+    this.item.values = undefined;
 
     if (!isNil(value)) {
       this.values(value);
     }
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuArray}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuArray}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuArray}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
   }
 
   /**
@@ -458,46 +229,12 @@ class LbuAnyOf extends ModelBuilder {
   constructor(...items) {
     super();
 
-    this.item = {
-      type: "anyOf",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      values: undefined,
-    };
+    this.item.type = "anyOf";
+    this.item.values = undefined;
 
     if (items.length !== 0) {
       this.values(...items);
     }
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuAnyOf}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuAnyOf}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuAnyOf}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
   }
 
   /**
@@ -550,49 +287,15 @@ class LbuRef extends ModelBuilder {
   constructor(type, field) {
     super();
 
-    this.item = {
-      type: "reference",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      referenceModel: undefined,
-      referenceField: undefined,
-    };
+    this.item.type = "reference";
+    this.item.referenceModel = undefined;
+    this.item.referenceField = undefined;
 
     this.type(type);
 
     if (!isNil(field)) {
       this.externalField(field);
     }
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuRef}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuRef}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuRef}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
   }
 
   /**
@@ -620,43 +323,9 @@ class LbuAny extends ModelBuilder {
   constructor() {
     super();
 
-    this.item = {
-      type: "any",
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      typeOf: undefined,
-      instanceOf: undefined,
-    };
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuAny}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuAny}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {LbuAny}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
+    this.item.type = "any";
+    this.item.typeOf = undefined;
+    this.item.instanceOf = undefined;
   }
 
   /**
@@ -687,37 +356,13 @@ class LbuGeneric extends ModelBuilder {
   constructor(value) {
     super();
 
-    this.item = {
-      type: "generic",
-      name: undefined,
-      docs: undefined,
-      keys: undefined,
-      values: undefined,
-    };
+    this.item.type = "generic";
+    this.item.keys = undefined;
+    this.item.values = undefined;
 
     if (!isNil(value)) {
       this.values(value);
     }
-  }
-
-  /**
-   * @public
-   * @param {string} name
-   * @return {LbuGeneric}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docValue
-   * @return {LbuGeneric}
-   */
-  docs(docValue) {
-    this.item.docs = docValue;
-    return this;
   }
 
   /**
@@ -770,6 +415,116 @@ class LbuGeneric extends ModelBuilder {
   }
 }
 
+class ModelIntantiator {
+  /**
+   * Check if value is instanceof ModelBuilder
+   * @param {*} value
+   * @return {boolean}
+   */
+  instanceOf(value) {
+    return value instanceof ModelBuilder;
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuBool}
+   */
+  bool(name) {
+    return new LbuBool().name(name);
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuNumber}
+   */
+  number(name) {
+    return new LbuNumber().name(name);
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuString}
+   */
+  string(name) {
+    return new LbuString().name(name);
+  }
+
+  /**
+   * @public
+   * @param {string|Object<string, ModelBuilder>} [name]
+   * @param {Object<string, ModelBuilder>} [obj]
+   * @return {LbuObject}
+   */
+  object(name, obj) {
+    if (isPlainObject(name)) {
+      return new LbuObject(name);
+    } else {
+      return new LbuObject(obj).name(name);
+    }
+  }
+
+  /**
+   * @public
+   * @param {string|ModelBuilder} [name]
+   * @param {ModelBuilder} [value]
+   * @return {LbuArray}
+   */
+  array(name, value) {
+    if (this.instanceOf(name)) {
+      return new LbuArray(name);
+    } else {
+      return new LbuArray(value).name(name);
+    }
+  }
+
+  /**
+   * @public
+   * @param {string|ModelBuilder[]} [name]
+   * @param {...ModelBuilder} [values]
+   * @return {LbuAnyOf}
+   */
+  anyOf(name, ...values) {
+    if (Array.isArray(name)) {
+      return new LbuAnyOf(...name);
+    } else {
+      return new LbuAnyOf(...values).name(name);
+    }
+  }
+
+  /**
+   * @public
+   * @param {string} [type]
+   * @param {string} [field]
+   * @return {LbuRef}
+   */
+  ref(type, field) {
+    return new LbuRef(type, field);
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuAny}
+   */
+  any(name) {
+    return new LbuAny().name(name);
+  }
+
+  /**
+   * @public
+   * @param {string} [name]
+   * @return {LbuGeneric}
+   */
+  generic(name) {
+    return new LbuGeneric().name(name);
+  }
+}
+
+export const M = new ModelIntantiator();
+
 M.types = {
   LbuBool,
   LbuNumber,
@@ -780,13 +535,4 @@ M.types = {
   LbuRef,
   LbuAny,
   LbuGeneric,
-};
-
-/**
- * Check if value is instanceof ModelBuilder
- * @param {*} value
- * @return {boolean}
- */
-M.instanceOf = (value) => {
-  return value instanceof ModelBuilder;
 };
