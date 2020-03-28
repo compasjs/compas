@@ -1,4 +1,4 @@
-export const numberMock = (mock, { ignoreDefaults }) => {
+export function numberMock(mock, { ignoreDefaults }) {
   const result = [];
   const mockArgs = JSON.stringify({
     min: mock.validator.min,
@@ -28,4 +28,4 @@ export const numberMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

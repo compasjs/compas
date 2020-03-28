@@ -7,7 +7,20 @@ import {
 import { join } from "path";
 import { upperCaseFirst } from "../utils.js";
 
-const init = async () => {
+/**
+ * Generate validator functions with support for pre & post-validate hooks
+ * @param {Object} [opts]
+ * @param {string} [opts.header] Useful for setting extra imports
+ */
+export function getValidatorPlugin(opts = {}) {
+  return {
+    name: "validator",
+    init: init.bind(undefined, opts),
+    generate: generate.bind(undefined, opts),
+  };
+}
+
+async function init() {
   await compileTemplateDirectory(
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
@@ -15,9 +28,9 @@ const init = async () => {
       debug: false,
     },
   );
-};
+}
 
-const generate = (opts, data) => {
+function generate(opts, data) {
   const validatorFunctions = transform(data);
   return {
     path: "./validators.js",
@@ -27,18 +40,7 @@ const generate = (opts, data) => {
       opts,
     }),
   };
-};
-
-/**
- * Generate validator functions with support for pre & post-validate hooks
- * @param {Object} [opts]
- * @param {string} [opts.header] Useful for setting extra imports
- */
-export const getValidatorPlugin = (opts = {}) => ({
-  name: "validator",
-  init: init.bind(undefined, opts),
-  generate: generate.bind(undefined, opts),
-});
+}
 
 function transform({ models, validators }) {
   const ctx = {

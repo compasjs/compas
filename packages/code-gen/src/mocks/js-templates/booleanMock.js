@@ -1,4 +1,4 @@
-export const booleanMock = (mock, { ignoreDefaults }) => {
+export function booleanMock(mock, { ignoreDefaults }) {
   const result = [];
 
   if (mock.oneOf) {
@@ -20,4 +20,4 @@ export const booleanMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

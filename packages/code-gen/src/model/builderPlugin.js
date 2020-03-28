@@ -4,7 +4,12 @@ import { M } from "./ModelBuilder.js";
 
 const store = new Set();
 
-const init = (app) => {
+export const plugin = {
+  init,
+  build,
+};
+
+function init(app) {
   store.clear();
   app.hooks.addModel = (model) => {
     if (!M.instanceOf(model)) {
@@ -19,9 +24,9 @@ const init = (app) => {
 
     store.add(model);
   };
-};
+}
 
-const build = (result) => {
+function build(result) {
   result.models = {};
   for (const model of store.values()) {
     const build = model.build();
@@ -32,12 +37,7 @@ const build = (result) => {
   for (const model of Object.keys(result.models)) {
     replaceReferences(result.models, result.models[model]);
   }
-};
-
-export const plugin = {
-  init,
-  build,
-};
+}
 
 /**
  * Registered nested named models & replace others with references to them

@@ -1,14 +1,9 @@
 import { M } from "../model/index.js";
 
-const checkMocks = (builder) => {
-  if (M.instanceOf(builder)) {
-    builder.item.mocks = builder.item.mocks || {};
-  }
-};
-
 /**
  * @name LbuBool#mock
- * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the Chance instance
+ * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the
+ *   Chance instance
  * @return {LbuBool}
  */
 M.types.LbuBool.prototype.mock = function (mockFn) {
@@ -20,7 +15,8 @@ M.types.LbuBool.prototype.mock = function (mockFn) {
 
 /**
  * @name LbuNumber#mock
- * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the Chance instance
+ * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the
+ *   Chance instance
  * @return {LbuNumber}
  */
 M.types.LbuNumber.prototype.mock = function (mockFn) {
@@ -31,7 +27,8 @@ M.types.LbuNumber.prototype.mock = function (mockFn) {
 };
 /**
  * @name LbuString#mock
- * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the Chance instance
+ * @param {string} mockFn Raw mock function, use _mocker or '__' to get access to the
+ *   Chance instance
  * @return {LbuString}
  */
 M.types.LbuString.prototype.mock = function (mockFn) {
@@ -40,3 +37,9 @@ M.types.LbuString.prototype.mock = function (mockFn) {
 
   return this;
 };
+
+function checkMocks(builder) {
+  if (M.instanceOf(builder)) {
+    builder.item.mocks = builder.item.mocks || {};
+  }
+}

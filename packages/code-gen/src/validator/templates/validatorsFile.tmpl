@@ -31,7 +31,7 @@ let _errorFn = (key, info) => {
  * Set a different error function, for example AppError.validationError
  * @param {ValidationErrorFn} fn
  */
-export const validatorSetErrorFn = fn => {
+export function validatorSetErrorFn(fn) {
   _errorFn = fn;
 }
 

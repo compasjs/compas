@@ -1,4 +1,4 @@
-export const anyMock = (mock, { ignoreDefaults }) => {
+export function anyMock(mock, { ignoreDefaults }) {
   const result = [];
 
   // TODO: Lots of missing cases, decide on stuff ?
@@ -30,4 +30,4 @@ export const anyMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

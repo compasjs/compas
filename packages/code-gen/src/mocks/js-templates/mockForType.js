@@ -21,7 +21,7 @@ const mapping = {
   generic: genericMock,
 };
 
-export const mockForType = (mock, { ignoreDefaults }) => {
+export function mockForType(mock, { ignoreDefaults }) {
   if (!isNil(mock.mocks) && !isNil(mock.mocks.rawMock)) {
     return mock.mocks.rawMock;
   }
@@ -32,4 +32,4 @@ export const mockForType = (mock, { ignoreDefaults }) => {
     const result = fn(mock, { ignoreDefaults });
     return String(result || "").replace(/\s+/g, " ");
   }
-};
+}

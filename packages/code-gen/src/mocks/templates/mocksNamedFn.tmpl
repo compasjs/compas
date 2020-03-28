@@ -2,14 +2,14 @@
  * Generated mock for {{= mock.name }}
  * @return { {{= mock.name }}}
  */
-export const mock{{= mock.name }} = () => {
+export function mock{{= mock.name }}() {
   return {{= mockForType(mock, { ignoreDefaults: false }) }};
-};
+}
 
 /**
  * Generated mock for {{= mock.name }} ignoring default values
  * @return { {{= mock.name }}_Optional}
  */
-export const mock{{= mock.name }}_Optional = () => {
+export function mock{{= mock.name }}_Optional() {
   return {{= mockForType(mock, { ignoreDefaults: true }) }};
-};
+}

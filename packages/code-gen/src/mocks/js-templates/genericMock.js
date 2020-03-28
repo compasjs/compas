@@ -1,6 +1,6 @@
 import { mockForType } from "./mockForType.js";
 
-export const genericMock = (mock, { ignoreDefaults }) => {
+export function genericMock(mock, { ignoreDefaults }) {
   const result = [];
 
   const entryMock = mockForType(
@@ -35,4 +35,4 @@ export const genericMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

@@ -1,4 +1,4 @@
-export const referenceMock = (mock, { ignoreDefaults }) => {
+export function referenceMock(mock, { ignoreDefaults }) {
   const result = [];
 
   const fn = `mock${mock.referenceModel}`;
@@ -21,4 +21,4 @@ export const referenceMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

@@ -1,6 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 
-export const generateJsDoc = (models, value, { ignoreDefaults }) => {
+export function generateJsDoc(models, value, { ignoreDefaults }) {
   let result = "";
   switch (value.type) {
     case "boolean":
@@ -93,4 +93,4 @@ export const generateJsDoc = (models, value, { ignoreDefaults }) => {
   }
 
   return result;
-};
+}

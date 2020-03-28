@@ -5,7 +5,7 @@
  * @param {*} value
  * @returns { {{= typeName }}}
  */
-export const {{= validatorName }} = value => {
+export function {{= validatorName }}(value) {
  let result = value;
 
  {{ const preValidate = quote(preValidateHook); }}
@@ -21,4 +21,4 @@ export const {{= validatorName }} = value => {
  } else {
    return result;
  }
-};
+}

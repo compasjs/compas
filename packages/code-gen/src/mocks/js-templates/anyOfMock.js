@@ -1,6 +1,6 @@
 import { mockForType } from "./mockForType.js";
 
-export const anyOfMock = (mock, { ignoreDefaults }) => {
+export function anyOfMock(mock, { ignoreDefaults }) {
   const result = [];
 
   for (const value of mock.values) {
@@ -20,4 +20,4 @@ export const anyOfMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

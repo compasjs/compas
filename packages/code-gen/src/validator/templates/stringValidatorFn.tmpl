@@ -1,4 +1,4 @@
-const {{= functionName }} = (value, propertyPath) => {
+function {{= functionName }}(value, propertyPath) {
   if (isNil(value)) {
     {{ if (it.optional) { }}
       return {{= it.default }};
@@ -58,4 +58,4 @@ const {{= functionName }} = (value, propertyPath) => {
   {{ } }}
 
   return value;
-};
+}

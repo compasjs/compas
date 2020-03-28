@@ -37,11 +37,11 @@ const validatorDefaults = {
 /**
  * Add the default validator object for the appropriate Lbu Type
  */
-const checkHasValidatorObject = (instance) => {
+function checkHasValidatorObject(instance) {
   if (!instance.item.validator) {
     instance.item.validator = merge({}, validatorDefaults[instance.item.type]);
   }
-};
+}
 
 /**
  * @name LbuBool#convert

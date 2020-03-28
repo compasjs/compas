@@ -1,6 +1,6 @@
 import { mockForType } from "./mockForType.js";
 
-export const objectMock = (mock, { ignoreDefaults }) => {
+export function objectMock(mock, { ignoreDefaults }) {
   const result = [];
 
   let buildObject = `{`;
@@ -25,4 +25,4 @@ export const objectMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

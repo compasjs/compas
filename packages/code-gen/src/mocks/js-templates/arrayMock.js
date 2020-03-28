@@ -1,6 +1,6 @@
 import { mockForType } from "./mockForType.js";
 
-export const arrayMock = (mock, { ignoreDefaults }) => {
+export function arrayMock(mock, { ignoreDefaults }) {
   const result = [];
 
   const arrayFromArgs = JSON.stringify({
@@ -28,4 +28,4 @@ export const arrayMock = (mock, { ignoreDefaults }) => {
   } else {
     return `_mocker.pickone([${result.join(", ")}])`;
   }
-};
+}

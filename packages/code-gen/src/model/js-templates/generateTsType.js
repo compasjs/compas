@@ -1,6 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 
-export const generateTsType = (models, value, { ignoreDefaults }) => {
+export function generateTsType(models, value, { ignoreDefaults }) {
   let result = "";
   switch (value.type) {
     case "boolean":
@@ -95,4 +95,4 @@ export const generateTsType = (models, value, { ignoreDefaults }) => {
   }
 
   return result;
-};
+}

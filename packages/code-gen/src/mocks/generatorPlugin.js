@@ -7,7 +7,20 @@ import {
 import { join } from "path";
 import { mockForType } from "./js-templates/mockForType.js";
 
-const init = async () => {
+/**
+ * Generate mocks
+ * @param {Object} [opts]
+ * @param {string} [opts.header] Useful for setting extra imports
+ */
+export function getMocksPlugin(opts = {}) {
+  return {
+    name: "mocks",
+    init: init.bind(undefined, opts),
+    generate: generate.bind(undefined, opts),
+  };
+}
+
+async function init() {
   await compileTemplateDirectory(
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
@@ -16,9 +29,9 @@ const init = async () => {
     },
   );
   addToTemplateContext("mockForType", mockForType);
-};
+}
 
-const generate = (opts, data) => {
+function generate(opts, data) {
   const mocksContent = executeTemplate("mocksFile", { ...data, opts });
 
   return [
@@ -27,17 +40,4 @@ const generate = (opts, data) => {
       content: mocksContent,
     },
   ];
-};
-
-/**
- * Generate mocks
- * @param {Object} [opts]
- * @param {string} [opts.header] Useful for setting extra imports
- */
-export const getMocksPlugin = (opts = {}) => {
-  return {
-    name: "mocks",
-    init: init.bind(undefined, opts),
-    generate: generate.bind(undefined, opts),
-  };
-};
+}

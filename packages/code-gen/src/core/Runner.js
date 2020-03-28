@@ -1,19 +1,40 @@
 import { isPlainObject } from "@lbu/stdlib";
-import { existsSync, promises } from "fs";
+import { existsSync, promises as fs } from "fs";
 import { join } from "path";
 
-const { writeFile, mkdir } = promises;
+const { writeFile, mkdir } = fs;
+
+/**
+ * Entry point for code generation needs
+ * @param {Logger} logger
+ * @param dataLoader
+ * @returns {{build: Function}}
+ */
+export function runCodeGen(logger, dataLoader) {
+  return new Runner(logger, dataLoader);
+}
 
 class Runner {
-  constructor(logger, dataLoader, { plugins, ...opts }) {
+  constructor(logger, dataLoader) {
     this.logger = logger;
     this.dataLoader = dataLoader;
-    this.plugins = plugins;
-    this.opts = opts;
 
     this.outputs = [];
   }
 
+  /**
+   * @public
+   */
+  build({ plugins, ...opts }) {
+    this.plugins = plugins;
+    this.opts = opts;
+
+    return this.run();
+  }
+
+  /**
+   * @private
+   */
   async run() {
     this.logger.info("Initializing plugins...");
     await this.pluginsInit();
@@ -31,6 +52,9 @@ class Runner {
     this.logger.info("Done...");
   }
 
+  /**
+   * @private
+   */
   async pluginsInit() {
     const hasPlugin = (name) => !!this.plugins.find((it) => it.name === name);
 
@@ -44,6 +68,9 @@ class Runner {
     }
   }
 
+  /**
+   * @private
+   */
   async pluginsGenerate() {
     for (const p of this.plugins) {
       if ("generate" in p) {
@@ -64,6 +91,9 @@ class Runner {
     }
   }
 
+  /**
+   * @private
+   */
   async writeOutputs() {
     if (!existsSync(this.opts.outputDir)) {
       await mkdir(this.opts.outputDir, { recursive: true });
@@ -75,13 +105,3 @@ class Runner {
     }
   }
 }
-
-/**
- * Entry point for code generation needs
- * @param {Logger} logger
- * @param dataLoader
- * @returns {{build: Function}}
- */
-export const runCodeGen = (logger, dataLoader) => ({
-  build: async (opts) => new Runner(logger, dataLoader, opts).run(),
-});
