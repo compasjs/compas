@@ -8,28 +8,15 @@ const defaultOptions = {
 };
 
 /**
- * @callback LogFn
- * @param {...*} args
- * @returns {void}
- */
-/**
- * @typedef Logger
- * @property {LogFn} info
- * @property {LogFn} error
- */
-
-/**
  * Create a new logger
  * @param {Object} [options]
  * @param {boolean} [options.isProduction]
  * @param {NodeJS.WritableStream} [options.stream=process.stdout]
  * @param {Object} [options.ctx]
  * @param {number} [options.depth]
- * @return {{isProduction: (function(): boolean), setCtx: (function(Object): void),
- *   getCtx: (function(): Object|*), error: LogFn, setDepth: (function(number): void),
- *   info: LogFn}}
+ * @return {Logger}
  */
-export const newLogger = (options = {}) => {
+export function newLogger(options = {}) {
   const stream = options.stream || defaultOptions.stream();
   const isProduction =
     typeof options.isProduction === "boolean"
@@ -38,23 +25,71 @@ export const newLogger = (options = {}) => {
   let ctx = options.ctx || defaultOptions.ctx();
   let depth = options.depth || defaultOptions.depth();
 
-  return {
-    info: (...args) => {
-      logger(isProduction, stream, depth, ctx, "info", ...args);
-    },
-    error: (...args) => {
-      logger(isProduction, stream, depth, ctx, "error", ...args);
-    },
-    setDepth: (newDepth) => {
-      depth = newDepth;
-    },
-    setCtx: (newCtx) => {
-      ctx = newCtx;
-    },
-    getCtx: () => ctx,
-    isProduction: () => isProduction,
-  };
-};
+  return new Logger(stream, isProduction, ctx, depth);
+}
+
+class Logger {
+  /**
+   * @param {NodeJS.WritableStream} stream
+   * @param {boolean} isProduction
+   * @param {object} ctx
+   * @param {number} depth
+   */
+  constructor(stream, isProduction, ctx, depth) {
+    this.stream = stream;
+    this.isProd = isProduction;
+    this.ctx = ctx;
+    this.depth = depth;
+  }
+
+  /**
+   * @public
+   * @param args
+   */
+  info(...args) {
+    logger(this.isProd, this.stream, this.depth, this.ctx, "info", ...args);
+  }
+
+  /**
+   * @public
+   * @param args
+   */
+  error(...args) {
+    logger(this.isProd, this.stream, this.depth, this.ctx, "error", ...args);
+  }
+
+  /**
+   * @public
+   * @param {number} depth
+   */
+  setDepth(depth) {
+    this.depth = depth;
+  }
+
+  /**
+   * @public
+   * @return {boolean}
+   */
+  isProduction() {
+    return this.isProd;
+  }
+
+  /**
+   * @public
+   * @return {object}
+   */
+  getCtx() {
+    return this.ctx;
+  }
+
+  /**
+   * @public
+   * @param {object} ctx
+   */
+  setCtx(ctx) {
+    this.ctx = ctx;
+  }
+}
 
 function logger(isProduction, stream, depth, ctx, level, ...args) {
   const metaData = {

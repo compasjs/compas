@@ -2,7 +2,7 @@ import { dirnameForModule } from "@lbu/stdlib";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
-export const getKnownScripts = () => {
+export function getKnownScripts() {
   const result = {};
 
   const userDir = join(process.cwd(), "scripts");
@@ -36,4 +36,4 @@ export const getKnownScripts = () => {
   }
 
   return result;
-};
+}

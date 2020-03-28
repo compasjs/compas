@@ -1,38 +1,50 @@
 import { inspect } from "util";
 
-/**
- * @param {Date} date
- * @returns {string}
- */
-const formatDate = (date) => {
-  const h = date.getHours().toString(10).padStart(2, "0");
-  const m = date.getMinutes().toString(10).padStart(2, "0");
-  const s = date.getSeconds().toString(10).padStart(2, "0");
-  const ms = date.getMilliseconds().toString(10).padStart(3, "0");
+export function writeNDJSON(stream, depth, input) {
+  input.timestamp = input.timestamp.toISOString();
+  input.message = formatMessage(depth, input.message);
 
-  return `${h}:${m}:${s}.${ms}`;
-};
+  stream.write(JSON.stringify(input));
+  stream.write("\n");
+}
 
-/**
- * @param {string} level
- * @param {string} type
- * @returns {string}
- */
-const formatLevelAndType = (level, type) => {
-  const str =
-    typeof type === "string" && type.length > 0 ? `${level}[${type}]` : level;
+export function writePretty(
+  stream,
+  depth,
+  { level, type, timestamp, message, ...ctx },
+) {
+  stream.write(formatDate(timestamp));
+  stream.write(" ");
+  stream.write(formatLevelAndType(level, type));
 
-  return level === "error"
-    ? `\x1b[31m${str}\x1b[39m`
-    : `\x1b[34m${str}\x1b[39m`;
-};
+  if (Array.isArray(message) && Object.keys(ctx).length > 0) {
+    message.unshift(ctx);
+  }
+
+  if (message) {
+    stream.write(" ");
+    if (Array.isArray(message)) {
+      stream.write(
+        message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
+      );
+    } else {
+      if (Object.keys(ctx).length > 0) {
+        stream.write(formatMessagePretty(depth - 1, ctx));
+        stream.write(" ");
+      }
+      stream.write(formatMessagePretty(depth - 1, message));
+    }
+  }
+
+  stream.write("\n");
+}
 
 /**
  * @param {number} depth
  * @param {*} value
  * @returns {string}
  */
-const formatMessagePretty = (depth, value) => {
+function formatMessagePretty(depth, value) {
   if (
     typeof value === "boolean" ||
     typeof value === "string" ||
@@ -45,14 +57,14 @@ const formatMessagePretty = (depth, value) => {
       depth,
     });
   }
-};
+}
 
 /**
  * @param {number} availableDepth
  * @param {*} message
  * @returns {*}
  */
-const formatMessage = (availableDepth, message) => {
+function formatMessage(availableDepth, message) {
   if (message === null) {
     return null;
   }
@@ -104,43 +116,31 @@ const formatMessage = (availableDepth, message) => {
   }
 
   return result;
-};
+}
 
-export const writePretty = (
-  stream,
-  depth,
-  { level, type, timestamp, message, ...ctx },
-) => {
-  stream.write(formatDate(timestamp));
-  stream.write(" ");
-  stream.write(formatLevelAndType(level, type));
+/**
+ * @param {Date} date
+ * @returns {string}
+ */
+function formatDate(date) {
+  const h = date.getHours().toString(10).padStart(2, "0");
+  const m = date.getMinutes().toString(10).padStart(2, "0");
+  const s = date.getSeconds().toString(10).padStart(2, "0");
+  const ms = date.getMilliseconds().toString(10).padStart(3, "0");
 
-  if (Array.isArray(message) && Object.keys(ctx).length > 0) {
-    message.unshift(ctx);
-  }
+  return `${h}:${m}:${s}.${ms}`;
+}
 
-  if (message) {
-    stream.write(" ");
-    if (Array.isArray(message)) {
-      stream.write(
-        message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
-      );
-    } else {
-      if (Object.keys(ctx).length > 0) {
-        stream.write(formatMessagePretty(depth - 1, ctx));
-        stream.write(" ");
-      }
-      stream.write(formatMessagePretty(depth - 1, message));
-    }
-  }
+/**
+ * @param {string} level
+ * @param {string} type
+ * @returns {string}
+ */
+function formatLevelAndType(level, type) {
+  const str =
+    typeof type === "string" && type.length > 0 ? `${level}[${type}]` : level;
 
-  stream.write("\n");
-};
-
-export const writeNDJSON = (stream, depth, input) => {
-  input.timestamp = input.timestamp.toISOString();
-  input.message = formatMessage(depth, input.message);
-
-  stream.write(JSON.stringify(input));
-  stream.write("\n");
-};
+  return level === "error"
+    ? `\x1b[31m${str}\x1b[39m`
+    : `\x1b[34m${str}\x1b[39m`;
+}

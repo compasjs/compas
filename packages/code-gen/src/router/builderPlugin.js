@@ -4,7 +4,13 @@ import { R } from "./RouteBuilder.js";
 
 const store = new Set();
 
-const init = (app) => {
+export const plugin = {
+  init,
+  process,
+  build,
+};
+
+function init(app) {
   store.clear();
   app.hooks.addRoute = (route) => {
     if (!(route instanceof R.types.RouteBuilder)) {
@@ -13,9 +19,37 @@ const init = (app) => {
 
     store.add(route);
   };
-};
+}
 
-const process = (app) => {
+function build(result) {
+  registerLbuRoutes();
+
+  result.routes = [];
+  const tags = new Set();
+  const groups = new Set();
+
+  for (const route of store.values()) {
+    const r = route.build();
+
+    for (const t of r.tags.values()) {
+      tags.add(t);
+    }
+    groups.add(r.group);
+
+    r.paramsValidator = getModelName(route.paramsValidator);
+    r.queryValidator = getModelName(route.queryValidator);
+    r.bodyValidator = getModelName(route.bodyValidator);
+    r.responseModel = getModelName(route.responseModel);
+
+    result.routes.push(r);
+  }
+
+  // unique route tags
+  result.routeTags = [...tags];
+  result.routeGroups = [...groups];
+}
+
+function process(app) {
   // Validators / response can still be swapped out if wanted, so only finalize when no
   // user code is running
 
@@ -33,56 +67,24 @@ const process = (app) => {
       app.callHook("addModel", route.responseModel);
     }
   }
-};
+}
 
-const getModelName = (validator) => {
+function getModelName(validator) {
   if (validator === undefined || validator.item === undefined) {
     return undefined;
   }
 
   return upperCaseFirst(validator.item.name);
-};
+}
 
-const registerLbuRoutes = () => {
-  const group = R.group("LBU", "_lbu/");
+function registerLbuRoutes() {
+  const group = R.group("lbu", "_lbu/");
   const tags = ["_lbu"];
 
   store.add(
     group
-      .get("structure.json", "lbuStructure")
+      .get("structure.json", "structure")
       .tags(...tags)
       .docs("Return the full generated structure as a json object."),
   );
-};
-
-const build = (result) => {
-  registerLbuRoutes();
-
-  result.routes = {};
-  const tags = new Set();
-
-  for (const route of store.values()) {
-    const r = route.build();
-
-    for (const t of r.tags.values()) {
-      tags.add(t);
-    }
-    result.routes[r.group] = result.routes[r.group] || [];
-
-    r.paramsValidator = getModelName(route.paramsValidator);
-    r.queryValidator = getModelName(route.queryValidator);
-    r.bodyValidator = getModelName(route.bodyValidator);
-    r.responseModel = getModelName(route.responseModel);
-
-    result.routes[r.group].push(r);
-  }
-
-  // unique route tags
-  result.routeTags = [...tags];
-};
-
-export const plugin = {
-  init,
-  process,
-  build,
-};
+}

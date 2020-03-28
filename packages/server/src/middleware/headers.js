@@ -4,7 +4,7 @@ import { cors } from "./cors.js";
  * @param {Object} [opts]
  * @param {CorsOptions} opts.cors Cors configuration see koa2-cors
  */
-export const defaultHeaders = (opts = {}) => {
+export function defaultHeaders(opts = {}) {
   // Excerpt from default helmet headers
   // When serving static files, some extra headers should be added
   // See: https://helmetjs.github.io/docs/
@@ -22,4 +22,4 @@ export const defaultHeaders = (opts = {}) => {
 
     return next();
   };
-};
+}

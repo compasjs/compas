@@ -17,7 +17,7 @@ import {
  * @param {Object} opts.headers Argument for defaultHeaders middleware
  * @param {CorsOptions} opts.headers.cors Argument for defaultHeaders middleware
  */
-export const getApp = (opts = {}) => {
+export function getApp(opts = {}) {
   const app = new Koa();
   app.proxy =
     opts.proxy === undefined
@@ -37,4 +37,4 @@ export const getApp = (opts = {}) => {
   }
 
   return app;
-};
+}

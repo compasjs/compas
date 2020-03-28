@@ -9,7 +9,7 @@ let memoizeMultipartBodyParser;
  * Note that koa-body parses url-encoded, form data, json and text by default
  * @param {Object} [opts={}] Options that will be passed to koa-body
  */
-export const createBodyParsers = (opts = {}) => {
+export function createBodyParsers(opts = {}) {
   const multiPartOpts = merge({}, opts);
 
   opts.multipart = false;
@@ -17,14 +17,14 @@ export const createBodyParsers = (opts = {}) => {
 
   memoizeBodyParser = koaBody(opts);
   memoizeMultipartBodyParser = koaBody(multiPartOpts);
-};
+}
 
 /**
  * Middleware to parse querystring and request body
  * Only use this before a route that needs access to ctx.request.body or ctx.request.query
  * @returns {*} Koa middleware
  */
-export const getBodyParser = () => {
+export function getBodyParser() {
   if (memoizeBodyParser === undefined) {
     throw new Error(
       "Body parser used before initialization. Call createBodyParsers first",
@@ -32,7 +32,7 @@ export const getBodyParser = () => {
   }
 
   return memoizeBodyParser;
-};
+}
 
 /**
  * Middleware to parse querystring and request body with file support
@@ -40,7 +40,7 @@ export const getBodyParser = () => {
  * or ctx.request.query
  * @returns {*} Koa middleware
  */
-export const getMultipartBodyParser = () => {
+export function getMultipartBodyParser() {
   if (memoizeMultipartBodyParser === undefined) {
     throw new Error(
       "Multipart body parser used before initialization. Call createBodyParsers first",
@@ -48,4 +48,4 @@ export const getMultipartBodyParser = () => {
   }
 
   return memoizeMultipartBodyParser;
-};
+}

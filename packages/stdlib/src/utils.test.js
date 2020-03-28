@@ -1,6 +1,6 @@
 import { gc, getSecondsSinceEpoch } from "./utils.js";
 
-export const test = (t) => {
+export function test(t) {
   t.test("getSecondsSinceEpoch", (t) => {
     t.ok(Number.isInteger(getSecondsSinceEpoch()));
 
@@ -12,4 +12,4 @@ export const test = (t) => {
 
     t.end();
   });
-};
+}

@@ -15,7 +15,7 @@ import { getKnownScripts } from "./utils.js";
  * @param {string} cmd
  * @param {string[]} args
  */
-export const execScript = (logger, cmd = "help", args = []) => {
+export function execScript(logger, cmd = "help", args = []) {
   let watch = false;
   if (cmd === "--watch") {
     watch = true;
@@ -46,9 +46,9 @@ export const execScript = (logger, cmd = "help", args = []) => {
   } else if (script.type === "YARN") {
     return execYarnScript(logger, script, cmd, args, watch);
   }
-};
+}
 
-const execJsFile = async (logger, script, cmd, args, watch) => {
+async function execJsFile(logger, script, cmd, args, watch) {
   if (watch) {
     const opts = (await import(script.path)) || {};
 
@@ -70,9 +70,9 @@ const execJsFile = async (logger, script, cmd, args, watch) => {
   const executor = watch ? "./node_modules/.bin/nodemon" : "node";
 
   return spawn(executor, args);
-};
+}
 
-const execYarnScript = (logger, script, cmd, args, watch) => {
+function execYarnScript(logger, script, cmd, args, watch) {
   if (watch) {
     return spawn(`./node_modules/.bin/nodemon`, [
       "--exec",
@@ -83,4 +83,4 @@ const execYarnScript = (logger, script, cmd, args, watch) => {
   }
 
   return spawn(`yarn`, ["run", cmd, ...args]);
-};
+}

@@ -1,5 +1,5 @@
 let _internalBodyParser = undefined;
-const parseBody = ctx => {
+function parseBody(ctx) {
     if (_internalBodyParser === undefined) {
       const bp = getBodyParser();
       _internalBodyParser = ctx => new Promise(r => bp(ctx, r).then(r));
@@ -12,13 +12,15 @@ const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 
 const _composed = {
 {{ for (const r of routes) { }}
-  {{= r.name }}: undefined,
+{{ const qName = r.group + "_" + r.name; }}
+  {{= qName }}: undefined,
 {{ } }}
 };
 
 const handlers = {
 {{ for (const r of routes) { }}
-  {{= r.name }}: {{ if (r.bodyValidator || r.queryValidator) { }} async {{ } }} (params, ctx, next) => {
+{{ const qName = r.group + "_" + r.name; }}
+  {{= qName }}: {{ if (r.bodyValidator || r.queryValidator) { }} async {{ } }} function (params, ctx, next) {
     ctx.request.params = params;
 
     {{ if (r.paramsValidator) { }}
@@ -37,9 +39,9 @@ const handlers = {
     ctx.validatedQuery = validate{{= r.queryValidator }}(ctx.request.query);
     {{ } }}
 
-    if (_composed.{{= r.name}} === undefined) {
-      const curHandler = routeHandlers.{{= r.name }};
-      _composed.{{= r.name}} = filterCompose(
+    if (_composed.{{= qName }} === undefined) {
+      const curHandler = {{= r.group }}Handlers.{{= r.name }};
+      _composed.{{= qName }} = filterCompose(
         {{ for (const t of r.tags) { }}
           taggedMiddleware.{{= t }},
         {{ } }}
@@ -47,13 +49,15 @@ const handlers = {
       );
     }
 
-    return _composed.{{= r.name }}(ctx, next);
+    return _composed.{{= qName }}(ctx, next);
   },
 {{ } }}
 };
 
-export const routeHandlers = {
+{{ for (const group of routeGroups) { }}
+export const {{= group }}Handlers = {
 {{ for (const r of routes) { }}
+{{ if (r.group !== group) { continue; } }}
   /**
    * {{= r.docs.replace(/\n/g, "\\n  * ") }}
    * Tags: {{= r.tags.join(", ") }}
@@ -79,3 +83,4 @@ export const routeHandlers = {
   },
 {{ } }}
 };
+{{ } }}

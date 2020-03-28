@@ -3,7 +3,11 @@ import { isNil, mainFn, spawn } from "@lbu/stdlib";
 import { readdirSync } from "fs";
 import { join } from "path";
 
-const main = async (logger) => {
+mainFn(import.meta, newLogger(), main);
+
+export const disallowNodemon = true;
+
+async function main(logger) {
   const [workingDir] = process.argv.slice(2);
 
   if (isNil(workingDir)) {
@@ -19,8 +23,4 @@ const main = async (logger) => {
       cwd: join(process.cwd(), workingDir),
     });
   }
-};
-
-mainFn(import.meta, newLogger(), main);
-
-export const disallowNodemon = true;
+}

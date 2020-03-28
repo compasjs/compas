@@ -4,7 +4,9 @@ import { mainFn } from "@lbu/stdlib";
 import { router } from "../generated/router.js";
 import { validatorSetErrorFn } from "../generated/validators.js";
 
-const main = async (logger) => {
+mainFn(import.meta, newLogger(), main);
+
+async function main(logger) {
   const app = getApp({
     errorOptions: {
       leakError: true,
@@ -26,8 +28,6 @@ const main = async (logger) => {
   });
 
   mount();
-};
-
-mainFn(import.meta, newLogger(), main);
+}
 
 function mount() {}

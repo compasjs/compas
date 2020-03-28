@@ -3,7 +3,9 @@ import { AppError, createBodyParsers, getApp } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 import { validatorSetErrorFn } from "./generated/validators.js";
 
-const main = async (logger) => {
+mainFn(import.meta, log, main);
+
+async function main(logger) {
   logger.info("Hello from my src/api.js");
 
   const app = getApp({
@@ -23,6 +25,4 @@ const main = async (logger) => {
   app.listen(process.env.API_PORT, () => {
     logger.info(`Listening on port ${process.env.API_PORT}`);
   });
-};
-
-mainFn(import.meta, log, main);
+}

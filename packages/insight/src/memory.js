@@ -6,7 +6,7 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
  * @param {number} bytes
  * @returns {string}
  */
-export const bytesToHumanReadable = (bytes) => {
+export function bytesToHumanReadable(bytes) {
   if (bytes === 0) {
     return "0 Byte";
   }
@@ -23,7 +23,7 @@ export const bytesToHumanReadable = (bytes) => {
     result = result.substring(0, result.length - 1);
   }
   return `${result} ${sizes[idx]}`;
-};
+}
 
 /**
  * Prints the memory usage of the current process to the provided logger
@@ -31,7 +31,7 @@ export const bytesToHumanReadable = (bytes) => {
  * https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
  * @param logger
  */
-export const printProcessMemoryUsage = (logger) => {
+export function printProcessMemoryUsage(logger) {
   const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
   if (logger.isProduction()) {
     logger.info({
@@ -48,4 +48,4 @@ export const printProcessMemoryUsage = (logger) => {
       external: bytesToHumanReadable(external),
     });
   }
-};
+}

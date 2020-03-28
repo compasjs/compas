@@ -46,7 +46,7 @@ class RouteBuilder {
   params(model) {
     this.paramsValidator = model;
     if (this.paramsValidator !== undefined && !this.paramsValidator.item.name) {
-      this.paramsValidator.item.name = `${this.item.name}Params`;
+      this.paramsValidator.item.name = `${this.createModelName()}Params`;
     }
     return this;
   }
@@ -59,7 +59,7 @@ class RouteBuilder {
   query(model) {
     this.queryValidator = model;
     if (this.queryValidator !== undefined && !this.queryValidator.item.name) {
-      this.queryValidator.item.name = `${this.item.name}Query`;
+      this.queryValidator.item.name = `${this.createModelName()}Query`;
     }
     return this;
   }
@@ -76,7 +76,7 @@ class RouteBuilder {
 
     this.bodyValidator = model;
     if (this.bodyValidator !== undefined && !this.bodyValidator.item.name) {
-      this.bodyValidator.item.name = `${this.item.name}Body`;
+      this.bodyValidator.item.name = `${this.createModelName()}Body`;
     }
     return this;
   }
@@ -89,9 +89,16 @@ class RouteBuilder {
   response(model) {
     this.responseModel = model;
     if (this.responseModel !== undefined && !this.responseModel.item.name) {
-      this.responseModel.item.name = `${this.item.name}Response`;
+      this.responseModel.item.name = `${this.createModelName()}Response`;
     }
     return this;
+  }
+
+  /**
+   * @private
+   */
+  createModelName() {
+    return upperCaseFirst(this.item.group) + upperCaseFirst(this.item.name);
   }
 
   /**
@@ -105,7 +112,7 @@ class RouteBuilder {
 class RouteConstructor {
   constructor(group, path) {
     this.item = {
-      group: upperCaseFirst(group),
+      group,
       path,
     };
   }
@@ -216,7 +223,7 @@ function concatenateRoutePaths(path1, path2) {
   return path1 + path2;
 }
 
-export const R = new RouteConstructor("$", "/");
+export const R = new RouteConstructor("root", "/");
 
 R.types = {
   RouteBuilder,

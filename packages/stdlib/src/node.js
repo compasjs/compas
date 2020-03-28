@@ -4,7 +4,6 @@ import { join } from "path";
 import { promisify } from "util";
 
 const { lstat, readdir } = promises;
-
 const internalExec = promisify(cpExec);
 
 /**
@@ -13,7 +12,9 @@ const internalExec = promisify(cpExec);
  * @param {string} command
  * @returns {Promise<Object<{stdout: string, stderr: string}>>}
  */
-export const exec = (command) => internalExec(command, { encoding: "utf8" });
+export function exec(command) {
+  return internalExec(command, { encoding: "utf8" });
+}
 
 /**
  * A promise wrapper around child_process#spawn
@@ -22,14 +23,14 @@ export const exec = (command) => internalExec(command, { encoding: "utf8" });
  * @param {Object} [opts={}]
  * @returns {Promise<void>}
  */
-export const spawn = (command, args, opts = {}) => {
+export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
     const sp = cpSpawn(command, args, { stdio: "inherit", ...opts });
 
     sp.once("error", reject);
     sp.once("exit", resolve);
   });
-};
+}
 
 /**
  * Recursively walks directory async and calls cb on all files.
@@ -40,14 +41,14 @@ export const spawn = (command, args, opts = {}) => {
  * @param {boolean} [opts.skipNodeModules=true]
  * @param {boolean} [opts.skipDotFiles=true]
  */
-export const processDirectoryRecursive = async (
+export async function processDirectoryRecursive(
   dir,
   cb,
   opts = {
     skipDotFiles: true,
     skipNodeModules: true,
   },
-) => {
+) {
   for (const file of await readdir(dir, { encoding: "utf8" })) {
     if (opts.skipNodeModules && file === "node_modules") {
       continue;
@@ -64,7 +65,7 @@ export const processDirectoryRecursive = async (
       await Promise.resolve(cb(newPath));
     }
   }
-};
+}
 
 /**
  *
@@ -74,14 +75,14 @@ export const processDirectoryRecursive = async (
  * @param {boolean} [opts.skipNodeModules=true]
  * @param {boolean} [opts.skipDotFiles=true]
  */
-export const processDirectoryRecursiveSync = (
+export function processDirectoryRecursiveSync(
   dir,
   cb,
   opts = {
     skipDotFiles: true,
     skipNodeModules: true,
   },
-) => {
+) {
   for (const file of readdirSync(dir, { encoding: "utf8" })) {
     if (opts.skipNodeModules && file === "node_modules") {
       continue;
@@ -98,4 +99,4 @@ export const processDirectoryRecursiveSync = (
       cb(newPath);
     }
   }
-};
+}

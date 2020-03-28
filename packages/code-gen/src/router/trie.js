@@ -10,6 +10,7 @@ export const buildTrie = (routes) => {
   for (const r of routes) {
     routeTrieInput.push({
       routeName: r.name,
+      routeGroup: r.group,
       fullPath: `${r.method}/${r.path}`,
     });
   }
@@ -26,6 +27,7 @@ function buildRouteTrie(input) {
       trie,
       r.fullPath.split("/").filter((it) => it.trim() !== ""),
       r.routeName,
+      r.routeGroup,
     );
   }
 
@@ -50,6 +52,7 @@ function buildRouteTrie(input) {
 function convertToGeneratorTrie(trie, ctx) {
   let result = {
     routeName: trie.routeName || undefined,
+    routeGroup: trie.routeGroup || undefined,
     functionName: `routeMatcher${ctx.counter++}`,
     children: trie.children.map((it) => convertToGeneratorTrie(it, ctx)),
   };
@@ -70,9 +73,10 @@ function convertToGeneratorTrie(trie, ctx) {
 /**
  *
  * @param {string} path
- * @param {string=} [routeName]
+ * @param {string} [routeName]
+ * @param {string} [routeGroup]
  */
-function createNode(path, routeName) {
+function createNode(path, routeName, routeGroup) {
   let prio = RoutePrio.STATIC;
   if (path === "*") {
     prio = RoutePrio.WILDCARD;
@@ -85,6 +89,7 @@ function createNode(path, routeName) {
     prio,
     path,
     routeName,
+    routeGroup,
     parent: undefined,
   };
 }
@@ -107,12 +112,12 @@ function addHttpMethods(trie) {
   );
 }
 
-function addRoute(trie, path, routeName) {
+function addRoute(trie, path, routeName, routeGroup) {
   const currentPath = path[0];
 
   let child = trie.children.find((it) => it.path === currentPath);
   if (!child) {
-    child = createNode(currentPath, undefined);
+    child = createNode(currentPath, undefined, undefined);
     if (trie.prio === RoutePrio.WILDCARD) {
       throw new Error("Can't have sub routes on wildcard routes");
     }
@@ -121,8 +126,9 @@ function addRoute(trie, path, routeName) {
 
   if (path.length === 1) {
     child.routeName = routeName;
+    child.routeGroup = routeGroup;
   } else {
-    addRoute(child, path.slice(1), routeName);
+    addRoute(child, path.slice(1), routeName, routeGroup);
   }
 }
 
@@ -165,6 +171,9 @@ function collapseStaticChildren(trie) {
   }
 }
 
+/**
+ * Sort trie recursively, putting prio in order from low to high, and longer routes first
+ */
 function sortTrie(trie) {
   trie.children = trie.children.sort((a, b) => {
     const result = a.prio - b.prio;

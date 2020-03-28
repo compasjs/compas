@@ -4,16 +4,11 @@ import { spawnSync } from "child_process";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
-const buildReadmeSource = (pkgName, readmeSource) =>
-  `# @lbu/${pkgName}\n${readmeSource}`;
+mainFn(import.meta, newLogger(), main);
 
-const getReadmeSource = () => {
-  const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
+export const nodemonArgs = "-w ./README.md";
 
-  return src.split("\n").slice(1).join("\n");
-};
-
-const exec = (logger) => {
+function main(logger) {
   // Script to copy the root README.md to all packages
 
   if (join(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
@@ -37,8 +32,14 @@ const exec = (logger) => {
 
   logger.info("Done.\nRunning linter");
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
-};
+}
 
-mainFn(import.meta, newLogger(), exec);
+function buildReadmeSource(pkgName, readmeSource) {
+  return `# @lbu/${pkgName}\n${readmeSource}`;
+}
 
-export const nodemonArgs = "-w ./README.md";
+function getReadmeSource() {
+  const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
+
+  return src.split("\n").slice(1).join("\n");
+}

@@ -11,15 +11,12 @@ import {
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
-const app = new App("TODO App");
+mainFn(import.meta, log, main);
 
-app.model(
-  M.object("MyObject", {
-    userName: M.string().mock("__.first"),
-  }),
-);
+export const nodemonArgs = "--ignore generated -e tmpl,js,json";
 
-const main = async (logger) => {
+async function main(logger) {
+  const app = createApp();
   // Code gen validators
   await runCodeGen(logger, () => app.build()).build({
     plugins: [
@@ -31,8 +28,16 @@ const main = async (logger) => {
     ],
     outputDir: "./src/generated",
   });
-};
+}
 
-mainFn(import.meta, log, main);
+function createApp() {
+  const app = new App("TODO App");
 
-export const nodemonArgs = "--ignore generated -e tmpl,js,json";
+  app.model(
+    M.object("MyObject", {
+      userName: M.string().mock("__.first"),
+    }),
+  );
+
+  return app;
+}

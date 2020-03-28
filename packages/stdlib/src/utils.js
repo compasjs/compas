@@ -6,7 +6,9 @@ import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
 import { isNil } from "./lodash.js";
 
-export const getSecondsSinceEpoch = () => Math.floor(Date.now() / 1000);
+export function getSecondsSinceEpoch() {
+  return Math.floor(Date.now() / 1000);
+}
 
 /**
  * Internal gc function reference
@@ -18,20 +20,63 @@ let internalGc = global.gc;
 /**
  * Let V8 know to please run the garbage collector.
  */
-export const gc = () => {
+export function gc() {
   if (isNil(internalGc)) {
     setFlagsFromString("--expose_gc");
     internalGc = runInNewContext("gc");
   }
 
   internalGc();
-};
+}
+
+/**
+ * @callback MainFnCallback
+ * @param {Logger} logger
+ * @returns {Promise.<void>|void}
+ */
+
+/**
+ * Run the provided cb if this file is the process entrypoint
+ * Will also load dotenv before executing the provided callback.
+ * Another side effect is that a process listener is added for warnings
+ * @param {ImportMeta} meta
+ * @param {Logger} logger
+ * @param {MainFnCallback} cb
+ */
+export function mainFn(meta, logger, cb) {
+  if (isMainFn(meta)) {
+    dotenv.config();
+    setupProcessListeners(logger);
+    let result = cb(logger);
+    Promise.resolve(result).catch((e) => logger.error(e));
+  }
+}
+
+/**
+ * Return filename for ES Module
+ * Alternative to CommonJS __filename
+ * @param {ImportMeta} meta
+ * @return {string}
+ */
+export function filenameForModule(meta) {
+  return fileURLToPath(meta.url);
+}
+
+/**
+ * Return dirname for ES Module
+ * Alternative to CommonJS __dirname
+ * @param {ImportMeta} meta
+ * @return {string}
+ */
+export function dirnameForModule(meta) {
+  return path.dirname(filenameForModule(meta));
+}
 
 /**
  * @param {ImportMeta} meta
  * @return {boolean}
  */
-const isMainFn = (meta) => {
+function isMainFn(meta) {
   const modulePath = fileURLToPath(meta.url);
 
   let scriptPath = process.argv[1];
@@ -53,47 +98,8 @@ const isMainFn = (meta) => {
   }
 
   return modulePathWithoutExt === scriptPath;
-};
+}
 
-const setupProcessListeners = (logger) => {
+function setupProcessListeners(logger) {
   process.on("warning", (err) => logger.error(err));
-};
-
-/**
- * @callback MainFnCallback
- * @param {Logger} logger
- * @returns {Promise.<void>|void}
- */
-
-/**
- * Run the provided cb if this file is the process entrypoint
- * Will also load dotenv before executing the provided callback.
- * Another side effect is that a process listener is added for warnings
- * @param {ImportMeta} meta
- * @param {Logger} logger
- * @param {MainFnCallback} cb
- */
-export const mainFn = (meta, logger, cb) => {
-  if (isMainFn(meta)) {
-    dotenv.config();
-    setupProcessListeners(logger);
-    let result = cb(logger);
-    Promise.resolve(result).catch((e) => logger.error(e));
-  }
-};
-
-/**
- * Return filename for ES Module
- * Alternative to CommonJS __filename
- * @param {ImportMeta} meta
- * @return {string}
- */
-export const filenameForModule = (meta) => fileURLToPath(meta.url);
-
-/**
- * Return dirname for ES Module
- * Alternative to CommonJS __dirname
- * @param {ImportMeta} meta
- * @return {string}
- */
-export const dirnameForModule = (meta) => path.dirname(filenameForModule(meta));
+}

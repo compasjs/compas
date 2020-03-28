@@ -5,7 +5,9 @@ import lodashMerge from "lodash.merge";
  * @param {*=} item
  * @returns {boolean}
  */
-export const isNil = (item) => item === null || item === undefined;
+export function isNil(item) {
+  return item === null || item === undefined;
+}
 
 /**
  * Check if item is a plain javascript object
@@ -13,11 +15,14 @@ export const isNil = (item) => item === null || item === undefined;
  * @param {*=} item
  * @returns {boolean}
  */
-export const isPlainObject = (item) =>
-  typeof item === "object" &&
-  !isNil(item) &&
-  item.constructor === Object &&
-  Object.prototype.toString.call(item) === "[object Object]";
+export function isPlainObject(item) {
+  return (
+    typeof item === "object" &&
+    !isNil(item) &&
+    item.constructor === Object &&
+    Object.prototype.toString.call(item) === "[object Object]"
+  );
+}
 
 /**
  * Re expose lodash.merge
@@ -37,7 +42,7 @@ export const merge = lodashMerge;
  * @param [path]
  * @return {Object.<string, *>}
  */
-export const flatten = (data, result = {}, path = "") => {
+export function flatten(data, result = {}, path = "") {
   for (const key of Object.keys(data)) {
     let resultPath = path + "." + key;
     if (path === "") {
@@ -53,14 +58,14 @@ export const flatten = (data, result = {}, path = "") => {
   }
 
   return result;
-};
+}
 
 /**
  * Opposite of flatten
  * @param {Object} data
  * @return {Object}
  */
-export const unFlatten = (data) => {
+export function unFlatten(data) {
   const result = {};
   for (const key of Object.keys(data)) {
     const value = data[key];
@@ -77,4 +82,4 @@ export const unFlatten = (data) => {
   }
 
   return result;
-};
+}

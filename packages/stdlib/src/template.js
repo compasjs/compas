@@ -32,7 +32,7 @@ const templateStore = new Map();
  * @param {boolean} opts.debug Set to true to print context keys and input object before
  *   executing the template
  */
-export const compileTemplate = (name, str, opts = {}) => {
+export function compileTemplate(name, str, opts = {}) {
   if (isNil(name) || isNil(str)) {
     throw new TypeError("Both name and string are required");
   }
@@ -96,9 +96,9 @@ export const compileTemplate = (name, str, opts = {}) => {
     err.originalErr = e;
     throw err;
   }
-};
+}
 
-export const compileTemplateDirectory = (dir, extension, opts) => {
+export function compileTemplateDirectory(dir, extension, opts) {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
   return processDirectoryRecursive(dir, async (file) => {
     if (!file.endsWith(ext)) {
@@ -110,18 +110,7 @@ export const compileTemplateDirectory = (dir, extension, opts) => {
 
     compileTemplate(name, content, opts);
   });
-};
-
-const getExecutionContext = () => {
-  const result = {
-    ...templateContext,
-  };
-  for (const [key, item] of templateStore.entries()) {
-    result[key] = item.bind(undefined, result);
-  }
-
-  return result;
-};
+}
 
 /**
  * Execute a template, template should be compiled using compileTemplate
@@ -129,7 +118,7 @@ const getExecutionContext = () => {
  * @param data
  * @returns {string} The resulting string for executing the template
  */
-export const executeTemplate = (name, data) => {
+export function executeTemplate(name, data) {
   if (!templateStore.has(name)) {
     throw new Error(`Unknown template: ${name}`);
   }
@@ -141,7 +130,7 @@ export const executeTemplate = (name, data) => {
     err.originalErr = e;
     throw err;
   }
-};
+}
 
 /**
  * Simply add an item to the Context dictionary, note name can overwrite or be
@@ -149,6 +138,17 @@ export const executeTemplate = (name, data) => {
  * @param name
  * @param value
  */
-export const addToTemplateContext = (name, value) => {
+export function addToTemplateContext(name, value) {
   templateContext[name] = value;
-};
+}
+
+function getExecutionContext() {
+  const result = {
+    ...templateContext,
+  };
+  for (const [key, item] of templateStore.entries()) {
+    result[key] = item.bind(undefined, result);
+  }
+
+  return result;
+}

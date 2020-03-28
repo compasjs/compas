@@ -32,7 +32,8 @@ const defaultOptions = {
 
 /**
  * @typedef {Object} CorsOptions
- * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is request Origin header
+ * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is
+ *   request Origin header
  * @property {string[]} [exposeHeaders] `Access-Control-Expose-Headers`
  * @property {string|number} [maxAge] `Access-Control-Max-Age` in seconds
  * @property {boolean} [credentials] `Access-Control-Allow-Credentials`
@@ -49,7 +50,7 @@ const defaultOptions = {
  * @param {CorsOptions} [options]
  * @return {Function}
  */
-export const cors = (options = {}) => {
+export function cors(options = {}) {
   const opts = Object.assign({}, defaultOptions, options);
 
   let originFn = (ctx) => options.origin || ctx.get("Origin") || "*";
@@ -127,4 +128,4 @@ export const cors = (options = {}) => {
       return returnValue();
     }
   };
-};
+}

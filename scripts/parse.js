@@ -2,7 +2,17 @@ import { addProcessor, newLogger, parseExec } from "@lbu/insight";
 import { logParser } from "@lbu/server";
 import { mainFn } from "@lbu/stdlib";
 
-const main = async (logger) => {
+mainFn(
+  import.meta,
+  newLogger({
+    ctx: {
+      type: "LOG_PROCESSING",
+    },
+  }),
+  main,
+);
+
+async function main(logger) {
   const store = {
     httpSummary: {},
     warnings: [],
@@ -27,14 +37,4 @@ const main = async (logger) => {
   const out = parseExec();
 
   out.pipe(process.stdout);
-};
-
-mainFn(
-  import.meta,
-  newLogger({
-    ctx: {
-      type: "LOG_PROCESSING",
-    },
-  }),
-  main,
-);
+}

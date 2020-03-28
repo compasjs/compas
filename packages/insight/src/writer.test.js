@@ -1,6 +1,6 @@
 import { writeNDJSON, writePretty } from "./writer.js";
 
-export const test = (t) => {
+export function test(t) {
   t.test("writePretty", (t) => {
     const now = new Date();
     let result = [];
@@ -85,4 +85,4 @@ export const test = (t) => {
 
     t.end();
   });
-};
+}

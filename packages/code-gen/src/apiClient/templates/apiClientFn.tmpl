@@ -18,7 +18,7 @@
 {{ } }}
 
  */
-export const {{= name }} = async (
+{{= name }}: async function (
 {{ if (it.paramsValidator) { }}
 params,
 {{ } }}
@@ -28,7 +28,7 @@ query,
 {{ if (it.bodyValidator) { }}
 body,
 {{ } }}
-) => {
+) {
     {{ const url = path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
     checkApiClient();
 
@@ -62,4 +62,4 @@ body,
 
         return response.data;
     {{ } }}
-};
+}

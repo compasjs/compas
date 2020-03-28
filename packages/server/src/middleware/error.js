@@ -119,7 +119,7 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
  * @param {ErrorHandlerOptions} opts
  * @returns {function(...[*]=)}
  */
-export const errorHandler = ({ onAppError, onError, leakError }) => {
+export function errorHandler({ onAppError, onError, leakError }) {
   onAppError = onAppError || defaultOnAppError;
   onError = onError || defaultOnError;
   leakError = leakError === true;
@@ -166,4 +166,4 @@ export const errorHandler = ({ onAppError, onError, leakError }) => {
       }
     }
   };
-};
+}

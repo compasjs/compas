@@ -18,7 +18,6 @@ export {
   compileTemplateDirectory,
   executeTemplate,
 } from "./src/template.js";
-export { newTranslator } from "./src/translate.js";
 export {
   getSecondsSinceEpoch,
   gc,
