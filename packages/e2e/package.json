@@ -1,0 +1,29 @@
+{
+  "name": "@lbu/e2e",
+  "private": true,
+  "version": "0.0.8",
+  "description": "E2E testing",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@lbu/insight": "^0.0.8",
+    "@lbu/server": "^0.0.8",
+    "@lbu/stdlib": "^0.0.8"
+  },
+  "devDependencies": {
+    "@lbu/cli": "^0.0.8",
+    "@lbu/code-gen": "^0.0.8",
+    "@lbu/lint-config": "^0.0.8"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbu.git"
+  },
+  "engines": {
+    "node": ">=12"
+  }
+}
