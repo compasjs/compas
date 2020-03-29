@@ -1,4 +1,5 @@
 import { isNil, spawn } from "@lbu/stdlib";
+import nodemon from "nodemon";
 import { join } from "path";
 import { getKnownScripts } from "./utils.js";
 
@@ -67,20 +68,41 @@ async function execJsFile(logger, script, cmd, args, watch) {
     args = [script.path, ...args];
   }
 
-  const executor = watch ? "./node_modules/.bin/nodemon" : "node";
-
-  return spawn(executor, args);
+  if (watch) {
+    execNodemon(logger, args.join(" "));
+  } else {
+    return spawn("node", args);
+  }
 }
 
 function execYarnScript(logger, script, cmd, args, watch) {
   if (watch) {
-    return spawn(`./node_modules/.bin/nodemon`, [
-      "--exec",
-      script.script,
-      "--",
-      ...args,
-    ]);
+    execNodemon(logger, `--exec "${script.script}" -- ${args.join(" ")}`);
+  } else {
+    return spawn(`yarn`, ["run", cmd, ...args]);
   }
+}
 
-  return spawn(`yarn`, ["run", cmd, ...args]);
+function execNodemon(logger, args) {
+  nodemon(args)
+    .once("start", () => {
+      logger.info("Script start");
+    })
+    .on("restart", (files) => {
+      if (!files || files.length === 0) {
+        logger.info("Script restart manually");
+      } else {
+        logger.info("Script restart due to file change", files);
+      }
+    })
+    .on("quit", (signal) => {
+      logger.info("LBU quit");
+      process.exit(signal);
+    })
+    .on("crash", (arg) => {
+      logger.info("Script crash", arg);
+    })
+    .on("exit", () => {
+      logger.info("Script exit");
+    });
 }

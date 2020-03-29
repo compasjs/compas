@@ -5,6 +5,16 @@ import { join } from "path";
 export function getKnownScripts() {
   const result = {};
 
+  const cliDir = join(dirnameForModule(import.meta), "../scripts");
+  for (const item of readdirSync(cliDir)) {
+    const name = item.split(".")[0];
+
+    result[name] = {
+      type: "CLI",
+      path: join(cliDir, item),
+    };
+  }
+
   const userDir = join(process.cwd(), "scripts");
   if (existsSync(userDir)) {
     for (const item of readdirSync(userDir)) {
@@ -23,16 +33,6 @@ export function getKnownScripts() {
     for (const item of Object.keys(pkgJson.scripts || {})) {
       result[item] = { type: "YARN", script: pkgJson.scripts[item] };
     }
-  }
-
-  const cliDir = join(dirnameForModule(import.meta), "../scripts");
-  for (const item of readdirSync(cliDir)) {
-    const name = item.split(".")[0];
-
-    result[name] = {
-      type: "CLI",
-      path: join(cliDir, item),
-    };
   }
 
   return result;
