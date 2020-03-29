@@ -1,3 +1,5 @@
+import { isNil } from "@lbu/stdlib";
+
 export function referenceMock(mock, { ignoreDefaults }) {
   const result = [];
 
@@ -9,7 +11,7 @@ export function referenceMock(mock, { ignoreDefaults }) {
   }
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

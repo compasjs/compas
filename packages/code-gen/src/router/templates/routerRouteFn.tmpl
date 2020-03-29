@@ -8,7 +8,7 @@ export function router(ctx, next) {
     triePath = triePath.substring(0, triePath.length - 1);
   }
 
-  const params = {};
+  const params = Object.create(null);
   let route = undefined;
 
   {{ for (const r of routeTrie.children) { }}

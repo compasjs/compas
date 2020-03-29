@@ -1,3 +1,5 @@
+import { isNil } from "@lbu/stdlib";
+
 export function numberMock(mock, { ignoreDefaults }) {
   const result = [];
   const mockArgs = JSON.stringify({
@@ -16,7 +18,7 @@ export function numberMock(mock, { ignoreDefaults }) {
   }
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

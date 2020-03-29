@@ -43,7 +43,7 @@ function {{= functionName }}(path, params, currentIdx) {
 
     const subPath = path.substring(currentIdx, subIdx);
     {{ if (it.routeName !== undefined && (it.children === undefined || it.children.length === 0)) { }}
-    params.{{= paramName }} = subPath;
+    params.{{= paramName }} = decodeURIComponent(subPath);
     return handlers.{{= qName }};
     {{ } else { }}
         const nextIdx = subIdx + 1;
@@ -51,7 +51,7 @@ function {{= functionName }}(path, params, currentIdx) {
 
         {{ if (it.routeName !== undefined) { }}
         if (path.length === nextIdx - 1) {
-            params.{{= paramName }} = subPath;
+            params.{{= paramName }} = decodeURIComponent(subPath);
             return handlers.{{= qName }};
         }
         {{ } }}
@@ -59,13 +59,13 @@ function {{= functionName }}(path, params, currentIdx) {
         {{ for (const child of children) { }}
         handler = {{= child.functionName }}(path, params, nextIdx);
         if (handler !== undefined) {
-            params.{{= paramName }} = subPath;
+            params.{{= paramName }} = decodeURIComponent(subPath);
             return handler;
         }
         {{ } }}
 
         {{ if (it.routeName !== undefined) { }}
-        params.{{= paramName }} = subPath;
+        params.{{= paramName }} = decodeURIComponent(subPath);
         return handlers.{{= qName }};
         {{ } else { }}
         return undefined;

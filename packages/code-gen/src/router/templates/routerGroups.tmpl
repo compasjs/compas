@@ -1,0 +1,5 @@
+export const groupMiddleware = {
+{{ for (const g of groups) { }}
+ {{= g }}: (ctx, next) => { return next(); },
+{{ } }}
+};

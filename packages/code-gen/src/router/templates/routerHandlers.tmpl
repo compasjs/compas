@@ -45,6 +45,7 @@ const handlers = {
         {{ for (const t of r.tags) { }}
           taggedMiddleware.{{= t }},
         {{ } }}
+          groupMiddleware.{{= r.group }},
         ...(Array.isArray(curHandler) ? curHandler : [curHandler]),
       );
     }

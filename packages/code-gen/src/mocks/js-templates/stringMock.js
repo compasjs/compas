@@ -1,14 +1,10 @@
+import { isNil } from "@lbu/stdlib";
+
 export function stringMock(mock, { ignoreDefaults }) {
   const result = [];
   const mockArgs = JSON.stringify({
     min: mock.validator.min,
     max: mock.validator.max,
-    casing: mock.validator.upperCase
-      ? "upper"
-      : mock.validator.lowerCase
-      ? "lower"
-      : undefined,
-    alpha: true,
   });
 
   if (mock.oneOf !== undefined) {
@@ -16,11 +12,11 @@ export function stringMock(mock, { ignoreDefaults }) {
       result.push(`"${str}"`);
     }
   } else {
-    result.push(`_mocker.string(${mockArgs})`);
+    result.push(`_mocker.word(${mockArgs})`);
   }
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

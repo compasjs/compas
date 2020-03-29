@@ -1,3 +1,5 @@
+import { isNil } from "@lbu/stdlib";
+
 export function booleanMock(mock, { ignoreDefaults }) {
   const result = [];
 
@@ -8,7 +10,7 @@ export function booleanMock(mock, { ignoreDefaults }) {
   }
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

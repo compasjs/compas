@@ -1,3 +1,4 @@
+import { isNil } from "@lbu/stdlib";
 import { mockForType } from "./mockForType.js";
 
 export function objectMock(mock, { ignoreDefaults }) {
@@ -13,7 +14,7 @@ export function objectMock(mock, { ignoreDefaults }) {
   result.push(buildObject);
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

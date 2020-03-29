@@ -1,3 +1,4 @@
+import { isNil } from "@lbu/stdlib";
 import { mockForType } from "./mockForType.js";
 
 export function genericMock(mock, { ignoreDefaults }) {
@@ -23,7 +24,7 @@ export function genericMock(mock, { ignoreDefaults }) {
   result.push(`Object.fromEntries(${entryMock})`);
 
   if (mock.optional) {
-    if (mock.default && !ignoreDefaults) {
+    if (!isNil(mock.default) && !ignoreDefaults) {
       result.push(mock.default);
     } else {
       result.push("undefined");

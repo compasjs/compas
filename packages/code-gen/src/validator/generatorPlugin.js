@@ -31,7 +31,18 @@ async function init() {
 }
 
 function generate(opts, data) {
-  const validatorFunctions = transform(data);
+  data.validators = data.validators.map((it) => upperCaseFirst(it));
+
+  const validatorsToGenerate = extractValidatorsToGenerate(
+    data.models,
+    data.validators,
+  );
+
+  const validatorFunctions = transform({
+    models: data.models,
+    validators: validatorsToGenerate,
+  });
+
   return {
     path: "./validators.js",
     content: executeTemplate("validatorsFile", {
@@ -124,4 +135,48 @@ function processValidator(ctx, validator) {
       break;
   }
   return validator;
+}
+
+/**
+ * Recursively adds referenced models to result.
+ * This is needed because of the way we generate the validators, and reuse the referenced
+ * models instead of generating all over again
+ */
+function extractValidatorsToGenerate(models, validators, result = []) {
+  for (const validator of validators) {
+    if (!models[validator] || result.indexOf(validator) !== -1) {
+      continue;
+    }
+
+    recursiveExtract(models, models[validator], result);
+
+    result.push(validator);
+  }
+
+  return result;
+}
+
+function recursiveExtract(models, model, result) {
+  switch (model.type) {
+    case "object":
+      for (const key of Object.keys(model.keys)) {
+        recursiveExtract(models, model.keys[key], result);
+      }
+      break;
+    case "array":
+      recursiveExtract(models, model.values, result);
+      break;
+    case "anyOf":
+      for (const value of model.values) {
+        recursiveExtract(models, value, result);
+      }
+      break;
+    case "reference":
+      extractValidatorsToGenerate(models, [model.referenceModel], result);
+      break;
+    case "generic":
+      recursiveExtract(models, model.keys, result);
+      recursiveExtract(models, model.values, result);
+      break;
+  }
 }

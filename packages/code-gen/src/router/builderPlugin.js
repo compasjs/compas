@@ -64,7 +64,7 @@ function process(app) {
       app.callHook("addValidator", route.bodyValidator);
     }
     if (!isNil(route.responseModel)) {
-      app.callHook("addModel", route.responseModel);
+      app.callHook("addValidator", route.responseModel);
     }
   }
 }
