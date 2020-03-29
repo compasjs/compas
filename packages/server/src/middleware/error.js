@@ -133,10 +133,10 @@ export function errorHandler({ onAppError, onError, leakError }) {
       }
 
       let err = error;
-      let log = ctx.log.info;
+      let log = ctx.log.info.bind(ctx.log);
 
       if (!(error instanceof AppError)) {
-        log = ctx.log.error;
+        log = ctx.log.error.bind(ctx.log);
         err = new AppError("error.server.internal", 500, {}, error);
       }
 
