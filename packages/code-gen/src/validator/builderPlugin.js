@@ -3,6 +3,7 @@ import { upperCaseFirst } from "../utils.js";
 const store = new Set();
 
 export const plugin = {
+  name: "validator",
   init,
   build,
 };

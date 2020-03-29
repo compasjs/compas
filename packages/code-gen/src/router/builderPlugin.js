@@ -5,6 +5,7 @@ import { R } from "./RouteBuilder.js";
 const store = new Set();
 
 export const plugin = {
+  name: "router",
   init,
   process,
   build,

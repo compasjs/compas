@@ -5,6 +5,7 @@ import { M } from "./ModelBuilder.js";
 const store = new Set();
 
 export const plugin = {
+  name: "model",
   init,
   build,
 };
@@ -16,11 +17,9 @@ function init(app) {
       throw new Error("Model only accpets instances of ModelBuilder. See M");
     }
 
-    if (!model.item.name) {
+    if (!model.item.name || model.item.name.length === 0) {
       throw new Error("Registered models should have a name.");
     }
-
-    model.item.name = upperCaseFirst(model.item.name);
 
     store.add(model);
   };
@@ -45,7 +44,7 @@ function build(result) {
  * @param model
  */
 function replaceReferences(models, model) {
-  if (!isNil(model.name)) {
+  if (!isNil(model.name) && model.name.trim().length > 0) {
     model.name = upperCaseFirst(model.name);
 
     if (!models[model.name]) {

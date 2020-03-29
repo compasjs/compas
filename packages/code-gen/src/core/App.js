@@ -6,6 +6,8 @@
  * }} AppPlugin
  */
 
+import { logger } from "@lbu/cli/src/logger.js";
+
 /**
  * @type {AppPlugin[]}
  * @private
@@ -49,6 +51,7 @@ export class App {
    */
   callPlugins(method, ...args) {
     for (const plugin of _plugins) {
+      logger.info(`builder: Calling ${plugin.name}#${method}`);
       if (method in plugin) {
         plugin[method](...args);
       }

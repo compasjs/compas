@@ -1,3 +1,4 @@
+import { logger } from "@lbu/cli/src/logger.js";
 import { isPlainObject } from "@lbu/stdlib";
 import { existsSync, promises as fs } from "fs";
 import { join } from "path";
@@ -59,6 +60,10 @@ class Runner {
     const hasPlugin = (name) => !!this.plugins.find((it) => it.name === name);
 
     for (const p of this.plugins) {
+      if (this.opts.verbose) {
+        logger.info(`generator: Calling ${p.name}#init`);
+      }
+
       if ("init" in p) {
         await p.init({
           hasPlugin,
@@ -73,6 +78,10 @@ class Runner {
    */
   async pluginsGenerate() {
     for (const p of this.plugins) {
+      if (this.opts.verbose) {
+        logger.info(`generator: Calling ${p.name}#generate`);
+      }
+
       if ("generate" in p) {
         const result = await p.generate(this.data);
         if (!result) {
