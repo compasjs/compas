@@ -88,6 +88,138 @@ mainFn(import.meta, log, main);
 The last part of this file instructs that the `main`-function should only run
 when this file is the entrypoint of the program.
 
-- Create api
-- Point out various things like type && type_Optional
-- Add mocks to the mix
+It's time to do the generation! Run this newly created file:
+`node ./generate.js` (or the `.mjs` variant). You may check the files in
+`./src/generated`. Note that it's not pretty, so run whatever formatter you want
+on the files.
+
+- types.{js,ts}: This file contains all 'Models'. The JsDoc in the different
+  JavaScript files can reference this for easier typechecked arguments
+- apiClient.js: The fully generated api client.
+
+Let's build a todo app ;)
+
+Currently the apiClient expects you to provide your own axios instance. You can
+provide it like so:
+
+```typescript
+import axios from "axios";
+import * as api from "../generated/apiClient.js";
+api.createApiClient(
+  axios.create({
+    baseURL: "http://lbu-e2e.lightbase.nl",
+  }),
+);
+```
+
+> Note: Your import may be different depending on where you create this file and
+> the outputDir in generate.js
+
+Now it should be pretty straight forward to use the api.
+
+For example, to get your own todo lists:
+
+```
+await api.todo.all();
+```
+
+To get one todo list by name:
+
+```typescript
+await api.todo.one({ name: "Default List" });
+```
+
+If you have a decent editor you noticed the first argument to `api.todo.one` is
+called `params` which expects an object. These arguments are generated when
+necessary by lbu, and always in the following order:
+
+- `params`: Route params, often used for ids like `/user/:id`
+- `query`: Query parameters, often used for sorting, filtering or paginating
+  like `&search=foo`
+- `body`: Body payload, since lbu, at the moment, supports only json, this will
+  be the json body of your post & put requests
+
+Another feature supported by the code generator and api client is to
+automatically mock routes that are not implemented.
+
+Change the `@lbu/code-gen` import in `./generate.js` to the following:
+
+```ecmascript 6
+import {
+  loadFromRemote,
+  runCodeGen,
+  getTypesPlugin,
+  getApiClientPlugin,
+ getMocksPlugin,
+} from "@lbu/code-gen";
+```
+
+Also add the following to the `plugins` array in `./generate.js`:
+
+```ecmascript 6
+ await runCodeGen(logger, () => loadFromRemote("http://localhost:3000")).build({
+    plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin(), getMocksPlugin()],
+    outputDir: "./src/generated",
+  });
+```
+
+Let's run the generator again: `node ./generate.js`. If you want to see the
+changes in `[outputDir]/apiClient.js` make sure to format the file, with for
+example Prettier.
+
+The example api contains several unimplemented routes and are conveniently
+grouped under `api.unimplemented`. Run for example the following snippet a few
+times, and notice that you get a different result each time:
+
+```ecmascript 6
+console.log(await api.unimplemented.user())
+```
+
+This executes a GET request to `/unimplemented/user` and the server will respond
+with a `405 Not implemented`. The api client catches that specific error, and
+will automatically call the appropriate mock for the expected response. All
+other errors will be throw again.
+
+For fun there is also `api.unimplemented.settings()`, which shows randomly
+generated enums, arrays and union types
+
+### Footnotes
+
+**Optional:**
+
+All types in lbu are generated twice:
+
+- Once with respect to default values
+- Once without default values
+
+This allows the api client to use the correct type for optional values, and with
+the 'same' type, allows the validator to return the default value instead of
+`undefined`
+
+**Validator:**
+
+There is also a validator plugin, this plugin generates validator functions for
+the provided models. Currently uses only specific registered models. But if
+there is interest, it should be pretty straight forward, to generate validators
+for all models.
+
+**Models:**
+
+All communication in Lbu is driven by Models, these models are turned in to
+either JsDoc or Typescript types and referenced in whatever way you want.
+
+Say we want to build a Websocket plugin:
+
+- We define the message structure
+- Provide these to lbu
+- Lbu will call our plugin
+  - This plugin contains some boilerplate
+  - This plugin generates specific functions for the provided message structures
+    and references types from `types.{js,ts}`
+
+**Server side testing:**
+
+The server has various options to make testing easier:
+
+- Use the api client on the backend as well for E2E tests
+- Use the generated mocks & directly inject into the route functions
