@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.9]()
+### [v0.0.9](d847630e049071c7c2385eef8377ba976ddd0e2a)
 
 - Export named functions instead of const and shorthand functions
 - @lbu/cli: Fix script ordering
