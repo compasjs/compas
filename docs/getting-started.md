@@ -69,7 +69,7 @@ Let's tie all imported functions together in to a single main function:
 
 ```ecmascript 6
 const main = async (logger) => {
-  await runCodeGen(logger, () => loadFromRemote("http://localhost:3000")).build({
+  await runCodeGen(logger, () => loadFromRemote("https://lbu-e2e.herokuapp.com")).build({
     plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin()],
     outputDir: "./src/generated",
   });
@@ -107,7 +107,7 @@ import axios from "axios";
 import * as api from "../generated/apiClient.js";
 api.createApiClient(
   axios.create({
-    baseURL: "http://lbu-e2e.lightbase.nl",
+    baseURL: "https://lbu-e2e.herokuapp.com",
   }),
 );
 ```
