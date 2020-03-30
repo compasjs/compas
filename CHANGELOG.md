@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.9]()
+
+- Export named functions instead of const and shorthand functions
+- @lbu/cli: Fix script ordering
+- @lbu/cli: Execute nodemon as a library
+- @lbu/code-gen: Various fixes
+- @lbu/code-gen: More logging in App build and Runner
+- @lbu/code-gen: Router refactoring, add group support. Also includes api client generated exports.
+- @lbu/code-gen: ModelBuilder refactoring, add docs, optional & default on all models
+- @lbu/lint-config: Move to Prettier 2.0
+- @lbu/insight: Return a Logger instance instead of a POJO
+- @lbu/stdlib: Remove translation system
+
 ### [v0.0.8](85feb582684f93714a7aad81f2a47883e72bd363)
 
 - Various fixes
