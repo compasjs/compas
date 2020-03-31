@@ -9,11 +9,12 @@ const defaultOptions = {
 
 /**
  * Create a new logger
- * @param {Object} [options]
- * @param {boolean} [options.isProduction]
- * @param {NodeJS.WritableStream} [options.stream=process.stdout]
- * @param {Object} [options.ctx]
- * @param {number} [options.depth]
+ * @param {object} [options]
+ * @param {boolean} [options.isProduction] If true, logs in NDJSON, else pretty print
+ * @param {NodeJS.WritableStream} [options.stream=process.stdout] Output stream to write to
+ * @param {object} [options.ctx] Context to log on all logs
+ * @param {string} [options.ctx.type] Special case to make logs easier to aggregate
+ * @param {number} [options.depth] Depth of recursion's of log formatter
  * @return {Logger}
  */
 export function newLogger(options = {}) {
@@ -28,6 +29,9 @@ export function newLogger(options = {}) {
   return new Logger(stream, isProduction, ctx, depth);
 }
 
+/**
+ * Logger instance
+ */
 class Logger {
   /**
    * @param {NodeJS.WritableStream} stream
@@ -44,6 +48,7 @@ class Logger {
 
   /**
    * @public
+   * level: "info"
    * @param args
    */
   info(...args) {
@@ -52,6 +57,7 @@ class Logger {
 
   /**
    * @public
+   * level: "error"
    * @param args
    */
   error(...args) {
@@ -60,6 +66,7 @@ class Logger {
 
   /**
    * @public
+   * Change the depth of this logger
    * @param {number} depth
    */
   setDepth(depth) {
@@ -68,6 +75,7 @@ class Logger {
 
   /**
    * @public
+   * Check if we are logging in production
    * @return {boolean}
    */
   isProduction() {
@@ -76,6 +84,7 @@ class Logger {
 
   /**
    * @public
+   * Get context of this logger
    * @return {object}
    */
   getCtx() {
@@ -84,6 +93,7 @@ class Logger {
 
   /**
    * @public
+   * Update context for this logger
    * @param {object} ctx
    */
   setCtx(ctx) {

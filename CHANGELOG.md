@@ -7,8 +7,10 @@
 - @lbu/cli: Execute nodemon as a library
 - @lbu/code-gen: Various fixes
 - @lbu/code-gen: More logging in App build and Runner
-- @lbu/code-gen: Router refactoring, add group support. Also includes api client generated exports.
-- @lbu/code-gen: ModelBuilder refactoring, add docs, optional & default on all models
+- @lbu/code-gen: Router refactoring, add group support. Also includes api client
+  generated exports.
+- @lbu/code-gen: ModelBuilder refactoring, add docs, optional & default on all
+  models
 - @lbu/lint-config: Move to Prettier 2.0
 - @lbu/insight: Return a Logger instance instead of a POJO
 - @lbu/stdlib: Remove translation system

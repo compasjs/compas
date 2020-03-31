@@ -98,6 +98,13 @@ export function compileTemplate(name, str, opts = {}) {
   }
 }
 
+/**
+ * Find template files in the specified directory and with the specified extension
+ * @param {string} dir
+ * @param {string} extension
+ * @param {ProcessDirectoryOptions} [opts]
+ * @returns {Promise<void>}
+ */
 export function compileTemplateDirectory(dir, extension, opts) {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
   return processDirectoryRecursive(dir, async (file) => {
@@ -114,8 +121,8 @@ export function compileTemplateDirectory(dir, extension, opts) {
 
 /**
  * Execute a template, template should be compiled using compileTemplate
- * @param name
- * @param data
+ * @param {string} name
+ * @param {*} data
  * @returns {string} The resulting string for executing the template
  */
 export function executeTemplate(name, data) {
@@ -135,8 +142,8 @@ export function executeTemplate(name, data) {
 /**
  * Simply add an item to the Context dictionary, note name can overwrite or be
  * overwritten by a template or other context value
- * @param name
- * @param value
+ * @param {string} name
+ * @param {*} value
  */
 export function addToTemplateContext(name, value) {
   templateContext[name] = value;

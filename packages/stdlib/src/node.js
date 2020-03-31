@@ -33,13 +33,18 @@ export function spawn(command, args, opts = {}) {
 }
 
 /**
+ * @typedef {object} ProcessDirectoryOptions
+ * @property {boolean} [skipNodeModules] Skip node_modules directory, true by default
+ * @property {boolean} [skipDotFiles] Skip files and directories starting with a '.', true
+ *    by default
+ */
+
+/**
  * Recursively walks directory async and calls cb on all files.
  * By default skips node_modules and files starting with a dot
  * @param {string} dir
  * @param {Function} cb
- * @param {Object} [opts={}]
- * @param {boolean} [opts.skipNodeModules=true]
- * @param {boolean} [opts.skipDotFiles=true]
+ * @param {ProcessDirectoryOptions} [opts]
  */
 export async function processDirectoryRecursive(
   dir,
@@ -68,7 +73,7 @@ export async function processDirectoryRecursive(
 }
 
 /**
- *
+ * Sync version of processDirectoryRecursive
  * @param {string} dir
  * @param {Function} cb
  * @param {Object} [opts={}]

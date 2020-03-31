@@ -6,6 +6,10 @@ import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
 import { isNil } from "./lodash.js";
 
+/**
+ * Return seconds since unix epoch
+ * @returns {number}
+ */
 export function getSecondsSinceEpoch() {
   return Math.floor(Date.now() / 1000);
 }
@@ -18,6 +22,7 @@ export function getSecondsSinceEpoch() {
 let internalGc = global.gc;
 
 /**
+ * HACKY
  * Let V8 know to please run the garbage collector.
  */
 export function gc() {

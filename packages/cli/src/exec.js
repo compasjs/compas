@@ -44,8 +44,8 @@ export function execScript(logger, cmd = "help", args = []) {
 
   if (script.type === "CLI" || script.type === "USER") {
     return execJsFile(logger, script, cmd, args, watch);
-  } else if (script.type === "YARN") {
-    return execYarnScript(logger, script, cmd, args, watch);
+  } else if (script.type === "PKG") {
+    return execPackageScript(logger, script, cmd, args, watch);
   }
 }
 
@@ -75,7 +75,7 @@ async function execJsFile(logger, script, cmd, args, watch) {
   }
 }
 
-function execYarnScript(logger, script, cmd, args, watch) {
+function execPackageScript(logger, script, cmd, args, watch) {
   if (watch) {
     execNodemon(logger, `--exec "${script.script}" -- ${args.join(" ")}`);
   } else {
