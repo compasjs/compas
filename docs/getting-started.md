@@ -16,7 +16,7 @@ set to `true` in your `tsconfig.json`.
 ### Getting started as an API consumer
 
 As the API consumer we set up infrastructure to fetch the API specification &
-then generate our API client.
+then generate our API client. Let's build a simple Todo app.
 
 We start with installing the main dependencies:
 
@@ -24,10 +24,11 @@ We start with installing the main dependencies:
 - @lbu/insight: Logger
 - @lbu/stdlib: For providing our main function
 - axios: Is required to inject in the api client
+- chance: You'll see ;)
 
 ```shell script
 yarn add -D @lbu/code-gen @lbu/insight @lbu/stdlib
-yarn add axios
+yarn add axios chance
 ```
 
 Now we are ready to setup our code generator script. In general this is a one
@@ -68,13 +69,13 @@ of a program.
 Let's tie all imported functions together in to a single main function:
 
 ```ecmascript 6
-const main = async (logger) => {
+async function main(logger) {
   await runCodeGen(logger, () => loadFromRemote("https://lbu-e2e.herokuapp.com")).build({
     plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin()],
     outputDir: "./src/generated",
   });
   logger.info("Done generating.");
-};
+}
 ```
 
 The second argument to `runCodGen` is instructing the generator to fetch the
@@ -96,8 +97,6 @@ on the files.
 - types.{js,ts}: This file contains all 'Models'. The JsDoc in the different
   JavaScript files can reference this for easier typechecked arguments
 - apiClient.js: The fully generated api client.
-
-Let's build a todo app ;)
 
 Currently the apiClient expects you to provide your own axios instance. You can
 provide it like so:
@@ -150,18 +149,20 @@ import {
   runCodeGen,
   getTypesPlugin,
   getApiClientPlugin,
- getMocksPlugin,
+  getMocksPlugin,
 } from "@lbu/code-gen";
 ```
 
 Also add the following to the `plugins` array in `./generate.js`:
 
 ```ecmascript 6
- await runCodeGen(logger, () => loadFromRemote("http://localhost:3000")).build({
-    plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin(), getMocksPlugin()],
-    outputDir: "./src/generated",
-  });
+await runCodeGen(logger, () => loadFromRemote("https://lbu-e2e.herokuapp.com")).build({
+  plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin(), getMocksPlugin()],
+  outputDir: "./src/generated",
+});
 ```
+
+> Again, change emitTypescriptTypes to true if you are using Typescript
 
 Let's run the generator again: `node ./generate.js`. If you want to see the
 changes in `[outputDir]/apiClient.js` make sure to format the file, with for
