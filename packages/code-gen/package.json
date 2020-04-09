@@ -4,6 +4,7 @@
   "description": "Generate various boring parts of your server",
   "main": "./index.js",
   "exports": "./index.js",
+  "type": "module",
   "keywords": [
     "lightbase",
     "lbu",

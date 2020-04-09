@@ -1,4 +1,3 @@
-import { logger } from "@lbu/cli/src/logger.js";
 import { isPlainObject, newTemplateContext } from "@lbu/stdlib";
 import { existsSync, promises as fs } from "fs";
 import { join } from "path";
@@ -64,7 +63,7 @@ class Runner {
 
     for (const p of this.plugins) {
       if (this.opts.verbose) {
-        logger.info(`generator: Calling ${p.name}#init`);
+        this.logger.info(`generator: Calling ${p.name}#init`);
       }
 
       if ("init" in p) {
@@ -81,7 +80,7 @@ class Runner {
   async pluginsGenerate() {
     for (const p of this.plugins) {
       if (this.opts.verbose) {
-        logger.info(`generator: Calling ${p.name}#generate`);
+        this.logger.info(`generator: Calling ${p.name}#generate`);
       }
 
       if ("generate" in p) {

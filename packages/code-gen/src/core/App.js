@@ -1,3 +1,5 @@
+import { log } from "@lbu/insight";
+
 /**
  * @typedef {{
  *   init?: Function,
@@ -5,8 +7,6 @@
  *   build?: Function
  * }} AppPlugin
  */
-
-import { logger } from "@lbu/cli/src/logger.js";
 
 /**
  * @type {AppPlugin[]}
@@ -51,7 +51,7 @@ export class App {
    */
   callPlugins(method, ...args) {
     for (const plugin of _plugins) {
-      logger.info(`builder: Calling ${plugin.name}#${method}`);
+      log.info(`builder: Calling ${plugin.name}#${method}`);
       if (method in plugin) {
         plugin[method](...args);
       }
