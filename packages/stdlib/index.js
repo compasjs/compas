@@ -13,7 +13,7 @@ export {
   processDirectoryRecursiveSync,
 } from "./src/node.js";
 export {
-  addToTemplateContext,
+  newTemplateContext,
   compileTemplate,
   compileTemplateDirectory,
   executeTemplate,

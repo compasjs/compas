@@ -1,5 +1,4 @@
 import {
-  addToTemplateContext,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
@@ -22,21 +21,27 @@ export function getTypesPlugin(opts = {}) {
   };
 }
 
-async function init() {
+async function init(_, app) {
   await compileTemplateDirectory(
+    app.templateContext,
+
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
     {
       debug: false,
     },
   );
-  addToTemplateContext("generateJsDoc", generateJsDoc);
-  addToTemplateContext("generateTsType", generateTsType);
+
+  app.templateContext.globals["generateJsDoc"] = generateJsDoc;
+  app.templateContext.globals["generateTsType"] = generateTsType;
 }
 
-function generate(opts, data) {
+function generate(opts, app, data) {
   return {
     path: opts.emitTypescriptTypes ? "./types.ts" : "./types.js",
-    content: executeTemplate("typesFile", { ...data, opts }),
+    content: executeTemplate(app.templateContext, "typesFile", {
+      ...data,
+      opts,
+    }),
   };
 }

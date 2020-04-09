@@ -18,7 +18,7 @@ tailored at smaller & monolithic projects.
 - Opinionated structured logging
 - Common Koa middleware wrapped in a single function
 - Various utilities like loading .env files, executing other processes and a
-  basic template system
+  basic string templating system
 
 ## Docs
 

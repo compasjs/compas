@@ -1,5 +1,4 @@
 import {
-  addToTemplateContext,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
@@ -20,19 +19,24 @@ export function getMocksPlugin(opts = {}) {
   };
 }
 
-async function init() {
+async function init(_, app) {
   await compileTemplateDirectory(
+    app.templateContext,
+
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
     {
       debug: false,
     },
   );
-  addToTemplateContext("mockForType", mockForType);
+  app.templateContext.globals["mockForType"] = mockForType;
 }
 
-function generate(opts, data) {
-  const mocksContent = executeTemplate("mocksFile", { ...data, opts });
+function generate(opts, app, data) {
+  const mocksContent = executeTemplate(app.templateContext, "mocksFile", {
+    ...data,
+    opts,
+  });
 
   return [
     {

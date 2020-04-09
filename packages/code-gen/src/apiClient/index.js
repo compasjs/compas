@@ -20,10 +20,11 @@ export function getApiClientPlugin(opts = {}) {
   };
 }
 
-async function init(opts, { hasPlugin }) {
+async function init(opts, app, { hasPlugin }) {
   opts.enableMocks = hasPlugin("mocks");
 
   await compileTemplateDirectory(
+    app.templateContext,
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
     {
@@ -32,9 +33,12 @@ async function init(opts, { hasPlugin }) {
   );
 }
 
-function generate(opts, data) {
+function generate(opts, app, data) {
   return {
     path: "./apiClient.js",
-    content: executeTemplate("apiClientFile", { ...data, opts }),
+    content: executeTemplate(app.templateContext, "apiClientFile", {
+      ...data,
+      opts,
+    }),
   };
 }

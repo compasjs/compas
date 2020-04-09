@@ -1,5 +1,5 @@
 import { logger } from "@lbu/cli/src/logger.js";
-import { isPlainObject } from "@lbu/stdlib";
+import { isPlainObject, newTemplateContext } from "@lbu/stdlib";
 import { existsSync, promises as fs } from "fs";
 import { join } from "path";
 
@@ -19,6 +19,9 @@ class Runner {
   constructor(logger, dataLoader) {
     this.logger = logger;
     this.dataLoader = dataLoader;
+
+    this.templateContext = newTemplateContext();
+    this.templateContext.globals.quote = (x) => `"${x}"`;
 
     this.outputs = [];
   }
@@ -65,9 +68,8 @@ class Runner {
       }
 
       if ("init" in p) {
-        await p.init({
+        await p.init(this, {
           hasPlugin,
-          opts: this.opts,
         });
       }
     }
@@ -83,7 +85,7 @@ class Runner {
       }
 
       if ("generate" in p) {
-        const result = await p.generate(this.data);
+        const result = await p.generate(this, this.data);
         if (!result) {
           continue;
         }

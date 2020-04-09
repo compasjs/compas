@@ -6,33 +6,45 @@ import { processDirectoryRecursive } from "./node.js";
 const { readFile } = promises;
 
 /**
- * Global context for template execution
+ * @typedef {object} TemplateContext
+ * @property {object<string, function>} globals
+ * @property {Map<string, function>} templates
  */
-const templateContext = {
-  isNil,
-  quote: (it) => `"${it}"`,
-  singleQuote: (it) => `'${it}'`,
-};
 
 /**
- * Global store for all templates
+ * @return {TemplateContext}
  */
-const templateStore = new Map();
+export function newTemplateContext() {
+  return {
+    globals: {
+      isNil,
+    },
+    templates: new Map(),
+  };
+}
 
 /**
- * Simple template support
- * Unsafe for not trusted inputs
+ * Compile templates add to TemplateContext
+ * Unsafe for untrusted inputs
  * Fields need to be explicitly set to undefined or access them via `it.field`
- * Inspired by:
- * https://johnresig.com/blog/javascript-micro-templating/
+ * Other known templates and globals will be available when executing
+ * Inspired by: https://johnresig.com/blog/javascript-micro-templating/
+ *
+ * @param {TemplateContext} tc
  * @param {string} name Name that is exposed in the template it self and to be used with
  *   the executeTemplate function
  * @param {string} str Template string
- * @param {Object} [opts={}]
- * @param {boolean} opts.debug Set to true to print context keys and input object before
+ * @param {object} [opts={}]
+ * @param {boolean} [opts.debug] Set to true to print context keys and input object before
  *   executing the template
  */
-export function compileTemplate(name, str, opts = {}) {
+export function compileTemplate(tc, name, str, opts = {}) {
+  if (isNil(tc)) {
+    throw new TypeError(
+      "TemplateContext is required, please create a new one with `newTemplateContext()`",
+    );
+  }
+
   if (isNil(name) || isNil(str)) {
     throw new TypeError("Both name and string are required");
   }
@@ -62,7 +74,7 @@ export function compileTemplate(name, str, opts = {}) {
     : "";
 
   try {
-    templateStore.set(
+    tc.templates.set(
       name,
       new Function(
         "_ctx",
@@ -99,39 +111,59 @@ export function compileTemplate(name, str, opts = {}) {
 }
 
 /**
- * Find template files in the specified directory and with the specified extension
+ * Compile all templates found in the provided directory with the provided extension
+ *
+ * @param {TemplateContext} tc
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
  * @returns {Promise<void>}
  */
-export function compileTemplateDirectory(dir, extension, opts) {
+export function compileTemplateDirectory(tc, dir, extension, opts) {
+  if (isNil(tc)) {
+    throw new TypeError(
+      "TemplateContext is required, please create a new one with `newTemplateContext()`",
+    );
+  }
+
   const ext = extension[0] !== "." ? `.${extension}` : extension;
-  return processDirectoryRecursive(dir, async (file) => {
-    if (!file.endsWith(ext)) {
-      return;
-    }
+  return processDirectoryRecursive(
+    dir,
+    async (file) => {
+      if (!file.endsWith(ext)) {
+        return;
+      }
 
-    const content = await readFile(file, { encoding: "utf-8" });
-    const name = path.parse(file).name;
+      const content = await readFile(file, { encoding: "utf-8" });
+      const name = path.parse(file).name;
 
-    compileTemplate(name, content, opts);
-  });
+      compileTemplate(tc, name, content);
+    },
+    opts,
+  );
 }
 
 /**
  * Execute a template, template should be compiled using compileTemplate
+ *
+ * @param {TemplateContext} tc
  * @param {string} name
  * @param {*} data
  * @returns {string} The resulting string for executing the template
  */
-export function executeTemplate(name, data) {
-  if (!templateStore.has(name)) {
+export function executeTemplate(tc, name, data) {
+  if (isNil(tc)) {
+    throw new TypeError(
+      "TemplateContext is required, please create a new one with `newTemplateContext()`",
+    );
+  }
+
+  if (!tc.templates.has(name)) {
     throw new Error(`Unknown template: ${name}`);
   }
 
   try {
-    return templateStore.get(name)(getExecutionContext(), data).trim();
+    return tc.templates.get(name)(getExecutionContext(tc), data).trim();
   } catch (e) {
     const err = new Error(`Error while executing ${name} template`);
     err.originalErr = e;
@@ -140,20 +172,15 @@ export function executeTemplate(name, data) {
 }
 
 /**
- * Simply add an item to the Context dictionary, note name can overwrite or be
- * overwritten by a template or other context value
- * @param {string} name
- * @param {*} value
+ * Combine globals and registered templates into a single object
+ *
+ * @param {TemplateContext} tc
  */
-export function addToTemplateContext(name, value) {
-  templateContext[name] = value;
-}
-
-function getExecutionContext() {
+function getExecutionContext(tc) {
   const result = {
-    ...templateContext,
+    ...tc.globals,
   };
-  for (const [key, item] of templateStore.entries()) {
+  for (const [key, item] of tc.templates.entries()) {
     result[key] = item.bind(undefined, result);
   }
 

@@ -20,7 +20,7 @@ export function getRouterPlugin(opts = {}) {
   };
 }
 
-async function init(opts, { hasPlugin }) {
+async function init(opts, app, { hasPlugin }) {
   if (!hasPlugin("validator")) {
     throw new Error(
       "The validators plugin is required for this plugin to produce valid code.",
@@ -28,18 +28,22 @@ async function init(opts, { hasPlugin }) {
   }
 
   await compileTemplateDirectory(
+    app.templateContext,
+
     join(dirnameForModule(import.meta), "templates"),
     ".tmpl",
-    { debug: false },
   );
 }
 
-function generate(opts, data) {
+function generate(opts, app, data) {
   data.stringified = JSON.stringify(data);
   data.routeTrie = buildTrie(data.routes);
 
   return {
     path: "./router.js",
-    content: executeTemplate("routerFile", { ...data, opts }),
+    content: executeTemplate(app.templateContext, "routerFile", {
+      ...data,
+      opts,
+    }),
   };
 }

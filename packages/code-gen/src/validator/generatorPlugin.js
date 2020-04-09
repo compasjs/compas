@@ -20,8 +20,9 @@ export function getValidatorPlugin(opts = {}) {
   };
 }
 
-async function init() {
+async function init(_, app) {
   await compileTemplateDirectory(
+    app.templateContext,
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
     {
@@ -30,7 +31,7 @@ async function init() {
   );
 }
 
-function generate(opts, data) {
+function generate(opts, app, data) {
   data.validators = data.validators.map((it) => upperCaseFirst(it));
 
   const validatorsToGenerate = extractValidatorsToGenerate(
@@ -45,7 +46,7 @@ function generate(opts, data) {
 
   return {
     path: "./validators.js",
-    content: executeTemplate("validatorsFile", {
+    content: executeTemplate(app.templateContext, "validatorsFile", {
       models: data.models,
       validatorFunctions,
       opts,
