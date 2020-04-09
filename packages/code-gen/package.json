@@ -2,10 +2,8 @@
   "name": "@lbu/code-gen",
   "version": "0.0.9",
   "description": "Generate various boring parts of your server",
-  "type": "module",
-  "exports": {
-    ".": "./index.js"
-  },
+  "main": "./index.js",
+  "exports": "./index.js",
   "keywords": [
     "lightbase",
     "lbu",

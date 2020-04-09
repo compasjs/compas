@@ -2,7 +2,8 @@
   "name": "@lbu/cli",
   "version": "0.0.9",
   "description": "CLI containing utilities and simple script runner",
-  "main": "index.js",
+  "main": "./index.js",
+  "exports": "./index.js",
   "type": "module",
   "bin": {
     "lbu": "./src/bin.js"
