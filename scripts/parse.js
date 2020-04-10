@@ -1,5 +1,5 @@
-import { addProcessor, newLogger, parseExec } from "@lbu/insight";
-import { logParser } from "@lbu/server";
+import { executeLogParser, newLogger, newLogParserContext } from "@lbu/insight";
+import { isServerLog } from "@lbu/server/src/middleware";
 import { mainFn } from "@lbu/stdlib";
 
 mainFn(
@@ -14,9 +14,7 @@ mainFn(
 
 async function main(logger) {
   const store = {
-    httpSummary: {},
-    warnings: [],
-    count: 0,
+    requests: 0,
   };
   let storeChanges = false;
 
@@ -27,14 +25,14 @@ async function main(logger) {
     storeChanges = false;
   }, 10000);
 
-  addProcessor("JSON", logParser(store.httpSummary));
-  addProcessor("TEXT", (line) => store.warnings.push(line));
-  addProcessor("JSON", () => {
-    store.count++;
-    storeChanges = true;
-  });
+  const pc = newLogParserContext(process.stdin);
 
-  const out = parseExec();
+  pc.jsonProcessor = (obj) => {
+    if (isServerLog(obj)) {
+      store.requests++;
+      storeChanges = true;
+    }
+  };
 
-  out.pipe(process.stdout);
+  executeLogParser(pc).pipe(process.stdout);
 }

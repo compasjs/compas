@@ -41,27 +41,20 @@ export function logMiddleware() {
 }
 
 /**
- * Basic http log counters
- * @param store
- * @return {function(...[*]=)}
+ * Given a logged object, check if it is a request log
+ * @param {object} obj
+ * @return {boolean}
  */
-export function logParser(store) {
-  store.requestCount = 0;
-  store.totalDuration = 0;
-  store.totalResponseLength = 0;
-  store.methodSummary = {};
-  store.statusCodeSummary = {};
+export function isServerLog(obj) {
+  if (!obj.type || obj.type !== "HTTP") {
+    return false;
+  }
 
-  return (obj) => {
-    if (!obj.type || obj.type !== "HTTP") {
-      return;
-    }
-    if (!obj.message || !obj.message.request || !obj.message.response) {
-      return;
-    }
+  if (!obj.message || (!obj.message.request && !obj.message.response)) {
+    return false;
+  }
 
-    handleRequestLog(store, obj);
-  };
+  return obj.message.request.path && !!obj.message.response.duration;
 }
 
 /**
@@ -93,7 +86,6 @@ function logInfo(ctx, startTime, length) {
 
   ctx.log.info({
     request: {
-      ip: ctx.ip,
       method: ctx.method,
       path: ctx.path,
     },
@@ -103,22 +95,6 @@ function logInfo(ctx, startTime, length) {
       status: ctx.status,
     },
   });
-}
-
-function handleRequestLog(store, obj) {
-  store.requestCount++;
-  store.totalDuration += Number(obj.message.response.duration);
-  store.totalResponseLength += obj.message.response.length;
-
-  if (!store.methodSummary[obj.message.request.method]) {
-    store.methodSummary[obj.message.request.method] = 0;
-  }
-  store.methodSummary[obj.message.request.method]++;
-
-  if (!store.statusCodeSummary[obj.message.response.status]) {
-    store.statusCodeSummary[obj.message.response.status] = 0;
-  }
-  store.statusCodeSummary[obj.message.response.status]++;
 }
 
 /**

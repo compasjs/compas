@@ -2,78 +2,77 @@ import pump from "pump";
 import split from "split2";
 import { Transform } from "stream";
 
-const jsonProcessors = new Set();
-const textProcessors = new Set();
+/**
+ * @typedef {object} LogParserContext
+ * @property {(function(data: object): undefined)} [jsonProcessor]
+ * @property {(function(data: string): undefined)} [textProcessor]
+ * @property {ReadStream} stream
+ */
 
 /**
- * Add new processors
- * @param {"JSON"|"TEXT"} type
- * @param {function} processor
+ * Create a new parser context
+ * @param {ReadStream} stream
+ * @return {LogParserContext}
  */
-export function addProcessor(type, processor) {
-  if (type === "JSON") {
-    jsonProcessors.add(processor);
-  } else {
-    textProcessors.add(processor);
-  }
+export function newLogParserContext(stream) {
+  return {
+    jsonProcessor: undefined,
+    textProcessor: undefined,
+    stream,
+  };
 }
 
 /**
- * Run parser on inStream
- * Returns a stream with original contents of inStream
- * Note that this is mostly useful with production logs
- * @param inStream
- * @return {void|*}
+ * Run the parser, splits the in stream onn lines and call either the jsonProcessor or
+ * textProcessor with the value. The original value is written to the returned stream
+ * @param {LogParserContext} lpc
+ * @return {ReadStream}
  */
-export function parseExec(inStream = process.stdin) {
+export function executeLogParser(lpc) {
   const transport = new Transform({
     transform(chunk, enc, cb) {
-      const line = processLine(chunk);
-      if (line === undefined) {
-        return cb();
+      if (chunk !== null && chunk !== undefined && chunk.length !== 0) {
+        const str = chunk.toString();
+        if (str.length > 0) {
+          callProcessor(lpc, str);
+        }
+        cb(null, str + "\n");
+      } else {
+        cb();
       }
-      cb(null, line);
     },
   });
 
-  return pump(inStream, split(), transport);
+  return pump(lpc.stream, split(), transport);
 }
 
-function processJson(obj) {
-  for (const p of jsonProcessors) {
-    p(obj);
-  }
-}
+/**
+ * Internal try to parse as json and execute jsonProcessor, else execute textProcessor
+ * @param {LogParserContext} lpc
+ * @param {string} line
+ */
+function callProcessor(lpc, line) {
+  let obj = undefined;
 
-function processText(txt) {
-  for (const p of textProcessors) {
-    p(txt);
-  }
-}
-
-function processLine(line) {
-  const l = line.toString();
-  let j = undefined;
-
-  if (!l) {
+  try {
+    obj = JSON.parse(line);
+  } catch {
+    if (lpc.textProcessor) {
+      lpc.textProcessor(line);
+    }
     return;
   }
 
-  try {
-    j = JSON.parse(l);
-  } catch {
-    processText(l);
-    return l + "\n";
-  }
-
   if (
-    j === undefined ||
+    obj === undefined ||
     Object.prototype.toString.call(j) !== "[object Object]"
   ) {
-    processText(l);
-    return l + "\n";
+    if (lpc.textProcessor) {
+      lpc.textProcessor(line);
+    }
+  } else {
+    if (lpc.jsonProcessor) {
+      lpc.jsonProcessor(obj);
+    }
   }
-
-  processJson(j);
-  return l + "\n";
 }
