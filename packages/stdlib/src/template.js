@@ -52,6 +52,10 @@ export function compileTemplate(tc, name, str, opts = {}) {
     throw new TypeError("Both name and string are required");
   }
 
+  if (tc.templates.has(name)) {
+    throw new TypeError(`Template with name ${name} already registered`);
+  }
+
   const compiled = str
     .split("\n")
     .map((it) => {
