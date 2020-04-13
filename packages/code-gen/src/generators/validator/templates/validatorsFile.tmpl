@@ -1,0 +1,39 @@
+/* eslint-disable no-unused-vars */
+
+{{ if (opts.fileHeader !== undefined) { }}
+{{= opts.fileHeader }}
+{{ } }}
+
+export const validatorHooks = {};
+
+const isNil = value => value === undefined || value === null;
+
+/**
+ * This function should not throw as the corresponding validator will do that
+ * @callback ValidationErrorFn
+ * @param {string} key
+ * @param {Object} info
+ */
+
+/**
+ * @type ValidationErrorFn
+ */
+let _errorFn = (key, info) => {
+  const err = new Error(`ValidationError: ${key}`);
+  err.key = key;
+  err.info = info;
+
+  return err;
+}
+
+/**
+ * Set a different error function, for example AppError.validationError
+ * @param {ValidationErrorFn} fn
+ */
+export function validatorSetErrorFn(fn) {
+  _errorFn = fn;
+}
+
+{{ for (const v of it.validatorFunctions) { }}
+{{= validatorsNamedFn({ models, ...v }) }}
+{{ } }}

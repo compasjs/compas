@@ -1,0 +1,37 @@
+{{ if (opts.fileHeader !== undefined) { }}
+{{= opts.fileHeader }}
+{{ } }}
+
+{{ if (opts.useTypescript) { }}
+{{ for (const modelName of Object.keys(models)) { }}
+
+/**
+ * {{= modelName }}
+ * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ */
+export type {{=modelName}} = {{= generateTsType(models, models[modelName], { ignoreDefaults: false }) }};
+
+/**
+ * {{= modelName }}_Optional
+ * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ */
+export type {{=modelName}}_Optional = {{= generateTsType(models, models[modelName], { ignoreDefaults: true }) }};
+
+{{ } }}
+{{ } else { }}
+{{ for (const modelName of Object.keys(models)) { }}
+
+/**
+ * {{= modelName }}
+ * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
+ */
+
+/**
+ * {{= modelName }}_Optional
+ * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
+ */
+
+{{ } }}
+{{ } }}

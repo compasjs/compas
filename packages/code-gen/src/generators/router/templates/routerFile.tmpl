@@ -1,0 +1,15 @@
+/* eslint-disable no-unused-vars */
+
+{{ if (opts.fileHeader !== undefined) { }}
+{{= opts.fileHeader }}
+{{ } }}
+
+{{= routerImports({ routes }) }}
+{{= routerTags({ tags: routeTags }) }}
+{{= routerGroups({ groups: routeGroups }) }}
+
+{{= routerHandlers({ routes, routeGroups }) }}
+
+{{= routerRouteFn({ routeTrie }) }}
+
+{{= routerInternalRoutes(it) }}

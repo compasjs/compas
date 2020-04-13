@@ -1,0 +1,20 @@
+{{ if (opts.fileHeader !== undefined) { }}
+{{= opts.fileHeader }}
+{{ } }}
+
+import chance from "chance";
+
+
+let _mocker = new chance.Chance();
+
+export function setMocker(mocker) {
+  if (!(mocker instanceof chance.Chance)) {
+    throw new Error("Not instance of Chance.js");
+  }
+
+  _mocker = mocker;
+}
+
+{{ for (const m of Object.keys(models)) { }}
+{{= mocksNamedFn({ mock: models[m] }) }}
+{{ } }}
