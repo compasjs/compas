@@ -83,10 +83,26 @@ export async function dumpStore(app, result, ...extendsFrom) {
   const tags = new Set();
   const groups = new Set();
 
-  for (const route of store.values()) {
+  for (const extender of extendsFrom) {
+    for (const tag of extender.routeTags || []) {
+      tags.add(tag);
+    }
+    for (const group of extender.routeGroups || []) {
+      groups.add(group);
+    }
+    for (const r of extender.routes || []) {
+      if (r.group === "lbu" && r.name === "structure") {
+        continue;
+      }
+      result.routes.push(r);
+    }
+    result.routes.push(...(extender.routes || []));
+  }
+
+  for (const route of store) {
     const r = route.build();
 
-    for (const t of r.tags.values()) {
+    for (const t of r.tags) {
       tags.add(t);
     }
     groups.add(r.group);

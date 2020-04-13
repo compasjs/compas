@@ -43,11 +43,21 @@ export async function init(app) {
  * @return {Promise<void>}
  */
 export async function dumpStore(app, result, ...extendsFrom) {
-  result.validators = [];
+  const validators = new Set();
+
+  for (const extender of extendsFrom) {
+    for (const v of extender.validators || []) {
+      validators.add(v);
+    }
+  }
 
   for (const m of store) {
-    result.validators.push(upperCaseFirst(m.item.name));
+    const v = upperCaseFirst(m.item.name);
+    validators.add(v);
   }
+
+  // Get a unique list
+  result.validators = [...validators];
 }
 
 /**

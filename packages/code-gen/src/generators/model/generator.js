@@ -5,10 +5,10 @@ import {
   isNil,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { upperCaseFirst } from "../../utils.js";
 import { generateJsDoc } from "./js-templates/generateJsDoc.js";
 import { generateTsType } from "./js-templates/generateTsType.js";
 import { normalizeModelsRecursively } from "./normalizeModelsRecursively.js";
+import { processExtendsFrom, processStore } from "./process.js";
 
 const store = new Set();
 
@@ -59,10 +59,15 @@ export async function init(app) {
  */
 export async function dumpStore(app, result, ...extendsFrom) {
   result.models = {};
-  for (const model of store.values()) {
-    const build = model.build();
-    build.name = upperCaseFirst(build.name);
-    result.models[build.name] = build;
+
+  const extendsResult = processExtendsFrom(result.models, extendsFrom);
+  const processResult = processStore(result.models, store);
+
+  if (extendsResult.length !== 0 && processResult.length !== 0) {
+    app.logger.info("Overwrote some models", {
+      nonUniqueExtend: extendsResult,
+      nonUniqueStore: processResult,
+    });
   }
 
   for (const model of Object.keys(result.models)) {
