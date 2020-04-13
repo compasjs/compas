@@ -65,7 +65,7 @@ function callProcessor(lpc, line) {
 
   if (
     obj === undefined ||
-    Object.prototype.toString.call(j) !== "[object Object]"
+    Object.prototype.toString.call(obj) !== "[object Object]"
   ) {
     if (lpc.textProcessor) {
       lpc.textProcessor(line);
