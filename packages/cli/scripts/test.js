@@ -35,7 +35,7 @@ mainFn(
   import.meta,
   newLogger({
     ctx: {
-      type: "TEST",
+      type: "test",
     },
   }),
   () => processDirectoryRecursiveSync(process.cwd(), contentHandler),

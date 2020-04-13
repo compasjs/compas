@@ -18,7 +18,7 @@ export function logMiddleware() {
     ctx.log = newLogger({
       depth: 5,
       ctx: {
-        type: "HTTP",
+        type: "http",
         requestId,
       },
     });
@@ -46,7 +46,7 @@ export function logMiddleware() {
  * @return {boolean}
  */
 export function isServerLog(obj) {
-  if (!obj.type || obj.type !== "HTTP") {
+  if (!obj.type || obj.type !== "http") {
     return false;
   }
 

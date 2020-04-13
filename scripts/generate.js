@@ -1,14 +1,4 @@
-import {
-  App,
-  getApiClientPlugin,
-  getMocksPlugin,
-  getRouterPlugin,
-  getTypesPlugin,
-  getValidatorPlugin,
-  M,
-  R,
-  runCodeGen,
-} from "@lbu/code-gen";
+import { App, generators, M, R } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
@@ -16,23 +6,20 @@ mainFn(import.meta, log, main);
 
 export const nodemonArgs = "--ignore generated -e tmpl,js,json";
 
-async function main(logger) {
-  const app = createApp();
-  // Code gen validators
-  await runCodeGen(logger, () => app.build()).build({
-    plugins: [
-      getTypesPlugin({ emitTypescriptTypes: false }),
-      getValidatorPlugin(),
-      getRouterPlugin(),
-      getMocksPlugin(),
-      getApiClientPlugin(),
+async function main() {
+  const app = new App({
+    generators: [
+      generators.model,
+      generators.validator,
+      generators.mock,
+      generators.router,
+      generators.apiClient,
     ],
+    verbose: true,
     outputDir: "./generated",
+    useTypescript: false,
   });
-}
-
-function createApp() {
-  const app = new App("TODO App");
+  await app.init();
 
   app.validator(
     M.object("User", {
@@ -50,14 +37,14 @@ function createApp() {
     }),
   );
 
-  app.model(
-    M.generic("MyGeneric")
-      .keys(M.string())
-      .values(M.anyOf([M.bool().convert(), M.number()]))
-      .docs("Foo"),
-  );
+  const myGeneric = M.generic("MyGeneric")
+    .keys(M.string())
+    .values(M.anyOf([M.bool().convert(), M.number()]))
+    .docs("Foo");
+
+  app.model(M.array("GenericArray").values(myGeneric));
 
   app.route(R.get("/foo", "test").query(M.ref("User")));
 
-  return app;
+  await app.generate();
 }

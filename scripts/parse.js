@@ -6,7 +6,7 @@ mainFn(
   import.meta,
   newLogger({
     ctx: {
-      type: "LOG_PROCESSING",
+      type: "log_processing",
     },
   }),
   main,
