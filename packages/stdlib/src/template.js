@@ -1,7 +1,10 @@
-import { promises } from "fs";
+import { promises, readFileSync } from "fs";
 import path from "path";
 import { isNil } from "./lodash.js";
-import { processDirectoryRecursive } from "./node.js";
+import {
+  processDirectoryRecursive,
+  processDirectoryRecursiveSync,
+} from "./node.js";
 
 const { readFile } = promises;
 
@@ -135,6 +138,39 @@ export function compileTemplateDirectory(tc, dir, extension, opts) {
       }
 
       const content = await readFile(file, { encoding: "utf-8" });
+      const name = path.parse(file).name;
+
+      compileTemplate(tc, name, content);
+    },
+    opts,
+  );
+}
+
+/**
+ * Sync version of compileTemplateDirectory
+ *
+ * @param {TemplateContext} tc
+ * @param {string} dir
+ * @param {string} extension
+ * @param {ProcessDirectoryOptions} [opts]
+ * @returns {void}
+ */
+export function compileTemplateDirectorySync(tc, dir, extension, opts) {
+  if (isNil(tc)) {
+    throw new TypeError(
+      "TemplateContext is required, please create a new one with `newTemplateContext()`",
+    );
+  }
+
+  const ext = extension[0] !== "." ? `.${extension}` : extension;
+  return processDirectoryRecursiveSync(
+    dir,
+    async (file) => {
+      if (!file.endsWith(ext)) {
+        return;
+      }
+
+      const content = readFileSync(file, { encoding: "utf-8" });
       const name = path.parse(file).name;
 
       compileTemplate(tc, name, content);

@@ -16,6 +16,7 @@ export {
   newTemplateContext,
   compileTemplate,
   compileTemplateDirectory,
+  compileTemplateDirectorySync,
   executeTemplate,
 } from "./src/template.js";
 export {
