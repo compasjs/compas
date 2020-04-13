@@ -32,7 +32,7 @@ function addToMapping(ctx, name, type) {
 }
 
 function buildValidator(ctx, data) {
-  const { name: typeName, docs, ...validator } = data;
+  const { uniqueName: typeName, docs, ...validator } = data;
   if (!isNil(ctx.mapping[typeName])) {
     validator.functionName = ctx.mapping[typeName];
   }
@@ -96,10 +96,10 @@ export function extractValidatorsToGenerate(models, value, result) {
     return;
   }
 
-  if (value.type && value.name) {
+  if (value.type && value.uniqueName) {
     // named item, should be top level
-    if (result.indexOf(value.name) === -1) {
-      result.push(value.name);
+    if (result.indexOf(value.uniqueName) === -1) {
+      result.push(value.uniqueName);
     } else {
       // already this this variant
       return;

@@ -1,7 +1,7 @@
 function {{= functionName }}(value, propertyPath) {
   if (isNil(value)) {
-    {{ if (it.optional) { }}
-      return {{= it.default }};
+    {{ if (it.isOptional) { }}
+      return {{= it.defaultValue }};
     {{ } else { }}
       throw _errorFn("validator.number.undefined", { propertyPath });
     {{ } }}

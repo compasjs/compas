@@ -30,18 +30,18 @@ export async function init(app) {
 
   /**
    * @name App#model
-   * @param {...ModelBuilder} models
+   * @param {...TypeBuilder} models
    * @return app;
    */
   app.constructor.prototype.model = function (...models) {
     for (const model of models) {
       if (
         isNil(model) ||
-        isNil(model.item) ||
-        isNil(model.item.name) ||
-        model.item.name.trim().length === 0
+        isNil(model.data) ||
+        isNil(model.data.uniqueName) ||
+        model.data.uniqueName.trim().length === 0
       ) {
-        throw new Error("App#model expects a named ModelBuilder");
+        throw new Error("App#model expects a named TypeBuilder");
       }
 
       store.add(model);
@@ -81,6 +81,7 @@ export async function dumpStore(app, result, ...extendsFrom) {
  * @return {Promise<GeneratedFile>}
  */
 export async function generate(app, data) {
+  app.logger.info(Object.keys(data.models));
   return {
     path: app.options.useTypescript ? "./types.ts" : "./types.js",
     source: executeTemplate(app.templateContext, "typesFile", {

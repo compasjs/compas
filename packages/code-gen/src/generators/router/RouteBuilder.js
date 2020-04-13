@@ -40,56 +40,64 @@ class RouteBuilder {
 
   /**
    * @public
-   * @param {ModelBuilder} model
+   * @param {TypeBuilder} model
    * @return {RouteBuilder}
    */
   params(model) {
     this.paramsValidator = model;
-    if (this.paramsValidator !== undefined && !this.paramsValidator.item.name) {
-      this.paramsValidator.item.name = `${this.createModelName()}Params`;
+    if (this.paramsValidator !== undefined && !this.paramsValidator.data.name) {
+      this.paramsValidator.data.group = this.item.group;
+      this.paramsValidator.data.name = `${this.createModelName()}Params`;
+      this.paramsValidator.setNameAndGroup();
     }
     return this;
   }
 
   /**
    * @public
-   * @param {ModelBuilder} model
+   * @param {TypeBuilder} model
    * @return {RouteBuilder}
    */
   query(model) {
     this.queryValidator = model;
-    if (this.queryValidator !== undefined && !this.queryValidator.item.name) {
-      this.queryValidator.item.name = `${this.createModelName()}Query`;
+    if (this.queryValidator !== undefined && !this.queryValidator.data.name) {
+      this.queryValidator.data.group = this.item.group;
+      this.queryValidator.data.name = `${this.createModelName()}Query`;
+      this.queryValidator.setNameAndGroup();
     }
     return this;
   }
 
   /**
    * @public
-   * @param {ModelBuilder} model
+   * @param {TypeBuilder} model
    * @return {RouteBuilder}
    */
   body(model) {
-    if (["POST", "PUT", "DELETE"].indexOf(this.item.method) === -1) {
+    if (["POST", "PUT", "DELETE"].indexOf(this.data.method) === -1) {
       throw new Error("Can only use body on POST, PUT or DELETE routes");
     }
 
     this.bodyValidator = model;
-    if (this.bodyValidator !== undefined && !this.bodyValidator.item.name) {
-      this.bodyValidator.item.name = `${this.createModelName()}Body`;
+    if (this.bodyValidator !== undefined && !this.bodyValidator.data.name) {
+      this.bodyValidator.data.group = this.item.group;
+      this.bodyValidator.data.name = `${this.createModelName()}Body`;
+      this.bodyValidator.setNameAndGroup();
     }
     return this;
   }
 
   /**
    * @public
-   * @param {ModelBuilder} model
+   * @param {TypeBuilder} model
    * @return {RouteBuilder}
    */
   response(model) {
     this.responseModel = model;
-    if (this.responseModel !== undefined && !this.responseModel.item.name) {
-      this.responseModel.item.name = `${this.createModelName()}Response`;
+    if (this.responseModel !== undefined && !this.responseModel.data.name) {
+      this.responseModel.data.group = this.item.group;
+      this.responseModel.data.name = `${this.createModelName()}Response`;
+      this.responseModel.setNameAndGroup();
     }
     return this;
   }

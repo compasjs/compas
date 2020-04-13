@@ -1,3 +1,4 @@
+import { TypeBuilder } from "../../types/index.js";
 import { M } from "../model/index.js";
 
 export function decorateModels() {
@@ -9,7 +10,7 @@ export function decorateModels() {
    */
   M.types.LbuBool.prototype.mock = function (mockFn) {
     checkMocks(this);
-    this.item.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
+    this.data.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
 
     return this;
   };
@@ -22,7 +23,7 @@ export function decorateModels() {
    */
   M.types.LbuNumber.prototype.mock = function (mockFn) {
     checkMocks(this);
-    this.item.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
+    this.data.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
 
     return this;
   };
@@ -34,14 +35,14 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.mock = function (mockFn) {
     checkMocks(this);
-    this.item.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
+    this.data.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
 
     return this;
   };
 }
 
 function checkMocks(builder) {
-  if (M.instanceOf(builder)) {
-    builder.item.mocks = builder.item.mocks || {};
+  if (builder instanceof TypeBuilder) {
+    builder.data.mocks = builder.data.mocks || {};
   }
 }

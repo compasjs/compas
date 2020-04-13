@@ -82,12 +82,12 @@ export function generateJsDoc(models, value, { ignoreDefaults }) {
   }
 
   if (ignoreDefaults) {
-    if (value.optional) {
+    if (value.isOptional) {
       result += "|undefined";
     }
   } else {
     // If default !== undefined, the value returned from validator will be set
-    if (value.optional && value.default === undefined) {
+    if (value.isOptional && value.defaultValue === undefined) {
       result += "|undefined";
     }
   }

@@ -1,4 +1,4 @@
-import { App, generators, M, R } from "@lbu/code-gen";
+import { App, generators, R, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
@@ -21,6 +21,8 @@ async function main() {
   });
   await app.init();
 
+  const M = new TypeCreator();
+
   app.validator(
     M.object("User", {
       id: M.number().integer().min(0).max(100).convert(),
@@ -31,7 +33,7 @@ async function main() {
 
   app.validator(
     M.object("Items", {
-      userId: M.ref("User", "id"),
+      userId: M.ref("AppUser", "id"),
       name: M.string(),
       count: M.number().integer(),
     }),
@@ -44,7 +46,7 @@ async function main() {
 
   app.model(M.array("GenericArray").values(myGeneric));
 
-  app.route(R.get("/foo", "test").query(M.ref("User")));
+  app.route(R.get("/foo", "test").query(M.ref("AppUser")));
 
   await app.generate();
 }

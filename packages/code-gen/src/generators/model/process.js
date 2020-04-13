@@ -22,13 +22,12 @@ export function processStore(models, store) {
 
   for (const model of store) {
     const build = model.build();
-    build.name = upperCaseFirst(build.name);
 
-    if (!isNil(models[build.name])) {
-      nonUnique.push(build.name);
+    if (!isNil(models[build.uniqueName])) {
+      nonUnique.push(build.uniqueName);
     }
 
-    models[build.name] = build;
+    models[build.uniqueName] = build;
   }
 
   return nonUnique;

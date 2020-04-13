@@ -52,8 +52,7 @@ export async function dumpStore(app, result, ...extendsFrom) {
   }
 
   for (const m of store) {
-    const v = upperCaseFirst(m.item.name);
-    validators.add(v);
+    validators.add(m.data.uniqueName);
   }
 
   // Get a unique list

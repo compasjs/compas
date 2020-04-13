@@ -23,9 +23,9 @@ export function genericMock(mock, { ignoreDefaults }) {
 
   result.push(`Object.fromEntries(${entryMock})`);
 
-  if (mock.optional) {
-    if (!isNil(mock.default) && !ignoreDefaults) {
-      result.push(mock.default);
+  if (mock.isOptional) {
+    if (!isNil(mock.defaultValue) && !ignoreDefaults) {
+      result.push(mock.defaultValue);
     } else {
       result.push("undefined");
     }

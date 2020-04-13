@@ -1,76 +1,11 @@
 import { isNil, isPlainObject, merge } from "@lbu/stdlib";
+import { TypeBuilder, TypeCreator } from "../../types/index.js";
 
-/**
- * Internal delegate for providing a fluent model building experience
- */
-class ModelBuilder {
-  constructor() {
-    this.item = {
-      type: undefined,
-      name: undefined,
-      docs: undefined,
-      optional: false,
-      default: undefined,
-    };
-  }
+class LbuBool extends TypeBuilder {
+  constructor(group, name) {
+    super("boolean", group, name);
 
-  /**
-   * @public
-   * @param {string} name
-   * @return {this}
-   */
-  name(name) {
-    this.item.name = name;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string} docs
-   * @return {this}
-   */
-  docs(docs) {
-    this.item.docs = docs;
-    return this;
-  }
-
-  /**
-   * @public
-   * @return {this}
-   */
-  optional() {
-    this.item.optional = true;
-    return this;
-  }
-
-  /**
-   * @public
-   * @param {string|boolean|number} value
-   * @return {this}
-   */
-  default(value) {
-    this.item.default = value;
-    this.item.optional = !isNil(value);
-    return this;
-  }
-
-  /**
-   * @public
-   */
-  build() {
-    if (this.item === undefined) {
-      throw new Error("Not implemented");
-    }
-    return merge({}, this.item);
-  }
-}
-
-class LbuBool extends ModelBuilder {
-  constructor() {
-    super();
-
-    this.item.type = "boolean";
-    this.item.oneOf = undefined;
+    this.data.oneOf = undefined;
   }
 
   /**
@@ -79,17 +14,16 @@ class LbuBool extends ModelBuilder {
    * @return {LbuBool}
    */
   oneOf(value) {
-    this.item.oneOf = value;
+    this.data.oneOf = value;
     return this;
   }
 }
 
-class LbuNumber extends ModelBuilder {
-  constructor() {
-    super();
+class LbuNumber extends TypeBuilder {
+  constructor(group, name) {
+    super("number", group, name);
 
-    this.item.type = "number";
-    this.item.oneOf = undefined;
+    this.data.oneOf = undefined;
   }
 
   /**
@@ -98,16 +32,16 @@ class LbuNumber extends ModelBuilder {
    * @return {LbuNumber}
    */
   oneOf(...values) {
-    this.item.oneOf = values;
+    this.data.oneOf = values;
     return this;
   }
 }
 
-class LbuString extends ModelBuilder {
-  constructor() {
-    super();
-    this.item.type = "string";
-    this.item.oneOf = undefined;
+class LbuString extends TypeBuilder {
+  constructor(group, name) {
+    super("string", group, name);
+
+    this.data.oneOf = undefined;
   }
 
   /**
@@ -116,19 +50,16 @@ class LbuString extends ModelBuilder {
    * @return {LbuString}
    */
   oneOf(...values) {
-    this.item.oneOf = values;
+    this.data.oneOf = values;
     return this;
   }
 }
 
-class LbuObject extends ModelBuilder {
-  /**
-   * @param {Object<string, ModelBuilder>} [obj]
-   */
-  constructor(obj) {
-    super();
-    this.item.type = "object";
-    this.item.keys = {};
+class LbuObject extends TypeBuilder {
+  constructor(group, name, obj) {
+    super("object", group, name);
+
+    this.internalKeys = {};
 
     if (!isNil(obj)) {
       this.keys(obj);
@@ -137,50 +68,32 @@ class LbuObject extends ModelBuilder {
 
   /**
    * @public
-   * @param {Object<string, ModelBuilder>} obj
+   * @param {Object<string, TypeBuilder>} obj
    * @return {LbuObject}
    */
   keys(obj) {
-    this.item.keys = merge(this.item.keys, obj);
+    this.internalKeys = merge(this.internalKeys, obj);
     return this;
   }
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuObject}
-   */
-  copy(name) {
-    const result = new LbuObject();
-    result.item = merge({}, this.item, { name });
-
-    return result;
-  }
-
   build() {
-    const keys = this.item.keys;
-    this.item.keys = {};
     const result = super.build();
 
-    for (const key of Object.keys(keys)) {
-      result.keys[key] = keys[key].build();
-    }
+    result.keys = {};
 
-    this.item.keys = keys;
+    for (const k of Object.keys(this.internalKeys)) {
+      result.keys[k] = this.internalKeys[k].build();
+    }
 
     return result;
   }
 }
 
-class LbuArray extends ModelBuilder {
-  /**
-   * @param {ModelBuilder} [value]
-   */
-  constructor(value) {
-    super();
+class LbuArray extends TypeBuilder {
+  constructor(group, name, value) {
+    super("array", group, name);
 
-    this.item.type = "array";
-    this.item.values = undefined;
+    this.internalValues = undefined;
 
     if (!isNil(value)) {
       this.values(value);
@@ -189,48 +102,28 @@ class LbuArray extends ModelBuilder {
 
   /**
    * @public
-   * @param {ModelBuilder} [value]
+   * @param {TypeBuilder} [value]
    * @return {LbuArray}
    */
   values(value) {
-    this.item.values = value;
+    this.internalValues = value;
     return this;
   }
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuArray}
-   */
-  copy(name) {
-    const result = new LbuArray();
-    result.item = merge({}, this.item, { name });
-
-    return result;
-  }
-
   build() {
-    const values = this.item.values;
-    this.item.values = undefined;
     const result = super.build();
 
-    result.values = values.build();
-
-    this.item.values = values;
+    result.values = this.internalValues.build();
 
     return result;
   }
 }
 
-class LbuAnyOf extends ModelBuilder {
-  /**
-   * @param {...ModelBuilder} [items]
-   */
-  constructor(...items) {
-    super();
+class LbuAnyOf extends TypeBuilder {
+  constructor(group, name, items) {
+    super("anyOf", group, name);
 
-    this.item.type = "anyOf";
-    this.item.values = undefined;
+    this.internalValues = undefined;
 
     if (items.length !== 0) {
       this.values(...items);
@@ -239,57 +132,37 @@ class LbuAnyOf extends ModelBuilder {
 
   /**
    * @public
-   * @param {...ModelBuilder} [items]
+   * @param {...TypeBuilder} [items]
    * @return {LbuAnyOf}
    */
   values(...items) {
-    if (isNil(this.item.values)) {
-      this.item.values = [];
+    if (isNil(this.internalValues)) {
+      this.internalValues = [];
     }
 
-    this.item.values.push(...items);
+    this.internalValues.push(...items);
 
     return this;
   }
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuAnyOf}
-   */
-  copy(name) {
-    const result = new LbuAnyOf();
-    result.item = merge({}, this.item, { name });
-
-    return result;
-  }
-
   build() {
-    const values = this.item.values;
-    this.item.values = [];
     const result = super.build();
 
-    for (const value of values) {
-      result.values.push(value.build());
+    result.values = [];
+    for (const v of this.internalValues) {
+      result.values.push(v.build());
     }
-
-    this.item.values = values;
 
     return result;
   }
 }
 
-class LbuRef extends ModelBuilder {
-  /**
-   * @param {string} [type]
-   * @param {string} [field]
-   */
-  constructor(type, field) {
-    super();
+class LbuRef extends TypeBuilder {
+  constructor(group, name, type, field) {
+    super("reference", group, name);
 
-    this.item.type = "reference";
-    this.item.referenceModel = undefined;
-    this.item.referenceField = undefined;
+    this.data.referenceModel = undefined;
+    this.data.referenceField = undefined;
 
     this.type(type);
 
@@ -304,7 +177,7 @@ class LbuRef extends ModelBuilder {
    * @return {LbuRef}
    */
   type(type) {
-    this.item.referenceModel = type;
+    this.data.referenceModel = type;
     return this;
   }
 
@@ -314,18 +187,17 @@ class LbuRef extends ModelBuilder {
    * @return {LbuRef}
    */
   externalField(field) {
-    this.item.referenceField = field;
+    this.data.referenceField = field;
     return this;
   }
 }
 
-class LbuAny extends ModelBuilder {
-  constructor() {
-    super();
+class LbuAny extends TypeBuilder {
+  constructor(group, name) {
+    super("any", group, name);
 
-    this.item.type = "any";
-    this.item.typeOf = undefined;
-    this.item.instanceOf = undefined;
+    this.data.typeOf = undefined;
+    this.data.instanceOf = undefined;
   }
 
   /**
@@ -334,7 +206,7 @@ class LbuAny extends ModelBuilder {
    * @return {LbuAny}
    */
   typeOf(value) {
-    this.item.typeOf = value;
+    this.data.typeOf = value;
     return this;
   }
 
@@ -344,195 +216,156 @@ class LbuAny extends ModelBuilder {
    * @return {LbuAny}
    */
   instanceOf(value) {
-    this.item.instanceOf = value;
+    this.data.instanceOf = value;
     return this;
   }
 }
 
-class LbuGeneric extends ModelBuilder {
-  /**
-   * @param {ModelBuilder} [value]
-   */
-  constructor(value) {
-    super();
+class LbuGeneric extends TypeBuilder {
+  constructor(group, name) {
+    super("generic", group, name);
 
-    this.item.type = "generic";
-    this.item.keys = undefined;
-    this.item.values = undefined;
-
-    if (!isNil(value)) {
-      this.values(value);
-    }
+    this.internalKeys = undefined;
+    this.internalValues = undefined;
   }
 
   /**
    * @public
-   * @param {ModelBuilder} [key]
+   * @param {TypeBuilder} [key]
    * @return {LbuGeneric}
    */
   keys(key) {
-    this.item.keys = key;
+    this.internalKeys = key;
     return this;
   }
 
   /**
    * @public
-   * @param {ModelBuilder} [value]
+   * @param {TypeBuilder} [value]
    * @return {LbuGeneric}
    */
   values(value) {
-    this.item.values = value;
+    this.internalValues = value;
     return this;
   }
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuGeneric}
-   */
-  copy(name) {
-    const result = new LbuGeneric();
-    result.item = merge({}, this.item, { name });
-
-    return result;
-  }
-
   build() {
-    const keys = this.item.keys;
-    const values = this.item.values;
-
-    this.item.keys = undefined;
-    this.item.values = undefined;
-
     const result = super.build();
-    result.keys = keys.build();
-    result.values = values.build();
 
-    this.item.keys = keys;
-    this.item.values = values;
+    result.keys = this.internalKeys.build();
+    result.values = this.internalValues.build();
 
     return result;
   }
 }
 
-class ModelIntantiator {
-  /**
-   * Check if value is instanceof ModelBuilder
-   * @param {*} value
-   * @return {boolean}
-   */
-  instanceOf(value) {
-    return value instanceof ModelBuilder;
+/**
+ * @name TypeCreator#bool
+ * @param {string} [name]
+ * @return {LbuBool}
+ */
+TypeCreator.prototype.bool = function (name) {
+  return new LbuBool(this.group, name);
+};
+
+/**
+ * @name TypeCreator#number
+ * @param {string} [name]
+ * @return {LbuNumber}
+ */
+TypeCreator.prototype.number = function (name) {
+  return new LbuNumber(this.group, name);
+};
+
+/**
+ * @name TypeCreator#string
+ * @param {string} [name]
+ * @return {LbuString}
+ */
+TypeCreator.prototype.string = function (name) {
+  return new LbuString(this.group, name);
+};
+
+/**
+ * @name TypeCreator#object
+ * @param {string|Object<string, TypeBuilder>} [name]
+ * @param {Object<string, TypeBuilder>} [obj]
+ * @return {LbuObject}
+ */
+TypeCreator.prototype.object = function (name, obj) {
+  if (isPlainObject(name)) {
+    return new LbuObject(this.group, undefined, name);
+  } else {
+    return new LbuObject(this.group, name, obj);
   }
+};
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuBool}
-   */
-  bool(name) {
-    return new LbuBool().name(name);
+/**
+ * @name TypeCreator#array
+ * @param {string|TypeBuilder} [name]
+ * @param {TypeBuilder} [value]
+ * @return {LbuArray}
+ */
+TypeCreator.prototype.array = function (name, value) {
+  if (name instanceof TypeBuilder) {
+    return new LbuArray(this.group, undefined, value);
+  } else {
+    return new LbuArray(this.group, name, value);
   }
+};
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuNumber}
-   */
-  number(name) {
-    return new LbuNumber().name(name);
+/**
+ * @name TypeCreator#anyOf
+ * @param {string|TypeBuilder[]} [name]
+ * @param {...TypeBuilder} [values]
+ * @return {LbuAnyOf}
+ */
+TypeCreator.prototype.anyOf = function (name, ...values) {
+  if (Array.isArray(name)) {
+    return new LbuAnyOf(this.group, undefined, name);
+  } else {
+    return new LbuAnyOf(this.group, name, values);
   }
+};
 
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuString}
-   */
-  string(name) {
-    return new LbuString().name(name);
-  }
+/**
+ * @name TypeCreator#ref
+ * @param {string} [type]
+ * @param {string} [field]
+ * @return {LbuRef}
+ */
+TypeCreator.prototype.ref = function (type, field) {
+  return new LbuRef(this.group, undefined, type, field);
+};
 
-  /**
-   * @public
-   * @param {string|Object<string, ModelBuilder>} [name]
-   * @param {Object<string, ModelBuilder>} [obj]
-   * @return {LbuObject}
-   */
-  object(name, obj) {
-    if (isPlainObject(name)) {
-      return new LbuObject(name);
-    } else {
-      return new LbuObject(obj).name(name);
-    }
-  }
+/**
+ * @name TypeCreator#any
+ * @param {string} [name]
+ * @return {LbuAny}
+ */
+TypeCreator.prototype.any = function (name) {
+  return new LbuAny(this.group, name);
+};
 
-  /**
-   * @public
-   * @param {string|ModelBuilder} [name]
-   * @param {ModelBuilder} [value]
-   * @return {LbuArray}
-   */
-  array(name, value) {
-    if (this.instanceOf(name)) {
-      return new LbuArray(name);
-    } else {
-      return new LbuArray(value).name(name);
-    }
-  }
+/**
+ * @name TypeCreator#generic
+ * @param {string} [name]
+ * @return {LbuGeneric}
+ */
+TypeCreator.prototype.generic = function (name) {
+  return new LbuGeneric(this.group, name);
+};
 
-  /**
-   * @public
-   * @param {string|ModelBuilder[]} [name]
-   * @param {...ModelBuilder} [values]
-   * @return {LbuAnyOf}
-   */
-  anyOf(name, ...values) {
-    if (Array.isArray(name)) {
-      return new LbuAnyOf(...name);
-    } else {
-      return new LbuAnyOf(...values).name(name);
-    }
-  }
-
-  /**
-   * @public
-   * @param {string} [type]
-   * @param {string} [field]
-   * @return {LbuRef}
-   */
-  ref(type, field) {
-    return new LbuRef(type, field);
-  }
-
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuAny}
-   */
-  any(name) {
-    return new LbuAny().name(name);
-  }
-
-  /**
-   * @public
-   * @param {string} [name]
-   * @return {LbuGeneric}
-   */
-  generic(name) {
-    return new LbuGeneric().name(name);
-  }
-}
-
-export const M = new ModelIntantiator();
-
-M.types = {
-  LbuBool,
-  LbuNumber,
-  LbuString,
-  LbuObject,
-  LbuArray,
-  LbuAnyOf,
-  LbuRef,
-  LbuAny,
-  LbuGeneric,
+export const M = {
+  types: {
+    LbuBool,
+    LbuNumber,
+    LbuString,
+    LbuObject,
+    LbuArray,
+    LbuAnyOf,
+    LbuRef,
+    LbuAny,
+    LbuGeneric,
+  },
 };

@@ -5,7 +5,6 @@ import {
   isNil,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { upperCaseFirst } from "../../utils.js";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { R } from "./RouteBuilder.js";
 import { buildTrie } from "./trie.js";
@@ -139,9 +138,9 @@ export async function generate(app, data) {
 }
 
 function getModelName(validator) {
-  if (validator === undefined || validator.item === undefined) {
+  if (validator === undefined || validator.data === undefined) {
     return undefined;
   }
 
-  return upperCaseFirst(validator.item.name);
+  return validator.data.uniqueName;
 }

@@ -39,10 +39,10 @@ export function decorateModels() {
    * Add the default validator object for the appropriate Lbu Type
    */
   function checkHasValidatorObject(instance) {
-    if (!instance.item.validator) {
-      instance.item.validator = merge(
+    if (!instance.data.validator) {
+      instance.data.validator = merge(
         {},
-        validatorDefaults[instance.item.type],
+        validatorDefaults[instance.data.type],
       );
     }
   }
@@ -54,7 +54,7 @@ export function decorateModels() {
    */
   M.types.LbuBool.prototype.convert = function () {
     checkHasValidatorObject(this);
-    this.item.validator.convert = true;
+    this.data.validator.convert = true;
 
     return this;
   };
@@ -66,7 +66,7 @@ export function decorateModels() {
    */
   M.types.LbuNumber.prototype.convert = function () {
     checkHasValidatorObject(this);
-    this.item.validator.convert = true;
+    this.data.validator.convert = true;
 
     return this;
   };
@@ -78,7 +78,7 @@ export function decorateModels() {
    */
   M.types.LbuNumber.prototype.integer = function () {
     checkHasValidatorObject(this);
-    this.item.validator.integer = true;
+    this.data.validator.integer = true;
 
     return this;
   };
@@ -91,7 +91,7 @@ export function decorateModels() {
    */
   M.types.LbuNumber.prototype.min = function (min) {
     checkHasValidatorObject(this);
-    this.item.validator.min = min;
+    this.data.validator.min = min;
 
     return this;
   };
@@ -104,7 +104,7 @@ export function decorateModels() {
    */
   M.types.LbuNumber.prototype.max = function (max) {
     checkHasValidatorObject(this);
-    this.item.validator.max = max;
+    this.data.validator.max = max;
 
     return this;
   };
@@ -116,7 +116,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.convert = function () {
     checkHasValidatorObject(this);
-    this.item.validator.convert = true;
+    this.data.validator.convert = true;
 
     return this;
   };
@@ -128,7 +128,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.trim = function () {
     checkHasValidatorObject(this);
-    this.item.validator.trim = true;
+    this.data.validator.trim = true;
 
     return this;
   };
@@ -140,7 +140,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.upperCase = function () {
     checkHasValidatorObject(this);
-    this.item.validator.upperCase = true;
+    this.data.validator.upperCase = true;
 
     return this;
   };
@@ -152,7 +152,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.lowerCase = function () {
     checkHasValidatorObject(this);
-    this.item.validator.lowerCase = true;
+    this.data.validator.lowerCase = true;
 
     return this;
   };
@@ -165,7 +165,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.min = function (min) {
     checkHasValidatorObject(this);
-    this.item.validator.min = min;
+    this.data.validator.min = min;
 
     return this;
   };
@@ -178,7 +178,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.max = function (max) {
     checkHasValidatorObject(this);
-    this.item.validator.max = max;
+    this.data.validator.max = max;
 
     return this;
   };
@@ -191,7 +191,7 @@ export function decorateModels() {
    */
   M.types.LbuString.prototype.pattern = function (pattern) {
     checkHasValidatorObject(this);
-    this.item.validator.pattern = pattern;
+    this.data.validator.pattern = pattern;
 
     return this;
   };
@@ -203,7 +203,7 @@ export function decorateModels() {
    */
   M.types.LbuObject.prototype.strict = function () {
     checkHasValidatorObject(this);
-    this.item.validator.strict = true;
+    this.data.validator.strict = true;
 
     return this;
   };
@@ -215,7 +215,7 @@ export function decorateModels() {
    */
   M.types.LbuArray.prototype.convert = function () {
     checkHasValidatorObject(this);
-    this.item.validator.convert = true;
+    this.data.validator.convert = true;
 
     return this;
   };
@@ -228,7 +228,7 @@ export function decorateModels() {
    */
   M.types.LbuArray.prototype.min = function (min) {
     checkHasValidatorObject(this);
-    this.item.validator.min = min;
+    this.data.validator.min = min;
 
     return this;
   };
@@ -241,7 +241,7 @@ export function decorateModels() {
    */
   M.types.LbuArray.prototype.max = function (max) {
     checkHasValidatorObject(this);
-    this.item.validator.max = max;
+    this.data.validator.max = max;
 
     return this;
   };

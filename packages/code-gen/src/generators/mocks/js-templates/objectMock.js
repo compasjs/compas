@@ -13,9 +13,9 @@ export function objectMock(mock, { ignoreDefaults }) {
   buildObject += "}";
   result.push(buildObject);
 
-  if (mock.optional) {
-    if (!isNil(mock.default) && !ignoreDefaults) {
-      result.push(mock.default);
+  if (mock.isOptional) {
+    if (!isNil(mock.defaultValue) && !ignoreDefaults) {
+      result.push(mock.defaultValue);
     } else {
       result.push("undefined");
     }

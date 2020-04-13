@@ -11,23 +11,23 @@ export function normalizeModelsRecursively(models, value) {
     return;
   }
 
-  if (isPlainObject(value) && value.type && value.name) {
+  if (isPlainObject(value) && value.type && value.uniqueName) {
     // Type is most likely a build from a named Modelbuiler
     // Make sure that if it is not in known models, put it there
-    if (!models[value.name]) {
-      models[value.name] = value;
+    if (!models[value.uniqueName]) {
+      models[value.uniqueName] = value;
     }
   }
 
   if (isPlainObject(value)) {
     for (const key of Object.keys(value)) {
       normalizeModelsRecursively(models, value[key]);
-      if (value[key] && value[key].name && value[key].type) {
+      if (value[key] && value[key].uniqueName && value[key].type) {
         value[key] = {
           type: "reference",
-          docs: "",
-          optional: false,
-          referenceModel: value[key].name,
+          docString: "",
+          isOptional: false,
+          referenceModel: value[key].uniqueName,
           referenceField: undefined,
         };
       }
@@ -35,12 +35,12 @@ export function normalizeModelsRecursively(models, value) {
   } else if (Array.isArray(value)) {
     for (let i = 0; i < value.length; ++i) {
       normalizeModelsRecursively(models, value[i]);
-      if (value[i] && value[i].name && value[i].type) {
+      if (value[i] && value[i].uniqueName && value[i].type) {
         value[i] = {
           type: "reference",
-          docs: "",
-          optional: false,
-          referenceModel: value[i].name,
+          docString: "",
+          isOptional: false,
+          referenceModel: value[i].uniqueName,
           referenceField: undefined,
         };
       }

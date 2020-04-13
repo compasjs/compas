@@ -7,13 +7,13 @@
 
 /**
  * {{= modelName }}
- * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
  */
 export type {{=modelName}} = {{= generateTsType(models, models[modelName], { ignoreDefaults: false }) }};
 
 /**
  * {{= modelName }}_Optional
- * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
  */
 export type {{=modelName}}_Optional = {{= generateTsType(models, models[modelName], { ignoreDefaults: true }) }};
 
@@ -23,13 +23,13 @@ export type {{=modelName}}_Optional = {{= generateTsType(models, models[modelNam
 
 /**
  * {{= modelName }}
- * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
  * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
  */
 
 /**
  * {{= modelName }}_Optional
- * {{ if (models[modelName].docs) { }}Docs: {{= models[modelName].docs }}{{ } }}
+ * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
  * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
  */
 
