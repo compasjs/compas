@@ -25,6 +25,7 @@ export function test(t) {
     t.ok(result.heapUsed);
     t.ok(result.heapTotal);
     t.ok(result.external);
+    t.ok(result.arrayBuffers);
 
     t.end();
   });

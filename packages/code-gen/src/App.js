@@ -1,4 +1,4 @@
-import { newLogger } from "@lbu/insight";
+import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, newTemplateContext } from "@lbu/stdlib";
 import { promises } from "fs";
 import { join } from "path";
@@ -148,6 +148,8 @@ export class App {
       const path = join(this.options.outputDir, file.path);
       await writeFile(path, file.source, { encoding: "utf-8" });
     }
+
+    printProcessMemoryUsage(this.logger);
   }
 
   /**

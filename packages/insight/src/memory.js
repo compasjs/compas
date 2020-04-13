@@ -3,11 +3,11 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 /**
  * Format bytes, with up to 2 digits after the decimal point, in a more human readable way
  * Support up to a pebibyte
- * @param {number} bytes
+ * @param {number} [bytes]
  * @returns {string}
  */
 export function bytesToHumanReadable(bytes) {
-  if (bytes === 0) {
+  if (bytes === 0 || bytes === undefined) {
     return "0 Byte";
   }
 
@@ -32,13 +32,20 @@ export function bytesToHumanReadable(bytes) {
  * @param logger
  */
 export function printProcessMemoryUsage(logger) {
-  const { external, heapTotal, heapUsed, rss } = process.memoryUsage();
+  const {
+    external,
+    heapTotal,
+    heapUsed,
+    rss,
+    arrayBuffers,
+  } = process.memoryUsage();
   if (logger.isProduction()) {
     logger.info({
       rss,
       heapUsed,
       heapTotal,
       external,
+      arrayBuffers,
     });
   } else {
     logger.info({
@@ -46,6 +53,7 @@ export function printProcessMemoryUsage(logger) {
       heapUsed: bytesToHumanReadable(heapUsed),
       heapTotal: bytesToHumanReadable(heapTotal),
       external: bytesToHumanReadable(external),
+      arrayBuffers: bytesToHumanReadable(arrayBuffers),
     });
   }
 }
