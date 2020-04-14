@@ -34,6 +34,8 @@ export function validatorSetErrorFn(fn) {
   _errorFn = fn;
 }
 
-{{ for (const v of it.validatorFunctions) { }}
-{{= validatorsNamedFn({ models, ...v }) }}
+{{ for (const v of it.validatorsToGenerate) { }}
+{{= validatorsNamedFn({ models, ctx, model: models[v] }) }}
 {{ } }}
+
+{{= ctx.functions }}

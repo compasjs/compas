@@ -1,20 +1,11 @@
-{{ for (const v of it.values) { }}
-{{= validatorsAnonFn(v) }}
-{{ } }}
+const errors = [];
 
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.anyOf.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  const errors = [];
-  {{ for (const v of values) { }}
+{{ for (const v of model.values) { }}
   try {
-    return {{= v.functionName }}(value, propertyPath);
+    {{ const num = ctx.counter; }}
+    {{ ctx.functions += validatorsAnonFn({ model: v, ctx }); }}
+
+    return {{= v.type }}Validator{{= num }}(value, propertyPath);
   } catch (e) {
     errors.push({
       name: e.name,
@@ -23,7 +14,7 @@ function {{= functionName }}(value, propertyPath) {
       info: e.info,
     });
   }
-  {{ } }}
+{{ } }}
 
-  throw _errorFn("validator.anyOf.type", { propertyPath, errors });
-}
+throw _errorFn("validator.anyOf.type", { propertyPath, errors });
+

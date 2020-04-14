@@ -1,25 +1,15 @@
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.any.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  {{ if (it.typeOf !== undefined) { }}
-  if (typeof value !== "{{= typeOf }}") {
-    const typeOf = "{{= typeOf }}";
+{{ if (model.typeOf !== undefined) { }}
+  if (typeof value !== "{{= model.typeOf }}") {
+    const typeOf = "{{= model.typeOf }}";
     throw _errorFn("validator.any.type", { propertyPath, typeOf });
-  }
-  {{ } }}
-
-  {{ if (it.instanceOf !== undefined) { }}
-    if (!(value instanceOf {{= instanceOf }}) {
-      const instanceOf = "{{= instanceOf }}";
-      throw _errorFn("validator.any.instance", { propertyPath, instanceOf });
-    }
-  {{ } }}
-
-  return value;
 }
+{{ } }}
+
+{{ if (model.instanceOf !== undefined) { }}
+  if (!(value instanceOf {{= model.instanceOf }}) {
+    const instanceOf = "{{= model.instanceOf }}";
+    throw _errorFn("validator.any.instance", { propertyPath, instanceOf });
+  }
+{{ } }}
+
+return value;

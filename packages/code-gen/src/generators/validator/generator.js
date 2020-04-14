@@ -4,9 +4,8 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { upperCaseFirst } from "../../utils.js";
 import { decorateModels } from "./decoreModels.js";
-import { extractValidatorsToGenerate, transform } from "./transform.js";
+import { extractValidatorsToGenerate } from "./transform.js";
 
 const store = new Set();
 
@@ -75,18 +74,12 @@ export async function generate(app, data) {
     );
   }
 
-  console.log(validatorsToGenerate);
-
-  const validatorFunctions = transform({
-    models: data.models,
-    validators: validatorsToGenerate,
-  });
-
   return {
     path: "./validators.js",
     source: executeTemplate(app.templateContext, "validatorsFile", {
       models: data.models,
-      validatorFunctions,
+      validatorsToGenerate,
+      ctx: { counter: 0, functions: "" },
       opts: app.options,
     }),
   };

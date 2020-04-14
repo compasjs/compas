@@ -1,48 +1,38 @@
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.number.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  {{ if (it.validator.convert) { }}
+{{ if (model.validator.convert) { }}
   if (typeof value !== "number") {
     value = Number(value)
   }
-  {{ } }}
+{{ } }}
 
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-      throw _errorFn("validator.number.type", { propertyPath });
-  }
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+  throw _errorFn("validator.number.type", { propertyPath });
+}
 
-  {{ if (it.validator.integer) { }}
+{{ if (model.validator.integer) { }}
   if (!Number.isInteger(value)) {
-      throw _errorFn("validator.number.integer", { propertyPath });
+    throw _errorFn("validator.number.integer", { propertyPath });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.min !== undefined) { }}
-  if (value < {{= validator.min }}) {
-    const min = {{= validator.min }};
+{{ if (model.validator.min !== undefined) { }}
+  if (value < {{= model.validator.min }}) {
+    const min = {{= model.validator.min }};
     throw _errorFn("validator.number.min", { propertyPath, min });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.max !== undefined) { }}
-  if (value > {{= validator.max }}) {
-    const max = {{= validator.max }};
+{{ if (model.validator.max !== undefined) { }}
+  if (value > {{= model.validator.max }}) {
+    const max = {{= model.validator.max }};
     throw _errorFn("validator.number.max", { propertyPath, max });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.oneOf !== undefined) { }}
-  if ({{= oneOf.map(it => "value !== " + it).join(" && ") }}) {
-    const oneOf = {{= quote(oneOf.join(", ")) }};
+{{ if (model.oneOf !== undefined) { }}
+  if ({{= model.oneOf.map(it => "value !== " + it).join(" && ") }}) {
+    const oneOf = {{= quote(model.oneOf.join(", ")) }};
     throw _errorFn("validator.number.oneOf", { propertyPath, oneOf });
   }
-  {{ } }}
+{{ } }}
 
-  return value;
-}
+return value;

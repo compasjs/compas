@@ -1,19 +1,22 @@
-{{ if (type === "boolean") { }}
-  {{= booleanValidatorFn(it) }}
-{{ } else if (type === "number") { }}
-  {{= numberValidatorFn(it) }}
-{{ } else if (type === "string") { }}
-  {{= stringValidatorFn(it) }}
-{{ } else if (type === "object") { }}
-  {{= objectValidatorFn(it) }}
-{{ } else if (type === "array") { }}
-  {{= arrayValidatorFn(it) }}
-{{ } else if (type === "anyOf") { }}
-  {{= anyOfValidatorFn(it) }}
-{{ } else if (type === "reference") { }}
-  {{= referenceValidatorFn(it) }}
-{{ } else if (type === "any") { }}
-  {{= anyValidatorFn(it) }}
-{{ } else if (type === "generic") { }}
-  {{= genericValidatorFn(it) }}
+{{ const table = { anyOf: anyOfValidatorFn, any: anyValidatorFn, array: arrayValidatorFn, boolean: booleanValidatorFn, generic: genericValidatorFn, number: numberValidatorFn, object: objectValidatorFn, reference: referenceValidatorFn, string: stringValidatorFn }; }}
+
+{{ if (model.docString !== "") { }}
+/**
+ * {{= model.docString }}
+ */
 {{ } }}
+function {{= model.type}}Validator{{= ctx.counter++ }}(value, propertyPath) {
+  if (isNil(value)) {
+    {{ if (model.isOptional) { }}
+      return {{= model.defaultValue }};
+    {{ } else { }}
+      throw _errorFn("validator.{{= model.type }}.undefined", { propertyPath });
+    {{ } }}
+  }
+
+  {{ /* makes it easier for type implementations */ }}
+  {{ model.validator = model.validator || {}; }}
+
+  {{= table[model.type]({ model, ctx }) }}
+}
+

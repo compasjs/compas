@@ -1,25 +1,19 @@
-{{= validatorsAnonFn(keys) }}
-{{= validatorsAnonFn(values) }}
+{{ const numKeys = ctx.counter; }}
+{{ const numValues = ctx.counter + 1; }}
+{{ ctx.functions += validatorsAnonFn({ model: model.keys, ctx }); }}
+{{ ctx.functions += validatorsAnonFn({ model: model.values, ctx }); }}
 
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.generic.undefined", { propertyPath });
-    {{ } }}
-  }
-  if (typeof value !== "object") {
-    throw _errorFn("validator.generic.type", { propertyPath });
-  }
 
-  const result = Object.create(null);
-  for (const key of Object.keys(value)) {
-    const validatedKey = {{= it.keys.functionName }}(key, propertyPath + ".$key");
-    const validatedValue = {{= it.values.functionName }}(value[key], propertyPath + ".$value");
-
-    result[validatedKey] = validatedValue;
-  }
-
-  return result;
+if (typeof value !== "object") {
+  throw _errorFn("validator.generic.type", { propertyPath });
 }
+
+const result = Object.create(null);
+for (const key of Object.keys(value)) {
+  const validatedKey = {{= model.keys.type }}Validator{{= numKeys }}(key, propertyPath + ".$key");
+  const validatedValue = {{= model.values.type }}Validator{{= numValues }}(value[key], propertyPath + ".$value");
+
+  result[validatedKey] = validatedValue;
+}
+
+return result;

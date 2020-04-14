@@ -1,61 +1,51 @@
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.string.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  {{ if (it.validator.convert) { }}
+{{ if (model.validator.convert) { }}
   if (typeof value !== "string") {
     value = String(value)
   }
-  {{ } }}
+{{ } }}
 
-  if (typeof value !== "string") {
-    throw _errorFn("validator.string.type", { propertyPath });
-  }
+if (typeof value !== "string") {
+  throw _errorFn("validator.string.type", { propertyPath });
+}
 
-  {{ if (it.validator.trim) { }}
+{{ if (model.validator.trim) { }}
   value = value.trim();
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.min !== undefined) { }}
-  if (value.length < {{= validator.min }}) {
-    const min = {{= validator.min }};
+{{ if (model.validator.min !== undefined) { }}
+  if (value.length < {{= model.validator.min }}) {
+    const min = {{= model.validator.min }};
     throw _errorFn("validator.string.min", { propertyPath, min });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.max !== undefined) { }}
-  if (value.length > {{= validator.max }}) {
-    const max = {{= validator.max }};
+{{ if (model.validator.max !== undefined) { }}
+  if (value.length > {{= model.validator.max }}) {
+    const max = {{= model.validator.max }};
     throw _errorFn("validator.string.max", { propertyPath, max });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.upperCase) { }}
+{{ if (model.validator.upperCase) { }}
   value = value.toUpperCase();
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.lowerCase) { }}
+{{ if (model.validator.lowerCase) { }}
   value = value.toLowerCase();
-  {{ } }}
+{{ } }}
 
-  {{ if (it.oneOf !== undefined) { }}
-  if ({{= oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
-    const oneOf = {{= quote(oneOf.join(", ")) }};
+{{ if (model.oneOf !== undefined) { }}
+  if ({{= model.oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
+    const oneOf = {{= quote(model.oneOf.join(", ")) }};
     throw _errorFn("validator.string.oneOf", { propertyPath, oneOf });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.pattern !== undefined) { }}
-  {{ const patternSrc = "/" + validator.pattern.source + "/" + validator.pattern.flags; }}
+{{ if (model.validator.pattern !== undefined) { }}
+  {{ const patternSrc = "/" + model.validator.pattern.source + "/" + model.validator.pattern.flags; }}
   if (!{{= patternSrc }}.test(value)) {
     throw _errorFn("validator.string.pattern", { propertyPath });
   }
-  {{ } }}
+{{ } }}
 
-  return value;
-}
+return value;

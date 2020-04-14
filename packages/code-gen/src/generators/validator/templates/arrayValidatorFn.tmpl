@@ -1,43 +1,34 @@
-{{= validatorsAnonFn(values) }}
+{{ const num = ctx.counter; }}
+{{ ctx.functions += validatorsAnonFn({ model: model.values, ctx }); }}
 
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.array.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  {{ if (it.validator.convert) { }}
+{{ if (model.validator.convert) { }}
   if (!Array.isArray(value)) {
     value = [value];
   }
-  {{ } }}
+{{ } }}
 
-  if (!Array.isArray(value)) {
-    throw _errorFn("validator.array.type", { propertyPath });
-  }
+if (!Array.isArray(value)) {
+  throw _errorFn("validator.array.type", { propertyPath });
+}
 
-  {{ if (it.validator.min !== undefined) { }}
-  if (value.length < {{= validator.min }}) {
-    const min = {{= validator.min }};
+{{ if (model.validator.min !== undefined) { }}
+  if (value.length < {{= model.validator.min }}) {
+    const min = {{= model.validator.min }};
     throw _errorFn("validator.array.min", { propertyPath, min });
   }
-  {{ } }}
+{{ } }}
 
-  {{ if (it.validator.max !== undefined) { }}
-  if (value.length > {{= validator.max }}) {
-    const max = {{= validator.max }};
+{{ if (model.validator.max !== undefined) { }}
+  if (value.length > {{= model.validator.max }}) {
+    const max = {{= model.validator.max }};
     throw _errorFn("validator.array.max", { propertyPath, max });
   }
-  {{ } }}
+{{ } }}
 
-  const result = [];
+const result = [];
 
-  for (let i = 0; i < value.length; ++i) {
-    result.push({{= values.functionName }}(value[i], propertyPath + "[" + i + "]"));
-  }
-
-  return result;
+for (let i = 0; i < value.length; ++i) {
+  result.push({{= model.values.type }}Validator{{= num }}(value[i], propertyPath + "[" + i + "]"));
 }
+
+return result;

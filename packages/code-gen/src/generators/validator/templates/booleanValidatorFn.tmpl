@@ -1,13 +1,4 @@
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.boolean.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  {{ if (it.validator.convert) { }}
+{{ if (model.validator.convert) { }}
   if (typeof value !== "boolean") {
     if (value === "true" || value === 1) {
       value = true;
@@ -15,18 +6,17 @@ function {{= functionName }}(value, propertyPath) {
       value = false;
     }
   }
-  {{ } }}
+{{ } }}
 
-  if (typeof value !== "boolean") {
-    throw _errorFn("validator.boolean.type", { propertyPath });
-  }
+if (typeof value !== "boolean") {
+  throw _errorFn("validator.boolean.type", { propertyPath });
+}
 
-  {{ if (it.oneOf !== undefined) { }}
-  if (value !== {{= oneOf }}) {
-    const oneOf = {{= oneOf }};
+{{ if (model.oneOf !== undefined) { }}
+  if (value !== {{= model.oneOf }}) {
+    const oneOf = {{= model.oneOf }};
     throw _errorFn("validator.boolean.oneOf", { propertyPath, oneOf });
   }
-  {{ } }}
+{{ } }}
 
-  return value;
-}
+return value;

@@ -1,11 +1,1 @@
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.reference.undefined", { propertyPath });
-    {{ } }}
-  }
-
-  return {{= reference }}(value, propertyPath);
-}
+return validate{{= model.referenceModel }}(value, propertyPath);

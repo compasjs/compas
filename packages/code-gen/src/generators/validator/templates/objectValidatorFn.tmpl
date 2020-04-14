@@ -1,40 +1,36 @@
-{{ for (const key of Object.keys(keys)) { }}
-{{= validatorsAnonFn(keys[key]) }}
+{{ const numMap = {}; }}
+{{ let idx = 0; }}
+{{ for (const key of Object.keys(model.keys)) { }}
+  {{ numMap[key] = ctx.counter; }}
+  {{ ctx.functions += validatorsAnonFn({ model: model.keys[key], ctx }); }}
 {{ } }}
 
-function {{= functionName }}(value, propertyPath) {
-  if (isNil(value)) {
-    {{ if (it.isOptional) { }}
-      return {{= it.defaultValue }};
-    {{ } else { }}
-      throw _errorFn("validator.object.undefined", { propertyPath });
-    {{ } }}
-  }
 
-  if (typeof value !== "object") {
-    throw _errorFn("validator.object.type", { propertyPath });
-  }
-  const result = Object.create(null);
+if (typeof value !== "object") {
+  throw _errorFn("validator.object.type", { propertyPath });
+}
 
-  {{ if (it.validator.strict) { }}
+const result = Object.create(null);
+
+{{ if (model.validator.strict) { }}
   const keySet = new Set(Object.keys(value));
-  {{ } }}
+{{ } }}
 
-  {{ for (const key of Object.keys(keys)) { }}
-    result[{{= quote(key) }}] = {{= keys[key].functionName }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }});
+{{ for (const key of Object.keys(model.keys)) { }}
+  result[{{= quote(key) }}] = {{= model.keys[key].type }}Validator{{= numMap[key] }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }});
 
-    {{ if (it.validator.strict) { }}
+  {{ if (model.validator.strict) { }}
     keySet.delete({{= quote(key) }});
-    {{ } }}
   {{ } }}
+{{ } }}
 
-  {{ if (it.validator.strict) { }}
+{{ if (model.validator.strict) { }}
   if (keySet.size !== 0) {
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }
+
     throw _errorFn("validator.object.strict", { propertyPath, extraKeys });
   }
-  {{ } }}
+{{ } }}
 
-  return result;
-}
+return result;

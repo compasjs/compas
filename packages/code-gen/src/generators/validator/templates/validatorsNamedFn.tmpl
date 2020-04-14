@@ -1,20 +1,19 @@
-{{= validatorsAnonFn(validator) }}
-
 /**
- * {{= docs }}
+ * {{= model.docString }}
  * @param {*} value
- * @returns { {{= typeName }}}
+ * @param {string} [propertyPath]
+ * @returns { {{= model.uniqueName }}}
  */
-export function {{= validatorName }}(value) {
+export function validate{{= model.uniqueName }}(value, propertyPath = "$") {
  let result = value;
 
- {{ const preValidate = quote(preValidateHook); }}
- {{ const postValidate = quote(postValidateHook); }}
+ {{ const preValidate = quote("preValidate" + model.uniqueName); }}
+ {{ const postValidate = quote("postValidate" + model.uniqueName); }}
  if ({{= preValidate }} in validatorHooks) {
     result = validatorHooks[{{= preValidate }}](result);
  }
 
- result = {{= validator.functionName }}(result, "$");
+ result = {{= model.type }}Validator{{= ctx.counter }}(result, propertyPath);
 
  if ({{= postValidate }} in validatorHooks) {
     return validatorHooks[{{= postValidate }}](result);
@@ -22,3 +21,6 @@ export function {{= validatorName }}(value) {
    return result;
  }
 }
+
+{{ const fn = validatorsAnonFn({ model, ctx }); }}
+{{ ctx.functions += fn; }}
