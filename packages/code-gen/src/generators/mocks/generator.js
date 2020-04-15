@@ -4,8 +4,23 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { decorateModels } from "./decorateModels.js";
+import { TypeBuilder } from "../../types/index.js";
 import { mockForType } from "./js-templates/mockForType.js";
+
+/**
+ * @name TypeBuilder#mock
+ * @param {string} mockFn Raw mock string that is inserted. Use _mocker or __ to access
+ *   the Chance instance
+ * @return {TypeBuilder}
+ */
+TypeBuilder.prototype.mock = function (mockFn) {
+  if (!this.data.mocks) {
+    this.data.mocks = {};
+  }
+  this.data.mocks = mockFn.replace(/__/g, "_mocker");
+
+  return this;
+};
 
 /**
  * @param {App} app
@@ -22,8 +37,6 @@ export async function init(app) {
     },
   );
   app.templateContext.globals["mockForType"] = mockForType;
-
-  decorateModels();
 }
 
 /**

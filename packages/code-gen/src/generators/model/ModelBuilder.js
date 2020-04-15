@@ -6,15 +6,27 @@ class LbuBool extends TypeBuilder {
     super("boolean", group, name);
 
     this.data.oneOf = undefined;
+    this.data.validator = {
+      convert: false,
+    };
   }
 
   /**
-   * @public
    * @param {boolean} value
    * @return {LbuBool}
    */
   oneOf(value) {
     this.data.oneOf = value;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuBool}
+   */
+  convert() {
+    this.data.validator.convert = true;
+
     return this;
   }
 }
@@ -24,15 +36,59 @@ class LbuNumber extends TypeBuilder {
     super("number", group, name);
 
     this.data.oneOf = undefined;
+    this.data.validator = {
+      convert: false,
+      integer: false,
+      min: undefined,
+      max: undefined,
+    };
   }
 
   /**
-   * @public
    * @param {...number} values
    * @return {LbuNumber}
    */
   oneOf(...values) {
     this.data.oneOf = values;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuNumber}
+   */
+  convert() {
+    this.data.validator.convert = true;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuNumber}
+   */
+  integer() {
+    this.data.validator.integer = true;
+
+    return this;
+  }
+
+  /**
+   * @param {number} min
+   * @return {LbuNumber}
+   */
+  min(min) {
+    this.data.validator.min = min;
+
+    return this;
+  }
+
+  /**
+   * @param {number} max
+   * @return {LbuNumber}
+   */
+  max(max) {
+    this.data.validator.max = max;
+
     return this;
   }
 }
@@ -42,15 +98,90 @@ class LbuString extends TypeBuilder {
     super("string", group, name);
 
     this.data.oneOf = undefined;
+    this.data.validator = {
+      convert: false,
+      trim: false,
+      lowerCase: false,
+      upperCase: false,
+      min: undefined,
+      max: undefined,
+      pattern: undefined,
+    };
   }
 
   /**
-   * @public
    * @param {...string} values
    * @return {LbuString}
    */
   oneOf(...values) {
     this.data.oneOf = values;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuString}
+   */
+  convert() {
+    this.data.validator.convert = true;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuString}
+   */
+  trim() {
+    this.data.validator.trim = true;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuString}
+   */
+  upperCase() {
+    this.data.validator.upperCase = true;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuString}
+   */
+  lowerCase() {
+    this.data.validator.lowerCase = true;
+
+    return this;
+  }
+
+  /**
+   * @param {number} min
+   * @return {LbuString}
+   */
+  min(min) {
+    this.data.validator.min = min;
+
+    return this;
+  }
+
+  /**
+   * @param {number} max
+   * @return {LbuString}
+   */
+  max(max) {
+    this.data.validator.max = max;
+
+    return this;
+  }
+
+  /**
+   * @param {RegExp} pattern
+   * @return {LbuString}
+   */
+  pattern(pattern) {
+    this.data.validator.pattern = pattern;
+
     return this;
   }
 }
@@ -61,18 +192,31 @@ class LbuObject extends TypeBuilder {
 
     this.internalKeys = {};
 
+    this.data.validator = {
+      strict: false,
+    };
+
     if (!isNil(obj)) {
       this.keys(obj);
     }
   }
 
   /**
-   * @public
    * @param {Object<string, TypeBuilder>} obj
    * @return {LbuObject}
    */
   keys(obj) {
     this.internalKeys = merge(this.internalKeys, obj);
+
+    return this;
+  }
+
+  /**
+   * @return {LbuObject}
+   */
+  strict() {
+    this.data.validator.strict = true;
+
     return this;
   }
 
@@ -95,18 +239,53 @@ class LbuArray extends TypeBuilder {
 
     this.internalValues = undefined;
 
+    this.data.validator = {
+      convert: false,
+      min: undefined,
+      max: undefined,
+    };
+
     if (!isNil(value)) {
       this.values(value);
     }
   }
 
   /**
-   * @public
    * @param {TypeBuilder} [value]
    * @return {LbuArray}
    */
   values(value) {
     this.internalValues = value;
+
+    return this;
+  }
+
+  /**
+   * @return {LbuArray}
+   */
+  convert() {
+    this.data.validator.convert = true;
+
+    return this;
+  }
+
+  /**
+   * @param {number} min
+   * @return {LbuArray}
+   */
+  min(min) {
+    this.data.validator.min = min;
+
+    return this;
+  }
+
+  /**
+   * @param {number} max
+   * @return {LbuArray}
+   */
+  max(max) {
+    this.data.validator.max = max;
+
     return this;
   }
 
@@ -131,7 +310,6 @@ class LbuAnyOf extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {...TypeBuilder} [items]
    * @return {LbuAnyOf}
    */
@@ -172,7 +350,6 @@ class LbuRef extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {string} type
    * @return {LbuRef}
    */
@@ -182,7 +359,6 @@ class LbuRef extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {string} field
    * @return {LbuRef}
    */
@@ -201,7 +377,6 @@ class LbuAny extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {string} value
    * @return {LbuAny}
    */
@@ -211,7 +386,6 @@ class LbuAny extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {string} value
    * @return {LbuAny}
    */
@@ -230,7 +404,6 @@ class LbuGeneric extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {TypeBuilder} [key]
    * @return {LbuGeneric}
    */
@@ -240,7 +413,6 @@ class LbuGeneric extends TypeBuilder {
   }
 
   /**
-   * @public
    * @param {TypeBuilder} [value]
    * @return {LbuGeneric}
    */
@@ -354,18 +526,4 @@ TypeCreator.prototype.any = function (name) {
  */
 TypeCreator.prototype.generic = function (name) {
   return new LbuGeneric(this.group, name);
-};
-
-export const M = {
-  types: {
-    LbuBool,
-    LbuNumber,
-    LbuString,
-    LbuObject,
-    LbuArray,
-    LbuAnyOf,
-    LbuRef,
-    LbuAny,
-    LbuGeneric,
-  },
 };

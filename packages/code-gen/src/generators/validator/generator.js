@@ -4,7 +4,6 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { decorateModels } from "./decoreModels.js";
 import { extractValidatorsToGenerate } from "./transform.js";
 
 const store = new Set();
@@ -22,8 +21,6 @@ export async function init(app) {
     ".tmpl",
   );
   app.templateContext.globals.quote = (x) => `"${x}"`;
-
-  decorateModels();
 
   app.constructor.prototype.validator = function (...models) {
     for (const m of models) {

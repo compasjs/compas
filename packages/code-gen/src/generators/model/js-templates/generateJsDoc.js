@@ -4,7 +4,7 @@ export function generateJsDoc(models, value, { ignoreDefaults }) {
   let result = "";
   switch (value.type) {
     case "boolean":
-      if (value.convert) {
+      if (value.validator.convert) {
         result += '"true"|"false"|true|false|0|1';
       } else if (value.oneOf) {
         result += value.oneOf;
