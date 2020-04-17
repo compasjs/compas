@@ -1,0 +1,3 @@
+(
+{{= model.values.map(value => typeExec({ type: value.type, model: value, ignoreDefaults }).trim()).join("|") }}
+)

@@ -1,5 +1,3 @@
-{{ const table = { anyOf: anyOfValidatorFn, any: anyValidatorFn, array: arrayValidatorFn, boolean: booleanValidatorFn, generic: genericValidatorFn, number: numberValidatorFn, object: objectValidatorFn, reference: referenceValidatorFn, string: stringValidatorFn }; }}
-
 {{ if (model.docString !== "") { }}
 /**
  * {{= model.docString }}
@@ -17,6 +15,6 @@ function {{= model.type}}Validator{{= ctx.counter++ }}(value, propertyPath) {
   {{ /* makes it easier for type implementations */ }}
   {{ model.validator = model.validator || {}; }}
 
-  {{= table[model.type]({ model, ctx }) }}
+  {{= validatorExec({ type: model.type, model, ctx }).trim() }}
 }
 

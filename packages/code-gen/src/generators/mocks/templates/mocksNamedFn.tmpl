@@ -1,15 +1,15 @@
 /**
- * Generated mock for {{= mock.uniqueName }}
- * @return { {{= mock.uniqueName }}}
+ * Generated mock for {{= model.uniqueName }}
+ * @return { {{= model.uniqueName }}}
  */
-export function mock{{= mock.uniqueName }}() {
-  return {{= mockForType(mock, { ignoreDefaults: false }) }};
+export function mock{{= model.uniqueName }}() {
+  return {{= mockExec({ type: model.type, model, ignoreDefaults: false }).trim() }};
 }
 
 /**
- * Generated mock for {{= mock.uniqueName }} ignoring default values
- * @return { {{= mock.uniqueName }}_Optional}
+ * Generated mock for {{= model.uniqueName }} ignoring default values
+ * @return { {{= model.uniqueName }}_Optional}
  */
-export function mock{{= mock.uniqueName }}_Optional() {
-  return {{= mockForType(mock, { ignoreDefaults: true }) }};
+export function mock{{= model.uniqueName }}_Optional() {
+  return {{= mockExec({ type: model.type, model, ignoreDefaults: true }).trim() }};
 }

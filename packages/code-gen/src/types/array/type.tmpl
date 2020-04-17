@@ -1,0 +1,6 @@
+{{ const result = typeExec({ type: model.values.type, model: model.values, ignoreDefaults }).trim(); }}
+{{ if (model.validator.convert) { }}
+({{= result}}|{{= result }})[]
+{{ } else { }}
+({{= result}})[]
+{{ } }}

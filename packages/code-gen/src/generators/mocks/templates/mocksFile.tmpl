@@ -16,5 +16,5 @@ export function setMocker(mocker) {
 }
 
 {{ for (const m of Object.keys(models)) { }}
-{{= mocksNamedFn({ mock: models[m] }) }}
+{{= mocksNamedFn({ model: models[m] }) }}
 {{ } }}

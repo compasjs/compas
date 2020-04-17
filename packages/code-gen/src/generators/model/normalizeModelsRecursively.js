@@ -27,8 +27,9 @@ export function normalizeModelsRecursively(models, value) {
           type: "reference",
           docString: "",
           isOptional: false,
-          referenceModel: value[key].uniqueName,
-          referenceField: undefined,
+          reference: {
+            uniqueName: value[key].uniqueName,
+          },
         };
       }
     }
@@ -40,8 +41,9 @@ export function normalizeModelsRecursively(models, value) {
           type: "reference",
           docString: "",
           isOptional: false,
-          referenceModel: value[i].uniqueName,
-          referenceField: undefined,
+          reference: {
+            uniqueName: value[i].uniqueName,
+          },
         };
       }
     }

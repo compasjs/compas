@@ -1,0 +1,7 @@
+{{ if (model.validator.convert) { }}
+"true"|"false"|true|false|0|1
+{{ } else if (model.oneOf) { }}
+{{= model.oneOf }}
+{{ } else { }}
+boolean
+{{ } }}

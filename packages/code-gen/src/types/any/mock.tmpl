@@ -1,0 +1,5 @@
+{{ if (model.typeOf) { }}
+    {{ if (model.typeOf === "boolean" ) { }}_mocker.bool(), {{ } }}
+    {{ if (model.typeOf === "number" ) { }}_mocker.float(), {{ } }}
+    {{ if (model.typeOf === "string" ) { }}_mocker.string(), {{ } }}
+{{ } }}

@@ -28,7 +28,7 @@ export class TypeBuilder {
   /**
    * Add a doc comment, some generators / types may support rendering this
    * @param docValue
-   * @return {TypeBuilder}
+   * @return {this}
    */
   docs(docValue) {
     this.data.docString = docValue;
@@ -38,7 +38,7 @@ export class TypeBuilder {
 
   /**
    * Value can be undefined
-   * @return {TypeBuilder}
+   * @return {this}
    */
   optional() {
     this.data.isOptional = true;
@@ -50,7 +50,7 @@ export class TypeBuilder {
    * Set a raw default value, also makes the type optional
    * Can be reverted by calling this function with undefined or null
    * @param rawString
-   * @return {TypeBuilder}
+   * @return {this}
    */
   default(rawString) {
     this.data.defaultValue = rawString;
@@ -87,6 +87,8 @@ export class TypeBuilder {
  * @name TypeCreator
  */
 export class TypeCreator {
+  static types = {};
+
   constructor(group) {
     this.group = group || "app";
 

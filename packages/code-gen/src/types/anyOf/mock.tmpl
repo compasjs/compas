@@ -1,0 +1,3 @@
+{{ for (const value of model.values) { }}
+{{= mockExec({ type: value.type, model: value, ignoreDefaults }).trim() }},
+{{ } }}

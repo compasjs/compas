@@ -3,34 +3,34 @@
 {{ } }}
 
 {{ if (opts.useTypescript) { }}
-{{ for (const modelName of Object.keys(models)) { }}
+{{ for (const uniqueName of Object.keys(models)) { }}
 
 /**
- * {{= modelName }}
- * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
+ * {{= uniqueName }}
+ * {{ if (models[uniqueName].docString) { }}Docs: {{= models[uniqueName].docString }}{{ } }}
  */
-export type {{=modelName}} = {{= generateTsType(models, models[modelName], { ignoreDefaults: false }) }};
+export type {{=uniqueName}} = {{= typeExec({ type: models[uniqueName].type, model: models[uniqueName], ignoreDefaults: false }).trim() }};
 
 /**
- * {{= modelName }}_Optional
- * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
+ * {{= uniqueName }}_Optional
+ * {{ if (models[uniqueName].docString) { }}Docs: {{= models[uniqueName].docString }}{{ } }}
  */
-export type {{=modelName}}_Optional = {{= generateTsType(models, models[modelName], { ignoreDefaults: true }) }};
+export type {{=uniqueName}}_Optional = {{= typeExec({ type: models[uniqueName].type, model: models[uniqueName], ignoreDefaults: true }).trim() }};
 
 {{ } }}
 {{ } else { }}
-{{ for (const modelName of Object.keys(models)) { }}
+{{ for (const uniqueName of Object.keys(models)) { }}
 
 /**
- * {{= modelName }}
- * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
- * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: false }) }}} {{= modelName }}
+ * {{= uniqueName }}
+ * {{ if (models[uniqueName].docString) { }}Docs: {{= models[uniqueName].docString }}{{ } }}
+ * @typedef { {{= typeExec({ type: models[uniqueName].type, model: models[uniqueName], ignoreDefaults: false }).trim() }}} {{= uniqueName }}
  */
 
 /**
- * {{= modelName }}_Optional
- * {{ if (models[modelName].docString) { }}Docs: {{= models[modelName].docString }}{{ } }}
- * @typedef { {{= generateJsDoc(models, models[modelName], { ignoreDefaults: true }) }}} {{= modelName }}_Optional
+ * {{= uniqueName }}_Optional
+ * {{ if (models[uniqueName].docString) { }}Docs: {{= models[uniqueName].docString }}{{ } }}
+ * @typedef { {{= typeExec({ type: models[uniqueName].type, model: models[uniqueName], ignoreDefaults: true }).trim() }}} {{= uniqueName }}_Optional
  */
 
 {{ } }}

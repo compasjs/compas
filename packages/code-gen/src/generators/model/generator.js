@@ -1,12 +1,11 @@
 import {
+  compileTemplate,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
   isNil,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { generateJsDoc } from "./js-templates/generateJsDoc.js";
-import { generateTsType } from "./js-templates/generateTsType.js";
 import { normalizeModelsRecursively } from "./normalizeModelsRecursively.js";
 import { processExtendsFrom, processStore } from "./process.js";
 
@@ -19,14 +18,13 @@ const store = new Set();
 export async function init(app) {
   store.clear();
 
+  collectTypes(app);
+
   await compileTemplateDirectory(
     app.templateContext,
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
-
-  app.templateContext.globals["generateJsDoc"] = generateJsDoc;
-  app.templateContext.globals["generateTsType"] = generateTsType;
 
   /**
    * @name App#model
@@ -89,4 +87,38 @@ export async function generate(app, data) {
       opts: app.options,
     }),
   };
+}
+
+/**
+ * @param {App} app
+ */
+function collectTypes(app) {
+  const useTypescript = app.options && app.options.useTypescript;
+  const key = useTypescript ? "tsType" : "jsType";
+
+  let fnString = `{{ let result = ''; }}`;
+
+  for (const type of app.types) {
+    if (key in type) {
+      const templateName = `${type.name}Type`;
+      compileTemplate(app.templateContext, templateName, type[key]());
+
+      fnString += `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`;
+    }
+  }
+
+  fnString += `
+   {{ if (it.ignoreDefaults) { }}
+     {{ if (it.model && it.model.isOptional) { }}
+       {{ result += "|undefined"; }}
+     {{ } }}
+   {{ } else { }}
+     {{ if (it.model.isOptional && it.model.defaultValue === undefined) { }}
+       {{ result += "|undefined"; }}       
+     {{ } }}
+   {{ } }}
+   {{= result.trim().replace(/\\s+/g, " ") }} 
+  `;
+
+  compileTemplate(app.templateContext, "typeExec", fnString);
 }

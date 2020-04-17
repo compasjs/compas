@@ -1,4 +1,5 @@
 import {
+  compileTemplate,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
@@ -14,6 +15,8 @@ const store = new Set();
  */
 export async function init(app) {
   store.clear();
+
+  collectTypes(app);
 
   await compileTemplateDirectory(
     app.templateContext,
@@ -80,4 +83,26 @@ export async function generate(app, data) {
       opts: app.options,
     }),
   };
+}
+
+/**
+ * @param {App} app
+ */
+function collectTypes(app) {
+  let fnString = `{{ let result = ''; }}`;
+
+  for (const type of app.types) {
+    if ("validator" in type) {
+      const templateName = `${type.name}Validator`;
+      compileTemplate(app.templateContext, templateName, type.validator());
+
+      fnString += `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`;
+    }
+  }
+
+  fnString += `
+   {{= result.trim() }} 
+  `;
+
+  compileTemplate(app.templateContext, "validatorExec", fnString);
 }

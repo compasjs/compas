@@ -1,0 +1,12 @@
+{
+{{ for (const key of Object.keys(model.keys)) { }}
+  {{ const val = model.keys[key]; }}
+  {{ let rightSide = typeExec({ type: val.type, model: val, ignoreDefaults }).trim(); }}
+  {{ let separator = ":"; }}
+  {{ if (rightSide.endsWith("|undefined")) { }}
+    {{ rightSide = rightSide.substring(0, rightSide.length -10); }}
+    {{ separator = "?:"; }}
+  {{ } }}
+  {{= key }}{{= separator }}{{= rightSide }},
+{{ } }}
+}

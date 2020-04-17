@@ -1,0 +1,9 @@
+{{ const args = JSON.stringify({ min: model.validator.min, max: model.validator.max }); }}
+
+{{ if (model.oneOf) { }}
+  {{ for (const w of model.oneOf) { }}
+  "{{= w }}",
+  {{ } }}
+{{ } else { }}
+_mocker.word({{= args }}),
+{{ } }}

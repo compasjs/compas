@@ -8,6 +8,7 @@ const { writeFile } = promises;
 /**
  * @typedef {object} AppOpts
  * @property {GeneratorPlugin[]} generators
+ * @property {object[]} types
  * @property {boolean} [verbose]
  * @property {boolean} [useTypescript]
  * @property {string} outputDir
@@ -36,12 +37,18 @@ export class App {
   /**
    * @param {AppOpts} options
    */
-  constructor({ verbose, generators, ...rest }) {
+  constructor({ verbose, generators, types, ...rest }) {
     /**
      * @public
      * @type {Map<string, GeneratorPlugin>}
      */
     this.generators = new Map();
+
+    /**
+     * @public
+     * @type {object[]}
+     */
+    this.types = types || [];
 
     /**
      * @public
@@ -85,9 +92,18 @@ export class App {
       this.generators.set(g.name, g);
     }
 
+    const enabledTypes = [];
+    for (const type of types) {
+      if (isNil(type.name)) {
+        throw new Error("Type is missing name");
+      }
+      enabledTypes.push(type.name);
+    }
+
     if (this.verbose) {
       this.logger.info("registered plugins: ", {
         generators: [...this.generators.keys()],
+        types: enabledTypes,
       });
     }
   }

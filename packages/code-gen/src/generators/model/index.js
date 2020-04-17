@@ -1,4 +1,3 @@
-import "./ModelBuilder.js";
 import { dumpStore, generate, init } from "./generator.js";
 
 /**

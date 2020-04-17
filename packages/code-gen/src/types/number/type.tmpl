@@ -1,0 +1,5 @@
+{{ if (model.oneOf) { }}
+{{= model.oneOf.join("|") }}
+{{ } else { }}
+number
+{{ } }}
