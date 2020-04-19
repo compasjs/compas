@@ -1,1 +1,1 @@
-mock{{= model.reference.uniqueName + (ignoreDefaults ? "_Optional" : "") }}(),
+{{= lowerCaseFirst(model.reference.group) }}Mocks.{{= lowerCaseFirst(model.reference.name) + (ignoreDefaults ? "Optional" : "") }}(),

@@ -1,11 +1,17 @@
-import { dumpStore, generate, init, preProcessStore } from "./generator.js";
-export { R } from "./RouteBuilder.js";
+import {
+  dumpStore,
+  generate,
+  init,
+  preProcessStore,
+  registerTypes,
+} from "./generator.js";
 
 /**
  * @type {GeneratorPlugin}
  */
 export const routerGenerator = {
   name: "router",
+  registerTypes,
   init,
   preProcessStore,
   dumpStore,

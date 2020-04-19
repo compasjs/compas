@@ -1,6 +1,0 @@
-lbuHandlers.structure = (ctx, next) => {
-  ctx.set("Content-Type", "application/json");
-  ctx.body = "{{= stringified.replace(/"/g, "\\\"") }}";
-
-  return next();
-}

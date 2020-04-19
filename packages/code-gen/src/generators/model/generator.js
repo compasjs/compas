@@ -71,6 +71,14 @@ export async function dumpStore(app, result, ...extendsFrom) {
   for (const model of Object.keys(result.models)) {
     normalizeModelsRecursively(result.models, result.models[model]);
   }
+
+  const groups = new Set();
+
+  for (const model of Object.keys(result.models)) {
+    groups.add(result.models[model].group);
+  }
+
+  result.groups = [...groups];
 }
 
 /**
@@ -79,7 +87,6 @@ export async function dumpStore(app, result, ...extendsFrom) {
  * @return {Promise<GeneratedFile>}
  */
 export async function generate(app, data) {
-  app.logger.info(Object.keys(data.models));
   return {
     path: app.options.useTypescript ? "./types.ts" : "./types.js",
     source: executeTemplate(app.templateContext, "typesFile", {
@@ -98,8 +105,13 @@ function collectTypes(app) {
 
   let fnString = `{{ let result = ''; }}`;
 
+  app.options.models = app.options.models || {};
+  app.options.models.enabledTypes = [];
+
   for (const type of app.types) {
     if (key in type) {
+      app.options.models.enabledTypes.push(type.name);
+
       const templateName = `${type.name}Type`;
       compileTemplate(app.templateContext, templateName, type[key]());
 

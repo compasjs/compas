@@ -15,6 +15,12 @@ export function setMocker(mocker) {
   _mocker = mocker;
 }
 
-{{ for (const m of Object.keys(models)) { }}
-{{= mocksNamedFn({ model: models[m] }) }}
+{{ for (const group of groups) { }}
+  export const {{= lowerCaseFirst(group) }}Mocks = {
+    {{ for (const m of Object.keys(models)) { }}
+      {{ if (models[m].group === group && opts.mocks.enabledTypes.indexOf(models[m].type) !== -1) { }}
+        {{= mocksNamedFn({ model: models[m] }) }}
+      {{ } }}
+    {{ } }}
+  };
 {{ } }}

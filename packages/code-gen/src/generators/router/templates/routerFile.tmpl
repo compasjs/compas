@@ -4,12 +4,139 @@
 {{= opts.fileHeader }}
 {{ } }}
 
-{{= routerImports({ routes }) }}
-{{= routerTags({ tags: routeTags }) }}
-{{= routerGroups({ groups: routeGroups }) }}
+import { getBodyParser, compose, AppError } from "@lbu/server";
+import {
+{{ for (const group of groups) { }}
+{{= lowerCaseFirst(group) }}Validators,
+{{ } }}
+} from "./validators.js";
 
-{{= routerHandlers({ routes, routeGroups }) }}
+let _internalBodyParser = undefined;
+function parseBody(ctx) {
+    if (_internalBodyParser === undefined) {
+      const bp = getBodyParser();
+      _internalBodyParser = ctx => new Promise(r => bp(ctx, r).then(r));
+    }
 
-{{= routerRouteFn({ routeTrie }) }}
+    return _internalBodyParser(ctx);
+}
 
-{{= routerInternalRoutes(it) }}
+const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
+
+export const tagMiddleware = {
+  {{ for (const t of routeTags) { }}
+    {{= lowerCaseFirst(t) }}: undefined,
+  {{ } }}
+};
+
+export const groupMiddleware = {
+  {{ for (const g of groups) { }}
+    {{= lowerCaseFirst(g) }}: undefined,
+  {{ } }}
+};
+
+const _composed = {
+  {{ for (const r of routes) { }}
+    {{= r }}: undefined,
+  {{ } }}
+};
+
+const handlers = {
+  {{ for (const r of routes) { }}
+    {{ const m = models[r]; }}
+    {{= r }}: {{ if (m.body || m.query) { }} async {{ } }} function (params, ctx, next) {
+
+      ctx.request.params = params;
+
+      {{ if (m.params && m.params.reference) { }}
+      ctx.validatedParams = {{= lowerCaseFirst(m.params.reference.group) }}Validators.{{= lowerCaseFirst(m.params.reference.name) }}(params);
+      {{ } }}
+
+      {{ if (m.body || m.query) { }}
+      await parseBody(ctx);
+      {{ } }}
+
+      {{ if (m.query) { }}
+      ctx.validatedQuery = {{= lowerCaseFirst(m.query.reference.group) }}Validators.{{= lowerCaseFirst(m.query.reference.name) }}(ctx.request.query);
+      {{ } }}
+
+      {{ if (m.body) { }}
+      ctx.validatedBody = {{= lowerCaseFirst(m.body.reference.group) }}Validators.{{= lowerCaseFirst(m.body.reference.name) }}(ctx.request.body);
+      {{ } }}
+
+      if (_composed.{{= r }} === undefined) {
+        const currentHandler = {{= lowerCaseFirst(m.group) }}Handlers.{{= m.name }};
+        _composed.{{= r }} = filterCompose(
+            {{ for (const t of m.tags) { }}
+            tagMiddleware.{{= lowerCaseFirst(t) }},
+            {{ } }}
+            groupMiddleware.{{= lowerCaseFirst(m.group) }},
+            ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
+        );
+      }
+
+      return _composed.{{= r }}(ctx, next);
+    },
+  {{ } }}
+};
+
+{{ for (const g of groups) { }}
+  export const {{= lowerCaseFirst(g) }}Handlers = {
+
+  {{ for (const r of routes) { }}
+    {{ if (models[r].group !== g) { continue; } }}
+    {{ const m = models[r]; }}
+
+    /**
+     * {{= m.docString.replace(/\n/g, "\\n  * ") }}
+     * Tags: {{= m.tags.join(", ") }}
+     * {{= m.method }} {{= m.path }}
+     * @param {object} ctx
+     {{ if (m.response) { }}* @param { {{= m.response.uniqueName || m.response.reference.uniqueName }} } ctx.body {{ } }}
+     {{ if (m.query) { }}* @param { {{= m.query.uniqueName || m.query.reference.uniqueName }} } ctx.validatedQuery {{ } }}
+     {{ if (m.params) { }}* @param { {{= m.params.uniqueName || m.params.reference.uniqueName }} } ctx.validatedParams {{ } }}
+     {{ if (m.body) { }}* @param { {{= m.body.uniqueName || m.body.reference.uniqueName }} } ctx.validatedBody {{ } }}
+     * @param {Function} next
+     * @returns {void|Promise<void>}
+     */
+     {{= lowerCaseFirst(m.name) }}: (ctx, next) => {
+       throw AppError.notImplemented();
+     },
+  {{ } }}
+
+  };
+
+{{ } }}
+
+{{ const context = { functions: "", counter: 0 }; }}
+
+export function router(ctx, next) {
+  let triePath = ctx.method + ctx.path;
+  if (triePath.endsWith("/")) {
+    triePath = triePath.substring(0, triePath.length - 1);
+  }
+
+  const params = Object.create(null);
+  let route = undefined;
+
+  {{ for (const child of routeTrie.children) { }}
+  route = routeMatcher{{= context.counter }}(triePath, params, 0);
+  {{ const src = routeMatcher({ matcher: child, context }); }}
+  {{ context.functions += src; }}
+  if (route !== undefined) {
+    return route(params, ctx, next);
+  }
+  {{ } }}
+
+  return next();
+}
+
+lbuHandlers.structure = (ctx, next) => {
+  ctx.set("Content-Type", "application/json");
+  ctx.body = "{{= stringified.replace(/"/g, "\\\"") }}";
+
+  return next();
+}
+
+
+{{= context.functions }}

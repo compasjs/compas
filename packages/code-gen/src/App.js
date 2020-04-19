@@ -2,6 +2,7 @@ import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, newTemplateContext } from "@lbu/stdlib";
 import { promises } from "fs";
 import { join } from "path";
+import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 const { writeFile } = promises;
 
@@ -84,7 +85,18 @@ export class App {
      */
     this.extendsList = [];
 
-    for (const g of generators) {
+    this._generatorList = generators;
+  }
+
+  /**
+   * Init generators and validate types
+   * @return {Promise<void>}
+   */
+  async init() {
+    this.templateContext.globals["upperCaseFirst"] = upperCaseFirst;
+    this.templateContext.globals["lowerCaseFirst"] = lowerCaseFirst;
+
+    for (const g of this._generatorList) {
       if (isNil(g.name)) {
         throw new Error("Generator is missing name");
       }
@@ -92,8 +104,10 @@ export class App {
       this.generators.set(g.name, g);
     }
 
+    await this.callGeneratorMethod("registerTypes");
+
     const enabledTypes = [];
-    for (const type of types) {
+    for (const type of this.types) {
       if (isNil(type.name)) {
         throw new Error("Type is missing name");
       }
@@ -106,9 +120,7 @@ export class App {
         types: enabledTypes,
       });
     }
-  }
 
-  async init() {
     await this.callGeneratorMethod("init");
   }
 

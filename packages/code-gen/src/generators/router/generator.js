@@ -6,10 +6,18 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 import { getInternalRoutes } from "./internalRoutes.js";
-import { R } from "./RouteBuilder.js";
 import { buildTrie } from "./trie.js";
+import { RouteBuilder, routeType } from "./type.js";
 
 const store = new Set();
+
+/**
+ * @param {App} app
+ * @return {Promise<void>}
+ */
+export async function registerTypes(app) {
+  app.types.push(routeType);
+}
 
 /**
  * @param {App} app
@@ -37,11 +45,12 @@ export async function init(app) {
    */
   app.constructor.prototype.route = function (...routes) {
     for (const r of routes) {
-      if (!(r instanceof R.types.RouteBuilder)) {
+      if (!(r instanceof RouteBuilder)) {
         throw new Error("Store#route is only accepting RouteBuilder");
       }
 
       store.add(r);
+      app.model(r);
     }
 
     return this;
@@ -56,17 +65,17 @@ export async function preProcessStore(app) {
   app.route(...getInternalRoutes());
 
   for (const route of store) {
-    if (!isNil(route.paramsValidator)) {
-      app.validator(route.paramsValidator);
+    if (!isNil(route.queryBuilder)) {
+      app.validator(route.queryBuilder);
     }
-    if (!isNil(route.queryValidator)) {
-      app.validator(route.queryValidator);
+    if (!isNil(route.paramsBuilder)) {
+      app.validator(route.paramsBuilder);
     }
-    if (!isNil(route.bodyValidator)) {
-      app.validator(route.bodyValidator);
+    if (!isNil(route.bodyBuilder)) {
+      app.validator(route.bodyBuilder);
     }
-    if (!isNil(route.responseModel)) {
-      app.validator(route.responseModel);
+    if (!isNil(route.responseBuilder)) {
+      app.validator(route.responseBuilder);
     }
   }
 }
@@ -78,24 +87,17 @@ export async function preProcessStore(app) {
  * @return {Promise<void>}
  */
 export async function dumpStore(app, result, ...extendsFrom) {
-  result.routes = [];
+  const routes = new Set();
   const tags = new Set();
-  const groups = new Set();
 
   for (const extender of extendsFrom) {
     for (const tag of extender.routeTags || []) {
       tags.add(tag);
     }
-    for (const group of extender.routeGroups || []) {
-      groups.add(group);
-    }
+
     for (const r of extender.routes || []) {
-      if (r.group === "lbu" && r.name === "structure") {
-        continue;
-      }
-      result.routes.push(r);
+      routes.add(r);
     }
-    result.routes.push(...(extender.routes || []));
   }
 
   for (const route of store) {
@@ -104,19 +106,12 @@ export async function dumpStore(app, result, ...extendsFrom) {
     for (const t of r.tags) {
       tags.add(t);
     }
-    groups.add(r.group);
 
-    r.paramsValidator = getModelName(route.paramsValidator);
-    r.queryValidator = getModelName(route.queryValidator);
-    r.bodyValidator = getModelName(route.bodyValidator);
-    r.responseModel = getModelName(route.responseModel);
-
-    result.routes.push(r);
+    routes.add(r.uniqueName);
   }
 
-  // unique route tags
   result.routeTags = [...tags];
-  result.routeGroups = [...groups];
+  result.routes = [...routes];
 }
 
 /**
@@ -126,7 +121,7 @@ export async function dumpStore(app, result, ...extendsFrom) {
  */
 export async function generate(app, data) {
   data.stringified = JSON.stringify(data);
-  data.routeTrie = buildTrie(data.routes);
+  data.routeTrie = buildTrie(data.models, data.routes);
 
   return {
     path: "./router.js",
@@ -135,12 +130,4 @@ export async function generate(app, data) {
       opts: app.options,
     }),
   };
-}
-
-function getModelName(validator) {
-  if (validator === undefined || validator.data === undefined) {
-    return undefined;
-  }
-
-  return validator.data.uniqueName;
 }

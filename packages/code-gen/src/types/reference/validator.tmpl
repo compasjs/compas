@@ -1,1 +1,1 @@
-return validate{{= model.reference.uniqueName }}(value, propertyPath);
+return {{= lowerCaseFirst(model.reference.group) }}Validators.{{= lowerCaseFirst(model.reference.name) }}(value, propertyPath);

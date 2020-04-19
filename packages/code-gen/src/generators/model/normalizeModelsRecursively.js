@@ -28,6 +28,8 @@ export function normalizeModelsRecursively(models, value) {
           docString: "",
           isOptional: false,
           reference: {
+            group: value[key].group,
+            name: value[key].name,
             uniqueName: value[key].uniqueName,
           },
         };
@@ -42,6 +44,8 @@ export function normalizeModelsRecursively(models, value) {
           docString: "",
           isOptional: false,
           reference: {
+            group: value[i].group,
+            name: value[i].name,
             uniqueName: value[i].uniqueName,
           },
         };

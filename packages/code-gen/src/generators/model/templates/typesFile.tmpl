@@ -4,6 +4,7 @@
 
 {{ if (opts.useTypescript) { }}
 {{ for (const uniqueName of Object.keys(models)) { }}
+{{ if (opts.models.enabledTypes.indexOf(models[uniqueName].type) === -1) { continue; } }}
 
 /**
  * {{= uniqueName }}
@@ -20,6 +21,7 @@ export type {{=uniqueName}}_Optional = {{= typeExec({ type: models[uniqueName].t
 {{ } }}
 {{ } else { }}
 {{ for (const uniqueName of Object.keys(models)) { }}
+{{ if (opts.models.enabledTypes.indexOf(models[uniqueName].type) === -1) { continue; } }}
 
 /**
  * {{= uniqueName }}

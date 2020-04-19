@@ -65,8 +65,13 @@ function collectTypes(app) {
    {{ } }}
   {{ let result = ''; }}`;
 
+  app.options.mocks = app.options.mocks || {};
+  app.options.mocks.enabledTypes = [];
+
   for (const type of app.types) {
     if ("mock" in type) {
+      app.options.mocks.enabledTypes.push(type.name);
+
       const templateName = `${type.name}Mock`;
       compileTemplate(app.templateContext, templateName, type.mock());
 

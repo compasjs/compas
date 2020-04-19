@@ -4,7 +4,7 @@
  * @param {string} [propertyPath]
  * @returns { {{= model.uniqueName }}}
  */
-export function validate{{= model.uniqueName }}(value, propertyPath = "$") {
+{{= lowerCaseFirst(model.name) }}: (value, propertyPath = "$") => {
  let result = value;
 
  {{ const preValidate = quote("preValidate" + model.uniqueName); }}
@@ -20,7 +20,7 @@ export function validate{{= model.uniqueName }}(value, propertyPath = "$") {
  } else {
    return result;
  }
-}
+},
 
 {{ const fn = validatorsAnonFn({ model, ctx }); }}
 {{ ctx.functions += fn; }}

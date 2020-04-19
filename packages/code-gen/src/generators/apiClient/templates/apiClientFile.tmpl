@@ -5,7 +5,11 @@
 {{ } }}
 
 {{ if (opts.enableMocks) { }}
-import * as mocks from "./mocks.js";
+import {
+{{ for (const g of groups) { }}
+{{= lowerCaseFirst(g) }}Mocks,
+{{ } }}
+} from "./mocks.js";
 {{ } }}
 
 let _internalClient = undefined;
@@ -28,13 +32,11 @@ function setXRequestId(headers) {
   _internalClient.defaults.headers.common["X-Request-Id"] = headers["x-request-id"];
 }
 
-{{ if (it.routes && it.routes.length > 0) { }}
-    {{ for (const group of routeGroups) { }}
-    export const {{= group }} = {
-        {{ for (const route of routes) { }}
-        {{ if (route.group !== group) { continue; } }}
-        {{= apiClientFn({...it, ...route, opts }) }}
-        {{ } }}
-    };
+{{ for (const group of groups) { }}
+  export const {{= group }}Api = {
+    {{ for (const route of routes) { }}
+      {{ if (models[route].group !== group) { continue; } }}
+      {{= apiClientFn({ model: models[route], opts }) }}
     {{ } }}
+  };
 {{ } }}

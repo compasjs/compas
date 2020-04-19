@@ -1,4 +1,4 @@
-import { App, coreTypes, generators, R, TypeCreator } from "@lbu/code-gen";
+import { App, coreTypes, generators, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
@@ -35,7 +35,7 @@ async function main(logger) {
   app.model(M.string("Str"));
   app.model(
     M.object("Objec", {
-      str: M.reference("AppStr"),
+      str: M.reference("App", "Str"),
     }),
   );
   app.validator(
@@ -48,7 +48,7 @@ async function main(logger) {
 
   app.validator(
     M.object("Items", {
-      userId: M.reference("AppUser"),
+      userId: M.reference("App", "User"),
       name: M.string(),
       count: M.number().integer(),
     }),
@@ -61,7 +61,31 @@ async function main(logger) {
 
   app.model(M.array("GenericArray").values(myGeneric));
 
-  app.route(R.get("/foo", "test").query(M.reference("AppUser")));
+  const T = new TypeCreator("Todo");
 
-  logger.info(await app.dump());
+  app.validator(T.bool("Boolean"));
+  app.validator(T.array("MyArr").values(T.reference("App", "Items")));
+
+  const G = T.router("/foo");
+  app.route(G.get().query(M.reference("App", "User")));
+  app.route(
+    G.post("/:id")
+      .body(
+        M.object({
+          foo: M.string(),
+        }),
+      )
+      .query(
+        M.object({
+          id: M.bool().convert(),
+        }),
+      )
+      .response(
+        M.object().keys({
+          bar: M.string(),
+        }),
+      ),
+  );
+
+  await app.generate();
 }

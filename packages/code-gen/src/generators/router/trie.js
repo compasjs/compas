@@ -4,14 +4,15 @@ const RoutePrio = {
   WILDCARD: 2,
 };
 
-export const buildTrie = (routes) => {
+export const buildTrie = (models, routes) => {
   const routeTrieInput = [];
 
   for (const r of routes) {
+    const m = models[r];
+
     routeTrieInput.push({
-      routeName: r.name,
-      routeGroup: r.group,
-      fullPath: `${r.method}/${r.path}`,
+      uniqueName: m.uniqueName,
+      fullPath: `${m.method}/${m.path}`,
     });
   }
 
@@ -19,15 +20,14 @@ export const buildTrie = (routes) => {
 };
 
 function buildRouteTrie(input) {
-  const trie = createNode("", undefined);
+  const trie = createNode("");
   addHttpMethods(trie);
 
   for (const r of input) {
     addRoute(
       trie,
       r.fullPath.split("/").filter((it) => it.trim() !== ""),
-      r.routeName,
-      r.routeGroup,
+      r.uniqueName,
     );
   }
 
@@ -38,23 +38,40 @@ function buildRouteTrie(input) {
 
   // Remove unneeded 'HTTP-method' children
   trie.children = trie.children.filter(
-    (it) => it.children.length > 0 || it.routeName !== undefined,
+    (it) => it.children.length > 0 || it.uniqueName !== undefined,
   );
 
   sortTrie(trie);
 
-  const ctx = {
-    counter: 0,
-  };
-  return convertToGeneratorTrie(trie, ctx);
+  return convertToGeneratorTrie(trie);
 }
 
-function convertToGeneratorTrie(trie, ctx) {
+/**
+ *
+ * @param {string} path
+ * @param {string} [uniqueName]
+ */
+function createNode(path, uniqueName) {
+  let prio = RoutePrio.STATIC;
+  if (path === "*") {
+    prio = RoutePrio.WILDCARD;
+  } else if (path.startsWith(":")) {
+    prio = RoutePrio.PARAM;
+  }
+
+  return {
+    children: [],
+    prio,
+    path,
+    uniqueName,
+    parent: undefined,
+  };
+}
+
+function convertToGeneratorTrie(trie) {
   let result = {
-    routeName: trie.routeName || undefined,
-    routeGroup: trie.routeGroup || undefined,
-    functionName: `routeMatcher${ctx.counter++}`,
-    children: trie.children.map((it) => convertToGeneratorTrie(it, ctx)),
+    uniqueName: trie.uniqueName || undefined,
+    children: trie.children.map((it) => convertToGeneratorTrie(it)),
   };
 
   if (trie.prio === RoutePrio.STATIC) {
@@ -68,30 +85,6 @@ function convertToGeneratorTrie(trie, ctx) {
   }
 
   return result;
-}
-
-/**
- *
- * @param {string} path
- * @param {string} [routeName]
- * @param {string} [routeGroup]
- */
-function createNode(path, routeName, routeGroup) {
-  let prio = RoutePrio.STATIC;
-  if (path === "*") {
-    prio = RoutePrio.WILDCARD;
-  } else if (path.startsWith(":")) {
-    prio = RoutePrio.PARAM;
-  }
-
-  return {
-    children: [],
-    prio,
-    path,
-    routeName,
-    routeGroup,
-    parent: undefined,
-  };
 }
 
 function addChildNodes(parent, ...children) {
@@ -112,12 +105,12 @@ function addHttpMethods(trie) {
   );
 }
 
-function addRoute(trie, path, routeName, routeGroup) {
+function addRoute(trie, path, uniqueName) {
   const currentPath = path[0];
 
   let child = trie.children.find((it) => it.path === currentPath);
   if (!child) {
-    child = createNode(currentPath, undefined, undefined);
+    child = createNode(currentPath);
     if (trie.prio === RoutePrio.WILDCARD) {
       throw new Error("Can't have sub routes on wildcard routes");
     }
@@ -125,17 +118,16 @@ function addRoute(trie, path, routeName, routeGroup) {
   }
 
   if (path.length === 1) {
-    child.routeName = routeName;
-    child.routeGroup = routeGroup;
+    child.uniqueName = uniqueName;
   } else {
-    addRoute(child, path.slice(1), routeName, routeGroup);
+    addRoute(child, path.slice(1), uniqueName);
   }
 }
 
 function cleanTrieAndCollapse(trie) {
-  // Remove nodes without routeName & without children
+  // Remove nodes without name & without children
   trie.children = trie.children.filter(
-    (it) => it.routeName !== undefined || it.children.length > 0,
+    (it) => it.uniqueName !== undefined || it.children.length > 0,
   );
 
   for (const child of trie.children) {
@@ -148,7 +140,7 @@ function cleanTrieAndCollapse(trie) {
 }
 
 function collapseStaticChildren(trie) {
-  if (trie.routeName !== undefined || trie.parent === undefined) {
+  if (trie.uniqueName !== undefined || trie.parent === undefined) {
     return;
   }
 

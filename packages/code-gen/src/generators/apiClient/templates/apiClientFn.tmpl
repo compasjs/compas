@@ -1,44 +1,44 @@
 /**
- * Name: {{= name }}
- * Tags: {{= tags.join(", ") }}
- * Docs: {{= docs }}
-{{ if (it.paramsValidator) { }}
- * @param { {{= paramsValidator }}_Optional} params
+ * {{= model.uniqueName }}
+ * Tags: {{= model.tags.join(", ") }}
+ * Docs: {{= model.docString }}
+{{ if (model.params) { }}
+ * @param { {{= model.params.reference.uniqueName }}_Optional} params
 {{ } }}
-{{ if (it.queryValidator) { }}
- * @param { {{= queryValidator }}_Optional} query
+{{ if (model.query) { }}
+ * @param { {{= model.query.reference.uniqueName }}_Optional} query
 {{ } }}
-{{ if (it.bodyValidator) { }}
- * @param { {{= bodyValidator }}_Optional} body
+{{ if (model.body) { }}
+ * @param { {{= model.body.reference.uniqueName }}_Optional} body
 {{ } }}
-{{ if (it.responseModel) { }}
- * @return {Promise.<{{= responseModel }}>}
+{{ if (model.response) { }}
+ * @return {Promise.<{{= model.response.reference.uniqueName }}>}
 {{ } else { }}
  * @return {Promise.<*>}
 {{ } }}
 
  */
-{{= name }}: async function (
-{{ if (it.paramsValidator) { }}
+{{= lowerCaseFirst(model.name) }}: async function (
+{{ if (model.params) { }}
 params,
 {{ } }}
-{{ if (it.queryValidator) { }}
+{{ if (model.query) { }}
 query,
 {{ } }}
-{{ if (it.bodyValidator) { }}
+{{ if (model.body) { }}
 body,
 {{ } }}
 ) {
-    {{ const url = path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
+    {{ const url = model.path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
     checkApiClient();
 
-    {{ if (opts.enableMocks && it.responseModel !== undefined) { }}
+    {{ if (opts.enableMocks && model.response !== undefined) { }}
       try {
         const response = await _internalClient.request({
-          url: `{{= url }}`,
-          method: "{{= method.toLowerCase() }}",
-          params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
-          data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
+          url: `{{= model.url }}`,
+          method: "{{= model.method.toLowerCase() }}",
+          params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
+          data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
         });
 
         setXRequestId(response.headers);
@@ -46,16 +46,16 @@ body,
         return response.data;
       } catch (e) {
         if (e.response && e.response.status === 405) {
-          return mocks.mock{{= it.responseModel }}();
+          return {{= lowerCaseFirst(model.response.reference.group) }}Mocks.{{= lowerCaseFirst(model.response.reference.name) }}();
         }
         throw e;
       }
     {{ } else { }}
         const response = await _internalClient.request({
-          url: `{{= url }}`,
-          method: "{{= method.toLowerCase() }}",
-          params: {{ if (it.queryValidator) { }}query{{ } else { }}{}{{ } }},
-          data: {{ if (it.bodyValidator) { }}body{{ } else { }}{}{{ } }}
+          url: `{{= model.url }}`,
+          method: "{{= model.method.toLowerCase() }}",
+          params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
+          data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
         });
 
         setXRequestId(response.headers);

@@ -1,5 +1,0 @@
-export const taggedMiddleware = {
-{{ for (const t of tags) { }}
- {{= t }}: (ctx, next) => { return next(); },
-{{ } }}
-};

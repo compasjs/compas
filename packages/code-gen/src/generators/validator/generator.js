@@ -77,7 +77,7 @@ export async function generate(app, data) {
   return {
     path: "./validators.js",
     source: executeTemplate(app.templateContext, "validatorsFile", {
-      models: data.models,
+      ...data,
       validatorsToGenerate,
       ctx: { counter: 0, functions: "" },
       opts: app.options,
