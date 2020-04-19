@@ -1,26 +1,28 @@
-import { dirnameForModule } from "@lbu/stdlib";
-import { existsSync, readdirSync, readFileSync } from "fs";
-import { join } from "path";
+import { spawn } from "@lbu/stdlib";
+import { existsSync, lstatSync, readdirSync, readFileSync } from "fs";
+import nodemon from "nodemon";
+import { join, sep } from "path";
+
+/**
+ * @typedef {object} CollectedScript
+ * @property {"user"|"package"} type
+ * @property {string} name
+ * @property {string} [path]
+ * @property {string} [script]
+ */
+
+/**
+ * @typedef {Object.<string, CollectedScript>} ScriptCollection
+ */
 
 /**
  * Return collection of available named scripts
- * - type CLI: Internal scripts
- * - type USER: User defined scripts from process.cwd/scripts/*.js
- * - type PKG: User defined scripts in package.json
- * @return {Object.<string, {type: "CLI"|"USER"|"PKG", path?: string, script?: string}>}
+ * - type user: User defined scripts from process.cwd/scripts/*.js
+ * - type package: User defined scripts in package.json. These override 'user' scripts
+ * @return {ScriptCollection}
  */
-export function getKnownScripts() {
+export function collectScripts() {
   const result = {};
-
-  const cliDir = join(dirnameForModule(import.meta), "../scripts");
-  for (const item of readdirSync(cliDir)) {
-    const name = item.split(".")[0];
-
-    result[name] = {
-      type: "CLI",
-      path: join(cliDir, item),
-    };
-  }
 
   const userDir = join(process.cwd(), "scripts");
   if (existsSync(userDir)) {
@@ -28,7 +30,8 @@ export function getKnownScripts() {
       const name = item.split(".")[0];
 
       result[name] = {
-        type: "USER",
+        type: "user",
+        name,
         path: join(userDir, item),
       };
     }
@@ -37,10 +40,61 @@ export function getKnownScripts() {
   const pkgJsonPath = join(process.cwd(), "package.json");
   if (existsSync(pkgJsonPath)) {
     const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
-    for (const item of Object.keys(pkgJson.scripts || {})) {
-      result[item] = { type: "PKG", script: pkgJson.scripts[item] };
+    for (const name of Object.keys(pkgJson.scripts || {})) {
+      result[name] = {
+        type: "package",
+        name,
+        script: pkgJson.scripts[name],
+      };
     }
   }
 
   return result;
+}
+
+export async function executeCommand(
+  logger,
+  verbose,
+  watch,
+  command,
+  commandArgs,
+  nodemonArgs,
+) {
+  if (verbose) {
+    logger.info("Executing command", { verbose, watch, command, commandArgs });
+  }
+
+  if (!watch) {
+    return spawn(command, commandArgs);
+  }
+
+  nodemon(`--exec "${command} ${commandArgs.join(" ")}" ${nodemonArgs || ""}`)
+    .once("start", () => {
+      if (verbose) {
+        logger.info("Script start");
+      }
+    })
+    .on("restart", (files) => {
+      if (verbose) {
+        if (!files || files.length === 0) {
+          logger.info("Script restart manually");
+        } else {
+          logger.info("Script restart due to file change", files);
+        }
+      }
+    })
+    .on("quit", (signal) => {
+      if (verbose) {
+        logger.info("LBU quit");
+      }
+      process.exit(signal);
+    })
+    .on("crash", (arg) => {
+      logger.info("Script crash", arg);
+    })
+    .on("exit", () => {
+      if (verbose) {
+        logger.info("Script exit");
+      }
+    });
 }

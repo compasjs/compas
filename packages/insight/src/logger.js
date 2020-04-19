@@ -22,7 +22,7 @@ import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
  * Create a new logger
- * @param {LoggerOptions} options
+ * @param {LoggerOptions} [options]
  * @return {Logger}
  */
 export function newLogger(options) {

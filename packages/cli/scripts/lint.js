@@ -1,7 +1,7 @@
 import { mainFn, spawn } from "@lbu/stdlib";
-import { cliLogger } from "../index.js";
+import { logger } from "../src/logger.js";
 
-mainFn(import.meta, cliLogger, async () => {
+mainFn(import.meta, logger, async () => {
   await spawn("./node_modules/.bin/eslint", [
     "./**/*.js",
     "--ignore-pattern",

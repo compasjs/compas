@@ -12,7 +12,6 @@ in at least a mid size released project our selves.
 
 ### Code generation roadmap
 
-- Pluggable model types, will help in next points as well
 - Reproducible mocks: Consistent & correctly referenced mock data, so api users
   can rely on them for correct results in testing and initial building
 - Websocket plugin: Generate a websocket server & client
