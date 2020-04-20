@@ -59,7 +59,7 @@ export function parseArgs(args, knownScripts = []) {
     };
   }
 
-  if (utilCommands.indexOf(args[0].trim().toLowerCase()) !== -1) {
+  if (utilCommands.indexOf(args[0]) !== -1) {
     return {
       type: "util",
       name: args[0],
@@ -68,9 +68,7 @@ export function parseArgs(args, knownScripts = []) {
   }
 
   let defaulted = false;
-  let execName = Object.keys(execCommands).find(
-    (it) => it === args[0].toLowerCase().trim(),
-  );
+  let execName = Object.keys(execCommands).find((it) => it === args[0]);
 
   if (!execName) {
     defaulted = true;
@@ -84,7 +82,7 @@ export function parseArgs(args, knownScripts = []) {
       continue;
     }
 
-    const item = args[i].toLowerCase().trim();
+    const item = args[i];
 
     const isNamedScript = knownScripts.indexOf(item) !== -1;
 
