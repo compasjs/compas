@@ -68,7 +68,9 @@ export async function executeCommand(
     return spawn(command, commandArgs);
   }
 
-  nodemon(`--exec "${command} ${commandArgs.join(" ")}" ${nodemonArgs || ""}`)
+  nodemon(
+    `--exec "${command} ${(commandArgs || []).join(" ")}" ${nodemonArgs || ""}`,
+  )
     .once("start", () => {
       if (verbose) {
         logger.info("Script start");

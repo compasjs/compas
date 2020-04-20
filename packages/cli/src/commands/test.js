@@ -10,7 +10,7 @@ const testFile = join(dirnameForModule(import.meta), "../../scripts/test.js");
  * @return {Promise<void>}
  */
 export function testCommand(logger, command) {
-  return executeCommand(logger, command.verbose, command.watch, [
+  return executeCommand(logger, command.verbose, command.watch, "node", [
     testFile,
     ...command.nodeArguments,
   ]);
