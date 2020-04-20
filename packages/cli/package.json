@@ -20,7 +20,7 @@
   "dependencies": {
     "@lbu/insight": "^0.0.9",
     "@lbu/stdlib": "^0.0.9",
-    "nodemon": "2.0.2"
+    "nodemon": "2.0.3"
   },
   "author": {
     "name": "Dirk de Visser",
