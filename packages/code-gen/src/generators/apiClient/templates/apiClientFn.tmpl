@@ -35,7 +35,7 @@ body,
     {{ if (opts.enableMocks && model.response !== undefined) { }}
       try {
         const response = await _internalClient.request({
-          url: `{{= model.url }}`,
+          url: `{{= url }}`,
           method: "{{= model.method.toLowerCase() }}",
           params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
           data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
@@ -52,7 +52,7 @@ body,
       }
     {{ } else { }}
         const response = await _internalClient.request({
-          url: `{{= model.url }}`,
+          url: `{{= url }}`,
           method: "{{= model.method.toLowerCase() }}",
           params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
           data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}

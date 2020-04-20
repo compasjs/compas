@@ -51,7 +51,7 @@ function routeMatcher{{= context.counter++ }}(path, params, currentIdx) {
         }
         {{ } }}
 
-        {{ for (const child of children) { }}
+        {{ for (const child of matcher.children) { }}
         handler = routeMatcher{{= context.counter }}(path, params, nextIdx);
         {{ const src = routeMatcher({ matcher: child, context }); }}
         {{ context.functions += src; }}

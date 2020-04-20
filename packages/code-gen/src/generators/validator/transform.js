@@ -19,10 +19,14 @@ export function extractValidatorsToGenerate(models, value, result) {
       // already this this variant
       return;
     }
-  } else if (value.type && value.referenceModel) {
+  } else if (value.type && value.reference && value.reference.uniqueName) {
     // reference
-    if (result.indexOf(value.referenceModel) === -1) {
-      extractValidatorsToGenerate(models, models[value.referenceModel], result);
+    if (result.indexOf(value.reference.uniqueName) === -1) {
+      extractValidatorsToGenerate(
+        models,
+        models[value.reference.uniqueName],
+        result,
+      );
     }
 
     return;
