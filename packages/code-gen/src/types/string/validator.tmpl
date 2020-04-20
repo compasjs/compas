@@ -42,8 +42,7 @@ if (typeof value !== "string") {
 {{ } }}
 
 {{ if (model.validator.pattern !== undefined) { }}
-  {{ const patternSrc = "/" + model.validator.pattern.source + "/" + model.validator.pattern.flags; }}
-  if (!{{= patternSrc }}.test(value)) {
+  if (!{{= model.validator.pattern }}.test(value)) {
     throw _errorFn("validator.string.pattern", { propertyPath });
   }
 {{ } }}

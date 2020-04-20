@@ -22,5 +22,4 @@
  }
 },
 
-{{ const fn = validatorsAnonFn({ model, ctx }); }}
-{{ ctx.functions += fn; }}
+{{ ctx.addFunc(validatorsAnonFn({ model, ctx })); }}

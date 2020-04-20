@@ -3,7 +3,7 @@ const errors = [];
 {{ for (const v of model.values) { }}
   try {
     {{ const num = ctx.counter; }}
-    {{ ctx.functions += validatorsAnonFn({ model: v, ctx }); }}
+    {{ ctx.addFunc(validatorsAnonFn({ model: v, ctx })); }}
 
     return {{= v.type }}Validator{{= num }}(value, propertyPath);
   } catch (e) {

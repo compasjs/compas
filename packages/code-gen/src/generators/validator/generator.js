@@ -79,7 +79,6 @@ export async function generate(app, data) {
     source: executeTemplate(app.templateContext, "validatorsFile", {
       ...data,
       validatorsToGenerate,
-      ctx: { counter: 0, functions: "" },
       opts: app.options,
     }),
   };

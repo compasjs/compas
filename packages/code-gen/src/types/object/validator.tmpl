@@ -2,7 +2,7 @@
 {{ let idx = 0; }}
 {{ for (const key of Object.keys(model.keys)) { }}
   {{ numMap[key] = ctx.counter; }}
-  {{ ctx.functions += validatorsAnonFn({ model: model.keys[key], ctx }); }}
+  {{ ctx.addFunc(validatorsAnonFn({ model: model.keys[key], ctx })); }}
 {{ } }}
 
 

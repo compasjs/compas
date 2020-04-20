@@ -34,6 +34,9 @@ export function validatorSetErrorFn(fn) {
   _errorFn = fn;
 }
 
+{{ const ctx = { counter: 0, functions: [] }; }}
+{{ ctx.addFunc = fn => { ctx.functions.push(fn); }; }}
+
 {{ for (const group of it.groups) { }}
   export const {{= lowerCaseFirst(group) }}Validators = {
     {{ for (const v of it.validatorsToGenerate) { }}
@@ -44,4 +47,4 @@ export function validatorSetErrorFn(fn) {
   };
 {{ } }}
 
-{{= ctx.functions }}
+{{= ctx.functions.join("\n") }}

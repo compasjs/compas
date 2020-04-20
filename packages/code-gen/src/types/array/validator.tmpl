@@ -1,5 +1,5 @@
 {{ const num = ctx.counter; }}
-{{ ctx.functions += validatorsAnonFn({ model: model.values, ctx }); }}
+{{ ctx.addFunc(validatorsAnonFn({ model: model.values, ctx })); }}
 
 {{ if (model.validator.convert) { }}
   if (!Array.isArray(value)) {

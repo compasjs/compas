@@ -1,7 +1,7 @@
 {{ const numKeys = ctx.counter; }}
 {{ const numValues = ctx.counter + 1; }}
-{{ ctx.functions += validatorsAnonFn({ model: model.keys, ctx }); }}
-{{ ctx.functions += validatorsAnonFn({ model: model.values, ctx }); }}
+{{ ctx.addFunc(validatorsAnonFn({ model: model.keys, ctx })); }}
+{{ ctx.addFunc(validatorsAnonFn({ model: model.values, ctx })); }}
 
 
 if (typeof value !== "object") {

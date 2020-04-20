@@ -40,7 +40,7 @@ async function main(logger) {
   );
   app.validator(
     M.object("User", {
-      id: M.number().integer().min(0).max(100).convert(),
+      id: M.uuid(),
       name: M.string().min(1).max(15).mock("__.first"),
       age: M.number().integer().min(0).max(150).convert().mock("__.age"),
     }),

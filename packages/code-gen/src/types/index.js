@@ -7,6 +7,7 @@ import { numberType } from "./number/index.js";
 import { objectType } from "./object/index.js";
 import { referenceType } from "./reference/index.js";
 import { stringType } from "./string/index.js";
+import { uuidType } from "./uuid/index.js";
 
 export { TypeBuilder, TypeCreator } from "./TypeBuilder.js";
 
@@ -20,4 +21,5 @@ export const coreTypes = [
   objectType,
   referenceType,
   stringType,
+  uuidType,
 ];

@@ -107,7 +107,7 @@ class StringType extends TypeBuilder {
    * @return {StringType}
    */
   pattern(pattern) {
-    this.data.validator.pattern = pattern;
+    this.data.validator.pattern = `/${pattern.source}/${pattern.flags}`;
 
     return this;
   }
