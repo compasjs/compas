@@ -83,22 +83,11 @@ export async function preProcessStore(app) {
 /**
  * @param {App} app
  * @param {object} result
- * @param {...object} extendsFrom
  * @return {Promise<void>}
  */
-export async function dumpStore(app, result, ...extendsFrom) {
+export async function dumpStore(app, result) {
   const routes = new Set();
   const tags = new Set();
-
-  for (const extender of extendsFrom) {
-    for (const tag of extender.routeTags || []) {
-      tags.add(tag);
-    }
-
-    for (const r of extender.routes || []) {
-      routes.add(r);
-    }
-  }
 
   for (const route of store) {
     const r = route.build();

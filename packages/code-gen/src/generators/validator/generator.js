@@ -38,17 +38,10 @@ export async function init(app) {
 /**
  * @param {App} app
  * @param {object} result
- * @param {...object} extendsFrom
  * @return {Promise<void>}
  */
-export async function dumpStore(app, result, ...extendsFrom) {
+export async function dumpStore(app, result) {
   const validators = new Set();
-
-  for (const extender of extendsFrom) {
-    for (const v of extender.validators || []) {
-      validators.add(v);
-    }
-  }
 
   for (const m of store) {
     validators.add(m.data.uniqueName);

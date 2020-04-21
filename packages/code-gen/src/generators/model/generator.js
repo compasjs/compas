@@ -7,7 +7,6 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 import { normalizeModelsRecursively } from "./normalizeModelsRecursively.js";
-import { processExtendsFrom, processStore } from "./process.js";
 
 const store = new Set();
 
@@ -52,20 +51,15 @@ export async function init(app) {
 /**
  * @param {App} app
  * @param {object} result
- * @param {...object} extendsFrom
  * @return {Promise<void>}
  */
-export async function dumpStore(app, result, ...extendsFrom) {
+export async function dumpStore(app, result) {
   result.models = {};
 
-  const extendsResult = processExtendsFrom(result.models, extendsFrom);
-  const processResult = processStore(result.models, store);
+  for (const model of store) {
+    const build = model.build();
 
-  if (extendsResult.length !== 0 && processResult.length !== 0) {
-    app.logger.info("Overwrote some models", {
-      nonUniqueExtend: extendsResult,
-      nonUniqueStore: processResult,
-    });
+    result.models[build.uniqueName] = build;
   }
 
   for (const model of Object.keys(result.models)) {

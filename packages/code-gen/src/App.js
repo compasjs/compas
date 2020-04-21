@@ -1,6 +1,6 @@
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
-import { isNil, newTemplateContext } from "@lbu/stdlib";
-import { promises } from "fs";
+import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
+import { promises, existsSync, mkdirSync } from "fs";
 import { join } from "path";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
@@ -20,7 +20,7 @@ const { writeFile } = promises;
  * @property {string} name
  * @property {function(App): void|Promise<void>} [init]
  * @property {function(App): void|Promise<void>} [preProcessStore]
- * @property {function(App, object, ...object): void|Promise<void>} [dumpStore]
+ * @property {function(App, object): void|Promise<void>} [dumpStore]
  * @property {function(App, object):
  *   GeneratedFile[]|GeneratedFile|Promise<GeneratedFile[]|GeneratedFile>} [generate]
  */
@@ -85,6 +85,12 @@ export class App {
      */
     this.extendsList = [];
 
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this.isDumped = false;
+
     this._generatorList = generators;
   }
 
@@ -136,14 +142,11 @@ export class App {
   async dump() {
     await this.callGeneratorMethod("preProcessStore");
 
-    const externalResult = {};
-    await this.callGeneratorMethod(
-      "dumpStore",
-      externalResult,
-      ...this.extendsList,
-    );
+    const pluginResult = {};
+    await this.callGeneratorMethod("dumpStore", pluginResult);
 
-    return externalResult;
+    this.extend(pluginResult);
+    this.isDumped = true;
   }
 
   /**
@@ -159,7 +162,11 @@ export class App {
     }`;
 
     // Dump and copy, just to make sure we are working with a clean slate
-    const input = JSON.parse(JSON.stringify(await this.dump()));
+    if (!this.isDumped) {
+      await this.dump();
+    }
+
+    const input = JSON.parse(JSON.stringify(this.processExtendsList()));
     const files = await this.callGeneratorMethod("generate", input);
 
     const flattenedFiles = [];
@@ -170,6 +177,10 @@ export class App {
       } else {
         flattenedFiles.push(...file);
       }
+    }
+
+    if (!existsSync(this.options.outputDir)) {
+      mkdirSync(this.options.outputDir, { recursive: true });
     }
 
     for (const file of flattenedFiles) {
@@ -196,6 +207,53 @@ export class App {
           this.logger.info(`generator: calling ${method} on ${generator.name}`);
         }
         result.push(await generator[method](this, ...args));
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * @private
+   */
+  processExtendsList() {
+    const keySet = new Set();
+
+    for (const ext of this.extendsList) {
+      for (const key of Object.keys(ext)) {
+        keySet.add(key);
+      }
+    }
+
+    const result = {};
+    for (const key of keySet) {
+      let intermediate = undefined;
+
+      for (const ext of this.extendsList) {
+        const extValue = ext[key];
+        if (Array.isArray(extValue)) {
+          if (intermediate === undefined) {
+            intermediate = new Set();
+          } else if (!(intermediate instanceof Set)) {
+            throw new Error(`Mixed extends for ${key}`);
+          }
+          for (const v of extValue) {
+            intermediate.add(v);
+          }
+        } else if (isPlainObject(extValue)) {
+          if (intermediate === undefined) {
+            intermediate = {};
+          } else if (intermediate instanceof Set) {
+            throw new Error(`Mixed extends for ${key}`);
+          }
+          Object.assign(intermediate, extValue);
+        }
+      }
+
+      if (intermediate instanceof Set) {
+        result[key] = [...intermediate];
+      } else if (isPlainObject(intermediate)) {
+        result[key] = intermediate;
       }
     }
 
