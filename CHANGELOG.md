@@ -1,5 +1,32 @@
 # CHANGELOG
 
+### [v0.0.10]()
+
+- Set minimum Node.js version to Node.js 14
+- @lbu/cli: Refactored
+
+  - Improved argument parser, logging and reload handling
+  - Supports arguments and passing arguments to Node.js
+
+- @lbu/code-gen: Refactored
+
+  - Moved to a double plugin structure with Generators and Types plugins
+  - Generator plugins replace the previous store and generator plugins
+  - Type plugins implement TypeBuilding, and code generation for specific types.
+    All type plugins support the core generators
+  - All plugins except Models are now operating on a group based way of
+    generating. This ensures that auto-completion stays relevant to the context
+    that you are working in
+
+- @lbu/insight: removed global state from log parser
+- @lbu/insight: support `arrayBuffers` when printing memory usage
+- @lbu/insight: cleanup logger a bit
+- @lbu/server: supply `isServerLog` to check if a json object may be output from
+  the log midleware
+- @lbu/stdlib: removed global state from teplates
+- @lbu/\*: various dependency updates
+- @lbu/\*: various docs improvements
+
 ### [v0.0.9](d847630e049071c7c2385eef8377ba976ddd0e2a)
 
 - Export named functions instead of const and shorthand functions
