@@ -9,9 +9,9 @@ in the docs can be used to add specific notes for either API creators or users
 
 ### Prerequisites both API creator & API consumer
 
-Since LBU uses experimental ES Modules, at least Node.js 13 is required. Further
-more when you are using Typescript in your project, make sure you `allowJs` is
-set to `true` in your `tsconfig.json`.
+Since LBU uses experimental ES Modules, at least Node.js 14 is required. Further
+more when you are using Typescript in your project, make sure you set `allowJs`
+to `true` in your `tsconfig.json`.
 
 ### Getting started as an API consumer
 
@@ -42,52 +42,66 @@ Create a new script called `generate.js`.
 Let's start with the imports:
 
 ```ecmascript 6
-import {
-  loadFromRemote,
-  runCodeGen,
-  getTypesPlugin,
-  getApiClientPlugin,
-} from "@lbu/code-gen";
+import { App, coreTypes, generators, loadFromRemote } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 ```
 
 From `code-gen` we import the following:
 
+- `App`: The main abstraction that manages generators and types
+- `coreTypes`: Every type, be it string, number or array, has its own type
+  plugin. For now, we only need the types provided in `coreTypes`.
+- `generators`: A collection of generator plugins provided in code-gen.
 - `loadFromRemote`: Allows fetching the LBU schema from an LBU based API
   instance.
-- `runCodeGen`: Main entrypoint in for the code-gen package.
-- `getTypesPlugin`: Constructs a new code generator plugin to build JsDoc or
-  Typescript types
-- `getApiClientPlugin`: Constructs a new code generator plugin to build the api
-  client
 
 Then the imports from `insight` & `stdlib` enable us to have a dedicated logger
 and the ability to only run a function when that the file is the main entrypoint
-of a program.
+of a program. e.g. `node ./generate.js`.
 
 Let's tie all imported functions together in to a single main function:
 
 ```ecmascript 6
-async function main(logger) {
-  await runCodeGen(logger, () => loadFromRemote("https://lbu-e2e.herokuapp.com")).build({
-    plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin()],
+async function main() {
+  const app = new App({
+    generators: [generators.apiClient, generators.model],
+    types: [...coreTypes],
     outputDir: "./src/generated",
+    useTypescript: false,
+    verbose: true,
   });
-  logger.info("Done generating.");
+
+  await app.init();
+
+  app.extend(await loadFromRemote("https://lbu-e2e.herokuapp.com"));
+
+  await app.generate();
 }
-```
 
-The second argument to `runCodGen` is instructing the generator to fetch the
-structure from the live api. If you are using Typescript you can toggle the
-`emitTypescriptTypes` to `true`. If not, you can safely delete this argument.
-
-```ecmascript 6
 mainFn(import.meta, log, main);
 ```
 
+First we instantiate an App. To do that, we provide the generators we want to
+use, apiClient and model. The apiClient plugin generates an api client based on
+Axios. The model generator will generate JsDoc or Typescript types for all
+defined types, i.e input & outputs to our api. To use the Typescript types
+variant, change `useTypescript` to `true`.
+
+Next we specify that we want to use all our core types. These types provide the
+generator plugins with the required knowledge to generate for example the
+correct JsDoc and Typescript types.
+
+The last notable argument is the `outputDir`. The result of our generators will
+be put in this directory.
+
 The last part of this file instructs that the `main`-function should only run
 when this file is the entrypoint of the program.
+
+> This abstraction is useful for when you have files that can operate alone, but
+> also can be imported. With CommonJs it was as easy as
+> `if (module === require.main) {` but with ES modules it becomes a bit harder
+> to do.
 
 It's time to do the generation! Run this newly created file:
 `node ./generate.js` (or the `.mjs` variant). You may check the files in
@@ -95,16 +109,20 @@ It's time to do the generation! Run this newly created file:
 on the files.
 
 - types.{js,ts}: This file contains all 'Models'. The JsDoc in the different
-  JavaScript files can reference this for easier typechecked arguments
+  JavaScript files can reference this for better auto complete and specification
+  of arguments
 - apiClient.js: The fully generated api client.
+
+Next we are going to use the generated files
 
 Currently the apiClient expects you to provide your own axios instance. You can
 provide it like so:
 
 ```typescript
 import axios from "axios";
-import * as api from "../generated/apiClient.js";
-api.createApiClient(
+import { createApiClient, todoApi } from "../generated/apiClient.js";
+
+createApiClient(
   axios.create({
     baseURL: "https://lbu-e2e.herokuapp.com",
   }),
@@ -119,16 +137,16 @@ Now it should be pretty straight forward to use the api.
 For example, to get your own todo lists:
 
 ```
-await api.todo.all();
+await todoApi.all();
 ```
 
 To get one todo list by name:
 
-```typescript
-await api.todo.one({ name: "Default List" });
+```
+await todoApi.one({ name: "Default List" });
 ```
 
-If you have a decent editor you noticed the first argument to `api.todo.one` is
+If you have a decent editor you noticed the first argument to `todoApi.one` is
 called `params` which expects an object. These arguments are generated when
 necessary by lbu, and always in the following order:
 
@@ -141,39 +159,29 @@ necessary by lbu, and always in the following order:
 Another feature supported by the code generator and api client is to
 automatically mock routes that are not implemented.
 
-Change the `@lbu/code-gen` import in `./generate.js` to the following:
+Add the `generators.mock` to the generator array `./generate.js`, so it will
+look something like:
 
 ```ecmascript 6
-import {
-  loadFromRemote,
-  runCodeGen,
-  getTypesPlugin,
-  getApiClientPlugin,
-  getMocksPlugin,
-} from "@lbu/code-gen";
-```
-
-Also add the following to the `plugins` array in `./generate.js`:
-
-```ecmascript 6
-await runCodeGen(logger, () => loadFromRemote("https://lbu-e2e.herokuapp.com")).build({
-  plugins: [getTypesPlugin({ emitTypescriptTypes: false }), getApiClientPlugin(), getMocksPlugin()],
+const app = new App({
+  generators: [generators.apiClient, generators.model, generators.mock],
+  types: [...coreTypes],
   outputDir: "./src/generated",
+  useTypescript: false,
+  verbose: true,
 });
 ```
-
-> Again, change emitTypescriptTypes to true if you are using Typescript
 
 Let's run the generator again: `node ./generate.js`. If you want to see the
 changes in `[outputDir]/apiClient.js` make sure to format the file, with for
 example Prettier.
 
 The example api contains several unimplemented routes and are conveniently
-grouped under `api.unimplemented`. Run for example the following snippet a few
+grouped under `unimplementedApi`. Run for example the following snippet a few
 times, and notice that you get a different result each time:
 
 ```ecmascript 6
-console.log(await api.unimplemented.user())
+console.log(await unimplementedApi.getUser())
 ```
 
 This executes a GET request to `/unimplemented/user` and the server will respond
@@ -181,7 +189,7 @@ with a `405 Not implemented`. The api client catches that specific error, and
 will automatically call the appropriate mock for the expected response. All
 other errors will be throw again.
 
-For fun there is also `api.unimplemented.settings()`, which shows randomly
+For fun there is also `unimplementedApi.settings()`, which shows randomly
 generated enums, arrays and union types
 
 ### Footnotes
