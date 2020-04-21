@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.10]()
+### [v0.0.10](35e227dd5217c7eda76fcc69adaabb19207e3008)
 
 - Set minimum Node.js version to Node.js 14
 - @lbu/cli: Refactored
