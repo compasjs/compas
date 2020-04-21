@@ -9,7 +9,7 @@
     "release": "lerna publish"
   },
   "engines": {
-    "node": ">=13"
+    "node": ">=14"
   },
   "devDependencies": {
     "@lbu/cli": "0.0.9",
