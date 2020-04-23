@@ -192,6 +192,21 @@ other errors will be throw again.
 For fun there is also `unimplementedApi.settings()`, which shows randomly
 generated enums, arrays and union types
 
+### Getting started as an API consumer
+
+Simply init a new project with `npx @lbu/cli init [name]`. If name is provided,
+the init will create a new subdirectory, else it will use the current directory
+for the name.
+
+> Note: On 0.0.10 template is broken :S
+
+There are a few commands available out of the box:
+
+- `yarn lbu generate`: Run the code generators, this has all core provided
+  generators enabled by default.
+- `yarn lbu api`: Run the api, for example `http :3000/_health` should return a
+  `200 OK`.
+
 ### Footnotes
 
 **Optional:**

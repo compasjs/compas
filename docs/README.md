@@ -24,3 +24,6 @@ tailored at smaller & monolithic projects.
 
 - [Roadmap](roadmap.md)
 - [Getting started](getting-started.md)
+- [CLI](cli/README.md)
+- [Code-gen](code-gen/README.md)
+- [Server](server/README.md)
