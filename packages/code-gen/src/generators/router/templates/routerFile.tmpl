@@ -4,7 +4,7 @@
 {{= opts.fileHeader }}
 {{ } }}
 
-import { getBodyParser, compose, AppError } from "@lbu/server";
+import { compose, AppError } from "@lbu/server";
 import {
 {{ for (const group of groups) { }}
 {{= lowerCaseFirst(group) }}Validators,
@@ -12,12 +12,11 @@ import {
 } from "./validators.js";
 
 let _internalBodyParser = undefined;
-function parseBody(ctx) {
-    if (_internalBodyParser === undefined) {
-      const bp = getBodyParser();
-      _internalBodyParser = ctx => new Promise(r => bp(ctx, r).then(r));
-    }
+export function setBodyParser(parser) {
+  _internalBodyParser = ctx => new Promise(r => parser(ctx, r).then(r));
+}
 
+function parseBody(ctx) {
     return _internalBodyParser(ctx);
 }
 
