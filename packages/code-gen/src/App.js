@@ -1,6 +1,6 @@
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
-import { promises, existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, promises } from "fs";
 import { join } from "path";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 

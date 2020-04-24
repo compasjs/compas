@@ -1,4 +1,4 @@
-import { join, isAbsolute } from "path";
+import { join } from "path";
 import { executeCommand } from "../utils.js";
 
 /**

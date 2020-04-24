@@ -1,7 +1,7 @@
 import { spawn } from "@lbu/stdlib";
-import { existsSync, lstatSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync } from "fs";
 import nodemon from "nodemon";
-import { join, sep } from "path";
+import { join } from "path";
 
 /**
  * @typedef {object} CollectedScript

@@ -1,6 +1,6 @@
 import { existsSync } from "fs";
 
-const utilCommands = ["init", "help"];
+const utilCommands = ["init", "help", "docker"];
 const execCommands = {
   run: {
     canWatch: true,

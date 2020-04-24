@@ -1,4 +1,5 @@
 import {
+  dockerCommand,
   helpCommand,
   initCommand,
   lintCommand,
@@ -9,6 +10,7 @@ import {
 const utilCommands = {
   help: helpCommand,
   init: initCommand,
+  docker: dockerCommand,
 };
 
 const execCommands = {

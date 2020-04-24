@@ -1,3 +1,4 @@
+export { dockerCommand } from "./docker.js";
 export { helpCommand } from "./help.js";
 export { initCommand } from "./init.js";
 export { lintCommand } from "./lint.js";
