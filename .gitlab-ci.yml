@@ -2,8 +2,8 @@ stages:
   - test
 
 # Supported Node versions
-.node13: &node13
-  image: node:13
+.node14: &node14
+  image: node:14
 
 # Test
 
@@ -17,8 +17,8 @@ stages:
     - yarn lbu lint
     - yarn lbu test
 
-build_lint_test_node13:
-  <<: [*node13]
+build_lint_test_node14:
+  <<: [*node14]
   extends: .build_lint_test
   cache:
-    key: lightbase-node13
+    key: lightbase-node14
