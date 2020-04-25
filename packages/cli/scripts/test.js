@@ -4,10 +4,8 @@ import {
   mainFn,
   processDirectoryRecursiveSync,
 } from "@lbu/stdlib";
-import tape from "tape";
-import promiseWrap from "tape-promise";
+import test from "tape";
 
-const test = promiseWrap.default(tape);
 const __filename = filenameForModule(import.meta);
 
 const contentHandler = async (file) => {
