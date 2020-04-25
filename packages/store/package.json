@@ -1,0 +1,34 @@
+{
+  "name": "@lbu/store",
+  "version": "0.0.10",
+  "description": "Postgres & S3-compatible wrappers for common things",
+  "main": "./index.js",
+  "exports": "./index.js",
+  "type": "module",
+  "keywords": [
+    "lightbase",
+    "lbu",
+    "s3",
+    "postgres",
+    "persistence"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "minio": "7.0.15",
+    "postgres": "1.0.2"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "dirkdev98@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightbasenl/lbu.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
