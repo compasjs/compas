@@ -1,9 +1,10 @@
+import test from "tape";
 import { uuid } from "./datatypes.js";
 
-export function test(t) {
+test("stdlib/datatypes", (t) => {
   t.test("uuid", (t) => {
     t.notEqual(uuid(), uuid());
 
     t.end();
   });
-}
+});

@@ -1,6 +1,7 @@
+import test from "tape";
 import { bytesToHumanReadable, printProcessMemoryUsage } from "./memory.js";
 
-export function test(t) {
+test("insight/memory", (t) => {
   t.test("bytesToHumanReadable", (t) => {
     t.equal(bytesToHumanReadable(0), "0 Byte");
     t.equal(bytesToHumanReadable(11), "11 Bytes");
@@ -29,4 +30,4 @@ export function test(t) {
 
     t.end();
   });
-}
+});

@@ -1,6 +1,7 @@
+import test from "tape";
 import { flatten, isNil, isPlainObject, merge, unFlatten } from "./lodash.js";
 
-export const test = (t) => {
+test("stdlib/lodash", (t) => {
   t.test("isNil", (t) => {
     t.ok(isNil(null));
     t.ok(isNil(undefined));
@@ -108,4 +109,4 @@ export const test = (t) => {
 
     t.end();
   });
-};
+});

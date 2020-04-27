@@ -1,6 +1,7 @@
+import test from "tape";
 import { writeNDJSON, writePretty } from "./writer.js";
 
-export function test(t) {
+test("insight/writer", (t) => {
   t.test("writePretty", (t) => {
     const now = new Date();
     let result = [];
@@ -85,4 +86,4 @@ export function test(t) {
 
     t.end();
   });
-}
+});

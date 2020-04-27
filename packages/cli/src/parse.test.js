@@ -1,6 +1,7 @@
+import test from "tape";
 import { parseArgs } from "./parse.js";
 
-export function test(t) {
+test("cli/parse", (t) => {
   t.test("default to help", (t) => {
     t.deepEqual(parseArgs([], []), {
       type: "util",
@@ -280,4 +281,4 @@ export function test(t) {
 
     t.end();
   });
-}
+});

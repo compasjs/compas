@@ -1,6 +1,7 @@
+import test from "tape";
 import { gc, getSecondsSinceEpoch } from "./utils.js";
 
-export function test(t) {
+test("stdlib/utils", (t) => {
   t.test("getSecondsSinceEpoch", (t) => {
     t.ok(Number.isInteger(getSecondsSinceEpoch()));
 
@@ -12,4 +13,4 @@ export function test(t) {
 
     t.end();
   });
-}
+});

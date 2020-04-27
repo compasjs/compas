@@ -16,17 +16,7 @@ const contentHandler = async (file) => {
   if (!file.endsWith(".test.js")) {
     return;
   }
-
-  const fileData = await import(file);
-  await test(
-    file,
-    {
-      skip: fileData.skip || false,
-      todo: fileData.todo || false,
-      timeout: fileData.timeout || 500,
-    },
-    fileData.test,
-  );
+  await import(file);
 };
 
 mainFn(
@@ -36,5 +26,27 @@ mainFn(
       type: "test",
     },
   }),
-  () => processDirectoryRecursiveSync(process.cwd(), contentHandler),
+  main,
 );
+
+async function main() {
+  test.Test.prototype.asyncShouldThrow = async function (cb, msg) {
+    try {
+      await cb();
+      this.fail(msg);
+    } catch (e) {
+      this.ok(msg || e.message);
+    }
+  };
+
+  test.Test.prototype.asyncShouldNotThrow = async function (cb) {
+    try {
+      await cb();
+      this.ok(true, "cb did not throw");
+    } catch (e) {
+      this.fail(e);
+    }
+  };
+
+  await processDirectoryRecursiveSync(process.cwd(), contentHandler);
+}

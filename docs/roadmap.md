@@ -22,7 +22,6 @@ in at least a mid size released project our selves.
 
 - @lbu/sql: Common persistent storage needs with Postgres
   - Queue: Extensible queue implementation with various queue types
-  - File: File storage table with support for chunked access
   - KV: Key value store
 - @lbu/server: Various common middleware:
   - Basic auth

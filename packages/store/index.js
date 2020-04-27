@@ -1,6 +1,13 @@
 import { dirnameForModule } from "@lbu/stdlib";
 
-export { newMinioClient, minio } from "./src/minio.js";
+export {
+  newMinioClient,
+  minio,
+  ensureBucket,
+  removeBucket,
+  listObjects,
+  removeBucketAndObjectsInBucket,
+} from "./src/minio.js";
 export { newPostgresConnection, postgres } from "./src/postgres.js";
 export {
   cleanupTestPostgresDatabase,
@@ -11,5 +18,14 @@ export {
   getMigrationsToBeApplied,
   runMigrations,
 } from "./src/migrations.js";
+export {
+  createFile,
+  copyFile,
+  getFileById,
+  getFileStream,
+  newFileStoreContext,
+  deleteFile,
+  syncDeletedFiles,
+} from "./src/files.js";
 
 export const migrations = dirnameForModule(import.meta) + "/migrations";

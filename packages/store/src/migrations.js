@@ -25,10 +25,13 @@ import path from "path";
 
 /**
  * @property {postgres} sql
- * @return {MigrateContext}
+ * @return {Promise<MigrateContext>}
  */
-export async function newMigrateContext(sql) {
-  const migrations = await readMigrationsDir(process.cwd() + "/migrations");
+export async function newMigrateContext(
+  sql,
+  migrationDirectory = `${process.cwd()}/migrations`,
+) {
+  const migrations = await readMigrationsDir(migrationDirectory);
 
   // Automatically add this package to the migrations
   if (migrations.namespaces.indexOf("@lbu/store") === -1) {

@@ -1,7 +1,8 @@
+import { log } from "@lbu/insight";
 import { uuid } from "@lbu/stdlib";
 import { newPostgresConnection, postgres } from "./postgres.js";
 
-export async function createTestPostgresDatabase() {
+export async function createTestPostgresDatabase(verboseSql = false) {
   const creationSql = postgres(process.env.POSTGRES_URI);
   const name = process.env.APP_NAME + uuid().substring(0, 7);
   // language=PostgreSQL
@@ -25,6 +26,7 @@ export async function createTestPostgresDatabase() {
 
   const sql = await newPostgresConnection({
     database: name,
+    debug: verboseSql ? log.error : undefined,
   });
 
   // hacky but needed because clients are lazily initialized
@@ -35,10 +37,10 @@ export async function createTestPostgresDatabase() {
 
 export async function cleanupTestPostgresDatabase(sql) {
   const dbName = sql.options.database;
-  await sql.end();
+  await sql.end({ timeout: 0.1 });
 
   const deletionSql = await newPostgresConnection({});
   // language=PostgreSQL
   await deletionSql.unsafe(`DROP DATABASE ${dbName}`);
-  await deletionSql.end();
+  await deletionSql.end({ timeout: 0.1 });
 }
