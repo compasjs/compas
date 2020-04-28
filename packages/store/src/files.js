@@ -13,6 +13,7 @@ import { listObjects } from "./minio.js";
 /**
  * @typedef {object} FileProps
  * @property {string} [id]
+ * @property {string} bucket_name
  * @property {number} content_length
  * @property {string} content_type
  * @property {string} filename
@@ -51,6 +52,7 @@ export async function createFile(fc, props, streamOrPath) {
     props.content_type = mime.lookup(props.filename);
   }
   props.updated_at = new Date();
+  props.bucket_name = fc.bucketName;
 
   if (typeof streamOrPath === "string") {
     streamOrPath = createReadStream(streamOrPath);
@@ -65,6 +67,7 @@ export async function createFile(fc, props, streamOrPath) {
   const [result] = await fc.sql`INSERT INTO file_store ${fc.sql(
     props,
     "id",
+    "bucket_name",
     "content_length",
     "content_type",
     "filename",
@@ -88,7 +91,7 @@ export async function createFile(fc, props, streamOrPath) {
 export async function getFileById(fc, id) {
   const [
     result,
-  ] = await fc.sql`SELECT id, content_type, content_length, filename, created_at, updated_at FROM file_store WHERE id = ${id}`;
+  ] = await fc.sql`SELECT id, bucket_name, content_type, content_length, filename, created_at, updated_at FROM file_store WHERE id = ${id} AND bucket_name = ${fc.bucketName}`;
 
   return result;
 }
@@ -114,26 +117,29 @@ export async function getFileStream(fc, id, { start, end } = {}) {
 /**
  * @param {FileStoreContext} fc
  * @param {string} id
+ * @param {string} [targetBucket=fc.bucketName]
  * @return {Promise<FileProps>}
  */
-export async function copyFile(fc, id) {
+export async function copyFile(fc, id, targetBucket = fc.bucketName) {
   const [
     result,
-  ] = await fc.sql`INSERT INTO file_store (id, content_type, content_length, filename) SELECT ${uuid()}, content_type, content_length, filename FROM file_store WHERE id = ${id} RETURNING *`;
+  ] = await fc.sql`INSERT INTO file_store (id, bucket_name, content_type, content_length, filename) SELECT ${uuid()}, ${targetBucket}, content_type, content_length, filename FROM file_store WHERE id = ${id} AND bucket_name = ${
+    fc.bucketName
+  } RETURNING *`;
 
-  await fc.minio.copyObject(fc.bucketName, result.id, `${fc.bucketName}/${id}`);
+  await fc.minio.copyObject(targetBucket, result.id, `${fc.bucketName}/${id}`);
 
   return result;
 }
 
 export async function deleteFile(fc, id) {
-  return fc.sql`DELETE FROM file_store WHERE id = ${id}`;
+  return fc.sql`DELETE FROM file_store WHERE id = ${id} AND bucket_name = ${fc.bucketName}`;
 }
 
 export async function syncDeletedFiles(fc) {
   const minioObjectsPromise = listObjects(fc.minio, fc.bucketName);
   const knownIds = await fc.sql`SELECT DISTINCT(id)
-                                FROM file_store`;
+                                FROM file_store WHERE bucket_name = ${fc.bucketName}`;
 
   const ids = knownIds.map((it) => it.id);
 

@@ -13,7 +13,6 @@ import {
 import {
   ensureBucket,
   newMinioClient,
-  removeBucket,
   removeBucketAndObjectsInBucket,
 } from "./minio.js";
 import {
@@ -81,8 +80,15 @@ test("store/files", async (t) => {
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await sql`SELECT id, content_length, content_type, filename, created_at, updated_at
-                FROM file_store`;
+    storedFiles = await sql`SELECT id,
+                                   id,
+                                   bucket_name,
+                                   content_length,
+                                   content_type,
+                                   filename,
+                                   created_at,
+                                   updated_at
+                            FROM file_store`;
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].content_length, storedFiles[1].content_length);
   });
