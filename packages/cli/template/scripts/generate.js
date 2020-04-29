@@ -1,43 +1,37 @@
-import {
-  App,
-  getApiClientPlugin,
-  getMocksPlugin,
-  getRouterPlugin,
-  getTypesPlugin,
-  getValidatorPlugin,
-  M,
-  runCodeGen,
-} from "@lbu/code-gen";
+import { App, coreTypes, generators, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
 mainFn(import.meta, log, main);
 
-export const nodemonArgs = "--ignore generated -e tmpl,js,json";
+export const nodemonArgs = "--ignore src/generated";
 
-async function main(logger) {
-  const app = createApp();
-  // Code gen validators
-  await runCodeGen(logger, () => app.build()).build({
-    plugins: [
-      getTypesPlugin(),
-      getValidatorPlugin(),
-      getRouterPlugin(),
-      getMocksPlugin(),
-      getApiClientPlugin(),
+async function main() {
+  const app = new App({
+    types: coreTypes,
+    generators: [
+      generators.validator,
+      generators.apiClient,
+      generators.mock,
+      generators.model,
+      generators.router,
     ],
+    verbose: true,
     outputDir: "./src/generated",
   });
-}
 
-function createApp() {
-  const app = new App("TODO App");
+  await app.init();
 
-  app.model(
-    M.object("MyObject", {
-      userName: M.string().mock("__.first"),
-    }),
-  );
+  const M = new TypeCreator();
+  const myObject = M.object("MyObject", {
+    id: M.uuid(),
+    userName: M.string().mock("__.first"),
+  });
 
-  return app;
+  app.model(myObject);
+
+  const router = M.router("/app");
+  app.route(router.get().response(myObject));
+
+  await app.generate();
 }

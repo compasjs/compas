@@ -1,28 +1,49 @@
 import { log } from "@lbu/insight";
 import { AppError, createBodyParsers, getApp } from "@lbu/server";
-import { mainFn } from "@lbu/stdlib";
+import { mainFn, uuid } from "@lbu/stdlib";
+import { appHandlers, router } from "./generated/router.js";
 import { validatorSetErrorFn } from "./generated/validators.js";
 
 mainFn(import.meta, log, main);
 
 async function main(logger) {
-  logger.info("Hello from my src/api.js");
+  const app = constructApp();
 
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    logger.info("Listening", { port });
+  });
+}
+
+export function constructApp() {
   const app = getApp({
     errorOptions: {
-      leakError: process.env.NODE_ENV === "development",
+      leakError: true,
     },
     headers: {
       cors: {
-        origin: "http://localhost:3000",
+        origin: (ctx) => ctx.get("origin") === "http://localhost:3000",
       },
     },
+    proxy: process.env.NODE_ENV === "production",
   });
 
-  createBodyParsers({});
   validatorSetErrorFn(AppError.validationError);
+  createBodyParsers({});
 
-  app.listen(process.env.API_PORT, () => {
-    logger.info(`Listening on port ${process.env.API_PORT}`);
-  });
+  app.use(router);
+
+  mountHandlers();
+
+  return app;
+}
+
+function mountHandlers() {
+  appHandlers.get = (ctx, next) => {
+    ctx.body = {
+      id: uuid(),
+      userName: "Dirk",
+    };
+    return next();
+  };
 }

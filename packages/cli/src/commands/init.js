@@ -31,7 +31,7 @@ export async function initCommand(logger, command) {
   const projectName = outDir.substring(outDir.lastIndexOf("/") + 1);
 
   copyDirRecursive(
-    join(dirnameForModule(import.meta), "../template"),
+    join(dirnameForModule(import.meta), "../../template"),
     outDir,
     (input) =>
       input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
@@ -40,6 +40,15 @@ export async function initCommand(logger, command) {
   await spawn(`yarn`, []);
   await spawn(`yarn`, [`lbu`, `generate`]);
   await spawn(`yarn`, [`lbu`, `lint`]);
+
+  logger.info(`
+We already completed your first code generation.
+
+- Try the api with 'yarn lbu ./src/api.js' and try 'http://localhost:3000/app' in your browser
+- Discover the utilities of lbu with 'yarn lbu help'
+
+Have fun ;)
+`);
 }
 
 function copyDirRecursive(source, target, contentHandler) {
