@@ -6,7 +6,7 @@ mainFn(import.meta, log, main);
 
 export const nodemonArgs = "--ignore generated -e tmpl,js,json";
 
-async function main(logger) {
+async function main() {
   const app = new App({
     generators: [
       generators.model,

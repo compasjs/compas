@@ -1,9 +1,12 @@
+{{ let hasParam = model.params !== undefined; }}
+{{ const url = model.path.split("/").map(part => { if (part.startsWith(":")) { hasParam = true; return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
+
 /**
  * {{= model.uniqueName }}
  * Tags: {{= model.tags.join(", ") }}
  * Docs: {{= model.docString }}
-{{ if (model.params) { }}
- * @param { {{= model.params.reference.uniqueName }}_Optional} params
+{{ if (hasParam) { }}
+ * @param { {{= model.params ? model.params.reference.uniqueName + "_Optional" : "object" }}} params
 {{ } }}
 {{ if (model.query) { }}
  * @param { {{= model.query.reference.uniqueName }}_Optional} query
@@ -19,7 +22,7 @@
 
  */
 {{= lowerCaseFirst(model.name) }}: async function (
-{{ if (model.params) { }}
+{{ if (hasParam) { }}
 params,
 {{ } }}
 {{ if (model.query) { }}
@@ -29,7 +32,6 @@ query,
 body,
 {{ } }}
 ) {
-    {{ const url = model.path.split("/").map(part => part.startsWith(":") ? "${params." + part.substring(1) + "}" : part).join("/"); }}
     checkApiClient();
 
     {{ if (opts.enableMocks && model.response !== undefined) { }}
