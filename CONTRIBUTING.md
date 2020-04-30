@@ -13,20 +13,6 @@ All commands in this repo can be run via the 'self-hosted' `@lbu/cli`. Run
 
 ### Debugging tests
 
-Add in the test file that you want to debug:
-
-```javascript
-import { mainFn } from "@lbu/stdlib";
-import { log } from "@lbu/insight";
-import tape from "tape";
-import promiseWrap from "tape-promise";
-
-mainFn(import.meta, log, () => {
-  const tapeTest = promiseWrap.default(tape);
-  test(tapeTest);
-});
-```
-
 Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 (right-mouse click -> Debug `file.test.js`)
 

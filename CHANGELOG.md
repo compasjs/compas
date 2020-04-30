@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### [v0.0.11]()
+
+- @lbu/store: initial release! Already supports test databases, migrations and a
+  persistent file store in combination with minio
+- @lbu/server: remove global state from body parsers
+- @lbu/code-gen: various bug fixes. The output should be ESLint error free after
+  formatting.
+- @lbu/cli: update template
+- @lbu/cli: improve command executor, now supports passing in flags to Node.js
+  as well as to the program it self
+- Various test and documentation improvements
+
 ### [v0.0.10](35e227dd5217c7eda76fcc69adaabb19207e3008)
 
 - Set minimum Node.js version to Node.js 14
