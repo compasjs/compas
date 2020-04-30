@@ -16,7 +16,7 @@ export const arrayType = {
     return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
   },
   tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "ut-8" });
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
   },
 };
 

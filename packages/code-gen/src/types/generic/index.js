@@ -16,7 +16,7 @@ export const genericType = {
     return readFileSync(directory + "/js-type.tmpl", { encoding: "utf-8" });
   },
   tsType: () => {
-    return readFileSync(directory + "/ts-type.tmpl", { encoding: "ut-8" });
+    return readFileSync(directory + "/ts-type.tmpl", { encoding: "utf-8" });
   },
 };
 
