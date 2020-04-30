@@ -1,0 +1,30 @@
+name: lint-build-test
+on: [push, pull_request]
+
+jobs:
+  lint-build-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-
+            ${{ runner.os }}-
+      - run: |
+          yarn install
+          yarn lbu lint
+          yarn lbu test
