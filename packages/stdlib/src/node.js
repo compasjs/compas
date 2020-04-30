@@ -21,14 +21,16 @@ export function exec(command) {
  * @param {string} command
  * @param {string[]} args
  * @param {Object} [opts={}]
- * @returns {Promise<void>}
+ * @returns {Promise<{code: number|undefined}>}
  */
 export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
     const sp = cpSpawn(command, args, { stdio: "inherit", ...opts });
 
     sp.once("error", reject);
-    sp.once("exit", resolve);
+    sp.once("exit", (code) => {
+      resolve({ code: code === null ? undefined : code });
+    });
   });
 }
 

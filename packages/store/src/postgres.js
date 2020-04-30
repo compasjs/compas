@@ -47,7 +47,6 @@ export async function createDatabaseIfNotExists(sql, databaseName, template) {
     db,
   ] = await sql`SELECT datname FROM pg_database WHERE datname = ${databaseName}`;
 
-  console.log("DB", db);
   if (!db || !db.datname) {
     if (template) {
       await sql`CREATE DATABASE ${sql(databaseName)} WITH TEMPLATE ${sql(

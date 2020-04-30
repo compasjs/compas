@@ -26,5 +26,8 @@ jobs:
             ${{ runner.os }}-
       - run: |
           yarn install
+          yarn lbu docker up
           yarn lbu lint
+          yarn lbu migrate
           yarn lbu test
+          yarn lbu docker clean

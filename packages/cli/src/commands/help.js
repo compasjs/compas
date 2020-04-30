@@ -23,7 +23,7 @@ Usage:
 
 - init              : lbu init [projectName]
 - help              : lbu help
-- docker            : lbu docker [up,down]
+- docker            : lbu docker [up,down,clean]
 - run (explicit)    : lbu run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : lbu [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - test              : lbu test [--watch] [--verbose] [--script-arg]

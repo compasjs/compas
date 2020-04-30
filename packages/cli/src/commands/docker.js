@@ -1,11 +1,11 @@
-import { exec } from "@lbu/stdlib";
+import { exec, spawn } from "@lbu/stdlib";
 
-const SUB_COMMANDS = ["up", "down"];
+const SUB_COMMANDS = ["up", "down", "clean"];
 
 const supportedContainers = {
   "lbu-postgres": {
     createCommand:
-      "docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-pg-data:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres postgres:12",
+      "docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres postgres:12",
   },
   "lbu-minio": {
     createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v lbu-minio:/data -p 9000:9000 --name lbu-minio minio/minio server /data`,
@@ -36,30 +36,39 @@ export async function dockerCommand(logger, command) {
   }
 
   if (subCommand === "up") {
-    await startContainers();
+    await startContainers(logger);
   } else if (subCommand === "down") {
-    await stopContainers();
+    await stopContainers(logger);
+  } else if (subCommand === "clean") {
+    await cleanContainers(logger);
   }
 }
 
-async function startContainers() {
+async function startContainers(logger) {
   const { stdout } = await exec("docker container ls -a --format '{{.Names}}'");
 
   for (const name of Object.keys(supportedContainers)) {
+    logger.info(`Creating ${name} container`);
     if (stdout.indexOf(name) === -1) {
       await exec(supportedContainers[name].createCommand);
     }
   }
 
-  for (const name of Object.keys(supportedContainers)) {
-    await exec(`docker start ${name}`);
-  }
+  logger.info(`Starting containers`);
+  await spawn(`docker`, ["start", ...Object.keys(supportedContainers)]);
 }
 
-async function stopContainers() {
-  for (const name of Object.keys(supportedContainers)) {
-    await exec(`docker stop ${name}`);
-  }
+async function stopContainers(logger) {
+  logger.info(`Stopping containers`);
+  await spawn(`docker`, ["stop", ...Object.keys(supportedContainers)]);
+}
+
+async function cleanContainers(logger) {
+  await stopContainers(logger);
+  logger.info(`Removing containers`);
+  await spawn(`docker`, ["rm", ...Object.keys(supportedContainers)]);
+  logger.info(`Removing volumes`);
+  await spawn(`docker`, ["volume", "rm", ...Object.keys(supportedContainers)]);
 }
 
 async function isDockerAvailable() {
