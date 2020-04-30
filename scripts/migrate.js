@@ -10,7 +10,7 @@ import {
 mainFn(import.meta, log, main);
 
 async function main(logger) {
-  const sql = newPostgresConnection({});
+  const sql = await newPostgresConnection({ createIfNotExists: true });
   const mc = await newMigrateContext(sql);
   logger.info(
     getMigrationsToBeApplied(mc).map((it) => ({

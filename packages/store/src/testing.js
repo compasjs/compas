@@ -1,28 +1,18 @@
 import { log } from "@lbu/insight";
 import { uuid } from "@lbu/stdlib";
-import { newPostgresConnection, postgres } from "./postgres.js";
+import {
+  createDatabaseIfNotExists,
+  newPostgresConnection,
+} from "./postgres.js";
 
 export async function createTestPostgresDatabase(verboseSql = false) {
-  const creationSql = postgres(process.env.POSTGRES_URI);
   const name = process.env.APP_NAME + uuid().substring(0, 7);
-  // language=PostgreSQL
-  const [
-    db,
-  ] = await creationSql`SELECT datname FROM pg_database WHERE datname = ${process.env.APP_NAME}`;
 
-  if (!db || !db.datname) {
-    // language=PostgreSQL
-    await creationSql`CREATE DATABASE ${creationSql(
-      process.env.APP_NAME,
-    )} WITH OWNER ${creationSql(creationSql.options.user)}`;
-  }
-
-  // language=PostgreSQL
-  await creationSql`CREATE DATABASE ${creationSql(
-    name,
-  )} WITH TEMPLATE ${creationSql(process.env.APP_NAME)} OWNER ${creationSql(
-    creationSql.options.user,
-  )}`;
+  const creationSql = await createDatabaseIfNotExists(
+    undefined,
+    process.env.APP_NAME,
+  );
+  await createDatabaseIfNotExists(creationSql, name, process.env.APP_NAME);
 
   const sql = await newPostgresConnection({
     database: name,
