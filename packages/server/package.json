@@ -1,6 +1,6 @@
 {
   "name": "@lbu/server",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Koa server and common middleware",
   "main": "./index.js",
   "exports": "./index.js",
@@ -15,8 +15,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "^0.0.10",
-    "@lbu/stdlib": "^0.0.10",
+    "@lbu/insight": "^0.0.11",
+    "@lbu/stdlib": "^0.0.11",
     "koa": "2.11.0",
     "koa-body": "4.1.1",
     "koa-compose": "4.1.0"
