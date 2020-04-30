@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.11]()
+### [v0.0.11](f0defbd9db98cefbd27e3f6af2518eb6ed8700e4)
 
 - @lbu/store: initial release! Already supports test databases, migrations and a
   persistent file store in combination with minio
