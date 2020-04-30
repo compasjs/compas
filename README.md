@@ -1,3 +1,6 @@
+![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
+---
+
 # @lbu/\*
 
 Collection of Lightbase backend utilities
