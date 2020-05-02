@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const objectType = {
-  name: "object",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class ObjectType extends TypeBuilder {
   constructor(group, name, obj) {
     super(objectType.name, group, name);
@@ -67,6 +51,23 @@ class ObjectType extends TypeBuilder {
   }
 }
 
+const objectType = {
+  name: "object",
+  class: ObjectType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#object
  * @param {string|Object<string, TypeBuilder>} [name]
@@ -81,4 +82,4 @@ TypeCreator.prototype.object = function (name, obj) {
   }
 };
 
-TypeCreator.types[objectType.name] = ObjectType;
+TypeCreator.types.set(objectType.name, objectType);

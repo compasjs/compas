@@ -1,4 +1,4 @@
-import { App, coreTypes, generators, TypeCreator } from "@lbu/code-gen";
+import { App, generators, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
@@ -15,7 +15,6 @@ async function main() {
       generators.router,
       generators.apiClient,
     ],
-    types: [...coreTypes],
     verbose: true,
     outputDir: "./generated",
     useTypescript: false,

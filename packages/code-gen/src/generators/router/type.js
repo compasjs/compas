@@ -1,10 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 
-export const routeType = {
-  name: "route",
-};
-
 export class RouteBuilder extends TypeBuilder {
   constructor(method, group, name, path) {
     super("route", group, name);
@@ -216,6 +212,14 @@ class RouteCreator {
   }
 }
 
+const routeType = {
+  name: "route",
+  class: {
+    builder: RouteBuilder,
+    Creator: RouteCreator,
+  },
+};
+
 /**
  * @name TypeCreator#router
  * @param {string} path
@@ -225,10 +229,7 @@ TypeCreator.prototype.router = function (path) {
   return new RouteCreator(this.group, path);
 };
 
-TypeCreator.types[routeType.name] = {
-  builder: RouteBuilder,
-  creator: RouteCreator,
-};
+TypeCreator.types.set(routeType.name, routeType);
 
 /**
  * @param {string} path1

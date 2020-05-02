@@ -16,8 +16,15 @@ const stringType = JSON.stringify(
   1,
 ).replace(/\n/g, " ");
 
-export const uuidType = {
+class UuidType extends TypeBuilder {
+  constructor(group, name) {
+    super(uuidType.name, group, name);
+  }
+}
+
+const uuidType = {
   name: "uuid",
+  class: UuidType,
   jsType: () => `string`,
   tsType: () => `string`,
   validator: () => `
@@ -29,12 +36,6 @@ return stringValidator{{= num }}(value, propertyPath);
   mock: () => `_mocker.guid({version: 4})`,
 };
 
-class UuidType extends TypeBuilder {
-  constructor(group, name) {
-    super(uuidType.name, group, name);
-  }
-}
-
 /**
  * @name TypeCreator#uuid
  * @param {string} [name]
@@ -44,4 +45,4 @@ TypeCreator.prototype.uuid = function (name) {
   return new UuidType(this.group, name);
 };
 
-TypeCreator.types[uuidType.name] = UuidType;
+TypeCreator.types.set(uuidType.name, uuidType);

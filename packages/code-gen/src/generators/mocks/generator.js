@@ -5,7 +5,7 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { TypeBuilder } from "../../types/index.js";
+import { TypeBuilder, TypeCreator } from "../../types/index.js";
 
 /**
  * @name TypeBuilder#mock
@@ -68,7 +68,7 @@ function collectTypes(app) {
   app.options.mocks = app.options.mocks || {};
   app.options.mocks.enabledTypes = [];
 
-  for (const type of app.types) {
+  for (const type of TypeCreator.types.values()) {
     if ("mock" in type) {
       app.options.mocks.enabledTypes.push(type.name);
 

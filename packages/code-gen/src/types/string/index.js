@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const stringType = {
-  name: "string",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class StringType extends TypeBuilder {
   constructor(group, name) {
     super(stringType.name, group, name);
@@ -113,6 +97,23 @@ class StringType extends TypeBuilder {
   }
 }
 
+const stringType = {
+  name: "string",
+  class: StringType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#string
  * @param {string} [name]
@@ -122,4 +123,4 @@ TypeCreator.prototype.string = function (name) {
   return new StringType(this.group, name);
 };
 
-TypeCreator.types[stringType.name] = StringType;
+TypeCreator.types.set(stringType.name, stringType);

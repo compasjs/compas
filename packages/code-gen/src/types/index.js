@@ -1,25 +1,12 @@
-import { anyType } from "./any/index.js";
-import { anyOfType } from "./anyOf/index.js";
-import { arrayType } from "./array/index.js";
-import { booleanType } from "./boolean/index.js";
-import { genericType } from "./generic/index.js";
-import { numberType } from "./number/index.js";
-import { objectType } from "./object/index.js";
-import { referenceType } from "./reference/index.js";
-import { stringType } from "./string/index.js";
-import { uuidType } from "./uuid/index.js";
-
 export { TypeBuilder, TypeCreator } from "./TypeBuilder.js";
 
-export const coreTypes = [
-  anyType,
-  anyOfType,
-  arrayType,
-  booleanType,
-  genericType,
-  numberType,
-  objectType,
-  referenceType,
-  stringType,
-  uuidType,
-];
+import "./any/index.js";
+import "./anyOf/index.js";
+import "./array/index.js";
+import "./boolean/index.js";
+import "./generic/index.js";
+import "./number/index.js";
+import "./object/index.js";
+import "./reference/index.js";
+import "./string/index.js";
+import "./uuid/index.js";

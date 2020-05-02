@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const arrayType = {
-  name: "array",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class ArrayType extends TypeBuilder {
   constructor(group, name, value) {
     super(arrayType.name, group, name);
@@ -85,6 +69,23 @@ class ArrayType extends TypeBuilder {
   }
 }
 
+const arrayType = {
+  name: "array",
+  class: ArrayType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#array
  * @param {string|TypeBuilder} [name]
@@ -99,4 +100,4 @@ TypeCreator.prototype.array = function (name, value) {
   }
 };
 
-TypeCreator.types[arrayType.name] = ArrayType;
+TypeCreator.types.set(arrayType.name, arrayType);

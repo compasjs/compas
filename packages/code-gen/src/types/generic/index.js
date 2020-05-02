@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const genericType = {
-  name: "generic",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/js-type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/ts-type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class GenericType extends TypeBuilder {
   constructor(group, name) {
     super(genericType.name, group, name);
@@ -56,6 +40,23 @@ class GenericType extends TypeBuilder {
   }
 }
 
+const genericType = {
+  name: "generic",
+  class: GenericType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/js-type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/ts-type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#generic
  * @param {string} [name]
@@ -65,4 +66,4 @@ TypeCreator.prototype.generic = function (name) {
   return new GenericType(this.group, name);
 };
 
-TypeCreator.types[genericType.name] = GenericType;
+TypeCreator.types.set(genericType.name, genericType);

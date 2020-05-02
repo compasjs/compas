@@ -82,12 +82,19 @@ export class TypeBuilder {
 }
 
 /**
+ * @typedef {object} TypePlugin
+ * @property {string} name
+ * @property {Class} class
+ */
+
+/**
  * Create new instances of registered types
  * @class
  * @name TypeCreator
  */
 export class TypeCreator {
-  static types = {};
+  /** @type {Map<string, TypePlugin|Object<string, TypePlugin|Class>>} */
+  static types = new Map();
 
   constructor(group) {
     this.group = group || "app";

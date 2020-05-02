@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const numberType = {
-  name: "number",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class NumberType extends TypeBuilder {
   constructor(group, name) {
     super(numberType.name, group, name);
@@ -82,6 +66,23 @@ class NumberType extends TypeBuilder {
   }
 }
 
+const numberType = {
+  name: "number",
+  class: NumberType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#number
  * @param {string} [name]
@@ -91,4 +92,4 @@ TypeCreator.prototype.number = function (name) {
   return new NumberType(this.group, name);
 };
 
-TypeCreator.types[numberType.name] = NumberType;
+TypeCreator.types.set(numberType.name, numberType);

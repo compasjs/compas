@@ -5,22 +5,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const referenceType = {
-  name: "reference",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class ReferenceType extends TypeBuilder {
   constructor() {
     super(referenceType.name, undefined, undefined);
@@ -78,6 +62,23 @@ class ReferenceType extends TypeBuilder {
   }
 }
 
+const referenceType = {
+  name: "reference",
+  class: ReferenceType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @param {string|TypeBuilder} [groupOrOther]
  * @param {string} [name]
@@ -91,4 +92,4 @@ TypeCreator.prototype.reference = function (groupOrOther, name) {
   }
 };
 
-TypeCreator.types[referenceType.name] = ReferenceType;
+TypeCreator.types.set(referenceType.name, referenceType);

@@ -4,24 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const anyOfType = {
-  name: "anyOf",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", {
-      encoding: "utf-8",
-    });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class AnyOfType extends TypeBuilder {
   constructor(group, name, items) {
     super(anyOfType.name, group, name);
@@ -59,6 +41,25 @@ class AnyOfType extends TypeBuilder {
   }
 }
 
+const anyOfType = {
+  name: "anyOf",
+  class: AnyOfType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", {
+      encoding: "utf-8",
+    });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#anyOf
  * @param {string|TypeBuilder[]} [name]
@@ -73,4 +74,4 @@ TypeCreator.prototype.anyOf = function (name, ...values) {
   }
 };
 
-TypeCreator.types[anyOfType.name] = AnyOfType;
+TypeCreator.types.set(anyOfType.name, anyOfType);

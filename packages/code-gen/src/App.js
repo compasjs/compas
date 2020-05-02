@@ -2,6 +2,7 @@ import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
 import { existsSync, mkdirSync, promises } from "fs";
 import { join } from "path";
+import { TypeCreator } from "./types/index.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 const { writeFile } = promises;
@@ -9,7 +10,6 @@ const { writeFile } = promises;
 /**
  * @typedef {object} AppOpts
  * @property {GeneratorPlugin[]} generators
- * @property {object[]} types
  * @property {boolean} [verbose]
  * @property {boolean} [useTypescript]
  * @property {string} outputDir
@@ -38,18 +38,12 @@ export class App {
   /**
    * @param {AppOpts} options
    */
-  constructor({ verbose, generators, types, ...rest }) {
+  constructor({ verbose, generators, ...rest }) {
     /**
      * @public
      * @type {Map<string, GeneratorPlugin>}
      */
     this.generators = new Map();
-
-    /**
-     * @public
-     * @type {object[]}
-     */
-    this.types = types || [];
 
     /**
      * @public
@@ -110,20 +104,10 @@ export class App {
       this.generators.set(g.name, g);
     }
 
-    await this.callGeneratorMethod("registerTypes");
-
-    const enabledTypes = [];
-    for (const type of this.types) {
-      if (isNil(type.name)) {
-        throw new Error("Type is missing name");
-      }
-      enabledTypes.push(type.name);
-    }
-
     if (this.verbose) {
       this.logger.info("registered plugins: ", {
         generators: [...this.generators.keys()],
-        types: enabledTypes,
+        types: [...TypeCreator.types.keys()],
       });
     }
 

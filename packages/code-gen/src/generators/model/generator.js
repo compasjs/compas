@@ -6,6 +6,7 @@ import {
   isNil,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { TypeCreator } from "../../types/index.js";
 import { normalizeModelsRecursively } from "./normalizeModelsRecursively.js";
 
 const store = new Set();
@@ -102,7 +103,7 @@ function collectTypes(app) {
   app.options.models = app.options.models || {};
   app.options.models.enabledTypes = [];
 
-  for (const type of app.types) {
+  for (const type of TypeCreator.types.values()) {
     if (key in type) {
       app.options.models.enabledTypes.push(type.name);
 

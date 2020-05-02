@@ -7,17 +7,9 @@ import {
 import { join } from "path";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { buildTrie } from "./trie.js";
-import { RouteBuilder, routeType } from "./type.js";
+import { RouteBuilder } from "./type.js";
 
 const store = new Set();
-
-/**
- * @param {App} app
- * @return {Promise<void>}
- */
-export async function registerTypes(app) {
-  app.types.push(routeType);
-}
 
 /**
  * @param {App} app

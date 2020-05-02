@@ -4,22 +4,6 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-export const booleanType = {
-  name: "boolean",
-  validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
-  },
-  mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
-  },
-  jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-  tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
-  },
-};
-
 class BooleanType extends TypeBuilder {
   constructor(group, name) {
     super(booleanType.name, group, name);
@@ -50,6 +34,23 @@ class BooleanType extends TypeBuilder {
   }
 }
 
+const booleanType = {
+  name: "boolean",
+  class: BooleanType,
+  validator: () => {
+    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+  },
+  mock: () => {
+    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+  },
+  jsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+  tsType: () => {
+    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+  },
+};
+
 /**
  * @name TypeCreator#bool
  * @param {string} [name]
@@ -59,4 +60,4 @@ TypeCreator.prototype.bool = function (name) {
   return new BooleanType(this.group, name);
 };
 
-TypeCreator.types[booleanType.name] = BooleanType;
+TypeCreator.types.set(booleanType.name, booleanType);

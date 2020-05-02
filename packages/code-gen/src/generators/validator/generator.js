@@ -5,6 +5,7 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { TypeCreator } from "../../types/index.js";
 import { extractValidatorsToGenerate } from "./transform.js";
 
 const store = new Set();
@@ -83,7 +84,7 @@ export async function generate(app, data) {
 function collectTypes(app) {
   let fnString = `{{ let result = ''; }}`;
 
-  for (const type of app.types) {
+  for (const type of TypeCreator.types.values()) {
     if ("validator" in type) {
       const templateName = `${type.name}Validator`;
       compileTemplate(app.templateContext, templateName, type.validator());
