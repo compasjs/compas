@@ -1,6 +1,10 @@
 # @lbu/stdlib
 
+![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
+
 Collection of Lightbase backend utilities
+
+---
 
 ## Why
 
