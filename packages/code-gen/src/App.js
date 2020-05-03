@@ -20,6 +20,9 @@ const { writeFile, mkdir } = promises;
  * @property {function(App, GenerateOptions): void|Promise<void>} [preGenerate]
  * @property {function(App, GenerateOptions, object):
  *   GeneratedFile[]|GeneratedFile|Promise<GeneratedFile[]|GeneratedFile>} [generate]
+ * @property {function(App, GenerateStubsOptions): void|Promise<void>} [preGenerateStubs]
+ * @property {function(App, GenerateStubsOptions, object):
+ *   GeneratedFile[]|GeneratedFile|Promise<GeneratedFile[]|GeneratedFile>} [generateStubs]
  */
 
 /**
@@ -27,6 +30,16 @@ const { writeFile, mkdir } = promises;
  * @property {boolean} [useTypescript]
  * @property {string} [fileHeader]
  * @property {string} outputDirectory
+ */
+
+/**
+ * @typedef {object} GenerateStubsOptions
+ * @property {boolean} [useTypescript]
+ * @property {string} [fileHeader]
+ * @property {string} outputDirectory
+ * @property {string} group
+ * @property {string[]} generators
+ * @property
  */
 
 /**
@@ -75,6 +88,7 @@ export class App {
      * @type {TemplateContext}
      */
     this.templateContext = newTemplateContext();
+    this.templateContext.strict = false;
 
     /** @type {Set<TypeBuilder>} */
     this.unprocessedData = new Set();
@@ -144,7 +158,6 @@ export class App {
 
   /**
    * Run the generate methods on the plugins
-   * Uses dump internally
    * @param {GenerateOptions} options
    */
   async generate(options) {
@@ -169,9 +182,59 @@ export class App {
     printProcessMemoryUsage(this.logger);
   }
 
-  async generateStubs() {
-    await this.callGeneratorMethod("preGenerateStubs");
+  /**
+   * Generate stubs can help assist a package author to comply to the needed spec
+   * @param {GenerateStubsOptions} options
+   * @return {Promise<void>}
+   */
+  async generateStubs(options) {
+    if (isNil(options?.outputDirectory)) {
+      throw new Error("Need options.outputDirectory to write files to.");
+    }
+    if (isNil(options?.group) || isNil(this.data.structure[options.group])) {
+      throw new Error("Need options.group be an existing group");
+    }
+
+    options.fileHeader = this.fileHeader + (options.fileHeader ?? "");
+    options.useTypescript = !!options.useTypescript;
+
+    for (const gen of options.generators) {
+      await this.callSpecificGeneratorWithMethod(
+        gen,
+        "preGenerateStubs",
+        options,
+      );
+    }
+
     this.processData();
+
+    const stubData = {
+      structure: {
+        [options.group]: this.data.structure[options.group],
+      },
+    };
+
+    for (const value of Object.values(stubData.structure[options.group])) {
+      this.fillReferencedTypes(stubData, value);
+    }
+
+    const input = JSON.parse(JSON.stringify(stubData));
+
+    const result = [];
+    for (const gen of options.generators) {
+      result.push(
+        await this.callSpecificGeneratorWithMethod(
+          gen,
+          "generateStubs",
+          options,
+          input,
+        ),
+      );
+    }
+
+    await this.normalizeAndWriteFiles(options, result);
+
+    printProcessMemoryUsage(this.logger);
   }
 
   /**
@@ -184,16 +247,40 @@ export class App {
   async callGeneratorMethod(method, ...args) {
     const result = [];
 
-    for (const generator of this.generators.values()) {
-      if (method in generator) {
-        if (this.verbose) {
-          this.logger.info(`generator: calling ${method} on ${generator.name}`);
-        }
-        result.push(await generator[method](this, ...args));
+    for (const key of this.generators.keys()) {
+      const tmp = await this.callSpecificGeneratorWithMethod(
+        key,
+        method,
+        ...args,
+      );
+      if (tmp) {
+        result.push(tmp);
       }
     }
 
     return result;
+  }
+
+  /**
+   * @private
+   * @param generatorName
+   * @param method
+   * @param args
+   * @return {Promise<undefined|*>}
+   */
+  async callSpecificGeneratorWithMethod(generatorName, method, ...args) {
+    const gen = this.generators.get(generatorName);
+    if (!gen) {
+      throw new Error(`Could not find generator with name: ${generatorName}`);
+    }
+    if (method in gen) {
+      if (this.verbose) {
+        this.logger.info(`generator: calling ${method} on ${gen.name}`);
+      }
+      return gen[method](this, ...args);
+    }
+
+    return undefined;
   }
 
   /**
@@ -205,9 +292,9 @@ export class App {
     const flattenedFiles = [];
 
     for (const file of files) {
-      if (!Array.isArray(file)) {
+      if (!Array.isArray(file) && isPlainObject(file)) {
         flattenedFiles.push(file);
-      } else {
+      } else if (Array.isArray(file)) {
         flattenedFiles.push(...file);
       }
     }
@@ -313,6 +400,50 @@ export class App {
             },
           };
         }
+      }
+    }
+  }
+
+  /**
+   * @private
+   * Find nested references and add to stubData in the correct group
+   * @param stubData
+   * @param value
+   */
+  fillReferencedTypes(stubData, value) {
+    if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
+      // Skip primitives & null / undefined
+      return;
+    }
+
+    if (
+      isPlainObject(value) &&
+      value.type &&
+      value.type === "reference" &&
+      isPlainObject(value.reference)
+    ) {
+      const { group, name } = value.reference;
+      if (
+        !isNil(this.data.structure[group]?.[name]) &&
+        isNil(stubData.structure[group]?.[name])
+      ) {
+        if (isNil(stubData.structure[group])) {
+          stubData.structure[group] = {};
+        }
+
+        const refValue = this.data.structure[group][name];
+        stubData.structure[group][name] = refValue;
+        this.fillReferencedTypes(stubData, refValue);
+      }
+    }
+
+    if (isPlainObject(value)) {
+      for (const key of Object.keys(value)) {
+        this.fillReferencedTypes(stubData, value[key]);
+      }
+    } else if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; ++i) {
+        this.fillReferencedTypes(stubData, value[i]);
       }
     }
   }

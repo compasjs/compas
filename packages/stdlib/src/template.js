@@ -12,6 +12,7 @@ const { readFile } = promises;
  * @typedef {object} TemplateContext
  * @property {object<string, function>} globals
  * @property {Map<string, function>} templates
+ * @property {boolean} strict
  */
 
 /**
@@ -23,6 +24,7 @@ export function newTemplateContext() {
       isNil,
     },
     templates: new Map(),
+    strict: true,
   };
 }
 
@@ -52,7 +54,7 @@ export function compileTemplate(tc, name, str, opts = {}) {
     throw new TypeError("Both name and string are required");
   }
 
-  if (tc.templates.has(name)) {
+  if (tc.strict && tc.templates.has(name)) {
     throw new TypeError(`Template with name ${name} already registered`);
   }
 

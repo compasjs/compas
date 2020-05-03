@@ -1,0 +1,55 @@
+import {
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+{{ if (item.response) { }} {{= item.response.reference.uniqueName }}, {{ } }}
+{{ if (item.params) { }} {{= item.params.reference.uniqueName }}_Optional, {{ } }}
+{{ if (item.query) { }} {{= item.query.reference.uniqueName }}_Optional, {{ } }}
+{{ if (item.body) { }} {{= item.body.reference.uniqueName }}_Optional, {{ } }}
+
+  {{ } }}
+{{ } }}
+} from "./types";
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    {{ const hasParam = item.params !== undefined || !!item.path.split("/").find(it => it.startsWith(":")); }}
+
+interface {{= item.uniqueName }}Call {
+    (
+    {{ if (hasParam) { }}params: {{= item.params ? item.params.reference.uniqueName + "_Optional" : "any" }},{{ } }}
+    {{ if (item.query) { }}query: {{= item.query ? item.query.reference.uniqueName + "_Optional" : "any" }},{{ } }}
+    {{ if (item.body) { }}body: {{= item.body ? item.body.reference.uniqueName + "_Optional" : "any" }},{{ } }}
+    ): Promise<{{= item.response ? item.response.reference.uniqueName : "unknown" }}>
+};
+
+  {{ } }}
+{{ } }}
+
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  export type {{= groupName }}Api = {
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    {{= item.name }}: {{= item.uniqueName }}Call;
+
+  {{ } }}
+
+  };
+
+{{ } }}

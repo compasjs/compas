@@ -48,6 +48,31 @@ export async function generate(app, options, data) {
 }
 
 /**
+ * @param {App} app
+ * @param {GenerateStubsOptions} options
+ * @return {Promise<void>}
+ */
+export async function preGenerateStubs(app, options) {
+  await compileTemplates(app.templateContext, options);
+}
+
+/**
+ * @param {App} app
+ * @param {GenerateStubsOptions} options
+ * @param {object} data
+ * @return {Promise<GeneratedFile>}
+ */
+export async function generateStubs(app, options, data) {
+  return {
+    path: "./mocks.js",
+    source: executeTemplate(app.templateContext, "mocksFile", {
+      ...data,
+      options,
+    }),
+  };
+}
+
+/**
  * @param {TemplateContext} tc
  * @param {GenerateOptions} options
  * @return {Promise<void>}

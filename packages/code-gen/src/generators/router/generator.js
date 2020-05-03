@@ -54,6 +54,22 @@ export async function generate(app, options, data) {
   };
 }
 
+/**
+ * @param {App} app
+ * @param {GenerateStubsOptions} options
+ * @param {object} data
+ * @return {Promise<GeneratedFile>}
+ */
+export async function generateStubs(app, options, data) {
+  return {
+    path: "./router.js",
+    source: executeTemplate(app.templateContext, "routerStubsFile", {
+      ...data,
+      options,
+    }),
+  };
+}
+
 function buildRouteTags(data) {
   const set = new Set();
 

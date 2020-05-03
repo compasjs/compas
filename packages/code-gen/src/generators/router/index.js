@@ -1,4 +1,4 @@
-import { generate, init, preGenerate } from "./generator.js";
+import { generate, generateStubs, init, preGenerate } from "./generator.js";
 import "./type.js";
 
 /**
@@ -9,4 +9,5 @@ export const routerGenerator = {
   init,
   preGenerate,
   generate,
+  generateStubs,
 };

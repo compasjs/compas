@@ -4,7 +4,7 @@ import { mainFn } from "@lbu/stdlib";
 
 mainFn(import.meta, log, main);
 
-export const nodemonArgs = "--ignore generated -e tmpl,js,json";
+export const nodemonArgs = "--ignore generated --ignore stubs -e tmpl,js,json";
 
 async function main() {
   const app = new App({
@@ -91,6 +91,20 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./generated",
+    useTypescript: false,
+  });
+
+  await app.generateStubs({
+    outputDirectory: "./stubs/app_stubs_api",
+    group: "app",
+    generators: ["type", "mock", "router"],
+    useTypescript: false,
+  });
+
+  await app.generateStubs({
+    outputDirectory: "./stubs/todo_stubs_api",
+    group: "todo",
+    generators: ["type", "mock", "router", "apiClient"],
     useTypescript: false,
   });
 }
