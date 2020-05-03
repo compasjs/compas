@@ -1,11 +1,9 @@
-{{ if (opts.fileHeader !== undefined) { }}
-{{= opts.fileHeader }}
-{{ } }}
+{{= options.fileHeader }}
 
-{{ if (opts.enableMocks) { }}
+{{ if (options.enableMocks) { }}
 import {
-{{ for (const g of groups) { }}
-{{= lowerCaseFirst(g) }}Mocks,
+{{ for (const group of Object.keys(structure)) { }}
+{{= group }}Mocks,
 {{ } }}
 } from "./mocks.js";
 {{ } }}
@@ -30,11 +28,21 @@ function setXRequestId(headers) {
   _internalClient.defaults.headers.common["X-Request-Id"] = headers["x-request-id"];
 }
 
-{{ for (const group of groups) { }}
-  export const {{= group }}Api = {
-    {{ for (const route of routes) { }}
-      {{ if (models[route].group !== group) { continue; } }}
-      {{= apiClientFn({ model: models[route], opts }) }}
+{{ for (const groupName of Object.keys(structure)) { }}
+
+  export const {{= groupName }}Api = {
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
     {{ } }}
+
+    {{= apiClientFn({ options, model: item }) }}
+
+  {{ } }}
+
   };
+
 {{ } }}

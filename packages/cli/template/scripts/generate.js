@@ -1,4 +1,4 @@
-import { App, coreTypes, generators, TypeCreator } from "@lbu/code-gen";
+import { App, generators, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
@@ -8,18 +8,15 @@ export const nodemonArgs = "--ignore src/generated";
 
 async function main() {
   const app = new App({
-    types: coreTypes,
     generators: [
+      generators.type,
       generators.validator,
-      generators.apiClient,
       generators.mock,
-      generators.model,
       generators.router,
+      generators.apiClient,
     ],
     verbose: true,
-    outputDir: "./src/generated",
   });
-
   await app.init();
 
   const M = new TypeCreator();
@@ -28,10 +25,13 @@ async function main() {
     userName: M.string().mock("__.first"),
   });
 
-  app.model(myObject);
+  app.add(myObject);
 
   const router = M.router("/app");
-  app.route(router.get().response(myObject));
+  app.add(router.get().response(myObject));
 
-  await app.generate();
+  await app.generate({
+    outputDirectory: "./src/generated",
+    useTypescript: false,
+  });
 }

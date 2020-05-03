@@ -1,6 +1,4 @@
-{{ if (opts.fileHeader !== undefined) { }}
-{{= opts.fileHeader }}
-{{ } }}
+{{= options.fileHeader }}
 
 import chance from "chance";
 
@@ -15,12 +13,21 @@ export function setMocker(mocker) {
   _mocker = mocker;
 }
 
-{{ for (const group of groups) { }}
-  export const {{= lowerCaseFirst(group) }}Mocks = {
-    {{ for (const m of Object.keys(models)) { }}
-      {{ if (models[m].group === group && opts.mocks.enabledTypes.indexOf(models[m].type) !== -1) { }}
-        {{= mocksNamedFn({ model: models[m] }) }}
-      {{ } }}
+{{ for (const groupName of Object.keys(structure)) { }}
+
+  export const {{= groupName }}Mocks = {
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (options.mock_enabledTypes.indexOf(item.type) === -1) { }}
+    {{ continue; }}
     {{ } }}
+
+    {{= mocksNamedFn({ model: item }) }}
+
+  {{ } }}
+
   };
+
 {{ } }}

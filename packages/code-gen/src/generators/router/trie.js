@@ -4,16 +4,18 @@ const RoutePrio = {
   WILDCARD: 2,
 };
 
-export const buildTrie = (models, routes) => {
+export const buildTrie = (data) => {
   const routeTrieInput = [];
 
-  for (const r of routes) {
-    const m = models[r];
-
-    routeTrieInput.push({
-      uniqueName: m.uniqueName,
-      fullPath: `${m.method}/${m.path}`,
-    });
+  for (const group of Object.values(data.structure)) {
+    for (const item of Object.values(group)) {
+      if (item.type === "route") {
+        routeTrieInput.push({
+          uniqueName: item.uniqueName,
+          fullPath: `${item.method}/${item.path}`,
+        });
+      }
+    }
   }
 
   return buildRouteTrie(routeTrieInput);

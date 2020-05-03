@@ -1,4 +1,5 @@
-import { dumpStore, generate, init, preProcessStore } from "./generator.js";
+import { generate, init, preGenerate } from "./generator.js";
+import "./type.js";
 
 /**
  * @type {GeneratorPlugin}
@@ -6,7 +7,6 @@ import { dumpStore, generate, init, preProcessStore } from "./generator.js";
 export const routerGenerator = {
   name: "router",
   init,
-  preProcessStore,
-  dumpStore,
+  preGenerate,
   generate,
 };

@@ -42,7 +42,7 @@ Create a new script called `generate.js`.
 Let's start with the imports:
 
 ```ecmascript 6
-import { App, coreTypes, generators, loadFromRemote } from "@lbu/code-gen";
+import { App, generators, loadFromRemote } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 ```
@@ -50,8 +50,6 @@ import { mainFn } from "@lbu/stdlib";
 From `code-gen` we import the following:
 
 - `App`: The main abstraction that manages generators and types
-- `coreTypes`: Every type, be it string, number or array, has its own type
-  plugin. For now, we only need the types provided in `coreTypes`.
 - `generators`: A collection of generator plugins provided in code-gen.
 - `loadFromRemote`: Allows fetching the LBU schema from an LBU based API
   instance.
@@ -65,10 +63,7 @@ Let's tie all imported functions together in to a single main function:
 ```ecmascript 6
 async function main() {
   const app = new App({
-    generators: [generators.apiClient, generators.model],
-    types: [...coreTypes],
-    outputDir: "./src/generated",
-    useTypescript: false,
+    generators: [generators.apiClient, generators.type],
     verbose: true,
   });
 
@@ -76,30 +71,33 @@ async function main() {
 
   app.extend(await loadFromRemote("https://lbu-e2e.herokuapp.com"));
 
-  await app.generate();
+  await app.generate({
+    outputDirectory: "./src/generated",
+   useTypescript: false,
+  });
 }
 
 mainFn(import.meta, log, main);
 ```
 
 First we instantiate an App. To do that, we provide the generators we want to
-use, apiClient and model. The apiClient plugin generates an api client based on
-Axios. The model generator will generate JsDoc or Typescript types for all
-defined types, i.e input & outputs to our api. To use the Typescript types
-variant, change `useTypescript` to `true`.
+use, apiClient and type. The apiClient plugin generates an api client based on
+Axios. The type generator will generate JsDoc or Typescript types for all
+defined types, i.e input & outputs to our api.
 
-Next we specify that we want to use all our core types. These types provide the
-generator plugins with the required knowledge to generate for example the
-correct JsDoc and Typescript types.
+Then we need to init our app with `await app.init()`. And follow up by calling
+`app.extend(...)`. `app.extend` can be used for loading the remote structure of
+an api, but also to extend from an installed package.
 
-The last notable argument is the `outputDir`. The result of our generators will
-be put in this directory.
+The final part in `main` tells the app that we want to generate. This will spit
+out the files in the provided output directory. To generate Typescript types,
+you can set `useTypescript` to `true`.
 
 The last part of this file instructs that the `main`-function should only run
 when this file is the entrypoint of the program.
 
-> This abstraction is useful for when you have files that can operate alone, but
-> also can be imported. With CommonJs it was as easy as
+> This abstraction (`mainFn`) is useful for when you have files that can operate
+> alone, but also can be imported. With CommonJs it was as easy as
 > `if (module === require.main) {` but with ES modules it becomes a bit harder
 > to do.
 
@@ -108,7 +106,7 @@ It's time to do the generation! Run this newly created file:
 `./src/generated`. Note that it's not pretty, so run whatever formatter you want
 on the files.
 
-- types.{js,ts}: This file contains all 'Models'. The JsDoc in the different
+- types.{js,ts}: This file contains all types. The JsDoc in the different
   JavaScript files can reference this for better auto complete and specification
   of arguments
 - apiClient.js: The fully generated api client.
@@ -130,7 +128,7 @@ createApiClient(
 ```
 
 > Note: Your import may be different depending on where you create this file and
-> the outputDir in generate.js
+> the outputDirectory in generate.js
 
 Now it should be pretty straight forward to use the api.
 
@@ -164,10 +162,7 @@ look something like:
 
 ```ecmascript 6
 const app = new App({
-  generators: [generators.apiClient, generators.model, generators.mock],
-  types: [...coreTypes],
-  outputDir: "./src/generated",
-  useTypescript: false,
+  generators: [generators.apiClient, generators.type, generators.mock],
   verbose: true,
 });
 ```
@@ -198,8 +193,6 @@ Simply init a new project with `npx @lbu/cli init [name]`. If name is provided,
 the init will create a new subdirectory, else it will use the current directory
 for the name.
 
-> Note: On 0.0.10 template is broken :S
-
 There are a few commands available out of the box:
 
 - `yarn lbu generate`: Run the code generators, this has all core provided
@@ -223,14 +216,12 @@ the 'same' type, allows the validator to return the default value instead of
 **Validator:**
 
 There is also a validator plugin, this plugin generates validator functions for
-the provided models. Currently uses only specific registered models. But if
-there is interest, it should be pretty straight forward, to generate validators
-for all models.
+the provided models. However, these validators are not end-user friendly
 
-**Models:**
+**Types:**
 
-All communication in Lbu is driven by Models, these models are turned in to
-either JsDoc or Typescript types and referenced in whatever way you want.
+All communication in Lbu is driven by Types, these types are turned in to either
+JsDoc or Typescript types and referenced in whatever way you want.
 
 Say we want to build a Websocket plugin:
 

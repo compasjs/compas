@@ -8,14 +8,6 @@ import { compileDynamicTemplates } from "../../utils.js";
 
 /**
  * @param {App} app
- * @return {Promise<void>}
- */
-export async function init(app) {
-  app.templateContext.globals.quote = (x) => `"${x}"`;
-}
-
-/**
- * @param {App} app
  * @param {GenerateOptions} options
  * @return {Promise<void>}
  */
@@ -31,8 +23,8 @@ export async function preGenerate(app, options) {
  */
 export async function generate(app, options, data) {
   return {
-    path: "./validators.js",
-    source: executeTemplate(app.templateContext, "validatorsFile", {
+    path: options.useTypescript ? "types.ts" : "types.js",
+    source: executeTemplate(app.templateContext, "typesFile", {
       ...data,
       options,
     }),
@@ -45,14 +37,30 @@ export async function generate(app, options, data) {
  * @return {Promise<void>}
  */
 async function compileTemplates(tc, options) {
-  compileDynamicTemplates(tc, options, "validator", {
-    fnStringStart: `{{ let result = ''; }}`,
-    fnStringAdd: (type, templateName) =>
-      `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,
-    fnStringEnd: `
-   {{= result.trim() }} 
+  const key = options.useTypescript ? "tsType" : "jsType";
+  compileDynamicTemplates(
+    tc,
+    options,
+    "type",
+    {
+      fnStringStart: `{{ let result = ''; }}`,
+      fnStringAdd: (type, templateName) =>
+        `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,
+      fnStringEnd: `
+   {{ if (it.ignoreDefaults) { }}
+     {{ if (it.model && it.model.isOptional) { }}
+       {{ result += "|undefined"; }}
+     {{ } }}
+   {{ } else { }}
+     {{ if (it.model.isOptional && it.model.defaultValue === undefined) { }}
+       {{ result += "|undefined"; }}       
+     {{ } }}
+   {{ } }}
+   {{= result.trim().replace(/\\s+/g, " ") }} 
   `,
-  });
+    },
+    key,
+  );
 
   await compileTemplateDirectory(
     tc,

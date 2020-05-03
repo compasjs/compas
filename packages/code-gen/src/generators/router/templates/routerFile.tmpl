@@ -1,13 +1,9 @@
-/* eslint-disable no-unused-vars */
-
-{{ if (opts.fileHeader !== undefined) { }}
-{{= opts.fileHeader }}
-{{ } }}
+{{= options.fileHeader }}
 
 import { compose, AppError } from "@lbu/server";
 import {
-{{ for (const group of groups) { }}
-{{= lowerCaseFirst(group) }}Validators,
+{{ for (const group of Object.keys(structure)) { }}
+{{= group }}Validators,
 {{ } }}
 } from "./validators.js";
 
@@ -24,88 +20,111 @@ const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 
 export const tagMiddleware = {
   {{ for (const t of routeTags) { }}
-    {{= lowerCaseFirst(t) }}: undefined,
+    {{= t }}: undefined,
   {{ } }}
 };
 
 export const groupMiddleware = {
-  {{ for (const g of groups) { }}
-    {{= lowerCaseFirst(g) }}: undefined,
+  {{ for (const group of Object.keys(structure)) { }}
+    {{= group }}: undefined,
   {{ } }}
 };
 
 const _composed = {
-  {{ for (const r of routes) { }}
-    {{= r }}: undefined,
+  {{ for (const groupName of Object.keys(structure)) { }}
+    {{ for (const itemName of Object.keys(structure[groupName])) { }}
+      {{ const item = structure[groupName][itemName]; }}
+
+      {{ if (item.type !== "route") { }}
+      {{ continue; }}
+      {{ } }}
+
+      {{= item.uniqueName }}: undefined,
+
+    {{ } }}
   {{ } }}
 };
 
 const handlers = {
-  {{ for (const r of routes) { }}
-    {{ const m = models[r]; }}
-    {{= r }}: {{ if (m.body || m.query) { }} async {{ } }} function (params, ctx, next) {
+  {{ for (const groupName of Object.keys(structure)) { }}
+    {{ for (const itemName of Object.keys(structure[groupName])) { }}
+      {{ const item = structure[groupName][itemName]; }}
 
-      ctx.request.params = params;
-
-      {{ if (m.params && m.params.reference) { }}
-      ctx.validatedParams = {{= lowerCaseFirst(m.params.reference.group) }}Validators.{{= lowerCaseFirst(m.params.reference.name) }}(params);
+      {{ if (item.type !== "route") { }}
+      {{ continue; }}
       {{ } }}
 
-      {{ if (m.body || m.query) { }}
-      await parseBody(ctx);
-      {{ } }}
+      {{= item.uniqueName }}: {{ if (item.body || item.query) { }} async {{ } }} function (params, ctx, next) {
 
-      {{ if (m.query) { }}
-      ctx.validatedQuery = {{= lowerCaseFirst(m.query.reference.group) }}Validators.{{= lowerCaseFirst(m.query.reference.name) }}(ctx.request.query);
-      {{ } }}
+        ctx.request.params = params;
 
-      {{ if (m.body) { }}
-      ctx.validatedBody = {{= lowerCaseFirst(m.body.reference.group) }}Validators.{{= lowerCaseFirst(m.body.reference.name) }}(ctx.request.body);
-      {{ } }}
+        {{ if (item.params && item.params.reference) { }}
+        ctx.validatedParams = {{= item.params.reference.group }}Validators.{{= item.params.reference.name }}(params);
+        {{ } }}
 
-      if (_composed.{{= r }} === undefined) {
-        const currentHandler = {{= lowerCaseFirst(m.group) }}Handlers.{{= m.name }};
-        _composed.{{= r }} = filterCompose(
-            {{ for (const t of m.tags) { }}
-            tagMiddleware.{{= lowerCaseFirst(t) }},
-            {{ } }}
-            groupMiddleware.{{= lowerCaseFirst(m.group) }},
-            ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
-        );
-      }
+        {{ if (item.body || item.query) { }}
+        await parseBody(ctx);
+        {{ } }}
 
-      return _composed.{{= r }}(ctx, next);
-    },
+        {{ if (item.query) { }}
+        ctx.validatedQuery = {{= item.query.reference.group }}Validators.{{= item.query.reference.name }}(ctx.request.query);
+        {{ } }}
+
+        {{ if (item.body) { }}
+        ctx.validatedBody = {{= item.body.reference.group }}Validators.{{= item.body.reference.name }}(ctx.request.body);
+        {{ } }}
+
+        if (_composed.{{= item.uniqueName }} === undefined) {
+          const currentHandler = {{= item.group }}Handlers.{{= item.name }};
+          _composed.{{= item.uniqueName }} = filterCompose(
+              {{ for (const t of item.tags) { }}
+              tagMiddleware.{{= t }},
+              {{ } }}
+              groupMiddleware.{{= item.group }},
+              ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
+          );
+        }
+
+        return _composed.{{= item.uniqueName }}(ctx, next);
+      },
+
+    {{ } }}
   {{ } }}
 };
 
-{{ for (const g of groups) { }}
-  export const {{= lowerCaseFirst(g) }}Handlers = {
+{{ for (const groupName of Object.keys(structure)) { }}
 
-  {{ for (const r of routes) { }}
-    {{ if (models[r].group !== g) { continue; } }}
-    {{ const m = models[r]; }}
+  export const {{= groupName }}Handlers = {
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
 
     /**
-     * {{= m.docString.replace(/\n/g, "\\n  * ") }}
-     * Tags: {{= m.tags.join(", ") }}
-     * {{= m.method }} {{= m.path }}
+     * {{= item.docString.replace(/\n/g, "\\n  * ") }}
+     * Tags: {{= item.tags.join(", ") }}
+     * {{= item.method }} {{= item.path }}
      * @param {object} ctx
-     {{ if (m.response) { }}* @param { {{= m.response.uniqueName || m.response.reference.uniqueName }} } ctx.body {{ } }}
-     {{ if (m.query) { }}* @param { {{= m.query.uniqueName || m.query.reference.uniqueName }} } ctx.validatedQuery {{ } }}
-     {{ if (m.params) { }}* @param { {{= m.params.uniqueName || m.params.reference.uniqueName }} } ctx.validatedParams {{ } }}
-     {{ if (m.body) { }}* @param { {{= m.body.uniqueName || m.body.reference.uniqueName }} } ctx.validatedBody {{ } }}
+     {{ if (item.response) { }}* @param { {{= item.response.reference.uniqueName }} } ctx.body {{ } }}
+     {{ if (item.query) { }}* @param { {{= item.query.reference.uniqueName }} } ctx.validatedQuery {{ } }}
+     {{ if (item.params) { }}* @param { {{= item.params.reference.uniqueName }} } ctx.validatedParams {{ } }}
+     {{ if (item.body) { }}* @param { {{= item.body.reference.uniqueName }} } ctx.validatedBody {{ } }}
      * @param {Function} next
      * @returns {void|Promise<void>}
      */
-     {{= lowerCaseFirst(m.name) }}: (ctx, next) => {
+     {{= item.name }}: (ctx, next) => {
        throw AppError.notImplemented();
      },
+
   {{ } }}
 
   };
 
 {{ } }}
+
 
 {{ const context = { functions: "", counter: 0 }; }}
 

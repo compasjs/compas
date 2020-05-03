@@ -2,14 +2,10 @@ import {
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
-  isNil,
 } from "@lbu/stdlib";
 import { join } from "path";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { buildTrie } from "./trie.js";
-import { RouteBuilder } from "./type.js";
-
-const store = new Set();
 
 /**
  * @param {App} app
@@ -20,95 +16,56 @@ export async function init(app) {
     throw new Error("router depends on validators");
   }
 
-  store.clear();
-
   await compileTemplateDirectory(
     app.templateContext,
 
     join(dirnameForModule(import.meta), "templates"),
     ".tmpl",
   );
-
-  /**
-   * @name App#route
-   * @function
-   * @param {...RouteBuilder} routes
-   * @return {App}
-   */
-  app.constructor.prototype.route = function (...routes) {
-    for (const r of routes) {
-      if (!(r instanceof RouteBuilder)) {
-        throw new Error("Store#route is only accepting RouteBuilder");
-      }
-
-      store.add(r);
-      app.model(r);
-    }
-
-    return this;
-  };
 }
 
 /**
  * @param {App} app
+ * @param {GenerateOptions} options
  * @return {Promise<void>}
  */
-export async function preProcessStore(app) {
-  app.route(...getInternalRoutes());
-
-  for (const route of store) {
-    if (!isNil(route.queryBuilder)) {
-      app.validator(route.queryBuilder);
-    }
-    if (!isNil(route.paramsBuilder)) {
-      app.validator(route.paramsBuilder);
-    }
-    if (!isNil(route.bodyBuilder)) {
-      app.validator(route.bodyBuilder);
-    }
-    if (!isNil(route.responseBuilder)) {
-      app.validator(route.responseBuilder);
-    }
-  }
+// eslint-disable-next-line no-unused-vars
+export async function preGenerate(app, options) {
+  app.add(...getInternalRoutes());
 }
 
 /**
  * @param {App} app
- * @param {object} result
- * @return {Promise<void>}
- */
-export async function dumpStore(app, result) {
-  const routes = new Set();
-  const tags = new Set();
-
-  for (const route of store) {
-    const r = route.build();
-
-    for (const t of r.tags) {
-      tags.add(t);
-    }
-
-    routes.add(r.uniqueName);
-  }
-
-  result.routeTags = [...tags];
-  result.routes = [...routes];
-}
-
-/**
- * @param {App} app
+ * @param {GenerateOptions} options
  * @param {object} data
  * @return {Promise<GeneratedFile>}
  */
-export async function generate(app, data) {
+export async function generate(app, options, data) {
   data.stringified = JSON.stringify(data);
-  data.routeTrie = buildTrie(data.models, data.routes);
+  data.routeTrie = buildTrie(data);
+  data.routeTags = buildRouteTags(data);
 
   return {
     path: "./router.js",
     source: executeTemplate(app.templateContext, "routerFile", {
       ...data,
-      opts: app.options,
+      options,
     }),
   };
+}
+
+function buildRouteTags(data) {
+  const set = new Set();
+
+  for (const group of Object.values(data.structure)) {
+    for (const item of Object.values(group)) {
+      if (item.type === "route") {
+        for (const t of item.tags) {
+          set.add(t);
+        }
+      }
+    }
+  }
+
+  return [...set];
 }

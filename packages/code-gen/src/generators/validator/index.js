@@ -1,4 +1,4 @@
-import { dumpStore, generate, init } from "./generator.js";
+import { generate, init, preGenerate } from "./generator.js";
 
 /**
  *
@@ -7,6 +7,6 @@ import { dumpStore, generate, init } from "./generator.js";
 export const validatorGenerator = {
   name: "validator",
   init,
-  dumpStore,
+  preGenerate,
   generate,
 };

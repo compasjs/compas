@@ -5,38 +5,31 @@ is already provided in the core types, it is a minimal type and perfect for a
 tutorial like document.
 
 Lets start with a simple scaffold. Create a file called something like
-`my-uuid-type.js`
+`my-uuid-type.js` with the following contents:
 
 ```ecmascript 6
+import { TypeBuilder, TypeCreator } from "@lbu/code-gen";
+
+class UuidType extends TypeBuilder {}
+
 export const uuidType = {
   name: "my-uuid",
+  class: UuidType
 }
+
+TypeCreator.types.set(uuidType.name, uuidType);
 ```
 
-And the magic to add it to our generate.js file
+By extending TypeBuilder we get some defaults for e.g. name, group, optional and
+docString properties. Most generators expect that your type extends TypeBuilder.
+We also add the type to `TypeCreator.types`. This is a map with all loaded
+types. When generators want to create a dynamic function based on available
+types, they can use this.
+
+Since the constructor on `TypeBuilder` expects a type identifier, we can always
+pass that in statically. Lets add a constructor:
 
 ```ecmascript 6
-import { uuidType } from "./my-uuid-type.js";
-
-const types = coreTypes.filter(it => it.name !== "uuid");
-types.push(uuidType)
-
-const app = new App({
- types,
- /* ... other props */
-})
-```
-
-To use our new type we have to provide a way to create it via the TypeCreator.
-The TypeCreator manages groups and the creation of all custom types. We also
-leverage the TypeBuilder class for default properties like `isOptional` and
-`docString`.
-
-Add the following to `my-uuid-type.js`:
-
-```ecmascript 6
-export const uuidType = {/* ... */};
-
 class UuidType extends TypeBuilder {
   constructor(group, name){
     // The TypeBuilder and core plugins handle names pretty okay.
@@ -55,7 +48,14 @@ class UuidType extends TypeBuilder {
   //  return this;
   // }
 }
+```
 
+To use our new type we have to provide a way to create it via the TypeCreator.
+The TypeCreator manages groups and the creation of all custom types.
+
+Add the following to `my-uuid-type.js`:
+
+```ecmascript 6
 /**
  * @name TypeCreator#uuid
  * @param {string} [name]
@@ -75,7 +75,7 @@ Now we have a way of creating our custom type like so:
 // generate.js
 // make sure that my-uuid-type is imported
 const T = new TypeCreator();
-app.model(T.uuid());
+app.add(T.uuid());
 ```
 
 At the moment this does exactly nothing to the generators. At least all core
@@ -86,8 +86,9 @@ Let's start by adding support for type generation. This is a simple one, because
 uuid is in both jsdoc and Typescript represented as a plain string.
 
 ```ecmascript 6
-export const uuidType = {
+const uuidType = {
   name: "my-uuid",
+  class: UuidType,
   jsType: () => `string`,
   tsType: () => `string`,
 };
@@ -127,7 +128,7 @@ return stringValidator{{= num }}(value, propertyPath);
 `;
 ```
 
-The next step is adding support for mocks. This ensure that when the api client
+The next step is adding support for mocks. This ensures that when the api client
 returns a mock, we have something nice to look at. The mock generator contains
 an instance of [Chance](https://chancejs.com/) at `_mocker` so we can utilize
 that.
@@ -136,23 +137,4 @@ that.
 uuidType.mock = () => `_mocker.guid({version: 4})`
 ```
 
-That's it! We have created a fully functional uuid type. To be good type plugin
-creators we do the final step of exposing our UuidType on TypeCreator. This
-ensures that other plugins can extend our type with other generators without us
-have to provide an implementation.
-
-```ecmascript 6
-// my-uuid-types.js at the end of the file
-TypeCreator.types[uuidType.name] = UuidType;
-```
-
-Say someone wants to create a plugin that creates a plugin that facilitates
-testing, they can extend our type to provide correct and incorrect examples.
-They can do something like this:
-
-```ecmascript 6
-if (TypeCreator.types["my-uuid"]) {
- TypeCreator.types["my-uuid"].testGood = () => uuid();
- TypeCreator.types["my-uuid"].testBad = () => String(Math.random() * 1000);
-}
-```
+That's it! We have created a fully functional uuid type.

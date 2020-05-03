@@ -9,35 +9,38 @@ export const nodemonArgs = "--ignore generated -e tmpl,js,json";
 async function main() {
   const app = new App({
     generators: [
-      generators.model,
+      generators.type,
       generators.validator,
       generators.mock,
       generators.router,
       generators.apiClient,
     ],
     verbose: true,
-    outputDir: "./generated",
-    useTypescript: false,
   });
   await app.init();
 
   const M = new TypeCreator();
 
-  app.model(M.bool("Foo").optional().convert().default(true));
-  app.model(M.anyOf("Bar", M.bool(), M.bool().optional().default(true)));
-  app.model(
+  app.add(
+    M.bool("Foo").optional().convert().default(true),
+    M.anyOf("Bar", M.reference("app", "foo"), M.string()),
+  );
+
+  app.add(M.bool("Foo").optional().convert().default(true));
+  app.add(M.anyOf("Bar", M.bool(), M.bool().optional().default(true)));
+  app.add(
     M.object("Obj").keys({
       foo: M.array(M.number().optional()),
     }),
   );
 
-  app.model(M.string("Str"));
-  app.model(
+  app.add(M.string("Str"));
+  app.add(
     M.object("Objec", {
       str: M.reference("App", "Str"),
     }),
   );
-  app.validator(
+  app.add(
     M.object("User", {
       id: M.uuid(),
       name: M.string().min(1).max(15).mock("__.first"),
@@ -45,7 +48,7 @@ async function main() {
     }),
   );
 
-  app.validator(
+  app.add(
     M.object("Items", {
       userId: M.reference("App", "User"),
       name: M.string(),
@@ -58,16 +61,16 @@ async function main() {
     .values(M.anyOf([M.bool().convert(), M.number()]))
     .docs("Foo");
 
-  app.model(M.array("GenericArray").values(myGeneric));
+  app.add(M.array("GenericArray").values(myGeneric));
 
   const T = new TypeCreator("Todo");
 
-  app.validator(T.bool("Boolean"));
-  app.validator(T.array("MyArr").values(T.reference("App", "Items")));
+  app.add(T.bool("Boolean"));
+  app.add(T.array("MyArr").values(T.reference("App", "Items")));
 
   const G = T.router("/foo");
-  app.route(G.get().query(M.reference("App", "User")));
-  app.route(
+  app.add(G.get().query(M.reference("App", "User")));
+  app.add(
     G.post("/:id")
       .body(
         M.object({
@@ -86,5 +89,8 @@ async function main() {
       ),
   );
 
-  await app.generate();
+  await app.generate({
+    outputDirectory: "./generated",
+    useTypescript: false,
+  });
 }

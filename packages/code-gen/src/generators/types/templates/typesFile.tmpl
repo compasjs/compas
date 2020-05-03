@@ -1,0 +1,43 @@
+{{= options.fileHeader }}
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (options.type_enabledTypes.indexOf(item.type) === -1) { }}
+    {{ continue; }}
+    {{ } }}
+
+    {{ if (options.useTypescript) { }}
+
+      /**
+       * {{= item.uniqueName }}
+       * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
+       */
+       export type {{= item.uniqueName }} = {{= typeExec({ type: item.type, model: item, ignoreDefaults: false }).trim() }};
+
+      /**
+       * {{= item.uniqueName }}_Optional
+       * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
+       */
+       export type {{= item.uniqueName }}_Optional = {{= typeExec({ type: item.type, model: item, ignoreDefaults: true }).trim() }};
+
+    {{ } else { }}
+
+      /**
+       * @name {{= item.uniqueName }}
+       * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
+       * @typedef { {{= typeExec({ type: item.type, model: item, ignoreDefaults: false }).trim() }}}
+       */
+
+      /**
+       * @name {{= item.uniqueName }}_Optional
+       * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
+       * @typedef { {{= typeExec({ type: item.type, model: item, ignoreDefaults: true }).trim() }}}
+       */
+
+    {{ } }}
+  {{ } }}
+{{ } }}
+
+

@@ -1,5 +1,5 @@
-import { isNil, merge } from "@lbu/stdlib";
-import { upperCaseFirst } from "../utils.js";
+import { isNil, isPlainObject, merge } from "@lbu/stdlib";
+import { lowerCaseFirst } from "../utils.js";
 
 /**
  * Provide base properties for types
@@ -16,13 +16,10 @@ export class TypeBuilder {
       type,
       group,
       name,
-      uniqueName: undefined,
       docString: "",
       isOptional: false,
       defaultValue: undefined,
     };
-
-    this.setNameAndGroup();
   }
 
   /**
@@ -64,20 +61,14 @@ export class TypeBuilder {
    * @return {object}
    */
   build() {
-    this.setNameAndGroup();
-
-    return merge({}, this.data);
-  }
-
-  setNameAndGroup() {
     if (isNil(this.data.name)) {
       this.data.group = undefined;
+    } else {
+      this.data.name = lowerCaseFirst(this.data.name);
+      this.data.group = lowerCaseFirst(this.data.group);
     }
 
-    if (!isNil(this.data.group) && !isNil(this.data.name)) {
-      this.data.uniqueName =
-        upperCaseFirst(this.data.group) + upperCaseFirst(this.data.name);
-    }
+    return merge({}, this.data);
   }
 }
 
@@ -105,4 +96,37 @@ export class TypeCreator {
       );
     }
   }
+
+  /**
+   * Return a list of types that have the specified property
+   * @param {string} property
+   * @return {TypePlugin[]}
+   */
+  static getTypesWithProperty(property) {
+    const result = [];
+    for (const type of TypeCreator.types.values()) {
+      if (property in type) {
+        result.push(type);
+      }
+    }
+
+    return result;
+  }
+}
+
+/**
+ * Check if value may be output object from a TypeBuilder
+ * @param value
+ * @return {boolean}
+ */
+export function isNamedTypeBuilderLike(value) {
+  if (!isPlainObject(value)) {
+    return false;
+  }
+
+  return (
+    typeof value.type === "string" &&
+    typeof value.group === "string" &&
+    typeof value.name === "string"
+  );
 }

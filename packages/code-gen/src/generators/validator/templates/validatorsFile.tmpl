@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-vars */
-
-{{ if (opts.fileHeader !== undefined) { }}
-{{= opts.fileHeader }}
-{{ } }}
+{{= options.fileHeader }}
 
 export const validatorHooks = {};
 
@@ -37,14 +33,23 @@ export function validatorSetErrorFn(fn) {
 {{ const ctx = { counter: 0, functions: [] }; }}
 {{ ctx.addFunc = fn => { ctx.functions.push(fn); }; }}
 
-{{ for (const group of it.groups) { }}
-  export const {{= lowerCaseFirst(group) }}Validators = {
-    {{ for (const v of it.validatorsToGenerate) { }}
-      {{ if (models[v].group === group) { }}
-        {{= validatorsNamedFn({ models, ctx, model: models[v] }) }}
-      {{ } }}
+{{ for (const groupName of Object.keys(structure)) { }}
+
+  export const {{= groupName }}Validators = {
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (options.validator_enabledTypes.indexOf(item.type) === -1) { }}
+    {{ continue; }}
     {{ } }}
+
+    {{= validatorsNamedFn({ ctx, model: item }) }}
+
+  {{ } }}
+
   };
+
 {{ } }}
 
 {{= ctx.functions.join("\n") }}

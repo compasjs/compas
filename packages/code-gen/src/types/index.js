@@ -1,4 +1,8 @@
-export { TypeBuilder, TypeCreator } from "./TypeBuilder.js";
+export {
+  TypeBuilder,
+  TypeCreator,
+  isNamedTypeBuilderLike,
+} from "./TypeBuilder.js";
 
 import "./any/index.js";
 import "./anyOf/index.js";

@@ -1,5 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
+import { lowerCaseFirst } from "../../utils.js";
 
 export class RouteBuilder extends TypeBuilder {
   constructor(method, group, name, path) {
@@ -20,7 +21,9 @@ export class RouteBuilder extends TypeBuilder {
    * @return {RouteBuilder}
    */
   tags(...values) {
-    this.data.tags.push(...values);
+    for (const v of values) {
+      this.data.tags.push(lowerCaseFirst(v));
+    }
 
     return this;
   }
@@ -32,10 +35,9 @@ export class RouteBuilder extends TypeBuilder {
   query(builder) {
     this.queryBuilder = builder;
 
-    if (isNil(this.queryBuilder.data.uniqueName)) {
+    if (isNil(this.queryBuilder.data.name)) {
       this.queryBuilder.data.group = this.data.group;
       this.queryBuilder.data.name = this.data.name + "Query";
-      this.queryBuilder.setNameAndGroup();
     }
 
     return this;
@@ -48,10 +50,9 @@ export class RouteBuilder extends TypeBuilder {
   params(builder) {
     this.paramsBuilder = builder;
 
-    if (isNil(this.paramsBuilder.data.uniqueName)) {
+    if (isNil(this.paramsBuilder.data.name)) {
       this.paramsBuilder.data.group = this.data.group;
       this.paramsBuilder.data.name = this.data.name + "Params";
-      this.paramsBuilder.setNameAndGroup();
     }
 
     return this;
@@ -68,10 +69,9 @@ export class RouteBuilder extends TypeBuilder {
 
     this.bodyBuilder = builder;
 
-    if (isNil(this.bodyBuilder.data.uniqueName)) {
+    if (isNil(this.bodyBuilder.data.name)) {
       this.bodyBuilder.data.group = this.data.group;
       this.bodyBuilder.data.name = this.data.name + "Body";
-      this.bodyBuilder.setNameAndGroup();
     }
 
     return this;
@@ -84,10 +84,9 @@ export class RouteBuilder extends TypeBuilder {
   response(builder) {
     this.responseBuilder = builder;
 
-    if (isNil(this.responseBuilder.data.uniqueName)) {
+    if (isNil(this.responseBuilder.data.name)) {
       this.responseBuilder.data.group = this.data.group;
       this.responseBuilder.data.name = this.data.name + "Response";
-      this.responseBuilder.setNameAndGroup();
     }
 
     return this;

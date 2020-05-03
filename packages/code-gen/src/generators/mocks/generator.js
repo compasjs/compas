@@ -1,11 +1,11 @@
 import {
-  compileTemplate,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
-import { TypeBuilder, TypeCreator } from "../../types/index.js";
+import { TypeBuilder } from "../../types/index.js";
+import { compileDynamicTemplates } from "../../utils.js";
 
 /**
  * @name TypeBuilder#mock
@@ -24,62 +24,44 @@ TypeBuilder.prototype.mock = function (mockFn) {
 
 /**
  * @param {App} app
+ * @param {GenerateOptions} options
  * @return {Promise<void>}
  */
-export async function init(app) {
-  collectTypes(app);
-
-  await compileTemplateDirectory(
-    app.templateContext,
-
-    join(dirnameForModule(import.meta), "./templates"),
-    ".tmpl",
-    {
-      debug: false,
-    },
-  );
+export async function preGenerate(app, options) {
+  await compileTemplates(app.templateContext, options);
 }
 
 /**
  * @param {App} app
+ * @param {GenerateOptions} options
  * @param {object} data
  * @return {Promise<GeneratedFile>}
  */
-export async function generate(app, data) {
+export async function generate(app, options, data) {
   return {
     path: "./mocks.js",
     source: executeTemplate(app.templateContext, "mocksFile", {
       ...data,
-      opts: app.options,
+      options,
     }),
   };
 }
 
 /**
- * @param {App} app
+ * @param {TemplateContext} tc
+ * @param {GenerateOptions} options
+ * @return {Promise<void>}
  */
-function collectTypes(app) {
-  let fnString = `
+async function compileTemplates(tc, options) {
+  compileDynamicTemplates(tc, options, "mock", {
+    fnStringStart: `
   {{ if (it.model && it.model.mocks && it.model.mocks.rawMock) { }}
      {{= it.model.mocks.rawMock }}
    {{ } }}
-  {{ let result = ''; }}`;
-
-  app.options.mocks = app.options.mocks || {};
-  app.options.mocks.enabledTypes = [];
-
-  for (const type of TypeCreator.types.values()) {
-    if ("mock" in type) {
-      app.options.mocks.enabledTypes.push(type.name);
-
-      const templateName = `${type.name}Mock`;
-      compileTemplate(app.templateContext, templateName, type.mock());
-
-      fnString += `{{ if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}{{ } }}\n`;
-    }
-  }
-
-  fnString += `
+  {{ let result = ''; }}`,
+    fnStringAdd: (type, templateName) =>
+      `{{ if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}{{ } }}\n`,
+    fnStringEnd: `
     {{ if (it.model && it.model.isOptional) { }}
       {{ if (model.defaultValue !== undefined && !it.ignoreDefaults) { }}
         {{ result += model.defaultValue + ","; }}
@@ -94,7 +76,16 @@ function collectTypes(app) {
   {{ } else { }}
    _mocker.pickone([ {{= result.trim().replace(/\\s+/g, " ") }} ])
    {{ } }} 
-  `;
+  `,
+  });
 
-  compileTemplate(app.templateContext, "mockExec", fnString);
+  await compileTemplateDirectory(
+    tc,
+
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+    {
+      debug: false,
+    },
+  );
 }

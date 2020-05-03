@@ -7,10 +7,11 @@ import { join } from "path";
 
 /**
  * @param {App} app
+ * @param {GenerateOptions} options
  * @return {Promise<void>}
  */
-export async function init(app) {
-  app.options.enableMocks = app.generators.has("mock");
+export async function preGenerate(app, options) {
+  options.enableMocks = app.generators.has("mock");
 
   await compileTemplateDirectory(
     app.templateContext,
@@ -21,15 +22,16 @@ export async function init(app) {
 
 /**
  * @param {App} app
+ * @param {GenerateOptions} options
  * @param {object} data
  * @return {Promise<GeneratedFile>}
  */
-export async function generate(app, data) {
+export async function generate(app, options, data) {
   return {
     path: "./apiClient.js",
     source: executeTemplate(app.templateContext, "apiClientFile", {
       ...data,
-      opts: app.options,
+      options,
     }),
   };
 }

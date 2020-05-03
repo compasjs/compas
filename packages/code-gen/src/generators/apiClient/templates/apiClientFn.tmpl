@@ -21,7 +21,7 @@
 {{ } }}
 
  */
-{{= lowerCaseFirst(model.name) }}: async function (
+{{= model.name }}: async function (
 {{ if (hasParam) { }}
 params,
 {{ } }}
@@ -34,7 +34,7 @@ body,
 ) {
     checkApiClient();
 
-    {{ if (opts.enableMocks && model.response !== undefined) { }}
+    {{ if (options.enableMocks && model.response !== undefined) { }}
       try {
         const response = await _internalClient.request({
           url: `{{= url }}`,
@@ -48,7 +48,7 @@ body,
         return response.data;
       } catch (e) {
         if (e.response && e.response.status === 405) {
-          return {{= lowerCaseFirst(model.response.reference.group) }}Mocks.{{= lowerCaseFirst(model.response.reference.name) }}();
+          return {{= model.response.reference.group }}Mocks.{{= model.response.reference.name }}();
         }
         throw e;
       }

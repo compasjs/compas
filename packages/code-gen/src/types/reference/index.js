@@ -1,6 +1,6 @@
 import { dirnameForModule, isNil } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { upperCaseFirst } from "../../utils.js";
+import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
 import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
@@ -30,8 +30,8 @@ class ReferenceType extends TypeBuilder {
       return this;
     }
 
-    this.data.reference.group = group;
-    this.data.reference.name = name;
+    this.data.reference.group = lowerCaseFirst(group);
+    this.data.reference.name = lowerCaseFirst(name);
 
     return this;
   }
@@ -48,15 +48,14 @@ class ReferenceType extends TypeBuilder {
     if (!isNil(this.ref)) {
       const refBuild = this.ref.build();
       result.reference = {
-        name: refBuild.name,
         group: refBuild.group,
-        uniqueName: refBuild.uniqueName,
+        name: refBuild.name,
       };
-    } else {
-      result.reference.uniqueName =
-        upperCaseFirst(result.reference.group) +
-        upperCaseFirst(result.reference.name);
     }
+
+    result.reference.uniqueName =
+      upperCaseFirst(result.reference.group) +
+      upperCaseFirst(result.reference.name);
 
     return result;
   }
