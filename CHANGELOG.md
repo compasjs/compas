@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [v0.0.12]()
+
+- Move project to Github
+- @lbu/cli: add docker clean command
+- @lbu/code-gen: remove the need to register coreTypes
+- @lbu/code-gen: support generating stubs
+- @lbu/stdlib: small fixes
+- @lbu/store: small fixes for database creation
+
 ### [v0.0.11](f0defbd9db98cefbd27e3f6af2518eb6ed8700e4)
 
 - @lbu/store: initial release! Already supports test databases, migrations and a

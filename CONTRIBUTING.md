@@ -21,7 +21,7 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 - Write to the changelog
   - New features
   - Breaking changes
-- Commit with `*: Prepare release for vX.X.X`
+- Commit with `*: prepare release for vX.X.X`
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version
   - Check packages it will publish and send `y`
@@ -32,7 +32,7 @@ Everything should be published now. To make the repo ready for more development:
 - Bump version in root package.json to new version
 - Run `yarn`
 - Copy SHA of release commit in CHANGELOG.md
-- Commit with `*: Bump @lbu/* to vX.X.X`
+- Commit with `*: bump @lbu/* to vX.X.X`
 
 ### WebStorm
 
