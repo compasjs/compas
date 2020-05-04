@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [v0.0.12]()
+### [v0.0.12](b665f42ce260e891ce32c34fce5bda5ce5c60abd)
 
 - Move project to Github
 - @lbu/cli: add docker clean command
