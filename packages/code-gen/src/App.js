@@ -36,6 +36,7 @@ const { writeFile, mkdir } = promises;
  * @typedef {object} GenerateStubsOptions
  * @property {boolean} [useTypescript]
  * @property {string} [fileHeader]
+ * @property {boolean} [dumpStructure]
  * @property {string} outputDirectory
  * @property {string} group
  * @property {string[]} generators
@@ -197,6 +198,7 @@ export class App {
 
     options.fileHeader = this.fileHeader + (options.fileHeader ?? "");
     options.useTypescript = !!options.useTypescript;
+    options.dumpStructure = !!options.dumpStructure;
 
     for (const gen of options.generators) {
       await this.callSpecificGeneratorWithMethod(
@@ -221,6 +223,16 @@ export class App {
     const input = JSON.parse(JSON.stringify(stubData));
 
     const result = [];
+
+    if (options.dumpStructure) {
+      result.push({
+        path: "./structure.js",
+        source: `export const ${
+          options.group
+        }Structure = JSON.parse('${JSON.stringify(input)}');\n`,
+      });
+    }
+
     for (const gen of options.generators) {
       result.push(
         await this.callSpecificGeneratorWithMethod(

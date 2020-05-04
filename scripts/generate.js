@@ -99,6 +99,7 @@ async function main() {
     group: "app",
     generators: ["type", "mock", "router"],
     useTypescript: false,
+    dumpStructure: true,
   });
 
   await app.generateStubs({
@@ -106,5 +107,6 @@ async function main() {
     group: "todo",
     generators: ["type", "mock", "router", "apiClient"],
     useTypescript: false,
+    dumpStructure: true,
   });
 }
