@@ -1,6 +1,10 @@
 # CHANGELOG
 
-### [v0.0.12](b665f42ce260e891ce32c34fce5bda5ce5c60abd)
+### [v0.0.13](https://github.com/lightbasenl/lbu/releases/tag/v0.0.13)
+
+- @lbu/code-gen: add dumpStructure option to generateStubs
+
+### [v0.0.12](https://github.com/lightbasenl/lbu/releases/tag/v0.0.12)
 
 - Move project to Github
 - @lbu/cli: add docker clean command
@@ -9,7 +13,7 @@
 - @lbu/stdlib: small fixes
 - @lbu/store: small fixes for database creation
 
-### [v0.0.11](f0defbd9db98cefbd27e3f6af2518eb6ed8700e4)
+### [v0.0.11](https://github.com/lightbasenl/lbu/releases/tag/v0.0.11)
 
 - @lbu/store: initial release! Already supports test databases, migrations and a
   persistent file store in combination with minio
@@ -21,7 +25,7 @@
   as well as to the program it self
 - Various test and documentation improvements
 
-### [v0.0.10](35e227dd5217c7eda76fcc69adaabb19207e3008)
+### [v0.0.10](https://github.com/lightbasenl/lbu/releases/tag/v0.0.10)
 
 - Set minimum Node.js version to Node.js 14
 - @lbu/cli: Refactored
@@ -48,7 +52,7 @@
 - @lbu/\*: various dependency updates
 - @lbu/\*: various docs improvements
 
-### [v0.0.9](d847630e049071c7c2385eef8377ba976ddd0e2a)
+### [v0.0.9](https://github.com/lightbasenl/lbu/releases/tag/v0.0.12)
 
 - Export named functions instead of const and shorthand functions
 - @lbu/cli: Fix script ordering
@@ -63,12 +67,12 @@
 - @lbu/insight: Return a Logger instance instead of a POJO
 - @lbu/stdlib: Remove translation system
 
-### [v0.0.8](85feb582684f93714a7aad81f2a47883e72bd363)
+### [v0.0.8](https://github.com/lightbasenl/lbu/releases/tag/v0.0.8)
 
 - Various fixes
 - @lbu/insight: Simple log processing setup
 
-### [v0.0.7](4c2199aeb1052bab67b3b1355bd648086736abf7)
+### [v0.0.7](https://github.com/lightbasenl/lbu/releases/tag/v0.0.7)
 
 - BREAKING: export es modules and drop CommonJS support
 - BREAKING: Only supporting >= Node.js 13
@@ -80,12 +84,12 @@
 - @lbu/stdlib: Translation system, utilities for moving from CommonJS to ES
   modules
 
-### [v0.0.6](a7b150d9265f449127dc812d4bcef7fb803d6d63)
+### [v0.0.6](https://github.com/lightbasenl/lbu/releases/tag/v0.0.6)
 
 - @lbu/code-gen: JSDoc generation and router tags support
 - @lbu/\*: Various bugs fixed
 
-### [v0.0.5](9e38110ceb9ddfdbf75a0e8300893fc0d4800e7e)
+### [v0.0.5](https://github.com/lightbasenl/lbu/releases/tag/v0.0.5)
 
 - Rewritten from scratch in plain old JavaScript
 - @lbu/cli is now more a script runner than anything else
@@ -96,23 +100,23 @@
 - @lbu/code-gen is refactored, needs some more thinking before adding a fluent
   api back
 
-### [v0.0.4](efcd5097edec95c80c2b7f1e637f6a4f401e26f5)
+### [v0.0.4](https://github.com/lightbasenl/lbu/releases/tag/v0.0.4)
 
 - Replaced @lbu/validator with @lbu/code-gen
 - @lbu/code-gen supports generating validator functions and routers
 - Add @lbu/koa with some minimal middleware
 
-### [v0.0.3](a193a6c8c4ae8fa52465e239ecbfdbf22041c47a)
+### [v0.0.3](https://github.com/lightbasenl/lbu/releases/tag/v0.0.3)
 
 - @lbu/validator refactor and pretty much stable feature wise
 - Various fixes in @lbu/cli and @lbu/stdlib
 
-### [v0.0.2](7f750bb0bf630eac49665f0ee12b03e08181c147)
+### [v0.0.2](https://github.com/lightbasenl/lbu/releases/tag/v0.0.2)
 
 - Add @lbu/register
 - Add @lbu/cli lint command
 - Improve @lbu/cli template
 
-### [v0.0.1](df5e23061072942770506569ac2e2a876100ab51)
+### [v0.0.1](https://github.com/lightbasenl/lbu/releases/tag/v0.0.1)
 
 - Initial release

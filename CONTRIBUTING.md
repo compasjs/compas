@@ -31,7 +31,6 @@ Everything should be published now. To make the repo ready for more development:
 
 - Bump version in root package.json to new version
 - Run `yarn`
-- Copy SHA of release commit in CHANGELOG.md
 - Commit with `*: bump @lbu/* to vX.X.X`
 
 ### WebStorm
