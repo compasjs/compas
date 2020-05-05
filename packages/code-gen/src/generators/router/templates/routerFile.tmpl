@@ -1,6 +1,7 @@
 {{= options.fileHeader }}
 
-import { compose, AppError } from "@lbu/server";
+import { compose } from "@lbu/server";
+import { AppError } from "@lbu/stdlib";
 import {
 {{ for (const group of Object.keys(structure)) { }}
 {{= group }}Validators,

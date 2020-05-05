@@ -1,4 +1,5 @@
 export { uuid } from "./src/datatypes.js";
+export { AppError } from "./src/error.js";
 export {
   isNil,
   isPlainObject,

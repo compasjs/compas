@@ -1,4 +1,4 @@
-import { AppError } from "./error.js";
+import { AppError } from "@lbu/stdlib";
 
 /**
  * Middleware that sets a 404 and throws a NotFoundError
