@@ -33,7 +33,7 @@ const uuidType = {
 
 return stringValidator{{= num }}(value, propertyPath);
 `,
-  mock: () => `_mocker.guid({version: 4})`,
+  mock: () => `_mocker.guid({version: 4}),\n`,
 };
 
 /**

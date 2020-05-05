@@ -25,7 +25,7 @@ class DateType extends TypeBuilder {
    * @return {DateType}
    */
   defaultToNow() {
-    return this.default("new Date()");
+    return this.default("(new Date())");
   }
 }
 
@@ -50,7 +50,7 @@ try {
 }
 throw _errorFn("validator.date.invalid", { propertyPath });
 `,
-  mock: () => `_mocker.guid({version: 4})`,
+  mock: () => `_mocker.date(),\n`,
 };
 
 /**
