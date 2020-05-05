@@ -45,6 +45,12 @@ _returns: { bodyParser: fn, multipartBodyParser: fn }_
 Create a normal (urleconded, json) body parser and a multipart enabled body
 parser. These are based on [koa-body](https://github.com/dlau/koa-body).
 
+**session(app, options)**
+
+_returns: fns_
+
+Session middleware. See [using_sessions](../using-sessions.md)
+
 **AppError**
 
 Standard error class for Application errors that can propagate to the client.

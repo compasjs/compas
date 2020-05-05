@@ -6,4 +6,5 @@ export {
   createBodyParsers,
   AppError,
   isServerLog,
+  session,
 } from "./src/middleware/index.js";

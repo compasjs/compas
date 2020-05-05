@@ -17,9 +17,11 @@
   "dependencies": {
     "@lbu/insight": "^0.0.13",
     "@lbu/stdlib": "^0.0.13",
+    "keygrip": "1.1.0",
     "koa": "2.11.0",
     "koa-body": "4.1.1",
-    "koa-compose": "4.1.0"
+    "koa-compose": "4.1.0",
+    "koa-session": "6.0.0"
   },
   "author": {
     "name": "Dirk de Visser",
