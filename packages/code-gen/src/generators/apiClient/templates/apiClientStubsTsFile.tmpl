@@ -1,4 +1,4 @@
-import {
+{{ const importSet = new Set(); }}
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -6,12 +6,17 @@ import {
     {{ continue; }}
     {{ } }}
 
-{{ if (item.response) { }} {{= item.response.reference.uniqueName }}, {{ } }}
-{{ if (item.params) { }} {{= item.params.reference.uniqueName }}_Input, {{ } }}
-{{ if (item.query) { }} {{= item.query.reference.uniqueName }}_Input, {{ } }}
-{{ if (item.body) { }} {{= item.body.reference.uniqueName }}_Input, {{ } }}
+{{ if (item.response) { }} {{ importSet.add(item.response.reference.uniqueName); }}{{ } }}
+{{ if (item.params) { }} {{ importSet.add(item.params.reference.uniqueName + "_Input"); }}{{ } }}
+{{ if (item.query) { }} {{ importSet.add(item.query.reference.uniqueName + "_Input"); }}{{ } }}
+{{ if (item.body) { }} {{ importSet.add(item.body.reference.uniqueName + "_Input"); }}{{ } }}
 
   {{ } }}
+{{ } }}
+
+import {
+{{ for (const imp of importSet) { }}
+{{= imp }},
 {{ } }}
 } from "./types";
 
