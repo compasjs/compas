@@ -19,8 +19,18 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     debug: verboseSql ? log.error : undefined,
   });
 
-  // hacky but needed because clients are lazily initialized
-  setImmediate(() => creationSql.end({}));
+  const schemas = await sql`SELECT table_name
+                            FROM information_schema.tables
+                            WHERE table_schema = 'public'`;
+
+  // removes migrations
+  const tableNames = schemas
+    .map((it) => it.table_name)
+    .filter((it) => it !== "migrations");
+
+  await sql`TRUNCATE ${sql(tableNames)} CASCADE `;
+
+  creationSql.end({});
 
   return sql;
 }

@@ -2,7 +2,7 @@ import { merge } from "@lbu/stdlib";
 import postgres from "postgres";
 
 /**
- * @param {object} opts
+ * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
  * @return {postgres}
  */

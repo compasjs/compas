@@ -27,5 +27,6 @@ export {
   deleteFile,
   syncDeletedFiles,
 } from "./src/files.js";
+export { newSessionStore } from "./src/sessions.js";
 
 export const migrations = dirnameForModule(import.meta) + "/migrations";
