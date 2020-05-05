@@ -53,7 +53,7 @@ test("store/sessions", async (t) => {
     );
 
     const store = newSessionStore(sql, { cleanupInterval: 5 });
-    await new Promise((r) => setTimeout(r, 7));
+    await new Promise((r) => setTimeout(r, 20));
     store.kill();
 
     t.equal(
