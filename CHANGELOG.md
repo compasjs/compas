@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.14](https://github.com/lightbasenl/lbu/releases/tag/v0.0.14)
+
+- @lbu/store: add session store
+- @lbu/server: add session middleware
+- @lbu/code-gen: rename \_Optional to \_Input
+- @lbu/code-gen: add date type
+
 ### [v0.0.13](https://github.com/lightbasenl/lbu/releases/tag/v0.0.13)
 
 - @lbu/code-gen: add dumpStructure option to generateStubs
