@@ -192,7 +192,7 @@ export class App {
     if (isNil(options?.outputDirectory)) {
       throw new Error("Need options.outputDirectory to write files to.");
     }
-    if (isNil(options?.group) || isNil(this.data.structure[options.group])) {
+    if (isNil(options?.group)) {
       throw new Error("Need options.group be an existing group");
     }
 
@@ -209,6 +209,10 @@ export class App {
     }
 
     this.processData();
+
+    if (isNil(this.data.structure[options.group])) {
+      throw new Error("Need options.group be an existing group");
+    }
 
     const stubData = {
       structure: {
