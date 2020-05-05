@@ -8,6 +8,7 @@ import "./any/index.js";
 import "./anyOf/index.js";
 import "./array/index.js";
 import "./boolean/index.js";
+import "./date/index.js";
 import "./generic/index.js";
 import "./number/index.js";
 import "./object/index.js";

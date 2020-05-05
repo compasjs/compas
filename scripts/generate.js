@@ -53,6 +53,8 @@ async function main() {
       userId: M.reference("App", "User"),
       name: M.string(),
       count: M.number().integer(),
+      createdAt: M.date().defaultToNow(),
+      updatedAt: M.date(),
     }),
   );
 
