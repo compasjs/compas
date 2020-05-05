@@ -1,6 +1,6 @@
 {
 {{ for (const key of Object.keys(model.keys)) { }}
   {{ const v = model.keys[key]; }}
-  {{= key }}: {{= mockExec({ type: v.type, model: v, ignoreDefaults }).trim() }},
+  {{= key }}: {{= mockExec({ type: v.type, model: v, isInputType }).trim() }},
 {{ } }}
 },

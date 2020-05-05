@@ -88,7 +88,7 @@ async function compileTemplates(tc, options) {
       `{{ if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}{{ } }}\n`,
     fnStringEnd: `
     {{ if (it.model && it.model.isOptional) { }}
-      {{ if (model.defaultValue !== undefined && !it.ignoreDefaults) { }}
+      {{ if (model.defaultValue !== undefined && !it.isInputType) { }}
         {{ result += model.defaultValue + ","; }}
       {{ } else { }}
         {{ result += "undefined,"; }}

@@ -6,13 +6,13 @@
  * Tags: {{= model.tags.join(", ") }}
  * Docs: {{= model.docString }}
 {{ if (hasParam) { }}
- * @param { {{= model.params ? model.params.reference.uniqueName + "_Optional" : "object" }}} params
+ * @param { {{= model.params ? model.params.reference.uniqueName + "_Input" : "object" }}} params
 {{ } }}
 {{ if (model.query) { }}
- * @param { {{= model.query.reference.uniqueName }}_Optional} query
+ * @param { {{= model.query.reference.uniqueName }}_Input} query
 {{ } }}
 {{ if (model.body) { }}
- * @param { {{= model.body.reference.uniqueName }}_Optional} body
+ * @param { {{= model.body.reference.uniqueName }}_Input} body
 {{ } }}
 {{ if (model.response) { }}
  * @return {Promise.<{{= model.response.reference.uniqueName }}>}

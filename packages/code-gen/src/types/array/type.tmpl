@@ -1,4 +1,4 @@
-{{ const result = typeExec({ type: model.values.type, model: model.values, ignoreDefaults }).trim(); }}
+{{ const result = typeExec({ type: model.values.type, model: model.values, isInputType }).trim(); }}
 {{ if (model.validator.convert) { }}
 ({{= result}}|{{= result }})[]
 {{ } else { }}

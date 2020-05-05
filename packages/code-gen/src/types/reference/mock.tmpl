@@ -1,1 +1,1 @@
-{{= lowerCaseFirst(model.reference.group) }}Mocks.{{= lowerCaseFirst(model.reference.name) + (ignoreDefaults ? "Optional" : "") }}(),
+{{= model.reference.group }}Mocks.{{= model.reference.name + (isInputType ? "Input" : "") }}(),

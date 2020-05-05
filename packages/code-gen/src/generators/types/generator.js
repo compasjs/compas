@@ -72,7 +72,7 @@ async function compileTemplates(tc, options) {
       fnStringAdd: (type, templateName) =>
         `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,
       fnStringEnd: `
-   {{ if (it.ignoreDefaults) { }}
+   {{ if (it.isInputType) { }}
      {{ if (it.model && it.model.isOptional) { }}
        {{ result += "|undefined"; }}
      {{ } }}
