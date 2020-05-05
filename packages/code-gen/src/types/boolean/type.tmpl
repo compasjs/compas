@@ -1,7 +1,5 @@
 {{ if (model.validator.convert && it.isInputType) { }}
-"true"|"false"|true|false|0|1
-{{ } else if (model.oneOf) { }}
-{{= model.oneOf }}
+"true"|"false"|boolean
 {{ } else { }}
 boolean
 {{ } }}
