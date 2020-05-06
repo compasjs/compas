@@ -13,3 +13,4 @@ depends on postgres and Minio and provides the following abstractions.
 
 - [Postgres migrations](./postgres-migrations.md)
 - [File store](./file-store.md)
+- [JobQueue](./queue.md)
