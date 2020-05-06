@@ -28,7 +28,12 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     .map((it) => it.table_name)
     .filter((it) => it !== "migrations");
 
-  await sql`TRUNCATE ${sql(tableNames)} CASCADE `;
+  if (tableNames.length > 0) {
+    await sql`TRUNCATE ${sql(tableNames)} CASCADE `;
+  } else {
+    // Just a query to initialize the connection
+    await sql`SELECT 1 + 1 AS sum;`;
+  }
 
   creationSql.end({});
 
