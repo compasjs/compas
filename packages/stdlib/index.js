@@ -24,6 +24,7 @@ export {
   getSecondsSinceEpoch,
   gc,
   mainFn,
+  noop,
   filenameForModule,
   dirnameForModule,
 } from "./src/utils.js";

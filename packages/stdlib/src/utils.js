@@ -15,6 +15,14 @@ export function getSecondsSinceEpoch() {
 }
 
 /**
+ * An empty function, doing exactly nothing but returning undefined.
+ * @return {undefined}
+ */
+export function noop() {
+  return undefined;
+}
+
+/**
  * Internal gc function reference
  * Note that this is undefined if the gc function is not called and Node is not running
  * with --expose-gc on
