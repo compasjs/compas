@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.15](https://github.com/lightbasenl/lbu/releases/tag/v0.0.15)
+
+- @lbu/server,stdlib: move AppError to stdlib
+- @lbu/code-gen: small fixes
+
 ### [v0.0.14](https://github.com/lightbasenl/lbu/releases/tag/v0.0.14)
 
 - @lbu/store: add session store
