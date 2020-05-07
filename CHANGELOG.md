@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [v0.0.16](https://github.com/lightbasenl/lbu/releases/tag/v0.0.16)
+
+- @lbu/code-gen: minor fixes
+- @lbu/cli: add tape as a dependency
+- @lbu/store: only truncate tables in testing when there are tables to be
+  truncated
+- @lbu/stdlib: add noop function
+
 ### [v0.0.15](https://github.com/lightbasenl/lbu/releases/tag/v0.0.15)
 
 - @lbu/server,stdlib: move AppError to stdlib
