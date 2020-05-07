@@ -233,7 +233,10 @@ export class App {
         path: "./structure.js",
         source: `export const ${
           options.group
-        }Structure = JSON.parse('${JSON.stringify(input)}');\n`,
+        }Structure = JSON.parse('${JSON.stringify(input).replace(
+          /\\/g,
+          "\\\\",
+        )}');\n`,
       });
     }
 
