@@ -17,7 +17,7 @@
     "@lbu/insight": "^0.0.16",
     "@lbu/stdlib": "^0.0.16",
     "mime-types": "2.1.27",
-    "minio": "7.0.15",
+    "minio": "7.0.16",
     "postgres": "1.0.2"
   },
   "author": {
