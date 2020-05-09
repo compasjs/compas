@@ -5,5 +5,6 @@ export { getApp } from "./src/app.js";
 export {
   createBodyParsers,
   isServerLog,
+  sendFile,
   session,
 } from "./src/middleware/index.js";

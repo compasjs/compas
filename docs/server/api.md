@@ -51,6 +51,12 @@ _returns: fns_
 
 Session middleware. See [using_sessions](../using-sessions.md)
 
+**sendFile(ctx, file: FileProps, getStreamFn: (id, start?, end?): Promise<{
+stream: ReadableStream, cacheControl?: string }>)**
+
+Send a file stream to the client. Supports Range headers. Accepts the File based
+on @lbu/store file.
+
 **isServerLog(log: object)**
 
 _returns: boolean_
