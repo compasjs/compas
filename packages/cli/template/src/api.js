@@ -1,6 +1,6 @@
 import { log } from "@lbu/insight";
-import { AppError, createBodyParsers, getApp } from "@lbu/server";
-import { mainFn, uuid } from "@lbu/stdlib";
+import { createBodyParsers, getApp } from "@lbu/server";
+import { AppError, mainFn, uuid } from "@lbu/stdlib";
 import { appHandlers, router } from "./generated/router.js";
 import { validatorSetErrorFn } from "./generated/validators.js";
 
