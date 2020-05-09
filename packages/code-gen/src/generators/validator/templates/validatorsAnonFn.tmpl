@@ -3,7 +3,7 @@
  * {{= model.docString }}
  */
 {{ } }}
-function {{= model.type}}Validator{{= ctx.counter++ }}(value, propertyPath) {
+function {{= model.type}}Validator{{= ctx.counter++ }}(value, propertyPath, parentType = "{{= model.type }}") {
   if (isNil(value)) {
     {{ if (model.isOptional) { }}
       return {{= model.defaultValue }};

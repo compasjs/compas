@@ -7,7 +7,7 @@
 
 
 if (typeof value !== "object") {
-  throw _errorFn("validator.object.type", { propertyPath });
+  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
 }
 
 const result = Object.create(null);
@@ -29,7 +29,7 @@ const result = Object.create(null);
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }
 
-    throw _errorFn("validator.object.strict", { propertyPath, extraKeys });
+    throw _errorFn(`validator.${parentType}.strict`, { propertyPath, extraKeys });
   }
 {{ } }}
 

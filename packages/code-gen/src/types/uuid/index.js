@@ -31,7 +31,7 @@ const uuidType = {
 {{ const num = ctx.counter; }}
 {{ ctx.addFunc(validatorsAnonFn({ model: ${stringType}, ctx })); }}
 
-return stringValidator{{= num }}(value, propertyPath);
+return stringValidator{{= num }}(value, propertyPath, parentType);
 `,
   mock: () => `_mocker.guid({version: 4}),\n`,
 };

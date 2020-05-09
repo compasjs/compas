@@ -5,7 +5,7 @@
 {{ } }}
 
 if (typeof value !== "string") {
-  throw _errorFn("validator.string.type", { propertyPath });
+  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
 }
 
 {{ if (model.validator.trim) { }}
@@ -15,14 +15,14 @@ if (typeof value !== "string") {
 {{ if (model.validator.min !== undefined) { }}
   if (value.length < {{= model.validator.min }}) {
     const min = {{= model.validator.min }};
-    throw _errorFn("validator.string.min", { propertyPath, min });
+    throw _errorFn(`validator.${parentType}.min`, { propertyPath, min });
   }
 {{ } }}
 
 {{ if (model.validator.max !== undefined) { }}
   if (value.length > {{= model.validator.max }}) {
     const max = {{= model.validator.max }};
-    throw _errorFn("validator.string.max", { propertyPath, max });
+    throw _errorFn(`validator.${parentType}.max`, { propertyPath, max });
   }
 {{ } }}
 
@@ -37,13 +37,13 @@ if (typeof value !== "string") {
 {{ if (model.oneOf !== undefined) { }}
   if ({{= model.oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
     const oneOf = {{= quote(model.oneOf.join(", ")) }};
-    throw _errorFn("validator.string.oneOf", { propertyPath, oneOf });
+    throw _errorFn(`validator.${parentType}.oneOf`, { propertyPath, oneOf });
   }
 {{ } }}
 
 {{ if (model.validator.pattern !== undefined) { }}
   if (!{{= model.validator.pattern }}.test(value)) {
-    throw _errorFn("validator.string.pattern", { propertyPath });
+    throw _errorFn(`validator.${parentType}.pattern`, { propertyPath });
   }
 {{ } }}
 

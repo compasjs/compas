@@ -5,7 +5,7 @@
 
 
 if (typeof value !== "object") {
-  throw _errorFn("validator.generic.type", { propertyPath });
+  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
 }
 
 const result = Object.create(null);

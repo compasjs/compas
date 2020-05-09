@@ -16,5 +16,5 @@ const errors = [];
   }
 {{ } }}
 
-throw _errorFn("validator.anyOf.type", { propertyPath, errors });
+throw _errorFn(`validator.${parentType}.type`, { propertyPath, errors });
 

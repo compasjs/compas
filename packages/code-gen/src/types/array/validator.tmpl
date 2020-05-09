@@ -8,20 +8,20 @@
 {{ } }}
 
 if (!Array.isArray(value)) {
-  throw _errorFn("validator.array.type", { propertyPath });
+  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
 }
 
 {{ if (model.validator.min !== undefined) { }}
   if (value.length < {{= model.validator.min }}) {
     const min = {{= model.validator.min }};
-    throw _errorFn("validator.array.min", { propertyPath, min });
+    throw _errorFn(`validator.${parentType}.min`, { propertyPath, min });
   }
 {{ } }}
 
 {{ if (model.validator.max !== undefined) { }}
   if (value.length > {{= model.validator.max }}) {
     const max = {{= model.validator.max }};
-    throw _errorFn("validator.array.max", { propertyPath, max });
+    throw _errorFn(`validator.${parentType}.max`, { propertyPath, max });
   }
 {{ } }}
 

@@ -38,7 +38,7 @@ const dateType = {
 {{ const num = ctx.counter; }}
 {{ ctx.addFunc(validatorsAnonFn({ model: ${stringType}, ctx })); }}
 
-const interim = stringValidator{{= num }}(value, propertyPath);
+const interim = stringValidator{{= num }}(value, propertyPath, parentType);
 let d;
 try {
   d = new Date(interim);
@@ -46,9 +46,9 @@ try {
     return d
   }
 } catch {
-  throw _errorFn("validator.date.invalid", { propertyPath });
+  throw _errorFn(\`validator.\${parentType}.invalid\`, { propertyPath });
 }
-throw _errorFn("validator.date.invalid", { propertyPath });
+throw _errorFn(\`validator.\${parentType}.invalid\`, { propertyPath });
 `,
   mock: () => `_mocker.date(),\n`,
 };
