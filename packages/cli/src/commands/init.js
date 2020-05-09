@@ -44,7 +44,7 @@ export async function initCommand(logger, command) {
   logger.info(`
 We already completed your first code generation.
 
-- Try the api with 'yarn lbu ./src/api.js' and try 'http://localhost:3000/app' in your browser
+- Try the api with 'yarn lbu api' and try 'http://localhost:3000/app' in your browser
 - Discover the utilities of lbu with 'yarn lbu help'
 
 Have fun ;)

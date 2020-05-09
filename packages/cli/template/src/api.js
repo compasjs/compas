@@ -1,19 +1,7 @@
-import { log } from "@lbu/insight";
 import { createBodyParsers, getApp } from "@lbu/server";
-import { AppError, mainFn, uuid } from "@lbu/stdlib";
+import { AppError, uuid } from "@lbu/stdlib";
 import { appHandlers, router } from "./generated/router.js";
 import { validatorSetErrorFn } from "./generated/validators.js";
-
-mainFn(import.meta, log, main);
-
-async function main(logger) {
-  const app = constructApp();
-
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    logger.info("Listening", { port });
-  });
-}
 
 export function constructApp() {
   const app = getApp({

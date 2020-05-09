@@ -4,7 +4,7 @@
   "name": "{{name}}",
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=production node ./src/api.js"
+    "start": "NODE_ENV=production node ./scripts/api.js"
   },
   "dependencies": {
     "@lbu/insight": "{{version}}",
