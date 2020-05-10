@@ -9,31 +9,35 @@
     {{ } }}
 
     {{ if (options.useTypescript) { }}
+      {{ const normalVariant = typeExec({ type: item.type, model: item, isInputType: false }).trim(); }}
+      {{ const inputVariant = typeExec({ type: item.type, model: item, isInputType: true }).trim(); }}
 
       /**
        * {{= item.uniqueName }}
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        */
-       export type {{= item.uniqueName }} = {{= typeExec({ type: item.type, model: item, isInputType: false }).trim() }};
+       export type {{= item.uniqueName }} = {{= normalVariant }};
 
       /**
        * {{= item.uniqueName }}_Input
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        */
-       export type {{= item.uniqueName }}_Input = {{= typeExec({ type: item.type, model: item, isInputType: true }).trim() }};
+       export type {{= item.uniqueName }}_Input = {{= normalVariant === inputVariant ? item.uniqueName : inputVariant }};
 
     {{ } else { }}
+      {{ const normalVariant = typeExec({ type: item.type, model: item, isInputType: false }).trim(); }}
+      {{ const inputVariant = typeExec({ type: item.type, model: item, isInputType: true }).trim(); }}
 
       /**
        * @name {{= item.uniqueName }}
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
-       * @typedef { {{= typeExec({ type: item.type, model: item, isInputType: false }).trim() }}}
+       * @typedef { {{= normalVariant }}}
        */
 
       /**
        * @name {{= item.uniqueName }}_Input
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
-       * @typedef { {{= typeExec({ type: item.type, model: item, isInputType: true }).trim() }}}
+       * @typedef { {{= normalVariant === inputVariant ? item.uniqueName : inputVariant }}}
        */
 
     {{ } }}
