@@ -3,7 +3,11 @@ import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
 import { existsSync, promises } from "fs";
 import path from "path";
 import { isNamedTypeBuilderLike, TypeCreator } from "./types/index.js";
-import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
+import {
+  lowerCaseFirst,
+  recursiveLinkupReferences,
+  upperCaseFirst,
+} from "./utils.js";
 
 const { writeFile, mkdir } = promises;
 
@@ -150,7 +154,7 @@ export class App {
       throw new Error(`data.structure should be an object.`);
     }
 
-    for (const groupData of Object.values(data.structure)) {
+    for (const groupData of Object.values(data)) {
       for (const item of Object.values(groupData)) {
         this.addToData(item);
       }
@@ -172,6 +176,13 @@ export class App {
     this.processData();
 
     const generatorInput = JSON.parse(JSON.stringify(this.data));
+    generatorInput.stringified = JSON.stringify(generatorInput.structure);
+
+    recursiveLinkupReferences(
+      generatorInput.structure,
+      generatorInput.structure,
+    );
+
     const result = await this.callGeneratorMethod(
       "generate",
       options,
@@ -221,10 +232,16 @@ export class App {
     };
 
     for (const value of Object.values(stubData.structure[options.group])) {
-      this.fillReferencedTypes(stubData, value);
+      this.includeReferenceTypes(stubData, value);
     }
 
-    const input = JSON.parse(JSON.stringify(stubData));
+    const generatorInput = JSON.parse(JSON.stringify(stubData));
+    generatorInput.stringified = JSON.stringify(generatorInput.structure);
+
+    recursiveLinkupReferences(
+      generatorInput.structure,
+      generatorInput.structure,
+    );
 
     const result = [];
 
@@ -233,7 +250,7 @@ export class App {
         path: "./structure.js",
         source: `export const ${
           options.group
-        }Structure = JSON.parse('${JSON.stringify(input).replace(
+        }Structure = JSON.parse('${generatorInput.stringified.replace(
           /\\/g,
           "\\\\",
         )}');\n`,
@@ -246,7 +263,7 @@ export class App {
           gen,
           "generateStubs",
           options,
-          input,
+          generatorInput,
         ),
       );
     }
@@ -429,7 +446,7 @@ export class App {
    * @param stubData
    * @param value
    */
-  fillReferencedTypes(stubData, value) {
+  includeReferenceTypes(stubData, value) {
     if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
       // Skip primitives & null / undefined
       return;
@@ -452,17 +469,17 @@ export class App {
 
         const refValue = this.data.structure[group][name];
         stubData.structure[group][name] = refValue;
-        this.fillReferencedTypes(stubData, refValue);
+        this.includeReferenceTypes(stubData, refValue);
       }
     }
 
     if (isPlainObject(value)) {
       for (const key of Object.keys(value)) {
-        this.fillReferencedTypes(stubData, value[key]);
+        this.includeReferenceTypes(stubData, value[key]);
       }
     } else if (Array.isArray(value)) {
       for (let i = 0; i < value.length; ++i) {
-        this.fillReferencedTypes(stubData, value[i]);
+        this.includeReferenceTypes(stubData, value[i]);
       }
     }
   }

@@ -41,7 +41,6 @@ export async function preGenerate(app, options) {
  * @return {Promise<GeneratedFile>}
  */
 export async function generate(app, options, data) {
-  data.stringified = JSON.stringify(data);
   data.routeTrie = buildTrie(data);
   data.routeTags = buildRouteTags(data);
 

@@ -6,7 +6,12 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class ReferenceType extends TypeBuilder {
-  constructor() {
+  /**
+   * @param {string|TypeBuilder} group
+   * @param {string} [name]
+   * @return {ReferenceType}
+   */
+  constructor(group, name) {
     super(referenceType.name, undefined, undefined);
 
     this.data.reference = {
@@ -16,6 +21,8 @@ class ReferenceType extends TypeBuilder {
     };
 
     this.ref = undefined;
+
+    this.set(group, name);
   }
 
   /**
@@ -36,6 +43,21 @@ class ReferenceType extends TypeBuilder {
     return this;
   }
 
+  /**
+   * @api public
+   * @param {string} referencing
+   * @param {string} [replacement]
+   * @return {ReferenceType}
+   */
+  field(referencing, replacement) {
+    this.data.reference.field = {
+      referencing,
+      replacement,
+    };
+
+    return this;
+  }
+
   build() {
     if (isNil(this.ref) && isNil(this.data.reference.group)) {
       throw new Error(
@@ -50,6 +72,7 @@ class ReferenceType extends TypeBuilder {
       result.reference = {
         group: refBuild.group,
         name: refBuild.name,
+        field: this.data.reference.field,
       };
     }
 
@@ -84,11 +107,7 @@ const referenceType = {
  * @return {ReferenceType}
  */
 TypeCreator.prototype.reference = function (groupOrOther, name) {
-  if (groupOrOther) {
-    return new ReferenceType().set(groupOrOther, name);
-  } else {
-    return new ReferenceType();
-  }
+  return new ReferenceType(groupOrOther, name);
 };
 
 TypeCreator.types.set(referenceType.name, referenceType);

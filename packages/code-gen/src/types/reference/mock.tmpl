@@ -1,1 +1,5 @@
+{{ if (model.reference.field) { }}
+{{= mockExec({ type: model.referencedItem.type, model: model.referencedItem, isInputType }).trim() }},
+{{ } else { }}
 {{= model.reference.group }}Mocks.{{= model.reference.name + (isInputType ? "Input" : "") }}(),
+{{ } }}

@@ -91,6 +91,12 @@ async function main() {
       ),
   );
 
+  app.add(
+    M.object("Foo", {
+      bar: M.reference("App", "User").field("id"),
+    }),
+  );
+
   await app.generate({
     outputDirectory: "./generated",
     useTypescript: false,

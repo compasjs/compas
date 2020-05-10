@@ -1,1 +1,5 @@
+{{ if (model.reference.field) { }}
+{{= typeExec({ type: model.referencedItem.type, model: model.referencedItem, isInputType }).trim() }}
+{{ } else { }}
 {{= model.reference.uniqueName }}{{= isInputType ? "_Input" : "" }}
+{{ } }}
