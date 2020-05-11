@@ -2,12 +2,12 @@ import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
 import { existsSync, promises } from "fs";
 import path from "path";
-import { isNamedTypeBuilderLike, TypeCreator } from "./types/index.js";
 import {
-  lowerCaseFirst,
   recursiveLinkupReferences,
-  upperCaseFirst,
-} from "./utils.js";
+  recursivelyApplyReferenceFieldsAsReferences,
+} from "./references.js";
+import { isNamedTypeBuilderLike, TypeCreator } from "./types/index.js";
+import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 const { writeFile, mkdir } = promises;
 
@@ -178,6 +178,11 @@ export class App {
     const generatorInput = JSON.parse(JSON.stringify(this.data));
     generatorInput.stringified = JSON.stringify(generatorInput.structure);
 
+    recursivelyApplyReferenceFieldsAsReferences(
+      generatorInput.structure,
+      undefined,
+      generatorInput.structure,
+    );
     recursiveLinkupReferences(
       generatorInput.structure,
       generatorInput.structure,
@@ -238,6 +243,11 @@ export class App {
     const generatorInput = JSON.parse(JSON.stringify(stubData));
     generatorInput.stringified = JSON.stringify(generatorInput.structure);
 
+    recursivelyApplyReferenceFieldsAsReferences(
+      generatorInput.structure,
+      undefined,
+      generatorInput.structure,
+    );
     recursiveLinkupReferences(
       generatorInput.structure,
       generatorInput.structure,

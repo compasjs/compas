@@ -50,7 +50,8 @@ async function main() {
 
   app.add(
     M.object("Items", {
-      userId: M.reference("App", "User"),
+      id: M.uuid(),
+      userId: M.reference("App", "User").field("id", "user"),
       name: M.string(),
       count: M.number().integer(),
       createdAt: M.date().defaultToNow(),
@@ -93,9 +94,13 @@ async function main() {
 
   app.add(
     M.object("Foo", {
-      bar: M.reference("App", "User").field("id"),
+      id: M.uuid(),
+      bar: M.reference("App", "User").field("id", "user"),
+      baz: M.reference("App", "Items").field("id", "items"),
     }),
   );
+
+  app.add(M.array("ArrayThing", M.reference("App", "Foo").field("id")));
 
   await app.generate({
     outputDirectory: "./generated",
