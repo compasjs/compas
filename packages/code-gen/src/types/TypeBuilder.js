@@ -130,3 +130,16 @@ export function isNamedTypeBuilderLike(value) {
     typeof value.name === "string"
   );
 }
+
+/**
+ * Check if value is a reference with a specified reference field
+ * @param value
+ * @return {boolean}
+ */
+export function isReferenceTypeWithField(value) {
+  if (!isPlainObject(value) || value?.type !== "reference") {
+    return false;
+  }
+
+  return isPlainObject(value.reference) && !isNil(value.reference.field);
+}
