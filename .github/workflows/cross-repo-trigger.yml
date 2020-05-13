@@ -1,5 +1,5 @@
 name: cross-repo-trigger
-on: [pull-request]
+on: [pull_request]
 
 jobs:
   cross-repo-trigger:
