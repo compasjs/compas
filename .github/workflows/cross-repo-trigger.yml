@@ -1,0 +1,10 @@
+name: cross-repo-trigger
+on: [pull-request]
+
+jobs:
+  cross-repo-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          curl -XPOST -u "dirkdev98:${{secrets.ORG_ACCESS_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/lightbase-platforms/components/dispatches --data '{"event_type": "trigger_ci", "sha": "${{ github.sha }}"}'
