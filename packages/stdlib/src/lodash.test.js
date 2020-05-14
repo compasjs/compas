@@ -1,5 +1,12 @@
 import test from "tape";
-import { flatten, isNil, isPlainObject, merge, unFlatten } from "./lodash.js";
+import {
+  camelToSnakeCase,
+  flatten,
+  isNil,
+  isPlainObject,
+  merge,
+  unFlatten,
+} from "./lodash.js";
 
 test("stdlib/lodash", (t) => {
   t.test("isNil", (t) => {
@@ -106,6 +113,14 @@ test("stdlib/lodash", (t) => {
         str: false,
       },
     );
+
+    t.end();
+  });
+
+  t.test("camelToSnakeCase", () => {
+    t.equal(camelToSnakeCase("thisISCool"), "this_is_cool");
+    t.equal(camelToSnakeCase("fileStore"), "file_store");
+    t.equal(camelToSnakeCase("FileStore"), "file_store");
 
     t.end();
   });
