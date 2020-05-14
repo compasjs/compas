@@ -4,6 +4,7 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { addToData } from "../../generate.js";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { buildTrie } from "./trie.js";
 
@@ -18,7 +19,6 @@ export async function init(app) {
 
   await compileTemplateDirectory(
     app.templateContext,
-
     join(dirnameForModule(import.meta), "templates"),
     ".tmpl",
   );
@@ -26,43 +26,30 @@ export async function init(app) {
 
 /**
  * @param {App} app
- * @param {GenerateOptions} options
+ * @param data
  * @return {Promise<void>}
  */
-// eslint-disable-next-line no-unused-vars
-export async function preGenerate(app, options) {
-  app.add(...getInternalRoutes());
+export async function preGenerate(app, data) {
+  for (const r of getInternalRoutes()) {
+    addToData(data, r.build());
+  }
 }
 
 /**
  * @param {App} app
- * @param {GenerateOptions} options
- * @param {object} data
+ * @param data
+ * @param {GenerateOpts} options
  * @return {Promise<GeneratedFile>}
  */
-export async function generate(app, options, data) {
+export async function generate(app, data, options) {
   data.routeTrie = buildTrie(data);
   data.routeTags = buildRouteTags(data);
 
-  return {
-    path: "./router.js",
-    source: executeTemplate(app.templateContext, "routerFile", {
-      ...data,
-      options,
-    }),
-  };
-}
+  const template = options.useStubGenerators ? "routerStubsFile" : "routerFile";
 
-/**
- * @param {App} app
- * @param {GenerateStubsOptions} options
- * @param {object} data
- * @return {Promise<GeneratedFile>}
- */
-export async function generateStubs(app, options, data) {
   return {
     path: "./router.js",
-    source: executeTemplate(app.templateContext, "routerStubsFile", {
+    source: executeTemplate(app.templateContext, template, {
       ...data,
       options,
     }),
