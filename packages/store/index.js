@@ -37,3 +37,4 @@ export { JobQueueWorker, addJobToQueue } from "./src/queue.js";
 export { newSessionStore } from "./src/sessions.js";
 
 export const migrations = dirnameForModule(import.meta) + "/migrations";
+export { structure as storeStructure } from "./src/generated/structure.js";

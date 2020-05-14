@@ -14,6 +14,7 @@ async function main() {
       generators.mock,
       generators.router,
       generators.apiClient,
+      generators.sql,
     ],
     verbose: true,
   });
@@ -33,5 +34,6 @@ async function main() {
   await app.generate({
     outputDirectory: "./src/generated",
     useTypescript: false,
+    dumpStructure: true,
   });
 }

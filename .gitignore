@@ -19,6 +19,8 @@ package-lock.json
 *.test-gen.*
 .nyc_output
 
-# Generated
-/generated
+/generated/*
+/packages/**/generated/*
 /stubs
+
+!packages/**/generated/structure.js
