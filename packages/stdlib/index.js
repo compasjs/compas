@@ -6,6 +6,7 @@ export {
   merge,
   flatten,
   unFlatten,
+  camelToSnakeCase,
 } from "./src/lodash.js";
 export {
   exec,
