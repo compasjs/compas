@@ -27,6 +27,10 @@ export function collectScripts() {
   const userDir = join(process.cwd(), "scripts");
   if (existsSync(userDir)) {
     for (const item of readdirSync(userDir)) {
+      if (!item.endsWith(".js")) {
+        continue;
+      }
+
       const name = item.split(".")[0];
 
       result[name] = {
