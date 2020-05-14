@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### [v0.0.17](https://github.com/lightbasenl/lbu/releases/tag/v0.0.17)
+
+- @lbu/cli: various template fixes
+- @lbu/\*: various dependency updates
+- @lbu/server: add a sendFile utility
+- @lbu/stdlib: add camelToSnakecase utility
+- @lbu/store: add JobQueue implementation
+- @lbu/code-gen: normalize generate & generateStubs
+- @lbu/code-gen: add basic sql query generator
+
 ### [v0.0.16](https://github.com/lightbasenl/lbu/releases/tag/v0.0.16)
 
 - @lbu/code-gen: minor fixes
