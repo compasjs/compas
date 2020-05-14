@@ -5,6 +5,15 @@ import { lowerCaseFirst } from "../utils.js";
  * Provide base properties for types
  */
 export class TypeBuilder {
+  static baseData = {
+    type: undefined,
+    group: undefined,
+    name: undefined,
+    docString: "",
+    isOptional: false,
+    defaultValue: undefined,
+  };
+
   /**
    * Create a new TypeBuilder for the provided group
    * @param {string} type
@@ -13,12 +22,10 @@ export class TypeBuilder {
    */
   constructor(type, group, name) {
     this.data = {
+      ...TypeBuilder.baseData,
       type,
       group,
       name,
-      docString: "",
-      isOptional: false,
-      defaultValue: undefined,
     };
   }
 
