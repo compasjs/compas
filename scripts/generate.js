@@ -1,6 +1,7 @@
 import { App, generators, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
+import { storeStructure } from "@lbu/store";
 
 mainFn(import.meta, log, main);
 
@@ -15,6 +16,7 @@ async function main() {
       generators.mock,
       generators.router,
       generators.apiClient,
+      generators.sql,
     ],
     verbose: true,
   });
@@ -93,15 +95,28 @@ async function main() {
       ),
   );
 
+  const tmp = M.object("Temporary", { foo: M.number().min(10) });
+
   app.add(
     M.object("Foo", {
-      id: M.uuid(),
+      id: M.uuid().primary(),
       bar: M.reference("App", "User").field("id", "user"),
       baz: M.reference("App", "Items").field("id", "items"),
+      tmp: tmp,
     }),
   );
 
   app.add(M.array("ArrayThing", M.reference("App", "Foo").field("id")));
+
+  app.extend(storeStructure);
+
+  app.add(
+    M.object("fileMeta", {
+      id: M.uuid().primary(),
+      file_id: M.reference("Store", "fileStore").field("id", "file"),
+      is_processed: M.bool().default("false"),
+    }).enableQueries(),
+  );
 
   await app.generate({
     outputDirectory: "./generated",
