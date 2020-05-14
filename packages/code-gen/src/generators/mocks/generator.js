@@ -24,45 +24,21 @@ TypeBuilder.prototype.mock = function (mockFn) {
 
 /**
  * @param {App} app
- * @param {GenerateOptions} options
+ * @param data
+ * @param {GenerateOpts} options
  * @return {Promise<void>}
  */
-export async function preGenerate(app, options) {
+export async function preGenerate(app, data, options) {
   await compileTemplates(app.templateContext, options);
 }
 
 /**
  * @param {App} app
- * @param {GenerateOptions} options
- * @param {object} data
+ * @param data
+ * @param {GenerateOpts} options
  * @return {Promise<GeneratedFile>}
  */
-export async function generate(app, options, data) {
-  return {
-    path: "./mocks.js",
-    source: executeTemplate(app.templateContext, "mocksFile", {
-      ...data,
-      options,
-    }),
-  };
-}
-
-/**
- * @param {App} app
- * @param {GenerateStubsOptions} options
- * @return {Promise<void>}
- */
-export async function preGenerateStubs(app, options) {
-  await compileTemplates(app.templateContext, options);
-}
-
-/**
- * @param {App} app
- * @param {GenerateStubsOptions} options
- * @param {object} data
- * @return {Promise<GeneratedFile>}
- */
-export async function generateStubs(app, options, data) {
+export async function generate(app, data, options) {
   return {
     path: "./mocks.js",
     source: executeTemplate(app.templateContext, "mocksFile", {
@@ -74,7 +50,7 @@ export async function generateStubs(app, options, data) {
 
 /**
  * @param {TemplateContext} tc
- * @param {GenerateOptions} options
+ * @param {GenerateOpts} options
  * @return {Promise<void>}
  */
 async function compileTemplates(tc, options) {

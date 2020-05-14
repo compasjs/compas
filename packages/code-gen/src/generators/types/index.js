@@ -1,9 +1,4 @@
-import {
-  generate,
-  generateStubs,
-  preGenerate,
-  preGenerateStubs,
-} from "./generator.js";
+import { generate, preGenerate } from "./generator.js";
 
 /**
  *
@@ -13,6 +8,4 @@ export const typeGenerator = {
   name: "type",
   preGenerate,
   generate,
-  preGenerateStubs,
-  generateStubs,
 };
