@@ -20,7 +20,7 @@
   "dependencies": {
     "@lbu/insight": "^0.0.16",
     "@lbu/stdlib": "^0.0.16",
-    "nodemon": "2.0.3",
+    "nodemon": "2.0.4",
     "tape": "5.0.0"
   },
   "author": {
