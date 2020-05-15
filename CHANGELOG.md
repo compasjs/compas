@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.18](https://github.com/lightbasenl/lbu/releases/tag/v0.0.18)
+
+- @lbu/stdlib: vendor uuid v4 generation
+
 ### [v0.0.17](https://github.com/lightbasenl/lbu/releases/tag/v0.0.17)
 
 - @lbu/cli: various template fixes
