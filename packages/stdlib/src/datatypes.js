@@ -1,4 +1,4 @@
-import { v4 } from "uuid";
+import { v4 } from "./vendor/uuid.js";
 
 /**
  * Return a new uuid v4
