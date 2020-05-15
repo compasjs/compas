@@ -12,9 +12,9 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.17",
-    "@lbu/insight": "0.0.17",
-    "@lbu/lint-config": "0.0.17",
+    "@lbu/cli": "0.0.18",
+    "@lbu/insight": "0.0.18",
+    "@lbu/lint-config": "0.0.18",
     "lerna": "3.21.0",
     "tape": "5.0.0"
   },
