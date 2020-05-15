@@ -61,9 +61,13 @@ of a program. e.g. `node ./generate.js`.
 Let's tie all imported functions together in to a single main function:
 
 ```ecmascript 6
+import { App, generators, loadFromRemote } from "@lbu/code-gen";
+import { log } from "@lbu/insight";
+import { mainFn } from "@lbu/stdlib";
+
 async function main() {
   const app = new App({
-    generators: [generators.apiClient, generators.type],
+    generators: [generators.type, generators.apiClient],
     verbose: true,
   });
 
@@ -73,7 +77,7 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./src/generated",
-   useTypescript: false,
+    useTypescript: false,
   });
 }
 
