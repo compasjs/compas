@@ -1,25 +1,21 @@
 import { inspect } from "util";
 
-export function writeNDJSON(stream, depth, input) {
-  input.timestamp = input.timestamp.toISOString();
-  input.message = formatMessage(depth, input.message);
-
-  stream.write(JSON.stringify(input));
+export function writeNDJSON(stream, depth, level, timestamp, context, message) {
+  stream.write(
+    JSON.stringify({
+      level,
+      ...context,
+      timestamp: timestamp.toISOString(),
+      message: formatMessage(depth, message),
+    }),
+  );
   stream.write("\n");
 }
 
-export function writePretty(
-  stream,
-  depth,
-  { level, type, timestamp, message, ...ctx },
-) {
+export function writePretty(stream, depth, level, timestamp, context, message) {
   stream.write(formatDate(timestamp));
   stream.write(" ");
-  stream.write(formatLevelAndType(level, type));
-
-  if (Array.isArray(message) && Object.keys(ctx).length > 0) {
-    message.unshift(ctx);
-  }
+  stream.write(formatLevelAndType(level, context?.type));
 
   if (message) {
     stream.write(" ");
@@ -28,8 +24,8 @@ export function writePretty(
         message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
       );
     } else {
-      if (Object.keys(ctx).length > 0) {
-        stream.write(formatMessagePretty(depth - 1, ctx));
+      if (Object.keys(context).length > 0) {
+        stream.write(formatMessagePretty(depth - 1, context));
         stream.write(" ");
       }
       stream.write(formatMessagePretty(depth - 1, message));

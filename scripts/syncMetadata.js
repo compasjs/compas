@@ -19,7 +19,7 @@ function main(logger) {
   const packages = readdirSync(packagesDir);
   const readmeSource = getReadmeSource();
 
-  logger.info("Updating", packages.length, "README.md's");
+  logger.info(`Updating ${packages.length} README.md's`);
 
   for (const pkg of packages) {
     const pkgDir = join(packagesDir, pkg);

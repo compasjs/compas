@@ -5,16 +5,15 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * @property {boolean} [pretty=false]
  * @property {number} [depth=3]
  * @property {WriteStream} [stream=process.stdout]
- * @property {object} [ctx={}]
+ * @property {*|{type: string}} [ctx]
  */
 
 /**
- * @typedef {function(args: ...*): undefined} LogFn
+ * @typedef {function(arg: *): undefined} LogFn
  */
 
 /**
  * @typedef {object} Logger
- * @property {function(opts: LoggerOptions): Logger} derive
  * @property {function(): boolean} isProduction
  * @property {LogFn} info
  * @property {LogFn} error
@@ -26,50 +25,52 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * @return {Logger}
  */
 export function newLogger(options) {
-  let _internal = Object.assign(
-    {
-      pretty: process.env.NODE_ENV !== "production",
-      depth: 3,
-      stream: process.stdout,
-      ctx: {},
-    },
-    options,
-  );
+  const isProduction =
+    options?.pretty === false || process.env.NODE_ENV === "production";
+  const stream = options?.stream ?? process.stdout;
+  const depth = options?.depth ?? 3;
 
+  const logFn = isProduction
+    ? wrapWriter(writeNDJSON)
+    : wrapWriter(writePretty);
+
+  if (options?.ctx === undefined) {
+    return {
+      isProduction: () => isProduction,
+      info: logFn.bind(undefined, stream, depth, "info"),
+      error: logFn.bind(undefined, stream, depth, "error"),
+    };
+  } else {
+    return {
+      isProduction: () => isProduction,
+      info: logFn.bind(undefined, stream, depth, "info", options.ctx),
+      error: logFn.bind(undefined, stream, depth, "error", options.ctx),
+    };
+  }
+}
+
+/**
+ * Bind a context object to the logger functions and returns a new Logger
+ * @param {Logger} logger
+ * @param {*} ctx
+ * @return {Logger}
+ */
+export function bindLoggerContext(logger, ctx) {
+  const isProd = logger.isProduction();
   return {
-    isProduction: () => !_internal.pretty,
-    info: logger.bind(
-      undefined,
-      _internal.pretty,
-      _internal.stream,
-      _internal.depth,
-      _internal.ctx,
-      "info",
-    ),
-    error: logger.bind(
-      undefined,
-      _internal.pretty,
-      _internal.stream,
-      _internal.depth,
-      _internal.ctx,
-      "error",
-    ),
-    derive: (opts) => {
-      return newLogger({ ..._internal, ...opts });
-    },
+    isProduction: () => isProd,
+    info: logger.info.bind(undefined, ctx),
+    error: logger.error.bind(undefined, ctx),
   };
 }
 
-function logger(pretty, stream, depth, ctx, level, ...args) {
-  const metaData = {
-    ...ctx,
-    level,
-    timestamp: new Date(),
-    message: args.length === 1 ? args[0] : args,
+function wrapWriter(fn) {
+  return function log(stream, depth, level, context, message) {
+    const timestamp = new Date();
+    if (!message) {
+      message = context;
+      context = {};
+    }
+    fn(stream, depth, level, timestamp, context, message);
   };
-  if (!pretty) {
-    writeNDJSON(stream, depth, metaData);
-  } else {
-    writePretty(stream, depth, metaData);
-  }
 }

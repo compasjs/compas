@@ -65,7 +65,13 @@ export async function executeCommand(
   nodemonArgs,
 ) {
   if (verbose) {
-    logger.info("Executing command", { verbose, watch, command, commandArgs });
+    logger.info({
+      msg: "Executing command",
+      verbose,
+      watch,
+      command,
+      commandArgs,
+    });
   }
 
   if (!watch) {
@@ -85,7 +91,7 @@ export async function executeCommand(
         if (!files || files.length === 0) {
           logger.info("Script restart manually");
         } else {
-          logger.info("Script restart due to file change", files);
+          logger.info("Script restart due to file change");
         }
       }
     })

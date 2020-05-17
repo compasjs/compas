@@ -100,7 +100,8 @@ export class App {
     }
 
     if (this.verbose) {
-      this.logger.info("registered plugins: ", {
+      this.logger.info({
+        msg: "Registered plugins: ",
         generators: [...this.generators.keys()],
         types: [...TypeCreator.types.keys()],
       });

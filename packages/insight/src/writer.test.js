@@ -11,12 +11,7 @@ test("insight/writer", (t) => {
       },
     };
 
-    writePretty(mock, 3, {
-      level: "info",
-      type: undefined,
-      timestamp: now,
-      message: {},
-    });
+    writePretty(mock, 3, "info", now, {}, {});
 
     t.equal(result.length, 6);
     t.match(result[0], /\d{2}:\d{2}:\d{2}.\d{3}/);
@@ -24,14 +19,18 @@ test("insight/writer", (t) => {
     t.ok(result[2].indexOf("info") !== -1, "should print log level");
 
     result = [];
-    writePretty(mock, 2, {
-      level: "info",
-      type: "foo",
-      timestamp: now,
-      message: { foo: { bar: { baz: "quix" } } },
-    });
+    writePretty(
+      mock,
+      2,
+      "info",
+      now,
+      { type: "foo" },
+      {
+        foo: { bar: { baz: "quix" } },
+      },
+    );
 
-    t.equal(result.length, 6);
+    t.equal(result.length, 8);
     t.ok(result[2].indexOf("foo") !== -1, "should print log type");
     t.ok(
       result[4].indexOf("quix") === -1,
@@ -50,12 +49,7 @@ test("insight/writer", (t) => {
       },
     };
 
-    writeNDJSON(mock, 3, {
-      level: "info",
-      type: undefined,
-      timestamp: now,
-      message: {},
-    });
+    writeNDJSON(mock, 3, "info", now, {}, {});
 
     t.equal(result.length, 2);
     t.equal(
@@ -66,15 +60,19 @@ test("insight/writer", (t) => {
     t.equal(result[1].trim(), "");
 
     result = [];
-    writeNDJSON(mock, 2, {
-      level: "info",
-      type: "foo",
-      timestamp: now,
-      message: { foo: { bar: { baz: "quix" } } },
-    });
+    writeNDJSON(
+      mock,
+      2,
+      "info",
+      now,
+      {
+        type: "foo",
+      },
+      { foo: { bar: { baz: "quix" } } },
+    );
 
     t.equal(result.length, 2);
-    t.equal(JSON.parse(result[0]).type, "foo", "should print log type");
+    t.equal(JSON.parse(result[0])?.type, "foo", "should print log type");
     t.ok(
       result[0].indexOf("quix") === -1,
       "should print nesting according to depth",

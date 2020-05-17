@@ -1,4 +1,4 @@
-import { newLogger } from "@lbu/insight";
+import { bindLoggerContext, newLogger } from "@lbu/insight";
 import { isNil, uuid } from "@lbu/stdlib";
 import { Transform } from "stream";
 
@@ -6,6 +6,10 @@ import { Transform } from "stream";
  * Log basic request and response information
  */
 export function logMiddleware() {
+  const logger = newLogger({
+    depth: 5,
+  });
+
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
 
@@ -15,12 +19,9 @@ export function logMiddleware() {
     }
     ctx.set("X-Request-Id", requestId);
 
-    ctx.log = newLogger({
-      depth: 5,
-      ctx: {
-        type: "http",
-        requestId,
-      },
+    ctx.log = bindLoggerContext(logger, {
+      type: "http",
+      requestId,
     });
 
     await next();
@@ -46,11 +47,11 @@ export function logMiddleware() {
  * @return {boolean}
  */
 export function isServerLog(obj) {
-  if (!obj.type || obj.type !== "http") {
+  if (obj?.type !== "http") {
     return false;
   }
 
-  if (!obj.message || (!obj.message.request && !obj.message.response)) {
+  if (!obj.message?.request || !obj.message.response) {
     return false;
   }
 
