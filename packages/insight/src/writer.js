@@ -24,7 +24,13 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
         message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
       );
     } else {
-      if (Object.keys(context).length > 0) {
+      let keyCount = 0;
+      if (context?.type) {
+        // Dynamic conditional for context writing
+        keyCount = 1;
+      }
+
+      if (Object.keys(context).length > keyCount) {
         stream.write(formatMessagePretty(depth - 1, context));
         stream.write(" ");
       }
