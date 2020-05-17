@@ -22,14 +22,18 @@
 {{ for (const groupName of Object.keys(structure)) { }}
   /**
    * @name {{= groupName }}Api
-
+  {{ let hasRoute = false; }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
 
     {{ if (item.type !== "route") { }}
     {{ continue; }}
     {{ } }}
+    {{ hasRoute = true; }}
     * @property { {{= item.uniqueName }}Call} {{= item.name }}
+  {{ } }}
+  {{ if (!hasRoute) { }}
+    * @typedef {object}
   {{ } }}
  */
 {{ } }}

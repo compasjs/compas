@@ -95,20 +95,9 @@ export function compileTemplate(tc, name, str, opts = {}) {
     p.push('${compiled}');
     }}
     
-    let hasEmptyLine = false;
-    return p.filter(it => {
-      if (typeof it === "string" && it.trim() === "") {
-        if (hasEmptyLine) {
-          return false;
-        } else {
-          hasEmptyLine = true;
-          return true;
-        }
-      } else {
-        hasEmptyLine = false;
-        return true;
-      }
-    }).join('');
+    return p.join('')
+      .replace(/^(\\s*\\r?\\n){2,}/gm, '\\n') // Replace multiple new lines
+      .replace(/^\\s*\\*\\s*([^\\n\\/\\*]+)\\s*\\n+/gm, ' * $1\\n '); // replace empty lines in JSDoc
   `,
       ),
     );

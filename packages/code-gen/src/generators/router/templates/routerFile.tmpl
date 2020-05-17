@@ -152,7 +152,7 @@ export function router(ctx, next) {
 
 lbuHandlers.structure = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
-  ctx.body = "{{= stringified.replace(/"/g, "\\\"") }}";
+  ctx.body = '{{= stringified }}';
 
   return next();
 }
