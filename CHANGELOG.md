@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.19](https://github.com/lightbasenl/lbu/releases/tag/v0.0.18)
+
+- @lbu/insight: BREAKING, remove 'varargs' support from logger
+- @lbu/code-gen: reuse generated validators
+- @lbu/code-gen: strip more new lines from output, which results in better
+  readability
+
 ### [v0.0.18](https://github.com/lightbasenl/lbu/releases/tag/v0.0.18)
 
 - @lbu/stdlib: vendor uuid v4 generation
