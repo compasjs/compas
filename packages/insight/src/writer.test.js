@@ -30,7 +30,7 @@ test("insight/writer", (t) => {
       },
     );
 
-    t.equal(result.length, 8);
+    t.equal(result.length, 6);
     t.ok(result[2].indexOf("foo") !== -1, "should print log type");
     t.ok(
       result[4].indexOf("quix") === -1,
