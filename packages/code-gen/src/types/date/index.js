@@ -2,6 +2,7 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const stringType = JSON.stringify(
   {
+    ...TypeBuilder.baseData,
     type: "string",
     validator: {
       min: 24,
@@ -35,10 +36,9 @@ const dateType = {
   jsType: () => `{{ if (it.isInputType) { }}string{{ } else { }}Date{{ } }}`,
   tsType: () => `{{ if (it.isInputType) { }}string{{ } else { }}Date{{ } }}`,
   validator: () => `
-{{ const num = ctx.counter; }}
-{{ ctx.addFunc(validatorsAnonFn({ model: ${stringType}, ctx })); }}
+{{ const fnNumber = ctx.anonFn(${stringType}); }}
 
-const interim = stringValidator{{= num }}(value, propertyPath, parentType);
+const interim = stringValidator{{= fnNumber }}(value, propertyPath, parentType);
 let d;
 try {
   d = new Date(interim);

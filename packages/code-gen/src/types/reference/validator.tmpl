@@ -1,7 +1,6 @@
 {{ if (model.reference.field) { }}
-  {{ const num = ctx.counter; }}
-  {{ ctx.addFunc(validatorsAnonFn({ model: model.referencedItem, ctx })); }}
-  return {{= model.referencedItem.type }}Validator{{= num }}(value, propertyPath);
+  {{ const fnNumber = ctx.anonFn(model.referencedItem); }}
+  return {{= model.referencedItem.type }}Validator{{= fnNumber }}(value, propertyPath);
 {{ } else { }}
 return {{= lowerCaseFirst(model.reference.group) }}Validators.{{= lowerCaseFirst(model.reference.name) }}(value, propertyPath);
 {{ } }}

@@ -2,10 +2,9 @@ const errors = [];
 
 {{ for (const v of model.values) { }}
   try {
-    {{ const num = ctx.counter; }}
-    {{ ctx.addFunc(validatorsAnonFn({ model: v, ctx })); }}
+    {{ const fnNumber = ctx.anonFn(v); }}
 
-    return {{= v.type }}Validator{{= num }}(value, propertyPath);
+    return {{= v.type }}Validator{{= fnNumber }}(value, propertyPath);
   } catch (e) {
     errors.push({
       name: e.name,

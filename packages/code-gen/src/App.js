@@ -1,5 +1,6 @@
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, isPlainObject, newTemplateContext } from "@lbu/stdlib";
+import { inspect } from "util";
 import {
   addToData,
   callGeneratorMethod,
@@ -90,6 +91,8 @@ export class App {
   async init() {
     this.templateContext.globals["upperCaseFirst"] = upperCaseFirst;
     this.templateContext.globals["lowerCaseFirst"] = lowerCaseFirst;
+    this.templateContext.globals["inspect"] = (arg) =>
+      inspect(arg, { sorted: true, colors: false });
 
     for (const g of this._generatorList) {
       if (isNil(g.name)) {

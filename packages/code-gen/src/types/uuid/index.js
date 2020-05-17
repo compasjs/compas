@@ -2,6 +2,7 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const stringType = JSON.stringify(
   {
+    ...TypeBuilder.baseData,
     type: "string",
     validator: {
       min: 36,
@@ -28,10 +29,9 @@ const uuidType = {
   jsType: () => `string`,
   tsType: () => `string`,
   validator: () => `
-{{ const num = ctx.counter; }}
-{{ ctx.addFunc(validatorsAnonFn({ model: ${stringType}, ctx })); }}
+{{ const fnNumber = ctx.anonFn(${stringType}); }}
 
-return stringValidator{{= num }}(value, propertyPath, parentType);
+return stringValidator{{= fnNumber }}(value, propertyPath, parentType);
 `,
   mock: () => `_mocker.guid({version: 4}),\n`,
 };

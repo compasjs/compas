@@ -1,8 +1,5 @@
-{{ const numKeys = ctx.counter; }}
-{{ const numValues = ctx.counter + 1; }}
-{{ ctx.addFunc(validatorsAnonFn({ model: model.keys, ctx })); }}
-{{ ctx.addFunc(validatorsAnonFn({ model: model.values, ctx })); }}
-
+{{ const fnNumberKeys = ctx.anonFn(model.keys); }}
+{{ const fnNumberValues = ctx.anonFn(model.values); }}
 
 if (typeof value !== "object") {
   throw _errorFn(`validator.${parentType}.type`, { propertyPath });
@@ -10,8 +7,8 @@ if (typeof value !== "object") {
 
 const result = Object.create(null);
 for (const key of Object.keys(value)) {
-  const validatedKey = {{= model.keys.type }}Validator{{= numKeys }}(key, propertyPath + ".$key");
-  const validatedValue = {{= model.values.type }}Validator{{= numValues }}(value[key], propertyPath + ".$value");
+  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + ".$key");
+  const validatedValue = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + ".$value");
 
   result[validatedKey] = validatedValue;
 }

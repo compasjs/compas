@@ -1,8 +1,7 @@
 {{ const numMap = {}; }}
 {{ let idx = 0; }}
 {{ for (const key of Object.keys(model.keys)) { }}
-  {{ numMap[key] = ctx.counter; }}
-  {{ ctx.addFunc(validatorsAnonFn({ model: model.keys[key], ctx })); }}
+  {{ numMap[key] = ctx.anonFn(model.keys[key]); }}
 {{ } }}
 
 

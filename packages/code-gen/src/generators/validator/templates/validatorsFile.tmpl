@@ -30,8 +30,9 @@ export function validatorSetErrorFn(fn) {
   _errorFn = fn;
 }
 
-{{ const ctx = { counter: 0, functions: [] }; }}
+{{ const ctx = { counter: 0, functions: [], memo: new Map() }; }}
 {{ ctx.addFunc = fn => { ctx.functions.push(fn); }; }}
+{{ ctx.anonFn = (model) => { const key = inspect(model); if (!ctx.memo.has(key)) { const nr = ctx.counter; ctx.addFunc(validatorsAnonFn({ model, ctx })); ctx.memo.set(key, nr); } return ctx.memo.get(key); }; }}
 
 {{ for (const groupName of Object.keys(structure)) { }}
 

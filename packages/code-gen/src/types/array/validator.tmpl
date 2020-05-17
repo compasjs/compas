@@ -1,5 +1,4 @@
-{{ const num = ctx.counter; }}
-{{ ctx.addFunc(validatorsAnonFn({ model: model.values, ctx })); }}
+{{ const fnNumber = ctx.anonFn(model.values); }}
 
 {{ if (model.validator.convert) { }}
   if (!Array.isArray(value)) {
@@ -28,7 +27,7 @@ if (!Array.isArray(value)) {
 const result = [];
 
 for (let i = 0; i < value.length; ++i) {
-  result.push({{= model.values.type }}Validator{{= num }}(value[i], propertyPath + "[" + i + "]"));
+  result.push({{= model.values.type }}Validator{{= fnNumber }}(value[i], propertyPath + "[" + i + "]"));
 }
 
 return result;

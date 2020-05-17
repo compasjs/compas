@@ -1,3 +1,5 @@
+{{ const fnNumber = ctx.anonFn(model); }}
+
 /**
  * {{= model.docString }}
  * @param {*} value
@@ -13,7 +15,7 @@
     result = validatorHooks[{{= preValidate }}](result);
  }
 
- result = {{= model.type }}Validator{{= ctx.counter }}(result, propertyPath);
+ result = {{= model.type }}Validator{{= fnNumber }}(result, propertyPath);
 
  if ({{= postValidate }} in validatorHooks) {
     return validatorHooks[{{= postValidate }}](result);
@@ -21,5 +23,3 @@
    return result;
  }
 },
-
-{{ ctx.addFunc(validatorsAnonFn({ model, ctx })); }}
