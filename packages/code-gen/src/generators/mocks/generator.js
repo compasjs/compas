@@ -17,7 +17,7 @@ TypeBuilder.prototype.mock = function (mockFn) {
   if (!this.data.mocks) {
     this.data.mocks = {};
   }
-  this.data.mocks = mockFn.replace(/__/g, "_mocker");
+  this.data.mocks.rawMock = mockFn.replace(/__/g, "_mocker");
 
   return this;
 };
@@ -58,7 +58,7 @@ async function compileTemplates(tc, options) {
     fnStringStart: `
   {{ if (it.model && it.model.mocks && it.model.mocks.rawMock) { }}
      {{= it.model.mocks.rawMock }}
-   {{ } }}
+   {{ } else { }}
   {{ let result = ''; }}`,
     fnStringAdd: (type, templateName) =>
       `{{ if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}{{ } }}\n`,
@@ -77,6 +77,7 @@ async function compileTemplates(tc, options) {
   {{ } else { }}
    _mocker.pickone([ {{= result.trim().replace(/\\s+/g, " ") }} ])
    {{ } }} 
+  {{ } }}
   `,
   });
 
