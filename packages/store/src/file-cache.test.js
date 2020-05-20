@@ -127,7 +127,7 @@ test("store/file-cache", async (t) => {
     t.equal(buffer.length, 10);
     t.ok(existsSync(path));
     t.ok(
-      lstatSync(path).ctime.getTime() < new Date().getTime(),
+      lstatSync(path).mtimeMs < new Date().getTime(),
       "file created before current time",
     );
   });
@@ -137,7 +137,7 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("create file again after clear", async (t) => {
-    const now = new Date();
+    const now = new Date().getTime();
     const path = FileCache.fileCachePath + "/" + files.large.id;
 
     const buffer = await streamToBuffer(
@@ -146,7 +146,7 @@ test("store/file-cache", async (t) => {
     t.equal(buffer.length, 10);
     t.ok(existsSync(path));
     t.ok(
-      lstatSync(path).ctime.getTime() > now.getTime(),
+      lstatSync(path).mtimeMs > now,
       "file created after start of this test block",
     );
   });
