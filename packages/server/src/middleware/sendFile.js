@@ -12,7 +12,7 @@
 /**
  * @name GetStreamFn
  * @typedef {Function}
- * @param {*} id
+ * @param {SendFile} fileInfo
  * @param {number} [start]
  * @param {number} [end]
  * @return {Promise<{ stream: ReadableStream, cacheControl?: string}>}
@@ -56,7 +56,7 @@ export async function sendFile(ctx, file, getStreamFn) {
       ctx.set("Content-Length", String(chunkSize));
       ctx.set("Content-Range", `bytes ${start}-${end}/${file.content_length}`);
 
-      const { stream, cacheControl } = await getStreamFn(file.id, start, end);
+      const { stream, cacheControl } = await getStreamFn(file, start, end);
       if (!isNil(cacheControl)) {
         ctx.set("Cache-Control", cacheControl);
       }
@@ -67,7 +67,7 @@ export async function sendFile(ctx, file, getStreamFn) {
       ctx.set("Content-Length", String(file.content_length));
       ctx.set("Content-Range", `bytes */${file.content_length}`);
 
-      const { stream, cacheControl } = await getStreamFn(file.id);
+      const { stream, cacheControl } = await getStreamFn(file);
       if (!isNil(cacheControl)) {
         ctx.set("Cache-Control", cacheControl);
       }
@@ -77,7 +77,7 @@ export async function sendFile(ctx, file, getStreamFn) {
   } else {
     ctx.set("Content-Length", String(file.content_length));
 
-    const { stream, cacheControl } = await getStreamFn(file.id);
+    const { stream, cacheControl } = await getStreamFn(file);
     if (!isNil(cacheControl)) {
       ctx.set("Cache-Control", cacheControl);
     }

@@ -19,15 +19,15 @@ test("server/sendFile", (t) => {
   };
 
   const getFileFnMock = (returnCacheControl) => {
-    return (id) => {
+    return (file) => {
       if (returnCacheControl) {
         return {
-          stream: id,
+          stream: file.id,
           cacheControl: "CacheControl",
         };
       } else {
         return {
-          stream: id,
+          stream: file.id,
         };
       }
     };
