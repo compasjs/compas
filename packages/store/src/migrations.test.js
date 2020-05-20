@@ -19,8 +19,6 @@ test("store/migrations", (t) => {
 
     let result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
-
-    t.end();
   });
 
   t.test("run full migration", async (t) => {
@@ -35,15 +33,12 @@ test("store/migrations", (t) => {
     const list = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);
 
-    t.ok(list[0].isMigrated === false);
     t.ok(list[0].repeatable === false);
     t.ok(list[0].number === 1);
 
-    t.ok(list[1].isMigrated === false);
     t.ok(list[1].repeatable === true);
     t.ok(list[1].number === 2);
 
-    t.ok(list[2].isMigrated === false);
     t.ok(list[2].repeatable === false);
     t.ok(list[2].number === 3);
 
@@ -51,14 +46,19 @@ test("store/migrations", (t) => {
     let testResult = await sql`SELECT *
                                FROM test_table;`;
     t.deepEqual([...testResult], [{ value: 1 }, { value: 2 }, { value: 3 }]);
+  });
 
-    t.end();
+  t.test("second run has no migrations to be applied", async (t) => {
+    const mc = await newMigrateContext(
+      sql,
+      dirnameForModule(import.meta) + "/../__fixtures__",
+    );
+
+    t.equal(getMigrationsToBeApplied(mc), false);
   });
 
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     t.ok(true);
-
-    t.end();
   });
 });

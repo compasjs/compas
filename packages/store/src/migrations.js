@@ -59,10 +59,39 @@ export async function newMigrateContext(
 }
 
 /**
+ * Get a list of migrations to be applied
+ * @param {MigrateContext} mc
+ * @return {({name: string, number: number, repeatable: boolean}[])|boolean}
+ */
+export function getMigrationsToBeApplied(mc) {
+  const list = filterMigrationsToBeApplied(mc);
+  if (list.length === 0) {
+    return false;
+  }
+
+  return list.map((it) => ({
+    name: `${it.namespace}/${it.name}`,
+    number: it.number,
+    repeatable: it.repeatable,
+  }));
+}
+
+/**
+ * @param {MigrateContext} mc
+ */
+export async function runMigrations(mc) {
+  const migrationFiles = filterMigrationsToBeApplied(mc);
+
+  for (const migration of migrationFiles) {
+    await runMigration(mc.sql, migration);
+  }
+}
+
+/**
  * @param {MigrateContext} mc
  * @return {MigrateFile[]}
  */
-export function getMigrationsToBeApplied(mc) {
+function filterMigrationsToBeApplied(mc) {
   const result = [];
   for (const f of mc.files) {
     if (!f.isMigrated) {
@@ -76,17 +105,6 @@ export function getMigrationsToBeApplied(mc) {
   }
 
   return result;
-}
-
-/**
- * @param {MigrateContext} mc
- */
-export async function runMigrations(mc) {
-  const migrationFiles = getMigrationsToBeApplied(mc);
-
-  for (const migration of migrationFiles) {
-    await runMigration(mc.sql, migration);
-  }
 }
 
 /**
