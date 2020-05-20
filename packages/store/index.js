@@ -32,6 +32,8 @@ export {
   syncDeletedFiles,
 } from "./src/files.js";
 
+export { FileCache } from "./src/file-cache.js";
+
 export { JobQueueWorker, addJobToQueue } from "./src/queue.js";
 
 export { newSessionStore } from "./src/sessions.js";
