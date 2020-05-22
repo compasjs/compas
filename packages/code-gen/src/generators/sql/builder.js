@@ -170,7 +170,10 @@ function getWhereInfo(table) {
   let queryPart = ``;
 
   for (const key of keys) {
-    queryPart += ` (\${where.${key}} IS NULL OR ${key} = \${where.${key}}) AND`;
+    // Using COALESCE forces Postgres to evaluate the passed-in value as a PG value
+    // instead of an identifier. The `xxx IS NULL` does not seem to incur a performance
+    // regression in the execution plans
+    queryPart += ` (COALESCE(\${where.${key}}, NULL) IS NULL OR ${key} = \${where.${key}}) AND`;
   }
 
   queryPart = "WHERE " + queryPart.substring(0, queryPart.length - 4).trim();
