@@ -138,7 +138,7 @@ test("store/file-cache", async (t) => {
 
   t.test("create file again after clear", async (t) => {
     const now = new Date().getTime();
-    await new Promise((r) => setTimeout(r, 2));
+    await new Promise((r) => setTimeout(r, 5));
     const path = FileCache.fileCachePath + "/" + files.large.id;
 
     const buffer = await streamToBuffer(
