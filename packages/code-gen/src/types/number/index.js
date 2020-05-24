@@ -5,15 +5,22 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class NumberType extends TypeBuilder {
-  constructor(group, name) {
-    super(numberType.name, group, name);
-
-    this.data.oneOf = undefined;
-    this.data.validator = {
+  static baseData = {
+    oneOf: undefined,
+    validator: {
       convert: false,
       integer: false,
       min: undefined,
       max: undefined,
+    },
+  };
+
+  constructor(group, name) {
+    super(numberType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...NumberType.baseData,
     };
   }
 

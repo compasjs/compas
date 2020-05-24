@@ -5,11 +5,9 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class StringType extends TypeBuilder {
-  constructor(group, name) {
-    super(stringType.name, group, name);
-
-    this.data.oneOf = undefined;
-    this.data.validator = {
+  static baseData = {
+    oneOf: undefined,
+    validator: {
       convert: false,
       trim: false,
       lowerCase: false,
@@ -17,6 +15,15 @@ class StringType extends TypeBuilder {
       min: undefined,
       max: undefined,
       pattern: undefined,
+    },
+  };
+
+  constructor(group, name) {
+    super(stringType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...StringType.baseData,
     };
   }
 

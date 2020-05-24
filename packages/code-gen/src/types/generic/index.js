@@ -5,8 +5,24 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class GenericType extends TypeBuilder {
+  static baseData = {};
+
+  build() {
+    const result = super.build();
+
+    result.keys = this.internalKeys.build();
+    result.values = this.internalValues.build();
+
+    return result;
+  }
+
   constructor(group, name) {
     super(genericType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...GenericType.baseData,
+    };
 
     this.internalKeys = undefined;
     this.internalValues = undefined;
@@ -28,15 +44,6 @@ class GenericType extends TypeBuilder {
   values(value) {
     this.internalValues = value;
     return this;
-  }
-
-  build() {
-    const result = super.build();
-
-    result.keys = this.internalKeys.build();
-    result.values = this.internalValues.build();
-
-    return result;
   }
 }
 

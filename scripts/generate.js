@@ -1,7 +1,13 @@
-import { App, generators, TypeCreator } from "@lbu/code-gen";
+import {
+  App,
+  generators,
+  loadFromOpenAPISpec,
+  TypeCreator,
+} from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import { storeStructure } from "@lbu/store";
+import { readFileSync } from "fs";
 
 mainFn(import.meta, log, main);
 
@@ -118,6 +124,20 @@ async function main() {
     }).enableQueries(),
   );
 
+  const externalApi = "apiName";
+
+  app.extend(
+    loadFromOpenAPISpec(
+      externalApi,
+      JSON.parse(
+        readFileSync(
+          "./packages/code-gen/src/__fixtures__/openapi.json",
+          "utf-8",
+        ),
+      ),
+    ),
+  );
+
   await app.generate({
     outputDirectory: "./generated",
     useTypescript: false,
@@ -127,6 +147,14 @@ async function main() {
   await app.generate({
     outputDirectory: "./stubs/app_stubs",
     enabledGroups: ["app", "todo"],
+    useStubGenerators: true,
+    dumpStructure: true,
+    enabledGenerators: ["type", "mock", "router", "apiClient"],
+  });
+
+  await app.generate({
+    outputDirectory: "./stubs/pet_stubs",
+    enabledGroups: [externalApi],
     useStubGenerators: true,
     dumpStructure: true,
     enabledGenerators: ["type", "mock", "router", "apiClient"],

@@ -5,12 +5,19 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class BooleanType extends TypeBuilder {
+  static baseData = {
+    oneOf: undefined,
+    validator: {
+      convert: false,
+    },
+  };
+
   constructor(group, name) {
     super(booleanType.name, group, name);
 
-    this.data.oneOf = undefined;
-    this.data.validator = {
-      convert: false,
+    this.data = {
+      ...this.data,
+      ...BooleanType.baseData,
     };
   }
 

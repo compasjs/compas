@@ -5,8 +5,26 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class AnyOfType extends TypeBuilder {
+  static baseData = {};
+
+  build() {
+    const result = super.build();
+
+    result.values = [];
+    for (const v of this.internalValues) {
+      result.values.push(v.build());
+    }
+
+    return result;
+  }
+
   constructor(group, name, items) {
     super(anyOfType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...AnyOfType.baseData,
+    };
 
     this.internalValues = undefined;
 
@@ -27,17 +45,6 @@ class AnyOfType extends TypeBuilder {
     this.internalValues.push(...items);
 
     return this;
-  }
-
-  build() {
-    const result = super.build();
-
-    result.values = [];
-    for (const v of this.internalValues) {
-      result.values.push(v.build());
-    }
-
-    return result;
   }
 }
 
