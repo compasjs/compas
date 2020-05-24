@@ -5,13 +5,32 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class ObjectType extends TypeBuilder {
+  static baseData = {
+    validator: {
+      strict: false,
+    },
+  };
+
+  build() {
+    const result = super.build();
+
+    result.keys = {};
+
+    for (const k of Object.keys(this.internalKeys)) {
+      result.keys[k] = this.internalKeys[k].build();
+    }
+
+    return result;
+  }
+
   constructor(group, name, obj) {
     super(objectType.name, group, name);
 
     this.internalKeys = {};
 
-    this.data.validator = {
-      strict: false,
+    this.data = {
+      ...this.data,
+      ...ObjectType.baseData,
     };
 
     if (!isNil(obj)) {
@@ -36,18 +55,6 @@ class ObjectType extends TypeBuilder {
     this.data.validator.strict = true;
 
     return this;
-  }
-
-  build() {
-    const result = super.build();
-
-    result.keys = {};
-
-    for (const k of Object.keys(this.internalKeys)) {
-      result.keys[k] = this.internalKeys[k].build();
-    }
-
-    return result;
   }
 }
 

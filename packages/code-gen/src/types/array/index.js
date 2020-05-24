@@ -5,15 +5,30 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class ArrayType extends TypeBuilder {
+  static baseData = {
+    validator: {
+      convert: false,
+      min: undefined,
+      max: undefined,
+    },
+  };
+
+  build() {
+    const result = super.build();
+
+    result.values = this.internalValues.build();
+
+    return result;
+  }
+
   constructor(group, name, value) {
     super(arrayType.name, group, name);
 
     this.internalValues = undefined;
 
-    this.data.validator = {
-      convert: false,
-      min: undefined,
-      max: undefined,
+    this.data = {
+      ...this.data,
+      ...ArrayType.baseData,
     };
 
     if (!isNil(value)) {
@@ -58,14 +73,6 @@ class ArrayType extends TypeBuilder {
     this.data.validator.max = max;
 
     return this;
-  }
-
-  build() {
-    const result = super.build();
-
-    result.values = this.internalValues.build();
-
-    return result;
   }
 }
 

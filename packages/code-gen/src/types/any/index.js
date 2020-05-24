@@ -5,11 +5,18 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class AnyType extends TypeBuilder {
+  static baseData = {
+    typeOf: undefined,
+    instanceOf: undefined,
+  };
+
   constructor(group, name) {
     super(anyType.name, group, name);
 
-    this.data.typeOf = undefined;
-    this.data.instanceOf = undefined;
+    this.data = {
+      ...this.data,
+      ...AnyType.baseData,
+    };
   }
 
   /**

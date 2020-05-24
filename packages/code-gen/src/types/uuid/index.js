@@ -18,8 +18,15 @@ const stringType = JSON.stringify(
 ).replace(/\n/g, " ");
 
 class UuidType extends TypeBuilder {
+  static baseData = {};
+
   constructor(group, name) {
     super(uuidType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...UuidType.baseData,
+    };
   }
 }
 

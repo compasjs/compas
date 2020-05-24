@@ -16,8 +16,15 @@ const stringType = JSON.stringify(
 ).replace(/\n/g, " ");
 
 class DateType extends TypeBuilder {
+  static baseData = {};
+
   constructor(group, name) {
     super(dateType.name, group, name);
+
+    this.data = {
+      ...this.data,
+      ...DateType.baseData,
+    };
   }
 
   /**

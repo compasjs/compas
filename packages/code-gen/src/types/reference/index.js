@@ -6,6 +6,39 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 const directory = dirnameForModule(import.meta);
 
 class ReferenceType extends TypeBuilder {
+  static baseData = {
+    reference: {
+      group: undefined,
+      name: undefined,
+      uniqueName: undefined,
+    },
+  };
+
+  build() {
+    if (isNil(this.ref) && isNil(this.data.reference.group)) {
+      throw new Error(
+        "Call .set() with either another named TypeBuilder or a valid group and name",
+      );
+    }
+
+    const result = super.build();
+
+    if (!isNil(this.ref)) {
+      const refBuild = this.ref.build();
+      result.reference = {
+        group: refBuild.group,
+        name: refBuild.name,
+        field: this.data.reference.field,
+      };
+    }
+
+    result.reference.uniqueName =
+      upperCaseFirst(result.reference.group) +
+      upperCaseFirst(result.reference.name);
+
+    return result;
+  }
+
   /**
    * @param {string|TypeBuilder} group
    * @param {string} [name]
@@ -14,10 +47,9 @@ class ReferenceType extends TypeBuilder {
   constructor(group, name) {
     super(referenceType.name, undefined, undefined);
 
-    this.data.reference = {
-      group: undefined,
-      name: undefined,
-      uniqueName: undefined,
+    this.data = {
+      ...this.data,
+      ...ReferenceType.baseData,
     };
 
     this.ref = undefined;
@@ -56,31 +88,6 @@ class ReferenceType extends TypeBuilder {
     };
 
     return this;
-  }
-
-  build() {
-    if (isNil(this.ref) && isNil(this.data.reference.group)) {
-      throw new Error(
-        "Call .set() with either another named TypeBuilder or a valid group and name",
-      );
-    }
-
-    const result = super.build();
-
-    if (!isNil(this.ref)) {
-      const refBuild = this.ref.build();
-      result.reference = {
-        group: refBuild.group,
-        name: refBuild.name,
-        field: this.data.reference.field,
-      };
-    }
-
-    result.reference.uniqueName =
-      upperCaseFirst(result.reference.group) +
-      upperCaseFirst(result.reference.name);
-
-    return result;
   }
 }
 
