@@ -30,10 +30,9 @@ export async function runGenerators(app, options) {
   const generatorInput = { structure: {} };
 
   addGroupsToGeneratorInput(generatorInput, copy, options.enabledGroups);
-  generatorInput.stringified = JSON.stringify(generatorInput.structure).replace(
-    /\\/g,
-    "\\\\",
-  );
+  generatorInput.stringified = JSON.stringify(generatorInput.structure)
+    .replace(/\\/g, "\\\\")
+    .replace("'", "\\'");
 
   hoistNamedItems(generatorInput, generatorInput.structure);
   let prevCount = getTopLevelItemCount(generatorInput);
@@ -83,7 +82,7 @@ export async function runGenerators(app, options) {
 
 function addGroupsToGeneratorInput(input, copy, groups) {
   for (const group of groups) {
-    input.structure[group] = copy.structure[group];
+    input.structure[group] = copy.structure[group] || {};
   }
 
   includeReferenceTypes(copy, input, input.structure);
