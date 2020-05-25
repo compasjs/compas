@@ -12,11 +12,10 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@lbu/cli": "0.0.19",
-    "@lbu/insight": "0.0.19",
-    "@lbu/lint-config": "0.0.19",
-    "lerna": "3.22.0",
-    "tape": "5.0.1"
+    "@lbu/cli": "0.0.20",
+    "@lbu/insight": "0.0.20",
+    "@lbu/lint-config": "0.0.20",
+    "lerna": "3.22.0"
   },
   "prettier": "@lbu/lint-config/prettierrc",
   "workspaces": [
