@@ -1,6 +1,15 @@
 # CHANGELOG
 
-### [v0.0.19](https://github.com/lightbasenl/lbu/releases/tag/v0.0.18)
+### [v0.0.20](https://github.com/lightbasenl/lbu/releases/tag/v0.0.20)
+
+- @lbu/code-gen: support OpenAPI conversion
+- @lbu/store: add file-cache, uses memory & local disk to speed up retrieving
+  items from S3
+- \*: various dependency bumps
+- @lbu/store: cleaner result on getMigrationsToBeApplied
+- @lbu/server: make sendFile compatible with file-cache
+
+### [v0.0.19](https://github.com/lightbasenl/lbu/releases/tag/v0.0.19)
 
 - @lbu/insight: BREAKING, remove 'varargs' support from logger
 - @lbu/code-gen: reuse generated validators
