@@ -21,7 +21,7 @@
     "@lbu/insight": "^0.0.19",
     "@lbu/stdlib": "^0.0.19",
     "nodemon": "2.0.4",
-    "tape": "5.0.0"
+    "tape": "5.0.1"
   },
   "author": {
     "name": "Dirk de Visser",
