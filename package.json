@@ -15,7 +15,7 @@
     "@lbu/cli": "0.0.19",
     "@lbu/insight": "0.0.19",
     "@lbu/lint-config": "0.0.19",
-    "lerna": "3.21.0",
+    "lerna": "3.22.0",
     "tape": "5.0.0"
   },
   "prettier": "@lbu/lint-config/prettierrc",
