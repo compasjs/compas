@@ -10,7 +10,7 @@ const internalExec = promisify(cpExec);
  * Promisify version of child_process#exec
  * @callback Exec
  * @param {string} command
- * @returns {Promise<Object<{stdout: string, stderr: string}>>}
+ * @return {Promise<Object<{stdout: string, stderr: string}>>}
  */
 export function exec(command) {
   return internalExec(command, { encoding: "utf8" });
@@ -21,7 +21,7 @@ export function exec(command) {
  * @param {string} command
  * @param {string[]} args
  * @param {Object} [opts={}]
- * @returns {Promise<{code: number|undefined}>}
+ * @return {Promise<{code: number|undefined}>}
  */
 export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -35,7 +35,9 @@ export function spawn(command, args, opts = {}) {
 }
 
 /**
- * @typedef {object} ProcessDirectoryOptions
+ * @name ProcessDirectoryOptions
+ *
+ * @typedef {object}
  * @property {boolean} [skipNodeModules] Skip node_modules directory, true by default
  * @property {boolean} [skipDotFiles] Skip files and directories starting with a '.', true
  *    by default

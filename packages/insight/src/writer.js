@@ -44,7 +44,7 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
 /**
  * @param {number} depth
  * @param {*} value
- * @returns {string}
+ * @return {string}
  */
 function formatMessagePretty(depth, value) {
   if (
@@ -64,7 +64,7 @@ function formatMessagePretty(depth, value) {
 /**
  * @param {number} availableDepth
  * @param {*} message
- * @returns {*}
+ * @return {*}
  */
 function formatMessage(availableDepth, message) {
   if (message === null) {
@@ -122,7 +122,7 @@ function formatMessage(availableDepth, message) {
 
 /**
  * @param {Date} date
- * @returns {string}
+ * @return {string}
  */
 function formatDate(date) {
   const h = date.getHours().toString(10).padStart(2, "0");
@@ -136,7 +136,7 @@ function formatDate(date) {
 /**
  * @param {string} level
  * @param {string} type
- * @returns {string}
+ * @return {string}
  */
 function formatLevelAndType(level, type) {
   const str =

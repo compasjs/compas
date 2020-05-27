@@ -11,7 +11,7 @@
       /**
        * @param sql
        * @param { {{= item.where }}} where
-       * @returns {Promise<{{= item.returning }}[]>}
+       * @return {Promise<{{= item.returning }}[]>}
        */
       {{= itemName }}: (sql, where) => sql`{{= item.query }}`,
     {{ } else if (item.type === "update") { }}
@@ -19,21 +19,21 @@
        * @param sql
        * @param { {{= item.where }}} where
        * @param { {{= item.partial }}} partial
-       * @returns {Promise<{{= item.returning }}[]>}
+       * @return {Promise<{{= item.returning }}[]>}
        */
       {{= itemName }}: (sql, where, partial) => sql`{{= item.query }}`,
     {{ } else if (item.type === "delete") { }}
       /**
        * @param sql
        * @param { {{= item.where }}} where
-       * @returns {Promise<void>}
+       * @return {Promise<void>}
        */
       {{= itemName }}: (sql, where) => sql`{{= item.query }}`,
     {{ } else if (item.type === "create") { }}
       /**
        * @param sql
        * @param { {{= item.input }}} input
-       * @returns {Promise<{{= item.returning }}[]>}
+       * @return {Promise<{{= item.returning }}[]>}
        */
       {{= itemName }}: (sql, input) => {
        {{= item.fnBody }}

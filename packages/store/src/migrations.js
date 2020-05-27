@@ -4,15 +4,19 @@ import { existsSync, promises as fs } from "fs";
 import path from "path";
 
 /**
- * @typedef {object} MigrateContext
+ * @name MigrateContext
+ *
+ * @typedef {object}
  * @property {MigrateFile[]} files
  * @property {string[]} namespaces
  * @property {object<string, string>} storedHashes
- * @property {postgres} sql
+ * @property {Postgres} sql
  */
 
 /**
- * @typedef {object} MigrateFile
+ * @name MigrateFile
+ *
+ * @typedef {object}
  * @property {string} namespace
  * @property {number} number
  * @property {boolean} repeatable
@@ -24,7 +28,7 @@ import path from "path";
  */
 
 /**
- * @property {postgres} sql
+ * @property {Postgres} sql
  * @return {Promise<MigrateContext>}
  */
 export async function newMigrateContext(
@@ -108,7 +112,7 @@ function filterMigrationsToBeApplied(mc) {
 }
 
 /**
- * @param {postgres} sql
+ * @param {Postgres} sql
  * @param {MigrateFile} migration
  * @return {Promise<void>}
  */
@@ -134,7 +138,7 @@ async function runMigration(sql, migration) {
 }
 
 /**
- * @param {postgres} sql
+ * @param {Postgres} sql
  * @param {MigrateFile} migration
  */
 async function buildInsert(sql, migration) {
@@ -187,7 +191,7 @@ async function syncWithSchemaState(mc) {
 }
 
 async function acquireLock(sql) {
-  // Should be automatically released by postgres once this connection ends.
+  // Should be automatically released by Postgres once this connection ends.
   // We expect that the user runs this process for migrations only
   let locked = false;
   while (!locked) {

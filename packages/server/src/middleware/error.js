@@ -4,7 +4,7 @@ import { AppError, isNil } from "@lbu/stdlib";
  * @callback CustomErrorHandler
  * @param ctx Koa Context
  * @param {Error} err
- * @returns {boolean} Return truthy when handled or falsey when skipped
+ * @return {boolean} Return truthy when handled or falsey when skipped
  */
 
 /**
@@ -12,7 +12,7 @@ import { AppError, isNil } from "@lbu/stdlib";
  * @param ctx Koa Context
  * @param {string} key
  * @param {Object} info
- * @returns {Object} The any data extracted from the key
+ * @return {Object} The any data extracted from the key
  */
 
 /**
@@ -28,7 +28,9 @@ const defaultOnError = () => false;
 const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
 
 /**
- * @typedef {Object} ErrorHandlerOptions
+ * @name ErrorHandlerOptions
+ *
+ * @typedef {Object}
  * @property {AppErrorHandler} [onAppError] Called to set the initial body when the
  *   error is an AppError
  * @property {CustomErrorHandler} [onError] Called before all others to let the user
@@ -40,7 +42,7 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
 /**
  * Handle any upstream errors
  * @param {ErrorHandlerOptions} opts
- * @returns {function(...[*]=)}
+ * @return {function(...[*]=)}
  */
 export function errorHandler({ onAppError, onError, leakError }) {
   onAppError = onAppError || defaultOnAppError;

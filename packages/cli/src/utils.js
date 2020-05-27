@@ -4,7 +4,11 @@ import nodemon from "nodemon";
 import { join } from "path";
 
 /**
- * @typedef {object} CollectedScript
+ * @name CollectedScript
+ *
+ * Depending on the type contains either script or path
+ *
+ * @typedef {object}
  * @property {"user"|"package"} type
  * @property {string} name
  * @property {string} [path]
@@ -12,13 +16,16 @@ import { join } from "path";
  */
 
 /**
- * @typedef {Object.<string, CollectedScript>} ScriptCollection
+ * @name ScriptCollection
+ *
+ * @typedef {Object.<string, CollectedScript>}
  */
 
 /**
  * Return collection of available named scripts
  * - type user: User defined scripts from process.cwd/scripts/*.js
  * - type package: User defined scripts in package.json. These override 'user' scripts
+ *
  * @return {ScriptCollection}
  */
 export function collectScripts() {

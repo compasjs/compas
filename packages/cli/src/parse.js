@@ -23,7 +23,9 @@ const execCommands = {
 const pathRegex = /^([^/]*\/)+(.*)$/;
 
 /**
- * @typedef {object} UtilCommand
+ * @name UtilCommand
+ *
+ * @typedef {object}
  * @property {"util"} type
  * @property {string} name
  * @property {string[]} arguments
@@ -31,7 +33,9 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  */
 
 /**
- * @typedef {object} ExecCommand
+ * @name ExecCommand
+ *
+ * @typedef {object}
  * @property {"exec"} type
  * @property {string} name
  * @property {string} script
@@ -42,7 +46,9 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  */
 
 /**
- * @typedef {UtilCommand|ExecCommand} ParsedArgs
+ * @name ParsedArgs
+ *
+ * @typedef {UtilCommand|ExecCommand}
  */
 
 /**

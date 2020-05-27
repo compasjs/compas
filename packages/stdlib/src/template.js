@@ -9,7 +9,9 @@ import {
 const { readFile } = promises;
 
 /**
- * @typedef {object} TemplateContext
+ * @name TemplateContext
+ *
+ * @typedef {object}
  * @property {object<string, function>} globals
  * @property {Map<string, function>} templates
  * @property {boolean} strict
@@ -115,7 +117,7 @@ export function compileTemplate(tc, name, str, opts = {}) {
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 export function compileTemplateDirectory(tc, dir, extension, opts) {
   if (isNil(tc)) {
@@ -148,7 +150,7 @@ export function compileTemplateDirectory(tc, dir, extension, opts) {
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
- * @returns {void}
+ * @return {void}
  */
 export function compileTemplateDirectorySync(tc, dir, extension, opts) {
   if (isNil(tc)) {
@@ -180,7 +182,7 @@ export function compileTemplateDirectorySync(tc, dir, extension, opts) {
  * @param {TemplateContext} tc
  * @param {string} name
  * @param {*} data
- * @returns {string} The resulting string for executing the template
+ * @return {string} The resulting string for executing the template
  */
 export function executeTemplate(tc, name, data) {
   if (isNil(tc)) {

@@ -4,7 +4,7 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
  * Format bytes, with up to 2 digits after the decimal point, in a more human readable way
  * Support up to a pebibyte
  * @param {number} [bytes]
- * @returns {string}
+ * @return {string}
  */
 export function bytesToHumanReadable(bytes) {
   if (bytes === 0 || bytes === undefined) {

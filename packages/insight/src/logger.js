@@ -1,7 +1,9 @@
 import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
- * @typedef {object} LoggerOptions
+ * @name LoggerOptions
+ *
+ * @typedef {object}
  * @property {boolean} [pretty=false]
  * @property {number} [depth=3]
  * @property {WriteStream} [stream=process.stdout]
@@ -9,11 +11,15 @@ import { writeNDJSON, writePretty } from "./writer.js";
  */
 
 /**
- * @typedef {function(arg: *): undefined} LogFn
+ * @name LogFn
+ *
+ * @typedef {function(arg: *): undefined}
  */
 
 /**
- * @typedef {object} Logger
+ * @name Logger
+ *
+ * @typedef {object}
  * @property {function(): boolean} isProduction
  * @property {LogFn} info
  * @property {LogFn} error

@@ -9,6 +9,7 @@
 
 /**
  * @name {{= item.uniqueName }}Call
+ *
  * @typedef {function(
 {{ if (hasParam) { }}* params: {{= item.params ? item.params.reference.uniqueName + "_Input" : "*" }},{{ } }}
 {{ if (item.query) { }}* query: {{= item.query ? item.query.reference.uniqueName + "_Input" : "*" }},{{ } }}

@@ -31,7 +31,9 @@ const defaultOptions = {
 };
 
 /**
- * @typedef {Object} CorsOptions
+ * @name CorsOptions
+ *
+ * @typedef {Object}
  * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is
  *   request Origin header
  * @property {string[]} [exposeHeaders] `Access-Control-Expose-Headers`

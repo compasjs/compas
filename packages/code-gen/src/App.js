@@ -11,13 +11,17 @@ import { TypeCreator } from "./types/index.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
- * @typedef {object} AppOpts
+ * @name AppOpts
+ *
+ * @typedef {object}
  * @property {GeneratorPlugin[]} generators
  * @property {boolean} [verbose]
  */
 
 /**
- * @typedef {object} GeneratorPlugin
+ * @name GeneratorPlugin
+ *
+ * @typedef {object}
  * @property {string} name
  * @property {function(App): void|Promise<void>} [init]
  * @property {function(App, GenerateOpts): void|Promise<void>} [preGenerate]
@@ -26,7 +30,9 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
  */
 
 /**
- * @typedef {object} GeneratedFile
+ * @name GeneratedFile
+ *
+ * @typedef {object}
  * @property {string} path
  * @property {string} source
  */
@@ -144,7 +150,7 @@ export class App {
 
   /**
    * @param {GenerateOpts} options
-   * @returns {Promise<void>}
+   * @return {Promise<void>}
    */
   async generate(options) {
     if (isNil(options?.outputDirectory)) {

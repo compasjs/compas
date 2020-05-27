@@ -80,7 +80,9 @@ export class TypeBuilder {
 }
 
 /**
- * @typedef {object} TypePlugin
+ * @name TypePlugin
+ *
+ * @typedef {object}
  * @property {string} name
  * @property {Class} class
  */

@@ -3,7 +3,7 @@ import lodashMerge from "lodash.merge";
 /**
  * Check if item is null or undefined
  * @param {*=} item
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isNil(item) {
   return item === null || item === undefined;
@@ -13,7 +13,7 @@ export function isNil(item) {
  * Check if item is a plain javascript object
  * Not completely bullet proof
  * @param {*=} item
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isPlainObject(item) {
   return (
@@ -31,7 +31,7 @@ export function isPlainObject(item) {
  *
  * @param {Object} object The destination object.
  * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
+ * @return {Object} Returns `object`.
  */
 export const merge = lodashMerge;
 

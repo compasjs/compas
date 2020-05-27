@@ -101,7 +101,7 @@ function logInfo(ctx, startTime, length) {
 /**
  * Wait for the ctx.body stream to finish before resolving
  * @param ctx
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 async function bodyCloseOrFinish(ctx) {
   return new Promise((resolve) => {

@@ -8,7 +8,7 @@ import { isNil } from "./lodash.js";
 
 /**
  * Return seconds since unix epoch
- * @returns {number}
+ * @return {number}
  */
 export function getSecondsSinceEpoch() {
   return Math.floor(Date.now() / 1000);
@@ -45,7 +45,7 @@ export function gc() {
 /**
  * @callback MainFnCallback
  * @param {Logger} logger
- * @returns {Promise.<void>|void}
+ * @return {Promise.<void>|void}
  */
 
 /**

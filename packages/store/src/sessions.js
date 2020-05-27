@@ -21,6 +21,7 @@ const queries = {
 
 /**
  * @name SessionStore
+ *
  * @typedef {object}
  * @property {function(string): Promise<object|boolean>} get
  * @property {function(string, object, number): Promise<void>} set

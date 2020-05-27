@@ -3,7 +3,9 @@ import split from "split2";
 import { Transform } from "stream";
 
 /**
- * @typedef {object} LogParserContext
+ * @name LogParserContext
+ *
+ * @typedef {object}
  * @property {(function(data: object): undefined)} [jsonProcessor]
  * @property {(function(data: string): undefined)} [textProcessor]
  * @property {ReadStream} stream

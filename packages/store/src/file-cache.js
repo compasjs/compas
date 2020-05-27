@@ -10,19 +10,26 @@ const pipeline = promisify(pipelineCallbacks);
 
 /**
  * @name FileCacheOptions
+ *
  * @typedef {object}
- * @property {number} inMemoryThreshold
- * @property {string} cacheControlHeader
+ * @property {number} inMemoryThreshold Maximum byte size of a file to be stored in
+ *   memory
+ * @property {string} cacheControlHeader Customize default Cache-Control header to give
+ *   back
  */
 
 /**
- * @class FileCache
+ * @name FileCache
+ *
+ * @class
  * A relatively simple local file cache implementation.
  * Supports saving files in memory and on local disk
  * Files#content_length smaller than the provided threshold will be stored in memory.
  * A file will always be cached in full, and then the range requests will be evaluated
- * The FileCache#clear does not remove files from disk, but will overwrite the file when
- *   added to the cache again
+ *   after The FileCache#clear does not remove files from disk, but will overwrite the
+ *   file when added to the cache again
+ *
+ * FileCache#getFileStream is compatible with `sendFile` in @lbu/server
  */
 export class FileCache {
   static fileCachePath = "/tmp";
@@ -40,6 +47,12 @@ export class FileCache {
 
     this.memoryCache = new Map();
     this.fileCache = new Set();
+
+    /**
+     * Pre-bind call to this#getFileStream
+     * @type {typeof FileCache#getFileStream}
+     */
+    this.getStreamFn = this.getFileStream.bind(this);
   }
 
   /**
@@ -49,10 +62,11 @@ export class FileCache {
    * If the file(part) does not exist, it will try to fetch it from the FileStore
    * If the file store throws an error / it doesn't exist, the error is propagated to the
    * caller
+   *
    * @param {FileProps} file
    * @param {number} [start]
    * @param {number} [end]
-   * @returns {Promise<{ stream: ReadableStream, cacheControl: string }>}
+   * @return {Promise<{ stream: ReadableStream, cacheControl: string }>}
    */
   getFileStream(file, start, end) {
     if (isNil(start) || start < 0) {

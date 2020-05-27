@@ -4,14 +4,18 @@ import mime from "mime-types";
 import { listObjects } from "./minio.js";
 
 /**
- * @typedef {object} FileStoreContext
- * @property {postgres} sql
+ * @name FileStoreContext
+ *
+ * @typedef {object}
+ * @property sql
  * @property {minio.Client} minio
  * @property {string} bucketName
  */
 
 /**
- * @typedef {object} FileProps
+ * @name FileProps
+ *
+ * @typedef {object}
  * @property {string} [id]
  * @property {string} bucket_name
  * @property {number} content_length
@@ -22,7 +26,7 @@ import { listObjects } from "./minio.js";
  */
 
 /**
- * @param {postgres} sql
+ * @param sql
  * @param {minio.Client} minio
  * @param {string} bucketName
  */

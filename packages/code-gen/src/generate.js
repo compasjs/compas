@@ -9,6 +9,7 @@ const { mkdir, writeFile } = fs;
 
 /**
  * @name GenerateOpts
+ *
  * @typedef {object}
  * @property {string[]} enabledGroups
  * @property {string[]} enabledGenerators
@@ -23,7 +24,7 @@ const { mkdir, writeFile } = fs;
  * The whole generate process
  * @param {App} app
  * @param {GenerateOpts} options
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 export async function runGenerators(app, options) {
   const copy = JSON.parse(JSON.stringify(app.data));
@@ -94,7 +95,7 @@ function addGroupsToGeneratorInput(input, copy, groups) {
  * @param {string} generatorName
  * @param {string} method
  * @param {...*} args
- * @returns {Promise<undefined|*>}
+ * @return {Promise<undefined|*>}
  */
 export async function callSpecificGeneratorWithMethod(
   app,
@@ -122,7 +123,7 @@ export async function callSpecificGeneratorWithMethod(
  * @param {string[]|Iterable<string>} keys
  * @param {string} method
  * @param {...*} args
- * @returns {Promise<*[]>}
+ * @return {Promise<*[]>}
  */
 export async function callGeneratorMethod(app, keys, method, ...args) {
   const result = [];

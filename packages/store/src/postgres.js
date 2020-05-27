@@ -2,9 +2,17 @@ import { merge } from "@lbu/stdlib";
 import postgres from "postgres";
 
 /**
+ * @name Postgres
+ *
+ * See https://github.com/porsager/postgres for docs
+ *
+ * @typedef {*}
+ */
+
+/**
  * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
- * @return {postgres}
+ * @return {Postgres}
  */
 export async function newPostgresConnection(opts) {
   if (!process.env.POSTGRES_URI || !process.env.APP_NAME) {

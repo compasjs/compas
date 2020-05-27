@@ -42,9 +42,9 @@ const queries = {
   getPendingQueueSize: (
     sql,
   ) => sql`SELECT sum(CASE WHEN scheduled_at < now() THEN 1 ELSE 0 END) AS  pending_count,
-                                            sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
-                                     FROM job_queue
-                                     WHERE NOT is_complete`,
+                                           sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
+                                    FROM job_queue
+                                    WHERE NOT is_complete`,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (
@@ -66,6 +66,9 @@ const queries = {
 
 /**
  * @name JobData
+ *
+ * Row data for a specific job
+ *
  * @typedef {object}
  * @property {number} id
  * @property {Date} created_at
@@ -76,6 +79,7 @@ const queries = {
 
 /**
  * @name JobInput
+ *
  * @typedef {object}
  * @property {number} [priority=0]
  * @property {object} [data={}]
@@ -85,14 +89,20 @@ const queries = {
 
 /**
  * @name JobQueueWorkerOptions
+ *
  * @typedef {object}
  * @property {function(sql: *, data: JobData): (void|Promise<void>)} handler
  * @property {number} [pollInterval] Determine the poll interval in milliseconds if the
  *   queue was empty. Defaults to 1500 ms
  * @property {number} [parallelCount] Set the amount of parallel jobs to process.
- *   Defaults to 1
+ *   Defaults to 1. Make sure it is not higher than the amount of Postgres connections in
+ *   the pool
  */
 
+/**
+ * @class
+ *
+ */
 export class JobQueueWorker {
   /**
    * Create a new JobQueueWorker
@@ -163,6 +173,7 @@ export class JobQueueWorker {
   /**
    * @public
    * Get the number of jobs that need to run
+   *
    * @return {Promise<{pending_count: number, scheduled_count: number}|undefined>}
    */
   pendingQueueSize() {
@@ -176,6 +187,7 @@ export class JobQueueWorker {
    * @public
    * Return the average time between scheduled and completed for jobs completed in the
    * provided time range in milliseconds
+   *
    * @param {Date} startDate
    * @param {Date} endDate
    * @return {Promise<number>}
@@ -196,6 +208,7 @@ export class JobQueueWorker {
   /**
    * @public
    * Uses this queue name and connection to add a job to the queue
+   *
    * @param {JobInput} job
    * @return {Promise<number>}
    */
