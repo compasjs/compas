@@ -38,6 +38,10 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
  */
 
 /**
+ * The entry-point to code generation
+ * Provides the structure for creating types, and extending with external sources.
+ * Also maintains the generators
+ *
  * @class
  */
 export class App {

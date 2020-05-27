@@ -3,6 +3,7 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 /**
  * Format bytes, with up to 2 digits after the decimal point, in a more human readable way
  * Support up to a pebibyte
+ *
  * @param {number} [bytes]
  * @return {string}
  */
@@ -29,7 +30,8 @@ export function bytesToHumanReadable(bytes) {
  * Prints the memory usage of the current process to the provided logger
  * For more info on the printed properties see:
  * https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
- * @param logger
+ *
+ * @param {Logger} logger
  */
 export function printProcessMemoryUsage(logger) {
   const {

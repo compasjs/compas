@@ -5,6 +5,8 @@ import { Transform } from "stream";
 /**
  * @name LogParserContext
  *
+ *  The LogParserContext enables you too analyze logs produced by this Logger
+ *
  * @typedef {object}
  * @property {(function(data: object): undefined)} [jsonProcessor]
  * @property {(function(data: string): undefined)} [textProcessor]
@@ -13,6 +15,7 @@ import { Transform } from "stream";
 
 /**
  * Create a new parser context
+ *
  * @param {ReadStream} stream
  * @return {LogParserContext}
  */
@@ -27,6 +30,7 @@ export function newLogParserContext(stream) {
 /**
  * Run the parser, splits the in stream onn lines and call either the jsonProcessor or
  * textProcessor with the value. The original value is written to the returned stream
+ *
  * @param {LogParserContext} lpc
  * @return {ReadStream}
  */
@@ -50,6 +54,7 @@ export function executeLogParser(lpc) {
 
 /**
  * Internal try to parse as json and execute jsonProcessor, else execute textProcessor
+ *
  * @param {LogParserContext} lpc
  * @param {string} line
  */

@@ -4,14 +4,17 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * @name LoggerOptions
  *
  * @typedef {object}
- * @property {boolean} [pretty=false]
- * @property {number} [depth=3]
- * @property {WriteStream} [stream=process.stdout]
- * @property {*|{type: string}} [ctx]
+ * @property {boolean} [pretty=false] Use the pretty formatter instead of the NDJSON formatter
+ * @property {number} [depth=3] Max-depth printed
+ * @property {WriteStream} [stream=process.stdout] The stream to write the logs to
+ * @property {*|{type: string}} [ctx] Context that should be logged in all log lines. e.g
+ *   a common request id.
  */
 
 /**
  * @name LogFn
+ *
+ * Prints the provided argument
  *
  * @typedef {function(arg: *): undefined}
  */
@@ -19,14 +22,25 @@ import { writeNDJSON, writePretty } from "./writer.js";
 /**
  * @name Logger
  *
+ * The logger only has two severities:
+ * - info
+ * - error
+ *
+ * Either a log line is innocent enough and only provides debug information if needed, or
+ *   someone should be paged because something goes wrong. For example handled 500 errors
+ *   don't need any ones attention, but unhandled 500 errors do.
+ * @see {@lbu/server#logMiddleware}
+ *
  * @typedef {object}
- * @property {function(): boolean} isProduction
- * @property {LogFn} info
- * @property {LogFn} error
+ * @property {function(): boolean} isProduction Check if this logger is using the pretty
+ *   printer or NDJSON printer
+ * @property {LogFn} info Info log
+ * @property {LogFn} error Error log
  */
 
 /**
  * Create a new logger
+ *
  * @param {LoggerOptions} [options]
  * @return {Logger}
  */
@@ -57,8 +71,10 @@ export function newLogger(options) {
 
 /**
  * Bind a context object to the logger functions and returns a new Logger
+ * The context is always printed
+ *
  * @param {Logger} logger
- * @param {*} ctx
+ * @param {object|{type: string}} ctx
  * @return {Logger}
  */
 export function bindLoggerContext(logger, ctx) {
@@ -70,6 +86,12 @@ export function bindLoggerContext(logger, ctx) {
   };
 }
 
+/**
+ * Wrap provided writer function to be used in the Logger
+ *
+ * @param fn
+ * @return {log}
+ */
 function wrapWriter(fn) {
   return function log(stream, depth, level, context, message) {
     const timestamp = new Date();

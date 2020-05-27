@@ -3,6 +3,8 @@ import { lowerCaseFirst } from "../utils.js";
 
 /**
  * Provide base properties for types
+ * This includes the 'type', optional, docs and default value.
+ * Also contains group and name information
  */
 export class TypeBuilder {
   static baseData = {
@@ -88,9 +90,9 @@ export class TypeBuilder {
  */
 
 /**
- * Create new instances of registered types
+ * Create new instances of registered types and manages grups
+ * Also keeps a Map of registered types on TypeCreator.types
  * @class
- * @name TypeCreator
  */
 export class TypeCreator {
   /** @type {Map<string, TypePlugin|Object<string, TypePlugin|Class>>} */
