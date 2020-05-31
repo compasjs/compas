@@ -51,6 +51,11 @@ export function buildQueryData(data) {
       const partialInfo = getPartialInfo(item);
       addToData(data, partialInfo.structure);
 
+      result[group][item.name + "Count"] = {
+        type: "count",
+        where: whereInfo.structure.uniqueName,
+        query: buildCountQuery(item, whereInfo),
+      };
       result[group][item.name + "Select"] = {
         type: "select",
         returning: item.uniqueName,
@@ -86,12 +91,15 @@ export function buildQueryData(data) {
 }
 
 function buildSelectQuery(table, where) {
-  if (table.keys["file"]) {
-    console.log(table.keys["file"], table);
-  }
   return `SELECT ${Object.keys(table.keys).join(", ")} FROM ${camelToSnakeCase(
     table.name,
   )} ${where.queryPart}`;
+}
+
+function buildCountQuery(table, where) {
+  return `SELECT COUNT(*) as gen_sum FROM ${camelToSnakeCase(table.name)} ${
+    where.queryPart
+  }`;
 }
 
 function buildUpdateQuery(table, where) {

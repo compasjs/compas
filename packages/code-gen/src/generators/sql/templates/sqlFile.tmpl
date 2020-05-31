@@ -38,6 +38,16 @@
       {{= itemName }}: (sql, input) => {
        {{= item.fnBody }}
       },
+    {{ } else if (item.type === "count") { }}
+      /**
+       * @param sql
+       * @param { {{= item.where }}} where
+       * @return {Promise<number>}
+       */
+      {{= itemName }}: async (sql, where) => {
+       const result = await sql`{{= item.query}}`;
+       return result?.[0]?.gen_sum ?? 0;
+      },
     {{ } }}
   {{ } }}
 

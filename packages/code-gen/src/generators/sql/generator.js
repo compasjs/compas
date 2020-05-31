@@ -9,10 +9,16 @@ import { buildQueryData, buildQueryTypes } from "./builder.js";
 
 /**
  * @name ObjectType#enableQueries
+ *
+ * @param {object} [options={}]
+ * @param {boolean} [options.withHistoryTable]
  * @return {ObjectType}
  */
-TypeCreator.types.get("object").class.prototype.enableQueries = function () {
+TypeCreator.types.get("object").class.prototype.enableQueries = function (
+  options = {},
+) {
   this.data.enableQueries = true;
+  this.data.queryOptions = options;
   return this;
 };
 
