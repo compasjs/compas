@@ -42,7 +42,7 @@ class AnyOfType extends TypeBuilder {
       this.internalValues = [];
     }
 
-    this.internalValues.push(...items);
+    this.internalValues.push(...items.flat(2));
 
     return this;
   }
