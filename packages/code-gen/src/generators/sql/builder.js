@@ -1,11 +1,12 @@
-import { camelToSnakeCase } from "@lbu/stdlib";
+import { camelToSnakeCase, isNil } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
-import { TypeBuilder } from "../../types/index.js";
+import { TypeBuilder, TypeCreator } from "../../types/index.js";
 
-export function buildQueryTypes(data) {
+export function buildExtraTypes(data) {
   for (const group of Object.keys(data.structure)) {
     for (const name of Object.keys(data.structure[group])) {
       const item = data.structure[group][name];
+
       if (
         !item.enableQueries ||
         item.type !== "object" ||
@@ -13,200 +14,194 @@ export function buildQueryTypes(data) {
       ) {
         continue;
       }
-      const whereInfo = getWhereInfo(item);
-      addToData(data, whereInfo.structure);
 
-      const partialInfo = getPartialInfo(item);
-      addToData(data, partialInfo.structure);
-
-      const create = buildCreateFunction(item);
-      addToData(data, create.structure);
-
-      if (item.variants) {
-        console.dir(item.variants, { colors: true, depth: 5 });
+      // withHistory implies withDates
+      if (item?.queryOptions?.withDates || item?.queryOptions?.withHistory) {
+        addDateFields(item);
       }
+
+      const queryType = {
+        type: "sql",
+        group: group,
+        name: name + "Sql",
+        original: {
+          group: group,
+          name: name,
+        },
+        shortName: item.name
+          .split(/(?=[A-Z])/)
+          .map((it) => (it[0] || "").toLowerCase())
+          .join(""), // FileHistory => fh
+      };
+
+      addToData(data, queryType);
+
+      const where = getWhereFields(item);
+      addToData(data, where.type);
+
+      const partial = getPartialFields(item);
+      addToData(data, partial.type);
+
+      queryType.whereFields = where.fieldsArray;
+      queryType.partialFields = partial.fieldsArray;
 
       item._didSqlGenerate = true;
     }
   }
 }
 
-export function buildQueryData(data) {
-  const result = {};
-
-  for (const group of Object.keys(data.structure)) {
-    for (const name of Object.keys(data.structure[group])) {
-      const item = data.structure[group][name];
-      if (!item.enableQueries || item.type !== "object") {
-        continue;
-      }
-
-      if (!result[group]) {
-        result[group] = {};
-      }
-
-      const whereInfo = getWhereInfo(item);
-      addToData(data, whereInfo.structure);
-
-      const partialInfo = getPartialInfo(item);
-      addToData(data, partialInfo.structure);
-
-      result[group][item.name + "Count"] = {
-        type: "count",
-        where: whereInfo.structure.uniqueName,
-        query: buildCountQuery(item, whereInfo),
-      };
-      result[group][item.name + "Select"] = {
-        type: "select",
-        returning: item.uniqueName,
-        where: whereInfo.structure.uniqueName,
-        query: buildSelectQuery(item, whereInfo),
-      };
-      result[group][item.name + "Update"] = {
-        type: "update",
-        returning: item.uniqueName,
-        where: whereInfo.structure.uniqueName,
-        partial: partialInfo.structure.uniqueName,
-        query: buildUpdateQuery(item, whereInfo),
-      };
-
-      result[group][item.name + "Delete"] = {
-        type: "delete",
-        where: whereInfo.structure.uniqueName,
-        query: buildDeleteQuery(item, whereInfo),
-      };
-
-      const create = buildCreateFunction(item);
-      addToData(data, create.structure);
-      result[group][item.name + "Create"] = {
-        type: "create",
-        returning: item.uniqueName,
-        input: create.structure.uniqueName,
-        fnBody: create.fnBody,
-      };
-    }
-  }
-
-  return result;
-}
-
-function buildSelectQuery(table, where) {
-  return `SELECT ${Object.keys(table.keys).join(", ")} FROM ${camelToSnakeCase(
-    table.name,
-  )} ${where.queryPart}`;
-}
-
-function buildCountQuery(table, where) {
-  return `SELECT COUNT(*) as gen_sum FROM ${camelToSnakeCase(table.name)} ${
-    where.queryPart
-  }`;
-}
-
-function buildUpdateQuery(table, where) {
-  return `UPDATE ${camelToSnakeCase(
-    table.name,
-  )} SET \${sql(partial, ...Object.keys(partial))} ${
-    where.queryPart
-  } RETURNING ${Object.keys(table.keys).join(", ")}`;
-}
-
-function buildDeleteQuery(table, where) {
-  return `DELETE FROM ${camelToSnakeCase(table.name)} ${where.queryPart}`;
-}
-
-function buildCreateFunction(table) {
-  const structure = {
+/**
+ * Add createdAt and updatedAt to this item
+ * These fields are optional as either LBU or Postgres will fill them
+ */
+function addDateFields(item) {
+  item.queryOptions.dateFields = true;
+  item.keys.createdAt = {
     ...TypeBuilder.baseData,
+    ...TypeCreator.types.get("date").class.baseData,
+    type: "date",
+    defaultValue: "(new Date())",
+    isOptional: true,
+    sql: {
+      searchable: true,
+    },
+  };
+  item.keys.updatedAt = {
+    ...TypeBuilder.baseData,
+    ...TypeCreator.types.get("date").class.baseData,
+    type: "date",
+    defaultValue: "(new Date())",
+    isOptional: true,
+    sql: {
+      searchable: true,
+    },
+  };
+}
+
+/**
+ * Get where fields and input type
+ * @param item
+ * @return {{type: object, fieldsArray: *[]}}
+ */
+function getWhereFields(item) {
+  const fieldsArray = [];
+  const resultType = {
+    ...TypeBuilder.baseData,
+    ...TypeCreator.types.get("object").baseData,
     type: "object",
-    group: table.group,
-    name: table.name + "Create",
+    group: item.group,
+    name: item.name + "Where",
     keys: {},
   };
 
-  let fnBody = ``;
-
-  for (const key of Object.keys(table.keys)) {
-    if (table.keys[key]?.sql?.primary) {
+  for (const key of Object.keys(item.keys)) {
+    const it = item.keys[key];
+    // We don't support optional field searching, since it will break the way we do the
+    // query generation e.g. NULL IS NULL is always true and thus the search results are
+    // invalid
+    if (it.isOptional || (!it?.sql?.searchable && !it?.reference?.field)) {
       continue;
     }
 
-    structure.keys[key] = {
-      ...table.keys[key],
-      isOptional: table.keys[key].isOptional || !!table.keys[key].defaultValue,
-      defaultValue: undefined,
-    };
+    // Also supports referenced fields
+    const type =
+      it.type === "reference" &&
+      !isNil(it.reference?.field) &&
+      !isNil(it.referencedItem?.type)
+        ? it.referencedItem.type
+        : it.type;
 
-    if (table.keys[key].defaultValue !== undefined) {
-      fnBody += `input.${key} = input.${key} || ${table.keys[key].defaultValue}; \n`;
+    if (type === "number" || type === "date") {
+      // Generate =, > and < queries
+
+      fieldsArray.push(
+        {
+          key,
+          name: key,
+          type: "equal",
+        },
+        { key, name: key + "GreaterThan", type: "greaterThan" },
+        { key, name: key + "LowerThan", type: "lowerThan" },
+      );
+
+      resultType.keys[key] = { ...it, isOptional: true };
+      resultType.keys[key + "GreaterThan"] = { ...it, isOptional: true };
+      resultType.keys[key + "LowerThan"] = { ...it, isOptional: true };
+    } else if (type === "string") {
+      // Generate = and LIKE %input% queries
+
+      fieldsArray.push(
+        { key, name: key, type: "equal" },
+        { key, name: key + "Like", type: "like" },
+      );
+
+      resultType.keys[key] = { ...it, isOptional: true };
+      resultType.keys[key + "Like"] = { ...it, isOptional: true };
+    } else if (type === "uuid") {
+      // Generate = and IN (uuid1, uuid2) queries
+      fieldsArray.push(
+        { key, name: key, type: "equal" },
+        { key, name: key + "In", type: "in" },
+      );
+
+      resultType.keys[key] = { ...it, isOptional: true };
+      resultType.keys[key + "In"] = {
+        ...TypeBuilder.baseData,
+        ...TypeCreator.types.get("array").class.baseData,
+        type: "array",
+        isOptional: true,
+        values: { ...it },
+      };
     }
   }
 
-  fnBody += `return sql\`INSERT INTO ${camelToSnakeCase(
-    table.name,
-  )} \${sql(input, ...Object.keys(input))} RETURNING ${Object.keys(
-    table.keys,
-  ).join(", ")}\`;`;
-
-  return { structure, fnBody };
+  return { fieldsArray, type: resultType };
 }
 
-function getWhereInfo(table) {
-  const keys = Object.keys(table.keys).filter(
-    (it) =>
-      !table.keys[it].isOptional &&
-      (table.keys[it].sql?.searchable || table.keys[it].sql?.primary),
-  );
-
-  const structure = {
+/**
+ * Get where fields and input type
+ * @param item
+ * @return {{type: object, fieldsArray: *[]}}
+ */
+function getPartialFields(item) {
+  const fieldsArray = [];
+  const resultType = {
     ...TypeBuilder.baseData,
+    ...TypeCreator.types.get("object").baseData,
     type: "object",
-    group: table.group,
-    name: table.name + "Where",
+    group: item.group,
+    name: item.name + "InsertPartial",
     keys: {},
   };
 
-  for (const key of keys) {
-    structure.keys[key] = { ...table.keys[key], isOptional: true };
-  }
+  for (const key of Object.keys(item.keys)) {
+    const it = item.keys[key];
 
-  if (keys.length === 0) {
-    throw new Error(
-      "Can't generate safe queries without a primary key or searchable field",
-    );
-  }
-
-  let queryPart = ``;
-
-  for (const key of keys) {
-    // Using COALESCE forces Postgres to evaluate the passed-in value as a PG value
-    // instead of an identifier. The `xxx IS NULL` does not seem to incur a performance
-    // regression in the execution plans
-    queryPart += ` (COALESCE(\${where.${key}}, NULL) IS NULL OR ${key} = \${where.${key}}) AND`;
-  }
-
-  queryPart = "WHERE " + queryPart.substring(0, queryPart.length - 4).trim();
-
-  return {
-    structure,
-    queryPart,
-  };
-}
-
-function getPartialInfo(table) {
-  const structure = {
-    ...TypeBuilder.baseData,
-    type: "object",
-    group: table.group,
-    name: table.name + "Partial",
-    keys: {},
-  };
-
-  for (const key of Object.keys(table.keys)) {
-    if (table.keys[key]?.sql?.primary) {
+    // Partial updates don't need to update primary key
+    if (it?.sql?.primary) {
       continue;
     }
-    structure.keys[key] = { ...table.keys[key], isOptional: true };
+
+    // Support updating referenced field
+    const type =
+      it.type === "reference" &&
+      !isNil(it.reference?.field) &&
+      !isNil(it.referencedItem?.type)
+        ? it.referencedItem.type
+        : it.type;
+
+    // JSON.stringify all values that are not 'primitives'
+    // So the user will can have a lbu GenericType into a JSONB field
+    fieldsArray.push({
+      source: key,
+      result: camelToSnakeCase(key),
+      defaultValue: it.defaultValue,
+      stringify:
+        ["number", "boolean", "string", "date", "uuid"].indexOf(type) === -1,
+    });
+
+    resultType.keys[key] = { ...it };
   }
 
-  return { structure };
+  return { fieldsArray, type: resultType };
 }

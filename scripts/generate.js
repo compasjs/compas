@@ -119,9 +119,9 @@ async function main() {
   app.add(
     M.object("fileMeta", {
       id: M.uuid().primary(),
-      file_id: M.reference("Store", "fileStore").field("id", "file"),
-      is_processed: M.bool().default("false"),
-    }).enableQueries(),
+      fileId: M.reference("Store", "fileStore").field("id", "file"),
+      isProcessed: M.bool().default("false"),
+    }).enableQueries({ withHistory: true }),
   );
 
   const externalApi = "apiName";
@@ -142,6 +142,7 @@ async function main() {
     outputDirectory: "./generated",
     useTypescript: false,
     dumpStructure: true,
+    dumpPostgres: true,
   });
 
   await app.generate({

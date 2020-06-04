@@ -1,0 +1,26 @@
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "object" || item.enableQueries !== true) { }}
+    {{ continue; }}
+    {{ } }}
+
+    CREATE TABLE {{= camelToSnakeCase(item.name) }} (
+      {{ for (const key of Object.keys(item.keys|| {})) { }}
+      {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }},
+      {{ } }}
+    );
+
+    {{ if (item.queryOptions?.withHistory) { }}
+
+    CREATE TABLE {{= camelToSnakeCase(item.name) }}_history (
+      {{ for (const key of Object.keys(item.keys|| {})) { }}
+      {{ if (key === "updatedAt") { continue; } }}
+      {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }},
+      {{ } }}
+    );
+
+    {{ } }}
+  {{ } }}
+{{ } }}

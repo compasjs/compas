@@ -41,6 +41,8 @@ const uuidType = {
 return stringValidator{{= fnNumber }}(value, propertyPath, parentType);
 `,
   mock: () => `_mocker.guid({version: 4}),\n`,
+  sql: () =>
+    `UUID {{= model?.sql?.primary ? "PRIMARY KEY DEFAULT uuid_generate_v4()" : model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**

@@ -1,17 +1,20 @@
 import {
+  camelToSnakeCase,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
-import { buildQueryData, buildQueryTypes } from "./builder.js";
+import { compileDynamicTemplates } from "../../utils.js";
+import { buildExtraTypes } from "./builder.js";
 
 /**
  * @name ObjectType#enableQueries
  *
  * @param {object} [options={}]
- * @param {boolean} [options.withHistoryTable]
+ * @param {boolean} [options.withHistory]
+ * @param {boolean} [options.withDates]
  * @return {ObjectType}
  */
 TypeCreator.types.get("object").class.prototype.enableQueries = function (
@@ -58,7 +61,27 @@ export async function preGenerate(app, data, options) {
     ".tmpl",
   );
 
-  buildQueryTypes(data, options);
+  if (options.dumpPostgres) {
+    compileDynamicTemplates(app.templateContext, options, "sql", {
+      fnStringStart: `
+  
+  {{ let result = ''; }}
+  {{ if (false) { }}
+  `,
+      fnStringAdd: (type, templateName) =>
+        `{{ } else if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }).trim(); }}\n`,
+      fnStringEnd: `
+      {{ } else { }}
+      {{ result += "JSONB"; }}
+      {{ } }}
+    {{= result.trim().replace(/\\s+/g, " ") }}
+  `,
+    });
+  }
+
+  app.templateContext.globals.camelToSnakeCase = camelToSnakeCase;
+
+  buildExtraTypes(data);
 }
 
 /**
@@ -68,11 +91,19 @@ export async function preGenerate(app, data, options) {
  * @return {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
-  data.sql = buildQueryData(data);
+  if (options.dumpPostgres) {
+    const result = executeTemplate(app.templateContext, "sqlPostgres", {
+      ...data,
+      options,
+    });
+
+    app.logger.info("\n" + result);
+  }
+
   return {
     path: "./queries.js",
     source: executeTemplate(app.templateContext, "sqlFile", {
-      data: data.sql,
+      ...data,
       options,
     }),
   };

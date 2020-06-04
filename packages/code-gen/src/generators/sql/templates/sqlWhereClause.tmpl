@@ -1,0 +1,21 @@
+{{ if (item.whereFields.length > 0) { }}
+{{ let result = "WHERE"; }}
+{{ for (const it of item.whereFields) { }}
+  {{ result += " (COALESCE(${where." + it.name + "}, NULL) IS NULL OR " + item.shortName + "."+ camelToSnakeCase(it.key) + " "; }}
+
+  {{ if (it.type === "equal") { }}
+    {{ result += "= ${where." + it.name + "}"; }}
+  {{ } else if (it.type === "greaterThan") { }}
+    {{ result += "> ${where." + it.name + "}"; }}
+  {{ } else if (it.type === "lowerThan") { }}
+    {{ result += "< ${where." + it.name + "}"; }}
+  {{ } else if (it.type === "like") { }}
+    {{ result += "LIKE ${'%' + where." + it.name + " +'%'}"; }}
+  {{ } else if (it.type === "in") { }}
+    {{ result += "IN ${where." + it.name + "}"; }}
+  {{ } }}
+
+  {{ result += ") AND"; }}
+{{ } }}
+{{= result.substring(0, result.length - 4) }}
+{{ } }}
