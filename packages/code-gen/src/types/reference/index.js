@@ -106,6 +106,8 @@ const referenceType = {
   tsType: () => {
     return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
   },
+  sql: () =>
+    `{{= model?.reference?.field !== undefined ? sqlExec({ type: model.referencedItem.type, model: { ...model.referencedItem, sql: {} } }).trim() : "JSONB" }} {{= model?.reference?.field !== undefined ? "REFERENCES " + camelToSnakeCase(model.reference.name) + "(" + camelToSnakeCase(model.reference.field.referencing) + ") ON DELETE CASCADE" : "" }}`,
 };
 
 /**

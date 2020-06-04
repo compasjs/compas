@@ -1,54 +1,108 @@
 {{= options.fileHeader }}
 
-{{ for (const groupName of Object.keys(data)) { }}
+import { isNil } from "@lbu/stdlib";
+
+
+{{ for (const groupName of Object.keys(structure)) { }}
 
   export const {{= groupName }}Queries = {
 
-  {{ for (const itemName of Object.keys(data[groupName])) { }}
-    {{ const item = data[groupName][itemName]; }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
 
-    {{ if (item.type === "select") { }}
-      /**
-       * @param sql
-       * @param { {{= item.where }}} where
-       * @return {Promise<{{= item.returning }}[]>}
-       */
-      {{= itemName }}: (sql, where) => sql`{{= item.query }}`,
-    {{ } else if (item.type === "update") { }}
-      /**
-       * @param sql
-       * @param { {{= item.where }}} where
-       * @param { {{= item.partial }}} partial
-       * @return {Promise<{{= item.returning }}[]>}
-       */
-      {{= itemName }}: (sql, where, partial) => sql`{{= item.query }}`,
-    {{ } else if (item.type === "delete") { }}
-      /**
-       * @param sql
-       * @param { {{= item.where }}} where
-       * @return {Promise<void>}
-       */
-      {{= itemName }}: (sql, where) => sql`{{= item.query }}`,
-    {{ } else if (item.type === "create") { }}
-      /**
-       * @param sql
-       * @param { {{= item.input }}} input
-       * @return {Promise<{{= item.returning }}[]>}
-       */
-      {{= itemName }}: (sql, input) => {
-       {{= item.fnBody }}
-      },
-    {{ } else if (item.type === "count") { }}
-      /**
-       * @param sql
-       * @param { {{= item.where }}} where
-       * @return {Promise<number>}
-       */
-      {{= itemName }}: async (sql, where) => {
-       const result = await sql`{{= item.query}}`;
-       return result?.[0]?.gen_sum ?? 0;
-      },
+    {{ if (item.type !== "sql") { }}
+    {{ continue; }}
     {{ } }}
+
+    {{ const ref = structure[item.original.group][item.original.name]; }}
+    {{ const getKeys = (shortName) => Object.keys(ref.keys).map(it => shortName + camelToSnakeCase(it) + ` as "` + it + `"`).join(", "); }}
+
+   /**
+    * @param sql
+    * @param { {{= ref.uniqueName }}Where} where
+    * @return {Promise<{{= ref.uniqueName }}[]>}
+    */
+    {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+
+    /**
+    * @param sql
+    * @param { {{= ref.uniqueName }}Where} where
+    * @return {Promise<number>}
+    */
+    {{= ref.name }}Count: async (sql, where) => {
+      const result = await sql`SELECT count(*) as gen_count FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
+
+      return result?.[0]?.gen_count ?? 0;
+    },
+
+    /**
+    * @param sql
+    * @param { {{= ref.uniqueName }}Where} where
+    * @return {Promise<*[]>}
+    */
+    {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+
+    /**
+     * @param sql
+     * @param { {{= ref.uniqueName }}InsertPartial_Input|{{= ref.uniqueName }}InsertPartial_Input[]} insert
+     * @return {Promise<{{= ref.uniqueName }}[]>}
+     */
+    {{= ref.name }}Insert: (sql, insert) => {
+      const data = Array.isArray(insert) ? insert : [insert];
+      const input = [];
+      for (const it of data) {
+        input.push({{= sqlGenDefaults({ item, ref, }) }} );
+      }
+
+      return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(input, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
+    },
+
+    /**
+     * @param sql
+     * @param { {{= ref.uniqueName }}InsertPartial_Input} value
+     * @param { {{= ref.uniqueName }}Where} where
+     * @return {Promise<{{= ref.uniqueName }}[]>}
+     */
+    {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
+      const updateValue = {};
+      {{ for (const key of item.partialFields) { }}
+      if (!isNil(value["{{= key.source }}"])) {
+        updateValue["{{= key.result }}"] = value["{{= key.source }}"];
+      }
+      {{ } }}
+
+      {{ if (ref.queryOptions.dateFields) { }}
+      updateValue.updated_at = new Date();
+      {{ } }}
+      {{ if (ref.queryOptions.withHistory) { }}
+      await sql`INSERT INTO {{= camelToSnakeCase(ref.name) }}_history ({{= camelToSnakeCase(ref.name) }}_id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, created_at)
+      SELECT (id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, COALESCE(updated_at, created_at)) FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
+      `;
+      {{ } }}
+      return sql`UPDATE {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} set ${sql(updateValue, ...Object.keys(updateValue))} {{= sqlWhereClause({ item, ref }) }} RETURNING {{= getKeys(item.shortName + ".") }}`;
+    },
+
+    /**
+     * @param sql
+     * @param { {{= ref.uniqueName }}InsertPartial_Input} it
+     * @return {Promise<{{= ref.uniqueName }}[]>}
+     */
+     {{= ref.name }}Upsert: (sql, it) => {
+       const data = {{= sqlGenDefaults({ item, ref, }) }};
+       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
+     },
+
+    {{ if (ref.queryOptions.withHistory) { }}
+   /**
+    * @param sql
+    * @param { {{= ref.uniqueName }}Where} where
+    * @return {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
+    */
+    {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg({{= item.shortName }}h.*) as history FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} LEFT JOIN  {{= camelToSnakeCase(ref.name) }}_history {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h.{{= camelToSnakeCase(ref.name) }}_id {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
+
+    {{ } }}
+
+
   {{ } }}
 
   };

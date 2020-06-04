@@ -58,6 +58,8 @@ try {
 throw _errorFn(\`validator.\${parentType}.invalid\`, { propertyPath });
 `,
   mock: () => `_mocker.date(),\n`,
+  sql: () =>
+    `TIMESTAMPTZ {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }} {{= model?.defaultValue === "(new Date())" ? "DEFAULT now()" : "" }}`,
 };
 
 /**

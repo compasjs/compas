@@ -88,6 +88,8 @@ const numberType = {
   tsType: () => {
     return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
   },
+  sql: () =>
+    `{{= model?.validator?.integer ? "INT" : "FLOAT" }} {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**
