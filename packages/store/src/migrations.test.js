@@ -28,7 +28,7 @@ test("store/migrations", (t) => {
     );
 
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
-    t.equal(mc.files.length, 7);
+    t.equal(mc.files.length, 8);
 
     const list = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);

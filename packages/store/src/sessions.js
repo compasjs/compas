@@ -1,23 +1,6 @@
-const DELETE_INTERVAL = 45 * 60 * 1000; // 45 minutes
+import { storeQueries } from "./generated/queries.js";
 
-const queries = {
-  get: (sql, id) =>
-    sql`SELECT data FROM session_store WHERE id = ${id} AND expires > ${new Date()}`,
-  set: (sql, id, expires, data) =>
-    sql`INSERT INTO session_store ${sql(
-      { id, data, expires },
-      "id",
-      "expires",
-      "data",
-    )} ON CONFLICT (id) DO UPDATE SET ${sql(
-      { data, expires },
-      "data",
-      "expires",
-    )}`,
-  delete: (sql, id) => sql`DELETE FROM session_store WHERE id = ${id}`,
-  deleteExpired: (sql, expires) =>
-    sql`DELETE FROM session_store WHERE expires < ${expires}`,
-};
+const DELETE_INTERVAL = 45 * 60 * 1000; // 45 minutes
 
 /**
  * @name SessionStore
@@ -44,25 +27,30 @@ export function newSessionStore(sql, options) {
 
   if (!options.disableInterval) {
     interval = setInterval(() => {
-      queries.deleteExpired(sql, new Date());
+      storeQueries.sessionStoreDelete(sql, { expiresLowerThan: new Date() });
     }, options.cleanupInterval);
   }
 
   return {
     get: async (sid) => {
-      const [data] = await queries.get(sql, sid);
+      const [data] = await storeQueries.sessionStoreSelect(sql, { id: sid });
       if (!data) {
         return false;
       }
-      return data.data;
+      return JSON.parse(data.data);
     },
     set: async (sid, sess, maxAge) => {
-      const d = new Date();
-      d.setMilliseconds(d.getMilliseconds() + maxAge);
-      await queries.set(sql, sid, d, JSON.stringify(sess));
+      const expires = new Date();
+      expires.setMilliseconds(expires.getMilliseconds() + maxAge);
+
+      await storeQueries.sessionStoreUpsert(sql, {
+        id: sid,
+        expires,
+        data: JSON.stringify(sess),
+      });
     },
     destroy: async (sid) => {
-      await queries.delete(sql, sid);
+      await storeQueries.sessionStoreDelete(sql, { id: sid });
     },
     kill: () => {
       clearInterval(interval);
