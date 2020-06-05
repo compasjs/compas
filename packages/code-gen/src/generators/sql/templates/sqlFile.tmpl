@@ -83,7 +83,7 @@ import { isNil, uuid } from "@lbu/stdlib";
       {{ } }}
       {{ if (ref.queryOptions.withHistory) { }}
       await sql`INSERT INTO {{= camelToSnakeCase(ref.name) }}_history ({{= camelToSnakeCase(ref.name) }}_id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, created_at)
-      SELECT (id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, COALESCE(updated_at, created_at)) FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
+      SELECT id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, COALESCE(updated_at, created_at, now()) FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
       `;
       {{ } }}
       return sql`UPDATE {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} set ${sql(updateValue, ...Object.keys(updateValue))} {{= sqlWhereClause({ item, ref }) }} RETURNING {{= getKeys(item.shortName + ".") }}`;
