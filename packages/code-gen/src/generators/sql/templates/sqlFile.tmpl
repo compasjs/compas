@@ -90,6 +90,7 @@ import { isNil } from "@lbu/stdlib";
     },
 ((newline))
 
+    {{ if (!ref.queryOptions.withHistory) { }}
     /**
      * @param sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input} it
@@ -97,9 +98,11 @@ import { isNil } from "@lbu/stdlib";
      */
      {{= ref.name }}Upsert: (sql, it) => {
        const data = {{= sqlGenDefaults({ item, ref, }) }};
-       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
+       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
      },
 ((newline))
+
+    {{ } }}
 
     {{ if (ref.queryOptions.withHistory) { }}
    /**
