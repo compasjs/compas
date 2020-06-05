@@ -9,7 +9,7 @@ ALTER TABLE file_store
 
 CREATE TABLE file_store_history
 (
-  file_store_id  UUID        NOT NULL REFERENCES file_store (id),
+  file_store_id  UUID        NOT NULL REFERENCES file_store (id) ON DELETE CASCADE,
   bucket_name    VARCHAR     NOT NULL,
   content_length INT         NOT NULL,
   content_type   VARCHAR     NOT NULL,

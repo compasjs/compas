@@ -6,7 +6,7 @@ import { pipeline as pipelineCallback } from "stream";
 import test from "tape";
 import { promisify } from "util";
 import { FileCache } from "./file-cache.js";
-import { createFile, newFileStoreContext } from "./files.js";
+import { createOrUpdateFile, newFileStoreContext } from "./files.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -73,7 +73,7 @@ test("store/file-cache", async (t) => {
 
   t.test("populate fileStore", async (t) => {
     await t.asyncShouldNotThrow(async () => {
-      files.small = await createFile(
+      files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
         join("/tmp", "small"),
@@ -81,14 +81,14 @@ test("store/file-cache", async (t) => {
     });
 
     await t.asyncShouldNotThrow(async () => {
-      files.medium = await createFile(
+      files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
         join("/tmp", "medium"),
       );
     });
     await t.asyncShouldNotThrow(async () => {
-      files.large = await createFile(
+      files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
         join("/tmp", "large"),
@@ -218,7 +218,7 @@ test("store/file-cache check memory usage", async (t) => {
 
   t.test("populate fileStore", async (t) => {
     await t.asyncShouldNotThrow(async () => {
-      files.small = await createFile(
+      files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
         join("/tmp", "small"),
@@ -226,14 +226,14 @@ test("store/file-cache check memory usage", async (t) => {
     });
 
     await t.asyncShouldNotThrow(async () => {
-      files.medium = await createFile(
+      files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
         join("/tmp", "medium"),
       );
     });
     await t.asyncShouldNotThrow(async () => {
-      files.large = await createFile(
+      files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
         join("/tmp", "large"),

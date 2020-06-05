@@ -3,13 +3,14 @@ import { createReadStream, createWriteStream, readFileSync } from "fs";
 import test from "tape";
 import {
   copyFile,
-  createFile,
+  createOrUpdateFile,
   deleteFile,
   getFileById,
   getFileStream,
   newFileStoreContext,
   syncDeletedFiles,
 } from "./files.js";
+import { storeQueries } from "./generated/queries.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -31,64 +32,54 @@ test("store/files", async (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {
-    sql = await createTestPostgresDatabase();
+    sql = await createTestPostgresDatabase(true);
     t.ok(!!sql);
 
     let result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
-  t.test("createFile no filename specified", async (t) => {
+  t.test("createOrUpdateFile no filename specified", async (t) => {
     const ctx = newFileStoreContext(sql, minio, bucketName);
     await t.asyncShouldThrow(
-      async () => createFile(ctx, {}, ""),
+      async () => createOrUpdateFile(ctx, {}, ""),
       "throws on unknown filename",
     );
   });
 
-  t.test("createFile only filename provided", async (t) => {
+  t.test("createOrUpdateFile only filename provided", async (t) => {
     const ctx = newFileStoreContext(sql, minio, bucketName);
-    const file = await createFile(ctx, { filename }, filePath);
+    const file = await createOrUpdateFile(ctx, { filename }, filePath);
     t.ok(!!file.id);
-    t.equal(file.content_type, "application/x-sql");
-    t.ok(!!file.content_length);
-    t.ok(!!file.created_at);
-    t.ok(!!file.updated_at);
+    t.equal(file.contentType, "application/x-sql");
+    t.ok(!!file.contentLength);
+    t.ok(!!file.createdAt);
+    t.ok(!!file.updatedAt);
   });
 
   t.test(
-    "createFile reuse id overwrite updated_at and use a stream",
+    "createOrUpdateFile overwrite updatedAt and use a stream",
     async (t) => {
-      const id = uuid();
-      const updated_at = new Date(2019, 1, 1, 1);
+      const updatedAt = new Date(2019, 1, 1, 1);
 
       const ctx = newFileStoreContext(sql, minio, bucketName);
-      const file = await createFile(
+      const file = await createOrUpdateFile(
         ctx,
-        { filename, id, updated_at },
+        { filename, updatedAt },
         createReadStream(filePath),
       );
 
-      t.equal(file.id, id);
-      t.equal(file.content_type, "application/x-sql");
-      t.ok(!!file.content_length);
-      t.ok(!!file.created_at);
-      t.notEqual(file.updated_at.getTime(), updated_at.getTime());
+      t.equal(file.contentType, "application/x-sql");
+      t.ok(!!file.contentLength);
+      t.ok(!!file.createdAt);
+      t.notEqual(file.updatedAt.getTime(), updatedAt.getTime());
     },
   );
 
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await sql`SELECT id,
-                                   id,
-                                   bucket_name,
-                                   content_length,
-                                   content_type,
-                                   filename,
-                                   created_at,
-                                   updated_at
-                            FROM file_store`;
+    storedFiles = await storeQueries.fileStoreSelect(sql, {});
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].content_length, storedFiles[1].content_length);
   });
