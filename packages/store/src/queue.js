@@ -1,16 +1,6 @@
+import { storeQueries } from "./generated/queries.js";
+
 const queries = {
-  insertJob: (sql, name, data, priority, scheduled_at) =>
-    sql`INSERT INTO job_queue ${sql(
-      { name, data, priority, scheduled_at },
-      "name",
-      "data",
-      "priority",
-      "scheduled_at",
-    )} RETURNING id`,
-
-  getJobById: (sql, id) =>
-    sql`SELECT id, created_at, scheduled_at, name, data FROM job_queue WHERE id = ${id}`,
-
   // Should only run in a transaction
   getAnyJob: (sql) => sql`UPDATE job_queue
                           SET is_complete = TRUE,
@@ -42,9 +32,9 @@ const queries = {
   getPendingQueueSize: (
     sql,
   ) => sql`SELECT sum(CASE WHEN scheduled_at < now() THEN 1 ELSE 0 END) AS  pending_count,
-                                           sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
-                                    FROM job_queue
-                                    WHERE NOT is_complete`,
+                                            sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
+                                     FROM job_queue
+                                     WHERE NOT is_complete`,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (
@@ -263,7 +253,9 @@ export class JobQueueWorker {
           return;
         }
 
-        const [jobData] = await queries.getJobById(sql, job.id);
+        const [jobData] = await storeQueries.jobQueueSelect(sql, {
+          id: job.id,
+        });
 
         // We need to catch errors to be able to reset the worker.
         // We throw this error afterwards, so the Postgres library
@@ -298,13 +290,10 @@ export class JobQueueWorker {
  * @return {Promise<number>}
  */
 export async function addJobToQueue(sql, job) {
-  const [result] = await queries.insertJob(
-    sql,
-    job.name ?? process.env.APP_NAME,
-    JSON.stringify(job.data ?? {}),
-    job.priority ?? 0,
-    job.scheduledAt ?? new Date(),
-  );
+  const [result] = await storeQueries.jobQueueInsert(sql, {
+    ...job,
+    name: job.name ?? process.env.APP_NAME,
+  });
   return result?.id;
 }
 
