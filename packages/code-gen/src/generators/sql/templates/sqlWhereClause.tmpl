@@ -12,7 +12,7 @@
   {{ } else if (it.type === "like") { }}
     {{ result += "LIKE ${'%' + where." + it.name + " +'%'}"; }}
   {{ } else if (it.type === "in") { }}
-    {{ result += "IN ${where." + it.name + "}"; }}
+    {{ result += "IN (${where." + it.name + "})"; }}
   {{ } }}
 
   {{ result += ") AND"; }}
