@@ -1,4 +1,5 @@
 {{= options.fileHeader }}
+((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
@@ -17,12 +18,14 @@
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        */
        export type {{= item.uniqueName }} = {{= normalVariant }};
+((newline))
 
       /**
        * {{= item.uniqueName }}_Input
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        */
        export type {{= item.uniqueName }}_Input = {{= normalVariant === inputVariant ? item.uniqueName : inputVariant }};
+((newline))
 
     {{ } else { }}
       {{ const normalVariant = typeExec({ type: item.type, model: item, isInputType: false }).trim(); }}
@@ -33,12 +36,14 @@
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        * @typedef { {{= normalVariant }}}
        */
+((newline))
 
       /**
        * @name {{= item.uniqueName }}_Input
        * {{ if (item.docString) { }}Docs: {{= item.docString }}{{ } }}
        * @typedef { {{= normalVariant === inputVariant ? item.uniqueName : inputVariant }}}
        */
+((newline))
 
     {{ } }}
   {{ } }}

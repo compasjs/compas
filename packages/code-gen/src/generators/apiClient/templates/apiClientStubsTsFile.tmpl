@@ -19,6 +19,7 @@ import {
 {{= imp }},
 {{ } }}
 } from "./types";
+((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
@@ -36,6 +37,7 @@ interface {{= item.uniqueName }}Call {
     {{ if (item.body) { }}body: {{= item.body ? item.body.reference.uniqueName + "_Input" : "any" }},{{ } }}
     ): Promise<{{= item.response ? item.response.reference.uniqueName : "unknown" }}>
 };
+((newline))
 
   {{ } }}
 {{ } }}
@@ -56,5 +58,6 @@ interface {{= item.uniqueName }}Call {
   {{ } }}
 
   };
+((newline))
 
 {{ } }}

@@ -16,6 +16,7 @@
 {{ if (item.body) { }}* body: {{= item.body ? item.body.reference.uniqueName + "_Input" : "*" }},{{ } }}
  * ): (Promise<{{= item.response ? item.response.reference.uniqueName : "*" }}>)}
  */
+((newline))
   {{ } }}
 {{ } }}
 
@@ -37,4 +38,5 @@
     * @typedef {object}
   {{ } }}
  */
+((newline))
 {{ } }}

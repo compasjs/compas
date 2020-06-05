@@ -98,8 +98,12 @@ export function compileTemplate(tc, name, str, opts = {}) {
     }}
     
     return p.join('')
-      .replace(/^(\\s*\\r?\\n){2,}/gm, '\\n') // Replace multiple new lines
-      .replace(/^\\s*\\*\\s*([^\\n\\/\\*]+)\\s*\\n+/gm, ' * $1\\n '); // replace empty lines in JSDoc
+      .replace(/[ \\t\\r]+/g, ' ') // Replace all multiple spaces, with a single
+      .replace(/^[ \\t\\r]+/gm, '') // Replace spaces at start of sentence with nothing
+      .replace(/^(\\s*\\r?\\n){1,}/gm, '\\n') // Replace multiple new lines
+      .replace(/^\\s*\\*\\s*([^\\n\\/\\*]+)\\s*\\n+/gm, ' * $1\\n ') // replace empty lines in JSDoc
+      .replace(/\\n\\n/gm, '\\n') // Remove empty lines
+      .replace(/\\(\\(newline\\)\\)/g, '\\n\\n'); // Controlled newlines 
   `,
       ),
     );

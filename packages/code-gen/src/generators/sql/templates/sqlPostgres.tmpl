@@ -7,19 +7,25 @@
     {{ } }}
 
     CREATE TABLE {{= camelToSnakeCase(item.name) }} (
+      {{ let count = Object.keys(item.keys || {}).length; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
-      {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }},
+        {{ count--; }}
+        {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
       {{ } }}
     );
+    ((newline))
 
     {{ if (item.queryOptions?.withHistory) { }}
 
     CREATE TABLE {{= camelToSnakeCase(item.name) }}_history (
+      {{ let count = Object.keys(item.keys || {}).length - 1; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
-      {{ if (key === "updatedAt") { continue; } }}
-      {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }},
+        {{ count--; }}
+        {{ if (key === "updatedAt") { continue; } }}
+        {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
       {{ } }}
     );
+    ((newline))
 
     {{ } }}
   {{ } }}

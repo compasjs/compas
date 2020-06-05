@@ -1,9 +1,12 @@
 {{= options.fileHeader }}
+((newline))
 
 import chance from "chance";
+((newline))
 
 
 let _mocker = new chance.Chance();
+((newline))
 
 export function setMocker(mocker) {
   if (!(mocker instanceof chance.Chance)) {
@@ -12,6 +15,7 @@ export function setMocker(mocker) {
 
   _mocker = mocker;
 }
+((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
@@ -23,11 +27,13 @@ export function setMocker(mocker) {
     {{ if (options.mock_enabledTypes.indexOf(item.type) === -1) { }}
     {{ continue; }}
     {{ } }}
+  ((newline))
 
     {{= mocksNamedFn({ model: item }) }}
 
   {{ } }}
 
   };
+((newline))
 
 {{ } }}

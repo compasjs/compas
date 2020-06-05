@@ -1,11 +1,14 @@
 {{= options.fileHeader }}
+((newline))
 
 import { isNil } from "@lbu/stdlib";
+((newline))
 
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
   export const {{= groupName }}Queries = {
+((newline))
 
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -23,6 +26,7 @@ import { isNil } from "@lbu/stdlib";
     * @return {Promise<{{= ref.uniqueName }}[]>}
     */
     {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+((newline))
 
     /**
     * @param sql
@@ -34,6 +38,7 @@ import { isNil } from "@lbu/stdlib";
 
       return result?.[0]?.gen_count ?? 0;
     },
+((newline))
 
     /**
     * @param sql
@@ -41,6 +46,7 @@ import { isNil } from "@lbu/stdlib";
     * @return {Promise<*[]>}
     */
     {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+((newline))
 
     /**
      * @param sql
@@ -56,6 +62,7 @@ import { isNil } from "@lbu/stdlib";
 
       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(input, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
     },
+((newline))
 
     /**
      * @param sql
@@ -81,6 +88,7 @@ import { isNil } from "@lbu/stdlib";
       {{ } }}
       return sql`UPDATE {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} set ${sql(updateValue, ...Object.keys(updateValue))} {{= sqlWhereClause({ item, ref }) }} RETURNING {{= getKeys(item.shortName + ".") }}`;
     },
+((newline))
 
     /**
      * @param sql
@@ -91,6 +99,7 @@ import { isNil } from "@lbu/stdlib";
        const data = {{= sqlGenDefaults({ item, ref, }) }};
        return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(it, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
      },
+((newline))
 
     {{ if (ref.queryOptions.withHistory) { }}
    /**
@@ -99,6 +108,7 @@ import { isNil } from "@lbu/stdlib";
     * @return {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
     */
     {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg({{= item.shortName }}h.*) as history FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} LEFT JOIN  {{= camelToSnakeCase(ref.name) }}_history {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h.{{= camelToSnakeCase(ref.name) }}_id {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
+((newline))
 
     {{ } }}
 
@@ -106,5 +116,6 @@ import { isNil } from "@lbu/stdlib";
   {{ } }}
 
   };
+((newline))
 
 {{ } }}
