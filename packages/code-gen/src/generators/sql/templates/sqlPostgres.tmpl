@@ -22,7 +22,11 @@
       {{ for (const key of Object.keys(item.keys|| {})) { }}
         {{ count--; }}
         {{ if (key === "updatedAt") { continue; } }}
-        {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+        {{ if (key === "id") { }}
+          {{= camelToSnakeCase(item.name) }}_id {{= sqlExec({ type: item.keys[key].type, model: { ...item.keys[key], sql: {} }, }).trim() }} REFERENCES {{= camelToSnakeCase(item.name) }}(id){{= count !== 0 ? "," : "" }}
+        {{ } else { }}
+          {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+        {{ } }}
       {{ } }}
     );
     ((newline))
