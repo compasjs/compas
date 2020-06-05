@@ -2,5 +2,3 @@ node_modules/
 *.test.js
 __fixtures__/
 generate.js
-src/generated/
-!src/generated/structure.js
