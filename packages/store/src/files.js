@@ -1,7 +1,13 @@
 import { uuid } from "@lbu/stdlib";
 import { createReadStream } from "fs";
 import mime from "mime-types";
+import { storeQueries } from "./generated/queries.js";
 import { listObjects } from "./minio.js";
+
+const queries = {
+  copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) =>
+    sql`INSERT INTO file_store (id, bucket_name, content_type, content_length, filename) SELECT ${targetId}, ${targetBucket}, content_type, content_length, filename FROM file_store WHERE id = ${sourceId} AND bucket_name = ${sourceBucket} RETURNING id`,
+};
 
 /**
  * @name FileStoreContext
@@ -10,19 +16,6 @@ import { listObjects } from "./minio.js";
  * @property sql
  * @property {minio.Client} minio
  * @property {string} bucketName
- */
-
-/**
- * @name FileProps
- *
- * @typedef {object}
- * @property {string} [id]
- * @property {string} bucket_name
- * @property {number} content_length
- * @property {string} content_type
- * @property {string} filename
- * @property {Date} created_at
- * @property {Date} updated_at
  */
 
 /**
@@ -39,50 +32,45 @@ export function newFileStoreContext(sql, minio, bucketName) {
 }
 
 /**
- * Create or update a file
+ * Create or update a file.
+ * If you pass in a non-existent id, the function will not error, but also not update the
+ * file
  * @param {FileStoreContext} fc
- * @param {FileProps} props
+ * @param {StoreFileStoreInsertPartial_Input & { id?: string }} props
  * @param {ReadStream|string} streamOrPath
- * @return {Promise<FileProps>}
+ * @return {Promise<StoreFileStore>}
  */
-export async function createFile(fc, props, streamOrPath) {
-  if (!props.id) {
-    props.id = uuid();
-  }
+export async function createOrUpdateFile(fc, props, streamOrPath) {
   if (!props.filename) {
     throw new Error("filename is required on file props");
   }
-  if (!props.content_type) {
-    props.content_type = mime.lookup(props.filename);
+
+  if (!props.contentType) {
+    props.contentType = mime.lookup(props.filename) || "*/*";
   }
-  props.updated_at = new Date();
-  props.bucket_name = fc.bucketName;
+
+  props.bucketName = fc.bucketName;
+
+  // Do a manual insert first to get an id
+  if (!props.id) {
+    props.contentLength = 0;
+    const [intermediate] = await storeQueries.fileStoreInsert(fc.sql, props);
+    props.id = intermediate.id;
+  }
 
   if (typeof streamOrPath === "string") {
     streamOrPath = createReadStream(streamOrPath);
   }
 
   await fc.minio.putObject(fc.bucketName, props.id, streamOrPath, {
-    "content-type": props.content_type,
+    "content-type": props.contentType,
   });
   const stat = await fc.minio.statObject(fc.bucketName, props.id);
-  props.content_length = stat.size;
+  props.contentLength = stat.size;
 
-  const [result] = await fc.sql`INSERT INTO file_store ${fc.sql(
-    props,
-    "id",
-    "bucket_name",
-    "content_length",
-    "content_type",
-    "filename",
-    "updated_at",
-  )} ON CONFLICT(id) DO UPDATE SET ${fc.sql(
-    props,
-    "content_length",
-    "content_type",
-    "filename",
-    "updated_at",
-  )} RETURNING *`;
+  const [result] = await storeQueries.fileStoreUpdate(fc.sql, props, {
+    id: props.id,
+  });
 
   return result;
 }
@@ -90,12 +78,13 @@ export async function createFile(fc, props, streamOrPath) {
 /**
  * @param {FileStoreContext} fc
  * @param {string} id
- * @return {Promise<FileProps|undefined>}
+ * @return {Promise<StoreFileStore|undefined>}
  */
 export async function getFileById(fc, id) {
-  const [
-    result,
-  ] = await fc.sql`SELECT id, bucket_name, content_type, content_length, filename, created_at, updated_at FROM file_store WHERE id = ${id} AND bucket_name = ${fc.bucketName}`;
+  const [result] = await storeQueries.fileStoreSelect(fc.sql, {
+    id,
+    bucketName: fc.bucketName,
+  });
 
   return result;
 }
@@ -122,28 +111,42 @@ export async function getFileStream(fc, id, { start, end } = {}) {
  * @param {FileStoreContext} fc
  * @param {string} id
  * @param {string} [targetBucket=fc.bucketName]
- * @return {Promise<FileProps>}
+ * @return {Promise<StoreFileStore>}
  */
 export async function copyFile(fc, id, targetBucket = fc.bucketName) {
-  const [
-    result,
-  ] = await fc.sql`INSERT INTO file_store (id, bucket_name, content_type, content_length, filename) SELECT ${uuid()}, ${targetBucket}, content_type, content_length, filename FROM file_store WHERE id = ${id} AND bucket_name = ${
-    fc.bucketName
-  } RETURNING *`;
+  const [intermediate] = await queries.copyFile(
+    fc.sql,
+    uuid(),
+    targetBucket,
+    id,
+    fc.bucketName,
+  );
 
-  await fc.minio.copyObject(targetBucket, result.id, `${fc.bucketName}/${id}`);
+  await fc.minio.copyObject(
+    targetBucket,
+    intermediate.id,
+    `${fc.bucketName}/${id}`,
+  );
+
+  const [result] = await storeQueries.fileStoreSelect(fc.sql, {
+    id: intermediate.id,
+  });
 
   return result;
 }
 
 export async function deleteFile(fc, id) {
-  return fc.sql`DELETE FROM file_store WHERE id = ${id} AND bucket_name = ${fc.bucketName}`;
+  return storeQueries.fileStoreDelete(fc.sql, {
+    id,
+    bucketName: fc.bucketName,
+  });
 }
 
 export async function syncDeletedFiles(fc) {
   const minioObjectsPromise = listObjects(fc.minio, fc.bucketName);
-  const knownIds = await fc.sql`SELECT DISTINCT(id)
-                                FROM file_store WHERE bucket_name = ${fc.bucketName}`;
+  const knownIds = await storeQueries.fileStoreSelect(fc.sql, {
+    bucketName: fc.bucketName,
+  });
 
   const ids = knownIds.map((it) => it.id);
 

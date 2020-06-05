@@ -24,7 +24,7 @@ const pipeline = promisify(pipelineCallbacks);
  * @class
  * A relatively simple local file cache implementation.
  * Supports saving files in memory and on local disk
- * Files#content_length smaller than the provided threshold will be stored in memory.
+ * Files#contentLength smaller than the provided threshold will be stored in memory.
  * A file will always be cached in full, and then the range requests will be evaluated
  *   after The FileCache#clear does not remove files from disk, but will overwrite the
  *   file when added to the cache again
@@ -58,12 +58,11 @@ export class FileCache {
   /**
    * @public
    * Get a file(part) from the cache.
-   * Get a file(part) from the cache.
    * If the file(part) does not exist, it will try to fetch it from the FileStore
    * If the file store throws an error / it doesn't exist, the error is propagated to the
    * caller
    *
-   * @param {FileProps} file
+   * @param {StoreFileStore} file
    * @param {number} [start]
    * @param {number} [end]
    * @return {Promise<{ stream: ReadableStream, cacheControl: string }>}
@@ -72,8 +71,8 @@ export class FileCache {
     if (isNil(start) || start < 0) {
       start = 0;
     }
-    if (isNil(end) || end > file.content_length) {
-      end = file.content_length;
+    if (isNil(end) || end > file.contentLength) {
+      end = file.contentLength;
     }
     const cacheKey = file.id;
 
@@ -81,7 +80,7 @@ export class FileCache {
       return this.loadFromMemoryCache(cacheKey, start, end);
     } else if (this.fileCache.has(cacheKey)) {
       return this.loadFromDiskCache(cacheKey, file.id, start, end);
-    } else if (file.content_length > this.inMemoryThreshold) {
+    } else if (file.contentLength > this.inMemoryThreshold) {
       return this.cacheFileOnDisk(cacheKey, file.id, start, end);
     } else {
       return this.cacheFileInMemory(cacheKey, file.id, start, end);

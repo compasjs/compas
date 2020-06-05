@@ -23,7 +23,7 @@ export {
 } from "./src/migrations.js";
 
 export {
-  createFile,
+  createOrUpdateFile,
   copyFile,
   getFileById,
   getFileStream,
