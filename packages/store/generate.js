@@ -16,7 +16,7 @@ export function applyStructure(app) {
   app.add(
     T.object("sessionStore", {
       id: T.uuid().primary(),
-      expires: T.date(),
+      expires: T.date().searchable(),
       data: T.any().default("{}"),
     }).enableQueries({ withDates: true }),
   );
