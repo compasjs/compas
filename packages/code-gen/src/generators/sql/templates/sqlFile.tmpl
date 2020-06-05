@@ -1,7 +1,7 @@
 {{= options.fileHeader }}
 ((newline))
 
-import { isNil } from "@lbu/stdlib";
+import { isNil, uuid } from "@lbu/stdlib";
 ((newline))
 
 
@@ -93,12 +93,13 @@ import { isNil } from "@lbu/stdlib";
     {{ if (!ref.queryOptions.withHistory) { }}
     /**
      * @param sql
-     * @param { {{= ref.uniqueName }}InsertPartial_Input} it
+     * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, model: ref.keys["id"], isInputType: true }).trim() }} } } it
      * @return {Promise<{{= ref.uniqueName }}[]>}
      */
      {{= ref.name }}Upsert: (sql, it) => {
        const data = {{= sqlGenDefaults({ item, ref, }) }};
-       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
+       data.id = it.id || uuid();
+       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
      },
 ((newline))
 
