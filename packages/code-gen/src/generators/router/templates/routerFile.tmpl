@@ -1,4 +1,5 @@
 {{= options.fileHeader }}
+((newline))
 
 import { compose } from "@lbu/server";
 import { AppError } from "@lbu/stdlib";
@@ -7,29 +8,35 @@ import {
 {{= group }}Validators,
 {{ } }}
 } from "./validators.js";
+((newline))
 
 let _internalBodyParser = undefined;
 export function setBodyParser(parser) {
   _internalBodyParser = ctx => new Promise(r => parser(ctx, r).then(r));
 }
+((newline))
 
 function parseBody(ctx) {
     return _internalBodyParser(ctx);
 }
+((newline))
 
 const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
+((newline))
 
 export const tagMiddleware = {
   {{ for (const t of routeTags) { }}
     {{= t }}: undefined,
   {{ } }}
 };
+((newline))
 
 export const groupMiddleware = {
   {{ for (const group of Object.keys(structure)) { }}
     {{= group }}: undefined,
   {{ } }}
 };
+((newline))
 
 const _composed = {
   {{ for (const groupName of Object.keys(structure)) { }}
@@ -45,6 +52,7 @@ const _composed = {
     {{ } }}
   {{ } }}
 };
+((newline))
 
 const handlers = {
   {{ for (const groupName of Object.keys(structure)) { }}
@@ -54,6 +62,7 @@ const handlers = {
       {{ if (item.type !== "route") { }}
       {{ continue; }}
       {{ } }}
+((newline))
 
       {{= item.uniqueName }}: {{ if (item.body || item.query) { }} async {{ } }} function (params, ctx, next) {
 
@@ -92,10 +101,12 @@ const handlers = {
     {{ } }}
   {{ } }}
 };
+((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
   export const {{= groupName }}Handlers = {
+((newline))
 
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -119,15 +130,18 @@ const handlers = {
      {{= item.name }}: (ctx, next) => {
        throw AppError.notImplemented();
      },
+((newline))
 
   {{ } }}
 
   };
+((newline))
 
 {{ } }}
 
 
 {{ const context = { functions: "", counter: 0 }; }}
+((newline))
 
 export function router(ctx, next) {
   let triePath = ctx.method + ctx.path;
@@ -149,6 +163,7 @@ export function router(ctx, next) {
 
   return next();
 }
+((newline))
 
 lbuHandlers.structure = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
@@ -156,6 +171,8 @@ lbuHandlers.structure = (ctx, next) => {
 
   return next();
 }
+((newline))
 
 
 {{= context.functions }}
+((newline))
