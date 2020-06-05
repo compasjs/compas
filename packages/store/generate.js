@@ -7,7 +7,7 @@ export function applyStructure(app) {
     T.object("fileStore", {
       id: T.uuid().primary(),
       bucketName: T.string().searchable(),
-      contentLength: T.number(),
+      contentLength: T.number().integer(),
       contentType: T.string(),
       filename: T.string(),
     }).enableQueries({ withHistory: true }),
@@ -15,7 +15,7 @@ export function applyStructure(app) {
 
   app.add(
     T.object("sessionStore", {
-      id: T.uuid().searchable(),
+      id: T.uuid().primary(),
       expires: T.date(),
       data: T.any().default("{}"),
     }).enableQueries({ withDates: true }),
@@ -23,9 +23,9 @@ export function applyStructure(app) {
 
   app.add(
     T.object("jobQueue", {
-      id: T.number().primary(),
+      id: T.number().primary().integer(),
       isComplete: T.bool().default("false").searchable(),
-      priority: T.number().default("0"),
+      priority: T.number().default("0").integer(),
       scheduledAt: T.date().defaultToNow().searchable(),
       name: T.string().searchable(),
       data: T.any().default("{}"),

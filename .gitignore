@@ -20,7 +20,7 @@ package-lock.json
 .nyc_output
 
 /generated/*
-/packages/**/generated/*
+/packages/*/generated/*
 /stubs
 
-!packages/**/generated/structure.js
+!packages/store/generated/

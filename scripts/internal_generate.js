@@ -46,6 +46,7 @@ async function main() {
       enabledGenerators: ["type", "sql"],
       useTypescript: false,
       dumpStructure: true,
+      dumpPostgres: true,
     });
   }
 }
