@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.21](https://github.com/lightbasenl/lbu/releases/tag/v0.0.21)
+
+- @lbu/code-gen: rework sql generator, now snake-cases table and column names
+- @lbu/code-gen: add support to generate count queries
+- @lbu/code-gen: add support to add createdAt and updatedAt fields for objects
+  with queries enabled
+- @lbu/code-gen: add support for insert-on-update history table when generating
+  sql
+- @lbu/code-gen: add support to dump a Postgres DDL based on lbu structure
+- @lbu/store: Most components are now backed by the sql generator
+- @lbu/lint-config: add jsdoc linting
+- @lbu/stdlib: support controlled output of newlines
+
 ### [v0.0.20](https://github.com/lightbasenl/lbu/releases/tag/v0.0.20)
 
 - @lbu/code-gen: support OpenAPI conversion
