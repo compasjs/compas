@@ -21,6 +21,9 @@ export const buildTrie = (data) => {
   return buildRouteTrie(routeTrieInput);
 };
 
+/**
+ * @param input
+ */
 function buildRouteTrie(input) {
   const trie = createNode("");
   addHttpMethods(trie);
@@ -70,6 +73,9 @@ function createNode(path, uniqueName) {
   };
 }
 
+/**
+ * @param trie
+ */
 function convertToGeneratorTrie(trie) {
   let result = {
     uniqueName: trie.uniqueName || undefined,
@@ -89,6 +95,10 @@ function convertToGeneratorTrie(trie) {
   return result;
 }
 
+/**
+ * @param parent
+ * @param {...any} children
+ */
 function addChildNodes(parent, ...children) {
   for (const child of children) {
     child.parent = parent;
@@ -96,6 +106,9 @@ function addChildNodes(parent, ...children) {
   }
 }
 
+/**
+ * @param trie
+ */
 function addHttpMethods(trie) {
   addChildNodes(
     trie,
@@ -107,6 +120,11 @@ function addHttpMethods(trie) {
   );
 }
 
+/**
+ * @param trie
+ * @param path
+ * @param uniqueName
+ */
 function addRoute(trie, path, uniqueName) {
   const currentPath = path[0];
 
@@ -126,6 +144,9 @@ function addRoute(trie, path, uniqueName) {
   }
 }
 
+/**
+ * @param trie
+ */
 function cleanTrieAndCollapse(trie) {
   // Remove nodes without name & without children
   trie.children = trie.children.filter(
@@ -141,6 +162,9 @@ function cleanTrieAndCollapse(trie) {
   }
 }
 
+/**
+ * @param trie
+ */
 function collapseStaticChildren(trie) {
   if (trie.uniqueName !== undefined || trie.parent === undefined) {
     return;
@@ -167,6 +191,8 @@ function collapseStaticChildren(trie) {
 
 /**
  * Sort trie recursively, putting prio in order from low to high, and longer routes first
+ *
+ * @param trie
  */
 function sortTrie(trie) {
   trie.children = trie.children.sort((a, b) => {

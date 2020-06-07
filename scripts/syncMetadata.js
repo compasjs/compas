@@ -8,6 +8,9 @@ mainFn(import.meta, newLogger(), main);
 
 export const nodemonArgs = "-w ./README.md";
 
+/**
+ * @param logger
+ */
 function main(logger) {
   // Script to copy the root README.md to all packages
 
@@ -34,10 +37,17 @@ function main(logger) {
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
 }
 
+/**
+ * @param pkgName
+ * @param readmeSource
+ */
 function buildReadmeSource(pkgName, readmeSource) {
   return `# @lbu/${pkgName}\n${readmeSource}`;
 }
 
+/**
+ *
+ */
 function getReadmeSource() {
   const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
 

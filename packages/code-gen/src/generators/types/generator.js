@@ -10,7 +10,7 @@ import { compileDynamicTemplates } from "../../utils.js";
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
   await compileTemplates(app.templateContext, options);
@@ -20,7 +20,7 @@ export async function preGenerate(app, data, options) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<GeneratedFile>}
+ * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
   return {
@@ -35,7 +35,7 @@ export async function generate(app, data, options) {
 /**
  * @param {TemplateContext} tc
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function compileTemplates(tc, options) {
   const key = options.useTypescript ? "tsType" : "jsType";

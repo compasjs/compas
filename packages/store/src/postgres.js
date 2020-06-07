@@ -12,7 +12,7 @@ import postgres from "postgres";
 /**
  * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
- * @return {Postgres}
+ * @returns {Postgres}
  */
 export async function newPostgresConnection(opts) {
   if (!process.env.POSTGRES_URI || !process.env.APP_NAME) {
@@ -47,6 +47,11 @@ export async function newPostgresConnection(opts) {
   );
 }
 
+/**
+ * @param sql
+ * @param databaseName
+ * @param template
+ */
 export async function createDatabaseIfNotExists(sql, databaseName, template) {
   if (!sql) {
     sql = postgres(process.env.POSTGRES_URI);

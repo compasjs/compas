@@ -21,7 +21,7 @@ class AnyType extends TypeBuilder {
 
   /**
    * @param {string} value
-   * @return {AnyType}
+   * @returns {AnyType}
    */
   typeOf(value) {
     this.data.typeOf = value;
@@ -30,7 +30,7 @@ class AnyType extends TypeBuilder {
 
   /**
    * @param {string} value
-   * @return {AnyType}
+   * @returns {AnyType}
    */
   instanceOf(value) {
     this.data.instanceOf = value;
@@ -58,7 +58,7 @@ const anyType = {
 /**
  * @name TypeCreator#any
  * @param {string} [name]
- * @return {AnyType}
+ * @returns {AnyType}
  */
 TypeCreator.prototype.any = function (name) {
   return new AnyType(this.group, name);

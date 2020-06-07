@@ -42,7 +42,7 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * Create a new logger
  *
  * @param {LoggerOptions} [options]
- * @return {Logger}
+ * @returns {Logger}
  */
 export function newLogger(options) {
   const isProduction =
@@ -75,7 +75,7 @@ export function newLogger(options) {
  *
  * @param {Logger} logger
  * @param {object|{type: string}} ctx
- * @return {Logger}
+ * @returns {Logger}
  */
 export function bindLoggerContext(logger, ctx) {
   const isProd = logger.isProduction();
@@ -90,7 +90,7 @@ export function bindLoggerContext(logger, ctx) {
  * Wrap provided writer function to be used in the Logger
  *
  * @param fn
- * @return {log}
+ * @returns {log}
  */
 function wrapWriter(fn) {
   return function log(stream, depth, level, context, message) {

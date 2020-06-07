@@ -10,7 +10,7 @@ import { buildTrie } from "./trie.js";
 
 /**
  * @param {App} app
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function init(app) {
   if (!app.generators.has("validator")) {
@@ -27,7 +27,7 @@ export async function init(app) {
 /**
  * @param {App} app
  * @param data
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function preGenerate(app, data) {
   for (const r of getInternalRoutes()) {
@@ -39,7 +39,7 @@ export async function preGenerate(app, data) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<GeneratedFile>}
+ * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
   data.routeTrie = buildTrie(data);
@@ -56,6 +56,9 @@ export async function generate(app, data, options) {
   };
 }
 
+/**
+ * @param data
+ */
 function buildRouteTags(data) {
   const set = new Set();
 

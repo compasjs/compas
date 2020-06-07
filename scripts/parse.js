@@ -12,6 +12,9 @@ mainFn(
   main,
 );
 
+/**
+ * @param logger
+ */
 async function main(logger) {
   const store = {
     requests: 0,

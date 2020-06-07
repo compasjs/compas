@@ -7,6 +7,9 @@ mainFn(import.meta, newLogger(), main);
 
 export const disallowNodemon = true;
 
+/**
+ * @param logger
+ */
 async function main(logger) {
   const [workingDir] = process.argv.slice(2);
 

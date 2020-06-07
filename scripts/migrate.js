@@ -9,6 +9,9 @@ import {
 
 mainFn(import.meta, log, main);
 
+/**
+ * @param logger
+ */
 async function main(logger) {
   const sql = await newPostgresConnection({ createIfNotExists: true });
   const mc = await newMigrateContext(sql);

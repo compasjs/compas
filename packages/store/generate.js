@@ -1,5 +1,8 @@
 import { TypeCreator } from "@lbu/code-gen";
 
+/**
+ * @param app
+ */
 export function applyStructure(app) {
   const T = new TypeCreator("store");
 

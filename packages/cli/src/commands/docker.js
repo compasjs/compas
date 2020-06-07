@@ -15,7 +15,7 @@ const supportedContainers = {
 /**
  * @param {Logger} logger
  * @param {UtilCommand} command
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function dockerCommand(logger, command) {
   const subCommand = command.arguments[0];
@@ -44,6 +44,9 @@ export async function dockerCommand(logger, command) {
   }
 }
 
+/**
+ * @param logger
+ */
 async function startContainers(logger) {
   const { stdout } = await exec("docker container ls -a --format '{{.Names}}'");
 
@@ -58,11 +61,17 @@ async function startContainers(logger) {
   await spawn(`docker`, ["start", ...Object.keys(supportedContainers)]);
 }
 
+/**
+ * @param logger
+ */
 async function stopContainers(logger) {
   logger.info(`Stopping containers`);
   await spawn(`docker`, ["stop", ...Object.keys(supportedContainers)]);
 }
 
+/**
+ * @param logger
+ */
 async function cleanContainers(logger) {
   await stopContainers(logger);
   logger.info(`Removing containers`);
@@ -71,6 +80,9 @@ async function cleanContainers(logger) {
   await spawn(`docker`, ["volume", "rm", ...Object.keys(supportedContainers)]);
 }
 
+/**
+ *
+ */
 async function isDockerAvailable() {
   try {
     await exec("docker -v");

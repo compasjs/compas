@@ -12,13 +12,13 @@ const { readFile } = promises;
  * @name TemplateContext
  *
  * @typedef {object}
- * @property {object<string, function>} globals
- * @property {Map<string, function>} templates
+ * @property {object<string, Function>} globals
+ * @property {Map<string, Function>} templates
  * @property {boolean} strict
  */
 
 /**
- * @return {TemplateContext}
+ * @returns {TemplateContext}
  */
 export function newTemplateContext() {
   return {
@@ -121,7 +121,7 @@ export function compileTemplate(tc, name, str, opts = {}) {
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export function compileTemplateDirectory(tc, dir, extension, opts) {
   if (isNil(tc)) {
@@ -154,7 +154,7 @@ export function compileTemplateDirectory(tc, dir, extension, opts) {
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
- * @return {void}
+ * @returns {void}
  */
 export function compileTemplateDirectorySync(tc, dir, extension, opts) {
   if (isNil(tc)) {
@@ -186,7 +186,7 @@ export function compileTemplateDirectorySync(tc, dir, extension, opts) {
  * @param {TemplateContext} tc
  * @param {string} name
  * @param {*} data
- * @return {string} The resulting string for executing the template
+ * @returns {string} The resulting string for executing the template
  */
 export function executeTemplate(tc, name, data) {
   if (isNil(tc)) {

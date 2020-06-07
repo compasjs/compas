@@ -29,7 +29,7 @@ class StringType extends TypeBuilder {
 
   /**
    * @param {...string} values
-   * @return {StringType}
+   * @returns {StringType}
    */
   oneOf(...values) {
     this.data.oneOf = values;
@@ -38,7 +38,7 @@ class StringType extends TypeBuilder {
   }
 
   /**
-   * @return {StringType}
+   * @returns {StringType}
    */
   convert() {
     this.data.validator.convert = true;
@@ -47,7 +47,7 @@ class StringType extends TypeBuilder {
   }
 
   /**
-   * @return {StringType}
+   * @returns {StringType}
    */
   trim() {
     this.data.validator.trim = true;
@@ -56,7 +56,7 @@ class StringType extends TypeBuilder {
   }
 
   /**
-   * @return {StringType}
+   * @returns {StringType}
    */
   upperCase() {
     this.data.validator.upperCase = true;
@@ -65,7 +65,7 @@ class StringType extends TypeBuilder {
   }
 
   /**
-   * @return {StringType}
+   * @returns {StringType}
    */
   lowerCase() {
     this.data.validator.lowerCase = true;
@@ -75,7 +75,7 @@ class StringType extends TypeBuilder {
 
   /**
    * @param {number} min
-   * @return {StringType}
+   * @returns {StringType}
    */
   min(min) {
     this.data.validator.min = min;
@@ -85,7 +85,7 @@ class StringType extends TypeBuilder {
 
   /**
    * @param {number} max
-   * @return {StringType}
+   * @returns {StringType}
    */
   max(max) {
     this.data.validator.max = max;
@@ -95,7 +95,7 @@ class StringType extends TypeBuilder {
 
   /**
    * @param {RegExp} pattern
-   * @return {StringType}
+   * @returns {StringType}
    */
   pattern(pattern) {
     this.data.validator.pattern = `/${pattern.source}/${pattern.flags}`;
@@ -126,7 +126,7 @@ const stringType = {
 /**
  * @name TypeCreator#string
  * @param {string} [name]
- * @return {StringType}
+ * @returns {StringType}
  */
 TypeCreator.prototype.string = function (name) {
   return new StringType(this.group, name);

@@ -54,7 +54,7 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
 /**
  * @param {string[]} args
  * @param {string[]} [knownScripts]
- * @return {ParsedArgs}
+ * @returns {ParsedArgs}
  */
 export function parseArgs(args, knownScripts = []) {
   if (args.length === 0) {
@@ -148,6 +148,10 @@ export function parseArgs(args, knownScripts = []) {
   };
 }
 
+/**
+ * @param args
+ * @param error
+ */
 function buildHelpError(args, error) {
   return {
     type: "util",

@@ -5,7 +5,7 @@ const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
  * Support up to a pebibyte
  *
  * @param {number} [bytes]
- * @return {string}
+ * @returns {string}
  */
 export function bytesToHumanReadable(bytes) {
   if (bytes === 0 || bytes === undefined) {

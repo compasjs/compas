@@ -20,7 +20,7 @@ import { isNil } from "@lbu/stdlib";
  * @param {SendFile} fileInfo
  * @param {number} [start]
  * @param {number} [end]
- * @return {Promise<{ stream: ReadableStream, cacheControl?: string}>}
+ * @returns {Promise<{ stream: ReadableStream, cacheControl?: string}>}
  */
 
 /**

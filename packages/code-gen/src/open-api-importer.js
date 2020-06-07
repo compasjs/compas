@@ -12,6 +12,7 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
  * request body and 200-response. There are some extra generated references to make sure
  * all path's are also referenced into the default group as to make sure they will be
  * included in the generation.
+ *
  * @param {string} defaultGroup
  * @param {object} data
  */
@@ -70,6 +71,11 @@ export function convertOpenAPISpec(defaultGroup, data) {
   return context.result;
 }
 
+/**
+ * @param context
+ * @param path
+ * @param method
+ */
 function extractRoute(context, path, method) {
   const item = context.data.paths[path][method];
   if (!item) {
@@ -122,9 +128,10 @@ function extractRoute(context, path, method) {
 
 /**
  * Remove spaces, dashes and return camelCased name
+ *
  * @param context
  * @param operationId
- * @return {string}
+ * @returns {string}
  */
 function transformRouteName(context, operationId) {
   return operationId
@@ -135,9 +142,10 @@ function transformRouteName(context, operationId) {
 
 /**
  * Transform path params, remove leading slash and add trailing slash
+ *
  * @param context
  * @param path
- * @return {string}
+ * @returns {string}
  */
 function transformRoutePath(context, path) {
   return (
@@ -156,6 +164,11 @@ function transformRoutePath(context, path) {
 
 /**
  * Extract either path params or query from the provided inputList
+ *
+ * @param context
+ * @param inputList
+ * @param lbuStruct
+ * @param filter
  */
 function transformQueryOrParams(context, inputList, lbuStruct, filter) {
   const obj = {};
@@ -188,6 +201,10 @@ function transformQueryOrParams(context, inputList, lbuStruct, filter) {
 
 /**
  * Transform the post body
+ *
+ * @param context
+ * @param input
+ * @param lbuStruct
  */
 function transformBody(context, input, lbuStruct) {
   if (isNil(input?.content?.["application/json"]?.schema)) {
@@ -205,6 +222,10 @@ function transformBody(context, input, lbuStruct) {
 
 /**
  * Transform success responses only
+ *
+ * @param context
+ * @param input
+ * @param lbuStruct
  */
 function transformResponse(context, input, lbuStruct) {
   if (isNil(input?.content?.["application/json"]?.schema)) {
@@ -221,6 +242,9 @@ function transformResponse(context, input, lbuStruct) {
 
 /**
  * Naively try to find the referenced item in the OpenAPI doc
+ *
+ * @param context
+ * @param refString
  */
 function resolveReference(context, refString) {
   const path = refString.split("/").slice(1);
@@ -248,9 +272,10 @@ function resolveReference(context, refString) {
  * LBU and OpenAPI offer flexibility in different places:
  * - allOf, oneOf and anyOf from OpenAPI all result into a LBU anyOf
  * - Unknown types result in a lbu AnyType
+ *
  * @param context
  * @param schema
- * @return {{defaultValue: any, name: any, docString: string, isOptional: boolean, type:
+ * @returns {{defaultValue: any, name: any, docString: string, isOptional: boolean, type:
  *   string, group: any}}
  */
 function convertSchema(context, schema) {

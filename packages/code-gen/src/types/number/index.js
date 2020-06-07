@@ -26,7 +26,7 @@ class NumberType extends TypeBuilder {
 
   /**
    * @param {...number} values
-   * @return {NumberType}
+   * @returns {NumberType}
    */
   oneOf(...values) {
     this.data.oneOf = values;
@@ -35,7 +35,7 @@ class NumberType extends TypeBuilder {
   }
 
   /**
-   * @return {NumberType}
+   * @returns {NumberType}
    */
   convert() {
     this.data.validator.convert = true;
@@ -44,7 +44,7 @@ class NumberType extends TypeBuilder {
   }
 
   /**
-   * @return {NumberType}
+   * @returns {NumberType}
    */
   integer() {
     this.data.validator.integer = true;
@@ -54,7 +54,7 @@ class NumberType extends TypeBuilder {
 
   /**
    * @param {number} min
-   * @return {NumberType}
+   * @returns {NumberType}
    */
   min(min) {
     this.data.validator.min = min;
@@ -64,7 +64,7 @@ class NumberType extends TypeBuilder {
 
   /**
    * @param {number} max
-   * @return {NumberType}
+   * @returns {NumberType}
    */
   max(max) {
     this.data.validator.max = max;
@@ -95,7 +95,7 @@ const numberType = {
 /**
  * @name TypeCreator#number
  * @param {string} [name]
- * @return {NumberType}
+ * @returns {NumberType}
  */
 TypeCreator.prototype.number = function (name) {
   return new NumberType(this.group, name);

@@ -7,9 +7,10 @@ import { isNil } from "./lodash.js";
 export class AppError extends Error {
   /**
    * Create a new AppError
+   *
    * @param {string} key
    * @param {number} status
-   * @param {Object} [info={}]
+   * @param {object} [info={}]
    * @param {Error} [originalError]
    */
   constructor(key, status, info, originalError) {
@@ -37,9 +38,10 @@ export class AppError extends Error {
 
   /**
    * Throw a new 404 not found error
-   * @param {Object} [info={}]
+   *
+   * @param {object} [info={}]
    * @param {Error} [error]
-   * @return {AppError}
+   * @returns {AppError}
    */
   static notFound(info = {}, error = undefined) {
     return new AppError("error.server.notFound", 404, info, error);
@@ -47,9 +49,10 @@ export class AppError extends Error {
 
   /**
    * Throw a new 405 Not implemented error
-   * @param {Object} [info={}]
+   *
+   * @param {object} [info={}]
    * @param {Error} [error]
-   * @return {AppError}
+   * @returns {AppError}
    */
   static notImplemented(info = {}, error = undefined) {
     return new AppError("error.server.notImplemented", 405, info, error);
@@ -57,9 +60,10 @@ export class AppError extends Error {
 
   /**
    * Throw a new 500 internal server error
-   * @param {Object} [info={}]
+   *
+   * @param {object} [info={}]
    * @param {Error} [error]
-   * @return {AppError}
+   * @returns {AppError}
    */
   static serverError(info = {}, error = undefined) {
     return new AppError("error.server.internal", 500, info, error);
@@ -67,10 +71,11 @@ export class AppError extends Error {
 
   /**
    * Throw a new 400 validation error
+   *
    * @param {string} key
-   * @param {Object} [info={}]
+   * @param {object} [info={}]
    * @param {Error} [error]
-   * @return {AppError}
+   * @returns {AppError}
    */
   static validationError(key, info = {}, error = undefined) {
     return new AppError(key, 400, info, error);

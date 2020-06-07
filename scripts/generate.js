@@ -14,6 +14,9 @@ mainFn(import.meta, log, main);
 export const nodemonArgs =
   "--ignore generated --ignore stubs --ignore **/generated/*.js -e tmpl,js,json";
 
+/**
+ *
+ */
 async function main() {
   const app = new App({
     generators: [

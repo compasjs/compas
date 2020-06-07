@@ -33,7 +33,7 @@ const defaultOptions = {
 /**
  * @name CorsOptions
  *
- * @typedef {Object}
+ * @typedef {object}
  * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is
  *   request Origin header
  * @property {string[]} [exposeHeaders] `Access-Control-Expose-Headers`
@@ -50,7 +50,7 @@ const defaultOptions = {
  * CORS middleware for koa2
  *
  * @param {CorsOptions} [options]
- * @return {Function}
+ * @returns {Function}
  */
 export function cors(options = {}) {
   const opts = Object.assign({}, defaultOptions, options);

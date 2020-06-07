@@ -17,7 +17,7 @@ import { Transform } from "stream";
  * Create a new parser context
  *
  * @param {ReadStream} stream
- * @return {LogParserContext}
+ * @returns {LogParserContext}
  */
 export function newLogParserContext(stream) {
   return {
@@ -32,7 +32,7 @@ export function newLogParserContext(stream) {
  * textProcessor with the value. The original value is written to the returned stream
  *
  * @param {LogParserContext} lpc
- * @return {ReadStream}
+ * @returns {ReadStream}
  */
 export function executeLogParser(lpc) {
   const transport = new Transform({

@@ -12,9 +12,8 @@ import { join } from "path";
 /**
  * @param {Logger} logger
  * @param {UtilCommand} command
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
-
 export async function initCommand(logger, command) {
   const { version } = JSON.parse(
     readFileSync(
@@ -51,6 +50,11 @@ Have fun ;)
 `);
 }
 
+/**
+ * @param source
+ * @param target
+ * @param contentHandler
+ */
 function copyDirRecursive(source, target, contentHandler) {
   const stat = lstatSync(source);
   if (stat.isDirectory()) {

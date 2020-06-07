@@ -2,6 +2,7 @@ import { isNil, isPlainObject } from "@lbu/stdlib";
 
 /**
  * Create a js-reference for reference types
+ *
  * @param structure
  * @param value
  */

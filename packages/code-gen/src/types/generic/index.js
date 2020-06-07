@@ -30,7 +30,7 @@ class GenericType extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} [key]
-   * @return {GenericType}
+   * @returns {GenericType}
    */
   keys(key) {
     this.internalKeys = key;
@@ -39,7 +39,7 @@ class GenericType extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} [value]
-   * @return {GenericType}
+   * @returns {GenericType}
    */
   values(value) {
     this.internalValues = value;
@@ -67,7 +67,7 @@ const genericType = {
 /**
  * @name TypeCreator#generic
  * @param {string} [name]
- * @return {GenericType}
+ * @returns {GenericType}
  */
 TypeCreator.prototype.generic = function (name) {
   return new GenericType(this.group, name);

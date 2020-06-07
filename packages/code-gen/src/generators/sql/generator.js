@@ -15,7 +15,7 @@ import { buildExtraTypes } from "./builder.js";
  * @param {object} [options={}]
  * @param {boolean} [options.withHistory]
  * @param {boolean} [options.withDates]
- * @return {ObjectType}
+ * @returns {ObjectType}
  */
 TypeCreator.types.get("object").class.prototype.enableQueries = function (
   options = {},
@@ -27,7 +27,7 @@ TypeCreator.types.get("object").class.prototype.enableQueries = function (
 
 /**
  * @name TypeBuilder#searchable
- * @return {TypeBuilder}
+ * @returns {TypeBuilder}
  */
 TypeBuilder.prototype.searchable = function () {
   this.data.sql = this.data.sql || {};
@@ -38,7 +38,7 @@ TypeBuilder.prototype.searchable = function () {
 
 /**
  * @name TypeBuilder#primary
- * @return {TypeBuilder}
+ * @returns {TypeBuilder}
  */
 TypeBuilder.prototype.primary = function () {
   this.data.sql = this.data.sql || {};
@@ -52,7 +52,7 @@ TypeBuilder.prototype.primary = function () {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
   await compileTemplateDirectory(
@@ -88,7 +88,7 @@ export async function preGenerate(app, data, options) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<GeneratedFile>}
+ * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
   if (options.dumpPostgres) {

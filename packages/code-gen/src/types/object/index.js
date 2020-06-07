@@ -39,8 +39,8 @@ class ObjectType extends TypeBuilder {
   }
 
   /**
-   * @param {Object<string, TypeBuilder>} obj
-   * @return {ObjectType}
+   * @param {object<string, TypeBuilder>} obj
+   * @returns {ObjectType}
    */
   keys(obj) {
     this.internalKeys = merge(this.internalKeys, obj);
@@ -49,7 +49,7 @@ class ObjectType extends TypeBuilder {
   }
 
   /**
-   * @return {ObjectType}
+   * @returns {ObjectType}
    */
   strict() {
     this.data.validator.strict = true;
@@ -77,9 +77,9 @@ const objectType = {
 
 /**
  * @name TypeCreator#object
- * @param {string|Object<string, TypeBuilder>} [name]
- * @param {Object<string, TypeBuilder>} [obj]
- * @return {ObjectType}
+ * @param {string|object<string, TypeBuilder>} [name]
+ * @param {object<string, TypeBuilder>} [obj]
+ * @returns {ObjectType}
  */
 TypeCreator.prototype.object = function (name, obj) {
   if (isPlainObject(name)) {

@@ -48,7 +48,7 @@ return stringValidator{{= fnNumber }}(value, propertyPath, parentType);
 /**
  * @name TypeCreator#uuid
  * @param {string} [name]
- * @return {UuidType}
+ * @returns {UuidType}
  */
 TypeCreator.prototype.uuid = function (name) {
   return new UuidType(this.group, name);

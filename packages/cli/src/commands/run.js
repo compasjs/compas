@@ -5,9 +5,8 @@ import { executeCommand } from "../utils.js";
  * @param {Logger} logger
  * @param {ExecCommand} command
  * @param {ScriptCollection} scriptCollection
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
-
 export async function runCommand(logger, command, scriptCollection) {
   const script = scriptCollection[command.script];
 
