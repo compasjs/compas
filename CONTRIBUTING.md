@@ -27,12 +27,6 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
   - Check packages it will publish and send `y`
   - Give a new OTP every time it is asked.
 
-Everything should be published now. To make the repo ready for more development:
-
-- Bump version in root package.json to new version
-- Run `yarn`
-- Commit with `*: bump @lbu/* to vX.X.X`
-
 ### WebStorm
 
 - `Help` > `Edit Custom Properties...` >
