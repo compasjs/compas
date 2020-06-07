@@ -38,7 +38,7 @@ class ArrayType extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} [value]
-   * @return {ArrayType}
+   * @returns {ArrayType}
    */
   values(value) {
     this.internalValues = value;
@@ -47,7 +47,7 @@ class ArrayType extends TypeBuilder {
   }
 
   /**
-   * @return {ArrayType}
+   * @returns {ArrayType}
    */
   convert() {
     this.data.validator.convert = true;
@@ -57,7 +57,7 @@ class ArrayType extends TypeBuilder {
 
   /**
    * @param {number} min
-   * @return {ArrayType}
+   * @returns {ArrayType}
    */
   min(min) {
     this.data.validator.min = min;
@@ -67,7 +67,7 @@ class ArrayType extends TypeBuilder {
 
   /**
    * @param {number} max
-   * @return {ArrayType}
+   * @returns {ArrayType}
    */
   max(max) {
     this.data.validator.max = max;
@@ -97,7 +97,7 @@ const arrayType = {
  * @name TypeCreator#array
  * @param {string|TypeBuilder} [name]
  * @param {TypeBuilder} [value]
- * @return {ArrayType}
+ * @returns {ArrayType}
  */
 TypeCreator.prototype.array = function (name, value) {
   if (name instanceof TypeBuilder) {

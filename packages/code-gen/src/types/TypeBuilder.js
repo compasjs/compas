@@ -18,6 +18,7 @@ export class TypeBuilder {
 
   /**
    * Create a new TypeBuilder for the provided group
+   *
    * @param {string} type
    * @param {string} [group]
    * @param {string} [name]
@@ -33,8 +34,9 @@ export class TypeBuilder {
 
   /**
    * Add a doc comment, some generators / types may support rendering this
+   *
    * @param docValue
-   * @return {this}
+   * @returns {this}
    */
   docs(docValue) {
     this.data.docString = docValue;
@@ -44,7 +46,8 @@ export class TypeBuilder {
 
   /**
    * Value can be undefined
-   * @return {this}
+   *
+   * @returns {this}
    */
   optional() {
     this.data.isOptional = true;
@@ -55,8 +58,9 @@ export class TypeBuilder {
   /**
    * Set a raw default value, also makes the type optional
    * Can be reverted by calling this function with undefined or null
+   *
    * @param rawString
-   * @return {this}
+   * @returns {this}
    */
   default(rawString) {
     this.data.defaultValue = rawString;
@@ -67,7 +71,8 @@ export class TypeBuilder {
 
   /**
    * Returns a shallow copy of the data object
-   * @return {object}
+   *
+   * @returns {object}
    */
   build() {
     if (isNil(this.data.name)) {
@@ -92,10 +97,11 @@ export class TypeBuilder {
 /**
  * Create new instances of registered types and manages grups
  * Also keeps a Map of registered types on TypeCreator.types
+ *
  * @class
  */
 export class TypeCreator {
-  /** @type {Map<string, TypePlugin|Object<string, TypePlugin|Class>>} */
+  /** @type {Map<string, TypePlugin|object<string, TypePlugin|Class>>} */
   static types = new Map();
 
   constructor(group) {
@@ -110,8 +116,9 @@ export class TypeCreator {
 
   /**
    * Return a list of types that have the specified property
+   *
    * @param {string} property
-   * @return {TypePlugin[]}
+   * @returns {TypePlugin[]}
    */
   static getTypesWithProperty(property) {
     const result = [];
@@ -127,8 +134,9 @@ export class TypeCreator {
 
 /**
  * Check if value may be output object from a TypeBuilder
+ *
  * @param value
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isNamedTypeBuilderLike(value) {
   if (!isPlainObject(value)) {
@@ -144,8 +152,9 @@ export function isNamedTypeBuilderLike(value) {
 
 /**
  * Check if value is a reference with a specified reference field
+ *
  * @param value
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isReferenceTypeWithField(value) {
   if (!isPlainObject(value) || value?.type !== "reference") {

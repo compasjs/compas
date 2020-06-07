@@ -2,6 +2,9 @@ import { camelToSnakeCase, isNil } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 
+/**
+ * @param data
+ */
 export function buildExtraTypes(data) {
   for (const group of Object.keys(data.structure)) {
     for (const name of Object.keys(data.structure[group])) {
@@ -53,6 +56,8 @@ export function buildExtraTypes(data) {
 /**
  * Add createdAt and updatedAt to this item
  * These fields are optional as either LBU or Postgres will fill them
+ *
+ * @param item
  */
 function addDateFields(item) {
   item.queryOptions.dateFields = true;
@@ -80,8 +85,9 @@ function addDateFields(item) {
 
 /**
  * Get where fields and input type
+ *
  * @param item
- * @return {{type: object, fieldsArray: *[]}}
+ * @returns {{type: object, fieldsArray: *[]}}
  */
 function getWhereFields(item) {
   const fieldsArray = [];
@@ -160,8 +166,9 @@ function getWhereFields(item) {
 
 /**
  * Get where fields and input type
+ *
  * @param item
- * @return {{type: object, fieldsArray: *[]}}
+ * @returns {{type: object, fieldsArray: *[]}}
  */
 function getPartialFields(item) {
   const fieldsArray = [];

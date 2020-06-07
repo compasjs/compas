@@ -11,7 +11,7 @@ import { compileDynamicTemplates } from "../../utils.js";
  * @name TypeBuilder#mock
  * @param {string} mockFn Raw mock string that is inserted. Use _mocker or __ to access
  *   the Chance instance
- * @return {TypeBuilder}
+ * @returns {TypeBuilder}
  */
 TypeBuilder.prototype.mock = function (mockFn) {
   if (!this.data.mocks) {
@@ -26,7 +26,7 @@ TypeBuilder.prototype.mock = function (mockFn) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
   await compileTemplates(app.templateContext, options);
@@ -36,7 +36,7 @@ export async function preGenerate(app, data, options) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<GeneratedFile>}
+ * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
   return {
@@ -51,7 +51,7 @@ export async function generate(app, data, options) {
 /**
  * @param {TemplateContext} tc
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function compileTemplates(tc, options) {
   compileDynamicTemplates(tc, options, "mock", {

@@ -42,7 +42,7 @@ class ReferenceType extends TypeBuilder {
   /**
    * @param {string|TypeBuilder} group
    * @param {string} [name]
-   * @return {ReferenceType}
+   * @returns {ReferenceType}
    */
   constructor(group, name) {
     super(referenceType.name, undefined, undefined);
@@ -60,7 +60,7 @@ class ReferenceType extends TypeBuilder {
   /**
    * @param {string|TypeBuilder} group
    * @param {string} [name]
-   * @return {ReferenceType}
+   * @returns {ReferenceType}
    */
   set(group, name) {
     if (group instanceof TypeBuilder) {
@@ -79,7 +79,7 @@ class ReferenceType extends TypeBuilder {
    * @api public
    * @param {string} referencing
    * @param {string} [replacement]
-   * @return {ReferenceType}
+   * @returns {ReferenceType}
    */
   field(referencing, replacement) {
     this.data.reference.field = {
@@ -113,7 +113,7 @@ const referenceType = {
 /**
  * @param {string|TypeBuilder} [groupOrOther]
  * @param {string} [name]
- * @return {ReferenceType}
+ * @returns {ReferenceType}
  */
 TypeCreator.prototype.reference = function (groupOrOther, name) {
   return new ReferenceType(groupOrOther, name);

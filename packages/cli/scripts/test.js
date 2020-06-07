@@ -29,6 +29,9 @@ mainFn(
   main,
 );
 
+/**
+ *
+ */
 async function main() {
   test.Test.prototype.asyncShouldThrow = async function (cb, msg) {
     try {

@@ -1,5 +1,8 @@
 import { TypeCreator } from "../../types/index.js";
 
+/**
+ *
+ */
 export function getInternalRoutes() {
   const T = new TypeCreator("lbu");
   const G = T.router("_lbu/");

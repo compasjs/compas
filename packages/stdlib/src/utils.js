@@ -8,7 +8,8 @@ import { isNil } from "./lodash.js";
 
 /**
  * Return seconds since unix epoch
- * @return {number}
+ *
+ * @returns {number}
  */
 export function getSecondsSinceEpoch() {
   return Math.floor(Date.now() / 1000);
@@ -16,7 +17,8 @@ export function getSecondsSinceEpoch() {
 
 /**
  * An empty function, doing exactly nothing but returning undefined.
- * @return {undefined}
+ *
+ * @returns {undefined}
  */
 export function noop() {
   return undefined;
@@ -45,13 +47,14 @@ export function gc() {
 /**
  * @callback MainFnCallback
  * @param {Logger} logger
- * @return {Promise.<void>|void}
+ * @returns {Promise.<void>|void}
  */
 
 /**
  * Run the provided cb if this file is the process entrypoint
  * Will also load dotenv before executing the provided callback.
  * Another side effect is that a process listener is added for warnings
+ *
  * @param {ImportMeta} meta
  * @param {Logger} logger
  * @param {MainFnCallback} cb
@@ -68,8 +71,9 @@ export function mainFn(meta, logger, cb) {
 /**
  * Return filename for ES Module
  * Alternative to CommonJS __filename
+ *
  * @param {ImportMeta} meta
- * @return {string}
+ * @returns {string}
  */
 export function filenameForModule(meta) {
   return fileURLToPath(meta.url);
@@ -78,8 +82,9 @@ export function filenameForModule(meta) {
 /**
  * Return dirname for ES Module
  * Alternative to CommonJS __dirname
+ *
  * @param {ImportMeta} meta
- * @return {string}
+ * @returns {string}
  */
 export function dirnameForModule(meta) {
   return path.dirname(filenameForModule(meta));
@@ -87,7 +92,7 @@ export function dirnameForModule(meta) {
 
 /**
  * @param {ImportMeta} meta
- * @return {boolean}
+ * @returns {boolean}
  */
 function isMainFn(meta) {
   const modulePath = fileURLToPath(meta.url);
@@ -113,6 +118,9 @@ function isMainFn(meta) {
   return modulePathWithoutExt === scriptPath;
 }
 
+/**
+ * @param logger
+ */
 function setupProcessListeners(logger) {
   process.on("warning", (err) => logger.error(err));
 }

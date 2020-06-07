@@ -1,5 +1,13 @@
 import { inspect } from "util";
 
+/**
+ * @param stream
+ * @param depth
+ * @param level
+ * @param timestamp
+ * @param context
+ * @param message
+ */
 export function writeNDJSON(stream, depth, level, timestamp, context, message) {
   stream.write(
     JSON.stringify({
@@ -12,6 +20,14 @@ export function writeNDJSON(stream, depth, level, timestamp, context, message) {
   stream.write("\n");
 }
 
+/**
+ * @param stream
+ * @param depth
+ * @param level
+ * @param timestamp
+ * @param context
+ * @param message
+ */
 export function writePretty(stream, depth, level, timestamp, context, message) {
   stream.write(formatDate(timestamp));
   stream.write(" ");
@@ -44,7 +60,7 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
 /**
  * @param {number} depth
  * @param {*} value
- * @return {string}
+ * @returns {string}
  */
 function formatMessagePretty(depth, value) {
   if (
@@ -64,7 +80,7 @@ function formatMessagePretty(depth, value) {
 /**
  * @param {number} availableDepth
  * @param {*} message
- * @return {*}
+ * @returns {*}
  */
 function formatMessage(availableDepth, message) {
   if (message === null) {
@@ -122,7 +138,7 @@ function formatMessage(availableDepth, message) {
 
 /**
  * @param {Date} date
- * @return {string}
+ * @returns {string}
  */
 function formatDate(date) {
   const h = date.getHours().toString(10).padStart(2, "0");
@@ -136,7 +152,7 @@ function formatDate(date) {
 /**
  * @param {string} level
  * @param {string} type
- * @return {string}
+ * @returns {string}
  */
 function formatLevelAndType(level, type) {
   const str =

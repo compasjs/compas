@@ -6,9 +6,8 @@ import { join } from "path";
  * @param {Logger} logger
  * @param {UtilCommand} command
  * @param {ScriptCollection} scriptCollection
- * @return {void}
+ * @returns {void}
  */
-
 export function helpCommand(logger, command, scriptCollection) {
   const { name, version } = JSON.parse(
     readFileSync(

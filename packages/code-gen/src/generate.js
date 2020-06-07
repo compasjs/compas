@@ -22,9 +22,10 @@ const { mkdir, writeFile } = fs;
 
 /**
  * The whole generate process
+ *
  * @param {App} app
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function runGenerators(app, options) {
   const copy = JSON.parse(JSON.stringify(app.data));
@@ -81,6 +82,11 @@ export async function runGenerators(app, options) {
   await normalizeAndWriteFiles(options, files);
 }
 
+/**
+ * @param input
+ * @param copy
+ * @param groups
+ */
 function addGroupsToGeneratorInput(input, copy, groups) {
   for (const group of groups) {
     input.structure[group] = copy.structure[group] || {};
@@ -91,11 +97,12 @@ function addGroupsToGeneratorInput(input, copy, groups) {
 
 /**
  * Call a method on the specific generator with the specified arguments
+ *
  * @param {App} app
  * @param {string} generatorName
  * @param {string} method
  * @param {...*} args
- * @return {Promise<undefined|*>}
+ * @returns {Promise<undefined|*>}
  */
 export async function callSpecificGeneratorWithMethod(
   app,
@@ -119,11 +126,12 @@ export async function callSpecificGeneratorWithMethod(
 
 /**
  * Call a method on all generators
+ *
  * @param {App} app
  * @param {string[]|Iterable<string>} keys
  * @param {string} method
  * @param {...*} args
- * @return {Promise<*[]>}
+ * @returns {Promise<*[]>}
  */
 export async function callGeneratorMethod(app, keys, method, ...args) {
   const result = [];
@@ -145,6 +153,7 @@ export async function callGeneratorMethod(app, keys, method, ...args) {
 
 /**
  * Add item to correct group and nmame
+ *
  * @param dataStructure
  * @param item
  */
@@ -192,6 +201,7 @@ async function normalizeAndWriteFiles(options, files) {
 
 /**
  * Find nested references and add to stubData in the correct group
+ *
  * @param rootData
  * @param generatorInput
  * @param value
@@ -236,6 +246,10 @@ function includeReferenceTypes(rootData, generatorInput, value) {
   }
 }
 
+/**
+ * @param root
+ * @param structure
+ */
 export function hoistNamedItems(root, structure) {
   for (const group of Object.values(structure)) {
     for (const item of Object.values(group)) {
@@ -244,6 +258,10 @@ export function hoistNamedItems(root, structure) {
   }
 }
 
+/**
+ * @param root
+ * @param value
+ */
 function hoistNamedItemsRecursive(root, value) {
   if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
     // Skip primitives & null / undefined
@@ -293,8 +311,9 @@ function hoistNamedItemsRecursive(root, value) {
 
 /**
  * Count the number of items in data
+ *
  * @param data
- * @return {number}
+ * @returns {number}
  */
 function getTopLevelItemCount(data) {
   let count = 0;

@@ -23,7 +23,7 @@ class BooleanType extends TypeBuilder {
 
   /**
    * @param {boolean} value
-   * @return {BooleanType}
+   * @returns {BooleanType}
    */
   oneOf(value) {
     this.data.oneOf = value;
@@ -32,7 +32,7 @@ class BooleanType extends TypeBuilder {
   }
 
   /**
-   * @return {BooleanType}
+   * @returns {BooleanType}
    */
   convert() {
     this.data.validator.convert = true;
@@ -63,7 +63,7 @@ const booleanType = {
 /**
  * @name TypeCreator#bool
  * @param {string} [name]
- * @return {BooleanType}
+ * @returns {BooleanType}
  */
 TypeCreator.prototype.bool = function (name) {
   return new BooleanType(this.group, name);

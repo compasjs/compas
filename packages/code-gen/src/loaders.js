@@ -6,7 +6,7 @@ import { convertOpenAPISpec } from "./open-api-importer.js";
  * Load a LBU structure from an LBU enabled API
  *
  * @param {string} url Base remote url
- * @return {Promise<any>}
+ * @returns {Promise<any>}
  */
 export async function loadFromRemote(url) {
   const response = await axios.get(url + "/_lbu/structure.json");
@@ -19,7 +19,7 @@ export async function loadFromRemote(url) {
  *
  * @param {string} defaultGroup Default to group to use for non tagged items in the spec
  * @param {object} data Raw OpenAPI json doc
- * @return {object}
+ * @returns {object}
  */
 export function loadFromOpenAPISpec(defaultGroup, data) {
   if (!isPlainObject(data)) {

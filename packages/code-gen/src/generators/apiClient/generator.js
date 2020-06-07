@@ -9,7 +9,7 @@ import { join } from "path";
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
   options.enableMocks = app.generators.has("mock");
@@ -25,7 +25,7 @@ export async function preGenerate(app, data, options) {
  * @param {App} app
  * @param data
  * @param {GenerateOpts} options
- * @return {Promise<GeneratedFile>}
+ * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
   let template = options.useStubGenerators

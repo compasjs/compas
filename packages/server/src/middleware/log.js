@@ -43,8 +43,9 @@ export function logMiddleware() {
 
 /**
  * Given a logged object, check if it is a request log
+ *
  * @param {object} obj
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isServerLog(obj) {
   if (obj?.type !== "http") {
@@ -76,8 +77,9 @@ class StreamLength extends Transform {
 
 /**
  * Real log function
+ *
  * @param ctx
- * @param {BigInt} startTime
+ * @param {bigint} startTime
  * @param {number} length
  */
 function logInfo(ctx, startTime, length) {
@@ -100,8 +102,9 @@ function logInfo(ctx, startTime, length) {
 
 /**
  * Wait for the ctx.body stream to finish before resolving
+ *
  * @param ctx
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function bodyCloseOrFinish(ctx) {
   return new Promise((resolve) => {
@@ -111,6 +114,9 @@ async function bodyCloseOrFinish(ctx) {
     ctx.body.once("finish", onFinish);
     ctx.body.once("close", onClose);
 
+    /**
+     *
+     */
     function done() {
       ctx.body.removeListener("finish", onFinish);
       ctx.body.removeListener("close", onClose);

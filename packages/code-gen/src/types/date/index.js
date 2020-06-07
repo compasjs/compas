@@ -28,9 +28,10 @@ class DateType extends TypeBuilder {
   }
 
   /**
-   * @public
    * Set as optional and default to new Date()
-   * @return {DateType}
+   *
+   * @public
+   * @returns {DateType}
    */
   defaultToNow() {
     return this.default("(new Date())");
@@ -65,7 +66,7 @@ throw _errorFn(\`validator.\${parentType}.invalid\`, { propertyPath });
 /**
  * @name TypeCreator#date
  * @param {string} [name]
- * @return {DateType}
+ * @returns {DateType}
  */
 TypeCreator.prototype.date = function (name) {
   return new DateType(this.group, name);

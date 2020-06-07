@@ -2,8 +2,9 @@ import lodashMerge from "lodash.merge";
 
 /**
  * Check if item is null or undefined
+ *
  * @param {*=} item
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isNil(item) {
   return item === null || item === undefined;
@@ -12,8 +13,9 @@ export function isNil(item) {
 /**
  * Check if item is a plain javascript object
  * Not completely bullet proof
+ *
  * @param {*=} item
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isPlainObject(item) {
   return (
@@ -29,18 +31,19 @@ export function isPlainObject(item) {
  * TODO: Note that lodash.merge is deprecated although it doesnt say so when installing
  * **Note:** This method mutates `object`.
  *
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @return {Object} Returns `object`.
+ * @param {object} object The destination object.
+ * @param {...object} [sources] The source objects.
+ * @returns {object} Returns `object`.
  */
 export const merge = lodashMerge;
 
 /**
  * Flattens the given nested object, skipping anything that is not a plain object
- * @param {Object} data The object to serialize
+ *
+ * @param {object} data The object to serialize
  * @param [result]
  * @param [path]
- * @return {Object.<string, *>}
+ * @returns {object.<string, *>}
  */
 export function flatten(data, result = {}, path = "") {
   for (const key of Object.keys(data)) {
@@ -62,8 +65,9 @@ export function flatten(data, result = {}, path = "") {
 
 /**
  * Opposite of flatten
- * @param {Object} data
- * @return {Object}
+ *
+ * @param {object} data
+ * @returns {object}
  */
 export function unFlatten(data) {
   const result = {};
@@ -84,6 +88,9 @@ export function unFlatten(data) {
   return result;
 }
 
+/**
+ * @param input
+ */
 export function camelToSnakeCase(input) {
   return input
     .replace(/(.)([A-Z][a-z]+)/, "$1_$2")

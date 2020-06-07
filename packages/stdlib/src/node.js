@@ -8,9 +8,10 @@ const internalExec = promisify(cpExec);
 
 /**
  * Promisify version of child_process#exec
+ *
  * @callback Exec
  * @param {string} command
- * @return {Promise<Object<{stdout: string, stderr: string}>>}
+ * @returns {Promise<object<{stdout: string, stderr: string}>>}
  */
 export function exec(command) {
   return internalExec(command, { encoding: "utf8" });
@@ -18,10 +19,11 @@ export function exec(command) {
 
 /**
  * A promise wrapper around child_process#spawn
+ *
  * @param {string} command
  * @param {string[]} args
- * @param {Object} [opts={}]
- * @return {Promise<{code: number|undefined}>}
+ * @param {object} [opts={}]
+ * @returns {Promise<{code: number|undefined}>}
  */
 export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -46,6 +48,7 @@ export function spawn(command, args, opts = {}) {
 /**
  * Recursively walks directory async and calls cb on all files.
  * By default skips node_modules and files starting with a dot
+ *
  * @param {string} dir
  * @param {Function} cb
  * @param {ProcessDirectoryOptions} [opts]
@@ -78,9 +81,10 @@ export async function processDirectoryRecursive(
 
 /**
  * Sync version of processDirectoryRecursive
+ *
  * @param {string} dir
  * @param {Function} cb
- * @param {Object} [opts={}]
+ * @param {object} [opts={}]
  * @param {boolean} [opts.skipNodeModules=true]
  * @param {boolean} [opts.skipDotFiles=true]
  */

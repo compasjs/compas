@@ -18,7 +18,7 @@ export class RouteBuilder extends TypeBuilder {
 
   /**
    * @param {string} values
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   tags(...values) {
     for (const v of values) {
@@ -30,7 +30,7 @@ export class RouteBuilder extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} builder
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   query(builder) {
     this.queryBuilder = builder;
@@ -45,7 +45,7 @@ export class RouteBuilder extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} builder
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   params(builder) {
     this.paramsBuilder = builder;
@@ -60,7 +60,7 @@ export class RouteBuilder extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} builder
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   body(builder) {
     if (["POST", "PUT", "DELETE"].indexOf(this.data.method) === -1) {
@@ -79,7 +79,7 @@ export class RouteBuilder extends TypeBuilder {
 
   /**
    * @param {TypeBuilder} builder
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   response(builder) {
     this.responseBuilder = builder;
@@ -127,9 +127,10 @@ class RouteCreator {
   /**
    * Create a new route group
    * Path will be concatenated with the current path of this group
+   *
    * @param {string} name
    * @param {string} path
-   * @return {RouteCreator}
+   * @returns {RouteCreator}
    */
   group(name, path) {
     return new RouteCreator(name, concatenateRoutePaths(this.data.path, path));
@@ -137,9 +138,10 @@ class RouteCreator {
 
   /**
    * GET route
+   *
    * @param {string} [path]
    * @param {string} [name]
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   get(path, name) {
     return new RouteBuilder(
@@ -152,9 +154,10 @@ class RouteCreator {
 
   /**
    * POST route
+   *
    * @param {string} [path]
    * @param {string} [name]
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   post(path, name) {
     return new RouteBuilder(
@@ -167,9 +170,10 @@ class RouteCreator {
 
   /**
    * PUT route
+   *
    * @param {string} [path]
    * @param {string} [name]
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   put(path, name) {
     return new RouteBuilder(
@@ -182,9 +186,10 @@ class RouteCreator {
 
   /**
    * DELETE route
+   *
    * @param {string} [path]
    * @param {string} [name]
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   delete(path, name) {
     return new RouteBuilder(
@@ -197,9 +202,10 @@ class RouteCreator {
 
   /**
    * HEAD route
+   *
    * @param {string} [path]
    * @param {string} [name]
-   * @return {RouteBuilder}
+   * @returns {RouteBuilder}
    */
   head(path, name) {
     return new RouteBuilder(
@@ -222,7 +228,7 @@ const routeType = {
 /**
  * @name TypeCreator#router
  * @param {string} path
- * @return {RouteCreator}
+ * @returns {RouteCreator}
  */
 TypeCreator.prototype.router = function (path) {
   return new RouteCreator(this.group, path);
@@ -233,7 +239,7 @@ TypeCreator.types.set(routeType.name, routeType);
 /**
  * @param {string} path1
  * @param {string} path2
- * @return {string}
+ * @returns {string}
  */
 function concatenateRoutePaths(path1, path2) {
   if (!path1.endsWith("/")) {

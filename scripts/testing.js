@@ -6,6 +6,9 @@ import { mainFn } from "@lbu/stdlib";
 
 mainFn(import.meta, newLogger(), main);
 
+/**
+ * @param logger
+ */
 async function main(logger) {
   const app = getApp({
     errorOptions: {
@@ -30,4 +33,7 @@ async function main(logger) {
   mount();
 }
 
+/**
+ *
+ */
 function mount() {}

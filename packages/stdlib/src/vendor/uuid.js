@@ -36,6 +36,9 @@ for (let i = 0; i < 256; ++i) {
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ *
+ * @param buf
+ * @param offset
  */
 function bytesToUuid(buf, offset) {
   const i = offset || 0;
@@ -68,6 +71,9 @@ function bytesToUuid(buf, offset) {
   ).toLowerCase();
 }
 
+/**
+ *
+ */
 export function v4() {
   const rnds = randomFillSync(rnds8);
 

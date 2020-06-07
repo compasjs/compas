@@ -3,7 +3,7 @@ import minio from "minio";
 
 /**
  * @param {object} opts
- * @return {minio.Client}
+ * @returns {minio.Client}
  */
 export function newMinioClient(opts) {
   const config = {
@@ -30,10 +30,11 @@ export async function ensureBucket(minio, bucketName, region) {
 
 /**
  * List all objects in a bucket
+ *
  * @param {minio.Client} minio
  * @param {string} bucketName
  * @param {string} [filter]
- * @return {Promise<{name: string, prefix: string, size: number, etag: string,
+ * @returns {Promise<{name: string, prefix: string, size: number, etag: string,
  *   lastModified: Date}[]>}
  */
 export async function listObjects(minio, bucketName, filter = "") {

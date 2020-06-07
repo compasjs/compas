@@ -36,6 +36,7 @@ export class FileCache {
 
   /**
    * Create a new file cache
+   *
    * @param {FileStoreContext} fileStore
    * @param {FileCacheOptions} [options]
    */
@@ -50,22 +51,23 @@ export class FileCache {
 
     /**
      * Pre-bind call to this#getFileStream
+     *
      * @type {typeof FileCache#getFileStream}
      */
     this.getStreamFn = this.getFileStream.bind(this);
   }
 
   /**
-   * @public
    * Get a file(part) from the cache.
    * If the file(part) does not exist, it will try to fetch it from the FileStore
    * If the file store throws an error / it doesn't exist, the error is propagated to the
    * caller
    *
+   * @public
    * @param {StoreFileStore} file
    * @param {number} [start]
    * @param {number} [end]
-   * @return {Promise<{ stream: ReadableStream, cacheControl: string }>}
+   * @returns {Promise<{ stream: ReadableStream, cacheControl: string }>}
    */
   getFileStream(file, start, end) {
     if (isNil(start) || start < 0) {
@@ -88,8 +90,9 @@ export class FileCache {
   }
 
   /**
-   * @public
    * Remove a file from cache, but not from local disk
+   *
+   * @public
    * @param {string} fileId
    */
   clear(fileId) {
@@ -116,6 +119,11 @@ export class FileCache {
 
   /**
    * Load file from disk, if not exists, will pull it in.
+   *
+   * @param key
+   * @param id
+   * @param start
+   * @param end
    */
   async loadFromDiskCache(key, id, start, end) {
     try {
@@ -139,6 +147,11 @@ export class FileCache {
   /**
    * Load file from memory.
    * Transforms the buffer to a stream for consistency
+   *
+   * @param key
+   * @param id
+   * @param start
+   * @param end
    */
   async cacheFileInMemory(key, id, start, end) {
     const buffers = [];
@@ -161,6 +174,11 @@ export class FileCache {
 
   /**
    * Save file on disk and return a new Readable
+   *
+   * @param key
+   * @param id
+   * @param start
+   * @param end
    */
   async cacheFileOnDisk(key, id, start, end) {
     const path = join(FileCache.fileCachePath, key);

@@ -18,7 +18,7 @@ import { join } from "path";
 /**
  * @name ScriptCollection
  *
- * @typedef {Object.<string, CollectedScript>}
+ * @typedef {object.<string, CollectedScript>}
  */
 
 /**
@@ -26,7 +26,7 @@ import { join } from "path";
  * - type user: User defined scripts from process.cwd/scripts/*.js
  * - type package: User defined scripts in package.json. These override 'user' scripts
  *
- * @return {ScriptCollection}
+ * @returns {ScriptCollection}
  */
 export function collectScripts() {
   const result = {};
@@ -63,6 +63,14 @@ export function collectScripts() {
   return result;
 }
 
+/**
+ * @param logger
+ * @param verbose
+ * @param watch
+ * @param command
+ * @param commandArgs
+ * @param nodemonArgs
+ */
 export async function executeCommand(
   logger,
   verbose,

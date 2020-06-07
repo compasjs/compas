@@ -35,7 +35,7 @@ class AnyOfType extends TypeBuilder {
 
   /**
    * @param {...TypeBuilder} [items]
-   * @return {AnyOfType}
+   * @returns {AnyOfType}
    */
   values(...items) {
     if (isNil(this.internalValues)) {
@@ -71,7 +71,7 @@ const anyOfType = {
  * @name TypeCreator#anyOf
  * @param {string|TypeBuilder[]} [name]
  * @param {...TypeBuilder} [values]
- * @return {AnyOfType}
+ * @returns {AnyOfType}
  */
 TypeCreator.prototype.anyOf = function (name, ...values) {
   if (Array.isArray(name)) {

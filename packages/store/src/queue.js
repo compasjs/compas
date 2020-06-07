@@ -96,6 +96,7 @@ const queries = {
 export class JobQueueWorker {
   /**
    * Create a new JobQueueWorker
+   *
    * @param sql
    * @param {string|JobQueueWorkerOptions} nameOrOptions
    * @param {JobQueueWorkerOptions} [options]
@@ -127,8 +128,9 @@ export class JobQueueWorker {
   }
 
   /**
-   * @public
    * Start the JobQueueWorker
+   *
+   * @public
    */
   start() {
     if (this.isStarted) {
@@ -146,9 +148,10 @@ export class JobQueueWorker {
   }
 
   /**
-   * @public
    * Stop the JobQueueWorker
    * Running jobs will continue to run, but no new jobs are fetched
+   *
+   * @public
    */
   stop() {
     if (!this.isStarted) {
@@ -161,10 +164,10 @@ export class JobQueueWorker {
   }
 
   /**
-   * @public
    * Get the number of jobs that need to run
    *
-   * @return {Promise<{pending_count: number, scheduled_count: number}|undefined>}
+   * @public
+   * @returns {Promise<{pending_count: number, scheduled_count: number}|undefined>}
    */
   pendingQueueSize() {
     if (this.name) {
@@ -174,13 +177,13 @@ export class JobQueueWorker {
   }
 
   /**
-   * @public
    * Return the average time between scheduled and completed for jobs completed in the
    * provided time range in milliseconds
    *
+   * @public
    * @param {Date} startDate
    * @param {Date} endDate
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   averageTimeToCompletion(startDate, endDate) {
     if (this.name) {
@@ -196,11 +199,11 @@ export class JobQueueWorker {
   }
 
   /**
-   * @public
    * Uses this queue name and connection to add a job to the queue
    *
+   * @public
    * @param {JobInput} job
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   addJob(job) {
     if (this.name && !job.name) {
@@ -285,9 +288,10 @@ export class JobQueueWorker {
 
 /**
  *Add a new item to the job queue
+ *
  * @param sql
  * @param {JobInput} job
- * @return {Promise<number>}
+ * @returns {Promise<number>}
  */
 export async function addJobToQueue(sql, job) {
   const [result] = await storeQueries.jobQueueInsert(sql, {
@@ -299,8 +303,9 @@ export async function addJobToQueue(sql, job) {
 
 /**
  * Get the number of jobs that need to run
+ *
  * @param sql
- * @return {Promise<{pendingCount: number, scheduledCount: number}>}
+ * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
 async function getPendingQueueSize(sql) {
   const [result] = await queries.getPendingQueueSize(sql);
@@ -314,9 +319,10 @@ async function getPendingQueueSize(sql) {
 
 /**
  * Get the number of jobs that need to run for specified job name
+ *
  * @param sql
  * @param {string} name
- * @return {Promise<{pendingCount: number, scheduledCount: number}>}
+ * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
 async function getPendingQueueSizeForName(sql, name) {
   const [result] = await queries.getPendingQueueSizeForName(sql, name);
@@ -331,10 +337,11 @@ async function getPendingQueueSizeForName(sql, name) {
 /**
  * Return the average time between scheduled and completed for jobs completed in the
  * provided time range
+ *
  * @param sql
  * @param {Date} startDate
  * @param {Date} endDate
- * @return {Promise<number>}
+ * @returns {Promise<number>}
  */
 async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
   const [result] = await queries.getAverageJobTime(sql, startDate, endDate);
@@ -345,11 +352,12 @@ async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
 /**
  * Return the average time between scheduled and completed for jobs completed in the
  * provided time range
+ *
  * @param sql
  * @param {string} name
  * @param {Date} startDate
  * @param {Date} endDate
- * @return {Promise<number>}
+ * @returns {Promise<number>}
  */
 async function getAverageTimeToJobCompletionForName(
   sql,

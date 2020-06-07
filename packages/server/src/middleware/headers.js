@@ -1,7 +1,7 @@
 import { cors } from "./cors.js";
 
 /**
- * @param {Object} [opts]
+ * @param {object} [opts]
  * @param {CorsOptions} opts.cors Cors configuration see koa2-cors
  */
 export function defaultHeaders(opts = {}) {

@@ -7,9 +7,8 @@ const lintFile = join(dirnameForModule(import.meta), "../../scripts/lint.js");
 /**
  * @param {Logger} logger
  * @param {ExecCommand} command
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
-
 export function lintCommand(logger, command) {
   return executeCommand(logger, command.verbose, command.watch, "node", [
     lintFile,

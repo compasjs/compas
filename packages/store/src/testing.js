@@ -5,6 +5,9 @@ import {
   newPostgresConnection,
 } from "./postgres.js";
 
+/**
+ * @param verboseSql
+ */
 export async function createTestPostgresDatabase(verboseSql = false) {
   const name = process.env.APP_NAME + uuid().substring(0, 7);
 
@@ -40,6 +43,9 @@ export async function createTestPostgresDatabase(verboseSql = false) {
   return sql;
 }
 
+/**
+ * @param sql
+ */
 export async function cleanupTestPostgresDatabase(sql) {
   const dbName = sql.options.database;
   await sql.end({ timeout: 0.1 });

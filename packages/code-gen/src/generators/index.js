@@ -7,6 +7,7 @@ import { validatorGenerator } from "./validator/index.js";
 
 /**
  * The core provided generators.
+ *
  * @example  Use specific generators
  *   new App({ generators: [generators.type, generators.validator]});
  * @example  Use all generators

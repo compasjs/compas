@@ -35,10 +35,11 @@ export function newFileStoreContext(sql, minio, bucketName) {
  * Create or update a file.
  * If you pass in a non-existent id, the function will not error, but also not update the
  * file
+ *
  * @param {FileStoreContext} fc
  * @param {StoreFileStoreInsertPartial_Input & { id?: string }} props
  * @param {ReadStream|string} streamOrPath
- * @return {Promise<StoreFileStore>}
+ * @returns {Promise<StoreFileStore>}
  */
 export async function createOrUpdateFile(fc, props, streamOrPath) {
   if (!props.filename) {
@@ -78,7 +79,7 @@ export async function createOrUpdateFile(fc, props, streamOrPath) {
 /**
  * @param {FileStoreContext} fc
  * @param {string} id
- * @return {Promise<StoreFileStore|undefined>}
+ * @returns {Promise<StoreFileStore|undefined>}
  */
 export async function getFileById(fc, id) {
   const [result] = await storeQueries.fileStoreSelect(fc.sql, {
@@ -94,7 +95,7 @@ export async function getFileById(fc, id) {
  * @param {string} id
  * @param {number} [start]
  * @param {number} [end]
- * @return {Promise<ReadableStream>}
+ * @returns {Promise<ReadableStream>}
  */
 export async function getFileStream(fc, id, { start, end } = {}) {
   if (start !== undefined || end !== undefined) {
@@ -111,7 +112,7 @@ export async function getFileStream(fc, id, { start, end } = {}) {
  * @param {FileStoreContext} fc
  * @param {string} id
  * @param {string} [targetBucket=fc.bucketName]
- * @return {Promise<StoreFileStore>}
+ * @returns {Promise<StoreFileStore>}
  */
 export async function copyFile(fc, id, targetBucket = fc.bucketName) {
   const [intermediate] = await queries.copyFile(
@@ -135,6 +136,10 @@ export async function copyFile(fc, id, targetBucket = fc.bucketName) {
   return result;
 }
 
+/**
+ * @param fc
+ * @param id
+ */
 export async function deleteFile(fc, id) {
   return storeQueries.fileStoreDelete(fc.sql, {
     id,
@@ -142,6 +147,9 @@ export async function deleteFile(fc, id) {
   });
 }
 
+/**
+ * @param fc
+ */
 export async function syncDeletedFiles(fc) {
   const minioObjectsPromise = listObjects(fc.minio, fc.bucketName);
   const knownIds = await storeQueries.fileStoreSelect(fc.sql, {

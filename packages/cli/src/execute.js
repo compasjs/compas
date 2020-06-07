@@ -23,7 +23,7 @@ const execCommands = {
  * @param {Logger} logger
  * @param {UtilCommand|ExecCommand} command
  * @param {ScriptCollection} scriptCollection
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function execute(logger, command, scriptCollection) {
   if (command.type === "util") {

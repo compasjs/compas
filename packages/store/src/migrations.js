@@ -28,8 +28,10 @@ import path from "path";
  */
 
 /**
+ * @param sql
+ * @param migrationDirectory
  * @property {Postgres} sql
- * @return {Promise<MigrateContext>}
+ * @returns {Promise<MigrateContext>}
  */
 export async function newMigrateContext(
   sql,
@@ -64,8 +66,9 @@ export async function newMigrateContext(
 
 /**
  * Get a list of migrations to be applied
+ *
  * @param {MigrateContext} mc
- * @return {({name: string, number: number, repeatable: boolean}[])|boolean}
+ * @returns {({name: string, number: number, repeatable: boolean}[])|boolean}
  */
 export function getMigrationsToBeApplied(mc) {
   const list = filterMigrationsToBeApplied(mc);
@@ -93,7 +96,7 @@ export async function runMigrations(mc) {
 
 /**
  * @param {MigrateContext} mc
- * @return {MigrateFile[]}
+ * @returns {MigrateFile[]}
  */
 function filterMigrationsToBeApplied(mc) {
   const result = [];
@@ -114,7 +117,7 @@ function filterMigrationsToBeApplied(mc) {
 /**
  * @param {Postgres} sql
  * @param {MigrateFile} migration
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function runMigration(sql, migration) {
   const useTransaction =
@@ -153,7 +156,7 @@ async function buildInsert(sql, migration) {
 
 /**
  * @param {MigrateContext} mc
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function syncWithSchemaState(mc) {
   let rows = [];
@@ -190,6 +193,9 @@ async function syncWithSchemaState(mc) {
   }
 }
 
+/**
+ * @param sql
+ */
 async function acquireLock(sql) {
   // Should be automatically released by Postgres once this connection ends.
   // We expect that the user runs this process for migrations only
@@ -207,7 +213,7 @@ async function acquireLock(sql) {
  * @param directory
  * @param {string} namespace
  * @param {string[]} namespaces
- * @return {Promise<{migrationFiles: [], namespaces: [*]}>}
+ * @returns {Promise<{migrationFiles: [], namespaces: [*]}>}
  */
 async function readMigrationsDir(
   directory,
@@ -275,6 +281,10 @@ async function readMigrationsDir(
   };
 }
 
+/**
+ * @param namespaces
+ * @param files
+ */
 function sortMigrations(namespaces, files) {
   return files.sort((a, b) => {
     const namespaceResult =
@@ -288,6 +298,9 @@ function sortMigrations(namespaces, files) {
   });
 }
 
+/**
+ * @param fileName
+ */
 function parseFileName(fileName) {
   const filePattern = /(\d+)(-r)?-([a-zA-Z-]+).sql/g;
   filePattern.lastIndex = 0;

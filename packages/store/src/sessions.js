@@ -17,7 +17,7 @@ const DELETE_INTERVAL = 45 * 60 * 1000; // 45 minutes
  * @param {object} [options]
  * @param {number} [options.cleanupInterval]
  * @param {boolean} [options.disableInterval]
- * @return {SessionStore}
+ * @returns {SessionStore}
  */
 export function newSessionStore(sql, options) {
   options = options || {};
