@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.22](https://github.com/lightbasenl/lbu/releases/tag/v0.0.22)
+
+- @lbu/code-gen: fix setting column to null in update queries
+
 ### [v0.0.21](https://github.com/lightbasenl/lbu/releases/tag/v0.0.21)
 
 - @lbu/code-gen: rework sql generator, now snake-cases table and column names
