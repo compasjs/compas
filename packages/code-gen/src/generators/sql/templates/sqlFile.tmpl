@@ -1,7 +1,7 @@
 {{= options.fileHeader }}
 ((newline))
 
-import { isNil, uuid } from "@lbu/stdlib";
+import { uuid } from "@lbu/stdlib";
 ((newline))
 
 
@@ -73,7 +73,7 @@ import { isNil, uuid } from "@lbu/stdlib";
     {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
       const updateValue = {};
       {{ for (const key of item.partialFields) { }}
-      if (!isNil(value["{{= key.source }}"])) {
+      if (value["{{= key.source }}"] !== undefined) {
         updateValue["{{= key.result }}"] = value["{{= key.source }}"];
       }
       {{ } }}
