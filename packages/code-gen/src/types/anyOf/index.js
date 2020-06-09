@@ -57,20 +57,21 @@ const anyOfType = {
     });
   },
   mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/mock.tmpl", "utf-8");
   },
   jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
   tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
 };
 
 /**
  * @name TypeCreator#anyOf
- * @param {string|TypeBuilder[]} [name]
- * @param {...TypeBuilder} [values]
+ * @param {string|TypeBuilder[]} [name] Optional name or array of values that this type
+ *   can represent
+ * @param {...TypeBuilder} [values] Optional values that this type can represent
  * @returns {AnyOfType}
  */
 TypeCreator.prototype.anyOf = function (name, ...values) {

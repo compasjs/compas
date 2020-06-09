@@ -234,7 +234,7 @@ async function readMigrationsDir(
     const fullPath = path.join(directory, f);
 
     if (f === "namespaces.txt") {
-      const rawNamespaces = await fs.readFile(fullPath, { encoding: "utf-8" });
+      const rawNamespaces = await fs.readFile(fullPath, "utf-8");
       const subNamespaces = rawNamespaces
         .split("\n")
         .map((it) => it.trim())

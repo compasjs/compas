@@ -42,10 +42,10 @@ const anyType = {
   name: "any",
   class: AnyType,
   validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/validator.tmpl", "utf-8");
   },
   mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/mock.tmpl", "utf-8");
   },
   jsType: () => {
     return "*";
@@ -57,7 +57,7 @@ const anyType = {
 
 /**
  * @name TypeCreator#any
- * @param {string} [name]
+ * @param {string} [name] Optional name
  * @returns {AnyType}
  */
 TypeCreator.prototype.any = function (name) {

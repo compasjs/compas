@@ -95,16 +95,16 @@ const referenceType = {
   name: "reference",
   class: ReferenceType,
   validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/validator.tmpl", "utf-8");
   },
   mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/mock.tmpl", "utf-8");
   },
   jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
   tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
   sql: () =>
     `{{= model?.reference?.field !== undefined ? sqlExec({ type: model.referencedItem.type, model: { ...model.referencedItem, sql: {} } }).trim() : "JSONB" }} {{= model?.reference?.field !== undefined ? "REFERENCES " + camelToSnakeCase(model.reference.name) + "(" + camelToSnakeCase(model.reference.field.referencing) + ") ON DELETE CASCADE" : "" }}`,

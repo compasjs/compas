@@ -80,16 +80,16 @@ const arrayType = {
   name: "array",
   class: ArrayType,
   validator: () => {
-    return readFileSync(directory + "/validator.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/validator.tmpl", "utf-8");
   },
   mock: () => {
-    return readFileSync(directory + "/mock.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/mock.tmpl", "utf-8");
   },
   jsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
   tsType: () => {
-    return readFileSync(directory + "/type.tmpl", { encoding: "utf-8" });
+    return readFileSync(directory + "/type.tmpl", "utf-8");
   },
 };
 

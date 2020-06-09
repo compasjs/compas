@@ -101,7 +101,7 @@ export class TypeBuilder {
  * @class
  */
 export class TypeCreator {
-  /** @type {Map<string, TypePlugin|object<string, TypePlugin|Class>>} */
+  /** @type {Map<string, TypePlugin>} */
   static types = new Map();
 
   constructor(group) {

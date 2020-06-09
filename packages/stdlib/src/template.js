@@ -138,7 +138,7 @@ export function compileTemplateDirectory(tc, dir, extension, opts) {
         return;
       }
 
-      const content = await readFile(file, { encoding: "utf-8" });
+      const content = await readFile(file, "utf-8");
       const name = path.parse(file).name;
 
       compileTemplate(tc, name, content);
@@ -171,7 +171,7 @@ export function compileTemplateDirectorySync(tc, dir, extension, opts) {
         return;
       }
 
-      const content = readFileSync(file, { encoding: "utf-8" });
+      const content = readFileSync(file, "utf-8");
       const name = path.parse(file).name;
 
       compileTemplate(tc, name, content);

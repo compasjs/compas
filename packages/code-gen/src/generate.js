@@ -197,7 +197,7 @@ async function normalizeAndWriteFiles(options, files) {
 
   for (const file of flattenedFiles) {
     const filePath = path.join(options.outputDirectory, file.path);
-    await writeFile(filePath, file.source, { encoding: "utf-8" });
+    await writeFile(filePath, file.source, "utf-8");
   }
 }
 
