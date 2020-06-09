@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     "no-process-exit": "off",
     "jsdoc/require-returns-description": "off",
+    "jsdoc/require-property": "off",
   },
   env: {
     node: true,
