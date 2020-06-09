@@ -1,6 +1,7 @@
-import { camelToSnakeCase, isNil } from "@lbu/stdlib";
+import { camelToSnakeCase } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
+import { getTypeOfItem } from "../../utils.js";
 
 /**
  * @param data
@@ -110,12 +111,7 @@ function getWhereFields(item) {
     }
 
     // Also supports referenced fields
-    const type =
-      it.type === "reference" &&
-      !isNil(it.reference?.field) &&
-      !isNil(it.referencedItem?.type)
-        ? it.referencedItem.type
-        : it.type;
+    const type = getTypeOfItem(it);
 
     if (type === "number" || type === "date") {
       // Generate =, > and < queries
@@ -190,12 +186,7 @@ function getPartialFields(item) {
     }
 
     // Support updating referenced field
-    const type =
-      it.type === "reference" &&
-      !isNil(it.reference?.field) &&
-      !isNil(it.referencedItem?.type)
-        ? it.referencedItem.type
-        : it.type;
+    const type = getTypeOfItem(it);
 
     // JSON.stringify all values that are not 'primitives'
     // So the user will can have a lbu GenericType into a JSONB field
