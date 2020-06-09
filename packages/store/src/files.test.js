@@ -32,7 +32,7 @@ test("store/files", async (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {
-    sql = await createTestPostgresDatabase(true);
+    sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
     let result = await sql`SELECT 1 + 2 AS sum`;
