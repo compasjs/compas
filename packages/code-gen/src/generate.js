@@ -37,6 +37,8 @@ export async function runGenerators(app, options) {
     .replace("'", "\\'");
 
   hoistNamedItems(generatorInput, generatorInput.structure);
+  recursiveLinkupReferences(generatorInput.structure, generatorInput.structure);
+
   let prevCount = getTopLevelItemCount(generatorInput);
 
   // eslint-disable-next-line no-constant-condition
