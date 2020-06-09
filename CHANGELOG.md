@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.24](https://github.com/lightbasenl/lbu/releases/tag/v0.0.24)
+
+- @lbu/code-gen: fix nested reference lookups in sql code-generation
+
 ### [v0.0.23](https://github.com/lightbasenl/lbu/releases/tag/v0.0.23)
 
 - @lbu/lint-config: version bumps and disabled jsdoc/require-returns-description
