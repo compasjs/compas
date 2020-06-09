@@ -74,7 +74,7 @@ import { uuid } from "@lbu/stdlib";
       const updateValue = {};
       {{ for (const key of item.partialFields) { }}
       if (value["{{= key.source }}"] !== undefined) {
-        updateValue["{{= key.result }}"] = value["{{= key.source }}"];
+        updateValue["{{= key.result }}"] = {{= key.stringify ? `JSON.stringify(value["${key.source}"])` : `value["${key.source}"]` }};
       }
       {{ } }}
 
