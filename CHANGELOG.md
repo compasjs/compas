@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.23](https://github.com/lightbasenl/lbu/releases/tag/v0.0.23)
+
+- @lbu/lint-config: version bumps and disabled jsdoc/require-returns-description
+  rule
+- @lbu/code-gen: minor fixes to the update queries generation
+
 ### [v0.0.22](https://github.com/lightbasenl/lbu/releases/tag/v0.0.22)
 
 - @lbu/code-gen: fix setting column to null in update queries
