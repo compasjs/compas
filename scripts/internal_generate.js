@@ -19,6 +19,7 @@ async function main() {
       generators.router,
       generators.apiClient,
       generators.sql,
+      generators.reactQuery,
     ],
     verbose: true,
   });

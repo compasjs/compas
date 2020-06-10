@@ -1,5 +1,6 @@
 import { apiClientGenerator } from "./apiClient/index.js";
 import { mockGenerator } from "./mocks/index.js";
+import { reactQueryGenerator } from "./reactQuery/index.js";
 import { routerGenerator } from "./router/index.js";
 import { sqlGenerator } from "./sql/index.js";
 import { typeGenerator } from "./types/index.js";
@@ -56,4 +57,11 @@ export const generators = {
    * @type {GeneratorPlugin}
    */
   sql: sqlGenerator,
+
+  /**
+   * Generate react-query based hoooks wrapped around the apiClient
+   *
+   * @type {GeneratorPlugin}
+   */
+  reactQuery: reactQueryGenerator,
 };
