@@ -110,6 +110,8 @@ export function compileTemplate(tc, name, str, opts = {}) {
   } catch (e) {
     const err = new Error(`Error while compiling ${name} template`);
     err.originalErr = e;
+    err.templateName = name;
+    err.compiled = compiled;
     throw err;
   }
 }

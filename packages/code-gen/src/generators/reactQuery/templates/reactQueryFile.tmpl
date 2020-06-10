@@ -1,0 +1,33 @@
+{{= options.fileHeader }}
+((newline))
+
+import {
+  useQuery,
+  useMutation,
+  QueryOptions,
+  QueryResult,
+  MutationOptions,
+  MutateFunction,
+  MutationResult,
+} from "react-query";
+import {
+{{ for (const group of Object.keys(structure)) { }}
+{{= group }}Api,
+{{ } }}
+} from "./apiClient.js";
+import * as T from "./types";
+((newline))
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    {{= reactQueryFn({ options, model: item }) }}
+((newline))
+
+  {{ } }}
+{{ } }}
