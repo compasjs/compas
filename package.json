@@ -17,6 +17,9 @@
     "lerna": "3.22.1",
     "react-query": "1.5.7"
   },
+  "scarfSettings": {
+    "enabled": false
+  },
   "prettier": "@lbu/lint-config/prettierrc",
   "workspaces": [
     "packages/*"
