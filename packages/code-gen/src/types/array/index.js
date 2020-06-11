@@ -28,7 +28,7 @@ class ArrayType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...ArrayType.baseData,
+      ...ArrayType.getBaseData(),
     };
 
     if (!isNil(value)) {

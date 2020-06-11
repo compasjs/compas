@@ -49,7 +49,7 @@ class ReferenceType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...ReferenceType.baseData,
+      ...ReferenceType.getBaseData(),
     };
 
     this.ref = undefined;

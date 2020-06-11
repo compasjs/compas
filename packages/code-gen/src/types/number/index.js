@@ -20,7 +20,7 @@ class NumberType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...NumberType.baseData,
+      ...NumberType.getBaseData(),
     };
   }
 

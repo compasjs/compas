@@ -15,7 +15,7 @@ class AnyType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...AnyType.baseData,
+      ...AnyType.getBaseData(),
     };
   }
 

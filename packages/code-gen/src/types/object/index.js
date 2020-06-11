@@ -30,7 +30,7 @@ class ObjectType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...ObjectType.baseData,
+      ...ObjectType.getBaseData(),
     };
 
     if (!isNil(obj)) {

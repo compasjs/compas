@@ -285,7 +285,7 @@ function hoistNamedItemsRecursive(root, value) {
       if (isNamedTypeBuilderLike(value[key])) {
         // value[key] got a uniqueName when called with addToData()
         value[key] = {
-          ...TypeBuilder.baseData,
+          ...TypeBuilder.getBaseData(),
           type: "reference",
           reference: {
             group: value[key].group,
@@ -301,7 +301,7 @@ function hoistNamedItemsRecursive(root, value) {
       if (isNamedTypeBuilderLike(value[i])) {
         // value[i] got a uniqueName when called with addToData()
         value[i] = {
-          ...TypeBuilder.baseData,
+          ...TypeBuilder.getBaseData(),
           type: "reference",
           reference: {
             group: value[i].group,

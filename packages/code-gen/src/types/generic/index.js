@@ -21,7 +21,7 @@ class GenericType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...GenericType.baseData,
+      ...GenericType.getBaseData(),
     };
 
     this.internalKeys = undefined;

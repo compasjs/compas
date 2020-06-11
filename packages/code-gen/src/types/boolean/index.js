@@ -17,7 +17,7 @@ class BooleanType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...BooleanType.baseData,
+      ...BooleanType.getBaseData(),
     };
   }
 

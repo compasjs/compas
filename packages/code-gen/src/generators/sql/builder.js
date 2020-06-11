@@ -63,8 +63,8 @@ export function buildExtraTypes(data) {
 function addDateFields(item) {
   item.queryOptions.dateFields = true;
   item.keys.createdAt = {
-    ...TypeBuilder.baseData,
-    ...TypeCreator.types.get("date").class.baseData,
+    ...TypeBuilder.getBaseData(),
+    ...TypeCreator.types.get("date").class.getBaseData(),
     type: "date",
     defaultValue: "(new Date())",
     isOptional: true,
@@ -73,8 +73,8 @@ function addDateFields(item) {
     },
   };
   item.keys.updatedAt = {
-    ...TypeBuilder.baseData,
-    ...TypeCreator.types.get("date").class.baseData,
+    ...TypeBuilder.getBaseData(),
+    ...TypeCreator.types.get("date").class.getBaseData(),
     type: "date",
     defaultValue: "(new Date())",
     isOptional: true,
@@ -93,8 +93,8 @@ function addDateFields(item) {
 function getWhereFields(item) {
   const fieldsArray = [];
   const resultType = {
-    ...TypeBuilder.baseData,
-    ...TypeCreator.types.get("object").baseData,
+    ...TypeBuilder.getBaseData(),
+    ...TypeCreator.types.get("object").class.getBaseData(),
     type: "object",
     group: item.group,
     name: item.name + "Where",
@@ -148,8 +148,8 @@ function getWhereFields(item) {
 
       resultType.keys[key] = { ...it, isOptional: true };
       resultType.keys[key + "In"] = {
-        ...TypeBuilder.baseData,
-        ...TypeCreator.types.get("array").class.baseData,
+        ...TypeBuilder.getBaseData(),
+        ...TypeCreator.types.get("array").class.getBaseData(),
         type: "array",
         isOptional: true,
         values: { ...it },
@@ -169,8 +169,8 @@ function getWhereFields(item) {
 function getPartialFields(item) {
   const fieldsArray = [];
   const resultType = {
-    ...TypeBuilder.baseData,
-    ...TypeCreator.types.get("object").baseData,
+    ...TypeBuilder.getBaseData(),
+    ...TypeCreator.types.get("object").class.getBaseData(),
     type: "object",
     group: item.group,
     name: item.name + "InsertPartial",

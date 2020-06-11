@@ -23,7 +23,7 @@ class AnyOfType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...AnyOfType.baseData,
+      ...AnyOfType.getBaseData(),
     };
 
     this.internalValues = undefined;

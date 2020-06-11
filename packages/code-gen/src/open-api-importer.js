@@ -48,7 +48,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
   // Generate refs for all routes that operate in a different group
   for (const ref of context.crossReferences) {
     const generatedRef = {
-      ...TypeCreator.types.get("reference").class.baseData,
+      ...TypeCreator.types.get("reference").class.getBaseData(),
       type: "reference",
       group: defaultGroup,
       name: "ref" + upperCaseFirst(ref.name),
@@ -84,7 +84,7 @@ function extractRoute(context, path, method) {
 
   // Use tags[0] for the group or the defaultGroup
   const lbuStruct = {
-    ...TypeBuilder.baseData,
+    ...TypeBuilder.getBaseData(),
     type: "route",
     group: lowerCaseFirst(item.tags?.[0] ?? context.defaultGroup),
     name: transformRouteName(context, item.operationId),
@@ -187,7 +187,7 @@ function transformQueryOrParams(context, inputList, lbuStruct, filter) {
 
   if (Object.keys(obj).length > 0) {
     return {
-      ...TypeCreator.types.get("object").class.baseData,
+      ...TypeCreator.types.get("object").class.getBaseData(),
       type: "object",
       group: lbuStruct.group,
       name: lbuStruct.name + upperCaseFirst(filter),
@@ -280,12 +280,15 @@ function resolveReference(context, refString) {
  */
 function convertSchema(context, schema) {
   const result = {
-    ...TypeBuilder.baseData,
+    ...TypeBuilder.getBaseData(),
     type: "any",
   };
 
   const assignBaseData = () => {
-    Object.assign(result, TypeCreator.types.get(result.type)?.class.baseData);
+    Object.assign(
+      result,
+      TypeCreator.types.get(result.type)?.class.getBaseData(),
+    );
   };
 
   if (

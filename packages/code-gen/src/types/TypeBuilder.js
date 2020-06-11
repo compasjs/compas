@@ -16,6 +16,10 @@ export class TypeBuilder {
     defaultValue: undefined,
   };
 
+  static getBaseData() {
+    return merge({}, this.baseData);
+  }
+
   /**
    * Create a new TypeBuilder for the provided group
    *
@@ -25,7 +29,7 @@ export class TypeBuilder {
    */
   constructor(type, group, name) {
     this.data = {
-      ...TypeBuilder.baseData,
+      ...TypeBuilder.getBaseData(),
       type,
       group,
       name,

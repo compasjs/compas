@@ -2,7 +2,7 @@ import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const stringType = JSON.stringify(
   {
-    ...TypeBuilder.baseData,
+    ...TypeBuilder.getBaseData(),
     type: "string",
     validator: {
       min: 24,
@@ -23,7 +23,7 @@ class DateType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...DateType.baseData,
+      ...DateType.getBaseData(),
     };
   }
 

@@ -102,7 +102,7 @@ export class App {
     generatorTemplates.globals["upperCaseFirst"] = upperCaseFirst;
     generatorTemplates.globals["lowerCaseFirst"] = lowerCaseFirst;
     generatorTemplates.globals["inspect"] = (arg) =>
-      inspect(arg, { sorted: true, colors: false });
+      inspect(arg, { sorted: true, colors: false, depth: 6 });
 
     if (this.verbose) {
       this.logger.info({

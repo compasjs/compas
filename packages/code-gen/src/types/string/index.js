@@ -23,7 +23,7 @@ class StringType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...StringType.baseData,
+      ...StringType.getBaseData(),
     };
   }
 

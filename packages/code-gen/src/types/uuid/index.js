@@ -25,7 +25,7 @@ class UuidType extends TypeBuilder {
 
     this.data = {
       ...this.data,
-      ...UuidType.baseData,
+      ...UuidType.getBaseData(),
     };
   }
 }
