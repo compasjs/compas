@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.26](https://github.com/lightbasenl/lbu/releases/tag/v0.0.26)
+
+- @lbu/code-gen: make sure to deepcopy baseData for type plugins
+
 ### [v0.0.25](https://github.com/lightbasenl/lbu/releases/tag/v0.0.25)
 
 - @lbu/code-gen: add react-query generator
