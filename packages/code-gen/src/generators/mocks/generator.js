@@ -6,6 +6,7 @@ import {
 import { join } from "path";
 import { TypeBuilder } from "../../types/index.js";
 import { compileDynamicTemplates } from "../../utils.js";
+import { generatorTemplates } from "../index.js";
 
 /**
  * @name TypeBuilder#mock
@@ -22,14 +23,12 @@ TypeBuilder.prototype.mock = function (mockFn) {
   return this;
 };
 
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function preGenerate(app, data, options) {
-  await compileTemplates(app.templateContext, options);
+export async function init() {
+  await compileTemplateDirectory(
+    generatorTemplates,
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+  );
 }
 
 /**
@@ -39,9 +38,11 @@ export async function preGenerate(app, data, options) {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
+  await compileMockExec(options);
+
   return {
     path: "./mocks.js",
-    source: executeTemplate(app.templateContext, "mocksFile", {
+    source: executeTemplate(generatorTemplates, "mocksFile", {
       ...data,
       options,
     }),
@@ -49,12 +50,11 @@ export async function generate(app, data, options) {
 }
 
 /**
- * @param {TemplateContext} tc
  * @param {GenerateOpts} options
  * @returns {Promise<void>}
  */
-async function compileTemplates(tc, options) {
-  compileDynamicTemplates(tc, options, "mock", {
+async function compileMockExec(options) {
+  compileDynamicTemplates(generatorTemplates, options, "mock", {
     fnStringStart: `
   {{ if (it.model && it.model.mocks && it.model.mocks.rawMock) { }}
      {{= it.model.mocks.rawMock }}
@@ -80,14 +80,4 @@ async function compileTemplates(tc, options) {
   {{ } }}
   `,
   });
-
-  await compileTemplateDirectory(
-    tc,
-
-    join(dirnameForModule(import.meta), "./templates"),
-    ".tmpl",
-    {
-      debug: false,
-    },
-  );
 }

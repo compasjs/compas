@@ -23,7 +23,7 @@ import { uuid } from "@lbu/stdlib";
    /**
     * @param sql
     * @param { {{= ref.uniqueName }}Where} where
-    * @return {Promise<{{= ref.uniqueName }}[]>}
+    * @returns {Promise<{{= ref.uniqueName }}[]>}
     */
     {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
 ((newline))
@@ -31,7 +31,7 @@ import { uuid } from "@lbu/stdlib";
     /**
     * @param sql
     * @param { {{= ref.uniqueName }}Where} where
-    * @return {Promise<number>}
+    * @returns {Promise<number>}
     */
     {{= ref.name }}Count: async (sql, where) => {
       const result = await sql`SELECT count(*) as gen_count FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
@@ -43,7 +43,7 @@ import { uuid } from "@lbu/stdlib";
     /**
     * @param sql
     * @param { {{= ref.uniqueName }}Where} where
-    * @return {Promise<*[]>}
+    * @returns {Promise<*[]>}
     */
     {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
 ((newline))
@@ -51,7 +51,7 @@ import { uuid } from "@lbu/stdlib";
     /**
      * @param sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input|{{= ref.uniqueName }}InsertPartial_Input[]} insert
-     * @return {Promise<{{= ref.uniqueName }}[]>}
+     * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
     {{= ref.name }}Insert: (sql, insert) => {
       const data = Array.isArray(insert) ? insert : [insert];
@@ -68,7 +68,7 @@ import { uuid } from "@lbu/stdlib";
      * @param sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input} value
      * @param { {{= ref.uniqueName }}Where} where
-     * @return {Promise<{{= ref.uniqueName }}[]>}
+     * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
     {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
       const updateValue = {};
@@ -94,7 +94,7 @@ import { uuid } from "@lbu/stdlib";
     /**
      * @param sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, model: ref.keys["id"], isInputType: true }).trim() }} } } it
-     * @return {Promise<{{= ref.uniqueName }}[]>}
+     * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
      {{= ref.name }}Upsert: (sql, it) => {
        const data = {{= sqlGenDefaults({ item, ref, }) }};
@@ -109,7 +109,7 @@ import { uuid } from "@lbu/stdlib";
    /**
     * @param sql
     * @param { {{= ref.uniqueName }}Where} where
-    * @return {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
+    * @returns {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
     */
     {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg({{= item.shortName }}h.*) as history FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} LEFT JOIN  {{= camelToSnakeCase(ref.name) }}_history {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h.{{= camelToSnakeCase(ref.name) }}_id {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
 ((newline))

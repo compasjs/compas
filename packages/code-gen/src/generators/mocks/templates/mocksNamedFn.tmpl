@@ -1,6 +1,6 @@
 /**
  * Generated mock for {{= model.uniqueName }}
- * @return { {{= model.uniqueName }}}
+ * @returns { {{= model.uniqueName }}}
  */
 {{= model.name }}: () => {
   return {{= mockExec({ type: model.type, model, isInputType: false }).trim() }};
@@ -9,7 +9,7 @@
 
 /**
  * Generated mock for {{= model.uniqueName }} ignoring default values
- * @return { {{= model.uniqueName }}_Input}
+ * @returns { {{= model.uniqueName }}_Input}
  */
 {{= model.name }}Input: () => {
   return {{= mockExec({ type: model.type, model, isInputType: true }).trim() }};

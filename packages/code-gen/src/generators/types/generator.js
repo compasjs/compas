@@ -5,15 +5,14 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 import { compileDynamicTemplates } from "../../utils.js";
+import { generatorTemplates } from "../templates.js";
 
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function preGenerate(app, data, options) {
-  await compileTemplates(app.templateContext, options);
+export async function init() {
+  await compileTemplateDirectory(
+    generatorTemplates,
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+  );
 }
 
 /**
@@ -23,9 +22,10 @@ export async function preGenerate(app, data, options) {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
+  await compileTypeExec(options);
   return {
     path: options.useTypescript ? "types.ts" : "types.js",
-    source: executeTemplate(app.templateContext, "typesFile", {
+    source: executeTemplate(generatorTemplates, "typesFile", {
       ...data,
       options,
     }),
@@ -33,14 +33,13 @@ export async function generate(app, data, options) {
 }
 
 /**
- * @param {TemplateContext} tc
  * @param {GenerateOpts} options
  * @returns {Promise<void>}
  */
-async function compileTemplates(tc, options) {
+async function compileTypeExec(options) {
   const key = options.useTypescript ? "tsType" : "jsType";
   compileDynamicTemplates(
-    tc,
+    generatorTemplates,
     options,
     "type",
     {
@@ -61,11 +60,5 @@ async function compileTemplates(tc, options) {
   `,
     },
     key,
-  );
-
-  await compileTemplateDirectory(
-    tc,
-    join(dirnameForModule(import.meta), "./templates"),
-    ".tmpl",
   );
 }

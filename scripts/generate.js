@@ -1,9 +1,4 @@
-import {
-  App,
-  generators,
-  loadFromOpenAPISpec,
-  TypeCreator,
-} from "@lbu/code-gen";
+import { App, loadFromOpenAPISpec, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import { storeStructure } from "@lbu/store";
@@ -18,19 +13,9 @@ export const nodemonArgs =
  *
  */
 async function main() {
-  const app = new App({
-    generators: [
-      generators.type,
-      generators.validator,
-      generators.mock,
-      generators.router,
-      generators.apiClient,
-      generators.sql,
-      generators.reactQuery,
-    ],
+  const app = await App.new({
     verbose: true,
   });
-  await app.init();
 
   const M = new TypeCreator();
 
@@ -144,7 +129,14 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./generated",
-    enabledGenerators: ["type", "router", "apiClient", "sql"],
+    enabledGenerators: [
+      "type",
+      "router",
+      "apiClient",
+      "sql",
+      "validator",
+      "mock",
+    ],
     useTypescript: false,
     dumpStructure: true,
     dumpPostgres: true,

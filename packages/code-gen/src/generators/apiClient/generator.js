@@ -4,18 +4,11 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { generatorTemplates } from "../index.js";
 
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function preGenerate(app, data, options) {
-  options.enableMocks = options.enabledGenerators.indexOf("mock") !== -1;
-
+export async function init() {
   await compileTemplateDirectory(
-    app.templateContext,
+    generatorTemplates,
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
@@ -28,6 +21,8 @@ export async function preGenerate(app, data, options) {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
+  options.enableMocks = options.enabledGenerators.indexOf("mock") !== -1;
+
   let template = options.useStubGenerators
     ? "apiClientStubsJsFile"
     : "apiClientFile";
@@ -40,7 +35,7 @@ export async function generate(app, data, options) {
 
   return {
     path,
-    source: executeTemplate(app.templateContext, template, {
+    source: executeTemplate(generatorTemplates, template, {
       ...data,
       options,
     }),

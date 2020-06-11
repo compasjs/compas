@@ -4,6 +4,15 @@ import {
   executeTemplate,
 } from "@lbu/stdlib";
 import { join } from "path";
+import { generatorTemplates } from "../index.js";
+
+export async function init() {
+  await compileTemplateDirectory(
+    generatorTemplates,
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+  );
+}
 
 /**
  *
@@ -20,12 +29,6 @@ export async function preGenerate(app, data, options) {
   if (options.enabledGenerators.indexOf("apiClient") === -1) {
     throw new Error("ReactQuery plugin depends on the apiClient plugin");
   }
-
-  await compileTemplateDirectory(
-    app.templateContext,
-    join(dirnameForModule(import.meta), "./templates"),
-    ".tmpl",
-  );
 }
 
 /**

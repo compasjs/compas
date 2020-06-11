@@ -15,9 +15,9 @@
  * @param { {{= model.body.reference.uniqueName }}_Input} body
 {{ } }}
 {{ if (model.response) { }}
- * @return {Promise.<{{= model.response.reference.uniqueName }}>}
+ * @returns {Promise.<{{= model.response.reference.uniqueName }}>}
 {{ } else { }}
- * @return {Promise.<*>}
+ * @returns {Promise.<*>}
 {{ } }}
 
  */

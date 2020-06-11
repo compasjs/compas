@@ -1,6 +1,7 @@
 import { isNil, isPlainObject } from "@lbu/stdlib";
 import { existsSync, promises as fs } from "fs";
 import path from "path";
+import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
 import { upperCaseFirst } from "./utils.js";
@@ -47,6 +48,7 @@ export async function runGenerators(app, options) {
       app,
       options.enabledGenerators,
       "preGenerate",
+      app,
       generatorInput,
       options,
     );
@@ -70,6 +72,7 @@ export async function runGenerators(app, options) {
     app,
     options.enabledGenerators,
     "generate",
+    app,
     generatorInput,
     options,
   );
@@ -112,7 +115,7 @@ export async function callSpecificGeneratorWithMethod(
   method,
   ...args
 ) {
-  const gen = app.generators.get(generatorName);
+  const gen = generators.get(generatorName);
   if (!gen) {
     throw new Error(`Could not find generator with name: ${generatorName}`);
   }
@@ -120,7 +123,7 @@ export async function callSpecificGeneratorWithMethod(
     if (app.verbose) {
       app.logger.info(`generator: calling ${method} on ${gen.name}`);
     }
-    return gen[method](app, ...args);
+    return gen[method](...args);
   }
 
   return undefined;

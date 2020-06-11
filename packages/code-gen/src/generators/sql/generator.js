@@ -7,6 +7,7 @@ import {
 import { join } from "path";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 import { compileDynamicTemplates } from "../../utils.js";
+import { generatorTemplates } from "../index.js";
 import { buildExtraTypes } from "./builder.js";
 
 /**
@@ -48,23 +49,59 @@ TypeBuilder.prototype.primary = function () {
   return this;
 };
 
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function preGenerate(app, data, options) {
+export async function init() {
   await compileTemplateDirectory(
-    app.templateContext,
+    generatorTemplates,
     join(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
 
+  generatorTemplates.globals.camelToSnakeCase = camelToSnakeCase;
+}
+
+/**
+ * @param {App} app
+ * @param data
+ * @returns {Promise<void>}
+ */
+export async function preGenerate(app, data) {
+  buildExtraTypes(data);
+}
+
+/**
+ * @param {App} app
+ * @param data
+ * @param {GenerateOpts} options
+ * @returns {Promise<GeneratedFile>}
+ */
+export async function generate(app, data, options) {
+  await compileSqlExec(options);
+
   if (options.dumpPostgres) {
-    compileDynamicTemplates(app.templateContext, options, "sql", {
+    const result = executeTemplate(generatorTemplates, "sqlPostgres", {
+      ...data,
+      options,
+    });
+
+    app.logger.info("\n" + result);
+  }
+
+  return {
+    path: "./queries.js",
+    source: executeTemplate(generatorTemplates, "sqlFile", {
+      ...data,
+      options,
+    }),
+  };
+}
+
+/**
+ * @param {GenerateOpts} options
+ */
+function compileSqlExec(options) {
+  if (options.dumpPostgres) {
+    compileDynamicTemplates(generatorTemplates, options, "sql", {
       fnStringStart: `
-  
   {{ let result = ''; }}
   {{ if (false) { }}
   `,
@@ -78,33 +115,4 @@ export async function preGenerate(app, data, options) {
   `,
     });
   }
-
-  app.templateContext.globals.camelToSnakeCase = camelToSnakeCase;
-
-  buildExtraTypes(data);
-}
-
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<GeneratedFile>}
- */
-export async function generate(app, data, options) {
-  if (options.dumpPostgres) {
-    const result = executeTemplate(app.templateContext, "sqlPostgres", {
-      ...data,
-      options,
-    });
-
-    app.logger.info("\n" + result);
-  }
-
-  return {
-    path: "./queries.js",
-    source: executeTemplate(app.templateContext, "sqlFile", {
-      ...data,
-      options,
-    }),
-  };
 }

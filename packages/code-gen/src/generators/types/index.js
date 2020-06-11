@@ -1,4 +1,4 @@
-import { generate, preGenerate } from "./generator.js";
+import { generate, init } from "./generator.js";
 
 /**
  *
@@ -6,6 +6,6 @@ import { generate, preGenerate } from "./generator.js";
  */
 export const typeGenerator = {
   name: "type",
-  preGenerate,
+  init,
   generate,
 };

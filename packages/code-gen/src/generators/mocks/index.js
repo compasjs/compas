@@ -1,10 +1,10 @@
-import { generate, preGenerate } from "./generator.js";
+import { generate, init } from "./generator.js";
 
 /**
  * @type {GeneratorPlugin}
  */
 export const mockGenerator = {
   name: "mock",
-  preGenerate,
+  init,
   generate,
 };

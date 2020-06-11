@@ -7,61 +7,32 @@ import { typeGenerator } from "./types/index.js";
 import { validatorGenerator } from "./validator/index.js";
 
 /**
+ * @name GeneratorPlugin
+ *
+ * @typedef {object}
+ * @property {string} name Generator name
+ * @property {function(): void|Promise<void>} [init] Compile static templates and do
+ *   other static checks
+ * @property {function(App, object, GenerateOpts): void|Promise<void>} [preGenerate] Can be
+ *   called multiple times, add dynamic types
+ * @property {function(App, object, GenerateOpts):
+ *   GeneratedFile[]|GeneratedFile|Promise<GeneratedFile[]|GeneratedFile>} [generate]
+ *   Compile dynamic templates, execute template and return file
+ */
+
+/**
  * The core provided generators.
  *
- * @example  Use specific generators
- *   new App({ generators: [generators.type, generators.validator]});
- * @example  Use all generators
- *   new App({ generators: Object.values(generators) })
- *
+ * @type {Map<string, GeneratorPlugin>}
  */
-export const generators = {
-  /**
-   * Generate JSDoc or Typescript types
-   *
-   * @type {GeneratorPlugin}
-   */
-  type: typeGenerator,
+export const generators = new Map([
+  ["type", typeGenerator],
+  ["validator", validatorGenerator],
+  ["mock", mockGenerator],
+  ["router", routerGenerator],
+  ["apiClient", apiClientGenerator],
+  ["sql", sqlGenerator],
+  ["reactQuery", reactQueryGenerator],
+]);
 
-  /**
-   * Generate pure JS validators
-   *
-   * @type {GeneratorPlugin}
-   */
-  validator: validatorGenerator,
-
-  /**
-   * Generate customizable mocks
-   *
-   * @type {GeneratorPlugin}
-   */
-  mock: mockGenerator,
-
-  /**
-   * Generate a common prefix based router, supporting tag & group middleware
-   *
-   * @type {GeneratorPlugin}
-   */
-  router: routerGenerator,
-
-  /**
-   * Generate an Axios based api client
-   *
-   * @type {GeneratorPlugin}
-   */
-  apiClient: apiClientGenerator,
-
-  /**
-   * Generate basic CRUD queries
-   *
-   * @type {GeneratorPlugin}
-   */
-  sql: sqlGenerator,
-
-  /**
-   * Generate react-query based hooks wrapped around the apiClient
-   *
-   * @type {GeneratorPlugin}
-   */
-  reactQuery: reactQueryGenerator,
-};
+export { generatorTemplates } from "./templates.js";

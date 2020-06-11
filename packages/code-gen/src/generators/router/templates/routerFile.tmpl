@@ -125,7 +125,7 @@ const handlers = {
      {{ if (item.params) { }}* @param { {{= item.params.reference.uniqueName }} } ctx.validatedParams {{ } }}
      {{ if (item.body) { }}* @param { {{= item.body.reference.uniqueName }} } ctx.validatedBody {{ } }}
      * @param {Function} next
-     * @return {void|Promise<void>}
+     * @returns {void|Promise<void>}
      */
      {{= item.name }}: (ctx, next) => {
        throw AppError.notImplemented();

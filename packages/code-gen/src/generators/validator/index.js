@@ -1,4 +1,4 @@
-import { generate, init, preGenerate } from "./generator.js";
+import { generate, init } from "./generator.js";
 
 /**
  *
@@ -7,6 +7,5 @@ import { generate, init, preGenerate } from "./generator.js";
 export const validatorGenerator = {
   name: "validator",
   init,
-  preGenerate,
   generate,
 };

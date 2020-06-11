@@ -5,23 +5,15 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 import { compileDynamicTemplates } from "../../utils.js";
+import { generatorTemplates } from "../templates.js";
 
-/**
- * @param {App} app
- * @returns {Promise<void>}
- */
-export async function init(app) {
-  app.templateContext.globals.quote = (x) => `"${x}"`;
-}
-
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function preGenerate(app, data, options) {
-  await compileTemplates(app.templateContext, options);
+export async function init() {
+  generatorTemplates.globals.quote = (x) => `"${x}"`;
+  await compileTemplateDirectory(
+    generatorTemplates,
+    join(dirnameForModule(import.meta), "./templates"),
+    ".tmpl",
+  );
 }
 
 /**
@@ -31,9 +23,10 @@ export async function preGenerate(app, data, options) {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
+  await compileValidatorExec(options);
   return {
     path: "./validators.js",
-    source: executeTemplate(app.templateContext, "validatorsFile", {
+    source: executeTemplate(generatorTemplates, "validatorsFile", {
       ...data,
       options,
     }),
@@ -41,12 +34,11 @@ export async function generate(app, data, options) {
 }
 
 /**
- * @param {TemplateContext} tc
  * @param {GenerateOpts} options
  * @returns {Promise<void>}
  */
-async function compileTemplates(tc, options) {
-  compileDynamicTemplates(tc, options, "validator", {
+async function compileValidatorExec(options) {
+  compileDynamicTemplates(generatorTemplates, options, "validator", {
     fnStringStart: `{{ let result = ''; }}`,
     fnStringAdd: (type, templateName) =>
       `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,
@@ -54,10 +46,4 @@ async function compileTemplates(tc, options) {
    {{= result.trim() }} 
   `,
   });
-
-  await compileTemplateDirectory(
-    tc,
-    join(dirnameForModule(import.meta), "./templates"),
-    ".tmpl",
-  );
 }

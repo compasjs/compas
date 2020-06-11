@@ -5,20 +5,13 @@ import {
 } from "@lbu/stdlib";
 import { join } from "path";
 import { addToData } from "../../generate.js";
+import { generatorTemplates } from "../index.js";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { buildTrie } from "./trie.js";
 
-/**
- * @param {App} app
- * @returns {Promise<void>}
- */
-export async function init(app) {
-  if (!app.generators.has("validator")) {
-    throw new Error("router depends on validators");
-  }
-
+export async function init() {
   await compileTemplateDirectory(
-    app.templateContext,
+    generatorTemplates,
     join(dirnameForModule(import.meta), "templates"),
     ".tmpl",
   );
@@ -27,9 +20,17 @@ export async function init(app) {
 /**
  * @param {App} app
  * @param data
+ * @param {GenerateOpts} options
  * @returns {Promise<void>}
  */
-export async function preGenerate(app, data) {
+export async function preGenerate(app, data, options) {
+  if (
+    !options.useStubGenerators &&
+    options.enabledGenerators.indexOf("validator") === -1
+  ) {
+    throw new Error("router generator depends on validator generator");
+  }
+
   for (const r of getInternalRoutes()) {
     addToData(data, r.build());
   }
@@ -49,7 +50,7 @@ export async function generate(app, data, options) {
 
   return {
     path: "./router.js",
-    source: executeTemplate(app.templateContext, template, {
+    source: executeTemplate(generatorTemplates, template, {
       ...data,
       options,
     }),

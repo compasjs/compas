@@ -1,4 +1,4 @@
-import { App, generators } from "@lbu/code-gen";
+import { App } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import { join } from "path";
@@ -11,19 +11,9 @@ export const nodemonArgs = `--ignore generated --ignore stubs --ignore **/genera
  *
  */
 async function main() {
-  const app = new App({
-    generators: [
-      generators.type,
-      generators.validator,
-      generators.mock,
-      generators.router,
-      generators.apiClient,
-      generators.sql,
-      generators.reactQuery,
-    ],
+  const app = await App.new({
     verbose: true,
   });
-  await app.init();
 
   const enabledPackages = ["store"];
   const packagesDirectory = join(process.cwd(), "packages");

@@ -1,4 +1,4 @@
-import { generate, preGenerate } from "./generator.js";
+import { generate, init, preGenerate } from "./generator.js";
 
 /**
  *
@@ -6,6 +6,7 @@ import { generate, preGenerate } from "./generator.js";
  */
 export const sqlGenerator = {
   name: "sql",
+  init,
   preGenerate,
   generate,
 };
