@@ -6,16 +6,6 @@ import {
 import { join } from "path";
 
 /**
- * @param {App} app App instance
- * @returns {Promise<void>}
- */
-export async function init(app) {
-  if (!app.generators.has("apiClient")) {
-    throw new Error("ReactQuery plugin depends on the apiClient plugin");
-  }
-}
-
-/**
  *
  * @param {App} app
  * @param {*} data
@@ -25,6 +15,10 @@ export async function init(app) {
 export async function preGenerate(app, data, options) {
   if (!options.useTypescript) {
     throw new Error("ReactQuery generator requires `useTypescript` to be true");
+  }
+
+  if (!app.generators.has("apiClient")) {
+    throw new Error("ReactQuery plugin depends on the apiClient plugin");
   }
 
   await compileTemplateDirectory(
@@ -42,7 +36,7 @@ export async function preGenerate(app, data, options) {
  */
 export async function generate(app, data, options) {
   return {
-    path: "./react-queries.ts",
+    path: "./reactQueries.ts",
     source: executeTemplate(app.templateContext, "reactQueryFile", {
       ...data,
       options,

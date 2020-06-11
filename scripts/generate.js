@@ -144,6 +144,7 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./generated",
+    enabledGenerators: ["type", "router", "apiClient", "sql"],
     useTypescript: false,
     dumpStructure: true,
     dumpPostgres: true,
