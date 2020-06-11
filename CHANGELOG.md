@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.25](https://github.com/lightbasenl/lbu/releases/tag/v0.0.25)
+
+- @lbu/code-gen: add react-query generator
+- @lbu/lint-config: remove JSDoc plugin
+- @lbu/code-gen: make generators stable
+- @lbu/cli: update boilerplate add (test-)services code
+
 ### [v0.0.24](https://github.com/lightbasenl/lbu/releases/tag/v0.0.24)
 
 - @lbu/code-gen: fix nested reference lookups in sql code-generation
