@@ -1,7 +1,7 @@
 {
-  "private": true,
-  "license": "MIT",
   "name": "{{name}}",
+  "version": "0.0.1",
+  "private": true,
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=production node ./scripts/api.js"
@@ -12,13 +12,12 @@
     "@lbu/stdlib": "{{version}}",
     "@lbu/store": "{{version}}",
     "axios": "0.19.2",
-    "chance": "1.1.4"
+    "chance": "1.1.6"
   },
   "devDependencies": {
     "@lbu/cli": "{{version}}",
     "@lbu/code-gen": "{{version}}",
-    "@lbu/lint-config": "{{version}}",
-    "tape": "5.0.0"
+    "@lbu/lint-config": "{{version}}"
   },
   "prettier": "@lbu/lint-config/prettierrc",
   "engines": {

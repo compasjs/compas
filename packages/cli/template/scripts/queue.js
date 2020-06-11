@@ -1,11 +1,13 @@
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
-import { JobQueueWorker, newPostgresConnection } from "@lbu/store";
+import { JobQueueWorker } from "@lbu/store";
+import { injectServices } from "../src/service.js";
+import { sql } from "../src/services/index.js";
 
 mainFn(import.meta, log, main);
 
 async function main() {
-  const sql = await newPostgresConnection();
+  await injectServices();
 
   // parallelCount shouldn't be higher than Postgres pool size
   const queueWorker = new JobQueueWorker(sql, {
@@ -16,6 +18,10 @@ async function main() {
   queueWorker.start();
 }
 
+/**
+ * @param sql
+ * @param job
+ */
 async function handler(sql, job) {
   log.info(job);
 }

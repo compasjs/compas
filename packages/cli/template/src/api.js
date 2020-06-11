@@ -1,12 +1,16 @@
-import { createBodyParsers, getApp } from "@lbu/server";
-import { AppError, uuid } from "@lbu/stdlib";
-import { appHandlers, router } from "./generated/router.js";
+import { getApp } from "@lbu/server";
+import { AppError } from "@lbu/stdlib";
+import { router, setBodyParser } from "./generated/router.js";
 import { validatorSetErrorFn } from "./generated/validators.js";
+import { app, bodyParsers } from "./services/index.js";
 
-export function constructApp() {
-  const app = getApp({
+/**
+ * Create a basic LBU app
+ */
+export function createApp() {
+  return getApp({
     errorOptions: {
-      leakError: true,
+      leakError: process.env.NODE_ENV !== "production",
     },
     headers: {
       cors: {
@@ -15,9 +19,11 @@ export function constructApp() {
     },
     proxy: process.env.NODE_ENV === "production",
   });
+}
 
+export function constructApp() {
   validatorSetErrorFn(AppError.validationError);
-  createBodyParsers({});
+  setBodyParser(bodyParsers.bodyParser);
 
   app.use(router);
 
@@ -26,12 +32,4 @@ export function constructApp() {
   return app;
 }
 
-function mountHandlers() {
-  appHandlers.get = (ctx, next) => {
-    ctx.body = {
-      id: uuid(),
-      userName: "Dirk",
-    };
-    return next();
-  };
-}
+function mountHandlers() {}
