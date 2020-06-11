@@ -12,7 +12,7 @@ import { join } from "path";
  * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
-  options.enableMocks = app.generators.has("mock");
+  options.enableMocks = options.enabledGenerators.indexOf("mock") !== -1;
 
   await compileTemplateDirectory(
     app.templateContext,
