@@ -59,7 +59,7 @@ export const generators = {
   sql: sqlGenerator,
 
   /**
-   * Generate react-query based hoooks wrapped around the apiClient
+   * Generate react-query based hooks wrapped around the apiClient
    *
    * @type {GeneratorPlugin}
    */

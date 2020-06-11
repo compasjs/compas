@@ -17,7 +17,7 @@ export async function preGenerate(app, data, options) {
     throw new Error("ReactQuery generator requires `useTypescript` to be true");
   }
 
-  if (!app.generators.has("apiClient")) {
+  if (options.enabledGenerators.indexOf("apiClient") === -1) {
     throw new Error("ReactQuery plugin depends on the apiClient plugin");
   }
 
