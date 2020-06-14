@@ -1,0 +1,7 @@
+{
+  "strict": true,
+  "jsx": "react",
+  "target": "esnext",
+  "lib": ["esnext"],
+  "module": "ES6"
+}

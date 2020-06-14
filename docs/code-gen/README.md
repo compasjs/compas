@@ -11,7 +11,6 @@ your api can then access the api structure and generate the same api client.
 ## Table of Contents:
 
 - [Custom types](./custom-types.md)
-- [Custom plugins](./custom-plugins.md)
 
 ## Compared to...
 

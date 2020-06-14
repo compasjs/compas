@@ -30,8 +30,15 @@ function main(logger) {
     writeFileSync(
       join(pkgDir, "README.md"),
       buildReadmeSource(pkg, readmeSource),
+      "utf-8",
     );
   }
+
+  writeFileSync(
+    "./docs/README.md",
+    `# @lbu (Lightbase Backend Utilities)\n${readmeSource}`,
+    "utf-8",
+  );
 
   logger.info("Done.\nRunning linter");
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });

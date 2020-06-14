@@ -103,7 +103,8 @@ tailored at monolithic projects.
 
 ## Docs
 
-See [/docs](/docs/README.md) for all available APIs and various guides.
+See [the website](https://lbu.lightbase.nl) for all available APIs and various
+guides.
 
 ## Development
 

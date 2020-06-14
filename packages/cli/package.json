@@ -4,6 +4,7 @@
   "description": "CLI containing utilities and simple script runner",
   "main": "./index.js",
   "exports": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "bin": {
     "lbu": "./src/bin.js"

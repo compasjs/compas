@@ -20,8 +20,15 @@ package-lock.json
 .nyc_output
 coverage
 
+# Test code-gen output
 /generated/*
 /packages/*/generated/*
 /stubs
 
+# Real code-gen output
 !packages/store/generated/
+
+# Generated docs folder output
+
+/docs/generated/*
+!/docs/generated/README.md

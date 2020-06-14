@@ -3,28 +3,6 @@ import { existsSync, readdirSync, readFileSync } from "fs";
 import nodemon from "nodemon";
 
 /**
- * @name CollectedScript
- *
- * Depending on the type contains either script or path
- *
- * @typedef {object}
- * @property {"user"|"package"} type
- * @property {string} name
- * @property {string} [path]
- * @property {string} [script]
- */
-
-/**
- * @name ScriptCollection
- *
- * @typedef {object.<string, CollectedScript>}
- */
-
-/**
- * Return collection of available named scripts
- * - type user: User defined scripts from process.cwd/scripts/*.js
- * - type package: User defined scripts in package.json. These override 'user' scripts
- *
  * @returns {ScriptCollection}
  */
 export function collectScripts() {

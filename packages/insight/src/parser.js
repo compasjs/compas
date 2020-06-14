@@ -3,20 +3,7 @@ import split from "split2";
 import { Transform } from "stream";
 
 /**
- * @name LogParserContext
- *
- *  The LogParserContext enables you too analyze logs produced by this Logger
- *
- * @typedef {object}
- * @property {(function(data: object): undefined)} [jsonProcessor]
- * @property {(function(data: string): undefined)} [textProcessor]
- * @property {ReadStream} stream
- */
-
-/**
- * Create a new parser context
- *
- * @param {ReadStream} stream
+ * @param {ReadableStream} stream
  * @returns {LogParserContext}
  */
 export function newLogParserContext(stream) {
@@ -28,11 +15,8 @@ export function newLogParserContext(stream) {
 }
 
 /**
- * Run the parser, splits the in stream onn lines and call either the jsonProcessor or
- * textProcessor with the value. The original value is written to the returned stream
- *
  * @param {LogParserContext} lpc
- * @returns {ReadStream}
+ * @returns {ReadableStream}
  */
 export function executeLogParser(lpc) {
   const transport = new Transform({

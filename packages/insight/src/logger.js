@@ -1,46 +1,6 @@
 import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
- * @name LoggerOptions
- *
- * @typedef {object}
- * @property {boolean} [pretty=false] Use the pretty formatter instead of the NDJSON formatter
- * @property {number} [depth=3] Max-depth printed
- * @property {WriteStream} [stream=process.stdout] The stream to write the logs to
- * @property {*|{type: string}} [ctx] Context that should be logged in all log lines. e.g
- *   a common request id.
- */
-
-/**
- * @name LogFn
- *
- * Prints the provided argument
- *
- * @typedef {function(arg: *): undefined}
- */
-
-/**
- * @name Logger
- *
- * The logger only has two severities:
- * - info
- * - error
- *
- * Either a log line is innocent enough and only provides debug information if needed, or
- *   someone should be paged because something goes wrong. For example handled 500 errors
- *   don't need any ones attention, but unhandled 500 errors do.
- * @see {@lbu/server#logMiddleware}
- *
- * @typedef {object}
- * @property {function(): boolean} isProduction Check if this logger is using the pretty
- *   printer or NDJSON printer
- * @property {LogFn} info Info log
- * @property {LogFn} error Error log
- */
-
-/**
- * Create a new logger
- *
  * @param {LoggerOptions} [options]
  * @returns {Logger}
  */
@@ -70,11 +30,8 @@ export function newLogger(options) {
 }
 
 /**
- * Bind a context object to the logger functions and returns a new Logger
- * The context is always printed
- *
  * @param {Logger} logger
- * @param {object|{type: string}} ctx
+ * @param {LoggerContext} ctx
  * @returns {Logger}
  */
 export function bindLoggerContext(logger, ctx) {

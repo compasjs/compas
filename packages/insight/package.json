@@ -4,6 +4,7 @@
   "description": "Simple logger in NDJSON format",
   "main": "./index.js",
   "exports": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "keywords": [
     "lightbase",
