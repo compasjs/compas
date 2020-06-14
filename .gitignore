@@ -23,6 +23,7 @@ coverage
 # Test code-gen output
 /generated/*
 /packages/*/generated/*
+/packages/*/test-generated/*
 /stubs
 
 # Real code-gen output

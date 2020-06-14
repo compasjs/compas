@@ -43,19 +43,6 @@ export class App {
   static defaultEslintIgnore = ["no-unused-vars"];
 
   /**
-   * Create a new App instance
-   *
-   * @public
-   * @param {AppOpts} [options={}] Optional options
-   * @returns {Promise<App>}
-   */
-  static async new(options = {}) {
-    const app = new App(options);
-    await app.init();
-    return app;
-  }
-
-  /**
    * @private
    * @param {AppOpts} options
    */
@@ -93,6 +80,19 @@ export class App {
   }
 
   /**
+   * Create a new App instance
+   *
+   * @public
+   * @param {AppOpts} [options={}] Optional options
+   * @returns {Promise<App>}
+   */
+  static async new(options = {}) {
+    const app = new App(options);
+    await app.init();
+    return app;
+  }
+
+  /**
    * Init generators and validate types
    *
    * @private
@@ -102,7 +102,7 @@ export class App {
     generatorTemplates.globals["upperCaseFirst"] = upperCaseFirst;
     generatorTemplates.globals["lowerCaseFirst"] = lowerCaseFirst;
     generatorTemplates.globals["inspect"] = (arg) =>
-      inspect(arg, { sorted: true, colors: false, depth: 6 });
+      inspect(arg, { sorted: true, colors: false, depth: 15 });
 
     if (this.verbose) {
       this.logger.info({
