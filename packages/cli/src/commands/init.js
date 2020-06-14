@@ -1,4 +1,4 @@
-import { dirnameForModule, spawn } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin, spawn } from "@lbu/stdlib";
 import {
   existsSync,
   lstatSync,
@@ -7,7 +7,6 @@ import {
   readFileSync,
   writeFileSync,
 } from "fs";
-import { join } from "path";
 
 /**
  * @param {Logger} logger
@@ -17,20 +16,20 @@ import { join } from "path";
 export async function initCommand(logger, command) {
   const { version } = JSON.parse(
     readFileSync(
-      join(dirnameForModule(import.meta), "../../package.json"),
+      pathJoin(dirnameForModule(import.meta), "../../package.json"),
       "utf-8",
     ),
   );
 
   let outDir = process.cwd();
   if (command.arguments.length === 1) {
-    outDir = join(outDir, command.arguments[0]);
+    outDir = pathJoin(outDir, command.arguments[0]);
   }
 
   const projectName = outDir.substring(outDir.lastIndexOf("/") + 1);
 
   copyDirRecursive(
-    join(dirnameForModule(import.meta), "../../template"),
+    pathJoin(dirnameForModule(import.meta), "../../template"),
     outDir,
     (input) =>
       input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
@@ -64,7 +63,11 @@ function copyDirRecursive(source, target, contentHandler) {
 
     const files = readdirSync(source);
     for (const file of files) {
-      copyDirRecursive(join(source, file), join(target, file), contentHandler);
+      copyDirRecursive(
+        pathJoin(source, file),
+        pathJoin(target, file),
+        contentHandler,
+      );
     }
   } else if (stat.isFile()) {
     const src = readFileSync(source, "utf-8");

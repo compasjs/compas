@@ -2,8 +2,8 @@ import {
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
+  pathJoin,
 } from "@lbu/stdlib";
-import { join } from "path";
 import { addToData } from "../../generate.js";
 import { generatorTemplates } from "../index.js";
 import { getInternalRoutes } from "./internalRoutes.js";
@@ -12,7 +12,7 @@ import { buildTrie } from "./trie.js";
 export async function init() {
   await compileTemplateDirectory(
     generatorTemplates,
-    join(dirnameForModule(import.meta), "templates"),
+    pathJoin(dirnameForModule(import.meta), "templates"),
     ".tmpl",
   );
 }

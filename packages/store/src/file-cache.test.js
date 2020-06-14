@@ -1,7 +1,6 @@
 import { log, printProcessMemoryUsage } from "@lbu/insight";
-import { gc, uuid } from "@lbu/stdlib";
+import { gc, pathJoin, uuid } from "@lbu/stdlib";
 import { existsSync, lstatSync, writeFileSync } from "fs";
-import { join } from "path";
 import { pipeline as pipelineCallback } from "stream";
 import test from "tape";
 import { promisify } from "util";
@@ -64,9 +63,9 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("write fixtures to disk", async (t) => {
-    writeFileSync(join("/tmp", "small"), files.small);
-    writeFileSync(join("/tmp", "medium"), files.medium);
-    writeFileSync(join("/tmp", "large"), files.large);
+    writeFileSync(pathJoin("/tmp", "small"), files.small);
+    writeFileSync(pathJoin("/tmp", "medium"), files.medium);
+    writeFileSync(pathJoin("/tmp", "large"), files.large);
 
     t.ok(true);
   });
@@ -76,7 +75,7 @@ test("store/file-cache", async (t) => {
       files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
-        join("/tmp", "small"),
+        pathJoin("/tmp", "small"),
       );
     });
 
@@ -84,14 +83,14 @@ test("store/file-cache", async (t) => {
       files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
-        join("/tmp", "medium"),
+        pathJoin("/tmp", "medium"),
       );
     });
     await t.asyncShouldNotThrow(async () => {
       files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
-        join("/tmp", "large"),
+        pathJoin("/tmp", "large"),
       );
     });
   });
@@ -209,9 +208,9 @@ test("store/file-cache check memory usage", async (t) => {
   logMemory(t);
 
   t.test("write fixtures to disk", async (t) => {
-    writeFileSync(join("/tmp", "small"), files.small);
-    writeFileSync(join("/tmp", "medium"), files.medium);
-    writeFileSync(join("/tmp", "large"), files.large);
+    writeFileSync(pathJoin("/tmp", "small"), files.small);
+    writeFileSync(pathJoin("/tmp", "medium"), files.medium);
+    writeFileSync(pathJoin("/tmp", "large"), files.large);
 
     t.ok(true);
   });
@@ -221,7 +220,7 @@ test("store/file-cache check memory usage", async (t) => {
       files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
-        join("/tmp", "small"),
+        pathJoin("/tmp", "small"),
       );
     });
 
@@ -229,14 +228,14 @@ test("store/file-cache check memory usage", async (t) => {
       files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
-        join("/tmp", "medium"),
+        pathJoin("/tmp", "medium"),
       );
     });
     await t.asyncShouldNotThrow(async () => {
       files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
-        join("/tmp", "large"),
+        pathJoin("/tmp", "large"),
       );
     });
   });

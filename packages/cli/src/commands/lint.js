@@ -1,8 +1,10 @@
-import { dirnameForModule } from "@lbu/stdlib";
-import { join } from "path";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { executeCommand } from "../utils.js";
 
-const lintFile = join(dirnameForModule(import.meta), "../../scripts/lint.js");
+const lintFile = pathJoin(
+  dirnameForModule(import.meta),
+  "../../scripts/lint.js",
+);
 
 /**
  * @param {Logger} logger

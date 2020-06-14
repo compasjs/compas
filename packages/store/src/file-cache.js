@@ -1,7 +1,6 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil, pathJoin } from "@lbu/stdlib";
 import { once } from "events";
 import { createReadStream, createWriteStream } from "fs";
-import { join } from "path";
 import { pipeline as pipelineCallbacks, Readable } from "stream";
 import { promisify } from "util";
 import { getFileStream } from "./files.js";
@@ -127,7 +126,7 @@ export class FileCache {
    */
   async loadFromDiskCache(key, id, start, end) {
     try {
-      const str = createReadStream(join(FileCache.fileCachePath, key), {
+      const str = createReadStream(pathJoin(FileCache.fileCachePath, key), {
         start,
         end,
       });
@@ -181,10 +180,10 @@ export class FileCache {
    * @param end
    */
   async cacheFileOnDisk(key, id, start, end) {
-    const path = join(FileCache.fileCachePath, key);
+    const path = pathJoin(FileCache.fileCachePath, key);
     await pipeline(
       await getFileStream(this.fileStore, id),
-      createWriteStream(join(FileCache.fileCachePath, key)),
+      createWriteStream(pathJoin(FileCache.fileCachePath, key)),
     );
 
     this.fileCache.add(key);

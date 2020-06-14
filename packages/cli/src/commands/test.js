@@ -1,8 +1,10 @@
-import { dirnameForModule } from "@lbu/stdlib";
-import { join } from "path";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { executeCommand } from "../utils.js";
 
-const testFile = join(dirnameForModule(import.meta), "../../scripts/test.js");
+export const testFile = pathJoin(
+  dirnameForModule(import.meta),
+  "../../scripts/test.js",
+);
 
 /**
  * @param {Logger} logger

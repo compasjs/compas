@@ -2,15 +2,15 @@ import {
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
+  pathJoin,
 } from "@lbu/stdlib";
-import { join } from "path";
 import { compileDynamicTemplates } from "../../utils.js";
 import { generatorTemplates } from "../templates.js";
 
 export async function init() {
   await compileTemplateDirectory(
     generatorTemplates,
-    join(dirnameForModule(import.meta), "./templates"),
+    pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
 }

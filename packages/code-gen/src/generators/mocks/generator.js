@@ -2,8 +2,8 @@ import {
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
+  pathJoin,
 } from "@lbu/stdlib";
-import { join } from "path";
 import { TypeBuilder } from "../../types/index.js";
 import { compileDynamicTemplates } from "../../utils.js";
 import { generatorTemplates } from "../index.js";
@@ -26,7 +26,7 @@ TypeBuilder.prototype.mock = function (mockFn) {
 export async function init() {
   await compileTemplateDirectory(
     generatorTemplates,
-    join(dirnameForModule(import.meta), "./templates"),
+    pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
 }

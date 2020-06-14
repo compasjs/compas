@@ -1,7 +1,6 @@
-import { spawn } from "@lbu/stdlib";
+import { pathJoin, spawn } from "@lbu/stdlib";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import nodemon from "nodemon";
-import { join } from "path";
 
 /**
  * @name CollectedScript
@@ -31,7 +30,7 @@ import { join } from "path";
 export function collectScripts() {
   const result = {};
 
-  const userDir = join(process.cwd(), "scripts");
+  const userDir = pathJoin(process.cwd(), "scripts");
   if (existsSync(userDir)) {
     for (const item of readdirSync(userDir)) {
       if (!item.endsWith(".js")) {
@@ -43,12 +42,12 @@ export function collectScripts() {
       result[name] = {
         type: "user",
         name,
-        path: join(userDir, item),
+        path: pathJoin(userDir, item),
       };
     }
   }
 
-  const pkgJsonPath = join(process.cwd(), "package.json");
+  const pkgJsonPath = pathJoin(process.cwd(), "package.json");
   if (existsSync(pkgJsonPath)) {
     const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
     for (const name of Object.keys(pkgJson.scripts || {})) {

@@ -6,6 +6,8 @@ import { promisify } from "util";
 const { lstat, readdir } = promises;
 const internalExec = promisify(cpExec);
 
+export { join as pathJoin };
+
 /**
  * Promisify version of child_process#exec
  *

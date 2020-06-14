@@ -11,6 +11,7 @@ export {
 export {
   exec,
   spawn,
+  pathJoin,
   processDirectoryRecursive,
   processDirectoryRecursiveSync,
 } from "./src/node.js";

@@ -1,6 +1,5 @@
-import { dirnameForModule } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { join } from "path";
 
 /**
  * @param {Logger} logger
@@ -11,7 +10,7 @@ import { join } from "path";
 export function helpCommand(logger, command, scriptCollection) {
   const { name, version } = JSON.parse(
     readFileSync(
-      join(dirnameForModule(import.meta), "../../package.json"),
+      pathJoin(dirnameForModule(import.meta), "../../package.json"),
       "utf-8",
     ),
   );
@@ -25,8 +24,9 @@ Usage:
 - docker            : lbu docker [up,down,clean]
 - run (explicit)    : lbu run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : lbu [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
-- test              : lbu test [--watch] [--verbose] [--script-arg]
-- lint              : lbu lint [--watch] [--verbose] [--script-arg]
+- test              : lbu test [--watch] [--verbose] [--node-arg]
+- coverage          : lbu coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
+- lint              : lbu lint [--watch] [--verbose] [--any-node-arg]
 - profile           : lbu profile [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 
 Available script names:
