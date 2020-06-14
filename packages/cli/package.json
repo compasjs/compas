@@ -20,6 +20,7 @@
   "dependencies": {
     "@lbu/insight": "0.0.26",
     "@lbu/stdlib": "0.0.26",
+    "c8": "7.2.0",
     "nodemon": "2.0.4",
     "tape": "5.0.1"
   },

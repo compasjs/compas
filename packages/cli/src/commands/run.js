@@ -1,4 +1,4 @@
-import { join } from "path";
+import { pathJoin } from "@lbu/stdlib";
 import { executeCommand } from "../utils.js";
 
 /**
@@ -23,7 +23,7 @@ export async function runCommand(logger, command, scriptCollection) {
       logger.error("Ignoring node arguments in a package.json script");
     }
   } else {
-    const src = script ? script.path : join(process.cwd(), command.script);
+    const src = script ? script.path : pathJoin(process.cwd(), command.script);
 
     cmd = "node";
     args.push(...command.nodeArguments);

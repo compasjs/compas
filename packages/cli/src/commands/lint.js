@@ -13,7 +13,7 @@ const lintFile = pathJoin(
  */
 export function lintCommand(logger, command) {
   return executeCommand(logger, command.verbose, command.watch, "node", [
-    lintFile,
     ...command.nodeArguments,
+    lintFile,
   ]);
 }

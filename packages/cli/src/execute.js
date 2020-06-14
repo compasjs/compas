@@ -1,4 +1,5 @@
 import {
+  coverageCommand,
   dockerCommand,
   helpCommand,
   initCommand,
@@ -17,6 +18,7 @@ const execCommands = {
   test: testCommand,
   lint: lintCommand,
   run: runCommand,
+  coverage: coverageCommand,
 };
 
 /**

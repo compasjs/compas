@@ -48,6 +48,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "foo",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -86,6 +87,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "foo",
       nodeArguments: ["--cpu-prof"],
+      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -100,6 +102,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "foo",
       nodeArguments: ["--cpu-prof"],
+      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -114,6 +117,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "foo",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: ["--cache"],
       watch: false,
       verbose: false,
@@ -128,6 +132,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "foo",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: ["--cache"],
       watch: false,
       verbose: false,
@@ -142,6 +147,7 @@ test("cli/parse", (t) => {
       name: "run",
       script: "./scripts/generate.js",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -169,6 +175,7 @@ test("cli/parse", (t) => {
         name: "profile",
         script: "bar",
         nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
+        toolArguments: [],
         execArguments: ["--no-cache"],
         watch: true,
         verbose: true,
@@ -189,6 +196,7 @@ test("cli/parse", (t) => {
         name: "profile",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
+        toolArguments: [],
         execArguments: [],
         watch: false,
         verbose: true,
@@ -200,6 +208,7 @@ test("cli/parse", (t) => {
       name: "profile",
       script: "foo",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: true,
@@ -215,6 +224,7 @@ test("cli/parse", (t) => {
         name: "profile",
         script: "foo",
         nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
+        toolArguments: [],
         execArguments: [],
         watch: false,
         verbose: true,
@@ -223,7 +233,8 @@ test("cli/parse", (t) => {
 
     t.end();
   });
-  t.test("get test correctly", (t) => {
+
+  t.test("get watch correctly", (t) => {
     t.deepEqual(
       parseArgs(
         ["profile", "--watch", "--cpu-prof-interval=10", "foo"],
@@ -234,6 +245,7 @@ test("cli/parse", (t) => {
         name: "profile",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
+        toolArguments: [],
         execArguments: [],
         watch: true,
         verbose: false,
@@ -245,6 +257,7 @@ test("cli/parse", (t) => {
       name: "profile",
       script: "foo",
       nodeArguments: [],
+      toolArguments: [],
       execArguments: [],
       watch: true,
       verbose: false,
@@ -260,6 +273,7 @@ test("cli/parse", (t) => {
         name: "profile",
         script: "foo",
         nodeArguments: ["--watch", "--cpu-prof-interval=10"],
+        toolArguments: [],
         execArguments: [],
         watch: true,
         verbose: false,
@@ -278,6 +292,24 @@ test("cli/parse", (t) => {
     parseResult = parseArgs(["test", "./foo/"], []);
     t.equal(parseResult.type, "exec");
     t.equal(parseResult.name, "test");
+
+    t.end();
+  });
+
+  t.test("accept -- delimiter", (t) => {
+    t.deepEqual(
+      parseArgs(["coverage", "--watch", "--foo", "--", "--check-coverage"]),
+      {
+        type: "exec",
+        name: "coverage",
+        script: undefined,
+        nodeArguments: ["--foo"],
+        toolArguments: ["--check-coverage"],
+        execArguments: [],
+        watch: true,
+        verbose: false,
+      },
+    );
 
     t.end();
   });

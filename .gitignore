@@ -18,6 +18,7 @@ package-lock.json
 # Tests
 *.test-gen.*
 .nyc_output
+coverage
 
 /generated/*
 /packages/*/generated/*

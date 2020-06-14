@@ -1,25 +1,49 @@
 import { existsSync } from "fs";
 
+/**
+ * List of commands that don't need to parse node args, script args and tooling args
+ * @type {string[]}
+ */
 const utilCommands = ["init", "help", "docker"];
+
+/**
+ * Object of commands that accept special input like node arguments, script name or
+ * tooling args
+ * @type {object<string, {canWatch: boolean, useArgDelimiter: string, useScriptOrFile:
+ *   boolean, useArgDelimiter: boolean, }>}
+ */
 const execCommands = {
   run: {
     canWatch: true,
     useScriptOrFile: true,
+    useArgDelimiter: false,
   },
   profile: {
     canWatch: false,
     useScriptOrFile: true,
+    useArgDelimiter: false,
   },
   test: {
     canWatch: true,
     useScriptOrFile: false,
+    useArgDelimiter: false,
   },
   lint: {
     canWatch: true,
     useScriptOrFile: false,
+    useArgDelimiter: false,
+  },
+  coverage: {
+    canWatch: true,
+    useScriptOrFile: false,
+    useArgDelimiter: true,
   },
 };
 
+/**
+ * Used for checking if an argument is a valid script path
+ * @type {RegExp}
+ */
 const pathRegex = /^([^/]*\/)+(.*)$/;
 
 /**
@@ -43,6 +67,7 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  * @property {boolean} verbose
  * @property {string[]} nodeArguments
  * @property {string[]} execArguments
+ * @property {string[]} toolArguments
  */
 
 /**
@@ -57,6 +82,7 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  * @returns {ParsedArgs}
  */
 export function parseArgs(args, knownScripts = []) {
+  // Default to help
   if (args.length === 0) {
     return {
       type: "util",
@@ -73,18 +99,19 @@ export function parseArgs(args, knownScripts = []) {
     };
   }
 
-  let defaulted = false;
+  let defaultedToRun = false;
   let execName = Object.keys(execCommands).find((it) => it === args[0]);
 
   if (!execName) {
-    defaulted = true;
+    defaultedToRun = true;
     execName = "run";
   }
   const command = execCommands[execName];
 
+  // Find the index in the argument list of a named script or path to script
   let foundScriptIdx = -1;
   for (let i = 0; i < args.length; ++i) {
-    if (i === 0 && !defaulted) {
+    if (i === 0 && !defaultedToRun) {
       continue;
     }
 
@@ -116,7 +143,7 @@ export function parseArgs(args, knownScripts = []) {
   let watch = false;
   let verbose = false;
   const lbuAndNodeArguments = args.slice(
-    defaulted ? 0 : 1,
+    defaultedToRun ? 0 : 1,
     foundScriptIdx === -1 ? args.length : foundScriptIdx,
   );
 
@@ -131,7 +158,30 @@ export function parseArgs(args, knownScripts = []) {
       verbose = true;
       continue;
     }
+
+    // Use '--' as a special arg delimiter for passing args to other tools
+    if (command.useArgDelimiter && arg === "--") {
+      break;
+    }
+
     nodeArguments.push(arg);
+  }
+
+  // Either have execArguments or tool arguments
+  // This is checked based on command.useArgDelimiter
+  let execArguments = [];
+  let toolArguments = [];
+
+  if (command.useArgDelimiter) {
+    const delimiterIndex = args.indexOf("--");
+    if (delimiterIndex !== -1) {
+      toolArguments = args.slice(delimiterIndex + 1);
+    }
+  } else {
+    execArguments =
+      foundScriptIdx === -1
+        ? args.slice(defaultedToRun ? 0 : 1)
+        : args.slice(foundScriptIdx + 1);
   }
 
   return {
@@ -141,10 +191,8 @@ export function parseArgs(args, knownScripts = []) {
     watch,
     verbose,
     nodeArguments,
-    execArguments:
-      foundScriptIdx === -1
-        ? args.slice(defaulted ? 0 : 1)
-        : args.slice(foundScriptIdx + 1),
+    toolArguments,
+    execArguments,
   };
 }
 
