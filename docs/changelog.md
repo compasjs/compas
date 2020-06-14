@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [v0.0.27](https://github.com/lightbasenl/lbu/releases/tag/v0.0.27)
+
+- stdlib: expose pathJoin as alternative for `import { join } from "path";`
+- cli: add coverage command, runs tests and collects coverage information
+- insight,cli: provide typescript declaration files
+- docs: initialize docsify
+- docs: add typedoc for generating api information based on declaration files
+
 ### [v0.0.26](https://github.com/lightbasenl/lbu/releases/tag/v0.0.26)
 
 - @lbu/code-gen: make sure to deepcopy baseData for type plugins
