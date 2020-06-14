@@ -1,4 +1,6 @@
 - [home](/)
+- [changelog](/changelog.md)
+- [contributing](/contributing.md)
 - [getting started](/getting-started.md)
 - [api](/api.md)
 - [environment](/env.md)
@@ -8,3 +10,4 @@
   - [migrations](/store/postgres-migrations.md)
   - [file store](/store/file-store.md)
   - [job queue](/store/queue.md)
+- [contributing](/contributing.md)

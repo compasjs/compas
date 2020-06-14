@@ -1,3 +1,4 @@
 packages/cli/template/*
 coverage
 packages/code-gen/test-generated
+lerna.json

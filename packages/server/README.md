@@ -101,11 +101,13 @@ tailored at monolithic projects.
   - api client structure (Typescript supported)
   - and of course the normal types generator
 
-## Docs
+## Docs and development
 
-See [the website](https://lbu.lightbase.nl) for all available APIs and various
-guides.
+See [the website](https://lbu.lightbase.nl) for the changelog, all available
+APIs and various guides.
+
+For contributing see [contributing.md](https://lbu.lightbase.nl/#/contributing).
 
 ## Development
 
-See [CONTRIBUTING.md](/CONTRIBUTING.md).
+See [CONTRIBUTING.md](/contributing.md).

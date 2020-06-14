@@ -2,3 +2,4 @@ node_modules
 .nyc_output
 coverage
 packages/code-gen/test-generated
+lerna.json
