@@ -1,5 +1,6 @@
 # @lbu/insight
 
+[![install size insight](https://packagephobia.com/badge?p=@lbu/insight)](https://packagephobia.com/result?p=@lbu/insight)
 ![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
 
 Collection of Lightbase backend utilities

@@ -1,5 +1,6 @@
 # @lbu/server
 
+[![install size server](https://packagephobia.com/badge?p=@lbu/server)](https://packagephobia.com/result?p=@lbu/server)
 ![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
 
 Collection of Lightbase backend utilities

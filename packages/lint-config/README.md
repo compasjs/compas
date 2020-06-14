@@ -1,5 +1,6 @@
 # @lbu/lint-config
 
+[![install size lint-config](https://packagephobia.com/badge?p=@lbu/lint-config)](https://packagephobia.com/result?p=@lbu/lint-config)
 ![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
 
 Collection of Lightbase backend utilities

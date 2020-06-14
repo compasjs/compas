@@ -1,5 +1,6 @@
 # @lbu/code-gen
 
+[![install size code-gen](https://packagephobia.com/badge?p=@lbu/code-gen)](https://packagephobia.com/result?p=@lbu/code-gen)
 ![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
 
 Collection of Lightbase backend utilities

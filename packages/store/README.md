@@ -1,5 +1,6 @@
 # @lbu/store
 
+[![install size store](https://packagephobia.com/badge?p=@lbu/store)](https://packagephobia.com/result?p=@lbu/store)
 ![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
 
 Collection of Lightbase backend utilities

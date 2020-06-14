@@ -42,7 +42,7 @@ function main(logger) {
  * @param readmeSource
  */
 function buildReadmeSource(pkgName, readmeSource) {
-  return `# @lbu/${pkgName}\n${readmeSource}`;
+  return `# @lbu/${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=@lbu/${pkgName})](https://packagephobia.com/result?p=@lbu/${pkgName})${readmeSource}\n`;
 }
 
 /**
