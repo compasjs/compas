@@ -1,15 +1,15 @@
 import { isPlainObject } from "@lbu/stdlib";
-import axios from "axios";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 /**
  * Load a LBU structure from an LBU enabled API
  *
+ * @param {AxiosInstance} Axios
  * @param {string} url Base remote url
  * @returns {Promise<any>}
  */
-export async function loadFromRemote(url) {
-  const response = await axios.get(url + "/_lbu/structure.json");
+export async function loadFromRemote(Axios, url) {
+  const response = await Axios.get(url + "/_lbu/structure.json");
 
   return response.data;
 }
