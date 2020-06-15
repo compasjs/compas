@@ -18,7 +18,7 @@
     "@lbu/insight": "0.0.28",
     "@lbu/stdlib": "0.0.28",
     "keygrip": "1.1.0",
-    "koa": "2.12.0",
+    "koa": "2.12.1",
     "koa-body": "4.2.0",
     "koa-compose": "4.1.0",
     "koa-session": "6.0.0"
