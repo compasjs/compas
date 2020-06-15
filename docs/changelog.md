@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.28](https://github.com/lightbasenl/lbu/releases/tag/v0.0.28)
+
+- code-gen: remove axios dependency in loadFromRemote and accept as argument
+
 ### [v0.0.27](https://github.com/lightbasenl/lbu/releases/tag/v0.0.27)
 
 - stdlib: expose pathJoin as alternative for `import { join } from "path";`
