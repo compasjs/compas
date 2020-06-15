@@ -1,15 +1,47 @@
 # CONTRIBUTING
 
-### Development
+### Development & scripts
 
-Development should be pretty straight forward. Run `yarn lbu --test watch` to
+Development should be pretty straight forward. Run `yarn lbu test --watch` to
 run the test suite. Before making a commit, make sure to run `yarn lbu lint`.
-Note that this automatically will try to fix most issues that popup.
+Note that this automatically will try to fix most issues that popup. All
+commands in this repo can be run vai the 'self-hosted' `@lbu/cli`. Run
+`yarn lbu help` for an overview. Below a few commands related to things you
+could be working on:
 
-### Scripts
+**General**:
 
-All commands in this repo can be run via the 'self-hosted' `@lbu/cli`. Run
-`yarn lbu help` for an overview.
+```
+# Format with ESLint & Prettier
+yarn lbu lint (--watch)
+# Run the tests
+yarn lbu test (--watch)
+# Run coverage test
+yarn lbu coverage -- --check-coverage
+yarn lbu coverage -- report --reporter lcov
+# Link your local lbu checkout to another project
+yarn lbu link && yarn lbu linkExternally ../other-project/
+```
+
+**Documentation & Typescript types**:
+
+```
+# Build docs from index.d.ts files and put in /docs/api.md
+yarn lbu typedoc
+# Run docsify server available on port 3000
+yarn lbu docs
+# Sync content of README.md's based on the README.md in the root
+yarn lbu syncMetadata
+```
+
+**Code generation, @lbu/store structure changes**:
+
+```
+# Generate to ignored files for testing stuff out
+yarn lbu generate
+# Generate for @lbu/ packages
+yarn lbu internal_generate
+```
 
 ### Debugging tests
 
