@@ -1,6 +1,5 @@
 - [home](/)
 - [changelog](/changelog.md)
-- [contributing](/contributing.md)
 - [getting started](/getting-started.md)
 - [api](/api.md)
 - [environment](/env.md)
