@@ -58,6 +58,13 @@ export function cors(options = {}) {
   let originFn = (ctx) => options.origin || ctx.get("Origin") || "*";
   if (typeof options.origin === "function") {
     originFn = options.origin;
+  } else if (
+    process.env.CORS_URL !== undefined &&
+    process.env.CORS_URL.length > 0
+  ) {
+    // Use CORS_URL array provided via environment variables
+    originFn = (ctx) =>
+      (process.env.CORS_URL || "").split(",").indexOf(ctx.get("Origin")) !== -1;
   }
 
   // eslint-disable-next-line consistent-return

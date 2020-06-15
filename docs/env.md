@@ -14,6 +14,24 @@ use a SSL connection.
 Used for database creation and selection, default s3 bucket name. In general
 this environment variable is required.
 
+**APP_URL**
+
+Full url where this api is available
+
+**APP_KEYS**
+
+Keys used for signing cookies. Can be a comma separated string to support
+multiple keys.
+
+Use for example
+`node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` to
+generate these.
+
+**CORS_URL**
+
+Default CORS origin check. Can be a comma separated string to support multiple
+origins.
+
 **POSTGRES_URI**
 
 Connection string to Postgres. Should not include a database name.
