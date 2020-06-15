@@ -7,8 +7,6 @@ import { runInNewContext } from "vm";
 import { isNil } from "./lodash.js";
 
 /**
- * Return seconds since unix epoch
- *
  * @returns {number}
  */
 export function getSecondsSinceEpoch() {
@@ -16,8 +14,6 @@ export function getSecondsSinceEpoch() {
 }
 
 /**
- * An empty function, doing exactly nothing but returning undefined.
- *
  * @returns {undefined}
  */
 export function noop() {
@@ -33,7 +29,6 @@ let internalGc = global.gc;
 
 /**
  * HACKY
- * Let V8 know to please run the garbage collector.
  */
 export function gc() {
   if (isNil(internalGc)) {
@@ -45,16 +40,6 @@ export function gc() {
 }
 
 /**
- * @callback MainFnCallback
- * @param {Logger} logger
- * @returns {Promise.<void>|void}
- */
-
-/**
- * Run the provided cb if this file is the process entrypoint
- * Will also load dotenv before executing the provided callback.
- * Another side effect is that a process listener is added for warnings
- *
  * @param {ImportMeta} meta
  * @param {Logger} logger
  * @param {MainFnCallback} cb
@@ -69,9 +54,6 @@ export function mainFn(meta, logger, cb) {
 }
 
 /**
- * Return filename for ES Module
- * Alternative to CommonJS __filename
- *
  * @param {ImportMeta} meta
  * @returns {string}
  */
@@ -80,9 +62,6 @@ export function filenameForModule(meta) {
 }
 
 /**
- * Return dirname for ES Module
- * Alternative to CommonJS __dirname
- *
  * @param {ImportMeta} meta
  * @returns {string}
  */

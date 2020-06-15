@@ -1,8 +1,6 @@
 import lodashMerge from "lodash.merge";
 
 /**
- * Check if item is null or undefined
- *
  * @param {*=} item
  * @returns {boolean}
  */
@@ -11,9 +9,6 @@ export function isNil(item) {
 }
 
 /**
- * Check if item is a plain javascript object
- * Not completely bullet proof
- *
  * @param {*=} item
  * @returns {boolean}
  */
@@ -27,10 +22,6 @@ export function isPlainObject(item) {
 }
 
 /**
- * Re expose lodash.merge
- * TODO: Note that lodash.merge is deprecated although it doesnt say so when installing
- * **Note:** This method mutates `object`.
- *
  * @param {object} object The destination object.
  * @param {...object} [sources] The source objects.
  * @returns {object} Returns `object`.
@@ -38,8 +29,6 @@ export function isPlainObject(item) {
 export const merge = lodashMerge;
 
 /**
- * Flattens the given nested object, skipping anything that is not a plain object
- *
  * @param {object} data The object to serialize
  * @param [result]
  * @param [path]
@@ -64,8 +53,6 @@ export function flatten(data, result = {}, path = "") {
 }
 
 /**
- * Opposite of flatten
- *
  * @param {object} data
  * @returns {object}
  */

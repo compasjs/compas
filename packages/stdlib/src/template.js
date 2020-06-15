@@ -9,15 +9,6 @@ import {
 const { readFile } = promises;
 
 /**
- * @name TemplateContext
- *
- * @typedef {object}
- * @property {object<string, Function>} globals
- * @property {Map<string, Function>} templates
- * @property {boolean} strict
- */
-
-/**
  * @returns {TemplateContext}
  */
 export function newTemplateContext() {
@@ -31,19 +22,11 @@ export function newTemplateContext() {
 }
 
 /**
- * Compile templates add to TemplateContext
- * Unsafe for untrusted inputs
- * Fields need to be explicitly set to undefined or access them via `it.field`
- * Other known templates and globals will be available when executing
- * Inspired by: https://johnresig.com/blog/javascript-micro-templating/
- *
  * @param {TemplateContext} tc
- * @param {string} name Name that is exposed in the template it self and to be used with
- *   the executeTemplate function
- * @param {string} str Template string
+ * @param {string} name
+ * @param {string} str
  * @param {object} [opts={}]
- * @param {boolean} [opts.debug] Set to true to print context keys and input object before
- *   executing the template
+ * @param {boolean} [opts.debug]
  */
 export function compileTemplate(tc, name, str, opts = {}) {
   if (isNil(tc)) {
@@ -117,8 +100,6 @@ export function compileTemplate(tc, name, str, opts = {}) {
 }
 
 /**
- * Compile all templates found in the provided directory with the provided extension
- *
  * @param {TemplateContext} tc
  * @param {string} dir
  * @param {string} extension
@@ -183,12 +164,10 @@ export function compileTemplateDirectorySync(tc, dir, extension, opts) {
 }
 
 /**
- * Execute a template, template should be compiled using compileTemplate
- *
  * @param {TemplateContext} tc
  * @param {string} name
  * @param {*} data
- * @returns {string} The resulting string for executing the template
+ * @returns {string}
  */
 export function executeTemplate(tc, name, data) {
   if (isNil(tc)) {

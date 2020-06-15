@@ -1,13 +1,7 @@
 import { isNil } from "./lodash.js";
 
-/**
- * AppErrors represent errors, that should immediately stop the request and return a
- * status and other meta data directly
- */
 export class AppError extends Error {
   /**
-   * Create a new AppError
-   *
    * @param {string} key
    * @param {number} status
    * @param {object} [info={}]
@@ -37,8 +31,6 @@ export class AppError extends Error {
   }
 
   /**
-   * Throw a new 404 not found error
-   *
    * @param {object} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
@@ -48,8 +40,6 @@ export class AppError extends Error {
   }
 
   /**
-   * Throw a new 405 Not implemented error
-   *
    * @param {object} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
@@ -59,8 +49,6 @@ export class AppError extends Error {
   }
 
   /**
-   * Throw a new 500 internal server error
-   *
    * @param {object} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
@@ -70,8 +58,6 @@ export class AppError extends Error {
   }
 
   /**
-   * Throw a new 400 validation error
-   *
    * @param {string} key
    * @param {object} [info={}]
    * @param {Error} [error]
