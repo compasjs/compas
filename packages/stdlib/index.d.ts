@@ -1,10 +1,23 @@
 import { Logger } from "@lbu/insight";
 import { SpawnOptions } from "child_process";
 
+interface UuidFunc {
+  /**
+   * Return a new uuid v4
+   */
+  (): string;
+
+  /**
+   * Returns true if value conforms a basic uuid structure.
+   * This check is case-insensitive.
+   */
+  isValid(value: any): boolean;
+}
+
 /**
  * Return a new uuid v4
  */
-export declare const uuid: () => string;
+export declare const uuid: UuidFunc;
 
 /**
  * AppErrors represent errors, that should immediately stop the request and return a

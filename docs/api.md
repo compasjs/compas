@@ -488,6 +488,7 @@ The LogParserContext enables you too analyze logs produced by this Logger
 - [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 - [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 - [TemplateContext](#stdlibinterfacestemplatecontextmd)
+- [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 #### Variables
 
@@ -521,13 +522,9 @@ The LogParserContext enables you too analyze logs produced by this Logger
 
 #### `Const` uuid
 
-• **uuid**: _function_
+• **uuid**: _[UuidFunc](#stdlibinterfacesuuidfuncmd)_
 
 Return a new uuid v4
-
-##### Type declaration:
-
-▸ (): _string_
 
 ### Functions
 
@@ -1270,3 +1267,45 @@ Throw on recompilation of a template Defaults to 'true'
 • **templates**: _Map‹string, Function›_
 
 Compiled template functions
+
+<a name="stdlibinterfacesuuidfuncmd"></a>
+
+[@lbu/stdlib - v0.0.28](#stdlibreadmemd) ›
+[UuidFunc](#stdlibinterfacesuuidfuncmd)
+
+### Interface: UuidFunc
+
+#### Hierarchy
+
+- **UuidFunc**
+
+#### Callable
+
+▸ (): _string_
+
+Return a new uuid v4
+
+**Returns:** _string_
+
+#### Index
+
+##### Methods
+
+- [isValid](#isvalid)
+
+#### Methods
+
+##### isValid
+
+▸ **isValid**(`value`: any): _boolean_
+
+Returns true if value conforms a basic uuid structure. This check is
+case-insensitive.
+
+**Parameters:**
+
+| Name    | Type |
+| ------- | ---- |
+| `value` | any  |
+
+**Returns:** _boolean_
