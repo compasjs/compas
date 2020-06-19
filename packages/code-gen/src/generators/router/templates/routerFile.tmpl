@@ -114,6 +114,7 @@ const handlers = {
     /**
      * @name {{= item.uniqueName }}Ctx
      * @typedef {object & Application}
+     * @property {Logger} log
      {{ if (item.response) { }}* @property { {{= item.response.reference.uniqueName }} } body {{ } }}
      {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
      {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
