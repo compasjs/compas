@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.29](https://github.com/lightbasenl/lbu/releases/tag/v0.0.29)
+
+- server: add support for CORS_URL env variable
+- stdlib: add type definition file
+- stdlib: add uuid.isValid function
+- code-gen: improve router generated JSDoc
+
 ### [v0.0.28](https://github.com/lightbasenl/lbu/releases/tag/v0.0.28)
 
 - code-gen: remove axios dependency in loadFromRemote and accept as argument
