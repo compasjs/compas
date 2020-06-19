@@ -4,6 +4,7 @@
   "description": "All kinds of utility functions",
   "main": "./index.js",
   "exports": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "keywords": [
     "lbu",
