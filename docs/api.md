@@ -515,6 +515,7 @@ The LogParserContext enables you too analyze logs produced by this Logger
 - [noop](#noop)
 - [pathJoin](#pathjoin)
 - [processDirectoryRecursive](#processdirectoryrecursive)
+- [processDirectoryRecursiveSync](#processdirectoryrecursivesync)
 - [spawn](#spawn)
 - [unFlatten](#unflatten)
 
@@ -876,7 +877,11 @@ _[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)_
 
 **Returns:** _Promise‹void›_
 
-▸ **processDirectoryRecursive**(`dir`: string, `cb`: function, `opts?`:
+---
+
+#### processDirectoryRecursiveSync
+
+▸ **processDirectoryRecursiveSync**(`dir`: string, `cb`: function, `opts?`:
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): _void_
 
 Recursively walks directory synchronous and calls cb on all files

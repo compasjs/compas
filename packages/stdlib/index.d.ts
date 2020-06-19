@@ -166,7 +166,7 @@ export function processDirectoryRecursive(
 /**
  * Recursively walks directory synchronous and calls cb on all files
  */
-export function processDirectoryRecursive(
+export function processDirectoryRecursiveSync(
   dir: string,
   cb: (file: string) => void,
   opts?: ProcessDirectoryOptions,
