@@ -8,9 +8,9 @@ Per module documentation, generated from the Typescript declaration files.
 
 <a name="clireadmemd"></a>
 
-[@lbu/cli - v0.0.28](#clireadmemd)
+[@lbu/cli - v0.0.29](#clireadmemd)
 
-## @lbu/cli - v0.0.28
+## @lbu/cli - v0.0.29
 
 ### Index
 
@@ -41,7 +41,7 @@ Return collection of available named scripts
 
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.28](#clireadmemd) ›
+[@lbu/cli - v0.0.29](#clireadmemd) ›
 [CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
@@ -88,7 +88,7 @@ package.json Depending on the type contains either script or path
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.28](#clireadmemd) ›
+[@lbu/cli - v0.0.29](#clireadmemd) ›
 [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
@@ -105,9 +105,9 @@ package.json Depending on the type contains either script or path
 
 <a name="insightreadmemd"></a>
 
-[@lbu/insight - v0.0.28](#insightreadmemd)
+[@lbu/insight - v0.0.29](#insightreadmemd)
 
-## @lbu/insight - v0.0.28
+## @lbu/insight - v0.0.29
 
 ### Index
 
@@ -261,7 +261,7 @@ https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memor
 
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.28](#insightreadmemd) ›
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
 [Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
@@ -331,7 +331,7 @@ Check if this logger is using the pretty printer or NDJSON printer
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.28](#insightreadmemd) ›
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
 [LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
@@ -356,7 +356,7 @@ Context that should be logged in all log lines. e.g a common request id.
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.28](#insightreadmemd) ›
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
 [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
@@ -412,7 +412,7 @@ The stream to write the logs to
 
 <a name="insightinterfaceslogparsercontextmd"></a>
 
-[@lbu/insight - v0.0.28](#insightreadmemd) ›
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
 [LogParserContext](#insightinterfaceslogparsercontextmd)
 
 ### Interface: LogParserContext
@@ -473,9 +473,9 @@ The LogParserContext enables you too analyze logs produced by this Logger
 
 <a name="stdlibreadmemd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd)
 
-## @lbu/stdlib - v0.0.28
+## @lbu/stdlib - v0.0.29
 
 ### Index
 
@@ -939,7 +939,7 @@ Opposite of flatten
 
 <a name="stdlibclassesapperrormd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
 
 ### Class: AppError ‹**T**›
 
@@ -1161,7 +1161,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
 [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
@@ -1184,7 +1184,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
@@ -1220,7 +1220,7 @@ Skip node_modules directory, true by default
 
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
 [TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
@@ -1270,7 +1270,7 @@ Compiled template functions
 
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.28](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
 [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
