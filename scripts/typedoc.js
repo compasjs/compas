@@ -5,13 +5,13 @@ import { join } from "path";
 
 mainFn(import.meta, newLogger(), main);
 
-export const nodemonArgs = "-w ./README.md";
+export const nodemonArgs = "-e .d.ts";
 
 /**
  * @param logger
  */
 async function main(logger) {
-  // Script to copy the root README.md to all packages
+  // Script to convert all index.d.ts files in to a single api.md file
 
   if (join(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
     throw new Error("Wrong directory. Run in root.");
@@ -61,6 +61,10 @@ async function main(logger) {
     rmdirSync(pathJoin("./docs/generated", pkg), { recursive: true });
   }
 
-  logger.info("Done.\nRunning linter");
-  await spawn("yarn", ["lbu", "lint"]);
+  logger.info("Done.");
+
+  if (process.argv?.[2] !== "--no-lint") {
+    logger.info("Running linter");
+    await spawn("yarn", ["lbu", "lint"]);
+  }
 }
