@@ -8,15 +8,7 @@ import {
 } from "./middleware/index.js";
 
 /**
- * Create a new Koa instance with some default middleware
- *
- * @param {object=} opts
- * @param {boolean} [opts.proxy] Trust proxy headers
- * @param {boolean} [opts.disableHeaders] Don't handle cors headers
- * @param {boolean} [opts.disableHealthRoute] Disable GET /_health
- * @param {ErrorHandlerOptions} [opts.errorOptions] Flexible error handling options
- * @param {object} opts.headers Argument for defaultHeaders middleware
- * @param {CorsOptions} opts.headers.cors Argument for defaultHeaders middleware
+ * @param {GetAppOptions} [opts]
  */
 export function getApp(opts = {}) {
   const app = new Koa();

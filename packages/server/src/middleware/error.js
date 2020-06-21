@@ -1,21 +1,6 @@
 import { AppError, isNil } from "@lbu/stdlib";
 
 /**
- * @callback CustomErrorHandler
- * @param ctx Koa Context
- * @param {Error} err
- * @returns {boolean} Return truthy when handled or falsey when skipped
- */
-
-/**
- * @callback AppErrorHandler
- * @param ctx Koa Context
- * @param {string} key
- * @param {object} info
- * @returns {object} The any data extracted from the key
- */
-
-/**
  * @type CustomErrorHandler
  * Default onError handler that doesn't handle anything
  */
@@ -26,18 +11,6 @@ const defaultOnError = () => false;
  * Default onAppError handler that builds a simple object with key, message and info.
  */
 const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
-
-/**
- * @name ErrorHandlerOptions
- *
- * @typedef {object}
- * @property {AppErrorHandler} [onAppError] Called to set the initial body when the
- *   error is an AppError
- * @property {CustomErrorHandler} [onError] Called before all others to let the user
- *   handle their own errors
- * @property {boolean} [leakError] Useful on development and staging environments to
- *   just dump the error to the consumer
- */
 
 /**
  * Handle any upstream errors

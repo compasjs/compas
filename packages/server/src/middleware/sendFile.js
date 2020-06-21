@@ -1,34 +1,8 @@
 import { isNil } from "@lbu/stdlib";
 
 /**
- * @name SendFile
- *
- * Compatible with @lbu/store files. Needs either updated_at or last_modified
- *
- * @typedef {object}
- * @property {*} id
- * @property {number} content_length
- * @property {string} content_type
- * @property {Date} [updated_at]
- * @property {Date} [last_modified]
- */
-
-/**
- * @name GetStreamFn
- *
- * @typedef {Function}
- * @param {SendFile} fileInfo
- * @param {number} [start]
- * @param {number} [end]
- * @returns {Promise<{ stream: ReadableStream, cacheControl?: string}>}
- */
-
-/**
- * Send any file to the ctx.body
- * User is free to set Cache-Control
- *
  * @param ctx
- * @param {SendFile} file
+ * @param {SendFileItem} file
  * @param {GetStreamFn} getStreamFn
  */
 export async function sendFile(ctx, file, getStreamFn) {

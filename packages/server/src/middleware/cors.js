@@ -31,22 +31,6 @@ const defaultOptions = {
 };
 
 /**
- * @name CorsOptions
- *
- * @typedef {object}
- * @property {string|function(ctx)} [origin] `Access-Control-Allow-Origin`, default is
- *   request Origin header
- * @property {string[]} [exposeHeaders] `Access-Control-Expose-Headers`
- * @property {string|number} [maxAge] `Access-Control-Max-Age` in seconds
- * @property {boolean} [credentials] `Access-Control-Allow-Credentials`
- * @property {string[]} [allowMethods] `Access-Control-Allow-Methods`,
- *    default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']
- * @property {string[]} [allowHeaders] `Access-Control-Allow-Headers`
- * @property {boolean} [returnNext] By default, and if false, won't call next, but
- *   just returns undefined
- */
-
-/**
  * CORS middleware for koa2
  *
  * @param {CorsOptions} [options]

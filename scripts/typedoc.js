@@ -32,6 +32,7 @@ async function main(logger) {
       "file",
       "--includeDeclarations",
       "--excludeExternals",
+      "--excludePrivate",
       "--includeVersion",
       "--disableSources",
       "--categorizeByGroup",

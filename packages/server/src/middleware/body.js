@@ -5,7 +5,7 @@ import koaBody from "koa-body";
  * Creates a body parser and a body parser with multipart enabled
  * Note that koa-body parses url-encoded, form data, json and text by default
  *
- * @param {object} [opts={}] Options that will be passed to koa-body
+ * @param {IKoaBodyOptions} [opts={}] Options that will be passed to koa-body
  */
 export function createBodyParsers(opts = {}) {
   const multiPartOpts = merge({}, opts);

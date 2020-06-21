@@ -4509,6 +4509,1143 @@ Name | Type |
 ------ | ------ |
 `data` | string |
 
+# Server
+
+
+<a name="serverreadmemd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd)
+
+## @lbu/server - v0.0.29
+
+### Index
+
+#### Classes
+
+* [Application](#serverclassesapplicationmd)
+
+#### Interfaces
+
+* [AppErrorHandler](#serverinterfacesapperrorhandlermd)
+* [CorsOptions](#serverinterfacescorsoptionsmd)
+* [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
+* [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
+* [GetAppOptions](#serverinterfacesgetappoptionsmd)
+* [HeaderOptions](#serverinterfacesheaderoptionsmd)
+
+#### Type aliases
+
+* [Context](#context)
+* [Middleware](#middleware)
+* [Next](#next)
+
+#### Functions
+
+* [createBodyParsers](#createbodyparsers)
+* [getApp](#getapp)
+* [isServerLog](#isserverlog)
+* [sendFile](#sendfile)
+* [session](#session)
+
+### Type aliases
+
+####  Context
+
+Ƭ **Context**: *ExtendableContext & object & CustomT*
+
+___
+
+####  Middleware
+
+Ƭ **Middleware**: *function*
+
+##### Type declaration:
+
+▸ (`context`: [Context](#context)‹StateT, CustomT›, `next`: [Next](#next)): *any*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`context` | [Context](#context)‹StateT, CustomT› |
+`next` | [Next](#next) |
+
+___
+
+####  Next
+
+Ƭ **Next**: *function*
+
+##### Type declaration:
+
+▸ (): *Promise‹any›*
+
+### Functions
+
+####  createBodyParsers
+
+▸ **createBodyParsers**(`options?`: IKoaBodyOptions): *object*
+
+Creates a body parser and a body parser with multipart enabled
+Note that koa-body parses url-encoded, form data, json and text by default
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options?` | IKoaBodyOptions |
+
+**Returns:** *object*
+
+* **bodyParser**: *[Middleware](#middleware)*
+
+* **multipartBodyParsers**: *[Middleware](#middleware)*
+
+___
+
+####  getApp
+
+▸ **getApp**(`opts?`: [GetAppOptions](#serverinterfacesgetappoptionsmd)): *[Application](#serverclassesapplicationmd)*
+
+Create a new Koa instance with some default middleware
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`opts?` | [GetAppOptions](#serverinterfacesgetappoptionsmd) |
+
+**Returns:** *[Application](#serverclassesapplicationmd)*
+
+___
+
+####  isServerLog
+
+▸ **isServerLog**(`value`: Record‹string, unknown›): *boolean*
+
+Given a logged object, check if it is a request log
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | Record‹string, unknown› |
+
+**Returns:** *boolean*
+
+___
+
+####  sendFile
+
+▸ **sendFile**(`ctx`: [Context](#context), `file`: unknown, `getStreamFn`: GetStreamFn): *Promise‹void›*
+
+Send any file to the ctx.body
+User is free to set Cache-Control
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ctx` | [Context](#context) |
+`file` | unknown |
+`getStreamFn` | GetStreamFn |
+
+**Returns:** *Promise‹void›*
+
+___
+
+####  session
+
+▸ **session**(`app`: [Application](#serverclassesapplicationmd), `options`: SessionOptions): *[Middleware](#middleware)*
+
+Session middleware
+Requires process.env.APP_KEYS
+To generate a key use something like
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`app` | [Application](#serverclassesapplicationmd) |
+`options` | SessionOptions |
+
+**Returns:** *[Middleware](#middleware)*
+
+## Classes
+
+
+<a name="serverclassesapplicationmd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [Application](#serverclassesapplicationmd)
+
+### Class: Application ‹**StateT, CustomT**›
+
+#### Type parameters
+
+▪ **StateT**
+
+▪ **CustomT**
+
+#### Hierarchy
+
+* EventEmitter
+
+  ↳ **Application**
+
+#### Index
+
+##### Constructors
+
+* [constructor](#constructor)
+
+##### Properties
+
+* [context](#context)
+* [env](#env)
+* [keys](#keys)
+* [maxIpsCount](#maxipscount)
+* [middleware](#middleware)
+* [proxy](#proxy)
+* [proxyIpHeader](#proxyipheader)
+* [request](#request)
+* [response](#response)
+* [silent](#silent)
+* [subdomainOffset](#subdomainoffset)
+* [defaultMaxListeners](#static-defaultmaxlisteners)
+* [errorMonitor](#static-readonly-errormonitor)
+
+##### Methods
+
+* [addListener](#addlistener)
+* [callback](#callback)
+* [createContext](#createcontext)
+* [emit](#emit)
+* [eventNames](#eventnames)
+* [getMaxListeners](#getmaxlisteners)
+* [inspect](#inspect)
+* [listen](#listen)
+* [listenerCount](#listenercount)
+* [listeners](#listeners)
+* [off](#off)
+* [on](#on)
+* [once](#once)
+* [onerror](#onerror)
+* [prependListener](#prependlistener)
+* [prependOnceListener](#prependoncelistener)
+* [rawListeners](#rawlisteners)
+* [removeAllListeners](#removealllisteners)
+* [removeListener](#removelistener)
+* [setMaxListeners](#setmaxlisteners)
+* [toJSON](#tojson)
+* [use](#use)
+* [listenerCount](#static-listenercount)
+
+#### Constructors
+
+#####  constructor
+
+\+ **new Application**(): *[Application](#serverclassesapplicationmd)*
+
+*Overrides void*
+
+**Returns:** *[Application](#serverclassesapplicationmd)*
+
+#### Properties
+
+#####  context
+
+• **context**: *BaseContext & CustomT*
+
+___
+
+#####  env
+
+• **env**: *string*
+
+___
+
+#####  keys
+
+• **keys**: *string[]*
+
+___
+
+#####  maxIpsCount
+
+• **maxIpsCount**: *number*
+
+___
+
+#####  middleware
+
+• **middleware**: *[Middleware](#middleware)‹StateT, CustomT›[]*
+
+___
+
+#####  proxy
+
+• **proxy**: *boolean*
+
+___
+
+#####  proxyIpHeader
+
+• **proxyIpHeader**: *string*
+
+___
+
+#####  request
+
+• **request**: *BaseRequest*
+
+___
+
+#####  response
+
+• **response**: *BaseResponse*
+
+___
+
+#####  silent
+
+• **silent**: *boolean*
+
+___
+
+#####  subdomainOffset
+
+• **subdomainOffset**: *number*
+
+___
+
+##### `Static` defaultMaxListeners
+
+▪ **defaultMaxListeners**: *number*
+
+*Inherited from [Application](#serverclassesapplicationmd).[defaultMaxListeners](#static-defaultmaxlisteners)*
+
+___
+
+##### `Static` `Readonly` errorMonitor
+
+▪ **errorMonitor**: *keyof symbol*
+
+*Inherited from [Application](#serverclassesapplicationmd).[errorMonitor](#static-readonly-errormonitor)*
+
+This symbol shall be used to install a listener for only monitoring `'error'`
+events. Listeners installed using this symbol are called before the regular
+`'error'` listeners are called.
+
+Installing a listener using this symbol does not change the behavior once an
+`'error'` event is emitted, therefore the process will still crash if no
+regular `'error'` listener is installed.
+
+#### Methods
+
+#####  addListener
+
+▸ **addListener**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[addListener](#addlistener)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  callback
+
+▸ **callback**(): *function*
+
+Return a request handler callback
+for node's native http/http2 server.
+
+**Returns:** *function*
+
+▸ (`req`: IncomingMessage, `res`: ServerResponse): *Promise‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | IncomingMessage |
+`res` | ServerResponse |
+
+___
+
+#####  createContext
+
+▸ **createContext**‹**StateT**›(`req`: IncomingMessage, `res`: ServerResponse): *[Context](#context)‹StateT›*
+
+Initialize a new context.
+
+**`api`** private
+
+**Type parameters:**
+
+▪ **StateT**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | IncomingMessage |
+`res` | ServerResponse |
+
+**Returns:** *[Context](#context)‹StateT›*
+
+___
+
+#####  emit
+
+▸ **emit**(`event`: string | symbol, ...`args`: any[]): *boolean*
+
+*Inherited from [Application](#serverclassesapplicationmd).[emit](#emit)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`event` | string &#124; symbol |
+`...args` | any[] |
+
+**Returns:** *boolean*
+
+___
+
+#####  eventNames
+
+▸ **eventNames**(): *Array‹string | symbol›*
+
+*Inherited from [Application](#serverclassesapplicationmd).[eventNames](#eventnames)*
+
+**Returns:** *Array‹string | symbol›*
+
+___
+
+#####  getMaxListeners
+
+▸ **getMaxListeners**(): *number*
+
+*Inherited from [Application](#serverclassesapplicationmd).[getMaxListeners](#getmaxlisteners)*
+
+**Returns:** *number*
+
+___
+
+#####  inspect
+
+▸ **inspect**(): *any*
+
+Return JSON representation.
+We only bother showing settings.
+
+**Returns:** *any*
+
+___
+
+#####  listen
+
+▸ **listen**(`port?`: number, `hostname?`: string, `backlog?`: number, `listeningListener?`: function): *Server*
+
+Shorthand for:
+
+   http.createServer(app.callback()).listen(...)
+
+**Parameters:**
+
+▪`Optional`  **port**: *number*
+
+▪`Optional`  **hostname**: *string*
+
+▪`Optional`  **backlog**: *number*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`port`: number, `hostname?`: string, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **port**: *number*
+
+▪`Optional`  **hostname**: *string*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`port`: number, `backlog?`: number, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **port**: *number*
+
+▪`Optional`  **backlog**: *number*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`port`: number, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **port**: *number*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`path`: string, `backlog?`: number, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **path**: *string*
+
+▪`Optional`  **backlog**: *number*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`path`: string, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **path**: *string*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`options`: ListenOptions, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **options**: *ListenOptions*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`handle`: any, `backlog?`: number, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **handle**: *any*
+
+▪`Optional`  **backlog**: *number*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+▸ **listen**(`handle`: any, `listeningListener?`: function): *Server*
+
+**Parameters:**
+
+▪ **handle**: *any*
+
+▪`Optional`  **listeningListener**: *function*
+
+▸ (): *void*
+
+**Returns:** *Server*
+
+___
+
+#####  listenerCount
+
+▸ **listenerCount**(`type`: string | symbol): *number*
+
+*Inherited from [Application](#serverclassesapplicationmd).[listenerCount](#listenercount)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`type` | string &#124; symbol |
+
+**Returns:** *number*
+
+___
+
+#####  listeners
+
+▸ **listeners**(`event`: string | symbol): *Function[]*
+
+*Inherited from [Application](#serverclassesapplicationmd).[listeners](#listeners)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`event` | string &#124; symbol |
+
+**Returns:** *Function[]*
+
+___
+
+#####  off
+
+▸ **off**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[off](#off)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  on
+
+▸ **on**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[on](#on)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  once
+
+▸ **once**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[once](#once)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  onerror
+
+▸ **onerror**(`err`: Error): *void*
+
+Default error handler.
+
+**`api`** private
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | Error |
+
+**Returns:** *void*
+
+___
+
+#####  prependListener
+
+▸ **prependListener**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[prependListener](#prependlistener)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  prependOnceListener
+
+▸ **prependOnceListener**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[prependOnceListener](#prependoncelistener)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  rawListeners
+
+▸ **rawListeners**(`event`: string | symbol): *Function[]*
+
+*Inherited from [Application](#serverclassesapplicationmd).[rawListeners](#rawlisteners)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`event` | string &#124; symbol |
+
+**Returns:** *Function[]*
+
+___
+
+#####  removeAllListeners
+
+▸ **removeAllListeners**(`event?`: string | symbol): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[removeAllListeners](#removealllisteners)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`event?` | string &#124; symbol |
+
+**Returns:** *this*
+
+___
+
+#####  removeListener
+
+▸ **removeListener**(`event`: string | symbol, `listener`: function): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[removeListener](#removelistener)*
+
+**Parameters:**
+
+▪ **event**: *string | symbol*
+
+▪ **listener**: *function*
+
+▸ (...`args`: any[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | any[] |
+
+**Returns:** *this*
+
+___
+
+#####  setMaxListeners
+
+▸ **setMaxListeners**(`n`: number): *this*
+
+*Inherited from [Application](#serverclassesapplicationmd).[setMaxListeners](#setmaxlisteners)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`n` | number |
+
+**Returns:** *this*
+
+___
+
+#####  toJSON
+
+▸ **toJSON**(): *any*
+
+Return JSON representation.
+We only bother showing settings.
+
+**Returns:** *any*
+
+___
+
+#####  use
+
+▸ **use**‹**NewStateT**, **NewCustomT**›(`middleware`: [Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT›): *[Application](#serverclassesapplicationmd)‹StateT & NewStateT, CustomT & NewCustomT›*
+
+Use the given middleware `fn`.
+
+Old-style middleware will be converted.
+
+**Type parameters:**
+
+▪ **NewStateT**
+
+▪ **NewCustomT**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`middleware` | [Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT› |
+
+**Returns:** *[Application](#serverclassesapplicationmd)‹StateT & NewStateT, CustomT & NewCustomT›*
+
+___
+
+##### `Static` listenerCount
+
+▸ **listenerCount**(`emitter`: EventEmitter, `event`: string | symbol): *number*
+
+*Inherited from [Application](#serverclassesapplicationmd).[listenerCount](#static-listenercount)*
+
+**`deprecated`** since v4.0.0
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`emitter` | EventEmitter |
+`event` | string &#124; symbol |
+
+**Returns:** *number*
+
+## Interfaces
+
+
+<a name="serverinterfacesapperrorhandlermd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [AppErrorHandler](#serverinterfacesapperrorhandlermd)
+
+### Interface: AppErrorHandler
+
+Extract data for the response from the AppError data
+
+#### Hierarchy
+
+* **AppErrorHandler**
+
+#### Callable
+
+▸ (`ctx`: [Context](#context), `key`: string, `info`: any): *Record‹string, any›*
+
+Extract data for the response from the AppError data
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ctx` | [Context](#context) |
+`key` | string |
+`info` | any |
+
+**Returns:** *Record‹string, any›*
+
+
+<a name="serverinterfacescorsoptionsmd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [CorsOptions](#serverinterfacescorsoptionsmd)
+
+### Interface: CorsOptions
+
+#### Hierarchy
+
+* **CorsOptions**
+
+#### Index
+
+##### Properties
+
+* [allowHeaders](#optional-allowheaders)
+* [allowMethods](#optional-allowmethods)
+* [credentials](#optional-credentials)
+* [exposeHeaders](#optional-exposeheaders)
+* [maxAge](#optional-maxage)
+* [origin](#optional-origin)
+* [returnNext](#optional-returnnext)
+
+#### Properties
+
+##### `Optional` allowHeaders
+
+• **allowHeaders**? : *string[]*
+
+`Access-Control-Allow-Headers`
+
+___
+
+##### `Optional` allowMethods
+
+• **allowMethods**? : *string[]*
+
+`Access-Control-Allow-Methods`, default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE',
+'HEAD', 'OPTIONS']
+
+___
+
+##### `Optional` credentials
+
+• **credentials**? : *boolean*
+
+`Access-Control-Allow-Credentials`
+
+___
+
+##### `Optional` exposeHeaders
+
+• **exposeHeaders**? : *string[]*
+
+`Access-Control-Expose-Headers`
+
+___
+
+##### `Optional` maxAge
+
+• **maxAge**? : *string | number*
+
+`Access-Control-Max-Age` in seconds
+
+___
+
+##### `Optional` origin
+
+• **origin**? : *string | function*
+
+`Access-Control-Allow-Origin`, default is request Origin header
+
+___
+
+##### `Optional` returnNext
+
+• **returnNext**? : *boolean*
+
+By default, and if false, won't call next, but just returns undefined
+
+
+<a name="serverinterfacescustomerrorhandlermd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
+
+### Interface: CustomErrorHandler
+
+Return truthy when handled or falsey when skipped
+
+#### Hierarchy
+
+* **CustomErrorHandler**
+
+#### Callable
+
+▸ (`ctx`: [Context](#context), `err`: Error): *boolean*
+
+Return truthy when handled or falsey when skipped
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ctx` | [Context](#context) |
+`err` | Error |
+
+**Returns:** *boolean*
+
+
+<a name="serverinterfaceserrorhandleroptionsmd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
+
+### Interface: ErrorHandlerOptions
+
+#### Hierarchy
+
+* **ErrorHandlerOptions**
+
+#### Index
+
+##### Properties
+
+* [leakError](#optional-leakerror)
+* [onAppError](#optional-onapperror)
+* [onError](#optional-onerror)
+
+#### Properties
+
+##### `Optional` leakError
+
+• **leakError**? : *boolean*
+
+Useful on development and staging environments to just dump the error to the consumer
+
+___
+
+##### `Optional` onAppError
+
+• **onAppError**? : *[AppErrorHandler](#serverinterfacesapperrorhandlermd)*
+
+Called to set the initial body when the error is an AppError
+
+___
+
+##### `Optional` onError
+
+• **onError**? : *[CustomErrorHandler](#serverinterfacescustomerrorhandlermd)*
+
+Called before all others to let the user handle their own errors
+
+
+<a name="serverinterfacesgetappoptionsmd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [GetAppOptions](#serverinterfacesgetappoptionsmd)
+
+### Interface: GetAppOptions
+
+#### Hierarchy
+
+* **GetAppOptions**
+
+#### Index
+
+##### Properties
+
+* [disableHeaders](#optional-disableheaders)
+* [disableHealthRoute](#optional-disablehealthroute)
+* [errorOptions](#optional-erroroptions)
+* [headers](#optional-headers)
+* [proxy](#optional-proxy)
+
+#### Properties
+
+##### `Optional` disableHeaders
+
+• **disableHeaders**? : *boolean*
+
+Don't handle cors headers
+
+___
+
+##### `Optional` disableHealthRoute
+
+• **disableHealthRoute**? : *boolean*
+
+Disable GET /_health
+
+___
+
+##### `Optional` errorOptions
+
+• **errorOptions**? : *[ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)*
+
+Flexible error handling options
+
+___
+
+##### `Optional` headers
+
+• **headers**? : *[HeaderOptions](#serverinterfacesheaderoptionsmd)*
+
+Argument for defaultHeader middleware
+
+___
+
+##### `Optional` proxy
+
+• **proxy**? : *boolean*
+
+Trust proxy headers
+
+
+<a name="serverinterfacesheaderoptionsmd"></a>
+
+[@lbu/server - v0.0.29](#serverreadmemd) › [HeaderOptions](#serverinterfacesheaderoptionsmd)
+
+### Interface: HeaderOptions
+
+#### Hierarchy
+
+* **HeaderOptions**
+
+#### Index
+
+##### Properties
+
+* [cors](#optional-cors)
+
+#### Properties
+
+##### `Optional` cors
+
+• **cors**? : *[CorsOptions](#serverinterfacescorsoptionsmd)*
+
 # Stdlib
 
 
