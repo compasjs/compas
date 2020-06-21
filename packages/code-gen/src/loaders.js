@@ -2,10 +2,8 @@ import { isPlainObject } from "@lbu/stdlib";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 /**
- * Load a LBU structure from an LBU enabled API
- *
  * @param {AxiosInstance} Axios
- * @param {string} url Base remote url
+ * @param {string} url
  * @returns {Promise<any>}
  */
 export async function loadFromRemote(Axios, url) {
@@ -15,10 +13,8 @@ export async function loadFromRemote(Axios, url) {
 }
 
 /**
- * Try to convert a OpenAPI spec object to LBU structure
- *
- * @param {string} defaultGroup Default to group to use for non tagged items in the spec
- * @param {object} data Raw OpenAPI json doc
+ * @param {string} defaultGroup
+ * @param {object} data
  * @returns {object}
  */
 export function loadFromOpenAPISpec(defaultGroup, data) {

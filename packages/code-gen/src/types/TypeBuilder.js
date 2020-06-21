@@ -1,11 +1,6 @@
 import { isNil, isPlainObject, merge } from "@lbu/stdlib";
 import { lowerCaseFirst } from "../utils.js";
 
-/**
- * Provide base properties for types
- * This includes the 'type', optional, docs and default value.
- * Also contains group and name information
- */
 export class TypeBuilder {
   static baseData = {
     type: undefined,
@@ -21,8 +16,6 @@ export class TypeBuilder {
   }
 
   /**
-   * Create a new TypeBuilder for the provided group
-   *
    * @param {string} type
    * @param {string} [group]
    * @param {string} [name]
@@ -37,8 +30,6 @@ export class TypeBuilder {
   }
 
   /**
-   * Add a doc comment, some generators / types may support rendering this
-   *
    * @param docValue
    * @returns {this}
    */
@@ -49,8 +40,6 @@ export class TypeBuilder {
   }
 
   /**
-   * Value can be undefined
-   *
    * @returns {this}
    */
   optional() {
@@ -60,9 +49,6 @@ export class TypeBuilder {
   }
 
   /**
-   * Set a raw default value, also makes the type optional
-   * Can be reverted by calling this function with undefined or null
-   *
    * @param rawString
    * @returns {this}
    */
@@ -74,8 +60,6 @@ export class TypeBuilder {
   }
 
   /**
-   * Returns a shallow copy of the data object
-   *
    * @returns {object}
    */
   build() {
@@ -91,16 +75,6 @@ export class TypeBuilder {
 }
 
 /**
- * @name TypePlugin
- *
- * @typedef {object}
- * @property {string} name
- * @property {Class} class
- */
-
-/**
- * Create new instances of registered types and manages grups
- * Also keeps a Map of registered types on TypeCreator.types
  *
  * @class
  */
@@ -119,8 +93,6 @@ export class TypeCreator {
   }
 
   /**
-   * Return a list of types that have the specified property
-   *
    * @param {string} property
    * @returns {TypePlugin[]}
    */
@@ -137,8 +109,6 @@ export class TypeCreator {
 }
 
 /**
- * Check if value may be output object from a TypeBuilder
- *
  * @param value
  * @returns {boolean}
  */

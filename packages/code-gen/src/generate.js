@@ -9,19 +9,6 @@ import { upperCaseFirst } from "./utils.js";
 const { mkdir, writeFile } = fs;
 
 /**
- * @name GenerateOpts
- *
- * @typedef {object}
- * @property {string[]} enabledGroups
- * @property {string[]} enabledGenerators
- * @property {boolean} [useTypescript]
- * @property {boolean} [dumpStructure]
- * @property {boolean} [useStubGenerators]
- * @property {string} fileHeader
- * @property {string} outputDirectory
- */
-
-/**
  * The whole generate process
  *
  * @param {App} app

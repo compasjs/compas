@@ -76,7 +76,6 @@ class ReferenceType extends TypeBuilder {
   }
 
   /**
-   * @api public
    * @param {string} referencing
    * @param {string} [replacement]
    * @returns {ReferenceType}

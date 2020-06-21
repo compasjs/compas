@@ -125,9 +125,6 @@ class RouteCreator {
   }
 
   /**
-   * Create a new route group
-   * Path will be concatenated with the current path of this group
-   *
    * @param {string} name
    * @param {string} path
    * @returns {RouteCreator}
@@ -137,8 +134,6 @@ class RouteCreator {
   }
 
   /**
-   * GET route
-   *
    * @param {string} [path]
    * @param {string} [name]
    * @returns {RouteBuilder}
@@ -153,8 +148,6 @@ class RouteCreator {
   }
 
   /**
-   * POST route
-   *
    * @param {string} [path]
    * @param {string} [name]
    * @returns {RouteBuilder}
@@ -169,8 +162,6 @@ class RouteCreator {
   }
 
   /**
-   * PUT route
-   *
    * @param {string} [path]
    * @param {string} [name]
    * @returns {RouteBuilder}
@@ -185,8 +176,6 @@ class RouteCreator {
   }
 
   /**
-   * DELETE route
-   *
    * @param {string} [path]
    * @param {string} [name]
    * @returns {RouteBuilder}
@@ -201,8 +190,6 @@ class RouteCreator {
   }
 
   /**
-   * HEAD route
-   *
    * @param {string} [path]
    * @param {string} [name]
    * @returns {RouteBuilder}
@@ -220,7 +207,7 @@ class RouteCreator {
 const routeType = {
   name: "route",
   class: {
-    builder: RouteBuilder,
+    Builder: RouteBuilder,
     Creator: RouteCreator,
   },
 };
