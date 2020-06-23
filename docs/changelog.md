@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.30](https://github.com/lightbasenl/lbu/releases/tag/v0.0.30)
+
+- docs: add api docs for code-gen and server
+- code-gen: various fixes
+- deps: various bumps
+
 ### [v0.0.29](https://github.com/lightbasenl/lbu/releases/tag/v0.0.29)
 
 - server: add support for CORS_URL env variable
