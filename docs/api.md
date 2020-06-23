@@ -6,7 +6,6 @@ Per module documentation, generated from the Typescript declaration files.
 
 # Cli
 
-
 <a name="clireadmemd"></a>
 
 [@lbu/cli - v0.0.29](#clireadmemd)
@@ -17,91 +16,92 @@ Per module documentation, generated from the Typescript declaration files.
 
 #### Interfaces
 
-* [CollectedScript](#cliinterfacescollectedscriptmd)
-* [ScriptCollection](#cliinterfacesscriptcollectionmd)
+- [CollectedScript](#cliinterfacescollectedscriptmd)
+- [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 #### Functions
 
-* [collectScripts](#collectscripts)
+- [collectScripts](#collectscripts)
 
 ### Functions
 
-####  collectScripts
+#### collectScripts
 
-▸ **collectScripts**(): *[ScriptCollection](#cliinterfacesscriptcollectionmd)*
+▸ **collectScripts**(): _[ScriptCollection](#cliinterfacesscriptcollectionmd)_
 
 Return collection of available named scripts
-- type user: User defined scripts from process.cwd/scripts/*.js
-- type package: User defined scripts in package.json. These override 'user' scripts
 
-**Returns:** *[ScriptCollection](#cliinterfacesscriptcollectionmd)*
+- type user: User defined scripts from process.cwd/scripts/\*.js
+- type package: User defined scripts in package.json. These override 'user'
+  scripts
+
+**Returns:** _[ScriptCollection](#cliinterfacesscriptcollectionmd)_
 
 ## Interfaces
 
-
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.29](#clireadmemd) › [CollectedScript](#cliinterfacescollectedscriptmd)
+[@lbu/cli - v0.0.29](#clireadmemd) ›
+[CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
 
-Represents either a file in the `scripts` directory or a script from the package.json
-Depending on the type contains either script or path
+Represents either a file in the `scripts` directory or a script from the
+package.json Depending on the type contains either script or path
 
 #### Hierarchy
 
-* **CollectedScript**
+- **CollectedScript**
 
 #### Index
 
 ##### Properties
 
-* [name](#name)
-* [path](#optional-path)
-* [script](#optional-script)
-* [type](#type)
+- [name](#name)
+- [path](#optional-path)
+- [script](#optional-script)
+- [type](#type)
 
 #### Properties
 
-#####  name
+##### name
 
-• **name**: *string*
+• **name**: _string_
 
-___
+---
 
 ##### `Optional` path
 
-• **path**? : *string*
+• **path**? : _string_
 
-___
+---
 
 ##### `Optional` script
 
-• **script**? : *string*
+• **script**? : _string_
 
-___
+---
 
-#####  type
+##### type
 
-• **type**: *"user" | "package"*
-
+• **type**: _"user" | "package"_
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.29](#clireadmemd) › [ScriptCollection](#cliinterfacesscriptcollectionmd)
+[@lbu/cli - v0.0.29](#clireadmemd) ›
+[ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
 
 #### Hierarchy
 
-* **ScriptCollection**
+- **ScriptCollection**
 
 #### Indexable
 
-* \[ **k**: *string*\]: [CollectedScript](#cliinterfacescollectedscriptmd)
+- \[ **k**: _string_\]: [CollectedScript](#cliinterfacescollectedscriptmd)
 
 # Code Gen
-
 
 <a name="code-genreadmemd"></a>
 
@@ -113,120 +113,121 @@ ___
 
 #### Classes
 
-* [AnyOfType](#code-genclassesanyoftypemd)
-* [AnyType](#code-genclassesanytypemd)
-* [App](#code-genclassesappmd)
-* [ArrayType](#code-genclassesarraytypemd)
-* [BooleanType](#code-genclassesbooleantypemd)
-* [DateType](#code-genclassesdatetypemd)
-* [GenericType](#code-genclassesgenerictypemd)
-* [NumberType](#code-genclassesnumbertypemd)
-* [ObjectType](#code-genclassesobjecttypemd)
-* [ReferenceType](#code-genclassesreferencetypemd)
-* [RouteBuilder](#code-genclassesroutebuildermd)
-* [RouteCreator](#code-genclassesroutecreatormd)
-* [StringType](#code-genclassesstringtypemd)
-* [TypeBuilder](#code-genclassestypebuildermd)
-* [TypeCreator](#code-genclassestypecreatormd)
-* [UuidType](#code-genclassesuuidtypemd)
+- [AnyOfType](#code-genclassesanyoftypemd)
+- [AnyType](#code-genclassesanytypemd)
+- [App](#code-genclassesappmd)
+- [ArrayType](#code-genclassesarraytypemd)
+- [BooleanType](#code-genclassesbooleantypemd)
+- [DateType](#code-genclassesdatetypemd)
+- [GenericType](#code-genclassesgenerictypemd)
+- [NumberType](#code-genclassesnumbertypemd)
+- [ObjectType](#code-genclassesobjecttypemd)
+- [ReferenceType](#code-genclassesreferencetypemd)
+- [RouteBuilder](#code-genclassesroutebuildermd)
+- [RouteCreator](#code-genclassesroutecreatormd)
+- [StringType](#code-genclassesstringtypemd)
+- [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeCreator](#code-genclassestypecreatormd)
+- [UuidType](#code-genclassesuuidtypemd)
 
 #### Interfaces
 
-* [AppOpts](#code-geninterfacesappoptsmd)
-* [GenerateOpts](#code-geninterfacesgenerateoptsmd)
-* [GeneratedFile](#code-geninterfacesgeneratedfilemd)
-* [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
-* [TypePlugin](#code-geninterfacestypepluginmd)
+- [AppOpts](#code-geninterfacesappoptsmd)
+- [GenerateOpts](#code-geninterfacesgenerateoptsmd)
+- [GeneratedFile](#code-geninterfacesgeneratedfilemd)
+- [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
+- [TypePlugin](#code-geninterfacestypepluginmd)
 
 #### Variables
 
-* [generatorTemplates](#const-generatortemplates)
-* [generators](#const-generators)
+- [generatorTemplates](#const-generatortemplates)
+- [generators](#const-generators)
 
 #### Functions
 
-* [isNamedTypeBuilderLike](#isnamedtypebuilderlike)
-* [loadFromOpenAPISpec](#loadfromopenapispec)
-* [loadFromRemote](#loadfromremote)
+- [isNamedTypeBuilderLike](#isnamedtypebuilderlike)
+- [loadFromOpenAPISpec](#loadfromopenapispec)
+- [loadFromRemote](#loadfromremote)
 
 ### Variables
 
 #### `Const` generatorTemplates
 
-• **generatorTemplates**: *TemplateContext*
+• **generatorTemplates**: _TemplateContext_
 
 Shared templateContext for all generators
 
-___
+---
 
 #### `Const` generators
 
-• **generators**: *Map‹string, [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)›*
+• **generators**: _Map‹string,
+[GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)›_
 
 Generator registry, with all core provided generators already added
 
 ### Functions
 
-####  isNamedTypeBuilderLike
+#### isNamedTypeBuilderLike
 
-▸ **isNamedTypeBuilderLike**(`value`: any): *boolean*
+▸ **isNamedTypeBuilderLike**(`value`: any): _boolean_
 
 Check if value may be output object from a TypeBuilder
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | any |
+| Name    | Type |
+| ------- | ---- |
+| `value` | any  |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-####  loadFromOpenAPISpec
+#### loadFromOpenAPISpec
 
-▸ **loadFromOpenAPISpec**(`defaultGroup`: string, `data`: any): *any*
+▸ **loadFromOpenAPISpec**(`defaultGroup`: string, `data`: any): _any_
 
 Try to convert a OpenAPI spec object to LBU structure
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`defaultGroup` | string | Default to group to use for non tagged items in the spec |
-`data` | any | Raw OpenAPI 3 json object  |
+| Name           | Type   | Description                                              |
+| -------------- | ------ | -------------------------------------------------------- |
+| `defaultGroup` | string | Default to group to use for non tagged items in the spec |
+| `data`         | any    | Raw OpenAPI 3 json object                                |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-####  loadFromRemote
+#### loadFromRemote
 
-▸ **loadFromRemote**(`axios`: AxiosInstance, `baseUrl`: string): *any*
+▸ **loadFromRemote**(`axios`: AxiosInstance, `baseUrl`: string): _any_
 
 Load a LBU structure from an LBU enabled API
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`axios` | AxiosInstance |
-`baseUrl` | string |
+| Name      | Type          |
+| --------- | ------------- |
+| `axios`   | AxiosInstance |
+| `baseUrl` | string        |
 
-**Returns:** *any*
+**Returns:** _any_
 
 ## Classes
 
-
 <a name="code-genclassesanyoftypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [AnyOfType](#code-genclassesanyoftypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[AnyOfType](#code-genclassesanyoftypemd)
 
 ### Class: AnyOfType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **AnyOfType**
 
@@ -234,213 +235,221 @@ Name | Type |
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [values](#values)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [values](#values)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new AnyOfType**(`type`: string, `group?`: string, `name?`: string): *[AnyOfType](#code-genclassesanyoftypemd)*
+\+ **new AnyOfType**(`type`: string, `group?`: string, `name?`: string):
+_[AnyOfType](#code-genclassesanyoftypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[AnyOfType](#code-genclassesanyoftypemd)*
+**Returns:** _[AnyOfType](#code-genclassesanyoftypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  values
+##### values
 
-▸ **values**(...`items`: [TypeBuilder](#code-genclassestypebuildermd)[]): *this*
+▸ **values**(...`items`: [TypeBuilder](#code-genclassestypebuildermd)[]): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...items` | [TypeBuilder](#code-genclassestypebuildermd)[] |
+| Name       | Type                                           |
+| ---------- | ---------------------------------------------- |
+| `...items` | [TypeBuilder](#code-genclassestypebuildermd)[] |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesanytypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [AnyType](#code-genclassesanytypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[AnyType](#code-genclassesanytypemd)
 
 ### Class: AnyType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **AnyType**
 
@@ -448,218 +457,225 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [instanceOf](#instanceof)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [typeOf](#typeof)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [instanceOf](#instanceof)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [typeOf](#typeof)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new AnyType**(`type`: string, `group?`: string, `name?`: string): *[AnyType](#code-genclassesanytypemd)*
+\+ **new AnyType**(`type`: string, `group?`: string, `name?`: string):
+_[AnyType](#code-genclassesanytypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[AnyType](#code-genclassesanytypemd)*
+**Returns:** _[AnyType](#code-genclassesanytypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  instanceOf
+##### instanceOf
 
-▸ **instanceOf**(`value`: string): *this*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | string |
-
-**Returns:** *this*
-
-___
-
-#####  mock
-
-▸ **mock**(`mockFn`: string): *this*
-
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
-
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+▸ **instanceOf**(`value`: string): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `value` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### mock
 
-▸ **optional**(): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
+
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  typeOf
+##### typeOf
 
-▸ **typeOf**(`value`: string): *this*
+▸ **typeOf**(`value`: string): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `value` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesappmd"></a>
 
@@ -667,128 +683,129 @@ ___
 
 ### Class: App
 
-The entry-point to code generation
-Provides the structure for creating types, and extending with external sources.
-Also maintains the generators
+The entry-point to code generation Provides the structure for creating types,
+and extending with external sources. Also maintains the generators
 
 #### Hierarchy
 
-* **App**
+- **App**
 
 #### Index
 
 ##### Properties
 
-* [logger](#logger)
-* [verbose](#verbose)
-* [defaultEslintIgnore](#static-defaulteslintignore)
+- [logger](#logger)
+- [verbose](#verbose)
+- [defaultEslintIgnore](#static-defaulteslintignore)
 
 ##### Methods
 
-* [add](#add)
-* [extend](#extend)
-* [generate](#generate)
-* [new](#static-new)
+- [add](#add)
+- [extend](#extend)
+- [generate](#generate)
+- [new](#static-new)
 
 #### Properties
 
-#####  logger
+##### logger
 
-• **logger**: *Logger*
+• **logger**: _Logger_
 
 Internally used logger
 
-___
+---
 
-#####  verbose
+##### verbose
 
-• **verbose**: *boolean*
+• **verbose**: _boolean_
 
 Enable more logging while generating
 
-___
+---
 
 ##### `Static` defaultEslintIgnore
 
-▪ **defaultEslintIgnore**: *string[]*
+▪ **defaultEslintIgnore**: _string[]_
 
 List used in the file header to ignore some eslint rules
 
 #### Methods
 
-#####  add
+##### add
 
-▸ **add**(...`builders`: [TypeBuilder](#code-genclassestypebuildermd)[]): *[App](#code-genclassesappmd)*
+▸ **add**(...`builders`: [TypeBuilder](#code-genclassestypebuildermd)[]):
+_[App](#code-genclassesappmd)_
 
 Add new TypeBuilders to this app
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...builders` | [TypeBuilder](#code-genclassestypebuildermd)[] |
+| Name          | Type                                           |
+| ------------- | ---------------------------------------------- |
+| `...builders` | [TypeBuilder](#code-genclassestypebuildermd)[] |
 
-**Returns:** *[App](#code-genclassesappmd)*
+**Returns:** _[App](#code-genclassesappmd)_
 
-___
+---
 
-#####  extend
+##### extend
 
-▸ **extend**(`data`: any): *void*
+▸ **extend**(`data`: any): _void_
 
 Add all groups and items to this App instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`data` | any |
+| Name   | Type |
+| ------ | ---- |
+| `data` | any  |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-#####  generate
+##### generate
 
-▸ **generate**(`options`: [GenerateOpts](#code-geninterfacesgenerateoptsmd)): *Promise‹void›*
+▸ **generate**(`options`: [GenerateOpts](#code-geninterfacesgenerateoptsmd)):
+_Promise‹void›_
 
-Call the generators with the provided options
-and writes the output
+Call the generators with the provided options and writes the output
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
+| Name      | Type                                              |
+| --------- | ------------------------------------------------- |
+| `options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
 ##### `Static` new
 
-▸ **new**(`options`: [AppOpts](#code-geninterfacesappoptsmd)): *Promise‹[App](#code-genclassesappmd)›*
+▸ **new**(`options`: [AppOpts](#code-geninterfacesappoptsmd)):
+_Promise‹[App](#code-genclassesappmd)›_
 
 Create a new App instance and inits generators
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options` | [AppOpts](#code-geninterfacesappoptsmd) |
+| Name      | Type                                    |
+| --------- | --------------------------------------- |
+| `options` | [AppOpts](#code-geninterfacesappoptsmd) |
 
-**Returns:** *Promise‹[App](#code-genclassesappmd)›*
-
+**Returns:** _Promise‹[App](#code-genclassesappmd)›_
 
 <a name="code-genclassesarraytypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [ArrayType](#code-genclassesarraytypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[ArrayType](#code-genclassesarraytypemd)
 
 ### Class: ArrayType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **ArrayType**
 
@@ -796,258 +813,266 @@ Name | Type |
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [convert](#convert)
-* [default](#default)
-* [docs](#docs)
-* [max](#max)
-* [min](#min)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [values](#values)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [convert](#convert)
+- [default](#default)
+- [docs](#docs)
+- [max](#max)
+- [min](#min)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [values](#values)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new ArrayType**(`type`: string, `group?`: string, `name?`: string): *[ArrayType](#code-genclassesarraytypemd)*
+\+ **new ArrayType**(`type`: string, `group?`: string, `name?`: string):
+_[ArrayType](#code-genclassesarraytypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[ArrayType](#code-genclassesarraytypemd)*
+**Returns:** _[ArrayType](#code-genclassesarraytypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  convert
+##### convert
 
-▸ **convert**(): *this*
+▸ **convert**(): _this_
 
 Validator converts single item to an array
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  max
+##### max
 
-▸ **max**(`max`: number): *this*
+▸ **max**(`max`: number): _this_
 
 Validator enforced maximum length inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`max` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `max` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  min
+##### min
 
-▸ **min**(`min`: number): *this*
+▸ **min**(`min`: number): _this_
 
 Validator enforced minimum length inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`min` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `min` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  values
+##### values
 
-▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name    | Type                                         |
+| ------- | -------------------------------------------- |
+| `value` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesbooleantypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [BooleanType](#code-genclassesbooleantypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[BooleanType](#code-genclassesbooleantypemd)
 
 ### Class: BooleanType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **BooleanType**
 
@@ -1055,226 +1080,234 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [convert](#convert)
-* [default](#default)
-* [docs](#docs)
-* [mock](#mock)
-* [oneOf](#oneof)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [convert](#convert)
+- [default](#default)
+- [docs](#docs)
+- [mock](#mock)
+- [oneOf](#oneof)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new BooleanType**(`type`: string, `group?`: string, `name?`: string): *[BooleanType](#code-genclassesbooleantypemd)*
+\+ **new BooleanType**(`type`: string, `group?`: string, `name?`: string):
+_[BooleanType](#code-genclassesbooleantypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[BooleanType](#code-genclassesbooleantypemd)*
+**Returns:** _[BooleanType](#code-genclassesbooleantypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  convert
+##### convert
 
-▸ **convert**(): *this*
+▸ **convert**(): _this_
 
 Validator converts "true", "false", 0 and 1 to a boolean
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  oneOf
+##### oneOf
 
-▸ **oneOf**(`value`: boolean): *this*
+▸ **oneOf**(`value`: boolean): _this_
 
 Only accepts a specific value
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | boolean |
+| Name    | Type    |
+| ------- | ------- |
+| `value` | boolean |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesdatetypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [DateType](#code-genclassesdatetypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[DateType](#code-genclassesdatetypemd)
 
 ### Class: DateType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **DateType**
 
@@ -1282,207 +1315,215 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [defaultToNow](#defaulttonow)
-* [docs](#docs)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [defaultToNow](#defaulttonow)
+- [docs](#docs)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new DateType**(`type`: string, `group?`: string, `name?`: string): *[DateType](#code-genclassesdatetypemd)*
+\+ **new DateType**(`type`: string, `group?`: string, `name?`: string):
+_[DateType](#code-genclassesdatetypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[DateType](#code-genclassesdatetypemd)*
+**Returns:** _[DateType](#code-genclassesdatetypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  defaultToNow
+##### defaultToNow
 
-▸ **defaultToNow**(): *this*
+▸ **defaultToNow**(): _this_
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesgenerictypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [GenericType](#code-genclassesgenerictypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[GenericType](#code-genclassesgenerictypemd)
 
 ### Class: GenericType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **GenericType**
 
@@ -1490,228 +1531,236 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [keys](#keys)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [values](#values)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [keys](#keys)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [values](#values)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new GenericType**(`type`: string, `group?`: string, `name?`: string): *[GenericType](#code-genclassesgenerictypemd)*
+\+ **new GenericType**(`type`: string, `group?`: string, `name?`: string):
+_[GenericType](#code-genclassesgenerictypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[GenericType](#code-genclassesgenerictypemd)*
+**Returns:** _[GenericType](#code-genclassesgenerictypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  keys
+##### keys
 
-▸ **keys**(`key`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`key` | [TypeBuilder](#code-genclassestypebuildermd) |
-
-**Returns:** *this*
-
-___
-
-#####  mock
-
-▸ **mock**(`mockFn`: string): *this*
-
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
-
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+▸ **keys**(`key`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name  | Type                                         |
+| ----- | -------------------------------------------- |
+| `key` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### mock
 
-▸ **optional**(): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
+
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  values
+##### values
 
-▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name    | Type                                         |
+| ------- | -------------------------------------------- |
+| `value` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesnumbertypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [NumberType](#code-genclassesnumbertypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[NumberType](#code-genclassesnumbertypemd)
 
 ### Class: NumberType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **NumberType**
 
@@ -1719,271 +1768,279 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [convert](#convert)
-* [default](#default)
-* [docs](#docs)
-* [integer](#integer)
-* [max](#max)
-* [min](#min)
-* [mock](#mock)
-* [oneOf](#oneof)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [convert](#convert)
+- [default](#default)
+- [docs](#docs)
+- [integer](#integer)
+- [max](#max)
+- [min](#min)
+- [mock](#mock)
+- [oneOf](#oneof)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new NumberType**(`type`: string, `group?`: string, `name?`: string): *[NumberType](#code-genclassesnumbertypemd)*
+\+ **new NumberType**(`type`: string, `group?`: string, `name?`: string):
+_[NumberType](#code-genclassesnumbertypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[NumberType](#code-genclassesnumbertypemd)*
+**Returns:** _[NumberType](#code-genclassesnumbertypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  convert
+##### convert
 
-▸ **convert**(): *this*
+▸ **convert**(): _this_
 
 Try to convert a string to a number in the validator
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  integer
+##### integer
 
-▸ **integer**(): *this*
+▸ **integer**(): _this_
 
 Validator enforced integer
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  max
+##### max
 
-▸ **max**(`max`: number): *this*
+▸ **max**(`max`: number): _this_
 
 Validator enforced maximum value inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`max` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `max` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  min
+##### min
 
-▸ **min**(`min`: number): *this*
+▸ **min**(`min`: number): _this_
 
 Validator enforced minimum value inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`min` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `min` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  oneOf
+##### oneOf
 
-▸ **oneOf**(...`value`: number[]): *this*
+▸ **oneOf**(...`value`: number[]): _this_
 
 Only accepts a number from the provided set
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...value` | number[] |
+| Name       | Type     |
+| ---------- | -------- |
+| `...value` | number[] |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesobjecttypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [ObjectType](#code-genclassesobjecttypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[ObjectType](#code-genclassesobjecttypemd)
 
 ### Class: ObjectType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **ObjectType**
 
@@ -1991,247 +2048,255 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [enableQueries](#enablequeries)
-* [keys](#keys)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [strict](#strict)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [enableQueries](#enablequeries)
+- [keys](#keys)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [strict](#strict)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new ObjectType**(`type`: string, `group?`: string, `name?`: string): *[ObjectType](#code-genclassesobjecttypemd)*
+\+ **new ObjectType**(`type`: string, `group?`: string, `name?`: string):
+_[ObjectType](#code-genclassesobjecttypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[ObjectType](#code-genclassesobjecttypemd)*
+**Returns:** _[ObjectType](#code-genclassesobjecttypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  enableQueries
+##### enableQueries
 
-▸ **enableQueries**(`options`: object): *this*
+▸ **enableQueries**(`options`: object): _this_
 
-Generate sql queries for this object
-Posibbly adding createdAt and updatedAt fields.
-When withHistory is true, it automatically enables withDates.
-Added by the 'sql' plugin
-
-**Parameters:**
-
-▪ **options**: *object*
-
-Name | Type |
------- | ------ |
-`withDates?` | boolean |
-`withHistory?` | boolean |
-
-**Returns:** *this*
-
-___
-
-#####  keys
-
-▸ **keys**(`obj`: Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›): *this*
+Generate sql queries for this object Posibbly adding createdAt and updatedAt
+fields. When withHistory is true, it automatically enables withDates. Added by
+the 'sql' plugin
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`obj` | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
+▪ **options**: _object_
 
-**Returns:** *this*
+| Name           | Type    |
+| -------------- | ------- |
+| `withDates?`   | boolean |
+| `withHistory?` | boolean |
 
-___
+**Returns:** _this_
 
-#####  mock
+---
 
-▸ **mock**(`mockFn`: string): *this*
+##### keys
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
-
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+▸ **keys**(`obj`: Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›):
+_this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name  | Type                                                         |
+| ----- | ------------------------------------------------------------ |
+| `obj` | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### mock
 
-▸ **optional**(): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
+
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  strict
+##### strict
 
-▸ **strict**(): *this*
+▸ **strict**(): _this_
 
 Validator enforces no extra keys
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesreferencetypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [ReferenceType](#code-genclassesreferencetypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[ReferenceType](#code-genclassesreferencetypemd)
 
 ### Class: ReferenceType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **ReferenceType**
 
@@ -2239,224 +2304,232 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [field](#field)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [set](#set)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [field](#field)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [set](#set)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new ReferenceType**(`type`: string, `group?`: string, `name?`: string): *[ReferenceType](#code-genclassesreferencetypemd)*
+\+ **new ReferenceType**(`type`: string, `group?`: string, `name?`: string):
+_[ReferenceType](#code-genclassesreferencetypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[ReferenceType](#code-genclassesreferencetypemd)*
+**Returns:** _[ReferenceType](#code-genclassesreferencetypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  field
+##### field
 
-▸ **field**(`referencing`: string, `replacement?`: string): *this*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`referencing` | string |
-`replacement?` | string |
-
-**Returns:** *this*
-
-___
-
-#####  mock
-
-▸ **mock**(`mockFn`: string): *this*
-
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
-
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+▸ **field**(`referencing`: string, `replacement?`: string): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name           | Type   |
+| -------------- | ------ |
+| `referencing`  | string |
+| `replacement?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### mock
 
-▸ **optional**(): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
+
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  set
+##### set
 
-▸ **set**(`group`: string, `name`: string): *this*
+▸ **set**(`group`: string, `name`: string): _this_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`group` | string |
-`name` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `group` | string |
+| `name`  | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesroutebuildermd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [RouteBuilder](#code-genclassesroutebuildermd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[RouteBuilder](#code-genclassesroutebuildermd)
 
 ### Class: RouteBuilder
 
@@ -2464,7 +2537,7 @@ ___
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **RouteBuilder**
 
@@ -2472,409 +2545,417 @@ ___
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [body](#body)
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [mock](#mock)
-* [optional](#optional)
-* [params](#params)
-* [primary](#primary)
-* [query](#query)
-* [response](#response)
-* [searchable](#searchable)
-* [tags](#tags)
-* [getBaseData](#static-getbasedata)
+- [body](#body)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [mock](#mock)
+- [optional](#optional)
+- [params](#params)
+- [primary](#primary)
+- [query](#query)
+- [response](#response)
+- [searchable](#searchable)
+- [tags](#tags)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new RouteBuilder**(`type`: string, `group?`: string, `name?`: string): *[RouteBuilder](#code-genclassesroutebuildermd)*
+\+ **new RouteBuilder**(`type`: string, `group?`: string, `name?`: string):
+_[RouteBuilder](#code-genclassesroutebuildermd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[RouteBuilder](#code-genclassesroutebuildermd)*
+**Returns:** _[RouteBuilder](#code-genclassesroutebuildermd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  body
+##### body
 
-▸ **body**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **body**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 Type of accepted body parameters
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                         |
+| --------- | -------------------------------------------- |
+| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  params
+##### params
 
-▸ **params**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **params**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 Type of accepted path parameters
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                         |
+| --------- | -------------------------------------------- |
+| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  query
+##### query
 
-▸ **query**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **query**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 Type of accepted query parameters
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                         |
+| --------- | -------------------------------------------- |
+| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  response
+##### response
 
-▸ **response**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): *this*
+▸ **response**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
 
 Route response type
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                         |
+| --------- | -------------------------------------------- |
+| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  tags
+##### tags
 
-▸ **tags**(...`value`: string[]): *this*
+▸ **tags**(...`value`: string[]): _this_
 
-Add tags to this route.
-Tag handlers are executed before group and specific route handlers
+Add tags to this route. Tag handlers are executed before group and specific
+route handlers
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...value` | string[] |
+| Name       | Type     |
+| ---------- | -------- |
+| `...value` | string[] |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassesroutecreatormd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [RouteCreator](#code-genclassesroutecreatormd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[RouteCreator](#code-genclassesroutecreatormd)
 
 ### Class: RouteCreator
 
 #### Hierarchy
 
-* **RouteCreator**
+- **RouteCreator**
 
 #### Index
 
 ##### Methods
 
-* [delete](#delete)
-* [get](#get)
-* [group](#group)
-* [head](#head)
-* [post](#post)
-* [put](#put)
+- [delete](#delete)
+- [get](#get)
+- [group](#group)
+- [head](#head)
+- [post](#post)
+- [put](#put)
 
 #### Methods
 
-#####  delete
+##### delete
 
-▸ **delete**(`path?`: string, `name?`: string): *any*
+▸ **delete**(`path?`: string, `name?`: string): _any_
 
 DELETE route
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path?` | string |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `path?` | string |
+| `name?` | string |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-#####  get
+##### get
 
-▸ **get**(`path?`: string, `name?`: string): *any*
+▸ **get**(`path?`: string, `name?`: string): _any_
 
 GET route
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path?` | string |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `path?` | string |
+| `name?` | string |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-#####  group
+##### group
 
-▸ **group**(`name`: string, `path`: string): *this*
+▸ **group**(`name`: string, `path`: string): _this_
 
-Create a new route group
-Path will be concatenated with the current path of this group
+Create a new route group Path will be concatenated with the current path of this
+group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name` | string |
-`path` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `name` | string |
+| `path` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  head
+##### head
 
-▸ **head**(`path?`: string, `name?`: string): *any*
+▸ **head**(`path?`: string, `name?`: string): _any_
 
 HEAD route
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path?` | string |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `path?` | string |
+| `name?` | string |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-#####  post
+##### post
 
-▸ **post**(`path?`: string, `name?`: string): *any*
+▸ **post**(`path?`: string, `name?`: string): _any_
 
 POST route
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path?` | string |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `path?` | string |
+| `name?` | string |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-#####  put
+##### put
 
-▸ **put**(`path?`: string, `name?`: string): *any*
+▸ **put**(`path?`: string, `name?`: string): _any_
 
 PUT route
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path?` | string |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `path?` | string |
+| `name?` | string |
 
-**Returns:** *any*
-
+**Returns:** _any_
 
 <a name="code-genclassesstringtypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [StringType](#code-genclassesstringtypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[StringType](#code-genclassesstringtypemd)
 
 ### Class: StringType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **StringType**
 
@@ -2882,315 +2963,321 @@ Name | Type |
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [convert](#convert)
-* [default](#default)
-* [docs](#docs)
-* [lowerCase](#lowercase)
-* [max](#max)
-* [min](#min)
-* [mock](#mock)
-* [oneOf](#oneof)
-* [optional](#optional)
-* [pattern](#pattern)
-* [primary](#primary)
-* [searchable](#searchable)
-* [trim](#trim)
-* [upperCase](#uppercase)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [convert](#convert)
+- [default](#default)
+- [docs](#docs)
+- [lowerCase](#lowercase)
+- [max](#max)
+- [min](#min)
+- [mock](#mock)
+- [oneOf](#oneof)
+- [optional](#optional)
+- [pattern](#pattern)
+- [primary](#primary)
+- [searchable](#searchable)
+- [trim](#trim)
+- [upperCase](#uppercase)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new StringType**(`type`: string, `group?`: string, `name?`: string): *[StringType](#code-genclassesstringtypemd)*
+\+ **new StringType**(`type`: string, `group?`: string, `name?`: string):
+_[StringType](#code-genclassesstringtypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[StringType](#code-genclassesstringtypemd)*
+**Returns:** _[StringType](#code-genclassesstringtypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  convert
+##### convert
 
-▸ **convert**(): *this*
+▸ **convert**(): _this_
 
 Validator tries to convert to string
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  lowerCase
+##### lowerCase
 
-▸ **lowerCase**(): *this*
+▸ **lowerCase**(): _this_
 
 Validator lower cases the input
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  max
+##### max
 
-▸ **max**(`max`: number): *this*
+▸ **max**(`max`: number): _this_
 
 Validator enforced maximum length inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`max` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `max` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  min
+##### min
 
-▸ **min**(`min`: number): *this*
+▸ **min**(`min`: number): _this_
 
 Validator enforced minimum length inclusive
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`min` | number |
+| Name  | Type   |
+| ----- | ------ |
+| `min` | number |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`mockFn` | string |
-
-**Returns:** *this*
-
-___
-
-#####  oneOf
-
-▸ **oneOf**(...`values`: string[]): *this*
-
-Only accepts a string from the provided set.
-Also the way to make enums
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...values` | string[] |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### oneOf
 
-▸ **optional**(): *this*
+▸ **oneOf**(...`values`: string[]): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+Only accepts a string from the provided set. Also the way to make enums
+
+**Parameters:**
+
+| Name        | Type     |
+| ----------- | -------- |
+| `...values` | string[] |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  pattern
+##### pattern
 
-▸ **pattern**(`pattern`: RegExp): *this*
+▸ **pattern**(`pattern`: RegExp): _this_
 
 Validator enforced pattern
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`pattern` | RegExp |
+| Name      | Type   |
+| --------- | ------ |
+| `pattern` | RegExp |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  trim
+##### trim
 
-▸ **trim**(): *this*
+▸ **trim**(): _this_
 
 Validator trims the input
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  upperCase
+##### upperCase
 
-▸ **upperCase**(): *this*
+▸ **upperCase**(): _this_
 
 Validator upper cases the input
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassestypebuildermd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [TypeBuilder](#code-genclassestypebuildermd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[TypeBuilder](#code-genclassestypebuildermd)
 
 ### Class: TypeBuilder
 
-Provide base properties for types
-This includes the 'type', optional, docs and default value.
-Also contains group and name information
+Provide base properties for types This includes the 'type', optional, docs and
+default value. Also contains group and name information
 
 #### Hierarchy
 
-* **TypeBuilder**
+- **TypeBuilder**
 
   ↳ [RouteBuilder](#code-genclassesroutebuildermd)
 
@@ -3220,432 +3307,443 @@ Also contains group and name information
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new TypeBuilder**(`type`: string, `group?`: string, `name?`: string): *[TypeBuilder](#code-genclassestypebuildermd)*
+\+ **new TypeBuilder**(`type`: string, `group?`: string, `name?`: string):
+_[TypeBuilder](#code-genclassestypebuildermd)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[TypeBuilder](#code-genclassestypebuildermd)*
+**Returns:** _[TypeBuilder](#code-genclassestypebuildermd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-**Returns:** *typeof baseData*
-
+**Returns:** _typeof baseData_
 
 <a name="code-genclassestypecreatormd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [TypeCreator](#code-genclassestypecreatormd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[TypeCreator](#code-genclassestypecreatormd)
 
 ### Class: TypeCreator
 
-Create new instances of registered types and manages grups
-Also keeps a Map of registered types on TypeCreator.types
+Create new instances of registered types and manages grups Also keeps a Map of
+registered types on TypeCreator.types
 
-Note that all functions that return a `T extends TypeBuilder` are dynamically added and
-provided by the core.
+Note that all functions that return a `T extends TypeBuilder` are dynamically
+added and provided by the core.
 
 #### Hierarchy
 
-* **TypeCreator**
+- **TypeCreator**
 
 #### Index
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [types](#static-types)
+- [types](#static-types)
 
 ##### Methods
 
-* [any](#any)
-* [anyOf](#anyof)
-* [array](#array)
-* [bool](#bool)
-* [date](#date)
-* [generic](#generic)
-* [number](#number)
-* [object](#object)
-* [reference](#reference)
-* [router](#router)
-* [string](#string)
-* [uuid](#uuid)
-* [getTypesWithProperty](#static-gettypeswithproperty)
+- [any](#any)
+- [anyOf](#anyof)
+- [array](#array)
+- [bool](#bool)
+- [date](#date)
+- [generic](#generic)
+- [number](#number)
+- [object](#object)
+- [reference](#reference)
+- [router](#router)
+- [string](#string)
+- [uuid](#uuid)
+- [getTypesWithProperty](#static-gettypeswithproperty)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new TypeCreator**(`group?`: string): *[TypeCreator](#code-genclassestypecreatormd)*
+\+ **new TypeCreator**(`group?`: string):
+_[TypeCreator](#code-genclassestypecreatormd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`group?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `group?` | string |
 
-**Returns:** *[TypeCreator](#code-genclassestypecreatormd)*
+**Returns:** _[TypeCreator](#code-genclassestypecreatormd)_
 
 #### Properties
 
 ##### `Static` types
 
-▪ **types**: *Map‹string, [TypePlugin](#code-geninterfacestypepluginmd)‹any››*
+▪ **types**: _Map‹string, [TypePlugin](#code-geninterfacestypepluginmd)‹any››_
 
 Registry of all type plugins
 
 #### Methods
 
-#####  any
+##### any
 
-▸ **any**(`name?`: string): *[AnyType](#code-genclassesanytypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`name?` | string |
-
-**Returns:** *[AnyType](#code-genclassesanytypemd)*
-
-___
-
-#####  anyOf
-
-▸ **anyOf**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd)[], ...`values`: [TypeBuilder](#code-genclassestypebuildermd)[]): *[AnyOfType](#code-genclassesanyoftypemd)*
+▸ **any**(`name?`: string): _[AnyType](#code-genclassesanytypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name?` | string &#124; [TypeBuilder](#code-genclassestypebuildermd)[] |
-`...values` | [TypeBuilder](#code-genclassestypebuildermd)[] |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
-**Returns:** *[AnyOfType](#code-genclassesanyoftypemd)*
+**Returns:** _[AnyType](#code-genclassesanytypemd)_
 
-___
+---
 
-#####  array
+##### anyOf
 
-▸ **array**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd), `value?`: [TypeBuilder](#code-genclassestypebuildermd)): *[ArrayType](#code-genclassesarraytypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`name?` | string &#124; [TypeBuilder](#code-genclassestypebuildermd) |
-`value?` | [TypeBuilder](#code-genclassestypebuildermd) |
-
-**Returns:** *[ArrayType](#code-genclassesarraytypemd)*
-
-___
-
-#####  bool
-
-▸ **bool**(`name?`: string): *[BooleanType](#code-genclassesbooleantypemd)*
+▸ **anyOf**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd)[],
+...`values`: [TypeBuilder](#code-genclassestypebuildermd)[]):
+_[AnyOfType](#code-genclassesanyoftypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name?` | string |
+| Name        | Type                                                         |
+| ----------- | ------------------------------------------------------------ |
+| `name?`     | string &#124; [TypeBuilder](#code-genclassestypebuildermd)[] |
+| `...values` | [TypeBuilder](#code-genclassestypebuildermd)[]               |
 
-**Returns:** *[BooleanType](#code-genclassesbooleantypemd)*
+**Returns:** _[AnyOfType](#code-genclassesanyoftypemd)_
 
-___
+---
 
-#####  date
+##### array
 
-▸ **date**(`name?`: string): *[DateType](#code-genclassesdatetypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`name?` | string |
-
-**Returns:** *[DateType](#code-genclassesdatetypemd)*
-
-___
-
-#####  generic
-
-▸ **generic**(`name?`: string): *[GenericType](#code-genclassesgenerictypemd)*
+▸ **array**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd),
+`value?`: [TypeBuilder](#code-genclassestypebuildermd)):
+_[ArrayType](#code-genclassesarraytypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name?` | string |
+| Name     | Type                                                       |
+| -------- | ---------------------------------------------------------- |
+| `name?`  | string &#124; [TypeBuilder](#code-genclassestypebuildermd) |
+| `value?` | [TypeBuilder](#code-genclassestypebuildermd)               |
 
-**Returns:** *[GenericType](#code-genclassesgenerictypemd)*
+**Returns:** _[ArrayType](#code-genclassesarraytypemd)_
 
-___
+---
 
-#####  number
+##### bool
 
-▸ **number**(`name?`: string): *[NumberType](#code-genclassesnumbertypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`name?` | string |
-
-**Returns:** *[NumberType](#code-genclassesnumbertypemd)*
-
-___
-
-#####  object
-
-▸ **object**(`name?`: string | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›, `obj?`: Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›): *[ObjectType](#code-genclassesobjecttypemd)*
+▸ **bool**(`name?`: string): _[BooleanType](#code-genclassesbooleantypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name?` | string &#124; Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
-`obj?` | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
-**Returns:** *[ObjectType](#code-genclassesobjecttypemd)*
+**Returns:** _[BooleanType](#code-genclassesbooleantypemd)_
 
-___
+---
 
-#####  reference
+##### date
 
-▸ **reference**(`groupOrOther?`: string | [TypeBuilder](#code-genclassestypebuildermd), `name?`: string): *[ReferenceType](#code-genclassesreferencetypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`groupOrOther?` | string &#124; [TypeBuilder](#code-genclassestypebuildermd) |
-`name?` | string |
-
-**Returns:** *[ReferenceType](#code-genclassesreferencetypemd)*
-
-___
-
-#####  router
-
-▸ **router**(`path`: string): *[RouteCreator](#code-genclassesroutecreatormd)*
-
-Create a new RouteCreator
-Provided by the 'router' generator
+▸ **date**(`name?`: string): _[DateType](#code-genclassesdatetypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`path` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
-**Returns:** *[RouteCreator](#code-genclassesroutecreatormd)*
+**Returns:** _[DateType](#code-genclassesdatetypemd)_
 
-___
+---
 
-#####  string
+##### generic
 
-▸ **string**(`name?`: string): *[StringType](#code-genclassesstringtypemd)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`name?` | string |
-
-**Returns:** *[StringType](#code-genclassesstringtypemd)*
-
-___
-
-#####  uuid
-
-▸ **uuid**(`name?`: string): *[UuidType](#code-genclassesuuidtypemd)*
+▸ **generic**(`name?`: string): _[GenericType](#code-genclassesgenerictypemd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`name?` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
-**Returns:** *[UuidType](#code-genclassesuuidtypemd)*
+**Returns:** _[GenericType](#code-genclassesgenerictypemd)_
 
-___
+---
+
+##### number
+
+▸ **number**(`name?`: string): _[NumberType](#code-genclassesnumbertypemd)_
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[NumberType](#code-genclassesnumbertypemd)_
+
+---
+
+##### object
+
+▸ **object**(`name?`: string | Record‹string,
+[TypeBuilder](#code-genclassestypebuildermd)›, `obj?`: Record‹string,
+[TypeBuilder](#code-genclassestypebuildermd)›):
+_[ObjectType](#code-genclassesobjecttypemd)_
+
+**Parameters:**
+
+| Name    | Type                                                                       |
+| ------- | -------------------------------------------------------------------------- |
+| `name?` | string &#124; Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
+| `obj?`  | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›               |
+
+**Returns:** _[ObjectType](#code-genclassesobjecttypemd)_
+
+---
+
+##### reference
+
+▸ **reference**(`groupOrOther?`: string |
+[TypeBuilder](#code-genclassestypebuildermd), `name?`: string):
+_[ReferenceType](#code-genclassesreferencetypemd)_
+
+**Parameters:**
+
+| Name            | Type                                                       |
+| --------------- | ---------------------------------------------------------- |
+| `groupOrOther?` | string &#124; [TypeBuilder](#code-genclassestypebuildermd) |
+| `name?`         | string                                                     |
+
+**Returns:** _[ReferenceType](#code-genclassesreferencetypemd)_
+
+---
+
+##### router
+
+▸ **router**(`path`: string): _[RouteCreator](#code-genclassesroutecreatormd)_
+
+Create a new RouteCreator Provided by the 'router' generator
+
+**Parameters:**
+
+| Name   | Type   |
+| ------ | ------ |
+| `path` | string |
+
+**Returns:** _[RouteCreator](#code-genclassesroutecreatormd)_
+
+---
+
+##### string
+
+▸ **string**(`name?`: string): _[StringType](#code-genclassesstringtypemd)_
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[StringType](#code-genclassesstringtypemd)_
+
+---
+
+##### uuid
+
+▸ **uuid**(`name?`: string): _[UuidType](#code-genclassesuuidtypemd)_
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[UuidType](#code-genclassesuuidtypemd)_
+
+---
 
 ##### `Static` getTypesWithProperty
 
-▸ **getTypesWithProperty**(`property`: string): *[TypePlugin](#code-geninterfacestypepluginmd)‹any›[]*
+▸ **getTypesWithProperty**(`property`: string):
+_[TypePlugin](#code-geninterfacestypepluginmd)‹any›[]_
 
 Return a list of type plugins that have the specified property
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`property` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `property` | string |
 
-**Returns:** *[TypePlugin](#code-geninterfacestypepluginmd)‹any›[]*
-
+**Returns:** _[TypePlugin](#code-geninterfacestypepluginmd)‹any›[]_
 
 <a name="code-genclassesuuidtypemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [UuidType](#code-genclassesuuidtypemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[UuidType](#code-genclassesuuidtypemd)
 
 ### Class: UuidType
 
 #### Hierarchy
 
-* [TypeBuilder](#code-genclassestypebuildermd)
+- [TypeBuilder](#code-genclassestypebuildermd)
 
   ↳ **UuidType**
 
@@ -3653,500 +3751,513 @@ Name | Type |
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [data](#data)
-* [baseData](#static-basedata)
+- [data](#data)
+- [baseData](#static-basedata)
 
 ##### Methods
 
-* [build](#build)
-* [default](#default)
-* [docs](#docs)
-* [mock](#mock)
-* [optional](#optional)
-* [primary](#primary)
-* [searchable](#searchable)
-* [getBaseData](#static-getbasedata)
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [mock](#mock)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new UuidType**(`type`: string, `group?`: string, `name?`: string): *[UuidType](#code-genclassesuuidtypemd)*
+\+ **new UuidType**(`type`: string, `group?`: string, `name?`: string):
+_[UuidType](#code-genclassesuuidtypemd)_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
 
 Create a new TypeBuilder for the provided group
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`group?` | string |
-`name?` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
 
-**Returns:** *[UuidType](#code-genclassesuuidtypemd)*
+**Returns:** _[UuidType](#code-genclassesuuidtypemd)_
 
 #### Properties
 
-#####  data
+##### data
 
-• **data**: *typeof baseData*
+• **data**: _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
 
-___
+---
 
 ##### `Static` baseData
 
-▪ **baseData**: *object*
+▪ **baseData**: _object_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
 
 ###### Type declaration:
 
-* **defaultValue**? : *string*
+- **defaultValue**? : _string_
 
-* **docString**: *string*
+- **docString**: _string_
 
-* **group**? : *string*
+- **group**? : _string_
 
-* **isOptional**: *boolean*
+- **isOptional**: _boolean_
 
-* **name**? : *string*
+- **name**? : _string_
 
-* **type**? : *string*
+- **type**? : _string_
 
 #### Methods
 
-#####  build
+##### build
 
-▸ **build**(): *Record‹string, any›*
+▸ **build**(): _Record‹string, any›_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
 
 Returns a shallow copy of the data object
 
-**Returns:** *Record‹string, any›*
+**Returns:** _Record‹string, any›_
 
-___
+---
 
-#####  default
+##### default
 
-▸ **default**(`rawString?`: string): *this*
+▸ **default**(`rawString?`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[default](#default)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
 
-Set a raw default value, also makes the type optional
-Can be reverted by calling this function with undefined or null
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString?` | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  docs
+##### docs
 
-▸ **docs**(`docValue`: string): *this*
+▸ **docs**(`docValue`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
 
 Add a doc comment, some generators / types may support rendering this
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`docValue` | string |
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  mock
+##### mock
 
-▸ **mock**(`mockFn`: string): *this*
+▸ **mock**(`mockFn`: string): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)*
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
 
-Raw mock string used with the 'mock' plugin.
-Use '_mocker' or '__' to access the Chance instance
+Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
+the Chance instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`mockFn` | string |
+| Name     | Type   |
+| -------- | ------ |
+| `mockFn` | string |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  optional
+##### optional
 
-▸ **optional**(): *this*
+▸ **optional**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
 
 Value can be undefined
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  primary
+##### primary
 
-▸ **primary**(): *this*
+▸ **primary**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
 
 Set this field as primary for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  searchable
+##### searchable
 
-▸ **searchable**(): *this*
+▸ **searchable**(): _this_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
 
 Set this field as searchable for the 'sql' plugin
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
 ##### `Static` getBaseData
 
-▸ **getBaseData**(): *typeof baseData*
+▸ **getBaseData**(): _typeof baseData_
 
-*Inherited from [TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)*
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
 
-**Returns:** *typeof baseData*
+**Returns:** _typeof baseData_
 
 ## Interfaces
 
-
 <a name="code-geninterfacesappoptsmd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [AppOpts](#code-geninterfacesappoptsmd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[AppOpts](#code-geninterfacesappoptsmd)
 
 ### Interface: AppOpts
 
 #### Hierarchy
 
-* **AppOpts**
+- **AppOpts**
 
 #### Index
 
 ##### Properties
 
-* [verbose](#optional-verbose)
+- [verbose](#optional-verbose)
 
 #### Properties
 
 ##### `Optional` verbose
 
-• **verbose**? : *boolean*
-
+• **verbose**? : _boolean_
 
 <a name="code-geninterfacesgeneratedfilemd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [GeneratedFile](#code-geninterfacesgeneratedfilemd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[GeneratedFile](#code-geninterfacesgeneratedfilemd)
 
 ### Interface: GeneratedFile
 
 #### Hierarchy
 
-* **GeneratedFile**
+- **GeneratedFile**
 
 #### Index
 
 ##### Properties
 
-* [path](#path)
-* [source](#source)
+- [path](#path)
+- [source](#source)
 
 #### Properties
 
-#####  path
+##### path
 
-• **path**: *string*
+• **path**: _string_
 
 Relative path to the outputDirectory
 
-___
+---
 
-#####  source
+##### source
 
-• **source**: *string*
+• **source**: _string_
 
 Generated source string
 
-
 <a name="code-geninterfacesgenerateoptsmd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [GenerateOpts](#code-geninterfacesgenerateoptsmd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[GenerateOpts](#code-geninterfacesgenerateoptsmd)
 
 ### Interface: GenerateOpts
 
 #### Hierarchy
 
-* **GenerateOpts**
+- **GenerateOpts**
 
 #### Index
 
 ##### Properties
 
-* [dumpStructure](#optional-dumpstructure)
-* [enabledGenerators](#optional-enabledgenerators)
-* [enabledGroups](#optional-enabledgroups)
-* [fileHeader](#optional-fileheader)
-* [outputDirectory](#outputdirectory)
-* [useStubGenerators](#optional-usestubgenerators)
-* [useTypescript](#optional-usetypescript)
+- [dumpStructure](#optional-dumpstructure)
+- [enabledGenerators](#optional-enabledgenerators)
+- [enabledGroups](#optional-enabledgroups)
+- [fileHeader](#optional-fileheader)
+- [outputDirectory](#outputdirectory)
+- [useStubGenerators](#optional-usestubgenerators)
+- [useTypescript](#optional-usetypescript)
 
 #### Properties
 
 ##### `Optional` dumpStructure
 
-• **dumpStructure**? : *boolean*
+• **dumpStructure**? : _boolean_
 
 Dump a structure.js file with the used payload in it
 
-___
+---
 
 ##### `Optional` enabledGenerators
 
-• **enabledGenerators**? : *string[]*
+• **enabledGenerators**? : _string[]_
 
-Enabling specific generators.
-If this is undefined, all registered generators are enabled
+Enabling specific generators. If this is undefined, all registered generators
+are enabled
 
-___
+---
 
 ##### `Optional` enabledGroups
 
-• **enabledGroups**? : *string[]*
+• **enabledGroups**? : _string[]_
 
-Enabling specific groups so different generator combinations can be used.
-The machinery will automatically find referenced types and include those
-If this is undefined, all groups will be enabled
+Enabling specific groups so different generator combinations can be used. The
+machinery will automatically find referenced types and include those If this is
+undefined, all groups will be enabled
 
-___
+---
 
 ##### `Optional` fileHeader
 
-• **fileHeader**? : *string*
+• **fileHeader**? : _string_
 
 Custom file header to for example disable linting or something
 
-___
+---
 
-#####  outputDirectory
+##### outputDirectory
 
-• **outputDirectory**: *string*
+• **outputDirectory**: _string_
 
 Directory to write the files to
 
-___
+---
 
 ##### `Optional` useStubGenerators
 
-• **useStubGenerators**? : *boolean*
+• **useStubGenerators**? : _boolean_
 
-Some generators support so called stub generation.
-This often outputs the types only and doesn't include any real code.
+Some generators support so called stub generation. This often outputs the types
+only and doesn't include any real code.
 
-___
+---
 
 ##### `Optional` useTypescript
 
-• **useTypescript**? : *boolean*
+• **useTypescript**? : _boolean_
 
 Enable Typescript for the generators that support it
 
-
 <a name="code-geninterfacesgeneratorpluginmd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
 
 ### Interface: GeneratorPlugin
 
 #### Hierarchy
 
-* **GeneratorPlugin**
+- **GeneratorPlugin**
 
 #### Index
 
 ##### Properties
 
-* [generate](#optional-generate)
-* [init](#optional-init)
-* [name](#name)
-* [preGenerate](#optional-pregenerate)
+- [generate](#optional-generate)
+- [init](#optional-init)
+- [name](#name)
+- [preGenerate](#optional-pregenerate)
 
 #### Properties
 
 ##### `Optional` generate
 
-• **generate**? : *function*
+• **generate**? : _function_
 
-Compile dynamic templates, execute templates and return the GeneratedFiles
-Can be called multiple times
+Compile dynamic templates, execute templates and return the GeneratedFiles Can
+be called multiple times
 
 ###### Type declaration:
 
-▸ (`app`: [App](#code-genclassesappmd), `data`: object, `options`: [GenerateOpts](#code-geninterfacesgenerateoptsmd)): *[GeneratedFile](#code-geninterfacesgeneratedfilemd) | [GeneratedFile](#code-geninterfacesgeneratedfilemd)[] | Promise‹[GeneratedFile](#code-geninterfacesgeneratedfilemd)› | Promise‹[GeneratedFile](#code-geninterfacesgeneratedfilemd)[]›*
+▸ (`app`: [App](#code-genclassesappmd), `data`: object, `options`:
+[GenerateOpts](#code-geninterfacesgenerateoptsmd)):
+_[GeneratedFile](#code-geninterfacesgeneratedfilemd) |
+[GeneratedFile](#code-geninterfacesgeneratedfilemd)[] |
+Promise‹[GeneratedFile](#code-geninterfacesgeneratedfilemd)› |
+Promise‹[GeneratedFile](#code-geninterfacesgeneratedfilemd)[]›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`app` | [App](#code-genclassesappmd) |
-`data` | object |
-`options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
+| Name      | Type                                              |
+| --------- | ------------------------------------------------- |
+| `app`     | [App](#code-genclassesappmd)                      |
+| `data`    | object                                            |
+| `options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
 
-___
+---
 
 ##### `Optional` init
 
-• **init**? : *function*
+• **init**? : _function_
 
 Compile static templates and do other static checks
 
 ###### Type declaration:
 
-▸ (): *void | Promise‹void›*
+▸ (): _void | Promise‹void›_
 
-___
+---
 
-#####  name
+##### name
 
-• **name**: *string*
+• **name**: _string_
 
 Generator name
 
-___
+---
 
 ##### `Optional` preGenerate
 
-• **preGenerate**? : *function*
+• **preGenerate**? : _function_
 
-Add dynamic types to app.
-Can be called multiple times
+Add dynamic types to app. Can be called multiple times
 
 ###### Type declaration:
 
-▸ (`app`: [App](#code-genclassesappmd), `data`: object, `options`: [GenerateOpts](#code-geninterfacesgenerateoptsmd)): *void | Promise‹void›*
+▸ (`app`: [App](#code-genclassesappmd), `data`: object, `options`:
+[GenerateOpts](#code-geninterfacesgenerateoptsmd)): _void | Promise‹void›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`app` | [App](#code-genclassesappmd) |
-`data` | object |
-`options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
-
+| Name      | Type                                              |
+| --------- | ------------------------------------------------- |
+| `app`     | [App](#code-genclassesappmd)                      |
+| `data`    | object                                            |
+| `options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
 
 <a name="code-geninterfacestypepluginmd"></a>
 
-[@lbu/code-gen - v0.0.29](#code-genreadmemd) › [TypePlugin](#code-geninterfacestypepluginmd)
+[@lbu/code-gen - v0.0.29](#code-genreadmemd) ›
+[TypePlugin](#code-geninterfacestypepluginmd)
 
 ### Interface: TypePlugin ‹**T**›
 
 #### Type parameters
 
-▪ **T**: *[TypeBuilder](#code-genclassestypebuildermd)*
+▪ **T**: _[TypeBuilder](#code-genclassestypebuildermd)_
 
 #### Hierarchy
 
-* **TypePlugin**
+- **TypePlugin**
 
 #### Index
 
 ##### Properties
 
-* [class](#class)
-* [jsType](#optional-jstype)
-* [mock](#optional-mock)
-* [name](#name)
-* [tsType](#optional-tstype)
-* [validator](#optional-validator)
+- [class](#class)
+- [jsType](#optional-jstype)
+- [mock](#optional-mock)
+- [name](#name)
+- [tsType](#optional-tstype)
+- [validator](#optional-validator)
 
 #### Properties
 
-#####  class
+##### class
 
-• **class**: *T | object*
+• **class**: _T | object_
 
-___
+---
 
 ##### `Optional` jsType
 
-• **jsType**? : *function*
+• **jsType**? : _function_
 
 Return the template that should be used to create JSDoc for this type
 
 ###### Type declaration:
 
-▸ (): *string*
+▸ (): _string_
 
-___
+---
 
 ##### `Optional` mock
 
-• **mock**? : *function*
+• **mock**? : _function_
 
 Return the template that should be used to mock this type
 
 ###### Type declaration:
 
-▸ (): *string*
+▸ (): _string_
 
-___
+---
 
-#####  name
+##### name
 
-• **name**: *string*
+• **name**: _string_
 
-___
+---
 
 ##### `Optional` tsType
 
-• **tsType**? : *function*
+• **tsType**? : _function_
 
-Return the template that should be used to create Typescript types for this type.
+Return the template that should be used to create Typescript types for this
+type.
 
 ###### Type declaration:
 
-▸ (): *string*
+▸ (): _string_
 
-___
+---
 
 ##### `Optional` validator
 
-• **validator**? : *function*
+• **validator**? : _function_
 
 Return the template that should be used to validate this type
 
 ###### Type declaration:
 
-▸ (): *string*
+▸ (): _string_
 
 # Insight
-
 
 <a name="insightreadmemd"></a>
 
@@ -4158,302 +4269,307 @@ Return the template that should be used to validate this type
 
 #### Interfaces
 
-* [LogParserContext](#insightinterfaceslogparsercontextmd)
-* [Logger](#insightinterfacesloggermd)
-* [LoggerContext](#insightinterfacesloggercontextmd)
-* [LoggerOptions](#insightinterfacesloggeroptionsmd)
+- [LogParserContext](#insightinterfaceslogparsercontextmd)
+- [Logger](#insightinterfacesloggermd)
+- [LoggerContext](#insightinterfacesloggercontextmd)
+- [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 #### Variables
 
-* [log](#const-log)
+- [log](#const-log)
 
 #### Functions
 
-* [bindLoggerContext](#bindloggercontext)
-* [bytesToHumanReadable](#bytestohumanreadable)
-* [executeLogParser](#executelogparser)
-* [newLogParserContext](#newlogparsercontext)
-* [newLogger](#newlogger)
-* [printProcessMemoryUsage](#printprocessmemoryusage)
+- [bindLoggerContext](#bindloggercontext)
+- [bytesToHumanReadable](#bytestohumanreadable)
+- [executeLogParser](#executelogparser)
+- [newLogParserContext](#newlogparsercontext)
+- [newLogger](#newlogger)
+- [printProcessMemoryUsage](#printprocessmemoryusage)
 
 ### Variables
 
 #### `Const` log
 
-• **log**: *[Logger](#insightinterfacesloggermd)*
+• **log**: _[Logger](#insightinterfacesloggermd)_
 
-Standard log instance.
-Comes with a depth of 4, prevents printing deeply nested objects
+Standard log instance. Comes with a depth of 4, prevents printing deeply nested
+objects
 
 ### Functions
 
-####  bindLoggerContext
+#### bindLoggerContext
 
-▸ **bindLoggerContext**‹**T**›(`logger`: [Logger](#insightinterfacesloggermd), `ctx`: T): *[Logger](#insightinterfacesloggermd)*
+▸ **bindLoggerContext**‹**T**›(`logger`: [Logger](#insightinterfacesloggermd),
+`ctx`: T): _[Logger](#insightinterfacesloggermd)_
 
-Bind a context object to the logger functions and returns a new Logger
-The context is always printed
+Bind a context object to the logger functions and returns a new Logger The
+context is always printed
 
 **Type parameters:**
 
-▪ **T**: *[LoggerContext](#insightinterfacesloggercontextmd)*
+▪ **T**: _[LoggerContext](#insightinterfacesloggercontextmd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`logger` | [Logger](#insightinterfacesloggermd) |
-`ctx` | T |
+| Name     | Type                                 |
+| -------- | ------------------------------------ |
+| `logger` | [Logger](#insightinterfacesloggermd) |
+| `ctx`    | T                                    |
 
-**Returns:** *[Logger](#insightinterfacesloggermd)*
+**Returns:** _[Logger](#insightinterfacesloggermd)_
 
-___
+---
 
-####  bytesToHumanReadable
+#### bytesToHumanReadable
 
-▸ **bytesToHumanReadable**(`bytes?`: number): *string*
+▸ **bytesToHumanReadable**(`bytes?`: number): _string_
 
-Format bytes, with up to 2 digits after the decimal point, in a more human readable way
-Support up to a pebibyte
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`bytes?` | number |
-
-**Returns:** *string*
-
-___
-
-####  executeLogParser
-
-▸ **executeLogParser**(`lpc`: [LogParserContext](#insightinterfaceslogparsercontextmd)): *ReadableStream*
-
-Run the parser, splits the in stream onn lines and call either the jsonProcessor or
-textProcessor with the value. The original value is written to the returned stream
+Format bytes, with up to 2 digits after the decimal point, in a more human
+readable way Support up to a pebibyte
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`lpc` | [LogParserContext](#insightinterfaceslogparsercontextmd) |
+| Name     | Type   |
+| -------- | ------ |
+| `bytes?` | number |
 
-**Returns:** *ReadableStream*
+**Returns:** _string_
 
-___
+---
 
-####  newLogParserContext
+#### executeLogParser
 
-▸ **newLogParserContext**(`stream`: ReadableStream): *[LogParserContext](#insightinterfaceslogparsercontextmd)*
+▸ **executeLogParser**(`lpc`:
+[LogParserContext](#insightinterfaceslogparsercontextmd)): _ReadableStream_
+
+Run the parser, splits the in stream onn lines and call either the jsonProcessor
+or textProcessor with the value. The original value is written to the returned
+stream
+
+**Parameters:**
+
+| Name  | Type                                                     |
+| ----- | -------------------------------------------------------- |
+| `lpc` | [LogParserContext](#insightinterfaceslogparsercontextmd) |
+
+**Returns:** _ReadableStream_
+
+---
+
+#### newLogParserContext
+
+▸ **newLogParserContext**(`stream`: ReadableStream):
+_[LogParserContext](#insightinterfaceslogparsercontextmd)_
 
 Create a new parser context
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`stream` | ReadableStream |
+| Name     | Type           |
+| -------- | -------------- |
+| `stream` | ReadableStream |
 
-**Returns:** *[LogParserContext](#insightinterfaceslogparsercontextmd)*
+**Returns:** _[LogParserContext](#insightinterfaceslogparsercontextmd)_
 
-___
+---
 
-####  newLogger
+#### newLogger
 
-▸ **newLogger**‹**T**›(`options?`: [LoggerOptions](#insightinterfacesloggeroptionsmd)‹T›): *[Logger](#insightinterfacesloggermd)*
+▸ **newLogger**‹**T**›(`options?`:
+[LoggerOptions](#insightinterfacesloggeroptionsmd)‹T›):
+_[Logger](#insightinterfacesloggermd)_
 
 Create a new logger
 
 **Type parameters:**
 
-▪ **T**: *[LoggerContext](#insightinterfacesloggercontextmd)*
+▪ **T**: _[LoggerContext](#insightinterfacesloggercontextmd)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | [LoggerOptions](#insightinterfacesloggeroptionsmd)‹T› |
+| Name       | Type                                                  |
+| ---------- | ----------------------------------------------------- |
+| `options?` | [LoggerOptions](#insightinterfacesloggeroptionsmd)‹T› |
 
-**Returns:** *[Logger](#insightinterfacesloggermd)*
+**Returns:** _[Logger](#insightinterfacesloggermd)_
 
-___
+---
 
-####  printProcessMemoryUsage
+#### printProcessMemoryUsage
 
-▸ **printProcessMemoryUsage**(`logger`: [Logger](#insightinterfacesloggermd)): *void*
+▸ **printProcessMemoryUsage**(`logger`: [Logger](#insightinterfacesloggermd)):
+_void_
 
-Prints the memory usage of the current process to the provided logger
-For more info on the printed properties see:
+Prints the memory usage of the current process to the provided logger For more
+info on the printed properties see:
 https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memoryusage
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`logger` | [Logger](#insightinterfacesloggermd) |
+| Name     | Type                                 |
+| -------- | ------------------------------------ |
+| `logger` | [Logger](#insightinterfacesloggermd) |
 
-**Returns:** *void*
+**Returns:** _void_
 
 ## Interfaces
 
-
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.29](#insightreadmemd) › [Logger](#insightinterfacesloggermd)
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
+[Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
 
 The logger only has two severities:
+
 - info
 - error
 
-Either a log line is innocent enough and only provides debug information if needed, or
-  someone should be paged because something goes wrong. For example handled 500 errors
-  don't need any ones attention, but unhandled 500 errors do.
+Either a log line is innocent enough and only provides debug information if
+needed, or someone should be paged because something goes wrong. For example
+handled 500 errors don't need any ones attention, but unhandled 500 errors do.
 
-The log functions {@ee Logger#info} only accepts a single parameter. This prevents magic
-outputs like automatic concatenating strings in to a single message, or always having a top
-level array as a message.
+The log functions {@ee Logger#info} only accepts a single parameter. This
+prevents magic outputs like automatic concatenating strings in to a single
+message, or always having a top level array as a message.
 
 #### Hierarchy
 
-* **Logger**
+- **Logger**
 
 #### Index
 
 ##### Methods
 
-* [error](#error)
-* [info](#info)
-* [isProduction](#isproduction)
+- [error](#error)
+- [info](#info)
+- [isProduction](#isproduction)
 
 #### Methods
 
-#####  error
+##### error
 
-▸ **error**(`arg`: any): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg` | any |
-
-**Returns:** *void*
-
-___
-
-#####  info
-
-▸ **info**(`arg`: any): *void*
+▸ **error**(`arg`: any): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`arg` | any |
+| Name  | Type |
+| ----- | ---- |
+| `arg` | any  |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-#####  isProduction
+##### info
 
-▸ **isProduction**(): *boolean*
+▸ **info**(`arg`: any): _void_
 
-Check if this logger is using the pretty
-  printer or NDJSON printer
+**Parameters:**
 
-**Returns:** *boolean*
+| Name  | Type |
+| ----- | ---- |
+| `arg` | any  |
 
+**Returns:** _void_
+
+---
+
+##### isProduction
+
+▸ **isProduction**(): _boolean_
+
+Check if this logger is using the pretty printer or NDJSON printer
+
+**Returns:** _boolean_
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.29](#insightreadmemd) › [LoggerContext](#insightinterfacesloggercontextmd)
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
+[LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
 
-Context that should be logged in all log lines. e.g
-  a common request id.
+Context that should be logged in all log lines. e.g a common request id.
 
 #### Hierarchy
 
-* **LoggerContext**
+- **LoggerContext**
 
 #### Index
 
 ##### Properties
 
-* [type](#optional-type)
+- [type](#optional-type)
 
 #### Properties
 
 ##### `Optional` type
 
-• **type**? : *string*
-
+• **type**? : _string_
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.29](#insightreadmemd) › [LoggerOptions](#insightinterfacesloggeroptionsmd)
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
+[LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
 
 #### Type parameters
 
-▪ **T**: *[LoggerContext](#insightinterfacesloggercontextmd)*
+▪ **T**: _[LoggerContext](#insightinterfacesloggercontextmd)_
 
 #### Hierarchy
 
-* **LoggerOptions**
+- **LoggerOptions**
 
 #### Index
 
 ##### Properties
 
-* [ctx](#optional-ctx)
-* [depth](#optional-depth)
-* [pretty](#optional-pretty)
-* [stream](#optional-stream)
+- [ctx](#optional-ctx)
+- [depth](#optional-depth)
+- [pretty](#optional-pretty)
+- [stream](#optional-stream)
 
 #### Properties
 
 ##### `Optional` ctx
 
-• **ctx**? : *T*
+• **ctx**? : _T_
 
-Context that should be logged in all log lines. e.g
-  a common request id.
+Context that should be logged in all log lines. e.g a common request id.
 
-___
+---
 
 ##### `Optional` depth
 
-• **depth**? : *number*
+• **depth**? : _number_
 
 Max-depth printed
 
-___
+---
 
 ##### `Optional` pretty
 
-• **pretty**? : *boolean*
+• **pretty**? : _boolean_
 
 Use the pretty formatter instead of the NDJSON formatter
 
-___
+---
 
 ##### `Optional` stream
 
-• **stream**? : *WritableStream*
+• **stream**? : _WritableStream_
 
 The stream to write the logs to
 
-
 <a name="insightinterfaceslogparsercontextmd"></a>
 
-[@lbu/insight - v0.0.29](#insightreadmemd) › [LogParserContext](#insightinterfaceslogparsercontextmd)
+[@lbu/insight - v0.0.29](#insightreadmemd) ›
+[LogParserContext](#insightinterfaceslogparsercontextmd)
 
 ### Interface: LogParserContext
 
@@ -4461,56 +4577,55 @@ The LogParserContext enables you too analyze logs produced by this Logger
 
 #### Hierarchy
 
-* **LogParserContext**
+- **LogParserContext**
 
 #### Index
 
 ##### Properties
 
-* [jsonProcessor](#optional-jsonprocessor)
-* [stream](#stream)
-* [textProcessor](#optional-textprocessor)
+- [jsonProcessor](#optional-jsonprocessor)
+- [stream](#stream)
+- [textProcessor](#optional-textprocessor)
 
 #### Properties
 
 ##### `Optional` jsonProcessor
 
-• **jsonProcessor**? : *function*
+• **jsonProcessor**? : _function_
 
 ###### Type declaration:
 
-▸ (`data`: object): *void*
+▸ (`data`: object): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`data` | object |
+| Name   | Type   |
+| ------ | ------ |
+| `data` | object |
 
-___
+---
 
-#####  stream
+##### stream
 
-• **stream**: *ReadableStream*
+• **stream**: _ReadableStream_
 
-___
+---
 
 ##### `Optional` textProcessor
 
-• **textProcessor**? : *function*
+• **textProcessor**? : _function_
 
 ###### Type declaration:
 
-▸ (`data`: string): *void*
+▸ (`data`: string): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`data` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `data` | string |
 
 # Server
-
 
 <a name="serverreadmemd"></a>
 
@@ -4522,162 +4637,163 @@ Name | Type |
 
 #### Classes
 
-* [Application](#serverclassesapplicationmd)
+- [Application](#serverclassesapplicationmd)
 
 #### Interfaces
 
-* [AppErrorHandler](#serverinterfacesapperrorhandlermd)
-* [CorsOptions](#serverinterfacescorsoptionsmd)
-* [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
-* [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
-* [GetAppOptions](#serverinterfacesgetappoptionsmd)
-* [HeaderOptions](#serverinterfacesheaderoptionsmd)
+- [AppErrorHandler](#serverinterfacesapperrorhandlermd)
+- [CorsOptions](#serverinterfacescorsoptionsmd)
+- [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
+- [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
+- [GetAppOptions](#serverinterfacesgetappoptionsmd)
+- [HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 #### Type aliases
 
-* [Context](#context)
-* [Middleware](#middleware)
-* [Next](#next)
+- [Context](#context)
+- [Middleware](#middleware)
+- [Next](#next)
 
 #### Functions
 
-* [createBodyParsers](#createbodyparsers)
-* [getApp](#getapp)
-* [isServerLog](#isserverlog)
-* [sendFile](#sendfile)
-* [session](#session)
+- [createBodyParsers](#createbodyparsers)
+- [getApp](#getapp)
+- [isServerLog](#isserverlog)
+- [sendFile](#sendfile)
+- [session](#session)
 
 ### Type aliases
 
-####  Context
+#### Context
 
-Ƭ **Context**: *ExtendableContext & object & CustomT*
+Ƭ **Context**: _ExtendableContext & object & CustomT_
 
-___
+---
 
-####  Middleware
+#### Middleware
 
-Ƭ **Middleware**: *function*
+Ƭ **Middleware**: _function_
 
 ##### Type declaration:
 
-▸ (`context`: [Context](#context)‹StateT, CustomT›, `next`: [Next](#next)): *any*
+▸ (`context`: [Context](#context)‹StateT, CustomT›, `next`: [Next](#next)):
+_any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`context` | [Context](#context)‹StateT, CustomT› |
-`next` | [Next](#next) |
+| Name      | Type                                 |
+| --------- | ------------------------------------ |
+| `context` | [Context](#context)‹StateT, CustomT› |
+| `next`    | [Next](#next)                        |
 
-___
+---
 
-####  Next
+#### Next
 
-Ƭ **Next**: *function*
+Ƭ **Next**: _function_
 
 ##### Type declaration:
 
-▸ (): *Promise‹any›*
+▸ (): _Promise‹any›_
 
 ### Functions
 
-####  createBodyParsers
+#### createBodyParsers
 
-▸ **createBodyParsers**(`options?`: IKoaBodyOptions): *object*
+▸ **createBodyParsers**(`options?`: IKoaBodyOptions): _object_
 
-Creates a body parser and a body parser with multipart enabled
-Note that koa-body parses url-encoded, form data, json and text by default
+Creates a body parser and a body parser with multipart enabled Note that
+koa-body parses url-encoded, form data, json and text by default
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | IKoaBodyOptions |
+| Name       | Type            |
+| ---------- | --------------- |
+| `options?` | IKoaBodyOptions |
 
-**Returns:** *object*
+**Returns:** _object_
 
-* **bodyParser**: *[Middleware](#middleware)*
+- **bodyParser**: _[Middleware](#middleware)_
 
-* **multipartBodyParsers**: *[Middleware](#middleware)*
+- **multipartBodyParsers**: _[Middleware](#middleware)_
 
-___
+---
 
-####  getApp
+#### getApp
 
-▸ **getApp**(`opts?`: [GetAppOptions](#serverinterfacesgetappoptionsmd)): *[Application](#serverclassesapplicationmd)*
+▸ **getApp**(`opts?`: [GetAppOptions](#serverinterfacesgetappoptionsmd)):
+_[Application](#serverclassesapplicationmd)_
 
 Create a new Koa instance with some default middleware
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`opts?` | [GetAppOptions](#serverinterfacesgetappoptionsmd) |
+| Name    | Type                                              |
+| ------- | ------------------------------------------------- |
+| `opts?` | [GetAppOptions](#serverinterfacesgetappoptionsmd) |
 
-**Returns:** *[Application](#serverclassesapplicationmd)*
+**Returns:** _[Application](#serverclassesapplicationmd)_
 
-___
+---
 
-####  isServerLog
+#### isServerLog
 
-▸ **isServerLog**(`value`: Record‹string, unknown›): *boolean*
+▸ **isServerLog**(`value`: Record‹string, unknown›): _boolean_
 
 Given a logged object, check if it is a request log
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | Record‹string, unknown› |
+| Name    | Type                    |
+| ------- | ----------------------- |
+| `value` | Record‹string, unknown› |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-####  sendFile
+#### sendFile
 
-▸ **sendFile**(`ctx`: [Context](#context), `file`: unknown, `getStreamFn`: GetStreamFn): *Promise‹void›*
+▸ **sendFile**(`ctx`: [Context](#context), `file`: unknown, `getStreamFn`:
+GetStreamFn): _Promise‹void›_
 
-Send any file to the ctx.body
-User is free to set Cache-Control
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`ctx` | [Context](#context) |
-`file` | unknown |
-`getStreamFn` | GetStreamFn |
-
-**Returns:** *Promise‹void›*
-
-___
-
-####  session
-
-▸ **session**(`app`: [Application](#serverclassesapplicationmd), `options`: SessionOptions): *[Middleware](#middleware)*
-
-Session middleware
-Requires process.env.APP_KEYS
-To generate a key use something like
-node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+Send any file to the ctx.body User is free to set Cache-Control
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`app` | [Application](#serverclassesapplicationmd) |
-`options` | SessionOptions |
+| Name          | Type                |
+| ------------- | ------------------- |
+| `ctx`         | [Context](#context) |
+| `file`        | unknown             |
+| `getStreamFn` | GetStreamFn         |
 
-**Returns:** *[Middleware](#middleware)*
+**Returns:** _Promise‹void›_
+
+---
+
+#### session
+
+▸ **session**(`app`: [Application](#serverclassesapplicationmd), `options`:
+SessionOptions): _[Middleware](#middleware)_
+
+Session middleware Requires process.env.APP_KEYS To generate a key use something
+like node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+
+**Parameters:**
+
+| Name      | Type                                       |
+| --------- | ------------------------------------------ |
+| `app`     | [Application](#serverclassesapplicationmd) |
+| `options` | SessionOptions                             |
+
+**Returns:** _[Middleware](#middleware)_
 
 ## Classes
 
-
 <a name="serverclassesapplicationmd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [Application](#serverclassesapplicationmd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[Application](#serverclassesapplicationmd)
 
 ### Class: Application ‹**StateT, CustomT**›
 
@@ -4689,7 +4805,7 @@ Name | Type |
 
 #### Hierarchy
 
-* EventEmitter
+- EventEmitter
 
   ↳ **Application**
 
@@ -4697,199 +4813,202 @@ Name | Type |
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [context](#context)
-* [env](#env)
-* [keys](#keys)
-* [maxIpsCount](#maxipscount)
-* [middleware](#middleware)
-* [proxy](#proxy)
-* [proxyIpHeader](#proxyipheader)
-* [request](#request)
-* [response](#response)
-* [silent](#silent)
-* [subdomainOffset](#subdomainoffset)
-* [defaultMaxListeners](#static-defaultmaxlisteners)
-* [errorMonitor](#static-readonly-errormonitor)
+- [context](#context)
+- [env](#env)
+- [keys](#keys)
+- [maxIpsCount](#maxipscount)
+- [middleware](#middleware)
+- [proxy](#proxy)
+- [proxyIpHeader](#proxyipheader)
+- [request](#request)
+- [response](#response)
+- [silent](#silent)
+- [subdomainOffset](#subdomainoffset)
+- [defaultMaxListeners](#static-defaultmaxlisteners)
+- [errorMonitor](#static-readonly-errormonitor)
 
 ##### Methods
 
-* [addListener](#addlistener)
-* [callback](#callback)
-* [createContext](#createcontext)
-* [emit](#emit)
-* [eventNames](#eventnames)
-* [getMaxListeners](#getmaxlisteners)
-* [inspect](#inspect)
-* [listen](#listen)
-* [listenerCount](#listenercount)
-* [listeners](#listeners)
-* [off](#off)
-* [on](#on)
-* [once](#once)
-* [onerror](#onerror)
-* [prependListener](#prependlistener)
-* [prependOnceListener](#prependoncelistener)
-* [rawListeners](#rawlisteners)
-* [removeAllListeners](#removealllisteners)
-* [removeListener](#removelistener)
-* [setMaxListeners](#setmaxlisteners)
-* [toJSON](#tojson)
-* [use](#use)
-* [listenerCount](#static-listenercount)
+- [addListener](#addlistener)
+- [callback](#callback)
+- [createContext](#createcontext)
+- [emit](#emit)
+- [eventNames](#eventnames)
+- [getMaxListeners](#getmaxlisteners)
+- [inspect](#inspect)
+- [listen](#listen)
+- [listenerCount](#listenercount)
+- [listeners](#listeners)
+- [off](#off)
+- [on](#on)
+- [once](#once)
+- [onerror](#onerror)
+- [prependListener](#prependlistener)
+- [prependOnceListener](#prependoncelistener)
+- [rawListeners](#rawlisteners)
+- [removeAllListeners](#removealllisteners)
+- [removeListener](#removelistener)
+- [setMaxListeners](#setmaxlisteners)
+- [toJSON](#tojson)
+- [use](#use)
+- [listenerCount](#static-listenercount)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new Application**(): *[Application](#serverclassesapplicationmd)*
+\+ **new Application**(): _[Application](#serverclassesapplicationmd)_
 
-*Overrides void*
+_Overrides void_
 
-**Returns:** *[Application](#serverclassesapplicationmd)*
+**Returns:** _[Application](#serverclassesapplicationmd)_
 
 #### Properties
 
-#####  context
+##### context
 
-• **context**: *BaseContext & CustomT*
+• **context**: _BaseContext & CustomT_
 
-___
+---
 
-#####  env
+##### env
 
-• **env**: *string*
+• **env**: _string_
 
-___
+---
 
-#####  keys
+##### keys
 
-• **keys**: *string[]*
+• **keys**: _string[]_
 
-___
+---
 
-#####  maxIpsCount
+##### maxIpsCount
 
-• **maxIpsCount**: *number*
+• **maxIpsCount**: _number_
 
-___
+---
 
-#####  middleware
+##### middleware
 
-• **middleware**: *[Middleware](#middleware)‹StateT, CustomT›[]*
+• **middleware**: _[Middleware](#middleware)‹StateT, CustomT›[]_
 
-___
+---
 
-#####  proxy
+##### proxy
 
-• **proxy**: *boolean*
+• **proxy**: _boolean_
 
-___
+---
 
-#####  proxyIpHeader
+##### proxyIpHeader
 
-• **proxyIpHeader**: *string*
+• **proxyIpHeader**: _string_
 
-___
+---
 
-#####  request
+##### request
 
-• **request**: *BaseRequest*
+• **request**: _BaseRequest_
 
-___
+---
 
-#####  response
+##### response
 
-• **response**: *BaseResponse*
+• **response**: _BaseResponse_
 
-___
+---
 
-#####  silent
+##### silent
 
-• **silent**: *boolean*
+• **silent**: _boolean_
 
-___
+---
 
-#####  subdomainOffset
+##### subdomainOffset
 
-• **subdomainOffset**: *number*
+• **subdomainOffset**: _number_
 
-___
+---
 
 ##### `Static` defaultMaxListeners
 
-▪ **defaultMaxListeners**: *number*
+▪ **defaultMaxListeners**: _number_
 
-*Inherited from [Application](#serverclassesapplicationmd).[defaultMaxListeners](#static-defaultmaxlisteners)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[defaultMaxListeners](#static-defaultmaxlisteners)_
 
-___
+---
 
 ##### `Static` `Readonly` errorMonitor
 
-▪ **errorMonitor**: *keyof symbol*
+▪ **errorMonitor**: _keyof symbol_
 
-*Inherited from [Application](#serverclassesapplicationmd).[errorMonitor](#static-readonly-errormonitor)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[errorMonitor](#static-readonly-errormonitor)_
 
 This symbol shall be used to install a listener for only monitoring `'error'`
 events. Listeners installed using this symbol are called before the regular
 `'error'` listeners are called.
 
 Installing a listener using this symbol does not change the behavior once an
-`'error'` event is emitted, therefore the process will still crash if no
-regular `'error'` listener is installed.
+`'error'` event is emitted, therefore the process will still crash if no regular
+`'error'` listener is installed.
 
 #### Methods
 
-#####  addListener
+##### addListener
 
-▸ **addListener**(`event`: string | symbol, `listener`: function): *this*
+▸ **addListener**(`event`: string | symbol, `listener`: function): _this_
 
-*Inherited from [Application](#serverclassesapplicationmd).[addListener](#addlistener)*
-
-**Parameters:**
-
-▪ **event**: *string | symbol*
-
-▪ **listener**: *function*
-
-▸ (...`args`: any[]): *void*
+_Inherited from
+[Application](#serverclassesapplicationmd).[addListener](#addlistener)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+▪ **event**: _string | symbol_
 
-**Returns:** *this*
+▪ **listener**: _function_
 
-___
-
-#####  callback
-
-▸ **callback**(): *function*
-
-Return a request handler callback
-for node's native http/http2 server.
-
-**Returns:** *function*
-
-▸ (`req`: IncomingMessage, `res`: ServerResponse): *Promise‹void›*
+▸ (...`args`: any[]): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`req` | IncomingMessage |
-`res` | ServerResponse |
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
 
-___
+**Returns:** _this_
 
-#####  createContext
+---
 
-▸ **createContext**‹**StateT**›(`req`: IncomingMessage, `res`: ServerResponse): *[Context](#context)‹StateT›*
+##### callback
+
+▸ **callback**(): _function_
+
+Return a request handler callback for node's native http/http2 server.
+
+**Returns:** _function_
+
+▸ (`req`: IncomingMessage, `res`: ServerResponse): _Promise‹void›_
+
+**Parameters:**
+
+| Name  | Type            |
+| ----- | --------------- |
+| `req` | IncomingMessage |
+| `res` | ServerResponse  |
+
+---
+
+##### createContext
+
+▸ **createContext**‹**StateT**›(`req`: IncomingMessage, `res`: ServerResponse):
+_[Context](#context)‹StateT›_
 
 Initialize a new context.
 
@@ -4901,298 +5020,306 @@ Initialize a new context.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`req` | IncomingMessage |
-`res` | ServerResponse |
+| Name  | Type            |
+| ----- | --------------- |
+| `req` | IncomingMessage |
+| `res` | ServerResponse  |
 
-**Returns:** *[Context](#context)‹StateT›*
+**Returns:** _[Context](#context)‹StateT›_
 
-___
+---
 
-#####  emit
+##### emit
 
-▸ **emit**(`event`: string | symbol, ...`args`: any[]): *boolean*
+▸ **emit**(`event`: string | symbol, ...`args`: any[]): _boolean_
 
-*Inherited from [Application](#serverclassesapplicationmd).[emit](#emit)*
+_Inherited from [Application](#serverclassesapplicationmd).[emit](#emit)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event` | string &#124; symbol |
-`...args` | any[] |
+| Name      | Type                 |
+| --------- | -------------------- |
+| `event`   | string &#124; symbol |
+| `...args` | any[]                |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
 
-___
+---
 
-#####  eventNames
+##### eventNames
 
-▸ **eventNames**(): *Array‹string | symbol›*
+▸ **eventNames**(): _Array‹string | symbol›_
 
-*Inherited from [Application](#serverclassesapplicationmd).[eventNames](#eventnames)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[eventNames](#eventnames)_
 
-**Returns:** *Array‹string | symbol›*
+**Returns:** _Array‹string | symbol›_
 
-___
+---
 
-#####  getMaxListeners
+##### getMaxListeners
 
-▸ **getMaxListeners**(): *number*
+▸ **getMaxListeners**(): _number_
 
-*Inherited from [Application](#serverclassesapplicationmd).[getMaxListeners](#getmaxlisteners)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[getMaxListeners](#getmaxlisteners)_
 
-**Returns:** *number*
+**Returns:** _number_
 
-___
+---
 
-#####  inspect
+##### inspect
 
-▸ **inspect**(): *any*
+▸ **inspect**(): _any_
 
-Return JSON representation.
-We only bother showing settings.
+Return JSON representation. We only bother showing settings.
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-#####  listen
+##### listen
 
-▸ **listen**(`port?`: number, `hostname?`: string, `backlog?`: number, `listeningListener?`: function): *Server*
+▸ **listen**(`port?`: number, `hostname?`: string, `backlog?`: number,
+`listeningListener?`: function): _Server_
 
 Shorthand for:
 
-   http.createServer(app.callback()).listen(...)
+http.createServer(app.callback()).listen(...)
 
 **Parameters:**
 
-▪`Optional`  **port**: *number*
+▪`Optional` **port**: _number_
 
-▪`Optional`  **hostname**: *string*
+▪`Optional` **hostname**: _string_
 
-▪`Optional`  **backlog**: *number*
+▪`Optional` **backlog**: _number_
 
-▪`Optional`  **listeningListener**: *function*
+▪`Optional` **listeningListener**: _function_
 
-▸ (): *void*
+▸ (): _void_
 
-**Returns:** *Server*
+**Returns:** _Server_
 
-▸ **listen**(`port`: number, `hostname?`: string, `listeningListener?`: function): *Server*
-
-**Parameters:**
-
-▪ **port**: *number*
-
-▪`Optional`  **hostname**: *string*
-
-▪`Optional`  **listeningListener**: *function*
-
-▸ (): *void*
-
-**Returns:** *Server*
-
-▸ **listen**(`port`: number, `backlog?`: number, `listeningListener?`: function): *Server*
+▸ **listen**(`port`: number, `hostname?`: string, `listeningListener?`:
+function): _Server_
 
 **Parameters:**
 
-▪ **port**: *number*
+▪ **port**: _number_
 
-▪`Optional`  **backlog**: *number*
+▪`Optional` **hostname**: _string_
 
-▪`Optional`  **listeningListener**: *function*
+▪`Optional` **listeningListener**: _function_
 
-▸ (): *void*
+▸ (): _void_
 
-**Returns:** *Server*
+**Returns:** _Server_
 
-▸ **listen**(`port`: number, `listeningListener?`: function): *Server*
-
-**Parameters:**
-
-▪ **port**: *number*
-
-▪`Optional`  **listeningListener**: *function*
-
-▸ (): *void*
-
-**Returns:** *Server*
-
-▸ **listen**(`path`: string, `backlog?`: number, `listeningListener?`: function): *Server*
+▸ **listen**(`port`: number, `backlog?`: number, `listeningListener?`:
+function): _Server_
 
 **Parameters:**
 
-▪ **path**: *string*
+▪ **port**: _number_
 
-▪`Optional`  **backlog**: *number*
+▪`Optional` **backlog**: _number_
 
-▪`Optional`  **listeningListener**: *function*
+▪`Optional` **listeningListener**: _function_
 
-▸ (): *void*
+▸ (): _void_
 
-**Returns:** *Server*
+**Returns:** _Server_
 
-▸ **listen**(`path`: string, `listeningListener?`: function): *Server*
-
-**Parameters:**
-
-▪ **path**: *string*
-
-▪`Optional`  **listeningListener**: *function*
-
-▸ (): *void*
-
-**Returns:** *Server*
-
-▸ **listen**(`options`: ListenOptions, `listeningListener?`: function): *Server*
+▸ **listen**(`port`: number, `listeningListener?`: function): _Server_
 
 **Parameters:**
 
-▪ **options**: *ListenOptions*
+▪ **port**: _number_
 
-▪`Optional`  **listeningListener**: *function*
+▪`Optional` **listeningListener**: _function_
 
-▸ (): *void*
+▸ (): _void_
 
-**Returns:** *Server*
+**Returns:** _Server_
 
-▸ **listen**(`handle`: any, `backlog?`: number, `listeningListener?`: function): *Server*
-
-**Parameters:**
-
-▪ **handle**: *any*
-
-▪`Optional`  **backlog**: *number*
-
-▪`Optional`  **listeningListener**: *function*
-
-▸ (): *void*
-
-**Returns:** *Server*
-
-▸ **listen**(`handle`: any, `listeningListener?`: function): *Server*
+▸ **listen**(`path`: string, `backlog?`: number, `listeningListener?`:
+function): _Server_
 
 **Parameters:**
 
-▪ **handle**: *any*
+▪ **path**: _string_
 
-▪`Optional`  **listeningListener**: *function*
+▪`Optional` **backlog**: _number_
 
-▸ (): *void*
+▪`Optional` **listeningListener**: _function_
 
-**Returns:** *Server*
+▸ (): _void_
 
-___
+**Returns:** _Server_
 
-#####  listenerCount
-
-▸ **listenerCount**(`type`: string | symbol): *number*
-
-*Inherited from [Application](#serverclassesapplicationmd).[listenerCount](#listenercount)*
+▸ **listen**(`path`: string, `listeningListener?`: function): _Server_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string &#124; symbol |
+▪ **path**: _string_
 
-**Returns:** *number*
+▪`Optional` **listeningListener**: _function_
 
-___
+▸ (): _void_
 
-#####  listeners
+**Returns:** _Server_
 
-▸ **listeners**(`event`: string | symbol): *Function[]*
-
-*Inherited from [Application](#serverclassesapplicationmd).[listeners](#listeners)*
+▸ **listen**(`options`: ListenOptions, `listeningListener?`: function): _Server_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event` | string &#124; symbol |
+▪ **options**: _ListenOptions_
 
-**Returns:** *Function[]*
+▪`Optional` **listeningListener**: _function_
 
-___
+▸ (): _void_
 
-#####  off
+**Returns:** _Server_
 
-▸ **off**(`event`: string | symbol, `listener`: function): *this*
-
-*Inherited from [Application](#serverclassesapplicationmd).[off](#off)*
+▸ **listen**(`handle`: any, `backlog?`: number, `listeningListener?`: function):
+_Server_
 
 **Parameters:**
 
-▪ **event**: *string | symbol*
+▪ **handle**: _any_
 
-▪ **listener**: *function*
+▪`Optional` **backlog**: _number_
 
-▸ (...`args`: any[]): *void*
+▪`Optional` **listeningListener**: _function_
 
-**Parameters:**
+▸ (): _void_
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+**Returns:** _Server_
 
-**Returns:** *this*
-
-___
-
-#####  on
-
-▸ **on**(`event`: string | symbol, `listener`: function): *this*
-
-*Inherited from [Application](#serverclassesapplicationmd).[on](#on)*
+▸ **listen**(`handle`: any, `listeningListener?`: function): _Server_
 
 **Parameters:**
 
-▪ **event**: *string | symbol*
+▪ **handle**: _any_
 
-▪ **listener**: *function*
+▪`Optional` **listeningListener**: _function_
 
-▸ (...`args`: any[]): *void*
+▸ (): _void_
 
-**Parameters:**
+**Returns:** _Server_
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+---
 
-**Returns:** *this*
+##### listenerCount
 
-___
+▸ **listenerCount**(`type`: string | symbol): _number_
 
-#####  once
-
-▸ **once**(`event`: string | symbol, `listener`: function): *this*
-
-*Inherited from [Application](#serverclassesapplicationmd).[once](#once)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[listenerCount](#listenercount)_
 
 **Parameters:**
 
-▪ **event**: *string | symbol*
+| Name   | Type                 |
+| ------ | -------------------- |
+| `type` | string &#124; symbol |
 
-▪ **listener**: *function*
+**Returns:** _number_
 
-▸ (...`args`: any[]): *void*
+---
+
+##### listeners
+
+▸ **listeners**(`event`: string | symbol): _Function[]_
+
+_Inherited from
+[Application](#serverclassesapplicationmd).[listeners](#listeners)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+| Name    | Type                 |
+| ------- | -------------------- |
+| `event` | string &#124; symbol |
 
-**Returns:** *this*
+**Returns:** _Function[]_
 
-___
+---
 
-#####  onerror
+##### off
 
-▸ **onerror**(`err`: Error): *void*
+▸ **off**(`event`: string | symbol, `listener`: function): _this_
+
+_Inherited from [Application](#serverclassesapplicationmd).[off](#off)_
+
+**Parameters:**
+
+▪ **event**: _string | symbol_
+
+▪ **listener**: _function_
+
+▸ (...`args`: any[]): _void_
+
+**Parameters:**
+
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
+
+**Returns:** _this_
+
+---
+
+##### on
+
+▸ **on**(`event`: string | symbol, `listener`: function): _this_
+
+_Inherited from [Application](#serverclassesapplicationmd).[on](#on)_
+
+**Parameters:**
+
+▪ **event**: _string | symbol_
+
+▪ **listener**: _function_
+
+▸ (...`args`: any[]): _void_
+
+**Parameters:**
+
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
+
+**Returns:** _this_
+
+---
+
+##### once
+
+▸ **once**(`event`: string | symbol, `listener`: function): _this_
+
+_Inherited from [Application](#serverclassesapplicationmd).[once](#once)_
+
+**Parameters:**
+
+▪ **event**: _string | symbol_
+
+▪ **listener**: _function_
+
+▸ (...`args`: any[]): _void_
+
+**Parameters:**
+
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
+
+**Returns:** _this_
+
+---
+
+##### onerror
+
+▸ **onerror**(`err`: Error): _void_
 
 Default error handler.
 
@@ -5200,148 +5327,157 @@ Default error handler.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`err` | Error |
+| Name  | Type  |
+| ----- | ----- |
+| `err` | Error |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-#####  prependListener
+##### prependListener
 
-▸ **prependListener**(`event`: string | symbol, `listener`: function): *this*
+▸ **prependListener**(`event`: string | symbol, `listener`: function): _this_
 
-*Inherited from [Application](#serverclassesapplicationmd).[prependListener](#prependlistener)*
-
-**Parameters:**
-
-▪ **event**: *string | symbol*
-
-▪ **listener**: *function*
-
-▸ (...`args`: any[]): *void*
+_Inherited from
+[Application](#serverclassesapplicationmd).[prependListener](#prependlistener)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+▪ **event**: _string | symbol_
 
-**Returns:** *this*
+▪ **listener**: _function_
 
-___
-
-#####  prependOnceListener
-
-▸ **prependOnceListener**(`event`: string | symbol, `listener`: function): *this*
-
-*Inherited from [Application](#serverclassesapplicationmd).[prependOnceListener](#prependoncelistener)*
+▸ (...`args`: any[]): _void_
 
 **Parameters:**
 
-▪ **event**: *string | symbol*
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
 
-▪ **listener**: *function*
+**Returns:** _this_
 
-▸ (...`args`: any[]): *void*
+---
 
-**Parameters:**
+##### prependOnceListener
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+▸ **prependOnceListener**(`event`: string | symbol, `listener`: function):
+_this_
 
-**Returns:** *this*
-
-___
-
-#####  rawListeners
-
-▸ **rawListeners**(`event`: string | symbol): *Function[]*
-
-*Inherited from [Application](#serverclassesapplicationmd).[rawListeners](#rawlisteners)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[prependOnceListener](#prependoncelistener)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event` | string &#124; symbol |
+▪ **event**: _string | symbol_
 
-**Returns:** *Function[]*
+▪ **listener**: _function_
 
-___
-
-#####  removeAllListeners
-
-▸ **removeAllListeners**(`event?`: string | symbol): *this*
-
-*Inherited from [Application](#serverclassesapplicationmd).[removeAllListeners](#removealllisteners)*
+▸ (...`args`: any[]): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event?` | string &#124; symbol |
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  removeListener
+##### rawListeners
 
-▸ **removeListener**(`event`: string | symbol, `listener`: function): *this*
+▸ **rawListeners**(`event`: string | symbol): _Function[]_
 
-*Inherited from [Application](#serverclassesapplicationmd).[removeListener](#removelistener)*
-
-**Parameters:**
-
-▪ **event**: *string | symbol*
-
-▪ **listener**: *function*
-
-▸ (...`args`: any[]): *void*
+_Inherited from
+[Application](#serverclassesapplicationmd).[rawListeners](#rawlisteners)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...args` | any[] |
+| Name    | Type                 |
+| ------- | -------------------- |
+| `event` | string &#124; symbol |
 
-**Returns:** *this*
+**Returns:** _Function[]_
 
-___
+---
 
-#####  setMaxListeners
+##### removeAllListeners
 
-▸ **setMaxListeners**(`n`: number): *this*
+▸ **removeAllListeners**(`event?`: string | symbol): _this_
 
-*Inherited from [Application](#serverclassesapplicationmd).[setMaxListeners](#setmaxlisteners)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[removeAllListeners](#removealllisteners)_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`n` | number |
+| Name     | Type                 |
+| -------- | -------------------- |
+| `event?` | string &#124; symbol |
 
-**Returns:** *this*
+**Returns:** _this_
 
-___
+---
 
-#####  toJSON
+##### removeListener
 
-▸ **toJSON**(): *any*
+▸ **removeListener**(`event`: string | symbol, `listener`: function): _this_
 
-Return JSON representation.
-We only bother showing settings.
+_Inherited from
+[Application](#serverclassesapplicationmd).[removeListener](#removelistener)_
 
-**Returns:** *any*
+**Parameters:**
 
-___
+▪ **event**: _string | symbol_
 
-#####  use
+▪ **listener**: _function_
 
-▸ **use**‹**NewStateT**, **NewCustomT**›(`middleware`: [Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT›): *[Application](#serverclassesapplicationmd)‹StateT & NewStateT, CustomT & NewCustomT›*
+▸ (...`args`: any[]): _void_
+
+**Parameters:**
+
+| Name      | Type  |
+| --------- | ----- |
+| `...args` | any[] |
+
+**Returns:** _this_
+
+---
+
+##### setMaxListeners
+
+▸ **setMaxListeners**(`n`: number): _this_
+
+_Inherited from
+[Application](#serverclassesapplicationmd).[setMaxListeners](#setmaxlisteners)_
+
+**Parameters:**
+
+| Name | Type   |
+| ---- | ------ |
+| `n`  | number |
+
+**Returns:** _this_
+
+---
+
+##### toJSON
+
+▸ **toJSON**(): _any_
+
+Return JSON representation. We only bother showing settings.
+
+**Returns:** _any_
+
+---
+
+##### use
+
+▸ **use**‹**NewStateT**, **NewCustomT**›(`middleware`:
+[Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT›):
+_[Application](#serverclassesapplicationmd)‹StateT & NewStateT, CustomT &
+NewCustomT›_
 
 Use the given middleware `fn`.
 
@@ -5355,37 +5491,39 @@ Old-style middleware will be converted.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`middleware` | [Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT› |
+| Name         | Type                                                                |
+| ------------ | ------------------------------------------------------------------- |
+| `middleware` | [Middleware](#middleware)‹StateT & NewStateT, CustomT & NewCustomT› |
 
-**Returns:** *[Application](#serverclassesapplicationmd)‹StateT & NewStateT, CustomT & NewCustomT›*
+**Returns:** _[Application](#serverclassesapplicationmd)‹StateT & NewStateT,
+CustomT & NewCustomT›_
 
-___
+---
 
 ##### `Static` listenerCount
 
-▸ **listenerCount**(`emitter`: EventEmitter, `event`: string | symbol): *number*
+▸ **listenerCount**(`emitter`: EventEmitter, `event`: string | symbol): _number_
 
-*Inherited from [Application](#serverclassesapplicationmd).[listenerCount](#static-listenercount)*
+_Inherited from
+[Application](#serverclassesapplicationmd).[listenerCount](#static-listenercount)_
 
 **`deprecated`** since v4.0.0
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`emitter` | EventEmitter |
-`event` | string &#124; symbol |
+| Name      | Type                 |
+| --------- | -------------------- |
+| `emitter` | EventEmitter         |
+| `event`   | string &#124; symbol |
 
-**Returns:** *number*
+**Returns:** _number_
 
 ## Interfaces
 
-
 <a name="serverinterfacesapperrorhandlermd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [AppErrorHandler](#serverinterfacesapperrorhandlermd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[AppErrorHandler](#serverinterfacesapperrorhandlermd)
 
 ### Interface: AppErrorHandler
 
@@ -5393,108 +5531,109 @@ Extract data for the response from the AppError data
 
 #### Hierarchy
 
-* **AppErrorHandler**
+- **AppErrorHandler**
 
 #### Callable
 
-▸ (`ctx`: [Context](#context), `key`: string, `info`: any): *Record‹string, any›*
+▸ (`ctx`: [Context](#context), `key`: string, `info`: any): _Record‹string,
+any›_
 
 Extract data for the response from the AppError data
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`ctx` | [Context](#context) |
-`key` | string |
-`info` | any |
+| Name   | Type                |
+| ------ | ------------------- |
+| `ctx`  | [Context](#context) |
+| `key`  | string              |
+| `info` | any                 |
 
-**Returns:** *Record‹string, any›*
-
+**Returns:** _Record‹string, any›_
 
 <a name="serverinterfacescorsoptionsmd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [CorsOptions](#serverinterfacescorsoptionsmd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[CorsOptions](#serverinterfacescorsoptionsmd)
 
 ### Interface: CorsOptions
 
 #### Hierarchy
 
-* **CorsOptions**
+- **CorsOptions**
 
 #### Index
 
 ##### Properties
 
-* [allowHeaders](#optional-allowheaders)
-* [allowMethods](#optional-allowmethods)
-* [credentials](#optional-credentials)
-* [exposeHeaders](#optional-exposeheaders)
-* [maxAge](#optional-maxage)
-* [origin](#optional-origin)
-* [returnNext](#optional-returnnext)
+- [allowHeaders](#optional-allowheaders)
+- [allowMethods](#optional-allowmethods)
+- [credentials](#optional-credentials)
+- [exposeHeaders](#optional-exposeheaders)
+- [maxAge](#optional-maxage)
+- [origin](#optional-origin)
+- [returnNext](#optional-returnnext)
 
 #### Properties
 
 ##### `Optional` allowHeaders
 
-• **allowHeaders**? : *string[]*
+• **allowHeaders**? : _string[]_
 
 `Access-Control-Allow-Headers`
 
-___
+---
 
 ##### `Optional` allowMethods
 
-• **allowMethods**? : *string[]*
+• **allowMethods**? : _string[]_
 
-`Access-Control-Allow-Methods`, default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE',
-'HEAD', 'OPTIONS']
+`Access-Control-Allow-Methods`, default is ['GET', 'PUT', 'POST', 'PATCH',
+'DELETE', 'HEAD', 'OPTIONS']
 
-___
+---
 
 ##### `Optional` credentials
 
-• **credentials**? : *boolean*
+• **credentials**? : _boolean_
 
 `Access-Control-Allow-Credentials`
 
-___
+---
 
 ##### `Optional` exposeHeaders
 
-• **exposeHeaders**? : *string[]*
+• **exposeHeaders**? : _string[]_
 
 `Access-Control-Expose-Headers`
 
-___
+---
 
 ##### `Optional` maxAge
 
-• **maxAge**? : *string | number*
+• **maxAge**? : _string | number_
 
 `Access-Control-Max-Age` in seconds
 
-___
+---
 
 ##### `Optional` origin
 
-• **origin**? : *string | function*
+• **origin**? : _string | function_
 
 `Access-Control-Allow-Origin`, default is request Origin header
 
-___
+---
 
 ##### `Optional` returnNext
 
-• **returnNext**? : *boolean*
+• **returnNext**? : _boolean_
 
 By default, and if false, won't call next, but just returns undefined
 
-
 <a name="serverinterfacescustomerrorhandlermd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 
 ### Interface: CustomErrorHandler
 
@@ -5502,152 +5641,153 @@ Return truthy when handled or falsey when skipped
 
 #### Hierarchy
 
-* **CustomErrorHandler**
+- **CustomErrorHandler**
 
 #### Callable
 
-▸ (`ctx`: [Context](#context), `err`: Error): *boolean*
+▸ (`ctx`: [Context](#context), `err`: Error): _boolean_
 
 Return truthy when handled or falsey when skipped
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`ctx` | [Context](#context) |
-`err` | Error |
+| Name  | Type                |
+| ----- | ------------------- |
+| `ctx` | [Context](#context) |
+| `err` | Error               |
 
-**Returns:** *boolean*
-
+**Returns:** _boolean_
 
 <a name="serverinterfaceserrorhandleroptionsmd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
 
 ### Interface: ErrorHandlerOptions
 
 #### Hierarchy
 
-* **ErrorHandlerOptions**
+- **ErrorHandlerOptions**
 
 #### Index
 
 ##### Properties
 
-* [leakError](#optional-leakerror)
-* [onAppError](#optional-onapperror)
-* [onError](#optional-onerror)
+- [leakError](#optional-leakerror)
+- [onAppError](#optional-onapperror)
+- [onError](#optional-onerror)
 
 #### Properties
 
 ##### `Optional` leakError
 
-• **leakError**? : *boolean*
+• **leakError**? : _boolean_
 
-Useful on development and staging environments to just dump the error to the consumer
+Useful on development and staging environments to just dump the error to the
+consumer
 
-___
+---
 
 ##### `Optional` onAppError
 
-• **onAppError**? : *[AppErrorHandler](#serverinterfacesapperrorhandlermd)*
+• **onAppError**? : _[AppErrorHandler](#serverinterfacesapperrorhandlermd)_
 
 Called to set the initial body when the error is an AppError
 
-___
+---
 
 ##### `Optional` onError
 
-• **onError**? : *[CustomErrorHandler](#serverinterfacescustomerrorhandlermd)*
+• **onError**? : _[CustomErrorHandler](#serverinterfacescustomerrorhandlermd)_
 
 Called before all others to let the user handle their own errors
 
-
 <a name="serverinterfacesgetappoptionsmd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [GetAppOptions](#serverinterfacesgetappoptionsmd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[GetAppOptions](#serverinterfacesgetappoptionsmd)
 
 ### Interface: GetAppOptions
 
 #### Hierarchy
 
-* **GetAppOptions**
+- **GetAppOptions**
 
 #### Index
 
 ##### Properties
 
-* [disableHeaders](#optional-disableheaders)
-* [disableHealthRoute](#optional-disablehealthroute)
-* [errorOptions](#optional-erroroptions)
-* [headers](#optional-headers)
-* [proxy](#optional-proxy)
+- [disableHeaders](#optional-disableheaders)
+- [disableHealthRoute](#optional-disablehealthroute)
+- [errorOptions](#optional-erroroptions)
+- [headers](#optional-headers)
+- [proxy](#optional-proxy)
 
 #### Properties
 
 ##### `Optional` disableHeaders
 
-• **disableHeaders**? : *boolean*
+• **disableHeaders**? : _boolean_
 
 Don't handle cors headers
 
-___
+---
 
 ##### `Optional` disableHealthRoute
 
-• **disableHealthRoute**? : *boolean*
+• **disableHealthRoute**? : _boolean_
 
-Disable GET /_health
+Disable GET /\_health
 
-___
+---
 
 ##### `Optional` errorOptions
 
-• **errorOptions**? : *[ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)*
+• **errorOptions**? :
+_[ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)_
 
 Flexible error handling options
 
-___
+---
 
 ##### `Optional` headers
 
-• **headers**? : *[HeaderOptions](#serverinterfacesheaderoptionsmd)*
+• **headers**? : _[HeaderOptions](#serverinterfacesheaderoptionsmd)_
 
 Argument for defaultHeader middleware
 
-___
+---
 
 ##### `Optional` proxy
 
-• **proxy**? : *boolean*
+• **proxy**? : _boolean_
 
 Trust proxy headers
 
-
 <a name="serverinterfacesheaderoptionsmd"></a>
 
-[@lbu/server - v0.0.29](#serverreadmemd) › [HeaderOptions](#serverinterfacesheaderoptionsmd)
+[@lbu/server - v0.0.29](#serverreadmemd) ›
+[HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 ### Interface: HeaderOptions
 
 #### Hierarchy
 
-* **HeaderOptions**
+- **HeaderOptions**
 
 #### Index
 
 ##### Properties
 
-* [cors](#optional-cors)
+- [cors](#optional-cors)
 
 #### Properties
 
 ##### `Optional` cors
 
-• **cors**? : *[CorsOptions](#serverinterfacescorsoptionsmd)*
+• **cors**? : _[CorsOptions](#serverinterfacescorsoptionsmd)_
 
 # Stdlib
-
 
 <a name="stdlibreadmemd"></a>
 
@@ -5659,257 +5799,266 @@ Trust proxy headers
 
 #### Classes
 
-* [AppError](#stdlibclassesapperrormd)
+- [AppError](#stdlibclassesapperrormd)
 
 #### Interfaces
 
-* [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
-* [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
-* [TemplateContext](#stdlibinterfacestemplatecontextmd)
-* [UuidFunc](#stdlibinterfacesuuidfuncmd)
+- [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
+- [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
+- [TemplateContext](#stdlibinterfacestemplatecontextmd)
+- [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 #### Variables
 
-* [uuid](#const-uuid)
+- [uuid](#const-uuid)
 
 #### Functions
 
-* [camelToSnakeCase](#cameltosnakecase)
-* [compileTemplate](#compiletemplate)
-* [compileTemplateDirectory](#compiletemplatedirectory)
-* [compileTemplateDirectorySync](#compiletemplatedirectorysync)
-* [dirnameForModule](#dirnameformodule)
-* [exec](#exec)
-* [executeTemplate](#executetemplate)
-* [filenameForModule](#filenameformodule)
-* [flatten](#flatten)
-* [gc](#gc)
-* [getSecondsSinceEpoch](#getsecondssinceepoch)
-* [isNil](#isnil)
-* [isPlainObject](#isplainobject)
-* [mainFn](#mainfn)
-* [merge](#merge)
-* [neTemplateContext](#netemplatecontext)
-* [noop](#noop)
-* [pathJoin](#pathjoin)
-* [processDirectoryRecursive](#processdirectoryrecursive)
-* [processDirectoryRecursiveSync](#processdirectoryrecursivesync)
-* [spawn](#spawn)
-* [unFlatten](#unflatten)
+- [camelToSnakeCase](#cameltosnakecase)
+- [compileTemplate](#compiletemplate)
+- [compileTemplateDirectory](#compiletemplatedirectory)
+- [compileTemplateDirectorySync](#compiletemplatedirectorysync)
+- [dirnameForModule](#dirnameformodule)
+- [exec](#exec)
+- [executeTemplate](#executetemplate)
+- [filenameForModule](#filenameformodule)
+- [flatten](#flatten)
+- [gc](#gc)
+- [getSecondsSinceEpoch](#getsecondssinceepoch)
+- [isNil](#isnil)
+- [isPlainObject](#isplainobject)
+- [mainFn](#mainfn)
+- [merge](#merge)
+- [neTemplateContext](#netemplatecontext)
+- [noop](#noop)
+- [pathJoin](#pathjoin)
+- [processDirectoryRecursive](#processdirectoryrecursive)
+- [processDirectoryRecursiveSync](#processdirectoryrecursivesync)
+- [spawn](#spawn)
+- [unFlatten](#unflatten)
 
 ### Variables
 
 #### `Const` uuid
 
-• **uuid**: *[UuidFunc](#stdlibinterfacesuuidfuncmd)*
+• **uuid**: _[UuidFunc](#stdlibinterfacesuuidfuncmd)_
 
 Return a new uuid v4
 
 ### Functions
 
-####  camelToSnakeCase
+#### camelToSnakeCase
 
-▸ **camelToSnakeCase**(`input`: string): *string*
+▸ **camelToSnakeCase**(`input`: string): _string_
 
 Convert a camelCase string to a snake_case string
 
 ```js
-  camelToSnakeCase("fooBBar");
-  // => "foo_b_bar"
+camelToSnakeCase("fooBBar");
+// => "foo_b_bar"
 ```
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`input` | string |
+| Name    | Type   |
+| ------- | ------ |
+| `input` | string |
 
-**Returns:** *string*
+**Returns:** _string_
 
-___
+---
 
-####  compileTemplate
+#### compileTemplate
 
-▸ **compileTemplate**(`tc`: [TemplateContext](#stdlibinterfacestemplatecontextmd), `name`: string, `str`: string, `opts?`: object): *any*
+▸ **compileTemplate**(`tc`:
+[TemplateContext](#stdlibinterfacestemplatecontextmd), `name`: string, `str`:
+string, `opts?`: object): _any_
 
-Compile templates add to TemplateContext.
-This function is unsafe for untrusted inputs
-Fields need to be explicitly set to undefined or access them via `it.field`
-Inspired by: https://johnresig.com/blog/javascript-micro-templating/
+Compile templates add to TemplateContext. This function is unsafe for untrusted
+inputs Fields need to be explicitly set to undefined or access them via
+`it.field` Inspired by: https://johnresig.com/blog/javascript-micro-templating/
 
 **Parameters:**
 
-▪ **tc**: *[TemplateContext](#stdlibinterfacestemplatecontextmd)*
+▪ **tc**: _[TemplateContext](#stdlibinterfacestemplatecontextmd)_
 
-▪ **name**: *string*
+▪ **name**: _string_
 
-Name that is exposed in the template it self and to be used with
-  the executeTemplate function
+Name that is exposed in the template it self and to be used with the
+executeTemplate function
 
-▪ **str**: *string*
+▪ **str**: _string_
 
 Template string
 
-▪`Optional`  **opts**: *object*
+▪`Optional` **opts**: _object_
 
-Name | Type |
------- | ------ |
-`debug?` | boolean |
+| Name     | Type    |
+| -------- | ------- |
+| `debug?` | boolean |
 
-**Returns:** *any*
+**Returns:** _any_
 
-___
+---
 
-####  compileTemplateDirectory
+#### compileTemplateDirectory
 
-▸ **compileTemplateDirectory**(`tc`: [TemplateContext](#stdlibinterfacestemplatecontextmd), `dir`: string, `extension`: string, `opts?`: [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): *Promise‹void›*
+▸ **compileTemplateDirectory**(`tc`:
+[TemplateContext](#stdlibinterfacestemplatecontextmd), `dir`: string,
+`extension`: string, `opts?`:
+[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)):
+_Promise‹void›_
 
-Compile all templates found in the provided directory with the provided extension
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`tc` | [TemplateContext](#stdlibinterfacestemplatecontextmd) |
-`dir` | string |
-`extension` | string |
-`opts?` | [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd) |
-
-**Returns:** *Promise‹void›*
-
-___
-
-####  compileTemplateDirectorySync
-
-▸ **compileTemplateDirectorySync**(`tc`: [TemplateContext](#stdlibinterfacestemplatecontextmd), `dir`: string, `extension`: string, `opts?`: [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): *void*
-
-Compile all templates found in the provided directory with the provided extension synchronously
+Compile all templates found in the provided directory with the provided
+extension
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`tc` | [TemplateContext](#stdlibinterfacestemplatecontextmd) |
-`dir` | string |
-`extension` | string |
-`opts?` | [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd) |
+| Name        | Type                                                                  |
+| ----------- | --------------------------------------------------------------------- |
+| `tc`        | [TemplateContext](#stdlibinterfacestemplatecontextmd)                 |
+| `dir`       | string                                                                |
+| `extension` | string                                                                |
+| `opts?`     | [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd) |
 
-**Returns:** *void*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-####  dirnameForModule
+#### compileTemplateDirectorySync
 
-▸ **dirnameForModule**(`meta`: ImportMeta): *string*
+▸ **compileTemplateDirectorySync**(`tc`:
+[TemplateContext](#stdlibinterfacestemplatecontextmd), `dir`: string,
+`extension`: string, `opts?`:
+[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): _void_
 
-Return dirname for ES Module
-Alternative to CommonJS __dirname
+Compile all templates found in the provided directory with the provided
+extension synchronously
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`meta` | ImportMeta |
+| Name        | Type                                                                  |
+| ----------- | --------------------------------------------------------------------- |
+| `tc`        | [TemplateContext](#stdlibinterfacestemplatecontextmd)                 |
+| `dir`       | string                                                                |
+| `extension` | string                                                                |
+| `opts?`     | [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd) |
 
-**Returns:** *string*
+**Returns:** _void_
 
-___
+---
 
-####  exec
+#### dirnameForModule
 
-▸ **exec**(`command`: string): *Promise‹object›*
+▸ **dirnameForModule**(`meta`: ImportMeta): _string_
+
+Return dirname for ES Module Alternative to CommonJS \_\_dirname
+
+**Parameters:**
+
+| Name   | Type       |
+| ------ | ---------- |
+| `meta` | ImportMeta |
+
+**Returns:** _string_
+
+---
+
+#### exec
+
+▸ **exec**(`command`: string): _Promise‹object›_
 
 Promisify version of child_process#exec
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`command` | string |
+| Name      | Type   |
+| --------- | ------ |
+| `command` | string |
 
-**Returns:** *Promise‹object›*
+**Returns:** _Promise‹object›_
 
-___
+---
 
-####  executeTemplate
+#### executeTemplate
 
-▸ **executeTemplate**(`tc`: [TemplateContext](#stdlibinterfacestemplatecontextmd), `name`: string, `data`: any): *string*
+▸ **executeTemplate**(`tc`:
+[TemplateContext](#stdlibinterfacestemplatecontextmd), `name`: string, `data`:
+any): _string_
 
 Execute a template, template should be compiled using compileTemplate
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`tc` | [TemplateContext](#stdlibinterfacestemplatecontextmd) |
-`name` | string |
-`data` | any |
+| Name   | Type                                                  |
+| ------ | ----------------------------------------------------- |
+| `tc`   | [TemplateContext](#stdlibinterfacestemplatecontextmd) |
+| `name` | string                                                |
+| `data` | any                                                   |
 
-**Returns:** *string*
+**Returns:** _string_
 
-___
+---
 
-####  filenameForModule
+#### filenameForModule
 
-▸ **filenameForModule**(`meta`: ImportMeta): *string*
+▸ **filenameForModule**(`meta`: ImportMeta): _string_
 
-Return filename for ES Module
-Alternative to CommonJS __filename
+Return filename for ES Module Alternative to CommonJS \_\_filename
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`meta` | ImportMeta |
+| Name   | Type       |
+| ------ | ---------- |
+| `meta` | ImportMeta |
 
-**Returns:** *string*
+**Returns:** _string_
 
-___
+---
 
-####  flatten
+#### flatten
 
-▸ **flatten**(`object`: any, `result?`: any, `path?`: string): *object*
+▸ **flatten**(`object`: any, `result?`: any, `path?`: string): _object_
 
 Flattens the given nested object, skipping anything that is not a plain object
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`object` | any |
-`result?` | any |
-`path?` | string |
+| Name      | Type   |
+| --------- | ------ |
+| `object`  | any    |
+| `result?` | any    |
+| `path?`   | string |
 
-**Returns:** *object*
+**Returns:** _object_
 
-* \[ **key**: *string*\]: any
+- \[ **key**: _string_\]: any
 
-___
+---
 
-####  gc
+#### gc
 
-▸ **gc**(): *void*
+▸ **gc**(): _void_
 
-HACKY
-Let V8 know to please run the garbage collector.
+HACKY Let V8 know to please run the garbage collector.
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-####  getSecondsSinceEpoch
+#### getSecondsSinceEpoch
 
-▸ **getSecondsSinceEpoch**(): *number*
+▸ **getSecondsSinceEpoch**(): _number_
 
 Return seconds since unix epoch
 
-**Returns:** *number*
+**Returns:** _number_
 
-___
+---
 
-####  isNil
+#### isNil
 
-▸ **isNil**‹**T**›(`value`: T | null | undefined): *value is null | undefined*
+▸ **isNil**‹**T**›(`value`: T | null | undefined): _value is null | undefined_
 
 Check if item is null or undefined
 
@@ -5919,193 +6068,197 @@ Check if item is null or undefined
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | T &#124; null &#124; undefined |
+| Name    | Type                           |
+| ------- | ------------------------------ |
+| `value` | T &#124; null &#124; undefined |
 
-**Returns:** *value is null | undefined*
+**Returns:** _value is null | undefined_
 
-___
+---
 
-####  isPlainObject
+#### isPlainObject
 
-▸ **isPlainObject**(`obj`: any): *boolean*
+▸ **isPlainObject**(`obj`: any): _boolean_
 
-Check if item is a plain javascript object
-Not completely bullet proof
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`obj` | any |
-
-**Returns:** *boolean*
-
-___
-
-####  mainFn
-
-▸ **mainFn**(`meta`: ImportMeta, `logger`: Logger, `cb`: [MainFnCallback](#stdlibinterfacesmainfncallbackmd)): *Promise‹void›*
-
-Run the provided cb if this file is the process entrypoint
-Will also load dotenv before executing the provided callback.
-Another side effect is that a process listener is added for warnings
+Check if item is a plain javascript object Not completely bullet proof
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`meta` | ImportMeta |
-`logger` | Logger |
-`cb` | [MainFnCallback](#stdlibinterfacesmainfncallbackmd) |
+| Name  | Type |
+| ----- | ---- |
+| `obj` | any  |
 
-**Returns:** *Promise‹void›*
+**Returns:** _boolean_
 
-___
+---
 
-####  merge
+#### mainFn
 
-▸ **merge**(`object`: any, ...`sources`: any[]): *any*
+▸ **mainFn**(`meta`: ImportMeta, `logger`: Logger, `cb`:
+[MainFnCallback](#stdlibinterfacesmainfncallbackmd)): _Promise‹void›_
 
-Re expose lodash.merge
-TODO: Note that lodash.merge is deprecated although it doesnt say so when installing
-**Note:** This method mutates `object`.
+Run the provided cb if this file is the process entrypoint Will also load dotenv
+before executing the provided callback. Another side effect is that a process
+listener is added for warnings
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`object` | any |
-`...sources` | any[] |
+| Name     | Type                                                |
+| -------- | --------------------------------------------------- |
+| `meta`   | ImportMeta                                          |
+| `logger` | Logger                                              |
+| `cb`     | [MainFnCallback](#stdlibinterfacesmainfncallbackmd) |
 
-**Returns:** *any*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-####  neTemplateContext
+#### merge
 
-▸ **neTemplateContext**(): *[TemplateContext](#stdlibinterfacestemplatecontextmd)*
+▸ **merge**(`object`: any, ...`sources`: any[]): _any_
 
-Create a new TemplateContext
-Adds the `isNil` function as a global
+Re expose lodash.merge TODO: Note that lodash.merge is deprecated although it
+doesnt say so when installing **Note:** This method mutates `object`.
 
-**Returns:** *[TemplateContext](#stdlibinterfacestemplatecontextmd)*
+**Parameters:**
 
-___
+| Name         | Type  |
+| ------------ | ----- |
+| `object`     | any   |
+| `...sources` | any[] |
 
-####  noop
+**Returns:** _any_
 
-▸ **noop**(): *void*
+---
+
+#### neTemplateContext
+
+▸ **neTemplateContext**():
+_[TemplateContext](#stdlibinterfacestemplatecontextmd)_
+
+Create a new TemplateContext Adds the `isNil` function as a global
+
+**Returns:** _[TemplateContext](#stdlibinterfacestemplatecontextmd)_
+
+---
+
+#### noop
+
+▸ **noop**(): _void_
 
 An empty function, doing exactly nothing but returning undefined.
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-####  pathJoin
+#### pathJoin
 
-▸ **pathJoin**(...`parts`: string[]): *string*
+▸ **pathJoin**(...`parts`: string[]): _string_
 
 Reexport of path#join
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`...parts` | string[] |
+| Name       | Type     |
+| ---------- | -------- |
+| `...parts` | string[] |
 
-**Returns:** *string*
+**Returns:** _string_
 
-___
+---
 
-####  processDirectoryRecursive
+#### processDirectoryRecursive
 
-▸ **processDirectoryRecursive**(`dir`: string, `cb`: function, `opts?`: [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): *Promise‹void›*
+▸ **processDirectoryRecursive**(`dir`: string, `cb`: function, `opts?`:
+[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)):
+_Promise‹void›_
 
 Recursively walks directory async and calls cb on all files
 
 **Parameters:**
 
-▪ **dir**: *string*
+▪ **dir**: _string_
 
-▪ **cb**: *function*
+▪ **cb**: _function_
 
-▸ (`file`: string): *Promise‹void› | void*
+▸ (`file`: string): _Promise‹void› | void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`file` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `file` | string |
 
-▪`Optional`  **opts**: *[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)*
+▪`Optional` **opts**:
+_[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)_
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+---
 
-####  processDirectoryRecursiveSync
+#### processDirectoryRecursiveSync
 
-▸ **processDirectoryRecursiveSync**(`dir`: string, `cb`: function, `opts?`: [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): *void*
+▸ **processDirectoryRecursiveSync**(`dir`: string, `cb`: function, `opts?`:
+[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)): _void_
 
 Recursively walks directory synchronous and calls cb on all files
 
 **Parameters:**
 
-▪ **dir**: *string*
+▪ **dir**: _string_
 
-▪ **cb**: *function*
+▪ **cb**: _function_
 
-▸ (`file`: string): *void*
+▸ (`file`: string): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`file` | string |
+| Name   | Type   |
+| ------ | ------ |
+| `file` | string |
 
-▪`Optional`  **opts**: *[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)*
+▪`Optional` **opts**:
+_[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)_
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+---
 
-####  spawn
+#### spawn
 
-▸ **spawn**(`command`: string, `args`: string[], `opts?`: SpawnOptions): *Promise‹object›*
+▸ **spawn**(`command`: string, `args`: string[], `opts?`: SpawnOptions):
+_Promise‹object›_
 
 A promise wrapper around child_process#spawn
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`command` | string |
-`args` | string[] |
-`opts?` | SpawnOptions |
+| Name      | Type         |
+| --------- | ------------ |
+| `command` | string       |
+| `args`    | string[]     |
+| `opts?`   | SpawnOptions |
 
-**Returns:** *Promise‹object›*
+**Returns:** _Promise‹object›_
 
-___
+---
 
-####  unFlatten
+#### unFlatten
 
-▸ **unFlatten**(`data?`: object): *any*
+▸ **unFlatten**(`data?`: object): _any_
 
 Opposite of flatten
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`data?` | object |
+| Name    | Type   |
+| ------- | ------ |
+| `data?` | object |
 
-**Returns:** *any*
+**Returns:** _any_
 
 ## Classes
-
 
 <a name="stdlibclassesapperrormd"></a>
 
@@ -6113,16 +6266,16 @@ Name | Type |
 
 ### Class: AppError ‹**T**›
 
-AppErrors represent errors, that should immediately stop the request and return a
-status and other meta data directly
+AppErrors represent errors, that should immediately stop the request and return
+a status and other meta data directly
 
 #### Type parameters
 
-▪ **T**: *any*
+▪ **T**: _any_
 
 #### Hierarchy
 
-* [Error](#static-error)
+- [Error](#static-error)
 
   ↳ **AppError**
 
@@ -6130,225 +6283,232 @@ status and other meta data directly
 
 ##### Constructors
 
-* [constructor](#constructor)
+- [constructor](#constructor)
 
 ##### Properties
 
-* [info](#info)
-* [key](#key)
-* [message](#message)
-* [name](#name)
-* [originalError](#optional-originalerror)
-* [stack](#optional-stack)
-* [status](#status)
-* [Error](#static-error)
+- [info](#info)
+- [key](#key)
+- [message](#message)
+- [name](#name)
+- [originalError](#optional-originalerror)
+- [stack](#optional-stack)
+- [status](#status)
+- [Error](#static-error)
 
 ##### Methods
 
-* [notFound](#static-notfound)
-* [notImplemented](#static-notimplemented)
-* [serverError](#static-servererror)
-* [validationError](#static-validationerror)
+- [notFound](#static-notfound)
+- [notImplemented](#static-notimplemented)
+- [serverError](#static-servererror)
+- [validationError](#static-validationerror)
 
 #### Constructors
 
-#####  constructor
+##### constructor
 
-\+ **new AppError**(`key`: string, `status`: number, `info?`: T, `originalError?`: [Error](#static-error)): *[AppError](#stdlibclassesapperrormd)*
+\+ **new AppError**(`key`: string, `status`: number, `info?`: T,
+`originalError?`: [Error](#static-error)):
+_[AppError](#stdlibclassesapperrormd)_
 
 Create a new AppError
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`key` | string |
-`status` | number |
-`info?` | T |
-`originalError?` | [Error](#static-error) |
+| Name             | Type                   |
+| ---------------- | ---------------------- |
+| `key`            | string                 |
+| `status`         | number                 |
+| `info?`          | T                      |
+| `originalError?` | [Error](#static-error) |
 
-**Returns:** *[AppError](#stdlibclassesapperrormd)*
+**Returns:** _[AppError](#stdlibclassesapperrormd)_
 
 #### Properties
 
-#####  info
+##### info
 
-• **info**: *T*
+• **info**: _T_
 
 Extra information in the form of an object for the client to use
 
-___
+---
 
-#####  key
+##### key
 
-• **key**: *string*
+• **key**: _string_
 
 Key is preferred to be in the following format
+
 ```
   "foo.bar"
   "error.server.notImplemented"
 ```
 
-___
+---
 
-#####  message
+##### message
 
-• **message**: *string*
+• **message**: _string_
 
-*Inherited from [AppError](#stdlibclassesapperrormd).[message](#message)*
+_Inherited from [AppError](#stdlibclassesapperrormd).[message](#message)_
 
-___
+---
 
-#####  name
+##### name
 
-• **name**: *string*
+• **name**: _string_
 
-*Inherited from [AppError](#stdlibclassesapperrormd).[name](#name)*
+_Inherited from [AppError](#stdlibclassesapperrormd).[name](#name)_
 
-___
+---
 
 ##### `Optional` originalError
 
-• **originalError**? : *[Error](#static-error)*
+• **originalError**? : _[Error](#static-error)_
 
 Optional original error that was thrown
 
-___
+---
 
 ##### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : _string_
 
-*Inherited from [AppError](#stdlibclassesapperrormd).[stack](#optional-stack)*
+_Inherited from [AppError](#stdlibclassesapperrormd).[stack](#optional-stack)_
 
-___
+---
 
-#####  status
+##### status
 
-• **status**: *number*
+• **status**: _number_
 
 Status number to send to the api client
 
-___
+---
 
 ##### `Static` Error
 
-▪ **Error**: *ErrorConstructor*
+▪ **Error**: _ErrorConstructor_
 
 #### Methods
 
 ##### `Static` notFound
 
-▸ **notFound**‹**T**›(`info?`: T, `error?`: [Error](#static-error)): *[AppError](#stdlibclassesapperrormd)‹T›*
+▸ **notFound**‹**T**›(`info?`: T, `error?`: [Error](#static-error)):
+_[AppError](#stdlibclassesapperrormd)‹T›_
 
 Create a new 404 not found error
 
 **Type parameters:**
 
-▪ **T**: *any*
+▪ **T**: _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`info?` | T |
-`error?` | [Error](#static-error) |
+| Name     | Type                   |
+| -------- | ---------------------- |
+| `info?`  | T                      |
+| `error?` | [Error](#static-error) |
 
-**Returns:** *[AppError](#stdlibclassesapperrormd)‹T›*
+**Returns:** _[AppError](#stdlibclassesapperrormd)‹T›_
 
-___
+---
 
 ##### `Static` notImplemented
 
-▸ **notImplemented**‹**T**›(`info?`: T, `error?`: [Error](#static-error)): *[AppError](#stdlibclassesapperrormd)‹T›*
+▸ **notImplemented**‹**T**›(`info?`: T, `error?`: [Error](#static-error)):
+_[AppError](#stdlibclassesapperrormd)‹T›_
 
 Create a new 405 not implemented error
 
 **Type parameters:**
 
-▪ **T**: *any*
+▪ **T**: _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`info?` | T |
-`error?` | [Error](#static-error) |
+| Name     | Type                   |
+| -------- | ---------------------- |
+| `info?`  | T                      |
+| `error?` | [Error](#static-error) |
 
-**Returns:** *[AppError](#stdlibclassesapperrormd)‹T›*
+**Returns:** _[AppError](#stdlibclassesapperrormd)‹T›_
 
-___
+---
 
 ##### `Static` serverError
 
-▸ **serverError**‹**T**›(`info?`: T, `error?`: [Error](#static-error)): *[AppError](#stdlibclassesapperrormd)‹T›*
+▸ **serverError**‹**T**›(`info?`: T, `error?`: [Error](#static-error)):
+_[AppError](#stdlibclassesapperrormd)‹T›_
 
 Create a new 500 internal server error
 
 **Type parameters:**
 
-▪ **T**: *any*
+▪ **T**: _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`info?` | T |
-`error?` | [Error](#static-error) |
+| Name     | Type                   |
+| -------- | ---------------------- |
+| `info?`  | T                      |
+| `error?` | [Error](#static-error) |
 
-**Returns:** *[AppError](#stdlibclassesapperrormd)‹T›*
+**Returns:** _[AppError](#stdlibclassesapperrormd)‹T›_
 
-___
+---
 
 ##### `Static` validationError
 
-▸ **validationError**‹**T**›(`key`: string, `info?`: T, `error?`: [Error](#static-error)): *[AppError](#stdlibclassesapperrormd)‹T›*
+▸ **validationError**‹**T**›(`key`: string, `info?`: T, `error?`:
+[Error](#static-error)): _[AppError](#stdlibclassesapperrormd)‹T›_
 
 Create a new 400 validation error
 
 **Type parameters:**
 
-▪ **T**: *any*
+▪ **T**: _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`key` | string |
-`info?` | T |
-`error?` | [Error](#static-error) |
+| Name     | Type                   |
+| -------- | ---------------------- |
+| `key`    | string                 |
+| `info?`  | T                      |
+| `error?` | [Error](#static-error) |
 
-**Returns:** *[AppError](#stdlibclassesapperrormd)‹T›*
+**Returns:** _[AppError](#stdlibclassesapperrormd)‹T›_
 
 ## Interfaces
 
-
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.29](#stdlibreadmemd) › [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
+[MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
 
 #### Hierarchy
 
-* **MainFnCallback**
+- **MainFnCallback**
 
 #### Callable
 
-▸ (`logger`: Logger): *void | Promise‹void›*
+▸ (`logger`: Logger): _void | Promise‹void›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`logger` | Logger |
+| Name     | Type   |
+| -------- | ------ |
+| `logger` | Logger |
 
-**Returns:** *void | Promise‹void›*
-
+**Returns:** _void | Promise‹void›_
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.29](#stdlibreadmemd) › [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
+[ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
 
@@ -6356,122 +6516,119 @@ Options for processDirectoryRecursive and processDirectoryRecursiveSync
 
 #### Hierarchy
 
-* **ProcessDirectoryOptions**
+- **ProcessDirectoryOptions**
 
 #### Index
 
 ##### Properties
 
-* [skipDotFiles](#optional-skipdotfiles)
-* [skipNodeModules](#optional-skipnodemodules)
+- [skipDotFiles](#optional-skipdotfiles)
+- [skipNodeModules](#optional-skipnodemodules)
 
 #### Properties
 
 ##### `Optional` skipDotFiles
 
-• **skipDotFiles**? : *boolean*
+• **skipDotFiles**? : _boolean_
 
-Skip files and directories starting with a '.', true
-  by default
+Skip files and directories starting with a '.', true by default
 
-___
+---
 
 ##### `Optional` skipNodeModules
 
-• **skipNodeModules**? : *boolean*
+• **skipNodeModules**? : _boolean_
 
 Skip node_modules directory, true by default
 
-
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.29](#stdlibreadmemd) › [TemplateContext](#stdlibinterfacestemplatecontextmd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
+[TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
 
-Wraps the state needed for templates
-Globals are available to all templates
+Wraps the state needed for templates Globals are available to all templates
 Templates are also available to all other templates when executing
 
 #### Hierarchy
 
-* **TemplateContext**
+- **TemplateContext**
 
 #### Index
 
 ##### Properties
 
-* [globals](#globals)
-* [strict](#strict)
-* [templates](#templates)
+- [globals](#globals)
+- [strict](#strict)
+- [templates](#templates)
 
 #### Properties
 
-#####  globals
+##### globals
 
-• **globals**: *object*
+• **globals**: _object_
 
 Functions available to all templates
 
 ###### Type declaration:
 
-* \[ **key**: *string*\]: Function
+- \[ **key**: _string_\]: Function
 
-___
+---
 
-#####  strict
+##### strict
 
-• **strict**: *boolean*
+• **strict**: _boolean_
 
-Throw on recompilation of a template
-Defaults to 'true'
+Throw on recompilation of a template Defaults to 'true'
 
-___
+---
 
-#####  templates
+##### templates
 
-• **templates**: *Map‹string, Function›*
+• **templates**: _Map‹string, Function›_
 
 Compiled template functions
 
-
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.29](#stdlibreadmemd) › [UuidFunc](#stdlibinterfacesuuidfuncmd)
+[@lbu/stdlib - v0.0.29](#stdlibreadmemd) ›
+[UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
 
 #### Hierarchy
 
-* **UuidFunc**
+- **UuidFunc**
 
 #### Callable
 
-▸ (): *string*
+▸ (): _string_
 
 Return a new uuid v4
 
-**Returns:** *string*
+**Returns:** _string_
 
 #### Index
 
 ##### Methods
 
-* [isValid](#isvalid)
+- [isValid](#isvalid)
 
 #### Methods
 
-#####  isValid
+##### isValid
 
-▸ **isValid**(`value`: any): *boolean*
+▸ **isValid**(`value`: any): _boolean_
 
-Returns true if value conforms a basic uuid structure.
-This check is case-insensitive.
+Returns true if value conforms a basic uuid structure. This check is
+case-insensitive.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`value` | any |
+| Name    | Type |
+| ------- | ---- |
+| `value` | any  |
 
-**Returns:** *boolean*
+**Returns:** _boolean_
