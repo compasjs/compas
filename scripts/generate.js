@@ -153,8 +153,7 @@ async function main() {
   await app.generate({
     outputDirectory: "./stubs/pet_stubs",
     enabledGroups: [externalApi],
-    useStubGenerators: true,
-    dumpStructure: true,
-    enabledGenerators: ["type", "mock", "router", "apiClient"],
+    useTypescript: true,
+    enabledGenerators: ["type", "mock", "apiClient", "reactQuery"],
   });
 }
