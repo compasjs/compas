@@ -80,7 +80,8 @@ export function unFlatten(data) {
  */
 export function camelToSnakeCase(input) {
   return input
-    .replace(/(.)([A-Z][a-z]+)/, "$1_$2")
-    .replace(/([a-z0-9])([A-Z])/, "$1_$2")
-    .toLowerCase();
+    .replace(/(.)([A-Z][a-z]+)/g, "$1_$2")
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .toLowerCase()
+    .trim();
 }
