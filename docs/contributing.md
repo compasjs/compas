@@ -50,6 +50,8 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 
 ### Publishing
 
+- Ensure you are logged in to npm with `npm whoami`, when logged out;
+  `npm login`
 - Write to the changelog
   - New features
   - Breaking changes
