@@ -118,9 +118,21 @@ test("stdlib/lodash", (t) => {
   });
 
   t.test("camelToSnakeCase", () => {
+    // minimal
     t.equal(camelToSnakeCase("thisISCool"), "this_is_cool");
     t.equal(camelToSnakeCase("fileStore"), "file_store");
     t.equal(camelToSnakeCase("FileStore"), "file_store");
+
+    // very long (check global replace)
+    t.equal(
+      camelToSnakeCase("fileStoreBucketUnitCollectionClusterDatacenter"),
+      "file_store_bucket_unit_collection_cluster_datacenter",
+    );
+
+    t.equal(
+      camelToSnakeCase("FileStoreBucketUnitCollectionClusterDatacenter"),
+      "file_store_bucket_unit_collection_cluster_datacenter",
+    );
 
     t.end();
   });
