@@ -7,8 +7,8 @@ if (typeof value !== "object") {
 
 const result = Object.create(null);
 for (const key of Object.keys(value)) {
-  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + ".$key");
-  const validatedValue = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + ".$value");
+  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + `.$key[${key}]`);
+  const validatedValue = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + `.$value[${key}]`);
 
   result[validatedKey] = validatedValue;
 }
