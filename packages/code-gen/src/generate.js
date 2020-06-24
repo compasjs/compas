@@ -243,22 +243,31 @@ function includeReferenceTypes(rootData, generatorInput, value) {
  * @param structure
  */
 export function hoistNamedItems(root, structure) {
+  const history = new Set();
+
   for (const group of Object.values(structure)) {
     for (const item of Object.values(group)) {
-      hoistNamedItemsRecursive(root, item);
+      hoistNamedItemsRecursive(history, root, item);
     }
   }
 }
 
 /**
+ * @param {Set} history
  * @param root
  * @param value
  */
-function hoistNamedItemsRecursive(root, value) {
+function hoistNamedItemsRecursive(history, root, value) {
   if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
     // Skip primitives & null / undefined
     return;
   }
+
+  if (history.has(value)) {
+    return;
+  }
+
+  history.add(value);
 
   if (isNamedTypeBuilderLike(value)) {
     // Most likely valid output from TypeBuilder
@@ -268,7 +277,7 @@ function hoistNamedItemsRecursive(root, value) {
 
   if (isPlainObject(value)) {
     for (const key of Object.keys(value)) {
-      hoistNamedItemsRecursive(root, value[key]);
+      hoistNamedItemsRecursive(history, root, value[key]);
       if (isNamedTypeBuilderLike(value[key])) {
         // value[key] got a uniqueName when called with addToData()
         value[key] = {
@@ -284,7 +293,7 @@ function hoistNamedItemsRecursive(root, value) {
     }
   } else if (Array.isArray(value)) {
     for (let i = 0; i < value.length; ++i) {
-      hoistNamedItemsRecursive(root, value[i]);
+      hoistNamedItemsRecursive(history, root, value[i]);
       if (isNamedTypeBuilderLike(value[i])) {
         // value[i] got a uniqueName when called with addToData()
         value[i] = {
@@ -299,6 +308,8 @@ function hoistNamedItemsRecursive(root, value) {
       }
     }
   }
+
+  history.delete(value);
 }
 
 /**
