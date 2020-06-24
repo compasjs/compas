@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.31](https://github.com/lightbasenl/lbu/releases/tag/v0.0.31)
+
+- stdlib: resolve camelToSnakeCase issue with long strings
+
 ### [v0.0.30](https://github.com/lightbasenl/lbu/releases/tag/v0.0.30)
 
 - docs: add api docs for code-gen and server

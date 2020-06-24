@@ -53,7 +53,7 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 - Write to the changelog
   - New features
   - Breaking changes
-- Commit with `*: prepare release for vX.X.X`
+- Commit with `*: prepare release for vX.X.X` and push to master
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version
   - Check packages it will publish and send `y`
