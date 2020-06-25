@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.33](https://github.com/lightbasenl/lbu/releases/tag/v0.0.33)
+
+- code-gen: fix api client generation of interceptors
+
 ### [v0.0.32](https://github.com/lightbasenl/lbu/releases/tag/v0.0.32)
 
 - code-gen: various fixes
