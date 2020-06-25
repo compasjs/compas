@@ -27,6 +27,10 @@ export function setMocker(mocker) {
     {{ if (options.mock_enabledTypes.indexOf(item.type) === -1) { }}
     {{ continue; }}
     {{ } }}
+
+    {{ if (item?.disabled?.mock) { }}
+    {{ continue; }}
+    {{ } }}
   ((newline))
 
     {{= mocksNamedFn({ model: item }) }}

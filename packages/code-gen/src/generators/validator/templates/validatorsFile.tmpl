@@ -52,6 +52,10 @@ export function validatorSetErrorFn(fn) {
     {{ continue; }}
     {{ } }}
 
+    {{ if (item?.disabled?.validator) { }}
+    {{ continue; }}
+    {{ } }}
+
     {{= validatorsNamedFn({ ctx, model: item }) }}
 ((newline))
 

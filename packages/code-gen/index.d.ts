@@ -260,6 +260,10 @@ export class TypeBuilder {
     docString: string;
     isOptional: boolean;
     defaultValue?: string;
+    disabled: {
+      validator: false;
+      mock: false;
+    };
   };
 
   static getBaseData(): typeof TypeBuilder.baseData;
@@ -286,6 +290,11 @@ export class TypeBuilder {
    * Can be reverted by calling this function with undefined or null
    */
   default(rawString?: string): this;
+
+  /**
+   * Disable specific generators for this type. Not all generators support this feature
+   */
+  disable(values: Partial<typeof TypeBuilder.baseData.disabled>): this;
 
   /**
    * Returns a shallow copy of the data object

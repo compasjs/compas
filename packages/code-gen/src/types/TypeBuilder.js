@@ -9,6 +9,10 @@ export class TypeBuilder {
     docString: "",
     isOptional: false,
     defaultValue: undefined,
+    disabled: {
+      validator: false,
+      mock: false,
+    },
   };
 
   static getBaseData() {
@@ -55,6 +59,16 @@ export class TypeBuilder {
   default(rawString) {
     this.data.defaultValue = rawString;
     this.data.isOptional = !isNil(rawString);
+
+    return this;
+  }
+
+  /**
+   * @param {{validator?: boolean, mock?: boolean}} values
+   * @returns {TypeBuilder}
+   */
+  disable(values) {
+    Object.assign(this.data.disabled, values);
 
     return this;
   }
