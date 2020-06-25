@@ -11,6 +11,7 @@ import {
 ((newline))
 
 let _internalClient = undefined;
+let requestId = undefined;
 ((newline))
 
 function checkApiClient() {
@@ -26,11 +27,24 @@ function checkApiClient() {
  */
 export function createApiClient(instance) {
   _internalClient = instance;
-}
-((newline))
 
-function setXRequestId(headers) {
-  _internalClient.defaults.headers.common["X-Request-Id"] = headers["x-request-id"];
+  _internalClient.interceptors.request.use((config) => {
+      if (requestId) {
+        config.headers["x-request-id"] = requestId;
+      }
+  });
+
+  _internalClient.interceptors.response.use((response) => {
+    if (response.headers["x-request-id"]) {
+      requestId = response.headers["x-request-id"];
+    }
+  },
+  (error) => {
+    if (error.response && error.response.headers["x-request-id"]) {
+      requestId = error.response.headers["x-request-id"];
+    }
+    return Promise.reject(error);
+  });
 }
 ((newline))
 

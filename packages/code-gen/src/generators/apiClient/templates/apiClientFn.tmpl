@@ -43,8 +43,6 @@ body,
           data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
         });
 
-        setXRequestId(response.headers);
-
         return response.data;
       } catch (e) {
         if (e.response && e.response.status === 405) {
@@ -59,8 +57,6 @@ body,
           params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
           data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
         });
-
-        setXRequestId(response.headers);
 
         return response.data;
     {{ } }}
