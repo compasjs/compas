@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.32](https://github.com/lightbasenl/lbu/releases/tag/v0.0.32)
+
+- code-gen: various fixes
+- code-gen: fixed x-request-id in apiClient
+- code-gen: add option to disable mock and validator generator for a type
+
 ### [v0.0.31](https://github.com/lightbasenl/lbu/releases/tag/v0.0.31)
 
 - stdlib: resolve camelToSnakeCase issue with long strings
