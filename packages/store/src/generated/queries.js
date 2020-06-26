@@ -15,11 +15,11 @@ export const storeQueries = {
   ) => sql`SELECT fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt" FROM file_store fs 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-    where.idIn
-  })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }) AND (COALESCE(${
+  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
   }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 `,
@@ -33,11 +33,11 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     const result = await sql`SELECT count(*) as gen_count FROM file_store fs 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-      where.idIn
-    })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }) AND (COALESCE(${
+    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
     }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 `;
@@ -52,11 +52,11 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
   fileStoreDelete: (sql, where) => sql`DELETE FROM file_store fs 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-    where.idIn
-  })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }) AND (COALESCE(${
+  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
   }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 `,
@@ -121,11 +121,11 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
 SELECT id, bucket_name, content_length, content_type, filename, COALESCE(updated_at, created_at, now()) FROM file_store fs 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-      where.idIn
-    })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }) AND (COALESCE(${
+    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
     }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 `;
@@ -135,11 +135,11 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     )} 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-      where.idIn
-    })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }) AND (COALESCE(${
+    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
     }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 RETURNING fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt"`;
@@ -156,11 +156,11 @@ RETURNING fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "c
   ) => sql`SELECT fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt", array_agg(fsh.*) as history FROM file_store fs LEFT JOIN file_store_history fsh ON fs.id = fsh.file_store_id 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id IN (${
-    where.idIn
-  })) AND (COALESCE(${where.bucketName}, NULL) IS NULL OR fs.bucket_name = ${
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }) AND (COALESCE(${
+  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
   }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
 GROUP BY fs.id`,
@@ -174,7 +174,17 @@ GROUP BY fs.id`,
     sql,
     where,
   ) => sql`SELECT ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_at as "createdAt", ss.updated_at as "updatedAt" FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id IN (${where.idIn})) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${where.expiresGreaterThan}) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${where.expiresLowerThan})
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+    where.id
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${
+    where.expires
+  }) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${
+    where.expiresGreaterThan
+  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+    where.expiresLowerThan
+  })
 `,
 
   /**
@@ -184,7 +194,19 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE
    */
   sessionStoreCount: async (sql, where) => {
     const result = await sql`SELECT count(*) as gen_count FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id IN (${where.idIn})) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${where.expiresGreaterThan}) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${where.expiresLowerThan})
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+      where.id
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
+      where.expires
+    }, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${
+      where.expiresGreaterThan
+    }, NULL) IS NULL OR ss.expires > ${
+      where.expiresGreaterThan
+    }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+      where.expiresLowerThan
+    })
 `;
     return result?.[0]?.gen_count ?? 0;
   },
@@ -195,7 +217,17 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE
    * @returns {Promise<*[]>}
    */
   sessionStoreDelete: (sql, where) => sql`DELETE FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id IN (${where.idIn})) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${where.expiresGreaterThan}) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${where.expiresLowerThan})
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+    where.id
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${
+    where.expires
+  }) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${
+    where.expiresGreaterThan
+  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+    where.expiresLowerThan
+  })
 `,
 
   /**
@@ -250,11 +282,11 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${where.id}) AND (COALESCE
     )} 
 WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id IN (${
-      where.idIn
-    })) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
       where.expires
-    }) AND (COALESCE(${
+    }, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${
       where.expiresGreaterThan
     }, NULL) IS NULL OR ss.expires > ${
       where.expiresGreaterThan
