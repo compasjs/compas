@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.34](https://github.com/lightbasenl/lbu/releases/tag/v0.0.34)
+
+- code-gen: try an fix for `WHERE IN` generation.
+
 ### [v0.0.33](https://github.com/lightbasenl/lbu/releases/tag/v0.0.33)
 
 - code-gen: fix api client generation of interceptors
