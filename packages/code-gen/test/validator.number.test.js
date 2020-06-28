@@ -80,5 +80,7 @@ function applyStructure(app) {
   app.add(T.number("number6").oneOf(1, 2, 3));
   app.add(T.number("number7").convert());
 
-  return ["validator"];
+  return {
+    enabledGenerators: ["validator"],
+  };
 }

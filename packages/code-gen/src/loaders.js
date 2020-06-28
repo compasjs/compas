@@ -7,6 +7,7 @@ import { convertOpenAPISpec } from "./open-api-importer.js";
  * @returns {Promise<any>}
  */
 export async function loadFromRemote(Axios, url) {
+  url = url.endsWith("/") ? url.substr(0, url.length - 1) : url;
   const response = await Axios.get(url + "/_lbu/structure.json");
 
   return response.data;

@@ -67,5 +67,7 @@ function applyStructure(app) {
   app.add(T.bool("boolean4").oneOf(true));
   app.add(T.bool("boolean5").default(false));
 
-  return ["validator"];
+  return {
+    enabledGenerators: ["validator"],
+  };
 }

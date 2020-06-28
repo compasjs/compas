@@ -1,9 +1,8 @@
 {{= options.fileHeader }}
 ((newline))
 
-import {
-  useQuery,
-  useMutation,
+import * as reactQuery from "react-query";
+import type {
   QueryOptions,
   QueryResult,
   MutationOptions,
@@ -17,6 +16,8 @@ import {
 } from "./apiClient.js";
 import * as T from "./types";
 ((newline))
+// @ts-ignore
+const { useQuery, useMutation } = reactQuery.useQuery ? reactQuery : reactQuery.default;
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
