@@ -4,7 +4,6 @@ import {
   mainFn,
   processDirectoryRecursiveSync,
 } from "@lbu/stdlib";
-import test from "tape";
 
 const __filename = filenameForModule(import.meta);
 
@@ -29,27 +28,6 @@ mainFn(
   main,
 );
 
-/**
- *
- */
 async function main() {
-  test.Test.prototype.asyncShouldThrow = async function (cb, msg) {
-    try {
-      await cb();
-      this.fail(msg);
-    } catch (e) {
-      this.ok(msg || e.message);
-    }
-  };
-
-  test.Test.prototype.asyncShouldNotThrow = async function (cb) {
-    try {
-      await cb();
-      this.ok(true, "cb did not throw");
-    } catch (e) {
-      this.fail(e);
-    }
-  };
-
   await processDirectoryRecursiveSync(process.cwd(), contentHandler);
 }

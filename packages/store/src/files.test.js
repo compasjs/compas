@@ -41,10 +41,12 @@ test("store/files", async (t) => {
 
   t.test("createOrUpdateFile no filename specified", async (t) => {
     const ctx = newFileStoreContext(sql, minio, bucketName);
-    await t.asyncShouldThrow(
-      async () => createOrUpdateFile(ctx, {}, ""),
-      "throws on unknown filename",
-    );
+    try {
+      await createOrUpdateFile(ctx, {}, "");
+      t.fail("Should throw for unknown filename");
+    } catch (e) {
+      t.ok(e);
+    }
   });
 
   t.test("createOrUpdateFile only filename provided", async (t) => {

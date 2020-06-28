@@ -71,28 +71,27 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("populate fileStore", async (t) => {
-    await t.asyncShouldNotThrow(async () => {
+    try {
       files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
         pathJoin("/tmp", "small"),
       );
-    });
 
-    await t.asyncShouldNotThrow(async () => {
       files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
         pathJoin("/tmp", "medium"),
       );
-    });
-    await t.asyncShouldNotThrow(async () => {
+
       files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
         pathJoin("/tmp", "large"),
       );
-    });
+    } catch (e) {
+      t.fail(e);
+    }
   });
 
   t.test("get a small file", async (t) => {
@@ -216,28 +215,27 @@ test("store/file-cache check memory usage", async (t) => {
   });
 
   t.test("populate fileStore", async (t) => {
-    await t.asyncShouldNotThrow(async () => {
+    try {
       files.small = await createOrUpdateFile(
         store,
         { filename: "small" },
         pathJoin("/tmp", "small"),
       );
-    });
 
-    await t.asyncShouldNotThrow(async () => {
       files.medium = await createOrUpdateFile(
         store,
         { filename: "medium" },
         pathJoin("/tmp", "medium"),
       );
-    });
-    await t.asyncShouldNotThrow(async () => {
+
       files.large = await createOrUpdateFile(
         store,
         { filename: "large" },
         pathJoin("/tmp", "large"),
       );
-    });
+    } catch (e) {
+      t.fail(e);
+    }
   });
 
   logMemory(t);
