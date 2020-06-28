@@ -297,6 +297,7 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
   },
 
   /**
+   * Note: Use only when id has a unique constraint
    * @param sql
    * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
    * @returns {Promise<StoreSessionStore[]>}
@@ -319,6 +320,35 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
     )} ON CONFLICT (id) DO UPDATE SET ${sql(
       data,
       "expires",
+      "data",
+      "created_at",
+      "updated_at",
+    )} RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+  },
+
+  /**
+   * Note: Use only when expires has a unique constraint
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpsertByExpires: (sql, it) => {
+    const data = {
+      expires: it.expires ?? undefined,
+      data: JSON.stringify(it.data ?? {}),
+      created_at: it.createdAt ?? new Date(),
+      updated_at: it.updatedAt ?? new Date(),
+    };
+    data.id = it.id || uuid();
+    return sql`INSERT INTO session_store ${sql(
+      data,
+      "id",
+      "expires",
+      "data",
+      "created_at",
+      "updated_at",
+    )} ON CONFLICT (expires) DO UPDATE SET ${sql(
+      data,
       "data",
       "created_at",
       "updated_at",
@@ -468,6 +498,7 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
   },
 
   /**
+   * Note: Use only when id has a unique constraint
    * @param sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
@@ -499,6 +530,44 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
       "priority",
       "scheduled_at",
       "name",
+      "data",
+      "created_at",
+      "updated_at",
+    )} RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+  },
+
+  /**
+   * Note: Use only when name has a unique constraint
+   * @param sql
+   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJobQueue[]>}
+   */
+  jobQueueUpsertByName: (sql, it) => {
+    const data = {
+      is_complete: it.isComplete ?? false,
+      priority: it.priority ?? 0,
+      scheduled_at: it.scheduledAt ?? new Date(),
+      name: it.name ?? undefined,
+      data: JSON.stringify(it.data ?? {}),
+      created_at: it.createdAt ?? new Date(),
+      updated_at: it.updatedAt ?? new Date(),
+    };
+    data.id = it.id || uuid();
+    return sql`INSERT INTO job_queue ${sql(
+      data,
+      "id",
+      "is_complete",
+      "priority",
+      "scheduled_at",
+      "name",
+      "data",
+      "created_at",
+      "updated_at",
+    )} ON CONFLICT (name) DO UPDATE SET ${sql(
+      data,
+      "is_complete",
+      "priority",
+      "scheduled_at",
       "data",
       "created_at",
       "updated_at",

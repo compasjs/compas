@@ -91,18 +91,22 @@ import { uuid } from "@lbu/stdlib";
 ((newline))
 
     {{ if (!ref.queryOptions.withHistory) { }}
-    /**
-     * @param sql
-     * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, model: ref.keys["id"], isInputType: true }).trim() }} } } it
-     * @returns {Promise<{{= ref.uniqueName }}[]>}
-     */
-     {{= ref.name }}Upsert: (sql, it) => {
-       const data = {{= sqlGenDefaults({ item, ref, }) }};
-       data.id = it.id || uuid();
-       return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT (id) DO UPDATE SET ${sql(data, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`
-     },
-((newline))
+        {{ for (const field of item.whereFields.filter(it => it.type === "equal")) { }}
 
+            /**
+             * Note: Use only when {{= field.key }} has a unique constraint
+             * @param sql
+             * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, model: ref.keys["id"], isInputType: true }).trim() }} } } it
+             * @returns {Promise<{{= ref.uniqueName }}[]>}
+             */
+             {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {
+               const data = {{= sqlGenDefaults({ item, ref, }) }};
+               data.id = it.id || uuid();
+               return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT ({{= camelToSnakeCase(field.key) }}) DO UPDATE SET ${sql(data, {{= item.partialFields.filter(it => it.result !== camelToSnakeCase(field.key)).map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
+             },
+
+         ((newline))
+        {{ } }}
     {{ } }}
 
     {{ if (ref.queryOptions.withHistory) { }}
