@@ -30,6 +30,9 @@ test("store/sessions", async (t) => {
     const data = { foo: "bar" };
     await store.set(checkAutoDeleteId, data, 15);
     t.deepEqual(await store.get(checkAutoDeleteId), data);
+    // Make sure upsert query works
+    await store.set(checkAutoDeleteId, data, 15);
+    t.deepEqual(await store.get(checkAutoDeleteId), data);
   });
 
   t.test("after destroy return false", async (t) => {

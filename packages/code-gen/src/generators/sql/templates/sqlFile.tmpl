@@ -102,7 +102,7 @@ import { uuid } from "@lbu/stdlib";
              {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {
                const data = {{= sqlGenDefaults({ item, ref, }) }};
                data.id = it.id || uuid();
-               return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT ({{= camelToSnakeCase(field.key) }}) DO UPDATE SET ${sql(data, {{= item.partialFields.filter(it => it.result !== camelToSnakeCase(field.key)).map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
+               return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT ({{= camelToSnakeCase(field.key) }}) DO UPDATE SET {{= item.partialFields.filter(it => it.result !== camelToSnakeCase(field.key) && it.result !== "created_at").map(it => `${it.result} = EXCLUDED.${it.result}`).join(", ") }} RETURNING {{= getKeys("") }}`;
              },
 
          ((newline))

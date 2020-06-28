@@ -317,13 +317,7 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
       "data",
       "created_at",
       "updated_at",
-    )} ON CONFLICT (id) DO UPDATE SET ${sql(
-      data,
-      "expires",
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    )} ON CONFLICT (id) DO UPDATE SET expires = EXCLUDED.expires, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
   },
 
   /**
@@ -347,12 +341,7 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
       "data",
       "created_at",
       "updated_at",
-    )} ON CONFLICT (expires) DO UPDATE SET ${sql(
-      data,
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    )} ON CONFLICT (expires) DO UPDATE SET data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
   },
 
   /**
@@ -524,16 +513,7 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
       "data",
       "created_at",
       "updated_at",
-    )} ON CONFLICT (id) DO UPDATE SET ${sql(
-      data,
-      "is_complete",
-      "priority",
-      "scheduled_at",
-      "name",
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    )} ON CONFLICT (id) DO UPDATE SET is_complete = EXCLUDED.is_complete, priority = EXCLUDED.priority, scheduled_at = EXCLUDED.scheduled_at, name = EXCLUDED.name, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
   },
 
   /**
@@ -563,14 +543,6 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
       "data",
       "created_at",
       "updated_at",
-    )} ON CONFLICT (name) DO UPDATE SET ${sql(
-      data,
-      "is_complete",
-      "priority",
-      "scheduled_at",
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    )} ON CONFLICT (name) DO UPDATE SET is_complete = EXCLUDED.is_complete, priority = EXCLUDED.priority, scheduled_at = EXCLUDED.scheduled_at, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
   },
 };
