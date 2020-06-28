@@ -39,12 +39,13 @@
 //                 Tomek Łaziuk <https://github.com/tlaziuk>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
+import { Logger } from "@lbu/insight";
+import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
 import { Files } from "formidable";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { ListenOptions, Socket } from "net";
 import * as url from "url";
-import { Logger } from "@lbu/insight";
 
 /**
  * @private
@@ -972,7 +973,13 @@ interface SessionOptions {
    * Renew session when session is nearly expired, so we can always keep user logged in.
    * (default is false)
    */
-  renew?: boolean; // Type definitions for koa-session 5.10 // Project: https://github.com/koajs/session // Definitions by: Yu Hsin Lu <https://github.com/kerol2r20> //                 Tomek Łaziuk <https://github.com/tlaziuk> //                 Hiroshi Ioka <https://github.com/hirochachacha> // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped // TypeScript Version: 2.8
+  renew?: boolean; // Type definitions for koa-session 5.10 // Project:
+  // https://github.com/koajs/session // Definitions by: Yu Hsin Lu
+  // <https://github.com/kerol2r20> //                 Tomek Łaziuk
+  // <https://github.com/tlaziuk> //                 Hiroshi Ioka
+  // <https://github.com/hirochachacha> // Definitions:
+  // https://github.com/DefinitelyTyped/DefinitelyTyped // TypeScript
+  // Version: 2.8
 
   /**
    * You can store the session content in external stores(redis, mongodb or other DBs)
@@ -996,46 +1003,42 @@ interface SessionOptions {
 // END OF @types
 // ============
 
-// From koa-body/index.d.ts https://github.com/dlau/koa-body/tree/a6ca8c78015e326154269d272410a11bf40e1a07
-// The MIT License (MIT)
-//
-// Copyright (c) 2014 Charlike Mike Reagent <mameto_100@mail.bg> and Daryl Lau <daryl@weak.io>
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-//   The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// From koa-body/index.d.ts
+// https://github.com/dlau/koa-body/tree/a6ca8c78015e326154269d272410a11bf40e1a07 The MIT
+// License (MIT)  Copyright (c) 2014 Charlike Mike Reagent <mameto_100@mail.bg> and Daryl Lau
+// <daryl@weak.io>  Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"), to deal in the
+// Software without restriction, including without limitation the rights to use, copy, modify,
+// merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the following conditions:
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
+// OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
  * @private
  */
 interface IKoaBodyFormidableOptions {
   /**
-   * {Integer} Limits the amount of memory all fields together (except files) can allocate in bytes. If this value is exceeded, an 'error' event is emitted. The default size is 20MB.
+   * {Integer} Limits the amount of memory all fields together (except files) can allocate in
+   * bytes. If this value is exceeded, an 'error' event is emitted. The default size is 20MB.
    */
   maxFileSize?: number;
 
   /**
-   * {Integer} Limits the number of fields that the querystring parser will decode, default 1000
+   * {Integer} Limits the number of fields that the querystring parser will decode, default
+   * 1000
    */
   maxFields?: number;
 
   /**
-   * {Integer} Limits the amount of memory all fields together (except files) can allocate in bytes.
-   * If this value is exceeded, an 'error' event is emitted, default 2mb (2 * 1024 * 1024)
+   * {Integer} Limits the amount of memory all fields together (except files) can allocate in
+   * bytes. If this value is exceeded, an 'error' event is emitted, default 2mb (2 * 1024 *
+   * 1024)
    */
   maxFieldsSize?: number;
 
@@ -1045,12 +1048,14 @@ interface IKoaBodyFormidableOptions {
   uploadDir?: string;
 
   /**
-   * {Boolean} Files written to uploadDir will include the extensions of the original files, default false
+   * {Boolean} Files written to uploadDir will include the extensions of the original files,
+   * default false
    */
   keepExtensions?: boolean;
 
   /**
-   * {String} If you want checksums calculated for incoming files, set this to either 'sha1' or 'md5', default false
+   * {String} If you want checksums calculated for incoming files, set this to either 'sha1'
+   * or 'md5', default false
    */
   hash?: string;
 
@@ -1060,8 +1065,9 @@ interface IKoaBodyFormidableOptions {
   multiples?: boolean;
 
   /**
-   * {Function} Special callback on file begin. The function is executed directly by formidable.
-   * It can be used to rename files before saving them to disk. See https://github.com/felixge/node-formidable#filebegin
+   * {Function} Special callback on file begin. The function is executed directly by
+   * formidable. It can be used to rename files before saving them to disk. See
+   * https://github.com/felixge/node-formidable#filebegin
    */
   onFileBegin?: (name: string, file: any) => void;
 }
@@ -1151,7 +1157,8 @@ interface IKoaBodyOptions {
   formidable?: IKoaBodyFormidableOptions;
 
   /**
-   * {Function} Custom error handle, if throw an error, you can customize the response - onError(error, context), default will throw
+   * {Function} Custom error handle, if throw an error, you can customize the response -
+   * onError(error, context), default will throw
    */
   onError?: (err: Error, ctx: Context) => void;
 
@@ -1167,7 +1174,8 @@ interface IKoaBodyOptions {
   strict?: boolean;
 
   /**
-   * {String[]} What HTTP methods to enable body parsing for; should be used in preference to strict mode.
+   * {String[]} What HTTP methods to enable body parsing for; should be used in preference to
+   * strict mode.
    *
    * GET, HEAD, and DELETE requests have no defined semantics for the request body,
    * but this doesn't mean they may not be valid in certain use cases.
@@ -1339,3 +1347,17 @@ export function sendFile(
  * node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
  */
 export function session(app: Application, options: SessionOptions): Middleware;
+
+/**
+ * Calls app.listen on a random port and sets the correct baseURL on the provided axios
+ * instance
+ */
+export function createTestAppAndClient(
+  app: Application,
+  axios: AxiosInstance,
+): Promise<void>;
+
+/**
+ * Stops the server created with `createTestAppAndClient`
+ */
+export function closeTestApp(app: Application): void | Promise<void>;

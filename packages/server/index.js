@@ -8,3 +8,4 @@ export {
   sendFile,
   session,
 } from "./src/middleware/index.js";
+export { closeTestApp, createTestAppAndClient } from "./src/testing.js";
