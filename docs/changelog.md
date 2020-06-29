@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.38](https://github.com/lightbasenl/lbu/releases/tag/v0.0.38)
+
+- code-gen: validator supports collecting errors instead of throwing
+- code-gen: always quote object keys in types generator
+
 ### [v0.0.37](https://github.com/lightbasenl/lbu/releases/tag/v0.0.37)
 
 - code-gen: fix generic Typescript type when key is an union type
