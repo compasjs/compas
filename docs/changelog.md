@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.35](https://github.com/lightbasenl/lbu/releases/tag/v0.0.35)
+
+- server: add server testing utilities
+- code-gen: e2e testing of generated router, validator and apiClient
+- cli: remove asyncShould(Not)Throw functions added to tape
+- code-gen: generate Postgres upsert queries for all searchable fields
+
 ### [v0.0.34](https://github.com/lightbasenl/lbu/releases/tag/v0.0.34)
 
 - code-gen: try an fix for `WHERE IN` generation.
