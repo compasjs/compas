@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.36](https://github.com/lightbasenl/lbu/releases/tag/v0.0.36)
+
+- code-gen: fix react-query import in generated file
+
 ### [v0.0.35](https://github.com/lightbasenl/lbu/releases/tag/v0.0.35)
 
 - server: add server testing utilities
