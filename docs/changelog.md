@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.37](https://github.com/lightbasenl/lbu/releases/tag/v0.0.37)
+
+- code-gen: fix generic Typescript type when key is an union type
+
 ### [v0.0.36](https://github.com/lightbasenl/lbu/releases/tag/v0.0.36)
 
 - code-gen: fix react-query import in generated file
