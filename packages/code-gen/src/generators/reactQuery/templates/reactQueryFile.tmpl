@@ -1,13 +1,14 @@
 {{= options.fileHeader }}
 ((newline))
 
-import * as reactQuery from "react-query";
-import type {
+import {
+  MutateFunction,
+  MutationOptions,
+  MutationResult,
   QueryOptions,
   QueryResult,
-  MutationOptions,
-  MutateFunction,
-  MutationResult,
+  useMutation,
+  useQuery,
 } from "react-query";
 import {
 {{ for (const group of Object.keys(structure)) { }}
@@ -16,8 +17,6 @@ import {
 } from "./apiClient.js";
 import * as T from "./types";
 ((newline))
-// @ts-ignore
-const { useQuery, useMutation } = reactQuery.useQuery ? reactQuery : reactQuery.default;
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
