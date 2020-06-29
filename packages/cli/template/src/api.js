@@ -1,7 +1,7 @@
 import { getApp } from "@lbu/server";
 import { AppError } from "@lbu/stdlib";
 import { router, setBodyParser } from "./generated/router.js";
-import { validatorSetErrorFn } from "./generated/validators.js";
+import { validatorSetError } from "./generated/validators.js";
 import { app, bodyParsers } from "./services/index.js";
 
 /**
@@ -22,7 +22,7 @@ export function createApp() {
 }
 
 export function constructApp() {
-  validatorSetErrorFn(AppError.validationError);
+  validatorSetError(AppError.validationError);
   setBodyParser(bodyParsers.bodyParser);
 
   app.use(router);

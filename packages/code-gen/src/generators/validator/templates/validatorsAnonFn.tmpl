@@ -3,19 +3,24 @@
  * {{= model.docString }}
  */
 {{ } }}
-function {{= model.type}}Validator{{= ctx.counter++ }}(value, propertyPath, parentType = "{{= model.type }}") {
+function {{= model.type}}Validator{{= ctx.counter++ }}(
+  value,
+  propertyPath,
+  errorList = [],
+  parentType = "{{= model.type }}"
+  ) {
   if (isNil(value)) {
     {{ if (model.isOptional) { }}
       return {{= model.defaultValue }};
     {{ } else { }}
-      throw _errorFn("validator.{{= model.type }}.undefined", { propertyPath });
+      return buildError("validator.{{= model.type }}.undefined", { propertyPath }, errorList);
     {{ } }}
   }
 
   {{ /* makes it easier for type implementations */ }}
   {{ model.validator = model.validator || {}; }}
 
-  {{= validatorExec({ type: model.type, model, ctx }).trim() }}
+  {{= validatorExec({ type: model.type, model, ctx, options, }).trim() }}
 }
 ((newline))
 

@@ -9,13 +9,13 @@
 {{ } }}
 
 if (typeof value !== "boolean") {
-  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
+  return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
 {{ if (model.oneOf !== undefined) { }}
   if (value !== {{= model.oneOf }}) {
     const oneOf = {{= model.oneOf }};
-    throw _errorFn(`validator.${parentType}.oneOf`, { propertyPath, oneOf });
+    return buildError(`validator.${parentType}.oneOf`, { propertyPath, oneOf }, errorList);
   }
 {{ } }}
 

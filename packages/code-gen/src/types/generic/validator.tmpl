@@ -2,13 +2,13 @@
 {{ const fnNumberValues = ctx.anonFn(model.values); }}
 
 if (typeof value !== "object") {
-  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
+  return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
 const result = Object.create(null);
 for (const key of Object.keys(value)) {
-  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + `.$key[${key}]`);
-  const validatedValue = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + `.$value[${key}]`);
+  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + `.$key[${key}]`, errorList);
+  const validatedValue = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + `.$value[${key}]`, errorList);
 
   result[validatedKey] = validatedValue;
 }

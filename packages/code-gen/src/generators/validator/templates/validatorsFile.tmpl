@@ -18,7 +18,7 @@ const isNil = value => value === undefined || value === null;
 /**
  * @type ValidationErrorFn
  */
-let _errorFn = (key, info) => {
+let _errorBuildFn = (key, info) => {
   const err = new Error(`ValidationError: ${key}`);
   err.key = key;
   err.info = info;
@@ -31,14 +31,26 @@ let _errorFn = (key, info) => {
  * Set a different error function, for example AppError.validationError
  * @param {ValidationErrorFn} fn
  */
-export function validatorSetErrorFn(fn) {
-  _errorFn = fn;
+export function validatorSetError(fn) {
+  _errorBuildFn = fn;
 }
+((newline))
+
+{{ if (!options.validatorCollectErrors) { }}
+function buildError(key, info) {
+  throw _errorBuildFn(key, info);
+}
+{{ } else { }}
+function buildError(key, info, list) {
+  list.push(_errorBuildFn(key, info));
+  return undefined;
+}
+{{ } }}
 ((newline))
 
 {{ const ctx = { counter: 0, functions: [], memo: new Map() }; }}
 {{ ctx.addFunc = fn => { ctx.functions.push(fn); }; }}
-{{ ctx.anonFn = (model) => { const key = inspect(model); if (!ctx.memo.has(key)) { const nr = ctx.counter; ctx.addFunc(validatorsAnonFn({ model, ctx })); ctx.memo.set(key, nr); } return ctx.memo.get(key); }; }}
+{{ ctx.anonFn = (model) => { const key = inspect(model); if (!ctx.memo.has(key)) { const nr = ctx.counter; ctx.addFunc(validatorsAnonFn({ model, ctx, options })); ctx.memo.set(key, nr); } return ctx.memo.get(key); }; }}
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
@@ -56,7 +68,7 @@ export function validatorSetErrorFn(fn) {
     {{ continue; }}
     {{ } }}
 
-    {{= validatorsNamedFn({ ctx, model: item }) }}
+    {{= validatorsNamedFn({ ctx, model: item, options }) }}
 ((newline))
 
   {{ } }}

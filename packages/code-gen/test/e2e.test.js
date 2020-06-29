@@ -144,6 +144,6 @@ function buildTestApp(serverImports) {
     return next();
   };
 
-  serverImports.validator.validatorSetErrorFn(AppError.validationError);
+  serverImports.validator.validatorSetError(AppError.validationError);
   return app;
 }

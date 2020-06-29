@@ -1,10 +1,32 @@
+{{ if (options.validatorCollectErrors) { }}
+
+let errCount = 0;
+const errors = [];
+let result = undefined;
+
+{{ for (const v of model.values) { }}
+  {{ const fnNumber = ctx.anonFn(v); }}
+
+  result =  {{= v.type }}Validator{{= fnNumber }}(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
+  } else {
+    errCount = errors.length
+  }
+
+{{ } }}
+
+return buildError(`validator.${parentType}.type`, { propertyPath, errors }, errorList);
+
+{{ } else { }}
+
 const errors = [];
 
 {{ for (const v of model.values) { }}
   try {
     {{ const fnNumber = ctx.anonFn(v); }}
 
-    return {{= v.type }}Validator{{= fnNumber }}(value, propertyPath);
+    return {{= v.type }}Validator{{= fnNumber }}(value, propertyPath, errorList);
   } catch (e) {
     errors.push({
       name: e.name,
@@ -15,5 +37,5 @@ const errors = [];
   }
 {{ } }}
 
-throw _errorFn(`validator.${parentType}.type`, { propertyPath, errors });
-
+return buildError(`validator.${parentType}.type`, { propertyPath, errors }, errorList);
+{{ } }}

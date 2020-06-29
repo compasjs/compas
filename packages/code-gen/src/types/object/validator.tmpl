@@ -6,7 +6,7 @@
 
 
 if (typeof value !== "object") {
-  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
+  return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
 const result = Object.create(null);
@@ -16,7 +16,7 @@ const result = Object.create(null);
 {{ } }}
 
 {{ for (const key of Object.keys(model.keys)) { }}
-  result[{{= quote(key) }}] = {{= model.keys[key].type }}Validator{{= numMap[key] }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }});
+  result[{{= quote(key) }}] = {{= model.keys[key].type }}Validator{{= numMap[key] }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }}, errorList);
 
   {{ if (model.validator.strict) { }}
     keySet.delete({{= quote(key) }});
@@ -28,7 +28,7 @@ const result = Object.create(null);
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }
 
-    throw _errorFn(`validator.${parentType}.strict`, { propertyPath, extraKeys });
+    return buildError(`validator.${parentType}.strict`, { propertyPath, extraKeys }, errorList);
   }
 {{ } }}
 

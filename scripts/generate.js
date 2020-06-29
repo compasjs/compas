@@ -115,6 +115,14 @@ async function main() {
 
   const externalApi = "apiName";
 
+  app.add(
+    new TypeCreator(externalApi).object("Foo", {
+      bar: T.string(),
+      baz: T.string(),
+      tag: T.number(),
+    }),
+  );
+
   app.extend(
     loadFromOpenAPISpec(
       externalApi,
@@ -154,6 +162,7 @@ async function main() {
     outputDirectory: "./stubs/pet_stubs",
     enabledGroups: [externalApi],
     useTypescript: true,
-    enabledGenerators: ["type", "mock", "apiClient", "reactQuery"],
+    validatorCollectErrors: true,
+    enabledGenerators: ["validator", "type", "mock", "apiClient", "reactQuery"],
   });
 }

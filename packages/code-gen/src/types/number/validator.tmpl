@@ -5,33 +5,33 @@
 {{ } }}
 
 if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
+  return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
 {{ if (model.validator.integer) { }}
   if (!Number.isInteger(value)) {
-    throw _errorFn(`validator.${parentType}.integer`, { propertyPath });
+    return buildError(`validator.${parentType}.integer`, { propertyPath }, errorList);
   }
 {{ } }}
 
 {{ if (model.validator.min !== undefined) { }}
   if (value < {{= model.validator.min }}) {
     const min = {{= model.validator.min }};
-    throw _errorFn(`validator.${parentType}.min`, { propertyPath, min });
+    return buildError(`validator.${parentType}.min`, { propertyPath, min }, errorList);
   }
 {{ } }}
 
 {{ if (model.validator.max !== undefined) { }}
   if (value > {{= model.validator.max }}) {
     const max = {{= model.validator.max }};
-    throw _errorFn(`validator.${parentType}.max`, { propertyPath, max });
+    return buildError(`validator.${parentType}.max`, { propertyPath, max }, errorList);
   }
 {{ } }}
 
 {{ if (model.oneOf !== undefined) { }}
   if ({{= model.oneOf.map(it => "value !== " + it).join(" && ") }}) {
     const oneOf = {{= quote(model.oneOf.join(", ")) }};
-    throw _errorFn(`validator.${parentType}.oneOf`, { propertyPath, oneOf });
+    return buildError(`validator.${parentType}.oneOf`, { propertyPath, oneOf }, errorList);
   }
 {{ } }}
 

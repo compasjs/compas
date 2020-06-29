@@ -4,7 +4,11 @@
  * {{= model.docString }}
  * @param {*} value
  * @param {string} [propertyPath]
+ {{ if (!options.validatorCollectErrors) { }}
  * @returns { {{= model.uniqueName }}}
+ {{ } else { }}
+ * @returns { { errors: ({ key: string, info: object}[]|undefined), data: {{= model.uniqueName }}|undefined } }
+ {{ } }}
  */
 {{= lowerCaseFirst(model.name) }}: (value, propertyPath = "$") => {
  let result = value;
@@ -15,12 +19,30 @@
     result = validatorHooks[{{= preValidate }}](result);
  }
 
- result = {{= model.type }}Validator{{= fnNumber }}(result, propertyPath);
-
- if ({{= postValidate }} in validatorHooks) {
+{{ if (!options.validatorCollectErrors) { }}
+result =  {{= model.type }}Validator{{= fnNumber }}(result, propertyPath);
+if ({{= postValidate }} in validatorHooks) {
     return validatorHooks[{{= postValidate }}](result);
  } else {
    return result;
  }
+{{ } else { }}
+
+const errorList = [];
+result = {{= model.type }}Validator{{= fnNumber }}(result, propertyPath, errorList, "{{= model.type }}");
+
+if (errorList.length > 0) {
+  return { errors: errorList };
+} else {
+  if ({{= postValidate }} in validatorHooks) {
+      return validatorHooks[{{= postValidate }}]({ data: result });
+   } else {
+     return { data: result };
+   }
+}
+
+{{ } }}
+((newline))
+
 },
 ((newline))

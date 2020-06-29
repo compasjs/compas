@@ -1,14 +1,14 @@
 {{ if (model.typeOf !== undefined) { }}
   if (typeof value !== "{{= model.typeOf }}") {
     const typeOf = "{{= model.typeOf }}";
-    throw _errorFn(`validator.${parentType}.type`, { propertyPath, typeOf });
+    return buildError(`validator.${parentType}.type`, { propertyPath, typeOf }, errorList);
 }
 {{ } }}
 
 {{ if (model.instanceOf !== undefined) { }}
   if (!(value instanceOf {{= model.instanceOf }}) {
     const instanceOf = "{{= model.instanceOf }}";
-    throw _errorFn(`validator.${parentType}.instance`, { propertyPath, instanceOf });
+    return buildError(`validator.${parentType}.instance`, { propertyPath, instanceOf }, errorList);
   }
 {{ } }}
 

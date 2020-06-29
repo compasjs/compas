@@ -38,7 +38,7 @@ const uuidType = {
   validator: () => `
 {{ const fnNumber = ctx.anonFn(${stringType}); }}
 
-return stringValidator{{= fnNumber }}(value, propertyPath, parentType);
+return stringValidator{{= fnNumber }}(value, propertyPath, errorList, parentType);
 `,
   mock: () => `_mocker.guid({version: 4}),\n`,
   sql: () =>

@@ -7,27 +7,27 @@
 {{ } }}
 
 if (!Array.isArray(value)) {
-  throw _errorFn(`validator.${parentType}.type`, { propertyPath });
+  return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
 {{ if (model.validator.min !== undefined) { }}
   if (value.length < {{= model.validator.min }}) {
     const min = {{= model.validator.min }};
-    throw _errorFn(`validator.${parentType}.min`, { propertyPath, min });
+    return buildError(`validator.${parentType}.min`, { propertyPath, min }, errorList);
   }
 {{ } }}
 
 {{ if (model.validator.max !== undefined) { }}
   if (value.length > {{= model.validator.max }}) {
     const max = {{= model.validator.max }};
-    throw _errorFn(`validator.${parentType}.max`, { propertyPath, max });
+    return buildError(`validator.${parentType}.max`, { propertyPath, max }, errorList);
   }
 {{ } }}
 
 const result = [];
 
 for (let i = 0; i < value.length; ++i) {
-  result.push({{= model.values.type }}Validator{{= fnNumber }}(value[i], propertyPath + "[" + i + "]"));
+  result.push({{= model.values.type }}Validator{{= fnNumber }}(value[i], propertyPath + "[" + i + "]", errorList));
 }
 
 return result;
