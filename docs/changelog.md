@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.39](https://github.com/lightbasenl/lbu/releases/tag/v0.0.39)
+
+- code-gen: always quote object keys on mock objects
+
 ### [v0.0.38](https://github.com/lightbasenl/lbu/releases/tag/v0.0.38)
 
 - code-gen: validator supports collecting errors instead of throwing
