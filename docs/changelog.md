@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.40](https://github.com/lightbasenl/lbu/releases/tag/v0.0.40)
+
+- code-gen: generate valid dependant queries for react-query >=2 (#88, #80)
+
 ### [v0.0.39](https://github.com/lightbasenl/lbu/releases/tag/v0.0.39)
 
 - code-gen: always quote object keys on mock objects
