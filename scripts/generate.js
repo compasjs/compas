@@ -70,7 +70,15 @@ async function main() {
   app.add(T.array("MyArr").values(T.reference("App", "Items")));
 
   const G = T.router("/foo");
-  app.add(G.get().query(M.reference("App", "User")));
+  app.add(
+    G.get()
+      .query(M.reference("App", "User"))
+      .params(
+        T.object({
+          bar: T.bool().optional(),
+        }),
+      ),
+  );
   app.add(
     G.post("/:id")
       .body(
@@ -160,7 +168,7 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./stubs/pet_stubs",
-    enabledGroups: [externalApi],
+    enabledGroups: ["todo", externalApi],
     useTypescript: true,
     validatorCollectErrors: true,
     enabledGenerators: ["validator", "type", "mock", "apiClient", "reactQuery"],

@@ -2,6 +2,7 @@
 {{ const funcName = "use" + upperCaseFirst(model.uniqueName); }}
 {{ let hasParam = model.params !== undefined; }}
 {{ model.path.split("/").forEach(part => { if (part.startsWith(":")) { hasParam = true; }  }); }}
+{{ const getRef = (model) => /* Recursively resolve references */ { const ref = !!model && structure[model.group][model.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
 
 {{ if (model.method === "GET") { }}
 
@@ -9,7 +10,7 @@
 /**
  * {{= funcName }}
  * Tags: {{= model.tags.join(", ") }}
- * Docs: {{= model.docString }}
+ * Docs: {{= model.docString.replace(/\n/g, "\n  * ") }}
  */
 export function {{= funcName }}(
 {{ if (hasParam) { }}
@@ -23,14 +24,46 @@ body: T.{{= model.body.reference.uniqueName }}_Input,
 {{ } }}
 options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}> = {},
 ): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}> {{ } else { }} QueryResult<any>{{ } }}  {
-  return useQuery(
-    {{ if (hasParam) { }}
-    ["{{= model.uniqueName }}", params],
-    {{ } else { }}
-     "{{= model.uniqueName }}",
+  options.enabled = (
+    !!options.enabled
+    {{ if (model.query && getRef(model.query.reference)) { }}
+      {{ const ref = getRef(model.query.reference); }}
+      {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
+        {{ if (!ref.keys[key].isOptional) { }}
+          || !!query.{{= key }}
+        {{ } }}
+      {{ } }}
     {{ } }}
-    ({{= hasParam ? "_, data" : "" }}) => {{= model.group }}Api.{{= model.name }}(
-      {{= hasParam ? "data, " : ""}}
+    {{ if (hasParam && getRef(model.params.reference)) { }}
+      {{ const ref = getRef(model.params.reference); }}
+      {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
+        {{ if (!ref.keys[key].isOptional) { }}
+          || !!params.{{= key }}
+        {{ } }}
+      {{ } }}
+    {{ } }}
+  );
+
+  return useQuery([
+     "{{= model.uniqueName }}",
+
+    {{ if (hasParam) { }}
+    params,
+    {{ } }}
+    {{ if (model.query) { }}
+    query,
+    {{ } }}
+    ],
+    (
+    _,
+    {{ if (hasParam) { }}
+    params,
+    {{ } }}
+    {{ if (model.query) { }}
+    query,
+    {{ } }}
+    ) => {{= model.group }}Api.{{= model.name }}(
+      {{= hasParam ? "params, " : ""}}
       {{= model.query ? "query, " : "" }}
       {{= model.body ? "body, " : "" }}
     ),
