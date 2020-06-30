@@ -142,6 +142,11 @@ export class App {
       throw new Error("Need at least a single group in enabledGroups");
     }
 
+    // Make sure to do the same case conversion here as well as to not confuse the user.
+    options.enabledGroups = options.enabledGroups.map((it) =>
+      lowerCaseFirst(it),
+    );
+
     await runGenerators(this, options);
     printProcessMemoryUsage(this.logger);
   }
