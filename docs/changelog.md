@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.41](https://github.com/lightbasenl/lbu/releases/tag/v0.0.41)
+
+- server: fix cors issue, and do some micro optimizations
+
 ### [v0.0.40](https://github.com/lightbasenl/lbu/releases/tag/v0.0.40)
 
 - code-gen: generate valid dependant queries for react-query >=2 (#88, #80)
