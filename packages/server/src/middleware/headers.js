@@ -12,14 +12,12 @@ export function defaultHeaders(opts = {}) {
     "X-DNS-Prefetch-Control": "off",
     "Strict-Transport-Security": "max-age=5184000; includeSubDomains", // 60 day default
   };
-  const corsOptions = opts.cors || {};
-  corsOptions.returnNext = false;
+
   const corsExec = cors(opts.cors);
 
   return (ctx, next) => {
     ctx.set(standardHeaders);
-    corsExec(ctx);
 
-    return next();
+    return corsExec(ctx, next);
   };
 }
