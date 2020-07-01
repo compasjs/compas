@@ -1229,12 +1229,12 @@ export interface CorsOptions {
   /**
    * `Access-Control-Allow-Origin`, default is request Origin header
    */
-  origin?: string | ((ctx: Context) => string | boolean);
+  origin?: string | ((ctx: Context) => string | undefined);
 
   /**
    * `Access-Control-Expose-Headers`
    */
-  exposeHeaders?: string[];
+  exposeHeaders?: string[] | string;
 
   /**
    * `Access-Control-Max-Age` in seconds
@@ -1250,17 +1250,12 @@ export interface CorsOptions {
    * `Access-Control-Allow-Methods`, default is ['GET', 'PUT', 'POST', 'PATCH', 'DELETE',
    * 'HEAD', 'OPTIONS']
    */
-  allowMethods?: string[];
+  allowMethods?: string[] | string;
 
   /**
    * `Access-Control-Allow-Headers`
    */
-  allowHeaders?: string[];
-
-  /**
-   * By default, and if false, won't call next, but just returns undefined
-   */
-  returnNext?: boolean;
+  allowHeaders?: string[] | string;
 }
 
 export interface GetAppOptions {

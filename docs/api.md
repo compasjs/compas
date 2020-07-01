@@ -5957,13 +5957,12 @@ Extract data for the response from the AppError data
 - [exposeHeaders](#optional-exposeheaders)
 - [maxAge](#optional-maxage)
 - [origin](#optional-origin)
-- [returnNext](#optional-returnnext)
 
 #### Properties
 
 ##### `Optional` allowHeaders
 
-• **allowHeaders**? : _string[]_
+• **allowHeaders**? : _string[] | string_
 
 `Access-Control-Allow-Headers`
 
@@ -5971,7 +5970,7 @@ Extract data for the response from the AppError data
 
 ##### `Optional` allowMethods
 
-• **allowMethods**? : _string[]_
+• **allowMethods**? : _string[] | string_
 
 `Access-Control-Allow-Methods`, default is ['GET', 'PUT', 'POST', 'PATCH',
 'DELETE', 'HEAD', 'OPTIONS']
@@ -5988,7 +5987,7 @@ Extract data for the response from the AppError data
 
 ##### `Optional` exposeHeaders
 
-• **exposeHeaders**? : _string[]_
+• **exposeHeaders**? : _string[] | string_
 
 `Access-Control-Expose-Headers`
 
@@ -6007,14 +6006,6 @@ Extract data for the response from the AppError data
 • **origin**? : _string | function_
 
 `Access-Control-Allow-Origin`, default is request Origin header
-
----
-
-##### `Optional` returnNext
-
-• **returnNext**? : _boolean_
-
-By default, and if false, won't call next, but just returns undefined
 
 <a name="serverinterfacescustomerrorhandlermd"></a>
 

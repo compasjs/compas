@@ -39,7 +39,23 @@ const defaultOptions = {
 export function cors(options = {}) {
   const opts = Object.assign({}, defaultOptions, options);
 
-  let originFn = (ctx) => options.origin || ctx.get("Origin") || "*";
+  if (Array.isArray(opts.exposeHeaders)) {
+    opts.exposeHeaders = opts.exposeHeaders.join(",");
+  }
+
+  if (Array.isArray(opts.allowHeaders)) {
+    opts.allowHeaders = opts.allowHeaders.join(",");
+  }
+
+  if (Array.isArray(opts.allowMethods)) {
+    opts.allowMethods = opts.allowMethods.join(",");
+  }
+
+  if (opts.maxAge) {
+    opts.maxAge = String(opts.maxAge);
+  }
+
+  let originFn = (ctx) => options.origin || ctx.get("origin") || "*";
   if (typeof options.origin === "function") {
     originFn = options.origin;
   } else if (
@@ -47,52 +63,47 @@ export function cors(options = {}) {
     process.env.CORS_URL.length > 0
   ) {
     // Use CORS_URL array provided via environment variables
+    const allowedOrigins = (process.env.CORS_URL || "").split(",");
     originFn = (ctx) =>
-      (process.env.CORS_URL || "").split(",").indexOf(ctx.get("Origin")) !== -1;
+      allowedOrigins.indexOf(ctx.get("origin")) !== -1
+        ? ctx.get("origin")
+        : undefined;
   }
 
   // eslint-disable-next-line consistent-return
   return (ctx, next) => {
-    const returnValue = opts.returnNext ? next : () => undefined;
-
     // always set vary Origin Header
     // https://github.com/rs/cors/issues/10
     ctx.vary("Origin");
 
     const origin = originFn(ctx);
     if (!origin) {
-      return returnValue();
+      return next();
     }
-
-    // Access-Control-Allow-Origin
-    ctx.set("Access-Control-Allow-Origin", origin);
 
     if (ctx.method === "OPTIONS") {
       // Preflight Request
       if (!ctx.get("Access-Control-Request-Method")) {
-        return returnValue();
+        // Invalid request, skip directly
+        return next();
       }
 
-      // Access-Control-Max-Age
+      ctx.set("Access-Control-Allow-Origin", origin);
+
       if (opts.maxAge) {
-        ctx.set("Access-Control-Max-Age", String(opts.maxAge));
+        ctx.set("Access-Control-Max-Age", opts.maxAge);
       }
 
-      // Access-Control-Allow-Credentials
       if (opts.credentials === true) {
-        // When used as part of a response to a preflight request,
-        // this indicates whether or not the actual request can be made using credentials.
         ctx.set("Access-Control-Allow-Credentials", "true");
       }
 
-      // Access-Control-Allow-Methods
       if (opts.allowMethods) {
-        ctx.set("Access-Control-Allow-Methods", opts.allowMethods.join(","));
+        ctx.set("Access-Control-Allow-Methods", opts.allowMethods);
       }
 
-      // Access-Control-Allow-Headers
       if (opts.allowHeaders) {
-        ctx.set("Access-Control-Allow-Headers", opts.allowHeaders.join(","));
+        ctx.set("Access-Control-Allow-Headers", opts.allowHeaders);
       } else {
         ctx.set(
           "Access-Control-Allow-Headers",
@@ -102,8 +113,9 @@ export function cors(options = {}) {
 
       ctx.status = 204; // No Content
     } else {
-      // Request
-      // Access-Control-Allow-Credentials
+      // Non OPTIONS request
+      ctx.set("Access-Control-Allow-Origin", origin);
+
       if (opts.credentials === true) {
         if (origin === "*") {
           // `credentials` can't be true when the `origin` is set to `*`
@@ -113,12 +125,11 @@ export function cors(options = {}) {
         }
       }
 
-      // Access-Control-Expose-Headers
       if (opts.exposeHeaders) {
-        ctx.set("Access-Control-Expose-Headers", opts.exposeHeaders.join(","));
+        ctx.set("Access-Control-Expose-Headers", opts.exposeHeaders);
       }
 
-      return returnValue();
+      return next();
     }
   };
 }
