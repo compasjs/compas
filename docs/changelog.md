@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.42](https://github.com/lightbasenl/lbu/releases/tag/v0.0.42)
+
+- code-gen: useQuery hook now enabled by default
+
 ### [v0.0.41](https://github.com/lightbasenl/lbu/releases/tag/v0.0.41)
 
 - server: fix cors issue, and do some micro optimizations
