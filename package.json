@@ -23,7 +23,7 @@
     "react-query": "2.4.7",
     "typedoc": "0.17.8",
     "typedoc-plugin-markdown": "2.3.1",
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   },
   "scarfSettings": {
     "enabled": false
