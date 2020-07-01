@@ -25,7 +25,7 @@ body: T.{{= model.body.reference.uniqueName }}_Input,
 options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}> = {},
 ): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}> {{ } else { }} QueryResult<any>{{ } }}  {
   options.enabled = (
-    !!options.enabled
+    options.enabled !== false
     {{ if (model.query && getRef(model.query.reference)) { }}
       {{ const ref = getRef(model.query.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
