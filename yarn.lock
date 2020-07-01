@@ -7041,10 +7041,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.4.9:
-  version "2.4.9"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.4.9.tgz#8ae86f2e09b4496f13ed1d6ab5cde0fa63348485"
-  integrity sha512-+Z5+Vb3vd4zt9Vgi0Q5kF4m7bxq6dhWflRyA+isIAIU+ctgNOn/melCo+jdQ0pIodEWAhUzd+o3ZysFmB6fspg==
+react-query@2.4.10:
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.4.10.tgz#74b57247f75ac88781741e48058fc789e96d7e22"
+  integrity sha512-e63se6x7cSywBnxqQY+1oMX/+hLPQ6KP0ctQa+YVx78X5Im6roBBkTNJIhRrqhewiAJkSwGZ2ZofspV9HiMpOw==
   dependencies:
     ts-toolbelt "^6.9.4"
 
