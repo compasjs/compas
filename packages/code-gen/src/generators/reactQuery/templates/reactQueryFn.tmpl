@@ -1,7 +1,5 @@
 {{ /* Keep in sync with apiClientFn */ }}
 {{ const funcName = "use" + upperCaseFirst(model.uniqueName); }}
-{{ let hasParam = model.params !== undefined; }}
-{{ model.path.split("/").forEach(part => { if (part.startsWith(":")) { hasParam = true; }  }); }}
 {{ const getRef = (model) => /* Recursively resolve references */ { const ref = !!model && structure[model.group][model.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
 
 {{ if (model.method === "GET") { }}
@@ -13,8 +11,8 @@
  * Docs: {{= model.docString.replace(/\n/g, "\n  * ") }}
  */
 export function {{= funcName }}(
-{{ if (hasParam) { }}
-params: {{= model.params ? "T." + model.params.reference.uniqueName + "_Input" : "object" }},
+{{ if (model.params) { }}
+params: {{= "T." + model.params.reference.uniqueName + "_Input" }},
 {{ } }}
 {{ if (model.query) { }}
 query: T.{{= model.query.reference.uniqueName }}_Input,
@@ -34,7 +32,7 @@ options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.
         {{ } }}
       {{ } }}
     {{ } }}
-    {{ if (hasParam && getRef(model.params.reference)) { }}
+    {{ if (model.params && getRef(model.params.reference)) { }}
       {{ const ref = getRef(model.params.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
         {{ if (!ref.keys[key].isOptional) { }}
@@ -47,7 +45,7 @@ options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.
   return useQuery([
      "{{= model.uniqueName }}",
 
-    {{ if (hasParam) { }}
+    {{ if (model.params) { }}
     params,
     {{ } }}
     {{ if (model.query) { }}
@@ -56,14 +54,14 @@ options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.
     ],
     (
     _,
-    {{ if (hasParam) { }}
+    {{ if (model.params) { }}
     params,
     {{ } }}
     {{ if (model.query) { }}
     query,
     {{ } }}
     ) => {{= model.group }}Api.{{= model.name }}(
-      {{= hasParam ? "params, " : ""}}
+      {{= model.params ? "params, " : ""}}
       {{= model.query ? "query, " : "" }}
       {{= model.body ? "body, " : "" }}
     ),
@@ -74,7 +72,7 @@ options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.
 {{ } else { }}
 
 interface {{= upperCaseFirst(funcName) }}Props {
-   {{ if (hasParam) { }}
+   {{ if (model.params) { }}
    params: {{= model.params ? "T." + model.params.reference.uniqueName + "_Input" : "object" }}
    {{ } }}
    {{ if (model.query) { }}
@@ -97,7 +95,7 @@ export function {{= funcName }}(
 ): {{ if (model.response) { }} [MutateFunction<T.{{= model.response.reference.uniqueName }}, {{= upperCaseFirst(funcName) }}Props>, MutationResult<T.{{= model.response.reference.uniqueName }}>] {{ } else { }} [MutateFunction<any, {{= upperCaseFirst(funcName) }}Props>, MutationResult<any>] {{ } }} {
   return useMutation(
     (variables) => {{= model.group }}Api.{{= model.name }}(
-      {{= hasParam ? "variables.params, " : ""}}
+      {{= model.params ? "variables.params, " : ""}}
       {{= model.query ? "variables.query, " : "" }}
       {{= model.body ? "variables.body, " : "" }}
     ),

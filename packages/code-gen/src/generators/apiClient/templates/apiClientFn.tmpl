@@ -1,12 +1,11 @@
-{{ let hasParam = model.params !== undefined; }}
-{{ const url = model.path.split("/").map(part => { if (part.startsWith(":")) { hasParam = true; return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
+{{ const url = model.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
 
 /**
  * {{= model.uniqueName }}
  * Tags: {{= model.tags.join(", ") }}
  * Docs: {{= model.docString }}
-{{ if (hasParam) { }}
- * @param { {{= model.params ? model.params.reference.uniqueName + "_Input" : "object" }}} params
+{{ if (model.params) { }}
+ * @param { {{= model.params.reference.uniqueName + "_Input" }}} params
 {{ } }}
 {{ if (model.query) { }}
  * @param { {{= model.query.reference.uniqueName }}_Input} query
@@ -22,7 +21,7 @@
 
  */
 {{= model.name }}: async function (
-{{ if (hasParam) { }}
+{{ if (model.params) { }}
 params,
 {{ } }}
 {{ if (model.query) { }}

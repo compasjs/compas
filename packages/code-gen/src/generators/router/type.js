@@ -108,8 +108,38 @@ export class RouteBuilder extends TypeBuilder {
       result.response = this.responseBuilder.build();
     }
 
+    if (result.path.indexOf(":") !== -1 && result.params === undefined) {
+      // Looks like there is a path param but no definition for it
+      result.params = createParamsFromPath(
+        this.data.group,
+        this.data.name + "Params",
+        result.path,
+      );
+    }
+
     return result;
   }
+}
+
+/**
+ * Build an object for route params if the user forgot to do that
+ * @param {string} group
+ * @param {string} name
+ * @param {string} path
+ * @returns {object}
+ */
+function createParamsFromPath(group, name, path) {
+  const T = new TypeCreator(group);
+  const obj = T.object(name);
+  const keys = {};
+
+  for (const part of path.split("/")) {
+    if (part.startsWith(":")) {
+      keys[part.substring(1)] = T.string();
+    }
+  }
+
+  return obj.keys(keys).build();
 }
 
 class RouteCreator {
