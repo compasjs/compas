@@ -10,6 +10,8 @@ test("server/app", async (t) => {
   app.use((ctx, next) => {
     if (ctx.request.path === "/500") {
       throw AppError.serverError({ foo: true });
+    } else if (ctx.request.path === "/wrap-500") {
+      throw new Error("o.0");
     }
 
     return next();
@@ -50,6 +52,20 @@ test("server/app", async (t) => {
         key: "error.server.internal",
         message: "error.server.internal",
         info: { foo: true },
+      });
+    }
+  });
+
+  t.test("random error handling", async (t) => {
+    try {
+      await client.get("/wrap-500");
+      t.fail("wrap-500, so axios should have thrown");
+    } catch ({ response }) {
+      t.equal(response.status, 500);
+      t.deepEqual(response.data, {
+        key: "error.server.internal",
+        message: "error.server.internal",
+        info: {},
       });
     }
   });
