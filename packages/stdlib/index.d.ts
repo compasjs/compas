@@ -4,8 +4,7 @@ import { SpawnOptions } from "child_process";
 interface UuidFunc {
   /**
    * Return a new uuid v4
-   */
-  (): string;
+   */ (): string;
 
   /**
    * Returns true if value conforms a basic uuid structure.
@@ -52,6 +51,11 @@ export class AppError<T extends any> extends Error {
    * Create a new AppError
    */
   constructor(key: string, status: number, info?: T, originalError?: Error);
+
+  /**
+   * Check if value contains the properties to at least act like a valid AppError
+   */
+  static instanceOf(value: unknown): value is AppError<unknown>;
 
   /**
    * Create a new 404 not found error
@@ -235,7 +239,8 @@ export function compileTemplateDirectory(
 ): Promise<void>;
 
 /**
- * Compile all templates found in the provided directory with the provided extension synchronously
+ * Compile all templates found in the provided directory with the provided extension
+ * synchronously
  */
 export function compileTemplateDirectorySync(
   tc: TemplateContext,

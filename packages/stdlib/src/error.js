@@ -31,6 +31,19 @@ export class AppError extends Error {
   }
 
   /**
+   * @param {*} value
+   * @returns {boolean}
+   */
+  static instanceOf(value) {
+    return (
+      value &&
+      typeof value.key === "string" &&
+      typeof value.status === "number" &&
+      !!value.info
+    );
+  }
+
+  /**
    * @param {object} [info={}]
    * @param {Error} [error]
    * @returns {AppError}

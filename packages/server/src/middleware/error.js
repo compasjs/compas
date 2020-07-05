@@ -34,7 +34,7 @@ export function errorHandler({ onAppError, onError, leakError }) {
       let err = error;
       let log = ctx.log.info;
 
-      if (!(error instanceof AppError)) {
+      if (!AppError.instanceOf(error)) {
         log = ctx.log.error;
         err = new AppError("error.server.internal", 500, {}, error);
       }
