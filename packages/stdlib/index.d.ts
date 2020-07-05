@@ -15,12 +15,23 @@ interface UuidFunc {
 
 /**
  * Return a new uuid v4
+ * @example
+ * ```js
+ * uuid();
+ * // => f3283b08-08c4-43fc-9fa6-e36c0ab2b61a
+ * ```
  */
 export declare const uuid: UuidFunc;
 
 /**
  * AppErrors represent errors, that should immediately stop the request and return a
  * status and other meta data directly
+ * @example
+ * ```js
+ * new AppError(401, "error.server.unauthorized");
+ * AppError.validationError("validation.string.length", { message: "String should have at least 3 characters" });
+ * AppError.serverError({}, new Error("Oopsie"));
+ * ```
  */
 export class AppError<T extends any> extends Error {
   /**
@@ -84,6 +95,15 @@ export class AppError<T extends any> extends Error {
 
 /**
  * Check if item is null or undefined
+ * @example
+ * ```js
+ * isNil(null);
+ * // => true
+ * isNil(undefined);
+ * // => true
+ * isNil({});
+ * // => false
+ * ```
  */
 export function isNil<T>(
   value: T | null | undefined,
@@ -92,6 +112,17 @@ export function isNil<T>(
 /**
  * Check if item is a plain javascript object
  * Not completely bullet proof
+ * @example
+ * ```js
+ * isPlainObject("foo");
+ * // => false
+ * isPlainObject(new (class Foo {}));
+ * // => false
+ * isPlainObject([]);
+ * // => false
+ * isPlainObject({});
+ * // => true
+ * ```
  */
 export function isPlainObject(obj: any): boolean;
 
@@ -99,11 +130,25 @@ export function isPlainObject(obj: any): boolean;
  * Re expose lodash.merge
  * TODO: Note that lodash.merge is deprecated although it doesnt say so when installing
  * **Note:** This method mutates `object`.
+ * @example
+ * ```js
+ * merge({}, {});
+ * // => {}
+ * merge({}, { foo: true});
+ * // => { foo: true }
+ * merge({ bar: 1 }, { bar: 2 });
+ * // => { bar: 2 }
+ * ```
  */
 export function merge(object: any, ...sources: any[]): any;
 
 /**
  * Flattens the given nested object, skipping anything that is not a plain object
+ * @example
+ * ```js
+ * flatten({ foo: { bar: 2 } });
+ * // => { "foo.bar": 2 }
+ * ```
  */
 export function flatten(
   object: any,
@@ -113,12 +158,18 @@ export function flatten(
 
 /**
  * Opposite of flatten
+ * @example
+ * ```js
+ * unFlatten({ "foo.bar": 2});
+ * // => { foo: { bar: 2 } }
+ * ```
  */
 export function unFlatten(data?: { [keys: string]: any }): any;
 
 /**
  * Convert a camelCase string to a snake_case string
  *
+ * @example
  * ```js
  *   camelToSnakeCase("fooBBar");
  *   // => "foo_b_bar"
@@ -128,6 +179,11 @@ export function camelToSnakeCase(input: string): string;
 
 /**
  * Promisify version of child_process#exec
+ * @example
+ * ```js
+ * exec("uname -m");
+ * // => Promise<{ stdout: "x86_64\n", stderr: "" }>
+ * ```
  */
 export function exec(
   command: string,
@@ -135,6 +191,11 @@ export function exec(
 
 /**
  * A promise wrapper around child_process#spawn
+ * @example
+ * ```js
+ * spawn("ls", ["-al"], { cwd: "/home" });
+ * // => Promise<{ code: 0 }>
+ * ```
  */
 export function spawn(
   command: string,
@@ -160,6 +221,7 @@ export interface ProcessDirectoryOptions {
 
 /**
  * Recursively walks directory async and calls cb on all files
+ *
  */
 export function processDirectoryRecursive(
   dir: string,
@@ -178,6 +240,11 @@ export function processDirectoryRecursiveSync(
 
 /**
  * Reexport of path#join
+ * @example
+ * ```js
+ * pathJoin("/foo", "bar");
+ * // => "/foo/bar"
+ * ```
  */
 export function pathJoin(...parts: string[]): string;
 

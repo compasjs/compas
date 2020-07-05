@@ -8,9 +8,9 @@ Per module documentation, generated from the Typescript declaration files.
 
 <a name="clireadmemd"></a>
 
-[@lbu/cli - v0.0.40](#clireadmemd)
+[@lbu/cli - v0.0.42](#clireadmemd)
 
-## @lbu/cli - v0.0.40
+## @lbu/cli - v0.0.42
 
 ### Index
 
@@ -41,7 +41,7 @@ Return collection of available named scripts
 
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.40](#clireadmemd) ›
+[@lbu/cli - v0.0.42](#clireadmemd) ›
 [CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
@@ -88,7 +88,7 @@ package.json Depending on the type contains either script or path
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.40](#clireadmemd) ›
+[@lbu/cli - v0.0.42](#clireadmemd) ›
 [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
@@ -105,9 +105,9 @@ package.json Depending on the type contains either script or path
 
 <a name="code-genreadmemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd)
+[@lbu/code-gen - v0.0.42](#code-genreadmemd)
 
-## @lbu/code-gen - v0.0.40
+## @lbu/code-gen - v0.0.42
 
 ### Index
 
@@ -220,7 +220,7 @@ Load a LBU structure from an LBU enabled API
 
 <a name="code-genclassesanyoftypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [AnyOfType](#code-genclassesanyoftypemd)
 
 ### Class: AnyOfType
@@ -469,7 +469,7 @@ _Inherited from
 
 <a name="code-genclassesanytypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [AnyType](#code-genclassesanytypemd)
 
 ### Class: AnyType
@@ -733,7 +733,7 @@ _Inherited from
 
 <a name="code-genclassesappmd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) › [App](#code-genclassesappmd)
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) › [App](#code-genclassesappmd)
 
 ### Class: App
 
@@ -852,7 +852,7 @@ Create a new App instance and inits generators
 
 <a name="code-genclassesarraytypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [ArrayType](#code-genclassesarraytypemd)
 
 ### Class: ArrayType
@@ -1146,7 +1146,7 @@ _Inherited from
 
 <a name="code-genclassesbooleantypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [BooleanType](#code-genclassesbooleantypemd)
 
 ### Class: BooleanType
@@ -1408,7 +1408,7 @@ _Inherited from
 
 <a name="code-genclassesdatetypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [DateType](#code-genclassesdatetypemd)
 
 ### Class: DateType
@@ -1651,7 +1651,7 @@ _Inherited from
 
 <a name="code-genclassesgenerictypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [GenericType](#code-genclassesgenerictypemd)
 
 ### Class: GenericType
@@ -1915,7 +1915,7 @@ _Inherited from
 
 <a name="code-genclassesnumbertypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [NumberType](#code-genclassesnumbertypemd)
 
 ### Class: NumberType
@@ -2222,7 +2222,7 @@ _Inherited from
 
 <a name="code-genclassesobjecttypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [ObjectType](#code-genclassesobjecttypemd)
 
 ### Class: ObjectType
@@ -2505,7 +2505,7 @@ _Inherited from
 
 <a name="code-genclassesreferencetypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [ReferenceType](#code-genclassesreferencetypemd)
 
 ### Class: ReferenceType
@@ -2771,7 +2771,7 @@ _Inherited from
 
 <a name="code-genclassesroutebuildermd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [RouteBuilder](#code-genclassesroutebuildermd)
 
 ### Class: RouteBuilder
@@ -3093,7 +3093,7 @@ _Inherited from
 
 <a name="code-genclassesroutecreatormd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [RouteCreator](#code-genclassesroutecreatormd)
 
 ### Class: RouteCreator
@@ -3218,7 +3218,7 @@ PUT route
 
 <a name="code-genclassesstringtypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [StringType](#code-genclassesstringtypemd)
 
 ### Class: StringType
@@ -3564,7 +3564,7 @@ _Inherited from
 
 <a name="code-genclassestypebuildermd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [TypeBuilder](#code-genclassestypebuildermd)
 
 ### Class: TypeBuilder
@@ -3791,7 +3791,7 @@ Set this field as searchable for the 'sql' plugin
 
 <a name="code-genclassestypecreatormd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [TypeCreator](#code-genclassestypecreatormd)
 
 ### Class: TypeCreator
@@ -4057,7 +4057,7 @@ Return a list of type plugins that have the specified property
 
 <a name="code-genclassesuuidtypemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [UuidType](#code-genclassesuuidtypemd)
 
 ### Class: UuidType
@@ -4293,7 +4293,7 @@ _Inherited from
 
 <a name="code-geninterfacesappoptsmd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [AppOpts](#code-geninterfacesappoptsmd)
 
 ### Interface: AppOpts
@@ -4316,7 +4316,7 @@ _Inherited from
 
 <a name="code-geninterfacesgeneratedfilemd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [GeneratedFile](#code-geninterfacesgeneratedfilemd)
 
 ### Interface: GeneratedFile
@@ -4350,7 +4350,7 @@ Generated source string
 
 <a name="code-geninterfacesgenerateoptsmd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [GenerateOpts](#code-geninterfacesgenerateoptsmd)
 
 ### Interface: GenerateOpts
@@ -4433,7 +4433,7 @@ Enable Typescript for the generators that support it
 
 <a name="code-geninterfacesgeneratorpluginmd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
 
 ### Interface: GeneratorPlugin
@@ -4520,7 +4520,7 @@ Add dynamic types to app. Can be called multiple times
 
 <a name="code-geninterfacestypepluginmd"></a>
 
-[@lbu/code-gen - v0.0.40](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
 [TypePlugin](#code-geninterfacestypepluginmd)
 
 ### Interface: TypePlugin ‹**T**›
@@ -4609,9 +4609,9 @@ Return the template that should be used to validate this type
 
 <a name="insightreadmemd"></a>
 
-[@lbu/insight - v0.0.40](#insightreadmemd)
+[@lbu/insight - v0.0.42](#insightreadmemd)
 
-## @lbu/insight - v0.0.40
+## @lbu/insight - v0.0.42
 
 ### Index
 
@@ -4765,7 +4765,7 @@ https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memor
 
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.40](#insightreadmemd) ›
+[@lbu/insight - v0.0.42](#insightreadmemd) ›
 [Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
@@ -4835,7 +4835,7 @@ Check if this logger is using the pretty printer or NDJSON printer
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.40](#insightreadmemd) ›
+[@lbu/insight - v0.0.42](#insightreadmemd) ›
 [LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
@@ -4860,7 +4860,7 @@ Context that should be logged in all log lines. e.g a common request id.
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.40](#insightreadmemd) ›
+[@lbu/insight - v0.0.42](#insightreadmemd) ›
 [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
@@ -4916,7 +4916,7 @@ The stream to write the logs to
 
 <a name="insightinterfaceslogparsercontextmd"></a>
 
-[@lbu/insight - v0.0.40](#insightreadmemd) ›
+[@lbu/insight - v0.0.42](#insightreadmemd) ›
 [LogParserContext](#insightinterfaceslogparsercontextmd)
 
 ### Interface: LogParserContext
@@ -4977,9 +4977,9 @@ The LogParserContext enables you too analyze logs produced by this Logger
 
 <a name="serverreadmemd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd)
+[@lbu/server - v0.0.42](#serverreadmemd)
 
-## @lbu/server - v0.0.40
+## @lbu/server - v0.0.42
 
 ### Index
 
@@ -5178,7 +5178,7 @@ like node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 <a name="serverclassesapplicationmd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [Application](#serverclassesapplicationmd)
 
 ### Class: Application ‹**StateT, CustomT**›
@@ -5908,7 +5908,7 @@ _Inherited from
 
 <a name="serverinterfacesapperrorhandlermd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [AppErrorHandler](#serverinterfacesapperrorhandlermd)
 
 ### Interface: AppErrorHandler
@@ -5938,7 +5938,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescorsoptionsmd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [CorsOptions](#serverinterfacescorsoptionsmd)
 
 ### Interface: CorsOptions
@@ -6009,7 +6009,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescustomerrorhandlermd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 
 ### Interface: CustomErrorHandler
@@ -6037,7 +6037,7 @@ Return truthy when handled or falsey when skipped
 
 <a name="serverinterfaceserrorhandleroptionsmd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
 
 ### Interface: ErrorHandlerOptions
@@ -6081,7 +6081,7 @@ Called before all others to let the user handle their own errors
 
 <a name="serverinterfacesgetappoptionsmd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [GetAppOptions](#serverinterfacesgetappoptionsmd)
 
 ### Interface: GetAppOptions
@@ -6143,7 +6143,7 @@ Trust proxy headers
 
 <a name="serverinterfacesheaderoptionsmd"></a>
 
-[@lbu/server - v0.0.40](#serverreadmemd) ›
+[@lbu/server - v0.0.42](#serverreadmemd) ›
 [HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 ### Interface: HeaderOptions
@@ -6168,9 +6168,9 @@ Trust proxy headers
 
 <a name="stdlibreadmemd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd)
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd)
 
-## @lbu/stdlib - v0.0.40
+## @lbu/stdlib - v0.0.42
 
 ### Index
 
@@ -6222,6 +6222,13 @@ Trust proxy headers
 
 Return a new uuid v4
 
+**`example`**
+
+```js
+uuid();
+// => f3283b08-08c4-43fc-9fa6-e36c0ab2b61a
+```
+
 ### Functions
 
 #### camelToSnakeCase
@@ -6229,6 +6236,8 @@ Return a new uuid v4
 ▸ **camelToSnakeCase**(`input`: string): _string_
 
 Convert a camelCase string to a snake_case string
+
+**`example`**
 
 ```js
 camelToSnakeCase("fooBBar");
@@ -6347,6 +6356,13 @@ Return dirname for ES Module Alternative to CommonJS \_\_dirname
 
 Promisify version of child_process#exec
 
+**`example`**
+
+```js
+exec("uname -m");
+// => Promise<{ stdout: "x86_64\n", stderr: "" }>
+```
+
 **Parameters:**
 
 | Name      | Type   |
@@ -6399,6 +6415,13 @@ Return filename for ES Module Alternative to CommonJS \_\_filename
 
 Flattens the given nested object, skipping anything that is not a plain object
 
+**`example`**
+
+```js
+flatten({ foo: { bar: 2 } });
+// => { "foo.bar": 2 }
+```
+
 **Parameters:**
 
 | Name      | Type   |
@@ -6439,6 +6462,17 @@ Return seconds since unix epoch
 
 Check if item is null or undefined
 
+**`example`**
+
+```js
+isNil(null);
+// => true
+isNil(undefined);
+// => true
+isNil({});
+// => false
+```
+
 **Type parameters:**
 
 ▪ **T**
@@ -6458,6 +6492,19 @@ Check if item is null or undefined
 ▸ **isPlainObject**(`obj`: any): _boolean_
 
 Check if item is a plain javascript object Not completely bullet proof
+
+**`example`**
+
+```js
+isPlainObject("foo");
+// => false
+isPlainObject(new (class Foo {})());
+// => false
+isPlainObject([]);
+// => false
+isPlainObject({});
+// => true
+```
 
 **Parameters:**
 
@@ -6497,6 +6544,17 @@ listener is added for warnings
 Re expose lodash.merge TODO: Note that lodash.merge is deprecated although it
 doesnt say so when installing **Note:** This method mutates `object`.
 
+**`example`**
+
+```js
+merge({}, {});
+// => {}
+merge({}, { foo: true });
+// => { foo: true }
+merge({ bar: 1 }, { bar: 2 });
+// => { bar: 2 }
+```
+
 **Parameters:**
 
 | Name         | Type  |
@@ -6534,6 +6592,13 @@ An empty function, doing exactly nothing but returning undefined.
 ▸ **pathJoin**(...`parts`: string[]): _string_
 
 Reexport of path#join
+
+**`example`**
+
+```js
+pathJoin("/foo", "bar");
+// => "/foo/bar"
+```
 
 **Parameters:**
 
@@ -6609,6 +6674,13 @@ _Promise‹object›_
 
 A promise wrapper around child_process#spawn
 
+**`example`**
+
+```js
+spawn("ls", ["-al"], { cwd: "/home" });
+// => Promise<{ code: 0 }>
+```
+
 **Parameters:**
 
 | Name      | Type         |
@@ -6627,6 +6699,13 @@ A promise wrapper around child_process#spawn
 
 Opposite of flatten
 
+**`example`**
+
+```js
+unFlatten({ "foo.bar": 2 });
+// => { foo: { bar: 2 } }
+```
+
 **Parameters:**
 
 | Name    | Type   |
@@ -6639,12 +6718,22 @@ Opposite of flatten
 
 <a name="stdlibclassesapperrormd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
 
 ### Class: AppError ‹**T**›
 
 AppErrors represent errors, that should immediately stop the request and return
 a status and other meta data directly
+
+**`example`**
+
+```js
+new AppError(401, "error.server.unauthorized");
+AppError.validationError("validation.string.length", {
+  message: "String should have at least 3 characters",
+});
+AppError.serverError({}, new Error("Oopsie"));
+```
 
 #### Type parameters
 
@@ -6675,6 +6764,7 @@ a status and other meta data directly
 
 ##### Methods
 
+- [instanceOf](#static-instanceof)
 - [notFound](#static-notfound)
 - [notImplemented](#static-notimplemented)
 - [serverError](#static-servererror)
@@ -6770,6 +6860,22 @@ Status number to send to the api client
 
 #### Methods
 
+##### `Static` instanceOf
+
+▸ **instanceOf**(`value`: unknown): _value is AppError<unknown>_
+
+Check if value contains the properties to at least act like a valid AppError
+
+**Parameters:**
+
+| Name    | Type    |
+| ------- | ------- |
+| `value` | unknown |
+
+**Returns:** _value is AppError<unknown>_
+
+---
+
 ##### `Static` notFound
 
 ▸ **notFound**‹**T**›(`info?`: T, `error?`: [Error](#static-error)):
@@ -6861,7 +6967,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
 [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
@@ -6884,7 +6990,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
@@ -6920,7 +7026,7 @@ Skip node_modules directory, true by default
 
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
 [TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
@@ -6970,7 +7076,7 @@ Compiled template functions
 
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.40](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
 [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
