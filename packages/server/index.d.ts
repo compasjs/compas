@@ -964,6 +964,30 @@ interface SessionOptions {
   maxAge?: number | "session";
 
   /**
+   * Automatically commit headers (default true)
+   */
+  autoCommit?: boolean;
+
+  /**
+   * Can overwrite or not (default true)
+   */
+  overwrite?: boolean;
+
+  /**
+   * httpOnly or not (default true)
+   */
+  httpOnly?: boolean;
+
+  signed?: boolean;
+
+  secure?: boolean;
+
+  /**
+   * Session cookie sameSite options (default null, don't set it)
+   */
+  sameSite?: "strict" | "lax" | boolean;
+
+  /**
    * Force a session identifier cookie to be set on every response. The expiration is reset to
    * the original maxAge, resetting the expiration countdown. default is false
    */
@@ -983,7 +1007,8 @@ interface SessionOptions {
 
   /**
    * You can store the session content in external stores(redis, mongodb or other DBs)
-   */ store?: SessionStore;
+   */
+  store?: SessionStore;
 
   /**
    * If your session store requires data or utilities from context, opts.ContextStore is alse
@@ -1002,7 +1027,6 @@ interface SessionOptions {
 // ===========
 // END OF @types
 // ============
-
 // From koa-body/index.d.ts
 // https://github.com/dlau/koa-body/tree/a6ca8c78015e326154269d272410a11bf40e1a07 The MIT
 // License (MIT)  Copyright (c) 2014 Charlike Mike Reagent <mameto_100@mail.bg> and Daryl Lau
