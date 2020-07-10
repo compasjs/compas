@@ -14,7 +14,7 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@types/node": "14.0.21",
+    "@types/node": "14.0.22",
     "axios": "0.19.2",
     "chance": "1.1.6",
     "concat-md": "0.3.5",
