@@ -24,6 +24,17 @@ function parseBody(ctx) {
 const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 ((newline))
 
+/**
+ * @name TagMiddleware
+ * @typedef {object}
+{{ for (const t of routeTags) { }}
+ * @property {Middleware|Middleware[]|undefined} {{= t }}
+{{ } }}
+ */
+
+/**
+ * @type {TagMiddleware}
+ */
 export const tagMiddleware = {
   {{ for (const t of routeTags) { }}
     {{= t }}: undefined,
@@ -31,6 +42,18 @@ export const tagMiddleware = {
 };
 ((newline))
 
+
+/**
+ * @name GroupMiddleware
+ * @typedef {object}
+{{ for (const group of Object.keys(structure)) { }}
+ * @property {Middleware|Middleware[]|undefined} {{= group }}
+{{ } }}
+ */
+
+/**
+ * @type {GroupMiddleware}
+ */
 export const groupMiddleware = {
   {{ for (const group of Object.keys(structure)) { }}
     {{= group }}: undefined,
@@ -68,7 +91,7 @@ const handlers = {
 
         ctx.request.params = params;
 
-        {{ if (item.params && item.params.reference) { }}
+        {{ if (item.params) { }}
         ctx.validatedParams = {{= item.params.reference.group }}Validators.{{= item.params.reference.name }}(params);
         {{ } }}
 
@@ -88,9 +111,9 @@ const handlers = {
           const currentHandler = {{= item.group }}Handlers.{{= item.name }};
           _composed.{{= item.uniqueName }} = filterCompose(
               {{ for (const t of item.tags) { }}
-              tagMiddleware.{{= t }},
+              ...(Array.isArray(tagMiddleware.{{= t }}) ? tagMiddleware.{{= t }} : [tagMiddleware.{{= t }}]),
               {{ } }}
-              groupMiddleware.{{= item.group }},
+              ...(Array.isArray(groupMiddleware.{{= item.group }}) ? groupMiddleware.{{= item.group }} : [groupMiddleware.{{= item.group }}]),
               ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
           );
         }
