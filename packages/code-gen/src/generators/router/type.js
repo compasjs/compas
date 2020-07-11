@@ -1,5 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
+import { buildOrInfer } from "../../types/TypeBuilder.js";
 import { lowerCaseFirst } from "../../utils.js";
 
 export class RouteBuilder extends TypeBuilder {
@@ -29,37 +30,27 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilder} builder
+   * @param {TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   query(builder) {
     this.queryBuilder = builder;
 
-    if (isNil(this.queryBuilder.data.name)) {
-      this.queryBuilder.data.group = this.data.group;
-      this.queryBuilder.data.name = this.data.name + "Query";
-    }
-
     return this;
   }
 
   /**
-   * @param {TypeBuilder} builder
+   * @param {TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   params(builder) {
     this.paramsBuilder = builder;
 
-    if (isNil(this.paramsBuilder.data.name)) {
-      this.paramsBuilder.data.group = this.data.group;
-      this.paramsBuilder.data.name = this.data.name + "Params";
-    }
-
     return this;
   }
 
   /**
-   * @param {TypeBuilder} builder
+   * @param {TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   body(builder) {
@@ -69,25 +60,15 @@ export class RouteBuilder extends TypeBuilder {
 
     this.bodyBuilder = builder;
 
-    if (isNil(this.bodyBuilder.data.name)) {
-      this.bodyBuilder.data.group = this.data.group;
-      this.bodyBuilder.data.name = this.data.name + "Body";
-    }
-
     return this;
   }
 
   /**
-   * @param {TypeBuilder} builder
+   * @param {TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   response(builder) {
     this.responseBuilder = builder;
-
-    if (isNil(this.responseBuilder.data.name)) {
-      this.responseBuilder.data.group = this.data.group;
-      this.responseBuilder.data.name = this.data.name + "Response";
-    }
 
     return this;
   }
@@ -96,23 +77,46 @@ export class RouteBuilder extends TypeBuilder {
     const result = super.build();
 
     if (this.queryBuilder) {
-      result.query = this.queryBuilder.build();
+      result.query = buildOrInfer(this.queryBuilder);
+
+      if (isNil(result.query.name)) {
+        result.query.group = result.group;
+        result.query.name = result.name + "Query";
+      }
     }
+
     if (this.paramsBuilder) {
-      result.params = this.paramsBuilder.build();
+      result.params = buildOrInfer(this.paramsBuilder);
+
+      if (isNil(result.params.name)) {
+        result.params.group = result.group;
+        result.params.name = result.name + "Params";
+      }
     }
+
     if (this.bodyBuilder) {
-      result.body = this.bodyBuilder.build();
+      result.body = buildOrInfer(this.bodyBuilder);
+
+      if (isNil(result.body.name)) {
+        result.body.group = result.group;
+        result.body.name = result.name + "Body";
+      }
     }
+
     if (this.responseBuilder) {
-      result.response = this.responseBuilder.build();
+      result.response = buildOrInfer(this.responseBuilder);
+
+      if (isNil(result.response.name)) {
+        result.response.group = result.group;
+        result.response.name = result.name + "Response";
+      }
     }
 
     if (result.path.indexOf(":") !== -1 && result.params === undefined) {
       // Looks like there is a path param but no definition for it
       result.params = createParamsFromPath(
-        this.data.group,
-        this.data.name + "Params",
+        result.group,
+        result.name + "Params",
         result.path,
       );
     }
@@ -139,7 +143,7 @@ function createParamsFromPath(group, name, path) {
     }
   }
 
-  return obj.keys(keys).build();
+  return buildOrInfer(obj.keys(keys));
 }
 
 class RouteCreator {

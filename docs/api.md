@@ -136,7 +136,13 @@ package.json Depending on the type contains either script or path
 - [GenerateOpts](#code-geninterfacesgenerateoptsmd)
 - [GeneratedFile](#code-geninterfacesgeneratedfilemd)
 - [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
+- [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd)
+- [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)
 - [TypePlugin](#code-geninterfacestypepluginmd)
+
+#### Type aliases
+
+- [TypeBuilderLike](#typebuilderlike)
 
 #### Variables
 
@@ -148,6 +154,15 @@ package.json Depending on the type contains either script or path
 - [isNamedTypeBuilderLike](#isnamedtypebuilderlike)
 - [loadFromOpenAPISpec](#loadfromopenapispec)
 - [loadFromRemote](#loadfromremote)
+
+### Type aliases
+
+#### TypeBuilderLike
+
+Ƭ **TypeBuilderLike**: _boolean | number | string |
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd) |
+[TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd) |
+[TypeBuilder](#code-genclassestypebuildermd)_
 
 ### Variables
 
@@ -446,13 +461,13 @@ Set this field as searchable for the 'sql' plugin
 
 ##### values
 
-▸ **values**(...`items`: [TypeBuilder](#code-genclassestypebuildermd)[]): _this_
+▸ **values**(...`items`: [TypeBuilderLike](#typebuilderlike)[]): _this_
 
 **Parameters:**
 
-| Name       | Type                                           |
-| ---------- | ---------------------------------------------- |
-| `...items` | [TypeBuilder](#code-genclassestypebuildermd)[] |
+| Name       | Type                                  |
+| ---------- | ------------------------------------- |
+| `...items` | [TypeBuilderLike](#typebuilderlike)[] |
 
 **Returns:** _this_
 
@@ -1123,13 +1138,13 @@ Set this field as searchable for the 'sql' plugin
 
 ##### values
 
-▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **values**(`value`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 **Parameters:**
 
-| Name    | Type                                         |
-| ------- | -------------------------------------------- |
-| `value` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name    | Type                                |
+| ------- | ----------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -1820,13 +1835,13 @@ Add a doc comment, some generators / types may support rendering this
 
 ##### keys
 
-▸ **keys**(`key`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **keys**(`key`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 **Parameters:**
 
-| Name  | Type                                         |
-| ----- | -------------------------------------------- |
-| `key` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name  | Type                                |
+| ----- | ----------------------------------- |
+| `key` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -1892,13 +1907,13 @@ Set this field as searchable for the 'sql' plugin
 
 ##### values
 
-▸ **values**(`value`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **values**(`value`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 **Parameters:**
 
-| Name    | Type                                         |
-| ------- | -------------------------------------------- |
-| `value` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name    | Type                                |
+| ------- | ----------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -2413,14 +2428,13 @@ the 'sql' plugin
 
 ##### keys
 
-▸ **keys**(`obj`: Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›):
-_this_
+▸ **keys**(`obj`: Record‹string, [TypeBuilderLike](#typebuilderlike)›): _this_
 
 **Parameters:**
 
-| Name  | Type                                                         |
-| ----- | ------------------------------------------------------------ |
-| `obj` | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
+| Name  | Type                                                |
+| ----- | --------------------------------------------------- |
+| `obj` | Record‹string, [TypeBuilderLike](#typebuilderlike)› |
 
 **Returns:** _this_
 
@@ -2875,15 +2889,15 @@ _Inherited from
 
 ##### body
 
-▸ **body**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **body**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 Type of accepted body parameters
 
 **Parameters:**
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -2993,15 +3007,15 @@ Value can be undefined
 
 ##### params
 
-▸ **params**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **params**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 Type of accepted path parameters
 
 **Parameters:**
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -3022,15 +3036,15 @@ Set this field as primary for the 'sql' plugin
 
 ##### query
 
-▸ **query**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **query**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 Type of accepted query parameters
 
 **Parameters:**
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -3038,15 +3052,15 @@ Type of accepted query parameters
 
 ##### response
 
-▸ **response**(`builder`: [TypeBuilder](#code-genclassestypebuildermd)): _this_
+▸ **response**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
 
 Route response type
 
 **Parameters:**
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `builder` | [TypeBuilder](#code-genclassestypebuildermd) |
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -3873,16 +3887,13 @@ Registry of all type plugins
 
 ##### anyOf
 
-▸ **anyOf**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd)[],
-...`values`: [TypeBuilder](#code-genclassestypebuildermd)[]):
-_[AnyOfType](#code-genclassesanyoftypemd)_
+▸ **anyOf**(`name?`: string): _[AnyOfType](#code-genclassesanyoftypemd)_
 
 **Parameters:**
 
-| Name        | Type                                                         |
-| ----------- | ------------------------------------------------------------ |
-| `name?`     | string &#124; [TypeBuilder](#code-genclassestypebuildermd)[] |
-| `...values` | [TypeBuilder](#code-genclassestypebuildermd)[]               |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
 **Returns:** _[AnyOfType](#code-genclassesanyoftypemd)_
 
@@ -3890,16 +3901,13 @@ _[AnyOfType](#code-genclassesanyoftypemd)_
 
 ##### array
 
-▸ **array**(`name?`: string | [TypeBuilder](#code-genclassestypebuildermd),
-`value?`: [TypeBuilder](#code-genclassestypebuildermd)):
-_[ArrayType](#code-genclassesarraytypemd)_
+▸ **array**(`name?`: string): _[ArrayType](#code-genclassesarraytypemd)_
 
 **Parameters:**
 
-| Name     | Type                                                       |
-| -------- | ---------------------------------------------------------- |
-| `name?`  | string &#124; [TypeBuilder](#code-genclassestypebuildermd) |
-| `value?` | [TypeBuilder](#code-genclassestypebuildermd)               |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
 **Returns:** _[ArrayType](#code-genclassesarraytypemd)_
 
@@ -3963,17 +3971,13 @@ _[ArrayType](#code-genclassesarraytypemd)_
 
 ##### object
 
-▸ **object**(`name?`: string | Record‹string,
-[TypeBuilder](#code-genclassestypebuildermd)›, `obj?`: Record‹string,
-[TypeBuilder](#code-genclassestypebuildermd)›):
-_[ObjectType](#code-genclassesobjecttypemd)_
+▸ **object**(`name?`: string): _[ObjectType](#code-genclassesobjecttypemd)_
 
 **Parameters:**
 
-| Name    | Type                                                                       |
-| ------- | -------------------------------------------------------------------------- |
-| `name?` | string &#124; Record‹string, [TypeBuilder](#code-genclassestypebuildermd)› |
-| `obj?`  | Record‹string, [TypeBuilder](#code-genclassestypebuildermd)›               |
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
 
 **Returns:** _[ObjectType](#code-genclassesobjecttypemd)_
 
@@ -4517,6 +4521,1085 @@ Add dynamic types to app. Can be called multiple times
 | `app`     | [App](#code-genclassesappmd)                      |
 | `data`    | object                                            |
 | `options` | [GenerateOpts](#code-geninterfacesgenerateoptsmd) |
+
+<a name="code-geninterfacestypebuilderlikearraymd"></a>
+
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd)
+
+### Interface: TypeBuilderLikeArray
+
+#### Hierarchy
+
+- [Array](#array)‹[TypeBuilderLike](#typebuilderlike)›
+
+  ↳ **TypeBuilderLikeArray**
+
+#### Indexable
+
+- \[ **n**: _number_\]: [TypeBuilderLike](#typebuilderlike)
+
+#### Index
+
+##### Properties
+
+- [Array](#array)
+- [length](#length)
+
+##### Methods
+
+- [[Symbol.iterator]](typebuilderlikearray.md#[symbol.iterator])
+- [[Symbol.unscopables]](typebuilderlikearray.md#[symbol.unscopables])
+- [concat](#concat)
+- [copyWithin](#copywithin)
+- [entries](#entries)
+- [every](#every)
+- [fill](#fill)
+- [filter](#filter)
+- [find](#find)
+- [findIndex](#findindex)
+- [forEach](#foreach)
+- [includes](#includes)
+- [indexOf](#indexof)
+- [join](#join)
+- [keys](#keys)
+- [lastIndexOf](#lastindexof)
+- [map](#map)
+- [pop](#pop)
+- [push](#push)
+- [reduce](#reduce)
+- [reduceRight](#reduceright)
+- [reverse](#reverse)
+- [shift](#shift)
+- [slice](#slice)
+- [some](#some)
+- [sort](#sort)
+- [splice](#splice)
+- [toLocaleString](#tolocalestring)
+- [toString](#tostring)
+- [unshift](#unshift)
+- [values](#values)
+
+#### Properties
+
+##### Array
+
+• **Array**: _ArrayConstructor_
+
+---
+
+##### length
+
+• **length**: _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[length](#length)_
+
+Gets or sets the length of the array. This is a number one higher than the
+highest element defined in an array.
+
+#### Methods
+
+##### [Symbol.iterator]
+
+▸ **[Symbol.iterator]**():
+_IterableIterator‹[TypeBuilderLike](#typebuilderlike)›_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[[Symbol.iterator]](typebuilderlikearray.md#[symbol.iterator])_
+
+Iterator
+
+**Returns:** _IterableIterator‹[TypeBuilderLike](#typebuilderlike)›_
+
+---
+
+##### [Symbol.unscopables]
+
+▸ **[Symbol.unscopables]**(): _object_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[[Symbol.unscopables]](typebuilderlikearray.md#[symbol.unscopables])_
+
+Returns an object whose properties have the value 'true' when they will be
+absent when used in a 'with' statement.
+
+**Returns:** _object_
+
+- **copyWithin**: _boolean_
+
+- **entries**: _boolean_
+
+- **fill**: _boolean_
+
+- **find**: _boolean_
+
+- **findIndex**: _boolean_
+
+- **keys**: _boolean_
+
+- **values**: _boolean_
+
+---
+
+##### concat
+
+▸ **concat**(...`items`: ConcatArray‹[TypeBuilderLike](#typebuilderlike)›[]):
+_[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[concat](#concat)_
+
+Combines two or more arrays.
+
+**Parameters:**
+
+| Name       | Type                                               | Description                                   |
+| ---------- | -------------------------------------------------- | --------------------------------------------- |
+| `...items` | ConcatArray‹[TypeBuilderLike](#typebuilderlike)›[] | Additional items to add to the end of array1. |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+▸ **concat**(...`items`: T | ConcatArray‹T›[]):
+_[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[concat](#concat)_
+
+Combines two or more arrays.
+
+**Parameters:**
+
+| Name       | Type                      | Description                                   |
+| ---------- | ------------------------- | --------------------------------------------- |
+| `...items` | T &#124; ConcatArray‹T›[] | Additional items to add to the end of array1. |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+---
+
+##### copyWithin
+
+▸ **copyWithin**(`target`: number, `start`: number, `end?`: number): _this_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[copyWithin](#copywithin)_
+
+Returns the this object after copying a section of the array identified by start
+and end to the same array starting at position target
+
+**Parameters:**
+
+| Name     | Type   | Description                                                                                           |
+| -------- | ------ | ----------------------------------------------------------------------------------------------------- |
+| `target` | number | If target is negative, it is treated as length+target where length is the length of the array.        |
+| `start`  | number | If start is negative, it is treated as length+start. If end is negative, it is treated as length+end. |
+| `end?`   | number | If not specified, length of the this object is used as its default value.                             |
+
+**Returns:** _this_
+
+---
+
+##### entries
+
+▸ **entries**(): _IterableIterator‹[number,
+[TypeBuilderLike](#typebuilderlike)]›_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[entries](#entries)_
+
+Returns an iterable of key, value pairs for every entry in the array
+
+**Returns:** _IterableIterator‹[number, [TypeBuilderLike](#typebuilderlike)]›_
+
+---
+
+##### every
+
+▸ **every**(`callbackfn`: function, `thisArg?`: any): _boolean_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[every](#every)_
+
+Determines whether all the members of an array satisfy the specified test.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. The every method calls the
+callbackfn function for each element in the array until the callbackfn returns a
+value which is coercible to the Boolean value false, or until the end of the
+array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _unknown_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _boolean_
+
+---
+
+##### fill
+
+▸ **fill**(`value`: [TypeBuilderLike](#typebuilderlike), `start?`: number,
+`end?`: number): _this_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[fill](#fill)_
+
+Returns the this object after filling the section identified by start and end
+with value
+
+**Parameters:**
+
+| Name     | Type                                | Description                                                                                                                       |
+| -------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `value`  | [TypeBuilderLike](#typebuilderlike) | value to fill array section with                                                                                                  |
+| `start?` | number                              | index to start filling the array at. If start is negative, it is treated as length+start where length is the length of the array. |
+| `end?`   | number                              | index to stop filling the array at. If end is negative, it is treated as length+end.                                              |
+
+**Returns:** _this_
+
+---
+
+##### filter
+
+▸ **filter**‹**S**›(`callbackfn`: function, `thisArg?`: any): _S[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[filter](#filter)_
+
+Returns the elements of an array that meet the condition specified in a callback
+function.
+
+**Type parameters:**
+
+▪ **S**: _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. The filter method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _value is S_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _S[]_
+
+▸ **filter**(`callbackfn`: function, `thisArg?`: any):
+_[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[filter](#filter)_
+
+Returns the elements of an array that meet the condition specified in a callback
+function.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. The filter method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _unknown_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+---
+
+##### find
+
+▸ **find**‹**S**›(`predicate`: function, `thisArg?`: any): _S | undefined_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[find](#find)_
+
+Returns the value of the first element in the array where predicate is true, and
+undefined otherwise.
+
+**Type parameters:**
+
+▪ **S**: _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+▪ **predicate**: _function_
+
+find calls predicate once for each element of the array, in ascending order,
+until it finds one where predicate returns true. If such an element is found,
+find immediately returns that element value. Otherwise, find returns undefined.
+
+▸ (`this`: void, `value`: [TypeBuilderLike](#typebuilderlike), `index`: number,
+`obj`: [TypeBuilderLike](#typebuilderlike)[]): _value is S_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `this`  | void                                  |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `obj`   | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+If provided, it will be used as the this value for each invocation of predicate.
+If it is not provided, undefined is used instead.
+
+**Returns:** _S | undefined_
+
+▸ **find**(`predicate`: function, `thisArg?`: any):
+_[TypeBuilderLike](#typebuilderlike) | undefined_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[find](#find)_
+
+**Parameters:**
+
+▪ **predicate**: _function_
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `obj`:
+[TypeBuilderLike](#typebuilderlike)[]): _unknown_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `obj`   | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike) | undefined_
+
+---
+
+##### findIndex
+
+▸ **findIndex**(`predicate`: function, `thisArg?`: any): _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[findIndex](#findindex)_
+
+Returns the index of the first element in the array where predicate is true, and
+-1 otherwise.
+
+**Parameters:**
+
+▪ **predicate**: _function_
+
+find calls predicate once for each element of the array, in ascending order,
+until it finds one where predicate returns true. If such an element is found,
+findIndex immediately returns that element index. Otherwise, findIndex returns
+-1.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `obj`:
+[TypeBuilderLike](#typebuilderlike)[]): _unknown_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `obj`   | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+If provided, it will be used as the this value for each invocation of predicate.
+If it is not provided, undefined is used instead.
+
+**Returns:** _number_
+
+---
+
+##### forEach
+
+▸ **forEach**(`callbackfn`: function, `thisArg?`: any): _void_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[forEach](#foreach)_
+
+Performs the specified action for each element in an array.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. forEach calls the callbackfn
+function one time for each element in the array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _void_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _void_
+
+---
+
+##### includes
+
+▸ **includes**(`searchElement`: [TypeBuilderLike](#typebuilderlike),
+`fromIndex?`: number): _boolean_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[includes](#includes)_
+
+Determines whether an array includes a certain element, returning true or false
+as appropriate.
+
+**Parameters:**
+
+| Name            | Type                                | Description                                                               |
+| --------------- | ----------------------------------- | ------------------------------------------------------------------------- |
+| `searchElement` | [TypeBuilderLike](#typebuilderlike) | The element to search for.                                                |
+| `fromIndex?`    | number                              | The position in this array at which to begin searching for searchElement. |
+
+**Returns:** _boolean_
+
+---
+
+##### indexOf
+
+▸ **indexOf**(`searchElement`: [TypeBuilderLike](#typebuilderlike),
+`fromIndex?`: number): _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[indexOf](#indexof)_
+
+Returns the index of the first occurrence of a value in an array.
+
+**Parameters:**
+
+| Name            | Type                                | Description                                                                                          |
+| --------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `searchElement` | [TypeBuilderLike](#typebuilderlike) | The value to locate in the array.                                                                    |
+| `fromIndex?`    | number                              | The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0. |
+
+**Returns:** _number_
+
+---
+
+##### join
+
+▸ **join**(`separator?`: string): _string_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[join](#join)_
+
+Adds all the elements of an array separated by the specified separator string.
+
+**Parameters:**
+
+| Name         | Type   | Description                                                                                                                                         |
+| ------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `separator?` | string | A string used to separate one element of an array from the next in the resulting String. If omitted, the array elements are separated with a comma. |
+
+**Returns:** _string_
+
+---
+
+##### keys
+
+▸ **keys**(): _IterableIterator‹number›_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[keys](#keys)_
+
+Returns an iterable of keys in the array
+
+**Returns:** _IterableIterator‹number›_
+
+---
+
+##### lastIndexOf
+
+▸ **lastIndexOf**(`searchElement`: [TypeBuilderLike](#typebuilderlike),
+`fromIndex?`: number): _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[lastIndexOf](#lastindexof)_
+
+Returns the index of the last occurrence of a specified value in an array.
+
+**Parameters:**
+
+| Name            | Type                                | Description                                                                                                              |
+| --------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `searchElement` | [TypeBuilderLike](#typebuilderlike) | The value to locate in the array.                                                                                        |
+| `fromIndex?`    | number                              | The array index at which to begin the search. If fromIndex is omitted, the search starts at the last index in the array. |
+
+**Returns:** _number_
+
+---
+
+##### map
+
+▸ **map**‹**U**›(`callbackfn`: function, `thisArg?`: any): _U[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[map](#map)_
+
+Calls a defined callback function on each element of an array, and returns an
+array that contains the results.
+
+**Type parameters:**
+
+▪ **U**
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. The map method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _U_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _U[]_
+
+---
+
+##### pop
+
+▸ **pop**(): _[TypeBuilderLike](#typebuilderlike) | undefined_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[pop](#pop)_
+
+Removes the last element from an array and returns it.
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike) | undefined_
+
+---
+
+##### push
+
+▸ **push**(...`items`: [TypeBuilderLike](#typebuilderlike)[]): _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[push](#push)_
+
+Appends new elements to an array, and returns the new length of the array.
+
+**Parameters:**
+
+| Name       | Type                                  | Description                |
+| ---------- | ------------------------------------- | -------------------------- |
+| `...items` | [TypeBuilderLike](#typebuilderlike)[] | New elements of the Array. |
+
+**Returns:** _number_
+
+---
+
+##### reduce
+
+▸ **reduce**(`callbackfn`: function): _[TypeBuilderLike](#typebuilderlike)_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduce](#reduce)_
+
+Calls the specified callback function for all the elements in an array. The
+return value of the callback function is the accumulated result, and is provided
+as an argument in the next call to the callback function.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to four arguments. The reduce method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`previousValue`: [TypeBuilderLike](#typebuilderlike), `currentValue`:
+[TypeBuilderLike](#typebuilderlike), `currentIndex`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | [TypeBuilderLike](#typebuilderlike)   |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)_
+
+▸ **reduce**(`callbackfn`: function, `initialValue`:
+[TypeBuilderLike](#typebuilderlike)): _[TypeBuilderLike](#typebuilderlike)_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduce](#reduce)_
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+▸ (`previousValue`: [TypeBuilderLike](#typebuilderlike), `currentValue`:
+[TypeBuilderLike](#typebuilderlike), `currentIndex`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | [TypeBuilderLike](#typebuilderlike)   |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪ **initialValue**: _[TypeBuilderLike](#typebuilderlike)_
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)_
+
+▸ **reduce**‹**U**›(`callbackfn`: function, `initialValue`: U): _U_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduce](#reduce)_
+
+Calls the specified callback function for all the elements in an array. The
+return value of the callback function is the accumulated result, and is provided
+as an argument in the next call to the callback function.
+
+**Type parameters:**
+
+▪ **U**
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to four arguments. The reduce method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`previousValue`: U, `currentValue`: [TypeBuilderLike](#typebuilderlike),
+`currentIndex`: number, `array`: [TypeBuilderLike](#typebuilderlike)[]): _U_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | U                                     |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪ **initialValue**: _U_
+
+If initialValue is specified, it is used as the initial value to start the
+accumulation. The first call to the callbackfn function provides this value as
+an argument instead of an array value.
+
+**Returns:** _U_
+
+---
+
+##### reduceRight
+
+▸ **reduceRight**(`callbackfn`: function): _[TypeBuilderLike](#typebuilderlike)_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduceRight](#reduceright)_
+
+Calls the specified callback function for all the elements in an array, in
+descending order. The return value of the callback function is the accumulated
+result, and is provided as an argument in the next call to the callback
+function.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to four arguments. The reduceRight method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`previousValue`: [TypeBuilderLike](#typebuilderlike), `currentValue`:
+[TypeBuilderLike](#typebuilderlike), `currentIndex`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | [TypeBuilderLike](#typebuilderlike)   |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)_
+
+▸ **reduceRight**(`callbackfn`: function, `initialValue`:
+[TypeBuilderLike](#typebuilderlike)): _[TypeBuilderLike](#typebuilderlike)_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduceRight](#reduceright)_
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+▸ (`previousValue`: [TypeBuilderLike](#typebuilderlike), `currentValue`:
+[TypeBuilderLike](#typebuilderlike), `currentIndex`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | [TypeBuilderLike](#typebuilderlike)   |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪ **initialValue**: _[TypeBuilderLike](#typebuilderlike)_
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)_
+
+▸ **reduceRight**‹**U**›(`callbackfn`: function, `initialValue`: U): _U_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reduceRight](#reduceright)_
+
+Calls the specified callback function for all the elements in an array, in
+descending order. The return value of the callback function is the accumulated
+result, and is provided as an argument in the next call to the callback
+function.
+
+**Type parameters:**
+
+▪ **U**
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to four arguments. The reduceRight method calls the
+callbackfn function one time for each element in the array.
+
+▸ (`previousValue`: U, `currentValue`: [TypeBuilderLike](#typebuilderlike),
+`currentIndex`: number, `array`: [TypeBuilderLike](#typebuilderlike)[]): _U_
+
+**Parameters:**
+
+| Name            | Type                                  |
+| --------------- | ------------------------------------- |
+| `previousValue` | U                                     |
+| `currentValue`  | [TypeBuilderLike](#typebuilderlike)   |
+| `currentIndex`  | number                                |
+| `array`         | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪ **initialValue**: _U_
+
+If initialValue is specified, it is used as the initial value to start the
+accumulation. The first call to the callbackfn function provides this value as
+an argument instead of an array value.
+
+**Returns:** _U_
+
+---
+
+##### reverse
+
+▸ **reverse**(): _[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[reverse](#reverse)_
+
+Reverses the elements in an Array.
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+---
+
+##### shift
+
+▸ **shift**(): _[TypeBuilderLike](#typebuilderlike) | undefined_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[shift](#shift)_
+
+Removes the first element from an array and returns it.
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike) | undefined_
+
+---
+
+##### slice
+
+▸ **slice**(`start?`: number, `end?`: number):
+_[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[slice](#slice)_
+
+Returns a section of an array.
+
+**Parameters:**
+
+| Name     | Type   | Description                                                                                         |
+| -------- | ------ | --------------------------------------------------------------------------------------------------- |
+| `start?` | number | The beginning of the specified portion of the array.                                                |
+| `end?`   | number | The end of the specified portion of the array. This is exclusive of the element at the index 'end'. |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+---
+
+##### some
+
+▸ **some**(`callbackfn`: function, `thisArg?`: any): _boolean_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[some](#some)_
+
+Determines whether the specified callback function returns true for any element
+of an array.
+
+**Parameters:**
+
+▪ **callbackfn**: _function_
+
+A function that accepts up to three arguments. The some method calls the
+callbackfn function for each element in the array until the callbackfn returns a
+value which is coercible to the Boolean value true, or until the end of the
+array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _unknown_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the callbackfn function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _boolean_
+
+---
+
+##### sort
+
+▸ **sort**(`compareFn?`: function): _this_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[sort](#sort)_
+
+Sorts an array.
+
+**Parameters:**
+
+▪`Optional` **compareFn**: _function_
+
+Function used to determine the order of the elements. It is expected to return a
+negative value if first argument is less than second argument, zero if they're
+equal and a positive value otherwise. If omitted, the elements are sorted in
+ascending, ASCII character order.
+
+```ts
+[11, 2, 22, 1].sort((a, b) => a - b);
+```
+
+▸ (`a`: [TypeBuilderLike](#typebuilderlike), `b`:
+[TypeBuilderLike](#typebuilderlike)): _number_
+
+**Parameters:**
+
+| Name | Type                                |
+| ---- | ----------------------------------- |
+| `a`  | [TypeBuilderLike](#typebuilderlike) |
+| `b`  | [TypeBuilderLike](#typebuilderlike) |
+
+**Returns:** _this_
+
+---
+
+##### splice
+
+▸ **splice**(`start`: number, `deleteCount?`: number):
+_[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[splice](#splice)_
+
+Removes elements from an array and, if necessary, inserts new elements in their
+place, returning the deleted elements.
+
+**Parameters:**
+
+| Name           | Type   | Description                                                                 |
+| -------------- | ------ | --------------------------------------------------------------------------- |
+| `start`        | number | The zero-based location in the array from which to start removing elements. |
+| `deleteCount?` | number | The number of elements to remove.                                           |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+▸ **splice**(`start`: number, `deleteCount`: number, ...`items`:
+[TypeBuilderLike](#typebuilderlike)[]): _[TypeBuilderLike](#typebuilderlike)[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[splice](#splice)_
+
+Removes elements from an array and, if necessary, inserts new elements in their
+place, returning the deleted elements.
+
+**Parameters:**
+
+| Name          | Type                                  | Description                                                                 |
+| ------------- | ------------------------------------- | --------------------------------------------------------------------------- |
+| `start`       | number                                | The zero-based location in the array from which to start removing elements. |
+| `deleteCount` | number                                | The number of elements to remove.                                           |
+| `...items`    | [TypeBuilderLike](#typebuilderlike)[] | Elements to insert into the array in place of the deleted elements.         |
+
+**Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
+
+---
+
+##### toLocaleString
+
+▸ **toLocaleString**(): _string_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[toLocaleString](#tolocalestring)_
+
+Returns a string representation of an array. The elements are converted to
+string using their toLocalString methods.
+
+**Returns:** _string_
+
+---
+
+##### toString
+
+▸ **toString**(): _string_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[toString](#tostring)_
+
+Returns a string representation of an array.
+
+**Returns:** _string_
+
+---
+
+##### unshift
+
+▸ **unshift**(...`items`: [TypeBuilderLike](#typebuilderlike)[]): _number_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[unshift](#unshift)_
+
+Inserts new elements at the start of an array.
+
+**Parameters:**
+
+| Name       | Type                                  | Description                                   |
+| ---------- | ------------------------------------- | --------------------------------------------- |
+| `...items` | [TypeBuilderLike](#typebuilderlike)[] | Elements to insert at the start of the Array. |
+
+**Returns:** _number_
+
+---
+
+##### values
+
+▸ **values**(): _IterableIterator‹[TypeBuilderLike](#typebuilderlike)›_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[values](#values)_
+
+Returns an iterable of values in the array
+
+**Returns:** _IterableIterator‹[TypeBuilderLike](#typebuilderlike)›_
+
+<a name="code-geninterfacestypebuilderlikeobjectmd"></a>
+
+[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)
+
+### Interface: TypeBuilderLikeObject
+
+#### Hierarchy
+
+- object
+
+  ↳ **TypeBuilderLikeObject**
 
 <a name="code-geninterfacestypepluginmd"></a>
 

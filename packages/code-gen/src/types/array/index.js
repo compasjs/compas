@@ -1,6 +1,6 @@
-import { dirnameForModule, isNil } from "@lbu/stdlib";
+import { dirnameForModule } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
+import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
@@ -16,12 +16,12 @@ class ArrayType extends TypeBuilder {
   build() {
     const result = super.build();
 
-    result.values = this.internalValues.build();
+    result.values = buildOrInfer(this.internalValues);
 
     return result;
   }
 
-  constructor(group, name, value) {
+  constructor(group, name) {
     super(arrayType.name, group, name);
 
     this.internalValues = undefined;
@@ -30,14 +30,10 @@ class ArrayType extends TypeBuilder {
       ...this.data,
       ...ArrayType.getBaseData(),
     };
-
-    if (!isNil(value)) {
-      this.values(value);
-    }
   }
 
   /**
-   * @param {TypeBuilder} [value]
+   * @param {TypeBuilderLike} [value]
    * @returns {ArrayType}
    */
   values(value) {
@@ -95,16 +91,11 @@ const arrayType = {
 
 /**
  * @name TypeCreator#array
- * @param {string|TypeBuilder} [name]
- * @param {TypeBuilder} [value]
+ * @param {string} [name]
  * @returns {ArrayType}
  */
-TypeCreator.prototype.array = function (name, value) {
-  if (name instanceof TypeBuilder) {
-    return new ArrayType(this.group, undefined, name);
-  } else {
-    return new ArrayType(this.group, name, value);
-  }
+TypeCreator.prototype.array = function (name) {
+  return new ArrayType(this.group, name);
 };
 
 TypeCreator.types.set(arrayType.name, arrayType);

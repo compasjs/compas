@@ -21,25 +21,25 @@ async function main() {
 
   app.add(
     M.bool("Foo").optional().convert().default(true),
-    M.anyOf("Bar", M.reference("app", "foo"), M.string()),
+    M.anyOf("Bar").values(M.reference("app", "foo"), M.string()),
   );
 
   app.add(M.bool("Foo").optional().convert().default(true));
-  app.add(M.anyOf("Bar", M.bool(), M.bool().optional().default(true)));
+  app.add(M.anyOf("Bar").values(M.bool(), M.bool().optional().default(true)));
   app.add(
     M.object("Obj").keys({
-      foo: M.array(M.number().optional()),
+      foo: M.array().values(M.number().optional()),
     }),
   );
 
   app.add(M.string("Str"));
   app.add(
-    M.object("Objec", {
+    M.object("Objec").keys({
       str: M.reference("App", "Str"),
     }),
   );
   app.add(
-    M.object("User", {
+    M.object("User").keys({
       id: M.uuid(),
       name: M.string().min(1).max(15).mock("__.first"),
       age: M.number().integer().min(0).max(150).convert().mock("__.age"),
@@ -47,7 +47,7 @@ async function main() {
   );
 
   app.add(
-    M.object("Items", {
+    M.object("Items").keys({
       id: M.uuid(),
       userId: M.reference("App", "User").field("id", "user"),
       name: M.string(),
@@ -59,7 +59,7 @@ async function main() {
 
   const myGeneric = M.generic("MyGeneric")
     .keys(M.string())
-    .values(M.anyOf([M.bool().convert(), M.number()]))
+    .values(M.anyOf().values(M.bool().convert(), M.number()))
     .docs("Foo");
 
   app.add(M.array("GenericArray").values(myGeneric));
@@ -71,26 +71,18 @@ async function main() {
 
   const G = T.router("/foo");
   app.add(
-    G.get()
-      .query(M.reference("App", "User"))
-      .params(
-        T.object({
-          bar: T.bool().optional(),
-        }),
-      ),
+    G.get().query(M.reference("App", "User")).params({
+      bar: T.bool().optional(),
+    }),
   );
   app.add(
     G.post("/:id")
-      .body(
-        M.object({
-          foo: M.string(),
-        }),
-      )
-      .query(
-        M.object({
-          id: M.bool().convert(),
-        }),
-      )
+      .body({
+        foo: M.string(),
+      })
+      .query({
+        id: M.bool().convert(),
+      })
       .response(
         M.object().keys({
           bar: M.string(),
@@ -98,10 +90,10 @@ async function main() {
       ),
   );
 
-  const tmp = M.object("Temporary", { foo: M.number().min(10) });
+  const tmp = M.object("Temporary").keys({ foo: M.number().min(10) });
 
   app.add(
-    M.object("Foo", {
+    M.object("Foo").keys({
       id: M.uuid().primary(),
       bar: M.reference("App", "User").field("id", "user"),
       baz: M.reference("App", "Items").field("id", "items"),
@@ -109,22 +101,24 @@ async function main() {
     }),
   );
 
-  app.add(M.array("ArrayThing", M.reference("App", "Foo").field("id")));
+  app.add(M.array("ArrayThing").values(M.reference("App", "Foo").field("id")));
 
   app.extend(storeStructure);
 
   app.add(
-    M.object("fileMeta", {
-      id: M.uuid().primary(),
-      fileId: M.reference("Store", "fileStore").field("id", "file"),
-      isProcessed: M.bool().default("false"),
-    }).enableQueries({ withHistory: true }),
+    M.object("fileMeta")
+      .keys({
+        id: M.uuid().primary(),
+        fileId: M.reference("Store", "fileStore").field("id", "file"),
+        isProcessed: M.bool().default("false"),
+      })
+      .enableQueries({ withHistory: true }),
   );
 
   const externalApi = "apiName";
 
   app.add(
-    new TypeCreator(externalApi).object("Foo", {
+    new TypeCreator(externalApi).object("Foo").keys({
       bar: T.string(),
       baz: T.string(),
       tag: T.number(),
@@ -141,6 +135,17 @@ async function main() {
         ),
       ),
     ),
+  );
+
+  app.add(
+    T.object("inferMe").keys({
+      look: "Ma",
+      i: {
+        am: true,
+      },
+      years: 18,
+      old: [T.number()],
+    }),
   );
 
   await app.generate({

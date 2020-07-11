@@ -1,6 +1,6 @@
 import { dirnameForModule, isNil } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
+import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
@@ -12,13 +12,13 @@ class AnyOfType extends TypeBuilder {
 
     result.values = [];
     for (const v of this.internalValues) {
-      result.values.push(v.build());
+      result.values.push(buildOrInfer(v));
     }
 
     return result;
   }
 
-  constructor(group, name, items) {
+  constructor(group, name) {
     super(anyOfType.name, group, name);
 
     this.data = {
@@ -27,14 +27,10 @@ class AnyOfType extends TypeBuilder {
     };
 
     this.internalValues = undefined;
-
-    if (items.length !== 0) {
-      this.values(...items);
-    }
   }
 
   /**
-   * @param {...TypeBuilder} [items]
+   * @param {...TypeBuilderLike} [items]
    * @returns {AnyOfType}
    */
   values(...items) {
@@ -42,7 +38,7 @@ class AnyOfType extends TypeBuilder {
       this.internalValues = [];
     }
 
-    this.internalValues.push(...items.flat(2));
+    this.internalValues.push(...items);
 
     return this;
   }
@@ -69,17 +65,12 @@ const anyOfType = {
 
 /**
  * @name TypeCreator#anyOf
- * @param {string|TypeBuilder[]} [name] Optional name or array of values that this type
+ * @param {string} [name] Optional name or array of values that this type
  *   can represent
- * @param {...TypeBuilder} [values] Optional values that this type can represent
  * @returns {AnyOfType}
  */
-TypeCreator.prototype.anyOf = function (name, ...values) {
-  if (Array.isArray(name)) {
-    return new AnyOfType(this.group, undefined, name);
-  } else {
-    return new AnyOfType(this.group, name, values);
-  }
+TypeCreator.prototype.anyOf = function (name) {
+  return new AnyOfType(this.group, name);
 };
 
 TypeCreator.types.set(anyOfType.name, anyOfType);

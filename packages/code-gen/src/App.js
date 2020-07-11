@@ -9,6 +9,7 @@ import {
 } from "./generate.js";
 import { generators, generatorTemplates } from "./generators/index.js";
 import { TypeCreator } from "./types/index.js";
+import { buildOrInfer } from "./types/TypeBuilder.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
@@ -44,7 +45,7 @@ export class App {
       depth: 4,
     });
 
-    /** @type {Set<TypeBuilder>} */
+    /** @type {Set<TypeBuilderLike>} */
     this.unprocessedData = new Set();
 
     /** @type {{structure: object<key, object<key, object>>}} */
@@ -90,7 +91,7 @@ export class App {
   }
 
   /**
-   * @param {...TypeBuilder} builders
+   * @param {...TypeBuilderLike} builders
    * @returns {this}
    */
   add(...builders) {
@@ -159,8 +160,7 @@ export class App {
    */
   processData() {
     for (const item of this.unprocessedData) {
-      const result = item.build();
-      this.addToData(result);
+      this.addToData(buildOrInfer(item));
     }
     this.unprocessedData.clear();
   }

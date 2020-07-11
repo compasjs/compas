@@ -1,7 +1,7 @@
 import { dirnameForModule, isNil } from "@lbu/stdlib";
 import { readFileSync } from "fs";
 import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
-import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
+import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
@@ -24,7 +24,7 @@ class ReferenceType extends TypeBuilder {
     const result = super.build();
 
     if (!isNil(this.ref)) {
-      const refBuild = this.ref.build();
+      const refBuild = buildOrInfer(this.ref);
       result.reference = {
         group: refBuild.group,
         name: refBuild.name,

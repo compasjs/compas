@@ -1,6 +1,6 @@
-import { dirnameForModule, isNil, isPlainObject, merge } from "@lbu/stdlib";
+import { dirnameForModule, merge } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
+import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
@@ -17,13 +17,13 @@ class ObjectType extends TypeBuilder {
     result.keys = {};
 
     for (const k of Object.keys(this.internalKeys)) {
-      result.keys[k] = this.internalKeys[k].build();
+      result.keys[k] = buildOrInfer(this.internalKeys[k]);
     }
 
     return result;
   }
 
-  constructor(group, name, obj) {
+  constructor(group, name) {
     super(objectType.name, group, name);
 
     this.internalKeys = {};
@@ -32,14 +32,10 @@ class ObjectType extends TypeBuilder {
       ...this.data,
       ...ObjectType.getBaseData(),
     };
-
-    if (!isNil(obj)) {
-      this.keys(obj);
-    }
   }
 
   /**
-   * @param {object<string, TypeBuilder>} obj
+   * @param {object<string, TypeBuilderLike>} obj
    * @returns {ObjectType}
    */
   keys(obj) {
@@ -77,16 +73,11 @@ const objectType = {
 
 /**
  * @name TypeCreator#object
- * @param {string|object<string, TypeBuilder>} [name]
- * @param {object<string, TypeBuilder>} [obj]
+ * @param {string} [name]
  * @returns {ObjectType}
  */
-TypeCreator.prototype.object = function (name, obj) {
-  if (isPlainObject(name)) {
-    return new ObjectType(this.group, undefined, name);
-  } else {
-    return new ObjectType(this.group, name, obj);
-  }
+TypeCreator.prototype.object = function (name) {
+  return new ObjectType(this.group, name);
 };
 
 TypeCreator.types.set(objectType.name, objectType);

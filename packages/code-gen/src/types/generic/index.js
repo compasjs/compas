@@ -1,6 +1,6 @@
 import { dirnameForModule } from "@lbu/stdlib";
 import { readFileSync } from "fs";
-import { TypeBuilder, TypeCreator } from "../TypeBuilder.js";
+import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
@@ -10,8 +10,8 @@ class GenericType extends TypeBuilder {
   build() {
     const result = super.build();
 
-    result.keys = this.internalKeys.build();
-    result.values = this.internalValues.build();
+    result.keys = buildOrInfer(this.internalKeys);
+    result.values = buildOrInfer(this.internalValues);
 
     return result;
   }
@@ -29,7 +29,7 @@ class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilder} [key]
+   * @param {TypeBuilderLike} [key]
    * @returns {GenericType}
    */
   keys(key) {
@@ -38,7 +38,7 @@ class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilder} [value]
+   * @param {TypeBuilderLike} [value]
    * @returns {GenericType}
    */
   values(value) {

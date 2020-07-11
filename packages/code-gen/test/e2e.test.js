@@ -74,33 +74,23 @@ function applyServerStructure(app) {
 
   app.add(
     R.get("/:id", "getId")
-      .params(
-        T.object({
-          id: T.number().integer().convert(),
-        }),
-      )
-      .response(
-        T.object({
-          id: T.number().integer(),
-        }),
-      ),
+      .params({
+        id: T.number().integer().convert(),
+      })
+      .response({
+        id: T.number().integer(),
+      }),
 
     R.post("/", "create")
-      .query(
-        T.object({
-          alwaysTrue: T.bool().optional(),
-        }),
-      )
-      .body(
-        T.object({
-          foo: T.bool(),
-        }),
-      )
-      .response(
-        T.object({
-          foo: T.bool(),
-        }),
-      ),
+      .query({
+        alwaysTrue: T.bool().optional(),
+      })
+      .body({
+        foo: T.bool(),
+      })
+      .response({
+        foo: T.bool(),
+      }),
   );
 
   return {

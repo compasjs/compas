@@ -151,3 +151,35 @@ export function isReferenceTypeWithField(value) {
 
   return isPlainObject(value.reference) && !isNil(value.reference.field);
 }
+
+/**
+ * Either calls TypeBuilder#build or infers one of the following types:
+ * - boolean oneOf
+ * - number oneOf
+ * - string oneOf
+ * - array
+ * - object
+ * @param {TypeBuilderLike} value
+ * @return {*}
+ */
+export function buildOrInfer(value) {
+  if (value.build && typeof value.build === "function") {
+    return value.build();
+  }
+
+  if (typeof value === "boolean") {
+    return new (TypeCreator.types.get("boolean").class)().oneOf(value).build();
+  } else if (typeof value === "number") {
+    return new (TypeCreator.types.get("number").class)().oneOf(value).build();
+  } else if (typeof value === "string") {
+    return new (TypeCreator.types.get("string").class)().oneOf(value).build();
+  } else if (isPlainObject(value)) {
+    return new (TypeCreator.types.get("object").class)().keys(value).build();
+  } else if (Array.isArray(value) && value.length !== 0) {
+    return new (TypeCreator.types.get("array").class)()
+      .values(value[0])
+      .build();
+  } else {
+    throw new Error(`Could not infer type of '${value}'`);
+  }
+}

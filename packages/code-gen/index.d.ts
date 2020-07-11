@@ -195,6 +195,17 @@ export class App {
   generate(options: GenerateOpts): Promise<void>;
 }
 
+export type TypeBuilderLike =
+  | boolean
+  | number
+  | string
+  | TypeBuilderLikeArray
+  | TypeBuilderLikeObject
+  | TypeBuilder;
+
+interface TypeBuilderLikeArray extends Array<TypeBuilderLike> {}
+interface TypeBuilderLikeObject extends Record<string, TypeBuilderLike> {}
+
 /**
  * Create new instances of registered types and manages grups
  * Also keeps a Map of registered types on TypeCreator.types
@@ -223,9 +234,9 @@ export class TypeCreator {
 
   any(name?: string): AnyType;
 
-  anyOf(name?: string | TypeBuilder[], ...values: TypeBuilder[]): AnyOfType;
+  anyOf(name?: string): AnyOfType;
 
-  array(name?: string | TypeBuilder, value?: TypeBuilder): ArrayType;
+  array(name?: string): ArrayType;
 
   bool(name?: string): BooleanType;
 
@@ -235,10 +246,7 @@ export class TypeCreator {
 
   number(name?: string): NumberType;
 
-  object(
-    name?: string | Record<string, TypeBuilder>,
-    obj?: Record<string, TypeBuilder>,
-  ): ObjectType;
+  object(name?: string): ObjectType;
 
   reference(groupOrOther?: string | TypeBuilder, name?: string): ReferenceType;
 
@@ -331,22 +339,22 @@ export class RouteBuilder extends TypeBuilder {
   /**
    * Type of accepted query parameters
    */
-  query(builder: TypeBuilder): this;
+  query(builder: TypeBuilderLike): this;
 
   /**
    * Type of accepted path parameters
    */
-  params(builder: TypeBuilder): this;
+  params(builder: TypeBuilderLike): this;
 
   /**
    * Type of accepted body parameters
    */
-  body(builder: TypeBuilder): this;
+  body(builder: TypeBuilderLike): this;
 
   /**
    * Route response type
    */
-  response(builder: TypeBuilder): this;
+  response(builder: TypeBuilderLike): this;
 }
 
 export class RouteCreator {
@@ -389,11 +397,11 @@ export class AnyType extends TypeBuilder {
 }
 
 export class AnyOfType extends TypeBuilder {
-  values(...items: TypeBuilder[]): this;
+  values(...items: TypeBuilderLike[]): this;
 }
 
 export class ArrayType extends TypeBuilder {
-  values(value: TypeBuilder): this;
+  values(value: TypeBuilderLike): this;
 
   /**
    * Validator converts single item to an array
@@ -428,9 +436,9 @@ export class DateType extends TypeBuilder {
 }
 
 export class GenericType extends TypeBuilder {
-  keys(key: TypeBuilder): this;
+  keys(key: TypeBuilderLike): this;
 
-  values(value: TypeBuilder): this;
+  values(value: TypeBuilderLike): this;
 }
 
 export class NumberType extends TypeBuilder {
@@ -461,7 +469,7 @@ export class NumberType extends TypeBuilder {
 }
 
 export class ObjectType extends TypeBuilder {
-  keys(obj: Record<string, TypeBuilder>): this;
+  keys(obj: Record<string, TypeBuilderLike>): this;
 
   /**
    * Validator enforces no extra keys
