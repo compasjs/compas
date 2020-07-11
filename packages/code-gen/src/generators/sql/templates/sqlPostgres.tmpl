@@ -32,5 +32,13 @@
     ((newline))
 
     {{ } }}
+
+
+    -- These are only for easy copy -pasting and should not be used as a guide!
+    {{ for (const key of Object.keys(item.keys || {})) { }}
+    {{ if (!item.keys[key]?.sql?.primary && item.keys[key]?.sql?.searchable) { }}
+    CREATE INDEX {{= camelToSnakeCase(item.name) }}_{{= camelToSnakeCase(key) }}_idx ON {{= camelToSnakeCase(item.name) }}({{= camelToSnakeCase(key) }});
+    {{ } }}
+    {{ } }}
   {{ } }}
 {{ } }}
