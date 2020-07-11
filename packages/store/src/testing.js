@@ -15,6 +15,13 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     undefined,
     process.env.APP_NAME,
   );
+
+  // Drop all connections to the database, this is required before it is usable as a template
+  await creationSql`SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
+  AND pid <> pg_backend_pid();`;
+
   await createDatabaseIfNotExists(creationSql, name, process.env.APP_NAME);
 
   const sql = await newPostgresConnection({
