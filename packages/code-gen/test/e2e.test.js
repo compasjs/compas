@@ -111,7 +111,7 @@ function applyClientStructure(apiClient) {
 function buildTestApp(serverImports) {
   const app = getApp();
   app.use(serverImports.router?.router);
-  serverImports.router.setBodyParser(createBodyParsers({}).bodyParser);
+  serverImports.router.setBodyParsers(createBodyParsers({}));
 
   serverImports.router.appHandlers.getId = (ctx, next) => {
     const { id } = ctx.validatedParams;
