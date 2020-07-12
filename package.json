@@ -28,6 +28,10 @@
   "scarfSettings": {
     "enabled": false
   },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/lightbasenl/lbu.git"
+  },
   "prettier": "@lbu/lint-config/prettierrc",
   "workspaces": [
     "packages/*"

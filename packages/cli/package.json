@@ -31,7 +31,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git"
+    "url": "ssh://git@github.com/lightbasenl/lbu.git",
+    "directory": "packages/cli"
   },
   "publishConfig": {
     "access": "public"
