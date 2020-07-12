@@ -11,6 +11,7 @@
 {{ if (item.params) { }}* @param { {{= item.params.reference.uniqueName + "_Input" }} } params{{ } }}
 {{ if (item.query) { }}* @param { {{= item.query.reference.uniqueName + "_Input" }} } query{{ } }}
 {{ if (item.body) { }}* @param { {{= item.body.reference.uniqueName + "_Input" }} } body{{ } }}
+{{ if (item.files) { }}* @param { {{= item.files.reference.uniqueName + "_Input" }} } files{{ } }}
  * @returns {Promise<{{= item.response ? item.response.reference.uniqueName : "*" }}>}
  */
 ((newline))

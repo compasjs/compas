@@ -13,6 +13,9 @@
 {{ if (model.body) { }}
  * @param { {{= model.body.reference.uniqueName }}_Input} body
 {{ } }}
+{{ if (model.files) { }}
+ * @param { {{= model.files.reference.uniqueName }}_Input} files
+{{ } }}
 {{ if (model.response) { }}
  * @returns {Promise.<{{= model.response.reference.uniqueName }}>}
 {{ } else { }}
@@ -30,16 +33,29 @@ query,
 {{ if (model.body) { }}
 body,
 {{ } }}
+{{ if (model.files) { }}
+files,
+{{ } }}
 ) {
     checkApiClient();
 
     {{ if (options.enableMocks && model.response !== undefined) { }}
       try {
+        {{ if (model.body) { }}
+        const data = body;
+        {{ } }}
+        {{ if (model.files) { }}
+        const data = new FormData();
+        for (const key of Object.keys(files)) {
+          data.set(key, files[key].data, files[key].name);
+        }
+        {{ } }}
+
         const response = await _internalClient.request({
           url: `{{= url }}`,
           method: "{{= model.method.toLowerCase() }}",
           params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
-          data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
+          data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }}
         });
 
         return response.data;
@@ -50,11 +66,21 @@ body,
         throw e;
       }
     {{ } else { }}
+{{ if (model.body) { }}
+        const data = body;
+        {{ } }}
+        {{ if (model.files) { }}
+        const data = new FormData();
+        for (const key of Object.keys(files)) {
+          data.set(key, files[key].data, files[key].name);
+        }
+        {{ } }}
+
         const response = await _internalClient.request({
           url: `{{= url }}`,
           method: "{{= model.method.toLowerCase() }}",
           params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
-          data: {{ if (model.body) { }}body{{ } else { }}{}{{ } }}
+          data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }}
         });
 
         return response.data;

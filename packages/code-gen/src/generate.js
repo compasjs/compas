@@ -67,7 +67,7 @@ export async function runGenerators(app, options) {
   if (options.dumpStructure) {
     files.push({
       path: "./structure.js",
-      source: `export const structure = JSON.parse('${generatorInput.stringified}');\n`,
+      source: `export const structureString = '${generatorInput.stringified}';\nexport const structure = JSON.parse(structureString);\n`,
     });
   }
 

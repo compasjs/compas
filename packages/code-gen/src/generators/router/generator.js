@@ -31,7 +31,7 @@ export async function preGenerate(app, data, options) {
     throw new Error("router generator depends on validator generator");
   }
 
-  for (const r of getInternalRoutes()) {
+  for (const r of getInternalRoutes(options)) {
     addToData(data, r.build());
   }
 }

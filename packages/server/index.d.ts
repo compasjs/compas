@@ -1314,13 +1314,16 @@ export interface GetAppOptions {
  */
 export function getApp(opts?: GetAppOptions): Application;
 
+export interface BodyParserPair {
+  bodyParser: Middleware;
+  multipartBodyParser: Middleware;
+}
+
 /**
  * Creates a body parser and a body parser with multipart enabled
  * Note that koa-body parses url-encoded, form data, json and text by default
  */
-export function createBodyParsers(
-  options?: IKoaBodyOptions,
-): { bodyParser: Middleware; multipartBodyParsers: Middleware };
+export function createBodyParsers(options?: IKoaBodyOptions): BodyParserPair;
 
 /**
  * Given a logged object, check if it is a request log

@@ -26,6 +26,7 @@
  {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
  {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
  {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
+ {{ if (item.files) { }}* @property { {{= item.files.reference.uniqueName }} } validatedFiles {{ } }}
  */
  ((newline))
  {{ } }}

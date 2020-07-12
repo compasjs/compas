@@ -88,6 +88,15 @@ async function main() {
           bar: M.string(),
         }),
       ),
+
+    G.post("/foobar", "fileTest")
+      .files({
+        foo: M.file(),
+        bar: M.file(),
+      })
+      .response({
+        foo: M.file(),
+      }),
   );
 
   const tmp = M.object("Temporary").keys({ foo: M.number().min(10) });

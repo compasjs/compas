@@ -81,6 +81,9 @@ interface {{= upperCaseFirst(funcName) }}Props {
    {{ if (model.body) { }}
    body: T.{{= model.body.reference.uniqueName }}_Input
    {{ } }}
+   {{ if (model.files) { }}
+   files: T.{{= model.files.reference.uniqueName }}_Input
+   {{ } }}
 }
 
 ((newline))
@@ -98,6 +101,7 @@ export function {{= funcName }}(
       {{= model.params ? "variables.params, " : ""}}
       {{= model.query ? "variables.query, " : "" }}
       {{= model.body ? "variables.body, " : "" }}
+      {{= model.files ? "variables.files, " : "" }}
     ),
     options,
   );

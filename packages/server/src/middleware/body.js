@@ -6,6 +6,7 @@ import koaBody from "koa-body";
  * Note that koa-body parses url-encoded, form data, json and text by default
  *
  * @param {IKoaBodyOptions} [opts={}] Options that will be passed to koa-body
+ * @returns {BodyParserPair}
  */
 export function createBodyParsers(opts = {}) {
   const multiPartOpts = merge({}, opts);

@@ -770,6 +770,7 @@ and extending with external sources. Also maintains the generators
 ##### Methods
 
 - [add](#add)
+- [addRaw](#addraw)
 - [extend](#extend)
 - [generate](#generate)
 - [new](#static-new)
@@ -812,6 +813,23 @@ Add new TypeBuilders to this app
 | Name          | Type                                           |
 | ------------- | ---------------------------------------------- |
 | `...builders` | [TypeBuilder](#code-genclassestypebuildermd)[] |
+
+**Returns:** _[App](#code-genclassesappmd)_
+
+---
+
+##### addRaw
+
+▸ **addRaw**(`obj`: any): _[App](#code-genclassesappmd)_
+
+Add a raw object to this app. Note that it throws when you are not conforming to
+at least the structure from the TypeBuilder
+
+**Parameters:**
+
+| Name  | Type |
+| ----- | ---- |
+| `obj` | any  |
 
 **Returns:** _[App](#code-genclassesappmd)_
 
@@ -6073,6 +6091,7 @@ The LogParserContext enables you too analyze logs produced by this Logger
 #### Interfaces
 
 - [AppErrorHandler](#serverinterfacesapperrorhandlermd)
+- [BodyParserPair](#serverinterfacesbodyparserpairmd)
 - [CorsOptions](#serverinterfacescorsoptionsmd)
 - [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 - [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
@@ -6150,7 +6169,8 @@ Stops the server created with `createTestAppAndClient`
 
 #### createBodyParsers
 
-▸ **createBodyParsers**(`options?`: IKoaBodyOptions): _object_
+▸ **createBodyParsers**(`options?`: IKoaBodyOptions):
+_[BodyParserPair](#serverinterfacesbodyparserpairmd)_
 
 Creates a body parser and a body parser with multipart enabled Note that
 koa-body parses url-encoded, form data, json and text by default
@@ -6161,11 +6181,7 @@ koa-body parses url-encoded, form data, json and text by default
 | ---------- | --------------- |
 | `options?` | IKoaBodyOptions |
 
-**Returns:** _object_
-
-- **bodyParser**: _[Middleware](#middleware)_
-
-- **multipartBodyParsers**: _[Middleware](#middleware)_
+**Returns:** _[BodyParserPair](#serverinterfacesbodyparserpairmd)_
 
 ---
 
@@ -7018,6 +7034,36 @@ Extract data for the response from the AppError data
 | `info` | any                 |
 
 **Returns:** _Record‹string, any›_
+
+<a name="serverinterfacesbodyparserpairmd"></a>
+
+[@lbu/server - v0.0.42](#serverreadmemd) ›
+[BodyParserPair](#serverinterfacesbodyparserpairmd)
+
+### Interface: BodyParserPair
+
+#### Hierarchy
+
+- **BodyParserPair**
+
+#### Index
+
+##### Properties
+
+- [bodyParser](#bodyparser)
+- [multipartBodyParser](#multipartbodyparser)
+
+#### Properties
+
+##### bodyParser
+
+• **bodyParser**: _[Middleware](#middleware)_
+
+---
+
+##### multipartBodyParser
+
+• **multipartBodyParser**: _[Middleware](#middleware)_
 
 <a name="serverinterfacescorsoptionsmd"></a>
 

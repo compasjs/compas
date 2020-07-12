@@ -8,16 +8,20 @@ import {
 {{= group }}Validators,
 {{ } }}
 } from "./validators.js";
+{{ if (options.dumpStructure) { }}
+import { structureString } from "./structure.js";
+{{ } }}
 ((newline))
 
-let _internalBodyParser = undefined;
-export function setBodyParser(parser) {
-  _internalBodyParser = ctx => new Promise(r => parser(ctx, r).then(r));
-}
-((newline))
-
-function parseBody(ctx) {
-    return _internalBodyParser(ctx);
+let internalBodyParsers = undefined;
+/**
+ * @param {BodyParserPair} parsers
+ */
+export function setBodyParsers(parsers) {
+  internalBodyParsers = {
+    body: ctx => new Promise(r => parsers.bodyParser(ctx, r).then(r)),
+    files: ctx => new Promise(r => parsers.multipartBodyParser(ctx, r).then(r)),
+  };
 }
 ((newline))
 
@@ -87,7 +91,7 @@ const handlers = {
       {{ } }}
 ((newline))
 
-      {{= item.uniqueName }}: {{ if (item.body || item.query) { }} async {{ } }} function (params, ctx, next) {
+      {{= item.uniqueName }}: {{ if (item.body || item.query || item.files) { }} async {{ } }} function (params, ctx, next) {
 
         ctx.request.params = params;
 
@@ -96,7 +100,7 @@ const handlers = {
         {{ } }}
 
         {{ if (item.body || item.query) { }}
-        await parseBody(ctx);
+        await internalBodyParsers.body(ctx);
         {{ } }}
 
         {{ if (item.query) { }}
@@ -105,6 +109,11 @@ const handlers = {
 
         {{ if (item.body) { }}
         ctx.validatedBody = {{= item.body.reference.group }}Validators.{{= item.body.reference.name }}(ctx.request.body);
+        {{ } }}
+
+        {{ if (item.files) { }}
+        await internalBodyParsers.files(ctx);
+        ctx.validatedFiles = {{= item.files.reference.group }}Validators.{{= item.files.reference.name }}(ctx.request.files);
         {{ } }}
 
         if (_composed.{{= item.uniqueName }} === undefined) {
@@ -142,6 +151,7 @@ const handlers = {
      {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
      {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
      {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
+     {{ if (item.files) { }}* @property { {{= item.files.reference.uniqueName }} } validatedFiles {{ } }}
      */
 ((newline))
      /**
@@ -225,12 +235,14 @@ export function router(ctx, next) {
 }
 ((newline))
 
+{{ if (options.dumpStructure) { }}
 lbuHandlers.structure = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
-  ctx.body = '{{= stringified }}';
+  ctx.body = structureString;
 
   return next();
 }
+{{ } }}
 ((newline))
 
 

@@ -14,6 +14,7 @@ export class RouteBuilder extends TypeBuilder {
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
     this.bodyBuilder = undefined;
+    this.filesBuilder = undefined;
     this.responseBuilder = undefined;
   }
 
@@ -67,6 +68,20 @@ export class RouteBuilder extends TypeBuilder {
    * @param {TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
+  files(builder) {
+    if (["POST", "PUT"].indexOf(this.data.method) === -1) {
+      throw new Error("Can only use files on POST or PUT routes");
+    }
+
+    this.filesBuilder = builder;
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteBuilder}
+   */
   response(builder) {
     this.responseBuilder = builder;
 
@@ -100,6 +115,15 @@ export class RouteBuilder extends TypeBuilder {
       if (isNil(result.body.name)) {
         result.body.group = result.group;
         result.body.name = result.name + "Body";
+      }
+    }
+
+    if (this.filesBuilder && !this.bodyBuilder) {
+      result.files = buildOrInfer(this.filesBuilder);
+
+      if (isNil(result.files.name)) {
+        result.files.group = result.group;
+        result.files.name = result.name + "Files";
       }
     }
 

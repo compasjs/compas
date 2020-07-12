@@ -59,10 +59,15 @@ async function compileMockExec(options) {
   {{ if (it.model && it.model.mocks && it.model.mocks.rawMock) { }}
      {{= it.model.mocks.rawMock }}
    {{ } else { }}
-  {{ let result = ''; }}`,
+  {{ let result = ''; }}
+  {{ if (false) { }}
+  `,
     fnStringAdd: (type, templateName) =>
-      `{{ if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}{{ } }}\n`,
+      `{{ } else if (it.type === "${type.name}") { }}{{ result += ${templateName}({ ...it }); }}\n`,
     fnStringEnd: `
+    {{ } else { }}
+    {{ result += "_mocker.falsy()"; }}
+    {{ } }}
     {{ if (it.model && it.model.isOptional) { }}
       {{ if (model.defaultValue !== undefined && !it.isInputType) { }}
         {{ result += model.defaultValue + ","; }}
