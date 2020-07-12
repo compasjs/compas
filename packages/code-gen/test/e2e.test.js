@@ -95,6 +95,7 @@ function applyServerStructure(app) {
 
   return {
     enabledGenerators: ["router", "validator"],
+    dumpStructure: true,
   };
 }
 
