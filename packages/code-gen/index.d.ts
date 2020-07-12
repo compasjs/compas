@@ -184,6 +184,12 @@ export class App {
   add(...builders: TypeBuilder[]): App;
 
   /**
+   * Add a raw object to this app.
+   * Note that it throws when you are not conforming to at least the structure from the TypeBuilder
+   */
+  addRaw(obj: any): App;
+
+  /**
    * Add all groups and items to this App instance
    */
   extend(data: any): void;

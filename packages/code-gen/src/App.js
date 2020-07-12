@@ -103,6 +103,37 @@ export class App {
   }
 
   /**
+   * @param {object} obj
+   * @returns {this}
+   */
+  addRaw(obj) {
+    const error = new Error(
+      "Invalid value provided for 'obj'. Either know what you are doing or don't use this method.",
+    );
+    if (!isPlainObject(obj)) {
+      throw error;
+    }
+
+    if (
+      typeof obj.type !== "string" ||
+      typeof obj.name !== "string" ||
+      typeof obj.group !== "string"
+    ) {
+      throw error;
+    }
+
+    if (isNil(obj.docString) || isNil(obj.isOptional)) {
+      throw error;
+    }
+
+    // Can't do more validation here than what the TypeBuilder does.
+
+    this.addToData(obj);
+
+    return this;
+  }
+
+  /**
    * @param data
    */
   extend(data) {
