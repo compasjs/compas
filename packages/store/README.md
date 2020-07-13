@@ -49,7 +49,6 @@ tailored at monolithic projects.
   - Writing newline delimited JSON in production
   - Pretty printing for development
 - Various utilities to get insight in the running process
-- Parser to process production logs in an external process
 
 **@lbu/stdlib**:
 

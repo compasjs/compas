@@ -42,24 +42,6 @@ export function logMiddleware() {
 }
 
 /**
- * Given a logged object, check if it is a request log
- *
- * @param {object} obj
- * @returns {boolean}
- */
-export function isServerLog(obj) {
-  if (obj?.type !== "http") {
-    return false;
-  }
-
-  if (!obj.message?.request || !obj.message.response) {
-    return false;
-  }
-
-  return obj.message.request.path && !!obj.message.response.duration;
-}
-
-/**
  * Get the size of data that goes through a stream
  */
 class StreamLength extends Transform {

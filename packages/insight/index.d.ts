@@ -89,25 +89,3 @@ export function printProcessMemoryUsage(logger: Logger): void;
  * Comes with a depth of 4, prevents printing deeply nested objects
  */
 export const log: Logger;
-
-/**
- * The LogParserContext enables you too analyze logs produced by this Logger
- */
-export interface LogParserContext {
-  jsonProcessor?: (data: object) => void;
-  textProcessor?: (data: string) => void;
-  stream: NodeJS.ReadableStream;
-}
-
-/**
- * Create a new parser context
- */
-export function newLogParserContext(
-  stream: NodeJS.ReadableStream,
-): LogParserContext;
-
-/**
- * Run the parser, splits the in stream onn lines and call either the jsonProcessor or
- * textProcessor with the value. The original value is written to the returned stream
- */
-export function executeLogParser(lpc: LogParserContext): NodeJS.ReadableStream;

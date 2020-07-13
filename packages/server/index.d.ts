@@ -1326,11 +1326,6 @@ export interface BodyParserPair {
 export function createBodyParsers(options?: IKoaBodyOptions): BodyParserPair;
 
 /**
- * Given a logged object, check if it is a request log
- */
-export function isServerLog(value: Record<string, unknown>): boolean;
-
-/**
  * Compatible with @lbu/store files. Needs either updated_at or last_modified
  * @private
  */
