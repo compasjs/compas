@@ -8,7 +8,6 @@ export function newLogger(options) {
   const isProduction =
     options?.pretty === false || process.env.NODE_ENV === "production";
   const stream = options?.stream ?? process.stdout;
-  const depth = options?.depth ?? 3;
 
   const logFn = isProduction
     ? wrapWriter(writeNDJSON)
@@ -17,14 +16,14 @@ export function newLogger(options) {
   if (options?.ctx === undefined) {
     return {
       isProduction: () => isProduction,
-      info: logFn.bind(undefined, stream, depth, "info"),
-      error: logFn.bind(undefined, stream, depth, "error"),
+      info: logFn.bind(undefined, stream, "info"),
+      error: logFn.bind(undefined, stream, "error"),
     };
   } else {
     return {
       isProduction: () => isProduction,
-      info: logFn.bind(undefined, stream, depth, "info", options.ctx),
-      error: logFn.bind(undefined, stream, depth, "error", options.ctx),
+      info: logFn.bind(undefined, stream, "info", options.ctx),
+      error: logFn.bind(undefined, stream, "error", options.ctx),
     };
   }
 }
@@ -50,12 +49,12 @@ export function bindLoggerContext(logger, ctx) {
  * @returns {log}
  */
 function wrapWriter(fn) {
-  return function log(stream, depth, level, context, message) {
+  return function log(stream, level, context, message) {
     const timestamp = new Date();
     if (!message) {
       message = context;
       context = {};
     }
-    fn(stream, depth, level, timestamp, context, message);
+    fn(stream, level, timestamp, context, message);
   };
 }

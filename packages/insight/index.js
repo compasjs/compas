@@ -6,6 +6,4 @@ export { newLogger, bindLoggerContext } from "./src/logger.js";
 /**
  * @type {Logger}
  */
-export const log = newLogger({
-  depth: 4,
-});
+export const log = newLogger({});

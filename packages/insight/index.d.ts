@@ -38,11 +38,6 @@ export interface LoggerOptions<T extends LoggerContext> {
   pretty?: boolean;
 
   /**
-   * Max-depth printed
-   */
-  depth?: number;
-
-  /**
    * The stream to write the logs to
    */
   stream?: NodeJS.WritableStream;
@@ -85,7 +80,6 @@ export function bytesToHumanReadable(bytes?: number): string;
 export function printProcessMemoryUsage(logger: Logger): void;
 
 /**
- * Standard log instance.
- * Comes with a depth of 4, prevents printing deeply nested objects
+ * Standard log instance
  */
 export const log: Logger;

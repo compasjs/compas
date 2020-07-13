@@ -6,9 +6,7 @@ import { Transform } from "stream";
  * Log basic request and response information
  */
 export function logMiddleware() {
-  const logger = newLogger({
-    depth: 5,
-  });
+  const logger = newLogger({});
 
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();

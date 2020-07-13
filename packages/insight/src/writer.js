@@ -2,19 +2,18 @@ import { inspect } from "util";
 
 /**
  * @param stream
- * @param depth
  * @param level
  * @param timestamp
  * @param context
  * @param message
  */
-export function writeNDJSON(stream, depth, level, timestamp, context, message) {
+export function writeNDJSON(stream, level, timestamp, context, message) {
   stream.write(
     JSON.stringify({
       level,
       ...context,
       timestamp: timestamp.toISOString(),
-      message: formatMessage(depth, message),
+      message: message,
     }),
   );
   stream.write("\n");
@@ -22,13 +21,12 @@ export function writeNDJSON(stream, depth, level, timestamp, context, message) {
 
 /**
  * @param stream
- * @param depth
  * @param level
  * @param timestamp
  * @param context
  * @param message
  */
-export function writePretty(stream, depth, level, timestamp, context, message) {
+export function writePretty(stream, level, timestamp, context, message) {
   stream.write(formatDate(timestamp));
   stream.write(" ");
   stream.write(formatLevelAndType(level, context?.type));
@@ -36,9 +34,7 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
   if (message) {
     stream.write(" ");
     if (Array.isArray(message)) {
-      stream.write(
-        message.map((it) => formatMessagePretty(depth - 2, it)).join(", "),
-      );
+      stream.write(message.map((it) => formatMessagePretty(it)).join(", "));
     } else {
       let keyCount = 0;
       if (context?.type) {
@@ -47,10 +43,10 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
       }
 
       if (Object.keys(context).length > keyCount) {
-        stream.write(formatMessagePretty(depth - 1, context));
+        stream.write(formatMessagePretty(context));
         stream.write(" ");
       }
-      stream.write(formatMessagePretty(depth - 1, message));
+      stream.write(formatMessagePretty(message));
     }
   }
 
@@ -58,11 +54,10 @@ export function writePretty(stream, depth, level, timestamp, context, message) {
 }
 
 /**
- * @param {number} depth
  * @param {*} value
  * @returns {string}
  */
-function formatMessagePretty(depth, value) {
+function formatMessagePretty(value) {
   if (
     typeof value === "boolean" ||
     typeof value === "string" ||
@@ -72,68 +67,9 @@ function formatMessagePretty(depth, value) {
   } else {
     return inspect(value, {
       colors: true,
-      depth,
+      depth: null,
     });
   }
-}
-
-/**
- * @param {number} availableDepth
- * @param {*} message
- * @returns {*}
- */
-function formatMessage(availableDepth, message) {
-  if (message === null) {
-    return null;
-  }
-  if (message === undefined) {
-    return undefined;
-  }
-
-  const type = typeof message;
-  if (type === "string" || type === "boolean" || type === "number") {
-    return message;
-  }
-
-  if (type === "bigint" || type === "symbol") {
-    return message.toString();
-  } else if (type === "function") {
-    return formatMessage(availableDepth, {
-      name: message.name || "fn",
-      length: message.length || 0,
-    });
-  }
-
-  if (availableDepth === 0) {
-    if (Array.isArray(message)) {
-      return `[...]`;
-    } else {
-      return `{...}`;
-    }
-  }
-
-  if (Array.isArray(message)) {
-    let result = Array(message.length);
-    for (let i = 0; i < message.length; ++i) {
-      result[i] = formatMessage(availableDepth - 1, message[i]);
-    }
-    return result;
-  }
-
-  // Handle classes & objects
-  const keys =
-    typeof message === "object" &&
-    message.constructor === Object &&
-    Object.prototype.toString.call(message) === "[object Object]"
-      ? Object.keys(message)
-      : Object.getOwnPropertyNames(message);
-
-  const result = {};
-  for (const key of keys) {
-    result[key] = formatMessage(availableDepth - 1, message[key]);
-  }
-
-  return result;
 }
 
 /**

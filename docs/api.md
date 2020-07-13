@@ -5718,7 +5718,6 @@ Return the template that should be used to validate this type
 
 #### Interfaces
 
-- [LogParserContext](#insightinterfaceslogparsercontextmd)
 - [Logger](#insightinterfacesloggermd)
 - [LoggerContext](#insightinterfacesloggercontextmd)
 - [LoggerOptions](#insightinterfacesloggeroptionsmd)
@@ -5731,8 +5730,6 @@ Return the template that should be used to validate this type
 
 - [bindLoggerContext](#bindloggercontext)
 - [bytesToHumanReadable](#bytestohumanreadable)
-- [executeLogParser](#executelogparser)
-- [newLogParserContext](#newlogparsercontext)
 - [newLogger](#newlogger)
 - [printProcessMemoryUsage](#printprocessmemoryusage)
 
@@ -5742,8 +5739,7 @@ Return the template that should be used to validate this type
 
 • **log**: _[Logger](#insightinterfacesloggermd)_
 
-Standard log instance. Comes with a depth of 4, prevents printing deeply nested
-objects
+Standard log instance
 
 ### Functions
 
@@ -5784,42 +5780,6 @@ readable way Support up to a pebibyte
 | `bytes?` | number |
 
 **Returns:** _string_
-
----
-
-#### executeLogParser
-
-▸ **executeLogParser**(`lpc`:
-[LogParserContext](#insightinterfaceslogparsercontextmd)): _ReadableStream_
-
-Run the parser, splits the in stream onn lines and call either the jsonProcessor
-or textProcessor with the value. The original value is written to the returned
-stream
-
-**Parameters:**
-
-| Name  | Type                                                     |
-| ----- | -------------------------------------------------------- |
-| `lpc` | [LogParserContext](#insightinterfaceslogparsercontextmd) |
-
-**Returns:** _ReadableStream_
-
----
-
-#### newLogParserContext
-
-▸ **newLogParserContext**(`stream`: ReadableStream):
-_[LogParserContext](#insightinterfaceslogparsercontextmd)_
-
-Create a new parser context
-
-**Parameters:**
-
-| Name     | Type           |
-| -------- | -------------- |
-| `stream` | ReadableStream |
-
-**Returns:** _[LogParserContext](#insightinterfaceslogparsercontextmd)_
 
 ---
 
@@ -5979,7 +5939,6 @@ Context that should be logged in all log lines. e.g a common request id.
 ##### Properties
 
 - [ctx](#optional-ctx)
-- [depth](#optional-depth)
 - [pretty](#optional-pretty)
 - [stream](#optional-stream)
 
@@ -5990,14 +5949,6 @@ Context that should be logged in all log lines. e.g a common request id.
 • **ctx**? : _T_
 
 Context that should be logged in all log lines. e.g a common request id.
-
----
-
-##### `Optional` depth
-
-• **depth**? : _number_
-
-Max-depth printed
 
 ---
 
@@ -6014,65 +5965,6 @@ Use the pretty formatter instead of the NDJSON formatter
 • **stream**? : _WritableStream_
 
 The stream to write the logs to
-
-<a name="insightinterfaceslogparsercontextmd"></a>
-
-[@lbu/insight - v0.0.42](#insightreadmemd) ›
-[LogParserContext](#insightinterfaceslogparsercontextmd)
-
-### Interface: LogParserContext
-
-The LogParserContext enables you too analyze logs produced by this Logger
-
-#### Hierarchy
-
-- **LogParserContext**
-
-#### Index
-
-##### Properties
-
-- [jsonProcessor](#optional-jsonprocessor)
-- [stream](#stream)
-- [textProcessor](#optional-textprocessor)
-
-#### Properties
-
-##### `Optional` jsonProcessor
-
-• **jsonProcessor**? : _function_
-
-###### Type declaration:
-
-▸ (`data`: object): _void_
-
-**Parameters:**
-
-| Name   | Type   |
-| ------ | ------ |
-| `data` | object |
-
----
-
-##### stream
-
-• **stream**: _ReadableStream_
-
----
-
-##### `Optional` textProcessor
-
-• **textProcessor**? : _function_
-
-###### Type declaration:
-
-▸ (`data`: string): _void_
-
-**Parameters:**
-
-| Name   | Type   |
-| ------ | ------ |
-| `data` | string |
 
 # Server
 
@@ -6110,7 +6002,6 @@ The LogParserContext enables you too analyze logs produced by this Logger
 - [createBodyParsers](#createbodyparsers)
 - [createTestAppAndClient](#createtestappandclient)
 - [getApp](#getapp)
-- [isServerLog](#isserverlog)
 - [sendFile](#sendfile)
 - [session](#session)
 
@@ -6218,22 +6109,6 @@ Create a new Koa instance with some default middleware
 | `opts?` | [GetAppOptions](#serverinterfacesgetappoptionsmd) |
 
 **Returns:** _[Application](#serverclassesapplicationmd)_
-
----
-
-#### isServerLog
-
-▸ **isServerLog**(`value`: Record‹string, unknown›): _boolean_
-
-Given a logged object, check if it is a request log
-
-**Parameters:**
-
-| Name    | Type                    |
-| ------- | ----------------------- |
-| `value` | Record‹string, unknown› |
-
-**Returns:** _boolean_
 
 ---
 

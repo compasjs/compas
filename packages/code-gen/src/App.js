@@ -42,7 +42,6 @@ export class App {
       ctx: {
         type: "code_gen",
       },
-      depth: 4,
     });
 
     /** @type {Set<TypeBuilderLike>} */
