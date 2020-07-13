@@ -1,5 +1,28 @@
 # CHANGELOG
 
+### [v0.0.43](https://github.com/lightbasenl/lbu/releases/tag/v0.0.43)
+
+- stdlib: add AppError#instanceOf
+- code-gen: build path params type if necessary but not provided by user
+- server: fix koa-session options type
+- store: drop Postgres connections to database if used as a template for test
+  database
+- code-gen: simplify TypeCreator methods
+- code-gen: support inferring basic types
+- code-gen: router supports arrays for tag and group middleware
+- code-gen: support generating `CREATE INDEX` statements
+- code-gen: added File type
+
+##### Breaking
+
+- Generated router exposes `setBodyParsers` which accepts the result of
+  `createBodyParsers()`
+- Passing in `dumpStructure` to `App.generate` is required if you want the
+  router to expose lbu structure automatically
+- TypeCreator methods now only accept a name. This affects `anyOf`, `array` and
+  `object`
+- `x instanceof AppError` should be replaced with `AppError.instanceOf(x)`
+
 ### [v0.0.42](https://github.com/lightbasenl/lbu/releases/tag/v0.0.42)
 
 - code-gen: useQuery hook now enabled by default
