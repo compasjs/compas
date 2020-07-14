@@ -1,7 +1,7 @@
-import { newLogger } from "@lbu/insight";
-import { isNil, mainFn, spawn } from "@lbu/stdlib";
 import { readdirSync } from "fs";
 import { join } from "path";
+import { newLogger } from "@lbu/insight";
+import { isNil, mainFn, spawn } from "@lbu/stdlib";
 
 mainFn(import.meta, newLogger(), main);
 

@@ -1,8 +1,8 @@
-import { isNil, pathJoin } from "@lbu/stdlib";
 import { once } from "events";
 import { createReadStream, createWriteStream } from "fs";
 import { pipeline as pipelineCallbacks, Readable } from "stream";
 import { promisify } from "util";
+import { isNil, pathJoin } from "@lbu/stdlib";
 import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);

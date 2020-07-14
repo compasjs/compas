@@ -1,6 +1,6 @@
-import { isNil, isPlainObject } from "@lbu/stdlib";
 import { existsSync, promises as fs } from "fs";
 import path from "path";
+import { isNil, isPlainObject } from "@lbu/stdlib";
 import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";

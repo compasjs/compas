@@ -1,6 +1,6 @@
+import { Transform } from "stream";
 import { bindLoggerContext, newLogger } from "@lbu/insight";
 import { isNil, uuid } from "@lbu/stdlib";
-import { Transform } from "stream";
 
 /**
  * Log basic request and response information

@@ -1,5 +1,5 @@
-import { dirnameForModule } from "@lbu/stdlib";
 import { readFileSync } from "fs";
+import { dirnameForModule } from "@lbu/stdlib";
 import test from "tape";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 

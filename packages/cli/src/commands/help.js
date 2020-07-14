@@ -1,5 +1,5 @@
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { readFileSync } from "fs";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Logger} logger

@@ -1,4 +1,3 @@
-import { dirnameForModule, pathJoin, spawn } from "@lbu/stdlib";
 import {
   existsSync,
   lstatSync,
@@ -7,6 +6,7 @@ import {
   readFileSync,
   writeFileSync,
 } from "fs";
+import { dirnameForModule, pathJoin, spawn } from "@lbu/stdlib";
 
 /**
  * @param {Logger} logger

@@ -1,9 +1,9 @@
-import { log, printProcessMemoryUsage } from "@lbu/insight";
-import { gc, pathJoin, uuid } from "@lbu/stdlib";
 import { existsSync, lstatSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
-import test from "tape";
 import { promisify } from "util";
+import { log, printProcessMemoryUsage } from "@lbu/insight";
+import { gc, pathJoin, uuid } from "@lbu/stdlib";
+import test from "tape";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile, newFileStoreContext } from "./files.js";
 import {

@@ -1,5 +1,5 @@
-import { dirnameForModule } from "@lbu/stdlib";
 import { readFileSync } from "fs";
+import { dirnameForModule } from "@lbu/stdlib";
 import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);

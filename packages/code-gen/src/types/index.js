@@ -1,9 +1,3 @@
-export {
-  TypeBuilder,
-  TypeCreator,
-  isNamedTypeBuilderLike,
-} from "./TypeBuilder.js";
-
 import "./any/index.js";
 import "./anyOf/index.js";
 import "./array/index.js";
@@ -16,3 +10,9 @@ import "./object/index.js";
 import "./reference/index.js";
 import "./string/index.js";
 import "./uuid/index.js";
+
+export {
+  TypeBuilder,
+  TypeCreator,
+  isNamedTypeBuilderLike,
+} from "./TypeBuilder.js";

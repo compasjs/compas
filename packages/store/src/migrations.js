@@ -1,7 +1,7 @@
-import { dirnameForModule } from "@lbu/stdlib";
 import { createHash } from "crypto";
 import { existsSync, promises as fs } from "fs";
 import path from "path";
+import { dirnameForModule } from "@lbu/stdlib";
 
 /**
  * @name MigrateContext
@@ -247,10 +247,10 @@ async function readMigrationsDir(
 
         namespaces.unshift(sub);
 
-        const exports = await import(sub);
-        if (exports && exports.migrations) {
+        const exportedItems = await import(sub);
+        if (exportedItems && exportedItems.migrations) {
           const subResult = await readMigrationsDir(
-            exports.migrations,
+            exportedItems.migrations,
             sub,
             namespaces,
           );

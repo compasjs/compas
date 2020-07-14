@@ -1,8 +1,8 @@
+import { readFileSync } from "fs";
 import { App, loadFromOpenAPISpec, TypeCreator } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import { storeStructure } from "@lbu/store";
-import { readFileSync } from "fs";
 
 mainFn(import.meta, log, main);
 

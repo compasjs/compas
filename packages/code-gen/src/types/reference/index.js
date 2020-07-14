@@ -1,5 +1,5 @@
-import { dirnameForModule, isNil } from "@lbu/stdlib";
 import { readFileSync } from "fs";
+import { dirnameForModule, isNil } from "@lbu/stdlib";
 import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
 import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 

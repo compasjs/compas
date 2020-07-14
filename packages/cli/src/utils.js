@@ -1,5 +1,5 @@
-import { pathJoin, spawn } from "@lbu/stdlib";
 import { existsSync, readdirSync, readFileSync } from "fs";
+import { pathJoin, spawn } from "@lbu/stdlib";
 import nodemon from "nodemon";
 
 /**

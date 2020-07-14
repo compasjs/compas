@@ -1,5 +1,5 @@
-import { dirnameForModule, isNil, uuid } from "@lbu/stdlib";
 import { createReadStream, createWriteStream, readFileSync } from "fs";
+import { dirnameForModule, isNil, uuid } from "@lbu/stdlib";
 import test from "tape";
 import {
   copyFile,

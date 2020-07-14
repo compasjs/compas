@@ -1,6 +1,6 @@
+import { inspect } from "util";
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil, isPlainObject } from "@lbu/stdlib";
-import { inspect } from "util";
 import {
   addToData,
   callGeneratorMethod,

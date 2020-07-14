@@ -1,7 +1,7 @@
+import { join } from "path";
 import { App } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
-import { join } from "path";
 
 mainFn(import.meta, log, main);
 

@@ -1,7 +1,7 @@
-import { newLogger } from "@lbu/insight";
-import { dirnameForModule, exec, mainFn, pathJoin, spawn } from "@lbu/stdlib";
 import { existsSync, readdirSync, rmdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import { newLogger } from "@lbu/insight";
+import { dirnameForModule, exec, mainFn, pathJoin, spawn } from "@lbu/stdlib";
 
 mainFn(import.meta, newLogger(), main);
 

@@ -9,6 +9,10 @@ import {
 } from "./mocks.js";
 {{ } }}
 ((newline))
+{{ if (options.enabledGenerators.indexOf("router") !== -1) { }}
+import formData from "form-data";
+const { FormData } = formData;
+{{ } }}
 
 let _internalClient = undefined;
 let requestId = undefined;
