@@ -6,9 +6,9 @@
 module.exports = {
   extends: [
     "eslint:recommended",
-    "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
+    "prettier",
   ],
   parser: "babel-eslint",
   rules: {
