@@ -60,7 +60,22 @@ import { uuid } from "@lbu/stdlib";
         input.push({{= sqlGenDefaults({ item, ref }) }} );
       }
 
-      return sql`INSERT INTO "{{= ref.name }}" ${sql(input, {{= item.partialFields.map(it => "'" + it.source + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
+      if (input.length === 0) { return []; }
+
+      let query = `INSERT INTO "{{= ref.name }}" ({{= item.partialFields.map(it => `"${it.source}"`).join(", ") }}) VALUES `;
+      const argList = [];
+      let idx = 1;
+
+      for (const item of input) {
+        argList.push({{= item.partialFields.map(it => `item.${it.source}`).join(", ") }});
+        query += `({{= item.partialFields.map(it => "\$${idx++}").join(", ") }}),`;
+      }
+
+      // Remove trailing comma
+      query = query.substring(0, query.length - 1)
+      query += ` RETURNING {{= getKeys("") }}`
+
+      return sql.unsafe(query, argList);
     },
 ((newline))
 

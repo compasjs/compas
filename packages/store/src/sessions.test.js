@@ -50,7 +50,7 @@ test("store/sessions", async (t) => {
     t.equal(
       (
         await sql`SELECT *
-                       FROM session_store`
+                       FROM "sessionStore"`
       ).length,
       1,
     );
@@ -62,7 +62,7 @@ test("store/sessions", async (t) => {
     t.equal(
       (
         await sql`SELECT *
-                       FROM session_store`
+                       FROM "sessionStore"`
       ).length,
       0,
     );

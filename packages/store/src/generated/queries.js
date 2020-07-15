@@ -12,16 +12,16 @@ export const storeQueries = {
   fileStoreSelect: (
     sql,
     where,
-  ) => sql`SELECT fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt" FROM file_store fs 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+  ) => sql`SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt" FROM "fileStore" fs 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+  }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
-  }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
 `,
 
   /**
@@ -30,18 +30,20 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
    * @returns {Promise<number>}
    */
   fileStoreCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as gen_count FROM file_store fs 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+    const result = await sql`SELECT count(*) as "genCount" FROM "fileStore" fs 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+    }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
-    }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${
+      "%" + where.bucketNameLike + "%"
+    })
 `;
-    return result?.[0]?.gen_count ?? 0;
+    return result?.[0]?.genCount ?? 0;
   },
 
   /**
@@ -49,16 +51,16 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
    * @param { StoreFileStoreWhere} where
    * @returns {Promise<*[]>}
    */
-  fileStoreDelete: (sql, where) => sql`DELETE FROM file_store fs 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+  fileStoreDelete: (sql, where) => sql`DELETE FROM "fileStore" fs 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+  }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
-  }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
 `,
 
   /**
@@ -71,23 +73,37 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
     const input = [];
     for (const it of data) {
       input.push({
-        bucket_name: it.bucketName ?? undefined,
-        content_length: it.contentLength ?? undefined,
-        content_type: it.contentType ?? undefined,
+        bucketName: it.bucketName ?? undefined,
+        contentLength: it.contentLength ?? undefined,
+        contentType: it.contentType ?? undefined,
         filename: it.filename ?? undefined,
-        created_at: it.createdAt ?? new Date(),
-        updated_at: it.updatedAt ?? new Date(),
+        createdAt: it.createdAt ?? new Date(),
+        updatedAt: it.updatedAt ?? new Date(),
       });
     }
-    return sql`INSERT INTO file_store ${sql(
-      input,
-      "bucket_name",
-      "content_length",
-      "content_type",
-      "filename",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", bucket_name as "bucketName", content_length as "contentLength", content_type as "contentType", filename as "filename", created_at as "createdAt", updated_at as "updatedAt"`;
+
+    if (input.length === 0) {
+      return [];
+    }
+
+    let query = `INSERT INTO "fileStore" ("bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt") VALUES `;
+    const argList = [];
+    let idx = 1;
+    for (const item of input) {
+      argList.push(
+        item.bucketName,
+        item.contentLength,
+        item.contentType,
+        item.filename,
+        item.createdAt,
+        item.updatedAt,
+      );
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+    }
+    // Remove trailing comma
+    query = query.substring(0, query.length - 1);
+    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"`;
+    return sql.unsafe(query, argList);
   },
 
   /**
@@ -97,52 +113,39 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
    * @returns {Promise<StoreFileStore[]>}
    */
   fileStoreUpdate: async (sql, value, where) => {
-    const updateValue = {};
-    if (value["bucketName"] !== undefined) {
-      updateValue["bucket_name"] = value["bucketName"];
-    }
-    if (value["contentLength"] !== undefined) {
-      updateValue["content_length"] = value["contentLength"];
-    }
-    if (value["contentType"] !== undefined) {
-      updateValue["content_type"] = value["contentType"];
-    }
-    if (value["filename"] !== undefined) {
-      updateValue["filename"] = value["filename"];
-    }
-    if (value["createdAt"] !== undefined) {
-      updateValue["created_at"] = value["createdAt"];
-    }
-    if (value["updatedAt"] !== undefined) {
-      updateValue["updated_at"] = value["updatedAt"];
-    }
-    updateValue.updated_at = new Date();
-    await sql`INSERT INTO file_store_history (file_store_id, bucket_name, content_length, content_type, filename, created_at)
-SELECT id, bucket_name, content_length, content_type, filename, COALESCE(updated_at, created_at, now()) FROM file_store fs 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+    const updateValue = { ...value };
+    updateValue.updatedAt = new Date();
+
+    await sql`INSERT INTO "fileStoreHistory" ("fileStoreId", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "createdAt")
+    SELECT id, "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", COALESCE("updatedAt", "createdAt", now()) FROM "fileStore" fs
+    WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+    }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
-    }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
-`;
-    return sql`UPDATE file_store fs set ${sql(
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${
+      "%" + where.bucketNameLike + "%"
+    })
+    `;
+    return sql`UPDATE "fileStore" fs set ${sql(
       updateValue,
       ...Object.keys(updateValue),
     )} 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where.bucketName
-    }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+    }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
       where.bucketNameLike
-    }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
-RETURNING fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt"`;
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${
+      "%" + where.bucketNameLike + "%"
+    })
+RETURNING fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt"`;
   },
 
   /**
@@ -153,16 +156,16 @@ RETURNING fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "c
   fileStoreSelectHistory: (
     sql,
     where,
-  ) => sql`SELECT fs.id as "id", fs.bucket_name as "bucketName", fs.content_length as "contentLength", fs.content_type as "contentType", fs.filename as "filename", fs.created_at as "createdAt", fs.updated_at as "updatedAt", array_agg(fsh.*) as history FROM file_store fs LEFT JOIN file_store_history fsh ON fs.id = fsh.file_store_id 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs.id = ${
+  ) => sql`SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(fsh.*) as history FROM "fileStore" fs LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId" 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR fs."id" = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs.id = ANY (${sql.array(
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where.bucketName
-  }, NULL) IS NULL OR fs.bucket_name = ${where.bucketName}) AND (COALESCE(${
+  }, NULL) IS NULL OR fs."bucketName" = ${where.bucketName}) AND (COALESCE(${
     where.bucketNameLike
-  }, NULL) IS NULL OR fs.bucket_name LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
 GROUP BY fs.id`,
 
   /**
@@ -173,16 +176,18 @@ GROUP BY fs.id`,
   sessionStoreSelect: (
     sql,
     where,
-  ) => sql`SELECT ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_at as "createdAt", ss.updated_at as "updatedAt" FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+  ) => sql`SELECT ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt" FROM "sessionStore" ss 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss."id" = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss."id" = ANY (${sql.array(
     where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${
+  )}::uuid[])) AND (COALESCE(${
     where.expires
-  }) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${
+  }, NULL) IS NULL OR ss."expires" = ${where.expires}) AND (COALESCE(${
     where.expiresGreaterThan
-  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+  }, NULL) IS NULL OR ss."expires" > ${
+    where.expiresGreaterThan
+  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss."expires" < ${
     where.expiresLowerThan
   })
 `,
@@ -193,22 +198,22 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
    * @returns {Promise<number>}
    */
   sessionStoreCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as gen_count FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+    const result = await sql`SELECT count(*) as "genCount" FROM "sessionStore" ss 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss."id" = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where.expires
-    }, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${
+    }, NULL) IS NULL OR ss."expires" = ${where.expires}) AND (COALESCE(${
       where.expiresGreaterThan
-    }, NULL) IS NULL OR ss.expires > ${
+    }, NULL) IS NULL OR ss."expires" > ${
       where.expiresGreaterThan
-    }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+    }) AND (COALESCE(${
       where.expiresLowerThan
-    })
+    }, NULL) IS NULL OR ss."expires" < ${where.expiresLowerThan})
 `;
-    return result?.[0]?.gen_count ?? 0;
+    return result?.[0]?.genCount ?? 0;
   },
 
   /**
@@ -216,16 +221,18 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
    * @param { StoreSessionStoreWhere} where
    * @returns {Promise<*[]>}
    */
-  sessionStoreDelete: (sql, where) => sql`DELETE FROM session_store ss 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+  sessionStoreDelete: (sql, where) => sql`DELETE FROM "sessionStore" ss 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss."id" = ${
     where.id
-  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+  }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss."id" = ANY (${sql.array(
     where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${where.expires}, NULL) IS NULL OR ss.expires = ${
+  )}::uuid[])) AND (COALESCE(${
     where.expires
-  }) AND (COALESCE(${where.expiresGreaterThan}, NULL) IS NULL OR ss.expires > ${
+  }, NULL) IS NULL OR ss."expires" = ${where.expires}) AND (COALESCE(${
     where.expiresGreaterThan
-  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+  }, NULL) IS NULL OR ss."expires" > ${
+    where.expiresGreaterThan
+  }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss."expires" < ${
     where.expiresLowerThan
   })
 `,
@@ -242,17 +249,24 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
       input.push({
         expires: it.expires ?? undefined,
         data: JSON.stringify(it.data ?? {}),
-        created_at: it.createdAt ?? new Date(),
-        updated_at: it.updatedAt ?? new Date(),
+        createdAt: it.createdAt ?? new Date(),
+        updatedAt: it.updatedAt ?? new Date(),
       });
     }
-    return sql`INSERT INTO session_store ${sql(
-      input,
-      "expires",
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    if (input.length === 0) {
+      return [];
+    }
+    let query = `INSERT INTO "sessionStore" ("expires", "data", "createdAt", "updatedAt") VALUES `;
+    const argList = [];
+    let idx = 1;
+    for (const item of input) {
+      argList.push(item.expires, item.data, item.createdAt, item.updatedAt);
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+    }
+    // Remove trailing comma
+    query = query.substring(0, query.length - 1);
+    query += ` RETURNING "id", "expires", "data", "createdAt", "updatedAt"`;
+    return sql.unsafe(query, argList);
   },
 
   /**
@@ -270,30 +284,30 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
       updateValue["data"] = JSON.stringify(value["data"]);
     }
     if (value["createdAt"] !== undefined) {
-      updateValue["created_at"] = value["createdAt"];
+      updateValue["createdAt"] = value["createdAt"];
     }
     if (value["updatedAt"] !== undefined) {
-      updateValue["updated_at"] = value["updatedAt"];
+      updateValue["updatedAt"] = value["updatedAt"];
     }
-    updateValue.updated_at = new Date();
-    return sql`UPDATE session_store ss set ${sql(
+    updateValue.updatedAt = new Date();
+    return sql`UPDATE "sessionStore" ss set ${sql(
       updateValue,
       ...Object.keys(updateValue),
     )} 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss.id = ${
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR ss."id" = ${
       where.id
-    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss.id = ANY (${sql.array(
+    }) AND (COALESCE(${where.idIn}, NULL) IS NULL OR ss."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where.expires
-    }, NULL) IS NULL OR ss.expires = ${where.expires}) AND (COALESCE(${
+    }, NULL) IS NULL OR ss."expires" = ${where.expires}) AND (COALESCE(${
       where.expiresGreaterThan
-    }, NULL) IS NULL OR ss.expires > ${
+    }, NULL) IS NULL OR ss."expires" > ${
       where.expiresGreaterThan
-    }) AND (COALESCE(${where.expiresLowerThan}, NULL) IS NULL OR ss.expires < ${
+    }) AND (COALESCE(${
       where.expiresLowerThan
-    })
-RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_at as "createdAt", ss.updated_at as "updatedAt"`;
+    }, NULL) IS NULL OR ss."expires" < ${where.expiresLowerThan})
+RETURNING ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"`;
   },
 
   /**
@@ -306,18 +320,18 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
     const data = {
       expires: it.expires ?? undefined,
       data: JSON.stringify(it.data ?? {}),
-      created_at: it.createdAt ?? new Date(),
-      updated_at: it.updatedAt ?? new Date(),
+      createdAt: it.createdAt ?? new Date(),
+      updatedAt: it.updatedAt ?? new Date(),
     };
     data.id = it.id || uuid();
-    return sql`INSERT INTO session_store ${sql(
+    return sql`INSERT INTO "sessionStore" ${sql(
       data,
       "id",
       "expires",
       "data",
-      "created_at",
-      "updated_at",
-    )} ON CONFLICT (id) DO UPDATE SET expires = EXCLUDED.expires, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+      "createdAt",
+      "updatedAt",
+    )} ON CONFLICT ("id") DO UPDATE SET expires = EXCLUDED.expires, data = EXCLUDED.data, updatedAt = EXCLUDED.updatedAt RETURNING "id", "expires", "data", "createdAt", "updatedAt"`;
   },
 
   /**
@@ -330,18 +344,18 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
     const data = {
       expires: it.expires ?? undefined,
       data: JSON.stringify(it.data ?? {}),
-      created_at: it.createdAt ?? new Date(),
-      updated_at: it.updatedAt ?? new Date(),
+      createdAt: it.createdAt ?? new Date(),
+      updatedAt: it.updatedAt ?? new Date(),
     };
     data.id = it.id || uuid();
-    return sql`INSERT INTO session_store ${sql(
+    return sql`INSERT INTO "sessionStore" ${sql(
       data,
       "id",
       "expires",
       "data",
-      "created_at",
-      "updated_at",
-    )} ON CONFLICT (expires) DO UPDATE SET data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", expires as "expires", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+      "createdAt",
+      "updatedAt",
+    )} ON CONFLICT ("expires") DO UPDATE SET data = EXCLUDED.data, updatedAt = EXCLUDED.updatedAt RETURNING "id", "expires", "data", "createdAt", "updatedAt"`;
   },
 
   /**
@@ -352,16 +366,16 @@ RETURNING ss.id as "id", ss.expires as "expires", ss.data as "data", ss.created_
   jobQueueSelect: (
     sql,
     where,
-  ) => sql`SELECT jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priority", jq.scheduled_at as "scheduledAt", jq.name as "name", jq.data as "data", jq.created_at as "createdAt", jq.updated_at as "updatedAt" FROM job_queue jq 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
+  ) => sql`SELECT jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt" FROM "jobQueue" jq 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq."id" = ${
     where.id
-  }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq.id > ${
+  }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq."id" > ${
     where.idGreaterThan
-  }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq.id < ${
+  }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq."id" < ${
     where.idLowerThan
-  }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq.name = ${
+  }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq."name" = ${
     where.name
-  }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq.name LIKE ${
+  }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq."name" LIKE ${
     "%" + where.nameLike + "%"
   })
 `,
@@ -372,20 +386,20 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
    * @returns {Promise<number>}
    */
   jobQueueCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as gen_count FROM job_queue jq 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
+    const result = await sql`SELECT count(*) as "genCount" FROM "jobQueue" jq 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq."id" = ${
       where.id
-    }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq.id > ${
+    }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq."id" > ${
       where.idGreaterThan
-    }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq.id < ${
+    }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq."id" < ${
       where.idLowerThan
-    }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq.name = ${
+    }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq."name" = ${
       where.name
-    }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq.name LIKE ${
+    }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq."name" LIKE ${
       "%" + where.nameLike + "%"
     })
 `;
-    return result?.[0]?.gen_count ?? 0;
+    return result?.[0]?.genCount ?? 0;
   },
 
   /**
@@ -393,16 +407,16 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
    * @param { StoreJobQueueWhere} where
    * @returns {Promise<*[]>}
    */
-  jobQueueDelete: (sql, where) => sql`DELETE FROM job_queue jq 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
+  jobQueueDelete: (sql, where) => sql`DELETE FROM "jobQueue" jq 
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq."id" = ${
     where.id
-  }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq.id > ${
+  }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq."id" > ${
     where.idGreaterThan
-  }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq.id < ${
+  }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq."id" < ${
     where.idLowerThan
-  }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq.name = ${
+  }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq."name" = ${
     where.name
-  }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq.name LIKE ${
+  }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq."name" LIKE ${
     "%" + where.nameLike + "%"
   })
 `,
@@ -417,25 +431,37 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
     const input = [];
     for (const it of data) {
       input.push({
-        is_complete: it.isComplete ?? false,
+        isComplete: it.isComplete ?? false,
         priority: it.priority ?? 0,
-        scheduled_at: it.scheduledAt ?? new Date(),
+        scheduledAt: it.scheduledAt ?? new Date(),
         name: it.name ?? undefined,
         data: JSON.stringify(it.data ?? {}),
-        created_at: it.createdAt ?? new Date(),
-        updated_at: it.updatedAt ?? new Date(),
+        createdAt: it.createdAt ?? new Date(),
+        updatedAt: it.updatedAt ?? new Date(),
       });
     }
-    return sql`INSERT INTO job_queue ${sql(
-      input,
-      "is_complete",
-      "priority",
-      "scheduled_at",
-      "name",
-      "data",
-      "created_at",
-      "updated_at",
-    )} RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+    if (input.length === 0) {
+      return [];
+    }
+    let query = `INSERT INTO "jobQueue" ("isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt") VALUES `;
+    const argList = [];
+    let idx = 1;
+    for (const item of input) {
+      argList.push(
+        item.isComplete,
+        item.priority,
+        item.scheduledAt,
+        item.name,
+        item.data,
+        item.createdAt,
+        item.updatedAt,
+      );
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+    }
+    // Remove trailing comma
+    query = query.substring(0, query.length - 1);
+    query += ` RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"`;
+    return sql.unsafe(query, argList);
   },
 
   /**
@@ -447,13 +473,13 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
   jobQueueUpdate: (sql, value, where) => {
     const updateValue = {};
     if (value["isComplete"] !== undefined) {
-      updateValue["is_complete"] = value["isComplete"];
+      updateValue["isComplete"] = value["isComplete"];
     }
     if (value["priority"] !== undefined) {
       updateValue["priority"] = value["priority"];
     }
     if (value["scheduledAt"] !== undefined) {
-      updateValue["scheduled_at"] = value["scheduledAt"];
+      updateValue["scheduledAt"] = value["scheduledAt"];
     }
     if (value["name"] !== undefined) {
       updateValue["name"] = value["name"];
@@ -462,28 +488,28 @@ WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
       updateValue["data"] = JSON.stringify(value["data"]);
     }
     if (value["createdAt"] !== undefined) {
-      updateValue["created_at"] = value["createdAt"];
+      updateValue["createdAt"] = value["createdAt"];
     }
     if (value["updatedAt"] !== undefined) {
-      updateValue["updated_at"] = value["updatedAt"];
+      updateValue["updatedAt"] = value["updatedAt"];
     }
-    updateValue.updated_at = new Date();
-    return sql`UPDATE job_queue jq set ${sql(
+    updateValue.updatedAt = new Date();
+    return sql`UPDATE "jobQueue" jq set ${sql(
       updateValue,
       ...Object.keys(updateValue),
     )} 
-WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq.id = ${
+WHERE (COALESCE(${where.id}, NULL) IS NULL OR jq."id" = ${
       where.id
-    }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq.id > ${
+    }) AND (COALESCE(${where.idGreaterThan}, NULL) IS NULL OR jq."id" > ${
       where.idGreaterThan
-    }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq.id < ${
+    }) AND (COALESCE(${where.idLowerThan}, NULL) IS NULL OR jq."id" < ${
       where.idLowerThan
-    }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq.name = ${
+    }) AND (COALESCE(${where.name}, NULL) IS NULL OR jq."name" = ${
       where.name
-    }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq.name LIKE ${
+    }) AND (COALESCE(${where.nameLike}, NULL) IS NULL OR jq."name" LIKE ${
       "%" + where.nameLike + "%"
     })
-RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priority", jq.scheduled_at as "scheduledAt", jq.name as "name", jq.data as "data", jq.created_at as "createdAt", jq.updated_at as "updatedAt"`;
+RETURNING jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt"`;
   },
 
   /**
@@ -494,26 +520,26 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
    */
   jobQueueUpsert: (sql, it) => {
     const data = {
-      is_complete: it.isComplete ?? false,
+      isComplete: it.isComplete ?? false,
       priority: it.priority ?? 0,
-      scheduled_at: it.scheduledAt ?? new Date(),
+      scheduledAt: it.scheduledAt ?? new Date(),
       name: it.name ?? undefined,
       data: JSON.stringify(it.data ?? {}),
-      created_at: it.createdAt ?? new Date(),
-      updated_at: it.updatedAt ?? new Date(),
+      createdAt: it.createdAt ?? new Date(),
+      updatedAt: it.updatedAt ?? new Date(),
     };
     data.id = it.id || uuid();
-    return sql`INSERT INTO job_queue ${sql(
+    return sql`INSERT INTO "jobQueue" ${sql(
       data,
       "id",
-      "is_complete",
+      "isComplete",
       "priority",
-      "scheduled_at",
+      "scheduledAt",
       "name",
       "data",
-      "created_at",
-      "updated_at",
-    )} ON CONFLICT (id) DO UPDATE SET is_complete = EXCLUDED.is_complete, priority = EXCLUDED.priority, scheduled_at = EXCLUDED.scheduled_at, name = EXCLUDED.name, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+      "createdAt",
+      "updatedAt",
+    )} ON CONFLICT ("id") DO UPDATE SET isComplete = EXCLUDED.isComplete, priority = EXCLUDED.priority, scheduledAt = EXCLUDED.scheduledAt, name = EXCLUDED.name, data = EXCLUDED.data, updatedAt = EXCLUDED.updatedAt RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"`;
   },
 
   /**
@@ -524,25 +550,25 @@ RETURNING jq.id as "id", jq.is_complete as "isComplete", jq.priority as "priorit
    */
   jobQueueUpsertByName: (sql, it) => {
     const data = {
-      is_complete: it.isComplete ?? false,
+      isComplete: it.isComplete ?? false,
       priority: it.priority ?? 0,
-      scheduled_at: it.scheduledAt ?? new Date(),
+      scheduledAt: it.scheduledAt ?? new Date(),
       name: it.name ?? undefined,
       data: JSON.stringify(it.data ?? {}),
-      created_at: it.createdAt ?? new Date(),
-      updated_at: it.updatedAt ?? new Date(),
+      createdAt: it.createdAt ?? new Date(),
+      updatedAt: it.updatedAt ?? new Date(),
     };
     data.id = it.id || uuid();
-    return sql`INSERT INTO job_queue ${sql(
+    return sql`INSERT INTO "jobQueue" ${sql(
       data,
       "id",
-      "is_complete",
+      "isComplete",
       "priority",
-      "scheduled_at",
+      "scheduledAt",
       "name",
       "data",
-      "created_at",
-      "updated_at",
-    )} ON CONFLICT (name) DO UPDATE SET is_complete = EXCLUDED.is_complete, priority = EXCLUDED.priority, scheduled_at = EXCLUDED.scheduled_at, data = EXCLUDED.data, updated_at = EXCLUDED.updated_at RETURNING id as "id", is_complete as "isComplete", priority as "priority", scheduled_at as "scheduledAt", name as "name", data as "data", created_at as "createdAt", updated_at as "updatedAt"`;
+      "createdAt",
+      "updatedAt",
+    )} ON CONFLICT ("name") DO UPDATE SET isComplete = EXCLUDED.isComplete, priority = EXCLUDED.priority, scheduledAt = EXCLUDED.scheduledAt, data = EXCLUDED.data, updatedAt = EXCLUDED.updatedAt RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"`;
   },
 };
