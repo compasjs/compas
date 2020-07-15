@@ -106,7 +106,7 @@ const referenceType = {
     return readFileSync(directory + "/type.tmpl", "utf-8");
   },
   sql: () =>
-    `{{= model?.reference?.field !== undefined ? sqlExec({ type: model.referencedItem.type, model: { ...model.referencedItem, sql: {}, isOptional: model.isOptional } }).trim() : "JSONB" }} {{= model?.reference?.field !== undefined ? "REFERENCES " + camelToSnakeCase(model.reference.name) + "(" + camelToSnakeCase(model.reference.field.referencing) + ") ON DELETE CASCADE" : "" }}`,
+    `{{= model?.reference?.field !== undefined ? sqlExec({ type: model.referencedItem.type, model: { ...model.referencedItem, sql: {}, isOptional: model.isOptional } }).trim() : "JSONB" }} {{= model?.reference?.field !== undefined ? "REFERENCES \\"" + model.reference.name + "\\" (\\"" + model.reference.field.referencing + "\\") ON DELETE CASCADE" : "" }}`,
 };
 
 /**

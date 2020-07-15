@@ -1,5 +1,4 @@
 import {
-  camelToSnakeCase,
   compileTemplateDirectory,
   dirnameForModule,
   executeTemplate,
@@ -55,8 +54,6 @@ export async function init() {
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
-
-  generatorTemplates.globals.camelToSnakeCase = camelToSnakeCase;
 }
 
 /**

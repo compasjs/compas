@@ -1,4 +1,3 @@
-import { camelToSnakeCase } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 import { getTypeOfItem } from "../../utils.js";
@@ -200,7 +199,6 @@ function getPartialFields(item) {
     // So the user will can have a lbu GenericType into a JSONB field
     fieldsArray.push({
       source: key,
-      result: camelToSnakeCase(key),
       defaultValue: it.defaultValue,
       stringify:
         ["number", "boolean", "string", "date", "uuid"].indexOf(type) === -1,
