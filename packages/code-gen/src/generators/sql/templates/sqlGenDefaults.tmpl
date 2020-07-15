@@ -1,5 +1,5 @@
-{
-{{ for (const field of item.partialFields) { if (field.stringify) { }}
-    {{= field.source }}: JSON.stringify(it.{{= field.source }} ?? {{= field.defaultValue || "undefined" }}), {{ } else { }} {{= field.source }}: it.{{= field.source }} ?? {{= field.defaultValue || "undefined" }},
-{{ } } }}
-}
+{{ if (field.stringify) { }}
+JSON.stringify(it.{{= field.source }} ?? {{= field.defaultValue || "undefined" }})
+{{ } else { }}
+it.{{= field.source }} ?? {{= field.defaultValue || "undefined" }}
+{{ } }}

@@ -2,56 +2,56 @@ import { storeQueries } from "./generated/queries.js";
 
 const queries = {
   // Should only run in a transaction
-  getAnyJob: (sql) => sql`UPDATE job_queue
-                          SET is_complete = TRUE,
-                              updated_at  = now()
-                          WHERE id = (SELECT id
-                                      FROM job_queue
-                                      WHERE NOT is_complete
-                                        AND scheduled_at < now()
-                                      ORDER BY scheduled_at, priority
+  getAnyJob: (sql) => sql`UPDATE "jobQueue"
+                          SET "isComplete" = TRUE,
+                              "updatedAt"  = now()
+                          WHERE id = (SELECT "id"
+                                      FROM "jobQueue"
+                                      WHERE NOT "isComplete"
+                                        AND "scheduledAt" < now()
+                                      ORDER BY "scheduledAt", "priority"
                                         FOR UPDATE SKIP LOCKED
                                       LIMIT 1)
                           RETURNING id`,
 
   // Should only run in a transaction
-  getJobByName: (name, sql) => sql`UPDATE job_queue
-                            SET is_complete = TRUE,
-                                updated_at  = now()
-                            WHERE id = (SELECT id
-                                        FROM job_queue
-                                        WHERE NOT is_complete
-                                          AND scheduled_at < now()
-                                          AND name = ${name}
-                                        ORDER BY scheduled_at, priority 
+  getJobByName: (name, sql) => sql`UPDATE jobQueue
+                            SET "isComplete" = TRUE,
+                                "updatedAt"  = now()
+                            WHERE id = (SELECT "id"
+                                        FROM "jobQueue"
+                                        WHERE NOT "isComplete"
+                                          AND "scheduledAt" < now()
+                                          AND "name" = ${name}
+                                        ORDER BY "scheduledAt", "priority" 
                                         FOR UPDATE SKIP LOCKED
                                         LIMIT 1)
-                            RETURNING id`,
+                            RETURNING "id"`,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSize: (
     sql,
-  ) => sql`SELECT sum(CASE WHEN scheduled_at < now() THEN 1 ELSE 0 END) AS  pending_count,
-                                            sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
-                                     FROM job_queue
-                                     WHERE NOT is_complete`,
+  ) => sql`SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS  "pendingCount",
+                                            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+                                     FROM "jobQueue"
+                                     WHERE NOT "isComplete"`,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (
     sql,
     name,
-  ) => sql`SELECT sum(CASE WHEN scheduled_at < now() THEN 1 ELSE 0 END) AS  pending_count,
-                                            sum(CASE WHEN scheduled_at >= now() THEN 1 ELSE 0 END) AS scheduled_count
-                                     FROM job_queue
-                                     WHERE NOT is_complete AND name = ${name}`,
+  ) => sql`SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS  "pendingCount",
+                                            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+                                     FROM "jobQueue"
+                                     WHERE NOT "isComplete" AND "name" = ${name}`,
 
   // Returns time in milliseconds
   getAverageJobTime: (sql, dateStart, dateEnd) =>
-    sql`SELECT avg((EXTRACT(EPOCH FROM updated_at AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM scheduled_at AT TIME ZONE 'UTC') * 1000)) AS completion_time FROM job_queue WHERE is_complete AND updated_at > ${dateStart} AND updated_at <= ${dateEnd};`,
+    sql`SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime" FROM "jobQueue" WHERE "isComplete" AND "updatedAt" > ${dateStart} AND "updatedAt" <= ${dateEnd};`,
 
   // Returns time in milliseconds
   getAverageJobTimeForName: (sql, name, dateStart, dateEnd) =>
-    sql`SELECT avg((EXTRACT(EPOCH FROM updated_at AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM scheduled_at AT TIME ZONE 'UTC') * 1000)) AS completion_time FROM job_queue WHERE is_complete AND name = ${name} AND updated_at > ${dateStart} AND updated_at <= ${dateEnd};`,
+    sql`SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime" FROM "jobQueue" WHERE "isComplete" AND name = ${name} AND "updatedAt" > ${dateStart} AND "updatedAt" <= ${dateEnd};`,
 };
 
 /**
@@ -61,8 +61,8 @@ const queries = {
  *
  * @typedef {object}
  * @property {number} id
- * @property {Date} created_at
- * @property {Date} scheduled_at
+ * @property {Date} createdAt
+ * @property {Date} scheduledAt
  * @property {string} name
  * @property {object} data
  */
@@ -167,7 +167,7 @@ export class JobQueueWorker {
    * Get the number of jobs that need to run
    *
    * @public
-   * @returns {Promise<{pending_count: number, scheduled_count: number}|undefined>}
+   * @returns {Promise<{pendingCount: number, scheduledCount: number}|undefined>}
    */
   pendingQueueSize() {
     if (this.name) {
@@ -312,8 +312,8 @@ async function getPendingQueueSize(sql) {
 
   // sql returns 'null' if no rows match, so coalesce in to '0'
   return {
-    pendingCount: result?.pending_count ?? 0,
-    scheduledCount: result?.scheduled_count ?? 0,
+    pendingCount: parseInt(result?.pendingCount ?? 0, 10),
+    scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
   };
 }
 
@@ -329,8 +329,8 @@ async function getPendingQueueSizeForName(sql, name) {
 
   // sql returns 'null' if no rows match, so coalesce in to '0'
   return {
-    pendingCount: result?.pending_count ?? 0,
-    scheduledCount: result?.scheduled_count ?? 0,
+    pendingCount: parseInt(result?.pendingCount ?? 0, 10),
+    scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
   };
 }
 
@@ -346,7 +346,7 @@ async function getPendingQueueSizeForName(sql, name) {
 async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
   const [result] = await queries.getAverageJobTime(sql, startDate, endDate);
 
-  return result?.completion_time ?? 0;
+  return parseFloat(result?.completionTime ?? 0);
 }
 
 /**
@@ -371,5 +371,5 @@ async function getAverageTimeToJobCompletionForName(
     startDate,
     endDate,
   );
-  return result?.completion_time ?? 0;
+  return result?.completionTime ?? 0;
 }

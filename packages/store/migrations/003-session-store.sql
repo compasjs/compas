@@ -7,5 +7,3 @@ CREATE TABLE "sessionStore" (
 );
 
 CREATE INDEX session_store_expires_idx ON "sessionStore" ("expires");
-CREATE INDEX session_store_created_at_idx ON "sessionStore" ("createdAt");
-CREATE INDEX session_store_updated_at_idx ON "sessionStore" ("updatedAt");
