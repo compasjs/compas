@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.44](https://github.com/lightbasenl/lbu/releases/tag/v0.0.44)
+
+- BREAKING: code-gen: sql template column and table identifiers to camelCase
+
+  Generated sql templates use camelCase nameschema instead of snake_case now.
+  All migrations or queries depended on LBU structure needs to be updated.
+
 ### [v0.0.43](https://github.com/lightbasenl/lbu/releases/tag/v0.0.43)
 
 - stdlib: add AppError#instanceOf
