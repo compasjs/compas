@@ -90,10 +90,10 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     let idx = 1;
     for (const it of data) {
       argList.push(
-        it.bucketName ?? undefined,
-        it.contentLength ?? undefined,
-        it.contentType ?? undefined,
-        it.filename ?? undefined,
+        it.bucketName ?? null,
+        it.contentLength ?? null,
+        it.contentType ?? null,
+        it.filename ?? null,
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
       );
@@ -165,8 +165,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     }
     if (where.idIn !== undefined) {
       query += `fs."id" `;
-      query += `= ANY $${idx++}::uuid[]`;
-      argList.push(where.idIn);
+      query += `= ANY (ARRAY['${where.idIn.join("', '")}']::uuid[])`;
       query += " AND ";
     }
     if (where.bucketName !== undefined) {
@@ -302,7 +301,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
     let idx = 1;
     for (const it of data) {
       argList.push(
-        it.expires ?? undefined,
+        it.expires ?? null,
         JSON.stringify(it.data ?? {}),
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
@@ -349,8 +348,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
     }
     if (where.idIn !== undefined) {
       query += `ss."id" `;
-      query += `= ANY $${idx++}::uuid[]`;
-      argList.push(where.idIn);
+      query += `= ANY (ARRAY['${where.idIn.join("', '")}']::uuid[])`;
       query += " AND ";
     }
     if (where.expires !== undefined) {
@@ -386,9 +384,9 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
     return sql`
 INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
-${it.id ?? uuid()}, ${it.expires ?? undefined}, ${JSON.stringify(
-      it.data ?? {},
-    )}, ${it.createdAt ?? new Date()}, ${it.updatedAt ?? new Date()}
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("id") DO UPDATE SET
 "expires" = EXCLUDED."expires", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
 RETURNING "id", "expires", "data", "createdAt", "updatedAt"
@@ -405,9 +403,9 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
     return sql`
 INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
-${it.id ?? uuid()}, ${it.expires ?? undefined}, ${JSON.stringify(
-      it.data ?? {},
-    )}, ${it.createdAt ?? new Date()}, ${it.updatedAt ?? new Date()}
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("expires") DO UPDATE SET
 "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
 RETURNING "id", "expires", "data", "createdAt", "updatedAt"
@@ -497,7 +495,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
         it.isComplete ?? false,
         it.priority ?? 0,
         it.scheduledAt ?? new Date(),
-        it.name ?? undefined,
+        it.name ?? null,
         JSON.stringify(it.data ?? {}),
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
@@ -595,7 +593,7 @@ INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
-    }, ${it.name ?? undefined}, ${JSON.stringify(it.data ?? {})}, ${
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()
     }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("id") DO UPDATE SET
@@ -616,7 +614,7 @@ INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
-    }, ${it.name ?? undefined}, ${JSON.stringify(it.data ?? {})}, ${
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()
     }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("name") DO UPDATE SET
