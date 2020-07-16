@@ -35,11 +35,11 @@ WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
 
   // removes migrations
   const tableNames = schemas
-    .map((it) => it.table_name)
-    .filter((it) => it !== "migrations");
+    .filter((it) => it.table_name !== "migrations")
+    .map((it) => `"${it.table_name}"`);
 
   if (tableNames.length > 0) {
-    await sql`TRUNCATE ${sql(tableNames)} CASCADE `;
+    await sql.unsafe(`TRUNCATE ${tableNames.join(", ")} CASCADE`);
   } else {
     // Just a query to initialize the connection
     await sql`SELECT 1 + 1 AS sum;`;

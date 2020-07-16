@@ -165,7 +165,7 @@ async function syncWithSchemaState(mc) {
                                                                number,
                                                                hash
                         FROM migrations
-                        ORDER BY namespace, number, created_at DESC`;
+                        ORDER BY namespace, number, "createdAt" DESC`;
   } catch (e) {
     if ((e.message ?? "").indexOf(`"migrations" does not exist`) === -1) {
       throw e;

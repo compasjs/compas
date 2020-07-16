@@ -1,9 +1,5 @@
-CREATE TABLE test_table
-(
+CREATE TABLE "testTable" (
   value INT
 );
 
-INSERT INTO test_table (value)
-VALUES (1),
-       (2),
-       (3);
+INSERT INTO "testTable" (value) VALUES (1), (2), (3);

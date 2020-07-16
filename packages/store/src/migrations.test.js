@@ -28,7 +28,7 @@ test("store/migrations", (t) => {
     );
 
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
-    t.equal(mc.files.length, 8);
+    t.equal(mc.files.length, 7);
 
     const list = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);
@@ -43,8 +43,7 @@ test("store/migrations", (t) => {
     t.ok(list[2].number === 3);
 
     await runMigrations(mc);
-    let testResult = await sql`SELECT *
-                               FROM test_table;`;
+    let testResult = await sql`SELECT * FROM "testTable"`;
     t.deepEqual([...testResult], [{ value: 1 }, { value: 2 }, { value: 3 }]);
   });
 
