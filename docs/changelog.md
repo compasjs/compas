@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.45](https://github.com/lightbasenl/lbu/releases/tag/v0.0.45)
+
+- code-gen: hotfix sql template issues for postgres 2.0
+
+  Fixes introduces template bug in 0.0.44
+
 ### [v0.0.44](https://github.com/lightbasenl/lbu/releases/tag/v0.0.44)
 
 - BREAKING: code-gen: sql template column and table identifiers to camelCase
