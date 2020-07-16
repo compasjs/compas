@@ -18,14 +18,14 @@ import { uuid } from "@lbu/stdlib";
     {{ } }}
 
     {{ const ref = structure[item.original.group][item.original.name]; }}
-    {{ const getKeys = (shortName) => Object.keys(ref.keys).map(it => shortName + camelToSnakeCase(it) + ` as "` + it + `"`).join(", "); }}
+    {{ const getKeys = (shortName) => Object.keys(ref.keys).map(it => `${shortName}"${it}"`).join(", "); }}
 
    /**
     * @param sql
     * @param { {{= ref.uniqueName }}Where} where
     * @returns {Promise<{{= ref.uniqueName }}[]>}
     */
-    {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+    {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
 ((newline))
 
     /**
@@ -34,9 +34,9 @@ import { uuid } from "@lbu/stdlib";
     * @returns {Promise<number>}
     */
     {{= ref.name }}Count: async (sql, where) => {
-      const result = await sql`SELECT count(*) as gen_count FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
+      const result = await sql`SELECT count(*) as "genCount" FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
 
-      return result?.[0]?.gen_count ?? 0;
+      return result?.[0]?.genCount ?? 0;
     },
 ((newline))
 
@@ -45,7 +45,7 @@ import { uuid } from "@lbu/stdlib";
     * @param { {{= ref.uniqueName }}Where} where
     * @returns {Promise<*[]>}
     */
-    {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+    {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
 ((newline))
 
     /**
@@ -55,12 +55,25 @@ import { uuid } from "@lbu/stdlib";
      */
     {{= ref.name }}Insert: (sql, insert) => {
       const data = Array.isArray(insert) ? insert : [insert];
-      const input = [];
-      for (const it of data) {
-        input.push({{= sqlGenDefaults({ item, ref, }) }} );
+      if (data.length === 0) {
+        {{ /* No input so no result as well */ }}
+        return [];
       }
 
-      return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(input, {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} RETURNING {{= getKeys("") }}`;
+      let query = `INSERT INTO "{{= ref.name }}" ({{= item.partialFields.map(it => `"${it.source}"`).join(", ") }}) VALUES `;
+      const argList = [];
+      let idx = 1;
+
+      for (const it of data) {
+        argList.push({{= item.partialFields.map(it => sqlGenDefaults({ field: it, ref })).join(", ") }});
+        query += `({{= item.partialFields.map(it => "$${idx++}").join(", ") }}),`;
+      }
+
+      // Remove trailing comma
+      query = query.substring(0, query.length - 1)
+      query += ` RETURNING {{= getKeys("") }}`
+
+      return sql.unsafe(query, argList);
     },
 ((newline))
 
@@ -71,22 +84,35 @@ import { uuid } from "@lbu/stdlib";
      * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
     {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
-      const updateValue = {};
-      {{ for (const key of item.partialFields) { }}
-      if (value["{{= key.source }}"] !== undefined) {
-        updateValue["{{= key.result }}"] = {{= key.stringify ? `JSON.stringify(value["${key.source}"])` : `value["${key.source}"]` }};
-      }
-      {{ } }}
-
-      {{ if (ref.queryOptions.dateFields) { }}
-      updateValue.updated_at = new Date();
-      {{ } }}
       {{ if (ref.queryOptions.withHistory) { }}
-      await sql`INSERT INTO {{= camelToSnakeCase(ref.name) }}_history ({{= camelToSnakeCase(ref.name) }}_id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, created_at)
-      SELECT id, {{= item.partialFields.map(it => it.result).filter(it => it !== "created_at" && it !== "updated_at").join(", ") }}, COALESCE(updated_at, created_at, now()) FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
+      await sql`INSERT INTO "{{= ref.name }}History" ("{{= ref.name }}Id", {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, "createdAt")
+      SELECT id, {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, COALESCE("updatedAt", "createdAt", now()) FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
       `;
       {{ } }}
-      return sql`UPDATE {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} set ${sql(updateValue, ...Object.keys(updateValue))} {{= sqlWhereClause({ item, ref }) }} RETURNING {{= getKeys(item.shortName + ".") }}`;
+
+      let query = `UPDATE "{{= ref.name }}" {{= item.shortName }} SET `;
+      const argList = [];
+      let idx = 1;
+
+      {{ for (const key of item.partialFields.filter(it => it.source !== "updatedAt")) { }}
+        if (value["{{= key.source }}"] !== undefined) {
+          query += `"{{= key.source }}" = $${idx++}, `
+          argList.push({{= key.stringify ? `JSON.stringify(value["${key.source}"])` : `value["${key.source}"]` }});
+        }
+      {{ } }}
+
+     {{ if (ref.queryOptions.dateFields) { }}
+       query += `"updatedAt" = $${idx++}, `;
+       argList.push(new Date());
+     {{ } }}
+
+     query = query.substring(0, query.length - 2);
+
+     {{= sqlWhereClauseUnsafe({ item, ref }) }}
+
+     query += ` RETURNING {{= getKeys(item.shortName + ".") }}`
+
+     return sql.unsafe(query, argList);
     },
 ((newline))
 
@@ -100,9 +126,14 @@ import { uuid } from "@lbu/stdlib";
              * @returns {Promise<{{= ref.uniqueName }}[]>}
              */
              {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {
-               const data = {{= sqlGenDefaults({ item, ref, }) }};
-               data.id = it.id || uuid();
-               return sql`INSERT INTO {{= camelToSnakeCase(ref.name) }} ${sql(data, "id", {{= item.partialFields.map(it => "'" + it.result + "'").join(", ") }} )} ON CONFLICT ({{= camelToSnakeCase(field.key) }}) DO UPDATE SET {{= item.partialFields.filter(it => it.result !== camelToSnakeCase(field.key) && it.result !== "created_at").map(it => `${it.result} = EXCLUDED.${it.result}`).join(", ") }} RETURNING {{= getKeys("") }}`;
+              return sql`
+                INSERT INTO "{{= ref.name }}" ("id", {{= item.partialFields.map(it => `"${it.source}"`).join(", ") }}
+                ) VALUES (
+                 ${it.id ?? uuid()}, {{= item.partialFields.map(it => `\${${sqlGenDefaults({ field: it, ref }) } }`).join(", ") }}
+                ) ON CONFLICT("{{= field.key }}") DO UPDATE SET
+                  {{= item.partialFields.filter(it => it.source !== field.key && it.source !== "createdAt").map(it => `"${it.source}" = EXCLUDED."${it.source}"`).join(", ") }}
+                RETURNING {{= getKeys("") }}
+              `;
              },
 
          ((newline))
@@ -115,7 +146,7 @@ import { uuid } from "@lbu/stdlib";
     * @param { {{= ref.uniqueName }}Where} where
     * @returns {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
     */
-    {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg({{= item.shortName }}h.*) as history FROM {{= camelToSnakeCase(ref.name) }} {{= item.shortName }} LEFT JOIN  {{= camelToSnakeCase(ref.name) }}_history {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h.{{= camelToSnakeCase(ref.name) }}_id {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
+    {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) as history FROM "{{= ref.name }}" {{= item.shortName }} LEFT JOIN  "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id" {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
 ((newline))
 
     {{ } }}

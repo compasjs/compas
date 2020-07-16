@@ -1,0 +1,31 @@
+{{ /* Expects query, argList and idx to be available */ }}
+
+{{ if (item.whereFields.length > 0) { }}
+query += ` WHERE `;
+{{ for (const it of item.whereFields) { }}
+  if (where.{{= it.name }} !== undefined) {
+    query += `{{= item.shortName }}."{{= it.key }}" `;
+
+  {{ if (it.type === "equal") { }}
+    query += `= $${idx++}`;
+    argList.push(where.{{= it.name }});
+  {{ } else if (it.type === "greaterThan") { }}
+    query += `> $${idx++}`;
+    argList.push(where.{{= it.name }});
+  {{ } else if (it.type === "lowerThan") { }}
+    query += `< $${idx++}`;
+    argList.push(where.{{= it.name }});
+  {{ } else if (it.type === "like") { }}
+    query += `LIKE $${idx++}`;
+    argList.push(`%${where.{{= it.name }} }%`);
+  {{ } else if (it.type === "in") { }}
+    query += `= ANY $${idx++}::uuid[]`;
+    argList.push(where.{{= it.name }});
+  {{ } }}
+
+    query += " AND ";
+  }
+{{ } }}
+query = query.substring(0, query.length - 4);
+{{ } }}
+

@@ -6,39 +6,38 @@
     {{ continue; }}
     {{ } }}
 
-    CREATE TABLE {{= camelToSnakeCase(item.name) }} (
+    CREATE TABLE "{{= item.name }}" (
       {{ let count = Object.keys(item.keys || {}).length; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
         {{ count--; }}
-        {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+        "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
       {{ } }}
     );
-    ((newline))
 
     {{ if (item.queryOptions?.withHistory) { }}
 
-    CREATE TABLE {{= camelToSnakeCase(item.name) }}_history (
+    CREATE TABLE "{{= item.name }}History" (
       {{ let count = Object.keys(item.keys || {}).length - 1; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
         {{ count--; }}
         {{ if (key === "updatedAt") { continue; } }}
         {{ if (key === "id") { }}
-          {{= camelToSnakeCase(item.name) }}_id {{= sqlExec({ type: item.keys[key].type, model: { ...item.keys[key], sql: {} }, }).trim() }} REFERENCES {{= camelToSnakeCase(item.name) }}(id){{= count !== 0 ? "," : "" }}
+          "{{= item.name }}Id" {{= sqlExec({ type: item.keys[key].type, model: { ...item.keys[key], sql: {} }, }).trim() }} REFERENCES "{{= item.name }}" (id){{= count !== 0 ? "," : "" }}
         {{ } else { }}
-          {{= camelToSnakeCase(key) }} {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+          "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
         {{ } }}
       {{ } }}
     );
-    ((newline))
 
     {{ } }}
-
 
     -- These are only for easy copy -pasting and should not be used as a guide!
     {{ for (const key of Object.keys(item.keys || {})) { }}
     {{ if (!item.keys[key]?.sql?.primary && item.keys[key]?.sql?.searchable) { }}
-    CREATE INDEX {{= camelToSnakeCase(item.name) }}_{{= camelToSnakeCase(key) }}_idx ON {{= camelToSnakeCase(item.name) }}({{= camelToSnakeCase(key) }});
+    CREATE INDEX {{= camelToSnakeCase(item.name) }}_{{= camelToSnakeCase(key) }}_idx ON "{{= item.name }}" ("{{= key }}");
     {{ } }}
     {{ } }}
+
+    ((newline))
   {{ } }}
 {{ } }}
