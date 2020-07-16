@@ -1,6 +1,6 @@
 {
   "name": "@lbu/insight",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "Simple logger in NDJSON format",
   "main": "./index.js",
   "exports": "./index.js",
@@ -12,7 +12,6 @@
     "logger"
   ],
   "license": "MIT",
-  "dependencies": {},
   "author": {
     "name": "Dirk de Visser",
     "email": "dirkdev98@gmail.com"
