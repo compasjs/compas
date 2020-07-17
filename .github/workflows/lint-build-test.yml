@@ -3,6 +3,7 @@ on: [push]
 
 jobs:
   lint-build-test:
+    timeout-minutes: 15
     strategy:
       matrix:
         os: [ubuntu-latest]
