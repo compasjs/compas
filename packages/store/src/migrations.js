@@ -37,31 +37,45 @@ export async function newMigrateContext(
   sql,
   migrationDirectory = `${process.cwd()}/migrations`,
 ) {
-  const migrations = await readMigrationsDir(migrationDirectory);
+  try {
+    const migrations = await readMigrationsDir(migrationDirectory);
 
-  // Automatically add this package to the migrations
-  if (migrations.namespaces.indexOf("@lbu/store") === -1) {
-    migrations.namespaces.unshift("@lbu/store");
+    // Automatically add this package to the migrations
+    if (migrations.namespaces.indexOf("@lbu/store") === -1) {
+      migrations.namespaces.unshift("@lbu/store");
 
-    const { migrationFiles } = await readMigrationsDir(
-      dirnameForModule(import.meta) + "/../migrations",
-      "@lbu/store",
-      migrations.namespaces,
-    );
+      const { migrationFiles } = await readMigrationsDir(
+        dirnameForModule(import.meta) + "/../migrations",
+        "@lbu/store",
+        migrations.namespaces,
+      );
 
-    migrations.migrationFiles.push(...migrationFiles);
+      migrations.migrationFiles.push(...migrationFiles);
+    }
+
+    const mc = {
+      files: sortMigrations(migrations.namespaces, migrations.migrationFiles),
+      namespaces: migrations.namespaces,
+      sql,
+      storedHashes: {},
+    };
+
+    await Promise.race([
+      acquireLock(sql),
+      new Promise((_, reject) => {
+        setTimeout(
+          () => reject(new Error("Could not acquire advisory lock")),
+          2500,
+        );
+      }),
+    ]);
+    await syncWithSchemaState(mc);
+    return mc;
+  } catch (error) {
+    // Help user by dropping the sql connection so the application will exit
+    sql?.end();
+    throw error;
   }
-
-  const mc = {
-    files: sortMigrations(migrations.namespaces, migrations.migrationFiles),
-    namespaces: migrations.namespaces,
-    sql,
-    storedHashes: {},
-  };
-
-  await acquireLock(sql);
-  await syncWithSchemaState(mc);
-  return mc;
 }
 
 /**
@@ -87,10 +101,16 @@ export function getMigrationsToBeApplied(mc) {
  * @param {MigrateContext} mc
  */
 export async function runMigrations(mc) {
-  const migrationFiles = filterMigrationsToBeApplied(mc);
+  try {
+    const migrationFiles = filterMigrationsToBeApplied(mc);
 
-  for (const migration of migrationFiles) {
-    await runMigration(mc.sql, migration);
+    for (const migration of migrationFiles) {
+      await runMigration(mc.sql, migration);
+    }
+  } catch (error) {
+    // Help user by dropping the sql connection so the application will exit
+    mc?.sql?.end();
+    throw error;
   }
 }
 
