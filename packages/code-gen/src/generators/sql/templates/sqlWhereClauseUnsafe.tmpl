@@ -19,7 +19,14 @@ query += ` WHERE `;
     query += `LIKE $${idx++}`;
     argList.push(`%${where.{{= it.name }} }%`);
   {{ } else if (it.type === "in") { }}
-    query += `= ANY (ARRAY['${where.{{= it.name }}.join("\', \'")}']::uuid[])`;
+    query += `= ANY (ARRAY[`;
+    let addOne = false;
+    for (const value of where.{{= it.name }} || []) {
+      addOne = true;
+      query += `$${idx++},`;
+      argList.push(value);
+    }
+    query = query.substring(0, query.length - (addOne ? 1 : 0)) + `]::uuid[])`;
   {{ } }}
 
     query += " AND ";

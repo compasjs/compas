@@ -165,7 +165,15 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     }
     if (where.idIn !== undefined) {
       query += `fs."id" `;
-      query += `= ANY (ARRAY['${where.idIn.join("', '")}']::uuid[])`;
+      query += `= ANY (ARRAY[`;
+      let addOne = false;
+      for (const value of where.idIn || []) {
+        addOne = true;
+        query += `$${idx++},`;
+        argList.push(value);
+      }
+      query =
+        query.substring(0, query.length - (addOne ? 1 : 0)) + `]::uuid[])`;
       query += " AND ";
     }
     if (where.bucketName !== undefined) {
@@ -348,7 +356,15 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
     }
     if (where.idIn !== undefined) {
       query += `ss."id" `;
-      query += `= ANY (ARRAY['${where.idIn.join("', '")}']::uuid[])`;
+      query += `= ANY (ARRAY[`;
+      let addOne = false;
+      for (const value of where.idIn || []) {
+        addOne = true;
+        query += `$${idx++},`;
+        argList.push(value);
+      }
+      query =
+        query.substring(0, query.length - (addOne ? 1 : 0)) + `]::uuid[])`;
       query += " AND ";
     }
     if (where.expires !== undefined) {

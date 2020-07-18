@@ -145,6 +145,18 @@ test("store/files", async (t) => {
     t.notEqual(storedFiles[1].id, copy.id);
   });
 
+  t.test("update files by idIn", async (t) => {
+    const result = await storeQueries.fileStoreUpdate(
+      sql,
+      { updatedAt: new Date() },
+      {
+        idIn: storedFiles.map((it) => it.id),
+      },
+    );
+
+    t.equal(result.length, 2);
+  });
+
   t.test("deleteFile", async (t) => {
     const ctx = newFileStoreContext(sql, minio, bucketName);
     await deleteFile(ctx, storedFiles[0].id);
