@@ -107,6 +107,16 @@ APIs and various guides.
 
 For contributing see [contributing.md](https://lbu.lightbase.nl/#/contributing).
 
-## Development
+## New features
 
-See [CONTRIBUTING.md](/contributing.md).
+New features added should fall under the following categories:
+
+- It improves the interface between api and client in some way. An example may
+  be to support websockets in @lbu/code-gen
+- It improves the developer experience one way or another while developing an
+  api For example the `lbu docker` commands or various utilities provided by
+  @lbu/stdlib
+
+Although some parts heavily rely on conventions set by the packages, we
+currently aim not to be a framework. However, the idea of being a bit more of
+framework is not completely out of the door yet.
