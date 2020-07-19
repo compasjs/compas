@@ -19,13 +19,19 @@
     "eslint-plugin-import": "2.22.0",
     "prettier": "2.0.5"
   },
-  "author": {
-    "name": "Dirk de Visser",
-    "email": "dirkdev98@gmail.com"
-  },
+  "maintainers": [
+    {
+      "name": "Dirk de Visser",
+      "email": "dirkdev98@gmail.com"
+    },
+    {
+      "name": "Daniël Hansen"
+    }
+  ],
+  "homepage": "https://lbu.lightbase.nl",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/lightbasenl/lbu.git",
     "directory": "packages/lint-config"
   },
   "publishConfig": {

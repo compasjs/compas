@@ -24,13 +24,19 @@
     "koa-compose": "4.1.0",
     "koa-session": "6.0.0"
   },
-  "author": {
-    "name": "Dirk de Visser",
-    "email": "dirkdev98@gmail.com"
-  },
+  "maintainers": [
+    {
+      "name": "Dirk de Visser",
+      "email": "dirkdev98@gmail.com"
+    },
+    {
+      "name": "Daniël Hansen"
+    }
+  ],
+  "homepage": "https://lbu.lightbase.nl",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/lightbasenl/lbu.git",
     "directory": "packages/server"
   },
   "publishConfig": {

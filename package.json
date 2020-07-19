@@ -26,12 +26,19 @@
     "typedoc-plugin-markdown": "2.3.1",
     "typescript": "3.9.7"
   },
-  "scarfSettings": {
-    "enabled": false
-  },
+  "maintainers": [
+    {
+      "name": "Dirk de Visser",
+      "email": "dirkdev98@gmail.com"
+    },
+    {
+      "name": "Daniël Hansen"
+    }
+  ],
+  "homepage": "https://lbu.lightbase.nl",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/lightbasenl/lbu.git"
+    "url": "https://github.com/lightbasenl/lbu.git"
   },
   "prettier": "@lbu/lint-config/prettierrc",
   "workspaces": [

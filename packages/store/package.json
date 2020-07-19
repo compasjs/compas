@@ -22,13 +22,19 @@
     "minio": "7.0.16",
     "postgres": "2.0.0-beta.0"
   },
-  "author": {
-    "name": "Dirk de Visser",
-    "email": "dirkdev98@gmail.com"
-  },
+  "maintainers": [
+    {
+      "name": "Dirk de Visser",
+      "email": "dirkdev98@gmail.com"
+    },
+    {
+      "name": "Daniël Hansen"
+    }
+  ],
+  "homepage": "https://lbu.lightbase.nl",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/lightbasenl/lbu.git",
     "directory": "packages/store"
   },
   "publishConfig": {
