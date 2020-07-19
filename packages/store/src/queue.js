@@ -54,49 +54,8 @@ const queries = {
     sql`SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime" FROM "jobQueue" WHERE "isComplete" AND name = ${name} AND "updatedAt" > ${dateStart} AND "updatedAt" <= ${dateEnd};`,
 };
 
-/**
- * @name JobData
- *
- * Row data for a specific job
- *
- * @typedef {object}
- * @property {number} id
- * @property {Date} createdAt
- * @property {Date} scheduledAt
- * @property {string} name
- * @property {object} data
- */
-
-/**
- * @name JobInput
- *
- * @typedef {object}
- * @property {number} [priority=0]
- * @property {object} [data={}]
- * @property {Date} [scheduledAt]
- * @property {string} [name]
- */
-
-/**
- * @name JobQueueWorkerOptions
- *
- * @typedef {object}
- * @property {function(sql: *, data: JobData): (void|Promise<void>)} handler
- * @property {number} [pollInterval] Determine the poll interval in milliseconds if the
- *   queue was empty. Defaults to 1500 ms
- * @property {number} [parallelCount] Set the amount of parallel jobs to process.
- *   Defaults to 1. Make sure it is not higher than the amount of Postgres connections in
- *   the pool
- */
-
-/**
- * @class
- *
- */
 export class JobQueueWorker {
   /**
-   * Create a new JobQueueWorker
-   *
    * @param sql
    * @param {string|JobQueueWorkerOptions} nameOrOptions
    * @param {JobQueueWorkerOptions} [options]
@@ -127,11 +86,6 @@ export class JobQueueWorker {
     this.jobHandler = options?.handler;
   }
 
-  /**
-   * Start the JobQueueWorker
-   *
-   * @public
-   */
   start() {
     if (this.isStarted) {
       return;
@@ -147,12 +101,6 @@ export class JobQueueWorker {
     this.run();
   }
 
-  /**
-   * Stop the JobQueueWorker
-   * Running jobs will continue to run, but no new jobs are fetched
-   *
-   * @public
-   */
   stop() {
     if (!this.isStarted) {
       return;
@@ -164,9 +112,6 @@ export class JobQueueWorker {
   }
 
   /**
-   * Get the number of jobs that need to run
-   *
-   * @public
    * @returns {Promise<{pendingCount: number, scheduledCount: number}|undefined>}
    */
   pendingQueueSize() {
@@ -177,10 +122,6 @@ export class JobQueueWorker {
   }
 
   /**
-   * Return the average time between scheduled and completed for jobs completed in the
-   * provided time range in milliseconds
-   *
-   * @public
    * @param {Date} startDate
    * @param {Date} endDate
    * @returns {Promise<number>}

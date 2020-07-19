@@ -4,30 +4,6 @@ import path from "path";
 import { dirnameForModule } from "@lbu/stdlib";
 
 /**
- * @name MigrateContext
- *
- * @typedef {object}
- * @property {MigrateFile[]} files
- * @property {string[]} namespaces
- * @property {object<string, string>} storedHashes
- * @property {Postgres} sql
- */
-
-/**
- * @name MigrateFile
- *
- * @typedef {object}
- * @property {string} namespace
- * @property {number} number
- * @property {boolean} repeatable
- * @property {string} name
- * @property {string} fullPath
- * @property {boolean} isMigrated
- * @property {string} source
- * @property {string} hash
- */
-
-/**
  * @param sql
  * @param migrationDirectory
  * @property {Postgres} sql
@@ -79,8 +55,6 @@ export async function newMigrateContext(
 }
 
 /**
- * Get a list of migrations to be applied
- *
  * @param {MigrateContext} mc
  * @returns {({name: string, number: number, repeatable: boolean}[])|boolean}
  */

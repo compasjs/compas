@@ -18,15 +18,6 @@ const queries = {
 };
 
 /**
- * @name FileStoreContext
- *
- * @typedef {object}
- * @property sql
- * @property {minio.Client} minio
- * @property {string} bucketName
- */
-
-/**
  * @param sql
  * @param {minio.Client} minio
  * @param {string} bucketName
@@ -40,10 +31,6 @@ export function newFileStoreContext(sql, minio, bucketName) {
 }
 
 /**
- * Create or update a file.
- * If you pass in a non-existent id, the function will not error, but also not update the
- * file
- *
  * @param {FileStoreContext} fc
  * @param {StoreFileStoreInsertPartial_Input & { id?: string }} props
  * @param {ReadStream|string} streamOrPath

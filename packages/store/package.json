@@ -4,6 +4,7 @@
   "description": "Postgres & S3-compatible wrappers for common things",
   "main": "./index.js",
   "exports": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "keywords": [
     "lightbase",
@@ -14,6 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@types/minio": "7.0.6",
     "@lbu/insight": "0.0.45",
     "@lbu/stdlib": "0.0.45",
     "mime-types": "2.1.27",

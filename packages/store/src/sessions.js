@@ -3,15 +3,6 @@ import { storeQueries } from "./generated/queries.js";
 const DELETE_INTERVAL = 45 * 60 * 1000; // 45 minutes
 
 /**
- * @name SessionStore
- *
- * @typedef {object}
- * @property {function(string): Promise<object|boolean>} get
- * @property {function(string, object, number): Promise<void>} set
- * @property {function(string): Promise<void>} destroy
- */
-
-/**
  *
  * @param sql
  * @param {object} [options]

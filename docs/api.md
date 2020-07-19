@@ -8,9 +8,9 @@ Per module documentation, generated from the Typescript declaration files.
 
 <a name="clireadmemd"></a>
 
-[@lbu/cli - v0.0.42](#clireadmemd)
+[@lbu/cli - v0.0.45](#clireadmemd)
 
-## @lbu/cli - v0.0.42
+## @lbu/cli - v0.0.45
 
 ### Index
 
@@ -41,7 +41,7 @@ Return collection of available named scripts
 
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.42](#clireadmemd) ›
+[@lbu/cli - v0.0.45](#clireadmemd) ›
 [CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
@@ -88,7 +88,7 @@ package.json Depending on the type contains either script or path
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.42](#clireadmemd) ›
+[@lbu/cli - v0.0.45](#clireadmemd) ›
 [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
@@ -105,9 +105,9 @@ package.json Depending on the type contains either script or path
 
 <a name="code-genreadmemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd)
+[@lbu/code-gen - v0.0.45](#code-genreadmemd)
 
-## @lbu/code-gen - v0.0.42
+## @lbu/code-gen - v0.0.45
 
 ### Index
 
@@ -235,7 +235,7 @@ Load a LBU structure from an LBU enabled API
 
 <a name="code-genclassesanyoftypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [AnyOfType](#code-genclassesanyoftypemd)
 
 ### Class: AnyOfType
@@ -484,7 +484,7 @@ _Inherited from
 
 <a name="code-genclassesanytypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [AnyType](#code-genclassesanytypemd)
 
 ### Class: AnyType
@@ -748,7 +748,7 @@ _Inherited from
 
 <a name="code-genclassesappmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) › [App](#code-genclassesappmd)
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) › [App](#code-genclassesappmd)
 
 ### Class: App
 
@@ -885,7 +885,7 @@ Create a new App instance and inits generators
 
 <a name="code-genclassesarraytypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [ArrayType](#code-genclassesarraytypemd)
 
 ### Class: ArrayType
@@ -1179,7 +1179,7 @@ _Inherited from
 
 <a name="code-genclassesbooleantypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [BooleanType](#code-genclassesbooleantypemd)
 
 ### Class: BooleanType
@@ -1441,7 +1441,7 @@ _Inherited from
 
 <a name="code-genclassesdatetypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [DateType](#code-genclassesdatetypemd)
 
 ### Class: DateType
@@ -1684,7 +1684,7 @@ _Inherited from
 
 <a name="code-genclassesgenerictypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [GenericType](#code-genclassesgenerictypemd)
 
 ### Class: GenericType
@@ -1948,7 +1948,7 @@ _Inherited from
 
 <a name="code-genclassesnumbertypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [NumberType](#code-genclassesnumbertypemd)
 
 ### Class: NumberType
@@ -2255,7 +2255,7 @@ _Inherited from
 
 <a name="code-genclassesobjecttypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [ObjectType](#code-genclassesobjecttypemd)
 
 ### Class: ObjectType
@@ -2537,7 +2537,7 @@ _Inherited from
 
 <a name="code-genclassesreferencetypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [ReferenceType](#code-genclassesreferencetypemd)
 
 ### Class: ReferenceType
@@ -2803,7 +2803,7 @@ _Inherited from
 
 <a name="code-genclassesroutebuildermd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [RouteBuilder](#code-genclassesroutebuildermd)
 
 ### Class: RouteBuilder
@@ -3125,7 +3125,7 @@ _Inherited from
 
 <a name="code-genclassesroutecreatormd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [RouteCreator](#code-genclassesroutecreatormd)
 
 ### Class: RouteCreator
@@ -3250,7 +3250,7 @@ PUT route
 
 <a name="code-genclassesstringtypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [StringType](#code-genclassesstringtypemd)
 
 ### Class: StringType
@@ -3596,7 +3596,7 @@ _Inherited from
 
 <a name="code-genclassestypebuildermd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [TypeBuilder](#code-genclassestypebuildermd)
 
 ### Class: TypeBuilder
@@ -3823,7 +3823,7 @@ Set this field as searchable for the 'sql' plugin
 
 <a name="code-genclassestypecreatormd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [TypeCreator](#code-genclassestypecreatormd)
 
 ### Class: TypeCreator
@@ -4079,7 +4079,7 @@ Return a list of type plugins that have the specified property
 
 <a name="code-genclassesuuidtypemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [UuidType](#code-genclassesuuidtypemd)
 
 ### Class: UuidType
@@ -4315,7 +4315,7 @@ _Inherited from
 
 <a name="code-geninterfacesappoptsmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [AppOpts](#code-geninterfacesappoptsmd)
 
 ### Interface: AppOpts
@@ -4338,7 +4338,7 @@ _Inherited from
 
 <a name="code-geninterfacesgeneratedfilemd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [GeneratedFile](#code-geninterfacesgeneratedfilemd)
 
 ### Interface: GeneratedFile
@@ -4372,7 +4372,7 @@ Generated source string
 
 <a name="code-geninterfacesgenerateoptsmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [GenerateOpts](#code-geninterfacesgenerateoptsmd)
 
 ### Interface: GenerateOpts
@@ -4455,7 +4455,7 @@ Enable Typescript for the generators that support it
 
 <a name="code-geninterfacesgeneratorpluginmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
 
 ### Interface: GeneratorPlugin
@@ -4542,7 +4542,7 @@ Add dynamic types to app. Can be called multiple times
 
 <a name="code-geninterfacestypebuilderlikearraymd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd)
 
 ### Interface: TypeBuilderLikeArray
@@ -5608,7 +5608,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypebuilderlikeobjectmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)
 
 ### Interface: TypeBuilderLikeObject
@@ -5621,7 +5621,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypepluginmd"></a>
 
-[@lbu/code-gen - v0.0.42](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
 [TypePlugin](#code-geninterfacestypepluginmd)
 
 ### Interface: TypePlugin ‹**T**›
@@ -5710,9 +5710,9 @@ Return the template that should be used to validate this type
 
 <a name="insightreadmemd"></a>
 
-[@lbu/insight - v0.0.42](#insightreadmemd)
+[@lbu/insight - v0.0.45](#insightreadmemd)
 
-## @lbu/insight - v0.0.42
+## @lbu/insight - v0.0.45
 
 ### Index
 
@@ -5826,7 +5826,7 @@ https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memor
 
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.42](#insightreadmemd) ›
+[@lbu/insight - v0.0.45](#insightreadmemd) ›
 [Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
@@ -5896,7 +5896,7 @@ Check if this logger is using the pretty printer or NDJSON printer
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.42](#insightreadmemd) ›
+[@lbu/insight - v0.0.45](#insightreadmemd) ›
 [LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
@@ -5921,7 +5921,7 @@ Context that should be logged in all log lines. e.g a common request id.
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.42](#insightreadmemd) ›
+[@lbu/insight - v0.0.45](#insightreadmemd) ›
 [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
@@ -5970,9 +5970,9 @@ The stream to write the logs to
 
 <a name="serverreadmemd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd)
+[@lbu/server - v0.0.45](#serverreadmemd)
 
-## @lbu/server - v0.0.42
+## @lbu/server - v0.0.45
 
 ### Index
 
@@ -6152,7 +6152,7 @@ like node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 
 <a name="serverclassesapplicationmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [Application](#serverclassesapplicationmd)
 
 ### Class: Application ‹**StateT, CustomT**›
@@ -6882,7 +6882,7 @@ _Inherited from
 
 <a name="serverinterfacesapperrorhandlermd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [AppErrorHandler](#serverinterfacesapperrorhandlermd)
 
 ### Interface: AppErrorHandler
@@ -6912,7 +6912,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacesbodyparserpairmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [BodyParserPair](#serverinterfacesbodyparserpairmd)
 
 ### Interface: BodyParserPair
@@ -6942,7 +6942,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescorsoptionsmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [CorsOptions](#serverinterfacescorsoptionsmd)
 
 ### Interface: CorsOptions
@@ -7013,7 +7013,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescustomerrorhandlermd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 
 ### Interface: CustomErrorHandler
@@ -7041,7 +7041,7 @@ Return truthy when handled or falsey when skipped
 
 <a name="serverinterfaceserrorhandleroptionsmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
 
 ### Interface: ErrorHandlerOptions
@@ -7085,7 +7085,7 @@ Called before all others to let the user handle their own errors
 
 <a name="serverinterfacesgetappoptionsmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [GetAppOptions](#serverinterfacesgetappoptionsmd)
 
 ### Interface: GetAppOptions
@@ -7147,7 +7147,7 @@ Trust proxy headers
 
 <a name="serverinterfacesheaderoptionsmd"></a>
 
-[@lbu/server - v0.0.42](#serverreadmemd) ›
+[@lbu/server - v0.0.45](#serverreadmemd) ›
 [HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 ### Interface: HeaderOptions
@@ -7172,9 +7172,9 @@ Trust proxy headers
 
 <a name="stdlibreadmemd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd)
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd)
 
-## @lbu/stdlib - v0.0.42
+## @lbu/stdlib - v0.0.45
 
 ### Index
 
@@ -7722,7 +7722,7 @@ unFlatten({ "foo.bar": 2 });
 
 <a name="stdlibclassesapperrormd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
 
 ### Class: AppError ‹**T**›
 
@@ -7971,7 +7971,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd) ›
 [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
@@ -7994,7 +7994,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd) ›
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
@@ -8030,7 +8030,7 @@ Skip node_modules directory, true by default
 
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd) ›
 [TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
@@ -8080,7 +8080,7 @@ Compiled template functions
 
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.42](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.45](#stdlibreadmemd) ›
 [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
@@ -8119,3 +8119,1220 @@ case-insensitive.
 | `value` | any  |
 
 **Returns:** _boolean_
+
+# Store
+
+<a name="storereadmemd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd)
+
+## @lbu/store - v0.0.45
+
+### Index
+
+#### Classes
+
+- [FileCache](#storeclassesfilecachemd)
+- [JobQueueWorker](#storeclassesjobqueueworkermd)
+
+#### Interfaces
+
+- [FileCacheOptions](#storeinterfacesfilecacheoptionsmd)
+- [FileStoreContext](#storeinterfacesfilestorecontextmd)
+- [JobData](#storeinterfacesjobdatamd)
+- [JobInput](#storeinterfacesjobinputmd)
+- [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)
+- [MigrateContext](#storeinterfacesmigratecontextmd)
+- [MigrateFile](#storeinterfacesmigratefilemd)
+- [SessionStore](#storeinterfacessessionstoremd)
+- [SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)
+- [StoreFileStore](#storeinterfacesstorefilestoremd)
+
+#### Variables
+
+- [migrations](#const-migrations)
+- [minio](#const-minio)
+- [postgres](#const-postgres)
+- [storeStructure](#const-storestructure)
+
+#### Functions
+
+- [addJobToQueue](#addjobtoqueue)
+- [cleanupTestPostgresDatabase](#cleanuptestpostgresdatabase)
+- [copyFile](#copyfile)
+- [createOrUpdateFile](#createorupdatefile)
+- [createTestPostgresDatabase](#createtestpostgresdatabase)
+- [deleteFile](#deletefile)
+- [ensureBucket](#ensurebucket)
+- [getFileById](#getfilebyid)
+- [getFileStream](#getfilestream)
+- [getMigrationsToBeApplied](#getmigrationstobeapplied)
+- [listObjects](#listobjects)
+- [newFileStoreContext](#newfilestorecontext)
+- [newMigrationContext](#newmigrationcontext)
+- [newMinioClient](#newminioclient)
+- [newPostgresConnection](#newpostgresconnection)
+- [newSessionStore](#newsessionstore)
+- [removeBucket](#removebucket)
+- [removeBucketAndObjectsInBucket](#removebucketandobjectsinbucket)
+- [runMigrations](#runmigrations)
+- [syncDeletedFiles](#syncdeletedfiles)
+
+### Variables
+
+#### `Const` migrations
+
+• **migrations**: _string_
+
+Migration directory
+
+---
+
+#### `Const` minio
+
+• **minio**: _typeof minioVendor_
+
+Reexported all of minio package
+
+---
+
+#### `Const` postgres
+
+• **postgres**: _typeof postgresVendor_
+
+Reexported all of postgres package
+
+---
+
+#### `Const` storeStructure
+
+• **storeStructure**: _any_
+
+LBU structure. Can be used to extend functionality or reference one of the
+columns
+
+### Functions
+
+#### addJobToQueue
+
+▸ **addJobToQueue**(`sql`: postgresVendor.Sql‹object›, `job`:
+[JobInput](#storeinterfacesjobinputmd)): _Promise‹number›_
+
+Add a new item to the job queue Defaults to `process.env.APP_NAME` if name is
+not specified
+
+**Parameters:**
+
+| Name  | Type                                   |
+| ----- | -------------------------------------- |
+| `sql` | postgresVendor.Sql‹object›             |
+| `job` | [JobInput](#storeinterfacesjobinputmd) |
+
+**Returns:** _Promise‹number›_
+
+---
+
+#### cleanupTestPostgresDatabase
+
+▸ **cleanupTestPostgresDatabase**(`sql`: postgresVendor.Sql‹object›):
+_Promise‹void›_
+
+Drop the test database created with `createTestPostgresDatabase` and end the
+connection
+
+**Parameters:**
+
+| Name  | Type                       |
+| ----- | -------------------------- |
+| `sql` | postgresVendor.Sql‹object› |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### copyFile
+
+▸ **copyFile**(`fc`: [FileStoreContext](#storeinterfacesfilestorecontextmd),
+`id`: string, `targetBucket?`: string):
+_Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd)›_
+
+Create a file copy both in postgres and in minio
+
+**Parameters:**
+
+| Name            | Type                                                   |
+| --------------- | ------------------------------------------------------ |
+| `fc`            | [FileStoreContext](#storeinterfacesfilestorecontextmd) |
+| `id`            | string                                                 |
+| `targetBucket?` | string                                                 |
+
+**Returns:** _Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd)›_
+
+---
+
+#### createOrUpdateFile
+
+▸ **createOrUpdateFile**(`fc`:
+[FileStoreContext](#storeinterfacesfilestorecontextmd), `props`: object,
+`streamOrPath`: string | ReadStream):
+_Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd)›_
+
+Create or update a file. If you pass in a non-existent id, the function will not
+error, but also not update the file
+
+**Parameters:**
+
+▪ **fc**: _[FileStoreContext](#storeinterfacesfilestorecontextmd)_
+
+▪ **props**: _object_
+
+| Name             | Type   |
+| ---------------- | ------ |
+| `bucketName?`    | string |
+| `contentLength?` | number |
+| `contentType?`   | string |
+| `createdAt?`     | string |
+| `filename`       | string |
+| `id?`            | string |
+| `updatedAt?`     | string |
+
+▪ **streamOrPath**: _string | ReadStream_
+
+**Returns:** _Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd)›_
+
+---
+
+#### createTestPostgresDatabase
+
+▸ **createTestPostgresDatabase**(`verboseSql?`: boolean):
+_Promise‹postgresVendor.Sql‹object››_
+
+Drops connections to 'normal' database and creates a new one based on the
+'normal' database. It will truncate all tables and return a connection to the
+new database.
+
+**Parameters:**
+
+| Name          | Type    |
+| ------------- | ------- |
+| `verboseSql?` | boolean |
+
+**Returns:** _Promise‹postgresVendor.Sql‹object››_
+
+---
+
+#### deleteFile
+
+▸ **deleteFile**(`fc`: [FileStoreContext](#storeinterfacesfilestorecontextmd),
+`id`: string): _Promise‹void›_
+
+Delete a file by id Does not remove the object from minio bucket
+
+**Parameters:**
+
+| Name | Type                                                   |
+| ---- | ------------------------------------------------------ |
+| `fc` | [FileStoreContext](#storeinterfacesfilestorecontextmd) |
+| `id` | string                                                 |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### ensureBucket
+
+▸ **ensureBucket**(`minio`: Client, `bucketName`: string, `region`:
+minioVendor.Region): _Promise‹void›_
+
+Create a bucket if it doesn't exist
+
+**Parameters:**
+
+| Name         | Type               |
+| ------------ | ------------------ |
+| `minio`      | Client             |
+| `bucketName` | string             |
+| `region`     | minioVendor.Region |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### getFileById
+
+▸ **getFileById**(`fc`: [FileStoreContext](#storeinterfacesfilestorecontextmd),
+`id`: string): _Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd) |
+undefined›_
+
+Select a file by id
+
+**Parameters:**
+
+| Name | Type                                                   |
+| ---- | ------------------------------------------------------ |
+| `fc` | [FileStoreContext](#storeinterfacesfilestorecontextmd) |
+| `id` | string                                                 |
+
+**Returns:** _Promise‹[StoreFileStore](#storeinterfacesstorefilestoremd) |
+undefined›_
+
+---
+
+#### getFileStream
+
+▸ **getFileStream**(`fc`:
+[FileStoreContext](#storeinterfacesfilestorecontextmd), `id`: string, `range?`:
+object): _Promise‹ReadStream›_
+
+Open a ReadStream for a (partial) file
+
+**Parameters:**
+
+▪ **fc**: _[FileStoreContext](#storeinterfacesfilestorecontextmd)_
+
+▪ **id**: _string_
+
+▪`Optional` **range**: _object_
+
+| Name     | Type   |
+| -------- | ------ |
+| `end?`   | number |
+| `start?` | number |
+
+**Returns:** _Promise‹ReadStream›_
+
+---
+
+#### getMigrationsToBeApplied
+
+▸ **getMigrationsToBeApplied**(`mc`:
+[MigrateContext](#storeinterfacesmigratecontextmd)): _false | object[]_
+
+Get a list of migrations to be applied Returns false if no migrations need to
+run
+
+**Parameters:**
+
+| Name | Type                                               |
+| ---- | -------------------------------------------------- |
+| `mc` | [MigrateContext](#storeinterfacesmigratecontextmd) |
+
+**Returns:** _false | object[]_
+
+---
+
+#### listObjects
+
+▸ **listObjects**(`minio`: Client, `bucketName`: string, `filter?`: string):
+_Promise‹object[]›_
+
+List all objects in a bucket. Note that this is not a fast operation
+
+**Parameters:**
+
+| Name         | Type   |
+| ------------ | ------ |
+| `minio`      | Client |
+| `bucketName` | string |
+| `filter?`    | string |
+
+**Returns:** _Promise‹object[]›_
+
+---
+
+#### newFileStoreContext
+
+▸ **newFileStoreContext**(`sql`: postgresVendor.Sql‹object›, `minio`: Client,
+`bucketName`: string): _[FileStoreContext](#storeinterfacesfilestorecontextmd)_
+
+Create a new FileStoreContext
+
+**Parameters:**
+
+| Name         | Type                       |
+| ------------ | -------------------------- |
+| `sql`        | postgresVendor.Sql‹object› |
+| `minio`      | Client                     |
+| `bucketName` | string                     |
+
+**Returns:** _[FileStoreContext](#storeinterfacesfilestorecontextmd)_
+
+---
+
+#### newMigrationContext
+
+▸ **newMigrationContext**(`sql`: postgresVendor.Sql‹object›):
+_Promise‹[MigrateContext](#storeinterfacesmigratecontextmd)›_
+
+Create a new MigrateContext, requires an advisory lock and does the necessary
+queries to get the state.
+
+**Parameters:**
+
+| Name  | Type                       |
+| ----- | -------------------------- |
+| `sql` | postgresVendor.Sql‹object› |
+
+**Returns:** _Promise‹[MigrateContext](#storeinterfacesmigratecontextmd)›_
+
+---
+
+#### newMinioClient
+
+▸ **newMinioClient**(`options`: ClientOptions): _Client_
+
+Create a new minio client. By defaults reads configuration from environment
+variables as specified in docs/env.md
+
+**Parameters:**
+
+| Name      | Type          |
+| --------- | ------------- |
+| `options` | ClientOptions |
+
+**Returns:** _Client_
+
+---
+
+#### newPostgresConnection
+
+▸ **newPostgresConnection**(`opts?`: postgresVendor.Options‹object› & object):
+_postgresVendor.Sql‹object›_
+
+Create a new postgres client. By defaults reads configuration from environment
+variables as specified in docs/env.md
+
+Will attempt database creation if `createIfNotExists` is set to true
+
+**Parameters:**
+
+| Name    | Type                                    |
+| ------- | --------------------------------------- |
+| `opts?` | postgresVendor.Options‹object› & object |
+
+**Returns:** _postgresVendor.Sql‹object›_
+
+---
+
+#### newSessionStore
+
+▸ **newSessionStore**(`sql`: postgresVendor.Sql‹object›, `opts?`:
+[SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)):
+_[SessionStore](#storeinterfacessessionstoremd)_
+
+Create a session store that can be used in combination with @lbu/server#session
+
+**Parameters:**
+
+| Name    | Type                                                         |
+| ------- | ------------------------------------------------------------ |
+| `sql`   | postgresVendor.Sql‹object›                                   |
+| `opts?` | [SessionStoreOptions](#storeinterfacessessionstoreoptionsmd) |
+
+**Returns:** _[SessionStore](#storeinterfacessessionstoremd)_
+
+---
+
+#### removeBucket
+
+▸ **removeBucket**(`minio`: Client, `bucketName`: string): _Promise‹void›_
+
+Remove a bucket
+
+**Parameters:**
+
+| Name         | Type   |
+| ------------ | ------ |
+| `minio`      | Client |
+| `bucketName` | string |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### removeBucketAndObjectsInBucket
+
+▸ **removeBucketAndObjectsInBucket**(`minio`: Client, `bucketName`: string):
+_Promise‹void›_
+
+Removes all objects and then deletes the bucket
+
+**Parameters:**
+
+| Name         | Type   |
+| ------------ | ------ |
+| `minio`      | Client |
+| `bucketName` | string |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### runMigrations
+
+▸ **runMigrations**(`mc`: [MigrateContext](#storeinterfacesmigratecontextmd)):
+_Promise‹void›_
+
+Run the migrations, as returned by `getMigrationsToBeApplied`
+
+**Parameters:**
+
+| Name | Type                                               |
+| ---- | -------------------------------------------------- |
+| `mc` | [MigrateContext](#storeinterfacesmigratecontextmd) |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### syncDeletedFiles
+
+▸ **syncDeletedFiles**(`fc`:
+[FileStoreContext](#storeinterfacesfilestorecontextmd)): _any_
+
+Sync deleted files to the minio bucket
+
+**Parameters:**
+
+| Name | Type                                                   |
+| ---- | ------------------------------------------------------ |
+| `fc` | [FileStoreContext](#storeinterfacesfilestorecontextmd) |
+
+**Returns:** _any_
+
+## Classes
+
+<a name="storeclassesfilecachemd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) › [FileCache](#storeclassesfilecachemd)
+
+### Class: FileCache
+
+A relatively simple local file cache implementation. Supports saving files in
+memory and on local disk Files#contentLength smaller than the provided threshold
+will be stored in memory. A file will always be cached in full, and then the
+range requests will be evaluated after The FileCache#clear does not remove files
+from disk, but will overwrite the file when added to the cache again
+
+FileCache#getFileStream is compatible with `sendFile` in @lbu/server
+
+#### Hierarchy
+
+- **FileCache**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [fileCachePath](#static-filecachepath)
+
+##### Methods
+
+- [clear](#clear)
+- [getFileSteam](#getfilesteam)
+
+#### Constructors
+
+##### constructor
+
+\+ **new FileCache**(`fileStore`:
+[FileStoreContext](#storeinterfacesfilestorecontextmd), `options?`:
+[FileCacheOptions](#storeinterfacesfilecacheoptionsmd)):
+_[FileCache](#storeclassesfilecachemd)_
+
+**Parameters:**
+
+| Name        | Type                                                   |
+| ----------- | ------------------------------------------------------ |
+| `fileStore` | [FileStoreContext](#storeinterfacesfilestorecontextmd) |
+| `options?`  | [FileCacheOptions](#storeinterfacesfilecacheoptionsmd) |
+
+**Returns:** _[FileCache](#storeclassesfilecachemd)_
+
+#### Properties
+
+##### `Static` fileCachePath
+
+▪ **fileCachePath**: _string_
+
+#### Methods
+
+##### clear
+
+▸ **clear**(`fileId`: string): _void_
+
+Remove a file from cache, but not from local disk
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `fileId` | string |
+
+**Returns:** _void_
+
+---
+
+##### getFileSteam
+
+▸ **getFileSteam**(`file`: [StoreFileStore](#storeinterfacesstorefilestoremd),
+`start?`: number, `end?`: number): _Promise‹object›_
+
+Get a file(part) from the cache. If the file(part) does not exist, it will try
+to fetch it from the FileStore If the file store throws an error / it doesn't
+exist, the error is propagated to the caller
+
+**Parameters:**
+
+| Name     | Type                                               |
+| -------- | -------------------------------------------------- |
+| `file`   | [StoreFileStore](#storeinterfacesstorefilestoremd) |
+| `start?` | number                                             |
+| `end?`   | number                                             |
+
+**Returns:** _Promise‹object›_
+
+<a name="storeclassesjobqueueworkermd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[JobQueueWorker](#storeclassesjobqueueworkermd)
+
+### Class: JobQueueWorker
+
+Job Queue worker. Supports scheduling, priorities and parallel workers If a name
+is provided, this worker will only accept jobs with the exact same name
+
+#### Hierarchy
+
+- **JobQueueWorker**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Methods
+
+- [addJob](#addjob)
+- [averageTimeToCompletion](#averagetimetocompletion)
+- [pendingQueueSize](#pendingqueuesize)
+- [start](#start)
+- [stop](#stop)
+
+#### Constructors
+
+##### constructor
+
+\+ **new JobQueueWorker**(`sql`: postgresVendor.Sql‹object›, `nameOrOptions`:
+string | [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd),
+`options?`: [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)):
+_[JobQueueWorker](#storeclassesjobqueueworkermd)_
+
+**Parameters:**
+
+| Name            | Type                                                                           |
+| --------------- | ------------------------------------------------------------------------------ |
+| `sql`           | postgresVendor.Sql‹object›                                                     |
+| `nameOrOptions` | string &#124; [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd) |
+| `options?`      | [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)               |
+
+**Returns:** _[JobQueueWorker](#storeclassesjobqueueworkermd)_
+
+#### Methods
+
+##### addJob
+
+▸ **addJob**(`job`: [JobInput](#storeinterfacesjobinputmd)): _Promise‹number›_
+
+Uses this queue name and connection to add a job to the queue. If name is
+already set, it will not be overwritten
+
+**Parameters:**
+
+| Name  | Type                                   |
+| ----- | -------------------------------------- |
+| `job` | [JobInput](#storeinterfacesjobinputmd) |
+
+**Returns:** _Promise‹number›_
+
+---
+
+##### averageTimeToCompletion
+
+▸ **averageTimeToCompletion**(`startDate`: Date, `endDate`: Date):
+_Promise‹number›_
+
+Return the average time between scheduled and completed for jobs completed in
+the provided time range in milliseconds
+
+**Parameters:**
+
+| Name        | Type |
+| ----------- | ---- |
+| `startDate` | Date |
+| `endDate`   | Date |
+
+**Returns:** _Promise‹number›_
+
+---
+
+##### pendingQueueSize
+
+▸ **pendingQueueSize**(): _Promise‹object | undefined›_
+
+Get the number of jobs that need to run
+
+**Returns:** _Promise‹object | undefined›_
+
+---
+
+##### start
+
+▸ **start**(): _void_
+
+Start the JobQueueWorker
+
+**Returns:** _void_
+
+---
+
+##### stop
+
+▸ **stop**(): _void_
+
+Stop the JobQueueWorker Running jobs will continue to run, but no new jobs are
+fetched
+
+**Returns:** _void_
+
+## Interfaces
+
+<a name="storeinterfacesfilecacheoptionsmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[FileCacheOptions](#storeinterfacesfilecacheoptionsmd)
+
+### Interface: FileCacheOptions
+
+#### Hierarchy
+
+- **FileCacheOptions**
+
+#### Index
+
+##### Properties
+
+- [cacheControlHeader](#optional-cachecontrolheader)
+- [inMemoryThreshold](#optional-inmemorythreshold)
+
+#### Properties
+
+##### `Optional` cacheControlHeader
+
+• **cacheControlHeader**? : _string_
+
+Customize default Cache-Control header to give back
+
+---
+
+##### `Optional` inMemoryThreshold
+
+• **inMemoryThreshold**? : _number_
+
+Maximum byte size of a file to be stored in memory
+
+<a name="storeinterfacesfilestorecontextmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[FileStoreContext](#storeinterfacesfilestorecontextmd)
+
+### Interface: FileStoreContext
+
+#### Hierarchy
+
+- **FileStoreContext**
+
+#### Index
+
+##### Properties
+
+- [bucketName](#bucketname)
+- [minio](#minio)
+- [sql](#sql)
+
+#### Properties
+
+##### bucketName
+
+• **bucketName**: _string_
+
+---
+
+##### minio
+
+• **minio**: _Client_
+
+---
+
+##### sql
+
+• **sql**: _postgresVendor.Sql‹object›_
+
+<a name="storeinterfacesjobdatamd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) › [JobData](#storeinterfacesjobdatamd)
+
+### Interface: JobData
+
+Raw data for a specific job
+
+#### Hierarchy
+
+- **JobData**
+
+#### Index
+
+##### Properties
+
+- [createdAt](#createdat)
+- [data](#data)
+- [id](#id)
+- [name](#name)
+- [scheduledAt](#scheduledat)
+
+#### Properties
+
+##### createdAt
+
+• **createdAt**: _Date_
+
+---
+
+##### data
+
+• **data**: _any_
+
+---
+
+##### id
+
+• **id**: _number_
+
+---
+
+##### name
+
+• **name**: _string_
+
+---
+
+##### scheduledAt
+
+• **scheduledAt**: _Date_
+
+<a name="storeinterfacesjobinputmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) › [JobInput](#storeinterfacesjobinputmd)
+
+### Interface: JobInput
+
+Job creation parameters
+
+#### Hierarchy
+
+- **JobInput**
+
+#### Index
+
+##### Properties
+
+- [data](#optional-data)
+- [name](#name)
+- [priority](#optional-priority)
+- [scheduledAt](#optional-scheduledat)
+
+#### Properties
+
+##### `Optional` data
+
+• **data**? : _Record‹string, any›_
+
+Defaults to empty object
+
+---
+
+##### name
+
+• **name**: _string_
+
+---
+
+##### `Optional` priority
+
+• **priority**? : _number_
+
+Defaults to 0
+
+---
+
+##### `Optional` scheduledAt
+
+• **scheduledAt**? : _Date_
+
+Defaults to now
+
+<a name="storeinterfacesjobqueueworkeroptionsmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)
+
+### Interface: JobQueueWorkerOptions
+
+#### Hierarchy
+
+- **JobQueueWorkerOptions**
+
+#### Index
+
+##### Properties
+
+- [handler](#handler)
+- [parallelCount](#optional-parallelcount)
+- [pollInterval](#optional-pollinterval)
+
+#### Properties
+
+##### handler
+
+• **handler**: _function_
+
+###### Type declaration:
+
+▸ (`sql`: postgresVendor.Sql‹object›, `data`:
+[JobData](#storeinterfacesjobdatamd)): _void | Promise‹void›_
+
+**Parameters:**
+
+| Name   | Type                                 |
+| ------ | ------------------------------------ |
+| `sql`  | postgresVendor.Sql‹object›           |
+| `data` | [JobData](#storeinterfacesjobdatamd) |
+
+---
+
+##### `Optional` parallelCount
+
+• **parallelCount**? : _number_
+
+Set the amount of parallel jobs to process. Defaults to 1. Make sure it is not
+higher than the amount of Postgres connections in the pool
+
+---
+
+##### `Optional` pollInterval
+
+• **pollInterval**? : _number_
+
+Determine the poll interval in milliseconds if the queue was empty. Defaults to
+1500 ms
+
+<a name="storeinterfacesmigratecontextmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[MigrateContext](#storeinterfacesmigratecontextmd)
+
+### Interface: MigrateContext
+
+Information used for doing migrations
+
+#### Hierarchy
+
+- **MigrateContext**
+
+#### Index
+
+##### Properties
+
+- [files](#files)
+- [namespaces](#namespaces)
+- [sql](#sql)
+- [storedHashes](#storedhashes)
+
+#### Properties
+
+##### files
+
+• **files**: _[MigrateFile](#storeinterfacesmigratefilemd)[]_
+
+---
+
+##### namespaces
+
+• **namespaces**: _string[]_
+
+---
+
+##### sql
+
+• **sql**: _postgresVendor.Sql‹object›_
+
+---
+
+##### storedHashes
+
+• **storedHashes**: _Record‹string, string›_
+
+<a name="storeinterfacesmigratefilemd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[MigrateFile](#storeinterfacesmigratefilemd)
+
+### Interface: MigrateFile
+
+Internal representation of a migration file
+
+#### Hierarchy
+
+- **MigrateFile**
+
+#### Index
+
+##### Properties
+
+- [fullPath](#fullpath)
+- [hash](#hash)
+- [isMigrated](#ismigrated)
+- [name](#name)
+- [namespace](#namespace)
+- [number](#number)
+- [repeatable](#repeatable)
+- [source](#source)
+
+#### Properties
+
+##### fullPath
+
+• **fullPath**: _string_
+
+---
+
+##### hash
+
+• **hash**: _string_
+
+---
+
+##### isMigrated
+
+• **isMigrated**: _boolean_
+
+---
+
+##### name
+
+• **name**: _string_
+
+---
+
+##### namespace
+
+• **namespace**: _string_
+
+---
+
+##### number
+
+• **number**: _number_
+
+---
+
+##### repeatable
+
+• **repeatable**: _boolean_
+
+---
+
+##### source
+
+• **source**: _string_
+
+<a name="storeinterfacessessionstoremd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[SessionStore](#storeinterfacessessionstoremd)
+
+### Interface: SessionStore
+
+Stripped down from @lbu/server SessionStore
+
+#### Hierarchy
+
+- **SessionStore**
+
+#### Index
+
+##### Methods
+
+- [destroy](#destroy)
+- [get](#get)
+- [kill](#kill)
+- [set](#set)
+
+#### Methods
+
+##### destroy
+
+▸ **destroy**(`id`: string): _Promise‹void›_
+
+**Parameters:**
+
+| Name | Type   |
+| ---- | ------ |
+| `id` | string |
+
+**Returns:** _Promise‹void›_
+
+---
+
+##### get
+
+▸ **get**(`id`: string): _Promise‹object | boolean›_
+
+**Parameters:**
+
+| Name | Type   |
+| ---- | ------ |
+| `id` | string |
+
+**Returns:** _Promise‹object | boolean›_
+
+---
+
+##### kill
+
+▸ **kill**(): _void_
+
+Stop the background job
+
+**Returns:** _void_
+
+---
+
+##### set
+
+▸ **set**(`id`: string, `session`: object, `age`: number): _Promise‹void›_
+
+**Parameters:**
+
+| Name      | Type   |
+| --------- | ------ |
+| `id`      | string |
+| `session` | object |
+| `age`     | number |
+
+**Returns:** _Promise‹void›_
+
+<a name="storeinterfacessessionstoreoptionsmd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)
+
+### Interface: SessionStoreOptions
+
+#### Hierarchy
+
+- **SessionStoreOptions**
+
+#### Index
+
+##### Properties
+
+- [cleanupInterval](#optional-cleanupinterval)
+- [disableInterval](#optional-disableinterval)
+
+#### Properties
+
+##### `Optional` cleanupInterval
+
+• **cleanupInterval**? : _number_
+
+Interval at which a background job runs to remove expired sessions Defaults to
+45 minutes
+
+---
+
+##### `Optional` disableInterval
+
+• **disableInterval**? : _boolean_
+
+Disable deletion interval completely
+
+<a name="storeinterfacesstorefilestoremd"></a>
+
+[@lbu/store - v0.0.45](#storereadmemd) ›
+[StoreFileStore](#storeinterfacesstorefilestoremd)
+
+### Interface: StoreFileStore
+
+#### Hierarchy
+
+- **StoreFileStore**
+
+#### Index
+
+##### Properties
+
+- [bucketName](#bucketname)
+- [contentLength](#contentlength)
+- [contentType](#contenttype)
+- [createdAt](#createdat)
+- [filename](#filename)
+- [id](#id)
+- [updatedAt](#updatedat)
+
+#### Properties
+
+##### bucketName
+
+• **bucketName**: _string_
+
+---
+
+##### contentLength
+
+• **contentLength**: _number_
+
+---
+
+##### contentType
+
+• **contentType**: _string_
+
+---
+
+##### createdAt
+
+• **createdAt**: _Date_
+
+---
+
+##### filename
+
+• **filename**: _string_
+
+---
+
+##### id
+
+• **id**: _string_
+
+---
+
+##### updatedAt
+
+• **updatedAt**: _Date_
