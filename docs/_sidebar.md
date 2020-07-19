@@ -5,6 +5,7 @@
 - [environment](/env.md)
 - [cli](/cli.md)
 - [code-gen](/code-gen/README.md)
+- [insight](/insight.md)
 - [store](/store/README.md)
   - [migrations](/store/postgres-migrations.md)
   - [file store](/store/file-store.md)
