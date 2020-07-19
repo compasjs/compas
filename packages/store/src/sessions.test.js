@@ -14,7 +14,7 @@ test("store/sessions", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
@@ -56,7 +56,9 @@ test("store/sessions", async (t) => {
     );
 
     const store = newSessionStore(sql, { cleanupInterval: 5 });
-    await new Promise((r) => setTimeout(r, 20));
+    await new Promise((r) => {
+      setTimeout(r, 20);
+    });
     store.kill();
 
     t.equal(

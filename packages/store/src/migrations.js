@@ -21,7 +21,7 @@ export async function newMigrateContext(
       migrations.namespaces.unshift("@lbu/store");
 
       const { migrationFiles } = await readMigrationsDir(
-        dirnameForModule(import.meta) + "/../migrations",
+        `${dirnameForModule(import.meta)}/../migrations`,
         "@lbu/store",
         migrations.namespaces,
       );

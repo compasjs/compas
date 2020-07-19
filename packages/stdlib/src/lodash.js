@@ -36,7 +36,7 @@ export const merge = lodashMerge;
  */
 export function flatten(data, result = {}, path = "") {
   for (const key of Object.keys(data)) {
-    let resultPath = path + "." + key;
+    let resultPath = `${path}.${key}`;
     if (path === "") {
       resultPath = key;
     }

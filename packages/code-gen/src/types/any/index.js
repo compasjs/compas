@@ -42,10 +42,10 @@ const anyType = {
   name: "any",
   class: AnyType,
   validator: () => {
-    return readFileSync(directory + "/validator.tmpl", "utf-8");
+    return readFileSync(`${directory}/validator.tmpl`, "utf-8");
   },
   mock: () => {
-    return readFileSync(directory + "/mock.tmpl", "utf-8");
+    return readFileSync(`${directory}/mock.tmpl`, "utf-8");
   },
   jsType: () => {
     return "*";

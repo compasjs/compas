@@ -179,7 +179,6 @@ export function buildOrInfer(value) {
     return new (TypeCreator.types.get("array").class)()
       .values(value[0])
       .build();
-  } else {
-    throw new Error(`Could not infer type of '${value}'`);
   }
+  throw new Error(`Could not infer type of '${value}'`);
 }

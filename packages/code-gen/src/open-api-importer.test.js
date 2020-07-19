@@ -6,7 +6,7 @@ import { convertOpenAPISpec } from "./open-api-importer.js";
 const loadCopy = () =>
   JSON.parse(
     readFileSync(
-      dirnameForModule(import.meta) + "/__fixtures__/openapi.json",
+      `${dirnameForModule(import.meta)}/__fixtures__/openapi.json`,
       "utf-8",
     ),
   );

@@ -16,7 +16,7 @@ test("store/queue", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
@@ -81,7 +81,9 @@ test("store/queue", async (t) => {
 
   t.test("quick start / stop sequence", async (t) => {
     qw.start();
-    await new Promise((r) => setTimeout(r, 15));
+    await new Promise((r) => {
+      setTimeout(r, 15);
+    });
     qw.stop();
     t.ok(!qw.isStarted);
   });

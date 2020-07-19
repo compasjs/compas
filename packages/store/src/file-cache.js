@@ -52,9 +52,8 @@ export class FileCache {
       return this.loadFromDiskCache(cacheKey, file.id, start, end);
     } else if (file.contentLength > this.inMemoryThreshold) {
       return this.cacheFileOnDisk(cacheKey, file.id, start, end);
-    } else {
-      return this.cacheFileInMemory(cacheKey, file.id, start, end);
     }
+    return this.cacheFileInMemory(cacheKey, file.id, start, end);
   }
 
   /**

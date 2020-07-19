@@ -26,7 +26,7 @@ export function buildExtraTypes(data) {
       const queryType = {
         type: "sql",
         group: group,
-        name: name + "Sql",
+        name: `${name}Sql`,
         original: {
           group: group,
           name: name,
@@ -96,7 +96,7 @@ function getWhereFields(item) {
     ...TypeCreator.types.get("object").class.getBaseData(),
     type: "object",
     group: item.group,
-    name: item.name + "Where",
+    name: `${item.name}Where`,
     keys: {},
     disabled: {
       validator: true,
@@ -125,32 +125,32 @@ function getWhereFields(item) {
           name: key,
           type: "equal",
         },
-        { key, name: key + "GreaterThan", type: "greaterThan" },
-        { key, name: key + "LowerThan", type: "lowerThan" },
+        { key, name: `${key}GreaterThan`, type: "greaterThan" },
+        { key, name: `${key}LowerThan`, type: "lowerThan" },
       );
 
       resultType.keys[key] = { ...it, isOptional: true };
-      resultType.keys[key + "GreaterThan"] = { ...it, isOptional: true };
-      resultType.keys[key + "LowerThan"] = { ...it, isOptional: true };
+      resultType.keys[`${key}GreaterThan`] = { ...it, isOptional: true };
+      resultType.keys[`${key}LowerThan`] = { ...it, isOptional: true };
     } else if (type === "string") {
       // Generate = and LIKE %input% queries
 
       fieldsArray.push(
         { key, name: key, type: "equal" },
-        { key, name: key + "Like", type: "like" },
+        { key, name: `${key}Like`, type: "like" },
       );
 
       resultType.keys[key] = { ...it, isOptional: true };
-      resultType.keys[key + "Like"] = { ...it, isOptional: true };
+      resultType.keys[`${key}Like`] = { ...it, isOptional: true };
     } else if (type === "uuid") {
       // Generate = and IN (uuid1, uuid2) queries
       fieldsArray.push(
         { key, name: key, type: "equal" },
-        { key, name: key + "In", type: "in" },
+        { key, name: `${key}In`, type: "in" },
       );
 
       resultType.keys[key] = { ...it, isOptional: true };
-      resultType.keys[key + "In"] = {
+      resultType.keys[`${key}In`] = {
         ...TypeBuilder.getBaseData(),
         ...TypeCreator.types.get("array").class.getBaseData(),
         type: "array",
@@ -176,7 +176,7 @@ function getPartialFields(item) {
     ...TypeCreator.types.get("object").class.getBaseData(),
     type: "object",
     group: item.group,
-    name: item.name + "InsertPartial",
+    name: `${item.name}InsertPartial`,
     keys: {},
     disabled: {
       validator: true,

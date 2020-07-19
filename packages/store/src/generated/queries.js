@@ -25,7 +25,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where.bucketName ?? null
   }) AND (COALESCE(${
     where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
 `,
 
   /**
@@ -47,9 +47,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
       where.bucketName ?? null
     }) AND (COALESCE(${
       where.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${
-      "%" + where.bucketNameLike + "%"
-    })
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
 `;
     return result?.[0]?.genCount ?? 0;
   },
@@ -72,7 +70,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where.bucketName ?? null
   }) AND (COALESCE(${
     where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
 `,
 
   /**
@@ -126,9 +124,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
       where.bucketName ?? null
     }) AND (COALESCE(${
       where.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${
-      "%" + where.bucketNameLike + "%"
-    })
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
 `;
     let query = `UPDATE "fileStore" fs SET `;
     const argList = [];
@@ -172,8 +168,10 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
         query += `$${idx++},`;
         argList.push(value);
       }
-      query =
-        query.substring(0, query.length - (addOne ? 1 : 0)) + `]::uuid[])`;
+      query = `${query.substring(
+        0,
+        query.length - (addOne ? 1 : 0),
+      )}]::uuid[])`;
       query += " AND ";
     }
     if (where.bucketName !== undefined) {
@@ -214,7 +212,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where.bucketName ?? null
   }) AND (COALESCE(${
     where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${"%" + where.bucketNameLike + "%"})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
 GROUP BY fs.id`,
 
   /**
@@ -363,8 +361,10 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
         query += `$${idx++},`;
         argList.push(value);
       }
-      query =
-        query.substring(0, query.length - (addOne ? 1 : 0)) + `]::uuid[])`;
+      query = `${query.substring(
+        0,
+        query.length - (addOne ? 1 : 0),
+      )}]::uuid[])`;
       query += " AND ";
     }
     if (where.expires !== undefined) {
@@ -445,9 +445,9 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where.idLowerThan ?? null
   }) AND (COALESCE(${where.name ?? null}, NULL) IS NULL OR jq."name" = ${
     where.name ?? null
-  }) AND (COALESCE(${where.nameLike ?? null}, NULL) IS NULL OR jq."name" LIKE ${
-    "%" + where.nameLike + "%"
-  })
+  }) AND (COALESCE(${
+    where.nameLike ?? null
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
 `,
 
   /**
@@ -469,7 +469,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
       where.name ?? null
     }) AND (COALESCE(${
       where.nameLike ?? null
-    }, NULL) IS NULL OR jq."name" LIKE ${"%" + where.nameLike + "%"})
+    }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
 `;
     return result?.[0]?.genCount ?? 0;
   },
@@ -488,9 +488,9 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where.idLowerThan ?? null
   }) AND (COALESCE(${where.name ?? null}, NULL) IS NULL OR jq."name" = ${
     where.name ?? null
-  }) AND (COALESCE(${where.nameLike ?? null}, NULL) IS NULL OR jq."name" LIKE ${
-    "%" + where.nameLike + "%"
-  })
+  }) AND (COALESCE(${
+    where.nameLike ?? null
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
 `,
 
   /**

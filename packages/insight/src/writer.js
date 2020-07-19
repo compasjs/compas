@@ -64,12 +64,11 @@ function formatMessagePretty(value) {
     typeof value === "number"
   ) {
     return String(value);
-  } else {
-    return inspect(value, {
-      colors: true,
-      depth: null,
-    });
   }
+  return inspect(value, {
+    colors: true,
+    depth: null,
+  });
 }
 
 /**

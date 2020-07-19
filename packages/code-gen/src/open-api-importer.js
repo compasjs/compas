@@ -51,7 +51,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
       ...TypeCreator.types.get("reference").class.getBaseData(),
       type: "reference",
       group: defaultGroup,
-      name: "ref" + upperCaseFirst(ref.name),
+      name: `ref${upperCaseFirst(ref.name)}`,
       references: {
         ...ref,
         uniqueName: upperCaseFirst(ref.group) + upperCaseFirst(ref.name),
@@ -148,18 +148,16 @@ function transformRouteName(context, operationId) {
  * @returns {string}
  */
 function transformRoutePath(context, path) {
-  return (
-    path
-      .split("/")
-      .filter((it) => it.length > 0)
-      .map((it) => {
-        if (it.startsWith("{") && it.endsWith("}")) {
-          return ":" + it.substring(1, it.length - 1);
-        }
-        return it;
-      })
-      .join("/") + "/"
-  );
+  return `${path
+    .split("/")
+    .filter((it) => it.length > 0)
+    .map((it) => {
+      if (it.startsWith("{") && it.endsWith("}")) {
+        return `:${it.substring(1, it.length - 1)}`;
+      }
+      return it;
+    })
+    .join("/")}/`;
 }
 
 /**
@@ -213,7 +211,7 @@ function transformBody(context, input, lbuStruct) {
 
   const item = convertSchema(context, input.content["application/json"].schema);
   item.group = lbuStruct.group;
-  item.name = lbuStruct.name + "Body";
+  item.name = `${lbuStruct.name}Body`;
   item.docString = input.description || "";
   item.isOptional = !input.required;
 
@@ -234,7 +232,7 @@ function transformResponse(context, input, lbuStruct) {
 
   const item = convertSchema(context, input.content["application/json"].schema);
   item.group = lbuStruct.group;
-  item.name = lbuStruct.name + "Response";
+  item.name = `${lbuStruct.name}Response`;
   item.docString = input.description || "";
 
   return item;

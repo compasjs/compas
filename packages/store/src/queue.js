@@ -1,3 +1,4 @@
+import { log } from "@lbu/insight";
 import { storeQueries } from "./generated/queries.js";
 
 const queries = {
@@ -222,7 +223,7 @@ export class JobQueueWorker {
         }
       })
       .catch((e) => {
-        console.error(e);
+        log.error(e);
       }); // user should have handled error already, so ignore it
   }
 }

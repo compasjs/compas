@@ -25,11 +25,10 @@ test("server/sendFile", (t) => {
           stream: file.id,
           cacheControl: "CacheControl",
         };
-      } else {
-        return {
-          stream: file.id,
-        };
       }
+      return {
+        stream: file.id,
+      };
     };
   };
 

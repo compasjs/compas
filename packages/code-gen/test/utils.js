@@ -38,7 +38,7 @@ export async function generateAndLoad(testName, callback) {
       "yarn",
       [
         "tsc",
-        pathJoin(baseTestDir, testName) + "/*.ts",
+        `${pathJoin(baseTestDir, testName)}/*.ts`,
         "--target",
         "ESNext",
         "--noErrorTruncation",

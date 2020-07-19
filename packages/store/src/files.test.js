@@ -25,8 +25,9 @@ test("store/files", async (t) => {
   const bucketName = uuid();
   const minio = newMinioClient({});
   await ensureBucket(minio, bucketName, "us-east-1");
-  const filePath =
-    dirnameForModule(import.meta) + "/../__fixtures__/001-test.sql";
+  const filePath = `${dirnameForModule(
+    import.meta,
+  )}/../__fixtures__/001-test.sql`;
   const filename = "001-test.sql";
 
   let sql = undefined;
@@ -35,7 +36,7 @@ test("store/files", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 

@@ -17,14 +17,14 @@ test("store/migrations", (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
   t.test("run full migration", async (t) => {
     const mc = await newMigrateContext(
       sql,
-      dirnameForModule(import.meta) + "/../__fixtures__",
+      `${dirnameForModule(import.meta)}/../__fixtures__`,
     );
 
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
@@ -43,14 +43,14 @@ test("store/migrations", (t) => {
     t.ok(list[2].number === 3);
 
     await runMigrations(mc);
-    let testResult = await sql`SELECT * FROM "testTable"`;
+    const testResult = await sql`SELECT * FROM "testTable"`;
     t.deepEqual([...testResult], [{ value: 1 }, { value: 2 }, { value: 3 }]);
   });
 
   t.test("second run has no migrations to be applied", async (t) => {
     const mc = await newMigrateContext(
       sql,
-      dirnameForModule(import.meta) + "/../__fixtures__",
+      `${dirnameForModule(import.meta)}/../__fixtures__`,
     );
 
     t.equal(getMigrationsToBeApplied(mc), false);

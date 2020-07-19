@@ -19,7 +19,7 @@ dotenv.config();
 test(name, async (t) => {
   // Server setup
   const serverImports = await generateAndLoad(
-    name + "/server",
+    `${name}/server`,
     applyServerStructure,
   );
   t.ok(serverImports);
@@ -30,7 +30,7 @@ test(name, async (t) => {
 
   // Client setup
   const clientImports = await generateAndLoad(
-    name + "/client",
+    `${name}/client`,
     applyClientStructure(client),
   );
   t.ok(clientImports);

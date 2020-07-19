@@ -83,7 +83,7 @@ export async function generate(app, data, options) {
       options,
     });
 
-    app.logger.info("\n" + result);
+    app.logger.info(`\n${result}`);
   }
 
   return {

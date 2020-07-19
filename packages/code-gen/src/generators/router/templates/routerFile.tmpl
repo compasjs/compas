@@ -19,8 +19,14 @@ let internalBodyParsers = undefined;
  */
 export function setBodyParsers(parsers) {
   internalBodyParsers = {
-    body: ctx => new Promise(r => parsers.bodyParser(ctx, r).then(r)),
-    files: ctx => new Promise(r => parsers.multipartBodyParser(ctx, r).then(r)),
+    body: (ctx) =>
+      new Promise((r) => {
+        parsers.bodyParser(ctx, r).then(r);
+      }),
+    files: (ctx) =>
+      new Promise((r) => {
+        parsers.multipartBodyParser(ctx, r).then(r);
+      }),
   };
 }
 ((newline))

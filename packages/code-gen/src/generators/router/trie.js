@@ -77,7 +77,7 @@ function createNode(path, uniqueName) {
  * @param trie
  */
 function convertToGeneratorTrie(trie) {
-  let result = {
+  const result = {
     uniqueName: trie.uniqueName || undefined,
     children: trie.children.map((it) => convertToGeneratorTrie(it)),
   };

@@ -38,7 +38,7 @@ test("store/file-cache", async (t) => {
   let sql = undefined;
   let store = undefined;
   let cache = undefined;
-  let files = {
+  const files = {
     small: Buffer.alloc(2, 0),
     medium: Buffer.alloc(4, 0),
     large: Buffer.alloc(10, 0),
@@ -48,7 +48,7 @@ test("store/file-cache", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
@@ -117,7 +117,7 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("find file on disk", async (t) => {
-    const path = FileCache.fileCachePath + "/" + files.large.id;
+    const path = `${FileCache.fileCachePath}/${files.large.id}`;
 
     const buffer = await streamToBuffer(
       (await cache.getFileStream(files.large)).stream,
@@ -136,8 +136,10 @@ test("store/file-cache", async (t) => {
 
   t.test("create file again after clear", async (t) => {
     const now = new Date().getTime();
-    await new Promise((r) => setTimeout(r, 5));
-    const path = FileCache.fileCachePath + "/" + files.large.id;
+    await new Promise((r) => {
+      setTimeout(r, 5);
+    });
+    const path = `${FileCache.fileCachePath}/${files.large.id}`;
 
     const buffer = await streamToBuffer(
       (await cache.getFileStream(files.large)).stream,
@@ -169,7 +171,7 @@ test("store/file-cache check memory usage", async (t) => {
   let sql = undefined;
   let store = undefined;
   let cache = undefined;
-  let files = {
+  const files = {
     small: Buffer.alloc(2000, 0),
     medium: Buffer.alloc(4000, 0),
     large: Buffer.alloc(10000, 0),
@@ -188,7 +190,7 @@ test("store/file-cache check memory usage", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    let result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`SELECT 1 + 2 AS sum`;
     t.equal(result[0].sum, 3);
   });
 
@@ -281,7 +283,9 @@ test("store/file-cache check memory usage", async (t) => {
 
   t.test("run gc", async () => {
     gc();
-    await new Promise((r) => setTimeout(r, 10));
+    await new Promise((r) => {
+      setTimeout(r, 10);
+    });
   });
 
   logMemory(t);

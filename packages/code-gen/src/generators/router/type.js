@@ -96,7 +96,7 @@ export class RouteBuilder extends TypeBuilder {
 
       if (isNil(result.query.name)) {
         result.query.group = result.group;
-        result.query.name = result.name + "Query";
+        result.query.name = `${result.name}Query`;
       }
     }
 
@@ -105,7 +105,7 @@ export class RouteBuilder extends TypeBuilder {
 
       if (isNil(result.params.name)) {
         result.params.group = result.group;
-        result.params.name = result.name + "Params";
+        result.params.name = `${result.name}Params`;
       }
     }
 
@@ -114,7 +114,7 @@ export class RouteBuilder extends TypeBuilder {
 
       if (isNil(result.body.name)) {
         result.body.group = result.group;
-        result.body.name = result.name + "Body";
+        result.body.name = `${result.name}Body`;
       }
     }
 
@@ -123,7 +123,7 @@ export class RouteBuilder extends TypeBuilder {
 
       if (isNil(result.files.name)) {
         result.files.group = result.group;
-        result.files.name = result.name + "Files";
+        result.files.name = `${result.name}Files`;
       }
     }
 
@@ -132,7 +132,7 @@ export class RouteBuilder extends TypeBuilder {
 
       if (isNil(result.response.name)) {
         result.response.group = result.group;
-        result.response.name = result.name + "Response";
+        result.response.name = `${result.name}Response`;
       }
     }
 
@@ -140,7 +140,7 @@ export class RouteBuilder extends TypeBuilder {
       // Looks like there is a path param but no definition for it
       result.params = createParamsFromPath(
         result.group,
-        result.name + "Params",
+        `${result.name}Params`,
         result.path,
       );
     }

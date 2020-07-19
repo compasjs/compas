@@ -11,7 +11,7 @@ export async function runCommand(logger, command, scriptCollection) {
   const script = scriptCollection[command.script];
 
   let cmd;
-  let args = [];
+  const args = [];
   let nodemonArgs = "";
 
   if (script && script.type === "package") {

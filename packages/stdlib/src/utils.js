@@ -48,7 +48,7 @@ export function mainFn(meta, logger, cb) {
   if (isMainFn(meta)) {
     dotenv.config();
     setupProcessListeners(logger);
-    let result = cb(logger);
+    const result = cb(logger);
     Promise.resolve(result).catch((e) => logger.error(e));
   }
 }

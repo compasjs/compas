@@ -19,13 +19,12 @@ export function newLogger(options) {
       info: logFn.bind(undefined, stream, "info"),
       error: logFn.bind(undefined, stream, "error"),
     };
-  } else {
-    return {
-      isProduction: () => isProduction,
-      info: logFn.bind(undefined, stream, "info", options.ctx),
-      error: logFn.bind(undefined, stream, "error", options.ctx),
-    };
   }
+  return {
+    isProduction: () => isProduction,
+    info: logFn.bind(undefined, stream, "info", options.ctx),
+    error: logFn.bind(undefined, stream, "error", options.ctx),
+  };
 }
 
 /**
