@@ -4,6 +4,7 @@
  * @type {object} Eslint settings
  */
 module.exports = {
+  root: true,
   extends: [
     "eslint:recommended",
     "plugin:import/errors",
