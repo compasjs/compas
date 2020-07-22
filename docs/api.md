@@ -261,7 +261,6 @@ Load a LBU structure from an LBU enabled API
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [optional](#optional)
 - [primary](#primary)
@@ -312,10 +311,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -355,26 +350,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -488,7 +463,6 @@ _Inherited from
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [instanceOf](#instanceof)
 - [optional](#optional)
@@ -540,10 +514,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -583,26 +553,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -868,7 +818,6 @@ Create a new App instance and inits generators
 - [build](#build)
 - [convert](#convert)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [max](#max)
 - [min](#min)
@@ -921,10 +870,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -974,26 +919,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -1140,7 +1065,6 @@ _Inherited from
 - [build](#build)
 - [convert](#convert)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [oneOf](#oneof)
 - [optional](#optional)
@@ -1191,10 +1115,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -1244,26 +1164,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -1380,7 +1280,6 @@ _Inherited from
 - [build](#build)
 - [default](#default)
 - [defaultToNow](#defaulttonow)
-- [disable](#disable)
 - [docs](#docs)
 - [optional](#optional)
 - [primary](#primary)
@@ -1430,10 +1329,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -1481,26 +1376,6 @@ this function with undefined or null
 ##### defaultToNow
 
 ▸ **defaultToNow**(): _this_
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -1600,7 +1475,6 @@ _Inherited from
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [keys](#keys)
 - [optional](#optional)
@@ -1652,10 +1526,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -1695,26 +1565,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -1843,7 +1693,6 @@ _Inherited from
 - [build](#build)
 - [convert](#convert)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [integer](#integer)
 - [max](#max)
@@ -1897,10 +1746,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -1950,26 +1795,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -2127,7 +1952,6 @@ _Inherited from
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [enableQueries](#enablequeries)
 - [keys](#keys)
@@ -2180,10 +2004,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -2223,26 +2043,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -2387,7 +2187,6 @@ _Inherited from
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [field](#field)
 - [optional](#optional)
@@ -2439,10 +2238,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -2482,26 +2277,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -2634,7 +2409,6 @@ _Inherited from
 - [body](#body)
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [optional](#optional)
 - [params](#params)
@@ -2687,10 +2461,6 @@ _Inherited from
 ###### Type declaration:
 
 - **defaultValue**? : _string_
-
-- **disabled**(): _object_
-
-  - **validator**: _false_
 
 - **docString**: _string_
 
@@ -2747,26 +2517,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -3057,7 +2807,6 @@ PUT route
 - [build](#build)
 - [convert](#convert)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [lowerCase](#lowercase)
 - [max](#max)
@@ -3114,10 +2863,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -3167,26 +2912,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -3405,7 +3130,6 @@ default value. Also contains group and name information
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [optional](#optional)
 - [primary](#primary)
@@ -3447,10 +3171,6 @@ Create a new TypeBuilder for the provided group
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -3485,23 +3205,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 
@@ -3843,7 +3546,6 @@ Return a list of type plugins that have the specified property
 
 - [build](#build)
 - [default](#default)
-- [disable](#disable)
 - [docs](#docs)
 - [optional](#optional)
 - [primary](#primary)
@@ -3893,10 +3595,6 @@ _Inherited from
 
 - **defaultValue**? : _string_
 
-- **disabled**(): _object_
-
-  - **validator**: _false_
-
 - **docString**: _string_
 
 - **group**? : _string_
@@ -3936,26 +3634,6 @@ this function with undefined or null
 | Name         | Type   |
 | ------------ | ------ |
 | `rawString?` | string |
-
-**Returns:** _this_
-
----
-
-##### disable
-
-▸ **disable**(`values`: Partial‹typeof disabled›): _this_
-
-_Inherited from
-[TypeBuilder](#code-genclassestypebuildermd).[disable](#disable)_
-
-Disable specific generators for this type. Not all generators support this
-feature
-
-**Parameters:**
-
-| Name     | Type                     |
-| -------- | ------------------------ |
-| `values` | Partial‹typeof disabled› |
 
 **Returns:** _this_
 

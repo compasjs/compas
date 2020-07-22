@@ -98,9 +98,6 @@ function getWhereFields(item) {
     group: item.group,
     name: `${item.name}Where`,
     keys: {},
-    disabled: {
-      validator: true,
-    },
   };
 
   for (const key of Object.keys(item.keys)) {
@@ -177,9 +174,6 @@ function getPartialFields(item) {
     group: item.group,
     name: `${item.name}InsertPartial`,
     keys: {},
-    disabled: {
-      validator: true,
-    },
   };
 
   for (const key of Object.keys(item.keys)) {

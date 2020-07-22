@@ -64,10 +64,6 @@ function buildError(key, info, list) {
     {{ continue; }}
     {{ } }}
 
-    {{ if (item?.disabled?.validator) { }}
-    {{ continue; }}
-    {{ } }}
-
     {{= validatorsNamedFn({ ctx, model: item, options }) }}
 ((newline))
 
