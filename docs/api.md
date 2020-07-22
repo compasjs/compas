@@ -263,7 +263,6 @@ Load a LBU structure from an LBU enabled API
 - [default](#default)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -314,8 +313,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -396,25 +393,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -513,7 +491,6 @@ _Inherited from
 - [disable](#disable)
 - [docs](#docs)
 - [instanceOf](#instanceof)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -564,8 +541,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -660,25 +635,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name    | Type   |
 | ------- | ------ |
 | `value` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -916,7 +872,6 @@ Create a new App instance and inits generators
 - [docs](#docs)
 - [max](#max)
 - [min](#min)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -967,8 +922,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -1096,25 +1049,6 @@ Validator enforced minimum length inclusive
 
 ---
 
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
-
-**Returns:** _this_
-
----
-
 ##### optional
 
 ▸ **optional**(): _this_
@@ -1208,7 +1142,6 @@ _Inherited from
 - [default](#default)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [oneOf](#oneof)
 - [optional](#optional)
 - [primary](#primary)
@@ -1259,8 +1192,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -1351,25 +1282,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -1470,7 +1382,6 @@ _Inherited from
 - [defaultToNow](#defaulttonow)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -1520,8 +1431,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -1615,25 +1524,6 @@ Add a doc comment, some generators / types may support rendering this
 
 ---
 
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
-
-**Returns:** _this_
-
----
-
 ##### optional
 
 ▸ **optional**(): _this_
@@ -1713,7 +1603,6 @@ _Inherited from
 - [disable](#disable)
 - [docs](#docs)
 - [keys](#keys)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -1764,8 +1653,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -1860,25 +1747,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name  | Type                                |
 | ----- | ----------------------------------- |
 | `key` | [TypeBuilderLike](#typebuilderlike) |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -1980,7 +1848,6 @@ _Inherited from
 - [integer](#integer)
 - [max](#max)
 - [min](#min)
-- [mock](#mock)
 - [oneOf](#oneof)
 - [optional](#optional)
 - [primary](#primary)
@@ -2031,8 +1898,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -2170,25 +2035,6 @@ Validator enforced minimum value inclusive
 
 ---
 
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
-
-**Returns:** _this_
-
----
-
 ##### oneOf
 
 ▸ **oneOf**(...`value`: number[]): _this_
@@ -2285,7 +2131,6 @@ _Inherited from
 - [docs](#docs)
 - [enableQueries](#enablequeries)
 - [keys](#keys)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -2336,8 +2181,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -2458,25 +2301,6 @@ the 'sql' plugin
 
 ---
 
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
-
-**Returns:** _this_
-
----
-
 ##### optional
 
 ▸ **optional**(): _this_
@@ -2566,7 +2390,6 @@ _Inherited from
 - [disable](#disable)
 - [docs](#docs)
 - [field](#field)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -2617,8 +2440,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -2714,25 +2535,6 @@ Add a doc comment, some generators / types may support rendering this
 | -------------- | ------ |
 | `referencing`  | string |
 | `replacement?` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -2834,7 +2636,6 @@ _Inherited from
 - [default](#default)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [optional](#optional)
 - [params](#params)
 - [primary](#primary)
@@ -2888,8 +2689,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -2986,25 +2785,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -3282,7 +3062,6 @@ PUT route
 - [lowerCase](#lowercase)
 - [max](#max)
 - [min](#min)
-- [mock](#mock)
 - [oneOf](#oneof)
 - [optional](#optional)
 - [pattern](#pattern)
@@ -3336,8 +3115,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -3470,25 +3247,6 @@ Validator enforced minimum length inclusive
 | Name  | Type   |
 | ----- | ------ |
 | `min` | number |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -3649,7 +3407,6 @@ default value. Also contains group and name information
 - [default](#default)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -3691,8 +3448,6 @@ Create a new TypeBuilder for the provided group
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -3763,23 +3518,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -4107,7 +3845,6 @@ Return a list of type plugins that have the specified property
 - [default](#default)
 - [disable](#disable)
 - [docs](#docs)
-- [mock](#mock)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
@@ -4157,8 +3894,6 @@ _Inherited from
 - **defaultValue**? : _string_
 
 - **disabled**(): _object_
-
-  - **mock**: _false_
 
   - **validator**: _false_
 
@@ -4239,25 +3974,6 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
-
-**Returns:** _this_
-
----
-
-##### mock
-
-▸ **mock**(`mockFn`: string): _this_
-
-_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[mock](#mock)_
-
-Raw mock string used with the 'mock' plugin. Use '\_mocker' or '\_\_' to access
-the Chance instance
-
-**Parameters:**
-
-| Name     | Type   |
-| -------- | ------ |
-| `mockFn` | string |
 
 **Returns:** _this_
 
@@ -5640,7 +5356,6 @@ Returns an iterable of values in the array
 
 - [class](#class)
 - [jsType](#optional-jstype)
-- [mock](#optional-mock)
 - [name](#name)
 - [tsType](#optional-tstype)
 - [validator](#optional-validator)
@@ -5658,18 +5373,6 @@ Returns an iterable of values in the array
 • **jsType**? : _function_
 
 Return the template that should be used to create JSDoc for this type
-
-###### Type declaration:
-
-▸ (): _string_
-
----
-
-##### `Optional` mock
-
-• **mock**? : _function_
-
-Return the template that should be used to mock this type
 
 ###### Type declaration:
 

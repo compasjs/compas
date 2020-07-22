@@ -11,7 +11,6 @@ export class TypeBuilder {
     defaultValue: undefined,
     disabled: {
       validator: false,
-      mock: false,
     },
   };
 
@@ -64,7 +63,7 @@ export class TypeBuilder {
   }
 
   /**
-   * @param {{validator?: boolean, mock?: boolean}} values
+   * @param {{validator?: boolean, }} values
    * @returns {TypeBuilder}
    */
   disable(values) {

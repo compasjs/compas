@@ -104,7 +104,7 @@ function applyClientStructure(apiClient) {
     app.extend(await loadFromRemote(apiClient, apiClient.defaults.baseURL));
 
     return {
-      enabledGenerators: ["apiClient", "mock", "type"],
+      enabledGenerators: ["apiClient", "type"],
     };
   };
 }

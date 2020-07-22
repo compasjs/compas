@@ -41,8 +41,8 @@ async function main() {
   app.add(
     M.object("User").keys({
       id: M.uuid(),
-      name: M.string().min(1).max(15).mock("__.first"),
-      age: M.number().integer().min(0).max(150).convert().mock("__.age"),
+      name: M.string().min(1).max(15),
+      age: M.number().integer().min(0).max(150).convert(),
     }),
   );
 
@@ -159,14 +159,7 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./generated",
-    enabledGenerators: [
-      "type",
-      "router",
-      "apiClient",
-      "sql",
-      "validator",
-      "mock",
-    ],
+    enabledGenerators: ["type", "router", "apiClient", "sql", "validator"],
     useTypescript: false,
     dumpStructure: true,
     dumpPostgres: true,
@@ -177,7 +170,7 @@ async function main() {
     enabledGroups: ["app", "todo"],
     useStubGenerators: true,
     dumpStructure: true,
-    enabledGenerators: ["type", "mock", "router", "apiClient"],
+    enabledGenerators: ["type", "router", "apiClient"],
   });
 
   await app.generate({
@@ -185,6 +178,6 @@ async function main() {
     enabledGroups: ["todo", externalApi],
     useTypescript: true,
     validatorCollectErrors: true,
-    enabledGenerators: ["validator", "type", "mock", "apiClient", "reactQuery"],
+    enabledGenerators: ["validator", "type", "apiClient", "reactQuery"],
   });
 }

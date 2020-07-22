@@ -47,9 +47,6 @@ const booleanType = {
   validator: () => {
     return readFileSync(`${directory}/validator.tmpl`, "utf-8");
   },
-  mock: () => {
-    return readFileSync(`${directory}/mock.tmpl`, "utf-8");
-  },
   jsType: () => {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },

@@ -18,13 +18,6 @@ async function main() {
     useTypescript: false,
     dumpStructure: true,
     dumpPostgres: true,
-    enabledGenerators: [
-      "type",
-      "validator",
-      "router",
-      "mock",
-      "apiClient",
-      "sql",
-    ],
+    enabledGenerators: ["type", "validator", "router", "apiClient", "sql"],
   });
 }

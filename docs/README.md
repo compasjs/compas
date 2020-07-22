@@ -10,8 +10,8 @@ Collection of Lightbase backend utilities
 
 - Minimal project boilerplate
 - Script runner, can watch & reload almost anything (via nodemon)
-- Flexible code generators supporting routers, validators, api clients, mocks,
-  CRUD queries and more in the future.
+- Flexible code generators supporting routers, validators, api clients, CRUD
+  queries and more in the future.
 - Opinionated structured logging
 - Common Koa middleware wrapped in a single function
 - Various utilities like loading .env files, executing other processes and a
@@ -86,7 +86,6 @@ tailored at monolithic projects.
   - queries, CRUD postgres queries
   - Axios based api client
   - Typescript or JSDoc types
-  - Generated mocks
 - An extendable set of types:
   - boolean, number, string;
   - object, array, any;

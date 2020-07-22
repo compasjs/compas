@@ -1,6 +1,0 @@
-{{ const keyMock = mockExec({ type: model.keys.type, model: model.keys, isInputType }); }}
-{{ const valueMock = mockExec({ type: model.values.type, model: model.values, isInputType }); }}
-
-Object.fromEntries(
-{{= mockExec({ type: "array", model: { type: "array", validator: { min: 2, }, values: { mocks: { rawMock: `[${keyMock}, ${valueMock}],` } } }, isInputType }) }}
-),

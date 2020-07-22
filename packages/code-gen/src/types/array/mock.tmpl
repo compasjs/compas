@@ -1,3 +1,0 @@
-Array.from({
-    length: _mocker.integer({ min: {{= model.validator.min || 0 }}, max: {{= model.validator.max || 15 }} }),
-}, () => {{= mockExec({ type: model.values.type, model: model.values, isInputType }).trim() }}),

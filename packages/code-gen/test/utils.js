@@ -10,7 +10,6 @@ const generatorPaths = {
   validator: (subTest) => pathJoin(baseTestDir, subTest, "validators.js"),
   router: (subTest) => pathJoin(baseTestDir, subTest, "router.js"),
   apiClient: (subTest) => pathJoin(baseTestDir, subTest, "apiClient.js"),
-  mock: (subTest) => pathJoin(baseTestDir, subTest, "mocks.js"),
   reactQuery: (subTest) => pathJoin(baseTestDir, subTest, "reactQueries.js"),
   type: (subTest) => pathJoin(baseTestDir, subTest, "types.js"),
 };

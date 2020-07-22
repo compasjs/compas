@@ -158,39 +158,6 @@ necessary by lbu, and always in the following order:
 - `body`: Body payload, since lbu, at the moment, supports only json, this will
   be the json body of your post & put requests
 
-Another feature supported by the code generator and api client is to
-automatically mock routes that are not implemented.
-
-Add the `generators.mock` to the generator array `./generate.js`, so it will
-look something like:
-
-```ecmascript 6
-const app = new App({
-  generators: [generators.apiClient, generators.type, generators.mock],
-  verbose: true,
-});
-```
-
-Let's run the generator again: `node ./generate.js`. If you want to see the
-changes in `[outputDir]/apiClient.js` make sure to format the file, with for
-example Prettier.
-
-The example api contains several unimplemented routes and are conveniently
-grouped under `unimplementedApi`. Run for example the following snippet a few
-times, and notice that you get a different result each time:
-
-```ecmascript 6
-console.log(await unimplementedApi.getUser())
-```
-
-This executes a GET request to `/unimplemented/user` and the server will respond
-with a `405 Not implemented`. The api client catches that specific error, and
-will automatically call the appropriate mock for the expected response. All
-other errors will be throw again.
-
-For fun there is also `unimplementedApi.settings()`, which shows randomly
-generated enums, arrays and union types
-
 ### Getting started as an API consumer
 
 Simply init a new project with `npx @lbu/cli init [name]`. If name is provided,
@@ -241,4 +208,3 @@ Say we want to build a Websocket plugin:
 The server has various options to make testing easier:
 
 - Use the api client on the backend as well for E2E tests
-- Use the generated mocks & directly inject into the route functions

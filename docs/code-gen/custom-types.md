@@ -80,7 +80,7 @@ app.add(T.uuid());
 
 At the moment this does exactly nothing to the generators. At least all core
 generators will check if you provided the specific functions needed to
-facilitate for example mock generation.
+facilitate for example type generation.
 
 Let's start by adding support for type generation. This is a simple one, because
 uuid is in both jsdoc and Typescript represented as a plain string.
@@ -126,15 +126,6 @@ uuidType.validator = () => `
 
 return stringValidator{{= num }}(value, propertyPath);
 `;
-```
-
-The next step is adding support for mocks. This ensures that when the api client
-returns a mock, we have something nice to look at. The mock generator contains
-an instance of [Chance](https://chancejs.com/) at `_mocker` so we can utilize
-that.
-
-```ecmascript 6
-uuidType.mock = () => `_mocker.guid({version: 4})`
 ```
 
 That's it! We have created a fully functional uuid type.

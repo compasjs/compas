@@ -21,8 +21,6 @@ export async function init() {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
-  options.enableMocks = options.enabledGenerators.indexOf("mock") !== -1;
-
   let template = options.useStubGenerators
     ? "apiClientStubsJsFile"
     : "apiClientFile";

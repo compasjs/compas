@@ -1,14 +1,6 @@
 {{= options.fileHeader }}
 ((newline))
 
-{{ if (options.enableMocks) { }}
-import {
-{{ for (const group of Object.keys(structure)) { }}
-{{= group }}Mocks,
-{{ } }}
-} from "./mocks.js";
-{{ } }}
-((newline))
 {{ if (options.enabledGenerators.indexOf("router") !== -1) { }}
 import formData from "form-data";
 const { FormData } = formData;

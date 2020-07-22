@@ -17,11 +17,6 @@ interface TypePlugin<T extends TypeBuilder> {
   validator?: () => string;
 
   /**
-   * Return the template that should be used to mock this type
-   */
-  mock?: () => string;
-
-  /**
    * Return the template that should be used to create JSDoc for this type
    */
   jsType?: () => string;
@@ -276,7 +271,6 @@ export class TypeBuilder {
     defaultValue?: string;
     disabled: {
       validator: false;
-      mock: false;
     };
   };
 
@@ -314,12 +308,6 @@ export class TypeBuilder {
    * Returns a shallow copy of the data object
    */
   build(): Record<string, any>;
-
-  /**
-   * Raw mock string used with the 'mock' plugin.
-   * Use '_mocker' or '__' to access the Chance instance
-   */
-  mock(mockFn: string): this;
 
   /**
    * Set this field as searchable for the 'sql' plugin

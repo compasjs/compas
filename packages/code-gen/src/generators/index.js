@@ -1,5 +1,4 @@
 import { apiClientGenerator } from "./apiClient/index.js";
-import { mockGenerator } from "./mocks/index.js";
 import { reactQueryGenerator } from "./reactQuery/index.js";
 import { routerGenerator } from "./router/index.js";
 import { sqlGenerator } from "./sql/index.js";
@@ -12,7 +11,6 @@ import { validatorGenerator } from "./validator/index.js";
 export const generators = new Map([
   ["type", typeGenerator],
   ["validator", validatorGenerator],
-  ["mock", mockGenerator],
   ["router", routerGenerator],
   ["apiClient", apiClientGenerator],
   ["sql", sqlGenerator],

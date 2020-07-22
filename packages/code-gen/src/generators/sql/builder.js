@@ -100,7 +100,6 @@ function getWhereFields(item) {
     keys: {},
     disabled: {
       validator: true,
-      mock: true,
     },
   };
 
@@ -180,7 +179,6 @@ function getPartialFields(item) {
     keys: {},
     disabled: {
       validator: true,
-      mock: true,
     },
   };
 
