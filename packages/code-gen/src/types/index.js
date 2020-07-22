@@ -7,6 +7,7 @@ import "./file/index.js";
 import "./generic/index.js";
 import "./number/index.js";
 import "./object/index.js";
+import "./relation/index.js";
 import "./reference/index.js";
 import "./string/index.js";
 import "./uuid/index.js";

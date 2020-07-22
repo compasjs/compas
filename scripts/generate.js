@@ -57,6 +57,16 @@ async function main() {
     }),
   );
 
+  app.add(
+    M.relation().manyToOne(
+      M.reference("app", "Items"),
+      "userId",
+      M.reference("app", "user"),
+      "id",
+      "user",
+    ),
+  );
+
   const myGeneric = M.generic("MyGeneric")
     .keys(M.string())
     .values(M.anyOf().values(M.bool().convert(), M.number()))
