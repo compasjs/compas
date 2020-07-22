@@ -20,6 +20,7 @@ async function main(logger) {
   const packagesDir = join(process.cwd(), "packages");
   const packages = readdirSync(packagesDir);
 
+  const promiseList = [];
   for (const pkg of packages) {
     const pkgFile = pathJoin(packagesDir, pkg, "index.d.ts");
 
@@ -27,26 +28,30 @@ async function main(logger) {
       continue;
     }
 
-    await spawn(`./node_modules/.bin/typedoc`, [
-      "--mode",
-      "file",
-      "--includeDeclarations",
-      "--excludeExternals",
-      "--excludePrivate",
-      "--includeVersion",
-      "--disableSources",
-      "--categorizeByGroup",
-      "false",
-      "--name",
-      `@lbu/${pkg}`,
-      "--readme",
-      "none",
-      "--listInvalidSymbolLinks",
-      "--out",
-      `docs/generated/${pkg}`,
-      pkgFile,
-    ]);
+    promiseList.push(
+      spawn(`./node_modules/.bin/typedoc`, [
+        "--mode",
+        "file",
+        "--includeDeclarations",
+        "--excludeExternals",
+        "--excludePrivate",
+        "--includeVersion",
+        "--disableSources",
+        "--categorizeByGroup",
+        "false",
+        "--name",
+        `@lbu/${pkg}`,
+        "--readme",
+        "none",
+        "--listInvalidSymbolLinks",
+        "--out",
+        `docs/generated/${pkg}`,
+        pkgFile,
+      ]),
+    );
   }
+
+  await Promise.all(promiseList);
 
   logger.info("Concatenating files");
 
