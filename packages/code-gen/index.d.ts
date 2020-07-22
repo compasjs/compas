@@ -180,7 +180,8 @@ export class App {
 
   /**
    * Add a raw object to this app.
-   * Note that it throws when you are not conforming to at least the structure from the TypeBuilder
+   * Note that it throws when you are not conforming to at least the structure from the
+   * TypeBuilder
    */
   addRaw(obj: any): App;
 
@@ -205,6 +206,7 @@ export type TypeBuilderLike =
   | TypeBuilder;
 
 interface TypeBuilderLikeArray extends Array<TypeBuilderLike> {}
+
 interface TypeBuilderLikeObject extends Record<string, TypeBuilderLike> {}
 
 /**
@@ -469,6 +471,50 @@ export class ObjectType extends TypeBuilder {
    * Added by the 'sql' plugin
    */
   enableQueries(options: { withHistory?: boolean; withDates?: boolean }): this;
+}
+
+/**
+ * Only stores information about relations, but does not do anything by itself
+ * This is for example usable in combination with the sql generator to create more than just
+ * basic CRUD queries
+ */
+export class RelationType extends TypeBuilder {
+  constructor();
+
+  /**
+   * Denote a 1-1 relation
+   */
+  oneToOne(
+    left: TypeBuilder,
+    leftKey: string,
+    right: TypeBuilder,
+    rightKey: string,
+    substituteKey: string,
+  ): this;
+
+  /**
+   * Denote a 1-N relation
+   * i.e User (left) has multiple Item (right)
+   */
+  oneToMany(
+    left: TypeBuilder,
+    leftKey: string,
+    right: TypeBuilder,
+    rightKey: string,
+    substituteKey: string,
+  ): this;
+
+  /**
+   * Denote a N-1 relation
+   * i.e Item (left) is owned by User (right)
+   */
+  manyToOne(
+    left: TypeBuilder,
+    leftKey: string,
+    right: TypeBuilder,
+    rightKey: string,
+    substituteKey: string,
+  ): this;
 }
 
 export class ReferenceType extends TypeBuilder {
