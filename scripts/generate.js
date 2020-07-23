@@ -47,14 +47,15 @@ async function main() {
   );
 
   app.add(
-    M.object("Items").keys({
-      id: M.uuid(),
-      userId: M.reference("App", "User").field("id", "user"),
-      name: M.string(),
-      count: M.number().integer(),
-      createdAt: M.date().defaultToNow(),
-      updatedAt: M.date(),
-    }),
+    M.object("Items")
+      .keys({
+        id: M.uuid(),
+        name: M.string(),
+        count: M.number().integer(),
+        createdAt: M.date().defaultToNow(),
+        updatedAt: M.date(),
+      })
+      .enableQueries({}),
   );
 
   app.add(
@@ -109,30 +110,7 @@ async function main() {
       }),
   );
 
-  const tmp = M.object("Temporary").keys({ foo: M.number().min(10) });
-
-  app.add(
-    M.object("Foo").keys({
-      id: M.uuid().primary(),
-      bar: M.reference("App", "User").field("id", "user"),
-      baz: M.reference("App", "Items").field("id", "items"),
-      tmp: tmp,
-    }),
-  );
-
-  app.add(M.array("ArrayThing").values(M.reference("App", "Foo").field("id")));
-
   app.extend(storeStructure);
-
-  app.add(
-    M.object("fileMeta")
-      .keys({
-        id: M.uuid().primary(),
-        fileId: M.reference("Store", "fileStore").field("id", "file"),
-        isProcessed: M.bool().default("false"),
-      })
-      .enableQueries({ withHistory: true }),
-  );
 
   const externalApi = "apiName";
 

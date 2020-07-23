@@ -123,6 +123,7 @@ package.json Depending on the type contains either script or path
 - [NumberType](#code-genclassesnumbertypemd)
 - [ObjectType](#code-genclassesobjecttypemd)
 - [ReferenceType](#code-genclassesreferencetypemd)
+- [RelationType](#code-genclassesrelationtypemd)
 - [RouteBuilder](#code-genclassesroutebuildermd)
 - [RouteCreator](#code-genclassesroutecreatormd)
 - [StringType](#code-genclassesstringtypemd)
@@ -2068,7 +2069,7 @@ Add a doc comment, some generators / types may support rendering this
 
 ##### enableQueries
 
-▸ **enableQueries**(`options`: object): _this_
+▸ **enableQueries**(`options?`: object): _this_
 
 Generate sql queries for this object Posibbly adding createdAt and updatedAt
 fields. When withHistory is true, it automatically enables withDates. Added by
@@ -2076,7 +2077,7 @@ the 'sql' plugin
 
 **Parameters:**
 
-▪ **options**: _object_
+▪`Optional` **options**: _object_
 
 | Name           | Type    |
 | -------------- | ------- |
@@ -2188,11 +2189,9 @@ _Inherited from
 - [build](#build)
 - [default](#default)
 - [docs](#docs)
-- [field](#field)
 - [optional](#optional)
 - [primary](#primary)
 - [searchable](#searchable)
-- [set](#set)
 - [getBaseData](#static-getbasedata)
 
 #### Constructors
@@ -2300,21 +2299,6 @@ Add a doc comment, some generators / types may support rendering this
 
 ---
 
-##### field
-
-▸ **field**(`referencing`: string, `replacement?`: string): _this_
-
-**Parameters:**
-
-| Name           | Type   |
-| -------------- | ------ |
-| `referencing`  | string |
-| `replacement?` | string |
-
-**Returns:** _this_
-
----
-
 ##### optional
 
 ▸ **optional**(): _this_
@@ -2354,16 +2338,251 @@ Set this field as searchable for the 'sql' plugin
 
 ---
 
-##### set
+##### `Static` getBaseData
 
-▸ **set**(`group`: string, `name`: string): _this_
+▸ **getBaseData**(): _typeof baseData_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
+
+**Returns:** _typeof baseData_
+
+<a name="code-genclassesrelationtypemd"></a>
+
+[@lbu/code-gen - v0.0.45](#code-genreadmemd) ›
+[RelationType](#code-genclassesrelationtypemd)
+
+### Class: RelationType
+
+Stores information about a relation between 2 objects. The App knows about a
+manyToOne relation will add the leftKey based on the rightKey if needed. Other
+than that, this type does nothing by itself and should only aid when used by
+another generator like the sql generator
+
+#### Hierarchy
+
+- [TypeBuilder](#code-genclassestypebuildermd)
+
+  ↳ **RelationType**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [data](#data)
+- [baseData](#static-basedata)
+
+##### Methods
+
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [manyToOne](#manytoone)
+- [oneToMany](#onetomany)
+- [oneToOne](#onetoone)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
+
+#### Constructors
+
+##### constructor
+
+\+ **new RelationType**(): _[RelationType](#code-genclassesrelationtypemd)_
+
+_Overrides
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
+
+**Returns:** _[RelationType](#code-genclassesrelationtypemd)_
+
+#### Properties
+
+##### data
+
+• **data**: _typeof baseData_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
+
+---
+
+##### `Static` baseData
+
+▪ **baseData**: _object_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
+
+###### Type declaration:
+
+- **defaultValue**? : _string_
+
+- **docString**: _string_
+
+- **group**? : _string_
+
+- **isOptional**: _boolean_
+
+- **name**? : _string_
+
+- **type**? : _string_
+
+#### Methods
+
+##### build
+
+▸ **build**(): _Record‹string, any›_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
+
+Returns a shallow copy of the data object
+
+**Returns:** _Record‹string, any›_
+
+---
+
+##### default
+
+▸ **default**(`rawString?`: string): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
+
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
 
 **Parameters:**
 
-| Name    | Type   |
-| ------- | ------ |
-| `group` | string |
-| `name`  | string |
+| Name         | Type   |
+| ------------ | ------ |
+| `rawString?` | string |
+
+**Returns:** _this_
+
+---
+
+##### docs
+
+▸ **docs**(`docValue`: string): _this_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
+
+Add a doc comment, some generators / types may support rendering this
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### manyToOne
+
+▸ **manyToOne**(`left`: [TypeBuilder](#code-genclassestypebuildermd), `leftKey`:
+string, `right`: [TypeBuilder](#code-genclassestypebuildermd), `rightKey`:
+string, `substituteKey`: string): _this_
+
+Denote a N-1 relation i.e Item (left) is owned by User (right)
+
+**Parameters:**
+
+| Name            | Type                                         |
+| --------------- | -------------------------------------------- |
+| `left`          | [TypeBuilder](#code-genclassestypebuildermd) |
+| `leftKey`       | string                                       |
+| `right`         | [TypeBuilder](#code-genclassestypebuildermd) |
+| `rightKey`      | string                                       |
+| `substituteKey` | string                                       |
+
+**Returns:** _this_
+
+---
+
+##### oneToMany
+
+▸ **oneToMany**(`left`: [TypeBuilder](#code-genclassestypebuildermd), `leftKey`:
+string, `right`: [TypeBuilder](#code-genclassestypebuildermd), `rightKey`:
+string, `substituteKey`: string): _this_
+
+Denote a 1-N relation i.e User (left) has multiple Item (right)
+
+**Parameters:**
+
+| Name            | Type                                         |
+| --------------- | -------------------------------------------- |
+| `left`          | [TypeBuilder](#code-genclassestypebuildermd) |
+| `leftKey`       | string                                       |
+| `right`         | [TypeBuilder](#code-genclassestypebuildermd) |
+| `rightKey`      | string                                       |
+| `substituteKey` | string                                       |
+
+**Returns:** _this_
+
+---
+
+##### oneToOne
+
+▸ **oneToOne**(`left`: [TypeBuilder](#code-genclassestypebuildermd), `leftKey`:
+string, `right`: [TypeBuilder](#code-genclassestypebuildermd), `rightKey`:
+string, `substituteKey`: string): _this_
+
+Denote a 1-1 relation
+
+**Parameters:**
+
+| Name            | Type                                         |
+| --------------- | -------------------------------------------- |
+| `left`          | [TypeBuilder](#code-genclassestypebuildermd) |
+| `leftKey`       | string                                       |
+| `right`         | [TypeBuilder](#code-genclassestypebuildermd) |
+| `rightKey`      | string                                       |
+| `substituteKey` | string                                       |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
+
+Value can be undefined
+
+**Returns:** _this_
+
+---
+
+##### primary
+
+▸ **primary**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
+
+Set this field as primary for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### searchable
+
+▸ **searchable**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
+
+Set this field as searchable for the 'sql' plugin
 
 **Returns:** _this_
 
@@ -3108,6 +3327,8 @@ default value. Also contains group and name information
   ↳ [NumberType](#code-genclassesnumbertypemd)
 
   ↳ [ObjectType](#code-genclassesobjecttypemd)
+
+  ↳ [RelationType](#code-genclassesrelationtypemd)
 
   ↳ [ReferenceType](#code-genclassesreferencetypemd)
 

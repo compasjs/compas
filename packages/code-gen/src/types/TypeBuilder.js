@@ -125,20 +125,6 @@ export function isNamedTypeBuilderLike(value) {
 }
 
 /**
- * Check if value is a reference with a specified reference field
- *
- * @param value
- * @returns {boolean}
- */
-export function isReferenceTypeWithField(value) {
-  if (!isPlainObject(value) || value?.type !== "reference") {
-    return false;
-  }
-
-  return isPlainObject(value.reference) && !isNil(value.reference.field);
-}
-
-/**
  * Either calls TypeBuilder#build or infers one of the following types:
  * - boolean oneOf
  * - number oneOf

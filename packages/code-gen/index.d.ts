@@ -470,13 +470,14 @@ export class ObjectType extends TypeBuilder {
    * When withHistory is true, it automatically enables withDates.
    * Added by the 'sql' plugin
    */
-  enableQueries(options: { withHistory?: boolean; withDates?: boolean }): this;
+  enableQueries(options?: { withHistory?: boolean; withDates?: boolean }): this;
 }
 
 /**
- * Only stores information about relations, but does not do anything by itself
- * This is for example usable in combination with the sql generator to create more than just
- * basic CRUD queries
+ * Stores information about a relation between 2 objects.
+ * The App knows about a manyToOne relation will add the leftKey based on the rightKey if needed.
+ * Other than that, this type does nothing by itself and should only aid when used by another
+ * generator like the sql generator
  */
 export class RelationType extends TypeBuilder {
   constructor();
@@ -517,11 +518,7 @@ export class RelationType extends TypeBuilder {
   ): this;
 }
 
-export class ReferenceType extends TypeBuilder {
-  set(group: string, name: string): this;
-
-  field(referencing: string, replacement?: string): this;
-}
+export class ReferenceType extends TypeBuilder {}
 
 export class StringType extends TypeBuilder {
   /**

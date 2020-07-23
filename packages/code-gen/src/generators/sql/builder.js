@@ -1,6 +1,6 @@
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
-import { getTypeOfItem } from "../../utils.js";
+import { getItem } from "../../utils.js";
 
 /**
  * @param data
@@ -105,12 +105,12 @@ function getWhereFields(item) {
     // We don't support optional field searching, since it will break the way we do the
     // query generation e.g. NULL IS NULL is always true and thus the search results are
     // invalid
-    if (it.isOptional || (!it?.sql?.searchable && !it?.reference?.field)) {
+    if (it.isOptional || !it?.sql?.searchable) {
       continue;
     }
 
     // Also supports referenced fields
-    const type = getTypeOfItem(it);
+    const type = getItem(it)?.type;
 
     if (type === "number" || type === "date") {
       // Generate =, > and < queries
@@ -185,7 +185,7 @@ function getPartialFields(item) {
     }
 
     // Support updating referenced field
-    const type = getTypeOfItem(it);
+    const type = getItem(it)?.type;
 
     // JSON.stringify all values that are not 'primitives'
     // So the user will can have a lbu GenericType into a JSONB field
