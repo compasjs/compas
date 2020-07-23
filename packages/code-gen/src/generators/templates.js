@@ -1,6 +1,6 @@
 import { inspect } from "util";
 import { newTemplateContext } from "../../../stdlib/src/template.js";
-import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
+import { getItem, lowerCaseFirst, upperCaseFirst } from "../utils.js";
 
 /**
  * @type {TemplateContext}
@@ -11,3 +11,4 @@ generatorTemplates.globals.upperCaseFirst = upperCaseFirst;
 generatorTemplates.globals.lowerCaseFirst = lowerCaseFirst;
 generatorTemplates.globals.inspect = (arg) =>
   inspect(arg, { sorted: true, colors: false });
+generatorTemplates.globals.getItem = (arg) => getItem(arg);

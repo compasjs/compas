@@ -1,7 +1,4 @@
-{{ if (model.reference.field) { }}
-  {{ const fnNumber = ctx.anonFn(model.referencedItem); }}
-  return {{= model.referencedItem.type }}Validator{{= fnNumber }}(value, propertyPath, errorList);
-{{ } else  if (options.validatorCollectErrors) { }}
+{{ if (options.validatorCollectErrors) { }}
 const { errors, data } = {{= lowerCaseFirst(model.reference.group) }}Validators.{{= lowerCaseFirst(model.reference.name) }}(value, propertyPath);
 if (errors !== undefined) {
   errorList.push(...errors);

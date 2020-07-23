@@ -10,7 +10,7 @@
       {{ let count = Object.keys(item.keys || {}).length; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
         {{ count--; }}
-        "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+        "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= item.keys[key].relationInfo ? ` REFERENCING "${getItem(item.keys[key].relationInfo.right).name}" ("${item.keys[key].relationInfo.rightKey}")  ON DELETE CASCADE` : "" }}{{= count !== 0 ? "," : "" }}
       {{ } }}
     );
 

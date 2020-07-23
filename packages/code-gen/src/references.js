@@ -20,25 +20,7 @@ export function recursiveLinkupReferences(structure, value) {
   ) {
     const { group, name } = value.reference;
     if (!isNil(structure[group]?.[name])) {
-      if (isNil(value.reference.field)) {
-        value.referencedItem = structure[group][name];
-      } else {
-        const otherValue = structure[group][name];
-        if (isNil(otherValue) || otherValue.type !== "object") {
-          throw new Error(
-            `Can't resolve a field reference to ${otherValue.uniqueName}, which is not an object but a ${otherValue.type}.`,
-          );
-        }
-
-        if (isNil(otherValue.keys[value.reference.field.referencing])) {
-          throw new Error(
-            `Referenced field ${value.reference.field.referencing} does not exists on ${otherValue.uniqueName}`,
-          );
-        }
-
-        value.referencedItem =
-          otherValue.keys[value.reference.field.referencing];
-      }
+      value.referencedItem = structure[group][name];
     }
 
     return;

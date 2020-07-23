@@ -61,19 +61,19 @@ export function compileDynamicTemplates(
 }
 
 /**
- * Try to get the (recursive) (referenced) type from item
- * Only works in the preGenerate or generate phases of code-generation
+ * Try to get the (recursive) (referenced) item.
+ * Only works in the preGenerate or generate phase of code-generation
  *
- * @param {object} item Any LBU structure
- * @returns {string|undefined}
+ * @param {object} item
+ * @returns {object}
  */
-export function getTypeOfItem(item) {
+export function getItem(item) {
   if (item?.type !== "reference") {
-    return item.type;
+    return item;
   }
 
   if (!isNil(item?.referencedItem)) {
-    return getTypeOfItem(item?.referencedItem);
+    return getItem(item.referencedItem);
   }
 
   return undefined;

@@ -4,7 +4,7 @@ import { isNil, isPlainObject } from "@lbu/stdlib";
 import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
-import { upperCaseFirst } from "./utils.js";
+import { getItem, upperCaseFirst } from "./utils.js";
 
 const { mkdir, writeFile } = fs;
 
@@ -24,8 +24,8 @@ export async function runGenerators(app, options) {
     .replace(/\\/g, "\\\\")
     .replace("'", "\\'");
 
-  hoistNamedItems(generatorInput, generatorInput.structure);
   recursiveLinkupReferences(generatorInput.structure, generatorInput.structure);
+  addFieldsOfRelations(generatorInput.structure);
 
   let prevCount = getTopLevelItemCount(generatorInput);
 
@@ -46,6 +46,7 @@ export async function runGenerators(app, options) {
       generatorInput.structure,
       generatorInput.structure,
     );
+    addFieldsOfRelations(generatorInput.structure);
 
     const newCount = getTopLevelItemCount(generatorInput);
 
@@ -310,6 +311,36 @@ function hoistNamedItemsRecursive(history, root, value) {
   }
 
   history.delete(value);
+}
+
+function addFieldsOfRelations(structure) {
+  for (const group of Object.values(structure)) {
+    for (const item of Object.values(group)) {
+      if (item.type !== "relation" || item.relationType !== "manyToOne") {
+        continue;
+      }
+
+      const relationLeft = getItem(item.left);
+      const relationRight = getItem(item.right);
+
+      if (isNil(relationLeft.keys[item.leftKey])) {
+        const hasPrimary = Object.values(relationLeft.keys).find(
+          (it) => it?.sql?.primary ?? false,
+        );
+
+        relationLeft.keys[item.leftKey] = {
+          ...relationRight.keys[item.rightKey],
+          sql: {
+            ...(relationRight.keys[item.rightKey] || {}),
+            searchable: true,
+            primary: !hasPrimary,
+          },
+        };
+      }
+
+      relationLeft.keys[item.leftKey].relationInfo = item;
+    }
+  }
 }
 
 /**

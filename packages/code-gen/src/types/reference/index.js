@@ -28,7 +28,6 @@ class ReferenceType extends TypeBuilder {
       result.reference = {
         group: refBuild.group,
         name: refBuild.name,
-        field: this.data.reference.field,
       };
     }
 
@@ -74,20 +73,6 @@ class ReferenceType extends TypeBuilder {
 
     return this;
   }
-
-  /**
-   * @param {string} referencing
-   * @param {string} [replacement]
-   * @returns {ReferenceType}
-   */
-  field(referencing, replacement) {
-    this.data.reference.field = {
-      referencing,
-      replacement,
-    };
-
-    return this;
-  }
 }
 
 const referenceType = {
@@ -102,8 +87,7 @@ const referenceType = {
   tsType: () => {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
-  sql: () =>
-    `{{= model?.reference?.field !== undefined ? sqlExec({ type: model.referencedItem.type, model: { ...model.referencedItem, sql: {}, isOptional: model.isOptional } }).trim() : "JSONB" }} {{= model?.reference?.field !== undefined ? "REFERENCES \\"" + model.reference.name + "\\" (\\"" + model.reference.field.referencing + "\\") ON DELETE CASCADE" : "" }}`,
+  sql: () => `{{= JSONB }}`,
 };
 
 /**
