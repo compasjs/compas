@@ -1,6 +1,10 @@
 # CHANGELOG
 
-### [v0.0.46](https://github.com/lightbasenl/lbu/releases/tag/v0.0.45)
+### [v0.0.47](https://github.com/lightbasenl/lbu/releases/tag/v0.0.47)
+
+- code-gen: small fix for reference sql generation
+
+### [v0.0.46](https://github.com/lightbasenl/lbu/releases/tag/v0.0.46)
 
 - store: catch migrations errors and exit correctly
 - store: add typescript types
