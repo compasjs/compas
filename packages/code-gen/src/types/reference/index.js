@@ -87,7 +87,7 @@ const referenceType = {
   tsType: () => {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
-  sql: () => `{{= JSONB }}`,
+  sql: () => `JSONB`,
 };
 
 /**
