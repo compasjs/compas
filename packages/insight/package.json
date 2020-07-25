@@ -1,6 +1,6 @@
 {
   "name": "@lbu/insight",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Simple logger in NDJSON format",
   "main": "./index.js",
   "exports": "./index.js",
