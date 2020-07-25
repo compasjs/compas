@@ -253,6 +253,8 @@ export class TypeCreator {
 
   reference(groupOrOther?: string | TypeBuilder, name?: string): ReferenceType;
 
+  relation(): RelationType;
+
   string(name?: string): StringType;
 
   uuid(name?: string): UuidType;
