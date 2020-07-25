@@ -1,5 +1,20 @@
 # CHANGELOG
 
+### [v0.0.46](https://github.com/lightbasenl/lbu/releases/tag/v0.0.45)
+
+- store: catch migrations errors and exit correctly
+- store: add typescript types
+- lint-config: more strict on control flow
+- code-gen: fix sql injection in `idIn` generated queries
+- code-gen: remove mock generator
+- code-gen: add relation type
+- code-gen: only import what is needed in generated reactQueries file
+
+##### Breaking
+
+- `T.reference().field` is removed. Use `T.relation().manyToOne()`
+- Removed the mock generator
+
 ### [v0.0.45](https://github.com/lightbasenl/lbu/releases/tag/v0.0.45)
 
 - code-gen: hotfix sql template issues for postgres 2.0
