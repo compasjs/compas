@@ -29,8 +29,8 @@ export declare const uuid: UuidFunc;
  * @example
  * ```js
  * new AppError(401, "error.server.unauthorized");
- * AppError.validationError("validation.string.length", { message: "String should have at least 3 characters" });
- * AppError.serverError({}, new Error("Oopsie"));
+ * AppError.validationError("validation.string.length", { message: "String should have at
+ *   least 3 characters" }); AppError.serverError({}, new Error("Oopsie"));
  * ```
  */
 export class AppError<T extends any> extends Error {
@@ -367,3 +367,18 @@ export function filenameForModule(meta: ImportMeta): string;
  * Alternative to CommonJS __dirname
  */
 export function dirnameForModule(meta: ImportMeta): string;
+
+/**
+ * Benchmark helper
+ * Note that results should be taken with a grain of salt since V8 is doing JIT stuff and
+ * garbage collection, so it's more of an indication than something reproducible
+ */
+export function bench(
+  name: string,
+  cb: (N: number) => void | Promise<void>,
+): void | Promise<void>;
+
+/**
+ * Formats the results of the benchmarks and logs them.
+ */
+export function logBenchResults(logger: Logger): void;

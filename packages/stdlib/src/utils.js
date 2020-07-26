@@ -47,7 +47,6 @@ export function gc() {
 export function mainFn(meta, logger, cb) {
   if (isMainFn(meta)) {
     dotenv.config();
-    setupProcessListeners(logger);
     const result = cb(logger);
     Promise.resolve(result).catch((e) => logger.error(e));
   }
@@ -98,8 +97,125 @@ function isMainFn(meta) {
 }
 
 /**
- * @param logger
+ * @name BenchResult
+ * @typedef {object}
+ * @property {string} name
+ * @property {number} N
+ * @property {string} operationTimeNs
  */
-function setupProcessListeners(logger) {
-  process.on("warning", (err) => logger.error(err));
+
+/**
+ * Global type, for easier formatting down the line
+ * @type {BenchResult[]}
+ */
+const benchmarkResults = [];
+
+class Benchmarker {
+  /**
+   * All iterations we can try to execute
+   */
+  static iterations = [
+    5,
+    10,
+    50,
+    100,
+    200,
+    500,
+    1000,
+    5000,
+    10000,
+    1_000_000,
+    5_000_000,
+    10_000_000,
+    50_000_000,
+    100_000_000,
+  ];
+
+  currentIdx = 0;
+  N = 0;
+  start = BigInt(0);
+
+  constructor(name, cb) {
+    this.name = name;
+    this.cb = cb;
+  }
+
+  async exec() {
+    for (let i = 0; i < Benchmarker.iterations.length; ++i) {
+      this.currentIdx = i;
+      this.start = process.hrtime.bigint();
+      this.N = Benchmarker.iterations[this.currentIdx];
+
+      const res = this.cb(this.N);
+      if (res && typeof res.then === "function") {
+        await res;
+      }
+
+      const diff = process.hrtime.bigint() - this.start;
+      if (diff >= 1_000_000_000 || i === Benchmarker.iterations.length - 1) {
+        benchmarkResults.push({
+          name: this.name,
+          N: this.N,
+          operationTimeNs: String(diff / BigInt(this.N)),
+        });
+        break;
+      }
+    }
+  }
+}
+
+/**
+ * @param {string} name
+ * @param {function(number): (void | Promise<void>)} cb
+ * @returns {Promise<void>}
+ */
+export function bench(name, cb) {
+  const b = new Benchmarker(name, cb);
+  return b.exec();
+}
+
+/**
+ * Formats the benchmark results and lines them out for easier consumption
+ * @param {Logger} logger
+ */
+export function logBenchResults(logger) {
+  let longestName = 0;
+  let longestOperationTimeBeforeDot = 0;
+  let longestOperationTimeAfterDot = 0;
+
+  for (const bench of benchmarkResults) {
+    if (bench.name.length > longestName) {
+      longestName = bench.name.length;
+    }
+
+    // We also line out on the '.'
+    // This results in easier to interpret results
+    const operationTimeSplit = bench.operationTimeNs.split(".");
+    bench.operationTimeBeforeDot = operationTimeSplit[0];
+    bench.operationTimeAfterDot = operationTimeSplit[1] ?? "";
+
+    if (bench.operationTimeBeforeDot.length > longestOperationTimeBeforeDot) {
+      longestOperationTimeBeforeDot = bench.operationTimeBeforeDot.length;
+    }
+    if (bench.operationTimeAfterDot.length > longestOperationTimeAfterDot) {
+      longestOperationTimeAfterDot = bench.operationTimeAfterDot.length;
+    }
+  }
+
+  for (const bench of benchmarkResults) {
+    logger.info(
+      `${bench.name.padEnd(longestName, " ")}   ${String(bench.N).padStart(
+        10,
+        " ",
+      )}  iterations   ${bench.operationTimeBeforeDot.padStart(
+        longestOperationTimeBeforeDot,
+        " ",
+      )}${
+        bench.operationTimeAfterDot.length > 0 ? "." : " "
+      }${bench.operationTimeAfterDot.padEnd(
+        longestOperationTimeAfterDot,
+        " ",
+      )}  ns/op`,
+    );
+  }
 }

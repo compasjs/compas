@@ -1,3 +1,4 @@
+import { benchCommand } from "./commands/bench.js";
 import {
   coverageCommand,
   dockerCommand,
@@ -16,6 +17,7 @@ const utilCommands = {
 
 const execCommands = {
   test: testCommand,
+  bench: benchCommand,
   lint: lintCommand,
   run: runCommand,
   coverage: coverageCommand,

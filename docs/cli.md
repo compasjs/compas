@@ -62,3 +62,5 @@ $ yarn lbu run --watch --node-argument ./scrippts/generate.js --my-argument
   coverage.
 - **docker**: Manage Postgres and Minio containers. Available subcommands: `up`,
   `down` and `clean`
+- **bench**: Run all `.bench.js` files and logs the benchmark results. Works by
+  importing and executing the `runBench` function from the loaded files

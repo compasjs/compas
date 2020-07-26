@@ -28,6 +28,11 @@ const execCommands = {
     useScriptOrFile: false,
     useArgDelimiter: false,
   },
+  bench: {
+    canWatch: true,
+    useScriptOrFile: false,
+    useArgDelimiter: false,
+  },
   lint: {
     canWatch: true,
     useScriptOrFile: false,

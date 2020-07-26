@@ -6806,6 +6806,7 @@ Trust proxy headers
 
 #### Functions
 
+- [bench](#bench)
 - [camelToSnakeCase](#cameltosnakecase)
 - [compileTemplate](#compiletemplate)
 - [compileTemplateDirectory](#compiletemplatedirectory)
@@ -6819,6 +6820,7 @@ Trust proxy headers
 - [getSecondsSinceEpoch](#getsecondssinceepoch)
 - [isNil](#isnil)
 - [isPlainObject](#isplainobject)
+- [logBenchResults](#logbenchresults)
 - [mainFn](#mainfn)
 - [merge](#merge)
 - [neTemplateContext](#netemplatecontext)
@@ -6845,6 +6847,32 @@ uuid();
 ```
 
 ### Functions
+
+#### bench
+
+▸ **bench**(`name`: string, `cb`: function): _void | Promise‹void›_
+
+Benchmark helper Note that results should be taken with a grain of salt since V8
+is doing JIT stuff and garbage collection, so it's more of an indication than
+something reproducible
+
+**Parameters:**
+
+▪ **name**: _string_
+
+▪ **cb**: _function_
+
+▸ (`N`: number): _void | Promise‹void›_
+
+**Parameters:**
+
+| Name | Type   |
+| ---- | ------ |
+| `N`  | number |
+
+**Returns:** _void | Promise‹void›_
+
+---
 
 #### camelToSnakeCase
 
@@ -7131,6 +7159,22 @@ isPlainObject({});
 
 ---
 
+#### logBenchResults
+
+▸ **logBenchResults**(`logger`: Logger): _void_
+
+Formats the results of the benchmarks and logs them.
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `logger` | Logger |
+
+**Returns:** _void_
+
+---
+
 #### mainFn
 
 ▸ **mainFn**(`meta`: ImportMeta, `logger`: Logger, `cb`:
@@ -7344,10 +7388,8 @@ a status and other meta data directly
 
 ```js
 new AppError(401, "error.server.unauthorized");
-AppError.validationError("validation.string.length", {
-  message: "String should have at least 3 characters",
-});
-AppError.serverError({}, new Error("Oopsie"));
+AppError.validationError("validation.string.length", { message: "String should have at
+  least 3 characters" }); AppError.serverError({}, new Error("Oopsie"));
 ```
 
 #### Type parameters
