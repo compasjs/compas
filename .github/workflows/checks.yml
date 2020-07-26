@@ -1,0 +1,86 @@
+name: lint-build-test
+on: [push]
+
+jobs:
+  lint:
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-
+            ${{ runner.os }}-
+      - run: |
+          yarn install
+          yarn lbu lint
+  test:
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-
+            ${{ runner.os }}-
+      - run: |
+          yarn install
+          yarn lbu docker up
+          yarn lbu migrate
+          yarn lbu test
+          yarn lbu docker clean
+  bench:
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node }}-
+            ${{ runner.os }}-
+      - run: |
+          yarn install
+          yarn lbu bench
+
