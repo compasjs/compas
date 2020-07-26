@@ -10,7 +10,11 @@ import {
   newSessionStore,
   removeBucketAndObjectsInBucket,
 } from "@lbu/store";
+import Axios from "axios";
+import axiosCookieJar from "axios-cookiejar-support";
+import thoughCookie from "tough-cookie";
 import { createApp } from "./api.js";
+import { createApiClient } from "./generated/apiClient.js";
 import {
   app,
   appBucket,
@@ -66,4 +70,24 @@ export async function cleanupTestServices() {
   await removeBucketAndObjectsInBucket(minio, appBucket);
   setMinio(undefined);
   setAppBucket(undefined);
+}
+
+/**
+ * Creates an axios instance with cookie support and injects it into the generated api
+ * client.
+ *
+ * @return {AxiosInstance}
+ */
+export function createAndInjectApiClient() {
+  const axiosInstance = Axios.create({
+    withCredentials: true,
+  });
+
+  // Add cookie jar support
+  axiosCookieJar.default(axiosInstance);
+  axiosInstance.defaults.jar = new thoughCookie.CookieJar();
+
+  createApiClient(axiosInstance);
+
+  return axiosInstance;
 }

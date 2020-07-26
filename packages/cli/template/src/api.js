@@ -1,6 +1,6 @@
 import { getApp } from "@lbu/server";
 import { AppError } from "@lbu/stdlib";
-import { router, setBodyParser } from "./generated/router.js";
+import { router, setBodyParsers } from "./generated/router.js";
 import { validatorSetError } from "./generated/validators.js";
 import { app, bodyParsers } from "./services/index.js";
 
@@ -12,24 +12,17 @@ export function createApp() {
     errorOptions: {
       leakError: process.env.NODE_ENV !== "production",
     },
-    headers: {
-      cors: {
-        origin: (ctx) => ctx.get("origin") === "http://localhost:3000",
-      },
-    },
+    headers: {},
     proxy: process.env.NODE_ENV === "production",
   });
 }
 
-export function constructApp() {
+export async function constructApp() {
   validatorSetError(AppError.validationError);
-  setBodyParser(bodyParsers.bodyParser);
+  setBodyParsers(bodyParsers);
+
+  // Import controllers
+  // await Promise.all([import("./xx/controller.js")]);
 
   app.use(router);
-
-  mountHandlers();
-
-  return app;
 }
-
-function mountHandlers() {}

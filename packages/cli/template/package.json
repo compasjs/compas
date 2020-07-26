@@ -10,14 +10,15 @@
     "@lbu/insight": "{{version}}",
     "@lbu/server": "{{version}}",
     "@lbu/stdlib": "{{version}}",
-    "@lbu/store": "{{version}}",
-    "axios": "0.19.2",
-    "chance": "1.1.6"
+    "@lbu/store": "{{version}}"
   },
   "devDependencies": {
     "@lbu/cli": "{{version}}",
     "@lbu/code-gen": "{{version}}",
-    "@lbu/lint-config": "{{version}}"
+    "@lbu/lint-config": "{{version}}",
+    "axios": "0.19.2",
+    "axios-cookiejar-support": "1.0.0",
+    "tough-cookie": "4.0.0"
   },
   "prettier": "@lbu/lint-config/prettierrc",
   "engines": {
