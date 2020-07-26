@@ -12,7 +12,7 @@ The following packages are in use:
 - **eslint-plugin-import**: Support for various rules around ES Modules and
   importing/exporting in them.
 
-### Overriding Prettier options
+## Overriding Prettier options
 
 To override prettier options create a `.prettierrc.cjs` file in the root of your
 project with the following contents:
@@ -27,7 +27,7 @@ module.exports = {
 Make sure to remove the `prettier` key from your package.json so Prettier will
 read the file.
 
-### Overriding ESLint rules
+## Overriding ESLint rules
 
 To override the provided ESLint rules do one of the following in your
 `.eslintrc.cjs` file.

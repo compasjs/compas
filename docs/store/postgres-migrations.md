@@ -20,7 +20,7 @@ The following script taken from this repository and provided in the template
 should be all that you need. Run `yarn lbu migrate` and the thing should run,
 provided that you already had a working database connection in this project.
 
-```ecmascript 6
+```javascript
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import {
@@ -49,7 +49,6 @@ async function main(logger) {
 
   await sql.end();
 }
-
 ```
 
 ### General notes

@@ -4,7 +4,7 @@
 - [api](/api.md)
 - [environment](/env.md)
 - [cli](/cli.md)
-- [code-gen](/code-gen/README.md)
+- [code-gen](/code-gen.md)
 - [insight](/insight.md)
 - [lint-config](/lint-config.md)
 - [store](/store/README.md)

@@ -41,7 +41,7 @@ Create a new script called `generate.js`.
 
 Let's start with the imports:
 
-```ecmascript 6
+```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
@@ -60,7 +60,7 @@ of a program. e.g. `node ./generate.js`.
 
 Let's tie all imported functions together in to a single main function:
 
-```ecmascript 6
+```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
 import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";

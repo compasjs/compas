@@ -15,8 +15,8 @@ To use persistent sessions, lbu provides two building blocks:
 Mounting sessions is pretty straight forward. First of all create a database
 connection and session store:
 
-```ecmascript 6
-import {newPostgresConnection, newSessionStore} from "@lbu/store";
+```javascript
+import { newPostgresConnection, newSessionStore } from "@lbu/store";
 
 const sql = newPostgresConnection({});
 const store = newSessionStore(sql, {});
@@ -28,14 +28,18 @@ task every 45 minutes. It is also possible to disable with `disableInterval`.
 
 Next we will mount the session middleware:
 
-```ecmascript 6
-import {getApp, session} from "@lbu/server";
+```javascript
+import { getApp, session } from "@lbu/server";
 
-const app = getApp({/* ... */});
-app.use(session(app, {
-  store,
-  // any other argument to koa-session
-}));
+const app = getApp({
+  /* ... */
+});
+app.use(
+  session(app, {
+    store,
+    // any other argument to koa-session
+  }),
+);
 ```
 
 Note that the call to session will use some defaults and has some expectations:

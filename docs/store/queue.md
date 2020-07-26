@@ -10,7 +10,7 @@ supports the following:
 
 Example usage:
 
-```ecmascript 6
+```javascript
 mainFn(import.meta, log, main);
 
 async function main() {
@@ -20,11 +20,14 @@ async function main() {
     console.log(data.name); // "myJob"
 
     // simulate work
-    await new Promise(r => setTimeout(r, 100));
-  }
+    await new Promise((r) => setTimeout(r, 100));
+  };
 
   // parallelCount shouldn't be higher than Postgres pool size
-  const queueWorker = new JobQueueWorker(sql, "myJob", { parallelCount: 5, pollInterval: 1500 });
+  const queueWorker = new JobQueueWorker(sql, "myJob", {
+    parallelCount: 5,
+    pollInterval: 1500,
+  });
 
   // Start queue
   queueWorker.start();
@@ -41,7 +44,6 @@ async function main() {
     // but no new job is started
     queueWorker.stop();
   }, 5000);
-
 
   // By default uses "myJob" as name
   await queueWorker.addJob({ data: {} });
@@ -60,7 +62,6 @@ async function main() {
   // Returns a job id, so you can use it as a tracking id / use it as a foreign key
   const jobId = await queueWorker.addJob({ data: {} });
 
-
   // The same api is available in separate exported function, so you don't have to pass the queueWorker around
   const otherJobId = await addJobToQueue(sql, { name: "myJob", data: {} });
 
@@ -70,5 +71,4 @@ async function main() {
   const end = new Date();
   const average = await queueWorker.averageTimeToCompletion(start, end);
 }
-
 ```

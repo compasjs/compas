@@ -5,7 +5,7 @@ reloading of scripts, linting, testing and more.
 
 Run `yarn lbu help` for more information.
 
-### Scripts
+## Scripts
 
 The cli currently understands a few different ways of running Node.js scripts.
 First of all it searches for Javascript files in the `{root}/scripts` directory.
@@ -51,7 +51,7 @@ It is also possible to provide the path to a Javascript file like so:
 $ yarn lbu run --watch --node-argument ./scrippts/generate.js --my-argument
 ```
 
-### Builtin commands
+## Builtin commands
 
 - **init**: Initialize a new project in the current directory
 - **lint**: This will run ESLint and Prettier over the whole project using
