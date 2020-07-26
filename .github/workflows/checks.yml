@@ -25,7 +25,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-
             ${{ runner.os }}-
-      - run: |
+      - name: Run lint
+        run: |
           yarn install
           yarn lbu lint
   test:
@@ -51,9 +52,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-
             ${{ runner.os }}-
-      - run: |
+      - name: Run tests
+        run: |
           yarn install
           yarn lbu docker up
+          sleep 10
           yarn lbu migrate
           yarn lbu test
           yarn lbu docker clean
@@ -80,7 +83,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node }}-
             ${{ runner.os }}-
-      - run: |
+      - name: Run benchmarks
+        run: |
           yarn install
           yarn lbu bench
-
