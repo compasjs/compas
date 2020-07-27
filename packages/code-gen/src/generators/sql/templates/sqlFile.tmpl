@@ -36,7 +36,7 @@ import { uuid } from "@lbu/stdlib";
     {{= ref.name }}Count: async (sql, where) => {
       const result = await sql`SELECT count(*) as "genCount" FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
 
-      return result?.[0]?.genCount ?? 0;
+      return parseInt(result?.[0]?.genCount ?? "0");
     },
 ((newline))
 
