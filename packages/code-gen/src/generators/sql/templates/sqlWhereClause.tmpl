@@ -1,18 +1,20 @@
 {{ if (item.whereFields.length > 0) { }}
+{{ let keysToSkip = it?.skipKeys ?? []; }}
 {{ let result = "WHERE"; }}
 {{ for (const it of item.whereFields) { }}
-  {{ result += " (COALESCE(${where." + it.name + " ?? null}, NULL) IS NULL OR " + item.shortName + "." + `"${it.key}"` + " "; }}
+  {{ if (keysToSkip.indexOf(it.name) !== -1) { continue; } }}
+  {{ result += " (COALESCE(${" + variable + "?." + it.name + " ?? null}, NULL) IS NULL OR " + item.shortName + "." + `"${it.key}"` + " "; }}
 
   {{ if (it.type === "equal") { }}
-    {{ result += "= ${where." + it.name + "?? null}"; }}
+    {{ result += "= ${"+ variable + "?." + it.name + "?? null}"; }}
   {{ } else if (it.type === "greaterThan") { }}
-    {{ result += "> ${where." + it.name + "?? null}"; }}
+    {{ result += "> ${"+ variable + "?." + it.name + "?? null}"; }}
   {{ } else if (it.type === "lowerThan") { }}
-    {{ result += "< ${where." + it.name + " ?? null}"; }}
+    {{ result += "< ${"+ variable + "?." + it.name + " ?? null}"; }}
   {{ } else if (it.type === "like") { }}
-    {{ result += "LIKE ${'%' + where." + it.name + " +'%'}"; }}
+    {{ result += "LIKE ${'%' + "+ variable + "?." + it.name + " +'%'}"; }}
   {{ } else if (it.type === "in") { }}
-    {{ result += "= ANY (${sql.array(where?." + it.name + " ?? [])}::uuid[])"; }}
+    {{ result += "= ANY (${sql.array("+ variable + "?." + it.name + " ?? [])}::uuid[])"; }}
   {{ } }}
 
   {{ result += ") AND"; }}

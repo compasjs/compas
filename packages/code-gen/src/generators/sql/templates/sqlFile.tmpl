@@ -22,19 +22,41 @@ import { uuid } from "@lbu/stdlib";
 
    /**
     * @param sql
-    * @param { {{= ref.uniqueName }}Where} where
+    * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<{{= ref.uniqueName }}[]>}
     */
-    {{= ref.name }}Select: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }} FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+    {{= ref.name }}Select: (sql, where) => sql`
+    SELECT {{= getKeys(item.shortName + ".") }} FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+    `,
 ((newline))
+
+   {{ for (const relation of item.relations) { }}
+     /**
+      * @param sql
+      * @param { {{= relation.whereType }} } [where]
+      * @returns {Promise<{{= relation.name }}[]>}
+      */
+     {{= relation.selectName }}: (sql, where) =>  sql`
+       SELECT {{= getKeys(item.shortName + ".") }}, to_jsonb({{= relation.rightShortName }}.*) AS "{{= relation.substituteKey }}"
+       FROM "{{= ref.name }}" {{= item.shortName }}
+       LEFT JOIN (
+         SELECT * FROM "{{= relation.rightName }}" {{= relation.rightShortName }}
+         {{= sqlWhereClause({ item: structure[relation.rightGroup][relation.rightName + "Sql"], ref: structure[relation.rightGroup][relation.rightName], variable: `where?.${relation.substituteKey}` }) }}
+       ) {{= relation.rightShortName }}
+         ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
+       {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}`,
+((newline))
+   {{ } }}
 
     /**
     * @param sql
-    * @param { {{= ref.uniqueName }}Where} where
+    * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<number>}
     */
     {{= ref.name }}Count: async (sql, where) => {
-      const result = await sql`SELECT count(*) as "genCount" FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`;
+      const result = await sql`
+      SELECT count(*) AS "genCount" FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+      `;
 
       return parseInt(result?.[0]?.genCount ?? "0");
     },
@@ -42,10 +64,12 @@ import { uuid } from "@lbu/stdlib";
 
     /**
     * @param sql
-    * @param { {{= ref.uniqueName }}Where} where
+    * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<*[]>}
     */
-    {{= ref.name }}Delete: (sql, where) => sql`DELETE FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}`,
+    {{= ref.name }}Delete: (sql, where) => sql`
+    DELETE FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+    `,
 ((newline))
 
     /**
@@ -80,13 +104,14 @@ import { uuid } from "@lbu/stdlib";
     /**
      * @param sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input} value
-     * @param { {{= ref.uniqueName }}Where} where
+     * @param { {{= ref.uniqueName }}Where} [where]
      * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
     {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
       {{ if (ref.queryOptions.withHistory) { }}
-      await sql`INSERT INTO "{{= ref.name }}History" ("{{= ref.name }}Id", {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, "createdAt")
-      SELECT id, {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, COALESCE("updatedAt", "createdAt", now()) FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref }) }}
+      await sql`
+      INSERT INTO "{{= ref.name }}History" ("{{= ref.name }}Id", {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, "createdAt")
+      SELECT id, {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, COALESCE("updatedAt", "createdAt", now()) FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
       `;
       {{ } }}
 
@@ -143,15 +168,15 @@ import { uuid } from "@lbu/stdlib";
     {{ if (ref.queryOptions.withHistory) { }}
    /**
     * @param sql
-    * @param { {{= ref.uniqueName }}Where} where
+    * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
     */
-    {{= ref.name }}SelectHistory: (sql, where) => sql`SELECT {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) as history FROM "{{= ref.name }}" {{= item.shortName }} LEFT JOIN  "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id" {{= sqlWhereClause({ item, ref }) }} GROUP BY {{= item.shortName }}.id`,
+    {{= ref.name }}SelectHistory: (sql, where) => sql`
+    SELECT {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) AS history FROM "{{= ref.name }}" {{= item.shortName }} LEFT JOIN  "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id" {{= sqlWhereClause({ item, ref, variable: "where" }) }} GROUP BY {{= item.shortName }}.id
+    `,
 ((newline))
 
     {{ } }}
-
-
   {{ } }}
 
   };
