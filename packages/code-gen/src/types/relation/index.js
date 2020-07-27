@@ -103,8 +103,9 @@ class RelationType extends TypeBuilder {
     }
 
     if (
-      !(this.left instanceof TypeBuilder) ||
-      (this.left.data.type !== "object" && this.left.data.type !== "reference")
+      !(this.right instanceof TypeBuilder) ||
+      (this.right.data.type !== "object" &&
+        this.right.data.type !== "reference")
     ) {
       throw new Error(
         "Relation only accepts a named object type or a reference type",
