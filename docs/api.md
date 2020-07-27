@@ -338,7 +338,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -348,9 +348,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -541,7 +541,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -551,9 +551,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -907,7 +907,7 @@ Validator converts single item to an array
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -917,9 +917,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -1152,7 +1152,7 @@ Validator converts "true", "false", 0 and 1 to a boolean
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -1162,9 +1162,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -1356,7 +1356,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -1366,9 +1366,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -1553,7 +1553,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -1563,9 +1563,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -1783,7 +1783,7 @@ Try to convert a string to a number in the validator
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -1793,9 +1793,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -2031,7 +2031,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -2041,9 +2041,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -2263,7 +2263,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -2273,9 +2273,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -2447,7 +2447,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -2457,9 +2457,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -2723,7 +2723,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -2733,9 +2733,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -3118,7 +3118,7 @@ Validator tries to convert to string
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -3128,9 +3128,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -3416,16 +3416,16 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 Set a raw default value, also makes the type optional Can be reverted by calling
 this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -3851,7 +3851,7 @@ Returns a shallow copy of the data object
 
 ##### default
 
-▸ **default**(`rawString?`: string): _this_
+▸ **default**(`rawString?`: string | boolean | number): _this_
 
 _Inherited from
 [TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
@@ -3861,9 +3861,9 @@ this function with undefined or null
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `rawString?` | string |
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
 
 **Returns:** _this_
 
@@ -7801,6 +7801,10 @@ case-insensitive.
 - [SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)
 - [StoreFileStore](#storeinterfacesstorefilestoremd)
 
+#### Type aliases
+
+- [Postgres](#postgres)
+
 #### Variables
 
 - [migrations](#const-migrations)
@@ -7830,6 +7834,12 @@ case-insensitive.
 - [removeBucketAndObjectsInBucket](#removebucketandobjectsinbucket)
 - [runMigrations](#runmigrations)
 - [syncDeletedFiles](#syncdeletedfiles)
+
+### Type aliases
+
+#### Postgres
+
+Ƭ **Postgres**: _postgresVendor.Sql‹object›_
 
 ### Variables
 
