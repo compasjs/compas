@@ -27,8 +27,8 @@ test("store/files", async (t) => {
   await ensureBucket(minio, bucketName, "us-east-1");
   const filePath = `${dirnameForModule(
     import.meta,
-  )}/../__fixtures__/001-test.sql`;
-  const filename = "001-test.sql";
+  )}/../__fixtures__/997-test.sql`;
+  const filename = "997-test.sql";
 
   let sql = undefined;
 

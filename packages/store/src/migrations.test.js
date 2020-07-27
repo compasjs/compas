@@ -34,13 +34,13 @@ test("store/migrations", (t) => {
     t.equal(list.length, 3);
 
     t.ok(list[0].repeatable === false);
-    t.ok(list[0].number === 1);
+    t.ok(list[0].number === 997);
 
     t.ok(list[1].repeatable === true);
-    t.ok(list[1].number === 2);
+    t.ok(list[1].number === 998);
 
     t.ok(list[2].repeatable === false);
-    t.ok(list[2].number === 3);
+    t.ok(list[2].number === 999);
 
     await runMigrations(mc);
     const testResult = await sql`SELECT * FROM "testTable"`;

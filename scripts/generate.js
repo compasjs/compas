@@ -61,7 +61,7 @@ async function main() {
       "list",
       T.reference("app", "list"),
       "id",
-      "items",
+      "list",
     ),
   );
 
@@ -87,6 +87,7 @@ async function main() {
     enabledGroups: ["app"],
     enabledGenerators: ["sql", "validator", "router", "type", "apiClient"],
     dumpStructure: true,
+    dumpPostgres: true,
   });
 
   await app.generate({
