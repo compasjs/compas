@@ -27,6 +27,7 @@ async function main() {
   const queueWorker = new JobQueueWorker(sql, "myJob", {
     parallelCount: 5,
     pollInterval: 1500,
+    handler: jobHandler,
   });
 
   // Start queue
