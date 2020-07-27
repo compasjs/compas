@@ -13,6 +13,7 @@ export function getInternalRoutes(options) {
   if (options.dumpStructure) {
     result.push(
       G.get("structure.json", "structure")
+        .response(T.any())
         .tags(...tags)
         .docs("Return the full generated structure as a json object."),
     );

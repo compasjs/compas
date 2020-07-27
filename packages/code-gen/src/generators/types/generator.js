@@ -15,6 +15,10 @@ export async function init() {
   );
 }
 
+export async function preGenerate(_, __, options) {
+  await compileTypeExec(options);
+}
+
 /**
  * @param {App} app
  * @param data

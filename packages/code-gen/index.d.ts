@@ -298,7 +298,7 @@ export class TypeBuilder {
    * Set a raw default value, also makes the type optional
    * Can be reverted by calling this function with undefined or null
    */
-  default(rawString?: string): this;
+  default(rawString?: string | boolean | number): this;
 
   /**
    * Returns a shallow copy of the data object
@@ -477,9 +477,9 @@ export class ObjectType extends TypeBuilder {
 
 /**
  * Stores information about a relation between 2 objects.
- * The App knows about a manyToOne relation will add the leftKey based on the rightKey if needed.
- * Other than that, this type does nothing by itself and should only aid when used by another
- * generator like the sql generator
+ * The App knows about a manyToOne relation will add the leftKey based on the rightKey if
+ * needed. Other than that, this type does nothing by itself and should only aid when used by
+ * another generator like the sql generator
  */
 export class RelationType extends TypeBuilder {
   constructor();

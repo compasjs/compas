@@ -17,114 +17,58 @@ async function main() {
     verbose: true,
   });
 
-  const M = new TypeCreator();
+  const T = new TypeCreator();
 
   app.add(
-    M.bool("Foo").optional().convert().default(true),
-    M.anyOf("Bar").values(M.reference("app", "foo"), M.string()),
-  );
-
-  app.add(M.bool("Foo").optional().convert().default(true));
-  app.add(M.anyOf("Bar").values(M.bool(), M.bool().optional().default(true)));
-  app.add(
-    M.object("Obj").keys({
-      foo: M.array().values(M.number().optional()),
+    // Base types and validators
+    T.object("inferTypes").keys({
+      inferred: [
+        {
+          infer: "string",
+          number: 5,
+          boolean: true,
+        },
+      ],
     }),
-  );
+    T.bool("boolean").convert().default(false),
+    T.bool("boolean2").oneOf(true),
+    T.number("number").convert().min(0).max(10).optional().integer(),
+    T.string("string").trim().lowerCase().min(1).max(10).convert(),
+    T.array("array").values(T.reference("app", "boolean")),
+    T.object("object").keys({ foo: T.bool() }),
+    T.generic("generic").keys(T.string()).values(T.reference("app", "number")),
+    T.anyOf("anyOf").values(T.bool(), T.string()),
+    T.uuid("uuid"),
+    T.date("date").defaultToNow(),
+    T.any("any"),
 
-  app.add(M.string("Str"));
-  app.add(
-    M.object("Objec").keys({
-      str: M.reference("App", "Str"),
-    }),
-  );
-  app.add(
-    M.object("User").keys({
-      id: M.uuid(),
-      name: M.string().min(1).max(15),
-      age: M.number().integer().min(0).max(150).convert(),
-    }),
-  );
-
-  app.add(
-    M.object("Items")
+    // SQL
+    T.object("list")
       .keys({
-        id: M.uuid(),
-        name: M.string(),
-        count: M.number().integer(),
-        createdAt: M.date().defaultToNow(),
-        updatedAt: M.date(),
+        id: T.uuid().primary(),
+        name: T.string(),
       })
-      .enableQueries({}),
-  );
-
-  app.add(
-    M.relation().manyToOne(
-      M.reference("app", "Items"),
-      "userId",
-      M.reference("app", "user"),
+      .enableQueries({ withDates: true }),
+    T.object("listItem")
+      .keys({
+        id: T.uuid().primary(),
+        checked: T.bool().default(false).searchable(),
+        value: T.string(),
+      })
+      .enableQueries({ withDates: true }),
+    T.relation().manyToOne(
+      T.reference("app", "listItem"),
+      "list",
+      T.reference("app", "list"),
       "id",
-      "user",
+      "items",
     ),
   );
 
-  const myGeneric = M.generic("MyGeneric")
-    .keys(M.string())
-    .values(M.anyOf().values(M.bool().convert(), M.number()))
-    .docs("Foo");
-
-  app.add(M.array("GenericArray").values(myGeneric));
-
-  const T = new TypeCreator("Todo");
-
-  app.add(T.bool("Boolean"));
-  app.add(T.array("MyArr").values(T.reference("App", "Items")));
-
-  const G = T.router("/foo");
-  app.add(
-    G.get().query(M.reference("App", "User")).params({
-      bar: T.bool().optional(),
-    }),
-  );
-  app.add(
-    G.post("/:id")
-      .body({
-        foo: M.string(),
-      })
-      .query({
-        id: M.bool().convert(),
-      })
-      .response(
-        M.object().keys({
-          bar: M.string(),
-        }),
-      ),
-
-    G.post("/foobar", "fileTest")
-      .files({
-        foo: M.file(),
-        bar: M.file(),
-      })
-      .response({
-        foo: M.file(),
-      }),
-  );
-
-  app.extend(storeStructure);
-
-  const externalApi = "apiName";
-
-  app.add(
-    new TypeCreator(externalApi).object("Foo").keys({
-      bar: T.string(),
-      baz: T.string(),
-      tag: T.number(),
-    }),
-  );
-
+  // OpenAPI conversion
   app.extend(
-    loadFromOpenAPISpec(
-      externalApi,
+    await loadFromOpenAPISpec(
+      "openapi",
       JSON.parse(
         readFileSync(
           "./packages/code-gen/src/__fixtures__/openapi.json",
@@ -134,38 +78,36 @@ async function main() {
     ),
   );
 
-  app.add(
-    T.object("inferMe").keys({
-      look: "Ma",
-      i: {
-        am: true,
-      },
-      years: 18,
-      old: [T.number()],
-    }),
-  );
+  // Lbu structures
+  app.extend(storeStructure);
 
+  // Generate calls
   await app.generate({
-    outputDirectory: "./generated",
-    enabledGenerators: ["type", "router", "apiClient", "sql", "validator"],
-    useTypescript: false,
+    outputDirectory: "./generated/app",
+    enabledGroups: ["app"],
+    enabledGenerators: ["sql", "validator", "router", "type", "apiClient"],
     dumpStructure: true,
-    dumpPostgres: true,
   });
 
   await app.generate({
-    outputDirectory: "./stubs/app_stubs",
-    enabledGroups: ["app", "todo"],
-    useStubGenerators: true,
+    outputDirectory: "./generated/store",
+    enabledGroups: ["store"],
+    enabledGenerators: ["sql", "validator", "type"],
     dumpStructure: true,
-    enabledGenerators: ["type", "router", "apiClient"],
   });
 
   await app.generate({
-    outputDirectory: "./stubs/pet_stubs",
-    enabledGroups: ["todo", externalApi],
+    outputDirectory: "./generated/openapi/server",
+    enabledGroups: ["openapi"],
+    enabledGenerators: ["sql", "validator", "router", "type", "apiClient"],
+    dumpStructure: true,
+  });
+
+  await app.generate({
+    outputDirectory: "./generated/openapi/client",
+    enabledGroups: ["openapi"],
+    enabledGenerators: ["validator", "type", "apiClient", "reactQuery"],
     useTypescript: true,
     validatorCollectErrors: true,
-    enabledGenerators: ["validator", "type", "apiClient", "reactQuery"],
   });
 }

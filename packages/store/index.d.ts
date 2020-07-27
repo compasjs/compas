@@ -11,6 +11,8 @@ export const minio: typeof minioVendor;
  */
 export const postgres: typeof postgresVendor;
 
+export type Postgres = postgresVendor.Sql<{}>;
+
 /**
  * Create a new minio client.
  * By defaults reads configuration from environment variables as specified in docs/env.md
