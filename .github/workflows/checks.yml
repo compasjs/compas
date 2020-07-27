@@ -56,7 +56,8 @@ jobs:
         run: |
           yarn install
           yarn lbu docker up
-          sleep 10
+          sleep 9
+          yarn lbu generate
           yarn lbu migrate
           yarn lbu test
           yarn lbu docker clean
