@@ -44,6 +44,7 @@ files,
         const data = body;
         {{ } }}
         {{ if (model.files) { }}
+        // eslint-disable-next-line
         const data = new FormData();
         for (const key of Object.keys(files)) {
           data.set(key, files[key].data, files[key].name);
