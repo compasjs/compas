@@ -48,7 +48,10 @@ export function mainFn(meta, logger, cb) {
   if (isMainFn(meta)) {
     dotenv.config();
     const result = cb(logger);
-    Promise.resolve(result).catch((e) => logger.error(e));
+    Promise.resolve(result).catch((e) => {
+      logger.error(e);
+      process.exit(1);
+    });
   }
 }
 
