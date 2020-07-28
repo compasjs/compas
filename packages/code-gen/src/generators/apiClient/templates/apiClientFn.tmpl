@@ -47,7 +47,7 @@ files,
       }
       {{ if (model.body) { }}
         for (const key of Object.keys(body)) {
-          data.set(key, body[key];
+          data.set(key, body[key]);
         }
       {{ } }}
     {{ } else if (model.body) { }}
