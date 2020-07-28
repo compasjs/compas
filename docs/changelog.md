@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [v0.0.48](https://github.com/lightbasenl/lbu/releases/tag/v0.0.48)
+
+- stdlib: mainFn exit with status(1) when catching errors
+- stdlib,cli: add experimental support for benchmarking
+- code-gen: support both body and files on a single route
+- code-gen: support generating left join queries for manyToOne relations
+- code-gen: various small fixes
+
 ### [v0.0.47](https://github.com/lightbasenl/lbu/releases/tag/v0.0.47)
 
 - code-gen: small fix for reference sql generation
