@@ -81,61 +81,132 @@ function buildSqlSelectJoinType(data, item) {
   const T = new TypeCreator(item.group);
   for (const rel of relations) {
     if (rel.relationType === "manyToOne") {
-      const rightSide = getItem(rel.right);
-
-      // Useful data for the template
-      const relationMeta = {
-        name: `${item.name}With${upperCaseFirst(rightSide.name)}`,
-        whereType: undefined,
-        selectName: `${item.name}SelectWith${upperCaseFirst(
-          rel.substituteKey,
-        )}`,
-        rightShortName: shortName(rightSide.name),
-        rightName: rightSide.name,
-        rightGroup: rightSide.group,
-        leftKey: rel.leftKey,
-        rightKey: rel.rightKey,
-        substituteKey: rel.substituteKey,
-      };
-
-      // Creates the new type with field added
-      addToData(data, {
-        ...item,
-        name: relationMeta.name,
-        keys: {
-          ...item.keys,
-          [rel.substituteKey]: T.reference(
-            rightSide.group,
-            rightSide.name,
-          ).build(),
-        },
-        enableQueries: false,
-      });
-
-      // Creates the new where type with embedded where for the joined type
-      // TODO: Add support for a where type that can filter on results that don't have
-      //   a joined item
-      const whereItem = {
-        ...data.structure[item.group][`${item.name}Where`],
-        name: `${relationMeta.name}Where`,
-        keys: {
-          ...data.structure[item.group][`${item.name}Where`].keys,
-          [rel.substituteKey]: T.reference(
-            rightSide.group,
-            `${rightSide.name}Where`,
-          )
-            .optional()
-            .build(),
-        },
-      };
-      addToData(data, whereItem);
-      relationMeta.whereType = whereItem.uniqueName;
-
-      queryType.relations.push(relationMeta);
+      buildSqlSelectJoinForManyToOne(data, item, rel, T, queryType);
+    } else if (rel.relationType === "oneToMany") {
+      buildSqlSelectJoinForOneToMany(data, item, rel, T, queryType);
     }
   }
 
   item._didSqlSelectJoinGenerate = true;
+}
+
+/**
+ * @param data
+ * @param item
+ * @param relation
+ * @param T
+ * @param queryType
+ */
+function buildSqlSelectJoinForManyToOne(data, item, relation, T, queryType) {
+  const rightSide = getItem(relation.right);
+
+  // Useful data for the template
+  const relationMeta = {
+    type: "manyToOne",
+    name: `${item.name}With${upperCaseFirst(relation.substituteKey)}`,
+    whereType: undefined,
+    selectName: `${item.name}SelectWith${upperCaseFirst(
+      relation.substituteKey,
+    )}`,
+    rightShortName: shortName(rightSide.name),
+    rightName: rightSide.name,
+    rightGroup: rightSide.group,
+    leftKey: relation.leftKey,
+    rightKey: relation.rightKey,
+    substituteKey: relation.substituteKey,
+  };
+
+  // Creates the new type with field added
+  addToData(data, {
+    ...item,
+    name: relationMeta.name,
+    keys: {
+      ...item.keys,
+      [relation.substituteKey]: T.reference(
+        rightSide.group,
+        rightSide.name,
+      ).build(),
+    },
+    enableQueries: false,
+  });
+
+  // Creates the new where type with embedded where for the joined type
+  const whereItem = {
+    ...data.structure[item.group][`${item.name}Where`],
+    name: `${relationMeta.name}Where`,
+    keys: {
+      ...data.structure[item.group][`${item.name}Where`].keys,
+      [relation.substituteKey]: T.reference(
+        rightSide.group,
+        `${rightSide.name}Where`,
+      )
+        .optional()
+        .build(),
+    },
+  };
+  addToData(data, whereItem);
+  relationMeta.whereType = whereItem.uniqueName;
+
+  queryType.relations.push(relationMeta);
+}
+
+/**
+ * @param data
+ * @param item
+ * @param relation
+ * @param T
+ * @param queryType
+ */
+function buildSqlSelectJoinForOneToMany(data, item, relation, T, queryType) {
+  const rightSide = getItem(relation.right);
+
+  // Useful data for the template
+  const relationMeta = {
+    type: "oneToMany",
+    name: `${item.name}With${upperCaseFirst(relation.substituteKey)}`,
+    whereType: undefined,
+    selectName: `${item.name}SelectWith${upperCaseFirst(
+      relation.substituteKey,
+    )}`,
+    rightShortName: shortName(rightSide.name),
+    rightName: rightSide.name,
+    rightGroup: rightSide.group,
+    leftKey: relation.leftKey,
+    rightKey: relation.rightKey,
+    substituteKey: relation.substituteKey,
+  };
+
+  // Creates the new type with field added
+  addToData(data, {
+    ...item,
+    name: relationMeta.name,
+    keys: {
+      ...item.keys,
+      [relation.substituteKey]: T.array()
+        .values(T.reference(rightSide.group, rightSide.name))
+        .build(),
+    },
+    enableQueries: false,
+  });
+
+  // Creates the new where type with embedded where for the joined type
+  const whereItem = {
+    ...data.structure[item.group][`${item.name}Where`],
+    name: `${relationMeta.name}Where`,
+    keys: {
+      ...data.structure[item.group][`${item.name}Where`].keys,
+      [relation.substituteKey]: T.reference(
+        rightSide.group,
+        `${rightSide.name}Where`,
+      )
+        .optional()
+        .build(),
+    },
+  };
+  addToData(data, whereItem);
+  relationMeta.whereType = whereItem.uniqueName;
+
+  queryType.relations.push(relationMeta);
 }
 
 /**

@@ -33,10 +33,13 @@ import { uuid } from "@lbu/stdlib";
    {{ for (const relation of item.relations) { }}
      /**
       * @param sql
-      * @param { {{= relation.whereType }} } [where]
-      * @returns {Promise<{{= relation.name }}[]>}
+      * @param { {{= upperCaseFirst(relation.whereType) }} } [where]
+      * @returns {Promise<{{= upperCaseFirst(item.group) + upperCaseFirst(relation.name) }}[]>}
       */
      {{= relation.selectName }}: (sql, where) =>  sql`
+
+     {{ if (relation.type === "manyToOne") { }}
+
        SELECT {{= getKeys(item.shortName + ".") }}, to_jsonb({{= relation.rightShortName }}.*) AS "{{= relation.substituteKey }}"
        FROM "{{= ref.name }}" {{= item.shortName }}
        LEFT JOIN (
@@ -45,6 +48,21 @@ import { uuid } from "@lbu/stdlib";
        ) {{= relation.rightShortName }}
          ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
        {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}`,
+
+     {{ } else if (relation.type === "oneToMany") { }}
+
+       SELECT {{= getKeys(item.shortName + ".") }}, array_remove(array_agg(to_jsonb({{= relation.rightShortName }}.*)), NULL) AS "{{= relation.substituteKey }}"
+        FROM "{{= ref.name }}" {{= item.shortName }}
+        LEFT JOIN (
+          SELECT * FROM "{{= relation.rightName }}" {{= relation.rightShortName }}
+          {{= sqlWhereClause({ item: structure[relation.rightGroup][relation.rightName + "Sql"], ref: structure[relation.rightGroup][relation.rightName], variable: `where?.${relation.substituteKey}` }) }}
+        ) {{= relation.rightShortName }}
+          ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
+        {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}
+        GROUP BY {{= item.shortName }}."{{= relation.leftKey }}"
+        `,
+
+     {{ } }}
 ((newline))
    {{ } }}
 

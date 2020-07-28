@@ -63,6 +63,13 @@ async function main() {
       "id",
       "list",
     ),
+    T.relation().oneToMany(
+      T.reference("app", "list"),
+      "id",
+      T.reference("app", "listItem"),
+      "list",
+      "items",
+    ),
   );
 
   // OpenAPI conversion

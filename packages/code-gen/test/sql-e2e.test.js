@@ -1,4 +1,4 @@
-import { pathJoin } from "@lbu/stdlib";
+import { pathJoin, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
@@ -59,6 +59,32 @@ test("code-gen/sql/e2e", async (t) => {
 
     t.equal(result.id, items[0].id);
     t.equal(result?.list?.name, list.name);
+  });
+
+  t.test("select list with items", async (t) => {
+    const [result] = await appQueries.listSelectWithItems(sql, {
+      id: list.id,
+      items: { list: list.id },
+    });
+
+    t.equal(result.id, list.id);
+    t.equal(result.items.length, items.length);
+
+    t.deepEqual(
+      new Set(result.items.map((it) => it.id)),
+      new Set(items.map((it) => it.id)),
+    );
+  });
+
+  t.test("select list but filter out items", async (t) => {
+    const [result] = await appQueries.listSelectWithItems(sql, {
+      id: list.id,
+      items: {
+        list: uuid(),
+      },
+    });
+
+    t.equal(result.items.length, 0);
   });
 
   t.test("teardown", async () => {
