@@ -6,71 +6,71 @@ import { uuid } from "@lbu/stdlib";
 export const storeQueries = {
   /**
    * @param sql
-   * @param { StoreFileStoreWhere} where
+   * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<StoreFileStore[]>}
    */
-  fileStoreSelect: (
-    sql,
-    where,
-  ) => sql`SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt" FROM "fileStore" fs 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
-    where.id ?? null
+  fileStoreSelect: (sql, where) => sql`
+SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt" FROM "fileStore" fs 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.idIn ?? null
+    where?.idIn ?? null
   }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }, NULL) IS NULL OR fs."bucketName" = ${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }) AND (COALESCE(${
-    where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
+    where?.bucketNameLike ?? null
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
 `,
 
   /**
    * @param sql
-   * @param { StoreFileStoreWhere} where
+   * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<number>}
    */
   fileStoreCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as "genCount" FROM "fileStore" fs 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
-      where.id ?? null
+    const result = await sql`
+SELECT count(*) AS "genCount" FROM "fileStore" fs 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+      where?.id ?? null
     }) AND (COALESCE(${
-      where.idIn ?? null
+      where?.idIn ?? null
     }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
-      where.bucketName ?? null
+      where?.bucketName ?? null
     }, NULL) IS NULL OR fs."bucketName" = ${
-      where.bucketName ?? null
+      where?.bucketName ?? null
     }) AND (COALESCE(${
-      where.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
+      where?.bucketNameLike ?? null
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
 `;
-    return result?.[0]?.genCount ?? 0;
+    return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param sql
-   * @param { StoreFileStoreWhere} where
+   * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<*[]>}
    */
-  fileStoreDelete: (sql, where) => sql`DELETE FROM "fileStore" fs 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
-    where.id ?? null
+  fileStoreDelete: (sql, where) => sql`
+DELETE FROM "fileStore" fs 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.idIn ?? null
+    where?.idIn ?? null
   }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }, NULL) IS NULL OR fs."bucketName" = ${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }) AND (COALESCE(${
-    where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
+    where?.bucketNameLike ?? null
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
 `,
 
   /**
@@ -106,25 +106,26 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
   /**
    * @param sql
    * @param { StoreFileStoreInsertPartial_Input} value
-   * @param { StoreFileStoreWhere} where
+   * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<StoreFileStore[]>}
    */
   fileStoreUpdate: async (sql, value, where) => {
-    await sql`INSERT INTO "fileStoreHistory" ("fileStoreId", "bucketName", "contentLength", "contentType", "filename", "createdAt")
+    await sql`
+INSERT INTO "fileStoreHistory" ("fileStoreId", "bucketName", "contentLength", "contentType", "filename", "createdAt")
 SELECT id, "bucketName", "contentLength", "contentType", "filename", COALESCE("updatedAt", "createdAt", now()) FROM "fileStore" fs 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
-      where.id ?? null
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+      where?.id ?? null
     }) AND (COALESCE(${
-      where.idIn ?? null
+      where?.idIn ?? null
     }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
-      where.bucketName ?? null
+      where?.bucketName ?? null
     }, NULL) IS NULL OR fs."bucketName" = ${
-      where.bucketName ?? null
+      where?.bucketName ?? null
     }) AND (COALESCE(${
-      where.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
+      where?.bucketNameLike ?? null
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
 `;
     let query = `UPDATE "fileStore" fs SET `;
     const argList = [];
@@ -193,103 +194,102 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
 
   /**
    * @param sql
-   * @param { StoreFileStoreWhere} where
+   * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<(StoreFileStore & (history: StoreFileStore[]))[]>}
    */
-  fileStoreSelectHistory: (
-    sql,
-    where,
-  ) => sql`SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(to_jsonb(fsh.*)) as history FROM "fileStore" fs LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId" 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR fs."id" = ${
-    where.id ?? null
+  fileStoreSelectHistory: (sql, where) => sql`
+SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(to_jsonb(fsh.*)) AS history FROM "fileStore" fs LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId" 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.idIn ?? null
+    where?.idIn ?? null
   }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }, NULL) IS NULL OR fs."bucketName" = ${
-    where.bucketName ?? null
+    where?.bucketName ?? null
   }) AND (COALESCE(${
-    where.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where.bucketNameLike}%`})
-GROUP BY fs.id`,
-
-  /**
-   * @param sql
-   * @param { StoreSessionStoreWhere} where
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreSelect: (
-    sql,
-    where,
-  ) => sql`SELECT ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt" FROM "sessionStore" ss 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
-    where.id ?? null
-  }) AND (COALESCE(${
-    where.idIn ?? null
-  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
-    where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${
-    where.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where.expires ?? null}) AND (COALESCE(${
-    where.expiresGreaterThan ?? null
-  }, NULL) IS NULL OR ss."expires" > ${
-    where.expiresGreaterThan ?? null
-  }) AND (COALESCE(${
-    where.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where.expiresLowerThan ?? null})
+    where?.bucketNameLike ?? null
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+GROUP BY fs.id
 `,
 
   /**
    * @param sql
-   * @param { StoreSessionStoreWhere} where
+   * @param { StoreSessionStoreWhere} [where]
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreSelect: (sql, where) => sql`
+SELECT ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt" FROM "sessionStore" ss 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+    where?.id ?? null
+  }) AND (COALESCE(${
+    where?.idIn ?? null
+  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
+    where?.expires ?? null
+  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+    where?.expiresGreaterThan ?? null
+  }, NULL) IS NULL OR ss."expires" > ${
+    where?.expiresGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.expiresLowerThan ?? null
+  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+`,
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<number>}
    */
   sessionStoreCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as "genCount" FROM "sessionStore" ss 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
-      where.id ?? null
+    const result = await sql`
+SELECT count(*) AS "genCount" FROM "sessionStore" ss 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+      where?.id ?? null
     }) AND (COALESCE(${
-      where.idIn ?? null
+      where?.idIn ?? null
     }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
-      where.expires ?? null
+      where?.expires ?? null
     }, NULL) IS NULL OR ss."expires" = ${
-      where.expires ?? null
+      where?.expires ?? null
     }) AND (COALESCE(${
-      where.expiresGreaterThan ?? null
+      where?.expiresGreaterThan ?? null
     }, NULL) IS NULL OR ss."expires" > ${
-      where.expiresGreaterThan ?? null
+      where?.expiresGreaterThan ?? null
     }) AND (COALESCE(${
-      where.expiresLowerThan ?? null
-    }, NULL) IS NULL OR ss."expires" < ${where.expiresLowerThan ?? null})
+      where?.expiresLowerThan ?? null
+    }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
 `;
-    return result?.[0]?.genCount ?? 0;
+    return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param sql
-   * @param { StoreSessionStoreWhere} where
+   * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<*[]>}
    */
-  sessionStoreDelete: (sql, where) => sql`DELETE FROM "sessionStore" ss 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
-    where.id ?? null
+  sessionStoreDelete: (sql, where) => sql`
+DELETE FROM "sessionStore" ss 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.idIn ?? null
+    where?.idIn ?? null
   }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
-    where.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where.expires ?? null}) AND (COALESCE(${
-    where.expiresGreaterThan ?? null
+    where?.expires ?? null
+  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+    where?.expiresGreaterThan ?? null
   }, NULL) IS NULL OR ss."expires" > ${
-    where.expiresGreaterThan ?? null
+    where?.expiresGreaterThan ?? null
   }) AND (COALESCE(${
-    where.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where.expiresLowerThan ?? null})
+    where?.expiresLowerThan ?? null
+  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
 `,
 
   /**
@@ -323,7 +323,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR ss."id" = ${
   /**
    * @param sql
    * @param { StoreSessionStoreInsertPartial_Input} value
-   * @param { StoreSessionStoreWhere} where
+   * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<StoreSessionStore[]>}
    */
   sessionStoreUpdate: (sql, value, where) => {
@@ -430,67 +430,73 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 
   /**
    * @param sql
-   * @param { StoreJobQueueWhere} where
+   * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<StoreJobQueue[]>}
    */
-  jobQueueSelect: (
-    sql,
-    where,
-  ) => sql`SELECT jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt" FROM "jobQueue" jq 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
-    where.id ?? null
-  }) AND (COALESCE(${where.idGreaterThan ?? null}, NULL) IS NULL OR jq."id" > ${
-    where.idGreaterThan ?? null
-  }) AND (COALESCE(${where.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
-    where.idLowerThan ?? null
-  }) AND (COALESCE(${where.name ?? null}, NULL) IS NULL OR jq."name" = ${
-    where.name ?? null
+  jobQueueSelect: (sql, where) => sql`
+SELECT jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt" FROM "jobQueue" jq 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
+    where?.idGreaterThan ?? null
+  }, NULL) IS NULL OR jq."id" > ${
+    where?.idGreaterThan ?? null
+  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
+    where?.idLowerThan ?? null
+  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+    where?.name ?? null
+  }) AND (COALESCE(${
+    where?.nameLike ?? null
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
 `,
 
   /**
    * @param sql
-   * @param { StoreJobQueueWhere} where
+   * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<number>}
    */
   jobQueueCount: async (sql, where) => {
-    const result = await sql`SELECT count(*) as "genCount" FROM "jobQueue" jq 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
-      where.id ?? null
+    const result = await sql`
+SELECT count(*) AS "genCount" FROM "jobQueue" jq 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+      where?.id ?? null
     }) AND (COALESCE(${
-      where.idGreaterThan ?? null
+      where?.idGreaterThan ?? null
     }, NULL) IS NULL OR jq."id" > ${
-      where.idGreaterThan ?? null
-    }) AND (COALESCE(${where.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
-      where.idLowerThan ?? null
-    }) AND (COALESCE(${where.name ?? null}, NULL) IS NULL OR jq."name" = ${
-      where.name ?? null
+      where?.idGreaterThan ?? null
     }) AND (COALESCE(${
-      where.nameLike ?? null
-    }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
+      where?.idLowerThan ?? null
+    }, NULL) IS NULL OR jq."id" < ${
+      where?.idLowerThan ?? null
+    }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+      where?.name ?? null
+    }) AND (COALESCE(${
+      where?.nameLike ?? null
+    }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
 `;
-    return result?.[0]?.genCount ?? 0;
+    return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param sql
-   * @param { StoreJobQueueWhere} where
+   * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<*[]>}
    */
-  jobQueueDelete: (sql, where) => sql`DELETE FROM "jobQueue" jq 
-WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
-    where.id ?? null
-  }) AND (COALESCE(${where.idGreaterThan ?? null}, NULL) IS NULL OR jq."id" > ${
-    where.idGreaterThan ?? null
-  }) AND (COALESCE(${where.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
-    where.idLowerThan ?? null
-  }) AND (COALESCE(${where.name ?? null}, NULL) IS NULL OR jq."name" = ${
-    where.name ?? null
+  jobQueueDelete: (sql, where) => sql`
+DELETE FROM "jobQueue" jq 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+    where?.id ?? null
   }) AND (COALESCE(${
-    where.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where.nameLike}%`})
+    where?.idGreaterThan ?? null
+  }, NULL) IS NULL OR jq."id" > ${
+    where?.idGreaterThan ?? null
+  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
+    where?.idLowerThan ?? null
+  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+    where?.name ?? null
+  }) AND (COALESCE(${
+    where?.nameLike ?? null
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
 `,
 
   /**
@@ -527,7 +533,7 @@ WHERE (COALESCE(${where.id ?? null}, NULL) IS NULL OR jq."id" = ${
   /**
    * @param sql
    * @param { StoreJobQueueInsertPartial_Input} value
-   * @param { StoreJobQueueWhere} where
+   * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<StoreJobQueue[]>}
    */
   jobQueueUpdate: (sql, value, where) => {
