@@ -119,6 +119,7 @@ package.json Depending on the type contains either script or path
 - [ArrayType](#code-genclassesarraytypemd)
 - [BooleanType](#code-genclassesbooleantypemd)
 - [DateType](#code-genclassesdatetypemd)
+- [FileType](#code-genclassesfiletypemd)
 - [GenericType](#code-genclassesgenerictypemd)
 - [NumberType](#code-genclassesnumbertypemd)
 - [ObjectType](#code-genclassesobjecttypemd)
@@ -1448,6 +1449,193 @@ _Inherited from
 
 **Returns:** _typeof baseData_
 
+<a name="code-genclassesfiletypemd"></a>
+
+[@lbu/code-gen - v0.0.47](#code-genreadmemd) ›
+[FileType](#code-genclassesfiletypemd)
+
+### Class: FileType
+
+#### Hierarchy
+
+- [TypeBuilder](#code-genclassestypebuildermd)
+
+  ↳ **FileType**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [data](#data)
+- [baseData](#static-basedata)
+
+##### Methods
+
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
+
+#### Constructors
+
+##### constructor
+
+\+ **new FileType**(`type`: string, `group?`: string, `name?`: string):
+_[FileType](#code-genclassesfiletypemd)_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
+
+Create a new TypeBuilder for the provided group
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
+
+**Returns:** _[FileType](#code-genclassesfiletypemd)_
+
+#### Properties
+
+##### data
+
+• **data**: _typeof baseData_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
+
+---
+
+##### `Static` baseData
+
+▪ **baseData**: _object_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
+
+###### Type declaration:
+
+- **defaultValue**? : _string_
+
+- **docString**: _string_
+
+- **group**? : _string_
+
+- **isOptional**: _boolean_
+
+- **name**? : _string_
+
+- **type**? : _string_
+
+#### Methods
+
+##### build
+
+▸ **build**(): _Record‹string, any›_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
+
+Returns a shallow copy of the data object
+
+**Returns:** _Record‹string, any›_
+
+---
+
+##### default
+
+▸ **default**(`rawString?`: string | boolean | number): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
+
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
+
+**Parameters:**
+
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
+
+**Returns:** _this_
+
+---
+
+##### docs
+
+▸ **docs**(`docValue`: string): _this_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
+
+Add a doc comment, some generators / types may support rendering this
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
+
+Value can be undefined
+
+**Returns:** _this_
+
+---
+
+##### primary
+
+▸ **primary**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
+
+Set this field as primary for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### searchable
+
+▸ **searchable**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
+
+Set this field as searchable for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### `Static` getBaseData
+
+▸ **getBaseData**(): _typeof baseData_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
+
+**Returns:** _typeof baseData_
+
 <a name="code-genclassesgenerictypemd"></a>
 
 [@lbu/code-gen - v0.0.47](#code-genreadmemd) ›
@@ -2629,6 +2817,7 @@ _Inherited from
 - [build](#build)
 - [default](#default)
 - [docs](#docs)
+- [files](#files)
 - [optional](#optional)
 - [params](#params)
 - [primary](#primary)
@@ -2754,6 +2943,22 @@ Add a doc comment, some generators / types may support rendering this
 | Name       | Type   |
 | ---------- | ------ |
 | `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### files
+
+▸ **files**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
+
+Type of accepted file parameters
+
+**Parameters:**
+
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
 
 **Returns:** _this_
 
@@ -3322,6 +3527,8 @@ default value. Also contains group and name information
 
   ↳ [DateType](#code-genclassesdatetypemd)
 
+  ↳ [FileType](#code-genclassesfiletypemd)
+
   ↳ [GenericType](#code-genclassesgenerictypemd)
 
   ↳ [NumberType](#code-genclassesnumbertypemd)
@@ -3517,6 +3724,7 @@ added and provided by the core.
 - [array](#array)
 - [bool](#bool)
 - [date](#date)
+- [file](#file)
 - [generic](#generic)
 - [number](#number)
 - [object](#object)
@@ -3619,6 +3827,20 @@ Registry of all type plugins
 | `name?` | string |
 
 **Returns:** _[DateType](#code-genclassesdatetypemd)_
+
+---
+
+##### file
+
+▸ **file**(`name?`: string): _[FileType](#code-genclassesfiletypemd)_
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[FileType](#code-genclassesfiletypemd)_
 
 ---
 

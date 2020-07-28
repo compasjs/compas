@@ -17,9 +17,6 @@ params: {{= "T." + model.params.reference.uniqueName + "_Input" }},
 {{ if (model.query) { }}
 query: T.{{= model.query.reference.uniqueName }}_Input,
 {{ } }}
-{{ if (model.body) { }}
-body: T.{{= model.body.reference.uniqueName }}_Input,
-{{ } }}
 options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}> = {},
 ): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}> {{ } else { }} QueryResult<any>{{ } }}  {
   options.enabled = (
@@ -63,7 +60,6 @@ options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.
     ) => {{= model.group }}Api.{{= model.name }}(
       {{= model.params ? "params, " : ""}}
       {{= model.query ? "query, " : "" }}
-      {{= model.body ? "body, " : "" }}
     ),
     options,
   );

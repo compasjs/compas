@@ -39,16 +39,19 @@ files,
 ) {
     checkApiClient();
 
-
-    {{ if (model.body) { }}
-        const data = body;
-        {{ } }}
-        {{ if (model.files) { }}
-        // eslint-disable-next-line
-        const data = new FormData();
-        for (const key of Object.keys(files)) {
-          data.set(key, files[key].data, files[key].name);
+    {{ if (model.files) { }}
+      // eslint-disable-next-line
+      const data = new FormData();
+      for (const key of Object.keys(files)) {
+        data.set(key, files[key].data, files[key].name);
+      }
+      {{ if (model.body) { }}
+        for (const key of Object.keys(body)) {
+          data.set(key, body[key];
         }
+      {{ } }}
+    {{ } else if (model.body) { }}
+      const data = body;
     {{ } }}
 
     const response = await _internalClient.request({
