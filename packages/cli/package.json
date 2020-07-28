@@ -1,6 +1,6 @@
 {
   "name": "@lbu/cli",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "CLI containing utilities and simple script runner",
   "main": "./index.js",
   "exports": "./index.js",
@@ -19,8 +19,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.49",
-    "@lbu/stdlib": "0.0.49",
+    "@lbu/insight": "0.0.50",
+    "@lbu/stdlib": "0.0.50",
     "c8": "7.2.1",
     "nodemon": "2.0.4",
     "tape": "5.0.1"
