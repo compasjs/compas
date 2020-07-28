@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.50](https://github.com/lightbasenl/lbu/releases/tag/v0.0.50)
+
+- code-gen: fix bug on `SelectWith` query identifiers
+
 ### [v0.0.49](https://github.com/lightbasenl/lbu/releases/tag/v0.0.49)
 
 - code-gen: fix syntax error in apiClient (introduced in v0.0.48)
