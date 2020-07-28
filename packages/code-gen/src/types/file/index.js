@@ -27,6 +27,7 @@ const fileType = {
   tsType: () => type,
   validator: () => `
 {{ /* Does nothing yet, but only allows to use optionals and defaults */ }}
+return value;
 `,
 };
 

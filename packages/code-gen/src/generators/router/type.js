@@ -118,7 +118,7 @@ export class RouteBuilder extends TypeBuilder {
       }
     }
 
-    if (this.filesBuilder && !this.bodyBuilder) {
+    if (this.filesBuilder) {
       result.files = buildOrInfer(this.filesBuilder);
 
       if (isNil(result.files.name)) {

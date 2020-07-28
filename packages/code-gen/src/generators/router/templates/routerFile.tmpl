@@ -105,22 +105,21 @@ const handlers = {
         ctx.validatedParams = {{= item.params.reference.group }}Validators.{{= item.params.reference.name }}(params);
         {{ } }}
 
-        {{ if (item.body || item.query) { }}
-        await internalBodyParsers.body(ctx);
+        {{ if (item.files) { }}
+          await internalBodyParsers.files(ctx);
+          ctx.validatedFiles = {{= item.files.reference.group }}Validators.{{= item.files.reference.name }}(ctx.request.files);
+        {{ } else if (item.body || item.query) { }}
+          await internalBodyParsers.body(ctx);
         {{ } }}
 
         {{ if (item.query) { }}
-        ctx.validatedQuery = {{= item.query.reference.group }}Validators.{{= item.query.reference.name }}(ctx.request.query);
+          ctx.validatedQuery = {{= item.query.reference.group }}Validators.{{= item.query.reference.name }}(ctx.request.query);
         {{ } }}
 
         {{ if (item.body) { }}
-        ctx.validatedBody = {{= item.body.reference.group }}Validators.{{= item.body.reference.name }}(ctx.request.body);
+          ctx.validatedBody = {{= item.body.reference.group }}Validators.{{= item.body.reference.name }}(ctx.request.body);
         {{ } }}
 
-        {{ if (item.files) { }}
-        await internalBodyParsers.files(ctx);
-        ctx.validatedFiles = {{= item.files.reference.group }}Validators.{{= item.files.reference.name }}(ctx.request.files);
-        {{ } }}
 
         if (_composed.{{= item.uniqueName }} === undefined) {
           const currentHandler = {{= item.group }}Handlers.{{= item.name }};

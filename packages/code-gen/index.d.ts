@@ -245,6 +245,8 @@ export class TypeCreator {
 
   date(name?: string): DateType;
 
+  file(name?: string): FileType;
+
   generic(name?: string): GenericType;
 
   number(name?: string): NumberType;
@@ -342,6 +344,11 @@ export class RouteBuilder extends TypeBuilder {
   body(builder: TypeBuilderLike): this;
 
   /**
+   * Type of accepted file parameters
+   */
+  files(builder: TypeBuilderLike): this;
+
+  /**
    * Route response type
    */
   response(builder: TypeBuilderLike): this;
@@ -424,6 +431,8 @@ export class BooleanType extends TypeBuilder {
 export class DateType extends TypeBuilder {
   defaultToNow(): this;
 }
+
+export class FileType extends TypeBuilder {}
 
 export class GenericType extends TypeBuilder {
   keys(key: TypeBuilderLike): this;
