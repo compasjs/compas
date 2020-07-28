@@ -87,7 +87,9 @@ function buildSqlSelectJoinType(data, item) {
       const relationMeta = {
         name: `${item.name}With${upperCaseFirst(rightSide.name)}`,
         whereType: undefined,
-        selectName: `${item.name}SelectWith${upperCaseFirst(rightSide.name)}`,
+        selectName: `${item.name}SelectWith${upperCaseFirst(
+          rel.substituteKey,
+        )}`,
         rightShortName: shortName(rightSide.name),
         rightName: rightSide.name,
         rightGroup: rightSide.group,
