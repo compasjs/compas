@@ -1,23 +1,24 @@
 {{ const url = model.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
+{{ const buildTypeQualifier = (uniqueName, inputType) => `${options.useTypescript ? 'import("./types").'  : ""}${uniqueName}${inputType ? "_Input" : ""}`; }}
 
 /**
  * {{= model.uniqueName }}
  * Tags: {{= model.tags.join(", ") }}
  * Docs: {{= model.docString }}
 {{ if (model.params) { }}
- * @param { {{= model.params.reference.uniqueName + "_Input" }}} params
+ * @param { {{= buildTypeQualifier(model.params.reference.uniqueName, true) }} } params
 {{ } }}
 {{ if (model.query) { }}
- * @param { {{= model.query.reference.uniqueName }}_Input} query
+ * @param { {{= buildTypeQualifier(model.query.reference.uniqueName, true) }} } query
 {{ } }}
 {{ if (model.body) { }}
- * @param { {{= model.body.reference.uniqueName }}_Input} body
+ * @param { {{= buildTypeQualifier(model.body.reference.uniqueName, true) }} } body
 {{ } }}
 {{ if (model.files) { }}
- * @param { {{= model.files.reference.uniqueName }}_Input} files
+ * @param { {{= buildTypeQualifier(model.files.reference.uniqueName, true) }} } files
 {{ } }}
 {{ if (model.response) { }}
- * @returns {Promise.<{{= model.response.reference.uniqueName }}>}
+ * @returns {Promise.<{{= buildTypeQualifier(model.response.reference.uniqueName, false) }}>}
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}

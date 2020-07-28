@@ -5,9 +5,9 @@
  * @param {*} value
  * @param {string} [propertyPath]
  {{ if (!options.validatorCollectErrors) { }}
- * @returns { {{= model.uniqueName }}}
+ * @returns { {{= options.useTypescript ? `import("./types").${model.uniqueName}` : model.uniqueName }}}
  {{ } else { }}
- * @returns { { errors: ({ key: string, info: object}[]|undefined), data: {{= model.uniqueName }}|undefined } }
+ * @returns { { errors: ({ key: string, info: object}[]|undefined), data: {{= options.useTypescript ? `import("./types").${model.uniqueName}` : model.uniqueName }}|undefined } }
  {{ } }}
  */
 {{= lowerCaseFirst(model.name) }}: (value, propertyPath = "$") => {
@@ -40,9 +40,7 @@ if (errorList.length > 0) {
      return { data: result };
    }
 }
-
 {{ } }}
 ((newline))
-
 },
 ((newline))
