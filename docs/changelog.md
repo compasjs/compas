@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.49](https://github.com/lightbasenl/lbu/releases/tag/v0.0.49)
+
+- code-gen: fix syntax error in apiClient (introduced in v0.0.48)
+
 ### [v0.0.48](https://github.com/lightbasenl/lbu/releases/tag/v0.0.48)
 
 - stdlib: mainFn exit with status(1) when catching errors
