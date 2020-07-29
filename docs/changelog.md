@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.51](https://github.com/lightbasenl/lbu/releases/tag/v0.0.51)
+
+- code-gen: support generating left join queries for oneToMany relations
+- code-gen: fix for Typescript not recognizing interfaces used in JS files
+
 ### [v0.0.50](https://github.com/lightbasenl/lbu/releases/tag/v0.0.50)
 
 - code-gen: fix bug on `SelectWith` query identifiers
