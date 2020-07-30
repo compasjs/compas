@@ -20,7 +20,7 @@
     "docsify-cli": "4.4.1",
     "form-data": "3.0.0",
     "lerna": "3.22.1",
-    "react-query": "2.5.8",
+    "react-query": "2.5.9",
     "typedoc": "0.17.8",
     "typedoc-plugin-markdown": "2.3.1",
     "typescript": "3.9.7"
