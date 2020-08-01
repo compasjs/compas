@@ -8506,10 +8506,10 @@ typedoc-default-themes@^0.10.2:
   dependencies:
     lunr "^2.3.8"
 
-typedoc-plugin-markdown@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-2.3.2.tgz#45db9bce7a0e278b816f7ddddba4490138a404bb"
-  integrity sha512-sbRTlqvO5m9Xqva8VxnXx3S0ZtTzo1YjdcUYJr1zo9fpo4hJV3jRc9XrxRTbI6a5X1u8hBDpXAmH98he0GU4GA==
+typedoc-plugin-markdown@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-2.4.0.tgz#276cf4d0e90b7f3c4892f3dec84c700acc7eaf98"
+  integrity sha512-m4eOwxSzeCbGNFzPDadNQcuMbkbc/45fgXsIP/m4K20i/8zVhCBmvoTxmKUqWYVTYc1BTtvQD5hY/qCueHoLFw==
   dependencies:
     fs-extra "^9.0.1"
     handlebars "^4.7.6"
