@@ -74,9 +74,4 @@ test("server/app", async (t) => {
     await closeTestApp(app);
     t.ok(!app._server.listening);
   });
-
-  t.test("close _server when not listening", async (t) => {
-    const result = closeTestApp(app);
-    t.equal(result, undefined);
-  });
 });
