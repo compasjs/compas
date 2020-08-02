@@ -1022,6 +1022,13 @@ interface SessionOptions {
    * will not work if options.genid present.
    */
   prefix?: string;
+
+  /**
+   * Tries to set the cookie domain and secure from the session _domain and _secure properties
+   * respectively. Defaults to false.
+   * Note that _domain and _secure are not returned when calling `ctx.session.toJSON()`.
+   */
+  supportOptionOverwrites?: boolean;
 }
 
 // ===========
@@ -1362,6 +1369,8 @@ export function sendFile(
  * Requires process.env.APP_KEYS
  * To generate a key use something like
  * node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+ * For more information read koa-session docs.
+ * See also the custom `supportOptionOverwrites` property on `SessionOptions`.
  */
 export function session(app: Application, options: SessionOptions): Middleware;
 
@@ -1377,4 +1386,4 @@ export function createTestAppAndClient(
 /**
  * Stops the server created with `createTestAppAndClient`
  */
-export function closeTestApp(app: Application): void | Promise<void>;
+export function closeTestApp(app: Application): Promise<void>;

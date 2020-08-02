@@ -14,11 +14,12 @@ export function createTestAppAndClient(app, axios) {
 
 /**
  * @param {Application} app
+ * @returns {Promise<void>}
  */
 export function closeTestApp(app) {
-  if (app._server && app._server.listening) {
-    return new Promise((resolve) => {
+  return new Promise((resolve) => {
+    if (app._server && app._server.listening) {
       app._server.close(resolve);
-    });
-  }
+    }
+  });
 }
