@@ -17,8 +17,8 @@ params: {{= "T." + model.params.reference.uniqueName + "_Input" }},
 {{ if (model.query) { }}
 query: T.{{= model.query.reference.uniqueName }}_Input,
 {{ } }}
-options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}> = {},
-): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}> {{ } else { }} QueryResult<any>{{ } }}  {
+options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, AppErrorResponse> = {},
+): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}, AppErrorResponse> {{ } else { }} QueryResult<any, AppErrorResponse>{{ } }}  {
   options.enabled = (
     options.enabled !== false
     {{ if (model.query && getRef(model.query.reference)) { }}
@@ -90,8 +90,8 @@ interface {{= upperCaseFirst(funcName) }}Props {
  * Docs: {{= model.docString }}
  */
 export function {{= funcName }}(
-  options: MutationOptions<{{= model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, {{= upperCaseFirst(funcName) }}Props> = {},
-): {{ if (model.response) { }} [MutateFunction<T.{{= model.response.reference.uniqueName }}, {{= upperCaseFirst(funcName) }}Props>, MutationResult<T.{{= model.response.reference.uniqueName }}>] {{ } else { }} [MutateFunction<any, {{= upperCaseFirst(funcName) }}Props>, MutationResult<any>] {{ } }} {
+  options: MutationOptions<{{= model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse> = {},
+): {{ if (model.response) { }} [MutateFunction<T.{{= model.response.reference.uniqueName }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<T.{{= model.response.reference.uniqueName }}, AppErrorResponse>] {{ } else { }} [MutateFunction<any, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<any, AppErrorResponse>] {{ } }} {
   return useMutation(
     (variables) => {{= model.group }}Api.{{= model.name }}(
       {{= model.params ? "variables.params, " : ""}}
