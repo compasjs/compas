@@ -370,31 +370,15 @@ export interface SessionStore {
   destroy(id: string): Promise<void>;
 
   /**
-   * Stop the background job
+   * Remove all expired sessions
    */
-  kill(): void;
-}
-
-export interface SessionStoreOptions {
-  /**
-   * Interval at which a background job runs to remove expired sessions
-   * Defaults to 45 minutes
-   */
-  cleanupInterval?: number;
-
-  /**
-   * Disable deletion interval completely
-   */
-  disableInterval?: boolean;
+  clean(): Promise<void>;
 }
 
 /**
- * Create a session store that can be used in combination with @lbu/server#session
+ * Create a session store compatible with @lbu/server#session
  */
-export function newSessionStore(
-  sql: postgresVendor.Sql<{}>,
-  opts?: SessionStoreOptions,
-): SessionStore;
+export function newSessionStore(sql: postgresVendor.Sql<{}>): SessionStore;
 
 /**
  * Migration directory

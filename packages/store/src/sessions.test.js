@@ -19,13 +19,13 @@ test("store/sessions", async (t) => {
   });
 
   t.test("get returns false on non existent id", async (t) => {
-    const store = newSessionStore(sql, { disableInterval: true });
+    const store = newSessionStore(sql);
 
     t.equal(await store.get(uuid()), false);
   });
 
   t.test("get returns set data", async (t) => {
-    const store = newSessionStore(sql, { disableInterval: true });
+    const store = newSessionStore(sql);
 
     const data = { foo: "bar" };
     await store.set(checkAutoDeleteId, data, 15);
@@ -36,7 +36,7 @@ test("store/sessions", async (t) => {
   });
 
   t.test("after destroy return false", async (t) => {
-    const store = newSessionStore(sql, { disableInterval: true });
+    const store = newSessionStore(sql);
     const id = uuid();
 
     const data = { foo: "bar" };
@@ -46,25 +46,24 @@ test("store/sessions", async (t) => {
     t.equal(await store.get(id), false);
   });
 
-  t.test("auto delete removes expired sessions", async (t) => {
+  t.test("store.clean removes expired sessions", async (t) => {
     t.equal(
       (
         await sql`SELECT *
-                       FROM "sessionStore"`
+                         FROM "sessionStore"`
       ).length,
       1,
     );
 
-    const store = newSessionStore(sql, { cleanupInterval: 5 });
-    await new Promise((r) => {
-      setTimeout(r, 20);
-    });
-    store.kill();
+    const store = newSessionStore(sql);
+    await store.clean();
 
     t.equal(
       (
-        await sql`SELECT *
-                       FROM "sessionStore"`
+        await sql`
+                  SELECT *
+                  FROM "sessionStore"
+         `
       ).length,
       0,
     );

@@ -1,27 +1,10 @@
 import { storeQueries } from "./generated/queries.js";
 
-const DELETE_INTERVAL = 45 * 60 * 1000; // 45 minutes
-
 /**
- *
- * @param sql
- * @param {object} [options]
- * @param {number} [options.cleanupInterval]
- * @param {boolean} [options.disableInterval]
+ * @param {Postgres} sql
  * @returns {SessionStore}
  */
-export function newSessionStore(sql, options) {
-  options = options || {};
-  options.cleanupInterval = options.cleanupInterval || DELETE_INTERVAL; // 45 minutes
-
-  let interval;
-
-  if (!options.disableInterval) {
-    interval = setInterval(() => {
-      storeQueries.sessionStoreDelete(sql, { expiresLowerThan: new Date() });
-    }, options.cleanupInterval);
-  }
-
+export function newSessionStore(sql) {
   return {
     get: async (sid) => {
       const [data] = await storeQueries.sessionStoreSelect(sql, { id: sid });
@@ -43,8 +26,10 @@ export function newSessionStore(sql, options) {
     destroy: async (sid) => {
       await storeQueries.sessionStoreDelete(sql, { id: sid });
     },
-    kill: () => {
-      clearInterval(interval);
+    clean: () => {
+      return storeQueries.sessionStoreDelete(sql, {
+        expiresLowerThan: new Date(),
+      });
     },
   };
 }

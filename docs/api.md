@@ -8020,7 +8020,6 @@ case-insensitive.
 - [MigrateContext](#storeinterfacesmigratecontextmd)
 - [MigrateFile](#storeinterfacesmigratefilemd)
 - [SessionStore](#storeinterfacessessionstoremd)
-- [SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)
 - [StoreFileStore](#storeinterfacesstorefilestoremd)
 
 #### Type aliases
@@ -8401,18 +8400,16 @@ Will attempt database creation if `createIfNotExists` is set to true
 
 #### newSessionStore
 
-▸ **newSessionStore**(`sql`: postgresVendor.Sql‹object›, `opts?`:
-[SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)):
+▸ **newSessionStore**(`sql`: postgresVendor.Sql‹object›):
 _[SessionStore](#storeinterfacessessionstoremd)_
 
-Create a session store that can be used in combination with @lbu/server#session
+Create a session store compatible with @lbu/server#session
 
 **Parameters:**
 
-| Name    | Type                                                         |
-| ------- | ------------------------------------------------------------ |
-| `sql`   | postgresVendor.Sql‹object›                                   |
-| `opts?` | [SessionStoreOptions](#storeinterfacessessionstoreoptionsmd) |
+| Name  | Type                       |
+| ----- | -------------------------- |
+| `sql` | postgresVendor.Sql‹object› |
 
 **Returns:** _[SessionStore](#storeinterfacessessionstoremd)_
 
@@ -9063,12 +9060,22 @@ Stripped down from @lbu/server SessionStore
 
 ##### Methods
 
+- [clean](#clean)
 - [destroy](#destroy)
 - [get](#get)
-- [kill](#kill)
 - [set](#set)
 
 #### Methods
+
+##### clean
+
+▸ **clean**(): _Promise‹void›_
+
+Remove all expired sessions
+
+**Returns:** _Promise‹void›_
+
+---
 
 ##### destroy
 
@@ -9098,16 +9105,6 @@ Stripped down from @lbu/server SessionStore
 
 ---
 
-##### kill
-
-▸ **kill**(): _void_
-
-Stop the background job
-
-**Returns:** _void_
-
----
-
 ##### set
 
 ▸ **set**(`id`: string, `session`: object, `age`: number): _Promise‹void›_
@@ -9121,41 +9118,6 @@ Stop the background job
 | `age`     | number |
 
 **Returns:** _Promise‹void›_
-
-<a name="storeinterfacessessionstoreoptionsmd"></a>
-
-[@lbu/store - v0.0.51](#storereadmemd) ›
-[SessionStoreOptions](#storeinterfacessessionstoreoptionsmd)
-
-### Interface: SessionStoreOptions
-
-#### Hierarchy
-
-- **SessionStoreOptions**
-
-#### Index
-
-##### Properties
-
-- [cleanupInterval](#optional-cleanupinterval)
-- [disableInterval](#optional-disableinterval)
-
-#### Properties
-
-##### `Optional` cleanupInterval
-
-• **cleanupInterval**? : _number_
-
-Interval at which a background job runs to remove expired sessions Defaults to
-45 minutes
-
----
-
-##### `Optional` disableInterval
-
-• **disableInterval**? : _boolean_
-
-Disable deletion interval completely
 
 <a name="storeinterfacesstorefilestoremd"></a>
 
