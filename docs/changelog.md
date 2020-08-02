@@ -1,5 +1,19 @@
 # CHANGELOG
 
+### [v0.0.52](https://github.com/lightbasenl/lbu/releases/tag/v0.0.52)
+
+- code-gen: add AppErrorResponse to generated reactQueries.ts
+- store: remove auto delete interval from session store
+- store: provide clean method on session store
+- server: support custom \_domain and \_secure on session cookies
+- server: fork koa-compose
+
+##### Breaking
+
+- Run `const store = newSessionStore(); store.clean()` in a user scheduled job.
+  The session store does not automatically cleanup old sessions
+- `closeTestApp` always returns a Promise
+
 ### [v0.0.51](https://github.com/lightbasenl/lbu/releases/tag/v0.0.51)
 
 - code-gen: support generating left join queries for oneToMany relations
