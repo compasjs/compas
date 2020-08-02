@@ -2,14 +2,14 @@
  * @param {Application} app
  * @param {AxiosInstance} axios
  */
-export function createTestAppAndClient(app, axios) {
-  return new Promise((resolve) => {
+export async function createTestAppAndClient(app, axios) {
+  await new Promise((resolve) => {
     app._server = app.listen(() => {
-      const { port } = app._server.address();
-      axios.defaults.baseURL = `http://127.0.0.1:${port}/`;
       resolve();
     });
   });
+  const { port } = app._server.address();
+  axios.defaults.baseURL = `http://127.0.0.1:${port}/`;
 }
 
 /**
