@@ -5876,8 +5876,8 @@ _any_
 
 #### closeTestApp
 
-▸ **closeTestApp**(`app`: [Application](#serverclassesapplicationmd)): _void |
-Promise‹void›_
+▸ **closeTestApp**(`app`: [Application](#serverclassesapplicationmd)):
+_Promise‹void›_
 
 Stops the server created with `createTestAppAndClient`
 
@@ -5887,7 +5887,7 @@ Stops the server created with `createTestAppAndClient`
 | ----- | ------------------------------------------ |
 | `app` | [Application](#serverclassesapplicationmd) |
 
-**Returns:** _void | Promise‹void›_
+**Returns:** _Promise‹void›_
 
 ---
 
@@ -5971,6 +5971,8 @@ SessionOptions): _[Middleware](#middleware)_
 
 Session middleware Requires process.env.APP_KEYS To generate a key use something
 like node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+For more information read koa-session docs. See also the custom
+`supportOptionOverwrites` property on `SessionOptions`.
 
 **Parameters:**
 
