@@ -1,7 +1,7 @@
 {
 {{ for (const key of Object.keys(model.keys)) { }}
   {{ const val = model.keys[key]; }}
-  {{ let rightSide = typeExec({ type: val.type, model: val, isInputType }).trim(); }}
+  {{ let rightSide = typeExec({ type: val.type, model: val, isInputType, options }).trim(); }}
   {{ let separator = ":"; }}
   {{ if (rightSide.endsWith("|undefined")) { }}
     {{ rightSide = rightSide.substring(0, rightSide.length -10); }}

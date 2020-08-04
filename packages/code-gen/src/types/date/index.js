@@ -38,11 +38,15 @@ class DateType extends TypeBuilder {
   }
 }
 
+// TODO: Hacky!
+//  Find a better way to do type exceptions when needed by the frontend
 const dateType = {
   name: "date",
   class: DateType,
-  jsType: () => `{{ if (it.isInputType) { }}string{{ } else { }}Date{{ } }}`,
-  tsType: () => `{{ if (it.isInputType) { }}string{{ } else { }}Date{{ } }}`,
+  jsType: () =>
+    `{{ if (it.isInputType || options.enabledGenerators.indexOf("reactQuery") !== -1) { }}string{{ } else { }}Date{{ } }}`,
+  tsType: () =>
+    `{{ if (it.isInputType || options.enabledGenerators.indexOf("reactQuery") !== -1) { }}string{{ } else { }}Date{{ } }}`,
   validator: () => `
 {{ const fnNumber = ctx.anonFn(${stringType}); }}
 
