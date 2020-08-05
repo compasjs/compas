@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### [v0.0.53](https://github.com/lightbasenl/lbu/releases/tag/v0.0.52)
+
+- docs: more docs for @lbu/server and @lbu/store
+- docs: add sitemap.xml
+- deps: bump various dependencies
+- code-gen: fix FormData package usage in the apiClient
+- code-gen: fix headers send by the apiClient when using FormData
+- code-gen: render Date as type string in all cases for frontend generation
+- stdlib: improve benchmark performance
+
 ### [v0.0.52](https://github.com/lightbasenl/lbu/releases/tag/v0.0.52)
 
 - code-gen: add AppErrorResponse to generated reactQueries.ts
