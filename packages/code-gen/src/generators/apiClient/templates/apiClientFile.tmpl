@@ -2,8 +2,7 @@
 ((newline))
 
 {{ if (options.enabledGenerators.indexOf("router") !== -1) { }}
-import formData from "form-data";
-const { FormData } = formData;
+import FormData from "form-data";
 {{ } }}
 
 let _internalClient = undefined;
