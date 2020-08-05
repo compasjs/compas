@@ -44,11 +44,11 @@ files,
       // eslint-disable-next-line
       const data = new FormData();
       for (const key of Object.keys(files)) {
-        data.set(key, files[key].data, files[key].name);
+        data.append(key, files[key].data, files[key].name);
       }
       {{ if (model.body) { }}
         for (const key of Object.keys(body)) {
-          data.set(key, body[key]);
+          data.append(key, body[key]);
         }
       {{ } }}
     {{ } else if (model.body) { }}
@@ -60,6 +60,9 @@ files,
       method: "{{= model.method.toLowerCase() }}",
       params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }}
+      {{ if (model.files) { }}
+      headers: data.getHeaders(),
+      {{ } }}
     });
 
     return response.data;
