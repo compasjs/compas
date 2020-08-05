@@ -8,9 +8,9 @@ Per module documentation, generated from the Typescript declaration files.
 
 <a name="clireadmemd"></a>
 
-[@lbu/cli - v0.0.51](#clireadmemd)
+[@lbu/cli - v0.0.52](#clireadmemd)
 
-## @lbu/cli - v0.0.51
+## @lbu/cli - v0.0.52
 
 ### Index
 
@@ -41,7 +41,7 @@ Return collection of available named scripts
 
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.51](#clireadmemd) ›
+[@lbu/cli - v0.0.52](#clireadmemd) ›
 [CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
@@ -88,7 +88,7 @@ package.json Depending on the type contains either script or path
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.51](#clireadmemd) ›
+[@lbu/cli - v0.0.52](#clireadmemd) ›
 [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
@@ -105,9 +105,9 @@ package.json Depending on the type contains either script or path
 
 <a name="code-genreadmemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd)
+[@lbu/code-gen - v0.0.52](#code-genreadmemd)
 
-## @lbu/code-gen - v0.0.51
+## @lbu/code-gen - v0.0.52
 
 ### Index
 
@@ -237,7 +237,7 @@ Load a LBU structure from an LBU enabled API
 
 <a name="code-genclassesanyoftypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [AnyOfType](#code-genclassesanyoftypemd)
 
 ### Class: AnyOfType
@@ -439,7 +439,7 @@ _Inherited from
 
 <a name="code-genclassesanytypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [AnyType](#code-genclassesanytypemd)
 
 ### Class: AnyType
@@ -656,7 +656,7 @@ _Inherited from
 
 <a name="code-genclassesappmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) › [App](#code-genclassesappmd)
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) › [App](#code-genclassesappmd)
 
 ### Class: App
 
@@ -793,7 +793,7 @@ Create a new App instance and inits generators
 
 <a name="code-genclassesarraytypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [ArrayType](#code-genclassesarraytypemd)
 
 ### Class: ArrayType
@@ -1040,7 +1040,7 @@ _Inherited from
 
 <a name="code-genclassesbooleantypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [BooleanType](#code-genclassesbooleantypemd)
 
 ### Class: BooleanType
@@ -1255,7 +1255,7 @@ _Inherited from
 
 <a name="code-genclassesdatetypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [DateType](#code-genclassesdatetypemd)
 
 ### Class: DateType
@@ -1451,7 +1451,7 @@ _Inherited from
 
 <a name="code-genclassesfiletypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [FileType](#code-genclassesfiletypemd)
 
 ### Class: FileType
@@ -1638,7 +1638,7 @@ _Inherited from
 
 <a name="code-genclassesgenerictypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [GenericType](#code-genclassesgenerictypemd)
 
 ### Class: GenericType
@@ -1855,7 +1855,7 @@ _Inherited from
 
 <a name="code-genclassesnumbertypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [NumberType](#code-genclassesnumbertypemd)
 
 ### Class: NumberType
@@ -2115,7 +2115,7 @@ _Inherited from
 
 <a name="code-genclassesobjecttypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [ObjectType](#code-genclassesobjecttypemd)
 
 ### Class: ObjectType
@@ -2350,7 +2350,7 @@ _Inherited from
 
 <a name="code-genclassesreferencetypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [ReferenceType](#code-genclassesreferencetypemd)
 
 ### Class: ReferenceType
@@ -2537,7 +2537,7 @@ _Inherited from
 
 <a name="code-genclassesrelationtypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [RelationType](#code-genclassesrelationtypemd)
 
 ### Class: RelationType
@@ -2787,7 +2787,7 @@ _Inherited from
 
 <a name="code-genclassesroutebuildermd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [RouteBuilder](#code-genclassesroutebuildermd)
 
 ### Class: RouteBuilder
@@ -3079,7 +3079,7 @@ _Inherited from
 
 <a name="code-genclassesroutecreatormd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [RouteCreator](#code-genclassesroutecreatormd)
 
 ### Class: RouteCreator
@@ -3204,7 +3204,7 @@ PUT route
 
 <a name="code-genclassesstringtypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [StringType](#code-genclassesstringtypemd)
 
 ### Class: StringType
@@ -3503,7 +3503,7 @@ _Inherited from
 
 <a name="code-genclassestypebuildermd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [TypeBuilder](#code-genclassestypebuildermd)
 
 ### Class: TypeBuilder
@@ -3692,7 +3692,7 @@ Set this field as searchable for the 'sql' plugin
 
 <a name="code-genclassestypecreatormd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [TypeCreator](#code-genclassestypecreatormd)
 
 ### Class: TypeCreator
@@ -3972,7 +3972,7 @@ Return a list of type plugins that have the specified property
 
 <a name="code-genclassesuuidtypemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [UuidType](#code-genclassesuuidtypemd)
 
 ### Class: UuidType
@@ -4161,7 +4161,7 @@ _Inherited from
 
 <a name="code-geninterfacesappoptsmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [AppOpts](#code-geninterfacesappoptsmd)
 
 ### Interface: AppOpts
@@ -4184,7 +4184,7 @@ _Inherited from
 
 <a name="code-geninterfacesgeneratedfilemd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [GeneratedFile](#code-geninterfacesgeneratedfilemd)
 
 ### Interface: GeneratedFile
@@ -4218,7 +4218,7 @@ Generated source string
 
 <a name="code-geninterfacesgenerateoptsmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [GenerateOpts](#code-geninterfacesgenerateoptsmd)
 
 ### Interface: GenerateOpts
@@ -4301,7 +4301,7 @@ Enable Typescript for the generators that support it
 
 <a name="code-geninterfacesgeneratorpluginmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
 
 ### Interface: GeneratorPlugin
@@ -4388,7 +4388,7 @@ Add dynamic types to app. Can be called multiple times
 
 <a name="code-geninterfacestypebuilderlikearraymd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd)
 
 ### Interface: TypeBuilderLikeArray
@@ -5454,7 +5454,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypebuilderlikeobjectmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)
 
 ### Interface: TypeBuilderLikeObject
@@ -5467,7 +5467,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypepluginmd"></a>
 
-[@lbu/code-gen - v0.0.51](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.52](#code-genreadmemd) ›
 [TypePlugin](#code-geninterfacestypepluginmd)
 
 ### Interface: TypePlugin ‹**T**›
@@ -5543,9 +5543,9 @@ Return the template that should be used to validate this type
 
 <a name="insightreadmemd"></a>
 
-[@lbu/insight - v0.0.51](#insightreadmemd)
+[@lbu/insight - v0.0.52](#insightreadmemd)
 
-## @lbu/insight - v0.0.51
+## @lbu/insight - v0.0.52
 
 ### Index
 
@@ -5659,7 +5659,7 @@ https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memor
 
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.51](#insightreadmemd) ›
+[@lbu/insight - v0.0.52](#insightreadmemd) ›
 [Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
@@ -5729,7 +5729,7 @@ Check if this logger is using the pretty printer or NDJSON printer
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.51](#insightreadmemd) ›
+[@lbu/insight - v0.0.52](#insightreadmemd) ›
 [LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
@@ -5754,7 +5754,7 @@ Context that should be logged in all log lines. e.g a common request id.
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.51](#insightreadmemd) ›
+[@lbu/insight - v0.0.52](#insightreadmemd) ›
 [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
@@ -5803,9 +5803,9 @@ The stream to write the logs to
 
 <a name="serverreadmemd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd)
+[@lbu/server - v0.0.52](#serverreadmemd)
 
-## @lbu/server - v0.0.51
+## @lbu/server - v0.0.52
 
 ### Index
 
@@ -5987,7 +5987,7 @@ For more information read koa-session docs. See also the custom
 
 <a name="serverclassesapplicationmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [Application](#serverclassesapplicationmd)
 
 ### Class: Application ‹**StateT, CustomT**›
@@ -6717,7 +6717,7 @@ _Inherited from
 
 <a name="serverinterfacesapperrorhandlermd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [AppErrorHandler](#serverinterfacesapperrorhandlermd)
 
 ### Interface: AppErrorHandler
@@ -6747,7 +6747,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacesbodyparserpairmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [BodyParserPair](#serverinterfacesbodyparserpairmd)
 
 ### Interface: BodyParserPair
@@ -6777,7 +6777,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescorsoptionsmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [CorsOptions](#serverinterfacescorsoptionsmd)
 
 ### Interface: CorsOptions
@@ -6848,7 +6848,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescustomerrorhandlermd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 
 ### Interface: CustomErrorHandler
@@ -6876,7 +6876,7 @@ Return truthy when handled or falsey when skipped
 
 <a name="serverinterfaceserrorhandleroptionsmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
 
 ### Interface: ErrorHandlerOptions
@@ -6920,7 +6920,7 @@ Called before all others to let the user handle their own errors
 
 <a name="serverinterfacesgetappoptionsmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [GetAppOptions](#serverinterfacesgetappoptionsmd)
 
 ### Interface: GetAppOptions
@@ -6982,7 +6982,7 @@ Trust proxy headers
 
 <a name="serverinterfacesheaderoptionsmd"></a>
 
-[@lbu/server - v0.0.51](#serverreadmemd) ›
+[@lbu/server - v0.0.52](#serverreadmemd) ›
 [HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 ### Interface: HeaderOptions
@@ -7007,9 +7007,9 @@ Trust proxy headers
 
 <a name="stdlibreadmemd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd)
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd)
 
-## @lbu/stdlib - v0.0.51
+## @lbu/stdlib - v0.0.52
 
 ### Index
 
@@ -7601,7 +7601,7 @@ unFlatten({ "foo.bar": 2 });
 
 <a name="stdlibclassesapperrormd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
 
 ### Class: AppError ‹**T**›
 
@@ -7848,7 +7848,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd) ›
 [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
@@ -7871,7 +7871,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd) ›
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
@@ -7907,7 +7907,7 @@ Skip node_modules directory, true by default
 
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd) ›
 [TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
@@ -7957,7 +7957,7 @@ Compiled template functions
 
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.51](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.52](#stdlibreadmemd) ›
 [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
@@ -8001,9 +8001,9 @@ case-insensitive.
 
 <a name="storereadmemd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd)
+[@lbu/store - v0.0.52](#storereadmemd)
 
-## @lbu/store - v0.0.51
+## @lbu/store - v0.0.52
 
 ### Index
 
@@ -8488,7 +8488,7 @@ Sync deleted files to the minio bucket
 
 <a name="storeclassesfilecachemd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) › [FileCache](#storeclassesfilecachemd)
+[@lbu/store - v0.0.52](#storereadmemd) › [FileCache](#storeclassesfilecachemd)
 
 ### Class: FileCache
 
@@ -8582,7 +8582,7 @@ exist, the error is propagated to the caller
 
 <a name="storeclassesjobqueueworkermd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [JobQueueWorker](#storeclassesjobqueueworkermd)
 
 ### Class: JobQueueWorker
@@ -8698,7 +8698,7 @@ fetched
 
 <a name="storeinterfacesfilecacheoptionsmd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [FileCacheOptions](#storeinterfacesfilecacheoptionsmd)
 
 ### Interface: FileCacheOptions
@@ -8732,7 +8732,7 @@ Maximum byte size of a file to be stored in memory
 
 <a name="storeinterfacesfilestorecontextmd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [FileStoreContext](#storeinterfacesfilestorecontextmd)
 
 ### Interface: FileStoreContext
@@ -8769,7 +8769,7 @@ Maximum byte size of a file to be stored in memory
 
 <a name="storeinterfacesjobdatamd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) › [JobData](#storeinterfacesjobdatamd)
+[@lbu/store - v0.0.52](#storereadmemd) › [JobData](#storeinterfacesjobdatamd)
 
 ### Interface: JobData
 
@@ -8821,7 +8821,7 @@ Raw data for a specific job
 
 <a name="storeinterfacesjobinputmd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) › [JobInput](#storeinterfacesjobinputmd)
+[@lbu/store - v0.0.52](#storereadmemd) › [JobInput](#storeinterfacesjobinputmd)
 
 ### Interface: JobInput
 
@@ -8872,7 +8872,7 @@ Defaults to now
 
 <a name="storeinterfacesjobqueueworkeroptionsmd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)
 
 ### Interface: JobQueueWorkerOptions
@@ -8927,7 +8927,7 @@ Determine the poll interval in milliseconds if the queue was empty. Defaults to
 
 <a name="storeinterfacesmigratecontextmd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [MigrateContext](#storeinterfacesmigratecontextmd)
 
 ### Interface: MigrateContext
@@ -8973,7 +8973,7 @@ Information used for doing migrations
 
 <a name="storeinterfacesmigratefilemd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [MigrateFile](#storeinterfacesmigratefilemd)
 
 ### Interface: MigrateFile
@@ -9047,7 +9047,7 @@ Internal representation of a migration file
 
 <a name="storeinterfacessessionstoremd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [SessionStore](#storeinterfacessessionstoremd)
 
 ### Interface: SessionStore
@@ -9123,7 +9123,7 @@ Remove all expired sessions
 
 <a name="storeinterfacesstorefilestoremd"></a>
 
-[@lbu/store - v0.0.51](#storereadmemd) ›
+[@lbu/store - v0.0.52](#storereadmemd) ›
 [StoreFileStore](#storeinterfacesstorefilestoremd)
 
 ### Interface: StoreFileStore
