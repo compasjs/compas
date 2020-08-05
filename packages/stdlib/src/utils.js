@@ -114,25 +114,24 @@ function isMainFn(meta) {
 const benchmarkResults = [];
 
 class Benchmarker {
+  static iterationBase = [1, 2, 5];
+
   /**
    * All iterations we can try to execute
    */
-  static iterations = [
-    5,
-    10,
-    50,
-    100,
-    200,
-    500,
-    1000,
-    5000,
-    10000,
-    1_000_000,
-    5_000_000,
-    10_000_000,
-    50_000_000,
-    100_000_000,
-  ];
+  static iterations = Array.from(
+    { length: Benchmarker.iterationBase.length * 9 },
+    (_, idx) => {
+      const base =
+        Benchmarker.iterationBase[idx % Benchmarker.iterationBase.length];
+      const times = Math.max(
+        1,
+        Math.pow(10, Math.floor(idx / Benchmarker.iterationBase.length)),
+      );
+
+      return base * times;
+    },
+  );
 
   currentIdx = 0;
   N = 0;
@@ -159,9 +158,19 @@ class Benchmarker {
         benchmarkResults.push({
           name: this.name,
           N: this.N,
-          operationTimeNs: String(diff / BigInt(this.N)),
+          operationTimeNs: (Number(diff) / this.N).toFixed(0),
         });
         break;
+      }
+
+      if (diff < 50_00_000) {
+        i += 4;
+      } else if (diff < 100_000_000) {
+        i += 3;
+      } else if (diff < 200_000_000) {
+        i += 2;
+      } else if (diff < 300_000_000) {
+        i += 1;
       }
     }
   }
@@ -184,7 +193,6 @@ export function bench(name, cb) {
 export function logBenchResults(logger) {
   let longestName = 0;
   let longestOperationTimeBeforeDot = 0;
-  let longestOperationTimeAfterDot = 0;
 
   for (const bench of benchmarkResults) {
     if (bench.name.length > longestName) {
@@ -195,13 +203,9 @@ export function logBenchResults(logger) {
     // This results in easier to interpret results
     const operationTimeSplit = bench.operationTimeNs.split(".");
     bench.operationTimeBeforeDot = operationTimeSplit[0];
-    bench.operationTimeAfterDot = operationTimeSplit[1] ?? "";
 
     if (bench.operationTimeBeforeDot.length > longestOperationTimeBeforeDot) {
       longestOperationTimeBeforeDot = bench.operationTimeBeforeDot.length;
-    }
-    if (bench.operationTimeAfterDot.length > longestOperationTimeAfterDot) {
-      longestOperationTimeAfterDot = bench.operationTimeAfterDot.length;
     }
   }
 
@@ -212,11 +216,6 @@ export function logBenchResults(logger) {
         " ",
       )}  iterations   ${bench.operationTimeBeforeDot.padStart(
         longestOperationTimeBeforeDot,
-        " ",
-      )}${
-        bench.operationTimeAfterDot.length > 0 ? "." : " "
-      }${bench.operationTimeAfterDot.padEnd(
-        longestOperationTimeAfterDot,
         " ",
       )}  ns/op`,
     );
