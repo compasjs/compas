@@ -1,6 +1,10 @@
 # CHANGELOG
 
-### [v0.0.53](https://github.com/lightbasenl/lbu/releases/tag/v0.0.52)
+### [v0.0.54](https://github.com/lightbasenl/lbu/releases/tag/v0.0.54)
+
+- code-gen: hotfix apiClient body template error (missing comma)
+
+### [v0.0.53](https://github.com/lightbasenl/lbu/releases/tag/v0.0.53)
 
 - docs: more docs for @lbu/server and @lbu/store
 - docs: add sitemap.xml
