@@ -59,7 +59,7 @@ files,
       url: `{{= url }}`,
       method: "{{= model.method.toLowerCase() }}",
       params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
-      data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }}
+      data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }},
       {{ if (model.files) { }}
       headers: data.getHeaders(),
       {{ } }}
