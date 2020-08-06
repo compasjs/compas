@@ -1,6 +1,6 @@
 {
   "name": "@lbu/store",
-  "version": "0.0.53",
+  "version": "0.0.54",
   "description": "Postgres & S3-compatible wrappers for common things",
   "main": "./index.js",
   "exports": "./index.js",
@@ -15,8 +15,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.53",
-    "@lbu/stdlib": "0.0.53",
+    "@lbu/insight": "0.0.54",
+    "@lbu/stdlib": "0.0.54",
     "@types/minio": "7.0.6",
     "mime-types": "2.1.27",
     "minio": "7.0.16",
