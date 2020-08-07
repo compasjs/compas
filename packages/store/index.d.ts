@@ -248,11 +248,11 @@ export class FileCache {
    * If the file store throws an error / it doesn't exist, the error is propagated to the
    * caller
    */
-  getFileSteam(
+  public getStreamFn: (
     file: StoreFileStore,
     start?: number,
     end?: number,
-  ): Promise<{ stream: NodeJS.ReadStream; cacheControl: string }>;
+  ) => Promise<{ stream: NodeJS.ReadStream; cacheControl: string }>;
 
   /**
    * Remove a file from cache, but not from local disk
