@@ -20,7 +20,7 @@ query: T.{{= model.query.reference.uniqueName }}_Input,
 options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, AppErrorResponse> = {},
 ): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}, AppErrorResponse> {{ } else { }} QueryResult<any, AppErrorResponse>{{ } }}  {
   options.enabled = (
-    options.enabled !== false
+    (options.enabled !== false && options.enabled !== undefined)
     {{ if (model.query && getRef(model.query.reference)) { }}
       {{ const ref = getRef(model.query.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
