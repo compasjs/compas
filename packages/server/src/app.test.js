@@ -1,4 +1,4 @@
-import { AppError } from "@lbu/stdlib";
+import { AppError, pathJoin, uuid } from "@lbu/stdlib";
 import Axios from "axios";
 import test from "tape";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
@@ -12,6 +12,8 @@ test("server/app", async (t) => {
       throw AppError.serverError({ foo: true });
     } else if (ctx.request.path === "/wrap-500") {
       throw new Error("o.0");
+    } else if (ctx.request.path === "/200") {
+      ctx.body = {};
     }
 
     return next();
@@ -68,6 +70,33 @@ test("server/app", async (t) => {
         info: {},
       });
     }
+  });
+
+  t.test("consistent x-request-id handling", async (t) => {
+    const response = await client.get("/200");
+    const header = response.headers["x-request-id"];
+
+    t.ok(uuid.isValid(header));
+
+    const secondResponse = await client.get("/200", {
+      headers: { "x-request-id": header },
+    });
+
+    t.equal(header, secondResponse.headers["x-request-id"]);
+  });
+
+  t.test("consistent x-request-id with generated api client", async (t) => {
+    const imp = await import(
+      pathJoin(process.cwd(), "./generated/app/apiClient.js")
+    );
+    imp.createApiClient(client);
+
+    const response = await client.get("/200");
+    const secondResponse = await client.get("/200");
+    t.equal(
+      response.headers["x-request-id"],
+      secondResponse.headers["x-request-id"],
+    );
   });
 
   t.test("close _server", async (t) => {

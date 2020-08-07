@@ -11,11 +11,11 @@ export function logMiddleware() {
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
 
-    let requestId = ctx.get("X-Request-Id");
+    let requestId = ctx.get("x-request-id");
     if (isNil(requestId) || requestId.length === 0) {
       requestId = uuid();
     }
-    ctx.set("X-Request-Id", requestId);
+    ctx.set("x-request-id", requestId);
 
     ctx.log = bindLoggerContext(logger, {
       type: "http",
