@@ -1,4 +1,4 @@
-import { isNil, isProduction, merge, uuid } from "@lbu/stdlib";
+import { isNil, isProduction, isStaging, merge, uuid } from "@lbu/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
@@ -42,7 +42,7 @@ export function session(app, opts) {
  *
  */
 function getKeys() {
-  if (isProduction()) {
+  if (!isProduction()) {
     return [process.env.APP_NAME];
   }
 
@@ -60,16 +60,36 @@ function getKeys() {
  * @param options
  */
 function getSessionExternalKey(options) {
+  const staging = isStaging();
+  const localhostRegex = /^http:\/\/localhost:\d{1,6}$/gi;
+
   return {
     get: (ctx) => {
       return ctx.cookies.get(options.key, options);
     },
     set: (ctx, value) => {
-      return ctx.cookies.set(options.key, value, {
-        ...options,
-        ...(isNil(ctx.session._domain) ? {} : { domain: ctx.session._domain }),
-        ...(isNil(ctx.session._secure) ? {} : { secure: ctx.session._secure }),
-      });
+      if (staging) {
+        ctx.cookies.set(options.key, value, {
+          ...options,
+          sameSite: "Lax",
+        });
+
+        const header = ctx.get("origin");
+        if (localhostRegex.test(header)) {
+          // Set cookie for the requesting localhost domain
+          // Allowing server side rendering access to the cookies
+          ctx.cookies.set(options.key, value, {
+            ...options,
+            secure: false,
+            sameSite: "Lax",
+            domain: header.substring(7),
+          });
+        }
+
+        return;
+      }
+
+      return ctx.cookies.set(options.key, value, options);
     },
   };
 }
