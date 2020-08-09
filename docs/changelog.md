@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [v0.0.55](https://github.com/lightbasenl/lbu/releases/tag/v0.0.54)
+
+- code-gen: fix reactQuery disabled options
+- code-gen: add getGroupsThatIncludeType utility
+- store: fix types for FileCache
+- stdlib: add isProduction and isStaging helpers
+- server: cors allow localhost when `isStaging`
+- server: set localhost cookies when server runs on staging
+
 ### [v0.0.54](https://github.com/lightbasenl/lbu/releases/tag/v0.0.54)
 
 - code-gen: hotfix apiClient body template error (missing comma)
