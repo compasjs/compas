@@ -21,7 +21,7 @@
     "form-data": "3.0.0",
     "lerna": "3.22.1",
     "react-query": "2.5.13",
-    "typedoc": "0.17.8",
+    "typedoc": "0.18.0",
     "typedoc-plugin-markdown": "2.4.0",
     "typescript": "3.9.7"
   },
