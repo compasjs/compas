@@ -1,5 +1,5 @@
 import { getApp } from "@lbu/server";
-import { AppError } from "@lbu/stdlib";
+import { AppError, isProduction, isStaging } from "@lbu/stdlib";
 import { router, setBodyParsers } from "./generated/router.js";
 import { validatorSetError } from "./generated/validators.js";
 import { app, bodyParsers } from "./services/index.js";
@@ -10,10 +10,10 @@ import { app, bodyParsers } from "./services/index.js";
 export function createApp() {
   return getApp({
     errorOptions: {
-      leakError: process.env.NODE_ENV !== "production",
+      leakError: isStaging(),
     },
     headers: {},
-    proxy: process.env.NODE_ENV === "production",
+    proxy: isProduction(),
   });
 }
 

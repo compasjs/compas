@@ -1,5 +1,6 @@
 import { newLogger } from "@lbu/insight";
 import { createBodyParsers, session } from "@lbu/server";
+import { isStaging } from "@lbu/stdlib";
 import {
   FileCache,
   newFileStoreContext,
@@ -38,7 +39,7 @@ export async function injectServices() {
 
   setSql(
     await newPostgresConnection({
-      createIfNotExists: process.env.NODE_ENV !== "production",
+      createIfNotExists: isStaging(),
     }),
   );
   setAppBucket(process.env.APP_NAME);

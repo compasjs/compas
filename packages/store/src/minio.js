@@ -1,4 +1,4 @@
-import { merge } from "@lbu/stdlib";
+import { isProduction, merge } from "@lbu/stdlib";
 import minio from "minio";
 
 /**
@@ -11,7 +11,7 @@ export function newMinioClient(opts) {
     port: process.env.MINIO_PORT ? Number(process.env.MINIO_PORT) : undefined,
     accessKey: process.env.MINIO_ACCESS_KEY,
     secretKey: process.env.MINIO_SECRET_KEY,
-    useSSL: process.env.NODE_ENV === "production",
+    useSSL: isProduction(),
   };
   return new minio.Client(merge(config, opts));
 }

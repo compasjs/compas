@@ -1,3 +1,4 @@
+import { isProduction } from "@lbu/stdlib";
 import Koa from "koa";
 import {
   defaultHeaders,
@@ -12,10 +13,7 @@ import {
  */
 export function getApp(opts = {}) {
   const app = new Koa();
-  app.proxy =
-    opts.proxy === undefined
-      ? process.env.NODE_ENV === "production"
-      : opts.proxy;
+  app.proxy = opts.proxy === undefined ? isProduction() : opts.proxy;
 
   if (opts.disableHealthRoute !== true) {
     app.use(healthHandler());

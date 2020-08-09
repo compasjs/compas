@@ -1,5 +1,5 @@
 import { log } from "@lbu/insight";
-import { mainFn } from "@lbu/stdlib";
+import { mainFn, isProduction, isStaging } from "@lbu/stdlib";
 import { constructApp } from "../src/api.js";
 import { injectServices } from "../src/service.js";
 import { app } from "../src/services/index.js";
@@ -18,7 +18,8 @@ async function main(logger) {
     logger.info({
       msg: "Listening",
       port,
-      env: process.env.NODE_ENV,
+      isProduction: isProduction(),
+      isStaging: isStaging(),
     });
   });
 }

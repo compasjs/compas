@@ -221,3 +221,19 @@ export function logBenchResults(logger) {
     );
   }
 }
+
+/**
+ * @returns {boolean}
+ */
+export function isProduction() {
+  return process.env.NODE_ENV === "production";
+}
+
+/**
+ * @returns {boolean}
+ */
+export function isStaging() {
+  return (
+    process.env.NODE_ENV !== "production" || process.env.IS_STAGING === "true"
+  );
+}

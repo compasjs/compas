@@ -31,4 +31,6 @@ export {
   dirnameForModule,
   bench,
   logBenchResults,
+  isProduction,
+  isStaging,
 } from "./src/utils.js";

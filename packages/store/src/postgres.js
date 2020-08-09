@@ -1,4 +1,4 @@
-import { merge } from "@lbu/stdlib";
+import { isProduction, merge } from "@lbu/stdlib";
 import postgres from "postgres";
 
 /**
@@ -39,7 +39,7 @@ export async function newPostgresConnection(opts) {
       {
         connection: {
           application_name: process.env.APP_NAME,
-          ssl: process.env.NODE_ENV === "production",
+          ssl: isProduction(),
         },
       },
       opts,

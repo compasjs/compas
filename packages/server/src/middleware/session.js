@@ -1,4 +1,4 @@
-import { isNil, merge, uuid } from "@lbu/stdlib";
+import { isNil, isProduction, merge, uuid } from "@lbu/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
@@ -20,7 +20,7 @@ export function session(app, opts) {
       key: `${process.env.APP_NAME.toLowerCase()}.sess`,
       maxAge: 10 * 24 * 60 * 60 * 1000,
       renew: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isProduction(),
       sameSite: "Strict",
       overwrite: true,
       httpOnly: true,
@@ -42,7 +42,7 @@ export function session(app, opts) {
  *
  */
 function getKeys() {
-  if (process.env.NODE_ENV !== "production") {
+  if (isProduction()) {
     return [process.env.APP_NAME];
   }
 

@@ -382,3 +382,13 @@ export function bench(
  * Formats the results of the benchmarks and logs them.
  */
 export function logBenchResults(logger: Logger): void;
+
+/**
+ * Returns whether NODE_ENV === "production"
+ */
+export function isProduction(): boolean;
+
+/**
+ * Returns whether NODE_ENV !== "production" OR IS_STAGING === "true"
+ */
+export function isStaging(): boolean;

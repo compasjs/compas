@@ -9,6 +9,13 @@ automatically will switch to a production ready setup. e.g the logger from
 @lbu/insight stops pretty printing, the minio client from @lbu/store will try to
 use a SSL connection.
 
+**IS_STAGING**
+
+Allowed values: 'true' or undefined. Can only be 'true' when `NODE_ENV` is set
+to 'production'. When `NODE_ENV` is not set to production, this variable is
+automatically 'true'. This can be used to differentiate between staging and
+production environments.
+
 **APP_NAME**
 
 Used for database creation and selection, default s3 bucket name. In general

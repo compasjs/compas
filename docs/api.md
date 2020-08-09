@@ -7063,6 +7063,8 @@ Trust proxy headers
 - [getSecondsSinceEpoch](#getsecondssinceepoch)
 - [isNil](#isnil)
 - [isPlainObject](#isplainobject)
+- [isProduction](#isproduction)
+- [isStaging](#isstaging)
 - [logBenchResults](#logbenchresults)
 - [mainFn](#mainfn)
 - [merge](#merge)
@@ -7397,6 +7399,26 @@ isPlainObject({});
 | Name  | Type |
 | ----- | ---- |
 | `obj` | any  |
+
+**Returns:** _boolean_
+
+---
+
+#### isProduction
+
+▸ **isProduction**(): _boolean_
+
+Returns whether NODE_ENV === "production"
+
+**Returns:** _boolean_
+
+---
+
+#### isStaging
+
+▸ **isStaging**(): _boolean_
+
+Returns whether NODE_ENV !== "production" OR IS_STAGING === "true"
 
 **Returns:** _boolean_
 
