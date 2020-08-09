@@ -1,3 +1,5 @@
+import { isStaging } from "@lbu/stdlib";
+
 /*
  Original copy from: https://github.com/zadzbw/koa2-cors/commit/45b6de0de6c4816b93d49335490b81995d450191
 
@@ -64,10 +66,31 @@ export function cors(options = {}) {
   ) {
     // Use CORS_URL array provided via environment variables
     const allowedOrigins = (process.env.CORS_URL || "").split(",");
-    originFn = (ctx) =>
-      allowedOrigins.indexOf(ctx.get("origin")) !== -1
-        ? ctx.get("origin")
-        : undefined;
+    const localhostRegex = /^http:\/\/localhost:\d{1,6}$/gi;
+
+    if (isStaging()) {
+      // Allow all localhost origins
+      originFn = (ctx) => {
+        const header = ctx.get("origin");
+        if (allowedOrigins.indexOf(header) !== -1) {
+          return header;
+        }
+
+        if (localhostRegex.test(header)) {
+          return header;
+        }
+
+        return undefined;
+      };
+    } else {
+      originFn = (ctx) => {
+        const header = ctx.get("origin");
+        if (allowedOrigins.indexOf(header) !== -1) {
+          return header;
+        }
+        return undefined;
+      };
+    }
   }
 
   // eslint-disable-next-line consistent-return
