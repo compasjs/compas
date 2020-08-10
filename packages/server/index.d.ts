@@ -40,6 +40,7 @@
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
 import { Logger } from "@lbu/insight";
+import { StoreFileStore } from "@lbu/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
 import { Files } from "formidable";
@@ -1336,13 +1337,11 @@ export function createBodyParsers(options?: IKoaBodyOptions): BodyParserPair;
  * Compatible with @lbu/store files. Needs either updated_at or last_modified
  * @private
  */
-interface SendFileItem {
-  id: string | number;
-  content_length: number;
-  content_type: string;
-  updated_at: Date;
-  last_modified: Date;
-}
+type SendFileItem =
+  | StoreFileStore
+  | (Pick<StoreFileStore, "id" | "contentLength" | "contentType"> & {
+      lastModified: Date;
+    });
 
 /**
  * @private
