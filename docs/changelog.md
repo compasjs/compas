@@ -1,6 +1,15 @@
 # CHANGELOG
 
-### [v0.0.55](https://github.com/lightbasenl/lbu/releases/tag/v0.0.54)
+### [v0.0.56](https://github.com/lightbasenl/lbu/releases/tag/v0.0.56)
+
+- cli: use isProduction and isStaging in template
+- cli: add proxy command for local development. Usable via `yarn lbu proxy`
+- store: make sure sessionStore checks expired sessions
+- server: use isProduction and isStaging in defaults
+- server: simplify session handling
+- server: fix sendFile compatibility with FileStore and FileCache
+
+### [v0.0.55](https://github.com/lightbasenl/lbu/releases/tag/v0.0.55)
 
 - code-gen: fix reactQuery disabled options
 - code-gen: add getGroupsThatIncludeType utility
