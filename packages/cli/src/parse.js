@@ -4,7 +4,7 @@ import { existsSync } from "fs";
  * List of commands that don't need to parse node args, script args and tooling args
  * @type {string[]}
  */
-const utilCommands = ["init", "help", "docker"];
+const utilCommands = ["init", "help", "docker", "proxy"];
 
 /**
  * Object of commands that accept special input like node arguments, script name or
@@ -15,11 +15,6 @@ const utilCommands = ["init", "help", "docker"];
 const execCommands = {
   run: {
     canWatch: true,
-    useScriptOrFile: true,
-    useArgDelimiter: false,
-  },
-  profile: {
-    canWatch: false,
     useScriptOrFile: true,
     useArgDelimiter: false,
   },

@@ -5,6 +5,7 @@ import {
   helpCommand,
   initCommand,
   lintCommand,
+  proxyCommand,
   runCommand,
   testCommand,
 } from "./commands/index.js";
@@ -13,6 +14,7 @@ const utilCommands = {
   help: helpCommand,
   init: initCommand,
   docker: dockerCommand,
+  proxy: proxyCommand,
 };
 
 const execCommands = {

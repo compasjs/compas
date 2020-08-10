@@ -15,13 +15,22 @@
     "cli",
     "scripts",
     "template",
-    "boilerplate"
+    "boilerplate",
+    "proxy",
+    "lint",
+    "test",
+    "help",
+    "bench",
+    "benchmark",
+    "docker",
+    "coverage"
   ],
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "0.0.55",
     "@lbu/stdlib": "0.0.55",
     "c8": "7.3.0",
+    "http-proxy-middleware": "1.0.5",
     "nodemon": "2.0.4",
     "tape": "5.0.1"
   },
