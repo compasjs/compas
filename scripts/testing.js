@@ -1,8 +1,7 @@
 import { newLogger } from "@lbu/insight";
 import { createBodyParsers, getApp, session } from "@lbu/server";
 import { isProduction, isStaging, mainFn } from "@lbu/stdlib";
-import { newSessionStore, newPostgresConnection } from "@lbu/store";
-import { app } from "../packages/cli/template/src/services/core.js";
+import { newPostgresConnection, newSessionStore } from "@lbu/store";
 // import { router } from "../generated/router.js";
 // import { validatorSetErrorFn } from "../generated/validators.js";
 
