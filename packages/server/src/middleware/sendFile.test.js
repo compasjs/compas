@@ -41,9 +41,9 @@ test("server/sendFile", (t) => {
       ctx,
       {
         id: 5,
-        content_length: 5,
-        content_type: "application/png",
-        updated_at: updatedAt,
+        contentLength: 5,
+        contentType: "application/png",
+        updatedAt: updatedAt,
       },
       fileFn,
     );
@@ -65,9 +65,9 @@ test("server/sendFile", (t) => {
       ctx,
       {
         id: 5,
-        content_length: 5,
-        content_type: "application/png",
-        updated_at: updatedAt,
+        contentLength: 5,
+        contentType: "application/png",
+        updatedAt: updatedAt,
       },
       fileFn,
     );
@@ -85,9 +85,9 @@ test("server/sendFile", (t) => {
       ctx,
       {
         id: 5,
-        content_length: 5,
-        content_type: "application/png",
-        updated_at: updatedAt,
+        contentLength: 5,
+        contentType: "application/png",
+        updatedAt: updatedAt,
       },
       fileFn,
     );
@@ -106,9 +106,9 @@ test("server/sendFile", (t) => {
       ctx,
       {
         id: 5,
-        content_length: 5,
-        content_type: "application/png",
-        updated_at: updatedAt,
+        contentLength: 5,
+        contentType: "application/png",
+        updatedAt: updatedAt,
       },
       fileFn,
     );
@@ -127,9 +127,9 @@ test("server/sendFile", (t) => {
       ctx,
       {
         id: 5,
-        content_length: 5,
-        content_type: "application/png",
-        updated_at: updatedAt,
+        contentLength: 5,
+        contentType: "application/png",
+        updatedAt: updatedAt,
       },
       fileFn,
     );
