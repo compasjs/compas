@@ -8,13 +8,7 @@ import { app, bodyParsers } from "./services/index.js";
  * Create a basic LBU app
  */
 export function createApp() {
-  return getApp({
-    errorOptions: {
-      leakError: isStaging(),
-    },
-    headers: {},
-    proxy: isProduction(),
-  });
+  return getApp();
 }
 
 export async function constructApp() {
