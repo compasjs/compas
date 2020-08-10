@@ -30,6 +30,7 @@ import { isStaging } from "@lbu/stdlib";
 
 const defaultOptions = {
   allowMethods: ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+  credentials: true,
 };
 
 /**

@@ -1,4 +1,4 @@
-import { AppError, isNil } from "@lbu/stdlib";
+import { AppError, isNil, isStaging } from "@lbu/stdlib";
 
 /**
  * @type CustomErrorHandler
@@ -21,7 +21,7 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
 export function errorHandler({ onAppError, onError, leakError }) {
   onAppError = onAppError || defaultOnAppError;
   onError = onError || defaultOnError;
-  leakError = leakError === true;
+  leakError = leakError === true || (leakError === undefined && isStaging());
 
   return async (ctx, next) => {
     try {
