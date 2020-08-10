@@ -72,7 +72,7 @@ export function removeBucketAndObjectsInBucket(
  */
 export function newPostgresConnection(
   opts?: postgresVendor.Options<{}> & { createIfNotExists?: boolean },
-): postgresVendor.Sql<{}>;
+): Promise<postgresVendor.Sql<{}>>;
 
 /**
  * Drops connections to 'normal' database and creates a new one based on the 'normal' database.
