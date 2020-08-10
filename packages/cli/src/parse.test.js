@@ -160,7 +160,7 @@ test("cli/parse", (t) => {
     t.deepEqual(
       parseArgs(
         [
-          "profile",
+          "run",
           "--watch",
           "--verbose",
           "--verbose",
@@ -172,7 +172,7 @@ test("cli/parse", (t) => {
       ),
       {
         type: "exec",
-        name: "profile",
+        name: "run",
         script: "bar",
         nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
         toolArguments: [],
@@ -187,13 +187,10 @@ test("cli/parse", (t) => {
 
   t.test("get verbose correctly", (t) => {
     t.deepEqual(
-      parseArgs(
-        ["profile", "--verbose", "--cpu-prof-interval=10", "foo"],
-        ["foo"],
-      ),
+      parseArgs(["run", "--verbose", "--cpu-prof-interval=10", "foo"], ["foo"]),
       {
         type: "exec",
-        name: "profile",
+        name: "run",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
         toolArguments: [],
@@ -203,9 +200,9 @@ test("cli/parse", (t) => {
       },
     );
 
-    t.deepEqual(parseArgs(["profile", "--verbose", "foo"], ["foo"]), {
+    t.deepEqual(parseArgs(["run", "--verbose", "foo"], ["foo"]), {
       type: "exec",
-      name: "profile",
+      name: "run",
       script: "foo",
       nodeArguments: [],
       toolArguments: [],
@@ -216,12 +213,12 @@ test("cli/parse", (t) => {
 
     t.deepEqual(
       parseArgs(
-        ["profile", "--verbose", "--verbose", "--cpu-prof-interval=10", "foo"],
+        ["run", "--verbose", "--verbose", "--cpu-prof-interval=10", "foo"],
         ["foo"],
       ),
       {
         type: "exec",
-        name: "profile",
+        name: "run",
         script: "foo",
         nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
         toolArguments: [],
@@ -236,13 +233,10 @@ test("cli/parse", (t) => {
 
   t.test("get watch correctly", (t) => {
     t.deepEqual(
-      parseArgs(
-        ["profile", "--watch", "--cpu-prof-interval=10", "foo"],
-        ["foo"],
-      ),
+      parseArgs(["run", "--watch", "--cpu-prof-interval=10", "foo"], ["foo"]),
       {
         type: "exec",
-        name: "profile",
+        name: "run",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
         toolArguments: [],
@@ -252,9 +246,9 @@ test("cli/parse", (t) => {
       },
     );
 
-    t.deepEqual(parseArgs(["profile", "--watch", "foo"], ["foo"]), {
+    t.deepEqual(parseArgs(["run", "--watch", "foo"], ["foo"]), {
       type: "exec",
-      name: "profile",
+      name: "run",
       script: "foo",
       nodeArguments: [],
       toolArguments: [],
@@ -265,12 +259,12 @@ test("cli/parse", (t) => {
 
     t.deepEqual(
       parseArgs(
-        ["profile", "--watch", "--watch", "--cpu-prof-interval=10", "foo"],
+        ["run", "--watch", "--watch", "--cpu-prof-interval=10", "foo"],
         ["foo"],
       ),
       {
         type: "exec",
-        name: "profile",
+        name: "run",
         script: "foo",
         nodeArguments: ["--watch", "--cpu-prof-interval=10"],
         toolArguments: [],
