@@ -7,7 +7,6 @@ import {
 } from "./testing.js";
 
 test("store/sessions", async (t) => {
-  const checkAutoDeleteId = uuid();
   let sql = undefined;
 
   t.test("create a test db", async (t) => {
@@ -26,13 +25,15 @@ test("store/sessions", async (t) => {
 
   t.test("get returns set data", async (t) => {
     const store = newSessionStore(sql);
-
+    const id = uuid();
     const data = { foo: "bar" };
-    await store.set(checkAutoDeleteId, data, 15);
-    t.deepEqual(await store.get(checkAutoDeleteId), data);
+
+    await store.set(id, data, 25);
+    t.deepEqual(await store.get(id), data);
+
     // Make sure upsert query works
-    await store.set(checkAutoDeleteId, data, 15);
-    t.deepEqual(await store.get(checkAutoDeleteId), data);
+    await store.set(id, data, 25);
+    t.deepEqual(await store.get(id), data);
   });
 
   t.test("after destroy return false", async (t) => {

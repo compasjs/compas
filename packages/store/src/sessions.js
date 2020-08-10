@@ -7,7 +7,10 @@ import { storeQueries } from "./generated/queries.js";
 export function newSessionStore(sql) {
   return {
     get: async (sid) => {
-      const [data] = await storeQueries.sessionStoreSelect(sql, { id: sid });
+      const [data] = await storeQueries.sessionStoreSelect(sql, {
+        id: sid,
+        expiresGreaterThan: new Date(),
+      });
       if (!data) {
         return false;
       }
