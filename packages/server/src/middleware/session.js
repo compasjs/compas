@@ -1,4 +1,4 @@
-import { isNil, isProduction, isStaging, merge, uuid } from "@lbu/stdlib";
+import { isNil, isProduction, merge, uuid } from "@lbu/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
@@ -18,10 +18,11 @@ export function session(app, opts) {
     {},
     {
       key: `${process.env.APP_NAME.toLowerCase()}.sess`,
-      maxAge: 10 * 24 * 60 * 60 * 1000,
+      maxAge: 6 * 24 * 60 * 60 * 1000,
       renew: true,
       secure: isProduction(),
-      sameSite: "Strict",
+      domain: !isProduction() ? undefined : process.env.COOKIE_URL,
+      sameSite: "lax",
       overwrite: true,
       httpOnly: true,
       signed: true,
@@ -30,10 +31,6 @@ export function session(app, opts) {
     },
     opts,
   );
-
-  if (opts?.supportOptionOverwrites) {
-    options.externalKey = getSessionExternalKey(options);
-  }
 
   return koaSession(options, app);
 }
@@ -52,44 +49,4 @@ function getKeys() {
 
   const keys = process.env.APP_KEYS.split(",");
   return new KeyGrip(keys, "sha256");
-}
-
-/**
- * Custom cookies getter and setter
- * Allows setting _domain or _secure for specific domain support
- * @param options
- */
-function getSessionExternalKey(options) {
-  const staging = isStaging();
-  const localhostRegex = /^http:\/\/localhost:\d{1,6}$/gi;
-
-  return {
-    get: (ctx) => {
-      return ctx.cookies.get(options.key, options);
-    },
-    set: (ctx, value) => {
-      if (staging) {
-        ctx.cookies.set(options.key, value, {
-          ...options,
-          sameSite: "Lax",
-        });
-
-        const header = ctx.get("origin");
-        if (localhostRegex.test(header)) {
-          // Set cookie for the requesting localhost domain
-          // Allowing server side rendering access to the cookies
-          ctx.cookies.set(options.key, value, {
-            ...options,
-            secure: false,
-            sameSite: "Lax",
-            domain: header.substring(7),
-          });
-        }
-
-        return;
-      }
-
-      return ctx.cookies.set(options.key, value, options);
-    },
-  };
 }

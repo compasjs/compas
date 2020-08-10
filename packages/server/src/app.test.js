@@ -64,11 +64,9 @@ test("server/app", async (t) => {
       t.fail("wrap-500, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 500);
-      t.deepEqual(response.data, {
-        key: "error.server.internal",
-        message: "error.server.internal",
-        info: {},
-      });
+      t.equal(response.data.key, response.data.message);
+      t.equal(response.data.key, "error.server.internal");
+      t.ok(Array.isArray(response.data.info._error.stack));
     }
   });
 

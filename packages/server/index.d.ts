@@ -630,9 +630,6 @@ interface BaseRequest extends ContextDelegatedRequest {
 interface BaseResponse extends ContextDelegatedResponse {
   /**
    * Return the request socket.
-   *
-   * @return {Connection}
-   * @api public
    */
   socket: Socket;
 
@@ -649,12 +646,7 @@ interface BaseResponse extends ContextDelegatedResponse {
   /**
    * Check whether the response is one of the listed types.
    * Pretty much the same as `this.request.is()`.
-   *
-   * @param {string|array} types...
-   * @return {string|false}
-   * @api public
    */
-  // is(): string;
   is(...types: string[]): string;
 
   is(types: string[]): string;
@@ -931,6 +923,8 @@ interface SessionStore {
     data: { rolling: SessionOptions["rolling"] },
   ): any;
 
+  get(id: string): Promise<object | boolean>;
+
   /**
    * set session object for key, with a maxAge (in ms)
    */
@@ -941,10 +935,14 @@ interface SessionStore {
     data: { changed: boolean; rolling: SessionOptions["rolling"] },
   ): any;
 
+  set(id: string, session: object, age: number): Promise<void>;
+
   /**
    * destroy session for key
    */
   destroy(key: string): any;
+
+  destroy(id: string): Promise<void>;
 }
 
 /**
@@ -952,12 +950,19 @@ interface SessionStore {
  */
 interface SessionOptions {
   /**
-   * cookie key (default is koa:sess)
+   * cookie key (default is process.env.APP_NAME.sess)
    */
-  key: string;
+  key?: string;
 
   /**
-   * maxAge in ms (default is 1 days)
+   * Domain to set the cookie for
+   * When development (default undefined)
+   * When production (default process.env.COOKIE_URL)
+   */
+  domain?: string;
+
+  /**
+   * maxAge in ms (default is 6 days)
    * "session" will result in a cookie that expires when session/browser is closed
    * Warning: If a session cookie is stolen, this cookie will never expire
    */
@@ -978,12 +983,19 @@ interface SessionOptions {
    */
   httpOnly?: boolean;
 
+  /**
+   * Set and check signature cookie (default true)
+   */
   signed?: boolean;
 
+  /**
+   * Set Secure cookie, only available in https context (default process.env.NODE_ENV ===
+   * "production")
+   */
   secure?: boolean;
 
   /**
-   * Session cookie sameSite options (default null, don't set it)
+   * Session cookie sameSite options (default "lax")
    */
   sameSite?: "strict" | "lax" | boolean;
 
@@ -995,18 +1007,13 @@ interface SessionOptions {
 
   /**
    * Renew session when session is nearly expired, so we can always keep user logged in.
-   * (default is false)
+   * (default is true)
    */
-  renew?: boolean; // Type definitions for koa-session 5.10 // Project:
-  // https://github.com/koajs/session // Definitions by: Yu Hsin Lu
-  // <https://github.com/kerol2r20> //                 Tomek Łaziuk
-  // <https://github.com/tlaziuk> //                 Hiroshi Ioka
-  // <https://github.com/hirochachacha> // Definitions:
-  // https://github.com/DefinitelyTyped/DefinitelyTyped // TypeScript
-  // Version: 2.8
+  renew?: boolean;
 
   /**
    * You can store the session content in external stores(redis, mongodb or other DBs)
+   * Use `newSessionStore` provided by `@lbu/store`
    */
   store?: SessionStore;
 
@@ -1022,13 +1029,6 @@ interface SessionOptions {
    * will not work if options.genid present.
    */
   prefix?: string;
-
-  /**
-   * Tries to set the cookie domain and secure from the session _domain and _secure properties
-   * respectively. Defaults to false.
-   * Note that _domain and _secure are not returned when calling `ctx.session.toJSON()`.
-   */
-  supportOptionOverwrites?: boolean;
 }
 
 // ===========
