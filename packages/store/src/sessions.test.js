@@ -54,7 +54,7 @@ test("store/sessions", async (t) => {
 
     const store = newSessionStore(sql);
     await new Promise((r) => {
-      setTimeout(r, Math.max(1, sessions[0].expires.getTime() - Date.now()));
+      setTimeout(r, 30);
     });
     await store.clean();
 
