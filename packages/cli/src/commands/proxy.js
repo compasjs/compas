@@ -63,6 +63,7 @@ export async function proxyCommand(logger) {
         req.headers["access-control-request-headers"],
       );
       res.writeHead(204);
+      res.end();
     } else {
       res.setHeader("Access-Control-Allow-Origin", origin || "*");
       if (!isNil(origin)) {
