@@ -2,6 +2,15 @@
 {{ const funcName = "use" + upperCaseFirst(model.uniqueName); }}
 {{ const getRef = (model) => /* Recursively resolve references */ { const ref = !!model && structure[model.group][model.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
 
+{{ let responseType = undefined; }}
+{{ if (model.response && getItem(model.response).type !== "file") { }}
+{{ responseType = `T.${model.response.reference.uniqueName}`; }}
+{{ } else if (model.response) { }}
+{{ responseType = "Blob"; }}
+{{ } else { }}
+{{ responseType = "any"; }}
+{{ } }}
+
 {{ if (model.method === "GET") { }}
 
 ((newline))
@@ -17,8 +26,8 @@ params: {{= "T." + model.params.reference.uniqueName + "_Input" }},
 {{ if (model.query) { }}
 query: T.{{= model.query.reference.uniqueName }}_Input,
 {{ } }}
-options: QueryOptions<{{=  model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, AppErrorResponse> = {},
-): {{ if (model.response) { }} QueryResult<T.{{= model.response.reference.uniqueName }}, AppErrorResponse> {{ } else { }} QueryResult<any, AppErrorResponse>{{ } }}  {
+options: QueryOptions<{{=  responseType }}, AppErrorResponse> = {},
+): QueryResult<{{= responseType }}, AppErrorResponse> {
   options.enabled = (
     (options.enabled !== false && options.enabled !== undefined)
     {{ if (model.query && getRef(model.query.reference)) { }}
@@ -90,8 +99,8 @@ interface {{= upperCaseFirst(funcName) }}Props {
  * Docs: {{= model.docString }}
  */
 export function {{= funcName }}(
-  options: MutationOptions<{{= model.response?.reference?.uniqueName ? "T." + model.response.reference.uniqueName : "any" }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse> = {},
-): {{ if (model.response) { }} [MutateFunction<T.{{= model.response.reference.uniqueName }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<T.{{= model.response.reference.uniqueName }}, AppErrorResponse>] {{ } else { }} [MutateFunction<any, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<any, AppErrorResponse>] {{ } }} {
+  options: MutationOptions<{{= responseType }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse> = {},
+): [MutateFunction<{{= responseType }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<{{= responseType }}, AppErrorResponse>] {
   return useMutation(
     (variables) => {{= model.group }}Api.{{= model.name }}(
       {{= model.params ? "variables.params, " : ""}}

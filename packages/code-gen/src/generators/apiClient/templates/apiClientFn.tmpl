@@ -17,8 +17,10 @@
 {{ if (model.files) { }}
  * @param { {{= buildTypeQualifier(model.files.reference.uniqueName, true) }} } files
 {{ } }}
-{{ if (model.response) { }}
+{{ if (model.response && getItem(model.response).type !== "file") { }}
  * @returns {Promise.<{{= buildTypeQualifier(model.response.reference.uniqueName, false) }}>}
+{{ } else if (model.response) { }}
+ * @returns {Promise.<{{= options.enabledGenerators.indexOf("router") !== -1 ? "ReadableStream" : "Blob" }}>}
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}
@@ -62,6 +64,9 @@ files,
       data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }},
       {{ if (model.files) { }}
       headers: data.getHeaders(),
+      {{ } }}
+      {{ if (model.response && getItem(model.response).type === "file") { }}
+      responseType: "{{= options.enabledGenerators.indexOf("router") !== -1 ? "stream" : "blob" }}",
       {{ } }}
     });
 
