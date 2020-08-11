@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [v0.0.57](https://github.com/lightbasenl/lbu/releases/tag/v0.0.57)
+
+- cli: fix memory leak in proxy
+- cli: add some request logging to the proxy
+- server: add request content-length to server logs
+
 ### [v0.0.56](https://github.com/lightbasenl/lbu/releases/tag/v0.0.56)
 
 - cli: use isProduction and isStaging in template
