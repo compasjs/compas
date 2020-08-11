@@ -50,6 +50,11 @@ export async function proxyCommand(logger) {
   });
 
   createServer((req, res) => {
+    logger.info({
+      method: req.method,
+      path: req.url,
+    });
+
     res.setHeader("Vary", "Origin");
     const origin = req.headers["origin"];
 
