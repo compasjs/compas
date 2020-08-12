@@ -29,12 +29,12 @@ query: T.{{= model.query.reference.uniqueName }}_Input,
 options: QueryOptions<{{=  responseType }}, AppErrorResponse> = {},
 ): QueryResult<{{= responseType }}, AppErrorResponse> {
   options.enabled = (
-    (options.enabled !== false && options.enabled !== undefined)
+    options.enabled === true || (options.enabled !== false
     {{ if (model.query && getRef(model.query.reference)) { }}
       {{ const ref = getRef(model.query.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
         {{ if (!ref.keys[key].isOptional) { }}
-          || !!query.{{= key }}
+          && !!query.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
@@ -42,11 +42,11 @@ options: QueryOptions<{{=  responseType }}, AppErrorResponse> = {},
       {{ const ref = getRef(model.params.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
         {{ if (!ref.keys[key].isOptional) { }}
-          || !!params.{{= key }}
+          && !!params.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
-  );
+  ));
 
   return useQuery([
      "{{= model.uniqueName }}",
