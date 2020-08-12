@@ -10,4 +10,5 @@
 - [environment](/env.md)
 - [api](/api.md)
 - [how to](/howto/README.md)
+  - [process entrypoint](/howto/process-entrypoint.md)
 - [contributing](/contributing.md)
