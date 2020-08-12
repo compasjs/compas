@@ -22,15 +22,7 @@ const contentHandler = async (logger, file) => {
   }
 };
 
-mainFn(
-  import.meta,
-  newLogger({
-    ctx: {
-      type: "bench",
-    },
-  }),
-  main,
-);
+mainFn(import.meta, main);
 
 async function main(logger) {
   await processDirectoryRecursive(process.cwd(), (file) =>

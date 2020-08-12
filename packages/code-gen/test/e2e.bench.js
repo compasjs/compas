@@ -1,9 +1,8 @@
 import { TypeCreator } from "@lbu/code-gen";
-import { log } from "@lbu/insight";
 import { bench, isNil, logBenchResults, mainFn } from "@lbu/stdlib";
 import { generateAndLoad } from "./utils.js";
 
-mainFn(import.meta, log, async (logger) => {
+mainFn(import.meta, async (logger) => {
   await runBench();
   logBenchResults(logger);
 });

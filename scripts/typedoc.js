@@ -1,9 +1,8 @@
 import { existsSync, readdirSync, rmdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { newLogger } from "@lbu/insight";
 import { dirnameForModule, exec, mainFn, pathJoin, spawn } from "@lbu/stdlib";
 
-mainFn(import.meta, newLogger(), main);
+mainFn(import.meta, main);
 
 export const nodemonArgs = "-e .d.ts";
 

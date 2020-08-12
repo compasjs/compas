@@ -1,9 +1,8 @@
 import { join } from "path";
 import { App } from "@lbu/code-gen";
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 export const nodemonArgs = `--ignore generated --ignore stubs --ignore **/generated/*.js -e tmpl,js,json`;
 

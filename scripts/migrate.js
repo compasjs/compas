@@ -1,4 +1,3 @@
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import {
   getMigrationsToBeApplied,
@@ -7,7 +6,7 @@ import {
   runMigrations,
 } from "@lbu/store";
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 /**
  * @param logger

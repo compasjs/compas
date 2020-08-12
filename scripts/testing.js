@@ -1,11 +1,10 @@
-import { newLogger } from "@lbu/insight";
 import { createBodyParsers, getApp, session } from "@lbu/server";
 import { isProduction, isStaging, mainFn } from "@lbu/stdlib";
 import { newPostgresConnection, newSessionStore } from "@lbu/store";
 // import { router } from "../generated/router.js";
 // import { validatorSetErrorFn } from "../generated/validators.js";
 
-mainFn(import.meta, newLogger(), main);
+mainFn(import.meta, main);
 
 /**
  * @param logger

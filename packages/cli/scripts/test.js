@@ -18,15 +18,7 @@ const contentHandler = async (file) => {
   await import(file);
 };
 
-mainFn(
-  import.meta,
-  newLogger({
-    ctx: {
-      type: "test",
-    },
-  }),
-  main,
-);
+mainFn(import.meta, main);
 
 async function main() {
   await processDirectoryRecursiveSync(process.cwd(), contentHandler);

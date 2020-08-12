@@ -1,9 +1,8 @@
 import { createWriteStream } from "fs";
-import { log } from "@lbu/insight";
 import { bench, logBenchResults, mainFn } from "@lbu/stdlib";
 import { newLogger } from "./logger.js";
 
-mainFn(import.meta, log, async (logger) => {
+mainFn(import.meta, async (logger) => {
   await runBench();
   logBenchResults(logger);
 });
