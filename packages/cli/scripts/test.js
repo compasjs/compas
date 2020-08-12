@@ -1,4 +1,3 @@
-import { newLogger } from "@lbu/insight";
 import {
   filenameForModule,
   mainFn,
