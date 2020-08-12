@@ -29,6 +29,16 @@ export async function proxyCommand(logger) {
     logProvider: getLogProvider(logger),
     changeOrigin: true,
     cookieDomainRewrite: "",
+    onError(err, req, res) {
+      logger.error("Proxy error:");
+      logger.error(err);
+
+      if (res.writableEnded) {
+        logger.error("Stream closed");
+      } else {
+        res.end(`Closed because of proxy error`);
+      }
+    },
     onProxyRes: (proxyResponse) => {
       if (proxyResponse.headers["set-cookie"]) {
         const cookies = proxyResponse.headers["set-cookie"];
