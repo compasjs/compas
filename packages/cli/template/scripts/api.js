@@ -1,10 +1,9 @@
-import { log } from "@lbu/insight";
 import { mainFn, isProduction, isStaging } from "@lbu/stdlib";
 import { constructApp } from "../src/api.js";
 import { injectServices } from "../src/service.js";
 import { app } from "../src/services/index.js";
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 /**
  * @param {Logger} logger

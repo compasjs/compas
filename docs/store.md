@@ -51,7 +51,6 @@ should be all that you need. Run `yarn lbu migrate` and the thing should run,
 provided that you already had a working database connection in this project.
 
 ```javascript
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import {
   getMigrationsToBeApplied,
@@ -60,7 +59,7 @@ import {
   runMigrations,
 } from "@lbu/store";
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 async function main(logger) {
   const sql = newPostgresConnection({});
@@ -132,7 +131,7 @@ supports the following:
 Example usage:
 
 ```javascript
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 async function main() {
   const sql = await newPostgresConnection();

@@ -1,9 +1,8 @@
 import { App } from "@lbu/code-gen";
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 import { extendWithDependencies, extendWithInternal } from "../gen/index.js";
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 
 export const nodemonArgs = "--ignore src/generated";
 

@@ -62,7 +62,6 @@ Let's tie all imported functions together in to a single main function:
 
 ```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 
 async function main() {
@@ -81,7 +80,7 @@ async function main() {
   });
 }
 
-mainFn(import.meta, log, main);
+mainFn(import.meta, main);
 ```
 
 First we instantiate an App. To do that, we provide the generators we want to

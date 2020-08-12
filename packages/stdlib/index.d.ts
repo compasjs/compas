@@ -350,11 +350,7 @@ export interface MainFnCallback {
  * Will also load dotenv before executing the provided callback.
  * Another side effect is that a process listener is added for warnings
  */
-export function mainFn(
-  meta: ImportMeta,
-  logger: Logger,
-  cb: MainFnCallback,
-): Promise<void>;
+export function mainFn(meta: ImportMeta, cb: MainFnCallback): void;
 
 /**
  * Return filename for ES Module

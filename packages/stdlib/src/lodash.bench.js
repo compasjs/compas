@@ -1,8 +1,7 @@
-import { log } from "@lbu/insight";
 import { isNil, isPlainObject } from "./lodash.js";
 import { bench, logBenchResults, mainFn } from "./utils.js";
 
-mainFn(import.meta, log, async (logger) => {
+mainFn(import.meta, async (logger) => {
   await runBench();
   logBenchResults(logger);
 });

@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
+import { newLogger } from "@lbu/insight";
 import dotenv from "dotenv";
 import { isNil } from "./lodash.js";
 
@@ -41,17 +42,23 @@ export function gc() {
 
 /**
  * @param {ImportMeta} meta
- * @param {Logger} logger
  * @param {MainFnCallback} cb
  */
-export function mainFn(meta, logger, cb) {
-  if (isMainFn(meta)) {
+export function mainFn(meta, cb) {
+  const { isMainFn, name } = isMainFnAndReturnName(meta);
+  if (isMainFn) {
     dotenv.config();
-    const result = cb(logger);
-    Promise.resolve(result).catch((e) => {
-      logger.error(e);
-      process.exit(1);
+    const logger = newLogger({
+      ctx: { type: name },
     });
+
+    const unhandled = (error) => {
+      logger.error(error);
+      process.exit(1);
+    };
+
+    // Handle async errors from the provided callback as `unhandledRejections`
+    Promise.resolve(cb(logger)).catch(unhandled);
   }
 }
 
@@ -73,9 +80,9 @@ export function dirnameForModule(meta) {
 
 /**
  * @param {ImportMeta} meta
- * @returns {boolean}
+ * @returns {{ isMainFn: boolean, name?: string}}
  */
-function isMainFn(meta) {
+function isMainFnAndReturnName(meta) {
   const modulePath = fileURLToPath(meta.url);
 
   let scriptPath = process.argv[1];
@@ -87,7 +94,13 @@ function isMainFn(meta) {
   }
   const scriptPathExt = path.extname(scriptPath);
   if (scriptPathExt) {
-    return modulePath === scriptPath;
+    return {
+      isMainFn: modulePath === scriptPath,
+      name: scriptPath
+        .substring(0, scriptPath.length - scriptPathExt.length)
+        .split(path.sep)
+        .pop(),
+    };
   }
 
   let modulePathWithoutExt = modulePath;
@@ -96,7 +109,10 @@ function isMainFn(meta) {
     modulePathWithoutExt = modulePathWithoutExt.slice(0, -modulePathExt.length);
   }
 
-  return modulePathWithoutExt === scriptPath;
+  return {
+    isMainFn: modulePathWithoutExt === scriptPath,
+    name: modulePathWithoutExt.split(path.sep).pop(),
+  };
 }
 
 /**

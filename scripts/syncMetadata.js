@@ -1,10 +1,9 @@
 import { spawnSync } from "child_process";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { newLogger } from "@lbu/insight";
 import { dirnameForModule, mainFn } from "@lbu/stdlib";
 
-mainFn(import.meta, newLogger(), main);
+mainFn(import.meta, main);
 
 export const nodemonArgs = "-w ./README.md";
 
