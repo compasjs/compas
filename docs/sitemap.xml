@@ -45,6 +45,10 @@
         <changefreq>daily</changefreq>
     </url>
     <url>
+        <loc>https://lbu.lightbase.nl/#/howto/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
         <loc>https://lbu.lightbase.nl/#/contributing</loc>
         <changefreq>daily</changefreq>
     </url>
