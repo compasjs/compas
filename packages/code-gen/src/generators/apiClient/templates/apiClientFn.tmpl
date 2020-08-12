@@ -63,7 +63,7 @@ files,
       params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }},
       {{ if (model.files) { }}
-      headers: data.getHeaders(),
+      headers: {{ if (options.enabledGenerators.indexOf("router") !== -1) { }}data.getHeaders(){{ } else { }}{ "Content-Type": undefined }{{ } }},
       {{ } }}
       {{ if (model.response && getItem(model.response).type === "file") { }}
       responseType: "{{= options.enabledGenerators.indexOf("router") !== -1 ? "stream" : "blob" }}",
