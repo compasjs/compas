@@ -57,6 +57,42 @@ export function mainFn(meta, cb) {
       process.exit(1);
     };
 
+    // Just kill the process
+    process.on("unhandledRejection", (reason, promise) =>
+      unhandled({
+        reason: {
+          name: reason.name,
+          message: reason.message,
+          stack: reason.stack,
+        },
+        promise: {
+          name: promise.name,
+          message: promise.message,
+          stack: promise.stack,
+        },
+      }),
+    );
+
+    // Node.js by default will kill the process, we just make sure to log correctly
+    process.on("uncaughtExceptionMonitor", (error, origin) =>
+      logger.error({
+        error: {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        },
+        origin,
+      }),
+    );
+    // Log full warnings as well, no need for exiting
+    process.on("warning", (warn) =>
+      logger.error({
+        name: warn.name,
+        message: warn.message,
+        stack: warn.stack,
+      }),
+    );
+
     // Handle async errors from the provided callback as `unhandledRejections`
     Promise.resolve(cb(logger)).catch(unhandled);
   }
