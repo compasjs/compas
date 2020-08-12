@@ -1,6 +1,6 @@
 {
   "name": "@lbu/code-gen",
-  "version": "0.0.58",
+  "version": "0.0.59",
   "description": "Generate various boring parts of your server",
   "main": "./index.js",
   "exports": "./index.js",
@@ -16,9 +16,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/cli": "0.0.58",
-    "@lbu/insight": "0.0.58",
-    "@lbu/stdlib": "0.0.58"
+    "@lbu/cli": "0.0.59",
+    "@lbu/insight": "0.0.59",
+    "@lbu/stdlib": "0.0.59"
   },
   "maintainers": [
     {
