@@ -115,10 +115,11 @@ export function dirnameForModule(meta) {
 }
 
 /**
+ * Checks if the provided meta.url is the process entrypoint and also returns the name of the entrypoint file
  * @param {ImportMeta} meta
  * @returns {{ isMainFn: boolean, name?: string}}
  */
-function isMainFnAndReturnName(meta) {
+export function isMainFnAndReturnName(meta) {
   const modulePath = fileURLToPath(meta.url);
 
   let scriptPath = process.argv[1];
