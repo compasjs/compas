@@ -17,7 +17,12 @@ export class AppError extends Error {
 
     Object.setPrototypeOf(this, AppError.prototype);
 
-    if (isNil(key) || isNil(status)) {
+    if (
+      isNil(key) ||
+      isNil(status) ||
+      typeof status !== "number" ||
+      typeof key !== "string"
+    ) {
       return AppError.serverError(
         {
           appErrorConstructParams: {
