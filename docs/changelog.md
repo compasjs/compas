@@ -1,5 +1,21 @@
 # CHANGELOG
 
+### [v0.0.60](https://github.com/lightbasenl/lbu/releases/tag/v0.0.60)
+
+- stdlib: remove logger as argument to mainFn
+- stdlib: add process exception handling in mainFn
+- stdlib: AppError check typeof status and key parameter
+
+##### Breaking
+
+- Remove logger argument from `mainFn`, change to
+  `mainFn(import.meta, () => {})`
+
+### [v0.0.59](https://github.com/lightbasenl/lbu/releases/tag/v0.0.59)
+
+- cli: add some logging to proxy errors
+- code-gen: fix react-query enabled check
+
 ### [v0.0.58](https://github.com/lightbasenl/lbu/releases/tag/v0.0.58)
 
 - code-gen: fix setting headers in form-data upload
