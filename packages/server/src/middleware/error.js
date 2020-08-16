@@ -49,6 +49,11 @@ export function errorHandler({ onAppError, onError, leakError }) {
           message: err.originalError.message,
           stack: err.originalError.stack.split("\n"),
         };
+
+        if (AppError.instanceOf(err.originalError)) {
+          originalError.key = err.originalError.key;
+          originalError.info = err.originalError.info;
+        }
       }
 
       log({
