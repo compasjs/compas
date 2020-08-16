@@ -34,24 +34,6 @@ export function setBodyParsers(parsers) {
 const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 ((newline))
 
-/**
- * @name TagMiddleware
- * @typedef {object}
-{{ for (const t of routeTags) { }}
- * @property {Middleware|Middleware[]|undefined} {{= t }}
-{{ } }}
- */
-
-/**
- * @type {TagMiddleware}
- */
-export const tagMiddleware = {
-  {{ for (const t of routeTags) { }}
-    {{= t }}: undefined,
-  {{ } }}
-};
-((newline))
-
 
 /**
  * @name GroupMiddleware
@@ -124,9 +106,6 @@ const handlers = {
         if (_composed.{{= item.uniqueName }} === undefined) {
           const currentHandler = {{= item.group }}Handlers.{{= item.name }};
           _composed.{{= item.uniqueName }} = filterCompose(
-              {{ for (const t of item.tags) { }}
-              ...(Array.isArray(tagMiddleware.{{= t }}) ? tagMiddleware.{{= t }} : [tagMiddleware.{{= t }}]),
-              {{ } }}
               ...(Array.isArray(groupMiddleware.{{= item.group }}) ? groupMiddleware.{{= item.group }} : [groupMiddleware.{{= item.group }}]),
               ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
           );
