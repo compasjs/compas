@@ -16,7 +16,7 @@
 ((newline))
 /**
  * {{= funcName }}
- * Tags: {{= model.tags.join(", ") }}
+  {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
  * Docs: {{= model.docString.replace(/\n/g, "\n  * ") }}
  */
 export function {{= funcName }}(
@@ -95,7 +95,7 @@ interface {{= upperCaseFirst(funcName) }}Props {
 
 /**
  * {{= funcName }}
- * Tags: {{= model.tags.join(", ") }}
+ {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
  * Docs: {{= model.docString }}
  */
 export function {{= funcName }}(

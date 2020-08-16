@@ -178,7 +178,7 @@ const handlers = {
 
     /**
      * {{= item.docString.replace(/\n/g, "\n  * ") }}
-     * Tags: {{= item.tags.join(", ") }}
+     {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
      * {{= item.method }} {{= item.path }}
      */
      {{= item.name }}: (ctx, next) => {

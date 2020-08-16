@@ -3,7 +3,7 @@
 
 /**
  * {{= model.uniqueName }}
- * Tags: {{= model.tags.join(", ") }}
+ {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
  * Docs: {{= model.docString }}
 {{ if (model.params) { }}
  * @param { {{= buildTypeQualifier(model.params.reference.uniqueName, true) }} } params
