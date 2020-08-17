@@ -39,7 +39,7 @@ $ yarn lbu hello
 $ yarn lbu generate --my-argument
 ```
 
-They also can be run in watch mode via Nodemon:
+They also can be run in watch mode:
 
 ```shell script
 $ yarn lbu --watch --node-argument generate --my-argument
@@ -53,14 +53,25 @@ $ yarn lbu run --watch --node-argument ./scrippts/generate.js --my-argument
 
 ## Builtin commands
 
-- **init**: Initialize a new project in the current directory
-- **lint**: This will run ESLint and Prettier over the whole project using
-  'auto-fix' on both.
-- **test**: Imports all `.test.js` files in the project. This is all that is
-  needed for tape.
-- **coverage**: Runs the test command with [c8](https://github.com/bcoe/c8) for
-  coverage.
-- **docker**: Manage Postgres and Minio containers. Available subcommands: `up`,
-  `down` and `clean`
-- **bench**: Run all `.bench.js` files and logs the benchmark results. Works by
-  importing and executing the `runBench` function from the loaded files
+```
+Usage:
+
+- init              : lbu init [projectName]
+- help              : lbu help
+- docker            : lbu docker [up,down,clean]
+- proxy             : lbu proxy
+- run (explicit)    : lbu run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
+- run (implicit)    : lbu [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
+- test              : lbu test [--watch] [--verbose] [--node-arg]
+- bench             : lbu bench [--watch] [--verbose] [--node-arg]
+- coverage          : lbu coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
+- lint              : lbu lint [--watch] [--verbose] [--any-node-arg]
+
+
+Available script names:
+User: ...
+Package.json: ...
+
+Custom scripts may control watch behaviour by exporting a constant called 'cliWatchOptions' with type CliWatchOptions
+from the script.
+```

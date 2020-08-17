@@ -12,8 +12,12 @@ export const benchFile = pathJoin(
  * @returns {Promise<void>}
  */
 export function benchCommand(logger, command) {
-  return executeCommand(logger, command.verbose, command.watch, "node", [
-    ...command.nodeArguments,
-    benchFile,
-  ]);
+  return executeCommand(
+    logger,
+    command.verbose,
+    command.watch,
+    "node",
+    [...command.nodeArguments, benchFile],
+    {},
+  );
 }

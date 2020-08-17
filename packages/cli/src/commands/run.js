@@ -1,5 +1,5 @@
 import { pathJoin } from "@lbu/stdlib";
-import { executeCommand } from "../utils.js";
+import { executeCommand, watchOptionsWithDefaults } from "../utils.js";
 
 /**
  * @param {Logger} logger
@@ -12,7 +12,7 @@ export async function runCommand(logger, command, scriptCollection) {
 
   let cmd;
   const args = [];
-  let nodemonArgs = "";
+  let watchOptions = undefined;
 
   if (script && script.type === "package") {
     cmd = "yarn";
@@ -31,12 +31,15 @@ export async function runCommand(logger, command, scriptCollection) {
     args.push(...command.execArguments);
 
     if (command.watch) {
+      // Try to import script, to see if it wants to control watch behaviour
+      // See CliWatchOptions
       const f = await import(src);
-      if (f.allowNodemon === false) {
+
+      watchOptions = watchOptionsWithDefaults(f?.cliWatchOptions);
+      if (watchOptions.disable) {
         logger.error("Script prevents running in watch mode.");
         command.watch = false;
       }
-      nodemonArgs = f.nodemonArgs || "";
     }
   }
 
@@ -46,6 +49,6 @@ export async function runCommand(logger, command, scriptCollection) {
     command.watch,
     cmd,
     args,
-    nodemonArgs,
+    watchOptions,
   );
 }

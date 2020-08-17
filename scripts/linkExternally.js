@@ -4,7 +4,10 @@ import { isNil, mainFn, spawn } from "@lbu/stdlib";
 
 mainFn(import.meta, main);
 
-export const disallowNodemon = true;
+/** @type {CliWatchOptions} */
+export const cliWatchOptions = {
+  disable: true,
+};
 
 /**
  * @param logger

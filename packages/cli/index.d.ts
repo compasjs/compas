@@ -19,3 +19,36 @@ export interface ScriptCollection {
  * - type package: User defined scripts in package.json. These override 'user' scripts
  */
 export function collectScripts(): ScriptCollection;
+
+/**
+ * Scripts can export this to control if and how they will be watched
+ *
+ * @example
+ * ```js
+ *   // @type {CliWatchOptions}
+ *   export const cliWatchOptions = {
+ *     disable: false,
+ *     extensions: ["js"],
+ *     ignoredPatterns: ["docs"]
+ *   };
+ * ```
+ */
+export interface CliWatchOptions {
+  /**
+   * Disable watch mode
+   */
+  disable?: boolean;
+
+  /**
+   * Array of extensions to watch
+   * Defaults to ["js", "json", "mjs", "cjs"]
+   */
+  extensions?: string[];
+
+  /**
+   * Ignore specific patterns
+   * Can be strings or RegExp instances
+   * Always ignores node_modules and `.dotfiles`
+   */
+  ignoredPatterns?: (string | RegExp)[];
+}
