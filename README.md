@@ -9,7 +9,7 @@ Collection of Lightbase backend utilities
 ## Features
 
 - Minimal project boilerplate
-- Script runner, can watch & reload almost anything (via nodemon)
+- Script runner, can watch & reload almost anything
 - Flexible code generators supporting routers, validators, api clients, CRUD
   queries and more in the future.
 - Opinionated structured logging

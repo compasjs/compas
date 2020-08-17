@@ -4,11 +4,12 @@ import { mainFn } from "@lbu/stdlib";
 
 mainFn(import.meta, main);
 
-export const nodemonArgs = `--ignore generated --ignore stubs --ignore **/generated/*.js -e tmpl,js,json`;
+/** @type {CliWatchOptions} */
+export const cliWatchOptions = {
+  ignoredPatterns: ["generated", "stubs"],
+  extensions: ["tmpl", "js", "json"],
+};
 
-/**
- *
- */
 async function main() {
   const app = await App.new({
     verbose: true,

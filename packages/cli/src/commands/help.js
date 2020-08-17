@@ -34,12 +34,8 @@ Usage:
 Available script names:
 ${formatScripts(scriptCollection)}
 
-Custom scripts may control watch behaviour with the following exports:
-
-export const allowNodemon = false;
-  Overrides --watch flag and set to false
-export const nodemonArgs = "--ignore my/dir";
-  If set, will be passed to nodemon. This prevents getting in a restart loop by controlling watched directories better
+Custom scripts may control watch behaviour by exporting a constant called 'cliWatchOptions'
+with type CliWatchOptions from the script.
 `;
 
   if (command.error) {

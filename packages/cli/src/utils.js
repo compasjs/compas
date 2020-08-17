@@ -1,8 +1,11 @@
+import { spawn as cpSpawn } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { pathJoin, spawn } from "@lbu/stdlib";
-import nodemon from "nodemon";
+import chokidar from "chokidar";
+import treeKill from "tree-kill";
 
 /**
+ * Load scripts directory and package.json scripts
  * @returns {ScriptCollection}
  */
 export function collectScripts() {
@@ -41,12 +44,92 @@ export function collectScripts() {
 }
 
 /**
+ * @param {*} [options]
+ * @returns {CliWatchOptions}
+ */
+export function watchOptionsWithDefaults(options) {
+  /** @type {string[]} } */
+  const extensions = options?.extensions ?? ["js", "json", "mjs", "cjs"];
+  /** @type {string[]} } */
+  const ignoredPatterns = options?.ignoredPatterns ?? ["__fixtures__"];
+  /** @type {boolean} */
+  const disable = options?.disable ?? false;
+
+  if (!Array.isArray(extensions)) {
+    throw new TypeError(
+      `Expected cliWatchOptions.extensions to be an array. Found ${extensions}`,
+    );
+  }
+
+  if (!Array.isArray(ignoredPatterns)) {
+    throw new TypeError(
+      `Expected cliWatchOptions.ignoredPatterns to be an array. Found ${ignoredPatterns}`,
+    );
+  }
+
+  for (let i = 0; i < extensions.length; ++i) {
+    // Remove '.' from extension if specified
+    if (extensions[i].startsWith(".")) {
+      extensions[i] = extensions[i].substring(1);
+    }
+  }
+
+  return {
+    disable,
+    extensions,
+    ignoredPatterns,
+  };
+}
+
+/**
+ * Compiles an chokidar ignore array for the specified options
+ * @param {CliWatchOptions} options
+ * @return {function(string): boolean}
+ */
+export function watchOptionsToIgnoredArray(options) {
+  // Compiled patterns contains extension filter and ignores dotfiles and node_modules
+  const patterns = [
+    RegExp(`\\.(?!${options.extensions.join("|")})[a-z]{1,8}$`),
+    /(^|[/\\])\../,
+    /node_modules/,
+  ];
+
+  for (const pattern of options.ignoredPatterns) {
+    if (pattern instanceof RegExp) {
+      patterns.push(pattern);
+    } else if (typeof pattern === "string") {
+      patterns.push(RegExp(pattern));
+    } else {
+      throw new TypeError(
+        `cliWatchOptions.ignoredPatterns accepts only string and RegExp. Found ${pattern}`,
+      );
+    }
+  }
+
+  const cwd = process.cwd();
+
+  return (path) => {
+    if (path.startsWith(cwd)) {
+      path = path.substring(cwd.length);
+    }
+
+    for (const pattern of patterns) {
+      if (pattern.test(path)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
+
+/**
  * @param logger
  * @param verbose
  * @param watch
  * @param command
  * @param commandArgs
- * @param nodemonArgs
+ * @param {CliWatchOptions} watchOptions
  */
 export async function executeCommand(
   logger,
@@ -54,7 +137,7 @@ export async function executeCommand(
   watch,
   command,
   commandArgs,
-  nodemonArgs,
+  watchOptions,
 ) {
   if (verbose) {
     logger.info({
@@ -67,38 +150,85 @@ export async function executeCommand(
   }
 
   if (!watch) {
+    // Easy mode
     return spawn(command, commandArgs);
   }
 
-  nodemon(
-    `--exec "${command} ${(commandArgs || []).join(" ")}" ${nodemonArgs || ""}`,
-  )
-    .once("start", () => {
-      if (verbose) {
-        logger.info("Script start");
-      }
-    })
-    .on("restart", (files) => {
-      if (verbose) {
-        if (!files || files.length === 0) {
-          logger.info("Script restart manually");
-        } else {
-          logger.info("Script restart due to file change");
-        }
-      }
-    })
-    .on("quit", (signal) => {
-      if (verbose) {
-        logger.info("LBU quit");
-      }
-      process.exit(signal);
-    })
-    .on("crash", (arg) => {
-      logger.info("Script crash", arg);
-    })
-    .on("exit", () => {
-      if (verbose) {
-        logger.info("Script exit");
+  // May supply empty watchOptions so all defaults again
+  const ignored = watchOptionsToIgnoredArray(
+    watchOptionsWithDefaults(watchOptions),
+  );
+
+  let timeout = undefined;
+  let instance = undefined;
+  let instanceKilled = false;
+
+  const watcher = chokidar.watch(".", {
+    persistent: true,
+    ignorePermissionErrors: true,
+    ignored,
+    cwd: process.cwd(),
+  });
+
+  watcher.on("change", (path) => {
+    if (verbose) {
+      logger.info(`Restarted because of ${path}`);
+    }
+
+    restart();
+  });
+
+  watcher.on("ready", () => {
+    if (verbose) {
+      logger.info({
+        watched: watcher.getWatched(),
+      });
+    }
+
+    start();
+  });
+
+  function start() {
+    instance = cpSpawn(command, commandArgs, {
+      stdio: "inherit",
+    });
+    instanceKilled = false;
+
+    instance.on("close", (code) => {
+      if (!instanceKilled || verbose) {
+        logger.info(`Process exited with code ${code ?? 0}`);
       }
     });
+  }
+
+  function stop() {
+    if (instance) {
+      // Needs tree-kill since `instance.kill` does not kill spawned processes by this instance
+      treeKill(instance.pid, "SIGKILL", (error) => {
+        logger.error({
+          message: "Could not kill process",
+          error,
+        });
+      });
+
+      // We don't way for the process to be killed
+      // This may leak some instances in edge cases
+      instanceKilled = true;
+      instance = undefined;
+    }
+  }
+
+  function restart() {
+    // Restart may be called multiple times in a row
+    // We may want to add some kind of graceful back off here
+    if (timeout !== undefined) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+      stop();
+      start();
+      clearTimeout(timeout);
+    }, 350);
+  }
 }

@@ -3,7 +3,7 @@ import { App } from "../index.js";
 
 export const baseTestDir = pathJoin(
   dirnameForModule(import.meta),
-  "../test-generated/",
+  "../__fixtures__/test-generated/",
 );
 
 const generatorPaths = {

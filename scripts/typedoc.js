@@ -4,7 +4,10 @@ import { dirnameForModule, exec, mainFn, pathJoin, spawn } from "@lbu/stdlib";
 
 mainFn(import.meta, main);
 
-export const nodemonArgs = "-e .d.ts";
+/** @type {CliWatchOptions} */
+export const cliWatchOptions = {
+  extensions: ["d.ts"],
+};
 
 /**
  * @param logger

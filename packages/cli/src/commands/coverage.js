@@ -13,10 +13,12 @@ const c8Path = pathJoin(
  * @returns {Promise<void>}
  */
 export function coverageCommand(logger, command) {
-  return executeCommand(logger, command.verbose, command.watch, c8Path, [
-    ...command.toolArguments,
-    "node",
-    ...command.nodeArguments,
-    testFile,
-  ]);
+  return executeCommand(
+    logger,
+    command.verbose,
+    command.watch,
+    c8Path,
+    [...command.toolArguments, "node", ...command.nodeArguments, testFile],
+    {},
+  );
 }

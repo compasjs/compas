@@ -4,7 +4,10 @@ import { extendWithDependencies, extendWithInternal } from "../gen/index.js";
 
 mainFn(import.meta, main);
 
-export const nodemonArgs = "--ignore src/generated";
+/** @type {CliWatchOptions} */
+export const cliWatchOptions = {
+  ignoredPatterns: ["generated"],
+};
 
 async function main() {
   const app = await App.new({ verbose: true });

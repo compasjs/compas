@@ -12,8 +12,12 @@ export const testFile = pathJoin(
  * @returns {Promise<void>}
  */
 export function testCommand(logger, command) {
-  return executeCommand(logger, command.verbose, command.watch, "node", [
-    ...command.nodeArguments,
-    testFile,
-  ]);
+  return executeCommand(
+    logger,
+    command.verbose,
+    command.watch,
+    "node",
+    [...command.nodeArguments, testFile],
+    {},
+  );
 }

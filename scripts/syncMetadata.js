@@ -5,7 +5,11 @@ import { dirnameForModule, mainFn } from "@lbu/stdlib";
 
 mainFn(import.meta, main);
 
-export const nodemonArgs = "-w ./README.md";
+/** @type {CliWatchOptions} */
+export const cliWatchOptions = {
+  ignoredPatterns: [/\w+[/\\]README.md$/gi],
+  extensions: ["md"],
+};
 
 /**
  * @param logger
@@ -39,8 +43,9 @@ function main(logger) {
     "utf-8",
   );
 
-  logger.info("Done.\nRunning linter");
+  logger.info("Running linter");
   spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
+  logger.info("Done");
 }
 
 /**
