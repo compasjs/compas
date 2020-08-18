@@ -18,11 +18,12 @@
   "dependencies": {
     "@lbu/insight": "0.0.60",
     "@lbu/stdlib": "0.0.60",
+    "formidable": "2.0.0-canary.20200504.1",
     "keygrip": "1.1.0",
     "koa": "2.13.0",
     "koa-body": "4.2.0",
     "koa-session": "6.0.0",
-    "formidable": "2.0.0-canary.20200504.1"
+    "qs": "6.9.4"
   },
   "maintainers": [
     {
