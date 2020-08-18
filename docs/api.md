@@ -5970,7 +5970,8 @@ Stops the server created with `createTestAppAndClient`
 
 #### createBodyParsers
 
-▸ **createBodyParsers**(`options?`: IKoaBodyOptions):
+▸ **createBodyParsers**(`bodyOptions?`: IKoaBodyOptions,
+`multipartBodyOptions?`: IFormidableBodyOptions):
 _[BodyParserPair](#serverinterfacesbodyparserpairmd)_
 
 Creates a body parser and a body parser with multipart enabled Note that
@@ -5978,9 +5979,10 @@ koa-body parses url-encoded, form data, json and text by default
 
 **Parameters:**
 
-| Name       | Type            |
-| ---------- | --------------- |
-| `options?` | IKoaBodyOptions |
+| Name                    | Type                   |
+| ----------------------- | ---------------------- |
+| `bodyOptions?`          | IKoaBodyOptions        |
+| `multipartBodyOptions?` | IFormidableBodyOptions |
 
 **Returns:** _[BodyParserPair](#serverinterfacesbodyparserpairmd)_
 
