@@ -1,3 +1,4 @@
+import { AppError } from "@lbu/stdlib";
 import formidable from "formidable";
 import koaBody from "koa-body";
 import qs from "qs";
@@ -11,12 +12,11 @@ import qs from "qs";
  * @returns {BodyParserPair}
  */
 export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
+  // disable formidable
+  bodyOpts.mutipart = false;
+
   return {
-    bodyParser: koaBody({
-      ...bodyOpts,
-      multipart: false,
-      formidable: {},
-    }),
+    bodyParser: koaBody(bodyOpts),
     multipartBodyParser: koaFormidable(multipartBodyOpts),
   };
 }
@@ -32,7 +32,8 @@ export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
  * @returns {Middleware}
  */
 function koaFormidable(opts = {}) {
-  opts = { ...opts, multiples: true };
+  // support for arrays
+  opts.multiples = true;
 
   return (ctx, next) =>
     new Promise((resolve, reject) => {
@@ -70,7 +71,7 @@ function koaFormidable(opts = {}) {
         }
       });
       form.on("error", (err) => {
-        reject(err, fields, files);
+        reject(AppError.serverError({ fields, files }, err));
       });
       form.on("end", () => {
         Object.assign(fields, qs.parse(mockFields));
