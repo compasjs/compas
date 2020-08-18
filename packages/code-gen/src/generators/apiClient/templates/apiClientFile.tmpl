@@ -17,6 +17,56 @@ function checkApiClient() {
 ((newline))
 
 /**
+ * Transforms array/objects to Querystrings because of missing support
+ * in FormData. The server bodyparser transforms the Querystrings back
+ * to there original types.
+ *
+ * @param {string}  key
+ * @param {any}     data
+ * @param {number}  index [index=0]
+ * @returns {string}
+ */
+function objectToQueryString(key, data, index = 0) {
+  // arrays
+  if (Array.isArray(data)) {
+    // empty array
+    if (data.length === 0) {
+      return "&";
+    }
+
+    const queryArray = [];
+    for (let i = 0; i < data.length; i++) {
+      queryArray.push(objectToQueryString(key, data[i], i));
+    }
+    return queryArray.join("");
+  }
+
+  // objects
+  if (typeof data === "object" && data !== null) {
+    const identifier = `&${key}[${index}]`;
+    const objectString = Object.keys(data)
+      .reduce((current, identifier) => {
+        return [
+          ...current,
+          [
+            "[",
+            identifier,
+            "]",
+            "=",
+            objectToQueryString(key, data[identifier]),
+          ].join(""),
+        ];
+      }, [])
+      .join(identifier);
+
+    return `${identifier}${objectString}`;
+  }
+
+  return data;
+}
+((newline))
+
+/**
  * Should set an axios compatible api client
  * @param {AxiosInstance} instance
  */
