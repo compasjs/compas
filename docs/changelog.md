@@ -1,5 +1,19 @@
 # CHANGELOG
 
+### [v0.0.61](https://github.com/lightbasenl/lbu/releases/tag/v0.0.61)
+
+- code-gen: cleanup tags in doc blocks Conditionally render tags if they exists
+  in doc blocks for router, apiClient and reactQuery
+- server: log key and info if originalError is also AppError
+
+##### Breaking
+
+- code-gen: remove tag middleware
+- cli: replace nodemon with chokidar
+- server: handle multipart request with formidable (without koa-body)
+- code-gen: transform array/objects to Querystrings because of missing support
+  in FormData
+
 ### [v0.0.60](https://github.com/lightbasenl/lbu/releases/tag/v0.0.60)
 
 - stdlib: remove logger as argument to mainFn
