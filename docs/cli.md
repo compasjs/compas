@@ -51,6 +51,9 @@ It is also possible to provide the path to a Javascript file like so:
 $ yarn lbu run --watch --node-argument ./scrippts/generate.js --my-argument
 ```
 
+?> You can manually restart processes in watch-mode, by typing `rs` and pressing
+enter.
+
 ## Builtin commands
 
 ```
