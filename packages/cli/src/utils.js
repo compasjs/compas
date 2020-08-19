@@ -186,6 +186,7 @@ export async function executeCommand(
     }
 
     start();
+    prepareStdin(restart);
   });
 
   function start() {
@@ -198,6 +199,7 @@ export async function executeCommand(
       if (!instanceKilled || verbose) {
         logger.info(`Process exited with code ${code ?? 0}`);
       }
+      instance = undefined;
     });
   }
 
@@ -231,4 +233,21 @@ export async function executeCommand(
       clearTimeout(timeout);
     }, 350);
   }
+}
+
+/**
+ * Prepare stdin to be used for manual restarting
+ * @param {Function} restart
+ */
+function prepareStdin(restart) {
+  process.stdin.resume();
+  process.stdin.setEncoding("utf-8");
+  process.stdin.on("data", (data) => {
+    const input = data.toString().trim().toLowerCase();
+
+    // Consistency with Nodemon
+    if (input === "rs") {
+      restart();
+    }
+  });
 }
