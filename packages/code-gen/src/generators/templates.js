@@ -45,7 +45,6 @@ generatorTemplates.globals.objectToQueryString = () =>
             key,
             data[identifier],
             depth,
-            index,
           )}\`,
         );
         return current;
