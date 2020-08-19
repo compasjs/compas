@@ -10,7 +10,7 @@ export function getTestMediaPath(testName) {
 
 /**
  * @param testName
- * @returns {Promise<{stderr: string, stdout: string}>}
+ * @returns {Promise<{exitCode: number, stderr: string, stdout: string}>}
  */
 export async function execTestFile(testName) {
   return exec(`node ${getTestMediaPath(testName)}`);
