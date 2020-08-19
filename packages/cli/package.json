@@ -31,7 +31,7 @@
     "@lbu/stdlib": "0.0.61",
     "c8": "7.3.0",
     "chokidar": "3.4.2",
-    "http-proxy-middleware": "1.0.5",
+    "http-proxy": "1.18.1",
     "tape": "5.0.1",
     "tree-kill": "1.2.2"
   },

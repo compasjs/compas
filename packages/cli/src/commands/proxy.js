@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { isNil } from "@lbu/stdlib";
-import proxy from "http-proxy-middleware";
+import proxy from "http-proxy";
 
 /**
  * @param {Logger} logger
@@ -24,38 +24,29 @@ export async function proxyCommand(logger) {
     process.exit(1);
   }
 
-  const localProxy = proxy.createProxyMiddleware({
-    target: process.env.PROXY_URL,
-    logProvider: getLogProvider(logger),
-    changeOrigin: true,
-    cookieDomainRewrite: "",
-    onError(err, req, res) {
-      logger.error("Proxy error:");
-      logger.error(err);
+  const localProxy = proxy.createProxyServer({});
 
-      if (res.writableEnded) {
-        logger.error("Stream closed");
-      } else {
-        res.end(`Closed because of proxy error`);
-      }
-    },
-    onProxyRes: (proxyResponse) => {
-      if (proxyResponse.headers["set-cookie"]) {
-        const cookies = proxyResponse.headers["set-cookie"];
+  localProxy.on("proxyRes", (proxyResponse) => {
+    // Remove secure flag since localhost connection is not secure
+    if (proxyResponse.headers["set-cookie"]) {
+      const cookies = proxyResponse.headers["set-cookie"];
 
-        // Remove secure flag since localhost connection is not secure
-        for (let i = 0; i < cookies.length; ++i) {
-          cookies[i] = cookies[i].replace(/; secure/gi, "");
-        }
+      for (let i = 0; i < cookies.length; ++i) {
+        cookies[i] = cookies[i].replace(/; secure/gi, "");
       }
-    },
+    }
   });
 
   const allowMethods = "GET,PUT,POST,PATCH,DELETE,HEAD,OPTIONS";
+  const options = {
+    target: process.env.PROXY_URL,
+    changeOrigin: true,
+    cookieDomainRewrite: "",
+  };
 
   logger.info({
     message: "Starting proxy",
-    target: process.env.PROXY_URL,
+    target: options.target,
     port,
   });
 
@@ -86,27 +77,20 @@ export async function proxyCommand(logger) {
       }
 
       // Proxy handles the other stuff
-      localProxy(req, res);
+      // Uses a custom error handler to make sure errors are logged and responses are 'ended'
+      localProxy.web(req, res, options, (error) => {
+        logger.error();
+        logger.error({
+          message: "Proxy error",
+          error,
+        });
+
+        if (res.writableEnded) {
+          logger.error("Stream closed");
+        } else {
+          res.end(`Closed because of proxy error`);
+        }
+      });
     }
   }).listen(port);
-}
-
-/**
- * Noramlize all log calls into info and error calls
- * @param {Logger} logger
- * @returns {LogProvider}
- */
-function getLogProvider(logger) {
-  return () => ({
-    log: (...args) =>
-      args.length === 1 ? logger.info(args[0]) : logger.info(args),
-    debug: (...args) =>
-      args.length === 1 ? logger.info(args[0]) : logger.info(args),
-    info: (...args) =>
-      args.length === 1 ? logger.info(args[0]) : logger.info(args),
-    warn: (...args) =>
-      args.length === 1 ? logger.error(args[0]) : logger.error(args),
-    error: (...args) =>
-      args.length === 1 ? logger.error(args[0]) : logger.error(args),
-  });
 }
