@@ -182,26 +182,26 @@ export function camelToSnakeCase(input: string): string;
  * @example
  * ```js
  * exec("uname -m");
- * // => Promise<{ stdout: "x86_64\n", stderr: "" }>
+ * // => Promise<{ stdout: "x86_64\n", stderr: "", exitCode: 0 }>
  * ```
  */
 export function exec(
   command: string,
-): Promise<{ stdout: string; stderr: string }>;
+): Promise<{ stdout: string; stderr: string; exitCode: number }>;
 
 /**
  * A promise wrapper around child_process#spawn
  * @example
  * ```js
  * spawn("ls", ["-al"], { cwd: "/home" });
- * // => Promise<{ code: 0 }>
+ * // => Promise<{ exitCode: 0 }>
  * ```
  */
 export function spawn(
   command: string,
   args: string[],
   opts?: SpawnOptions,
-): Promise<{ code?: number }>;
+): Promise<{ exitCode: number }>;
 
 /**
  * Options for processDirectoryRecursive and processDirectoryRecursiveSync

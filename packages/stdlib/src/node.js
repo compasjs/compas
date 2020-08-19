@@ -11,17 +11,24 @@ export { join as pathJoin };
 /**
  * @callback Exec
  * @param {string} command
- * @returns {Promise<object<{stdout: string, stderr: string}>>}
+ * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
  */
-export function exec(command) {
-  return internalExec(command, { encoding: "utf8" });
+export async function exec(command) {
+  const promise = internalExec(command, { encoding: "utf8" });
+  const { stdout, stderr } = await promise;
+
+  return {
+    stdout,
+    stderr,
+    exitCode: promise.child.exitCode ?? 0,
+  };
 }
 
 /**
  * @param {string} command
  * @param {string[]} args
  * @param {object} [opts={}]
- * @returns {Promise<{code: number|undefined}>}
+ * @returns {Promise<{exitCode: number}>}
  */
 export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -29,7 +36,7 @@ export function spawn(command, args, opts = {}) {
 
     sp.once("error", reject);
     sp.once("exit", (code) => {
-      resolve({ code: code === null ? undefined : code });
+      resolve({ exitCode: code ?? 0 });
     });
   });
 }
