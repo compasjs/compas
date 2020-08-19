@@ -35,8 +35,12 @@ function koaFormidable(opts = {}) {
   // support for arrays
   opts.multiples = true;
 
-  return (ctx, next) =>
-    new Promise((resolve, reject) => {
+  return (ctx, next) => {
+    if (!ctx.is("multipart/*")) {
+      throw new AppError("error.server.unsupportedMediaType", 415);
+    }
+
+    return new Promise((resolve, reject) => {
       const form = formidable(opts);
 
       let mockFields = "";
@@ -83,4 +87,5 @@ function koaFormidable(opts = {}) {
       ctx.request.files = files;
       return next();
     });
+  };
 }
