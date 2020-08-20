@@ -52,12 +52,6 @@ function koaFormidable(opts = {}) {
       form.on("field", (name, value) => {
         // check if object
         if (value.indexOf("&") === 0) {
-          if (value.length === 1) {
-            // handle empty array's
-            fields[name] = [];
-            return;
-          }
-
           mockFields = `${mockFields}&${value}`;
         } else {
           const mObj = { [name]: value };
