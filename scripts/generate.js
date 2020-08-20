@@ -44,12 +44,6 @@ async function main() {
     T.any("any"),
 
     // SQL
-    T.object("account")
-      .keys({
-        id: T.uuid().primary(),
-        name: T.string(),
-      })
-      .enableQueries({ withHistory: true }),
     T.object("list")
       .keys({
         id: T.uuid().primary(),
@@ -70,15 +64,6 @@ async function main() {
       "id",
       "list",
     ),
-    T.relation()
-      .manyToOne(
-        T.reference("app", "list"),
-        "account",
-        T.reference("app", "account"),
-        "id",
-        "account",
-      )
-      .optional(),
     T.relation().oneToMany(
       T.reference("app", "list"),
       "id",
