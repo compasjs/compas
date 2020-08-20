@@ -33,6 +33,25 @@ test("code-gen/generators/templates", (t) => {
       "&test[firstName]=First&test[lastName]=Last&test[phoneNumber]=0303&test[email]=daniel@ligthbase.nl&test[isViewOnlyBroker]=false&test[disableIpAddressCheck]=true&test[zipCodeRanges][0][item][0]=a&test[zipCodeRanges][0][item][1]=b&test[zipCodeRanges][0][item][2]=c&test[zipCodeRanges][1]=2&test[zipCodeRanges][2]=3",
     );
 
+    t.equal(
+      objectToQueryString("test", {
+        array: [
+          {
+            object: {
+              nested: [
+                {
+                  value: true,
+                  number: 1,
+                },
+                "oki",
+              ],
+            },
+          },
+        ],
+      }),
+      "&test[array][0][object][nested][0][value]=true&test[array][0][object][nested][0][number]=1&test[array][0][object][nested][1]=oki",
+    );
+
     t.end();
   });
 });
