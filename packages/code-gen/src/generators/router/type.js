@@ -91,6 +91,12 @@ export class RouteBuilder extends TypeBuilder {
   build() {
     const result = super.build();
 
+    if (this.bodyBuilder && this.filesBuilder) {
+      throw new Error(
+        `Route ${result.group} - ${result.name} can't have both body and files.`,
+      );
+    }
+
     if (this.queryBuilder) {
       result.query = buildOrInfer(this.queryBuilder);
 

@@ -17,19 +17,6 @@ function checkApiClient() {
 ((newline))
 
 /**
- * Transforms array/objects to Querystrings because of missing support
- * in FormData. The server bodyparser transforms the Querystrings back
- * to there original types.
- *
- * @param {string}  key
- * @param {any}     data
- * @param {boolean} topLevel
- * @returns {string}
- */
-{{= objectToQueryString() }}
-((newline))
-
-/**
  * Should set an axios compatible api client
  * @param {AxiosInstance} instance
  */

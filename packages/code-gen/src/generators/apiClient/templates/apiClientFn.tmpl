@@ -51,11 +51,6 @@ files,
           data.append(key, file.data, file.name);
         }
       }
-      {{ if (model.body) { }}
-        for (const key of Object.keys(body)) {
-          data.append(key, objectToQueryString(key, body[key]));
-        }
-      {{ } }}
     {{ } else if (model.body) { }}
       const data = body;
     {{ } }}
@@ -65,8 +60,8 @@ files,
       method: "{{= model.method.toLowerCase() }}",
       params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }},
-      {{ if (model.files) { }}
-      headers: {{ if (options.enabledGenerators.indexOf("router") !== -1) { }}data.getHeaders(){{ } else { }}{ "Content-Type": undefined }{{ } }},
+      {{ if (model.files && options.enabledGenerators.indexOf("router") !== -1) { }}
+      headers: data.getHeaders(),
       {{ } }}
       {{ if (model.response && getItem(model.response).type === "file") { }}
       responseType: "{{= options.enabledGenerators.indexOf("router") !== -1 ? "stream" : "blob" }}",
