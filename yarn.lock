@@ -6951,12 +6951,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.7.1.tgz#3a6b316b08376aeb6f5eb356c63a41310ef8f86d"
-  integrity sha512-6SN8T3r/MKt7yMXMTZqHZvwXYzJz/SIASknBYYz/Y0KLLSImstZfNBrhW9+dQq9ESzsaCesSlUQTVLTD2TNz8Q==
-  dependencies:
-    ts-toolbelt "^6.9.4"
+react-query@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.8.0.tgz#7c4c39c9344b99d3af5646f95267adf57e6b16fd"
+  integrity sha512-V9lwIA18MKY/sm3WNGHQOQvRGKI3ywlaoy5UejhBontoIljAjbvmffEUvJIvLTu3pymNG7QIVQV6jjBo6G9sCA==
 
 read-cmd-shim@^1.0.1, read-cmd-shim@^1.0.5:
   version "1.0.5"
@@ -8311,11 +8309,6 @@ trough@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/trough/-/trough-1.0.5.tgz#b8b639cefad7d0bb2abd37d433ff8293efa5f406"
   integrity sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==
-
-ts-toolbelt@^6.9.4:
-  version "6.9.4"
-  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.9.4.tgz#cc3a070d99c557c552b4f69e36f13d430c47a760"
-  integrity sha512-muRZZqfOTOVvLk5cdnp7YWm6xX+kD/WL2cS/L4zximBRcbQSuMoTbQQ2ZZBVMs1gB0EZw1qThP+HrIQB35OmEw==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
