@@ -117,15 +117,18 @@ function buildSqlSelectJoinForManyToOne(data, item, relation, T, queryType) {
   };
 
   // Creates the new type with field added
+  const relationRef = T.reference(rightSide.group, rightSide.name);
+
+  if (relation.isOptional) {
+    relationRef.optional();
+  }
+
   addToData(data, {
     ...item,
     name: relationMeta.name,
     keys: {
       ...item.keys,
-      [relation.substituteKey]: T.reference(
-        rightSide.group,
-        rightSide.name,
-      ).build(),
+      [relation.substituteKey]: relationRef.build(),
     },
     enableQueries: false,
   });
