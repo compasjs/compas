@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [v0.0.63](https://github.com/lightbasenl/lbu/releases/tag/v0.0.63)
+
+- code-gen: remove support for both files and body add the same time
+- server: remove support for fields in a multipart scenario
+
+##### Breaking
+
+- Use separate routes when both files and body are currently on a single route.
+
 ### [v0.0.62](https://github.com/lightbasenl/lbu/releases/tag/v0.0.62)
 
 - cli: use http-proxy directly
