@@ -1,5 +1,19 @@
 # CHANGELOG
 
+### [v0.0.62](https://github.com/lightbasenl/lbu/releases/tag/v0.0.62)
+
+- cli: use http-proxy directly
+- cli: support 'rs' in watch mode, mimicking nodemon
+- stdlib: add exitCode to `exec`
+- stdlib: rename `code` to `exitCode` in `spawn`
+- server,code-gen: fix serialization of nested objects
+- code-gen: postgres relation generation fixes
+
+##### Breaking
+
+- The return type of `spawn` and `exec` now have an `exitCode`
+- Using a lower level `http-proxy` for `lbu proxy`
+
 ### [v0.0.61](https://github.com/lightbasenl/lbu/releases/tag/v0.0.61)
 
 - code-gen: cleanup tags in doc blocks Conditionally render tags if they exists
