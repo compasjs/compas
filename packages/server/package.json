@@ -18,7 +18,7 @@
   "dependencies": {
     "@lbu/insight": "0.0.63",
     "@lbu/stdlib": "0.0.63",
-    "formidable": "2.0.0-canary.20200504.1",
+    "formidable": "2.0.0-dev.20200131.2",
     "keygrip": "1.1.0",
     "koa": "2.13.0",
     "koa-body": "4.2.0",
