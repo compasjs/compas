@@ -32,7 +32,6 @@
     "c8": "7.3.0",
     "chokidar": "3.4.2",
     "http-proxy": "1.18.1",
-    "tape": "5.0.1",
     "tree-kill": "1.2.2"
   },
   "maintainers": [
