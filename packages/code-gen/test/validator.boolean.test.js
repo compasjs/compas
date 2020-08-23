@@ -1,6 +1,8 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { TypeCreator } from "../src/types/index.js";
 import { generateAndLoad } from "./utils.js";
+
+mainTestFn(import.meta);
 
 const name = "code-gen/e2e/validator/boolean";
 
@@ -12,50 +14,76 @@ test(name, async (t) => {
   const { appValidators } = imports["validator"];
 
   t.test("boolean1", (t) => {
-    t.throws(() => appValidators.boolean1("true"));
-    t.throws(() => appValidators.boolean1());
+    try {
+      appValidators.boolean1("true");
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      appValidators.boolean1();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.boolean1(true), true);
     t.equal(appValidators.boolean1(false), false);
-
-    t.end();
   });
 
   t.test("boolean2", (t) => {
-    t.throws(() => appValidators.boolean2("true"));
-    t.doesNotThrow(() => appValidators.boolean2());
+    try {
+      appValidators.boolean2("true");
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      appValidators.boolean2();
+    } catch (e) {
+      t.fail("Should not throw");
+      t.log.error(e);
+    }
+
     t.equal(appValidators.boolean2(true), true);
     t.equal(appValidators.boolean2(false), false);
     t.equal(appValidators.boolean2(), undefined);
-
-    t.end();
   });
 
   t.test("boolean3", (t) => {
-    t.throws(() => appValidators.boolean3());
+    try {
+      appValidators.boolean3();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.boolean3(true), true);
     t.equal(appValidators.boolean3(false), false);
     t.equal(appValidators.boolean3("true"), true);
     t.equal(appValidators.boolean3(1), true);
     t.equal(appValidators.boolean3(0), false);
     t.equal(appValidators.boolean3("false"), false);
-
-    t.end();
   });
 
   t.test("boolean4", (t) => {
-    t.throws(() => appValidators.boolean4());
-    t.throws(() => appValidators.boolean4(false));
-    t.ok(appValidators.boolean4(true));
+    try {
+      appValidators.boolean4();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-    t.end();
+    try {
+      appValidators.boolean4(false);
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    t.ok(appValidators.boolean4(true));
   });
 
   t.test("boolean5", (t) => {
     t.equal(appValidators.boolean5(), false);
     t.equal(appValidators.boolean5(false), false);
     t.equal(appValidators.boolean5(true), true);
-
-    t.end();
   });
 });
 

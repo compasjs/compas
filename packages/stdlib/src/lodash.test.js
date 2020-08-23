@@ -1,4 +1,4 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import {
   camelToSnakeCase,
   flatten,
@@ -7,6 +7,8 @@ import {
   merge,
   unFlatten,
 } from "./lodash.js";
+
+mainTestFn(import.meta);
 
 test("stdlib/lodash", (t) => {
   t.test("isNil", (t) => {
@@ -23,8 +25,6 @@ test("stdlib/lodash", (t) => {
     t.notOk(isNil([true]));
     t.notOk(isNil({}));
     t.notOk(isNil({ foo: "bar" }));
-
-    t.end();
   });
 
   t.test("isPlainObject", (t) => {
@@ -34,8 +34,6 @@ test("stdlib/lodash", (t) => {
     t.notOk(isPlainObject([]));
     t.notOk(isPlainObject(null));
     t.notOk(isPlainObject(new (class {})()));
-
-    t.end();
   });
 
   t.test("merge", (t) => {
@@ -51,8 +49,6 @@ test("stdlib/lodash", (t) => {
     const obj = { foo: true };
     merge(obj, { foo: false });
     t.equal(obj.foo, false);
-
-    t.end();
   });
 
   t.test("flatten", (t) => {
@@ -76,8 +72,6 @@ test("stdlib/lodash", (t) => {
         "foo.bar.soup": [{ foo: "bar" }],
       },
     );
-
-    t.end();
   });
 
   t.test("unFlatten", (t) => {
@@ -113,8 +107,6 @@ test("stdlib/lodash", (t) => {
         str: false,
       },
     );
-
-    t.end();
   });
 
   t.test("camelToSnakeCase", () => {
@@ -133,7 +125,5 @@ test("stdlib/lodash", (t) => {
       camelToSnakeCase("FileStoreBucketUnitCollectionClusterDatacenter"),
       "file_store_bucket_unit_collection_cluster_datacenter",
     );
-
-    t.end();
   });
 });

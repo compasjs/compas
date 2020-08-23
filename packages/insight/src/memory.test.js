@@ -1,5 +1,7 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { bytesToHumanReadable, printProcessMemoryUsage } from "./memory.js";
+
+mainTestFn(import.meta);
 
 test("insight/memory", (t) => {
   t.test("bytesToHumanReadable", (t) => {
@@ -8,8 +10,6 @@ test("insight/memory", (t) => {
     t.equal(bytesToHumanReadable(1024), "1 KiB");
     t.equal(bytesToHumanReadable(1111), "1.08 KiB");
     t.equal(bytesToHumanReadable(1130), "1.1 KiB");
-
-    t.end();
   });
 
   t.test("printProcessMemoryUsage", (t) => {
@@ -27,7 +27,5 @@ test("insight/memory", (t) => {
     t.ok(result.heapTotal);
     t.ok(result.external);
     t.ok(result.arrayBuffers);
-
-    t.end();
   });
 });

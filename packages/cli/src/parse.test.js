@@ -1,5 +1,7 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { parseArgs } from "./parse.js";
+
+mainTestFn(import.meta);
 
 test("cli/parse", (t) => {
   t.test("default to help", (t) => {
@@ -8,8 +10,6 @@ test("cli/parse", (t) => {
       name: "help",
       arguments: [],
     });
-
-    t.end();
   });
 
   t.test("init is util", (t) => {
@@ -18,8 +18,6 @@ test("cli/parse", (t) => {
       name: "init",
       arguments: [],
     });
-
-    t.end();
   });
 
   t.test("help is util", (t) => {
@@ -28,8 +26,6 @@ test("cli/parse", (t) => {
       name: "help",
       arguments: [],
     });
-
-    t.end();
   });
 
   t.test("extra arguments for util scripts are passed through", (t) => {
@@ -38,8 +34,6 @@ test("cli/parse", (t) => {
       name: "init",
       arguments: ["--name=foo"],
     });
-
-    t.end();
   });
 
   t.test("exec default to run", (t) => {
@@ -53,8 +47,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("throw help with error when nothing is found", (t) => {
@@ -77,8 +69,6 @@ test("cli/parse", (t) => {
     t.ok(parseResult.error, "string");
     t.equal(parseResult.type, "util");
     t.equal(parseResult.name, "help");
-
-    t.end();
   });
 
   t.test("include node args on run exec", (t) => {
@@ -92,8 +82,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("include node args on explicit run exec", (t) => {
@@ -107,8 +95,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("include exec args on run exec", (t) => {
@@ -122,8 +108,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("include exec args on explicit run exec", (t) => {
@@ -137,8 +121,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("accept paths for run exec", (t) => {
@@ -152,8 +134,6 @@ test("cli/parse", (t) => {
       watch: false,
       verbose: false,
     });
-
-    t.end();
   });
 
   t.test("combined exec", (t) => {
@@ -181,8 +161,6 @@ test("cli/parse", (t) => {
         verbose: true,
       },
     );
-
-    t.end();
   });
 
   t.test("get verbose correctly", (t) => {
@@ -227,8 +205,6 @@ test("cli/parse", (t) => {
         verbose: true,
       },
     );
-
-    t.end();
   });
 
   t.test("get watch correctly", (t) => {
@@ -273,8 +249,6 @@ test("cli/parse", (t) => {
         verbose: false,
       },
     );
-
-    t.end();
   });
 
   t.test("error on named script", (t) => {
@@ -286,8 +260,6 @@ test("cli/parse", (t) => {
     parseResult = parseArgs(["test", "./foo/"], []);
     t.equal(parseResult.type, "exec");
     t.equal(parseResult.name, "test");
-
-    t.end();
   });
 
   t.test("accept -- delimiter", (t) => {
@@ -304,7 +276,5 @@ test("cli/parse", (t) => {
         verbose: false,
       },
     );
-
-    t.end();
   });
 });

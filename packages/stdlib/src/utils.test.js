@@ -1,4 +1,4 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import {
   gc,
   getSecondsSinceEpoch,
@@ -7,16 +7,23 @@ import {
   isStaging,
 } from "./utils.js";
 
-test("stdlib/utils", async (t) => {
-  t.test("getSecondsSinceEpoch", async (t) => {
+mainTestFn(import.meta);
+
+test("stdlib/utils", (t) => {
+  t.test("getSecondsSinceEpoch", (t) => {
     t.ok(Number.isInteger(getSecondsSinceEpoch()));
   });
 
-  t.test("gc", async (t) => {
-    t.doesNotThrow(() => gc());
+  t.test("gc", (t) => {
+    try {
+      gc();
+    } catch (e) {
+      t.fail("Should not throw");
+      t.log.error(e);
+    }
   });
 
-  t.test("isProduction", async (t) => {
+  t.test("isProduction", (t) => {
     const currentEnv = process.env.NODE_ENV;
 
     process.env.NODE_ENV = "production";
@@ -31,7 +38,7 @@ test("stdlib/utils", async (t) => {
     process.env.NODE_ENV = currentEnv;
   });
 
-  t.test("isStaging", async (t) => {
+  t.test("isStaging", (t) => {
     const currentEnv = process.env.NODE_ENV;
     const currentIsStaging = process.env.IS_STAGING;
 
@@ -59,7 +66,7 @@ test("stdlib/utils", async (t) => {
     process.env.IS_STAGING = currentIsStaging;
   });
 
-  t.test("isMainFnAndGetName", async (t) => {
+  t.test("isMainFnAndGetName", (t) => {
     const baseUrl = `file://${process.cwd()}`;
     const nonMainFnResult = isMainFnAndReturnName({
       url: `${baseUrl}/packages/stdlib/src/utils.js`,

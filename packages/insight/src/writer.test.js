@@ -1,5 +1,7 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { writeNDJSON, writePretty } from "./writer.js";
+
+mainTestFn(import.meta);
 
 test("insight/writer", (t) => {
   t.test("writePretty", (t) => {
@@ -14,7 +16,7 @@ test("insight/writer", (t) => {
     writePretty(mock, "info", now, {}, {});
 
     t.equal(result.length, 6);
-    t.match(result[0], /\d{2}:\d{2}:\d{2}.\d{3}/);
+    t.ok(result[0].match(/\d{2}:\d{2}:\d{2}.\d{3}/));
     t.equal(result[1].trim(), "");
     t.ok(result[2].indexOf("info") !== -1, "should print log level");
 
@@ -31,8 +33,6 @@ test("insight/writer", (t) => {
 
     t.equal(result.length, 6);
     t.ok(result[2].indexOf("foo") !== -1, "should print log type");
-
-    t.end();
   });
 
   t.test("writeNDJSON", (t) => {
@@ -67,7 +67,5 @@ test("insight/writer", (t) => {
 
     t.equal(result.length, 2);
     t.equal(JSON.parse(result[0])?.type, "foo", "should print log type");
-
-    t.end();
   });
 });

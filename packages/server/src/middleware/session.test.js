@@ -1,3 +1,4 @@
+import { mainTestFn, test } from "@lbu/cli";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
@@ -5,9 +6,10 @@ import {
 } from "@lbu/store";
 import Axios from "axios";
 import Koa from "koa";
-import test from "tape";
 import { closeTestApp, createTestAppAndClient } from "../testing.js";
 import { session } from "./session.js";
+
+mainTestFn(import.meta);
 
 test("Session test", async (t) => {
   const app = new Koa();

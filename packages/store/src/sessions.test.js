@@ -1,11 +1,13 @@
+import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "@lbu/stdlib";
-import test from "tape";
 import { storeQueries } from "./generated/queries.js";
 import { newSessionStore } from "./sessions.js";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "./testing.js";
+
+mainTestFn(import.meta);
 
 test("store/sessions", async (t) => {
   let sql = undefined;

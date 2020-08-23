@@ -1,5 +1,7 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { execTestFile } from "../utils.js";
+
+mainTestFn(import.meta);
 
 test("howto - execute-process", async (t) => {
   const result = await execTestFile("execute-process");

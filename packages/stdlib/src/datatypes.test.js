@@ -1,11 +1,11 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "./datatypes.js";
+
+mainTestFn(import.meta);
 
 test("stdlib/datatypes", (t) => {
   t.test("uuid", (t) => {
-    t.notEqual(uuid(), uuid());
-
-    t.end();
+    t.ok(uuid() !== uuid());
   });
 
   t.test("uuid.isValid", (t) => {
@@ -21,7 +21,5 @@ test("stdlib/datatypes", (t) => {
     t.notOk(uuid.isValid([]));
     t.notOk(uuid.isValid("9f7443e7-81ba-3be2-be0b-ed46faacc592"));
     t.notOk(uuid.isValid("9f7443e7-81ba-4be-be0b-ed46faacc592"));
-
-    t.end();
   });
 });

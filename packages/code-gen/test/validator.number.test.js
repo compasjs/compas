@@ -1,6 +1,8 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { TypeCreator } from "../src/types/index.js";
 import { generateAndLoad } from "./utils.js";
+
+mainTestFn(import.meta);
 
 const name = "code-gen/e2e/validator/number";
 
@@ -12,61 +14,97 @@ test(name, async (t) => {
   const { appValidators } = imports["validator"];
 
   t.test("number1", (t) => {
-    t.throws(() => appValidators.number1());
-    t.ok(appValidators.number1(3.5));
-    t.throws(() => appValidators.number1("1"));
+    try {
+      appValidators.number1();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-    t.end();
+    try {
+      appValidators.number1("1");
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    t.ok(appValidators.number1(3.5));
   });
 
   t.test("number2", (t) => {
     t.equal(appValidators.number2(), undefined);
     t.equal(appValidators.number2(3), 3);
-    t.throws(() => appValidators.number2("1"));
 
-    t.end();
+    try {
+      appValidators.number2("1");
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
   });
 
   t.test("number3", (t) => {
-    t.throws(() => appValidators.number3(0));
+    try {
+      appValidators.number3(0);
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.number3(1), 1);
     t.equal(appValidators.number3(6), 6);
-
-    t.end();
   });
 
   t.test("number4", (t) => {
-    t.throws(() => appValidators.number4(6));
+    try {
+      appValidators.number4(6);
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.number4(-1), -1);
     t.equal(appValidators.number4(5), 5);
-
-    t.end();
   });
 
   t.test("number5", (t) => {
-    t.throws(() => appValidators.number5(3.4));
-    t.equal(appValidators.number5(1), 1);
+    try {
+      appValidators.number5(3.4);
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-    t.end();
+    t.equal(appValidators.number5(1), 1);
   });
 
   t.test("number6", (t) => {
-    t.throws(() => appValidators.number6());
-    t.throws(() => appValidators.number6(4));
+    try {
+      appValidators.number6();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      appValidators.number6(4);
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.number6(1), 1);
     t.equal(appValidators.number6(3), 3);
-
-    t.end();
   });
 
   t.test("number7", (t) => {
-    t.throws(() => appValidators.number7());
-    t.throws(() => appValidators.number7("NaN"));
+    try {
+      appValidators.number7();
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      appValidators.number7("NaN");
+      t.fail("Should throw");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
     t.equal(appValidators.number7("3.4"), 3.4);
     t.equal(appValidators.number7("3"), 3);
     t.equal(appValidators.number7(3), 3);
-
-    t.end();
   });
 });
 

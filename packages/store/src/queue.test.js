@@ -1,13 +1,12 @@
-import { log } from "@lbu/insight";
-import { isNil, mainFn } from "@lbu/stdlib";
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
+import { isNil } from "@lbu/stdlib";
 import { JobQueueWorker } from "./queue.js";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "./testing.js";
 
-mainFn(import.meta, log, () => {});
+mainTestFn(import.meta);
 
 test("store/queue", async (t) => {
   let sql = undefined;
