@@ -1,8 +1,9 @@
 import {
   filenameForModule,
   mainFn,
-  processDirectoryRecursiveSync,
+  processDirectoryRecursive,
 } from "@lbu/stdlib";
+import { mainTestFn } from "../index.js";
 
 const __filename = filenameForModule(import.meta);
 
@@ -20,5 +21,6 @@ const contentHandler = async (file) => {
 mainFn(import.meta, main);
 
 async function main() {
-  await processDirectoryRecursiveSync(process.cwd(), contentHandler);
+  await processDirectoryRecursive(process.cwd(), contentHandler);
+  mainTestFn(import.meta);
 }
