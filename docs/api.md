@@ -240,6 +240,8 @@ Available assertions and the option of doing nested tests
 - [deepEqual](#deepequal)
 - [equal](#equal)
 - [fail](#fail)
+- [notEqual](#notequal)
+- [notOk](#notok)
 - [ok](#ok)
 - [pass](#pass)
 - [test](#test)
@@ -313,6 +315,41 @@ try {
 
 | Name       | Type   |
 | ---------- | ------ |
+| `message?` | string |
+
+**Returns:** _void_
+
+---
+
+##### notEqual
+
+▸ **notEqual**(`actual?`: any, `expected?`: any, `message?`: string): _void_
+
+Expect actual to not triple equal expected
+
+**Parameters:**
+
+| Name        | Type   |
+| ----------- | ------ |
+| `actual?`   | any    |
+| `expected?` | any    |
+| `message?`  | string |
+
+**Returns:** _void_
+
+---
+
+##### notOk
+
+▸ **notOk**(`value`: any, `message?`: string): _void_
+
+Expect value to be falsey
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `value`    | any    |
 | `message?` | string |
 
 **Returns:** _void_
@@ -8402,6 +8439,7 @@ case-insensitive.
 - [removeBucket](#removebucket)
 - [removeBucketAndObjectsInBucket](#removebucketandobjectsinbucket)
 - [runMigrations](#runmigrations)
+- [setupTestDatabase](#setuptestdatabase)
 - [syncDeletedFiles](#syncdeletedfiles)
 
 ### Type aliases
@@ -8810,6 +8848,31 @@ Run the migrations, as returned by `getMigrationsToBeApplied`
 | Name | Type                                               |
 | ---- | -------------------------------------------------- |
 | `mc` | [MigrateContext](#storeinterfacesmigratecontextmd) |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### setupTestDatabase
+
+▸ **setupTestDatabase**(`callback?`: function): _Promise‹void›_
+
+Setup a test database once Copies the current app database Calls callback, so
+seeding is possible, then reuses this as a template. Make sure to call this
+before any other call to createTestPostgresDatabase. It is safe to call this
+multiple times, the callback will only be executed once.
+
+**Parameters:**
+
+▪`Optional` **callback**: _function_
+
+▸ (`sql`: [Postgres](#postgres)): _Promise‹void›_
+
+**Parameters:**
+
+| Name  | Type                  |
+| ----- | --------------------- |
+| `sql` | [Postgres](#postgres) |
 
 **Returns:** _Promise‹void›_
 
