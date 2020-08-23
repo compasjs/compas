@@ -1,9 +1,9 @@
 import { existsSync, lstatSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
+import { mainTestFn, test } from "@lbu/cli";
 import { log, printProcessMemoryUsage } from "@lbu/insight";
 import { gc, pathJoin, uuid } from "@lbu/stdlib";
-import test from "tape";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile, newFileStoreContext } from "./files.js";
 import {
@@ -15,6 +15,8 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "./testing.js";
+
+mainTestFn(import.meta);
 
 const pipeline = promisify(pipelineCallback);
 
@@ -178,9 +180,8 @@ test("store/file-cache check memory usage", async (t) => {
   };
 
   const logMemory = (t) => {
-    t.test("print memory usage", (t) => {
+    t.test("print memory usage", () => {
       printProcessMemoryUsage(log);
-      t.end();
     });
   };
 
@@ -208,7 +209,7 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
-  t.test("write fixtures to disk", async (t) => {
+  t.test("write fixtures to disk", (t) => {
     writeFileSync(pathJoin("/tmp", "small"), files.small);
     writeFileSync(pathJoin("/tmp", "medium"), files.medium);
     writeFileSync(pathJoin("/tmp", "large"), files.large);
@@ -242,7 +243,7 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
-  t.test("run a decent number of rounds", async (t) => {
+  t.test("run a decent number of rounds", async () => {
     for (let i = 0; i < 1000; ++i) {
       const pArr = [];
       pArr.push(
@@ -256,13 +257,11 @@ test("store/file-cache check memory usage", async (t) => {
         it?.stream?.destroy();
       }
     }
-
-    t.end();
   });
 
   logMemory(t);
 
-  t.test("run a decent number of rounds", async (t) => {
+  t.test("run a decent number of rounds", async () => {
     console.time("file-cache");
     for (let i = 0; i < 1000; ++i) {
       const pArr = [];
@@ -278,7 +277,6 @@ test("store/file-cache check memory usage", async (t) => {
       }
     }
     console.timeEnd("file-cache");
-    t.end();
   });
 
   t.test("run gc", async () => {

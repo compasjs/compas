@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
+import { mainTestFn, test } from "@lbu/cli";
 import { dirnameForModule, isNil, uuid } from "@lbu/stdlib";
-import test from "tape";
 import {
   copyFile,
   createOrUpdateFile,
@@ -20,6 +20,8 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "./testing.js";
+
+mainTestFn(import.meta);
 
 test("store/files", async (t) => {
   const bucketName = uuid();
@@ -84,7 +86,7 @@ test("store/files", async (t) => {
   t.test("list available files", async (t) => {
     storedFiles = await storeQueries.fileStoreSelect(sql, {});
     t.equal(storedFiles.length, 2);
-    t.equal(storedFiles[0].content_length, storedFiles[1].content_length);
+    t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });
 
   t.test("get file by id", async (t) => {

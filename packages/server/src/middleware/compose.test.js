@@ -5,8 +5,10 @@
  License specifier: https://github.com/koajs/compose/blob/06e82e65a368ac12cd6405beaf19fd5d208a1477/package.json#L29
  */
 
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { compose } from "./compose.js";
+
+mainTestFn(import.meta);
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -18,7 +20,7 @@ function isPromise(x) {
   return x && typeof x.then === "function";
 }
 
-test("Koa Compose", async (t) => {
+test("Koa Compose", (t) => {
   t.test("should work", async (t) => {
     const arr = [];
     const stack = [];

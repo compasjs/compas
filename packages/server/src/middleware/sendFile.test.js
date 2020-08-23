@@ -1,5 +1,7 @@
-import test from "tape";
+import { mainTestFn, test } from "@lbu/cli";
 import { sendFile } from "./sendFile.js";
+
+mainTestFn(import.meta);
 
 test("server/sendFile", (t) => {
   const ctxMock = (range) => {

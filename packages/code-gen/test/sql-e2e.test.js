@@ -1,9 +1,11 @@
+import { mainTestFn, test } from "@lbu/cli";
 import { pathJoin, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "@lbu/store";
-import test from "tape";
+
+mainTestFn(import.meta);
 
 test("code-gen/sql/e2e", async (t) => {
   let sql = undefined;

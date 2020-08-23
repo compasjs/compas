@@ -1,7 +1,9 @@
+import { mainTestFn, test } from "@lbu/cli";
 import { AppError, pathJoin, uuid } from "@lbu/stdlib";
 import Axios from "axios";
-import test from "tape";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
+
+mainTestFn(import.meta);
 
 test("server/app", async (t) => {
   const app = getApp();

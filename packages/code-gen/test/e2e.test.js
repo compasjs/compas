@@ -1,3 +1,4 @@
+import { mainTestFn, test } from "@lbu/cli";
 import {
   closeTestApp,
   createBodyParsers,
@@ -6,15 +7,13 @@ import {
 } from "@lbu/server";
 import { AppError } from "@lbu/stdlib";
 import Axios from "axios";
-import dotenv from "dotenv";
-import test from "tape";
 import { loadFromRemote } from "../index.js";
 import { TypeCreator } from "../src/types/index.js";
 import { generateAndLoad } from "./utils.js";
 
-const name = "code-gen/e2e/server-and-client";
+mainTestFn(import.meta);
 
-dotenv.config();
+const name = "code-gen/e2e/server-and-client";
 
 test(name, async (t) => {
   // Server setup

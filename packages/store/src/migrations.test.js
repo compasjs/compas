@@ -1,5 +1,5 @@
+import { mainTestFn, test } from "@lbu/cli";
 import { dirnameForModule } from "@lbu/stdlib";
-import test from "tape";
 import {
   getMigrationsToBeApplied,
   newMigrateContext,
@@ -9,6 +9,8 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "./testing.js";
+
+mainTestFn(import.meta);
 
 test("store/migrations", (t) => {
   let sql = undefined;

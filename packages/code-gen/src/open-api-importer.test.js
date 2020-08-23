@@ -1,7 +1,9 @@
 import { readFileSync } from "fs";
+import { mainTestFn, test } from "@lbu/cli";
 import { dirnameForModule } from "@lbu/stdlib";
-import test from "tape";
 import { convertOpenAPISpec } from "./open-api-importer.js";
+
+mainTestFn(import.meta);
 
 const loadCopy = () =>
   JSON.parse(
@@ -13,17 +15,35 @@ const loadCopy = () =>
 
 test("code-gen/open-api-importer", (t) => {
   t.test("throw on invalid version", (t) => {
-    t.throws(() => convertOpenAPISpec("test", {}), Error);
-    t.throws(() => convertOpenAPISpec("test", { openapi: "" }));
-    t.throws(() => convertOpenAPISpec("test", { openapi: "2." }));
-    t.doesNotThrow(() => convertOpenAPISpec("test", { openapi: "3.1.0" }));
+    try {
+      convertOpenAPISpec("test", {});
+      t.fail("Should throw for invalid version");
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-    t.end();
+    try {
+      convertOpenAPISpec("test", { openapi: "" });
+      t.fail("Should throw for invalid version");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      convertOpenAPISpec("test", { openapi: "2." });
+      t.fail("Should throw for invalid version");
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    try {
+      convertOpenAPISpec("test", { openapi: "3.1.0" });
+      t.pass("Should not throw");
+    } catch (e) {
+      t.fail("Should not throw");
+      t.log.error(e);
+    }
   });
 
   t.test("has default group", (t) => {
     const result = convertOpenAPISpec("Test", loadCopy());
     t.deepEqual(Object.keys(result), ["test"]);
-    t.end();
   });
 });

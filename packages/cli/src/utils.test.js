@@ -1,51 +1,50 @@
+import { mainTestFn, test } from "@lbu/cli";
 import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
-import test from "tape";
 import {
   collectScripts,
   watchOptionsToIgnoredArray,
   watchOptionsWithDefaults,
 } from "./utils.js";
 
-test("cli/utils", async (t) => {
-  t.test("collectScripts builds an object", async (t) => {
+mainTestFn(import.meta);
+
+test("cli/utils", (t) => {
+  t.test("collectScripts builds an object", (t) => {
     const result = collectScripts();
 
     t.ok(isPlainObject(result));
   });
 
-  t.test("collectScripts contains scripts", async (t) => {
+  t.test("collectScripts contains scripts", (t) => {
     const result = collectScripts();
 
     t.ok(!isNil(result["generate"]));
     t.equal(result["generate"].type, "user");
   });
 
-  t.test("collectScripts contains package.json scripts", async (t) => {
+  t.test("collectScripts contains package.json scripts", (t) => {
     const result = collectScripts();
 
     t.ok(!isNil(result["release"]));
     t.equal(result["release"].type, "package");
   });
 
-  t.test("watchOptionsWithDefaults should have defaults", async (t) => {
+  t.test("watchOptionsWithDefaults should have defaults", (t) => {
     const result = watchOptionsWithDefaults();
 
     t.ok(result);
     t.ok(Array.isArray(result.extensions));
   });
 
-  t.test(
-    "watchOptionsWithDefaults should not overwrite provided args",
-    async (t) => {
-      const result = watchOptionsWithDefaults({ extensions: [] });
+  t.test("watchOptionsWithDefaults should not overwrite provided args", (t) => {
+    const result = watchOptionsWithDefaults({ extensions: [] });
 
-      t.equal(result.extensions.length, 0);
-    },
-  );
+    t.equal(result.extensions.length, 0);
+  });
 
   t.test(
     "watchOptionsWithDefaults should throw wrong type is provided",
-    async (t) => {
+    (t) => {
       try {
         watchOptionsWithDefaults({ extensions: false });
         t.fail("Should throw");
@@ -60,7 +59,7 @@ test("cli/utils", async (t) => {
     },
   );
 
-  t.test("watchOptionsToIgnoredArray should return function", async (t) => {
+  t.test("watchOptionsToIgnoredArray should return function", (t) => {
     const result = watchOptionsToIgnoredArray({
       extensions: [],
       ignoredPatterns: [],
@@ -69,7 +68,7 @@ test("cli/utils", async (t) => {
     t.equal(typeof result, "function");
   });
 
-  t.test("watchOptionsToIgnoredArray regex checks", async (t) => {
+  t.test("watchOptionsToIgnoredArray regex checks", (t) => {
     const call = watchOptionsToIgnoredArray({
       extensions: ["js", "md"],
       ignoredPatterns: ["files"],
@@ -79,40 +78,40 @@ test("cli/utils", async (t) => {
 
     const callWithCwd = (path) => call(pathJoin(cwd, path));
 
-    t.test("ignore by extension", async (t) => {
+    t.test("ignore by extension", (t) => {
       t.ok(call("foo.txt"));
     });
 
-    t.test("ignore by extension with cwd", async (t) => {
+    t.test("ignore by extension with cwd", (t) => {
       t.ok(callWithCwd("foo.txt"));
     });
 
-    t.test("ignore node_modules", async (t) => {
+    t.test("ignore node_modules", (t) => {
       t.ok(call("node_modules/foo.js"));
     });
 
-    t.test("ignore node_modules with cwd", async (t) => {
+    t.test("ignore node_modules with cwd", (t) => {
       t.ok(callWithCwd("node_modules/foo.js"));
     });
 
-    t.test("ignore by pattern", async (t) => {
+    t.test("ignore by pattern", (t) => {
       t.ok(call("/foo/files/foo.md"));
       t.ok(call("files/foo.md"));
     });
 
-    t.test("ignore by pattern with cwd", async (t) => {
+    t.test("ignore by pattern with cwd", (t) => {
       t.ok(callWithCwd("node_modules/foo.md"));
     });
 
-    t.test("ignore dotfiles", async (t) => {
+    t.test("ignore dotfiles", (t) => {
       t.ok(call(".foobar"));
     });
 
-    t.test("ignore dotfiles with cwd", async (t) => {
+    t.test("ignore dotfiles with cwd", (t) => {
       t.ok(callWithCwd(".bashrc"));
     });
 
-    t.test("don't ignore valid files", async (t) => {
+    t.test("don't ignore valid files", (t) => {
       t.ok(!call("test.js"));
       t.ok(!call("bar.md"));
       t.ok(!callWithCwd("test.js"));
