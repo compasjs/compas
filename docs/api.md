@@ -8,9 +8,9 @@ Per module documentation, generated from the Typescript declaration files.
 
 <a name="clireadmemd"></a>
 
-[@lbu/cli - v0.0.61](#clireadmemd)
+[@lbu/cli - v0.0.63](#clireadmemd)
 
-## @lbu/cli - v0.0.61
+## @lbu/cli - v0.0.63
 
 ### Index
 
@@ -19,10 +19,35 @@ Per module documentation, generated from the Typescript declaration files.
 - [CliWatchOptions](#cliinterfacescliwatchoptionsmd)
 - [CollectedScript](#cliinterfacescollectedscriptmd)
 - [ScriptCollection](#cliinterfacesscriptcollectionmd)
+- [TestRunner](#cliinterfacestestrunnermd)
+
+#### Type aliases
+
+- [TestCallback](#testcallback)
 
 #### Functions
 
 - [collectScripts](#collectscripts)
+- [mainTestFn](#maintestfn)
+- [test](#test)
+
+### Type aliases
+
+#### TestCallback
+
+Ƭ **TestCallback**: _function_
+
+Callback of a test function
+
+##### Type declaration:
+
+▸ (`t`: [TestRunner](#cliinterfacestestrunnermd)): _void | any | Promise‹any›_
+
+**Parameters:**
+
+| Name | Type                                     |
+| ---- | ---------------------------------------- |
+| `t`  | [TestRunner](#cliinterfacestestrunnermd) |
 
 ### Functions
 
@@ -38,11 +63,44 @@ Return collection of available named scripts
 
 **Returns:** _[ScriptCollection](#cliinterfacesscriptcollectionmd)_
 
+---
+
+#### mainTestFn
+
+▸ **mainTestFn**(`meta`: ImportMeta): _void_
+
+Run the registered tests
+
+**Parameters:**
+
+| Name   | Type       |
+| ------ | ---------- |
+| `meta` | ImportMeta |
+
+**Returns:** _void_
+
+---
+
+#### test
+
+▸ **test**(`name`: string, `callback`: [TestCallback](#testcallback)): _void_
+
+Top level test function for registering tests
+
+**Parameters:**
+
+| Name       | Type                          |
+| ---------- | ----------------------------- |
+| `name`     | string                        |
+| `callback` | [TestCallback](#testcallback) |
+
+**Returns:** _void_
+
 ## Interfaces
 
 <a name="cliinterfacescliwatchoptionsmd"></a>
 
-[@lbu/cli - v0.0.61](#clireadmemd) ›
+[@lbu/cli - v0.0.63](#clireadmemd) ›
 [CliWatchOptions](#cliinterfacescliwatchoptionsmd)
 
 ### Interface: CliWatchOptions
@@ -99,7 +157,7 @@ node_modules and `.dotfiles`
 
 <a name="cliinterfacescollectedscriptmd"></a>
 
-[@lbu/cli - v0.0.61](#clireadmemd) ›
+[@lbu/cli - v0.0.63](#clireadmemd) ›
 [CollectedScript](#cliinterfacescollectedscriptmd)
 
 ### Interface: CollectedScript
@@ -146,7 +204,7 @@ package.json Depending on the type contains either script or path
 
 <a name="cliinterfacesscriptcollectionmd"></a>
 
-[@lbu/cli - v0.0.61](#clireadmemd) ›
+[@lbu/cli - v0.0.63](#clireadmemd) ›
 [ScriptCollection](#cliinterfacesscriptcollectionmd)
 
 ### Interface: ScriptCollection
@@ -159,13 +217,164 @@ package.json Depending on the type contains either script or path
 
 - \[ **k**: _string_\]: [CollectedScript](#cliinterfacescollectedscriptmd)
 
+<a name="cliinterfacestestrunnermd"></a>
+
+[@lbu/cli - v0.0.63](#clireadmemd) › [TestRunner](#cliinterfacestestrunnermd)
+
+### Interface: TestRunner
+
+Available assertions and the option of doing nested tests
+
+#### Hierarchy
+
+- **TestRunner**
+
+#### Index
+
+##### Properties
+
+- [log](#log)
+
+##### Methods
+
+- [deepEqual](#deepequal)
+- [equal](#equal)
+- [fail](#fail)
+- [ok](#ok)
+- [pass](#pass)
+- [test](#test)
+
+#### Properties
+
+##### log
+
+• **log**: _Logger_
+
+Available test logger
+
+#### Methods
+
+##### deepEqual
+
+▸ **deepEqual**(`actual?`: any, `expected?`: any, `message?`: string): _void_
+
+Expect actual to deep equal expected Uses assert.deepStrictEqual under the hood
+See
+https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message
+
+**Parameters:**
+
+| Name        | Type   |
+| ----------- | ------ |
+| `actual?`   | any    |
+| `expected?` | any    |
+| `message?`  | string |
+
+**Returns:** _void_
+
+---
+
+##### equal
+
+▸ **equal**(`actual?`: any, `expected?`: any, `message?`: string): _void_
+
+Expect actual to triple equal expected
+
+**Parameters:**
+
+| Name        | Type   |
+| ----------- | ------ |
+| `actual?`   | any    |
+| `expected?` | any    |
+| `message?`  | string |
+
+**Returns:** _void_
+
+---
+
+##### fail
+
+▸ **fail**(`message?`: string): _void_
+
+Instantly fail a test Useful when testing if a function needs to throw.
+
+**`example`**
+
+```js
+try {
+  shouldThrow();
+  t.fail("Function should have thrown an error!");
+} catch (e) {
+  t.pass("Do other assertions here");
+}
+```
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `message?` | string |
+
+**Returns:** _void_
+
+---
+
+##### ok
+
+▸ **ok**(`value`: any, `message?`: string): _void_
+
+Expect value to be truthy
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `value`    | any    |
+| `message?` | string |
+
+**Returns:** _void_
+
+---
+
+##### pass
+
+▸ **pass**(`message?`: string): _void_
+
+Pass a test Useful if empty code blocks are not allowed
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `message?` | string |
+
+**Returns:** _void_
+
+---
+
+##### test
+
+▸ **test**(`name`: string, `callback`: [TestCallback](#testcallback)): _void_
+
+Create a nested test runner Note that these are executed after the parent is
+done executing.
+
+**Parameters:**
+
+| Name       | Type                          |
+| ---------- | ----------------------------- |
+| `name`     | string                        |
+| `callback` | [TestCallback](#testcallback) |
+
+**Returns:** _void_
+
 # Code Gen
 
 <a name="code-genreadmemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd)
+[@lbu/code-gen - v0.0.63](#code-genreadmemd)
 
-## @lbu/code-gen - v0.0.61
+## @lbu/code-gen - v0.0.63
 
 ### Index
 
@@ -314,7 +523,7 @@ Load a LBU structure from an LBU enabled API
 
 <a name="code-genclassesanyoftypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [AnyOfType](#code-genclassesanyoftypemd)
 
 ### Class: AnyOfType
@@ -516,7 +725,7 @@ _Inherited from
 
 <a name="code-genclassesanytypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [AnyType](#code-genclassesanytypemd)
 
 ### Class: AnyType
@@ -733,7 +942,7 @@ _Inherited from
 
 <a name="code-genclassesappmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) › [App](#code-genclassesappmd)
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) › [App](#code-genclassesappmd)
 
 ### Class: App
 
@@ -870,7 +1079,7 @@ Create a new App instance and inits generators
 
 <a name="code-genclassesarraytypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [ArrayType](#code-genclassesarraytypemd)
 
 ### Class: ArrayType
@@ -1117,7 +1326,7 @@ _Inherited from
 
 <a name="code-genclassesbooleantypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [BooleanType](#code-genclassesbooleantypemd)
 
 ### Class: BooleanType
@@ -1332,7 +1541,7 @@ _Inherited from
 
 <a name="code-genclassesdatetypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [DateType](#code-genclassesdatetypemd)
 
 ### Class: DateType
@@ -1528,7 +1737,7 @@ _Inherited from
 
 <a name="code-genclassesfiletypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [FileType](#code-genclassesfiletypemd)
 
 ### Class: FileType
@@ -1715,7 +1924,7 @@ _Inherited from
 
 <a name="code-genclassesgenerictypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [GenericType](#code-genclassesgenerictypemd)
 
 ### Class: GenericType
@@ -1932,7 +2141,7 @@ _Inherited from
 
 <a name="code-genclassesnumbertypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [NumberType](#code-genclassesnumbertypemd)
 
 ### Class: NumberType
@@ -2192,7 +2401,7 @@ _Inherited from
 
 <a name="code-genclassesobjecttypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [ObjectType](#code-genclassesobjecttypemd)
 
 ### Class: ObjectType
@@ -2427,7 +2636,7 @@ _Inherited from
 
 <a name="code-genclassesreferencetypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [ReferenceType](#code-genclassesreferencetypemd)
 
 ### Class: ReferenceType
@@ -2614,7 +2823,7 @@ _Inherited from
 
 <a name="code-genclassesrelationtypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [RelationType](#code-genclassesrelationtypemd)
 
 ### Class: RelationType
@@ -2864,7 +3073,7 @@ _Inherited from
 
 <a name="code-genclassesroutebuildermd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [RouteBuilder](#code-genclassesroutebuildermd)
 
 ### Class: RouteBuilder
@@ -3156,7 +3365,7 @@ _Inherited from
 
 <a name="code-genclassesroutecreatormd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [RouteCreator](#code-genclassesroutecreatormd)
 
 ### Class: RouteCreator
@@ -3281,7 +3490,7 @@ PUT route
 
 <a name="code-genclassesstringtypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [StringType](#code-genclassesstringtypemd)
 
 ### Class: StringType
@@ -3580,7 +3789,7 @@ _Inherited from
 
 <a name="code-genclassestypebuildermd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [TypeBuilder](#code-genclassestypebuildermd)
 
 ### Class: TypeBuilder
@@ -3769,7 +3978,7 @@ Set this field as searchable for the 'sql' plugin
 
 <a name="code-genclassestypecreatormd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [TypeCreator](#code-genclassestypecreatormd)
 
 ### Class: TypeCreator
@@ -4049,7 +4258,7 @@ Return a list of type plugins that have the specified property
 
 <a name="code-genclassesuuidtypemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [UuidType](#code-genclassesuuidtypemd)
 
 ### Class: UuidType
@@ -4238,7 +4447,7 @@ _Inherited from
 
 <a name="code-geninterfacesappoptsmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [AppOpts](#code-geninterfacesappoptsmd)
 
 ### Interface: AppOpts
@@ -4261,7 +4470,7 @@ _Inherited from
 
 <a name="code-geninterfacesgeneratedfilemd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [GeneratedFile](#code-geninterfacesgeneratedfilemd)
 
 ### Interface: GeneratedFile
@@ -4295,7 +4504,7 @@ Generated source string
 
 <a name="code-geninterfacesgenerateoptsmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [GenerateOpts](#code-geninterfacesgenerateoptsmd)
 
 ### Interface: GenerateOpts
@@ -4378,7 +4587,7 @@ Enable Typescript for the generators that support it
 
 <a name="code-geninterfacesgeneratorpluginmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [GeneratorPlugin](#code-geninterfacesgeneratorpluginmd)
 
 ### Interface: GeneratorPlugin
@@ -4465,7 +4674,7 @@ Add dynamic types to app. Can be called multiple times
 
 <a name="code-geninterfacestypebuilderlikearraymd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd)
 
 ### Interface: TypeBuilderLikeArray
@@ -4643,21 +4852,58 @@ and end to the same array starting at position target
 
 ##### entries
 
-▸ **entries**(): _IterableIterator‹[number,
-[TypeBuilderLike](#typebuilderlike)]›_
+▸ **entries**(): _IterableIterator‹[]›_
 
 _Inherited from
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[entries](#entries)_
 
 Returns an iterable of key, value pairs for every entry in the array
 
-**Returns:** _IterableIterator‹[number, [TypeBuilderLike](#typebuilderlike)]›_
+**Returns:** _IterableIterator‹[]›_
 
 ---
 
 ##### every
 
-▸ **every**(`callbackfn`: function, `thisArg?`: any): _boolean_
+▸ **every**‹**S**›(`predicate`: function, `thisArg?`: any): _this is S[]_
+
+_Inherited from
+[TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[every](#every)_
+
+Determines whether all the members of an array satisfy the specified test.
+
+**Type parameters:**
+
+▪ **S**: _[TypeBuilderLike](#typebuilderlike)_
+
+**Parameters:**
+
+▪ **predicate**: _function_
+
+A function that accepts up to three arguments. The every method calls the
+predicate function for each element in the array until the predicate returns a
+value which is coercible to the Boolean value false, or until the end of the
+array.
+
+▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
+[TypeBuilderLike](#typebuilderlike)[]): _value is S_
+
+**Parameters:**
+
+| Name    | Type                                  |
+| ------- | ------------------------------------- |
+| `value` | [TypeBuilderLike](#typebuilderlike)   |
+| `index` | number                                |
+| `array` | [TypeBuilderLike](#typebuilderlike)[] |
+
+▪`Optional` **thisArg**: _any_
+
+An object to which the this keyword can refer in the predicate function. If
+thisArg is omitted, undefined is used as the this value.
+
+**Returns:** _this is S[]_
+
+▸ **every**(`predicate`: function, `thisArg?`: any): _boolean_
 
 _Inherited from
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[every](#every)_
@@ -4666,10 +4912,10 @@ Determines whether all the members of an array satisfy the specified test.
 
 **Parameters:**
 
-▪ **callbackfn**: _function_
+▪ **predicate**: _function_
 
 A function that accepts up to three arguments. The every method calls the
-callbackfn function for each element in the array until the callbackfn returns a
+predicate function for each element in the array until the predicate returns a
 value which is coercible to the Boolean value false, or until the end of the
 array.
 
@@ -4686,7 +4932,7 @@ array.
 
 ▪`Optional` **thisArg**: _any_
 
-An object to which the this keyword can refer in the callbackfn function. If
+An object to which the this keyword can refer in the predicate function. If
 thisArg is omitted, undefined is used as the this value.
 
 **Returns:** _boolean_
@@ -4718,7 +4964,7 @@ with value
 
 ##### filter
 
-▸ **filter**‹**S**›(`callbackfn`: function, `thisArg?`: any): _S[]_
+▸ **filter**‹**S**›(`predicate`: function, `thisArg?`: any): _S[]_
 
 _Inherited from
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[filter](#filter)_
@@ -4732,10 +4978,10 @@ function.
 
 **Parameters:**
 
-▪ **callbackfn**: _function_
+▪ **predicate**: _function_
 
 A function that accepts up to three arguments. The filter method calls the
-callbackfn function one time for each element in the array.
+predicate function one time for each element in the array.
 
 ▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
 [TypeBuilderLike](#typebuilderlike)[]): _value is S_
@@ -4750,12 +4996,12 @@ callbackfn function one time for each element in the array.
 
 ▪`Optional` **thisArg**: _any_
 
-An object to which the this keyword can refer in the callbackfn function. If
+An object to which the this keyword can refer in the predicate function. If
 thisArg is omitted, undefined is used as the this value.
 
 **Returns:** _S[]_
 
-▸ **filter**(`callbackfn`: function, `thisArg?`: any):
+▸ **filter**(`predicate`: function, `thisArg?`: any):
 _[TypeBuilderLike](#typebuilderlike)[]_
 
 _Inherited from
@@ -4766,10 +5012,10 @@ function.
 
 **Parameters:**
 
-▪ **callbackfn**: _function_
+▪ **predicate**: _function_
 
 A function that accepts up to three arguments. The filter method calls the
-callbackfn function one time for each element in the array.
+predicate function one time for each element in the array.
 
 ▸ (`value`: [TypeBuilderLike](#typebuilderlike), `index`: number, `array`:
 [TypeBuilderLike](#typebuilderlike)[]): _unknown_
@@ -4784,7 +5030,7 @@ callbackfn function one time for each element in the array.
 
 ▪`Optional` **thisArg**: _any_
 
-An object to which the this keyword can refer in the callbackfn function. If
+An object to which the this keyword can refer in the predicate function. If
 thisArg is omitted, undefined is used as the this value.
 
 **Returns:** _[TypeBuilderLike](#typebuilderlike)[]_
@@ -5358,7 +5604,7 @@ Returns a section of an array.
 
 ##### some
 
-▸ **some**(`callbackfn`: function, `thisArg?`: any): _boolean_
+▸ **some**(`predicate`: function, `thisArg?`: any): _boolean_
 
 _Inherited from
 [TypeBuilderLikeArray](#code-geninterfacestypebuilderlikearraymd).[some](#some)_
@@ -5368,10 +5614,10 @@ of an array.
 
 **Parameters:**
 
-▪ **callbackfn**: _function_
+▪ **predicate**: _function_
 
 A function that accepts up to three arguments. The some method calls the
-callbackfn function for each element in the array until the callbackfn returns a
+predicate function for each element in the array until the predicate returns a
 value which is coercible to the Boolean value true, or until the end of the
 array.
 
@@ -5388,7 +5634,7 @@ array.
 
 ▪`Optional` **thisArg**: _any_
 
-An object to which the this keyword can refer in the callbackfn function. If
+An object to which the this keyword can refer in the predicate function. If
 thisArg is omitted, undefined is used as the this value.
 
 **Returns:** _boolean_
@@ -5531,7 +5777,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypebuilderlikeobjectmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)
 
 ### Interface: TypeBuilderLikeObject
@@ -5544,7 +5790,7 @@ Returns an iterable of values in the array
 
 <a name="code-geninterfacestypepluginmd"></a>
 
-[@lbu/code-gen - v0.0.61](#code-genreadmemd) ›
+[@lbu/code-gen - v0.0.63](#code-genreadmemd) ›
 [TypePlugin](#code-geninterfacestypepluginmd)
 
 ### Interface: TypePlugin ‹**T**›
@@ -5620,9 +5866,9 @@ Return the template that should be used to validate this type
 
 <a name="insightreadmemd"></a>
 
-[@lbu/insight - v0.0.61](#insightreadmemd)
+[@lbu/insight - v0.0.63](#insightreadmemd)
 
-## @lbu/insight - v0.0.61
+## @lbu/insight - v0.0.63
 
 ### Index
 
@@ -5736,7 +5982,7 @@ https://nodejs.org/dist/latest-v13.x/docs/api/process.html#process_process_memor
 
 <a name="insightinterfacesloggermd"></a>
 
-[@lbu/insight - v0.0.61](#insightreadmemd) ›
+[@lbu/insight - v0.0.63](#insightreadmemd) ›
 [Logger](#insightinterfacesloggermd)
 
 ### Interface: Logger
@@ -5806,7 +6052,7 @@ Check if this logger is using the pretty printer or NDJSON printer
 
 <a name="insightinterfacesloggercontextmd"></a>
 
-[@lbu/insight - v0.0.61](#insightreadmemd) ›
+[@lbu/insight - v0.0.63](#insightreadmemd) ›
 [LoggerContext](#insightinterfacesloggercontextmd)
 
 ### Interface: LoggerContext
@@ -5831,7 +6077,7 @@ Context that should be logged in all log lines. e.g a common request id.
 
 <a name="insightinterfacesloggeroptionsmd"></a>
 
-[@lbu/insight - v0.0.61](#insightreadmemd) ›
+[@lbu/insight - v0.0.63](#insightreadmemd) ›
 [LoggerOptions](#insightinterfacesloggeroptionsmd)
 
 ### Interface: LoggerOptions ‹**T**›
@@ -5880,9 +6126,9 @@ The stream to write the logs to
 
 <a name="serverreadmemd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd)
+[@lbu/server - v0.0.63](#serverreadmemd)
 
-## @lbu/server - v0.0.61
+## @lbu/server - v0.0.63
 
 ### Index
 
@@ -6066,7 +6312,7 @@ For more information read koa-session docs. See also the custom
 
 <a name="serverclassesapplicationmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [Application](#serverclassesapplicationmd)
 
 ### Class: Application ‹**StateT, CustomT**›
@@ -6796,7 +7042,7 @@ _Inherited from
 
 <a name="serverinterfacesapperrorhandlermd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [AppErrorHandler](#serverinterfacesapperrorhandlermd)
 
 ### Interface: AppErrorHandler
@@ -6826,7 +7072,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacesbodyparserpairmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [BodyParserPair](#serverinterfacesbodyparserpairmd)
 
 ### Interface: BodyParserPair
@@ -6856,7 +7102,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescorsoptionsmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [CorsOptions](#serverinterfacescorsoptionsmd)
 
 ### Interface: CorsOptions
@@ -6927,7 +7173,7 @@ Extract data for the response from the AppError data
 
 <a name="serverinterfacescustomerrorhandlermd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [CustomErrorHandler](#serverinterfacescustomerrorhandlermd)
 
 ### Interface: CustomErrorHandler
@@ -6955,7 +7201,7 @@ Return truthy when handled or falsey when skipped
 
 <a name="serverinterfaceserrorhandleroptionsmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [ErrorHandlerOptions](#serverinterfaceserrorhandleroptionsmd)
 
 ### Interface: ErrorHandlerOptions
@@ -6999,7 +7245,7 @@ Called before all others to let the user handle their own errors
 
 <a name="serverinterfacesgetappoptionsmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [GetAppOptions](#serverinterfacesgetappoptionsmd)
 
 ### Interface: GetAppOptions
@@ -7061,7 +7307,7 @@ Trust proxy headers
 
 <a name="serverinterfacesheaderoptionsmd"></a>
 
-[@lbu/server - v0.0.61](#serverreadmemd) ›
+[@lbu/server - v0.0.63](#serverreadmemd) ›
 [HeaderOptions](#serverinterfacesheaderoptionsmd)
 
 ### Interface: HeaderOptions
@@ -7086,9 +7332,9 @@ Trust proxy headers
 
 <a name="stdlibreadmemd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd)
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd)
 
-## @lbu/stdlib - v0.0.61
+## @lbu/stdlib - v0.0.63
 
 ### Index
 
@@ -7701,7 +7947,7 @@ unFlatten({ "foo.bar": 2 });
 
 <a name="stdlibclassesapperrormd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd) › [AppError](#stdlibclassesapperrormd)
 
 ### Class: AppError ‹**T**›
 
@@ -7948,7 +8194,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesmainfncallbackmd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd) ›
 [MainFnCallback](#stdlibinterfacesmainfncallbackmd)
 
 ### Interface: MainFnCallback
@@ -7971,7 +8217,7 @@ Create a new 400 validation error
 
 <a name="stdlibinterfacesprocessdirectoryoptionsmd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd) ›
 [ProcessDirectoryOptions](#stdlibinterfacesprocessdirectoryoptionsmd)
 
 ### Interface: ProcessDirectoryOptions
@@ -8007,7 +8253,7 @@ Skip node_modules directory, true by default
 
 <a name="stdlibinterfacestemplatecontextmd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd) ›
 [TemplateContext](#stdlibinterfacestemplatecontextmd)
 
 ### Interface: TemplateContext
@@ -8057,7 +8303,7 @@ Compiled template functions
 
 <a name="stdlibinterfacesuuidfuncmd"></a>
 
-[@lbu/stdlib - v0.0.61](#stdlibreadmemd) ›
+[@lbu/stdlib - v0.0.63](#stdlibreadmemd) ›
 [UuidFunc](#stdlibinterfacesuuidfuncmd)
 
 ### Interface: UuidFunc
@@ -8101,9 +8347,9 @@ case-insensitive.
 
 <a name="storereadmemd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd)
+[@lbu/store - v0.0.63](#storereadmemd)
 
-## @lbu/store - v0.0.61
+## @lbu/store - v0.0.63
 
 ### Index
 
@@ -8588,7 +8834,7 @@ Sync deleted files to the minio bucket
 
 <a name="storeclassesfilecachemd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) › [FileCache](#storeclassesfilecachemd)
+[@lbu/store - v0.0.63](#storereadmemd) › [FileCache](#storeclassesfilecachemd)
 
 ### Class: FileCache
 
@@ -8684,7 +8930,7 @@ Remove a file from cache, but not from local disk
 
 <a name="storeclassesjobqueueworkermd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [JobQueueWorker](#storeclassesjobqueueworkermd)
 
 ### Class: JobQueueWorker
@@ -8800,7 +9046,7 @@ fetched
 
 <a name="storeinterfacesfilecacheoptionsmd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [FileCacheOptions](#storeinterfacesfilecacheoptionsmd)
 
 ### Interface: FileCacheOptions
@@ -8834,7 +9080,7 @@ Maximum byte size of a file to be stored in memory
 
 <a name="storeinterfacesfilestorecontextmd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [FileStoreContext](#storeinterfacesfilestorecontextmd)
 
 ### Interface: FileStoreContext
@@ -8871,7 +9117,7 @@ Maximum byte size of a file to be stored in memory
 
 <a name="storeinterfacesjobdatamd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) › [JobData](#storeinterfacesjobdatamd)
+[@lbu/store - v0.0.63](#storereadmemd) › [JobData](#storeinterfacesjobdatamd)
 
 ### Interface: JobData
 
@@ -8923,7 +9169,7 @@ Raw data for a specific job
 
 <a name="storeinterfacesjobinputmd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) › [JobInput](#storeinterfacesjobinputmd)
+[@lbu/store - v0.0.63](#storereadmemd) › [JobInput](#storeinterfacesjobinputmd)
 
 ### Interface: JobInput
 
@@ -8974,7 +9220,7 @@ Defaults to now
 
 <a name="storeinterfacesjobqueueworkeroptionsmd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [JobQueueWorkerOptions](#storeinterfacesjobqueueworkeroptionsmd)
 
 ### Interface: JobQueueWorkerOptions
@@ -9029,7 +9275,7 @@ Determine the poll interval in milliseconds if the queue was empty. Defaults to
 
 <a name="storeinterfacesmigratecontextmd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [MigrateContext](#storeinterfacesmigratecontextmd)
 
 ### Interface: MigrateContext
@@ -9075,7 +9321,7 @@ Information used for doing migrations
 
 <a name="storeinterfacesmigratefilemd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [MigrateFile](#storeinterfacesmigratefilemd)
 
 ### Interface: MigrateFile
@@ -9149,7 +9395,7 @@ Internal representation of a migration file
 
 <a name="storeinterfacessessionstoremd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [SessionStore](#storeinterfacessessionstoremd)
 
 ### Interface: SessionStore
@@ -9225,7 +9471,7 @@ Remove all expired sessions
 
 <a name="storeinterfacesstorefilestoremd"></a>
 
-[@lbu/store - v0.0.61](#storereadmemd) ›
+[@lbu/store - v0.0.63](#storereadmemd) ›
 [StoreFileStore](#storeinterfacesstorefilestoremd)
 
 ### Interface: StoreFileStore
