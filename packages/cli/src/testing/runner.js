@@ -50,7 +50,9 @@ function createRunnerForState(testState) {
   return {
     log: testLogger,
     ok: ok.bind(undefined, testState),
+    notOk: notOk.bind(undefined, testState),
     equal: equal.bind(undefined, testState),
+    notEqual: notEqual.bind(undefined, testState),
     deepEqual: deepEqual.bind(undefined, testState),
     fail: fail.bind(undefined, testState),
     pass: pass.bind(undefined, testState),
@@ -75,6 +77,23 @@ function ok(state, value, message) {
     message,
   });
 }
+/**
+ * @param {TestState} state
+ * @param {*} value
+ * @param {string} [message]
+ */
+function notOk(state, value, message) {
+  const passed = !value;
+
+  state.assertions.push({
+    type: "notOk",
+    passed,
+    meta: {
+      actual: passed,
+    },
+    message,
+  });
+}
 
 /**
  * @param {TestState} state
@@ -87,6 +106,26 @@ function equal(state, actual, expected, message) {
 
   state.assertions.push({
     type: "equal",
+    passed,
+    meta: {
+      actual,
+      expected,
+    },
+    message,
+  });
+}
+
+/**
+ * @param {TestState} state
+ * @param {*} actual
+ * @param {*} expected
+ * @param {string} [message]
+ */
+function notEqual(state, actual, expected, message) {
+  const passed = actual !== expected;
+
+  state.assertions.push({
+    type: "notEqual",
     passed,
     meta: {
       actual,
