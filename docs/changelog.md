@@ -1,5 +1,22 @@
 # CHANGELOG
 
+### [v0.0.64](https://github.com/lightbasenl/lbu/releases/tag/v0.0.64)
+
+- cli: various exit code fixes
+- store: add setupTestDatabase
+- cli: replace tape with custom test runner
+
+##### Breaking
+
+Tape is replace by a custom test runner.
+
+- Make sure to `import { test } from "@lbu/cli` instead of
+  `import test from tape`
+- To run a test file via `lbu run` add `mainTestFn` to the file
+- Unnecessary `async` and `.end()` calls can be removed
+- Only a handful of assertions, see
+  [`TestRunner`](https://lbu.lightbase.nl/#/api?id=interface-testrunner)
+
 ### [v0.0.63](https://github.com/lightbasenl/lbu/releases/tag/v0.0.63)
 
 - code-gen: remove support for both files and body add the same time
