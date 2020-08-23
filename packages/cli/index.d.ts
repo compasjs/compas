@@ -25,9 +25,19 @@ interface TestRunner {
   ok(value: any, message?: string): void;
 
   /**
+   * Expect value to be falsey
+   */
+  notOk(value: any, message?: string): void;
+
+  /**
    * Expect actual to triple equal expected
    */
   equal(actual?: any, expected?: any, message?: string): void;
+
+  /**
+   * Expect actual to not triple equal expected
+   */
+  notEqual(actual?: any, expected?: any, message?: string): void;
 
   /**
    * Expect actual to deep equal expected
@@ -88,7 +98,15 @@ interface TestState {
  * @private
  */
 interface TestAssertion {
-  type: "timeout" | "ok" | "equal" | "deepEqual" | "fail" | "pass";
+  type:
+    | "timeout"
+    | "ok"
+    | "notOk"
+    | "equal"
+    | "notEqual"
+    | "deepEqual"
+    | "fail"
+    | "pass";
   passed: boolean;
   meta:
     | {
