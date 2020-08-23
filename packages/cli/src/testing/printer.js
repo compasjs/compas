@@ -69,9 +69,7 @@ function printFailedResults(state, result, indentCount) {
     if (state.caughtException) {
       const stack = state.caughtException.stack
         .split("\n")
-        .map((it, idx) => indent + (idx !== 0 ? "  " : "") + it.trim())
-        .filter((it) => it.indexOf("cli/src/testing/") === -1)
-        .slice(1);
+        .map((it, idx) => indent + (idx !== 0 ? "  " : "") + it.trim());
 
       if (AppError.instanceOf(state.caughtException)) {
         result.push(
