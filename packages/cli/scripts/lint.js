@@ -1,15 +1,17 @@
 import { mainFn, spawn } from "@lbu/stdlib";
 
 mainFn(import.meta, async () => {
-  await spawn("./node_modules/.bin/eslint", [
+  const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [
     "./**/*.js",
     "--ignore-pattern",
     "node_modules",
     "--fix",
   ]);
-  await spawn("./node_modules/.bin/prettier", [
+  const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
     "--write",
     "--list-different",
     ".",
   ]);
+
+  process.exit(lint || pretty || 0);
 });
