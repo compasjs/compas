@@ -12,7 +12,7 @@ class StringType extends TypeBuilder {
       trim: false,
       lowerCase: false,
       upperCase: false,
-      min: undefined,
+      min: 1,
       max: undefined,
       pattern: undefined,
     },
