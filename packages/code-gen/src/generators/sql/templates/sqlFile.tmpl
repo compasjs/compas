@@ -26,11 +26,20 @@ import { uuid } from "@lbu/stdlib";
     * @returns {Promise<{{= ref.uniqueName }}[]>}
     */
     {{= ref.name }}Select: (sql, where) => sql`
-    SELECT {{= getKeys(item.shortName + ".") }} FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+    SELECT
+      {{= getKeys(item.shortName + ".") }}
+    FROM "{{= ref.name }}" {{= item.shortName }}
+    {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+    {{= sqlOrderBy({ item, ref }) }}
     `,
 ((newline))
 
    {{ for (const relation of item.relations) { }}
+
+     {{ const subItem = structure[relation.rightGroup][relation.rightName + "Sql"]; }}
+     {{ const subRef = structure[relation.rightGroup][relation.rightName]; }}
+
+
      /**
       * @param sql
       * @param { {{= upperCaseFirst(relation.whereType) }} } [where]
@@ -40,26 +49,33 @@ import { uuid } from "@lbu/stdlib";
 
      {{ if (relation.type === "manyToOne") { }}
 
-       SELECT {{= getKeys(item.shortName + ".") }}, to_jsonb({{= relation.rightShortName }}.*) AS "{{= relation.substituteKey }}"
+       SELECT
+        {{= getKeys(item.shortName + ".") }}, to_jsonb({{= relation.rightShortName }}.*) AS "{{= relation.substituteKey }}"
        FROM "{{= ref.name }}" {{= item.shortName }}
        LEFT JOIN (
          SELECT * FROM "{{= relation.rightName }}" {{= relation.rightShortName }}
-         {{= sqlWhereClause({ item: structure[relation.rightGroup][relation.rightName + "Sql"], ref: structure[relation.rightGroup][relation.rightName], variable: `where?.${relation.substituteKey}` }) }}
+         {{= sqlWhereClause({ item: subItem, ref: subRef, variable: `where?.${relation.substituteKey}` }) }}
+         {{= sqlOrderBy({ item: subItem, ref: subRef }) }}
        ) {{= relation.rightShortName }}
          ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
-       {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}`,
-
+       {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}
+       {{= sqlOrderBy({ item, ref }) }}
+       `,
      {{ } else if (relation.type === "oneToMany") { }}
 
-       SELECT {{= getKeys(item.shortName + ".") }}, array_remove(array_agg(to_jsonb({{= relation.rightShortName }}.*)), NULL) AS "{{= relation.substituteKey }}"
-        FROM "{{= ref.name }}" {{= item.shortName }}
-        LEFT JOIN (
-          SELECT * FROM "{{= relation.rightName }}" {{= relation.rightShortName }}
-          {{= sqlWhereClause({ item: structure[relation.rightGroup][relation.rightName + "Sql"], ref: structure[relation.rightGroup][relation.rightName], variable: `where?.${relation.substituteKey}` }) }}
-        ) {{= relation.rightShortName }}
-          ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
-        {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}
-        GROUP BY {{= item.shortName }}."{{= relation.leftKey }}"
+       SELECT
+        {{= getKeys(item.shortName + ".") }}, array_remove(array_agg(to_jsonb({{= relation.rightShortName }}.*)), NULL) AS "{{= relation.substituteKey }}"
+       FROM "{{= ref.name }}" {{= item.shortName }}
+       LEFT JOIN (
+         SELECT *
+         FROM "{{= relation.rightName }}" {{= relation.rightShortName }}
+         {{= sqlWhereClause({ item: subItem, ref: subRef, variable: `where?.${relation.substituteKey}` }) }}
+         {{= sqlOrderBy({ item: subItem, ref: subRef }) }}
+       ) {{= relation.rightShortName }}
+         ON {{= item.shortName }}."{{= relation.leftKey }}" = {{= relation.rightShortName }}."{{= relation.rightKey }}"
+       {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: [relation.substituteKey, relation.substituteKey + "In", relation.substituteKey + "Like"] }) }}
+       GROUP BY {{= item.shortName }}."{{= relation.leftKey }}"
+       {{= sqlOrderBy({ item, ref }) }}
         `,
 
      {{ } }}
@@ -190,7 +206,13 @@ import { uuid } from "@lbu/stdlib";
     * @returns {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
     */
     {{= ref.name }}SelectHistory: (sql, where) => sql`
-    SELECT {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) AS history FROM "{{= ref.name }}" {{= item.shortName }} LEFT JOIN  "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id" {{= sqlWhereClause({ item, ref, variable: "where" }) }} GROUP BY {{= item.shortName }}.id
+    SELECT
+     {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) AS history
+    FROM "{{= ref.name }}" {{= item.shortName }}
+    LEFT JOIN "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id"
+    {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+    GROUP BY {{= item.shortName }}.id
+    {{= sqlOrderBy({ item, ref }) }}
     `,
 ((newline))
 

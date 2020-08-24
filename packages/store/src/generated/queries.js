@@ -10,7 +10,9 @@ export const storeQueries = {
    * @returns {Promise<StoreFileStore[]>}
    */
   fileStoreSelect: (sql, where) => sql`
-SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt" FROM "fileStore" fs 
+SELECT
+fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt"
+FROM "fileStore" fs
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -24,6 +26,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
   }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
 
   /**
@@ -198,7 +201,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
    * @returns {Promise<(StoreFileStore & (history: StoreFileStore[]))[]>}
    */
   fileStoreSelectHistory: (sql, where) => sql`
-SELECT fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(to_jsonb(fsh.*)) AS history FROM "fileStore" fs LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId" 
+SELECT
+fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(to_jsonb(fsh.*)) AS history
+FROM "fileStore" fs
+LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId"
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -213,6 +219,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.bucketNameLike ?? null
   }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
 GROUP BY fs.id
+ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
 
   /**
@@ -221,7 +228,9 @@ GROUP BY fs.id
    * @returns {Promise<StoreSessionStore[]>}
    */
   sessionStoreSelect: (sql, where) => sql`
-SELECT ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt" FROM "sessionStore" ss 
+SELECT
+ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"
+FROM "sessionStore" ss
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -237,6 +246,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
   }) AND (COALESCE(${
     where?.expiresLowerThan ?? null
   }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
 `,
 
   /**
@@ -434,7 +444,9 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
    * @returns {Promise<StoreJobQueue[]>}
    */
   jobQueueSelect: (sql, where) => sql`
-SELECT jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt" FROM "jobQueue" jq 
+SELECT
+jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt"
+FROM "jobQueue" jq
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -448,6 +460,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
   }) AND (COALESCE(${
     where?.nameLike ?? null
   }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
+ORDER BY jq."createdAt", jq."updatedAt" , jq."id"
 `,
 
   /**
