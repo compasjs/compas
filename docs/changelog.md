@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.65](https://github.com/lightbasenl/lbu/releases/tag/v0.0.65)
+
+- cli: increase static test timeout to 15 seconds
+
 ### [v0.0.64](https://github.com/lightbasenl/lbu/releases/tag/v0.0.64)
 
 - cli: various exit code fixes
