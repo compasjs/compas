@@ -22,8 +22,8 @@ export async function runTestsRecursively(testState) {
           result,
           new Promise((_, reject) => {
             setTimeout(
-              () => reject(new Error(`Exceeded test timeout of 2500 ms.`)),
-              2500,
+              () => reject(new Error(`Exceeded test timeout of 15 seconds.`)),
+              15000,
             );
           }),
         ]);
