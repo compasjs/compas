@@ -17,7 +17,7 @@ test("setup and teardown", (t) => {
   let myTestGlobal = undefined;
 
   // Every callback function can be async
-  t.test("setup", async (t) => {
+  t.test("setup", async () => {
     myTestGlobal = 10;
   });
 
