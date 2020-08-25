@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### [v0.0.66](https://github.com/lightbasenl/lbu/releases/tag/v0.0.66)
+
+Everything is breaking!
+
+- code-gen: add default min(1) to string type
+- code-gen: generated ORDER BY for select queries withDates
+- cli: configure test timeout, setup and teardown function in test/config.js
+- store: add copyAllObjects to clone a complete bucket
+- store: configurable postgres template support
+
 ### [v0.0.65](https://github.com/lightbasenl/lbu/releases/tag/v0.0.65)
 
 - cli: increase static test timeout to 15 seconds
