@@ -9,6 +9,11 @@ export let testLogger = undefined;
 export let areTestsRunning = false;
 
 /**
+ * @type {number}
+ */
+export let timeout = 2500;
+
+/**
  * @type {TestState}
  */
 export const state = {
@@ -31,4 +36,12 @@ export function setAreTestRunning(running) {
  */
 export function setTestLogger(logger) {
   testLogger = logger;
+}
+
+/**
+ * Set test timeout value in milliseconds
+ * @param value
+ */
+export function setTestTimeout(value) {
+  timeout = value;
 }

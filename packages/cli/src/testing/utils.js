@@ -3,6 +3,7 @@
  * @param {ImportMeta} meta
  */
 import { mainFn } from "@lbu/stdlib";
+import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
 import { runTestsRecursively } from "./runner.js";
 import {
@@ -27,6 +28,8 @@ export function mainTestFn(meta) {
     await new Promise((r) => {
       setTimeout(r, 2);
     });
+
+    await loadTestConfig();
     await runTestsRecursively(state);
     const exitCode = printTestResults();
 
