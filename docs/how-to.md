@@ -27,6 +27,64 @@ loaded.
 Another side effect is that `unhandledRejections` and `unhandledExceptions` will
 be logged and the process will be killed.
 
+## Testing
+
+Lbu comes with its own test runner loosely inspired by
+[tape](https://github.com/substack/tape). It comes with a few assertions, async
+testing, and the possibility of doing sub tests.
+
+### Basic test file
+
+A basic test file looks like the following:
+
+<!-- prettier-ignore -->
+[testing](_media/howto/testing.js ':include :type=code :fragment=basic')
+
+### Running tests
+
+There are two ways to run tests. The short way is to use `yarn lbu test` which
+will run all test files in your project. There is also the option to run a test
+file directly like `node ./file.test.js` or `yarn lbu run ./file.test.js`.
+However, to do this you need to add the following to your test file:
+
+```js
+import { mainTestFn } from "@lbu/cli";
+
+mainTestFn(import.meta);
+```
+
+This works based on `mainFn` as explained in
+[Process entrypoint](#process-entrypoint)
+
+### Setup and teardown per test file
+
+Most test runners have a special global function that runs before or after all
+tests in a single file. This is often called `beforeAll` / `afterAll`. We don't
+need this in the lbu provided test runner as all tests run in the order they are
+specified.
+
+<!-- prettier-ignore -->
+[testing](_media/howto/testing.js ':include :type=code :fragment=setup-teardown')
+
+### Asserting on throws
+
+Asserting on throws is another overlooked part of some test runners. This test
+runner does not provide any fancy util like `t.throws(functionThatThrows)`, but
+expects the user to use normal control flow like try / catch.
+
+<!-- prettier-ignore -->
+[testing](_media/howto/testing.js ':include :type=code :fragment=pass-fail')
+
+### Test configuration
+
+Test configuration is auto loaded from `{root}/test/config.js`. An example with
+the defaults is shown below:
+
+```js
+// Individual test timeout, i.e. the function provided to `test` and `t.test`
+export const timeout = 2500;
+```
+
 ## Execute Process
 
 There are two ways to execute a program or `child_process` provided by
