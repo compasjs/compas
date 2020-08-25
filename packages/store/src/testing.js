@@ -6,76 +6,48 @@ import {
 } from "./postgres.js";
 
 /**
- * This database is reused in in setupTestDatabase
- * @type {string|undefined}
+ * If set, new databases are derived from this database
+ * @type {undefined}
  */
-let testDatabaseName = undefined;
+let testDatabase = undefined;
 
 /**
- * Setup a test database once
- * Copies the current app database
- * Calls callback, so seeding is possible, then reuses this as a template
- *
- * @param {function(Postgres): Promise<void>} callback
+ * Set test database.
+ * New createTestPostgresConnection calls will use this as a template,
+ * so things like seeding only need to happen once
+ * @param {Postgres|string} databaseNameOrConnection
+ */
+export async function setPostgresDatabaseTemplate(databaseNameOrConnection) {
+  if (!isNil(testDatabase)) {
+    await cleanupPostgresDatabaseTemplate();
+  }
+
+  if (typeof databaseNameOrConnection === "string") {
+    testDatabase = databaseNameOrConnection;
+  } else if (typeof databaseNameOrConnection?.options?.database === "string") {
+    testDatabase = databaseNameOrConnection.options.database;
+  } else {
+    throw new Error(
+      `Expected string or sql connection. Found ${typeof databaseNameOrConnection}`,
+    );
+  }
+}
+
+/**
+ * Cleanup the test template
  * @returns {Promise<void>}
  */
-export async function setupTestDatabase(callback) {
-  if (testDatabaseName !== undefined) {
-    return;
+export async function cleanupPostgresDatabaseTemplate() {
+  if (!isNil(testDatabase)) {
+    // We mock a connection here, since cleanTestPostgresDatabase doesn't use the
+    // connection any way
+    await cleanupTestPostgresDatabase({
+      options: {
+        database: testDatabase,
+      },
+      end: () => Promise.resolve(),
+    });
   }
-
-  testDatabaseName = process.env.APP_NAME + uuid().substring(0, 7);
-
-  // Open connection to default database
-  const creationSql = await createDatabaseIfNotExists(
-    undefined,
-    process.env.APP_NAME,
-  );
-
-  // Drop all connections to the database, this is required before it is usable as a
-  // template
-  await creationSql`
-SELECT pg_terminate_backend(pg_stat_activity.pid)
-FROM pg_stat_activity
-WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
-  AND pid <> pg_backend_pid()
-  `;
-
-  // Create testDatabase based on the default app database
-  await createDatabaseIfNotExists(
-    creationSql,
-    testDatabaseName,
-    process.env.APP_NAME,
-  );
-
-  const sql = await newPostgresConnection({
-    database: testDatabaseName,
-  });
-
-  // List all tables
-  const tables = await sql`SELECT table_name
-                             FROM information_schema.tables
-                             WHERE table_schema = 'public' AND table_name != 'migrations'`;
-
-  if (tables.length > 0) {
-    await sql.unsafe(
-      `TRUNCATE ${tables.map((it) => `"${it.table_name}"`).join(", ")} CASCADE`,
-    );
-  } else {
-    // Just a query to initialize the connection
-    await sql`SELECT 1 + 1 AS sum;`;
-  }
-
-  if (!isNil(callback) && typeof callback === "function") {
-    // Call user seeder
-    await callback(sql);
-  }
-
-  // Cleanup connections
-  await Promise.all([
-    creationSql.end({ timeout: 0.01 }),
-    sql.end({ timeout: 0.01 }),
-  ]);
 }
 
 /**
@@ -83,12 +55,62 @@ WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
  */
 export async function createTestPostgresDatabase(verboseSql = false) {
   const name = process.env.APP_NAME + uuid().substring(0, 7);
-  await setupTestDatabase(() => {});
 
+  // Setup a template to work from
+  if (isNil(testDatabase)) {
+    testDatabase = process.env.APP_NAME + uuid().substring(0, 7);
+
+    const creationSql = await createDatabaseIfNotExists(
+      undefined,
+      process.env.APP_NAME,
+    );
+
+    // Clean all connections
+    // They prevent from using this as a template
+    await creationSql`
+  SELECT pg_terminate_backend(pg_stat_activity.pid)
+  FROM pg_stat_activity
+  WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
+    AND pid <> pg_backend_pid()
+    `;
+
+    // Use the current 'app' database as a base.
+    // We expect the user to have done all necessary migrations
+    await createDatabaseIfNotExists(
+      creationSql,
+      testDatabase,
+      process.env.APP_NAME,
+    );
+
+    const sql = await newPostgresConnection({
+      database: testDatabase,
+    });
+
+    // Cleanup all tables, except migrations
+    const tables = await sql`SELECT table_name
+                               FROM information_schema.tables
+                               WHERE table_schema = 'public'
+                                 AND table_name != 'migrations'`;
+    if (tables.length > 0) {
+      await sql.unsafe(
+        `TRUNCATE ${tables
+          .map((it) => `"${it.table_name}"`)
+          .join(", ")} CASCADE`,
+      );
+    }
+
+    // Cleanup all connections
+    await Promise.all([
+      creationSql.end({ timeout: 0.01 }),
+      sql.end({ timeout: 0.01 }),
+    ]);
+  }
+
+  // Real database creation
   const creationSql = await createDatabaseIfNotExists(
     undefined,
     name,
-    testDatabaseName,
+    testDatabase,
   );
 
   const sql = await newPostgresConnection({
@@ -99,7 +121,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
   // Initialize new connection and kill old connection
   await Promise.all([
     creationSql.end({ timeout: 0.01 }),
-    sql`SELECT 1 + 1 as sum`,
+    sql`SELECT 1 + 1 AS sum`,
   ]);
 
   return sql;

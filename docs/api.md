@@ -8421,6 +8421,7 @@ case-insensitive.
 #### Functions
 
 - [addJobToQueue](#addjobtoqueue)
+- [cleanupPostgresDatabaseTemplate](#cleanuppostgresdatabasetemplate)
 - [cleanupTestPostgresDatabase](#cleanuptestpostgresdatabase)
 - [copyFile](#copyfile)
 - [createOrUpdateFile](#createorupdatefile)
@@ -8439,7 +8440,7 @@ case-insensitive.
 - [removeBucket](#removebucket)
 - [removeBucketAndObjectsInBucket](#removebucketandobjectsinbucket)
 - [runMigrations](#runmigrations)
-- [setupTestDatabase](#setuptestdatabase)
+- [setPostgresDatabaseTemplate](#setpostgresdatabasetemplate)
 - [syncDeletedFiles](#syncdeletedfiles)
 
 ### Type aliases
@@ -8499,6 +8500,16 @@ not specified
 | `job` | [JobInput](#storeinterfacesjobinputmd) |
 
 **Returns:** _Promise‹number›_
+
+---
+
+#### cleanupPostgresDatabaseTemplate
+
+▸ **cleanupPostgresDatabaseTemplate**(): _Promise‹void›_
+
+Cleanup the database, set with `setPostgresDatabaseTemplate`
+
+**Returns:** _Promise‹void›_
 
 ---
 
@@ -8853,26 +8864,19 @@ Run the migrations, as returned by `getMigrationsToBeApplied`
 
 ---
 
-#### setupTestDatabase
+#### setPostgresDatabaseTemplate
 
-▸ **setupTestDatabase**(`callback?`: function): _Promise‹void›_
+▸ **setPostgresDatabaseTemplate**(`databaseNameOrConnection`:
+[Postgres](#postgres) | string): _Promise‹void›_
 
-Setup a test database once Copies the current app database Calls callback, so
-seeding is possible, then reuses this as a template. Make sure to call this
-before any other call to createTestPostgresDatabase. It is safe to call this
-multiple times, the callback will only be executed once.
-
-**Parameters:**
-
-▪`Optional` **callback**: _function_
-
-▸ (`sql`: [Postgres](#postgres)): _Promise‹void›_
+Set test database. New createTestPostgresConnection calls will use this as a
+template, so things like seeding only need to happen once
 
 **Parameters:**
 
-| Name  | Type                  |
-| ----- | --------------------- |
-| `sql` | [Postgres](#postgres) |
+| Name                       | Type                                |
+| -------------------------- | ----------------------------------- |
+| `databaseNameOrConnection` | [Postgres](#postgres) &#124; string |
 
 **Returns:** _Promise‹void›_
 
