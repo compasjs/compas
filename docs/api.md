@@ -8423,6 +8423,7 @@ case-insensitive.
 - [addJobToQueue](#addjobtoqueue)
 - [cleanupPostgresDatabaseTemplate](#cleanuppostgresdatabasetemplate)
 - [cleanupTestPostgresDatabase](#cleanuptestpostgresdatabase)
+- [copyAllObjects](#copyallobjects)
 - [copyFile](#copyfile)
 - [createOrUpdateFile](#createorupdatefile)
 - [createTestPostgresDatabase](#createtestpostgresdatabase)
@@ -8526,6 +8527,25 @@ connection
 | Name  | Type                       |
 | ----- | -------------------------- |
 | `sql` | postgresVendor.Sql‹object› |
+
+**Returns:** _Promise‹void›_
+
+---
+
+#### copyAllObjects
+
+▸ **copyAllObjects**(`minio`: Client, `sourceBucket`: string,
+`destinationBucket`: string): _Promise‹void›_
+
+Copy all objects from sourceBucket to destination bucket
+
+**Parameters:**
+
+| Name                | Type   |
+| ------------------- | ------ |
+| `minio`             | Client |
+| `sourceBucket`      | string |
+| `destinationBucket` | string |
 
 **Returns:** _Promise‹void›_
 

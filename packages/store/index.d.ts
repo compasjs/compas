@@ -57,6 +57,15 @@ export function listObjects(
 >;
 
 /**
+ * Copy all objects from sourceBucket to destination bucket
+ */
+export function copyAllObjects(
+  minio: minioVendor.Client,
+  sourceBucket: string,
+  destinationBucket: string,
+): Promise<void>;
+
+/**
  * Removes all objects and then deletes the bucket
  */
 export function removeBucketAndObjectsInBucket(

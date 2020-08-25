@@ -71,4 +71,28 @@ export async function removeBucketAndObjectsInBucket(minio, bucketName) {
   return removeBucket(minio, bucketName);
 }
 
+/**
+ * @param {minio.Client} minio
+ * @param {string} sourceBucket
+ * @param {string} destinationBucket
+ * @returns {Promise<void>}
+ */
+export async function copyAllObjects(minio, sourceBucket, destinationBucket) {
+  await ensureBucket(minio, destinationBucket);
+  const objects = await listObjects(minio, sourceBucket);
+
+  const pArr = [];
+  for (const object of objects) {
+    pArr.push(
+      minio.copyObject(
+        destinationBucket,
+        object.name,
+        `${sourceBucket}/${object.name}`,
+      ),
+    );
+  }
+
+  await Promise.all(pArr);
+}
+
 export { minio };
