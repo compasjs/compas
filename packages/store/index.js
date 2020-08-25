@@ -7,6 +7,7 @@ export {
   removeBucket,
   listObjects,
   removeBucketAndObjectsInBucket,
+  copyAllObjects,
 } from "./src/minio.js";
 
 export { newPostgresConnection, postgres } from "./src/postgres.js";
