@@ -29,9 +29,14 @@ export function mainTestFn(meta) {
       setTimeout(r, 2);
     });
 
-    await loadTestConfig();
+    const { setup, teardown } = await loadTestConfig();
+
+    await setup();
+
     await runTestsRecursively(state);
     const exitCode = printTestResults();
+
+    await teardown();
 
     process.exit(exitCode);
   });

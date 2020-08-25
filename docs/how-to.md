@@ -83,6 +83,14 @@ the defaults is shown below:
 ```js
 // Individual test timeout, i.e. the function provided to `test` and `t.test`
 export const timeout = 2500;
+
+export async function setup() {
+  // Global setup function
+}
+
+export async function teardown() {
+  // Global teardown function
+}
 ```
 
 ## Execute Process
