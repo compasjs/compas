@@ -14,7 +14,8 @@ export { newPostgresConnection, postgres } from "./src/postgres.js";
 export {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
-  setupTestDatabase,
+  setPostgresDatabaseTemplate,
+  cleanupPostgresDatabaseTemplate,
 } from "./src/testing.js";
 
 export {

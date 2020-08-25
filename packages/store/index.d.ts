@@ -75,15 +75,18 @@ export function newPostgresConnection(
 ): Promise<postgresVendor.Sql<{}>>;
 
 /**
- * Setup a test database once
- * Copies the current app database
- * Calls callback, so seeding is possible, then reuses this as a template.
- * Make sure to call this before any other call to createTestPostgresDatabase.
- * It is safe to call this multiple times, the callback will only be executed once.
+ * Set test database.
+ * New createTestPostgresConnection calls will use this as a template,
+ * so things like seeding only need to happen once
  */
-export function setupTestDatabase(
-  callback?: (sql: Postgres) => Promise<void>,
+export function setPostgresDatabaseTemplate(
+  databaseNameOrConnection: Postgres | string,
 ): Promise<void>;
+
+/**
+ * Cleanup the database, set with `setPostgresDatabaseTemplate`
+ */
+export function cleanupPostgresDatabaseTemplate(): Promise<void>;
 
 /**
  * Drops connections to 'normal' database and creates a new one based on the 'normal' database.
