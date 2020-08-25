@@ -6812,10 +6812,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.11.1:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.11.1.tgz#4e8210c65e95d64797185e879d7d3a16e356f89a"
-  integrity sha512-W67fQqAVJYtwylKzL6cBnNWIGBQMNuvGrOcp4r6StvOqd5zPT/KBO57pKV9fnQkdeIeFYFyYwNq9UNjRSZGWUQ==
+react-query@2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.12.1.tgz#60cfdaa2b2c142af5b169f4efc4def739222e8c9"
+  integrity sha512-KoIB/RE+hLCKjoUkPbc+gq4/XscQd0Cx9qryftG91GDykfEe47YtC2YlvKv235UTYWNXbFgByAqXrNIotXtd1g==
 
 read-cmd-shim@^1.0.1, read-cmd-shim@^1.0.5:
   version "1.0.5"
