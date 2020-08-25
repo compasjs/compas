@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "assert";
 import { isNil } from "@lbu/stdlib";
-import { state, testLogger } from "./state.js";
+import { state, testLogger, timeout } from "./state.js";
 
 /**
  * @param {TestState} testState
@@ -17,13 +17,17 @@ export async function runTestsRecursively(testState) {
 
       if (typeof result?.then === "function") {
         // Does a race so tests don't run for too long
-        // TODO: Make race timeout configurable
         await Promise.race([
           result,
           new Promise((_, reject) => {
             setTimeout(
-              () => reject(new Error(`Exceeded test timeout of 15 seconds.`)),
-              15000,
+              () =>
+                reject(
+                  new Error(
+                    `Exceeded test timeout of ${timeout / 1000} seconds.`,
+                  ),
+                ),
+              timeout,
             );
           }),
         ]);
