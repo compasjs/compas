@@ -60,7 +60,7 @@ jobs:
           yarn lbu generate
           yarn lbu migrate
           yarn lbu test
-          yarn lbu docker clean
+          yarn lbu docker reset
   bench:
     timeout-minutes: 15
     strategy:
