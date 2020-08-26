@@ -32,11 +32,10 @@ export function mainTestFn(meta) {
     const { setup, teardown } = await loadTestConfig();
 
     await setup();
-
     await runTestsRecursively(state);
-    const exitCode = printTestResults();
-
     await teardown();
+
+    const exitCode = printTestResults();
 
     process.exit(exitCode);
   });
