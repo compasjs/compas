@@ -1,7 +1,3 @@
-/**
- * Wraps `mainFn` and `areTestsRunning`
- * @param {ImportMeta} meta
- */
 import { mainFn } from "@lbu/stdlib";
 import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
@@ -13,6 +9,10 @@ import {
   state,
 } from "./state.js";
 
+/**
+ * Wraps `mainFn` and `areTestsRunning`
+ * @param {ImportMeta} meta
+ */
 export function mainTestFn(meta) {
   if (areTestsRunning) {
     return;
