@@ -1,6 +1,6 @@
 import { exec, spawn } from "@lbu/stdlib";
 
-const SUB_COMMANDS = ["up", "down", "clean"];
+const SUB_COMMANDS = ["up", "down", "clean", "reset"];
 
 const supportedContainers = {
   "lbu-postgres": {
@@ -15,7 +15,7 @@ const supportedContainers = {
 /**
  * @param {Logger} logger
  * @param {UtilCommand} command
- * @returns {Promise<void>}
+ * @returns {Promise<{ exitCode?: number }>}
  */
 export async function dockerCommand(logger, command) {
   const subCommand = command.arguments[0];
@@ -25,63 +25,128 @@ export async function dockerCommand(logger, command) {
         ", ",
       )}`,
     );
-    return;
+    return { exitCode: 1 };
   }
 
   if (!(await isDockerAvailable())) {
     logger.error(
       "Make sure to install Docker first. See https://docs.docker.com/install/",
     );
-    return;
+    return { exitCode: 1 };
   }
 
   if (subCommand === "up") {
-    await startContainers(logger);
+    return { exitCode: await startContainers(logger) };
   } else if (subCommand === "down") {
-    await stopContainers(logger);
+    return { exitCode: await stopContainers(logger) };
   } else if (subCommand === "clean") {
-    await cleanContainers(logger);
+    return { exitCode: await cleanContainers(logger) };
+  } else if (subCommand === "reset") {
+    return { exitCode: await resetDatabase(logger) };
   }
 }
 
 /**
- * @param logger
+ * @param {Logger} logger
+ * @returns {Promise<number>}
  */
 async function startContainers(logger) {
-  const { stdout } = await exec("docker container ls -a --format '{{.Names}}'");
+  const { stdout, exitCode: listContainersExit } = await exec(
+    "docker container ls -a --format '{{.Names}}'",
+  );
+  if (listContainersExit !== 0) {
+    return listContainersExit;
+  }
 
   for (const name of Object.keys(supportedContainers)) {
     logger.info(`Creating ${name} container`);
     if (stdout.indexOf(name) === -1) {
-      await exec(supportedContainers[name].createCommand);
+      const { exitCode } = await exec(supportedContainers[name].createCommand);
+      if (exitCode !== 0) {
+        return exitCode;
+      }
     }
   }
 
   logger.info(`Starting containers`);
-  await spawn(`docker`, ["start", ...Object.keys(supportedContainers)]);
+  const { exitCode } = await spawn(`docker`, [
+    "start",
+    ...Object.keys(supportedContainers),
+  ]);
+
+  return exitCode;
 }
 
 /**
- * @param logger
+ * @param {Logger} logger
+ * @returns {Promise<number>}
  */
 async function stopContainers(logger) {
   logger.info(`Stopping containers`);
-  await spawn(`docker`, ["stop", ...Object.keys(supportedContainers)]);
+  const { exitCode } = await spawn(`docker`, [
+    "stop",
+    ...Object.keys(supportedContainers),
+  ]);
+
+  return exitCode;
 }
 
 /**
- * @param logger
+ * @param {Logger} logger
+ * @returns {Promise<number>}
  */
 async function cleanContainers(logger) {
-  await stopContainers(logger);
+  const stopExit = await stopContainers(logger);
+  if (stopExit !== 0) {
+    return stopExit;
+  }
+
   logger.info(`Removing containers`);
-  await spawn(`docker`, ["rm", ...Object.keys(supportedContainers)]);
+  const { exitCode: rmExit } = await spawn(`docker`, [
+    "rm",
+    ...Object.keys(supportedContainers),
+  ]);
+  if (rmExit !== 0) {
+    return rmExit;
+  }
+
   logger.info(`Removing volumes`);
-  await spawn(`docker`, ["volume", "rm", ...Object.keys(supportedContainers)]);
+  const { exitCode: volumeRmExit } = await spawn(`docker`, [
+    "volume",
+    "rm",
+    ...Object.keys(supportedContainers),
+  ]);
+
+  return volumeRmExit;
 }
 
 /**
- *
+ * @param {Logger} logger
+ * @returns {Promise<number>}
+ */
+async function resetDatabase(logger) {
+  const startExit = await startContainers(logger);
+  if (startExit !== 0) {
+    return startExit;
+  }
+
+  const name = process.env.APP_NAME;
+
+  logger.info(`Resetting ${name} database`);
+  const { exitCode: postgresExit } = await spawn(`sh`, [
+    "-c",
+    `echo 'DROP DATABASE ${name}; CREATE DATABASE ${name}' | docker exec -i lbu-postgres psql --user postgres`,
+  ]);
+
+  if (postgresExit !== 0) {
+    return postgresExit;
+  }
+
+  return 0;
+}
+
+/**
+ * Brute force check if docker is available
  */
 async function isDockerAvailable() {
   try {

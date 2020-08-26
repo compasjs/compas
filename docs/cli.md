@@ -61,7 +61,7 @@ Usage:
 
 - init              : lbu init [projectName]
 - help              : lbu help
-- docker            : lbu docker [up,down,clean]
+- docker            : lbu docker [up,down,clean,reset]
 - proxy             : lbu proxy
 - run (explicit)    : lbu run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : lbu [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
