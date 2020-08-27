@@ -25,7 +25,9 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node }}-${{ hashFiles('**/yarn.lock') }}
+          key:
+            ${{ runner.os }}-yarn-${{ matrix.node }}-${{
+            hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-
@@ -57,7 +59,9 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node }}-${{ hashFiles('**/yarn.lock') }}
+          key:
+            ${{ runner.os }}-yarn-${{ matrix.node }}-${{
+            hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-
@@ -94,7 +98,9 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node }}-${{ hashFiles('**/yarn.lock') }}
+          key:
+            ${{ runner.os }}-yarn-${{ matrix.node }}-${{
+            hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-

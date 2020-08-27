@@ -344,13 +344,15 @@ function getPartialFields(item) {
     }
 
     // Support updating referenced field
-    const type = getItem(it)?.type;
+    // We follow through with the default value, so if the reference it self doesn't
+    // have a default value we use the default value of the referenced type
+    const { type, defaultValue } = getItem(it);
 
     // JSON.stringify all values that are not 'primitives'
     // So the user will can have a lbu GenericType into a JSONB field
     fieldsArray.push({
       source: key,
-      defaultValue: it.defaultValue,
+      defaultValue: it.defaultValue ?? defaultValue,
       stringify:
         ["number", "boolean", "string", "date", "uuid"].indexOf(type) === -1,
     });

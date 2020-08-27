@@ -57,8 +57,25 @@ async function main() {
         value: T.string(),
       })
       .enableQueries({ withDates: true }),
+    T.object("listSetting")
+      .keys({
+        id: T.uuid().primary(),
+        key: T.string(),
+        value: T.generic("settingValue")
+          .keys(T.string())
+          .values(T.any())
+          .default(JSON.stringify({ editable: true })),
+      })
+      .enableQueries(),
     T.relation().manyToOne(
       T.reference("app", "listItem"),
+      "list",
+      T.reference("app", "list"),
+      "id",
+      "list",
+    ),
+    T.relation().manyToOne(
+      T.reference("app", "listSetting"),
       "list",
       T.reference("app", "list"),
       "id",
@@ -70,6 +87,13 @@ async function main() {
       T.reference("app", "listItem"),
       "list",
       "items",
+    ),
+    T.relation().oneToMany(
+      T.reference("app", "list"),
+      "id",
+      T.reference("app", "listSetting"),
+      "list",
+      "settings",
     ),
 
     // Router

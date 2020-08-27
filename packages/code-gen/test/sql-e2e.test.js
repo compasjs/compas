@@ -89,6 +89,15 @@ test("code-gen/sql/e2e", async (t) => {
     t.equal(result.items.length, 0);
   });
 
+  t.test("insert setting uses default value", async (t) => {
+    const [setting] = await appQueries.listSettingInsert(sql, {
+      list: list.id,
+      key: "foo",
+    });
+
+    t.deepEqual(setting.value, { editable: true });
+  });
+
   t.test("teardown", async () => {
     await cleanupTestPostgresDatabase(sql);
   });
