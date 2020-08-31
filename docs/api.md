@@ -427,6 +427,9 @@ done executing.
 - [GenericType](#code-genclassesgenerictypemd)
 - [NumberType](#code-genclassesnumbertypemd)
 - [ObjectType](#code-genclassesobjecttypemd)
+- [OmitType](#code-genclassesomittypemd)
+- [OptionalType](#code-genclassesoptionaltypemd)
+- [PickType](#code-genclassespicktypemd)
 - [ReferenceType](#code-genclassesreferencetypemd)
 - [RelationType](#code-genclassesrelationtypemd)
 - [RouteBuilder](#code-genclassesroutebuildermd)
@@ -2671,6 +2674,654 @@ _Inherited from
 
 **Returns:** _typeof baseData_
 
+<a name="code-genclassesomittypemd"></a>
+
+[@lbu/code-gen - v0.0.67](#code-genreadmemd) ›
+[OmitType](#code-genclassesomittypemd)
+
+### Class: OmitType
+
+#### Hierarchy
+
+- [TypeBuilder](#code-genclassestypebuildermd)
+
+  ↳ **OmitType**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [data](#data)
+- [baseData](#static-basedata)
+
+##### Methods
+
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [keys](#keys)
+- [object](#object)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
+
+#### Constructors
+
+##### constructor
+
+\+ **new OmitType**(`type`: string, `group?`: string, `name?`: string):
+_[OmitType](#code-genclassesomittypemd)_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
+
+Create a new TypeBuilder for the provided group
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
+
+**Returns:** _[OmitType](#code-genclassesomittypemd)_
+
+#### Properties
+
+##### data
+
+• **data**: _typeof baseData_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
+
+---
+
+##### `Static` baseData
+
+▪ **baseData**: _object_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
+
+###### Type declaration:
+
+- **defaultValue**? : _string_
+
+- **docString**: _string_
+
+- **group**? : _string_
+
+- **isOptional**: _boolean_
+
+- **name**? : _string_
+
+- **type**? : _string_
+
+#### Methods
+
+##### build
+
+▸ **build**(): _Record‹string, any›_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
+
+Returns a shallow copy of the data object
+
+**Returns:** _Record‹string, any›_
+
+---
+
+##### default
+
+▸ **default**(`rawString?`: string | boolean | number): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
+
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
+
+**Parameters:**
+
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
+
+**Returns:** _this_
+
+---
+
+##### docs
+
+▸ **docs**(`docValue`: string): _this_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
+
+Add a doc comment, some generators / types may support rendering this
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### keys
+
+▸ **keys**(...`keys`: string[]): _this_
+
+Keys to remove from the provided builder
+
+**Parameters:**
+
+| Name      | Type     |
+| --------- | -------- |
+| `...keys` | string[] |
+
+**Returns:** _this_
+
+---
+
+##### object
+
+▸ **object**(`builder`: [ObjectType](#code-genclassesobjecttypemd) |
+[TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)): _this_
+
+Set the object to operate on
+
+**Parameters:**
+
+| Name      | Type                                                                                                                  |
+| --------- | --------------------------------------------------------------------------------------------------------------------- |
+| `builder` | [ObjectType](#code-genclassesobjecttypemd) &#124; [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd) |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
+
+Value can be undefined
+
+**Returns:** _this_
+
+---
+
+##### primary
+
+▸ **primary**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
+
+Set this field as primary for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### searchable
+
+▸ **searchable**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
+
+Set this field as searchable for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### `Static` getBaseData
+
+▸ **getBaseData**(): _typeof baseData_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
+
+**Returns:** _typeof baseData_
+
+<a name="code-genclassesoptionaltypemd"></a>
+
+[@lbu/code-gen - v0.0.67](#code-genreadmemd) ›
+[OptionalType](#code-genclassesoptionaltypemd)
+
+### Class: OptionalType
+
+#### Hierarchy
+
+- [TypeBuilder](#code-genclassestypebuildermd)
+
+  ↳ **OptionalType**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [data](#data)
+- [baseData](#static-basedata)
+
+##### Methods
+
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [value](#value)
+- [getBaseData](#static-getbasedata)
+
+#### Constructors
+
+##### constructor
+
+\+ **new OptionalType**(`type`: string, `group?`: string, `name?`: string):
+_[OptionalType](#code-genclassesoptionaltypemd)_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
+
+Create a new TypeBuilder for the provided group
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
+
+**Returns:** _[OptionalType](#code-genclassesoptionaltypemd)_
+
+#### Properties
+
+##### data
+
+• **data**: _typeof baseData_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
+
+---
+
+##### `Static` baseData
+
+▪ **baseData**: _object_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
+
+###### Type declaration:
+
+- **defaultValue**? : _string_
+
+- **docString**: _string_
+
+- **group**? : _string_
+
+- **isOptional**: _boolean_
+
+- **name**? : _string_
+
+- **type**? : _string_
+
+#### Methods
+
+##### build
+
+▸ **build**(): _Record‹string, any›_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
+
+Returns a shallow copy of the data object
+
+**Returns:** _Record‹string, any›_
+
+---
+
+##### default
+
+▸ **default**(`rawString?`: string | boolean | number): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
+
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
+
+**Parameters:**
+
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
+
+**Returns:** _this_
+
+---
+
+##### docs
+
+▸ **docs**(`docValue`: string): _this_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
+
+Add a doc comment, some generators / types may support rendering this
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
+
+Value can be undefined
+
+**Returns:** _this_
+
+---
+
+##### primary
+
+▸ **primary**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
+
+Set this field as primary for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### searchable
+
+▸ **searchable**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
+
+Set this field as searchable for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### value
+
+▸ **value**(`builder`: [TypeBuilderLike](#typebuilderlike)): _this_
+
+Set the type to operate on
+
+**Parameters:**
+
+| Name      | Type                                |
+| --------- | ----------------------------------- |
+| `builder` | [TypeBuilderLike](#typebuilderlike) |
+
+**Returns:** _this_
+
+---
+
+##### `Static` getBaseData
+
+▸ **getBaseData**(): _typeof baseData_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
+
+**Returns:** _typeof baseData_
+
+<a name="code-genclassespicktypemd"></a>
+
+[@lbu/code-gen - v0.0.67](#code-genreadmemd) ›
+[PickType](#code-genclassespicktypemd)
+
+### Class: PickType
+
+#### Hierarchy
+
+- [TypeBuilder](#code-genclassestypebuildermd)
+
+  ↳ **PickType**
+
+#### Index
+
+##### Constructors
+
+- [constructor](#constructor)
+
+##### Properties
+
+- [data](#data)
+- [baseData](#static-basedata)
+
+##### Methods
+
+- [build](#build)
+- [default](#default)
+- [docs](#docs)
+- [keys](#keys)
+- [object](#object)
+- [optional](#optional)
+- [primary](#primary)
+- [searchable](#searchable)
+- [getBaseData](#static-getbasedata)
+
+#### Constructors
+
+##### constructor
+
+\+ **new PickType**(`type`: string, `group?`: string, `name?`: string):
+_[PickType](#code-genclassespicktypemd)_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[constructor](#constructor)_
+
+Create a new TypeBuilder for the provided group
+
+**Parameters:**
+
+| Name     | Type   |
+| -------- | ------ |
+| `type`   | string |
+| `group?` | string |
+| `name?`  | string |
+
+**Returns:** _[PickType](#code-genclassespicktypemd)_
+
+#### Properties
+
+##### data
+
+• **data**: _typeof baseData_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[data](#data)_
+
+---
+
+##### `Static` baseData
+
+▪ **baseData**: _object_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[baseData](#static-basedata)_
+
+###### Type declaration:
+
+- **defaultValue**? : _string_
+
+- **docString**: _string_
+
+- **group**? : _string_
+
+- **isOptional**: _boolean_
+
+- **name**? : _string_
+
+- **type**? : _string_
+
+#### Methods
+
+##### build
+
+▸ **build**(): _Record‹string, any›_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[build](#build)_
+
+Returns a shallow copy of the data object
+
+**Returns:** _Record‹string, any›_
+
+---
+
+##### default
+
+▸ **default**(`rawString?`: string | boolean | number): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[default](#default)_
+
+Set a raw default value, also makes the type optional Can be reverted by calling
+this function with undefined or null
+
+**Parameters:**
+
+| Name         | Type                                |
+| ------------ | ----------------------------------- |
+| `rawString?` | string &#124; boolean &#124; number |
+
+**Returns:** _this_
+
+---
+
+##### docs
+
+▸ **docs**(`docValue`: string): _this_
+
+_Inherited from [TypeBuilder](#code-genclassestypebuildermd).[docs](#docs)_
+
+Add a doc comment, some generators / types may support rendering this
+
+**Parameters:**
+
+| Name       | Type   |
+| ---------- | ------ |
+| `docValue` | string |
+
+**Returns:** _this_
+
+---
+
+##### keys
+
+▸ **keys**(...`keys`: string[]): _this_
+
+Keys to keep from the provided builder
+
+**Parameters:**
+
+| Name      | Type     |
+| --------- | -------- |
+| `...keys` | string[] |
+
+**Returns:** _this_
+
+---
+
+##### object
+
+▸ **object**(`builder`: [ObjectType](#code-genclassesobjecttypemd) |
+[TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd)): _this_
+
+Set the object to operate on
+
+**Parameters:**
+
+| Name      | Type                                                                                                                  |
+| --------- | --------------------------------------------------------------------------------------------------------------------- |
+| `builder` | [ObjectType](#code-genclassesobjecttypemd) &#124; [TypeBuilderLikeObject](#code-geninterfacestypebuilderlikeobjectmd) |
+
+**Returns:** _this_
+
+---
+
+##### optional
+
+▸ **optional**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[optional](#optional)_
+
+Value can be undefined
+
+**Returns:** _this_
+
+---
+
+##### primary
+
+▸ **primary**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[primary](#primary)_
+
+Set this field as primary for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### searchable
+
+▸ **searchable**(): _this_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[searchable](#searchable)_
+
+Set this field as searchable for the 'sql' plugin
+
+**Returns:** _this_
+
+---
+
+##### `Static` getBaseData
+
+▸ **getBaseData**(): _typeof baseData_
+
+_Inherited from
+[TypeBuilder](#code-genclassestypebuildermd).[getBaseData](#static-getbasedata)_
+
+**Returns:** _typeof baseData_
+
 <a name="code-genclassesreferencetypemd"></a>
 
 [@lbu/code-gen - v0.0.67](#code-genreadmemd) ›
@@ -3858,6 +4509,12 @@ default value. Also contains group and name information
 
   ↳ [ObjectType](#code-genclassesobjecttypemd)
 
+  ↳ [OmitType](#code-genclassesomittypemd)
+
+  ↳ [OptionalType](#code-genclassesoptionaltypemd)
+
+  ↳ [PickType](#code-genclassespicktypemd)
+
   ↳ [RelationType](#code-genclassesrelationtypemd)
 
   ↳ [ReferenceType](#code-genclassesreferencetypemd)
@@ -4051,6 +4708,9 @@ added and provided by the core.
 - [generic](#generic)
 - [number](#number)
 - [object](#object)
+- [omit](#omit)
+- [optional](#optional)
+- [pick](#pick)
 - [reference](#reference)
 - [relation](#relation)
 - [router](#router)
@@ -4087,6 +4747,8 @@ Registry of all type plugins
 
 ▸ **any**(`name?`: string): _[AnyType](#code-genclassesanytypemd)_
 
+Represents any type
+
 **Parameters:**
 
 | Name    | Type   |
@@ -4101,11 +4763,13 @@ Registry of all type plugins
 
 ▸ **anyOf**(`name?`: string): _[AnyOfType](#code-genclassesanyoftypemd)_
 
+Represent one of the provided types.
+
 **Parameters:**
 
-| Name    | Type   |
-| ------- | ------ |
-| `name?` | string |
+| Name    | Type   | Description |
+| ------- | ------ | ----------- |
+| `name?` | string |             |
 
 **Returns:** _[AnyOfType](#code-genclassesanyoftypemd)_
 
@@ -4114,6 +4778,8 @@ Registry of all type plugins
 ##### array
 
 ▸ **array**(`name?`: string): _[ArrayType](#code-genclassesarraytypemd)_
+
+Represents a plain array
 
 **Parameters:**
 
@@ -4129,6 +4795,8 @@ Registry of all type plugins
 
 ▸ **bool**(`name?`: string): _[BooleanType](#code-genclassesbooleantypemd)_
 
+Boolean support
+
 **Parameters:**
 
 | Name    | Type   |
@@ -4143,11 +4811,13 @@ Registry of all type plugins
 
 ▸ **date**(`name?`: string): _[DateType](#code-genclassesdatetypemd)_
 
+Inputs ISO dates or js Date objects
+
 **Parameters:**
 
-| Name    | Type   |
-| ------- | ------ |
-| `name?` | string |
+| Name    | Type   | Description |
+| ------- | ------ | ----------- |
+| `name?` | string |             |
 
 **Returns:** _[DateType](#code-genclassesdatetypemd)_
 
@@ -4157,11 +4827,13 @@ Registry of all type plugins
 
 ▸ **file**(`name?`: string): _[FileType](#code-genclassesfiletypemd)_
 
+Formidable file object, Blob or Stream depending on the usecase
+
 **Parameters:**
 
-| Name    | Type   |
-| ------- | ------ |
-| `name?` | string |
+| Name    | Type   | Description |
+| ------- | ------ | ----------- |
+| `name?` | string |             |
 
 **Returns:** _[FileType](#code-genclassesfiletypemd)_
 
@@ -4170,6 +4842,8 @@ Registry of all type plugins
 ##### generic
 
 ▸ **generic**(`name?`: string): _[GenericType](#code-genclassesgenerictypemd)_
+
+A generic object, where both keys and values can be typed
 
 **Parameters:**
 
@@ -4185,11 +4859,13 @@ Registry of all type plugins
 
 ▸ **number**(`name?`: string): _[NumberType](#code-genclassesnumbertypemd)_
 
+Any number, integer by default but floating point can be enabled
+
 **Parameters:**
 
-| Name    | Type   |
-| ------- | ------ |
-| `name?` | string |
+| Name    | Type   | Description |
+| ------- | ------ | ----------- |
+| `name?` | string |             |
 
 **Returns:** _[NumberType](#code-genclassesnumbertypemd)_
 
@@ -4198,6 +4874,8 @@ Registry of all type plugins
 ##### object
 
 ▸ **object**(`name?`: string): _[ObjectType](#code-genclassesobjecttypemd)_
+
+Plain old js object
 
 **Parameters:**
 
@@ -4209,11 +4887,61 @@ Registry of all type plugins
 
 ---
 
+##### omit
+
+▸ **omit**(`name?`: string): _[OmitType](#code-genclassesomittypemd)_
+
+Omit keys from the provided object type
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[OmitType](#code-genclassesomittypemd)_
+
+---
+
+##### optional
+
+▸ **optional**(`name?`: string): _[ObjectType](#code-genclassesobjecttypemd)_
+
+Make a copy of the provided type, making it optional
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[ObjectType](#code-genclassesobjecttypemd)_
+
+---
+
+##### pick
+
+▸ **pick**(`name?`: string): _[OmitType](#code-genclassesomittypemd)_
+
+Pick keys from the provided object type
+
+**Parameters:**
+
+| Name    | Type   |
+| ------- | ------ |
+| `name?` | string |
+
+**Returns:** _[OmitType](#code-genclassesomittypemd)_
+
+---
+
 ##### reference
 
 ▸ **reference**(`groupOrOther?`: string |
 [TypeBuilder](#code-genclassestypebuildermd), `name?`: string):
 _[ReferenceType](#code-genclassesreferencetypemd)_
+
+Reference any other type, as if it was created inline
 
 **Parameters:**
 
@@ -4229,6 +4957,8 @@ _[ReferenceType](#code-genclassesreferencetypemd)_
 ##### relation
 
 ▸ **relation**(): _[RelationType](#code-genclassesrelationtypemd)_
+
+SQL object relation modelling
 
 **Returns:** _[RelationType](#code-genclassesrelationtypemd)_
 
@@ -4254,6 +4984,8 @@ Create a new RouteCreator Provided by the 'router' generator
 
 ▸ **string**(`name?`: string): _[StringType](#code-genclassesstringtypemd)_
 
+Any string use case
+
 **Parameters:**
 
 | Name    | Type   |
@@ -4267,6 +4999,8 @@ Create a new RouteCreator Provided by the 'router' generator
 ##### uuid
 
 ▸ **uuid**(`name?`: string): _[UuidType](#code-genclassesuuidtypemd)_
+
+Verified uuid
 
 **Parameters:**
 
