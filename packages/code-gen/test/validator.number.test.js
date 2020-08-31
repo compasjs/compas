@@ -110,13 +110,13 @@ test(name, async (t) => {
 
 function applyStructure(app) {
   const T = new TypeCreator();
-  app.add(T.number("number1"));
-  app.add(T.number("number2").optional());
-  app.add(T.number("number3").min(1));
-  app.add(T.number("number4").max(5));
-  app.add(T.number("number5").integer());
+  app.add(T.number("number1").float());
+  app.add(T.number("number2").float().optional());
+  app.add(T.number("number3").float().min(1));
+  app.add(T.number("number4").float().max(5));
+  app.add(T.number("number5"));
   app.add(T.number("number6").oneOf(1, 2, 3));
-  app.add(T.number("number7").convert());
+  app.add(T.number("number7").float().convert());
 
   return {
     enabledGenerators: ["validator"],

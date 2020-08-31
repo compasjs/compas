@@ -33,7 +33,7 @@ async function main() {
     }),
     T.bool("boolean").convert().default(false),
     T.bool("boolean2").oneOf(true),
-    T.number("number").convert().min(0).max(10).optional().integer(),
+    T.number("number").convert().min(0).max(10).optional(),
     T.string("string").trim().lowerCase().min(1).max(10).convert(),
     T.array("array").values(T.reference("app", "boolean")),
     T.object("object").keys({ foo: T.bool() }),
