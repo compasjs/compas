@@ -8,7 +8,7 @@ if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
-{{ if (model.validator.integer) { }}
+{{ if (!model.validator.floatingPoint) { }}
   if (!Number.isInteger(value)) {
     return buildError(`validator.${parentType}.integer`, { propertyPath }, errorList);
   }

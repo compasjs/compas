@@ -87,10 +87,10 @@ how you can create it via the TypeCreator (`T`).
   validator adds support for converting incoming strings like `"true"` via the
   `.convert()` method.
 
-- **Number**: created with `T.number()` it represents a floating point number.
-  Via `.integer()` enforceable to only accept a valid integer. It is also
-  possible to parse from string with the validators (`.convert()`) and providing
-  minimum and maximum values via `.min()` and `.max()`.
+- **Number**: created with `T.number()` it represents an integer. Via `.float()`
+  enforceable to also accept floating point numbers. It is also possible to
+  parse from string with the validators (`.convert()`) and providing minimum and
+  maximum values via `.min()` and `.max()`.
 
 - **String**: created with `T.string()`. The validator has various utilities
   build in for this type as well.
@@ -191,7 +191,7 @@ Arrays:
 app.add([T.string()]); // Error, top level types should be named
 app.add(
   T.object("name").keys({
-    numberArray: [T.number().integer()], // T.array().values(T.number().integer())
+    numberArray: [T.number()], // T.array().values(T.number().integer())
     objectArray: [
       {
         type: "bar",

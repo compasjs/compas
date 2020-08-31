@@ -74,10 +74,10 @@ function applyServerStructure(app) {
   app.add(
     R.get("/:id", "getId")
       .params({
-        id: T.number().integer().convert(),
+        id: T.number().convert(),
       })
       .response({
-        id: T.number().integer(),
+        id: T.number(),
       }),
 
     R.post("/", "create")

@@ -9,7 +9,7 @@ class NumberType extends TypeBuilder {
     oneOf: undefined,
     validator: {
       convert: false,
-      integer: false,
+      floatingPoint: false,
       min: undefined,
       max: undefined,
     },
@@ -46,8 +46,8 @@ class NumberType extends TypeBuilder {
   /**
    * @returns {NumberType}
    */
-  integer() {
-    this.data.validator.integer = true;
+  float() {
+    this.data.validator.floatingPoint = true;
 
     return this;
   }
@@ -86,7 +86,7 @@ const numberType = {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
   sql: () =>
-    `{{= model?.validator?.integer ? "INT" : "FLOAT" }} {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
+    `{{= model?.validator?.floatingPoint ? "FLOAT" : "INT" }} {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**
