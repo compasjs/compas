@@ -235,30 +235,88 @@ export class TypeCreator {
    */
   router(path: string): RouteCreator;
 
+  /**
+   * Represents any type
+   */
   any(name?: string): AnyType;
 
+  /**
+   * Represent one of the provided types.
+   * @param name
+   */
   anyOf(name?: string): AnyOfType;
 
+  /**
+   * Represents a plain array
+   */
   array(name?: string): ArrayType;
 
+  /**
+   * Boolean support
+   */
   bool(name?: string): BooleanType;
 
+  /**
+   * Inputs ISO dates or js Date objects
+   * @param name
+   */
   date(name?: string): DateType;
 
+  /**
+   * Formidable file object, Blob or Stream depending on the usecase
+   * @param name
+   */
   file(name?: string): FileType;
 
+  /**
+   * A generic object, where both keys and values can be typed
+   */
   generic(name?: string): GenericType;
 
+  /**
+   * Any number, integer by default but floating point can be enabled
+   * @param name
+   */
   number(name?: string): NumberType;
 
+  /**
+   * Plain old js object
+   */
   object(name?: string): ObjectType;
 
+  /**
+   * Omit keys from the provided object type
+   */
+  omit(name?: string): OmitType;
+
+  /**
+   * Make a copy of the provided type, making it optional
+   */
+  optional(name?: string): ObjectType;
+
+  /**
+   * Pick keys from the provided object type
+   */
+  pick(name?: string): OmitType;
+
+  /**
+   * Reference any other type, as if it was created inline
+   */
   reference(groupOrOther?: string | TypeBuilder, name?: string): ReferenceType;
 
+  /**
+   * SQL object relation modelling
+   */
   relation(): RelationType;
 
+  /**
+   * Any string use case
+   */
   string(name?: string): StringType;
 
+  /**
+   * Verified uuid
+   */
   uuid(name?: string): UuidType;
 }
 
@@ -482,6 +540,37 @@ export class ObjectType extends TypeBuilder {
    * Added by the 'sql' plugin
    */
   enableQueries(options?: { withHistory?: boolean; withDates?: boolean }): this;
+}
+
+export class OmitType extends TypeBuilder {
+  /**
+   * Set the object to operate on
+   */
+  object(builder: ObjectType | TypeBuilderLikeObject): this;
+
+  /**
+   * Keys to remove from the provided builder
+   */
+  keys(...keys: string[]): this;
+}
+
+export class OptionalType extends TypeBuilder {
+  /**
+   * Set the type to operate on
+   */
+  value(builder: TypeBuilderLike): this;
+}
+
+export class PickType extends TypeBuilder {
+  /**
+   * Set the object to operate on
+   */
+  object(builder: ObjectType | TypeBuilderLikeObject): this;
+
+  /**
+   * Keys to keep from the provided builder
+   */
+  keys(...keys: string[]): this;
 }
 
 /**

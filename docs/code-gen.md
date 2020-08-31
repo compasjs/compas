@@ -76,9 +76,11 @@ done. See further in this file for a more extensive information.
 
 ## The Types
 
-The code-gen package comese with a number of default types. Below a list of them
+The code-gen package comes with a number of default types. Below a list of them
 with a short description, some extra functionality provided by a generator, and
 how you can create it via the TypeCreator (`T`).
+
+**Basic**:
 
 - **Boolean**: created with `T.bool()` it represents either true or false.
   However by using the `.oneOf` function it can represent a single state. The
@@ -128,6 +130,17 @@ how you can create it via the TypeCreator (`T`).
 
 - **File**: created with `T.file()` has its use with the router generator for
   file uploads.
+
+**Advanced**:
+
+- **Optional**: created with `T.optional()` can make an optional copy of the
+  passed in type
+
+- **Omit**: created with `T.omit()` allows to remove a subset of keys from a
+  passed in object
+
+- **Pick**: created with `T.pick()` allows pick a subset of keys from the passed
+  in obejct
 
 ## Inferred types
 

@@ -4,7 +4,8 @@ import { buildOrInfer, TypeBuilder, TypeCreator } from "../TypeBuilder.js";
 
 const directory = dirnameForModule(import.meta);
 
-class ObjectType extends TypeBuilder {
+// This class is exported and used by Omit and Pick
+export class ObjectType extends TypeBuilder {
   static baseData = {
     validator: {
       strict: false,

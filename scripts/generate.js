@@ -43,6 +43,23 @@ async function main() {
     T.date("date").defaultToNow(),
     T.any("any"),
 
+    // Advanced types
+    T.optional("optionalBoolean").value(T.bool()),
+    T.omit("omitObject")
+      .object({
+        foo: T.bool(),
+        bar: T.string(),
+        onlyProp: T.number(),
+      })
+      .keys("foo", "bar"),
+    T.pick("pickObject")
+      .object({
+        foo: T.bool(),
+        bar: T.string(),
+        onlyProp: T.number(),
+      })
+      .keys("onlyProp"),
+
     // SQL
     T.object("list")
       .keys({
@@ -116,7 +133,8 @@ async function main() {
       }), // Infer params
     R.get("/:id/icon", "getIcon").response(T.file()),
 
-    // Reference router items in 'openapi' group so we can check file generation for browser usage
+    // Reference router items in 'openapi' group so we can check file generation
+    // for browser usage
     openApiT.object("referencingIn").keys({
       postIcon: openApiT.reference("app", "postIcon"),
       getIcon: openApiT.reference("app", "getIcon"),
