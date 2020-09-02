@@ -8328,7 +8328,7 @@ Return dirname for ES Module Alternative to CommonJS \_\_dirname
 
 #### exec
 
-▸ **exec**(`command`: string): _Promise‹object›_
+▸ **exec**(`command`: string, `opts?`: ExecOptions): _Promise‹object›_
 
 Promisify version of child_process#exec
 
@@ -8341,9 +8341,10 @@ exec("uname -m");
 
 **Parameters:**
 
-| Name      | Type   |
-| --------- | ------ |
-| `command` | string |
+| Name      | Type        |
+| --------- | ----------- |
+| `command` | string      |
+| `opts?`   | ExecOptions |
 
 **Returns:** _Promise‹object›_
 
