@@ -29,12 +29,16 @@ export function mainTestFn(meta) {
       setTimeout(r, 2);
     });
 
-    const { setup, teardown } = await loadTestConfig();
+    const config = await loadTestConfig();
 
-    await setup();
+    if (typeof config?.setup === "function") {
+      await config.setup();
+    }
     await runTestsRecursively(state);
-    await teardown();
 
+    if (typeof config?.teardown === "function") {
+      await config.teardown();
+    }
     const exitCode = printTestResults();
 
     process.exit(exitCode);
