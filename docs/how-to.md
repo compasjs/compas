@@ -78,7 +78,7 @@ expects the user to use normal control flow like try / catch.
 ### Test configuration
 
 Test configuration is auto loaded from `{root}/test/config.js`. An example with
-the defaults is shown below:
+the defaults is below:
 
 ```js
 // Individual test timeout, i.e. the function provided to `test` and `t.test`
@@ -92,6 +92,11 @@ export async function teardown() {
   // Global teardown function
 }
 ```
+
+Timeout is also configurable for subtests via `t.timeout` like so:
+
+<!-- prettier-ignore -->
+[testing](_media/howto/testing.js ':include :type=code :fragment=timeout')
 
 ## Execute Process
 
