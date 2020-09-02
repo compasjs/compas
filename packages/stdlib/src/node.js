@@ -11,10 +11,11 @@ export { join as pathJoin };
 /**
  * @callback Exec
  * @param {string} command
+ * @param {ExecOptions} [opts={}]
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
  */
-export async function exec(command) {
-  const promise = internalExec(command, { encoding: "utf8" });
+export async function exec(command, opts = {}) {
+  const promise = internalExec(command, { encoding: "utf8", ...opts });
   const { stdout, stderr } = await promise;
 
   return {

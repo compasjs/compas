@@ -1,5 +1,5 @@
 import { Logger } from "@lbu/insight";
-import { SpawnOptions } from "child_process";
+import { ExecOptions, SpawnOptions } from "child_process";
 
 interface UuidFunc {
   /**
@@ -187,6 +187,7 @@ export function camelToSnakeCase(input: string): string;
  */
 export function exec(
   command: string,
+  opts?: ExecOptions,
 ): Promise<{ stdout: string; stderr: string; exitCode: number }>;
 
 /**
