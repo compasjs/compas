@@ -234,6 +234,7 @@ Available assertions and the option of doing nested tests
 ##### Properties
 
 - [log](#log)
+- [timeout](#optional-timeout)
 
 ##### Methods
 
@@ -253,6 +254,14 @@ Available assertions and the option of doing nested tests
 • **log**: _Logger_
 
 Available test logger
+
+---
+
+##### `Optional` timeout
+
+• **timeout**? : _number_
+
+Configurable timeout used for sub tests
 
 #### Methods
 

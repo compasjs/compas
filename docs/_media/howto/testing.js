@@ -60,3 +60,24 @@ test("Throws vs not throws", async (t) => {
   }
 });
 /// [pass-fail]
+
+/// [timeout]
+test("configurable timeout", (t) => {
+  t.timeout = 20;
+
+  t.test("race with the timeout", async (t) => {
+    try {
+      await new Promise((resolve) => {
+        // No exception happening here
+        setTimeout(() => {
+          resolve();
+        }, 5);
+      });
+      t.pass("subtest is faster than the parent timeout of 20 milliseconds");
+    } catch (e) {
+      t.fail("This should not trigger");
+      t.log.error(e);
+    }
+  });
+});
+/// [timeout]

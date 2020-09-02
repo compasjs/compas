@@ -1,19 +1,21 @@
 import { deepStrictEqual } from "assert";
 import { isNil } from "@lbu/stdlib";
-import { state, testLogger, timeout } from "./state.js";
+import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**
  * @param {TestState} testState
  * @returns {Promise<void>}
  */
 export async function runTestsRecursively(testState) {
+  const runner = createRunnerForState(testState);
+
   if (!isNil(testState.callback)) {
     if (testState.parent === state) {
       testLogger.info(`Running: ${testState.name}`);
     }
 
     try {
-      const result = testState.callback(createRunnerForState(testState));
+      const result = testState.callback(runner);
 
       if (typeof result?.then === "function") {
         // Does a race so tests don't run for too long
@@ -37,9 +39,14 @@ export async function runTestsRecursively(testState) {
     }
   }
 
+  const originalTimeout = timeout;
+  setTestTimeout(runner.timeout ?? timeout);
+
   for (const child of testState.children) {
     await runTestsRecursively(child);
   }
+
+  setTestTimeout(originalTimeout);
 }
 
 /**

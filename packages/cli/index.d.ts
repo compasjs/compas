@@ -20,6 +20,11 @@ interface TestRunner {
   log: Logger;
 
   /**
+   * Configurable timeout used for sub tests
+   */
+  timeout?: number;
+
+  /**
    * Expect value to be truthy
    */
   ok(value: any, message?: string): void;
