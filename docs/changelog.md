@@ -11,8 +11,10 @@
   [#225](https://github.com/lightbasenl/lbu/pull/225),
   [#228](https://github.com/lightbasenl/lbu/pull/228))
 - build(deps-dev): bump typedoc from 0.18.0 to 0.19.0
+- chore: create script to automate changelog a little bit
 - chore: fix PR links in the changelog
 - chore: fix linting ([#231](https://github.com/lightbasenl/lbu/pull/231))
+- chore: setup CODEOWNERS again
 - ci: create dependabot config file
   ([#226](https://github.com/lightbasenl/lbu/pull/226))
 - cli: add some testing for the provided template
