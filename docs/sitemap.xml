@@ -41,10 +41,6 @@
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/api</loc>
-        <changefreq>daily</changefreq>
-    </url>
-    <url>
         <loc>https://lbu.lightbase.nl/#/howto/</loc>
         <changefreq>daily</changefreq>
     </url>

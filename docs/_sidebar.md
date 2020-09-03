@@ -9,5 +9,4 @@
 - [Lint-config](/lint-config.md)
 - [Environment](/env.md)
 - [How to](/how-to.md)
-- [Api](/api.md)
 - [Contributing](/contributing.md)
