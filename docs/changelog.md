@@ -1,5 +1,32 @@
 # CHANGELOG
 
+### [Unreleased](https://github.com/lightbasenl/lbu/releases/)
+
+- build(deps): bump @types/node from 14.6.1 to 14.6.3
+  ([#229](https://github.com/lightbasenl/lbu/pull/229))
+- build(deps): bump eslint from 7.7.0 to 7.8.1
+  ([#224](https://github.com/lightbasenl/lbu/pull/224))
+- build(deps-dev): bump react-query from 2.12.1 to 2.14.1
+  ([#222](https://github.com/lightbasenl/lbu/pull/222),
+  [#225](https://github.com/lightbasenl/lbu/pull/225),
+  [#228](https://github.com/lightbasenl/lbu/pull/228))
+- build(deps-dev): bump typedoc from 0.18.0 to 0.19.0
+- chore: fix PR links in the changelog
+- chore: fix linting ([#231](https://github.com/lightbasenl/lbu/pull/231))
+- ci: create dependabot config file
+  ([#226](https://github.com/lightbasenl/lbu/pull/226))
+- cli: add some testing for the provided template
+  ([#234](https://github.com/lightbasenl/lbu/pull/234))
+- cli: configure timeout of sub tests via `t.timeout`
+  ([#232](https://github.com/lightbasenl/lbu/pull/232))
+- code-gen: add optional, omit and pick types
+  ([#220](https://github.com/lightbasenl/lbu/pull/220))
+- code-gen: change default number to be an integer instead of float
+  ([#221](https://github.com/lightbasenl/lbu/pull/221))
+- docs: regenerate for v0.0.67
+- stdlib: support custom exec options
+  ([#233](https://github.com/lightbasenl/lbu/pull/233))
+
 ### [v0.0.67](https://github.com/lightbasenl/lbu/releases/tag/v0.0.67)
 
 - cli: add command to reset current database
