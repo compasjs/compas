@@ -2,9 +2,12 @@
 
 ### [v0.0.67](https://github.com/lightbasenl/lbu/releases/tag/v0.0.67)
 
-- cli: add command to reset current database (#213)
-- cli: run test teardown before printing results (#212)
-- code-gen: follow references when resolving defaults in sql generation (#215)
+- cli: add command to reset current database
+  ([#213](https://github.com/lightbasenl/lbu/pull/213))
+- cli: run test teardown before printing results
+  ([#212](https://github.com/lightbasenl/lbu/pull/212))
+- code-gen: follow references when resolving defaults in sql generation
+  ([#215](https://github.com/lightbasenl/lbu/pull/215))
 
 ### [v0.0.66](https://github.com/lightbasenl/lbu/releases/tag/v0.0.66)
 
