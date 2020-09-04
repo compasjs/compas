@@ -5563,10 +5563,10 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.14.1.tgz#d4a0a721c6155fc7dc682e036c284243ff48f74e"
-  integrity sha512-3NONArLC0SrYSOmdJMHBGkQBNFo76YjLgN38bpWXz5NIeK0qaVxjwqobfipSX3N7dsHbLGFV9jImkky0DHLfoA==
+react-query@2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.15.0.tgz#e8e48a84f92ce9ee33eba59c2534fc2d26b8df92"
+  integrity sha512-DWEg4PqsLu1PBMuEZaSsBWGctgZk9AbPwXwTC6Hb/srm3zWi6/6/XaFffcybOFYy2Y4R1giiHGdaYR67gy73uw==
 
 read-cmd-shim@^1.0.1:
   version "1.0.5"
