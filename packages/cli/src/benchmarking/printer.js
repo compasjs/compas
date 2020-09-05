@@ -11,8 +11,6 @@ export function printBenchResults() {
     }
   }
 
-  benchLogger.info(state);
-
   const result = [];
 
   result.push("");

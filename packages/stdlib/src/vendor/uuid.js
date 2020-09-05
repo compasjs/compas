@@ -26,7 +26,8 @@
 
 import { randomFillSync } from "crypto";
 
-const rnds8 = new Uint8Array(16);
+const randomPool = new Uint8Array(256); // # of random values to pre-allocate
+let poolPtr = randomPool.length;
 const byteToHex = [];
 
 for (let i = 0; i < 256; ++i) {
@@ -60,11 +61,15 @@ function bytesToUuid(buf, offset) {
  *
  */
 export function v4() {
-  const rnds = randomFillSync(rnds8);
+  if (poolPtr > randomPool.length - 16) {
+    randomFillSync(randomPool);
+    poolPtr = 0;
+  }
+  const buffer = randomPool.slice(poolPtr, (poolPtr += 16));
 
   // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+  buffer[6] = (buffer[6] & 0x0f) | 0x40;
+  buffer[8] = (buffer[8] & 0x3f) | 0x80;
 
-  return bytesToUuid(rnds);
+  return bytesToUuid(buffer);
 }
