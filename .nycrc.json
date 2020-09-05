@@ -1,4 +1,4 @@
 {
-  "reporter": ["lcov", "text"],
+  "reporter": ["lcov", "text", "json-summary"],
   "exclude": ["generated", "*/generated"]
 }

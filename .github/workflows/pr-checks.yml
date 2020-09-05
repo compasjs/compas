@@ -1,13 +1,16 @@
-name: Checks
-on: [push]
+name: PR Checks
+on: [pull_request]
+
+env:
+  CI: true
 
 jobs:
-  lint:
+  bench:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [14]
+        os: [ ubuntu-latest ]
+        node: [ 14 ]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
@@ -34,16 +37,17 @@ jobs:
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-
 
-      - name: Run lint
+      - name: Run benchmarks
         run: |
           yarn install
-          yarn lbu lint
-  test:
+          yarn lbu bench
+
+  coverage:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [14]
+        os: [ ubuntu-latest ]
+        node: [ 14 ]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
@@ -70,12 +74,19 @@ jobs:
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-
 
-      - name: Run tests
+      - name: Run benchmarks
         run: |
           yarn install
           yarn lbu docker up
           sleep 9
           yarn lbu generate
           yarn lbu migrate
-          yarn lbu test
+          yarn lbu coverage
           yarn lbu docker reset
+
+      - name: Comment test coverage
+        uses: AthleticNet/comment-test-coverage@1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: coverage/coverage-summary.json
+          title: C8 test coverage
