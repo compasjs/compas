@@ -1,59 +1,63 @@
+import { bench, mainBenchFn } from "@lbu/cli";
 import { TypeCreator } from "@lbu/code-gen";
-import { bench, isNil, logBenchResults, mainFn } from "@lbu/stdlib";
+import { AppError, isNil } from "@lbu/stdlib";
 import { generateAndLoad } from "./utils.js";
 
-mainFn(import.meta, async (logger) => {
-  await runBench();
-  logBenchResults(logger);
+mainBenchFn(import.meta);
+
+bench("object validator simple", async (b) => {
+  const appValidators = await setup();
+  b.resetTime();
+
+  let y;
+  for (let i = 0; i < b.N; ++i) {
+    // eslint-disable-next-line no-unused-vars
+    y = appValidators.simple({
+      foo: "true",
+      bar: "5",
+      baz: "Ok",
+    });
+  }
 });
 
-export async function runBench() {
+bench("object validator nested", async (b) => {
+  const appValidators = await setup();
+  b.resetTime();
+
+  let y;
+  for (let i = 0; i < b.N; ++i) {
+    // eslint-disable-next-line no-unused-vars
+    y = appValidators.nested({
+      foo: true,
+      bar: 5,
+      nest: [
+        "foo",
+        {
+          foo: true,
+          bar: 15,
+          baz: "Yes ",
+        },
+        {
+          foo: true,
+          bar: 15,
+          baz: "Yes ",
+        },
+        "bar",
+      ],
+    });
+  }
+});
+
+async function setup() {
   const imports = await generateAndLoad(
     "code-gen/e2e/bench/validator",
     applyStructure,
   );
   if (isNil(imports?.validator?.appValidators)) {
-    return;
+    throw new AppError("generateAndLoad.missingValidators", 500);
   }
 
-  const { appValidators } = imports["validator"];
-
-  await bench("object validator simple", (N) => {
-    let y;
-    for (let i = 0; i < N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = appValidators.simple({
-        foo: "true",
-        bar: "5",
-        baz: "Ok",
-      });
-    }
-  });
-
-  await bench("object validator nested", (N) => {
-    let y;
-    for (let i = 0; i < N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = appValidators.nested({
-        foo: true,
-        bar: 5,
-        nest: [
-          "foo",
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          "bar",
-        ],
-      });
-    }
-  });
+  return imports.validator.appValidators;
 }
 
 function applyStructure(app) {
