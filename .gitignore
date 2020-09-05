@@ -30,6 +30,6 @@ coverage
 !packages/store/generated/
 
 # Generated docs folder output
-
 /docs/generated/*
 !/docs/generated/README.md
+/benchmark_output.txt
