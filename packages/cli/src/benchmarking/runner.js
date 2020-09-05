@@ -8,6 +8,7 @@ import { state } from "./state.js";
 export async function runBenchmarks(state) {
   let i = 0;
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (isNil(state[i])) {
       // Give a chance for async imports to run
