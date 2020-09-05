@@ -127,6 +127,48 @@ interface TestAssertion {
 }
 
 /**
+ * Run the registered benchmarks
+ */
+export function mainBenchFn(meta: ImportMeta): void;
+
+/**
+ * Top level bench mark registering function
+ */
+export function bench(name: string, callback: BenchCallback): void;
+
+/**
+ * Argument to bench mark functions
+ */
+export interface BenchRunner {
+  /**
+   * Amount of iterations this call should do
+   */
+  N: number;
+
+  /**
+   * Reset the start time
+   * This can be used if a benchmark needs some setup
+   */
+  resetTime(): void;
+}
+
+/**
+ * Callback function executed while benchmarking
+ */
+export type BenchCallback = (BenchRunner) => void | Promise<void>;
+
+/**
+ * @private
+ */
+interface BenchState {
+  name: string;
+  N: number;
+  operationTimeNs: string;
+  callback: BenchCallback;
+  caughtException?: Error;
+}
+
+/**
  * Represents either a file in the `scripts` directory or a script from the package.json
  * Depending on the type contains either script or path
  */

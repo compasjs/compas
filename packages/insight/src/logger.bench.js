@@ -1,69 +1,64 @@
 import { createWriteStream } from "fs";
-import { bench, logBenchResults, mainFn } from "@lbu/stdlib";
+import { bench, mainBenchFn } from "@lbu/cli";
 import { newLogger } from "./logger.js";
 
-mainFn(import.meta, async (logger) => {
-  await runBench();
-  logBenchResults(logger);
+mainBenchFn(import.meta);
+
+bench("logger - strings", (b) => {
+  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const logger = newLogger({
+    pretty: false,
+    stream,
+  });
+
+  for (let i = 0; i < b.N; ++i) {
+    logger.info("My simple string");
+  }
+
+  stream.end();
 });
 
-export async function runBench() {
-  await bench("logger - strings", (N) => {
-    const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
-    const logger = newLogger({
-      pretty: false,
-      stream,
-    });
-
-    for (let i = 0; i < N; ++i) {
-      logger.info("My simple string");
-    }
-
-    stream.end();
+bench("logger - objects", (b) => {
+  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const logger = newLogger({
+    pretty: false,
+    stream,
   });
 
-  await bench("logger - objects", (N) => {
-    const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
-    const logger = newLogger({
-      pretty: false,
-      stream,
+  for (let i = 0; i < b.N; ++i) {
+    logger.info({
+      my: {
+        simple: "object",
+      },
     });
+  }
 
-    for (let i = 0; i < N; ++i) {
-      logger.info({
-        my: {
-          simple: "object",
-        },
-      });
-    }
+  stream.end();
+});
 
-    stream.end();
+bench("logger - deep objects", (b) => {
+  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const logger = newLogger({
+    pretty: false,
+    stream,
   });
 
-  await bench("logger - deep objects", (N) => {
-    const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
-    const logger = newLogger({
-      pretty: false,
-      stream,
-    });
-
-    for (let i = 0; i < N; ++i) {
-      logger.info({
-        my: {
-          more: [
-            {
-              advanced: {
-                object: "with",
-                multiple: "keys",
-                foo: 5,
-              },
+  for (let i = 0; i < b.N; ++i) {
+    logger.info({
+      my: {
+        more: [
+          {
+            advanced: {
+              object: "with",
+              multiple: "keys",
+              foo: 5,
             },
-          ],
-        },
-        bar: true,
-      });
-    }
+          },
+        ],
+      },
+      bar: true,
+    });
+  }
 
-    stream.end();
-  });
-}
+  stream.end();
+});

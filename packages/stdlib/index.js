@@ -29,8 +29,6 @@ export {
   noop,
   filenameForModule,
   dirnameForModule,
-  bench,
-  logBenchResults,
   isProduction,
   isStaging,
 } from "./src/utils.js";

@@ -17,6 +17,7 @@ export function printTestResults() {
   result.push(`Total assertions: ${passed + failed}`);
   result.push(`          Passed: ${passed}`);
   result.push(`          Failed: ${failed}`);
+  result.push(`-----------`);
 
   if (state.hasFailure) {
     for (const child of state.children) {

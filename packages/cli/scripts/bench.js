@@ -1,13 +1,13 @@
 import {
   filenameForModule,
-  logBenchResults,
   mainFn,
   processDirectoryRecursive,
 } from "@lbu/stdlib";
+import { mainBenchFn } from "../index.js";
 
 const __filename = filenameForModule(import.meta);
 
-const contentHandler = async (logger, file) => {
+const contentHandler = async (file) => {
   // Skip this index file
   if (file === __filename) {
     return;
@@ -15,17 +15,12 @@ const contentHandler = async (logger, file) => {
   if (!file.endsWith(".bench.js")) {
     return;
   }
-  const imported = await import(file);
-  if (imported && imported.runBench) {
-    await imported.runBench(logger);
-  }
+  await import(file);
 };
 
 mainFn(import.meta, main);
 
-async function main(logger) {
-  await processDirectoryRecursive(process.cwd(), (file) =>
-    contentHandler(logger, file),
-  );
-  logBenchResults(logger);
+async function main() {
+  await processDirectoryRecursive(process.cwd(), contentHandler);
+  mainBenchFn(import.meta);
 }

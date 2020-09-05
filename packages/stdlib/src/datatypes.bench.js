@@ -1,26 +1,21 @@
+import { bench, mainBenchFn } from "@lbu/cli";
 import { uuid } from "./datatypes.js";
-import { bench, logBenchResults, mainFn } from "./utils.js";
 
-mainFn(import.meta, async (logger) => {
-  await runBench();
-  logBenchResults(logger);
+mainBenchFn(import.meta);
+
+bench("uuid", (b) => {
+  let y;
+  for (let i = 0; i < b.N; ++i) {
+    // eslint-disable-next-line no-unused-vars
+    y = uuid();
+  }
 });
 
-export async function runBench() {
-  await bench("uuid", (N) => {
-    let y;
-    for (let i = 0; i < N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = uuid();
-    }
-  });
-
-  await bench("uuid.isValid", (N) => {
-    const id = uuid();
-    let y;
-    for (let i = 0; i < N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = uuid.isValid(id);
-    }
-  });
-}
+bench("uuid.isValid", (b) => {
+  const id = uuid();
+  let y;
+  for (let i = 0; i < b.N; ++i) {
+    // eslint-disable-next-line no-unused-vars
+    y = uuid.isValid(id);
+  }
+});

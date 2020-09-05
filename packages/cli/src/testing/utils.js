@@ -22,7 +22,6 @@ export function mainTestFn(meta) {
     setTestLogger(logger);
     setAreTestRunning(true);
 
-    // TODO: Convert to process.nextTick
     // Used when `mainTestFn` is called the first thing of the process,
     // which results in no tests registered yet
     await new Promise((r) => {
