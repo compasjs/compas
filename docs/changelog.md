@@ -1,22 +1,33 @@
 # CHANGELOG
 
-### [Unreleased](https://github.com/lightbasenl/lbu/releases/)
+### [v0.0.68](https://github.com/lightbasenl/lbu/releases/tag/v0.0.68)
 
-- build(deps): bump @types/node from 14.6.1 to 14.6.3
-  ([#229](https://github.com/lightbasenl/lbu/pull/229))
+- build(deps): bump @types/node from 14.6.1 to 14.6.4
+  ([#229](https://github.com/lightbasenl/lbu/pull/229),
+  [#237](https://github.com/lightbasenl/lbu/pull/237))
 - build(deps): bump eslint from 7.7.0 to 7.8.1
   ([#224](https://github.com/lightbasenl/lbu/pull/224))
-- build(deps-dev): bump react-query from 2.12.1 to 2.14.1
+- build(deps-dev): bump react-query from 2.12.1 to 2.15.1
   ([#222](https://github.com/lightbasenl/lbu/pull/222),
   [#225](https://github.com/lightbasenl/lbu/pull/225),
-  [#228](https://github.com/lightbasenl/lbu/pull/228))
+  [#228](https://github.com/lightbasenl/lbu/pull/228),
+  [#238](https://github.com/lightbasenl/lbu/pull/238),
+  [#241](https://github.com/lightbasenl/lbu/pull/241))
 - build(deps-dev): bump typedoc from 0.18.0 to 0.19.0
+- chore: add coverage summary to PR's
+  ([#243](https://github.com/lightbasenl/lbu/pull/243))
 - chore: create script to automate changelog a little bit
 - chore: fix PR links in the changelog
 - chore: fix linting ([#231](https://github.com/lightbasenl/lbu/pull/231))
+- chore: remove typedoc setup
+  ([#236](https://github.com/lightbasenl/lbu/pull/236))
 - chore: setup CODEOWNERS again
+- ci: comment benchmark result to PR
+  ([#244](https://github.com/lightbasenl/lbu/pull/244))
 - ci: create dependabot config file
   ([#226](https://github.com/lightbasenl/lbu/pull/226))
+- cli, stdlib: move bench to cli
+  ([#240](https://github.com/lightbasenl/lbu/pull/240))
 - cli: add some testing for the provided template
   ([#234](https://github.com/lightbasenl/lbu/pull/234))
 - cli: configure timeout of sub tests via `t.timeout`
@@ -25,7 +36,11 @@
   ([#220](https://github.com/lightbasenl/lbu/pull/220))
 - code-gen: change default number to be an integer instead of float
   ([#221](https://github.com/lightbasenl/lbu/pull/221))
+- code-gen: self host validation for App.extend
+  ([#246](https://github.com/lightbasenl/lbu/pull/246))
 - docs: regenerate for v0.0.67
+- stdlib: improve perf of uuid
+  ([#242](https://github.com/lightbasenl/lbu/pull/242))
 - stdlib: support custom exec options
   ([#233](https://github.com/lightbasenl/lbu/pull/233))
 
