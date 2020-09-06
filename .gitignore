@@ -24,7 +24,6 @@ coverage
 /generated/*
 /packages/*/generated/*
 /packages/*/test-generated/*
-/stubs
 
 # Real code-gen output
 !packages/store/generated/

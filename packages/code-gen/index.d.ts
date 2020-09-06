@@ -131,12 +131,6 @@ interface GenerateOpts {
   dumpStructure?: boolean;
 
   /**
-   * Some generators support so called stub generation.
-   * This often outputs the types only and doesn't include any real code.
-   */
-  useStubGenerators?: boolean;
-
-  /**
    * Custom file header to for example disable linting or something
    */
   fileHeader?: string;

@@ -24,10 +24,7 @@ export async function init() {
  * @returns {Promise<void>}
  */
 export async function preGenerate(app, data, options) {
-  if (
-    !options.useStubGenerators &&
-    options.enabledGenerators.indexOf("validator") === -1
-  ) {
+  if (options.enabledGenerators.indexOf("validator") === -1) {
     throw new Error("router generator depends on validator generator");
   }
 
@@ -46,7 +43,7 @@ export async function generate(app, data, options) {
   data.routeTrie = buildTrie(data);
   data.routeTags = buildRouteTags(data);
 
-  const template = options.useStubGenerators ? "routerStubsFile" : "routerFile";
+  const template = "routerFile";
 
   return {
     path: "./router.js",
