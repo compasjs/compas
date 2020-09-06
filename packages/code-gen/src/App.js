@@ -7,6 +7,7 @@ import {
   hoistNamedItems,
   runGenerators,
 } from "./generate.js";
+import { codeGenValidators } from "./generated/validators.js";
 import { generators, generatorTemplates } from "./generators/index.js";
 import { TypeCreator } from "./types/index.js";
 import { buildOrInfer } from "./types/TypeBuilder.js";
@@ -136,11 +137,9 @@ export class App {
    * @param data
    */
   extend(data) {
-    if (!isPlainObject(data)) {
-      throw new Error(`data should be an object.`);
-    }
+    const result = codeGenValidators.structure(data);
 
-    for (const groupData of Object.values(data)) {
+    for (const groupData of Object.values(result)) {
       for (const item of Object.values(groupData)) {
         this.addToData(item);
       }

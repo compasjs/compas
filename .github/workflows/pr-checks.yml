@@ -9,8 +9,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
-        node: [ 14 ]
+        os: [ubuntu-latest]
+        node: [14]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
@@ -57,15 +57,15 @@ jobs:
             ${{ env.BENCH_RESULT }}
             ```
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]'
+          repo-token-user-login: "github-actions[bot]"
           allow-repeats: false
 
   coverage:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
-        node: [ 14 ]
+        os: [ubuntu-latest]
+        node: [14]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
