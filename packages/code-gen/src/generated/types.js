@@ -2,18 +2,6 @@
 /* eslint-disable no-unused-vars */
 
 /**
- * @name CodeGenType
- *
- * @typedef { ( CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenObjectType|CodeGenReferenceType|CodeGenRelationType|CodeGenStringType|CodeGenUuidType|CodeGenRouteType )}
- */
-
-/**
- * @name CodeGenType_Input
- *
- * @typedef { ( CodeGenAnyType_Input|CodeGenAnyOfType_Input|CodeGenArrayType_Input|CodeGenBooleanType_Input|CodeGenDateType_Input|CodeGenFileType_Input|CodeGenGenericType_Input|CodeGenNumberType_Input|CodeGenObjectType_Input|CodeGenReferenceType_Input|CodeGenRelationType_Input|CodeGenStringType_Input|CodeGenUuidType_Input|CodeGenRouteType_Input )}
- */
-
-/**
  * @name CodeGenAnyType
  *
  * @typedef { { "type":"any", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "typeOf"?:string , "instanceOf"?:string , }}
@@ -182,6 +170,18 @@
  */
 
 /**
+ * @name CodeGenType
+ *
+ * @typedef { ( CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenObjectType|CodeGenReferenceType|CodeGenRelationType|CodeGenStringType|CodeGenUuidType|CodeGenRouteType )}
+ */
+
+/**
+ * @name CodeGenType_Input
+ *
+ * @typedef { ( CodeGenAnyType_Input|CodeGenAnyOfType_Input|CodeGenArrayType_Input|CodeGenBooleanType_Input|CodeGenDateType_Input|CodeGenFileType_Input|CodeGenGenericType_Input|CodeGenNumberType_Input|CodeGenObjectType_Input|CodeGenReferenceType_Input|CodeGenRelationType_Input|CodeGenStringType_Input|CodeGenUuidType_Input|CodeGenRouteType_Input )}
+ */
+
+/**
  * @name CodeGenStructure
  *
  * @typedef { Object< string , Object< string , CodeGenType > >}
@@ -191,4 +191,28 @@
  * @name CodeGenStructure_Input
  *
  * @typedef { Object< string , Object< string , CodeGenType_Input > >}
+ */
+
+/**
+ * @name CodeGenTemplateState
+ *
+ * @typedef { { "phase":"init"|"collect"|"finish", "imports":CodeGenTemplateImports, }}
+ */
+
+/**
+ * @name CodeGenTemplateState_Input
+ *
+ * @typedef { { "phase":"init"|"collect"|"finish", "imports":CodeGenTemplateImports_Input, }}
+ */
+
+/**
+ * @name CodeGenTemplateImports
+ *
+ * @typedef { { "destructureImport":Object< string , Set >, "starImport":Map, "commonjsImport":Map, } |undefined}
+ */
+
+/**
+ * @name CodeGenTemplateImports_Input
+ *
+ * @typedef { CodeGenTemplateImports}
  */

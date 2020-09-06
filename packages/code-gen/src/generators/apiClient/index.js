@@ -1,10 +1,9 @@
-import { generate, init } from "./generator.js";
+import { generate } from "./generator.js";
 
 /**
  * @type {GeneratorPlugin}
  */
 export const apiClientGenerator = {
   name: "apiClient",
-  init,
   generate,
 };

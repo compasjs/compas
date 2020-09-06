@@ -6,6 +6,39 @@ import { TypeCreator } from "@lbu/code-gen";
 export function applyCodeGenStructure(app) {
   const T = new TypeCreator("codeGen");
 
+  const types = getTypes(T);
+
+  // Types
+  app.add(
+    ...types,
+    T.anyOf("type").values(...types),
+    T.generic("structure")
+      .keys(T.string())
+      .values(
+        T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
+      ),
+  );
+
+  app.add(
+    T.object("templateState").keys({
+      phase: T.string().oneOf("init", "collect", "finish"),
+      imports: T.object("templateImports")
+        .keys({
+          destructureImport: T.generic()
+            .keys(T.string())
+            .values(T.any().instanceOf("Set")),
+          starImport: T.any().instanceOf("Map"),
+          commonjsImport: T.any().instanceOf("Map"),
+        })
+        .optional(),
+    }),
+  );
+}
+
+/**
+ * @param {TypeCreator} T
+ */
+function getTypes(T) {
   const typeBase = {
     docString: T.string().default("").min(0),
     isOptional: T.bool().default(false),
@@ -138,7 +171,7 @@ export function applyCodeGenStructure(app) {
     response: T.reference("codeGen", "type").optional(),
   });
 
-  const types = [
+  return [
     anyType,
     anyOfType,
     arrayType,
@@ -154,14 +187,4 @@ export function applyCodeGenStructure(app) {
     uuidType,
     routeType,
   ];
-
-  app.add(T.anyOf("type").values(...types));
-  app.add(...types);
-  app.add(
-    T.generic("structure")
-      .keys(T.string())
-      .values(
-        T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
-      ),
-  );
 }
