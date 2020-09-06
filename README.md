@@ -93,10 +93,6 @@ tailored at monolithic projects.
   - generic, anyOf, reference;
 - Remote structure loader
 - OpenAPI to LBU converter
-- Generate stubs (types and structure only) so packages can also use LBU
-  - router structure
-  - api client structure (Typescript supported)
-  - and of course the normal types generator
 
 ## Docs and development
 

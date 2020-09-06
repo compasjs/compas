@@ -158,7 +158,6 @@ export class App {
       this.fileHeader + formatEslint() + (options.fileHeader ?? "");
     options.useTypescript = !!options.useTypescript;
     options.dumpStructure = !!options.dumpStructure;
-    options.useStubGenerators = !!options.useStubGenerators;
     options.enabledGenerators = options.enabledGenerators || [
       ...generators.keys(),
     ];

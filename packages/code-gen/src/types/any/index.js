@@ -45,7 +45,7 @@ const anyType = {
     return readFileSync(`${directory}/validator.tmpl`, "utf-8");
   },
   jsType: () => {
-    return "*";
+    return `{{= !!model.instanceOf ? model.instanceOf : (!!model.typeOf ? model.typeOf : "*") }}`;
   },
   tsType: () => {
     return "any";

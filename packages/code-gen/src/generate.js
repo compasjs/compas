@@ -193,7 +193,7 @@ async function normalizeAndWriteFiles(options, files) {
 }
 
 /**
- * Find nested references and add to stubData in the correct group
+ * Find nested references and add to generatorInput in the correct group
  *
  * @param rootData
  * @param generatorInput

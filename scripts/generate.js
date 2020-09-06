@@ -7,7 +7,7 @@ mainFn(import.meta, main);
 
 /** @type {CliWatchOptions} */
 export const cliWatchOptions = {
-  ignoredPatterns: ["generated", "stubs"],
+  ignoredPatterns: ["generated"],
   extensions: ["tmpl", "js", "json"],
 };
 

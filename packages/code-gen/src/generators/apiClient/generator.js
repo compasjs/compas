@@ -21,15 +21,8 @@ export async function init() {
  * @returns {Promise<GeneratedFile>}
  */
 export async function generate(app, data, options) {
-  let template = options.useStubGenerators
-    ? "apiClientStubsJsFile"
-    : "apiClientFile";
-  let path = "./apiClient.js";
-
-  if (options.useTypescript && options.useStubGenerators) {
-    template = "apiClientStubsTsFile";
-    path = "./apiClient.ts";
-  }
+  const template = "apiClientFile";
+  const path = "./apiClient.js";
 
   return {
     path,

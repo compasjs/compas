@@ -6,7 +6,7 @@
 {{ } }}
 
 {{ if (model.instanceOf !== undefined) { }}
-  if (!(value instanceOf {{= model.instanceOf }}) {
+  if (!(value instanceof {{= model.instanceOf }})) {
     const instanceOf = "{{= model.instanceOf }}";
     return buildError(`validator.${parentType}.instance`, { propertyPath, instanceOf }, errorList);
   }
