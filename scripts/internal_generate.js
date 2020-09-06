@@ -1,6 +1,6 @@
-import { join } from "path";
 import { App } from "@lbu/code-gen";
 import { mainFn } from "@lbu/stdlib";
+import { applyCodeGenStructure, applyStoreStructure } from "../gen/index.js";
 
 mainFn(import.meta, main);
 
@@ -15,32 +15,23 @@ async function main() {
     verbose: true,
   });
 
-  const enabledPackages = ["store"];
-  const packagesDirectory = join(process.cwd(), "packages");
+  applyStoreStructure(app);
+  applyCodeGenStructure(app);
 
-  const state = {};
+  await app.generate({
+    outputDirectory: `packages/store/src/generated`,
+    enabledGroups: ["store"],
+    enabledGenerators: ["type", "sql"],
+    useTypescript: false,
+    dumpStructure: true,
+    dumpPostgres: true,
+  });
 
-  for (const pkg of enabledPackages) {
-    state[pkg] = {
-      sourcePath: join(packagesDirectory, pkg, "generate.js"),
-      destPath: join(packagesDirectory, pkg, "src/generated"),
-    };
-
-    const imported = await import(state[pkg].sourcePath);
-    if ("applyStructure" in imported) {
-      imported.applyStructure(app);
-    }
-  }
-
-  for (const pkg of enabledPackages) {
-    await app.generate({
-      outputDirectory: state[pkg].destPath,
-      enabledGroups: [pkg],
-      useStubGenerators: true,
-      enabledGenerators: ["type", "sql"],
-      useTypescript: false,
-      dumpStructure: true,
-      dumpPostgres: true,
-    });
-  }
+  await app.generate({
+    outputDirectory: `packages/code-gen/src/generated`,
+    enabledGroups: ["codeGen"],
+    enabledGenerators: ["type", "validator"],
+    useTypescript: false,
+    dumpStructure: false,
+  });
 }
