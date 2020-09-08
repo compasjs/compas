@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [v0.0.69](https://github.com/lightbasenl/lbu/releases/tag/v0.0.69)
+
+- build(deps-dev): bump react-query from 2.15.1 to 2.15.4
+  ([#249](https://github.com/lightbasenl/lbu/pull/249))
+- code-gen: add sql properties to generated types
+  ([#250](https://github.com/lightbasenl/lbu/pull/250))
+- code-gen: remove stub generators
+  ([#247](https://github.com/lightbasenl/lbu/pull/247))
+
 ### [v0.0.68](https://github.com/lightbasenl/lbu/releases/tag/v0.0.68)
 
 - build(deps): bump @types/node from 14.6.1 to 14.6.4
