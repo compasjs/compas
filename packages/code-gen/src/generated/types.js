@@ -16,169 +16,169 @@
 /**
  * @name CodeGenAnyType
  *
- * @typedef { { "type":"any", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "typeOf"?:string , "instanceOf"?:string , }}
+ * @typedef { { "type":"any", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "typeOf"?:string , "instanceOf"?:string , }}
  */
 
 /**
  * @name CodeGenAnyType_Input
  *
- * @typedef { { "type":"any", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "typeOf"?:string , "instanceOf"?:string , }}
+ * @typedef { { "type":"any", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "typeOf"?:string , "instanceOf"?:string , }}
  */
 
 /**
  * @name CodeGenAnyOfType
  *
- * @typedef { { "type":"anyOf", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "values":(CodeGenType)[], }}
+ * @typedef { { "type":"anyOf", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "values":(CodeGenType)[], }}
  */
 
 /**
  * @name CodeGenAnyOfType_Input
  *
- * @typedef { { "type":"anyOf", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "values":(CodeGenType_Input)[], }}
+ * @typedef { { "type":"anyOf", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "values":(CodeGenType_Input)[], }}
  */
 
 /**
  * @name CodeGenArrayType
  *
- * @typedef { { "type":"array", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "validator":{ "convert":boolean, "min"?:number , "max"?:number , }, "values":CodeGenType, }}
+ * @typedef { { "type":"array", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "validator":{ "convert":boolean, "min"?:number , "max"?:number , }, "values":CodeGenType, }}
  */
 
 /**
  * @name CodeGenArrayType_Input
  *
- * @typedef { { "type":"array", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "validator":{ "convert"?:boolean , "min"?:number , "max"?:number , }, "values":CodeGenType_Input, }}
+ * @typedef { { "type":"array", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "validator":{ "convert"?:boolean , "min"?:number , "max"?:number , }, "values":CodeGenType_Input, }}
  */
 
 /**
  * @name CodeGenBooleanType
  *
- * @typedef { { "type":"boolean", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:boolean , "validator":{ "convert":boolean, }, }}
+ * @typedef { { "type":"boolean", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "oneOf"?:boolean , "validator":{ "convert":boolean, }, }}
  */
 
 /**
  * @name CodeGenBooleanType_Input
  *
- * @typedef { { "type":"boolean", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:boolean , "validator":{ "convert"?:boolean , }, }}
+ * @typedef { { "type":"boolean", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "oneOf"?:boolean , "validator":{ "convert"?:boolean , }, }}
  */
 
 /**
  * @name CodeGenDateType
  *
- * @typedef { { "type":"date", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"date", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , }}
  */
 
 /**
  * @name CodeGenDateType_Input
  *
- * @typedef { { "type":"date", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"date", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , }}
  */
 
 /**
  * @name CodeGenFileType
  *
- * @typedef { { "type":"file", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"file", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , }}
  */
 
 /**
  * @name CodeGenFileType_Input
  *
- * @typedef { { "type":"file", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"file", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , }}
  */
 
 /**
  * @name CodeGenGenericType
  *
- * @typedef { { "type":"generic", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "keys":CodeGenType, "values":CodeGenType, }}
+ * @typedef { { "type":"generic", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "keys":CodeGenType, "values":CodeGenType, }}
  */
 
 /**
  * @name CodeGenGenericType_Input
  *
- * @typedef { { "type":"generic", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "keys":CodeGenType_Input, "values":CodeGenType_Input, }}
+ * @typedef { { "type":"generic", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "keys":CodeGenType_Input, "values":CodeGenType_Input, }}
  */
 
 /**
  * @name CodeGenNumberType
  *
- * @typedef { { "type":"number", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:(number)[] , "validator":{ "convert":boolean, "floatingPoint":boolean, "min"?:number , "max"?:number , }, }}
+ * @typedef { { "type":"number", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "oneOf"?:(number)[] , "validator":{ "convert":boolean, "floatingPoint":boolean, "min"?:number , "max"?:number , }, }}
  */
 
 /**
  * @name CodeGenNumberType_Input
  *
- * @typedef { { "type":"number", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:(number)[] , "validator":{ "convert"?:boolean , "floatingPoint"?:boolean , "min"?:number , "max"?:number , }, }}
+ * @typedef { { "type":"number", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "oneOf"?:(number)[] , "validator":{ "convert"?:boolean , "floatingPoint"?:boolean , "min"?:number , "max"?:number , }, }}
  */
 
 /**
  * @name CodeGenObjectType
  *
- * @typedef { { "type":"object", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "validator":{ "strict":boolean, }, "keys":Object< string , CodeGenType >, }}
+ * @typedef { { "type":"object", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "validator":{ "strict":boolean, }, "keys":Object< string , CodeGenType >, "enableQueries":boolean, "queryOptions"?:{ "withHistory":boolean, "withDates":boolean, } , }}
  */
 
 /**
  * @name CodeGenObjectType_Input
  *
- * @typedef { { "type":"object", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "validator":{ "strict"?:boolean , }, "keys":Object< string , CodeGenType_Input >, }}
+ * @typedef { { "type":"object", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "validator":{ "strict"?:boolean , }, "keys":Object< string , CodeGenType_Input >, "enableQueries"?:boolean , "queryOptions"?:{ "withHistory"?:boolean , "withDates"?:boolean , } , }}
  */
 
 /**
  * @name CodeGenReferenceType
  *
- * @typedef { { "type":"reference", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "reference":{ "uniqueName"?:string , "group"?:string , "name"?:string , }, }}
+ * @typedef { { "type":"reference", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "reference":{ "uniqueName"?:string , "group"?:string , "name"?:string , }, }}
  */
 
 /**
  * @name CodeGenReferenceType_Input
  *
- * @typedef { { "type":"reference", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "reference":{ "uniqueName"?:string , "group"?:string , "name"?:string , }, }}
+ * @typedef { { "type":"reference", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "reference":{ "uniqueName"?:string , "group"?:string , "name"?:string , }, }}
  */
 
 /**
  * @name CodeGenRelationType
  *
- * @typedef { { "type":"relation", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "relationType":"oneToOne"|"oneToMany"|"manyToOne", "left":CodeGenType, "leftKey":string, "right":CodeGenType, "rightKey":string, "substituteKey":string, }}
+ * @typedef { { "type":"relation", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "relationType":"oneToOne"|"oneToMany"|"manyToOne", "left":CodeGenType, "leftKey":string, "right":CodeGenType, "rightKey":string, "substituteKey":string, }}
  */
 
 /**
  * @name CodeGenRelationType_Input
  *
- * @typedef { { "type":"relation", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "relationType":"oneToOne"|"oneToMany"|"manyToOne", "left":CodeGenType_Input, "leftKey":string, "right":CodeGenType_Input, "rightKey":string, "substituteKey":string, }}
+ * @typedef { { "type":"relation", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "relationType":"oneToOne"|"oneToMany"|"manyToOne", "left":CodeGenType_Input, "leftKey":string, "right":CodeGenType_Input, "rightKey":string, "substituteKey":string, }}
  */
 
 /**
  * @name CodeGenStringType
  *
- * @typedef { { "type":"string", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:(string)[] , "validator":{ "convert":boolean, "trim":boolean, "lowerCase":boolean, "upperCase":boolean, "min":number, "max"?:number , "pattern"?:string , }, }}
+ * @typedef { { "type":"string", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "oneOf"?:(string)[] , "validator":{ "convert":boolean, "trim":boolean, "lowerCase":boolean, "upperCase":boolean, "min":number, "max"?:number , "pattern"?:string , }, }}
  */
 
 /**
  * @name CodeGenStringType_Input
  *
- * @typedef { { "type":"string", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "oneOf"?:(string)[] , "validator":{ "convert"?:boolean , "trim"?:boolean , "lowerCase"?:boolean , "upperCase"?:boolean , "min"?:number , "max"?:number , "pattern"?:string , }, }}
+ * @typedef { { "type":"string", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "oneOf"?:(string)[] , "validator":{ "convert"?:boolean , "trim"?:boolean , "lowerCase"?:boolean , "upperCase"?:boolean , "min"?:number , "max"?:number , "pattern"?:string , }, }}
  */
 
 /**
  * @name CodeGenUuidType
  *
- * @typedef { { "type":"uuid", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"uuid", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , }}
  */
 
 /**
  * @name CodeGenUuidType_Input
  *
- * @typedef { { "type":"uuid", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , }}
+ * @typedef { { "type":"uuid", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , }}
  */
 
 /**
  * @name CodeGenRouteType
  *
- * @typedef { { "type":"route", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "method":"GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path":string, "tags":(string)[], "query"?:CodeGenType , "params"?:CodeGenType , "body"?:CodeGenType , "files"?:CodeGenType , "response"?:CodeGenType , }}
+ * @typedef { { "type":"route", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "method":"GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path":string, "tags":(string)[], "query"?:CodeGenType , "params"?:CodeGenType , "body"?:CodeGenType , "files"?:CodeGenType , "response"?:CodeGenType , }}
  */
 
 /**
  * @name CodeGenRouteType_Input
  *
- * @typedef { { "type":"route", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "method":"GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path":string, "tags":(string)[], "query"?:CodeGenType_Input , "params"?:CodeGenType_Input , "body"?:CodeGenType_Input , "files"?:CodeGenType_Input , "response"?:CodeGenType_Input , }}
+ * @typedef { { "type":"route", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "method":"GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path":string, "tags":(string)[], "query"?:CodeGenType_Input , "params"?:CodeGenType_Input , "body"?:CodeGenType_Input , "files"?:CodeGenType_Input , "response"?:CodeGenType_Input , }}
  */
 
 /**

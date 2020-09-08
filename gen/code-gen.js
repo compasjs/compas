@@ -15,6 +15,12 @@ export function applyCodeGenStructure(app) {
     uniqueName: T.string().optional(),
     group: T.string().optional(),
     name: T.string().optional(),
+    sql: T.object()
+      .keys({
+        primary: T.bool().default(false),
+        searchable: T.bool().default(false),
+      })
+      .optional(),
   };
 
   const anyType = T.object("anyType").keys({
@@ -86,6 +92,13 @@ export function applyCodeGenStructure(app) {
       strict: T.bool().default(false),
     },
     keys: T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
+    enableQueries: T.bool().default(false),
+    queryOptions: T.object()
+      .keys({
+        withHistory: T.bool().default(false),
+        withDates: T.bool().default(false),
+      })
+      .optional(),
   });
 
   const referenceType = T.object("referenceType").keys({
