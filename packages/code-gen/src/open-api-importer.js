@@ -372,7 +372,7 @@ function convertSchema(context, schema) {
   } else if (schema.type === "number" || schema.type === "integer") {
     result.type = "number";
     assignBaseData();
-    result.validator.integer = schema.type === "integer";
+    result.validator.floatingPoint = schema.type !== "integer";
     if (!isNil(schema.minimum)) {
       result.validator.min = schema.minimum;
     }

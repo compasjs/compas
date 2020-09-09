@@ -523,9 +523,9 @@ export class ObjectType extends TypeBuilder {
   keys(obj: Record<string, TypeBuilderLike>): this;
 
   /**
-   * Validator enforces no extra keys
+   * Validator allows extra keys on the incoming object
    */
-  strict(): this;
+  loose(): this;
 
   /**
    * Generate sql queries for this object
