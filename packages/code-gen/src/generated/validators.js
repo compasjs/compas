@@ -226,7 +226,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenReferenceType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenReferenceType"](result);
     }
-    result = objectValidator57(result, propertyPath);
+    result = objectValidator58(result, propertyPath);
     if ("postValidateCodeGenReferenceType" in validatorHooks) {
       return validatorHooks["postValidateCodeGenReferenceType"](result);
     }
@@ -244,7 +244,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenRelationType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenRelationType"](result);
     }
-    result = objectValidator60(result, propertyPath);
+    result = objectValidator61(result, propertyPath);
     if ("postValidateCodeGenRelationType" in validatorHooks) {
       return validatorHooks["postValidateCodeGenRelationType"](result);
     }
@@ -262,7 +262,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenStringType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenStringType"](result);
     }
-    result = objectValidator65(result, propertyPath);
+    result = objectValidator66(result, propertyPath);
     if ("postValidateCodeGenStringType" in validatorHooks) {
       return validatorHooks["postValidateCodeGenStringType"](result);
     }
@@ -280,7 +280,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenUuidType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenUuidType"](result);
     }
-    result = objectValidator70(result, propertyPath);
+    result = objectValidator71(result, propertyPath);
     if ("postValidateCodeGenUuidType" in validatorHooks) {
       return validatorHooks["postValidateCodeGenUuidType"](result);
     }
@@ -298,7 +298,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenRouteType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenRouteType"](result);
     }
-    result = objectValidator72(result, propertyPath);
+    result = objectValidator73(result, propertyPath);
     if ("postValidateCodeGenRouteType" in validatorHooks) {
       return validatorHooks["postValidateCodeGenRouteType"](result);
     }
@@ -316,7 +316,7 @@ export const codeGenValidators = {
     if ("preValidateCodeGenStructure" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenStructure"](result);
     }
-    result = genericValidator81(result, propertyPath);
+    result = genericValidator82(result, propertyPath);
     if ("postValidateCodeGenStructure" in validatorHooks) {
       return validatorHooks["postValidateCodeGenStructure"](result);
     }
@@ -942,16 +942,30 @@ function objectValidator24(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["primary"] = booleanValidator18(
     value["primary"],
     `${propertyPath}.` + `primary`,
     errorList,
   );
+  keySet.delete("primary");
   result["searchable"] = booleanValidator18(
     value["searchable"],
     `${propertyPath}.` + `searchable`,
     errorList,
   );
+  keySet.delete("searchable");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function objectValidator15(
@@ -975,56 +989,78 @@ function objectValidator15(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator16(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["typeOf"] = stringValidator23(
     value["typeOf"],
     `${propertyPath}.` + `typeOf`,
     errorList,
   );
+  keySet.delete("typeOf");
   result["instanceOf"] = stringValidator23(
     value["instanceOf"],
     `${propertyPath}.` + `instanceOf`,
     errorList,
   );
+  keySet.delete("instanceOf");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator26(
@@ -1125,51 +1161,72 @@ function objectValidator25(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator26(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["values"] = arrayValidator27(
     value["values"],
     `${propertyPath}.` + `values`,
     errorList,
   );
+  keySet.delete("values");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator30(
@@ -1256,21 +1313,36 @@ function objectValidator31(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["convert"] = booleanValidator18(
     value["convert"],
     `${propertyPath}.` + `convert`,
     errorList,
   );
+  keySet.delete("convert");
   result["min"] = numberValidator32(
     value["min"],
     `${propertyPath}.` + `min`,
     errorList,
   );
+  keySet.delete("min");
   result["max"] = numberValidator32(
     value["max"],
     `${propertyPath}.` + `max`,
     errorList,
   );
+  keySet.delete("max");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function referenceValidator33(
@@ -1309,56 +1381,78 @@ function objectValidator29(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator30(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["validator"] = objectValidator31(
     value["validator"],
     `${propertyPath}.` + `validator`,
     errorList,
   );
+  keySet.delete("validator");
   result["values"] = referenceValidator33(
     value["values"],
     `${propertyPath}.` + `values`,
     errorList,
   );
+  keySet.delete("values");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator35(
@@ -1438,11 +1532,24 @@ function objectValidator37(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["convert"] = booleanValidator18(
     value["convert"],
     `${propertyPath}.` + `convert`,
     errorList,
   );
+  keySet.delete("convert");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function objectValidator34(
@@ -1466,56 +1573,78 @@ function objectValidator34(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator35(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["oneOf"] = booleanValidator36(
     value["oneOf"],
     `${propertyPath}.` + `oneOf`,
     errorList,
   );
+  keySet.delete("oneOf");
   result["validator"] = objectValidator37(
     value["validator"],
     `${propertyPath}.` + `validator`,
     errorList,
   );
+  keySet.delete("validator");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator39(
@@ -1577,46 +1706,66 @@ function objectValidator38(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator39(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator41(
@@ -1678,46 +1827,66 @@ function objectValidator40(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator41(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator43(
@@ -1809,56 +1978,78 @@ function objectValidator42(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator43(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["keys"] = referenceValidator44(
     value["keys"],
     `${propertyPath}.` + `keys`,
     errorList,
   );
+  keySet.delete("keys");
   result["values"] = referenceValidator45(
     value["values"],
     `${propertyPath}.` + `values`,
     errorList,
   );
+  keySet.delete("values");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator47(
@@ -1944,26 +2135,42 @@ function objectValidator49(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["convert"] = booleanValidator18(
     value["convert"],
     `${propertyPath}.` + `convert`,
     errorList,
   );
+  keySet.delete("convert");
   result["floatingPoint"] = booleanValidator18(
     value["floatingPoint"],
     `${propertyPath}.` + `floatingPoint`,
     errorList,
   );
+  keySet.delete("floatingPoint");
   result["min"] = numberValidator32(
     value["min"],
     `${propertyPath}.` + `min`,
     errorList,
   );
+  keySet.delete("min");
   result["max"] = numberValidator32(
     value["max"],
     `${propertyPath}.` + `max`,
     errorList,
   );
+  keySet.delete("max");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function objectValidator46(
@@ -1987,56 +2194,78 @@ function objectValidator46(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator47(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["oneOf"] = arrayValidator48(
     value["oneOf"],
     `${propertyPath}.` + `oneOf`,
     errorList,
   );
+  keySet.delete("oneOf");
   result["validator"] = objectValidator49(
     value["validator"],
     `${propertyPath}.` + `validator`,
     errorList,
   );
+  keySet.delete("validator");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function stringValidator51(
@@ -2077,6 +2306,24 @@ function stringValidator51(
   }
   return value;
 }
+function booleanValidator53(
+  value,
+  propertyPath,
+  errorList = [],
+  parentType = "boolean",
+) {
+  if (isNil(value)) {
+    return true;
+  }
+  if (typeof value !== "boolean") {
+    return buildError(
+      `validator.${parentType}.type`,
+      { propertyPath },
+      errorList,
+    );
+  }
+  return value;
+}
 function objectValidator52(
   value,
   propertyPath,
@@ -2098,14 +2345,27 @@ function objectValidator52(
     );
   }
   const result = Object.create(null);
-  result["strict"] = booleanValidator18(
+  const keySet = new Set(Object.keys(value));
+  result["strict"] = booleanValidator53(
     value["strict"],
     `${propertyPath}.` + `strict`,
     errorList,
   );
+  keySet.delete("strict");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator54(
+function stringValidator55(
   value,
   propertyPath,
   errorList = [],
@@ -2135,7 +2395,7 @@ function stringValidator54(
   }
   return value;
 }
-function referenceValidator55(
+function referenceValidator56(
   value,
   propertyPath,
   errorList = [],
@@ -2150,7 +2410,7 @@ function referenceValidator55(
   }
   return codeGenValidators.type(value, propertyPath);
 }
-function genericValidator53(
+function genericValidator54(
   value,
   propertyPath,
   errorList = [],
@@ -2172,12 +2432,12 @@ function genericValidator53(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    const validatedKey = stringValidator54(
+    const validatedKey = stringValidator55(
       key,
       `${propertyPath}.$key[${key}]`,
       errorList,
     );
-    const validatedValue = referenceValidator55(
+    const validatedValue = referenceValidator56(
       value[key],
       `${propertyPath}.$value[${key}]`,
       errorList,
@@ -2186,7 +2446,7 @@ function genericValidator53(
   }
   return result;
 }
-function objectValidator56(
+function objectValidator57(
   value,
   propertyPath,
   errorList = [],
@@ -2203,16 +2463,30 @@ function objectValidator56(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["withHistory"] = booleanValidator18(
     value["withHistory"],
     `${propertyPath}.` + `withHistory`,
     errorList,
   );
+  keySet.delete("withHistory");
   result["withDates"] = booleanValidator18(
     value["withDates"],
     `${propertyPath}.` + `withDates`,
     errorList,
   );
+  keySet.delete("withDates");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
 function objectValidator50(
@@ -2236,69 +2510,93 @@ function objectValidator50(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["type"] = stringValidator51(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
   result["validator"] = objectValidator52(
     value["validator"],
     `${propertyPath}.` + `validator`,
     errorList,
   );
-  result["keys"] = genericValidator53(
+  keySet.delete("validator");
+  result["keys"] = genericValidator54(
     value["keys"],
     `${propertyPath}.` + `keys`,
     errorList,
   );
+  keySet.delete("keys");
   result["enableQueries"] = booleanValidator18(
     value["enableQueries"],
     `${propertyPath}.` + `enableQueries`,
     errorList,
   );
-  result["queryOptions"] = objectValidator56(
+  keySet.delete("enableQueries");
+  result["queryOptions"] = objectValidator57(
     value["queryOptions"],
     `${propertyPath}.` + `queryOptions`,
     errorList,
   );
+  keySet.delete("queryOptions");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator58(
+function stringValidator59(
   value,
   propertyPath,
   errorList = [],
@@ -2336,7 +2634,7 @@ function stringValidator58(
   }
   return value;
 }
-function objectValidator59(
+function objectValidator60(
   value,
   propertyPath,
   errorList = [],
@@ -2357,24 +2655,39 @@ function objectValidator59(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function objectValidator57(
+function objectValidator58(
   value,
   propertyPath,
   errorList = [],
@@ -2395,54 +2708,75 @@ function objectValidator57(
     );
   }
   const result = Object.create(null);
-  result["type"] = stringValidator58(
+  const keySet = new Set(Object.keys(value));
+  result["type"] = stringValidator59(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
-  result["reference"] = objectValidator59(
+  keySet.delete("sql");
+  result["reference"] = objectValidator60(
     value["reference"],
     `${propertyPath}.` + `reference`,
     errorList,
   );
+  keySet.delete("reference");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator61(
+function stringValidator62(
   value,
   propertyPath,
   errorList = [],
@@ -2480,7 +2814,7 @@ function stringValidator61(
   }
   return value;
 }
-function stringValidator62(
+function stringValidator63(
   value,
   propertyPath,
   errorList = [],
@@ -2518,21 +2852,6 @@ function stringValidator62(
   }
   return value;
 }
-function referenceValidator63(
-  value,
-  propertyPath,
-  errorList = [],
-  parentType = "reference",
-) {
-  if (isNil(value)) {
-    return buildError(
-      "validator.reference.undefined",
-      { propertyPath },
-      errorList,
-    );
-  }
-  return codeGenValidators.type(value, propertyPath);
-}
 function referenceValidator64(
   value,
   propertyPath,
@@ -2548,7 +2867,22 @@ function referenceValidator64(
   }
   return codeGenValidators.type(value, propertyPath);
 }
-function objectValidator60(
+function referenceValidator65(
+  value,
+  propertyPath,
+  errorList = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return buildError(
+      "validator.reference.undefined",
+      { propertyPath },
+      errorList,
+    );
+  }
+  return codeGenValidators.type(value, propertyPath);
+}
+function objectValidator61(
   value,
   propertyPath,
   errorList = [],
@@ -2569,79 +2903,105 @@ function objectValidator60(
     );
   }
   const result = Object.create(null);
-  result["type"] = stringValidator61(
+  const keySet = new Set(Object.keys(value));
+  result["type"] = stringValidator62(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
-  result["relationType"] = stringValidator62(
+  keySet.delete("sql");
+  result["relationType"] = stringValidator63(
     value["relationType"],
     `${propertyPath}.` + `relationType`,
     errorList,
   );
-  result["left"] = referenceValidator63(
+  keySet.delete("relationType");
+  result["left"] = referenceValidator64(
     value["left"],
     `${propertyPath}.` + `left`,
     errorList,
   );
-  result["leftKey"] = stringValidator54(
+  keySet.delete("left");
+  result["leftKey"] = stringValidator55(
     value["leftKey"],
     `${propertyPath}.` + `leftKey`,
     errorList,
   );
-  result["right"] = referenceValidator64(
+  keySet.delete("leftKey");
+  result["right"] = referenceValidator65(
     value["right"],
     `${propertyPath}.` + `right`,
     errorList,
   );
-  result["rightKey"] = stringValidator54(
+  keySet.delete("right");
+  result["rightKey"] = stringValidator55(
     value["rightKey"],
     `${propertyPath}.` + `rightKey`,
     errorList,
   );
-  result["substituteKey"] = stringValidator54(
+  keySet.delete("rightKey");
+  result["substituteKey"] = stringValidator55(
     value["substituteKey"],
     `${propertyPath}.` + `substituteKey`,
     errorList,
   );
+  keySet.delete("substituteKey");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator66(
+function stringValidator67(
   value,
   propertyPath,
   errorList = [],
@@ -2679,7 +3039,7 @@ function stringValidator66(
   }
   return value;
 }
-function arrayValidator67(
+function arrayValidator68(
   value,
   propertyPath,
   errorList = [],
@@ -2698,12 +3058,12 @@ function arrayValidator67(
   const result = [];
   for (let i = 0; i < value.length; ++i) {
     result.push(
-      stringValidator54(value[i], `${propertyPath}[${i}]`, errorList),
+      stringValidator55(value[i], `${propertyPath}[${i}]`, errorList),
     );
   }
   return result;
 }
-function numberValidator69(
+function numberValidator70(
   value,
   propertyPath,
   errorList = [],
@@ -2728,7 +3088,7 @@ function numberValidator69(
   }
   return value;
 }
-function objectValidator68(
+function objectValidator69(
   value,
   propertyPath,
   errorList = [],
@@ -2749,44 +3109,63 @@ function objectValidator68(
     );
   }
   const result = Object.create(null);
+  const keySet = new Set(Object.keys(value));
   result["convert"] = booleanValidator18(
     value["convert"],
     `${propertyPath}.` + `convert`,
     errorList,
   );
+  keySet.delete("convert");
   result["trim"] = booleanValidator18(
     value["trim"],
     `${propertyPath}.` + `trim`,
     errorList,
   );
+  keySet.delete("trim");
   result["lowerCase"] = booleanValidator18(
     value["lowerCase"],
     `${propertyPath}.` + `lowerCase`,
     errorList,
   );
+  keySet.delete("lowerCase");
   result["upperCase"] = booleanValidator18(
     value["upperCase"],
     `${propertyPath}.` + `upperCase`,
     errorList,
   );
-  result["min"] = numberValidator69(
+  keySet.delete("upperCase");
+  result["min"] = numberValidator70(
     value["min"],
     `${propertyPath}.` + `min`,
     errorList,
   );
+  keySet.delete("min");
   result["max"] = numberValidator32(
     value["max"],
     `${propertyPath}.` + `max`,
     errorList,
   );
+  keySet.delete("max");
   result["pattern"] = stringValidator23(
     value["pattern"],
     `${propertyPath}.` + `pattern`,
     errorList,
   );
+  keySet.delete("pattern");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function objectValidator65(
+function objectValidator66(
   value,
   propertyPath,
   errorList = [],
@@ -2807,59 +3186,81 @@ function objectValidator65(
     );
   }
   const result = Object.create(null);
-  result["type"] = stringValidator66(
+  const keySet = new Set(Object.keys(value));
+  result["type"] = stringValidator67(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
-  result["oneOf"] = arrayValidator67(
+  keySet.delete("sql");
+  result["oneOf"] = arrayValidator68(
     value["oneOf"],
     `${propertyPath}.` + `oneOf`,
     errorList,
   );
-  result["validator"] = objectValidator68(
+  keySet.delete("oneOf");
+  result["validator"] = objectValidator69(
     value["validator"],
     `${propertyPath}.` + `validator`,
     errorList,
   );
+  keySet.delete("validator");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator71(
+function stringValidator72(
   value,
   propertyPath,
   errorList = [],
@@ -2897,7 +3298,7 @@ function stringValidator71(
   }
   return value;
 }
-function objectValidator70(
+function objectValidator71(
   value,
   propertyPath,
   errorList = [],
@@ -2918,49 +3319,69 @@ function objectValidator70(
     );
   }
   const result = Object.create(null);
-  result["type"] = stringValidator71(
+  const keySet = new Set(Object.keys(value));
+  result["type"] = stringValidator72(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
+  keySet.delete("sql");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function stringValidator73(
+function stringValidator74(
   value,
   propertyPath,
   errorList = [],
@@ -2998,7 +3419,7 @@ function stringValidator73(
   }
   return value;
 }
-function stringValidator74(
+function stringValidator75(
   value,
   propertyPath,
   errorList = [],
@@ -3042,7 +3463,7 @@ function stringValidator74(
   }
   return value;
 }
-function arrayValidator75(
+function arrayValidator76(
   value,
   propertyPath,
   errorList = [],
@@ -3061,21 +3482,10 @@ function arrayValidator75(
   const result = [];
   for (let i = 0; i < value.length; ++i) {
     result.push(
-      stringValidator54(value[i], `${propertyPath}[${i}]`, errorList),
+      stringValidator55(value[i], `${propertyPath}[${i}]`, errorList),
     );
   }
   return result;
-}
-function referenceValidator76(
-  value,
-  propertyPath,
-  errorList = [],
-  parentType = "reference",
-) {
-  if (isNil(value)) {
-    return;
-  }
-  return codeGenValidators.type(value, propertyPath);
 }
 function referenceValidator77(
   value,
@@ -3121,7 +3531,18 @@ function referenceValidator80(
   }
   return codeGenValidators.type(value, propertyPath);
 }
-function objectValidator72(
+function referenceValidator81(
+  value,
+  propertyPath,
+  errorList = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return;
+  }
+  return codeGenValidators.type(value, propertyPath);
+}
+function objectValidator73(
   value,
   propertyPath,
   errorList = [],
@@ -3142,89 +3563,117 @@ function objectValidator72(
     );
   }
   const result = Object.create(null);
-  result["type"] = stringValidator73(
+  const keySet = new Set(Object.keys(value));
+  result["type"] = stringValidator74(
     value["type"],
     `${propertyPath}.` + `type`,
     errorList,
   );
+  keySet.delete("type");
   result["docString"] = stringValidator17(
     value["docString"],
     `${propertyPath}.` + `docString`,
     errorList,
   );
+  keySet.delete("docString");
   result["isOptional"] = booleanValidator18(
     value["isOptional"],
     `${propertyPath}.` + `isOptional`,
     errorList,
   );
+  keySet.delete("isOptional");
   result["defaultValue"] = anyOfValidator19(
     value["defaultValue"],
     `${propertyPath}.` + `defaultValue`,
     errorList,
   );
+  keySet.delete("defaultValue");
   result["uniqueName"] = stringValidator23(
     value["uniqueName"],
     `${propertyPath}.` + `uniqueName`,
     errorList,
   );
+  keySet.delete("uniqueName");
   result["group"] = stringValidator23(
     value["group"],
     `${propertyPath}.` + `group`,
     errorList,
   );
+  keySet.delete("group");
   result["name"] = stringValidator23(
     value["name"],
     `${propertyPath}.` + `name`,
     errorList,
   );
+  keySet.delete("name");
   result["sql"] = objectValidator24(
     value["sql"],
     `${propertyPath}.` + `sql`,
     errorList,
   );
-  result["method"] = stringValidator74(
+  keySet.delete("sql");
+  result["method"] = stringValidator75(
     value["method"],
     `${propertyPath}.` + `method`,
     errorList,
   );
-  result["path"] = stringValidator54(
+  keySet.delete("method");
+  result["path"] = stringValidator55(
     value["path"],
     `${propertyPath}.` + `path`,
     errorList,
   );
-  result["tags"] = arrayValidator75(
+  keySet.delete("path");
+  result["tags"] = arrayValidator76(
     value["tags"],
     `${propertyPath}.` + `tags`,
     errorList,
   );
-  result["query"] = referenceValidator76(
+  keySet.delete("tags");
+  result["query"] = referenceValidator77(
     value["query"],
     `${propertyPath}.` + `query`,
     errorList,
   );
-  result["params"] = referenceValidator77(
+  keySet.delete("query");
+  result["params"] = referenceValidator78(
     value["params"],
     `${propertyPath}.` + `params`,
     errorList,
   );
-  result["body"] = referenceValidator78(
+  keySet.delete("params");
+  result["body"] = referenceValidator79(
     value["body"],
     `${propertyPath}.` + `body`,
     errorList,
   );
-  result["files"] = referenceValidator79(
+  keySet.delete("body");
+  result["files"] = referenceValidator80(
     value["files"],
     `${propertyPath}.` + `files`,
     errorList,
   );
-  result["response"] = referenceValidator80(
+  keySet.delete("files");
+  result["response"] = referenceValidator81(
     value["response"],
     `${propertyPath}.` + `response`,
     errorList,
   );
+  keySet.delete("response");
+  if (keySet.size !== 0) {
+    let extraKeys = "";
+    for (const k of keySet.keys()) {
+      extraKeys += `${k},`;
+    }
+    return buildError(
+      `validator.${parentType}.strict`,
+      { propertyPath, extraKeys },
+      errorList,
+    );
+  }
   return result;
 }
-function referenceValidator83(
+function referenceValidator84(
   value,
   propertyPath,
   errorList = [],
@@ -3238,6 +3687,42 @@ function referenceValidator83(
     );
   }
   return codeGenValidators.type(value, propertyPath);
+}
+function genericValidator83(
+  value,
+  propertyPath,
+  errorList = [],
+  parentType = "generic",
+) {
+  if (isNil(value)) {
+    return buildError(
+      "validator.generic.undefined",
+      { propertyPath },
+      errorList,
+    );
+  }
+  if (typeof value !== "object") {
+    return buildError(
+      `validator.${parentType}.type`,
+      { propertyPath },
+      errorList,
+    );
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    const validatedKey = stringValidator55(
+      key,
+      `${propertyPath}.$key[${key}]`,
+      errorList,
+    );
+    const validatedValue = referenceValidator84(
+      value[key],
+      `${propertyPath}.$value[${key}]`,
+      errorList,
+    );
+    result[validatedKey] = validatedValue;
+  }
+  return result;
 }
 function genericValidator82(
   value,
@@ -3261,48 +3746,12 @@ function genericValidator82(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    const validatedKey = stringValidator54(
+    const validatedKey = stringValidator55(
       key,
       `${propertyPath}.$key[${key}]`,
       errorList,
     );
-    const validatedValue = referenceValidator83(
-      value[key],
-      `${propertyPath}.$value[${key}]`,
-      errorList,
-    );
-    result[validatedKey] = validatedValue;
-  }
-  return result;
-}
-function genericValidator81(
-  value,
-  propertyPath,
-  errorList = [],
-  parentType = "generic",
-) {
-  if (isNil(value)) {
-    return buildError(
-      "validator.generic.undefined",
-      { propertyPath },
-      errorList,
-    );
-  }
-  if (typeof value !== "object") {
-    return buildError(
-      `validator.${parentType}.type`,
-      { propertyPath },
-      errorList,
-    );
-  }
-  const result = Object.create(null);
-  for (const key of Object.keys(value)) {
-    const validatedKey = stringValidator54(
-      key,
-      `${propertyPath}.$key[${key}]`,
-      errorList,
-    );
-    const validatedValue = genericValidator82(
+    const validatedValue = genericValidator83(
       value[key],
       `${propertyPath}.$value[${key}]`,
       errorList,

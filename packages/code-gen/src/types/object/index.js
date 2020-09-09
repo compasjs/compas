@@ -8,7 +8,7 @@ const directory = dirnameForModule(import.meta);
 export class ObjectType extends TypeBuilder {
   static baseData = {
     validator: {
-      strict: false,
+      strict: true,
     },
   };
 
@@ -48,8 +48,8 @@ export class ObjectType extends TypeBuilder {
   /**
    * @returns {ObjectType}
    */
-  strict() {
-    this.data.validator.strict = true;
+  loose() {
+    this.data.validator.strict = false;
 
     return this;
   }

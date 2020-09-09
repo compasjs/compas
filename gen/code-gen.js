@@ -106,7 +106,7 @@ function getTypes(T) {
     type: "object",
     ...typeBase,
     validator: {
-      strict: T.bool().default(false),
+      strict: T.bool().default(true),
     },
     keys: T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
     enableQueries: T.bool().default(false),
