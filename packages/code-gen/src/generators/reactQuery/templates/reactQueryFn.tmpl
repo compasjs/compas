@@ -21,12 +21,12 @@
  */
 export function {{= funcName }}(
 {{ if (model.params) { }}
-params: {{= "T." + model.params.reference.uniqueName + "_Input" }},
+params: T.{{= model.params.reference.uniqueName }}_Input,
 {{ } }}
 {{ if (model.query) { }}
 query: T.{{= model.query.reference.uniqueName }}_Input,
 {{ } }}
-options: QueryOptions<{{=  responseType }}, AppErrorResponse> = {},
+options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
 ): QueryResult<{{= responseType }}, AppErrorResponse> {
   options.enabled = (
     options.enabled === true || (options.enabled !== false
@@ -61,10 +61,10 @@ options: QueryOptions<{{=  responseType }}, AppErrorResponse> = {},
     (
     _,
     {{ if (model.params) { }}
-    params,
+    params: T.{{= model.params.reference.uniqueName }}_Input,
     {{ } }}
     {{ if (model.query) { }}
-    query,
+    query: T.{{= model.query.reference.uniqueName }}_Input,
     {{ } }}
     ) => {{= model.group }}Api.{{= model.name }}(
       {{= model.params ? "params, " : ""}}
@@ -99,8 +99,8 @@ interface {{= upperCaseFirst(funcName) }}Props {
  * Docs: {{= model.docString }}
  */
 export function {{= funcName }}(
-  options: MutationOptions<{{= responseType }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse> = {},
-): [MutateFunction<{{= responseType }}, {{= upperCaseFirst(funcName) }}Props, AppErrorResponse>, MutationResult<{{= responseType }}, AppErrorResponse>] {
+  options: MutationConfig<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},
+): MutationResultPair<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props, unknown> {
   return useMutation(
     (variables) => {{= model.group }}Api.{{= model.name }}(
       {{= model.params ? "variables.params, " : ""}}
