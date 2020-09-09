@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.70](https://github.com/lightbasenl/lbu/releases/tag/v0.0.70)
+
+- code-gen: fix breaking changes in react-query types
+  ([#252](https://github.com/lightbasenl/lbu/pull/252))
+
 ### [v0.0.69](https://github.com/lightbasenl/lbu/releases/tag/v0.0.69)
 
 - build(deps-dev): bump react-query from 2.15.1 to 2.15.4
