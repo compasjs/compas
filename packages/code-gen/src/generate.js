@@ -1,6 +1,5 @@
 import { existsSync, promises as fs } from "fs";
-import path from "path";
-import { isNil, isPlainObject } from "@lbu/stdlib";
+import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
 import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
@@ -187,7 +186,7 @@ async function normalizeAndWriteFiles(options, files) {
   }
 
   for (const file of flattenedFiles) {
-    const filePath = path.join(options.outputDirectory, file.path);
+    const filePath = pathJoin(options.outputDirectory, file.path);
     await writeFile(filePath, file.source, "utf-8");
   }
 }
