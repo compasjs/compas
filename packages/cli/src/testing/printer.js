@@ -76,6 +76,17 @@ function printFailedResults(state, result, indentCount) {
         result.push(
           `${indent}AppError: ${state.caughtException.key} - ${state.caughtException.status}`,
         );
+
+        // Pretty print info object
+        const infoObject = JSON.stringify(
+          state.caughtException.info,
+          null,
+          2,
+        ).split("\n");
+
+        for (const it of infoObject) {
+          result.push(`${indent}  ${it}`);
+        }
       } else {
         result.push(
           `${indent}${state.caughtException.name} - ${state.caughtException.message}`,

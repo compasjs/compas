@@ -114,6 +114,17 @@ function printErrorResults(result, state) {
       result.push(
         `${indent}AppError: ${bench.caughtException.key} - ${bench.caughtException.status}`,
       );
+
+      // Pretty print info object
+      const infoObject = JSON.stringify(
+        bench.caughtException.info,
+        null,
+        2,
+      ).split("\n");
+
+      for (const it of infoObject) {
+        result.push(`${indent}  ${it}`);
+      }
     } else {
       result.push(
         `${indent}${bench.caughtException.name} - ${bench.caughtException.message}`,
