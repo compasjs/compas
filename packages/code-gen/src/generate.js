@@ -1,5 +1,6 @@
 import { existsSync, promises as fs } from "fs";
 import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
+import { codeGenValidators } from "./generated/validators.js";
 import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
@@ -19,7 +20,9 @@ export async function runGenerators(app, options) {
   const generatorInput = {};
 
   addGroupsToGeneratorInput(generatorInput, copy, options.enabledGroups);
-  const stringifyInput = JSON.stringify(generatorInput)
+  const stringifyInput = JSON.stringify(
+    codeGenValidators.structure(generatorInput),
+  )
     .replace(/\\/g, "\\\\")
     .replace("'", "\\'");
 
