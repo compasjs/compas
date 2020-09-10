@@ -96,6 +96,8 @@ function applyStructure(app) {
   app.add(T.bool("boolean5").default(false));
 
   return {
+    isNode: true,
     enabledGenerators: ["validator"],
+    validatorCollectErrors: false,
   };
 }

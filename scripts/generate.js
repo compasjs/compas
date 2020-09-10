@@ -161,14 +161,13 @@ async function main() {
   await app.generate({
     outputDirectory: "./generated/app",
     enabledGroups: ["app"],
-    enabledGenerators: ["sql", "validator", "router", "type", "apiClient"],
-    dumpStructure: true,
-    dumpPostgres: true,
+    isNodeServer: true,
   });
 
   await app.generate({
     outputDirectory: "./generated/store",
     enabledGroups: ["store"],
+    isNode: true,
     enabledGenerators: ["sql", "validator", "type"],
     dumpStructure: true,
   });
@@ -176,15 +175,12 @@ async function main() {
   await app.generate({
     outputDirectory: "./generated/openapi/server",
     enabledGroups: ["openapi"],
-    enabledGenerators: ["sql", "validator", "router", "type", "apiClient"],
-    dumpStructure: true,
+    isNodeServer: true,
   });
 
   await app.generate({
     outputDirectory: "./generated/openapi/client",
     enabledGroups: ["openapi"],
-    enabledGenerators: ["validator", "type", "apiClient", "reactQuery"],
-    useTypescript: true,
-    validatorCollectErrors: true,
+    isBrowser: true,
   });
 }

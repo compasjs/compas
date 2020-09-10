@@ -10,9 +10,8 @@ let result = undefined;
   result =  {{= v.type }}Validator{{= fnNumber }}(value, propertyPath, errors);
   if (errors.length === errCount) {
     return result;
-  } else {
-    errCount = errors.length
   }
+  errCount = errors.length
 
 {{ } }}
 

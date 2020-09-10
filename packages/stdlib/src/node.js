@@ -15,14 +15,22 @@ export { join as pathJoin };
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
  */
 export async function exec(command, opts = {}) {
-  const promise = internalExec(command, { encoding: "utf8", ...opts });
-  const { stdout, stderr } = await promise;
+  try {
+    const promise = internalExec(command, { encoding: "utf8", ...opts });
+    const { stdout, stderr } = await promise;
 
-  return {
-    stdout,
-    stderr,
-    exitCode: promise.child.exitCode ?? 0,
-  };
+    return {
+      stdout,
+      stderr,
+      exitCode: promise.child.exitCode ?? 0,
+    };
+  } catch (e) {
+    return {
+      stdout: e.stdout ?? "",
+      stderr: e.stderr ?? "",
+      exitCode: e.code ?? 1,
+    };
+  }
 }
 
 /**

@@ -119,6 +119,8 @@ function applyStructure(app) {
   app.add(T.number("number7").float().convert());
 
   return {
+    isNode: true,
     enabledGenerators: ["validator"],
+    validatorCollectErrors: false,
   };
 }
