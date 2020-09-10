@@ -1,6 +1,6 @@
 import { inspect } from "util";
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
-import { isNil, isPlainObject } from "@lbu/stdlib";
+import { isNil } from "@lbu/stdlib";
 import {
   addToData,
   callGeneratorMethod,
@@ -105,28 +105,8 @@ export class App {
    * @returns {this}
    */
   addRaw(obj) {
-    const error = new Error(
-      "Invalid value provided for 'obj'. Either know what you are doing or don't use this method.",
-    );
-    if (!isPlainObject(obj)) {
-      throw error;
-    }
-
-    if (
-      typeof obj.type !== "string" ||
-      typeof obj.name !== "string" ||
-      typeof obj.group !== "string"
-    ) {
-      throw error;
-    }
-
-    if (isNil(obj.docString) || isNil(obj.isOptional)) {
-      throw error;
-    }
-
-    // Can't do more validation here than what the TypeBuilder does.
-
-    this.addToData(obj);
+    const type = codeGenValidators.type(obj);
+    this.addToData(type);
 
     return this;
   }
