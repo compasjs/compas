@@ -15,22 +15,26 @@ export async function init() {
   );
 }
 
-export async function preGenerate(_, __, options) {
+/**
+ * @param {App} app
+ * @param {GeneratorOptions} input
+ * @returns {Promise<void>}
+ */
+export async function preGenerate(app, { options }) {
   await compileTypeExec(options);
 }
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<GeneratedFile>}
  */
-export async function generate(app, data, options) {
+export async function generate(app, { structure, options }) {
   await compileTypeExec(options);
   return {
     path: options.useTypescript ? "types.ts" : "types.js",
     source: executeTemplate(generatorTemplates, "typesFile", {
-      ...data,
+      structure,
       options,
     }),
   };

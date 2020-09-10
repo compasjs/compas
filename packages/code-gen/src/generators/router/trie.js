@@ -7,7 +7,7 @@ const RoutePrio = {
 export const buildTrie = (data) => {
   const routeTrieInput = [];
 
-  for (const group of Object.values(data.structure)) {
+  for (const group of Object.values(data)) {
     for (const item of Object.values(group)) {
       if (item.type === "route") {
         routeTrieInput.push({

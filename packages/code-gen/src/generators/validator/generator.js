@@ -18,16 +18,15 @@ export async function init() {
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<GeneratedFile>}
  */
-export async function generate(app, data, options) {
+export async function generate(app, { structure, options }) {
   await compileValidatorExec(options);
   return {
     path: "./validators.js",
     source: executeTemplate(generatorTemplates, "validatorsFile", {
-      ...data,
+      structure,
       options,
     }),
   };

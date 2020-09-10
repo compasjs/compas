@@ -19,48 +19,47 @@ export async function init() {
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<void>}
  */
-export async function preGenerate(app, data, options) {
+export async function preGenerate(app, { structure, options }) {
   if (options.enabledGenerators.indexOf("validator") === -1) {
     throw new Error("router generator depends on validator generator");
   }
-
   for (const r of getInternalRoutes(options)) {
-    addToData(data, r.build());
+    addToData(structure, r.build());
   }
 }
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<GeneratedFile>}
  */
-export async function generate(app, data, options) {
-  data.routeTrie = buildTrie(data);
-  data.routeTags = buildRouteTags(data);
+export async function generate(app, { structure, options }) {
+  const routeTrie = buildTrie(structure);
+  const routeTags = buildRouteTags(structure);
 
   const template = "routerFile";
 
   return {
     path: "./router.js",
     source: executeTemplate(generatorTemplates, template, {
-      ...data,
+      routeTrie,
+      routeTags,
+      structure,
       options,
     }),
   };
 }
 
 /**
- * @param data
+ * @param {CodeGenStructure} data
  */
 function buildRouteTags(data) {
   const set = new Set();
 
-  for (const group of Object.values(data.structure)) {
+  for (const group of Object.values(data)) {
     for (const item of Object.values(group)) {
       if (item.type === "route") {
         for (const t of item.tags) {

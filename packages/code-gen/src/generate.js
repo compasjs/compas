@@ -16,15 +16,15 @@ const { mkdir, writeFile } = fs;
  */
 export async function runGenerators(app, options) {
   const copy = JSON.parse(JSON.stringify(app.data));
-  const generatorInput = { structure: {} };
+  const generatorInput = {};
 
   addGroupsToGeneratorInput(generatorInput, copy, options.enabledGroups);
-  generatorInput.stringified = JSON.stringify(generatorInput.structure)
+  const stringifyInput = JSON.stringify(generatorInput)
     .replace(/\\/g, "\\\\")
     .replace("'", "\\'");
 
-  recursiveLinkupReferences(generatorInput.structure, generatorInput.structure);
-  addFieldsOfRelations(generatorInput.structure);
+  recursiveLinkupReferences(generatorInput, generatorInput);
+  addFieldsOfRelations(generatorInput);
 
   let prevCount = getTopLevelItemCount(generatorInput);
 
@@ -35,17 +35,16 @@ export async function runGenerators(app, options) {
       options.enabledGenerators,
       "preGenerate",
       app,
-      generatorInput,
-      options,
+      {
+        structure: generatorInput,
+        options,
+      },
     );
 
-    hoistNamedItems(generatorInput, generatorInput.structure);
+    hoistNamedItems(generatorInput, generatorInput);
 
-    recursiveLinkupReferences(
-      generatorInput.structure,
-      generatorInput.structure,
-    );
-    addFieldsOfRelations(generatorInput.structure);
+    recursiveLinkupReferences(generatorInput, generatorInput);
+    addFieldsOfRelations(generatorInput);
 
     const newCount = getTopLevelItemCount(generatorInput);
 
@@ -60,14 +59,16 @@ export async function runGenerators(app, options) {
     options.enabledGenerators,
     "generate",
     app,
-    generatorInput,
-    options,
+    {
+      structure: generatorInput,
+      options,
+    },
   );
 
   if (options.dumpStructure) {
     files.push({
       path: "./structure.js",
-      source: `export const structureString = '${generatorInput.stringified}';\nexport const structure = JSON.parse(structureString);\n`,
+      source: `export const structureString = '${stringifyInput}';\nexport const structure = JSON.parse(structureString);\n`,
     });
   }
 
@@ -81,11 +82,18 @@ export async function runGenerators(app, options) {
  */
 function addGroupsToGeneratorInput(input, copy, groups) {
   for (const group of groups) {
-    input.structure[group] = copy.structure[group] || {};
+    input[group] = copy[group] || {};
   }
 
-  includeReferenceTypes(copy, input, input.structure);
+  includeReferenceTypes(copy, input, input);
 }
+
+/**
+ * @name GeneratorOptions
+ * @typedef {object}
+ * @property {GenerateOpts} options
+ * @property {CodeGenStructure} structure
+ */
 
 /**
  * Call a method on the specific generator with the specified arguments
@@ -146,8 +154,8 @@ export async function callGeneratorMethod(app, keys, method, ...args) {
 /**
  * Add item to correct group and nmame
  *
- * @param dataStructure
- * @param item
+ * @param {CodeGenStructure} dataStructure
+ * @param {CodeGenType} item
  */
 export function addToData(dataStructure, item) {
   if (!item.group || !item.name || !item.type) {
@@ -158,10 +166,10 @@ export function addToData(dataStructure, item) {
     );
   }
 
-  if (!dataStructure.structure[item.group]) {
-    dataStructure.structure[item.group] = {};
+  if (!dataStructure[item.group]) {
+    dataStructure[item.group] = {};
   }
-  dataStructure.structure[item.group][item.name] = item;
+  dataStructure[item.group][item.name] = item;
 
   item.uniqueName = upperCaseFirst(item.group) + upperCaseFirst(item.name);
 }
@@ -212,17 +220,17 @@ function includeReferenceTypes(rootData, generatorInput, value) {
   ) {
     const { group, name } = value.reference;
     if (
-      !isNil(rootData.structure[group]?.[name]) &&
-      isNil(generatorInput.structure[group]?.[name])
+      !isNil(rootData[group]?.[name]) &&
+      isNil(generatorInput[group]?.[name])
     ) {
-      if (isNil(generatorInput.structure[group])) {
-        generatorInput.structure[group] = {};
+      if (isNil(generatorInput[group])) {
+        generatorInput[group] = {};
       }
 
-      const refValue = rootData.structure[group][name];
-      generatorInput.structure[group][name] = refValue;
+      const refValue = rootData[group][name];
+      generatorInput[group][name] = refValue;
       includeReferenceTypes(rootData, generatorInput, refValue);
-    } else if (isNil(rootData.structure[group]?.[name])) {
+    } else if (isNil(rootData[group]?.[name])) {
       throw new Error(`Missing item at ${value.reference.uniqueName}`);
     }
   }
@@ -350,7 +358,7 @@ function addFieldsOfRelations(structure) {
  */
 function getTopLevelItemCount(data) {
   let count = 0;
-  for (const group of Object.values(data.structure)) {
+  for (const group of Object.values(data)) {
     count += Object.keys(group).length;
   }
 

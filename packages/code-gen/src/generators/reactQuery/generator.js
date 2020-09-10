@@ -17,11 +17,10 @@ export async function init() {
 /**
  *
  * @param {App} app
- * @param {*} data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<void>}
  */
-export async function preGenerate(app, data, options) {
+export async function preGenerate(app, { options }) {
   if (!options.useTypescript) {
     throw new Error("ReactQuery generator requires `useTypescript` to be true");
   }
@@ -33,16 +32,12 @@ export async function preGenerate(app, data, options) {
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<GeneratedFile>}
  */
-export async function generate(app, data, options) {
+export async function generate(app, input) {
   return {
     path: "./reactQueries.ts",
-    source: executeTemplate(generatorTemplates, "reactQueryFile", {
-      ...data,
-      options,
-    }),
+    source: executeTemplate(generatorTemplates, "reactQueryFile", input),
   };
 }

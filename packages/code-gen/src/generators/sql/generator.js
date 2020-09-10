@@ -61,38 +61,11 @@ export async function init() {
 
 /**
  * @param {App} app
- * @param data
+ * @param {GeneratorOptions} input
  * @returns {Promise<void>}
  */
-export async function preGenerate(app, data) {
-  buildExtraTypes(data);
-}
-
-/**
- * @param {App} app
- * @param data
- * @param {GenerateOpts} options
- * @returns {Promise<GeneratedFile>}
- */
-export async function generate(app, data, options) {
-  await compileSqlExec(options);
-
-  if (options.dumpPostgres) {
-    const result = executeTemplate(generatorTemplates, "sqlPostgres", {
-      ...data,
-      options,
-    });
-
-    app.logger.info(`\n${result}`);
-  }
-
-  return {
-    path: "./queries.js",
-    source: executeTemplate(generatorTemplates, "sqlFile", {
-      ...data,
-      options,
-    }),
-  };
+export async function preGenerate(app, { structure }) {
+  buildExtraTypes(structure);
 }
 
 /**
@@ -115,4 +88,30 @@ function compileSqlExec(options) {
   `,
     });
   }
+}
+
+/**
+ * @param {App} app
+ * @param {GeneratorOptions} input
+ * @returns {Promise<GeneratedFile>}
+ */
+export async function generate(app, { structure, options }) {
+  await compileSqlExec(options);
+
+  if (options.dumpPostgres) {
+    const result = executeTemplate(generatorTemplates, "sqlPostgres", {
+      structure,
+      options,
+    });
+
+    app.logger.info(`\n${result}`);
+  }
+
+  return {
+    path: "./queries.js",
+    source: executeTemplate(generatorTemplates, "sqlFile", {
+      structure,
+      options,
+    }),
+  };
 }

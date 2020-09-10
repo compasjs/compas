@@ -16,18 +16,17 @@ export async function init() {
 
 /**
  * @param {App} app
- * @param data
- * @param {GenerateOpts} options
+ * @param {GeneratorOptions} input
  * @returns {Promise<GeneratedFile>}
  */
-export async function generate(app, data, options) {
+export async function generate(app, { structure, options }) {
   const template = "apiClientFile";
   const path = "./apiClient.js";
 
   return {
     path,
     source: executeTemplate(generatorTemplates, template, {
-      ...data,
+      structure,
       options,
     }),
   };

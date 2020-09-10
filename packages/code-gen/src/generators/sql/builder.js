@@ -7,12 +7,12 @@ import { getItem, upperCaseFirst } from "../../utils.js";
  * Does it in 2 passes:
  *  - Create the basic sql type
  *  - Add relations to the sql type
- * @param data
+ * @param {CodeGenStructure} data
  */
 export function buildExtraTypes(data) {
-  for (const group of Object.keys(data.structure)) {
-    for (const name of Object.keys(data.structure[group])) {
-      const item = data.structure[group][name];
+  for (const group of Object.keys(data)) {
+    for (const name of Object.keys(data[group])) {
+      const item = data[group][name];
 
       if (!item.enableQueries || item.type !== "object") {
         continue;
@@ -63,9 +63,9 @@ function buildSqlType(data, item) {
 function buildSqlSelectJoinType(data, item) {
   // Bruteforce way of getting all relations
   const relations = [];
-  for (const group of Object.keys(data.structure)) {
-    for (const name of Object.keys(data.structure[group])) {
-      const rel = data.structure[group][name];
+  for (const group of Object.keys(data)) {
+    for (const name of Object.keys(data[group])) {
+      const rel = data[group][name];
       if (rel.type === "relation") {
         const left = getItem(rel.left);
         if (left.group === item.group && left.name === item.name) {
@@ -75,7 +75,7 @@ function buildSqlSelectJoinType(data, item) {
     }
   }
 
-  const queryType = data.structure[item.group][`${item.name}Sql`];
+  const queryType = data[item.group][`${item.name}Sql`];
   queryType.relations = [];
 
   const T = new TypeCreator(item.group);
@@ -135,10 +135,10 @@ function buildSqlSelectJoinForManyToOne(data, item, relation, T, queryType) {
 
   // Creates the new where type with embedded where for the joined type
   const whereItem = {
-    ...data.structure[item.group][`${item.name}Where`],
+    ...data[item.group][`${item.name}Where`],
     name: `${relationMeta.name}Where`,
     keys: {
-      ...data.structure[item.group][`${item.name}Where`].keys,
+      ...data[item.group][`${item.name}Where`].keys,
       [relation.substituteKey]: T.reference(
         rightSide.group,
         `${rightSide.name}Where`,
@@ -194,10 +194,10 @@ function buildSqlSelectJoinForOneToMany(data, item, relation, T, queryType) {
 
   // Creates the new where type with embedded where for the joined type
   const whereItem = {
-    ...data.structure[item.group][`${item.name}Where`],
+    ...data[item.group][`${item.name}Where`],
     name: `${relationMeta.name}Where`,
     keys: {
-      ...data.structure[item.group][`${item.name}Where`].keys,
+      ...data[item.group][`${item.name}Where`].keys,
       [relation.substituteKey]: T.reference(
         rightSide.group,
         `${rightSide.name}Where`,

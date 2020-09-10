@@ -48,10 +48,8 @@ export class App {
     /** @type {Set<TypeBuilderLike>} */
     this.unprocessedData = new Set();
 
-    /** @type {{structure: object<key, object<key, object>>}} */
-    this.data = {
-      structure: {},
-    };
+    /** @type {CodeGenStructure} */
+    this.data = {};
   }
 
   /**
@@ -163,10 +161,9 @@ export class App {
     ];
 
     this.processData();
-    hoistNamedItems(this.data, this.data.structure);
+    hoistNamedItems(this.data, this.data);
 
-    options.enabledGroups =
-      options.enabledGroups || Object.keys(this.data.structure);
+    options.enabledGroups = options.enabledGroups || Object.keys(this.data);
     if (options.enabledGroups.length === 0) {
       throw new Error("Need at least a single group in enabledGroups");
     }
