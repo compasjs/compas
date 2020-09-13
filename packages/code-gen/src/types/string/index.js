@@ -117,7 +117,7 @@ const stringType = {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
   sql: () =>
-    `VARCHAR {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
+    `VARCHAR {{= item?.isOptional && !item?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**

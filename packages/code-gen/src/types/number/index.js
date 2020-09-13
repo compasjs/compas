@@ -86,7 +86,7 @@ const numberType = {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
   sql: () =>
-    `{{= model?.validator?.floatingPoint ? "FLOAT" : "INT" }} {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
+    `{{= item?.validator?.floatingPoint ? "FLOAT" : "INT" }} {{= item?.isOptional && !item?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**

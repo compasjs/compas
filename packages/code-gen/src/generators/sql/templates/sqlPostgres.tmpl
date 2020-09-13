@@ -10,7 +10,7 @@
       {{ let count = Object.keys(item.keys || {}).length; }}
       {{ for (const key of Object.keys(item.keys|| {})) { }}
         {{ count--; }}
-        "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: { ...item.keys[key], isOptional: item.keys[key]?.relationInfo?.isOptional ?? item.keys[key].isOptional } }).trim() }}{{= item.keys[key].relationInfo ? ` REFERENCES "${getItem(item.keys[key].relationInfo.right).name}" ("${item.keys[key].relationInfo.rightKey}")  ${item.keys[key].relationInfo.isOptional ? "ON DELETE SET NULL" : "ON DELETE CASCADE"}` : "" }}{{= count !== 0 ? "," : "" }}
+        "{{= key }}" {{= sqlExec({ type: item.keys[key].type, item: { ...item.keys[key], isOptional: item.keys[key]?.relationInfo?.isOptional ?? item.keys[key].isOptional } }).trim() }}{{= item.keys[key].relationInfo ? ` REFERENCES "${getItem(item.keys[key].relationInfo.right).name}" ("${item.keys[key].relationInfo.rightKey}")  ${item.keys[key].relationInfo.isOptional ? "ON DELETE SET NULL" : "ON DELETE CASCADE"}` : "" }}{{= count !== 0 ? "," : "" }}
       {{ } }}
     );
 
@@ -22,9 +22,9 @@
         {{ count--; }}
         {{ if (key === "updatedAt") { continue; } }}
         {{ if (key === "id") { }}
-          "{{= item.name }}Id" {{= sqlExec({ type: item.keys[key].type, model: { ...item.keys[key], sql: {} }, }).trim() }} REFERENCES "{{= item.name }}" ("id")  ON DELETE CASCADE{{= count !== 0 ? "," : "" }}
+          "{{= item.name }}Id" {{= sqlExec({ type: item.keys[key].type, item: { ...item.keys[key], sql: {} }, }).trim() }} REFERENCES "{{= item.name }}" ("id")  ON DELETE CASCADE{{= count !== 0 ? "," : "" }}
         {{ } else { }}
-          "{{= key }}" {{= sqlExec({ type: item.keys[key].type, model: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
+          "{{= key }}" {{= sqlExec({ type: item.keys[key].type, item: item.keys[key] }).trim() }}{{= count !== 0 ? "," : "" }}
         {{ } }}
       {{ } }}
     );

@@ -1,7 +1,7 @@
 {{ const numMap = {}; }}
 {{ let idx = 0; }}
-{{ for (const key of Object.keys(model.keys)) { }}
-  {{ numMap[key] = ctx.anonFn(model.keys[key]); }}
+{{ for (const key of Object.keys(item.keys)) { }}
+  {{ numMap[key] = ctx.anonFn(item.keys[key]); }}
 {{ } }}
 
 
@@ -11,19 +11,19 @@ if (typeof value !== "object") {
 
 const result = Object.create(null);
 
-{{ if (model.validator.strict) { }}
+{{ if (item.validator.strict) { }}
   const keySet = new Set(Object.keys(value));
 {{ } }}
 
-{{ for (const key of Object.keys(model.keys)) { }}
-  result[{{= quote(key) }}] = {{= model.keys[key].type }}Validator{{= numMap[key] }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }}, errorList);
+{{ for (const key of Object.keys(item.keys)) { }}
+  result[{{= quote(key) }}] = {{= item.keys[key].type }}Validator{{= numMap[key] }}(value[{{= quote(key) }}], propertyPath + "." + {{= quote(key) }}, errorList);
 
-  {{ if (model.validator.strict) { }}
+  {{ if (item.validator.strict) { }}
     keySet.delete({{= quote(key) }});
   {{ } }}
 {{ } }}
 
-{{ if (model.validator.strict) { }}
+{{ if (item.validator.strict) { }}
   if (keySet.size !== 0) {
     let extraKeys = "";
     for (const k of keySet.keys()) { extraKeys += k + ","; }

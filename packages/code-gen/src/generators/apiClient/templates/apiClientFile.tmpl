@@ -56,7 +56,7 @@ export function createApiClient(instance) {
     {{ continue; }}
     {{ } }}
 
-    {{= apiClientFn({ options, model: item }) }}
+    {{= apiClientFn({ options, item }) }}
 ((newline))
 
   {{ } }}

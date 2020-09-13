@@ -181,7 +181,7 @@ import { uuid } from "@lbu/stdlib";
             /**
              * Note: Use only when {{= field.key }} has a unique constraint
              * @param sql
-             * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, model: ref.keys["id"], isInputType: true }).trim() }} } } it
+             * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, item: ref.keys["id"], isInputType: true }).trim() }} } } it
              * @returns {Promise<{{= ref.uniqueName }}[]>}
              */
              {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {

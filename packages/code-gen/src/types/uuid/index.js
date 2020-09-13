@@ -41,7 +41,7 @@ const uuidType = {
 return stringValidator{{= fnNumber }}(value, propertyPath, errorList, parentType);
 `,
   sql: () =>
-    `UUID {{= model?.sql?.primary ? "PRIMARY KEY DEFAULT uuid_generate_v4()" : model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }}`,
+    `UUID {{= item?.sql?.primary ? "PRIMARY KEY DEFAULT uuid_generate_v4()" : item?.isOptional && !item?.defaultValue ? "NULL" : "NOT NULL" }}`,
 };
 
 /**

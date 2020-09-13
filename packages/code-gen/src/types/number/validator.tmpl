@@ -1,4 +1,4 @@
-{{ if (model.validator.convert) { }}
+{{ if (item.validator.convert) { }}
   if (typeof value !== "number") {
     value = Number(value)
   }
@@ -8,29 +8,29 @@ if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
-{{ if (!model.validator.floatingPoint) { }}
+{{ if (!item.validator.floatingPoint) { }}
   if (!Number.isInteger(value)) {
     return buildError(`validator.${parentType}.integer`, { propertyPath }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.min !== undefined) { }}
-  if (value < {{= model.validator.min }}) {
-    const min = {{= model.validator.min }};
+{{ if (item.validator.min !== undefined) { }}
+  if (value < {{= item.validator.min }}) {
+    const min = {{= item.validator.min }};
     return buildError(`validator.${parentType}.min`, { propertyPath, min }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.max !== undefined) { }}
-  if (value > {{= model.validator.max }}) {
-    const max = {{= model.validator.max }};
+{{ if (item.validator.max !== undefined) { }}
+  if (value > {{= item.validator.max }}) {
+    const max = {{= item.validator.max }};
     return buildError(`validator.${parentType}.max`, { propertyPath, max }, errorList);
   }
 {{ } }}
 
-{{ if (model.oneOf !== undefined) { }}
-  if ({{= model.oneOf.map(it => "value !== " + it).join(" && ") }}) {
-    const oneOf = {{= quote(model.oneOf.join(", ")) }};
+{{ if (item.oneOf !== undefined) { }}
+  if ({{= item.oneOf.map(it => "value !== " + it).join(" && ") }}) {
+    const oneOf = {{= quote(item.oneOf.join(", ")) }};
     return buildError(`validator.${parentType}.oneOf`, { propertyPath, oneOf }, errorList);
   }
 {{ } }}

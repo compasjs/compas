@@ -54,7 +54,7 @@ const booleanType = {
     return readFileSync(`${directory}/type.tmpl`, "utf-8");
   },
   sql: () =>
-    `BOOL {{= model?.isOptional && model?.defaultValue === undefined ? "NULL" : "NOT NULL" }}`,
+    `BOOL {{= item?.isOptional && item?.defaultValue === undefined ? "NULL" : "NOT NULL" }}`,
 };
 
 /**

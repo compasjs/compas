@@ -4,7 +4,7 @@ let errCount = 0;
 const errors = [];
 let result = undefined;
 
-{{ for (const v of model.values) { }}
+{{ for (const v of item.values) { }}
   {{ const fnNumber = ctx.anonFn(v); }}
 
   result =  {{= v.type }}Validator{{= fnNumber }}(value, propertyPath, errors);
@@ -21,7 +21,7 @@ return buildError(`validator.${parentType}.type`, { propertyPath, errors }, erro
 
 const errors = [];
 
-{{ for (const v of model.values) { }}
+{{ for (const v of item.values) { }}
   try {
     {{ const fnNumber = ctx.anonFn(v); }}
 

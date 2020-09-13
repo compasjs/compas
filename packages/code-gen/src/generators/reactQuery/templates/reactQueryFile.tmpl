@@ -51,7 +51,7 @@ type AppErrorResponse = AxiosError<{
     {{ continue; }}
     {{ } }}
 
-    {{= reactQueryFn({ options, model: item, structure }) }}
+    {{= reactQueryFn({ options, item, structure }) }}
 ((newline))
 
   {{ } }}

@@ -1,5 +1,5 @@
-{{ const result = typeExec({ type: model.values.type, model: model.values, isInputType, options }).trim(); }}
-{{ if (model.validator.convert && it.isInputType) { }}
+{{ const result = typeExec({ type: item.values.type, item: item.values, isInputType, options }).trim(); }}
+{{ if (item.validator.convert && it.isInputType) { }}
 ({{= result}}|{{= result }})[]
 {{ } else { }}
 ({{= result}})[]

@@ -1,4 +1,4 @@
-{{ if (model.validator.convert) { }}
+{{ if (item.validator.convert) { }}
   if (typeof value !== "boolean") {
     if (value === "true" || value === 1) {
       value = true;
@@ -12,9 +12,9 @@ if (typeof value !== "boolean") {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
-{{ if (model.oneOf !== undefined) { }}
-  if (value !== {{= model.oneOf }}) {
-    const oneOf = {{= model.oneOf }};
+{{ if (item.oneOf !== undefined) { }}
+  if (value !== {{= item.oneOf }}) {
+    const oneOf = {{= item.oneOf }};
     return buildError(`validator.${parentType}.oneOf`, { propertyPath, oneOf }, errorList);
   }
 {{ } }}

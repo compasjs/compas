@@ -1,48 +1,48 @@
-{{ const url = model.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
+{{ const url = item.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
 {{ const buildTypeQualifier = (uniqueName, inputType) => `${options.useTypescript ? 'import("./types").'  : ""}${uniqueName}${inputType ? "_Input" : ""}`; }}
 
 /**
- * {{= model.uniqueName }}
- {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
- * Docs: {{= model.docString }}
-{{ if (model.params) { }}
- * @param { {{= buildTypeQualifier(model.params.reference.uniqueName, true) }} } params
+ * {{= item.uniqueName }}
+ {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+ * Docs: {{= item.docString }}
+{{ if (item.params) { }}
+ * @param { {{= buildTypeQualifier(item.params.reference.uniqueName, true) }} } params
 {{ } }}
-{{ if (model.query) { }}
- * @param { {{= buildTypeQualifier(model.query.reference.uniqueName, true) }} } query
+{{ if (item.query) { }}
+ * @param { {{= buildTypeQualifier(item.query.reference.uniqueName, true) }} } query
 {{ } }}
-{{ if (model.body) { }}
- * @param { {{= buildTypeQualifier(model.body.reference.uniqueName, true) }} } body
+{{ if (item.body) { }}
+ * @param { {{= buildTypeQualifier(item.body.reference.uniqueName, true) }} } body
 {{ } }}
-{{ if (model.files) { }}
- * @param { {{= buildTypeQualifier(model.files.reference.uniqueName, true) }} } files
+{{ if (item.files) { }}
+ * @param { {{= buildTypeQualifier(item.files.reference.uniqueName, true) }} } files
 {{ } }}
-{{ if (model.response && getItem(model.response).type !== "file") { }}
- * @returns {Promise.<{{= buildTypeQualifier(model.response.reference.uniqueName, false) }}>}
-{{ } else if (model.response) { }}
+{{ if (item.response && getItem(item.response).type !== "file") { }}
+ * @returns {Promise.<{{= buildTypeQualifier(item.response.reference.uniqueName, false) }}>}
+{{ } else if (item.response) { }}
  * @returns {Promise.<{{= options.enabledGenerators.indexOf("router") !== -1 ? "ReadableStream" : "Blob" }}>}
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}
 
  */
-{{= model.name }}: async function (
-{{ if (model.params) { }}
+{{= item.name }}: async function (
+{{ if (item.params) { }}
 params,
 {{ } }}
-{{ if (model.query) { }}
+{{ if (item.query) { }}
 query,
 {{ } }}
-{{ if (model.body) { }}
+{{ if (item.body) { }}
 body,
 {{ } }}
-{{ if (model.files) { }}
+{{ if (item.files) { }}
 files,
 {{ } }}
 ) {
     checkApiClient();
 
-    {{ if (model.files) { }}
+    {{ if (item.files) { }}
       // eslint-disable-next-line
       const data = new FormData();
       for (const key of Object.keys(files)) {
@@ -51,19 +51,19 @@ files,
           data.append(key, file.data, file.name);
         }
       }
-    {{ } else if (model.body) { }}
+    {{ } else if (item.body) { }}
       const data = body;
     {{ } }}
 
     const response = await _internalClient.request({
       url: `{{= url }}`,
-      method: "{{= model.method.toLowerCase() }}",
-      params: {{ if (model.query) { }}query{{ } else { }}{}{{ } }},
-      data: {{ if (model.body || model.files) { }}data{{ } else { }}{}{{ } }},
-      {{ if (model.files && options.enabledGenerators.indexOf("router") !== -1) { }}
+      method: "{{= item.method.toLowerCase() }}",
+      params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
+      data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
+      {{ if (item.files && options.enabledGenerators.indexOf("router") !== -1) { }}
       headers: data.getHeaders(),
       {{ } }}
-      {{ if (model.response && getItem(model.response).type === "file") { }}
+      {{ if (item.response && getItem(item.response).type === "file") { }}
       responseType: "{{= options.enabledGenerators.indexOf("router") !== -1 ? "stream" : "blob" }}",
       {{ } }}
     });

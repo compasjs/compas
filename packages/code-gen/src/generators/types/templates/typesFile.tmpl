@@ -10,8 +10,8 @@
     {{ } }}
 
     {{ if (options.useTypescript) { }}
-      {{ const normalVariant = typeExec({ type: item.type, model: item, isInputType: false, options }).trim(); }}
-      {{ const inputVariant = typeExec({ type: item.type, model: item, isInputType: true, options }).trim(); }}
+      {{ const normalVariant = typeExec({ type: item.type, item, isInputType: false, options }).trim(); }}
+      {{ const inputVariant = typeExec({ type: item.type, item, isInputType: true, options }).trim(); }}
 
       /**
        * {{= item.uniqueName }}
@@ -28,8 +28,8 @@
 ((newline))
 
     {{ } else { }}
-      {{ const normalVariant = typeExec({ type: item.type, model: item, isInputType: false, options }).trim(); }}
-      {{ const inputVariant = typeExec({ type: item.type, model: item, isInputType: true, options }).trim(); }}
+      {{ const normalVariant = typeExec({ type: item.type, item, isInputType: false, options }).trim(); }}
+      {{ const inputVariant = typeExec({ type: item.type, item, isInputType: true, options }).trim(); }}
 
       /**
        * @name {{= item.uniqueName }}

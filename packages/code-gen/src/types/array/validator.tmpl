@@ -1,6 +1,6 @@
-{{ const fnNumber = ctx.anonFn(model.values); }}
+{{ const fnNumber = ctx.anonFn(item.values); }}
 
-{{ if (model.validator.convert) { }}
+{{ if (item.validator.convert) { }}
   if (!Array.isArray(value)) {
     value = [value];
   }
@@ -10,16 +10,16 @@ if (!Array.isArray(value)) {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
-{{ if (model.validator.min !== undefined) { }}
-  if (value.length < {{= model.validator.min }}) {
-    const min = {{= model.validator.min }};
+{{ if (item.validator.min !== undefined) { }}
+  if (value.length < {{= item.validator.min }}) {
+    const min = {{= item.validator.min }};
     return buildError(`validator.${parentType}.min`, { propertyPath, min }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.max !== undefined) { }}
-  if (value.length > {{= model.validator.max }}) {
-    const max = {{= model.validator.max }};
+{{ if (item.validator.max !== undefined) { }}
+  if (value.length > {{= item.validator.max }}) {
+    const max = {{= item.validator.max }};
     return buildError(`validator.${parentType}.max`, { propertyPath, max }, errorList);
   }
 {{ } }}
@@ -27,7 +27,7 @@ if (!Array.isArray(value)) {
 const result = [];
 
 for (let i = 0; i < value.length; ++i) {
-  result.push({{= model.values.type }}Validator{{= fnNumber }}(value[i], propertyPath + "[" + i + "]", errorList));
+  result.push({{= item.values.type }}Validator{{= fnNumber }}(value[i], propertyPath + "[" + i + "]", errorList));
 }
 
 return result;

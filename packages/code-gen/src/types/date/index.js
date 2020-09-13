@@ -63,7 +63,7 @@ try {
 return buildError(\`validator.\${parentType}.invalid\`, { propertyPath }, errorList);
 `,
   sql: () =>
-    `TIMESTAMPTZ {{= model?.isOptional && !model?.defaultValue ? "NULL" : "NOT NULL" }} {{= model?.defaultValue === "(new Date())" ? "DEFAULT now()" : "" }}`,
+    `TIMESTAMPTZ {{= item?.isOptional && !item?.defaultValue ? "NULL" : "NOT NULL" }} {{= item?.defaultValue === "(new Date())" ? "DEFAULT now()" : "" }}`,
 };
 
 /**

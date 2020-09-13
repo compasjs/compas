@@ -1,26 +1,26 @@
-{{ const fnNumber = ctx.anonFn(model); }}
+{{ const fnNumber = ctx.anonFn(item); }}
 
 /**
- * {{= model.docString }}
+ * {{= item.docString }}
  * @param {*} value
  * @param {string} [propertyPath]
  {{ if (!options.validatorCollectErrors) { }}
- * @returns { {{= options.useTypescript ? `import("./types").${model.uniqueName}` : model.uniqueName }}}
+ * @returns { {{= options.useTypescript ? `import("./types").${item.uniqueName}` : item.uniqueName }}}
  {{ } else { }}
- * @returns { { errors: ({ key: string, info: object}[]|undefined), data: {{= options.useTypescript ? `import("./types").${model.uniqueName}` : model.uniqueName }}|undefined } }
+ * @returns { { errors: ({ key: string, info: object}[]|undefined), data: {{= options.useTypescript ? `import("./types").${item.uniqueName}` : item.uniqueName }}|undefined } }
  {{ } }}
  */
-{{= lowerCaseFirst(model.name) }}: (value, propertyPath = "$") => {
+{{= lowerCaseFirst(item.name) }}: (value, propertyPath = "$") => {
  let result = value;
 
- {{ const preValidate = quote("preValidate" + model.uniqueName); }}
- {{ const postValidate = quote("postValidate" + model.uniqueName); }}
+ {{ const preValidate = quote("preValidate" + item.uniqueName); }}
+ {{ const postValidate = quote("postValidate" + item.uniqueName); }}
  if ({{= preValidate }} in validatorHooks) {
     result = validatorHooks[{{= preValidate }}](result);
  }
 
 {{ if (!options.validatorCollectErrors) { }}
-result =  {{= model.type }}Validator{{= fnNumber }}(result, propertyPath);
+result =  {{= item.type }}Validator{{= fnNumber }}(result, propertyPath);
 if ({{= postValidate }} in validatorHooks) {
     return validatorHooks[{{= postValidate }}](result);
  } else {
@@ -29,7 +29,7 @@ if ({{= postValidate }} in validatorHooks) {
 {{ } else { }}
 
 const errorList = [];
-result = {{= model.type }}Validator{{= fnNumber }}(result, propertyPath, errorList, "{{= model.type }}");
+result = {{= item.type }}Validator{{= fnNumber }}(result, propertyPath, errorList, "{{= item.type }}");
 
 if (errorList.length > 0) {
   return { errors: errorList };

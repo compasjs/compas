@@ -56,11 +56,11 @@ async function compileTypeExec(options) {
         `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,
       fnStringEnd: `
    {{ if (it.isInputType) { }}
-     {{ if (it.model && it.model.isOptional) { }}
+     {{ if (it.item && it.item.isOptional) { }}
        {{ result += "|undefined"; }}
      {{ } }}
    {{ } else { }}
-     {{ if (it.model.isOptional && it.model.defaultValue === undefined) { }}
+     {{ if (it.item.isOptional && it.item.defaultValue === undefined) { }}
        {{ result += "|undefined"; }}       
      {{ } }}
    {{ } }}

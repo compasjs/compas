@@ -1,5 +1,5 @@
-{{ if (model.oneOf) { }}
-{{= model.oneOf.map(v => `"${v}"`).join("|") }}
+{{ if (item.oneOf) { }}
+{{= item.oneOf.map(v => `"${v}"`).join("|") }}
 {{ } else { }}
 string
 {{ } }}

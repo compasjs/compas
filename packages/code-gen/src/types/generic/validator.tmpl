@@ -1,5 +1,5 @@
-{{ const fnNumberKeys = ctx.anonFn(model.keys); }}
-{{ const fnNumberValues = ctx.anonFn(model.values); }}
+{{ const fnNumberKeys = ctx.anonFn(item.keys); }}
+{{ const fnNumberValues = ctx.anonFn(item.values); }}
 
 if (typeof value !== "object") {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
@@ -7,9 +7,9 @@ if (typeof value !== "object") {
 
 const result = Object.create(null);
 for (const key of Object.keys(value)) {
-  const validatedKey = {{= model.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + `.$key[${key}]`, errorList);
+  const validatedKey = {{= item.keys.type }}Validator{{= fnNumberKeys }}(key, propertyPath + `.$key[${key}]`, errorList);
 
-  result[validatedKey] = {{= model.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + `.$value[${key}]`, errorList);
+  result[validatedKey] = {{= item.values.type }}Validator{{= fnNumberValues }}(value[key], propertyPath + `.$value[${key}]`, errorList);
 }
 
 return result;

@@ -1,45 +1,45 @@
 {{ /* Keep in sync with apiClientFn */ }}
-{{ const funcName = "use" + upperCaseFirst(model.uniqueName); }}
-{{ const getRef = (model) => /* Recursively resolve references */ { const ref = !!model && structure[model.group][model.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
+{{ const funcName = "use" + upperCaseFirst(item.uniqueName); }}
+{{ const getRef = (item) => /* Recursively resolve references */ { const ref = !!item && structure[item.group][item.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
 
 {{ let responseType = undefined; }}
-{{ if (model.response && getItem(model.response).type !== "file") { }}
-{{ responseType = `T.${model.response.reference.uniqueName}`; }}
-{{ } else if (model.response) { }}
+{{ if (item.response && getItem(item.response).type !== "file") { }}
+{{ responseType = `T.${item.response.reference.uniqueName}`; }}
+{{ } else if (item.response) { }}
 {{ responseType = "Blob"; }}
 {{ } else { }}
 {{ responseType = "any"; }}
 {{ } }}
 
-{{ if (model.method === "GET") { }}
+{{ if (item.method === "GET") { }}
 
 ((newline))
 /**
  * {{= funcName }}
-  {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
- * Docs: {{= model.docString.replace(/\n/g, "\n  * ") }}
+  {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+ * Docs: {{= item.docString.replace(/\n/g, "\n  * ") }}
  */
 export function {{= funcName }}(
-{{ if (model.params) { }}
-params: T.{{= model.params.reference.uniqueName }}_Input,
+{{ if (item.params) { }}
+params: T.{{= item.params.reference.uniqueName }}_Input,
 {{ } }}
-{{ if (model.query) { }}
-query: T.{{= model.query.reference.uniqueName }}_Input,
+{{ if (item.query) { }}
+query: T.{{= item.query.reference.uniqueName }}_Input,
 {{ } }}
 options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
 ): QueryResult<{{= responseType }}, AppErrorResponse> {
   options.enabled = (
     options.enabled === true || (options.enabled !== false
-    {{ if (model.query && getRef(model.query.reference)) { }}
-      {{ const ref = getRef(model.query.reference); }}
+    {{ if (item.query && getRef(item.query.reference)) { }}
+      {{ const ref = getRef(item.query.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
         {{ if (!ref.keys[key].isOptional) { }}
           && !!query.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
-    {{ if (model.params && getRef(model.params.reference)) { }}
-      {{ const ref = getRef(model.params.reference); }}
+    {{ if (item.params && getRef(item.params.reference)) { }}
+      {{ const ref = getRef(item.params.reference); }}
       {{ for (const key of Object.keys(ref?.keys ?? {})) { }}
         {{ if (!ref.keys[key].isOptional) { }}
           && !!params.{{= key }}
@@ -49,26 +49,26 @@ options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
   ));
 
   return useQuery([
-     "{{= model.uniqueName }}",
+     "{{= item.uniqueName }}",
 
-    {{ if (model.params) { }}
+    {{ if (item.params) { }}
     params,
     {{ } }}
-    {{ if (model.query) { }}
+    {{ if (item.query) { }}
     query,
     {{ } }}
     ],
     (
     _,
-    {{ if (model.params) { }}
-    params: T.{{= model.params.reference.uniqueName }}_Input,
+    {{ if (item.params) { }}
+    params: T.{{= item.params.reference.uniqueName }}_Input,
     {{ } }}
-    {{ if (model.query) { }}
-    query: T.{{= model.query.reference.uniqueName }}_Input,
+    {{ if (item.query) { }}
+    query: T.{{= item.query.reference.uniqueName }}_Input,
     {{ } }}
-    ) => {{= model.group }}Api.{{= model.name }}(
-      {{= model.params ? "params, " : ""}}
-      {{= model.query ? "query, " : "" }}
+    ) => {{= item.group }}Api.{{= item.name }}(
+      {{= item.params ? "params, " : ""}}
+      {{= item.query ? "query, " : "" }}
     ),
     options,
   );
@@ -77,17 +77,17 @@ options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
 {{ } else { }}
 
 interface {{= upperCaseFirst(funcName) }}Props {
-   {{ if (model.params) { }}
-   params: {{= model.params ? "T." + model.params.reference.uniqueName + "_Input" : "object" }}
+   {{ if (item.params) { }}
+   params: {{= item.params ? "T." + item.params.reference.uniqueName + "_Input" : "object" }}
    {{ } }}
-   {{ if (model.query) { }}
-    query: T.{{= model.query.reference.uniqueName }}_Input
+   {{ if (item.query) { }}
+    query: T.{{= item.query.reference.uniqueName }}_Input
    {{ } }}
-   {{ if (model.body) { }}
-   body: T.{{= model.body.reference.uniqueName }}_Input
+   {{ if (item.body) { }}
+   body: T.{{= item.body.reference.uniqueName }}_Input
    {{ } }}
-   {{ if (model.files) { }}
-   files: T.{{= model.files.reference.uniqueName }}_Input
+   {{ if (item.files) { }}
+   files: T.{{= item.files.reference.uniqueName }}_Input
    {{ } }}
 }
 
@@ -95,18 +95,18 @@ interface {{= upperCaseFirst(funcName) }}Props {
 
 /**
  * {{= funcName }}
- {{ if (model.tags.length > 0 ) { }}* Tags: {{= model.tags.join(", ") }}{{ } }}
- * Docs: {{= model.docString }}
+ {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+ * Docs: {{= item.docString }}
  */
 export function {{= funcName }}(
   options: MutationConfig<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},
 ): MutationResultPair<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props, unknown> {
   return useMutation(
-    (variables) => {{= model.group }}Api.{{= model.name }}(
-      {{= model.params ? "variables.params, " : ""}}
-      {{= model.query ? "variables.query, " : "" }}
-      {{= model.body ? "variables.body, " : "" }}
-      {{= model.files ? "variables.files, " : "" }}
+    (variables) => {{= item.group }}Api.{{= item.name }}(
+      {{= item.params ? "variables.params, " : ""}}
+      {{= item.query ? "variables.query, " : "" }}
+      {{= item.body ? "variables.body, " : "" }}
+      {{= item.files ? "variables.files, " : "" }}
     ),
     options,
   );

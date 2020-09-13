@@ -1,4 +1,4 @@
-{{ if (model.validator.convert) { }}
+{{ if (item.validator.convert) { }}
   if (typeof value !== "string") {
     value = String(value)
   }
@@ -8,41 +8,41 @@ if (typeof value !== "string") {
   return buildError(`validator.${parentType}.type`, { propertyPath }, errorList);
 }
 
-{{ if (model.validator.trim) { }}
+{{ if (item.validator.trim) { }}
   value = value.trim();
 {{ } }}
 
-{{ if (model.validator.min !== undefined) { }}
-  if (value.length < {{= model.validator.min }}) {
-    const min = {{= model.validator.min }};
+{{ if (item.validator.min !== undefined) { }}
+  if (value.length < {{= item.validator.min }}) {
+    const min = {{= item.validator.min }};
     return buildError(`validator.${parentType}.min`, { propertyPath, min }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.max !== undefined) { }}
-  if (value.length > {{= model.validator.max }}) {
-    const max = {{= model.validator.max }};
+{{ if (item.validator.max !== undefined) { }}
+  if (value.length > {{= item.validator.max }}) {
+    const max = {{= item.validator.max }};
     return buildError(`validator.${parentType}.max`, { propertyPath, max }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.upperCase) { }}
+{{ if (item.validator.upperCase) { }}
   value = value.toUpperCase();
 {{ } }}
 
-{{ if (model.validator.lowerCase) { }}
+{{ if (item.validator.lowerCase) { }}
   value = value.toLowerCase();
 {{ } }}
 
-{{ if (model.oneOf !== undefined) { }}
-  if ({{= model.oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
-    const oneOf = {{= quote(model.oneOf.join(", ")) }};
+{{ if (item.oneOf !== undefined) { }}
+  if ({{= item.oneOf.map(it => "value !== \"" + it + "\"").join(" && ") }}) {
+    const oneOf = {{= quote(item.oneOf.join(", ")) }};
     return buildError(`validator.${parentType}.oneOf`, { propertyPath, oneOf }, errorList);
   }
 {{ } }}
 
-{{ if (model.validator.pattern !== undefined) { }}
-  if (!{{= model.validator.pattern }}.test(value)) {
+{{ if (item.validator.pattern !== undefined) { }}
+  if (!{{= item.validator.pattern }}.test(value)) {
     return buildError(`validator.${parentType}.pattern`, { propertyPath }, errorList);
   }
 {{ } }}

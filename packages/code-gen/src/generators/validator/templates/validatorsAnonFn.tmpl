@@ -1,26 +1,26 @@
-{{ if (model.docString !== "") { }}
+{{ if (item.docString !== "") { }}
 /**
- * {{= model.docString }}
+ * {{= item.docString }}
  */
 {{ } }}
-function {{= model.type}}Validator{{= ctx.counter++ }}(
+function {{= item.type}}Validator{{= ctx.counter++ }}(
   value,
   propertyPath,
   errorList = [],
-  parentType = "{{= model.type }}"
+  parentType = "{{= item.type }}"
   ) {
   if (isNil(value)) {
-    {{ if (model.isOptional) { }}
-      return {{= model.defaultValue }};
+    {{ if (item.isOptional) { }}
+      return {{= item.defaultValue }};
     {{ } else { }}
-      return buildError("validator.{{= model.type }}.undefined", { propertyPath }, errorList);
+      return buildError("validator.{{= item.type }}.undefined", { propertyPath }, errorList);
     {{ } }}
   }
 
   {{ /* makes it easier for type implementations */ }}
-  {{ model.validator = model.validator || {}; }}
+  {{ item.validator = item.validator || {}; }}
 
-  {{= validatorExec({ type: model.type, model, ctx, options, }).trim() }}
+  {{= validatorExec({ type: item.type, item, ctx, options, }).trim() }}
 }
 ((newline))
 

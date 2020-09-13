@@ -50,7 +50,7 @@ function buildError(key, info, list) {
 
 {{ const ctx = { counter: 0, functions: [], memo: new Map() }; }}
 {{ ctx.addFunc = fn => { ctx.functions.push(fn); }; }}
-{{ ctx.anonFn = (model) => { const key = inspect(model); if (!ctx.memo.has(key)) { const nr = ctx.counter; ctx.addFunc(validatorsAnonFn({ model, ctx, options })); ctx.memo.set(key, nr); } return ctx.memo.get(key); }; }}
+{{ ctx.anonFn = (item) => { const key = inspect(item); if (!ctx.memo.has(key)) { const nr = ctx.counter; ctx.addFunc(validatorsAnonFn({ item, ctx, options })); ctx.memo.set(key, nr); } return ctx.memo.get(key); }; }}
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
@@ -64,7 +64,7 @@ function buildError(key, info, list) {
     {{ continue; }}
     {{ } }}
 
-    {{= validatorsNamedFn({ ctx, model: item, options }) }}
+    {{= validatorsNamedFn({ ctx, item, options }) }}
 ((newline))
 
   {{ } }}

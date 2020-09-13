@@ -1,3 +1,3 @@
 (
-{{= model.values.map(value => typeExec({ type: value.type, model: value, isInputType, options }).trim()).join("|") }}
+{{= item.values.map(value => typeExec({ type: value.type, item: value, isInputType, options }).trim()).join("|") }}
 )
