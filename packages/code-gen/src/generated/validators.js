@@ -30,8 +30,9 @@ export function validatorSetError(fn) {
   _errorBuildFn = fn;
 }
 
-function buildError(key, info) {
-  throw _errorBuildFn(key, info);
+function buildError(key, info, list) {
+  list.push(_errorBuildFn(key, info));
+  return undefined;
 }
 
 export const codeGenValidators = {
@@ -39,288 +40,356 @@ export const codeGenValidators = {
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenType|undefined } }
    */
   type: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenType"](result);
     }
-    result = anyOfValidator0(result, propertyPath);
-    if ("postValidateCodeGenType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenType"](result);
+    const errorList = [];
+    result = anyOfValidator0(result, propertyPath, errorList, "anyOf");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenAnyType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenAnyType|undefined } }
    */
   anyType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenAnyType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenAnyType"](result);
     }
-    result = objectValidator15(result, propertyPath);
-    if ("postValidateCodeGenAnyType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenAnyType"](result);
+    const errorList = [];
+    result = objectValidator15(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenAnyType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenAnyType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenAnyOfType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenAnyOfType|undefined } }
    */
   anyOfType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenAnyOfType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenAnyOfType"](result);
     }
-    result = objectValidator25(result, propertyPath);
-    if ("postValidateCodeGenAnyOfType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenAnyOfType"](result);
+    const errorList = [];
+    result = objectValidator25(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenAnyOfType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenAnyOfType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenArrayType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenArrayType|undefined } }
    */
   arrayType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenArrayType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenArrayType"](result);
     }
-    result = objectValidator29(result, propertyPath);
-    if ("postValidateCodeGenArrayType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenArrayType"](result);
+    const errorList = [];
+    result = objectValidator29(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenArrayType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenArrayType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenBooleanType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenBooleanType|undefined } }
    */
   booleanType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenBooleanType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenBooleanType"](result);
     }
-    result = objectValidator34(result, propertyPath);
-    if ("postValidateCodeGenBooleanType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenBooleanType"](result);
+    const errorList = [];
+    result = objectValidator34(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenBooleanType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenBooleanType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenDateType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenDateType|undefined } }
    */
   dateType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenDateType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenDateType"](result);
     }
-    result = objectValidator38(result, propertyPath);
-    if ("postValidateCodeGenDateType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenDateType"](result);
+    const errorList = [];
+    result = objectValidator38(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenDateType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenDateType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenFileType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenFileType|undefined } }
    */
   fileType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenFileType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenFileType"](result);
     }
-    result = objectValidator40(result, propertyPath);
-    if ("postValidateCodeGenFileType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenFileType"](result);
+    const errorList = [];
+    result = objectValidator40(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenFileType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenFileType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenGenericType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenGenericType|undefined } }
    */
   genericType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenGenericType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenGenericType"](result);
     }
-    result = objectValidator42(result, propertyPath);
-    if ("postValidateCodeGenGenericType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenGenericType"](result);
+    const errorList = [];
+    result = objectValidator42(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenGenericType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenGenericType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenNumberType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenNumberType|undefined } }
    */
   numberType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenNumberType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenNumberType"](result);
     }
-    result = objectValidator46(result, propertyPath);
-    if ("postValidateCodeGenNumberType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenNumberType"](result);
+    const errorList = [];
+    result = objectValidator46(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenNumberType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenNumberType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenObjectType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenObjectType|undefined } }
    */
   objectType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenObjectType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenObjectType"](result);
     }
-    result = objectValidator50(result, propertyPath);
-    if ("postValidateCodeGenObjectType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenObjectType"](result);
+    const errorList = [];
+    result = objectValidator50(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenObjectType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenObjectType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenReferenceType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenReferenceType|undefined } }
    */
   referenceType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenReferenceType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenReferenceType"](result);
     }
-    result = objectValidator58(result, propertyPath);
-    if ("postValidateCodeGenReferenceType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenReferenceType"](result);
+    const errorList = [];
+    result = objectValidator58(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenReferenceType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenReferenceType"]({
+        data: result,
+      });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenRelationType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenRelationType|undefined } }
    */
   relationType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenRelationType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenRelationType"](result);
     }
-    result = objectValidator61(result, propertyPath);
-    if ("postValidateCodeGenRelationType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenRelationType"](result);
+    const errorList = [];
+    result = objectValidator61(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenRelationType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenRelationType"]({
+        data: result,
+      });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenStringType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenStringType|undefined } }
    */
   stringType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenStringType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenStringType"](result);
     }
-    result = objectValidator66(result, propertyPath);
-    if ("postValidateCodeGenStringType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenStringType"](result);
+    const errorList = [];
+    result = objectValidator66(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenStringType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenStringType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenUuidType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenUuidType|undefined } }
    */
   uuidType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenUuidType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenUuidType"](result);
     }
-    result = objectValidator71(result, propertyPath);
-    if ("postValidateCodeGenUuidType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenUuidType"](result);
+    const errorList = [];
+    result = objectValidator71(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenUuidType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenUuidType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenRouteType}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenRouteType|undefined } }
    */
   routeType: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenRouteType" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenRouteType"](result);
     }
-    result = objectValidator73(result, propertyPath);
-    if ("postValidateCodeGenRouteType" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenRouteType"](result);
+    const errorList = [];
+    result = objectValidator73(result, propertyPath, errorList, "object");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenRouteType" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenRouteType"]({ data: result });
+    }
+    return { data: result };
   },
 
   /**
    *
    * @param {*} value
    * @param {string} [propertyPath]
-   * @returns { CodeGenStructure}
+   * @returns { { errors: ({ key: string, info: object}[]|undefined), data: CodeGenStructure|undefined } }
    */
   structure: (value, propertyPath = "$") => {
     let result = value;
     if ("preValidateCodeGenStructure" in validatorHooks) {
       result = validatorHooks["preValidateCodeGenStructure"](result);
     }
-    result = genericValidator82(result, propertyPath);
-    if ("postValidateCodeGenStructure" in validatorHooks) {
-      return validatorHooks["postValidateCodeGenStructure"](result);
+    const errorList = [];
+    result = genericValidator82(result, propertyPath, errorList, "generic");
+    if (errorList.length > 0) {
+      return { errors: errorList };
     }
-    return result;
+    if ("postValidateCodeGenStructure" in validatorHooks) {
+      return validatorHooks["postValidateCodeGenStructure"]({ data: result });
+    }
+    return { data: result };
   },
 };
 
@@ -337,7 +406,11 @@ function referenceValidator1(
       errorList,
     );
   }
-  return codeGenValidators.anyType(value, propertyPath);
+  const { errors, data } = codeGenValidators.anyType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator2(
   value,
@@ -352,7 +425,11 @@ function referenceValidator2(
       errorList,
     );
   }
-  return codeGenValidators.anyOfType(value, propertyPath);
+  const { errors, data } = codeGenValidators.anyOfType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator3(
   value,
@@ -367,7 +444,11 @@ function referenceValidator3(
       errorList,
     );
   }
-  return codeGenValidators.arrayType(value, propertyPath);
+  const { errors, data } = codeGenValidators.arrayType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator4(
   value,
@@ -382,7 +463,11 @@ function referenceValidator4(
       errorList,
     );
   }
-  return codeGenValidators.booleanType(value, propertyPath);
+  const { errors, data } = codeGenValidators.booleanType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator5(
   value,
@@ -397,7 +482,11 @@ function referenceValidator5(
       errorList,
     );
   }
-  return codeGenValidators.dateType(value, propertyPath);
+  const { errors, data } = codeGenValidators.dateType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator6(
   value,
@@ -412,7 +501,11 @@ function referenceValidator6(
       errorList,
     );
   }
-  return codeGenValidators.fileType(value, propertyPath);
+  const { errors, data } = codeGenValidators.fileType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator7(
   value,
@@ -427,7 +520,11 @@ function referenceValidator7(
       errorList,
     );
   }
-  return codeGenValidators.genericType(value, propertyPath);
+  const { errors, data } = codeGenValidators.genericType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator8(
   value,
@@ -442,7 +539,11 @@ function referenceValidator8(
       errorList,
     );
   }
-  return codeGenValidators.numberType(value, propertyPath);
+  const { errors, data } = codeGenValidators.numberType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator9(
   value,
@@ -457,7 +558,11 @@ function referenceValidator9(
       errorList,
     );
   }
-  return codeGenValidators.objectType(value, propertyPath);
+  const { errors, data } = codeGenValidators.objectType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator10(
   value,
@@ -472,7 +577,11 @@ function referenceValidator10(
       errorList,
     );
   }
-  return codeGenValidators.referenceType(value, propertyPath);
+  const { errors, data } = codeGenValidators.referenceType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator11(
   value,
@@ -487,7 +596,11 @@ function referenceValidator11(
       errorList,
     );
   }
-  return codeGenValidators.relationType(value, propertyPath);
+  const { errors, data } = codeGenValidators.relationType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator12(
   value,
@@ -502,7 +615,11 @@ function referenceValidator12(
       errorList,
     );
   }
-  return codeGenValidators.stringType(value, propertyPath);
+  const { errors, data } = codeGenValidators.stringType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator13(
   value,
@@ -517,7 +634,11 @@ function referenceValidator13(
       errorList,
     );
   }
-  return codeGenValidators.uuidType(value, propertyPath);
+  const { errors, data } = codeGenValidators.uuidType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator14(
   value,
@@ -532,7 +653,11 @@ function referenceValidator14(
       errorList,
     );
   }
-  return codeGenValidators.routeType(value, propertyPath);
+  const { errors, data } = codeGenValidators.routeType(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function anyOfValidator0(
   value,
@@ -543,147 +668,79 @@ function anyOfValidator0(
   if (isNil(value)) {
     return buildError("validator.anyOf.undefined", { propertyPath }, errorList);
   }
+  let errCount = 0;
   const errors = [];
-  try {
-    return referenceValidator1(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  let result = undefined;
+  result = referenceValidator1(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator2(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator2(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator3(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator3(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator4(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator4(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator5(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator5(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator6(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator6(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator7(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator7(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator8(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator8(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator9(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator9(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator10(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator10(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator11(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator11(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator12(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator12(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator13(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator13(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return referenceValidator14(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = referenceValidator14(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
+  errCount = errors.length;
   return buildError(
     `validator.${parentType}.type`,
     { propertyPath, errors },
@@ -862,37 +919,24 @@ function anyOfValidator19(
   if (isNil(value)) {
     return;
   }
+  let errCount = 0;
   const errors = [];
-  try {
-    return stringValidator20(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  let result = undefined;
+  result = stringValidator20(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return booleanValidator21(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = booleanValidator21(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
-  try {
-    return numberValidator22(value, propertyPath, errorList);
-  } catch (e) {
-    errors.push({
-      name: e.name,
-      message: e.message,
-      key: e.key,
-      info: e.info,
-    });
+  errCount = errors.length;
+  result = numberValidator22(value, propertyPath, errors);
+  if (errors.length === errCount) {
+    return result;
   }
+  errCount = errors.length;
   return buildError(
     `validator.${parentType}.type`,
     { propertyPath, errors },
@@ -1114,7 +1158,11 @@ function referenceValidator28(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function arrayValidator27(
   value,
@@ -1358,7 +1406,11 @@ function referenceValidator33(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function objectValidator29(
   value,
@@ -1940,7 +1992,11 @@ function referenceValidator44(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator45(
   value,
@@ -1955,7 +2011,11 @@ function referenceValidator45(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function objectValidator42(
   value,
@@ -2408,7 +2468,11 @@ function referenceValidator56(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function genericValidator54(
   value,
@@ -2437,12 +2501,11 @@ function genericValidator54(
       `${propertyPath}.$key[${key}]`,
       errorList,
     );
-    const validatedValue = referenceValidator56(
+    result[validatedKey] = referenceValidator56(
       value[key],
       `${propertyPath}.$value[${key}]`,
       errorList,
     );
-    result[validatedKey] = validatedValue;
   }
   return result;
 }
@@ -2865,7 +2928,11 @@ function referenceValidator64(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator65(
   value,
@@ -2880,7 +2947,11 @@ function referenceValidator65(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function objectValidator61(
   value,
@@ -3496,7 +3567,11 @@ function referenceValidator77(
   if (isNil(value)) {
     return;
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator78(
   value,
@@ -3507,7 +3582,11 @@ function referenceValidator78(
   if (isNil(value)) {
     return;
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator79(
   value,
@@ -3518,7 +3597,11 @@ function referenceValidator79(
   if (isNil(value)) {
     return;
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator80(
   value,
@@ -3529,7 +3612,11 @@ function referenceValidator80(
   if (isNil(value)) {
     return;
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function referenceValidator81(
   value,
@@ -3540,7 +3627,11 @@ function referenceValidator81(
   if (isNil(value)) {
     return;
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function objectValidator73(
   value,
@@ -3686,7 +3777,11 @@ function referenceValidator84(
       errorList,
     );
   }
-  return codeGenValidators.type(value, propertyPath);
+  const { errors, data } = codeGenValidators.type(value, propertyPath);
+  if (errors !== undefined) {
+    errorList.push(...errors);
+  }
+  return data;
 }
 function genericValidator83(
   value,
@@ -3715,12 +3810,11 @@ function genericValidator83(
       `${propertyPath}.$key[${key}]`,
       errorList,
     );
-    const validatedValue = referenceValidator84(
+    result[validatedKey] = referenceValidator84(
       value[key],
       `${propertyPath}.$value[${key}]`,
       errorList,
     );
-    result[validatedKey] = validatedValue;
   }
   return result;
 }
@@ -3751,12 +3845,11 @@ function genericValidator82(
       `${propertyPath}.$key[${key}]`,
       errorList,
     );
-    const validatedValue = genericValidator83(
+    result[validatedKey] = genericValidator83(
       value[key],
       `${propertyPath}.$value[${key}]`,
       errorList,
     );
-    result[validatedKey] = validatedValue;
   }
   return result;
 }

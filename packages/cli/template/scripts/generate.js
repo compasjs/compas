@@ -17,9 +17,6 @@ async function main() {
 
   await app.generate({
     outputDirectory: "./src/generated",
-    useTypescript: false,
-    dumpStructure: true,
-    dumpPostgres: true,
-    enabledGenerators: ["type", "validator", "router", "apiClient", "sql"],
+    isNodeServer: true,
   });
 }

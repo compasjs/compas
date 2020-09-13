@@ -93,8 +93,8 @@ function applyServerStructure(app) {
   );
 
   return {
+    isNodeServer: true,
     enabledGenerators: ["router", "validator"],
-    dumpStructure: true,
   };
 }
 
@@ -103,7 +103,9 @@ function applyClientStructure(apiClient) {
     app.extend(await loadFromRemote(apiClient, apiClient.defaults.baseURL));
 
     return {
+      isBrowser: true,
       enabledGenerators: ["apiClient", "type"],
+      useTypescript: false,
     };
   };
 }

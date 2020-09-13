@@ -21,7 +21,7 @@ export async function runGenerators(app, options) {
 
   addGroupsToGeneratorInput(generatorInput, copy, options.enabledGroups);
   const stringifyInput = JSON.stringify(
-    codeGenValidators.structure(generatorInput),
+    codeGenValidators.structure(generatorInput).data,
   )
     .replace(/\\/g, "\\\\")
     .replace("'", "\\'");

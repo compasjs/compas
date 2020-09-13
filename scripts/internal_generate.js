@@ -21,8 +21,8 @@ async function main() {
   await app.generate({
     outputDirectory: `packages/store/src/generated`,
     enabledGroups: ["store"],
+    isNode: true,
     enabledGenerators: ["type", "sql"],
-    useTypescript: false,
     dumpStructure: true,
     dumpPostgres: true,
   });
@@ -30,8 +30,7 @@ async function main() {
   await app.generate({
     outputDirectory: `packages/code-gen/src/generated`,
     enabledGroups: ["codeGen"],
+    isNode: true,
     enabledGenerators: ["type", "validator"],
-    useTypescript: false,
-    dumpStructure: false,
   });
 }

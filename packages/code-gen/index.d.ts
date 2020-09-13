@@ -115,6 +115,50 @@ interface GenerateOpts {
   enabledGroups?: string[];
 
   /**
+   * Used to conditional generate various things.
+   * Is inferred when the reactQuery generator is enabled.
+   *   isBrowser: true,
+   *   isNodeServer: false,
+   *   isNode: false,
+   *   enabledGenerators: ["type", "validator", "apiClient", "reactQuery"],
+   *   useTypescript: true,
+   *   dumpStructure: false,
+   *   dumpPostgres: false,
+   *   validatorCollectErrors: true,
+   */
+  isBrowser?: boolean;
+
+  /**
+   * Used to conditional generate various things.
+   * Is inferred when the sql or router generator is enabled.
+   * Has a higher precedence than isNode, but also implies isNode.
+   *   isBrowser: false,
+   *   isNodeServer: true,
+   *   isNode: true,
+   *   enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
+   *   useTypescript: false,
+   *   dumpStructure: true,
+   *   dumpPostgres: true,
+   *   validatorCollectErrors: false,
+   */
+  isNodeServer?: boolean;
+
+  /**
+   * Used to conditional generate various things.
+   * Is inferred when the react-query generator is disabled.
+   * Has a lower precedence than isServer.
+   *   isBrowser: false,
+   *   isNodeServer: false,
+   *   isNode: true,
+   *   enabledGenerators: ["type", "validator"],
+   *   useTypescript: false,
+   *   dumpStructure: false,
+   *   dumpPostgres: false,
+   *   validatorCollectErrors: true,
+   */
+  isNode?: boolean;
+
+  /**
    * Enabling specific generators.
    * If this is undefined, all registered generators are enabled
    */

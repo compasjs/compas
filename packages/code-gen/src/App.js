@@ -14,6 +14,48 @@ import { buildOrInfer } from "./types/TypeBuilder.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
+ * @type {GenerateOpts}
+ */
+const defaultGenerateOptionsBrowser = {
+  isBrowser: true,
+  isNodeServer: false,
+  isNode: false,
+  enabledGenerators: ["type", "validator", "apiClient", "reactQuery"],
+  useTypescript: true,
+  dumpStructure: false,
+  dumpPostgres: false,
+  validatorCollectErrors: true,
+};
+
+/**
+ * @type {GenerateOpts}
+ */
+const defaultGenerateOptionsNodeServer = {
+  isBrowser: false,
+  isNodeServer: true,
+  isNode: true,
+  enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
+  useTypescript: false,
+  dumpStructure: true,
+  dumpPostgres: true,
+  validatorCollectErrors: false,
+};
+
+/**
+ * @type {GenerateOpts}
+ */
+const defaultGenerateOptionsNode = {
+  isBrowser: false,
+  isNodeServer: false,
+  isNode: true,
+  enabledGenerators: ["type", "validator"],
+  useTypescript: false,
+  dumpStructure: false,
+  dumpPostgres: false,
+  validatorCollectErrors: true,
+};
+
+/**
  * @class
  */
 export class App {
@@ -105,8 +147,13 @@ export class App {
    * @returns {this}
    */
   addRaw(obj) {
-    const type = codeGenValidators.type(obj);
-    this.addToData(type);
+    const { data, errors } = codeGenValidators.type(obj);
+    if (errors) {
+      this.logger.error(errors);
+      throw errors[0];
+    }
+
+    this.addToData(data);
 
     return this;
   }
@@ -115,9 +162,13 @@ export class App {
    * @param data
    */
   extend(data) {
-    const result = codeGenValidators.structure(data);
+    const { data: value, errors } = codeGenValidators.structure(data);
+    if (errors) {
+      this.logger.error(errors);
+      throw errors[0];
+    }
 
-    for (const groupData of Object.values(result)) {
+    for (const groupData of Object.values(value)) {
       for (const item of Object.values(groupData)) {
         this.addToData(item);
       }
@@ -132,28 +183,65 @@ export class App {
     if (isNil(options?.outputDirectory)) {
       throw new Error("Need options.outputDirectory to write files to.");
     }
-    options.fileHeader =
-      this.fileHeader + formatEslint() + (options.fileHeader ?? "");
-    options.useTypescript = !!options.useTypescript;
-    options.dumpStructure = !!options.dumpStructure;
-    options.enabledGenerators = options.enabledGenerators || [
-      ...generators.keys(),
-    ];
+
+    if (
+      isNil(options.isBrowser) &&
+      isNil(options.isNodeServer) &&
+      isNil(options.isNode) &&
+      isNil(options.enabledGenerators)
+    ) {
+      throw new Error(
+        `Either options.isBrowser, options.isNodeServer, options.isNode or options.enabledGenerators must be set.`,
+      );
+    }
+
+    options.enabledGenerators = options.enabledGenerators || [];
+
+    const opts = {
+      outputDirectory: options.outputDirectory,
+      fileHeader: this.fileHeader + formatEslint() + (options.fileHeader ?? ""),
+    };
+
+    if (
+      options.isBrowser ||
+      options.enabledGenerators.indexOf("reactQuery") !== -1
+    ) {
+      Object.assign(opts, defaultGenerateOptionsBrowser);
+    } else if (
+      options.isNodeServer ||
+      options.enabledGenerators.indexOf("sql") !== -1 ||
+      options.enabledGenerators.indexOf("router") !== -1
+    ) {
+      Object.assign(opts, defaultGenerateOptionsNodeServer);
+    } else if (
+      options.isNode ||
+      options.enabledGenerators.indexOf("reactQuery") === -1
+    ) {
+      Object.assign(opts, defaultGenerateOptionsNode);
+    }
+
+    opts.useTypescript = options.useTypescript ?? !!opts.useTypescript;
+    opts.dumpStructure = options.dumpStructure ?? !!opts.dumpStructure;
+    opts.dumpPostgres = options.dumpPostgres ?? !!opts.dumpPostgres;
+    opts.validatorCollectErrors =
+      options.validatorCollectErrors ?? !!opts.validatorCollectErrors;
+    opts.enabledGenerators =
+      options.enabledGenerators.length > 0
+        ? options.enabledGenerators
+        : opts.enabledGenerators ?? [...generators.keys()];
 
     this.processData();
     hoistNamedItems(this.data, this.data);
 
-    options.enabledGroups = options.enabledGroups || Object.keys(this.data);
-    if (options.enabledGroups.length === 0) {
+    opts.enabledGroups = options.enabledGroups ?? Object.keys(this.data);
+    // Make sure to do the same case conversion here as well as to not confuse the user.
+    opts.enabledGroups = opts.enabledGroups.map((it) => lowerCaseFirst(it));
+
+    if (opts.enabledGroups.length === 0) {
       throw new Error("Need at least a single group in enabledGroups");
     }
 
-    // Make sure to do the same case conversion here as well as to not confuse the user.
-    options.enabledGroups = options.enabledGroups.map((it) =>
-      lowerCaseFirst(it),
-    );
-
-    await runGenerators(this, options);
+    await runGenerators(this, opts);
     printProcessMemoryUsage(this.logger);
   }
 
