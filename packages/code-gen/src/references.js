@@ -1,4 +1,5 @@
 import { isNil, isPlainObject } from "@lbu/stdlib";
+import { followReference } from "./utils.js";
 
 /**
  * Create a js-reference for reference types
@@ -14,15 +15,19 @@ export function recursiveLinkupReferences(structure, value) {
 
   if (
     isPlainObject(value) &&
-    value.type &&
     value.type === "reference" &&
-    isPlainObject(value.reference)
+    isPlainObject(value.reference) &&
+    isNil(value.reference.type)
   ) {
-    const { group, name } = value.reference;
-    if (!isNil(structure[group]?.[name])) {
-      value.referencedItem = structure[group][name];
-    }
-
+    value.reference = followReference(structure, value.reference);
+    return;
+  } else if (
+    isPlainObject(value) &&
+    value.type === "reference" &&
+    isPlainObject(value.reference) &&
+    !isNil(value.reference.type)
+  ) {
+    // We already handled this object
     return;
   }
 

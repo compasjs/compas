@@ -287,6 +287,11 @@ function hoistNamedItemsRecursive(history, root, value) {
   }
 
   if (isPlainObject(value)) {
+    if (value.type === "reference" && !isNil(value.reference.type)) {
+      // Skip's a linked reference so it's created infinitely nested by the followed loop
+      return;
+    }
+
     for (const key of Object.keys(value)) {
       hoistNamedItemsRecursive(history, root, value[key]);
       if (isNamedTypeBuilderLike(value[key])) {

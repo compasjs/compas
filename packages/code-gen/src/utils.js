@@ -85,6 +85,28 @@ export function compileDynamicTemplates(
 }
 
 /**
+ * Follows references till back at the root with a named item
+ * @param {CodeGenStructure} structure
+ * @param {object} reference
+ */
+export function followReference(structure, reference) {
+  const item = structure?.[reference?.group]?.[reference?.name];
+
+  if (isNil(item)) {
+    return item;
+  }
+
+  if (item.type === "reference") {
+    if (!isNil(item.reference.type)) {
+      return item.reference;
+    }
+    return followReference(structure, item.reference);
+  }
+
+  return item;
+}
+
+/**
  * Try to get the (recursive) (referenced) item.
  * Only works in the preGenerate or generate phase of code-generation
  *
@@ -96,9 +118,5 @@ export function getItem(item) {
     return item;
   }
 
-  if (!isNil(item?.referencedItem)) {
-    return getItem(item.referencedItem);
-  }
-
-  return undefined;
+  return item?.reference;
 }
