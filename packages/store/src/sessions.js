@@ -1,5 +1,7 @@
 import { storeQueries } from "./generated/queries.js";
 
+const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
+
 /**
  * @param {Postgres} sql
  * @returns {SessionStore}
@@ -18,7 +20,14 @@ export function newSessionStore(sql) {
     },
     set: async (sid, sess, maxAge) => {
       const expires = new Date();
-      expires.setMilliseconds(expires.getMilliseconds() + maxAge);
+      if (maxAge === "session") {
+        expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
+      } else if (typeof maxAge === "number") {
+        expires.setMilliseconds(expires.getMilliseconds() + maxAge);
+      } else {
+        // Unknown max age
+        expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
+      }
 
       await storeQueries.sessionStoreUpsert(sql, {
         id: sid,

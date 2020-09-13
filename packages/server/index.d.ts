@@ -47,6 +47,7 @@ import { Files } from "formidable";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { ListenOptions, Socket } from "net";
 import * as url from "url";
+import ReadableStream = NodeJS.ReadableStream;
 
 /**
  * @private
@@ -964,8 +965,9 @@ interface SessionOptions {
 
   /**
    * maxAge in ms (default is 6 days)
-   * "session" will result in a cookie that expires when session/browser is closed
-   * Warning: If a session cookie is stolen, this cookie will never expire
+   * "session" will result in a cookie that expires when session/browser is closed or when
+   * eighteen hours are passed without a request.
+   * Works best with the options 'rolling' set to true
    */
   maxAge?: number | "session";
 
@@ -1165,7 +1167,8 @@ interface IFormidableBodyOptions {
   encoding?: string;
 
   /**
-   * default `os.tmpdir()` the directory for placing file uploads in. You can move them later by using `fs.rename()`
+   * default `os.tmpdir()` the directory for placing file uploads in. You can move them later
+   * by using `fs.rename()`
    */
   uploadDir?: string;
 
@@ -1180,17 +1183,20 @@ interface IFormidableBodyOptions {
   maxFileSize?: number;
 
   /**
-   * {number} - default 1000; limit the number of fields that the Querystring parser will decode, set 0 for unlimited
+   * {number} - default 1000; limit the number of fields that the Querystring parser will
+   * decode, set 0 for unlimited
    */
   maxFields?: number;
 
   /**
-   * {number} - default 20 * 1024 * 1024 (20mb); limit the amount of memory all fields together (except files) can allocate in bytes
+   * {number} - default 20 * 1024 * 1024 (20mb); limit the amount of memory all fields
+   * together (except files) can allocate in bytes
    */
   maxFieldsSize?: number;
 
   /**
-   * {boolean} - default false; include checksums calculated for incoming files, set this to some hash algorithm, see crypto.createHash for available algorithms
+   * {boolean} - default false; include checksums calculated for incoming files, set this to
+   * some hash algorithm, see crypto.createHash for available algorithms
    */
   hash?: boolean;
 }
