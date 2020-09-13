@@ -1,5 +1,33 @@
 # CHANGELOG
 
+### [v0.0.71](https://github.com/lightbasenl/lbu/releases/tag/v0.0.71)
+
+- build(deps): bump @types/node from 14.6.4 to 14.10.1
+  ([#264](https://github.com/lightbasenl/lbu/pull/264),
+  [#261](https://github.com/lightbasenl/lbu/pull/261))
+- build(deps): bump eslint from 7.8.1 to 7.9.0
+  ([#265](https://github.com/lightbasenl/lbu/pull/265))
+- build(deps): bump node-fetch from 2.6.0 to 2.6.1
+  ([#258](https://github.com/lightbasenl/lbu/pull/258))
+- build(deps-dev): bump react-query from 2.15.4 to 2.17.0
+  ([#263](https://github.com/lightbasenl/lbu/pull/263),
+  [#266](https://github.com/lightbasenl/lbu/pull/266))
+- cli: format info property on caught exceptions in bench and test
+  ([#257](https://github.com/lightbasenl/lbu/pull/257))
+- code-gen: add simple options to App#generate to provide better defaults
+  ([#260](https://github.com/lightbasenl/lbu/pull/260))
+- code-gen: add validators in App#addRaw and before dumping structure
+  ([#259](https://github.com/lightbasenl/lbu/pull/259))
+- code-gen: consistent handling of references
+- code-gen: consistent usage of 'item' in generators
+- code-gen: fix sql generation of nullable foreign key column
+  ([#255](https://github.com/lightbasenl/lbu/pull/255))
+- code-gen: object validation strict by default
+  ([#256](https://github.com/lightbasenl/lbu/pull/256))
+- code-gen: remove unnecessary internal nesting on structure
+- store: fix sessions with a maxAge of 'session'
+  ([#267](https://github.com/lightbasenl/lbu/pull/267))
+
 ### [v0.0.70](https://github.com/lightbasenl/lbu/releases/tag/v0.0.70)
 
 - code-gen: fix breaking changes in react-query types
