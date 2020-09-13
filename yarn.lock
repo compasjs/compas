@@ -61,6 +61,13 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.9.4.tgz#68a35e6b0319bbc014465be43828300113f2f2e8"
   integrity sha512-bC49otXX6N0/VYhgOMh4gnP26E9xnDZK3TmbNpxYzzz9BQLBosQwfyOe9/cXUU3txYhTzLCbcqd5c8y/OmCjHA==
 
+"@babel/runtime@^7.5.5":
+  version "7.11.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
+  integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.8.3":
   version "7.8.6"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.8.6.tgz#86b22af15f828dfb086474f964dcc3e39c43ce2b"
@@ -5563,10 +5570,12 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.16.1:
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.16.1.tgz#ebcb24cf3eb9ac5b406e8f9017736ffdf2e87dab"
-  integrity sha512-VDR1+NpU2V2oHF6PS5ZElWGzHKM2QTGnMKOSFJiN/7vci3/tsOE2ydwFn3E62n8KkY7i1TwCh1xakEylAD8nEQ==
+react-query@2.17.0:
+  version "2.17.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.17.0.tgz#ac6c1a17398ab86c65008d7a9a4c0d5385626d10"
+  integrity sha512-YtJ6Oot1vHyAHmllPdINEc0+3NnkjIWUcXZBUiScf+MpcRbzn8zBTc+QLF8dta+Zfm/HPHz1fFMYjAmTOSc/zw==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
 
 read-cmd-shim@^1.0.1:
   version "1.0.5"
@@ -5708,6 +5717,11 @@ redent@^2.0.0:
   dependencies:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
+
+regenerator-runtime@^0.13.4:
+  version "0.13.7"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
+  integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"
