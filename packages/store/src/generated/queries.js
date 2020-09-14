@@ -224,222 +224,6 @@ ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 
   /**
    * @param sql
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreSelect: (sql, where) => sql`
-SELECT
-ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"
-FROM "sessionStore" ss
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
-    where?.id ?? null
-  }) AND (COALESCE(${
-    where?.idIn ?? null
-  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
-    where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${
-    where?.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
-    where?.expiresGreaterThan ?? null
-  }, NULL) IS NULL OR ss."expires" > ${
-    where?.expiresGreaterThan ?? null
-  }) AND (COALESCE(${
-    where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
-ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
-`,
-
-  /**
-   * @param sql
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<number>}
-   */
-  sessionStoreCount: async (sql, where) => {
-    const result = await sql`
-SELECT count(*) AS "genCount" FROM "sessionStore" ss 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
-      where?.id ?? null
-    }) AND (COALESCE(${
-      where?.idIn ?? null
-    }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
-      where?.idIn ?? [],
-    )}::uuid[])) AND (COALESCE(${
-      where?.expires ?? null
-    }, NULL) IS NULL OR ss."expires" = ${
-      where?.expires ?? null
-    }) AND (COALESCE(${
-      where?.expiresGreaterThan ?? null
-    }, NULL) IS NULL OR ss."expires" > ${
-      where?.expiresGreaterThan ?? null
-    }) AND (COALESCE(${
-      where?.expiresLowerThan ?? null
-    }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
-`;
-    return parseInt(result?.[0]?.genCount ?? "0");
-  },
-
-  /**
-   * @param sql
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<*[]>}
-   */
-  sessionStoreDelete: (sql, where) => sql`
-DELETE FROM "sessionStore" ss 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
-    where?.id ?? null
-  }) AND (COALESCE(${
-    where?.idIn ?? null
-  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
-    where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${
-    where?.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
-    where?.expiresGreaterThan ?? null
-  }, NULL) IS NULL OR ss."expires" > ${
-    where?.expiresGreaterThan ?? null
-  }) AND (COALESCE(${
-    where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
-`,
-
-  /**
-   * @param sql
-   * @param { StoreSessionStoreInsertPartial_Input|StoreSessionStoreInsertPartial_Input[]} insert
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreInsert: (sql, insert) => {
-    const data = Array.isArray(insert) ? insert : [insert];
-    if (data.length === 0) {
-      return [];
-    }
-    let query = `INSERT INTO "sessionStore" ("expires", "data", "createdAt", "updatedAt") VALUES `;
-    const argList = [];
-    let idx = 1;
-    for (const it of data) {
-      argList.push(
-        it.expires ?? null,
-        JSON.stringify(it.data ?? {}),
-        it.createdAt ?? new Date(),
-        it.updatedAt ?? new Date(),
-      );
-      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
-    }
-    // Remove trailing comma
-    query = query.substring(0, query.length - 1);
-    query += ` RETURNING "id", "expires", "data", "createdAt", "updatedAt"`;
-    return sql.unsafe(query, argList);
-  },
-
-  /**
-   * @param sql
-   * @param { StoreSessionStoreInsertPartial_Input} value
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreUpdate: (sql, value, where) => {
-    let query = `UPDATE "sessionStore" ss SET `;
-    const argList = [];
-    let idx = 1;
-    if (value["expires"] !== undefined) {
-      query += `"expires" = $${idx++}, `;
-      argList.push(value["expires"]);
-    }
-    if (value["data"] !== undefined) {
-      query += `"data" = $${idx++}, `;
-      argList.push(JSON.stringify(value["data"]));
-    }
-    if (value["createdAt"] !== undefined) {
-      query += `"createdAt" = $${idx++}, `;
-      argList.push(value["createdAt"]);
-    }
-    query += `"updatedAt" = $${idx++}, `;
-    argList.push(new Date());
-    query = query.substring(0, query.length - 2);
-    query += ` WHERE `;
-    if (where.id !== undefined) {
-      query += `ss."id" `;
-      query += `= $${idx++}`;
-      argList.push(where.id);
-      query += " AND ";
-    }
-    if (where.idIn !== undefined) {
-      query += `ss."id" `;
-      query += `= ANY (ARRAY[`;
-      let addOne = false;
-      for (const value of where.idIn || []) {
-        addOne = true;
-        query += `$${idx++},`;
-        argList.push(value);
-      }
-      query = `${query.substring(
-        0,
-        query.length - (addOne ? 1 : 0),
-      )}]::uuid[])`;
-      query += " AND ";
-    }
-    if (where.expires !== undefined) {
-      query += `ss."expires" `;
-      query += `= $${idx++}`;
-      argList.push(where.expires);
-      query += " AND ";
-    }
-    if (where.expiresGreaterThan !== undefined) {
-      query += `ss."expires" `;
-      query += `> $${idx++}`;
-      argList.push(where.expiresGreaterThan);
-      query += " AND ";
-    }
-    if (where.expiresLowerThan !== undefined) {
-      query += `ss."expires" `;
-      query += `< $${idx++}`;
-      argList.push(where.expiresLowerThan);
-      query += " AND ";
-    }
-    query = query.substring(0, query.length - 4);
-    query += ` RETURNING ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"`;
-    return sql.unsafe(query, argList);
-  },
-
-  /**
-   * Note: Use only when id has a unique constraint
-   * @param sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreUpsert: (sql, it) => {
-    return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
-) VALUES (
-${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
-      it.createdAt ?? new Date()
-    }, ${it.updatedAt ?? new Date()}
-) ON CONFLICT("id") DO UPDATE SET
-"expires" = EXCLUDED."expires", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "expires", "data", "createdAt", "updatedAt"
-`;
-  },
-
-  /**
-   * Note: Use only when expires has a unique constraint
-   * @param sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
-   */
-  sessionStoreUpsertByExpires: (sql, it) => {
-    return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
-) VALUES (
-${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
-      it.createdAt ?? new Date()
-    }, ${it.updatedAt ?? new Date()}
-) ON CONFLICT("expires") DO UPDATE SET
-"data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "expires", "data", "createdAt", "updatedAt"
-`;
-  },
-
-  /**
-   * @param sql
    * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -655,6 +439,222 @@ ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
 ) ON CONFLICT("name") DO UPDATE SET
 "isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
 RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreWhere} [where]
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreSelect: (sql, where) => sql`
+SELECT
+ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"
+FROM "sessionStore" ss
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+    where?.id ?? null
+  }) AND (COALESCE(${
+    where?.idIn ?? null
+  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
+    where?.expires ?? null
+  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+    where?.expiresGreaterThan ?? null
+  }, NULL) IS NULL OR ss."expires" > ${
+    where?.expiresGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.expiresLowerThan ?? null
+  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
+`,
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreWhere} [where]
+   * @returns {Promise<number>}
+   */
+  sessionStoreCount: async (sql, where) => {
+    const result = await sql`
+SELECT count(*) AS "genCount" FROM "sessionStore" ss 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+      where?.id ?? null
+    }) AND (COALESCE(${
+      where?.idIn ?? null
+    }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+      where?.idIn ?? [],
+    )}::uuid[])) AND (COALESCE(${
+      where?.expires ?? null
+    }, NULL) IS NULL OR ss."expires" = ${
+      where?.expires ?? null
+    }) AND (COALESCE(${
+      where?.expiresGreaterThan ?? null
+    }, NULL) IS NULL OR ss."expires" > ${
+      where?.expiresGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.expiresLowerThan ?? null
+    }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+`;
+    return parseInt(result?.[0]?.genCount ?? "0");
+  },
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreWhere} [where]
+   * @returns {Promise<*[]>}
+   */
+  sessionStoreDelete: (sql, where) => sql`
+DELETE FROM "sessionStore" ss 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+    where?.id ?? null
+  }) AND (COALESCE(${
+    where?.idIn ?? null
+  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
+    where?.expires ?? null
+  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+    where?.expiresGreaterThan ?? null
+  }, NULL) IS NULL OR ss."expires" > ${
+    where?.expiresGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.expiresLowerThan ?? null
+  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+`,
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input|StoreSessionStoreInsertPartial_Input[]} insert
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreInsert: (sql, insert) => {
+    const data = Array.isArray(insert) ? insert : [insert];
+    if (data.length === 0) {
+      return [];
+    }
+    let query = `INSERT INTO "sessionStore" ("expires", "data", "createdAt", "updatedAt") VALUES `;
+    const argList = [];
+    let idx = 1;
+    for (const it of data) {
+      argList.push(
+        it.expires ?? null,
+        JSON.stringify(it.data ?? {}),
+        it.createdAt ?? new Date(),
+        it.updatedAt ?? new Date(),
+      );
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+    }
+    // Remove trailing comma
+    query = query.substring(0, query.length - 1);
+    query += ` RETURNING "id", "expires", "data", "createdAt", "updatedAt"`;
+    return sql.unsafe(query, argList);
+  },
+
+  /**
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input} value
+   * @param { StoreSessionStoreWhere} [where]
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpdate: (sql, value, where) => {
+    let query = `UPDATE "sessionStore" ss SET `;
+    const argList = [];
+    let idx = 1;
+    if (value["expires"] !== undefined) {
+      query += `"expires" = $${idx++}, `;
+      argList.push(value["expires"]);
+    }
+    if (value["data"] !== undefined) {
+      query += `"data" = $${idx++}, `;
+      argList.push(JSON.stringify(value["data"]));
+    }
+    if (value["createdAt"] !== undefined) {
+      query += `"createdAt" = $${idx++}, `;
+      argList.push(value["createdAt"]);
+    }
+    query += `"updatedAt" = $${idx++}, `;
+    argList.push(new Date());
+    query = query.substring(0, query.length - 2);
+    query += ` WHERE `;
+    if (where.id !== undefined) {
+      query += `ss."id" `;
+      query += `= $${idx++}`;
+      argList.push(where.id);
+      query += " AND ";
+    }
+    if (where.idIn !== undefined) {
+      query += `ss."id" `;
+      query += `= ANY (ARRAY[`;
+      let addOne = false;
+      for (const value of where.idIn || []) {
+        addOne = true;
+        query += `$${idx++},`;
+        argList.push(value);
+      }
+      query = `${query.substring(
+        0,
+        query.length - (addOne ? 1 : 0),
+      )}]::uuid[])`;
+      query += " AND ";
+    }
+    if (where.expires !== undefined) {
+      query += `ss."expires" `;
+      query += `= $${idx++}`;
+      argList.push(where.expires);
+      query += " AND ";
+    }
+    if (where.expiresGreaterThan !== undefined) {
+      query += `ss."expires" `;
+      query += `> $${idx++}`;
+      argList.push(where.expiresGreaterThan);
+      query += " AND ";
+    }
+    if (where.expiresLowerThan !== undefined) {
+      query += `ss."expires" `;
+      query += `< $${idx++}`;
+      argList.push(where.expiresLowerThan);
+      query += " AND ";
+    }
+    query = query.substring(0, query.length - 4);
+    query += ` RETURNING ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"`;
+    return sql.unsafe(query, argList);
+  },
+
+  /**
+   * Note: Use only when id has a unique constraint
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpsert: (sql, it) => {
+    return sql`
+INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("id") DO UPDATE SET
+"expires" = EXCLUDED."expires", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "expires", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when expires has a unique constraint
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpsertByExpires: (sql, it) => {
+    return sql`
+INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("expires") DO UPDATE SET
+"data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 `;
   },
 };

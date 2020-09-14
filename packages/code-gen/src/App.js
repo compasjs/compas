@@ -147,32 +147,49 @@ export class App {
    * @returns {this}
    */
   addRaw(obj) {
-    const { data, errors } = codeGenValidators.type(obj);
-    if (errors) {
-      this.logger.error(errors);
-      throw errors[0];
-    }
+    if (!isNil(codeGenValidators?.type)) {
+      const { data, errors } = codeGenValidators.type(obj);
+      if (errors) {
+        this.logger.error(errors);
+        throw errors[0];
+      }
 
-    this.addToData(data);
+      this.addToData(data);
+    } else {
+      // No validators present, most likely in development environment of lbu
+      this.addToData(obj);
+    }
 
     return this;
   }
 
   /**
    * @param data
+   * @returns {this}
    */
   extend(data) {
-    const { data: value, errors } = codeGenValidators.structure(data);
-    if (errors) {
-      this.logger.error(errors);
-      throw errors[0];
-    }
+    if (!isNil(codeGenValidators?.type)) {
+      const { data: value, errors } = codeGenValidators.structure(data);
+      if (errors) {
+        this.logger.error(errors);
+        throw errors[0];
+      }
 
-    for (const groupData of Object.values(value)) {
-      for (const item of Object.values(groupData)) {
-        this.addToData(item);
+      for (const groupData of Object.values(value)) {
+        for (const item of Object.values(groupData)) {
+          this.addToData(item);
+        }
+      }
+    } else {
+      // No validators present, most likely in development environment of lbu
+      for (const groupData of Object.values(data)) {
+        for (const item of Object.values(groupData)) {
+          this.addToData(item);
+        }
       }
     }
+
+    return this;
   }
 
   /**
@@ -234,6 +251,7 @@ export class App {
     hoistNamedItems(this.data, this.data);
 
     opts.enabledGroups = options.enabledGroups ?? Object.keys(this.data);
+
     // Make sure to do the same case conversion here as well as to not confuse the user.
     opts.enabledGroups = opts.enabledGroups.map((it) => lowerCaseFirst(it));
 

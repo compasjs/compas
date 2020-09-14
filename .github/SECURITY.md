@@ -4,8 +4,9 @@
 
 Currently only the latest released version is supported.
 
-| Version | Supported          |
-| ------- | ------------------ |
+| Version | Supported |
+| ------- | --------- |
+
 
 ## Reporting a Vulnerability
 

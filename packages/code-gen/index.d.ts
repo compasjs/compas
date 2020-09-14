@@ -226,7 +226,7 @@ export class App {
   /**
    * Add all groups and items to this App instance
    */
-  extend(data: any): void;
+  extend(data: any): App;
 
   /**
    * Call the generators with the provided options
@@ -330,12 +330,12 @@ export class TypeCreator {
   /**
    * Make a copy of the provided type, making it optional
    */
-  optional(name?: string): ObjectType;
+  optional(name?: string): OptionalType;
 
   /**
    * Pick keys from the provided object type
    */
-  pick(name?: string): OmitType;
+  pick(name?: string): PickType;
 
   /**
    * Reference any other type, as if it was created inline

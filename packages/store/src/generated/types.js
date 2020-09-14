@@ -14,27 +14,15 @@
  */
 
 /**
- * @name StoreSessionStore
+ * @name StoreFileStoreInsertPartial
  *
- * @typedef { { "id":string, "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreSessionStore_Input
+ * @name StoreFileStoreInsertPartial_Input
  *
- * @typedef { { "id":string, "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
- */
-
-/**
- * @name StoreJobQueue
- *
- * @typedef { { "id":number, "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
- */
-
-/**
- * @name StoreJobQueue_Input
- *
- * @typedef { { "id":number, "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
@@ -50,39 +38,27 @@
  */
 
 /**
- * @name StoreFileStoreInsertPartial
+ * @name StoreJobQueue
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, }}
+ * @typedef { { "id":number, "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreFileStoreInsertPartial_Input
+ * @name StoreJobQueue_Input
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "id":number, "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
- * @name StoreSessionStoreWhere
+ * @name StoreJobQueueInsertPartial
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, }}
+ * @typedef { { "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreSessionStoreWhere_Input
+ * @name StoreJobQueueInsertPartial_Input
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:string, "expiresGreaterThan"?:string, "expiresLowerThan"?:string, }}
- */
-
-/**
- * @name StoreSessionStoreInsertPartial
- *
- * @typedef { { "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
- */
-
-/**
- * @name StoreSessionStoreInsertPartial_Input
- *
- * @typedef { { "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
@@ -98,13 +74,37 @@
  */
 
 /**
- * @name StoreJobQueueInsertPartial
+ * @name StoreSessionStore
  *
- * @typedef { { "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
+ * @typedef { { "id":string, "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreJobQueueInsertPartial_Input
+ * @name StoreSessionStore_Input
  *
- * @typedef { { "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "id":string, "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ */
+
+/**
+ * @name StoreSessionStoreInsertPartial
+ *
+ * @typedef { { "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
+ */
+
+/**
+ * @name StoreSessionStoreInsertPartial_Input
+ *
+ * @typedef { { "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ */
+
+/**
+ * @name StoreSessionStoreWhere
+ *
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, }}
+ */
+
+/**
+ * @name StoreSessionStoreWhere_Input
+ *
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:string, "expiresGreaterThan"?:string, "expiresLowerThan"?:string, }}
  */
