@@ -20,7 +20,7 @@
 {{ if (item.response && getItem(item.response).type !== "file") { }}
  * @returns {Promise.<{{= buildTypeQualifier(item.response.reference.uniqueName, false) }}>}
 {{ } else if (item.response) { }}
- * @returns {Promise.<{{= options.enabledGenerators.indexOf("router") !== -1 ? "ReadableStream" : "Blob" }}>}
+ * @returns {Promise.<{{= options.isNode ? "ReadableStream" : "Blob" }}>}
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}
@@ -60,11 +60,11 @@ files,
       method: "{{= item.method.toLowerCase() }}",
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
-      {{ if (item.files && options.enabledGenerators.indexOf("router") !== -1) { }}
+      {{ if (item.files && options.isNode !== -1) { }}
       headers: data.getHeaders(),
       {{ } }}
       {{ if (item.response && getItem(item.response).type === "file") { }}
-      responseType: "{{= options.enabledGenerators.indexOf("router") !== -1 ? "stream" : "blob" }}",
+      responseType: "{{= options.isNode !== -1 ? "stream" : "blob" }}",
       {{ } }}
     });
 

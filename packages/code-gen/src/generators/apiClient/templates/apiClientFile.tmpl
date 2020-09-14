@@ -1,7 +1,7 @@
 {{= options.fileHeader }}
 ((newline))
 
-{{ if (options.enabledGenerators.indexOf("router") !== -1) { }}
+{{ if (options.isNode) { }}
 import FormData from "form-data";
 {{ } }}
 
