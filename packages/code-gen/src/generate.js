@@ -16,12 +16,16 @@ const { mkdir, writeFile } = fs;
  * @returns {Promise<void>}
  */
 export async function runGenerators(app, options) {
-  const copy = JSON.parse(JSON.stringify(app.data));
+  // Ensure that we don't mutate the current working data of the user
+  const dataCopy = JSON.parse(JSON.stringify(app.data));
   const generatorInput = {};
 
-  addGroupsToGeneratorInput(generatorInput, copy, options.enabledGroups);
-  const stringifyInput = JSON.stringify(
-    codeGenValidators.structure(generatorInput).data,
+  addGroupsToGeneratorInput(generatorInput, dataCopy, options.enabledGroups);
+
+  // validators may not be present, fallback to just stringify
+  const stringifyInput = (!isNil(codeGenValidators.structure)
+    ? JSON.stringify(codeGenValidators.structure(generatorInput).data)
+    : JSON.stringify(generatorInput)
   )
     .replace(/\\/g, "\\\\")
     .replace("'", "\\'");
@@ -57,13 +61,16 @@ export async function runGenerators(app, options) {
     prevCount = newCount;
   }
 
+  const generatorInputCopy = {};
+  copyAndSort(generatorInput, generatorInputCopy);
+
   const files = await callGeneratorMethod(
     app,
     options.enabledGenerators,
     "generate",
     app,
     {
-      structure: generatorInput,
+      structure: generatorInputCopy,
       options,
     },
   );
@@ -79,16 +86,37 @@ export async function runGenerators(app, options) {
 }
 
 /**
- * @param input
- * @param copy
- * @param groups
+ * @param {CodeGenStructure} input
+ * @param {CodeGenStructure} structure
+ * @param {string[]} groups
  */
-function addGroupsToGeneratorInput(input, copy, groups) {
+function addGroupsToGeneratorInput(input, structure, groups) {
   for (const group of groups) {
-    input[group] = copy[group] || {};
+    input[group] = structure[group] || {};
   }
 
-  includeReferenceTypes(copy, input, input);
+  includeReferenceTypes(structure, input, input);
+}
+
+/**
+ * Using some more memory, but ensures a mostly consistent output.
+ * JS Object iterators mostly follow insert order.
+ * We do this so diffs are more logical
+ *
+ * @param {CodeGenStructure} input
+ * @param {CodeGenStructure} copy
+ */
+function copyAndSort(input, copy) {
+  const groups = Object.keys(input).sort();
+
+  for (const group of groups) {
+    copy[group] = {};
+
+    const names = Object.keys(input[group]).sort();
+    for (const name of names) {
+      copy[group][name] = input[group][name];
+    }
+  }
 }
 
 /**
