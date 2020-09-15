@@ -19,7 +19,7 @@
     "docsify-cli": "4.4.1",
     "form-data": "3.0.0",
     "lerna": "3.22.1",
-    "react-query": "2.17.2",
+    "react-query": "2.18.0",
     "typescript": "4.0.2"
   },
   "maintainers": [
