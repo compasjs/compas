@@ -55,6 +55,10 @@ files,
       const data = body;
     {{ } }}
 
+    {{ if (options.isNodeServer) { }}
+    try {
+    {{ } }}
+
     const response = await _internalClient.request({
       url: `{{= url }}`,
       method: "{{= item.method.toLowerCase() }}",
@@ -68,6 +72,20 @@ files,
       {{ } }}
     });
 
-    return response.data;
+    {{ if (!options.isNodeServer) { }}
+      return response.data;
+    {{ } else { }}
+      {{ if (item.response) { }}
+        {{ const { name, group } = getItem(item.response); }}
+        {{ /* Validates response, but does not use the validated result. This implies that dates will be ISO strings, and objects don't have a 'null' prototype. */ }}
+        validators.{{= group }}Validators.{{= name }}(response.data);
+      {{ } }}
+      return response.data;
+    } catch (e) {
+      handleError(e, "{{= item.group }}", "{{= item.name }}");
+    }
+
+    {{ } }}
+
 },
 ((newline))

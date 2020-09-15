@@ -34,8 +34,9 @@ test(name, async (t) => {
   );
   t.ok(clientImports);
   clientImports.apiClient.createApiClient(client);
+  serverImports.apiClient.createApiClient(client);
 
-  t.test("GET /:id validation", async (t) => {
+  t.test("client - GET /:id validation", async (t) => {
     try {
       await clientImports.apiClient.appApi.getId({});
       t.fail("Expected validator error for missing id");
@@ -45,7 +46,7 @@ test(name, async (t) => {
     }
   });
 
-  t.test("GET /:id", async (t) => {
+  t.test("client - GET /:id", async (t) => {
     const result = await clientImports.apiClient.appApi.getId({
       id: "5",
     });
@@ -53,13 +54,51 @@ test(name, async (t) => {
     t.deepEqual(result, { id: 5 });
   });
 
-  t.test("POST /", async (t) => {
+  t.test("client - POST /", async (t) => {
     const result = await clientImports.apiClient.appApi.create(
       {},
       { foo: false },
     );
 
     t.deepEqual(result, { foo: false });
+  });
+
+  t.test("server - GET /:id validation", async (t) => {
+    try {
+      await serverImports.apiClient.appApi.getId({});
+      t.fail("Expected validator error for missing id");
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.status, 400);
+      t.equal(e.info.propertyPath, "$.id");
+    }
+  });
+
+  t.test("server - GET /:id", async (t) => {
+    const result = await serverImports.apiClient.appApi.getId({
+      id: "5",
+    });
+
+    t.deepEqual(result, { id: 5 });
+  });
+
+  t.test("server - POST /", async (t) => {
+    const result = await serverImports.apiClient.appApi.create(
+      {},
+      { foo: false },
+    );
+
+    t.deepEqual(result, { foo: false });
+  });
+
+  t.test("server - POST /invalid-response", async (t) => {
+    try {
+      await serverImports.apiClient.appApi.invalidResponse();
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.status, 400);
+      t.equal(e.key, "response.app.invalidResponse.validator.string.type");
+    }
   });
 
   t.test("Cleanup server", async () => {
@@ -90,11 +129,15 @@ function applyServerStructure(app) {
       .response({
         foo: T.bool(),
       }),
+
+    R.get("/invalid-response", "invalidResponse").response({
+      id: T.string(),
+    }),
   );
 
   return {
     isNodeServer: true,
-    enabledGenerators: ["router", "validator"],
+    enabledGenerators: ["router", "validator", "apiClient"],
   };
 }
 
@@ -133,6 +176,14 @@ function buildTestApp(serverImports) {
         foo,
       };
     }
+    return next();
+  };
+
+  serverImports.router.appHandlers.invalidResponse = (ctx, next) => {
+    ctx.body = {
+      id: 5,
+    };
+
     return next();
   };
 

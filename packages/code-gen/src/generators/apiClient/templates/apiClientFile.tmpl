@@ -4,6 +4,10 @@
 {{ if (options.isNode) { }}
 import FormData from "form-data";
 {{ } }}
+{{ if (options.isNodeServer) { }}
+import * as validators from "./validators.js";
+import { AppError } from "@lbu/stdlib";
+{{ } }}
 
 let _internalClient = undefined;
 let requestId = undefined;
@@ -15,6 +19,29 @@ function checkApiClient() {
   }
 }
 ((newline))
+{{ if (options.isNodeServer) { }}
+function handleError(e, group, name) {
+  // Validator error
+  if (AppError.instanceOf(e)) {
+    e.key = `response.${group}.${name}.${e.key}`
+    throw e;
+  }
+
+  // Server AppError
+  const { key, info } = e.response?.data ?? {};
+  if (typeof key === "string" && !!info && typeof info === "object") {
+    throw new AppError(key, e.response.status, info, e);
+  }
+
+  // Unknown error
+  throw new AppError(
+    `response.${group}.${name}`,
+    e.response?.status ?? 500,
+    { response: e.response, headers: e.headers },
+    e,
+  );
+}
+{{ } }}
 
 /**
  * Should set an axios compatible api client

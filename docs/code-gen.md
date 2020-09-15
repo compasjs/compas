@@ -201,3 +201,22 @@ app.add(
   }),
 );
 ```
+
+### Generator integrations
+
+Some generators work stand alone, some always require another generator to be
+enabled. The following is a complete integration list:
+
+- The `type` generator is required by all other generators. In case of JSDoc
+  types, they just use them. When `useTypescript` is provided, they are used so
+  that Typescript understands it.
+- The `router` generator expects the `validator` generator to be enabled. The
+  validators are automatically inserted to validate route and query parameters,
+  but also the body if needed.
+- The `reactQuery` generator expects the `apiClient` to be enabled. The
+  generated hooks will internally call the functions provided by the
+  `apiClient`.
+- The `apiClient` assumes validators are enabled when `isNodeServer` is provided
+  to `App#generate`. This automatically enables response validation and
+  conversion of errors to `AppError`. External api's used by the current
+  application should be generated with separate `App#generate` calls.
