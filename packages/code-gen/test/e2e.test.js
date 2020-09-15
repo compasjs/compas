@@ -101,6 +101,11 @@ test(name, async (t) => {
     }
   });
 
+  t.test("server - router - tags are available", (t) => {
+    t.deepEqual(serverImports.router.appTags.getId, ["tag"]);
+    t.deepEqual(serverImports.router.appTags.create, []);
+  });
+
   t.test("Cleanup server", async () => {
     await closeTestApp(app);
   });
@@ -117,7 +122,8 @@ function applyServerStructure(app) {
       })
       .response({
         id: T.number(),
-      }),
+      })
+      .tags("tag"),
 
     R.post("/", "create")
       .query({

@@ -191,6 +191,25 @@ const handlers = {
   };
 ((newline))
 
+  export const {{= groupName }}Tags = {
+((newline))
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+     {{= item.name }}: {{ if (item.tags.length > 0 ) { }}["{{= item.tags.join(`", "`) }}"]{{ } else { }}[]{{ } }},
+((newline))
+
+  {{ } }}
+
+  };
+
+((newline))
+
 {{ } }}
 
 
