@@ -1,26 +1,24 @@
 {{ const url = item.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
-{{ const buildTypeQualifier = (uniqueName, inputType) => `${options.useTypescript ? 'import("./types").'  : ""}${uniqueName}${inputType ? "_Input" : ""}`; }}
+{{ const buildTypeQualifier = (type, inputType) => `${options.useTypescript ? 'import("./types").'  : ""}${type.uniqueName}${inputType ? "_Input" : ""}`; }}
 
 /**
  * {{= item.uniqueName }}
  {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
  * Docs: {{= item.docString }}
 {{ if (item.params) { }}
- * @param { {{= buildTypeQualifier(item.params.reference.uniqueName, true) }} } params
+ * @param { {{= buildTypeQualifier(getItem(item.params), true) }} } params
 {{ } }}
 {{ if (item.query) { }}
- * @param { {{= buildTypeQualifier(item.query.reference.uniqueName, true) }} } query
+ * @param { {{= buildTypeQualifier(getItem(item.query), true) }} } query
 {{ } }}
 {{ if (item.body) { }}
- * @param { {{= buildTypeQualifier(item.body.reference.uniqueName, true) }} } body
+ * @param { {{= buildTypeQualifier(getItem(item.body), true) }} } body
 {{ } }}
 {{ if (item.files) { }}
- * @param { {{= buildTypeQualifier(item.files.reference.uniqueName, true) }} } files
+ * @param { {{= buildTypeQualifier(getItem(item.files), true) }} } files
 {{ } }}
-{{ if (item.response && getItem(item.response).type !== "file") { }}
- * @returns {Promise.<{{= buildTypeQualifier(item.response.reference.uniqueName, false) }}>}
-{{ } else if (item.response) { }}
- * @returns {Promise.<{{= options.isNode ? "ReadableStream" : "Blob" }}>}
+{{ if (item.response) { }}
+ * @returns { {{= buildTypeQualifier(getItem(item.response), false) }} }
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}
@@ -68,7 +66,7 @@ files,
       headers: data.getHeaders(),
       {{ } }}
       {{ if (item.response && getItem(item.response).type === "file") { }}
-      responseType: "{{= options.isNode !== -1 ? "stream" : "blob" }}",
+      responseType: "{{= options.isNode ? "stream" : "blob" }}",
       {{ } }}
     });
 

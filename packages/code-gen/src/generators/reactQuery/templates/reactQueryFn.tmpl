@@ -3,10 +3,8 @@
 {{ const getRef = (item) => /* Recursively resolve references */ { const ref = !!item && structure[item.group][item.name]; if (ref && ref.reference) { return getRef(ref.reference); } else { return ref; } }; }}
 
 {{ let responseType = undefined; }}
-{{ if (item.response && getItem(item.response).type !== "file") { }}
-{{ responseType = `T.${item.response.reference.uniqueName}`; }}
-{{ } else if (item.response) { }}
-{{ responseType = "Blob"; }}
+{{ if (item.response) { }}
+{{ responseType = `T.${getItem(item.response)?.uniqueName}`; }}
 {{ } else { }}
 {{ responseType = "any"; }}
 {{ } }}

@@ -14,8 +14,12 @@ class FileType extends TypeBuilder {
 }
 
 const type = `
-{{ if (it.isInputType) { }}
-{ name?: string, data: Blob | ReadableStream }
+{{ if (it.isInputType && options.isBrowser) { }}
+{ name?: string, data: Blob }
+{{ } else if (it.isInputType && options.isNode) { }}
+{ name?: string, data: ReadableStream }
+{{ } else if (!it.isInputType && options.isBrowser) { }}
+Blob
 {{ } else { }}
 { size: number, path: string, name?: string, type?: string, lastModifiedDate?: Date, hash?: "sha1" | "md5" | "sha256" }
 {{ } }}
