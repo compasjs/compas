@@ -1,5 +1,28 @@
 # CHANGELOG
 
+### [v0.0.72](https://github.com/lightbasenl/lbu/releases/tag/v0.0.72)
+
+- build(deps): bump @types/node from 14.10.1 to 14.10.2
+  ([#277](https://github.com/lightbasenl/lbu/pull/277))
+- build(deps): bump prettier from 2.1.1 to 2.1.2
+  ([#278](https://github.com/lightbasenl/lbu/pull/278))
+- build(deps-dev): bump react-query from 2.17.0 to 2.20.0
+  ([#268](https://github.com/lightbasenl/lbu/pull/268),
+  [#275](https://github.com/lightbasenl/lbu/pull/275),
+  [#276](https://github.com/lightbasenl/lbu/pull/276),
+  [#280](https://github.com/lightbasenl/lbu/pull/280))
+- chore: add SECURITY.md ([#271](https://github.com/lightbasenl/lbu/pull/271))
+- code-gen: AppError and response validation in apiClient
+  ([#274](https://github.com/lightbasenl/lbu/pull/274))
+- code-gen: add group and item sorting before generation
+  ([#272](https://github.com/lightbasenl/lbu/pull/272))
+- code-gen: experiment with using `isBrowser` and `isNode` in the generated file
+  type
+- code-gen: make tags available in the router
+- code-gen: use isNode check in apiClient generator
+  ([#273](https://github.com/lightbasenl/lbu/pull/273))
+- server: consistent logging of request length
+
 ### [v0.0.71](https://github.com/lightbasenl/lbu/releases/tag/v0.0.71)
 
 - build(deps): bump @types/node from 14.6.4 to 14.10.1
