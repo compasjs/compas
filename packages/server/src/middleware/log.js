@@ -71,7 +71,7 @@ function logInfo(ctx, startTime, length) {
     request: {
       method: ctx.method,
       path: ctx.path,
-      length: ctx.get("Content-Length") ?? 0,
+      length: Number(ctx.get("Content-Length") || "0"),
     },
     response: {
       duration,

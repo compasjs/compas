@@ -116,7 +116,7 @@ async function main() {
     // Router
     R.get("/", "getLists")
       .query({
-        checked: T.bool().optional(),
+        checked: T.bool().convert().optional(),
       })
       .response({
         lists: [T.reference("app", "list")],
