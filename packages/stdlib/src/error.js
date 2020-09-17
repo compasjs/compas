@@ -84,4 +84,38 @@ export class AppError extends Error {
   static validationError(key, info = {}, error = undefined) {
     return new AppError(key, 400, info, error);
   }
+
+  /**
+   * Format any error skipping the stack automatically for nested errors
+   *
+   * @param {AppError|Error} e
+   * @param {boolean} [skipStack=false]
+   * @returns {{ name: string, message: string, stack: string[] }|{ key: string, status:
+   *   number, info: *, stack: string[], originalError: object }}
+   */
+  static format(e, skipStack = false) {
+    const stack = e.stack.split("\n").map((it) => it.trim());
+    // Remove first element as this is the Error name
+    stack.shift();
+
+    if (AppError.instanceOf(e)) {
+      return {
+        key: e.key,
+        status: e.status,
+        info: e.info,
+        stack: skipStack ? [] : stack,
+        originalError: e.originalError
+          ? typeof e.originalError.toJSON === "function"
+            ? e.originalError.toJSON()
+            : AppError.format(e, true)
+          : undefined,
+      };
+    }
+
+    return {
+      name: e.name,
+      message: e.message,
+      stack: skipStack ? [] : stack,
+    };
+  }
 }

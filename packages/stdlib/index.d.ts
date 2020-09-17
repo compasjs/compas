@@ -91,6 +91,22 @@ export class AppError<T extends any> extends Error {
     info?: T,
     error?: Error,
   ): AppError<T>;
+
+  /**
+   * Format errors recursively
+   */
+  static format<T extends any>(
+    e: AppError<T> | Error,
+    skipStack?: boolean,
+  ):
+    | {
+        key: string;
+        status: number;
+        info: T;
+        originalError: any;
+        stack: string[];
+      }
+    | { name: string; message: string; stack: string[] };
 }
 
 /**

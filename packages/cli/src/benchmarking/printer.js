@@ -1,4 +1,5 @@
 import { writeFileSync } from "fs";
+import { inspect } from "util";
 import { AppError, isNil, pathJoin } from "@lbu/stdlib";
 import { benchLogger, state } from "./state.js";
 
@@ -106,21 +107,18 @@ function printErrorResults(result, state) {
     result.push(bench.name);
 
     const indent = "  ";
-    const stack = bench.caughtException.stack
-      .split("\n")
-      .map((it, idx) => indent + (idx !== 0 ? "  " : "") + it.trim());
+    const exception = AppError.format(bench.caughtException);
+
+    const stack = exception.stack.map((it) => `${indent}  ${it.trim()}`);
 
     if (AppError.instanceOf(bench.caughtException)) {
-      result.push(
-        `${indent}AppError: ${bench.caughtException.key} - ${bench.caughtException.status}`,
-      );
+      result.push(`${indent}AppError: ${exception.key} - ${exception.status}`);
 
       // Pretty print info object
-      const infoObject = JSON.stringify(
-        bench.caughtException.info,
-        null,
-        2,
-      ).split("\n");
+      const infoObject = inspect(exception.info, {
+        depth: null,
+        colors: true,
+      }).split("\n");
 
       for (const it of infoObject) {
         result.push(`${indent}  ${it}`);

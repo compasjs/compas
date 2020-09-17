@@ -1,3 +1,4 @@
+import { inspect } from "util";
 import { AppError, isNil } from "@lbu/stdlib";
 import { state, testLogger } from "./state.js";
 
@@ -68,33 +69,42 @@ function printFailedResults(state, result, indentCount) {
     indent += "  ";
 
     if (state.caughtException) {
-      const stack = state.caughtException.stack
-        .split("\n")
-        .map((it, idx) => indent + (idx !== 0 ? "  " : "") + it.trim());
+      const exception = AppError.format(state.caughtException);
+
+      const stack = exception.stack.map((it) => `${indent}  ${it.trim()}`);
 
       if (AppError.instanceOf(state.caughtException)) {
         result.push(
-          `${indent}AppError: ${state.caughtException.key} - ${state.caughtException.status}`,
+          `${indent}AppError: ${exception.key} - ${exception.status}`,
         );
 
         // Pretty print info object
-        const infoObject = JSON.stringify(
-          state.caughtException.info,
-          null,
-          2,
-        ).split("\n");
+        const infoObject = inspect(exception.info, {
+          depth: null,
+          colors: true,
+        }).split("\n");
 
         for (const it of infoObject) {
           result.push(`${indent}  ${it}`);
         }
       } else {
-        result.push(
-          `${indent}${state.caughtException.name} - ${state.caughtException.message}`,
-        );
+        result.push(`${indent}${exception.name} - ${exception.message}`);
       }
 
       for (const item of stack) {
         result.push(item);
+      }
+
+      if (exception.originalError) {
+        // Pretty print original error object
+        const originalError = inspect(exception.originalError, {
+          depth: null,
+          colors: true,
+        }).split("\n");
+
+        for (const it of originalError) {
+          result.push(`${indent}    ${it}`);
+        }
       }
     } else {
       for (const assertion of failedAssertions) {
