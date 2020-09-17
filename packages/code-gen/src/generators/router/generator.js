@@ -1,17 +1,11 @@
-import {
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
-import { generatorTemplates } from "../index.js";
+import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { getInternalRoutes } from "./internalRoutes.js";
 import { buildTrie } from "./trie.js";
 
-export async function init() {
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "templates"),
     ".tmpl",
   );
@@ -44,7 +38,7 @@ export async function generate(app, { structure, options }) {
 
   return {
     path: "./router.js",
-    source: executeTemplate(generatorTemplates, template, {
+    source: executeTemplate(template, {
       routeTrie,
       routeTags,
       structure,

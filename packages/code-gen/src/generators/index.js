@@ -16,5 +16,3 @@ export const generators = new Map([
   ["sql", sqlGenerator],
   ["reactQuery", reactQueryGenerator],
 ]);
-
-export { generatorTemplates } from "./templates.js";

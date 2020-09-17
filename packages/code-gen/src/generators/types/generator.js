@@ -1,15 +1,9 @@
-import {
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { compileDynamicTemplates } from "../../utils.js";
-import { generatorTemplates } from "../templates.js";
 
-export async function init() {
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
@@ -33,7 +27,7 @@ export async function generate(app, { structure, options }) {
   await compileTypeExec(options);
   return {
     path: options.useTypescript ? "types.ts" : "types.js",
-    source: executeTemplate(generatorTemplates, "typesFile", {
+    source: executeTemplate("typesFile", {
       structure,
       options,
     }),
@@ -47,7 +41,6 @@ export async function generate(app, { structure, options }) {
 async function compileTypeExec(options) {
   const key = options.useTypescript ? "tsType" : "jsType";
   compileDynamicTemplates(
-    generatorTemplates,
     options,
     "type",
     {

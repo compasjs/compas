@@ -1,5 +1,4 @@
 import { Logger } from "@lbu/insight";
-import { TemplateContext } from "@lbu/stdlib";
 import { AxiosInstance } from "axios";
 
 interface TypePlugin<T extends TypeBuilder> {
@@ -67,11 +66,6 @@ export interface GeneratorPlugin {
  * Generator registry, with all core provided generators already added
  */
 export const generators: Map<string, GeneratorPlugin>;
-
-/**
- * Shared templateContext for all generators
- */
-export const generatorTemplates: TemplateContext;
 
 /**
  * Check if value may be output object from a TypeBuilder

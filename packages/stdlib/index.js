@@ -16,13 +16,6 @@ export {
   processDirectoryRecursiveSync,
 } from "./src/node.js";
 export {
-  newTemplateContext,
-  compileTemplate,
-  compileTemplateDirectory,
-  compileTemplateDirectorySync,
-  executeTemplate,
-} from "./src/template.js";
-export {
   getSecondsSinceEpoch,
   gc,
   mainFn,
