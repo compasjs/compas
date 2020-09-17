@@ -106,6 +106,17 @@ test(name, async (t) => {
     t.deepEqual(serverImports.router.appTags.create, []);
   });
 
+  t.test("apiClient - caught server error", async (t) => {
+    try {
+      await serverImports.apiClient.appApi.serverError();
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, "server.error");
+      t.equal(e.status, 499);
+      t.equal(e.originalError.isAxiosError, true);
+    }
+  });
+
   t.test("Cleanup server", async () => {
     await closeTestApp(app);
   });
@@ -139,6 +150,8 @@ function applyServerStructure(app) {
     R.get("/invalid-response", "invalidResponse").response({
       id: T.string(),
     }),
+
+    R.post("/server-error", "serverError").response({}),
   );
 
   return {
@@ -191,6 +204,12 @@ function buildTestApp(serverImports) {
     };
 
     return next();
+  };
+
+  serverImports.router.appHandlers.serverError = () => {
+    throw new AppError("server.error", 499, {
+      test: "X",
+    });
   };
 
   serverImports.validator.validatorSetError(AppError.validationError);

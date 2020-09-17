@@ -42,31 +42,15 @@ export function errorHandler({ onAppError, onError, leakError }) {
       ctx.status = err.status;
       ctx.body = onAppError(ctx, err.key, err.info);
 
-      let originalError = undefined;
-      if (err.originalError) {
-        originalError = {
-          name: err.originalError.name,
-          message: err.originalError.message,
-          stack: err.originalError.stack.split("\n"),
-        };
-
-        if (AppError.instanceOf(err.originalError)) {
-          originalError.key = err.originalError.key;
-          originalError.info = err.originalError.info;
-        }
-      }
-
+      const formatted = AppError.format(error);
       log({
         type: "API_ERROR",
-        status: err.status,
-        key: err.key,
-        info: err.info,
-        originalError,
+        ...formatted,
       });
 
       if (!isNil(err.originalError) && leakError) {
         ctx.body.info = ctx.body.info || {};
-        ctx.body.info._error = originalError;
+        ctx.body.info._error = formatted;
       }
     }
   };
