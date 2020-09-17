@@ -37,7 +37,7 @@ function handleError(e, group, name) {
   throw new AppError(
     `response.${group}.${name}`,
     e.response?.status ?? 500,
-    { response: e.response, headers: e.headers },
+    { data: e?.response?.data, headers: e?.response?.headers },
     e,
   );
 }
