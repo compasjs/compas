@@ -18,7 +18,7 @@
  * @param { {{= buildTypeQualifier(getItem(item.files), true) }} } files
 {{ } }}
 {{ if (item.response) { }}
- * @returns { {{= buildTypeQualifier(getItem(item.response), false) }} }
+ * @returns {Promise<{{= buildTypeQualifier(getItem(item.response), false) }}>}
 {{ } else { }}
  * @returns {Promise.<*>}
 {{ } }}
