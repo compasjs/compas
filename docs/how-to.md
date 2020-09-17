@@ -31,7 +31,9 @@ be logged and the process will be killed.
 
 Lbu comes with its own test runner loosely inspired by
 [tape](https://github.com/substack/tape). It comes with a few assertions, async
-testing, and the possibility of doing sub tests.
+testing, and the possibility of doing sub tests. `AssertionErrors` by using
+Node.js builtin [assert](https://nodejs.org/api/assert.html) -module are handled
+as well.
 
 ### Basic test file
 
