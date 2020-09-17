@@ -1,5 +1,25 @@
 # CHANGELOG
 
+### [v0.0.73](https://github.com/lightbasenl/lbu/releases/tag/v0.0.73)
+
+- build(deps): bump @types/node from 14.10.2 to 14.11.1
+  ([#281](https://github.com/lightbasenl/lbu/pull/281),
+  [#287](https://github.com/lightbasenl/lbu/pull/287))
+- build(deps-dev): bump react-query from 2.20.0 to 2.22.0
+  ([#282](https://github.com/lightbasenl/lbu/pull/282),
+  [#288](https://github.com/lightbasenl/lbu/pull/288))
+- chore: cleanup fs/promises imports
+  ([#289](https://github.com/lightbasenl/lbu/pull/289))
+- chore: disable testing.js script, since the generated code is not checked in
+- cli: catch and handle assertion errors in tests
+  ([#285](https://github.com/lightbasenl/lbu/pull/285))
+- code-gen,stdlib: move templates to code-gen
+  ([#286](https://github.com/lightbasenl/lbu/pull/286))
+- code-gen: apiClient calls returns Promise
+- code-gen: apiClient handleError should use response headers and data
+- stdlib,cli,server: add and use AppError.format
+  ([#284](https://github.com/lightbasenl/lbu/pull/284))
+
 ### [v0.0.72](https://github.com/lightbasenl/lbu/releases/tag/v0.0.72)
 
 - build(deps): bump @types/node from 14.10.1 to 14.10.2
