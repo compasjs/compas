@@ -5570,10 +5570,10 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-query@2.20.0:
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.20.0.tgz#db1498a5c140e379129e39bf60f1536135a5e5ed"
-  integrity sha512-KiAicyjdNbsbREcnVGFBQO6io3HL9v8tsp8acCbMOh1qXmWEceKyDZTnfeMsnKl9G/5OYLFRRohWfybzfSm7Tg==
+react-query@2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.21.0.tgz#cb8e4b59c06a35455c98b0d8bd4109e7d5424a38"
+  integrity sha512-zGYj08Jycgpiwcwx62diIiMP8TW2ll3LLSOvBsUtsLuapxqTZDBF0U3tVR17eD88TQJesyE/xIq6nC91qW2Igg==
   dependencies:
     "@babel/runtime" "^7.5.5"
 
