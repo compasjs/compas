@@ -1,4 +1,4 @@
-import { deepStrictEqual } from "assert";
+import { deepStrictEqual, AssertionError } from "assert";
 import { isNil } from "@lbu/stdlib";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
@@ -35,7 +35,21 @@ export async function runTestsRecursively(testState) {
         ]);
       }
     } catch (e) {
-      testState.caughtException = e;
+      if (e instanceof AssertionError) {
+        // Convert to an assertion
+        testState.assertions.push({
+          type: e.operator,
+          message: e.generatedMessage ? undefined : e.message,
+          passed: false,
+          meta: {
+            actual: e.actual,
+            expected: e.expected,
+            message: e.generatedMessage ? e.message : undefined,
+          },
+        });
+      } else {
+        testState.caughtException = e;
+      }
     }
   }
 
