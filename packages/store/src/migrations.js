@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
-import { existsSync, promises as fs } from "fs";
+import { existsSync } from "fs";
+import { readdir, readFile } from "fs/promises";
 import path from "path";
 import { dirnameForModule } from "@lbu/stdlib";
 
@@ -221,14 +222,14 @@ async function readMigrationsDir(
     };
   }
 
-  const files = await fs.readdir(directory);
+  const files = await readdir(directory);
   const result = [];
 
   for (const f of files) {
     const fullPath = path.join(directory, f);
 
     if (f === "namespaces.txt") {
-      const rawNamespaces = await fs.readFile(fullPath, "utf-8");
+      const rawNamespaces = await readFile(fullPath, "utf-8");
       const subNamespaces = rawNamespaces
         .split("\n")
         .map((it) => it.trim())
@@ -255,7 +256,7 @@ async function readMigrationsDir(
     }
 
     const { number, repeatable, name } = parseFileName(f);
-    const source = await fs.readFile(fullPath, "utf-8");
+    const source = await readFile(fullPath, "utf-8");
     const hash = createHash("sha1").update(source, "utf-8").digest("hex");
     result.push({
       namespace,

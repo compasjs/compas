@@ -1,12 +1,11 @@
-import { existsSync, promises as fs } from "fs";
+import { existsSync } from "fs";
+import { mkdir, writeFile } from "fs/promises";
 import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
 import { codeGenValidators } from "./generated/validators.js";
 import { generators } from "./generators/index.js";
 import { recursiveLinkupReferences } from "./references.js";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
 import { getItem, upperCaseFirst } from "./utils.js";
-
-const { mkdir, writeFile } = fs;
 
 /**
  * The whole generate process
