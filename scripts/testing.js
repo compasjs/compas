@@ -1,8 +1,6 @@
 import { createBodyParsers, getApp, session } from "@lbu/server";
-import { AppError, isProduction, isStaging, mainFn } from "@lbu/stdlib";
+import { isProduction, isStaging, mainFn } from "@lbu/stdlib";
 import { newPostgresConnection, newSessionStore } from "@lbu/store";
-import { router, setBodyParsers } from "../generated/app/router.js";
-import { validatorSetError } from "../generated/app/validators.js";
 
 mainFn(import.meta, main);
 
@@ -32,10 +30,11 @@ async function main(logger) {
     ctx.body = ctx.session.toJSON();
     return next();
   });
-  validatorSetError(AppError.validationError);
-  setBodyParsers(createBodyParsers({}));
 
-  app.use(router);
+  // validatorSetError(AppError.validationError);
+  // setBodyParsers(createBodyParsers({}));
+  //
+  // app.use(router);
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
