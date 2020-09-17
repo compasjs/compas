@@ -1,16 +1,9 @@
-import {
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { compileDynamicTemplates } from "../../utils.js";
-import { generatorTemplates } from "../templates.js";
 
-export async function init() {
-  generatorTemplates.globals.quote = (x) => `"${x}"`;
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
@@ -25,7 +18,7 @@ export async function generate(app, { structure, options }) {
   await compileValidatorExec(options);
   return {
     path: "./validators.js",
-    source: executeTemplate(generatorTemplates, "validatorsFile", {
+    source: executeTemplate("validatorsFile", {
       structure,
       options,
     }),
@@ -37,7 +30,7 @@ export async function generate(app, { structure, options }) {
  * @returns {Promise<void>}
  */
 async function compileValidatorExec(options) {
-  compileDynamicTemplates(generatorTemplates, options, "validator", {
+  compileDynamicTemplates(options, "validator", {
     fnStringStart: `{{ let result = ''; }}`,
     fnStringAdd: (type, templateName) =>
       `{{ if (it.type === "${type.name}") { }}{{ result = ${templateName}(it); }}{{ } }}\n`,

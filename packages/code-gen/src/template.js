@@ -1,46 +1,38 @@
-import { promises, readFileSync } from "fs";
+import { readFileSync } from "fs";
 import path from "path";
-import { isNil } from "./lodash.js";
+import { inspect } from "util";
 import {
-  processDirectoryRecursive,
+  camelToSnakeCase,
+  isNil,
   processDirectoryRecursiveSync,
-} from "./node.js";
-
-const { readFile } = promises;
+} from "@lbu/stdlib";
+import { getItem, lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
- * @returns {TemplateContext}
+ * @type {{context: Object<string, Function>, globals: Object<string, Function>}}
  */
-export function newTemplateContext() {
-  return {
-    globals: {
-      isNil,
-    },
-    templates: new Map(),
-    strict: true,
-  };
-}
+const tc = {
+  globals: {
+    isNil,
+    upperCaseFirst,
+    lowerCaseFirst,
+    camelToSnakeCase,
+    getItem,
+    inspect: (arg) => inspect(arg, { sorted: true, colors: false, depth: 15 }),
+    quote: (x) => `"${x}"`,
+  },
+  context: {},
+};
 
 /**
- * @param {TemplateContext} tc
  * @param {string} name
  * @param {string} str
  * @param {object} [opts={}]
  * @param {boolean} [opts.debug]
  */
-export function compileTemplate(tc, name, str, opts = {}) {
-  if (isNil(tc)) {
-    throw new TypeError(
-      "TemplateContext is required, please create a new one with `newTemplateContext()`",
-    );
-  }
-
+export function compileTemplate(name, str, opts = {}) {
   if (isNil(name) || isNil(str)) {
     throw new TypeError("Both name and string are required");
-  }
-
-  if (tc.strict && tc.templates.has(name)) {
-    throw new TypeError(`Template with name ${name} already registered`);
   }
 
   const compiled = str
@@ -68,12 +60,10 @@ export function compileTemplate(tc, name, str, opts = {}) {
     : "";
 
   try {
-    tc.templates.set(
-      name,
-      new Function(
-        "_ctx",
-        "it",
-        `
+    tc.context[name] = new Function(
+      "_ctx",
+      "it",
+      `
     const p = [];
     ${debugString}
     with (_ctx) { with (it) {
@@ -88,7 +78,6 @@ export function compileTemplate(tc, name, str, opts = {}) {
       .replace(/\\n\\n/gm, '\\n') // Remove empty lines
       .replace(/\\(\\(newline\\)\\)/g, '\\n\\n'); // Controlled newlines 
   `,
-      ),
     );
   } catch (e) {
     const err = new Error(`Error while compiling ${name} template`);
@@ -100,54 +89,13 @@ export function compileTemplate(tc, name, str, opts = {}) {
 }
 
 /**
- * @param {TemplateContext} tc
  * @param {string} dir
  * @param {string} extension
  * @param {ProcessDirectoryOptions} [opts]
- * @returns {Promise<void>}
  */
-export function compileTemplateDirectory(tc, dir, extension, opts) {
-  if (isNil(tc)) {
-    throw new TypeError(
-      "TemplateContext is required, please create a new one with `newTemplateContext()`",
-    );
-  }
-
+export function compileTemplateDirectory(dir, extension, opts) {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
-  return processDirectoryRecursive(
-    dir,
-    async (file) => {
-      if (!file.endsWith(ext)) {
-        return;
-      }
-
-      const content = await readFile(file, "utf-8");
-      const name = path.parse(file).name;
-
-      compileTemplate(tc, name, content);
-    },
-    opts,
-  );
-}
-
-/**
- * Sync version of compileTemplateDirectory
- *
- * @param {TemplateContext} tc
- * @param {string} dir
- * @param {string} extension
- * @param {ProcessDirectoryOptions} [opts]
- * @returns {void}
- */
-export function compileTemplateDirectorySync(tc, dir, extension, opts) {
-  if (isNil(tc)) {
-    throw new TypeError(
-      "TemplateContext is required, please create a new one with `newTemplateContext()`",
-    );
-  }
-
-  const ext = extension[0] !== "." ? `.${extension}` : extension;
-  return processDirectoryRecursiveSync(
+  processDirectoryRecursiveSync(
     dir,
     async (file) => {
       if (!file.endsWith(ext)) {
@@ -157,31 +105,30 @@ export function compileTemplateDirectorySync(tc, dir, extension, opts) {
       const content = readFileSync(file, "utf-8");
       const name = path.parse(file).name;
 
-      compileTemplate(tc, name, content);
+      compileTemplate(name, content);
     },
     opts,
   );
 }
 
 /**
- * @param {TemplateContext} tc
  * @param {string} name
  * @param {*} data
  * @returns {string}
  */
-export function executeTemplate(tc, name, data) {
+export function executeTemplate(name, data) {
   if (isNil(tc)) {
     throw new TypeError(
       "TemplateContext is required, please create a new one with `newTemplateContext()`",
     );
   }
 
-  if (!tc.templates.has(name)) {
+  if (isNil(tc.context[name])) {
     throw new Error(`Unknown template: ${name}`);
   }
 
   try {
-    return tc.templates.get(name)(getExecutionContext(tc), data).trim();
+    return tc.context[name](getExecutionContext(), data).trim();
   } catch (e) {
     const err = new Error(`Error while executing ${name} template`);
     err.originalErr = e;
@@ -191,14 +138,12 @@ export function executeTemplate(tc, name, data) {
 
 /**
  * Combine globals and registered templates into a single object
- *
- * @param {TemplateContext} tc
  */
-function getExecutionContext(tc) {
+function getExecutionContext() {
   const result = {
     ...tc.globals,
   };
-  for (const [key, item] of tc.templates.entries()) {
+  for (const [key, item] of Object.entries(tc.context)) {
     result[key] = item.bind(undefined, result);
   }
 

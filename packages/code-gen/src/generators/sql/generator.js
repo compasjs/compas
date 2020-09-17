@@ -1,13 +1,7 @@
-import {
-  camelToSnakeCase,
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 import { compileDynamicTemplates } from "../../utils.js";
-import { generatorTemplates } from "../index.js";
 import { buildExtraTypes } from "./builder.js";
 
 /**
@@ -49,14 +43,11 @@ TypeBuilder.prototype.primary = function () {
   return this;
 };
 
-export async function init() {
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
-
-  generatorTemplates.globals.camelToSnakeCase = camelToSnakeCase;
 }
 
 /**
@@ -73,7 +64,7 @@ export async function preGenerate(app, { structure }) {
  */
 function compileSqlExec(options) {
   if (options.dumpPostgres) {
-    compileDynamicTemplates(generatorTemplates, options, "sql", {
+    compileDynamicTemplates(options, "sql", {
       fnStringStart: `
   {{ let result = ''; }}
   {{ if (false) { }}
@@ -99,7 +90,7 @@ export async function generate(app, { structure, options }) {
   await compileSqlExec(options);
 
   if (options.dumpPostgres) {
-    const result = executeTemplate(generatorTemplates, "sqlPostgres", {
+    const result = executeTemplate("sqlPostgres", {
       structure,
       options,
     });
@@ -109,7 +100,7 @@ export async function generate(app, { structure, options }) {
 
   return {
     path: "./queries.js",
-    source: executeTemplate(generatorTemplates, "sqlFile", {
+    source: executeTemplate("sqlFile", {
       structure,
       options,
     }),

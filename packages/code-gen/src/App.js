@@ -1,4 +1,3 @@
-import { inspect } from "util";
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { isNil } from "@lbu/stdlib";
 import {
@@ -8,10 +7,10 @@ import {
   runGenerators,
 } from "./generate.js";
 import { codeGenValidators } from "./generated/validators.js";
-import { generators, generatorTemplates } from "./generators/index.js";
+import { generators } from "./generators/index.js";
 import { TypeCreator } from "./types/index.js";
 import { buildOrInfer } from "./types/TypeBuilder.js";
-import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
+import { lowerCaseFirst } from "./utils.js";
 
 /**
  * @type {GenerateOpts}
@@ -114,11 +113,6 @@ export class App {
    * @returns {Promise<void>}
    */
   async init() {
-    generatorTemplates.globals["upperCaseFirst"] = upperCaseFirst;
-    generatorTemplates.globals["lowerCaseFirst"] = lowerCaseFirst;
-    generatorTemplates.globals["inspect"] = (arg) =>
-      inspect(arg, { sorted: true, colors: false, depth: 15 });
-
     if (this.verbose) {
       this.logger.info({
         msg: "Registered plugins: ",

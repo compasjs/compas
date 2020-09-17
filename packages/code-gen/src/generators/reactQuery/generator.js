@@ -1,14 +1,8 @@
-import {
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
-import { generatorTemplates } from "../index.js";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 
-export async function init() {
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
@@ -38,6 +32,6 @@ export async function preGenerate(app, { options }) {
 export async function generate(app, input) {
   return {
     path: "./reactQueries.ts",
-    source: executeTemplate(generatorTemplates, "reactQueryFile", input),
+    source: executeTemplate("reactQueryFile", input),
   };
 }

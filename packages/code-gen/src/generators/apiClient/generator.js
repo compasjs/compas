@@ -1,14 +1,8 @@
-import {
-  compileTemplateDirectory,
-  dirnameForModule,
-  executeTemplate,
-  pathJoin,
-} from "@lbu/stdlib";
-import { generatorTemplates } from "../index.js";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { executeTemplate, compileTemplateDirectory } from "../../template.js";
 
-export async function init() {
-  await compileTemplateDirectory(
-    generatorTemplates,
+export function init() {
+  compileTemplateDirectory(
     pathJoin(dirnameForModule(import.meta), "./templates"),
     ".tmpl",
   );
@@ -25,7 +19,7 @@ export async function generate(app, { structure, options }) {
 
   return {
     path,
-    source: executeTemplate(generatorTemplates, template, {
+    source: executeTemplate(template, {
       structure,
       options,
     }),

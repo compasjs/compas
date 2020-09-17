@@ -1,4 +1,5 @@
-import { compileTemplate, isNil, isPlainObject } from "@lbu/stdlib";
+import { isNil, isPlainObject } from "@lbu/stdlib";
+import { compileTemplate } from "./template.js";
 import { TypeCreator } from "./types/index.js";
 
 /**
@@ -48,7 +49,6 @@ export function lowerCaseFirst(str) {
 /**
  * Compile templates from types and build a dynamic execute template function
  *
- * @param {TemplateContext} tc
  * @param {object} options
  * @param {string} key
  * @param {string} fnStringStart
@@ -58,7 +58,6 @@ export function lowerCaseFirst(str) {
  * @returns {void}
  */
 export function compileDynamicTemplates(
-  tc,
   options,
   key,
   { fnStringStart, fnStringAdd, fnStringEnd },
@@ -74,14 +73,14 @@ export function compileDynamicTemplates(
     options[optsKey].push(type.name);
 
     const templateName = `${type.name}${upperCaseFirst(key)}`;
-    compileTemplate(tc, templateName, type[pluginKey]());
+    compileTemplate(templateName, type[pluginKey]());
 
     fnString += fnStringAdd(type, templateName);
   }
 
   fnString += fnStringEnd;
 
-  compileTemplate(tc, `${key}Exec`, fnString);
+  compileTemplate(`${key}Exec`, fnString);
 }
 
 /**
