@@ -1,9 +1,9 @@
 import { exec as cpExec, spawn as cpSpawn } from "child_process";
-import { lstatSync, promises, readdirSync } from "fs";
+import { lstatSync, readdirSync } from "fs";
+import { lstat, readdir } from "fs/promises";
 import { join } from "path";
 import { promisify } from "util";
 
-const { lstat, readdir } = promises;
 const internalExec = promisify(cpExec);
 
 export { join as pathJoin };
