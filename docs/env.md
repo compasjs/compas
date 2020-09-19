@@ -16,6 +16,14 @@ to 'production'. When `NODE_ENV` is not set to production, this variable is
 automatically 'true'. This can be used to differentiate between staging and
 production environments.
 
+**CI**
+
+If set to `true`, some commands may behave differently. For example the
+`lbu lint` command will run `prettier --check` instead of `prettier --write`
+which makes sure the command exits with an error on nonformatted files. The
+bench runner will write it's summary to a file called `benchmark_output.txt` in
+the project root, so other programs can use this more easily.
+
 **APP_NAME**
 
 Used for database creation and selection, default s3 bucket name. In general

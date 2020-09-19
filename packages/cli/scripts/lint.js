@@ -7,9 +7,12 @@ mainFn(import.meta, async () => {
     "node_modules",
     "--fix",
   ]);
+
+  const prettierCommand =
+    process.env.CI === "true" ? ["--check"] : ["--write", "--list-different"];
+
   const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
-    "--write",
-    "--list-different",
+    ...prettierCommand,
     ".",
   ]);
 
