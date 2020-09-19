@@ -33,12 +33,12 @@ test(name, async (t) => {
     applyClientStructure(client),
   );
   t.ok(clientImports);
-  clientImports.apiClient.createApiClient(client);
+  const apiClient = clientImports.apiClient.newApiClient(client);
   serverImports.apiClient.createApiClient(client);
 
   t.test("client - GET /:id validation", async (t) => {
     try {
-      await clientImports.apiClient.appApi.getId({});
+      await apiClient.appApi.getId({});
       t.fail("Expected validator error for missing id");
     } catch (e) {
       t.equal(e.response.status, 400);
@@ -47,7 +47,7 @@ test(name, async (t) => {
   });
 
   t.test("client - GET /:id", async (t) => {
-    const result = await clientImports.apiClient.appApi.getId({
+    const result = await apiClient.appApi.getId({
       id: "5",
     });
 
@@ -55,10 +55,7 @@ test(name, async (t) => {
   });
 
   t.test("client - POST /", async (t) => {
-    const result = await clientImports.apiClient.appApi.create(
-      {},
-      { foo: false },
-    );
+    const result = await apiClient.appApi.create({}, { foo: false });
 
     t.deepEqual(result, { foo: false });
   });

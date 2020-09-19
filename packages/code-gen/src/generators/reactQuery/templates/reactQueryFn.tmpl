@@ -26,6 +26,8 @@ query: T.{{= item.query.reference.uniqueName }}_Input,
 {{ } }}
 options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
 ): QueryResult<{{= responseType }}, AppErrorResponse> {
+  const { {{= item.group }}Api } = useApi();
+
   options.enabled = (
     options.enabled === true || (options.enabled !== false
     {{ if (item.query && getRef(item.query.reference)) { }}
@@ -99,6 +101,8 @@ interface {{= upperCaseFirst(funcName) }}Props {
 export function {{= funcName }}(
   options: MutationConfig<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},
 ): MutationResultPair<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props, unknown> {
+  const { {{= item.group }}Api } = useApi();
+
   return useMutation(
     (variables) => {{= item.group }}Api.{{= item.name }}(
       {{= item.params ? "variables.params, " : ""}}

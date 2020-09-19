@@ -1,19 +1,8 @@
 {{= options.fileHeader }}
 ((newline))
 
-{{ const importSet = new Set(); }}
-{{ for (const groupName of Object.keys(structure)) { }}
-  {{ for (const itemName of Object.keys(structure[groupName])) { }}
-    {{ const item = structure[groupName][itemName]; }}
-    {{ if (item.type !== "route") { }}
-    {{ continue; }}
-    {{ } }}
-    {{ importSet.add(item.group); }}
-
-  {{ } }}
-{{ } }}
-
 import { AxiosError } from "axios";
+import React from "react";
 import {
   MutationConfig,
   MutationResultPair,
@@ -22,13 +11,22 @@ import {
   useMutation,
   useQuery,
 } from "react-query";
-import {
-{{ for (const imp of importSet) { }}
-{{= imp }}Api,
-{{ } }}
-} from "./apiClient.js";
+import { newApiClient } from "./apiClient.js";
 import * as T from "./types";
 ((newline))
+
+const ApiContext = React.createContext<ReturnType<newApiClient>>();
+
+export function ApiProvider<T extends ReturnType<newApiClient>>({
+  instance, children,
+}: {
+  instance: T;
+  children: React.ReactElement[] | React.ReactElement;
+}) {
+  return <ApiContext.Provider value = { instance } > { children } < /ApiContext.Provider>;;
+}
+
+export const useApi = () => React.useContext(ApiContext);
 
 type AppErrorResponse = AxiosError<{
   key?: string;
