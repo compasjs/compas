@@ -23,7 +23,7 @@ export function ApiProvider<T extends ReturnType<newApiClient>>({
   instance: T;
   children: React.ReactElement[] | React.ReactElement;
 }) {
-  return <ApiContext.Provider value = { instance } > { children } < /ApiContext.Provider>;;
+  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
 }
 
 export const useApi = () => React.useContext(ApiContext);
