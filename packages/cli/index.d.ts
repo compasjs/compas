@@ -155,7 +155,7 @@ export interface BenchRunner {
 /**
  * Callback function executed while benchmarking
  */
-export type BenchCallback = (BenchRunner) => void | Promise<void>;
+export type BenchCallback = (b: BenchRunner) => void | Promise<void>;
 
 /**
  * @private
