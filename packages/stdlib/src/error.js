@@ -94,7 +94,7 @@ export class AppError extends Error {
    *   number, info: *, stack: string[], originalError: object }}
    */
   static format(e, skipStack = false) {
-    const stack = e.stack.split("\n").map((it) => it.trim());
+    const stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
     // Remove first element as this is the Error name
     stack.shift();
 
@@ -107,7 +107,7 @@ export class AppError extends Error {
         originalError: e.originalError
           ? typeof e.originalError.toJSON === "function"
             ? e.originalError.toJSON()
-            : AppError.format(e, true)
+            : AppError.format(e.originalError, true)
           : undefined,
       };
     }
