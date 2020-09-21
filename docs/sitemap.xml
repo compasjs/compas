@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://lbu.lightbase.nl/#/</loc>
+        <loc>https://lbu.lightbase.nl/</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/changelog</loc>
+        <loc>https://lbu.lightbase.nl/changelog</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/getting-started</loc>
+        <loc>https://lbu.lightbase.nl/getting-started</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/cli</loc>
+        <loc>https://lbu.lightbase.nl/cli</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/code-gen</loc>
+        <loc>https://lbu.lightbase.nl/code-gen</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/insight</loc>
+        <loc>https://lbu.lightbase.nl/insight</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/server</loc>
+        <loc>https://lbu.lightbase.nl/server</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/store</loc>
+        <loc>https://lbu.lightbase.nl/store</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/lint-config</loc>
+        <loc>https://lbu.lightbase.nl/lint-config</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/env</loc>
+        <loc>https://lbu.lightbase.nl/env</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/howto/</loc>
+        <loc>https://lbu.lightbase.nl/howto</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/#/contributing</loc>
+        <loc>https://lbu.lightbase.nl/contributing</loc>
         <changefreq>daily</changefreq>
     </url>
 </urlset>

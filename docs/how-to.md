@@ -9,8 +9,17 @@ edge cases.
 Use the `mainFn` provided by `@lbu/stdlib` to run a function when the file is
 the program entrypoint.
 
-<!-- prettier-ignore -->
-[process-entrypoint](_media/howto/process-entrypoint.js ':include :type=code :fragment=snippet')
+<--- howto-entrypoint -->
+
+```js
+import { mainFn } from "@lbu/stdlib";
+
+mainFn(import.meta, (logger) => {
+  logger.info("Process entrypoint running.");
+});
+```
+
+`<--- howto-entrypoint -->
 
 This function uses `import.meta` to check if this file is used as the
 entrypoint. If for example `my-file.js` contained the above snippet,
@@ -39,8 +48,19 @@ as well.
 
 A basic test file looks like the following:
 
-<!-- prettier-ignore -->
-[testing](_media/howto/testing.js ':include :type=code :fragment=basic')
+<--- howto-test-basic -->
+
+```js
+test("my test", (t) => {
+  t.equal(1, 1);
+  t.ok(true);
+  t.notOk(false);
+  t.notEqual("foo", "bar");
+  t.deepEqual([1, 2], [1, 2]);
+});
+```
+
+`<--- howto-test-basic -->
 
 ### Running tests
 
@@ -65,8 +85,31 @@ tests in a single file. This is often called `beforeAll` / `afterAll`. We don't
 need this in the lbu provided test runner as all tests run in the order they are
 specified.
 
-<!-- prettier-ignore -->
-[testing](_media/howto/testing.js ':include :type=code :fragment=setup-teardown')
+<--- howto-test-setup-teardown -->
+
+```js
+test("setup and teardown", (t) => {
+  let myTestGlobal = undefined;
+
+  // Every callback function can be async
+  t.test("setup", async () => {
+    myTestGlobal = 10;
+  });
+
+  t.test("my test global is there", (t) => {
+    t.equal(myTestGlobal, 10);
+  });
+
+  // In this example not necessary since myTestGlobal will
+  // be out of scope for all other code
+  t.test("teardown", (t) => {
+    myTestGlobal = undefined;
+    t.pass("successful teardown");
+  });
+});
+```
+
+`<--- howto-test-setup-teardown -->
 
 ### Asserting on throws
 
@@ -74,8 +117,36 @@ Asserting on throws is another overlooked part of some test runners. This test
 runner does not provide any fancy util like `t.throws(functionThatThrows)`, but
 expects the user to use normal control flow like try / catch.
 
-<!-- prettier-ignore -->
-[testing](_media/howto/testing.js ':include :type=code :fragment=pass-fail')
+<--- howto-test-pass-fail -->
+
+```js
+const throws = async () => {
+  throw new Error("Oops!");
+};
+
+const doesNotThrow = () => {};
+
+test("Throws vs not throws", async (t) => {
+  try {
+    await throws();
+    t.fail(`The 'throws' function should have thrown.`);
+  } catch (e) {
+    t.equal(e.message, "Oops!");
+  }
+
+  try {
+    doesNotThrow();
+    t.pass("The function did not throw!");
+  } catch (e) {
+    t.fail(`The 'doesNotThrow' function did throw.`);
+
+    // A logger from @lbu/insight is available
+    t.log.error(e);
+  }
+});
+```
+
+`<--- howto-test-pass-fail -->
 
 ### Test configuration
 
@@ -97,8 +168,30 @@ export async function teardown() {
 
 Timeout is also configurable for subtests via `t.timeout` like so:
 
-<!-- prettier-ignore -->
-[testing](_media/howto/testing.js ':include :type=code :fragment=timeout')
+<--- howto-test-timeout -->
+
+```js
+test("configurable timeout", (t) => {
+  t.timeout = 20;
+
+  t.test("race with the timeout", async (t) => {
+    try {
+      await new Promise((resolve) => {
+        // No exception happening here
+        setTimeout(() => {
+          resolve();
+        }, 5);
+      });
+      t.pass("subtest is faster than the parent timeout of 20 milliseconds");
+    } catch (e) {
+      t.fail("This should not trigger");
+      t.log.error(e);
+    }
+  });
+});
+```
+
+`<--- howto-test-timeout -->
 
 ## Execute Process
 
@@ -108,14 +201,29 @@ There are two ways to execute a program or `child_process` provided by
 - Exec, a promisified version of
   [`child_process#exec`](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback)
 
-<!-- prettier-ignore -->
-[execute-process](_media/howto/execute-process.js ':include :type=code :fragment=exec')
+<--- howto-exec -->
+
+```js
+const { stdout, stderr, exitCode } = await exec("echo 'foo'");
+// stdout => "foo\n"
+// stderr => ""
+// exitCode => 0
+```
+
+`<--- howto-exec -->
 
 - Spawn, a promisified version of
   [`child_process#spawn`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options)
 
-<!-- prettier-ignore -->
-[execute-process](_media/howto/execute-process.js ':include :type=code :fragment=spawn')
+<--- howto-spawn -->
+
+```js
+const { exitCode } = await spawn("echo", ["bar"]);
+// Outputs "bar\n" on stdout
+// exitCode => 0
+```
+
+`<--- howto-spawn -->
 
 By default `{ stdio: "inherit" }` is passed to `spawn` which means that all of
 stdin, stdout and stderr are passed to the spawned process.
