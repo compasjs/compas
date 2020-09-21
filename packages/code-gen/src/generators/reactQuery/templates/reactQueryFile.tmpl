@@ -15,9 +15,9 @@ import { newApiClient } from "./apiClient.js";
 import * as T from "./types";
 ((newline))
 
-const ApiContext = React.createContext<ReturnType<newApiClient>>();
+const ApiContext = React.createContext<ReturnType<typeof newApiClient> | null>(null);
 
-export function ApiProvider<T extends ReturnType<newApiClient>>({
+export function ApiProvider<T extends ReturnType<typeof newApiClient>>({
   instance, children,
 }: {
   instance: T;
@@ -26,7 +26,15 @@ export function ApiProvider<T extends ReturnType<newApiClient>>({
   return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
 }
 
-export const useApi = () => React.useContext(ApiContext);
+export const useApi = () => {
+  const context = React.useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};
 
 type AppErrorResponse = AxiosError<{
   key?: string;

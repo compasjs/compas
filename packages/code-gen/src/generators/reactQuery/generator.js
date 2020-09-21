@@ -31,7 +31,7 @@ export async function preGenerate(app, { options }) {
  */
 export async function generate(app, input) {
   return {
-    path: "./reactQueries.ts",
+    path: "./reactQueries.tsx",
     source: executeTemplate("reactQueryFile", input),
   };
 }
