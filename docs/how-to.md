@@ -9,7 +9,7 @@ edge cases.
 Use the `mainFn` provided by `@lbu/stdlib` to run a function when the file is
 the program entrypoint.
 
-<--- howto-entrypoint -->
+<!-- howto-entrypoint -->
 
 ```js
 import { mainFn } from "@lbu/stdlib";
@@ -19,7 +19,7 @@ mainFn(import.meta, (logger) => {
 });
 ```
 
-`<--- howto-entrypoint -->
+<!-- howto-entrypoint -->
 
 This function uses `import.meta` to check if this file is used as the
 entrypoint. If for example `my-file.js` contained the above snippet,
@@ -48,7 +48,7 @@ as well.
 
 A basic test file looks like the following:
 
-<--- howto-test-basic -->
+<!-- howto-test-basic -->
 
 ```js
 test("my test", (t) => {
@@ -60,7 +60,7 @@ test("my test", (t) => {
 });
 ```
 
-`<--- howto-test-basic -->
+<!-- howto-test-basic -->
 
 ### Running tests
 
@@ -85,7 +85,7 @@ tests in a single file. This is often called `beforeAll` / `afterAll`. We don't
 need this in the lbu provided test runner as all tests run in the order they are
 specified.
 
-<--- howto-test-setup-teardown -->
+<!-- howto-test-setup-teardown -->
 
 ```js
 test("setup and teardown", (t) => {
@@ -109,7 +109,7 @@ test("setup and teardown", (t) => {
 });
 ```
 
-`<--- howto-test-setup-teardown -->
+<!-- howto-test-setup-teardown -->
 
 ### Asserting on throws
 
@@ -117,7 +117,7 @@ Asserting on throws is another overlooked part of some test runners. This test
 runner does not provide any fancy util like `t.throws(functionThatThrows)`, but
 expects the user to use normal control flow like try / catch.
 
-<--- howto-test-pass-fail -->
+<!-- howto-test-pass-fail -->
 
 ```js
 const throws = async () => {
@@ -146,7 +146,7 @@ test("Throws vs not throws", async (t) => {
 });
 ```
 
-`<--- howto-test-pass-fail -->
+<!-- howto-test-pass-fail -->
 
 ### Test configuration
 
@@ -168,7 +168,7 @@ export async function teardown() {
 
 Timeout is also configurable for subtests via `t.timeout` like so:
 
-<--- howto-test-timeout -->
+<!-- howto-test-timeout -->
 
 ```js
 test("configurable timeout", (t) => {
@@ -191,7 +191,7 @@ test("configurable timeout", (t) => {
 });
 ```
 
-`<--- howto-test-timeout -->
+<!-- howto-test-timeout -->
 
 ## Execute Process
 
@@ -201,7 +201,7 @@ There are two ways to execute a program or `child_process` provided by
 - Exec, a promisified version of
   [`child_process#exec`](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback)
 
-<--- howto-exec -->
+<!-- howto-exec -->
 
 ```js
 const { stdout, stderr, exitCode } = await exec("echo 'foo'");
@@ -210,12 +210,12 @@ const { stdout, stderr, exitCode } = await exec("echo 'foo'");
 // exitCode => 0
 ```
 
-`<--- howto-exec -->
+<!-- howto-exec -->
 
 - Spawn, a promisified version of
   [`child_process#spawn`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options)
 
-<--- howto-spawn -->
+<!-- howto-spawn -->
 
 ```js
 const { exitCode } = await spawn("echo", ["bar"]);
@@ -223,7 +223,7 @@ const { exitCode } = await spawn("echo", ["bar"]);
 // exitCode => 0
 ```
 
-`<--- howto-spawn -->
+<!-- howto-spawn -->
 
 By default `{ stdio: "inherit" }` is passed to `spawn` which means that all of
 stdin, stdout and stderr are passed to the spawned process.

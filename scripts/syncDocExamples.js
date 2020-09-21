@@ -98,17 +98,17 @@ async function readDocFiles() {
  */
 function replaceContentBlocks(logger, file, blocks) {
   for (const block of blocks) {
-    const regex = `<--- ${block.name} -->.+<--- ${block.name} -->`;
+    const regex = `<!-- ${block.name} -->.+<!-- ${block.name} -->`;
 
     file.contents = file.contents.replace(
       RegExp(regex, "gms"),
-      `<--- ${block.name} -->
+      `<!-- ${block.name} -->
 
 \`\`\`js
 ${block.contents}
 \`\`\`
 
-\`<--- ${block.name} -->`,
+<!-- ${block.name} -->`,
     );
   }
 }
