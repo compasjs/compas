@@ -4,22 +4,11 @@
 {{ if (options.isNode) { }}
 import FormData from "form-data";
 {{ } }}
+
 {{ if (options.isNodeServer) { }}
 import * as validators from "./validators.js";
 import { AppError } from "@lbu/stdlib";
-{{ } }}
-
-let _internalClient = undefined;
-let requestId = undefined;
 ((newline))
-
-function checkApiClient() {
-  if (_internalClient === undefined) {
-    throw new Error("Initialize api client with createApiClient");
-  }
-}
-((newline))
-{{ if (options.isNodeServer) { }}
 function handleError(e, group, name) {
   // Validator error
   if (AppError.instanceOf(e)) {
@@ -43,11 +32,29 @@ function handleError(e, group, name) {
 }
 {{ } }}
 
+{{ if (options.isBrowser) { }}
 /**
  * Should set an axios compatible api client
  * @param {AxiosInstance} instance
  */
-export function createApiClient(instance) {
+export function newApiClient(instance) {
+{{ } else { }}
+function checkApiClient() {
+  if (_internalClient === undefined) {
+    throw new Error("Initialize api client with createApiClient");
+  }
+}
+{{ } }}
+
+let _internalClient = undefined;
+let requestId = undefined;
+((newline))
+
+/**
+ * Should set an axios compatible api client
+ * @param {AxiosInstance} instance
+ */
+{{ if (!options.isBrowser) { }}export {{ } }} function createApiClient(instance) {
   _internalClient = instance;
 
   _internalClient.interceptors.request.use((config) => {
@@ -74,7 +81,11 @@ export function createApiClient(instance) {
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
+  {{ if (!options.isBrowser) { }}
   export const {{= groupName }}Api = {
+  {{ } else { }}
+  const {{= groupName }} = {
+  {{ } }}
 
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -82,6 +93,7 @@ export function createApiClient(instance) {
     {{ if (item.type !== "route") { }}
     {{ continue; }}
     {{ } }}
+
 
     {{= apiClientFn({ options, item }) }}
 ((newline))
@@ -91,4 +103,16 @@ export function createApiClient(instance) {
   };
 ((newline))
 
+{{ } }}
+
+{{ if (options.isBrowser) { }}
+
+  createApiClient(instance);
+
+  return {
+    {{ for (const group of Object.keys(structure)) { }}
+    {{= group }},
+    {{ } }}
+  };
+}
 {{ } }}

@@ -38,7 +38,9 @@ body,
 files,
 {{ } }}
 ) {
+    {{ if (!options.isBrowser) { }}
     checkApiClient();
+    {{ } }}
 
     {{ if (item.files) { }}
       // eslint-disable-next-line
