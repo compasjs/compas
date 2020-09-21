@@ -81,7 +81,11 @@ let requestId = undefined;
 
 {{ for (const groupName of Object.keys(structure)) { }}
 
-  {{ if (!options.isBrowser) { }}export {{ } }} const {{= groupName }}Api = {
+  {{ if (!options.isBrowser) { }}
+  export const {{= groupName }}Api = {
+  {{ } else { }}
+  const {{= groupName }} = {
+  {{ } }}
 
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -107,7 +111,7 @@ let requestId = undefined;
 
   return {
     {{ for (const group of Object.keys(structure)) { }}
-    {{= group }}Api,
+    {{= group }},
     {{ } }}
   };
 }
