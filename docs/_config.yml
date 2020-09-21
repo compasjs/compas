@@ -1,1 +1,26 @@
-theme: jekyll-theme-tactile
+theme: jekyll-theme-minimal
+show_downloads: false
+
+navigation:
+  - title: Home
+    url: /
+  - title: Changelog
+    url: changelog
+  - title: Getting started
+    url: getting-started
+  - title: Cli
+    url: cli
+  - title: Code generation
+    url: code-gen
+  - title: Insight
+    url: insight
+  - title: Server
+    url: server
+  - title: Lint config
+    url: lint-config
+  - title: Environment
+    url: env
+  - title: How to
+    url: how-to
+  - title: Contributing
+    url: contributing
