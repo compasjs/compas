@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.74](https://github.com/lightbasenl/lbu/releases/tag/v0.0.74)
+
+- build(deps-dev): bump react-query from 2.22.0 to 2.23.0
+  ([#292](https://github.com/lightbasenl/lbu/pull/292))
+- build(deps-dev): bump typescript from 4.0.2 to 4.0.3
+  ([#293](https://github.com/lightbasenl/lbu/pull/293))
+- cli: fix bench callback type
+- cli: fix recursive error formatting
+- cli: lint exit with error when CI=true
+- code-gen: scoped api client generation for browser envs
+  ([#294](https://github.com/lightbasenl/lbu/pull/294),
+  [#295](https://github.com/lightbasenl/lbu/pull/295))
+
 ### [v0.0.73](https://github.com/lightbasenl/lbu/releases/tag/v0.0.73)
 
 - build(deps): bump @types/node from 14.10.2 to 14.11.1
