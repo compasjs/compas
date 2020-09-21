@@ -3,4 +3,4 @@ node_modules
 coverage
 packages/code-gen/test-generated
 lerna.json
-reactQueries.ts
+reactQueries.tsx
