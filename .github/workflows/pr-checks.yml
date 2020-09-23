@@ -96,7 +96,6 @@ jobs:
         run: |
           yarn install
           yarn lbu docker up
-          sleep 9
           yarn lbu generate
           yarn lbu migrate
           yarn lbu coverage

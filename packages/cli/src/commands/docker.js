@@ -74,6 +74,18 @@ async function startContainers(logger) {
     ...Object.keys(supportedContainers),
   ]);
 
+  logger.info(`Waiting for Postgres to be ready...`);
+  // Race for 30 seconds against the pg_isready command
+  await Promise.race([
+    await exec(
+      `until docker exec lbu-postgres pg_isready ; do sleep 1 ; done`,
+      { shell: true },
+    ),
+    new Promise((resolve, reject) => {
+      setTimeout(reject, 30000);
+    }),
+  ]);
+
   return exitCode;
 }
 
