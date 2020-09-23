@@ -106,15 +106,6 @@ export class RouteBuilder extends TypeBuilder {
       }
     }
 
-    if (this.paramsBuilder) {
-      result.params = buildOrInfer(this.paramsBuilder);
-
-      if (isNil(result.params.name)) {
-        result.params.group = result.group;
-        result.params.name = `${result.name}Params`;
-      }
-    }
-
     if (this.bodyBuilder) {
       result.body = buildOrInfer(this.bodyBuilder);
 
@@ -142,13 +133,30 @@ export class RouteBuilder extends TypeBuilder {
       }
     }
 
-    if (result.path.indexOf(":") !== -1 && result.params === undefined) {
-      // Looks like there is a path param but no definition for it
-      result.params = createParamsFromPath(
-        result.group,
-        `${result.name}Params`,
-        result.path,
-      );
+    const pathParamKeys = collectPathParams(result.path);
+
+    if (this.paramsBuilder || pathParamKeys.length > 0) {
+      const paramsResult = buildOrInfer(this.paramsBuilder) ?? buildOrInfer({});
+      paramsResult.group = result.group;
+      paramsResult.name = `${result.name}Params`;
+
+      for (const param of pathParamKeys) {
+        if (isNil(paramsResult.keys?.[param])) {
+          throw new Error(
+            `Route ${result.group}->${result.name} is missing a type definition for '${param}' parameter.`,
+          );
+        }
+      }
+
+      for (const key of Object.keys(paramsResult.keys ?? {})) {
+        if (pathParamKeys.indexOf(key) === -1) {
+          throw new Error(
+            `Route ${result.group}->${result.name} has type definition for '${key}' but is not found in the path: ${result.path}`,
+          );
+        }
+      }
+
+      result.params = paramsResult;
     }
 
     return result;
@@ -156,24 +164,21 @@ export class RouteBuilder extends TypeBuilder {
 }
 
 /**
- * Build an object for route params if the user forgot to do that
- * @param {string} group
- * @param {string} name
+ * Collect all path params
+ *
  * @param {string} path
- * @returns {object}
+ * @returns {string[]}
  */
-function createParamsFromPath(group, name, path) {
-  const T = new TypeCreator(group);
-  const obj = T.object(name);
-  const keys = {};
+function collectPathParams(path) {
+  const keys = [];
 
   for (const part of path.split("/")) {
     if (part.startsWith(":")) {
-      keys[part.substring(1)] = T.string();
+      keys.push(part.substring(1));
     }
   }
 
-  return buildOrInfer(obj.keys(keys));
+  return keys;
 }
 
 class RouteCreator {
