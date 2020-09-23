@@ -1,5 +1,16 @@
 # CHANGELOG
 
+### [v0.0.75](https://github.com/lightbasenl/lbu/releases/tag/v0.0.75)
+
+- build(deps): bump @types/node from 14.11.1 to 14.11.2
+  ([#299](https://github.com/lightbasenl/lbu/pull/299))
+- build(deps): bump c8 from 7.3.0 to 7.3.1
+  ([#301](https://github.com/lightbasenl/lbu/pull/301))
+- code-gen: apiClient should not call getHeaders in browser environment
+  ([#302](https://github.com/lightbasenl/lbu/pull/302))
+- docs: move to plain Github pages and Jekyll
+  ([#298](https://github.com/lightbasenl/lbu/pull/298))
+
 ### [v0.0.74](https://github.com/lightbasenl/lbu/releases/tag/v0.0.74)
 
 - build(deps-dev): bump react-query from 2.22.0 to 2.23.0
