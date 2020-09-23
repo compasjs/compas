@@ -131,7 +131,7 @@ async function main() {
       .response({
         lists: [T.reference("app", "list")],
       }), // Infer params
-    R.get("/:id/icon", "getIcon").response(T.file()),
+    R.get("/:id/icon", "getIcon").params({ id: T.uuid() }).response(T.file()),
 
     // Reference router items in 'openapi' group so we can check file generation
     // for browser usage
