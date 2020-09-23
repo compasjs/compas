@@ -2,7 +2,7 @@ import { mainTestFn, test } from "@lbu/cli";
 
 mainTestFn(import.meta);
 
-/// [basic]
+/// [howto-test-basic]
 test("my test", (t) => {
   t.equal(1, 1);
   t.ok(true);
@@ -10,9 +10,9 @@ test("my test", (t) => {
   t.notEqual("foo", "bar");
   t.deepEqual([1, 2], [1, 2]);
 });
-/// [basic]
+/// [howto-test-basic]
 
-/// [setup-teardown]
+/// [howto-test-setup-teardown]
 test("setup and teardown", (t) => {
   let myTestGlobal = undefined;
 
@@ -32,9 +32,9 @@ test("setup and teardown", (t) => {
     t.pass("successful teardown");
   });
 });
-/// [setup-teardown]
+/// [howto-test-setup-teardown]
 
-/// [pass-fail]
+/// [howto-test-pass-fail]
 const throws = async () => {
   throw new Error("Oops!");
 };
@@ -59,9 +59,9 @@ test("Throws vs not throws", async (t) => {
     t.log.error(e);
   }
 });
-/// [pass-fail]
+/// [howto-test-pass-fail]
 
-/// [timeout]
+/// [howto-test-timeout]
 test("configurable timeout", (t) => {
   t.timeout = 20;
 
@@ -80,4 +80,4 @@ test("configurable timeout", (t) => {
     }
   });
 });
-/// [timeout]
+/// [howto-test-timeout]

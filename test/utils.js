@@ -5,7 +5,7 @@ import { exec, pathJoin } from "@lbu/stdlib";
  * @returns {string}
  */
 export function getTestMediaPath(testName) {
-  return pathJoin(process.cwd(), "docs/_media/howto", `${testName}.js`);
+  return pathJoin(process.cwd(), "assets/examples/", `${testName}.js`);
 }
 
 /**

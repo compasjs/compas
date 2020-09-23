@@ -28,10 +28,10 @@ yarn lbu link && yarn lbu linkExternally ../other-project/
 ```
 # Build docs from index.d.ts files and put in /docs/api.md
 yarn lbu typedoc
-# Run docsify server available on port 3000
-yarn lbu docs
 # Sync content of README.md's based on the README.md in the root
 yarn lbu syncMetadata
+# Sync assets/examples to the documentation files
+yarn lbu syncDocExamples
 ```
 
 **Code generation, @lbu/store structure changes**:
