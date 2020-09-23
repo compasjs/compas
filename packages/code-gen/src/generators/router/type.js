@@ -136,7 +136,9 @@ export class RouteBuilder extends TypeBuilder {
     const pathParamKeys = collectPathParams(result.path);
 
     if (this.paramsBuilder || pathParamKeys.length > 0) {
-      const paramsResult = buildOrInfer(this.paramsBuilder) ?? buildOrInfer({});
+      const paramsResult = this.paramsBuilder
+        ? buildOrInfer(this.paramsBuilder)
+        : buildOrInfer({});
       paramsResult.group = result.group;
       paramsResult.name = `${result.name}Params`;
 
