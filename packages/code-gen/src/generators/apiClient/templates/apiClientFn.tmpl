@@ -65,7 +65,7 @@ files,
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
       {{ if (item.files && options.isNode !== -1) { }}
-      headers: {{ if (options.enabledGenerators.indexOf("router") !== -1) { }}data.getHeaders(){{ } else { }}{ "Content-Type": undefined }{{ } }},
+      headers: {{ if (options.isNode) { }}data.getHeaders(){{ } else { }}{ "Content-Type": undefined }{{ } }},
       {{ } }}
       {{ if (item.response && getItem(item.response).type === "file") { }}
       responseType: "{{= options.isNode ? "stream" : "blob" }}",
