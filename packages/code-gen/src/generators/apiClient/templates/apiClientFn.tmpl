@@ -64,7 +64,7 @@ files,
       method: "{{= item.method.toLowerCase() }}",
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
-      {{ if (item.files && options.isNode !== -1) { }}
+      {{ if (item.files && options.isNode) { }}
       headers: data.getHeaders(),
       {{ } }}
       {{ if (item.response && getItem(item.response).type === "file") { }}
