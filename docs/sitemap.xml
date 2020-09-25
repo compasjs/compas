@@ -5,47 +5,47 @@
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/changelog</loc>
+        <loc>https://lbu.lightbase.nl/changelog.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/getting-started</loc>
+        <loc>https://lbu.lightbase.nl/getting-started.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/cli</loc>
+        <loc>https://lbu.lightbase.nl/cli.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/code-gen</loc>
+        <loc>https://lbu.lightbase.nl/code-gen.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/insight</loc>
+        <loc>https://lbu.lightbase.nl/insight.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/server</loc>
+        <loc>https://lbu.lightbase.nl/server.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/store</loc>
+        <loc>https://lbu.lightbase.nl/store.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/lint-config</loc>
+        <loc>https://lbu.lightbase.nl/lint-config.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/env</loc>
+        <loc>https://lbu.lightbase.nl/env.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/howto</loc>
+        <loc>https://lbu.lightbase.nl/howto.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/contributing</loc>
+        <loc>https://lbu.lightbase.nl/contributing.html</loc>
         <changefreq>daily</changefreq>
     </url>
 </urlset>
