@@ -53,8 +53,10 @@ export class TypeBuilder {
    * @returns {this}
    */
   default(rawString) {
-    this.data.defaultValue = rawString;
     this.data.isOptional = !isNil(rawString);
+    if (this.data.isOptional) {
+      this.data.defaultValue = rawString.toString();
+    }
 
     return this;
   }
