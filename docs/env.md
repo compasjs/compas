@@ -2,12 +2,14 @@
 
 A quick reference for all environment variables supported across the packages:
 
+## General
+
 **NODE_ENV**
 
 Allowed values: 'development' and 'production'. Various configurations
 automatically will switch to a production ready setup. e.g the logger from
 @lbu/insight stops pretty printing, the minio client from @lbu/store will try to
-use a SSL connection.
+use an SSL connection.
 
 **IS_STAGING**
 
@@ -29,10 +31,6 @@ the project root, so other programs can use this more easily.
 Used for database creation and selection, default s3 bucket name. In general
 this environment variable is required.
 
-**APP_URL**
-
-Full url where this api is available
-
 **APP_KEYS**
 
 Keys used for signing cookies. Can be a comma separated string to support
@@ -42,10 +40,7 @@ Use for example
 `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` to
 generate these.
 
-**CORS_URL**
-
-Default CORS origin check. Can be a comma separated string to support multiple
-origins.
+## @lbu/store
 
 **POSTGRES_URI**
 
@@ -66,3 +61,30 @@ Minio access key
 **MINIO_SECRET_KEY**
 
 Minio secret key for authorizing bucket and object creation and deletion
+
+## @lbu/server
+
+**CORS_URL**
+
+Default CORS origin check. Can be a comma separated string to support multiple
+origins.
+
+**PORT**
+
+Port to run the api on. This is a convention and not set in stone. Future lbu
+versions may use this as this defaults.
+
+**COOKIE_URL**
+
+Default domain for the cookie in production. Used by the `session` middleware.
+
+## @lbu/cli
+
+**API_URL** / **NEXT_PUBLIC_API_URL**
+
+Base url that the frontend client will use. From this the port value is
+extracted and used in `lbu proxy`.
+
+**PROXY_URL**
+
+The url to proxy for `lbu proxy` command.
