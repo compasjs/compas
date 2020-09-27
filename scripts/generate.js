@@ -61,6 +61,13 @@ async function main() {
       .keys("onlyProp"),
 
     // SQL
+    T.object("settings")
+      .keys({
+        id: T.uuid().primary(),
+        name: T.string("settingKey").oneOf("foo", "bar").searchable(),
+        value: T.bool(),
+      })
+      .enableQueries(),
     T.object("list")
       .keys({
         id: T.uuid().primary(),
