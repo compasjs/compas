@@ -8,11 +8,9 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node: [14]
-        postgres_version: [12, 13]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
-      POSTGRES_VERSION: ${{ matrix.postgres_version }}
     steps:
       - uses: actions/checkout@v2
 
