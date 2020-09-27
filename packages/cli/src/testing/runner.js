@@ -1,6 +1,33 @@
-import { deepStrictEqual, AssertionError } from "assert";
+import { AssertionError, deepStrictEqual } from "assert";
+import { cpus } from "os";
 import { isNil } from "@lbu/stdlib";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
+
+/**
+ * @param {TestState} testState
+ * @returns {Promise<void>}
+ */
+export async function runTestChildrenInParallel(testState) {
+  // This only provides a reasonable default of concurrency mostly useful in synchronous testing
+  // We actually still use a single Node.js process and thus CPU bound to a single core.
+  const maxParallel = Math.min(cpus().length, testState.children.length, 6);
+  let testIndex = 0;
+  const schedule = async () => {
+    if (testIndex >= testState.children.length) {
+      return;
+    }
+
+    const idx = testIndex;
+    testIndex++;
+
+    await runTestsRecursively(testState.children[idx]);
+
+    return schedule();
+  };
+
+  const promiseArray = Array.from({ length: maxParallel }, () => schedule());
+  await Promise.all(promiseArray);
+}
 
 /**
  * @param {TestState} testState
@@ -102,6 +129,7 @@ function ok(state, value, message) {
     message,
   });
 }
+
 /**
  * @param {TestState} state
  * @param {*} value
