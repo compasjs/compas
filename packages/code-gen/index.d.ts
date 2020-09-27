@@ -414,7 +414,6 @@ export class TypeBuilder {
 export class RouteBuilder extends TypeBuilder {
   /**
    * Add tags to this route.
-   * Tag handlers are executed before group and specific route handlers
    */
   tags(...value: string[]): this;
 
@@ -446,8 +445,9 @@ export class RouteBuilder extends TypeBuilder {
 
 export class RouteCreator {
   /**
-   * Create a new route group
-   * Path will be concatenated with the current path of this group
+   * Create a new route group.
+   * Path will be concatenated with the current path of this group.
+   * This resets the default tags, query, params, body and response type.
    */
   group(name: string, path: string): this;
 
@@ -475,6 +475,36 @@ export class RouteCreator {
    * HEAD route
    */
   head(path?: string, name?: string);
+
+  /**
+   * Default tags for all routes created by this RouteCreator.
+   */
+  tags(...value: string[]): this;
+
+  /**
+   * Default query type for all routes created by this RouteCreator.
+   */
+  query(builder: TypeBuilderLike): this;
+
+  /**
+   * Default params type for all routes created by this RouteCreator.
+   */
+  params(builder: TypeBuilderLike): this;
+
+  /**
+   * Default body type for all routes created by this RouteCreator.
+   */
+  body(builder: TypeBuilderLike): this;
+
+  /**
+   * Default files type for all routes created by this RouteCreator.
+   */
+  files(builder: TypeBuilderLike): this;
+
+  /**
+   * Default response type for all routes created by this RouteCreator.
+   */
+  response(builder: TypeBuilderLike): this;
 }
 
 export class AnyType extends TypeBuilder {

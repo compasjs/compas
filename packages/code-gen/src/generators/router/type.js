@@ -193,6 +193,75 @@ class RouteCreator {
     if (this.data.path.startsWith("/")) {
       this.data.path = this.data.path.slice(1);
     }
+
+    this.defaultTags = [];
+    this.queryBuilder = undefined;
+    this.paramsBuilder = undefined;
+    this.bodyBuilder = undefined;
+    this.filesBuilder = undefined;
+    this.responseBuilder = undefined;
+  }
+
+  /**
+   * @param {string} values
+   * @returns {RouteCreator}
+   */
+  tags(...values) {
+    for (const v of values) {
+      this.data.tags.push(lowerCaseFirst(v));
+    }
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteCreator}
+   */
+  query(builder) {
+    this.queryBuilder = builder;
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteCreator}
+   */
+  params(builder) {
+    this.paramsBuilder = builder;
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteCreator}
+   */
+  body(builder) {
+    this.bodyBuilder = builder;
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteCreator}
+   */
+  files(builder) {
+    this.filesBuilder = builder;
+
+    return this;
+  }
+
+  /**
+   * @param {TypeBuilderLike} builder
+   * @returns {RouteCreator}
+   */
+  response(builder) {
+    this.responseBuilder = builder;
+
+    return this;
   }
 
   /**
@@ -210,7 +279,7 @@ class RouteCreator {
    * @returns {RouteBuilder}
    */
   get(path, name) {
-    return new RouteBuilder(
+    return this.create(
       "GET",
       this.data.group,
       name || "get",
@@ -224,7 +293,7 @@ class RouteCreator {
    * @returns {RouteBuilder}
    */
   post(path, name) {
-    return new RouteBuilder(
+    return this.create(
       "POST",
       this.data.group,
       name || "post",
@@ -238,7 +307,7 @@ class RouteCreator {
    * @returns {RouteBuilder}
    */
   put(path, name) {
-    return new RouteBuilder(
+    return this.create(
       "PUT",
       this.data.group,
       name || "put",
@@ -252,7 +321,7 @@ class RouteCreator {
    * @returns {RouteBuilder}
    */
   delete(path, name) {
-    return new RouteBuilder(
+    return this.create(
       "DELETE",
       this.data.group,
       name || "delete",
@@ -266,12 +335,52 @@ class RouteCreator {
    * @returns {RouteBuilder}
    */
   head(path, name) {
-    return new RouteBuilder(
+    return this.create(
       "HEAD",
       this.data.group,
       name || "get",
       concatenateRoutePaths(this.data.path, path || "/"),
     );
+  }
+
+  /**
+   * Create a new RouteBuilder and add the defaults if exists.
+   *
+   * @param {string} method
+   * @param {string} group
+   * @param {string} name
+   * @param {string} path
+   * @returns {RouteBuilder}
+   */
+  create(method, group, name, path) {
+    const b = new RouteBuilder(method, group, name, path);
+
+    b.tags(...this.defaultTags);
+
+    if (!isNil(this.paramsBuilder)) {
+      b.params(this.paramsBuilder);
+    }
+
+    if (!isNil(this.queryBuilder)) {
+      b.query(this.queryBuilder);
+    }
+
+    if (
+      !isNil(this.bodyBuilder) &&
+      ["POST", "PUT", "DELETE"].indexOf(method) !== -1
+    ) {
+      b.body(this.bodyBuilder);
+    }
+
+    if (!isNil(this.filesBuilder) && ["POST", "PUT"].indexOf(method) !== -1) {
+      b.files(this.filesBuilder);
+    }
+
+    if (!isNil(this.responseBuilder)) {
+      b.response(this.responseBuilder);
+    }
+
+    return b;
   }
 }
 
