@@ -2,10 +2,12 @@ import { exec, spawn } from "@lbu/stdlib";
 
 const SUB_COMMANDS = ["up", "down", "clean", "reset"];
 
-const supportedContainers = {
-  "lbu-postgres": {
-    createCommand:
-      "docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres postgres:12",
+const containers = {
+  "lbu-postgres-12": {
+    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres-12:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres-12 postgres:12`,
+  },
+  "lbu-postgres-13": {
+    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres-13:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres-13 postgres:13`,
   },
   "lbu-minio": {
     createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v lbu-minio:/data -p 9000:9000 --name lbu-minio minio/minio server /data`,
@@ -35,33 +37,63 @@ export async function dockerCommand(logger, command) {
     return { exitCode: 1 };
   }
 
+  const {
+    knownContainers,
+    exitCode,
+    stdout,
+    stderr,
+  } = await getKnownContainers();
+  if (exitCode !== 0) {
+    logger.error(`Could not list containers.`);
+    logger.error({ exitCode, stderr, stdout });
+  }
+
+  const enabledContainers = [
+    `lbu-postgres-${getPostgresVersion()}`,
+    `lbu-minio`,
+  ];
+
+  const disabledContainers = Object.keys(containers).filter(
+    (it) => enabledContainers.indexOf(it) === -1,
+  );
+
+  const containerInfo = {
+    knownContainers,
+    enabledContainers,
+    disabledContainers,
+  };
+
   if (subCommand === "up") {
-    return { exitCode: await startContainers(logger) };
+    return { exitCode: await startContainers(logger, containerInfo) };
   } else if (subCommand === "down") {
-    return { exitCode: await stopContainers(logger) };
+    return { exitCode: await stopContainers(logger, containerInfo) };
   } else if (subCommand === "clean") {
-    return { exitCode: await cleanContainers(logger) };
+    return { exitCode: await cleanContainers(logger, containerInfo) };
   } else if (subCommand === "reset") {
-    return { exitCode: await resetDatabase(logger) };
+    return { exitCode: await resetDatabase(logger, containerInfo) };
   }
 }
 
 /**
  * @param {Logger} logger
+ * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
+ *   string[] }} containerInfo
  * @returns {Promise<number>}
  */
-async function startContainers(logger) {
-  const { stdout, exitCode: listContainersExit } = await exec(
-    "docker container ls -a --format '{{.Names}}'",
-  );
-  if (listContainersExit !== 0) {
-    return listContainersExit;
+async function startContainers(logger, containerInfo) {
+  const stopExitCode = await stopContainers(logger, {
+    knownContainers: containerInfo.knownContainers,
+    enabledContainers: containerInfo.disabledContainers,
+  });
+
+  if (stopExitCode !== 0) {
+    return stopExitCode;
   }
 
-  for (const name of Object.keys(supportedContainers)) {
+  for (const name of containerInfo.enabledContainers) {
     logger.info(`Creating ${name} container`);
-    if (stdout.indexOf(name) === -1) {
-      const { exitCode } = await exec(supportedContainers[name].createCommand);
+    if (containerInfo.knownContainers.indexOf(name) === -1) {
+      const { exitCode } = await exec(containers[name].createCommand);
       if (exitCode !== 0) {
         return exitCode;
       }
@@ -71,14 +103,18 @@ async function startContainers(logger) {
   logger.info(`Starting containers`);
   const { exitCode } = await spawn(`docker`, [
     "start",
-    ...Object.keys(supportedContainers),
+    ...containerInfo.enabledContainers,
   ]);
 
-  logger.info(`Waiting for Postgres to be ready...`);
+  if (exitCode !== 0) {
+    return exitCode;
+  }
+
+  logger.info(`Waiting for Postgres ${getPostgresVersion()} to be ready...`);
   // Race for 30 seconds against the pg_isready command
   await Promise.race([
-    await exec(
-      `until docker exec lbu-postgres pg_isready ; do sleep 1 ; done`,
+    exec(
+      `until docker exec lbu-postgres-${getPostgresVersion()} pg_isready ; do sleep 1 ; done`,
       { shell: true },
     ),
     new Promise((resolve, reject) => {
@@ -90,33 +126,53 @@ async function startContainers(logger) {
 }
 
 /**
+ * Stops 'available' containers.
+ * By using the `knownContainers` as a check, we don't error when a container is not yet
+ * created.
+ *
  * @param {Logger} logger
+ * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
+ *   string[] }} containerInfo
  * @returns {Promise<number>}
  */
-async function stopContainers(logger) {
+async function stopContainers(logger, containerInfo) {
+  const containers = containerInfo.enabledContainers.filter(
+    (it) => containerInfo.knownContainers.indexOf(it) !== -1,
+  );
+
+  if (containers.length === 0) {
+    return 0;
+  }
+
   logger.info(`Stopping containers`);
-  const { exitCode } = await spawn(`docker`, [
-    "stop",
-    ...Object.keys(supportedContainers),
-  ]);
+  const { exitCode } = await spawn(`docker`, ["stop", ...containers]);
 
   return exitCode;
 }
 
 /**
+ * Cleanup 'available' known containers.
+ * By using the `knownContainers` as a check, we don't error when a container is not yet
+ * created.
+ *
  * @param {Logger} logger
+ * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
+ *   string[] }} containerInfo
  * @returns {Promise<number>}
  */
-async function cleanContainers(logger) {
-  const stopExit = await stopContainers(logger);
+async function cleanContainers(logger, containerInfo) {
+  const stopExit = await stopContainers(logger, containerInfo);
   if (stopExit !== 0) {
     return stopExit;
   }
 
   logger.info(`Removing containers`);
+  const containersAndVolumes = containerInfo.enabledContainers.filter(
+    (it) => containerInfo.knownContainers.indexOf(it) !== -1,
+  );
   const { exitCode: rmExit } = await spawn(`docker`, [
     "rm",
-    ...Object.keys(supportedContainers),
+    ...containersAndVolumes,
   ]);
   if (rmExit !== 0) {
     return rmExit;
@@ -126,7 +182,7 @@ async function cleanContainers(logger) {
   const { exitCode: volumeRmExit } = await spawn(`docker`, [
     "volume",
     "rm",
-    ...Object.keys(supportedContainers),
+    ...containersAndVolumes,
   ]);
 
   return volumeRmExit;
@@ -134,12 +190,14 @@ async function cleanContainers(logger) {
 
 /**
  * @param {Logger} logger
+ * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
+ *   string[] }} containerInfo
  * @returns {Promise<number>}
  */
-async function resetDatabase(logger) {
-  const startExit = await startContainers(logger);
-  if (startExit !== 0) {
-    return startExit;
+async function resetDatabase(logger, containerInfo) {
+  const startExitCode = await startContainers(logger, containerInfo);
+  if (startExitCode !== 0) {
+    return startExitCode;
   }
 
   const name = process.env.APP_NAME;
@@ -147,7 +205,7 @@ async function resetDatabase(logger) {
   logger.info(`Resetting ${name} database`);
   const { exitCode: postgresExit } = await spawn(`sh`, [
     "-c",
-    `echo 'DROP DATABASE ${name}; CREATE DATABASE ${name}' | docker exec -i lbu-postgres psql --user postgres`,
+    `echo 'DROP DATABASE IF EXISTS ${name}; CREATE DATABASE ${name}' | docker exec -i lbu-postgres-${getPostgresVersion()} psql --user postgres`,
   ]);
 
   if (postgresExit !== 0) {
@@ -167,4 +225,33 @@ async function isDockerAvailable() {
   } catch {
     return false;
   }
+}
+
+/**
+ * Get list of available containers
+ *
+ * @returns {Promise<{ exitCode: number, knownContainers: string[], stdout?: string,
+ *   stderr?: string }>}
+ */
+async function getKnownContainers() {
+  const { exitCode, stdout, stderr } = await exec(
+    "docker container ls -a --format '{{.Names}}'",
+  );
+  if (exitCode !== 0) {
+    return { exitCode, knownContainers: [], stdout, stderr };
+  }
+
+  const knownContainers = stdout
+    .split("\n")
+    .map((it) => it.trim())
+    .filter((it) => it.length > 0);
+
+  return {
+    exitCode,
+    knownContainers,
+  };
+}
+
+function getPostgresVersion() {
+  return Number(process.env.POSTGRES_VERSION ?? "12");
 }

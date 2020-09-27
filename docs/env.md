@@ -88,3 +88,7 @@ extracted and used in `lbu proxy`.
 **PROXY_URL**
 
 The url to proxy for `lbu proxy` command.
+
+**POSTGRES_VERSION**
+
+Global postgres version to use. Defaults to `12`
