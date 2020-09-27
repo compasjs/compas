@@ -11,11 +11,15 @@ export class FileCache {
   static fileCachePath = "/tmp";
 
   /**
-   * @param {FileStoreContext} fileStore
+   * @param {Postgres} sql
+   * @param {minio.Client} minio
+   * @param {string} bucketName
    * @param {FileCacheOptions} [options]
    */
-  constructor(fileStore, options) {
-    this.fileStore = fileStore;
+  constructor(sql, minio, bucketName, options) {
+    this.sql = sql;
+    this.minio = minio;
+    this.bucketName = bucketName;
 
     this.inMemoryThreshold = options?.inMemoryThreshold ?? 8 * 1024;
     this.cacheControlHeader = options?.cacheControlHeader ?? "max-age=1200";
@@ -119,14 +123,15 @@ export class FileCache {
    */
   async cacheFileInMemory(key, id, start, end) {
     const buffers = [];
-    await pipeline(await getFileStream(this.fileStore, id), async function* (
-      transform,
-    ) {
-      for await (const chunk of transform) {
-        buffers.push(chunk);
-        yield chunk;
-      }
-    });
+    await pipeline(
+      await getFileStream(this.minio, this.bucketName, id),
+      async function* (transform) {
+        for await (const chunk of transform) {
+          buffers.push(chunk);
+          yield chunk;
+        }
+      },
+    );
 
     this.memoryCache.set(key, Buffer.concat(buffers));
 
@@ -147,7 +152,7 @@ export class FileCache {
   async cacheFileOnDisk(key, id, start, end) {
     const path = pathJoin(FileCache.fileCachePath, key);
     await pipeline(
-      await getFileStream(this.fileStore, id),
+      await getFileStream(this.minio, this.bucketName, id),
       createWriteStream(pathJoin(FileCache.fileCachePath, key)),
     );
 

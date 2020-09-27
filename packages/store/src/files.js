@@ -18,25 +18,20 @@ const queries = {
 };
 
 /**
- * @param sql
+ * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
- */
-export function newFileStoreContext(sql, minio, bucketName) {
-  return {
-    sql,
-    minio,
-    bucketName,
-  };
-}
-
-/**
- * @param {FileStoreContext} fc
  * @param {StoreFileStoreInsertPartial_Input & { id?: string }} props
  * @param {ReadStream|string} streamOrPath
  * @returns {Promise<StoreFileStore>}
  */
-export async function createOrUpdateFile(fc, props, streamOrPath) {
+export async function createOrUpdateFile(
+  sql,
+  minio,
+  bucketName,
+  props,
+  streamOrPath,
+) {
   if (!props.filename) {
     throw new Error("filename is required on file props");
   }
@@ -45,12 +40,12 @@ export async function createOrUpdateFile(fc, props, streamOrPath) {
     props.contentType = mime.lookup(props.filename) || "*/*";
   }
 
-  props.bucketName = fc.bucketName;
+  props.bucketName = bucketName;
 
   // Do a manual insert first to get an id
   if (!props.id) {
     props.contentLength = 0;
-    const [intermediate] = await storeQueries.fileStoreInsert(fc.sql, props);
+    const [intermediate] = await storeQueries.fileStoreInsert(sql, props);
     props.id = intermediate.id;
   }
 
@@ -58,13 +53,13 @@ export async function createOrUpdateFile(fc, props, streamOrPath) {
     streamOrPath = createReadStream(streamOrPath);
   }
 
-  await fc.minio.putObject(fc.bucketName, props.id, streamOrPath, {
+  await minio.putObject(bucketName, props.id, streamOrPath, {
     "content-type": props.contentType,
   });
-  const stat = await fc.minio.statObject(fc.bucketName, props.id);
+  const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
-  const [result] = await storeQueries.fileStoreUpdate(fc.sql, props, {
+  const [result] = await storeQueries.fileStoreUpdate(sql, props, {
     id: props.id,
   });
 
@@ -72,58 +67,54 @@ export async function createOrUpdateFile(fc, props, streamOrPath) {
 }
 
 /**
- * @param {FileStoreContext} fc
- * @param {string} id
- * @returns {Promise<StoreFileStore|undefined>}
- */
-export async function getFileById(fc, id) {
-  const [result] = await storeQueries.fileStoreSelect(fc.sql, {
-    id,
-    bucketName: fc.bucketName,
-  });
-
-  return result;
-}
-
-/**
- * @param {FileStoreContext} fc
+ * @param {minio.Client} minio
+ * @param {string} bucketName
  * @param {string} id
  * @param {number} [start]
  * @param {number} [end]
  * @returns {Promise<ReadableStream>}
  */
-export async function getFileStream(fc, id, { start, end } = {}) {
+export async function getFileStream(
+  minio,
+  bucketName,
+  id,
+  { start, end } = {},
+) {
   if (start !== undefined || end !== undefined) {
     start = start || 0;
     const size = end === undefined ? 0 : end - start;
 
-    return fc.minio.getPartialObject(fc.bucketName, id, start, size);
+    return minio.getPartialObject(bucketName, id, start, size);
   }
-  return fc.minio.getObject(fc.bucketName, id);
+  return minio.getObject(bucketName, id);
 }
 
 /**
- * @param {FileStoreContext} fc
+ * @param {Postgres} sql
+ * @param {minio.Client} minio
+ * @param {string} bucketName
  * @param {string} id
- * @param {string} [targetBucket=fc.bucketName]
+ * @param {string} [targetBucket=bucketName]
  * @returns {Promise<StoreFileStore>}
  */
-export async function copyFile(fc, id, targetBucket = fc.bucketName) {
+export async function copyFile(
+  sql,
+  minio,
+  bucketName,
+  id,
+  targetBucket = bucketName,
+) {
   const [intermediate] = await queries.copyFile(
-    fc.sql,
+    sql,
     uuid(),
     targetBucket,
     id,
-    fc.bucketName,
+    bucketName,
   );
 
-  await fc.minio.copyObject(
-    targetBucket,
-    intermediate.id,
-    `${fc.bucketName}/${id}`,
-  );
+  await minio.copyObject(targetBucket, intermediate.id, `${bucketName}/${id}`);
 
-  const [result] = await storeQueries.fileStoreSelect(fc.sql, {
+  const [result] = await storeQueries.fileStoreSelect(sql, {
     id: intermediate.id,
   });
 
@@ -131,23 +122,14 @@ export async function copyFile(fc, id, targetBucket = fc.bucketName) {
 }
 
 /**
- * @param fc
- * @param id
+ * @param {Postgres} sql
+ * @param {minio.Client} minio
+ * @param {string} bucketName
  */
-export async function deleteFile(fc, id) {
-  return storeQueries.fileStoreDelete(fc.sql, {
-    id,
-    bucketName: fc.bucketName,
-  });
-}
-
-/**
- * @param fc
- */
-export async function syncDeletedFiles(fc) {
-  const minioObjectsPromise = listObjects(fc.minio, fc.bucketName);
-  const knownIds = await storeQueries.fileStoreSelect(fc.sql, {
-    bucketName: fc.bucketName,
+export async function syncDeletedFiles(sql, minio, bucketName) {
+  const minioObjectsPromise = listObjects(minio, bucketName);
+  const knownIds = await storeQueries.fileStoreSelect(sql, {
+    bucketName: bucketName,
   });
 
   const ids = knownIds.map((it) => it.id);
@@ -161,7 +143,7 @@ export async function syncDeletedFiles(fc) {
     }
   }
 
-  await fc.minio.removeObjects(fc.bucketName, deletingSet);
+  await minio.removeObjects(bucketName, deletingSet);
 
   return deletingSet.length;
 }

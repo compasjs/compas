@@ -81,7 +81,7 @@ export function removeBucketAndObjectsInBucket(
  */
 export function newPostgresConnection(
   opts?: postgresVendor.Options<{}> & { createIfNotExists?: boolean },
-): Promise<postgresVendor.Sql<{}>>;
+): Promise<Postgres>;
 
 /**
  * Set test database.
@@ -103,14 +103,12 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  */
 export function createTestPostgresDatabase(
   verboseSql?: boolean,
-): Promise<postgresVendor.Sql<{}>>;
+): Promise<Postgres>;
 
 /**
  * Drop the test database created with `createTestPostgresDatabase` and end the connection
  */
-export function cleanupTestPostgresDatabase(
-  sql: postgresVendor.Sql<{}>,
-): Promise<void>;
+export function cleanupTestPostgresDatabase(sql: Postgres): Promise<void>;
 
 /**
  * Internal representation of a migration file
@@ -133,16 +131,14 @@ export interface MigrateContext {
   files: MigrateFile[];
   namespaces: string[];
   storedHashes: Record<string, string>;
-  sql: postgresVendor.Sql<{}>;
+  sql: Postgres;
 }
 
 /**
  * Create a new MigrateContext, requires an advisory lock and does the necessary queries to
  * get the state.
  */
-export function newMigrationContext(
-  sql: postgresVendor.Sql<{}>,
-): Promise<MigrateContext>;
+export function newMigrationContext(sql: Postgres): Promise<MigrateContext>;
 
 /**
  * Get a list of migrations to be applied
@@ -156,21 +152,6 @@ export function getMigrationsToBeApplied(
  * Run the migrations, as returned by `getMigrationsToBeApplied`
  */
 export function runMigrations(mc: MigrateContext): Promise<void>;
-
-export interface FileStoreContext {
-  sql: postgresVendor.Sql<{}>;
-  minio: minioVendor.Client;
-  bucketName: string;
-}
-
-/**
- * Create a new FileStoreContext
- */
-export function newFileStoreContext(
-  sql: postgresVendor.Sql<{}>,
-  minio: minioVendor.Client,
-  bucketName: string,
-): FileStoreContext;
 
 export interface StoreFileStore {
   id: string;
@@ -188,7 +169,9 @@ export interface StoreFileStore {
  * file
  */
 export function createOrUpdateFile(
-  fc: FileStoreContext,
+  sql: Postgres,
+  minio: minioVendor.Client,
+  bucketName: string,
   props: {
     id?: string;
     bucketName?: string;
@@ -202,38 +185,31 @@ export function createOrUpdateFile(
 ): Promise<StoreFileStore>;
 
 /**
- * Delete a file by id
- * Does not remove the object from minio bucket
- */
-export function deleteFile(fc: FileStoreContext, id: string): Promise<void>;
-
-/**
  * Sync deleted files to the minio bucket
  */
-export function syncDeletedFiles(fc: FileStoreContext);
+export function syncDeletedFiles(
+  sql: Postgres,
+  minio: minioVendor.Client,
+  bucketName: string,
+);
 
 /**
  * Create a file copy both in postgres and in minio
  */
 export function copyFile(
-  fc: FileStoreContext,
+  sql: Postgres,
+  minio: minioVendor.Client,
+  bucketName: string,
   id: string,
   targetBucket?: string,
 ): Promise<StoreFileStore>;
 
 /**
- * Select a file by id
- */
-export function getFileById(
-  fc: FileStoreContext,
-  id: string,
-): Promise<StoreFileStore | undefined>;
-
-/**
  * Open a ReadStream for a (partial) file
  */
 export function getFileStream(
-  fc: FileStoreContext,
+  minio: minioVendor.Client,
+  bucketName: string,
   id: string,
   range?: { start?: number; end?: number },
 ): Promise<NodeJS.ReadStream>;
@@ -263,7 +239,12 @@ export interface FileCacheOptions {
 export class FileCache {
   static fileCachePath: string;
 
-  constructor(fileStore: FileStoreContext, options?: FileCacheOptions);
+  constructor(
+    sql: Postgres,
+    minio: minioVendor.Client,
+    bucketName: string,
+    options?: FileCacheOptions,
+  );
 
   /**
    * Get a file(part) from the cache.
@@ -317,7 +298,7 @@ export interface JobInput {
 }
 
 export interface JobQueueWorkerOptions {
-  handler: (sql: postgresVendor.Sql<{}>, data: JobData) => void | Promise<void>;
+  handler: (sql: Postgres, data: JobData) => void | Promise<void>;
 
   /**
    * Determine the poll interval in milliseconds if the queue was empty. Defaults to 1500 ms
@@ -337,7 +318,7 @@ export interface JobQueueWorkerOptions {
  */
 export class JobQueueWorker {
   constructor(
-    sql: postgresVendor.Sql<{}>,
+    sql: Postgres,
     nameOrOptions: string | JobQueueWorkerOptions,
     options?: JobQueueWorkerOptions,
   );
@@ -377,10 +358,7 @@ export class JobQueueWorker {
  * Add a new item to the job queue
  * Defaults to `process.env.APP_NAME` if name is not specified
  */
-export function addJobToQueue(
-  sql: postgresVendor.Sql<{}>,
-  job: JobInput,
-): Promise<number>;
+export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
 
 /**
  * Stripped down from @lbu/server SessionStore
@@ -401,7 +379,7 @@ export interface SessionStore {
 /**
  * Create a session store compatible with @lbu/server#session
  */
-export function newSessionStore(sql: postgresVendor.Sql<{}>): SessionStore;
+export function newSessionStore(sql: Postgres): SessionStore;
 
 /**
  * Migration directory

@@ -1,13 +1,10 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@lbu/cli";
-import { dirnameForModule, isNil, uuid } from "@lbu/stdlib";
+import { dirnameForModule, uuid } from "@lbu/stdlib";
 import {
   copyFile,
   createOrUpdateFile,
-  deleteFile,
-  getFileById,
   getFileStream,
-  newFileStoreContext,
   syncDeletedFiles,
 } from "./files.js";
 import { storeQueries } from "./generated/queries.js";
@@ -43,9 +40,8 @@ test("store/files", async (t) => {
   });
 
   t.test("createOrUpdateFile no filename specified", async (t) => {
-    const ctx = newFileStoreContext(sql, minio, bucketName);
     try {
-      await createOrUpdateFile(ctx, {}, "");
+      await createOrUpdateFile(sql, minio, bucketName, {}, "");
       t.fail("Should throw for unknown filename");
     } catch (e) {
       t.ok(e);
@@ -53,8 +49,13 @@ test("store/files", async (t) => {
   });
 
   t.test("createOrUpdateFile only filename provided", async (t) => {
-    const ctx = newFileStoreContext(sql, minio, bucketName);
-    const file = await createOrUpdateFile(ctx, { filename }, filePath);
+    const file = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { filename },
+      filePath,
+    );
     t.ok(!!file.id);
     t.equal(file.contentType, "application/x-sql");
     t.ok(!!file.contentLength);
@@ -67,9 +68,10 @@ test("store/files", async (t) => {
     async (t) => {
       const updatedAt = new Date(2019, 1, 1, 1);
 
-      const ctx = newFileStoreContext(sql, minio, bucketName);
       const file = await createOrUpdateFile(
-        ctx,
+        sql,
+        minio,
+        bucketName,
         { filename, updatedAt },
         createReadStream(filePath),
       );
@@ -89,21 +91,11 @@ test("store/files", async (t) => {
     t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });
 
-  t.test("get file by id", async (t) => {
-    const ctx = newFileStoreContext(sql, minio, bucketName);
-    const file1 = await getFileById(ctx, uuid());
-    t.ok(isNil(file1));
-
-    const file2 = await getFileById(ctx, storedFiles[0].id);
-    t.deepEqual(file2, storedFiles[0]);
-  });
-
   t.test("get file stream by id", async (t) => {
     const testPath = "/tmp/lbu_store_stream_test";
     const ws = createWriteStream(testPath);
-    const ctx = newFileStoreContext(sql, minio, bucketName);
 
-    const stream = await getFileStream(ctx, storedFiles[1].id);
+    const stream = await getFileStream(minio, bucketName, storedFiles[1].id);
 
     await new Promise((resolve, reject) => {
       ws.on("close", resolve);
@@ -120,11 +112,15 @@ test("store/files", async (t) => {
     const inputs = [{ end: 14 }, { start: 2 }, { start: 2, end: 14 }];
     const original = readFileSync(filePath, "utf-8");
     const testPath = "/tmp/lbu_store_stream_test";
-    const ctx = newFileStoreContext(sql, minio, bucketName);
 
     for (const input of inputs) {
       const ws = createWriteStream(testPath);
-      const stream = await getFileStream(ctx, storedFiles[1].id, input);
+      const stream = await getFileStream(
+        minio,
+        bucketName,
+        storedFiles[1].id,
+        input,
+      );
 
       await new Promise((resolve, reject) => {
         ws.on("close", resolve);
@@ -142,8 +138,7 @@ test("store/files", async (t) => {
   });
 
   t.test("copyFile", async (t) => {
-    const ctx = newFileStoreContext(sql, minio, bucketName);
-    const copy = await copyFile(ctx, storedFiles[1].id);
+    const copy = await copyFile(sql, minio, bucketName, storedFiles[1].id);
 
     t.notEqual(storedFiles[1].id, copy.id);
   });
@@ -160,21 +155,14 @@ test("store/files", async (t) => {
     t.equal(result.length, 2);
   });
 
-  t.test("deleteFile", async (t) => {
-    const ctx = newFileStoreContext(sql, minio, bucketName);
-    await deleteFile(ctx, storedFiles[0].id);
-    const file = await getFileById(ctx, storedFiles[0].id);
-    t.ok(isNil(file));
+  t.test("deleteFile", async () => {
+    await storeQueries.fileStoreDelete(sql, { id: storedFiles[0].id });
   });
 
   t.test("sync deleted files", async (t) => {
-    let length = await syncDeletedFiles(
-      newFileStoreContext(sql, minio, bucketName),
-    );
+    let length = await syncDeletedFiles(sql, minio, bucketName);
     t.ok(length > 0);
-    length = await syncDeletedFiles(
-      newFileStoreContext(sql, minio, bucketName),
-    );
+    length = await syncDeletedFiles(sql, minio, bucketName);
     t.equal(length, 0);
   });
 
