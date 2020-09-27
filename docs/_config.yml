@@ -4,22 +4,24 @@ navigation:
   - title: Home
     url: /
   - title: Changelog
-    url: changelog
+    url: changelog.html
   - title: Getting started
-    url: getting-started
+    url: getting-started.html
   - title: Cli
-    url: cli
+    url: cli.html
   - title: Code generation
-    url: code-gen
+    url: code-gen.html
   - title: Insight
-    url: insight
+    url: insight.html
   - title: Server
-    url: server
+    url: server.html
+  - title: Store
+    url: store.html
   - title: Lint config
-    url: lint-config
+    url: lint-config.html
   - title: Environment
-    url: env
+    url: env.html
   - title: How to
-    url: how-to
+    url: how-to.html
   - title: Contributing
-    url: contributing
+    url: contributing.html
