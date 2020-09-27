@@ -1,3 +1,4 @@
+import { isNil } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 import { getItem, upperCaseFirst } from "../../utils.js";
@@ -263,8 +264,9 @@ function getWhereFields(item) {
     const it = item.keys[key];
     // We don't support optional field searching, since it will break the way we do the
     // query generation e.g. NULL IS NULL is always true and thus the search results are
-    // invalid
-    if (it.isOptional || !it?.sql?.searchable) {
+    // invalid. However if a default value is set, we expect that this will be honored
+    // throughout all of the application.
+    if ((it.isOptional && isNil(it.defaultValue)) || !it?.sql?.searchable) {
       continue;
     }
 
