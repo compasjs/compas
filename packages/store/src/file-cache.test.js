@@ -5,7 +5,7 @@ import { mainTestFn, test } from "@lbu/cli";
 import { log, printProcessMemoryUsage } from "@lbu/insight";
 import { gc, pathJoin, uuid } from "@lbu/stdlib";
 import { FileCache } from "./file-cache.js";
-import { createOrUpdateFile, newFileStoreContext } from "./files.js";
+import { createOrUpdateFile } from "./files.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -38,7 +38,6 @@ test("store/file-cache", async (t) => {
   await ensureBucket(minio, bucketName, "us-east-1");
 
   let sql = undefined;
-  let store = undefined;
   let cache = undefined;
   const files = {
     small: Buffer.alloc(2, 0),
@@ -54,40 +53,41 @@ test("store/file-cache", async (t) => {
     t.equal(result[0].sum, 3);
   });
 
-  t.test("create FileCache", async (t) => {
-    store = newFileStoreContext(sql, minio, bucketName);
-    cache = new FileCache(store, {
+  t.test("create FileCache", () => {
+    cache = new FileCache(sql, minio, bucketName, {
       cacheControlHeader: "test",
       inMemoryThreshold: 5,
     });
-
-    t.ok(store);
   });
 
-  t.test("write fixtures to disk", async (t) => {
+  t.test("write fixtures to disk", () => {
     writeFileSync(pathJoin("/tmp", "small"), files.small);
     writeFileSync(pathJoin("/tmp", "medium"), files.medium);
     writeFileSync(pathJoin("/tmp", "large"), files.large);
-
-    t.ok(true);
   });
 
   t.test("populate fileStore", async (t) => {
     try {
       files.small = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "small" },
         pathJoin("/tmp", "small"),
       );
 
       files.medium = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "medium" },
         pathJoin("/tmp", "medium"),
       );
 
       files.large = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "large" },
         pathJoin("/tmp", "large"),
       );
@@ -166,18 +166,17 @@ test("store/file-cache", async (t) => {
 });
 
 test("store/file-cache check memory usage", async (t) => {
-  const bucketName = uuid();
-  const minio = newMinioClient({});
-  await ensureBucket(minio, bucketName, "us-east-1");
-
-  let sql = undefined;
-  let store = undefined;
-  let cache = undefined;
   const files = {
     small: Buffer.alloc(2000, 0),
     medium: Buffer.alloc(4000, 0),
     large: Buffer.alloc(10000, 0),
   };
+  const bucketName = uuid();
+  const minio = newMinioClient({});
+  await ensureBucket(minio, bucketName, "us-east-1");
+
+  let sql = undefined;
+  let cache = undefined;
 
   const logMemory = (t) => {
     t.test("print memory usage", () => {
@@ -197,42 +196,43 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
-  t.test("create FileCache", async (t) => {
-    store = newFileStoreContext(sql, minio, bucketName);
-    cache = new FileCache(store, {
+  t.test("create FileCache", () => {
+    cache = new FileCache(sql, minio, bucketName, {
       cacheControlHeader: "test",
       inMemoryThreshold: 3500,
     });
-
-    t.ok(store);
   });
 
   logMemory(t);
 
-  t.test("write fixtures to disk", (t) => {
+  t.test("write fixtures to disk", () => {
     writeFileSync(pathJoin("/tmp", "small"), files.small);
     writeFileSync(pathJoin("/tmp", "medium"), files.medium);
     writeFileSync(pathJoin("/tmp", "large"), files.large);
-
-    t.ok(true);
   });
 
   t.test("populate fileStore", async (t) => {
     try {
       files.small = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "small" },
         pathJoin("/tmp", "small"),
       );
 
       files.medium = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "medium" },
         pathJoin("/tmp", "medium"),
       );
 
       files.large = await createOrUpdateFile(
-        store,
+        sql,
+        minio,
+        bucketName,
         { filename: "large" },
         pathJoin("/tmp", "large"),
       );

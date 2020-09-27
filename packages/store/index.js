@@ -28,10 +28,7 @@ export {
 export {
   createOrUpdateFile,
   copyFile,
-  getFileById,
   getFileStream,
-  newFileStoreContext,
-  deleteFile,
   syncDeletedFiles,
 } from "./src/files.js";
 
