@@ -25,7 +25,29 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR fs."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR fs."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
 
@@ -49,7 +71,29 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       where?.bucketName ?? null
     }) AND (COALESCE(${
       where?.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+      where?.createdAt ?? null
+    }, NULL) IS NULL OR fs."createdAt" = ${
+      where?.createdAt ?? null
+    }) AND (COALESCE(${
+      where?.createdAtGreaterThan ?? null
+    }, NULL) IS NULL OR fs."createdAt" > ${
+      where?.createdAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.createdAtLowerThan ?? null
+    }, NULL) IS NULL OR fs."createdAt" < ${
+      where?.createdAtLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAt ?? null
+    }, NULL) IS NULL OR fs."updatedAt" = ${
+      where?.updatedAt ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtGreaterThan ?? null
+    }, NULL) IS NULL OR fs."updatedAt" > ${
+      where?.updatedAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtLowerThan ?? null
+    }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
@@ -73,7 +117,29 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR fs."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR fs."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `,
 
   /**
@@ -128,7 +194,29 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       where?.bucketName ?? null
     }) AND (COALESCE(${
       where?.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+      where?.createdAt ?? null
+    }, NULL) IS NULL OR fs."createdAt" = ${
+      where?.createdAt ?? null
+    }) AND (COALESCE(${
+      where?.createdAtGreaterThan ?? null
+    }, NULL) IS NULL OR fs."createdAt" > ${
+      where?.createdAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.createdAtLowerThan ?? null
+    }, NULL) IS NULL OR fs."createdAt" < ${
+      where?.createdAtLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAt ?? null
+    }, NULL) IS NULL OR fs."updatedAt" = ${
+      where?.updatedAt ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtGreaterThan ?? null
+    }, NULL) IS NULL OR fs."updatedAt" > ${
+      where?.updatedAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtLowerThan ?? null
+    }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     let query = `UPDATE "fileStore" fs SET `;
     const argList = [];
@@ -190,6 +278,42 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       argList.push(`%${where.bucketNameLike}%`);
       query += " AND ";
     }
+    if (where.createdAt !== undefined) {
+      query += `fs."createdAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.createdAt);
+      query += " AND ";
+    }
+    if (where.createdAtGreaterThan !== undefined) {
+      query += `fs."createdAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.createdAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.createdAtLowerThan !== undefined) {
+      query += `fs."createdAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.createdAtLowerThan);
+      query += " AND ";
+    }
+    if (where.updatedAt !== undefined) {
+      query += `fs."updatedAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.updatedAt);
+      query += " AND ";
+    }
+    if (where.updatedAtGreaterThan !== undefined) {
+      query += `fs."updatedAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.updatedAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.updatedAtLowerThan !== undefined) {
+      query += `fs."updatedAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.updatedAtLowerThan);
+      query += " AND ";
+    }
     query = query.substring(0, query.length - 4);
     query += ` RETURNING fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt"`;
     return sql.unsafe(query, argList);
@@ -217,7 +341,29 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`})
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR fs."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR fs."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 GROUP BY fs.id
 ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
@@ -239,11 +385,45 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where?.idGreaterThan ?? null
   }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
     where?.idLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAt ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" = ${
+    where?.scheduledAt ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" > ${
+    where?.scheduledAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" < ${
+    where?.scheduledAtLowerThan ?? null
   }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
     where?.name ?? null
   }) AND (COALESCE(${
     where?.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR jq."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR jq."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 ORDER BY jq."createdAt", jq."updatedAt" , jq."id"
 `,
 
@@ -265,11 +445,45 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
       where?.idLowerThan ?? null
     }, NULL) IS NULL OR jq."id" < ${
       where?.idLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.scheduledAt ?? null
+    }, NULL) IS NULL OR jq."scheduledAt" = ${
+      where?.scheduledAt ?? null
+    }) AND (COALESCE(${
+      where?.scheduledAtGreaterThan ?? null
+    }, NULL) IS NULL OR jq."scheduledAt" > ${
+      where?.scheduledAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.scheduledAtLowerThan ?? null
+    }, NULL) IS NULL OR jq."scheduledAt" < ${
+      where?.scheduledAtLowerThan ?? null
     }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
       where?.name ?? null
     }) AND (COALESCE(${
       where?.nameLike ?? null
-    }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
+    }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+      where?.createdAt ?? null
+    }, NULL) IS NULL OR jq."createdAt" = ${
+      where?.createdAt ?? null
+    }) AND (COALESCE(${
+      where?.createdAtGreaterThan ?? null
+    }, NULL) IS NULL OR jq."createdAt" > ${
+      where?.createdAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.createdAtLowerThan ?? null
+    }, NULL) IS NULL OR jq."createdAt" < ${
+      where?.createdAtLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAt ?? null
+    }, NULL) IS NULL OR jq."updatedAt" = ${
+      where?.updatedAt ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtGreaterThan ?? null
+    }, NULL) IS NULL OR jq."updatedAt" > ${
+      where?.updatedAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtLowerThan ?? null
+    }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
@@ -289,11 +503,45 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where?.idGreaterThan ?? null
   }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
     where?.idLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAt ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" = ${
+    where?.scheduledAt ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" > ${
+    where?.scheduledAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.scheduledAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."scheduledAt" < ${
+    where?.scheduledAtLowerThan ?? null
   }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
     where?.name ?? null
   }) AND (COALESCE(${
     where?.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`})
+  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR jq."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR jq."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR jq."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `,
 
   /**
@@ -383,6 +631,24 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
       argList.push(where.idLowerThan);
       query += " AND ";
     }
+    if (where.scheduledAt !== undefined) {
+      query += `jq."scheduledAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.scheduledAt);
+      query += " AND ";
+    }
+    if (where.scheduledAtGreaterThan !== undefined) {
+      query += `jq."scheduledAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.scheduledAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.scheduledAtLowerThan !== undefined) {
+      query += `jq."scheduledAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.scheduledAtLowerThan);
+      query += " AND ";
+    }
     if (where.name !== undefined) {
       query += `jq."name" `;
       query += `= $${idx++}`;
@@ -393,6 +659,42 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
       query += `jq."name" `;
       query += `LIKE $${idx++}`;
       argList.push(`%${where.nameLike}%`);
+      query += " AND ";
+    }
+    if (where.createdAt !== undefined) {
+      query += `jq."createdAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.createdAt);
+      query += " AND ";
+    }
+    if (where.createdAtGreaterThan !== undefined) {
+      query += `jq."createdAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.createdAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.createdAtLowerThan !== undefined) {
+      query += `jq."createdAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.createdAtLowerThan);
+      query += " AND ";
+    }
+    if (where.updatedAt !== undefined) {
+      query += `jq."updatedAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.updatedAt);
+      query += " AND ";
+    }
+    if (where.updatedAtGreaterThan !== undefined) {
+      query += `jq."updatedAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.updatedAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.updatedAtLowerThan !== undefined) {
+      query += `jq."updatedAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.updatedAtLowerThan);
       query += " AND ";
     }
     query = query.substring(0, query.length - 4);
@@ -422,6 +724,27 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   },
 
   /**
+   * Note: Use only when scheduledAt has a unique constraint
+   * @param sql
+   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJobQueue[]>}
+   */
+  jobQueueUpsertByScheduledAt: (sql, it) => {
+    return sql`
+INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
+      it.scheduledAt ?? new Date()
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("scheduledAt") DO UPDATE SET
+"isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "name" = EXCLUDED."name", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
    * Note: Use only when name has a unique constraint
    * @param sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
@@ -438,6 +761,48 @@ ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
     }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("name") DO UPDATE SET
 "isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when createdAt has a unique constraint
+   * @param sql
+   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJobQueue[]>}
+   */
+  jobQueueUpsertByCreatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
+      it.scheduledAt ?? new Date()
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("createdAt") DO UPDATE SET
+"isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "name" = EXCLUDED."name", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when updatedAt has a unique constraint
+   * @param sql
+   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJobQueue[]>}
+   */
+  jobQueueUpsertByUpdatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
+      it.scheduledAt ?? new Date()
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("updatedAt") DO UPDATE SET
+"isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "name" = EXCLUDED."name", "data" = EXCLUDED."data"
 RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 `;
   },
@@ -465,7 +830,31 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
     where?.expiresGreaterThan ?? null
   }) AND (COALESCE(${
     where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+  }, NULL) IS NULL OR ss."expires" < ${
+    where?.expiresLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR ss."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR ss."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR ss."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR ss."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR ss."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
 `,
 
@@ -493,7 +882,31 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
       where?.expiresGreaterThan ?? null
     }) AND (COALESCE(${
       where?.expiresLowerThan ?? null
-    }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+    }, NULL) IS NULL OR ss."expires" < ${
+      where?.expiresLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.createdAt ?? null
+    }, NULL) IS NULL OR ss."createdAt" = ${
+      where?.createdAt ?? null
+    }) AND (COALESCE(${
+      where?.createdAtGreaterThan ?? null
+    }, NULL) IS NULL OR ss."createdAt" > ${
+      where?.createdAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.createdAtLowerThan ?? null
+    }, NULL) IS NULL OR ss."createdAt" < ${
+      where?.createdAtLowerThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAt ?? null
+    }, NULL) IS NULL OR ss."updatedAt" = ${
+      where?.updatedAt ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtGreaterThan ?? null
+    }, NULL) IS NULL OR ss."updatedAt" > ${
+      where?.updatedAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.updatedAtLowerThan ?? null
+    }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
@@ -519,7 +932,31 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
     where?.expiresGreaterThan ?? null
   }) AND (COALESCE(${
     where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${where?.expiresLowerThan ?? null})
+  }, NULL) IS NULL OR ss."expires" < ${
+    where?.expiresLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR ss."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR ss."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR ss."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR ss."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR ss."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `,
 
   /**
@@ -615,6 +1052,42 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
       argList.push(where.expiresLowerThan);
       query += " AND ";
     }
+    if (where.createdAt !== undefined) {
+      query += `ss."createdAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.createdAt);
+      query += " AND ";
+    }
+    if (where.createdAtGreaterThan !== undefined) {
+      query += `ss."createdAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.createdAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.createdAtLowerThan !== undefined) {
+      query += `ss."createdAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.createdAtLowerThan);
+      query += " AND ";
+    }
+    if (where.updatedAt !== undefined) {
+      query += `ss."updatedAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.updatedAt);
+      query += " AND ";
+    }
+    if (where.updatedAtGreaterThan !== undefined) {
+      query += `ss."updatedAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.updatedAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.updatedAtLowerThan !== undefined) {
+      query += `ss."updatedAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.updatedAtLowerThan);
+      query += " AND ";
+    }
     query = query.substring(0, query.length - 4);
     query += ` RETURNING ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"`;
     return sql.unsafe(query, argList);
@@ -654,6 +1127,44 @@ ${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
     }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("expires") DO UPDATE SET
 "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "expires", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when createdAt has a unique constraint
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpsertByCreatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("createdAt") DO UPDATE SET
+"expires" = EXCLUDED."expires", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "expires", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when updatedAt has a unique constraint
+   * @param sql
+   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSessionStore[]>}
+   */
+  sessionStoreUpsertByUpdatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("updatedAt") DO UPDATE SET
+"expires" = EXCLUDED."expires", "data" = EXCLUDED."data"
 RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 `;
   },

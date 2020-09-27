@@ -28,13 +28,13 @@
 /**
  * @name StoreFileStoreWhere
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , }}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
  */
 
 /**
  * @name StoreFileStoreWhere_Input
  *
- * @typedef { StoreFileStoreWhere}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */
 
 /**
@@ -64,13 +64,13 @@
 /**
  * @name StoreJobQueueWhere
  *
- * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "name"?:string , "nameLike"?:string , }}
+ * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt":Date, "scheduledAtGreaterThan":Date, "scheduledAtLowerThan":Date, "name"?:string , "nameLike"?:string , "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
  */
 
 /**
  * @name StoreJobQueueWhere_Input
  *
- * @typedef { StoreJobQueueWhere}
+ * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:string, "scheduledAtGreaterThan"?:string, "scheduledAtLowerThan"?:string, "name"?:string , "nameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */
 
 /**
@@ -100,11 +100,11 @@
 /**
  * @name StoreSessionStoreWhere
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, }}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
  */
 
 /**
  * @name StoreSessionStoreWhere_Input
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:string, "expiresGreaterThan"?:string, "expiresLowerThan"?:string, }}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:string, "expiresGreaterThan"?:string, "expiresLowerThan"?:string, "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */
