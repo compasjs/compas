@@ -261,7 +261,7 @@ function getWhereFields(item) {
   };
 
   for (const key of Object.keys(item.keys)) {
-    const it = item.keys[key];
+    const it = getItem(item.keys[key]);
     // We don't support optional field searching, since it will break the way we do the
     // query generation e.g. NULL IS NULL is always true and thus the search results are
     // invalid. However if a default value is set, we expect that this will be honored
@@ -271,7 +271,7 @@ function getWhereFields(item) {
     }
 
     // Also supports referenced fields
-    const type = getItem(it)?.type;
+    const type = it.type;
 
     if (type === "number" || type === "date") {
       // Generate =, > and < queries
