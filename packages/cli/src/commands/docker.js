@@ -136,13 +136,16 @@ async function startContainers(logger, containerInfo) {
  * @returns {Promise<number>}
  */
 async function stopContainers(logger, containerInfo) {
+  const containers = containerInfo.enabledContainers.filter(
+    (it) => containerInfo.knownContainers.indexOf(it) !== -1,
+  );
+
+  if (containers.length === 0) {
+    return 0;
+  }
+
   logger.info(`Stopping containers`);
-  const { exitCode } = await spawn(`docker`, [
-    "stop",
-    ...containerInfo.enabledContainers.filter(
-      (it) => containerInfo.knownContainers.indexOf(it) !== -1,
-    ),
-  ]);
+  const { exitCode } = await spawn(`docker`, ["stop", ...containers]);
 
   return exitCode;
 }
