@@ -1,7 +1,7 @@
 import { mainFn } from "@lbu/stdlib";
 import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
-import { runTestChildrenInParallel } from "./runner.js";
+import { runTestsRecursively } from "./runner.js";
 import {
   areTestsRunning,
   setAreTestRunning,
@@ -34,7 +34,7 @@ export function mainTestFn(meta) {
       await config.setup();
     }
 
-    await runTestChildrenInParallel(state);
+    await runTestsRecursively(state);
 
     if (typeof config?.teardown === "function") {
       await config.teardown();
