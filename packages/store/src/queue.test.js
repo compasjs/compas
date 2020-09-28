@@ -84,6 +84,9 @@ test("store/queue", async (t) => {
       setTimeout(r, 15);
     });
     qw.stop();
+    await new Promise((r) => {
+      setTimeout(r, 15);
+    });
     t.ok(!qw.isStarted);
   });
 

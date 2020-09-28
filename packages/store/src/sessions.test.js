@@ -31,11 +31,11 @@ test("store/sessions", async (t) => {
     const id = uuid();
     const data = { foo: "bar" };
 
-    await store.set(id, data, 25);
+    await store.set(id, data, 45);
     t.deepEqual(await store.get(id), data);
 
     // Make sure upsert query works
-    await store.set(id, data, 25);
+    await store.set(id, data, 45);
     t.deepEqual(await store.get(id), data);
   });
 
@@ -44,7 +44,7 @@ test("store/sessions", async (t) => {
     const id = uuid();
 
     const data = { foo: "bar" };
-    await store.set(id, data, 15);
+    await store.set(id, data, 25);
     t.deepEqual(await store.get(id), data);
     await store.destroy(id);
     t.equal(await store.get(id), false);
@@ -55,17 +55,21 @@ test("store/sessions", async (t) => {
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);
-    await new Promise((r) => {
-      setTimeout(r, 30);
-    });
+    await storeQueries.sessionStoreUpdate(
+      sql,
+      { expires: new Date(0) },
+      {
+        expiresGreaterThan: new Date(0),
+      },
+    );
     await store.clean();
 
     t.equal(
       (
         await sql`
-                  SELECT *
-                  FROM "sessionStore"
-         `
+                SELECT *
+                FROM "sessionStore"
+      `
       ).length,
       0,
     );

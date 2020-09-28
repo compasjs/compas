@@ -1,4 +1,4 @@
-import { existsSync, lstatSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, lstatSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
 import { mainTestFn, test } from "@lbu/cli";
@@ -33,6 +33,7 @@ const streamToBuffer = async (str) => {
 };
 
 test("store/file-cache", async (t) => {
+  const basePath = pathJoin("/tmp", uuid());
   const bucketName = uuid();
   const minio = newMinioClient({});
   await ensureBucket(minio, bucketName, "us-east-1");
@@ -61,9 +62,10 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("write fixtures to disk", () => {
-    writeFileSync(pathJoin("/tmp", "small"), files.small);
-    writeFileSync(pathJoin("/tmp", "medium"), files.medium);
-    writeFileSync(pathJoin("/tmp", "large"), files.large);
+    mkdirSync(basePath, { recursive: true });
+    writeFileSync(pathJoin(basePath, "small"), files.small);
+    writeFileSync(pathJoin(basePath, "medium"), files.medium);
+    writeFileSync(pathJoin(basePath, "large"), files.large);
   });
 
   t.test("populate fileStore", async (t) => {
@@ -73,7 +75,7 @@ test("store/file-cache", async (t) => {
         minio,
         bucketName,
         { filename: "small" },
-        pathJoin("/tmp", "small"),
+        pathJoin(basePath, "small"),
       );
 
       files.medium = await createOrUpdateFile(
@@ -81,7 +83,7 @@ test("store/file-cache", async (t) => {
         minio,
         bucketName,
         { filename: "medium" },
-        pathJoin("/tmp", "medium"),
+        pathJoin(basePath, "medium"),
       );
 
       files.large = await createOrUpdateFile(
@@ -89,7 +91,7 @@ test("store/file-cache", async (t) => {
         minio,
         bucketName,
         { filename: "large" },
-        pathJoin("/tmp", "large"),
+        pathJoin(basePath, "large"),
       );
     } catch (e) {
       t.fail(e);
@@ -166,6 +168,7 @@ test("store/file-cache", async (t) => {
 });
 
 test("store/file-cache check memory usage", async (t) => {
+  const basePath = pathJoin("/tmp", uuid());
   const files = {
     small: Buffer.alloc(2000, 0),
     medium: Buffer.alloc(4000, 0),
@@ -206,9 +209,10 @@ test("store/file-cache check memory usage", async (t) => {
   logMemory(t);
 
   t.test("write fixtures to disk", () => {
-    writeFileSync(pathJoin("/tmp", "small"), files.small);
-    writeFileSync(pathJoin("/tmp", "medium"), files.medium);
-    writeFileSync(pathJoin("/tmp", "large"), files.large);
+    mkdirSync(basePath, { recursive: true });
+    writeFileSync(pathJoin(basePath, "small"), files.small);
+    writeFileSync(pathJoin(basePath, "medium"), files.medium);
+    writeFileSync(pathJoin(basePath, "large"), files.large);
   });
 
   t.test("populate fileStore", async (t) => {
@@ -218,7 +222,7 @@ test("store/file-cache check memory usage", async (t) => {
         minio,
         bucketName,
         { filename: "small" },
-        pathJoin("/tmp", "small"),
+        pathJoin(basePath, "small"),
       );
 
       files.medium = await createOrUpdateFile(
@@ -226,7 +230,7 @@ test("store/file-cache check memory usage", async (t) => {
         minio,
         bucketName,
         { filename: "medium" },
-        pathJoin("/tmp", "medium"),
+        pathJoin(basePath, "medium"),
       );
 
       files.large = await createOrUpdateFile(
@@ -234,7 +238,7 @@ test("store/file-cache check memory usage", async (t) => {
         minio,
         bucketName,
         { filename: "large" },
-        pathJoin("/tmp", "large"),
+        pathJoin(basePath, "large"),
       );
     } catch (e) {
       t.fail(e);
@@ -288,13 +292,13 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
-  t.test("destroy test db", async (t) => {
-    await cleanupTestPostgresDatabase(sql);
-    t.ok(true, "closed postgres connection");
-  });
-
   t.test("remove minio bucket", async (t) => {
     await removeBucketAndObjectsInBucket(minio, bucketName);
     t.ok(true, "removed minio bucket");
+  });
+
+  t.test("destroy test db", async (t) => {
+    await cleanupTestPostgresDatabase(sql);
+    t.ok(true, "closed postgres connection");
   });
 });
