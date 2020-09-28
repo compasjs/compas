@@ -1,14 +1,14 @@
 import { once } from "events";
-import { createReadStream, createWriteStream } from "fs";
+import { mkdirSync, createReadStream, createWriteStream } from "fs";
 import { pipeline as pipelineCallbacks, Readable } from "stream";
 import { promisify } from "util";
-import { isNil, pathJoin } from "@lbu/stdlib";
+import { isNil, pathJoin, uuid } from "@lbu/stdlib";
 import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);
 
 export class FileCache {
-  static fileCachePath = "/tmp";
+  static fileCachePath = `/tmp/lbu-cache/${uuid()}/`;
 
   /**
    * @param {Postgres} sql
@@ -33,6 +33,10 @@ export class FileCache {
      * @type {typeof FileCache#getFileStream}
      */
     this.getStreamFn = this.getFileStream.bind(this);
+
+    // Create the directory synchronously
+    // So we don't have to track if it was made or not
+    mkdirSync(FileCache.fileCachePath, { recursive: true });
   }
 
   /**

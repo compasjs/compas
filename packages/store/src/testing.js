@@ -101,8 +101,8 @@ export async function createTestPostgresDatabase(verboseSql = false) {
 
     // Cleanup all connections
     await Promise.all([
-      creationSql.end({ timeout: 0.01 }),
-      sql.end({ timeout: 0.01 }),
+      creationSql.end({ timeout: 0.2 }),
+      sql.end({ timeout: 0.2 }),
     ]);
   }
 
@@ -120,7 +120,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
 
   // Initialize new connection and kill old connection
   await Promise.all([
-    creationSql.end({ timeout: 0.01 }),
+    creationSql.end({ timeout: 0.2 }),
     sql`SELECT 1 + 1 AS sum`,
   ]);
 
@@ -132,10 +132,10 @@ export async function createTestPostgresDatabase(verboseSql = false) {
  */
 export async function cleanupTestPostgresDatabase(sql) {
   const dbName = sql.options.database;
-  await sql.end({ timeout: 0.01 });
+  await sql.end({ timeout: 0.2 });
 
   const deletionSql = await newPostgresConnection({});
   // language=PostgreSQL
   await deletionSql.unsafe(`DROP DATABASE ${dbName}`);
-  await deletionSql.end({ timeout: 0.01 });
+  await deletionSql.end({ timeout: 0.2 });
 }

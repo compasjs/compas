@@ -41,6 +41,7 @@ export async function newPostgresConnection(opts) {
           application_name: process.env.APP_NAME,
           ssl: isProduction(),
         },
+        no_prepare: true,
       },
       opts,
     ),
