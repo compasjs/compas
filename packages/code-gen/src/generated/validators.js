@@ -447,6 +447,9 @@ function stringValidator2(
       errorList,
     );
   }
+  if (value.length === 0) {
+    return;
+  }
   if (value.length < 0) {
     const min = 0;
     return buildError(
@@ -604,6 +607,9 @@ function stringValidator8(
       { propertyPath },
       errorList,
     );
+  }
+  if (value.length === 0) {
+    return;
   }
   if (value.length < 1) {
     const min = 1;
