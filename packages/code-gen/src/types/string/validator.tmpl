@@ -12,6 +12,12 @@ if (typeof value !== "string") {
   value = value.trim();
 {{ } }}
 
+{{ if (item.isOptional) { }}
+  if (value.length === 0) {
+    return {{= item.defaultValue }};
+  }
+{{ } }}
+
 {{ if (item.validator.min !== undefined) { }}
   if (value.length < {{= item.validator.min }}) {
     const min = {{= item.validator.min }};

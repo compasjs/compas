@@ -95,11 +95,13 @@ how you can create it via the TypeCreator (`T`).
 - **String**: created with `T.string()`. The validator has various utilities
   build in for this type as well.
 
-  - `.min()` and `.max()` to enforce a length
+  - `.min()` and `.max()` to enforce a length. The default length is one (1).
   - `.trim()`, `.lowercase()` and `.uppercase()` for sanitizing some data
   - `.pattern()` to check with a regular expression
-  - `.oneOf` to enforce specific values. This is also the way to create an
+  - `.oneOf()` to enforce specific values. This is also the way to create an
     'enum'-like.
+  - `.isOptional()` allow empty and undefined values. Empty strings are
+    automatically converted to undefined values.
 
 - **Object**: created with `T.object()` supports string keys and other
   TypeBuilders as values.

@@ -272,6 +272,12 @@ function getWhereFields(item) {
 
     // Also supports referenced fields
     const type = it.type;
+    const settings = {
+      name: undefined,
+      group: undefined,
+      uniqueName: undefined,
+      isOptional: true,
+    };
 
     if (type === "number" || type === "date") {
       // Generate =, > and < queries
@@ -286,9 +292,9 @@ function getWhereFields(item) {
         { key, name: `${key}LowerThan`, type: "lowerThan" },
       );
 
-      resultType.keys[key] = { ...it, isOptional: true };
-      resultType.keys[`${key}GreaterThan`] = { ...it, isOptional: true };
-      resultType.keys[`${key}LowerThan`] = { ...it, isOptional: true };
+      resultType.keys[key] = { ...it, ...settings };
+      resultType.keys[`${key}GreaterThan`] = { ...it, ...settings };
+      resultType.keys[`${key}LowerThan`] = { ...it, ...settings };
     } else if (type === "string") {
       // Generate = and LIKE %input% queries
 
@@ -297,8 +303,8 @@ function getWhereFields(item) {
         { key, name: `${key}Like`, type: "like" },
       );
 
-      resultType.keys[key] = { ...it, isOptional: true };
-      resultType.keys[`${key}Like`] = { ...it, isOptional: true };
+      resultType.keys[key] = { ...it, ...settings };
+      resultType.keys[`${key}Like`] = { ...it, ...settings };
     } else if (type === "uuid") {
       // Generate = and IN (uuid1, uuid2) queries
       fieldsArray.push(
@@ -306,13 +312,13 @@ function getWhereFields(item) {
         { key, name: `${key}In`, type: "in" },
       );
 
-      resultType.keys[key] = { ...it, isOptional: true };
+      resultType.keys[key] = { ...it, ...settings };
       resultType.keys[`${key}In`] = {
         ...TypeBuilder.getBaseData(),
         ...TypeCreator.types.get("array").class.getBaseData(),
         type: "array",
         isOptional: true,
-        values: { ...it },
+        values: { ...it, ...settings, isOptional: it.isOptional },
       };
     }
   }
