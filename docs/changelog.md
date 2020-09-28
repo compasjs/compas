@@ -1,5 +1,34 @@
 # CHANGELOG
 
+### [v0.0.76](https://github.com/lightbasenl/lbu/releases/tag/v0.0.76)
+
+- build(deps): bump eslint from 7.9.0 to 7.10.0
+  ([#313](https://github.com/lightbasenl/lbu/pull/313))
+- build(deps): bump eslint-config-prettier from 6.11.0 to 6.12.0
+  ([#312](https://github.com/lightbasenl/lbu/pull/312))
+- build(deps): bump eslint-plugin-import from 2.22.0 to 2.22.1
+  ([#321](https://github.com/lightbasenl/lbu/pull/321))
+- cli: allow running tests in concurrently
+  ([#322](https://github.com/lightbasenl/lbu/pull/322))
+- cli: allow switching between postgres versions
+  ([#317](https://github.com/lightbasenl/lbu/pull/317))
+- cli: make sure Postgres is ready before returning from `docker up`
+  ([#306](https://github.com/lightbasenl/lbu/pull/306))
+- code-gen: convert default value always to a string
+- code-gen: generate sql where clause for optional values with a default type
+  ([#314](https://github.com/lightbasenl/lbu/pull/314))
+- code-gen: sql follow references in DDL and where clause
+  ([#315](https://github.com/lightbasenl/lbu/pull/315))
+- code-gen: support providing default types on a RouteCreator
+  ([#318](https://github.com/lightbasenl/lbu/pull/318))
+- code-gen: verify path params against params type before generating
+  ([#305](https://github.com/lightbasenl/lbu/pull/305))
+- docs: consistent urls in config and sitemap
+- docs: update env documentation
+- docs: update sitemap to use extensions on the urls
+- store: remove FileStoreContext out of files
+  ([#320](https://github.com/lightbasenl/lbu/pull/320))
+
 ### [v0.0.75](https://github.com/lightbasenl/lbu/releases/tag/v0.0.75)
 
 - build(deps): bump @types/node from 14.11.1 to 14.11.2
