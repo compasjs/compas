@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [v0.0.77](https://github.com/lightbasenl/lbu/releases/tag/v0.0.77)
+
+- cli: remove concurrent test support
+  ([#324](https://github.com/lightbasenl/lbu/pull/324))
+- code-gen: validator default to undefined on empty strings
+  ([#325](https://github.com/lightbasenl/lbu/pull/325))
+
 ### [v0.0.76](https://github.com/lightbasenl/lbu/releases/tag/v0.0.76)
 
 - build(deps): bump eslint from 7.9.0 to 7.10.0
