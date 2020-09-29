@@ -438,7 +438,7 @@ function stringValidator2(
   parentType = "string",
 ) {
   if (isNil(value)) {
-    return;
+    return "";
   }
   if (typeof value !== "string") {
     return buildError(
@@ -448,10 +448,10 @@ function stringValidator2(
     );
   }
   if (value.length === 0) {
-    return;
+    return "";
   }
-  if (value.length < 0) {
-    const min = 0;
+  if (value.length < 1) {
+    const min = 1;
     return buildError(
       `validator.${parentType}.min`,
       { propertyPath, min },
