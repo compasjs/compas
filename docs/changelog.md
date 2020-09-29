@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.78](https://github.com/lightbasenl/lbu/releases/tag/v0.0.78)
+
+- code-gen: fix default value of `docString`
+  ([#326](https://github.com/lightbasenl/lbu/pull/326))
+
 ### [v0.0.77](https://github.com/lightbasenl/lbu/releases/tag/v0.0.77)
 
 - cli: remove concurrent test support
