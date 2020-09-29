@@ -24,7 +24,7 @@ export function applyCodeGenStructure(app) {
  */
 function getTypes(T) {
   const typeBase = {
-    docString: T.string().default("").min(0),
+    docString: T.string().default(`""`),
     isOptional: T.bool().default(false),
     defaultValue: T.anyOf()
       .values(T.string().min(0), T.bool(), T.number())
