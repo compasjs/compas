@@ -5020,10 +5020,10 @@ posix-character-classes@^0.1.0:
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
-postgres@2.0.0-beta.0:
-  version "2.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/postgres/-/postgres-2.0.0-beta.0.tgz#0c0405fd4944d60d94ca229bb960dec13b904184"
-  integrity sha512-1VzJ2ClvMJ8NaSdrDPp5K3g4VABNCiZCcdfqSfEPFC4WSWq8SR4mXSb3p3R2FijRA7gtCnPn1h7iQsplLS+u/A==
+postgres@2.0.0-beta.1:
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-2.0.0-beta.1.tgz#992b2a44d66b0ad52200deb100a1660099394cce"
+  integrity sha512-fwc7WZ1i7uWS5KtkXljRpUvb9NVstmDFY/LfGMpo8W4iTAB74BpPeMkvXkSRHIineWmFbjiwk7qJh9RWoSnX/g==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
