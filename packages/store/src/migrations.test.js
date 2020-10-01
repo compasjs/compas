@@ -32,7 +32,7 @@ test("store/migrations", (t) => {
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
     t.equal(mc.files.length, 7);
 
-    const list = getMigrationsToBeApplied(mc);
+    const { migrationQueue: list } = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);
 
     t.ok(list[0].repeatable === false);
@@ -55,7 +55,9 @@ test("store/migrations", (t) => {
       `${dirnameForModule(import.meta)}/../__fixtures__`,
     );
 
-    t.equal(getMigrationsToBeApplied(mc), false);
+    const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
+    t.equal(migrationQueue.length, 0);
+    t.equal(hashChanges.length, 0);
   });
 
   t.test("destroy test db", async (t) => {
