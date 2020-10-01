@@ -3,7 +3,12 @@
 {{ let result = "WHERE"; }}
 {{ for (const it of item.whereFields) { }}
   {{ if (keysToSkip.indexOf(it.name) !== -1) { continue; } }}
-  {{ result += " (COALESCE(${" + variable + "?." + it.name + " ?? null}, NULL) IS NULL OR " + item.shortName + "." + `"${it.key}"` + " "; }}
+
+  {{ if (["includeNotNull"].indexOf(it.type) === -1) { }}
+    {{ result += " (COALESCE(${" + variable + "?." + it.name + " ?? null}, NULL) IS NULL OR " + item.shortName + "." + `"${it.key}"` + " "; }}
+  {{ } else { }}
+    {{ result += " ("; }}
+  {{ } }}
 
   {{ if (it.type === "equal") { }}
     {{ result += "= ${"+ variable + "?." + it.name + "?? null}"; }}
@@ -15,6 +20,8 @@
     {{ result += "LIKE ${'%' + "+ variable + "?." + it.name + " +'%'}"; }}
   {{ } else if (it.type === "in") { }}
     {{ result += "= ANY (${sql.array("+ variable + "?." + it.name + " ?? [])}::uuid[])"; }}
+  {{ } else if (it.type === "includeNotNull") { }}
+    {{ result += "${" + variable + "?." + it.name + "?? false} IS TRUE OR " + item.shortName + "." + `"${it.key}" IS NULL`; }}
   {{ } }}
 
   {{ result += ") AND"; }}

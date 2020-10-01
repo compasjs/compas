@@ -598,10 +598,13 @@ export class ObjectType extends TypeBuilder {
   /**
    * Generate sql queries for this object
    * Posibbly adding createdAt and updatedAt fields.
-   * When withHistory is true, it automatically enables withDates.
+   * When withSoftDeletes is true, it automatically enables withDates.
    * Added by the 'sql' plugin
    */
-  enableQueries(options?: { withHistory?: boolean; withDates?: boolean }): this;
+  enableQueries(options?: {
+    withSoftDeletes?: boolean;
+    withDates?: boolean;
+  }): this;
 }
 
 export class OmitType extends TypeBuilder {

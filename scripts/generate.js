@@ -70,7 +70,7 @@ async function main() {
         name: T.string("settingKey").oneOf("foo", "bar").searchable(),
         value: T.bool(),
       })
-      .enableQueries(),
+      .enableQueries({ withSoftDeletes: true }),
     T.object("list")
       .keys({
         id: T.uuid().primary(),

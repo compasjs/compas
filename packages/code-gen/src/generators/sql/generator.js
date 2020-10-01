@@ -8,7 +8,7 @@ import { buildExtraTypes } from "./builder.js";
  * @name ObjectType#enableQueries
  *
  * @param {object} [options={}]
- * @param {boolean} [options.withHistory]
+ * @param {boolean} [options.withSoftDeletes]
  * @param {boolean} [options.withDates]
  * @returns {ObjectType}
  */

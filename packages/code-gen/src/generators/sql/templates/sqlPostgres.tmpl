@@ -14,23 +14,6 @@
       {{ } }}
     );
 
-    {{ if (item.queryOptions?.withHistory) { }}
-
-    CREATE TABLE "{{= item.name }}History" (
-      {{ let count = Object.keys(item.keys || {}).length - 1; }}
-      {{ for (const key of Object.keys(item.keys|| {})) { }}
-        {{ count--; }}
-        {{ if (key === "updatedAt") { continue; } }}
-        {{ if (key === "id") { }}
-          "{{= item.name }}Id" {{= sqlExec({ type: getItem(item.keys[key]).type, item: { ...getItem(item.keys[key]), sql: {} }, }).trim() }} REFERENCES "{{= item.name }}" ("id")  ON DELETE CASCADE{{= count !== 0 ? "," : "" }}
-        {{ } else { }}
-          "{{= key }}" {{= sqlExec({ type: getItem(item.keys[key]).type, item: getItem(item.keys[key]) }).trim() }}{{= count !== 0 ? "," : "" }}
-        {{ } }}
-      {{ } }}
-    );
-
-    {{ } }}
-
     -- These are only for easy copy -pasting and should not be used as a guide!
     {{ for (const key of Object.keys(item.keys || {})) { }}
     {{ if (!getItem(item.keys[key])?.sql?.primary && getItem(item.keys[key])?.sql?.searchable) { }}

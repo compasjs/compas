@@ -18,10 +18,20 @@ import { uuid } from "@lbu/stdlib";
     {{ } }}
 
     {{ const ref = structure[item.original.group][item.original.name]; }}
+    {{ const whereType = structure[item.original.group][item.original.name + "Where"] ?? { docString: "" }; }}
     {{ const getKeys = (shortName) => Object.keys(ref.keys).map(it => `${shortName}"${it}"`).join(", "); }}
 
+    {{ if (ref.docString.length > 0 || whereType.docString.length > 0) { }}
+       /**
+        * Queries for {{= ref.uniqueName }}
+        * Docs: {{= ref.docString.replace(/\n/g, "\n  * ") }}
+        * Where docs: {{= whereType.docString.replace(/\n/g, "\n  * ") }}
+        */
+        ((newline))
+    {{ } }}
+
    /**
-    * @param sql
+    * @param {Postgres} sql
     * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<{{= ref.uniqueName }}[]>}
     */
@@ -41,7 +51,7 @@ import { uuid } from "@lbu/stdlib";
 
 
      /**
-      * @param sql
+      * @param {Postgres} sql
       * @param { {{= upperCaseFirst(relation.whereType) }} } [where]
       * @returns {Promise<{{= upperCaseFirst(item.group) + upperCaseFirst(relation.name) }}[]>}
       */
@@ -83,7 +93,7 @@ import { uuid } from "@lbu/stdlib";
    {{ } }}
 
     /**
-    * @param sql
+    * @param {Postgres} sql
     * @param { {{= ref.uniqueName }}Where} [where]
     * @returns {Promise<number>}
     */
@@ -96,18 +106,43 @@ import { uuid } from "@lbu/stdlib";
     },
 ((newline))
 
+    {{ if (ref.queryOptions.withSoftDeletes) { }}
+        /**
+        * @param {Postgres} sql
+        * @param { {{= ref.uniqueName }}Where} [where]
+        * @returns {Promise<[]>}
+        */
+        {{= ref.name }}Delete: (sql, where) => sql`
+        UPDATE "{{= ref.name }}" {{= item.shortName }} SET "deletedAt" = NOW()
+         {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+        `,
+        ((newline))
+
+        /**
+        * @param {Postgres} sql
+        * @param { {{= ref.uniqueName }}Where} [where]
+        * @returns {Promise<[]>}
+        */
+        {{= ref.name }}DeletePermanent: (sql, where) => sql`
+        DELETE FROM "{{= ref.name }}" {{= item.shortName }}
+         {{= sqlWhereClause({ item, ref, variable: "where", skipKeys: ["deletedAtInclude"] }) }}
+        `,
+        ((newline))
+    {{ } else { }}
     /**
-    * @param sql
-    * @param { {{= ref.uniqueName }}Where} [where]
-    * @returns {Promise<*[]>}
-    */
-    {{= ref.name }}Delete: (sql, where) => sql`
-    DELETE FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
-    `,
-((newline))
+        * @param {Postgres} sql
+        * @param { {{= ref.uniqueName }}Where} [where]
+        * @returns {Promise<[]>}
+        */
+        {{= ref.name }}Delete: (sql, where) => sql`
+        DELETE FROM "{{= ref.name }}" {{= item.shortName }}
+         {{= sqlWhereClause({ item, ref, variable: "where" }) }}
+        `,
+    ((newline))
+    {{ } }}
 
     /**
-     * @param sql
+     * @param {Postgres} sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input|{{= ref.uniqueName }}InsertPartial_Input[]} insert
      * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
@@ -136,19 +171,12 @@ import { uuid } from "@lbu/stdlib";
 ((newline))
 
     /**
-     * @param sql
+     * @param {Postgres} sql
      * @param { {{= ref.uniqueName }}InsertPartial_Input} value
      * @param { {{= ref.uniqueName }}Where} [where]
      * @returns {Promise<{{= ref.uniqueName }}[]>}
      */
-    {{= ref.name }}Update: {{ if (ref.queryOptions.withHistory) { }} async {{ } }}(sql, value, where) => {
-      {{ if (ref.queryOptions.withHistory) { }}
-      await sql`
-      INSERT INTO "{{= ref.name }}History" ("{{= ref.name }}Id", {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, "createdAt")
-      SELECT id, {{= item.partialFields.filter(it => it.source !== "createdAt" && it.source !== "updatedAt").map(it => `"${it.source}"`).join(", ") }}, COALESCE("updatedAt", "createdAt", now()) FROM "{{= ref.name }}" {{= item.shortName }} {{= sqlWhereClause({ item, ref, variable: "where" }) }}
-      `;
-      {{ } }}
-
+    {{= ref.name }}Update: (sql, value, where) => {
       let query = `UPDATE "{{= ref.name }}" {{= item.shortName }} SET `;
       const argList = [];
       let idx = 1;
@@ -160,7 +188,7 @@ import { uuid } from "@lbu/stdlib";
         }
       {{ } }}
 
-     {{ if (ref.queryOptions.dateFields) { }}
+     {{ if (ref.queryOptions.withDates || ref.queryOptions.withSoftDeletes) { }}
        query += `"updatedAt" = $${idx++}, `;
        argList.push(new Date());
      {{ } }}
@@ -175,47 +203,26 @@ import { uuid } from "@lbu/stdlib";
     },
 ((newline))
 
-    {{ if (!ref.queryOptions.withHistory) { }}
-        {{ for (const field of item.whereFields.filter(it => it.type === "equal")) { }}
+    {{ for (const field of item.whereFields.filter(it => it.type === "equal")) { }}
 
-            /**
-             * Note: Use only when {{= field.key }} has a unique constraint
-             * @param sql
-             * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, item: ref.keys["id"], isInputType: true }).trim() }} } } it
-             * @returns {Promise<{{= ref.uniqueName }}[]>}
-             */
-             {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {
-              return sql`
-                INSERT INTO "{{= ref.name }}" ("id", {{= item.partialFields.map(it => `"${it.source}"`).join(", ") }}
-                ) VALUES (
-                 ${it.id ?? uuid()}, {{= item.partialFields.map(it => `\${${sqlGenDefaults({ field: it, ref }) } }`).join(", ") }}
-                ) ON CONFLICT("{{= field.key }}") DO UPDATE SET
-                  {{= item.partialFields.filter(it => it.source !== field.key && it.source !== "createdAt").map(it => `"${it.source}" = EXCLUDED."${it.source}"`).join(", ") }}
-                RETURNING {{= getKeys("") }}
-              `;
-             },
+        /**
+         * Note: Use only when {{= field.key }} has a unique constraint
+         * @param {Postgres} sql
+         * @param { {{= ref.uniqueName }}InsertPartial_Input & { id?: {{= typeExec({ type: ref.keys["id"].type, item: ref.keys["id"], isInputType: true }).trim() }} } } it
+         * @returns {Promise<{{= ref.uniqueName }}[]>}
+         */
+         {{= ref.name }}Upsert{{= field.key === "id" ? "" : "By" + upperCaseFirst(field.key) }}: (sql, it) => {
+          return sql`
+            INSERT INTO "{{= ref.name }}" ("id", {{= item.partialFields.map(it => `"${it.source}"`).join(", ") }}
+            ) VALUES (
+             ${it.id ?? uuid()}, {{= item.partialFields.map(it => `\${${sqlGenDefaults({ field: it, ref }) } }`).join(", ") }}
+            ) ON CONFLICT("{{= field.key }}") DO UPDATE SET
+              {{= item.partialFields.filter(it => it.source !== field.key && it.source !== "createdAt").map(it => `"${it.source}" = EXCLUDED."${it.source}"`).join(", ") }}
+            RETURNING {{= getKeys("") }}
+          `;
+         },
 
-         ((newline))
-        {{ } }}
-    {{ } }}
-
-    {{ if (ref.queryOptions.withHistory) { }}
-   /**
-    * @param sql
-    * @param { {{= ref.uniqueName }}Where} [where]
-    * @returns {Promise<({{= ref.uniqueName }} & (history: {{= ref.uniqueName }}[]))[]>}
-    */
-    {{= ref.name }}SelectHistory: (sql, where) => sql`
-    SELECT
-     {{= getKeys(item.shortName + ".") }}, array_agg(to_jsonb({{= item.shortName }}h.*)) AS history
-    FROM "{{= ref.name }}" {{= item.shortName }}
-    LEFT JOIN "{{= ref.name }}History" {{= item.shortName }}h ON {{= item.shortName }}.id = {{= item.shortName }}h."{{= ref.name }}Id"
-    {{= sqlWhereClause({ item, ref, variable: "where" }) }}
-    GROUP BY {{= item.shortName }}.id
-    {{= sqlOrderBy({ item, ref }) }}
-    `,
-((newline))
-
+     ((newline))
     {{ } }}
   {{ } }}
 

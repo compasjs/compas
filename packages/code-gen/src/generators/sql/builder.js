@@ -1,4 +1,3 @@
-import { isNil } from "@lbu/stdlib";
 import { addToData } from "../../generate.js";
 import { TypeBuilder, TypeCreator } from "../../types/index.js";
 import { getItem, upperCaseFirst } from "../../utils.js";
@@ -30,8 +29,8 @@ export function buildExtraTypes(data) {
 
 function buildSqlType(data, item) {
   const { group, name } = item;
-  // withHistory implies withDates
-  if (item?.queryOptions?.withDates || item?.queryOptions?.withHistory) {
+  // withSoftDeletes implies withDates
+  if (item?.queryOptions?.withDates || item?.queryOptions?.withSoftDeletes) {
     addDateFields(item);
   }
 
@@ -220,7 +219,6 @@ function buildSqlSelectJoinForOneToMany(data, item, relation, T, queryType) {
  * @param item
  */
 function addDateFields(item) {
-  item.queryOptions.dateFields = true;
   item.keys.createdAt = {
     ...TypeBuilder.getBaseData(),
     ...TypeCreator.types.get("date").class.getBaseData(),
@@ -241,6 +239,18 @@ function addDateFields(item) {
       searchable: true,
     },
   };
+
+  if (item.queryOptions?.withSoftDeletes) {
+    item.keys.deletedAt = {
+      ...TypeBuilder.getBaseData(),
+      ...TypeCreator.types.get("date").class.getBaseData(),
+      type: "date",
+      isOptional: true,
+      sql: {
+        searchable: true,
+      },
+    };
+  }
 }
 
 /**
@@ -262,11 +272,8 @@ function getWhereFields(item) {
 
   for (const key of Object.keys(item.keys)) {
     const it = getItem(item.keys[key]);
-    // We don't support optional field searching, since it will break the way we do the
-    // query generation e.g. NULL IS NULL is always true and thus the search results are
-    // invalid. However if a default value is set, we expect that this will be honored
-    // throughout all of the application.
-    if ((it.isOptional && isNil(it.defaultValue)) || !it?.sql?.searchable) {
+
+    if (!it?.sql?.searchable) {
       continue;
     }
 
@@ -278,6 +285,25 @@ function getWhereFields(item) {
       uniqueName: undefined,
       isOptional: true,
     };
+
+    if (
+      key === "deletedAt" &&
+      item.queryOptions?.withSoftDeletes &&
+      type === "date"
+    ) {
+      fieldsArray.push({
+        key,
+        name: "deletedAtInclude",
+        type: "includeNotNull",
+      });
+      resultType.keys["deletedAtInclude"] = {
+        ...TypeBuilder.getBaseData(),
+        ...TypeCreator.types.get("boolean").class.getBaseData(),
+        ...settings,
+      };
+
+      resultType.docString += `By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.`;
+    }
 
     if (type === "number" || type === "date") {
       // Generate =, > and < queries

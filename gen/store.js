@@ -15,7 +15,7 @@ export function applyStoreStructure(app) {
         contentType: T.string(),
         filename: T.string(),
       })
-      .enableQueries({ withHistory: true }),
+      .enableQueries({ withDates: true }),
   );
 
   app.add(
