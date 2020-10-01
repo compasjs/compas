@@ -5,13 +5,19 @@ import { uuid } from "@lbu/stdlib";
 
 export const storeQueries = {
   /**
+   * Queries for StoreFileStore
+   * Docs:
+   * Where docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
+   */
+
+  /**
    * @param {Postgres} sql
    * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<StoreFileStore[]>}
    */
   fileStoreSelect: (sql, where) => sql`
 SELECT
-fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt"
+fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", fs."deletedAt"
 FROM "fileStore" fs
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.id ?? null
@@ -47,7 +53,21 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+  }, NULL) IS NULL OR fs."updatedAt" < ${
+    where?.updatedAtLowerThan ?? null
+  }) AND (${
+    where?.deletedAtInclude ?? false
+  } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+    where?.deletedAt ?? null
+  }, NULL) IS NULL OR fs."deletedAt" = ${
+    where?.deletedAt ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" > ${
+    where?.deletedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
 
@@ -93,7 +113,21 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       where?.updatedAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.updatedAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+    }, NULL) IS NULL OR fs."updatedAt" < ${
+      where?.updatedAtLowerThan ?? null
+    }) AND (${
+      where?.deletedAtInclude ?? false
+    } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+      where?.deletedAt ?? null
+    }, NULL) IS NULL OR fs."deletedAt" = ${
+      where?.deletedAt ?? null
+    }) AND (COALESCE(${
+      where?.deletedAtGreaterThan ?? null
+    }, NULL) IS NULL OR fs."deletedAt" > ${
+      where?.deletedAtGreaterThan ?? null
+    }) AND (COALESCE(${
+      where?.deletedAtLowerThan ?? null
+    }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
@@ -104,6 +138,64 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
    * @returns {Promise<[]>}
    */
   fileStoreDelete: (sql, where) => sql`
+UPDATE "fileStore" fs SET "deletedAt" = NOW()
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+    where?.id ?? null
+  }) AND (COALESCE(${
+    where?.idIn ?? null
+  }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
+    where?.idIn ?? [],
+  )}::uuid[])) AND (COALESCE(${
+    where?.bucketName ?? null
+  }, NULL) IS NULL OR fs."bucketName" = ${
+    where?.bucketName ?? null
+  }) AND (COALESCE(${
+    where?.bucketNameLike ?? null
+  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+    where?.createdAt ?? null
+  }, NULL) IS NULL OR fs."createdAt" = ${
+    where?.createdAt ?? null
+  }) AND (COALESCE(${
+    where?.createdAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" > ${
+    where?.createdAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.createdAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."createdAt" < ${
+    where?.createdAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAt ?? null
+  }, NULL) IS NULL OR fs."updatedAt" = ${
+    where?.updatedAt ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" > ${
+    where?.updatedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.updatedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."updatedAt" < ${
+    where?.updatedAtLowerThan ?? null
+  }) AND (${
+    where?.deletedAtInclude ?? false
+  } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+    where?.deletedAt ?? null
+  }, NULL) IS NULL OR fs."deletedAt" = ${
+    where?.deletedAt ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" > ${
+    where?.deletedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
+`,
+
+  /**
+   * @param {Postgres} sql
+   * @param { StoreFileStoreWhere} [where]
+   * @returns {Promise<[]>}
+   */
+  fileStoreDeletePermanent: (sql, where) => sql`
 DELETE FROM "fileStore" fs
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.id ?? null
@@ -139,7 +231,19 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+  }, NULL) IS NULL OR fs."updatedAt" < ${
+    where?.updatedAtLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.deletedAt ?? null
+  }, NULL) IS NULL OR fs."deletedAt" = ${
+    where?.deletedAt ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtGreaterThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" > ${
+    where?.deletedAtGreaterThan ?? null
+  }) AND (COALESCE(${
+    where?.deletedAtLowerThan ?? null
+  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 `,
 
   /**
@@ -152,7 +256,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     if (data.length === 0) {
       return [];
     }
-    let query = `INSERT INTO "fileStore" ("bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt") VALUES `;
+    let query = `INSERT INTO "fileStore" ("bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt") VALUES `;
     const argList = [];
     let idx = 1;
     for (const it of data) {
@@ -163,12 +267,13 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
         it.filename ?? null,
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
+        it.deletedAt ?? null,
       );
-      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
     }
     // Remove trailing comma
     query = query.substring(0, query.length - 1);
-    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"`;
+    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
@@ -201,6 +306,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     if (value["createdAt"] !== undefined) {
       query += `"createdAt" = $${idx++}, `;
       argList.push(value["createdAt"]);
+    }
+    if (value["deletedAt"] !== undefined) {
+      query += `"deletedAt" = $${idx++}, `;
+      argList.push(value["deletedAt"]);
     }
     query += `"updatedAt" = $${idx++}, `;
     argList.push(new Date());
@@ -275,8 +384,31 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       argList.push(where.updatedAtLowerThan);
       query += " AND ";
     }
+    if (where.deletedAtInclude !== undefined) {
+      if (where.deletedAtInclude ?? false === false) {
+        query += `fs."deletedAt" IS NULL`;
+      }
+    }
+    if (where.deletedAt !== undefined) {
+      query += `fs."deletedAt" `;
+      query += `= $${idx++}`;
+      argList.push(where.deletedAt);
+      query += " AND ";
+    }
+    if (where.deletedAtGreaterThan !== undefined) {
+      query += `fs."deletedAt" `;
+      query += `> $${idx++}`;
+      argList.push(where.deletedAtGreaterThan);
+      query += " AND ";
+    }
+    if (where.deletedAtLowerThan !== undefined) {
+      query += `fs."deletedAt" `;
+      query += `< $${idx++}`;
+      argList.push(where.deletedAtLowerThan);
+      query += " AND ";
+    }
     query = query.substring(0, query.length - 4);
-    query += ` RETURNING fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt"`;
+    query += ` RETURNING fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", fs."deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
@@ -288,16 +420,16 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
    */
   fileStoreUpsert: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
     }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
-    }
+    }, ${it.deletedAt ?? null}
 ) ON CONFLICT("id") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -309,16 +441,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "creat
    */
   fileStoreUpsertByBucketName: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
     }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
-    }
+    }, ${it.deletedAt ?? null}
 ) ON CONFLICT("bucketName") DO UPDATE SET
-"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -330,16 +462,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "creat
    */
   fileStoreUpsertByCreatedAt: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
     }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
-    }
+    }, ${it.deletedAt ?? null}
 ) ON CONFLICT("createdAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -351,16 +483,37 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "creat
    */
   fileStoreUpsertByUpdatedAt: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
     }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
-    }
+    }, ${it.deletedAt ?? null}
 ) ON CONFLICT("updatedAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when deletedAt has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFileStore[]>}
+   */
+  fileStoreUpsertByDeletedAt: (sql, it) => {
+    return sql`
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+      it.contentType ?? null
+    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }, ${it.deletedAt ?? null}
+) ON CONFLICT("deletedAt") DO UPDATE SET
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
