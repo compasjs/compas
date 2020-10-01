@@ -130,6 +130,7 @@ export async function syncDeletedFiles(sql, minio, bucketName) {
   const minioObjectsPromise = listObjects(minio, bucketName);
   const knownIds = await storeQueries.fileStoreSelect(sql, {
     bucketName: bucketName,
+    deletedAtInclude: true,
   });
 
   const ids = knownIds.map((it) => it.id);

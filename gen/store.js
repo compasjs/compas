@@ -15,7 +15,7 @@ export function applyStoreStructure(app) {
         contentType: T.string(),
         filename: T.string(),
       })
-      .enableQueries({ withDates: true }),
+      .enableQueries({ withSoftDeletes: true }),
   );
 
   app.add(

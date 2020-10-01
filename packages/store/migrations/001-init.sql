@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE migrations (
   "namespace" VARCHAR NOT NULL,
   "number"    INT,
@@ -6,4 +8,4 @@ CREATE TABLE migrations (
   "hash"      VARCHAR
 );
 
-CREATE INDEX namespace_number_idx ON "migrations" ("namespace", "number");
+CREATE UNIQUE INDEX namespace_number_idx ON "migrations" ("namespace", "number");

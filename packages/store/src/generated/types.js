@@ -4,37 +4,37 @@
 /**
  * @name StoreFileStore
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
  * @name StoreFileStore_Input
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
  */
 
 /**
  * @name StoreFileStoreInsertPartial
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
  * @name StoreFileStoreInsertPartial_Input
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
  */
 
 /**
  * @name StoreFileStoreWhere
- *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
+ * Docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, "deletedAtInclude"?:, "deletedAt"?:Date, "deletedAtGreaterThan"?:Date, "deletedAtLowerThan"?:Date, }}
  */
 
 /**
  * @name StoreFileStoreWhere_Input
- *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
+ * Docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, "deletedAtInclude"?:, "deletedAt"?:string, "deletedAtGreaterThan"?:string, "deletedAtLowerThan"?:string, }}
  */
 
 /**
