@@ -28,7 +28,7 @@
 /**
  * @name StoreFileStoreWhere
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**
@@ -64,7 +64,7 @@
 /**
  * @name StoreJobQueueWhere
  *
- * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt":Date, "scheduledAtGreaterThan":Date, "scheduledAtLowerThan":Date, "name"?:string , "nameLike"?:string , "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
+ * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:Date, "scheduledAtGreaterThan"?:Date, "scheduledAtLowerThan"?:Date, "name"?:string , "nameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**
@@ -100,7 +100,7 @@
 /**
  * @name StoreSessionStoreWhere
  *
- * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, "createdAt":Date, "createdAtGreaterThan":Date, "createdAtLowerThan":Date, "updatedAt":Date, "updatedAtGreaterThan":Date, "updatedAtLowerThan":Date, }}
+ * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**

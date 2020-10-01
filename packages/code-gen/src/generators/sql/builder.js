@@ -284,6 +284,7 @@ function getWhereFields(item) {
       group: undefined,
       uniqueName: undefined,
       isOptional: true,
+      defaultValue: undefined,
     };
 
     if (
