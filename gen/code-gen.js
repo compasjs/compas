@@ -112,7 +112,7 @@ function getTypes(T) {
     enableQueries: T.bool().default(false),
     queryOptions: T.object()
       .keys({
-        withHistory: T.bool().default(false),
+        withSoftDeletes: T.bool().default(false),
         withDates: T.bool().default(false),
       })
       .optional(),

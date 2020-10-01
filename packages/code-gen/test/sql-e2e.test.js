@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { pathJoin, uuid } from "@lbu/stdlib";
+import { isNil, pathJoin, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
@@ -96,6 +96,64 @@ test("code-gen/sql/e2e", async (t) => {
     });
 
     t.deepEqual(setting.value, { editable: true });
+  });
+
+  t.test("insert app setting", async (t) => {
+    const [setting] = await appQueries.settingsInsert(sql, {
+      name: "foo",
+      value: true,
+    });
+
+    t.ok(setting.id);
+    t.ok(isNil(setting.deletedAt));
+  });
+
+  t.test("app setting returns one item", async (t) => {
+    const settings = await appQueries.settingsSelect(sql);
+
+    t.equal(settings.length, 1);
+  });
+
+  t.test("soft delete does not throw", async (t) => {
+    const [setting] = await appQueries.settingsSelect(sql);
+    const result = await appQueries.settingsDelete(sql, { id: setting.id });
+
+    t.equal(result.count, 1);
+  });
+
+  t.test(
+    "deleted app setting does not show up in default empty where clause",
+    async (t) => {
+      const settings = await appQueries.settingsSelect(sql);
+
+      t.equal(settings.length, 0);
+    },
+  );
+
+  t.test("deleted app setting does show up with where clause", async (t) => {
+    const settings = await appQueries.settingsSelect(sql, {
+      deletedAtInclude: true,
+    });
+
+    t.equal(settings.length, 1);
+  });
+
+  t.test("permanent delete app setting", async (t) => {
+    const [setting] = await appQueries.settingsSelect(sql, {
+      deletedAtInclude: true,
+    });
+    const result = await appQueries.settingsDeletePermanent(sql, {
+      id: setting.id,
+    });
+    t.equal(result.count, 1);
+  });
+
+  t.test("deleted app setting is gone", async (t) => {
+    const settings = await appQueries.settingsSelect(sql, {
+      deletedAtInclude: true,
+    });
+
+    t.equal(settings.length, 0);
   });
 
   t.test("teardown", async () => {

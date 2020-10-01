@@ -97,7 +97,7 @@ export function compileTemplateDirectory(dir, extension, opts) {
   const ext = extension[0] !== "." ? `.${extension}` : extension;
   processDirectoryRecursiveSync(
     dir,
-    async (file) => {
+    (file) => {
       if (!file.endsWith(ext)) {
         return;
       }

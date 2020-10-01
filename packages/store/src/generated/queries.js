@@ -5,7 +5,7 @@ import { uuid } from "@lbu/stdlib";
 
 export const storeQueries = {
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<StoreFileStore[]>}
    */
@@ -52,7 +52,7 @@ ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<number>}
    */
@@ -99,12 +99,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreFileStoreWhere} [where]
-   * @returns {Promise<*[]>}
+   * @returns {Promise<[]>}
    */
   fileStoreDelete: (sql, where) => sql`
-DELETE FROM "fileStore" fs 
+DELETE FROM "fileStore" fs
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -143,7 +143,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreFileStoreInsertPartial_Input|StoreFileStoreInsertPartial_Input[]} insert
    * @returns {Promise<StoreFileStore[]>}
    */
@@ -173,51 +173,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreFileStoreInsertPartial_Input} value
    * @param { StoreFileStoreWhere} [where]
    * @returns {Promise<StoreFileStore[]>}
    */
-  fileStoreUpdate: async (sql, value, where) => {
-    await sql`
-INSERT INTO "fileStoreHistory" ("fileStoreId", "bucketName", "contentLength", "contentType", "filename", "createdAt")
-SELECT id, "bucketName", "contentLength", "contentType", "filename", COALESCE("updatedAt", "createdAt", now()) FROM "fileStore" fs 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
-      where?.id ?? null
-    }) AND (COALESCE(${
-      where?.idIn ?? null
-    }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
-      where?.idIn ?? [],
-    )}::uuid[])) AND (COALESCE(${
-      where?.bucketName ?? null
-    }, NULL) IS NULL OR fs."bucketName" = ${
-      where?.bucketName ?? null
-    }) AND (COALESCE(${
-      where?.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
-      where?.createdAt ?? null
-    }, NULL) IS NULL OR fs."createdAt" = ${
-      where?.createdAt ?? null
-    }) AND (COALESCE(${
-      where?.createdAtGreaterThan ?? null
-    }, NULL) IS NULL OR fs."createdAt" > ${
-      where?.createdAtGreaterThan ?? null
-    }) AND (COALESCE(${
-      where?.createdAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."createdAt" < ${
-      where?.createdAtLowerThan ?? null
-    }) AND (COALESCE(${
-      where?.updatedAt ?? null
-    }, NULL) IS NULL OR fs."updatedAt" = ${
-      where?.updatedAt ?? null
-    }) AND (COALESCE(${
-      where?.updatedAtGreaterThan ?? null
-    }, NULL) IS NULL OR fs."updatedAt" > ${
-      where?.updatedAtGreaterThan ?? null
-    }) AND (COALESCE(${
-      where?.updatedAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
-`;
+  fileStoreUpdate: (sql, value, where) => {
     let query = `UPDATE "fileStore" fs SET `;
     const argList = [];
     let idx = 1;
@@ -320,56 +281,91 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
   },
 
   /**
-   * @param sql
-   * @param { StoreFileStoreWhere} [where]
-   * @returns {Promise<(StoreFileStore & (history: StoreFileStore[]))[]>}
+   * Note: Use only when id has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFileStore[]>}
    */
-  fileStoreSelectHistory: (sql, where) => sql`
-SELECT
-fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", array_agg(to_jsonb(fsh.*)) AS history
-FROM "fileStore" fs
-LEFT JOIN "fileStoreHistory" fsh ON fs.id = fsh."fileStoreId"
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
-    where?.id ?? null
-  }) AND (COALESCE(${
-    where?.idIn ?? null
-  }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
-    where?.idIn ?? [],
-  )}::uuid[])) AND (COALESCE(${
-    where?.bucketName ?? null
-  }, NULL) IS NULL OR fs."bucketName" = ${
-    where?.bucketName ?? null
-  }) AND (COALESCE(${
-    where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
-    where?.createdAt ?? null
-  }, NULL) IS NULL OR fs."createdAt" = ${
-    where?.createdAt ?? null
-  }) AND (COALESCE(${
-    where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" > ${
-    where?.createdAtGreaterThan ?? null
-  }) AND (COALESCE(${
-    where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" < ${
-    where?.createdAtLowerThan ?? null
-  }) AND (COALESCE(${
-    where?.updatedAt ?? null
-  }, NULL) IS NULL OR fs."updatedAt" = ${
-    where?.updatedAt ?? null
-  }) AND (COALESCE(${
-    where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" > ${
-    where?.updatedAtGreaterThan ?? null
-  }) AND (COALESCE(${
-    where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${where?.updatedAtLowerThan ?? null})
-GROUP BY fs.id
-ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
-`,
+  fileStoreUpsert: (sql, it) => {
+    return sql`
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+      it.contentType ?? null
+    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }
+) ON CONFLICT("id") DO UPDATE SET
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+`;
+  },
 
   /**
-   * @param sql
+   * Note: Use only when bucketName has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFileStore[]>}
+   */
+  fileStoreUpsertByBucketName: (sql, it) => {
+    return sql`
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+      it.contentType ?? null
+    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }
+) ON CONFLICT("bucketName") DO UPDATE SET
+"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when createdAt has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFileStore[]>}
+   */
+  fileStoreUpsertByCreatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+      it.contentType ?? null
+    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }
+) ON CONFLICT("createdAt") DO UPDATE SET
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when updatedAt has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFileStore[]>}
+   */
+  fileStoreUpsertByUpdatedAt: (sql, it) => {
+    return sql`
+INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+      it.contentType ?? null
+    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }
+) ON CONFLICT("updatedAt") DO UPDATE SET
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename"
+RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * @param {Postgres} sql
    * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -428,7 +424,7 @@ ORDER BY jq."createdAt", jq."updatedAt" , jq."id"
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<number>}
    */
@@ -489,12 +485,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueWhere} [where]
-   * @returns {Promise<*[]>}
+   * @returns {Promise<[]>}
    */
   jobQueueDelete: (sql, where) => sql`
-DELETE FROM "jobQueue" jq 
+DELETE FROM "jobQueue" jq
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -545,7 +541,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input|StoreJobQueueInsertPartial_Input[]} insert
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -576,7 +572,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input} value
    * @param { StoreJobQueueWhere} [where]
    * @returns {Promise<StoreJobQueue[]>}
@@ -704,7 +700,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
 
   /**
    * Note: Use only when id has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -725,7 +721,7 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
 
   /**
    * Note: Use only when scheduledAt has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -746,7 +742,7 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
 
   /**
    * Note: Use only when name has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -767,7 +763,7 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
 
   /**
    * Note: Use only when createdAt has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -788,7 +784,7 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
 
   /**
    * Note: Use only when updatedAt has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
    * @returns {Promise<StoreJobQueue[]>}
    */
@@ -808,7 +804,7 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<StoreSessionStore[]>}
    */
@@ -859,7 +855,7 @@ ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<number>}
    */
@@ -912,12 +908,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<*[]>}
+   * @returns {Promise<[]>}
    */
   sessionStoreDelete: (sql, where) => sql`
-DELETE FROM "sessionStore" ss 
+DELETE FROM "sessionStore" ss
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
@@ -960,7 +956,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
 `,
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input|StoreSessionStoreInsertPartial_Input[]} insert
    * @returns {Promise<StoreSessionStore[]>}
    */
@@ -988,7 +984,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
   },
 
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input} value
    * @param { StoreSessionStoreWhere} [where]
    * @returns {Promise<StoreSessionStore[]>}
@@ -1095,7 +1091,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
 
   /**
    * Note: Use only when id has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
    * @returns {Promise<StoreSessionStore[]>}
    */
@@ -1114,7 +1110,7 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 
   /**
    * Note: Use only when expires has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
    * @returns {Promise<StoreSessionStore[]>}
    */
@@ -1133,7 +1129,7 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 
   /**
    * Note: Use only when createdAt has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
    * @returns {Promise<StoreSessionStore[]>}
    */
@@ -1152,7 +1148,7 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
 
   /**
    * Note: Use only when updatedAt has a unique constraint
-   * @param sql
+   * @param {Postgres} sql
    * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
    * @returns {Promise<StoreSessionStore[]>}
    */

@@ -2177,12 +2177,12 @@ function objectValidator42(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["withHistory"] = booleanValidator3(
-    value["withHistory"],
-    `${propertyPath}.` + `withHistory`,
+  result["withSoftDeletes"] = booleanValidator3(
+    value["withSoftDeletes"],
+    `${propertyPath}.` + `withSoftDeletes`,
     errorList,
   );
-  keySet.delete("withHistory");
+  keySet.delete("withSoftDeletes");
   result["withDates"] = booleanValidator3(
     value["withDates"],
     `${propertyPath}.` + `withDates`,

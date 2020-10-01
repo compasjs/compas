@@ -100,13 +100,13 @@
 /**
  * @name CodeGenObjectType
  *
- * @typedef { { "type":"object", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "validator":{ "strict":boolean, }, "keys":Object< string , CodeGenType >, "enableQueries":boolean, "queryOptions"?:{ "withHistory":boolean, "withDates":boolean, } , }}
+ * @typedef { { "type":"object", "docString":string, "isOptional":boolean, "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary":boolean, "searchable":boolean, } , "validator":{ "strict":boolean, }, "keys":Object< string , CodeGenType >, "enableQueries":boolean, "queryOptions"?:{ "withSoftDeletes":boolean, "withDates":boolean, } , }}
  */
 
 /**
  * @name CodeGenObjectType_Input
  *
- * @typedef { { "type":"object", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "validator":{ "strict"?:boolean , }, "keys":Object< string , CodeGenType_Input >, "enableQueries"?:boolean , "queryOptions"?:{ "withHistory"?:boolean , "withDates"?:boolean , } , }}
+ * @typedef { { "type":"object", "docString"?:string , "isOptional"?:boolean , "defaultValue"?:( string|boolean|number ) , "uniqueName"?:string , "group"?:string , "name"?:string , "sql"?:{ "primary"?:boolean , "searchable"?:boolean , } , "validator":{ "strict"?:boolean , }, "keys":Object< string , CodeGenType_Input >, "enableQueries"?:boolean , "queryOptions"?:{ "withSoftDeletes"?:boolean , "withDates"?:boolean , } , }}
  */
 
 /**

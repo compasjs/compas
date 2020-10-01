@@ -21,13 +21,20 @@ export async function runGenerators(app, options) {
 
   addGroupsToGeneratorInput(generatorInput, dataCopy, options.enabledGroups);
 
+  let stringifyInput;
+
   // validators may not be present, fallback to just stringify
-  const stringifyInput = (!isNil(codeGenValidators.structure)
-    ? JSON.stringify(codeGenValidators.structure(generatorInput).data)
-    : JSON.stringify(generatorInput)
-  )
-    .replace(/\\/g, "\\\\")
-    .replace("'", "\\'");
+  if (!isNil(codeGenValidators.structure)) {
+    const { data, errors } = codeGenValidators.structure(generatorInput);
+    if (errors) {
+      app.logger.error(errors);
+    }
+    stringifyInput = JSON.stringify(data);
+  } else {
+    stringifyInput = JSON.stringify(generatorInput);
+  }
+
+  stringifyInput = stringifyInput.replace(/\\/g, "\\\\").replace("'", "\\'");
 
   recursiveLinkupReferences(generatorInput, generatorInput);
   addFieldsOfRelations(generatorInput);
