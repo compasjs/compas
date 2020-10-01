@@ -138,7 +138,7 @@ export interface MigrateContext {
  * Create a new MigrateContext, requires an advisory lock and does the necessary queries to
  * get the state.
  */
-export function newMigrationContext(sql: Postgres): Promise<MigrateContext>;
+export function newMigrateContext(sql: Postgres): Promise<MigrateContext>;
 
 /**
  * Get a list of migrations to be applied

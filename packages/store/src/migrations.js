@@ -5,9 +5,8 @@ import path from "path";
 import { dirnameForModule } from "@lbu/stdlib";
 
 /**
- * @param sql
- * @param migrationDirectory
- * @property {Postgres} sql
+ * @param {Postgres} sql
+ * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
 export async function newMigrateContext(
@@ -17,17 +16,24 @@ export async function newMigrateContext(
   try {
     const migrations = await readMigrationsDir(migrationDirectory);
 
-    // Automatically add this package to the migrations
-    if (migrations.namespaces.indexOf("@lbu/store") === -1) {
-      migrations.namespaces.unshift("@lbu/store");
+    // Automatically add this package to the migrations,
+    // and make sure it is at the front
+    const storeMigrationIndex = migrations.namespaces.indexOf("@lbu/store");
+    if (storeMigrationIndex !== 0) {
+      if (storeMigrationIndex !== -1) {
+        migrations.namespaces.splice(storeMigrationIndex, 1);
+        migrations.namespaces.unshift("@lbu/store");
+      } else {
+        migrations.namespaces.unshift("@lbu/store");
 
-      const { migrationFiles } = await readMigrationsDir(
-        `${dirnameForModule(import.meta)}/../migrations`,
-        "@lbu/store",
-        migrations.namespaces,
-      );
+        const { migrationFiles } = await readMigrationsDir(
+          `${dirnameForModule(import.meta)}/../migrations`,
+          "@lbu/store",
+          migrations.namespaces,
+        );
 
-      migrations.migrationFiles.push(...migrationFiles);
+        migrations.migrationFiles.push(...migrationFiles);
+      }
     }
 
     const mc = {
@@ -57,19 +63,37 @@ export async function newMigrateContext(
 
 /**
  * @param {MigrateContext} mc
- * @returns {({name: string, number: number, repeatable: boolean}[])|boolean}
+ * @returns {{
+ *   migrationQueue: ({ namespace: string, name: string, number: number, repeatable:
+ *   boolean}[]), hashChanges: { name: string, number: number, namespace: string }[]
+ * }}
  */
 export function getMigrationsToBeApplied(mc) {
-  const list = filterMigrationsToBeApplied(mc);
-  if (list.length === 0) {
-    return false;
-  }
-
-  return list.map((it) => ({
-    name: `${it.namespace}/${it.name}`,
+  const migrationQueue = filterMigrationsToBeApplied(mc).map((it) => ({
+    namespace: it.namespace,
+    name: it.name,
     number: it.number,
     repeatable: it.repeatable,
   }));
+
+  const hashChanges = [];
+  for (const it of mc.files) {
+    if (
+      it.isMigrated &&
+      mc.storedHashes[`${it.namespace}-${it.number}`] !== it.hash
+    ) {
+      hashChanges.push({
+        namespace: it.namespace,
+        name: it.name,
+        number: it.number,
+      });
+    }
+  }
+
+  return {
+    migrationQueue,
+    hashChanges,
+  };
 }
 
 /**
