@@ -62,7 +62,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
   }
 
   for (const ref of context.openAPIReferences) {
-    const refValue = resolveReference(context, ref);
+    const refValue = resolveReferenceAndConvert(context, ref);
     if (refValue) {
       context.result[context.defaultGroup][refValue.name] = refValue;
     }
@@ -86,11 +86,11 @@ function extractRoute(context, path, method) {
   const lbuStruct = {
     ...TypeBuilder.getBaseData(),
     type: "route",
-    group: lowerCaseFirst(item.tags?.[0] ?? context.defaultGroup),
-    name: transformRouteName(context, item.operationId),
+    group: transformRouteName(item.tags?.[0] ?? context.defaultGroup),
+    name: transformRouteName(item.operationId ?? upperCaseFirst(method) + path),
     docString: item.description ?? "",
     method: method.toUpperCase(),
-    path: transformRoutePath(context, path),
+    path: transformRoutePath(path),
     tags: [],
   };
 
@@ -129,13 +129,13 @@ function extractRoute(context, path, method) {
 /**
  * Remove spaces, dashes and return camelCased name
  *
- * @param context
  * @param operationId
  * @returns {string}
  */
-function transformRouteName(context, operationId) {
+function transformRouteName(operationId) {
   return operationId
-    .split(/(?:[_\s-])/g)
+    .replace(/[{}]/g, "/")
+    .split(/(?:[_\s-/])/g)
     .map((it, idx) => (idx === 0 ? lowerCaseFirst(it) : upperCaseFirst(it)))
     .join("");
 }
@@ -143,11 +143,10 @@ function transformRouteName(context, operationId) {
 /**
  * Transform path params, remove leading slash and add trailing slash
  *
- * @param context
  * @param path
  * @returns {string}
  */
-function transformRoutePath(context, path) {
+function transformRoutePath(path) {
   return `${path
     .split("/")
     .filter((it) => it.length > 0)
@@ -171,7 +170,13 @@ function transformRoutePath(context, path) {
 function transformQueryOrParams(context, inputList, lbuStruct, filter) {
   const obj = {};
 
-  for (const input of inputList) {
+  for (let input of inputList) {
+    // resolve param/query references
+    if (input.$ref) {
+      input = resolveReference(context, input.$ref);
+    }
+
+    // ensure filter type align
     if (input.in !== filter) {
       continue;
     }
@@ -244,12 +249,11 @@ function transformResponse(context, input, lbuStruct) {
  * @param context
  * @param refString
  */
-function resolveReference(context, refString) {
+function resolveReferenceAndConvert(context, refString) {
   const path = refString.split("/").slice(1);
   const name = path[path.length - 1];
 
   let currentItem = context.data;
-
   while (path.length > 0) {
     currentItem = currentItem?.[path.shift()];
   }
@@ -263,6 +267,23 @@ function resolveReference(context, refString) {
     group: context.defaultGroup,
     name: lowerCaseFirst(name),
   };
+}
+
+/**
+ * Naively try to find the referenced item in the OpenAPI doc
+ *
+ * @param context
+ * @param refString
+ */
+function resolveReference(context, refString) {
+  const path = refString.split("/").slice(1);
+
+  let currentItem = context.data;
+  while (path.length > 0) {
+    currentItem = currentItem?.[path.shift()];
+  }
+
+  return currentItem;
 }
 
 /**
