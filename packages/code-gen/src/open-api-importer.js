@@ -52,7 +52,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
       type: "reference",
       group: defaultGroup,
       name: `ref${upperCaseFirst(ref.name)}`,
-      references: {
+      reference: {
         ...ref,
         uniqueName: upperCaseFirst(ref.group) + upperCaseFirst(ref.name),
       },
