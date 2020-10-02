@@ -144,7 +144,6 @@ export class App {
     if (!isNil(codeGenValidators?.type)) {
       const { data, errors } = codeGenValidators.type(obj);
       if (errors) {
-        this.logger.error(errors);
         throw errors[0];
       }
 
@@ -165,7 +164,6 @@ export class App {
     if (!isNil(codeGenValidators?.type)) {
       const { data: value, errors } = codeGenValidators.structure(data);
       if (errors) {
-        this.logger.error(errors);
         throw errors[0];
       }
 
