@@ -1,12 +1,12 @@
 {{= options.fileHeader }}
 ((newline))
 
-import { AxiosError } from "axios";
+import { AxiosError, CancelTokenSource } from "axios";
 import React from "react";
 import {
   MutationConfig,
   MutationResultPair,
-  QueryConfig,
+  QueryConfig as ReactQueryConfig,
   QueryResult,
   useMutation,
   useQuery,
@@ -48,6 +48,8 @@ type AppErrorResponse = AxiosError<{
     [key: string]: any;
   };
 }>;
+
+type QueryConfig<Response, Error> = ReactQueryConfig<Response, Error> & { cancelToken?: CancelTokenSource };
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}

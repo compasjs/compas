@@ -17,6 +17,9 @@
 {{ if (item.files) { }}
  * @param { {{= buildTypeQualifier(getItem(item.files), true) }} } files
 {{ } }}
+{{ if (options.isBrowser) { }}
+ * @param { { cancelToken?: CancelToken } } [options]
+{{ } }}
 {{ if (item.response) { }}
  * @returns {Promise<{{= buildTypeQualifier(getItem(item.response), false) }}>}
 {{ } else { }}
@@ -36,6 +39,9 @@ body,
 {{ } }}
 {{ if (item.files) { }}
 files,
+{{ } }}
+{{ if (options.isBrowser) { }}
+options = {},
 {{ } }}
 ) {
     {{ if (!options.isBrowser) { }}
@@ -69,6 +75,9 @@ files,
       {{ } }}
       {{ if (item.response && getItem(item.response).type === "file") { }}
       responseType: "{{= options.isNode ? "stream" : "blob" }}",
+      {{ } }}
+      {{ if (options.isBrowser) { }}
+      cancelToken: options?.cancelToken,
       {{ } }}
     });
 
