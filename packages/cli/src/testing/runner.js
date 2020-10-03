@@ -55,6 +55,7 @@ export async function runTestsRecursively(testState) {
 
   const originalTimeout = timeout;
   setTestTimeout(runner.timeout ?? timeout);
+  mutateRunnerEnablingWarnings(runner);
 
   for (const child of testState.children) {
     await runTestsRecursively(child);
@@ -86,6 +87,36 @@ function createRunnerForState(testState) {
 }
 
 /**
+ * Wrap runner functions and log a warning before calling the implementation.
+ * This is mostly to 'lint' writing tests, and improves detecting which assertion fails
+ * instead of it being 'logged' on the 'parent'.
+ */
+function mutateRunnerEnablingWarnings(runner) {
+  const methods = [
+    "ok",
+    "notOk",
+    "equal",
+    "notEqual",
+    "deepEqual",
+    "fail",
+    "pass",
+    "test",
+  ];
+
+  for (const method of methods) {
+    const implementation = runner[method];
+
+    runner[method] = (...args) => {
+      runner.log.error(
+        `warning: called 't.${method}' on parent 't'. Accept 't' as argument in the callback of 't.test(msg, callback)'.`,
+      );
+
+      implementation(...args);
+    };
+  }
+}
+
+/**
  * @param {TestState} state
  * @param {*} value
  * @param {string} [message]
@@ -98,6 +129,7 @@ function ok(state, value, message) {
     passed,
     meta: {
       actual: passed,
+      expected: true,
     },
     message,
   });
@@ -116,6 +148,7 @@ function notOk(state, value, message) {
     passed,
     meta: {
       actual: passed,
+      expected: false,
     },
     message,
   });
