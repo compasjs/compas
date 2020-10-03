@@ -109,7 +109,7 @@ test("stdlib/lodash", (t) => {
     );
   });
 
-  t.test("camelToSnakeCase", () => {
+  t.test("camelToSnakeCase", (t) => {
     // minimal
     t.equal(camelToSnakeCase("thisISCool"), "this_is_cool");
     t.equal(camelToSnakeCase("fileStore"), "file_store");
