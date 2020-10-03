@@ -36,6 +36,27 @@ test(name, async (t) => {
   const apiClient = clientImports.apiClient.newApiClient(client);
   serverImports.apiClient.createApiClient(client);
 
+  t.test("client - request cancellation works", async (t) => {
+    try {
+      const cancelToken = Axios.CancelToken.source();
+
+      const requestPromise = apiClient.app.getId(
+        { id: "5" },
+        { cancelToken: cancelToken.token },
+      );
+      await Promise.all([
+        new Promise((r) => {
+          setTimeout(r, 0);
+        }).then(() => cancelToken.cancel("foo")),
+        requestPromise,
+      ]);
+      t.fail("Should throw cancel error");
+    } catch (e) {
+      t.equal(e.__CANCEL__, true, "Cancel token throws");
+      t.equal(e.message, "foo");
+    }
+  });
+
   t.test("client - GET /:id validation", async (t) => {
     try {
       await apiClient.app.getId({});

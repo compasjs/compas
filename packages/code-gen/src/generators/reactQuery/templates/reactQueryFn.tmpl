@@ -66,10 +66,19 @@ options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
     {{ if (item.query) { }}
     query: T.{{= item.query.reference.uniqueName }}_Input,
     {{ } }}
-    ) => {{= item.group }}.{{= item.name }}(
-      {{= item.params ? "params, " : ""}}
-      {{= item.query ? "query, " : "" }}
-    ),
+    ) => {
+      const promise = {{= item.group }}.{{= item.name }}(
+        {{= item.params ? "params, " : ""}}
+        {{= item.query ? "query, " : "" }}
+        { cancelToken: options?.cancelToken?.token },
+      );
+
+      if (options?.cancelToken) {
+        promise.cancel = () => options.cancelToken.cancel();
+      }
+
+      return promise;
+    },
     options,
   );
 }
