@@ -3,56 +3,73 @@ import { storeQueries } from "./generated/queries.js";
 
 const queries = {
   // Should only run in a transaction
-  getAnyJob: (sql) => sql`UPDATE "jobQueue"
-                          SET "isComplete" = TRUE,
-                              "updatedAt"  = now()
-                          WHERE id = (SELECT "id"
-                                      FROM "jobQueue"
-                                      WHERE NOT "isComplete"
-                                        AND "scheduledAt" < now()
-                                      ORDER BY "scheduledAt", "priority"
-                                        FOR UPDATE SKIP LOCKED
-                                      LIMIT 1)
-                          RETURNING id`,
+  getAnyJob: (sql) => sql`
+    UPDATE "jobQueue"
+    SET "isComplete" = TRUE,
+        "updatedAt"  = now()
+    WHERE id = (SELECT "id"
+                FROM "jobQueue"
+                WHERE NOT "isComplete"
+                  AND "scheduledAt" < now()
+                ORDER BY "scheduledAt", "priority"
+                  FOR UPDATE SKIP LOCKED
+                LIMIT 1)
+    RETURNING id
+  `,
 
   // Should only run in a transaction
-  getJobByName: (name, sql) => sql`UPDATE jobQueue
-                            SET "isComplete" = TRUE,
-                                "updatedAt"  = now()
-                            WHERE id = (SELECT "id"
-                                        FROM "jobQueue"
-                                        WHERE NOT "isComplete"
-                                          AND "scheduledAt" < now()
-                                          AND "name" = ${name}
-                                        ORDER BY "scheduledAt", "priority" 
-                                        FOR UPDATE SKIP LOCKED
-                                        LIMIT 1)
-                            RETURNING "id"`,
+  getJobByName: (name, sql) => sql`
+    UPDATE "jobQueue"
+    SET "isComplete" = TRUE,
+        "updatedAt"  = now()
+    WHERE id = (SELECT "id"
+                FROM "jobQueue"
+                WHERE NOT "isComplete"
+                  AND "scheduledAt" < now()
+                  AND "name" = ${name}
+                ORDER BY "scheduledAt", "priority"
+                  FOR UPDATE SKIP LOCKED
+                LIMIT 1)
+    RETURNING "id"
+  `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
-  getPendingQueueSize: (
-    sql,
-  ) => sql`SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS  "pendingCount",
-                                            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-                                     FROM "jobQueue"
-                                     WHERE NOT "isComplete"`,
+  getPendingQueueSize: (sql) => sql`
+    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
+           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM "jobQueue"
+    WHERE NOT "isComplete"
+  `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
-  getPendingQueueSizeForName: (
-    sql,
-    name,
-  ) => sql`SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS  "pendingCount",
-                                            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-                                     FROM "jobQueue"
-                                     WHERE NOT "isComplete" AND "name" = ${name}`,
+  getPendingQueueSizeForName: (sql, name) => sql`
+    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
+           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM "jobQueue"
+    WHERE NOT "isComplete"
+      AND "name" = ${name}
+  `,
 
   // Returns time in milliseconds
-  getAverageJobTime: (sql, dateStart, dateEnd) =>
-    sql`SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime" FROM "jobQueue" WHERE "isComplete" AND "updatedAt" > ${dateStart} AND "updatedAt" <= ${dateEnd};`,
+  getAverageJobTime: (sql, dateStart, dateEnd) => sql`
+    SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+               (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+    FROM "jobQueue"
+    WHERE "isComplete"
+      AND "updatedAt" > ${dateStart}
+      AND "updatedAt" <= ${dateEnd};
+  `,
 
   // Returns time in milliseconds
-  getAverageJobTimeForName: (sql, name, dateStart, dateEnd) =>
-    sql`SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) - (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime" FROM "jobQueue" WHERE "isComplete" AND name = ${name} AND "updatedAt" > ${dateStart} AND "updatedAt" <= ${dateEnd};`,
+  getAverageJobTimeForName: (sql, name, dateStart, dateEnd) => sql`
+    SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+               (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+    FROM "jobQueue"
+    WHERE "isComplete"
+      AND name = ${name}
+      AND "updatedAt" > ${dateStart}
+      AND "updatedAt" <= ${dateEnd};
+  `,
 };
 
 export class JobQueueWorker {

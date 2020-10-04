@@ -5,16 +5,18 @@ import { storeQueries } from "./generated/queries.js";
 import { listObjects } from "./minio.js";
 
 const queries = {
-  copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) =>
-    sql`INSERT INTO "fileStore" ("id", "bucketName", "contentType", "contentLength", "filename") 
-  SELECT 
-    ${targetId},
-    ${targetBucket},
-    "contentType",
-    "contentLength",
-    "filename" 
-  FROM "fileStore"
-  WHERE id = ${sourceId} AND "bucketName" = ${sourceBucket} RETURNING id`,
+  copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
+    INSERT INTO "fileStore" ("id", "bucketName", "contentType", "contentLength", "filename")
+    SELECT ${targetId},
+           ${targetBucket},
+           "contentType",
+           "contentLength",
+           "filename"
+    FROM "fileStore"
+    WHERE id = ${sourceId}
+      AND "bucketName" = ${sourceBucket}
+    RETURNING id
+  `,
 };
 
 /**

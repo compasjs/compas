@@ -68,10 +68,10 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     // Clean all connections
     // They prevent from using this as a template
     await creationSql`
-  SELECT pg_terminate_backend(pg_stat_activity.pid)
-  FROM pg_stat_activity
-  WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
-    AND pid <> pg_backend_pid()
+      SELECT pg_terminate_backend(pg_stat_activity.pid)
+      FROM pg_stat_activity
+      WHERE pg_stat_activity.datname = ${process.env.APP_NAME}
+        AND pid <> pg_backend_pid()
     `;
 
     // Use the current 'app' database as a base.
@@ -87,16 +87,16 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     });
 
     // Cleanup all tables, except migrations
-    const tables = await sql`SELECT table_name
-                               FROM information_schema.tables
-                               WHERE table_schema = 'public'
-                                 AND table_name != 'migrations'`;
+    const tables = await sql`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+        AND table_name != 'migrations'
+    `;
     if (tables.length > 0) {
-      await sql.unsafe(
-        `TRUNCATE ${tables
-          .map((it) => `"${it.table_name}"`)
-          .join(", ")} CASCADE`,
-      );
+      await sql.unsafe(`
+        TRUNCATE ${tables.map((it) => `"${it.table_name}"`).join(", ")} CASCADE
+          `);
     }
 
     // Cleanup all connections

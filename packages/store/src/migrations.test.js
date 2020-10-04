@@ -19,7 +19,9 @@ test("store/migrations", (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    const result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`
+      SELECT 1 + 2 AS sum
+    `;
     t.equal(result[0].sum, 3);
   });
 
@@ -45,7 +47,10 @@ test("store/migrations", (t) => {
     t.ok(list[2].number === 999);
 
     await runMigrations(mc);
-    const testResult = await sql`SELECT * FROM "testTable"`;
+    const testResult = await sql`
+      SELECT *
+      FROM "testTable"
+    `;
     t.deepEqual([...testResult], [{ value: 1 }, { value: 2 }, { value: 3 }]);
   });
 

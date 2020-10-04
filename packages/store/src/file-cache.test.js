@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, lstatSync, writeFileSync } from "fs";
+import { existsSync, lstatSync, mkdirSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
 import { mainTestFn, test } from "@lbu/cli";
@@ -50,7 +50,9 @@ test("store/file-cache", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    const result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`
+      SELECT 1 + 2 AS sum
+    `;
     t.equal(result[0].sum, 3);
   });
 
@@ -193,7 +195,9 @@ test("store/file-cache check memory usage", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    const result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`
+      SELECT 1 + 2 AS sum
+    `;
     t.equal(result[0].sum, 3);
   });
 

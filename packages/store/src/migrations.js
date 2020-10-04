@@ -164,13 +164,15 @@ async function runMigration(sql, migration) {
  * @param {MigrateFile} migration
  */
 async function buildInsert(sql, migration) {
-  return sql`INSERT INTO migrations ${sql(
-    migration,
-    "namespace",
-    "name",
-    "number",
-    "hash",
-  )}`;
+  return sql`
+    INSERT INTO migrations ${sql(
+      migration,
+      "namespace",
+      "name",
+      "number",
+      "hash",
+    )}
+  `;
 }
 
 /**
@@ -180,11 +182,13 @@ async function buildInsert(sql, migration) {
 async function syncWithSchemaState(mc) {
   let rows = [];
   try {
-    rows = await mc.sql`SELECT DISTINCT ON (namespace, number) namespace,
-                                                               number,
-                                                               hash
-                        FROM migrations
-                        ORDER BY namespace, number, "createdAt" DESC`;
+    rows = await mc.sql`
+      SELECT DISTINCT ON (namespace, number) namespace,
+                                             number,
+                                             hash
+      FROM migrations
+      ORDER BY namespace, number, "createdAt" DESC
+    `;
   } catch (e) {
     if ((e.message ?? "").indexOf(`"migrations" does not exist`) === -1) {
       throw e;

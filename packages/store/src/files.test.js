@@ -35,7 +35,9 @@ test("store/files", async (t) => {
     sql = await createTestPostgresDatabase();
     t.ok(!!sql);
 
-    const result = await sql`SELECT 1 + 2 AS sum`;
+    const result = await sql`
+      SELECT 1 + 2 AS sum
+    `;
     t.equal(result[0].sum, 3);
   });
 

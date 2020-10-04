@@ -57,19 +57,23 @@ export async function createDatabaseIfNotExists(sql, databaseName, template) {
   if (!sql) {
     sql = postgres(process.env.POSTGRES_URI);
   }
-  const [
-    db,
-  ] = await sql`SELECT datname FROM pg_database WHERE datname = ${databaseName}`;
+  const [db] = await sql`
+    SELECT datname
+    FROM pg_database
+    WHERE datname = ${databaseName}
+  `;
 
   if (!db || !db.datname) {
     if (template) {
-      await sql`CREATE DATABASE ${sql(databaseName)} WITH TEMPLATE ${sql(
+      await sql`
+        CREATE DATABASE ${sql(databaseName)} WITH TEMPLATE ${sql(
         template,
-      )} OWNER ${sql(sql.options.user)}`;
+      )} OWNER ${sql(sql.options.user)}
+      `;
     } else {
-      await sql`CREATE DATABASE ${sql(databaseName)} WITH OWNER ${sql(
-        sql.options.user,
-      )}`;
+      await sql`
+        CREATE DATABASE ${sql(databaseName)} WITH OWNER ${sql(sql.options.user)}
+      `;
     }
   }
 
