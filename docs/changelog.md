@@ -1,5 +1,38 @@
 # CHANGELOG
 
+### [v0.0.79](https://github.com/lightbasenl/lbu/releases/tag/v0.0.79)
+
+- build(deps): bump postgres from 2.0.0-beta.0 to 2.0.0-beta.2
+  ([#332](https://github.com/lightbasenl/lbu/pull/332),
+  [#346](https://github.com/lightbasenl/lbu/pull/346))
+- build(deps-dev): bump react-query from 2.23.0 to 2.23.1
+  ([#349](https://github.com/lightbasenl/lbu/pull/349))
+- chore: automatically add link to release notes in the changelog and update
+  publish guide
+- chore: cleanup dependabot config
+- chore: change default branch name to `main`
+- cli: warn on usage of parent `t.xx` in sub tests
+  ([#348](https://github.com/lightbasenl/lbu/pull/348))
+- code-gen: generate cancel token support in browser environments
+  ([#347](https://github.com/lightbasenl/lbu/pull/347))
+- code-gen: open api importer fixes
+  ([#345](https://github.com/lightbasenl/lbu/pull/345))
+- code-gen: remove defaultValue from generated where type
+  ([#339](https://github.com/lightbasenl/lbu/pull/339))
+- code-gen: support `withSoftDeletes` and remove `withHistory`
+  ([#334](https://github.com/lightbasenl/lbu/pull/334))
+- store: cleanup table names
+  ([#350](https://github.com/lightbasenl/lbu/pull/350))
+- store: consistent internal query formatting
+- store: enable soft deletes for fileStore
+  ([#340](https://github.com/lightbasenl/lbu/pull/340))
+- store: reset postgres#end timeout in tests
+- store: return hash changes from getMigrationsToBeApplied
+  ([#341](https://github.com/lightbasenl/lbu/pull/341))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://lbu.lightbase.nl/releases/0.0.79.html).
+
 ### [v0.0.78](https://github.com/lightbasenl/lbu/releases/tag/v0.0.78)
 
 - code-gen: fix default value of `docString`
