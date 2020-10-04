@@ -146,11 +146,11 @@ async function runMigration(sql, migration) {
     if (useTransaction) {
       await sql.begin(async (sql) => [
         await sql.unsafe(migration.source),
-        await buildInsert(sql, migration),
+        await runInsert(sql, migration),
       ]);
     } else {
       await sql.unsafe(migration.source);
-      await buildInsert(sql, migration);
+      await runInsert(sql, migration);
     }
   } catch (e) {
     throw new Error(
@@ -163,9 +163,9 @@ async function runMigration(sql, migration) {
  * @param {Postgres} sql
  * @param {MigrateFile} migration
  */
-async function buildInsert(sql, migration) {
+async function runInsert(sql, migration) {
   return sql`
-    INSERT INTO migrations ${sql(
+    INSERT INTO migration ${sql(
       migration,
       "namespace",
       "name",
@@ -186,11 +186,11 @@ async function syncWithSchemaState(mc) {
       SELECT DISTINCT ON (namespace, number) namespace,
                                              number,
                                              hash
-      FROM migrations
+      FROM migration
       ORDER BY namespace, number, "createdAt" DESC
     `;
   } catch (e) {
-    if ((e.message ?? "").indexOf(`"migrations" does not exist`) === -1) {
+    if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
       throw e;
     }
     return;

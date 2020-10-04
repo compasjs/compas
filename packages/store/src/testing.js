@@ -91,7 +91,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
       SELECT table_name
       FROM information_schema.tables
       WHERE table_schema = 'public'
-        AND table_name != 'migrations'
+        AND table_name != 'migration'
     `;
     if (tables.length > 0) {
       await sql.unsafe(`

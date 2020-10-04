@@ -53,11 +53,11 @@ test("store/sessions", async (t) => {
   });
 
   t.test("store.clean removes expired sessions", async (t) => {
-    const sessions = await storeQueries.sessionStoreSelect(sql);
+    const sessions = await storeQueries.sessionSelect(sql);
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);
-    await storeQueries.sessionStoreUpdate(
+    await storeQueries.sessionUpdate(
       sql,
       { expires: new Date(0) },
       {
@@ -70,7 +70,7 @@ test("store/sessions", async (t) => {
       (
         await sql`
           SELECT *
-          FROM "sessionStore"
+          FROM "session"
       `
       ).length,
       0,

@@ -5,258 +5,258 @@ import { uuid } from "@lbu/stdlib";
 
 export const storeQueries = {
   /**
-   * Queries for StoreFileStore
+   * Queries for StoreFile
    * Docs:
    * Where docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
    */
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreWhere} [where]
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileWhere} [where]
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreSelect: (sql, where) => sql`
+  fileSelect: (sql, where) => sql`
 SELECT
-fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", fs."deletedAt"
-FROM "fileStore" fs
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."createdAt", f."updatedAt", f."deletedAt"
+FROM "file" f
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
     where?.idIn ?? null
-  }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
+  }, NULL) IS NULL OR f."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where?.bucketName ?? null
-  }, NULL) IS NULL OR fs."bucketName" = ${
+  }, NULL) IS NULL OR f."bucketName" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+  }, NULL) IS NULL OR f."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR fs."createdAt" = ${
+  }, NULL) IS NULL OR f."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" > ${
+  }, NULL) IS NULL OR f."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" < ${
+  }, NULL) IS NULL OR f."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR fs."updatedAt" = ${
+  }, NULL) IS NULL OR f."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" > ${
+  }, NULL) IS NULL OR f."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${
+  }, NULL) IS NULL OR f."updatedAt" < ${
     where?.updatedAtLowerThan ?? null
   }) AND (${
     where?.deletedAtInclude ?? false
-  } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+  } IS TRUE OR f."deletedAt" IS NULL) AND (COALESCE(${
     where?.deletedAt ?? null
-  }, NULL) IS NULL OR fs."deletedAt" = ${
+  }, NULL) IS NULL OR f."deletedAt" = ${
     where?.deletedAt ?? null
   }) AND (COALESCE(${
     where?.deletedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" > ${
+  }, NULL) IS NULL OR f."deletedAt" > ${
     where?.deletedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.deletedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
-ORDER BY fs."createdAt", fs."updatedAt" , fs."id"
+  }, NULL) IS NULL OR f."deletedAt" < ${where?.deletedAtLowerThan ?? null})
+ORDER BY f."createdAt", f."updatedAt" , f."id"
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreWhere} [where]
+   * @param { StoreFileWhere} [where]
    * @returns {Promise<number>}
    */
-  fileStoreCount: async (sql, where) => {
+  fileCount: async (sql, where) => {
     const result = await sql`
-SELECT count(*) AS "genCount" FROM "fileStore" fs 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+SELECT count(*) AS "genCount" FROM "file" f 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
       where?.id ?? null
     }) AND (COALESCE(${
       where?.idIn ?? null
-    }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
+    }, NULL) IS NULL OR f."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where?.bucketName ?? null
-    }, NULL) IS NULL OR fs."bucketName" = ${
+    }, NULL) IS NULL OR f."bucketName" = ${
       where?.bucketName ?? null
     }) AND (COALESCE(${
       where?.bucketNameLike ?? null
-    }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+    }, NULL) IS NULL OR f."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
       where?.createdAt ?? null
-    }, NULL) IS NULL OR fs."createdAt" = ${
+    }, NULL) IS NULL OR f."createdAt" = ${
       where?.createdAt ?? null
     }) AND (COALESCE(${
       where?.createdAtGreaterThan ?? null
-    }, NULL) IS NULL OR fs."createdAt" > ${
+    }, NULL) IS NULL OR f."createdAt" > ${
       where?.createdAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.createdAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."createdAt" < ${
+    }, NULL) IS NULL OR f."createdAt" < ${
       where?.createdAtLowerThan ?? null
     }) AND (COALESCE(${
       where?.updatedAt ?? null
-    }, NULL) IS NULL OR fs."updatedAt" = ${
+    }, NULL) IS NULL OR f."updatedAt" = ${
       where?.updatedAt ?? null
     }) AND (COALESCE(${
       where?.updatedAtGreaterThan ?? null
-    }, NULL) IS NULL OR fs."updatedAt" > ${
+    }, NULL) IS NULL OR f."updatedAt" > ${
       where?.updatedAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.updatedAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."updatedAt" < ${
+    }, NULL) IS NULL OR f."updatedAt" < ${
       where?.updatedAtLowerThan ?? null
     }) AND (${
       where?.deletedAtInclude ?? false
-    } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+    } IS TRUE OR f."deletedAt" IS NULL) AND (COALESCE(${
       where?.deletedAt ?? null
-    }, NULL) IS NULL OR fs."deletedAt" = ${
+    }, NULL) IS NULL OR f."deletedAt" = ${
       where?.deletedAt ?? null
     }) AND (COALESCE(${
       where?.deletedAtGreaterThan ?? null
-    }, NULL) IS NULL OR fs."deletedAt" > ${
+    }, NULL) IS NULL OR f."deletedAt" > ${
       where?.deletedAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.deletedAtLowerThan ?? null
-    }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
+    }, NULL) IS NULL OR f."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreWhere} [where]
+   * @param { StoreFileWhere} [where]
    * @returns {Promise<[]>}
    */
-  fileStoreDelete: (sql, where) => sql`
-UPDATE "fileStore" fs SET "deletedAt" = NOW()
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+  fileDelete: (sql, where) => sql`
+UPDATE "file" f SET "deletedAt" = NOW()
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
     where?.idIn ?? null
-  }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
+  }, NULL) IS NULL OR f."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where?.bucketName ?? null
-  }, NULL) IS NULL OR fs."bucketName" = ${
+  }, NULL) IS NULL OR f."bucketName" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+  }, NULL) IS NULL OR f."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR fs."createdAt" = ${
+  }, NULL) IS NULL OR f."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" > ${
+  }, NULL) IS NULL OR f."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" < ${
+  }, NULL) IS NULL OR f."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR fs."updatedAt" = ${
+  }, NULL) IS NULL OR f."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" > ${
+  }, NULL) IS NULL OR f."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${
+  }, NULL) IS NULL OR f."updatedAt" < ${
     where?.updatedAtLowerThan ?? null
   }) AND (${
     where?.deletedAtInclude ?? false
-  } IS TRUE OR fs."deletedAt" IS NULL) AND (COALESCE(${
+  } IS TRUE OR f."deletedAt" IS NULL) AND (COALESCE(${
     where?.deletedAt ?? null
-  }, NULL) IS NULL OR fs."deletedAt" = ${
+  }, NULL) IS NULL OR f."deletedAt" = ${
     where?.deletedAt ?? null
   }) AND (COALESCE(${
     where?.deletedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" > ${
+  }, NULL) IS NULL OR f."deletedAt" > ${
     where?.deletedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.deletedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
+  }, NULL) IS NULL OR f."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreWhere} [where]
+   * @param { StoreFileWhere} [where]
    * @returns {Promise<[]>}
    */
-  fileStoreDeletePermanent: (sql, where) => sql`
-DELETE FROM "fileStore" fs
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
+  fileDeletePermanent: (sql, where) => sql`
+DELETE FROM "file" f
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
     where?.idIn ?? null
-  }, NULL) IS NULL OR fs."id" = ANY (${sql.array(
+  }, NULL) IS NULL OR f."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where?.bucketName ?? null
-  }, NULL) IS NULL OR fs."bucketName" = ${
+  }, NULL) IS NULL OR f."bucketName" = ${
     where?.bucketName ?? null
   }) AND (COALESCE(${
     where?.bucketNameLike ?? null
-  }, NULL) IS NULL OR fs."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
+  }, NULL) IS NULL OR f."bucketName" LIKE ${`%${where?.bucketNameLike}%`}) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR fs."createdAt" = ${
+  }, NULL) IS NULL OR f."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" > ${
+  }, NULL) IS NULL OR f."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."createdAt" < ${
+  }, NULL) IS NULL OR f."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR fs."updatedAt" = ${
+  }, NULL) IS NULL OR f."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" > ${
+  }, NULL) IS NULL OR f."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."updatedAt" < ${
+  }, NULL) IS NULL OR f."updatedAt" < ${
     where?.updatedAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.deletedAt ?? null
-  }, NULL) IS NULL OR fs."deletedAt" = ${
+  }, NULL) IS NULL OR f."deletedAt" = ${
     where?.deletedAt ?? null
   }) AND (COALESCE(${
     where?.deletedAtGreaterThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" > ${
+  }, NULL) IS NULL OR f."deletedAt" > ${
     where?.deletedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.deletedAtLowerThan ?? null
-  }, NULL) IS NULL OR fs."deletedAt" < ${where?.deletedAtLowerThan ?? null})
+  }, NULL) IS NULL OR f."deletedAt" < ${where?.deletedAtLowerThan ?? null})
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input|StoreFileStoreInsertPartial_Input[]} insert
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input|StoreFileInsertPartial_Input[]} insert
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreInsert: (sql, insert) => {
+  fileInsert: (sql, insert) => {
     const data = Array.isArray(insert) ? insert : [insert];
     if (data.length === 0) {
       return [];
     }
-    let query = `INSERT INTO "fileStore" ("bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt") VALUES `;
+    let query = `INSERT INTO "file" ("bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt") VALUES `;
     const argList = [];
     let idx = 1;
     for (const it of data) {
@@ -264,7 +264,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
         it.bucketName ?? null,
         it.contentLength ?? null,
         it.contentType ?? null,
-        it.filename ?? null,
+        it.name ?? null,
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
         it.deletedAt ?? null,
@@ -273,18 +273,18 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     }
     // Remove trailing comma
     query = query.substring(0, query.length - 1);
-    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"`;
+    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
   /**
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input} value
-   * @param { StoreFileStoreWhere} [where]
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input} value
+   * @param { StoreFileWhere} [where]
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpdate: (sql, value, where) => {
-    let query = `UPDATE "fileStore" fs SET `;
+  fileUpdate: (sql, value, where) => {
+    let query = `UPDATE "file" f SET `;
     const argList = [];
     let idx = 1;
     if (value["bucketName"] !== undefined) {
@@ -299,9 +299,9 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       query += `"contentType" = $${idx++}, `;
       argList.push(value["contentType"]);
     }
-    if (value["filename"] !== undefined) {
-      query += `"filename" = $${idx++}, `;
-      argList.push(value["filename"]);
+    if (value["name"] !== undefined) {
+      query += `"name" = $${idx++}, `;
+      argList.push(value["name"]);
     }
     if (value["createdAt"] !== undefined) {
       query += `"createdAt" = $${idx++}, `;
@@ -316,13 +316,13 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
     query = query.substring(0, query.length - 2);
     query += ` WHERE `;
     if (where.id !== undefined) {
-      query += `fs."id" `;
+      query += `f."id" `;
       query += `= $${idx++}`;
       argList.push(where.id);
       query += " AND ";
     }
     if (where.idIn !== undefined) {
-      query += `fs."id" `;
+      query += `f."id" `;
       query += `= ANY (ARRAY[`;
       let addOne = false;
       for (const value of where.idIn || []) {
@@ -337,373 +337,367 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR fs."id" = ${
       query += " AND ";
     }
     if (where.bucketName !== undefined) {
-      query += `fs."bucketName" `;
+      query += `f."bucketName" `;
       query += `= $${idx++}`;
       argList.push(where.bucketName);
       query += " AND ";
     }
     if (where.bucketNameLike !== undefined) {
-      query += `fs."bucketName" `;
+      query += `f."bucketName" `;
       query += `LIKE $${idx++}`;
       argList.push(`%${where.bucketNameLike}%`);
       query += " AND ";
     }
     if (where.createdAt !== undefined) {
-      query += `fs."createdAt" `;
+      query += `f."createdAt" `;
       query += `= $${idx++}`;
       argList.push(where.createdAt);
       query += " AND ";
     }
     if (where.createdAtGreaterThan !== undefined) {
-      query += `fs."createdAt" `;
+      query += `f."createdAt" `;
       query += `> $${idx++}`;
       argList.push(where.createdAtGreaterThan);
       query += " AND ";
     }
     if (where.createdAtLowerThan !== undefined) {
-      query += `fs."createdAt" `;
+      query += `f."createdAt" `;
       query += `< $${idx++}`;
       argList.push(where.createdAtLowerThan);
       query += " AND ";
     }
     if (where.updatedAt !== undefined) {
-      query += `fs."updatedAt" `;
+      query += `f."updatedAt" `;
       query += `= $${idx++}`;
       argList.push(where.updatedAt);
       query += " AND ";
     }
     if (where.updatedAtGreaterThan !== undefined) {
-      query += `fs."updatedAt" `;
+      query += `f."updatedAt" `;
       query += `> $${idx++}`;
       argList.push(where.updatedAtGreaterThan);
       query += " AND ";
     }
     if (where.updatedAtLowerThan !== undefined) {
-      query += `fs."updatedAt" `;
+      query += `f."updatedAt" `;
       query += `< $${idx++}`;
       argList.push(where.updatedAtLowerThan);
       query += " AND ";
     }
     if (where.deletedAtInclude !== undefined) {
       if (where.deletedAtInclude ?? false === false) {
-        query += `fs."deletedAt" IS NULL`;
+        query += `f."deletedAt" IS NULL`;
       }
     }
     if (where.deletedAt !== undefined) {
-      query += `fs."deletedAt" `;
+      query += `f."deletedAt" `;
       query += `= $${idx++}`;
       argList.push(where.deletedAt);
       query += " AND ";
     }
     if (where.deletedAtGreaterThan !== undefined) {
-      query += `fs."deletedAt" `;
+      query += `f."deletedAt" `;
       query += `> $${idx++}`;
       argList.push(where.deletedAtGreaterThan);
       query += " AND ";
     }
     if (where.deletedAtLowerThan !== undefined) {
-      query += `fs."deletedAt" `;
+      query += `f."deletedAt" `;
       query += `< $${idx++}`;
       argList.push(where.deletedAtLowerThan);
       query += " AND ";
     }
     query = query.substring(0, query.length - 4);
-    query += ` RETURNING fs."id", fs."bucketName", fs."contentLength", fs."contentType", fs."filename", fs."createdAt", fs."updatedAt", fs."deletedAt"`;
+    query += ` RETURNING f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."createdAt", f."updatedAt", f."deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
   /**
    * Note: Use only when id has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpsert: (sql, it) => {
+  fileUpsert: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
     }, ${it.deletedAt ?? null}
 ) ON CONFLICT("id") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
   /**
    * Note: Use only when bucketName has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpsertByBucketName: (sql, it) => {
+  fileUpsertByBucketName: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
     }, ${it.deletedAt ?? null}
 ) ON CONFLICT("bucketName") DO UPDATE SET
-"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
   /**
    * Note: Use only when createdAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpsertByCreatedAt: (sql, it) => {
+  fileUpsertByCreatedAt: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
     }, ${it.deletedAt ?? null}
 ) ON CONFLICT("createdAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
   /**
    * Note: Use only when updatedAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpsertByUpdatedAt: (sql, it) => {
+  fileUpsertByUpdatedAt: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
     }, ${it.deletedAt ?? null}
 ) ON CONFLICT("updatedAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
   /**
    * Note: Use only when deletedAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreFileStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreFileStore[]>}
+   * @param { StoreFileInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreFile[]>}
    */
-  fileStoreUpsertByDeletedAt: (sql, it) => {
+  fileUpsertByDeletedAt: (sql, it) => {
     return sql`
-INSERT INTO "fileStore" ("id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.filename ?? null}, ${it.createdAt ?? new Date()}, ${
+    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
       it.updatedAt ?? new Date()
     }, ${it.deletedAt ?? null}
 ) ON CONFLICT("deletedAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "filename" = EXCLUDED."filename", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "filename", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
   /**
    * @param {Postgres} sql
-   * @param { StoreJobQueueWhere} [where]
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobWhere} [where]
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueSelect: (sql, where) => sql`
+  jobSelect: (sql, where) => sql`
 SELECT
-jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt"
-FROM "jobQueue" jq
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+j."id", j."isComplete", j."priority", j."scheduledAt", j."name", j."data", j."createdAt", j."updatedAt"
+FROM "job" j
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
     where?.id ?? null
-  }) AND (COALESCE(${
+  }) AND (COALESCE(${where?.idGreaterThan ?? null}, NULL) IS NULL OR j."id" > ${
     where?.idGreaterThan ?? null
-  }, NULL) IS NULL OR jq."id" > ${
-    where?.idGreaterThan ?? null
-  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
+  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
     where?.idLowerThan ?? null
   }) AND (COALESCE(${
     where?.scheduledAt ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" = ${
+  }, NULL) IS NULL OR j."scheduledAt" = ${
     where?.scheduledAt ?? null
   }) AND (COALESCE(${
     where?.scheduledAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" > ${
+  }, NULL) IS NULL OR j."scheduledAt" > ${
     where?.scheduledAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.scheduledAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" < ${
+  }, NULL) IS NULL OR j."scheduledAt" < ${
     where?.scheduledAtLowerThan ?? null
-  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR j."name" = ${
     where?.name ?? null
   }) AND (COALESCE(${
     where?.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+  }, NULL) IS NULL OR j."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR jq."createdAt" = ${
+  }, NULL) IS NULL OR j."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."createdAt" > ${
+  }, NULL) IS NULL OR j."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."createdAt" < ${
+  }, NULL) IS NULL OR j."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR jq."updatedAt" = ${
+  }, NULL) IS NULL OR j."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."updatedAt" > ${
+  }, NULL) IS NULL OR j."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
-ORDER BY jq."createdAt", jq."updatedAt" , jq."id"
+  }, NULL) IS NULL OR j."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+ORDER BY j."createdAt", j."updatedAt" , j."id"
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreJobQueueWhere} [where]
+   * @param { StoreJobWhere} [where]
    * @returns {Promise<number>}
    */
-  jobQueueCount: async (sql, where) => {
+  jobCount: async (sql, where) => {
     const result = await sql`
-SELECT count(*) AS "genCount" FROM "jobQueue" jq 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+SELECT count(*) AS "genCount" FROM "job" j 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
       where?.id ?? null
     }) AND (COALESCE(${
       where?.idGreaterThan ?? null
-    }, NULL) IS NULL OR jq."id" > ${
+    }, NULL) IS NULL OR j."id" > ${
       where?.idGreaterThan ?? null
-    }) AND (COALESCE(${
-      where?.idLowerThan ?? null
-    }, NULL) IS NULL OR jq."id" < ${
+    }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
       where?.idLowerThan ?? null
     }) AND (COALESCE(${
       where?.scheduledAt ?? null
-    }, NULL) IS NULL OR jq."scheduledAt" = ${
+    }, NULL) IS NULL OR j."scheduledAt" = ${
       where?.scheduledAt ?? null
     }) AND (COALESCE(${
       where?.scheduledAtGreaterThan ?? null
-    }, NULL) IS NULL OR jq."scheduledAt" > ${
+    }, NULL) IS NULL OR j."scheduledAt" > ${
       where?.scheduledAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.scheduledAtLowerThan ?? null
-    }, NULL) IS NULL OR jq."scheduledAt" < ${
+    }, NULL) IS NULL OR j."scheduledAt" < ${
       where?.scheduledAtLowerThan ?? null
-    }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+    }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR j."name" = ${
       where?.name ?? null
     }) AND (COALESCE(${
       where?.nameLike ?? null
-    }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+    }, NULL) IS NULL OR j."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
       where?.createdAt ?? null
-    }, NULL) IS NULL OR jq."createdAt" = ${
+    }, NULL) IS NULL OR j."createdAt" = ${
       where?.createdAt ?? null
     }) AND (COALESCE(${
       where?.createdAtGreaterThan ?? null
-    }, NULL) IS NULL OR jq."createdAt" > ${
+    }, NULL) IS NULL OR j."createdAt" > ${
       where?.createdAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.createdAtLowerThan ?? null
-    }, NULL) IS NULL OR jq."createdAt" < ${
+    }, NULL) IS NULL OR j."createdAt" < ${
       where?.createdAtLowerThan ?? null
     }) AND (COALESCE(${
       where?.updatedAt ?? null
-    }, NULL) IS NULL OR jq."updatedAt" = ${
+    }, NULL) IS NULL OR j."updatedAt" = ${
       where?.updatedAt ?? null
     }) AND (COALESCE(${
       where?.updatedAtGreaterThan ?? null
-    }, NULL) IS NULL OR jq."updatedAt" > ${
+    }, NULL) IS NULL OR j."updatedAt" > ${
       where?.updatedAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.updatedAtLowerThan ?? null
-    }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+    }, NULL) IS NULL OR j."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param {Postgres} sql
-   * @param { StoreJobQueueWhere} [where]
+   * @param { StoreJobWhere} [where]
    * @returns {Promise<[]>}
    */
-  jobQueueDelete: (sql, where) => sql`
-DELETE FROM "jobQueue" jq
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
+  jobDelete: (sql, where) => sql`
+DELETE FROM "job" j
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
     where?.id ?? null
-  }) AND (COALESCE(${
+  }) AND (COALESCE(${where?.idGreaterThan ?? null}, NULL) IS NULL OR j."id" > ${
     where?.idGreaterThan ?? null
-  }, NULL) IS NULL OR jq."id" > ${
-    where?.idGreaterThan ?? null
-  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR jq."id" < ${
+  }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
     where?.idLowerThan ?? null
   }) AND (COALESCE(${
     where?.scheduledAt ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" = ${
+  }, NULL) IS NULL OR j."scheduledAt" = ${
     where?.scheduledAt ?? null
   }) AND (COALESCE(${
     where?.scheduledAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" > ${
+  }, NULL) IS NULL OR j."scheduledAt" > ${
     where?.scheduledAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.scheduledAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."scheduledAt" < ${
+  }, NULL) IS NULL OR j."scheduledAt" < ${
     where?.scheduledAtLowerThan ?? null
-  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR jq."name" = ${
+  }) AND (COALESCE(${where?.name ?? null}, NULL) IS NULL OR j."name" = ${
     where?.name ?? null
   }) AND (COALESCE(${
     where?.nameLike ?? null
-  }, NULL) IS NULL OR jq."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
+  }, NULL) IS NULL OR j."name" LIKE ${`%${where?.nameLike}%`}) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR jq."createdAt" = ${
+  }, NULL) IS NULL OR j."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."createdAt" > ${
+  }, NULL) IS NULL OR j."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."createdAt" < ${
+  }, NULL) IS NULL OR j."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR jq."updatedAt" = ${
+  }, NULL) IS NULL OR j."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR jq."updatedAt" > ${
+  }, NULL) IS NULL OR j."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR jq."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+  }, NULL) IS NULL OR j."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input|StoreJobQueueInsertPartial_Input[]} insert
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input|StoreJobInsertPartial_Input[]} insert
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueInsert: (sql, insert) => {
+  jobInsert: (sql, insert) => {
     const data = Array.isArray(insert) ? insert : [insert];
     if (data.length === 0) {
       return [];
     }
-    let query = `INSERT INTO "jobQueue" ("isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt") VALUES `;
+    let query = `INSERT INTO "job" ("isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt") VALUES `;
     const argList = [];
     let idx = 1;
     for (const it of data) {
@@ -726,12 +720,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
 
   /**
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input} value
-   * @param { StoreJobQueueWhere} [where]
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input} value
+   * @param { StoreJobWhere} [where]
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpdate: (sql, value, where) => {
-    let query = `UPDATE "jobQueue" jq SET `;
+  jobUpdate: (sql, value, where) => {
+    let query = `UPDATE "job" j SET `;
     const argList = [];
     let idx = 1;
     if (value["isComplete"] !== undefined) {
@@ -763,103 +757,103 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR jq."id" = ${
     query = query.substring(0, query.length - 2);
     query += ` WHERE `;
     if (where.id !== undefined) {
-      query += `jq."id" `;
+      query += `j."id" `;
       query += `= $${idx++}`;
       argList.push(where.id);
       query += " AND ";
     }
     if (where.idGreaterThan !== undefined) {
-      query += `jq."id" `;
+      query += `j."id" `;
       query += `> $${idx++}`;
       argList.push(where.idGreaterThan);
       query += " AND ";
     }
     if (where.idLowerThan !== undefined) {
-      query += `jq."id" `;
+      query += `j."id" `;
       query += `< $${idx++}`;
       argList.push(where.idLowerThan);
       query += " AND ";
     }
     if (where.scheduledAt !== undefined) {
-      query += `jq."scheduledAt" `;
+      query += `j."scheduledAt" `;
       query += `= $${idx++}`;
       argList.push(where.scheduledAt);
       query += " AND ";
     }
     if (where.scheduledAtGreaterThan !== undefined) {
-      query += `jq."scheduledAt" `;
+      query += `j."scheduledAt" `;
       query += `> $${idx++}`;
       argList.push(where.scheduledAtGreaterThan);
       query += " AND ";
     }
     if (where.scheduledAtLowerThan !== undefined) {
-      query += `jq."scheduledAt" `;
+      query += `j."scheduledAt" `;
       query += `< $${idx++}`;
       argList.push(where.scheduledAtLowerThan);
       query += " AND ";
     }
     if (where.name !== undefined) {
-      query += `jq."name" `;
+      query += `j."name" `;
       query += `= $${idx++}`;
       argList.push(where.name);
       query += " AND ";
     }
     if (where.nameLike !== undefined) {
-      query += `jq."name" `;
+      query += `j."name" `;
       query += `LIKE $${idx++}`;
       argList.push(`%${where.nameLike}%`);
       query += " AND ";
     }
     if (where.createdAt !== undefined) {
-      query += `jq."createdAt" `;
+      query += `j."createdAt" `;
       query += `= $${idx++}`;
       argList.push(where.createdAt);
       query += " AND ";
     }
     if (where.createdAtGreaterThan !== undefined) {
-      query += `jq."createdAt" `;
+      query += `j."createdAt" `;
       query += `> $${idx++}`;
       argList.push(where.createdAtGreaterThan);
       query += " AND ";
     }
     if (where.createdAtLowerThan !== undefined) {
-      query += `jq."createdAt" `;
+      query += `j."createdAt" `;
       query += `< $${idx++}`;
       argList.push(where.createdAtLowerThan);
       query += " AND ";
     }
     if (where.updatedAt !== undefined) {
-      query += `jq."updatedAt" `;
+      query += `j."updatedAt" `;
       query += `= $${idx++}`;
       argList.push(where.updatedAt);
       query += " AND ";
     }
     if (where.updatedAtGreaterThan !== undefined) {
-      query += `jq."updatedAt" `;
+      query += `j."updatedAt" `;
       query += `> $${idx++}`;
       argList.push(where.updatedAtGreaterThan);
       query += " AND ";
     }
     if (where.updatedAtLowerThan !== undefined) {
-      query += `jq."updatedAt" `;
+      query += `j."updatedAt" `;
       query += `< $${idx++}`;
       argList.push(where.updatedAtLowerThan);
       query += " AND ";
     }
     query = query.substring(0, query.length - 4);
-    query += ` RETURNING jq."id", jq."isComplete", jq."priority", jq."scheduledAt", jq."name", jq."data", jq."createdAt", jq."updatedAt"`;
+    query += ` RETURNING j."id", j."isComplete", j."priority", j."scheduledAt", j."name", j."data", j."createdAt", j."updatedAt"`;
     return sql.unsafe(query, argList);
   },
 
   /**
    * Note: Use only when id has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpsert: (sql, it) => {
+  jobUpsert: (sql, it) => {
     return sql`
-INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
@@ -875,12 +869,12 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   /**
    * Note: Use only when scheduledAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpsertByScheduledAt: (sql, it) => {
+  jobUpsertByScheduledAt: (sql, it) => {
     return sql`
-INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
@@ -896,12 +890,12 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   /**
    * Note: Use only when name has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpsertByName: (sql, it) => {
+  jobUpsertByName: (sql, it) => {
     return sql`
-INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
@@ -917,12 +911,12 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   /**
    * Note: Use only when createdAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpsertByCreatedAt: (sql, it) => {
+  jobUpsertByCreatedAt: (sql, it) => {
     return sql`
-INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
@@ -938,12 +932,12 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
   /**
    * Note: Use only when updatedAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreJobQueueInsertPartial_Input & { id?: number } } it
-   * @returns {Promise<StoreJobQueue[]>}
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
    */
-  jobQueueUpsertByUpdatedAt: (sql, it) => {
+  jobUpsertByUpdatedAt: (sql, it) => {
     return sql`
-INSERT INTO "jobQueue" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
       it.scheduledAt ?? new Date()
@@ -958,167 +952,167 @@ RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "create
 
   /**
    * @param {Postgres} sql
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionWhere} [where]
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreSelect: (sql, where) => sql`
+  sessionSelect: (sql, where) => sql`
 SELECT
-ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"
-FROM "sessionStore" ss
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+s."id", s."expires", s."data", s."createdAt", s."updatedAt"
+FROM "session" s
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR s."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
     where?.idIn ?? null
-  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+  }, NULL) IS NULL OR s."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where?.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+  }, NULL) IS NULL OR s."expires" = ${where?.expires ?? null}) AND (COALESCE(${
     where?.expiresGreaterThan ?? null
-  }, NULL) IS NULL OR ss."expires" > ${
+  }, NULL) IS NULL OR s."expires" > ${
     where?.expiresGreaterThan ?? null
   }) AND (COALESCE(${
     where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${
+  }, NULL) IS NULL OR s."expires" < ${
     where?.expiresLowerThan ?? null
   }) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR ss."createdAt" = ${
+  }, NULL) IS NULL OR s."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR ss."createdAt" > ${
+  }, NULL) IS NULL OR s."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR ss."createdAt" < ${
+  }, NULL) IS NULL OR s."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR ss."updatedAt" = ${
+  }, NULL) IS NULL OR s."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR ss."updatedAt" > ${
+  }, NULL) IS NULL OR s."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
-ORDER BY ss."createdAt", ss."updatedAt" , ss."id"
+  }, NULL) IS NULL OR s."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+ORDER BY s."createdAt", s."updatedAt" , s."id"
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreSessionStoreWhere} [where]
+   * @param { StoreSessionWhere} [where]
    * @returns {Promise<number>}
    */
-  sessionStoreCount: async (sql, where) => {
+  sessionCount: async (sql, where) => {
     const result = await sql`
-SELECT count(*) AS "genCount" FROM "sessionStore" ss 
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+SELECT count(*) AS "genCount" FROM "session" s 
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR s."id" = ${
       where?.id ?? null
     }) AND (COALESCE(${
       where?.idIn ?? null
-    }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+    }, NULL) IS NULL OR s."id" = ANY (${sql.array(
       where?.idIn ?? [],
     )}::uuid[])) AND (COALESCE(${
       where?.expires ?? null
-    }, NULL) IS NULL OR ss."expires" = ${
+    }, NULL) IS NULL OR s."expires" = ${
       where?.expires ?? null
     }) AND (COALESCE(${
       where?.expiresGreaterThan ?? null
-    }, NULL) IS NULL OR ss."expires" > ${
+    }, NULL) IS NULL OR s."expires" > ${
       where?.expiresGreaterThan ?? null
     }) AND (COALESCE(${
       where?.expiresLowerThan ?? null
-    }, NULL) IS NULL OR ss."expires" < ${
+    }, NULL) IS NULL OR s."expires" < ${
       where?.expiresLowerThan ?? null
     }) AND (COALESCE(${
       where?.createdAt ?? null
-    }, NULL) IS NULL OR ss."createdAt" = ${
+    }, NULL) IS NULL OR s."createdAt" = ${
       where?.createdAt ?? null
     }) AND (COALESCE(${
       where?.createdAtGreaterThan ?? null
-    }, NULL) IS NULL OR ss."createdAt" > ${
+    }, NULL) IS NULL OR s."createdAt" > ${
       where?.createdAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.createdAtLowerThan ?? null
-    }, NULL) IS NULL OR ss."createdAt" < ${
+    }, NULL) IS NULL OR s."createdAt" < ${
       where?.createdAtLowerThan ?? null
     }) AND (COALESCE(${
       where?.updatedAt ?? null
-    }, NULL) IS NULL OR ss."updatedAt" = ${
+    }, NULL) IS NULL OR s."updatedAt" = ${
       where?.updatedAt ?? null
     }) AND (COALESCE(${
       where?.updatedAtGreaterThan ?? null
-    }, NULL) IS NULL OR ss."updatedAt" > ${
+    }, NULL) IS NULL OR s."updatedAt" > ${
       where?.updatedAtGreaterThan ?? null
     }) AND (COALESCE(${
       where?.updatedAtLowerThan ?? null
-    }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+    }, NULL) IS NULL OR s."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `;
     return parseInt(result?.[0]?.genCount ?? "0");
   },
 
   /**
    * @param {Postgres} sql
-   * @param { StoreSessionStoreWhere} [where]
+   * @param { StoreSessionWhere} [where]
    * @returns {Promise<[]>}
    */
-  sessionStoreDelete: (sql, where) => sql`
-DELETE FROM "sessionStore" ss
-WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
+  sessionDelete: (sql, where) => sql`
+DELETE FROM "session" s
+WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR s."id" = ${
     where?.id ?? null
   }) AND (COALESCE(${
     where?.idIn ?? null
-  }, NULL) IS NULL OR ss."id" = ANY (${sql.array(
+  }, NULL) IS NULL OR s."id" = ANY (${sql.array(
     where?.idIn ?? [],
   )}::uuid[])) AND (COALESCE(${
     where?.expires ?? null
-  }, NULL) IS NULL OR ss."expires" = ${where?.expires ?? null}) AND (COALESCE(${
+  }, NULL) IS NULL OR s."expires" = ${where?.expires ?? null}) AND (COALESCE(${
     where?.expiresGreaterThan ?? null
-  }, NULL) IS NULL OR ss."expires" > ${
+  }, NULL) IS NULL OR s."expires" > ${
     where?.expiresGreaterThan ?? null
   }) AND (COALESCE(${
     where?.expiresLowerThan ?? null
-  }, NULL) IS NULL OR ss."expires" < ${
+  }, NULL) IS NULL OR s."expires" < ${
     where?.expiresLowerThan ?? null
   }) AND (COALESCE(${
     where?.createdAt ?? null
-  }, NULL) IS NULL OR ss."createdAt" = ${
+  }, NULL) IS NULL OR s."createdAt" = ${
     where?.createdAt ?? null
   }) AND (COALESCE(${
     where?.createdAtGreaterThan ?? null
-  }, NULL) IS NULL OR ss."createdAt" > ${
+  }, NULL) IS NULL OR s."createdAt" > ${
     where?.createdAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.createdAtLowerThan ?? null
-  }, NULL) IS NULL OR ss."createdAt" < ${
+  }, NULL) IS NULL OR s."createdAt" < ${
     where?.createdAtLowerThan ?? null
   }) AND (COALESCE(${
     where?.updatedAt ?? null
-  }, NULL) IS NULL OR ss."updatedAt" = ${
+  }, NULL) IS NULL OR s."updatedAt" = ${
     where?.updatedAt ?? null
   }) AND (COALESCE(${
     where?.updatedAtGreaterThan ?? null
-  }, NULL) IS NULL OR ss."updatedAt" > ${
+  }, NULL) IS NULL OR s."updatedAt" > ${
     where?.updatedAtGreaterThan ?? null
   }) AND (COALESCE(${
     where?.updatedAtLowerThan ?? null
-  }, NULL) IS NULL OR ss."updatedAt" < ${where?.updatedAtLowerThan ?? null})
+  }, NULL) IS NULL OR s."updatedAt" < ${where?.updatedAtLowerThan ?? null})
 `,
 
   /**
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input|StoreSessionStoreInsertPartial_Input[]} insert
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input|StoreSessionInsertPartial_Input[]} insert
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreInsert: (sql, insert) => {
+  sessionInsert: (sql, insert) => {
     const data = Array.isArray(insert) ? insert : [insert];
     if (data.length === 0) {
       return [];
     }
-    let query = `INSERT INTO "sessionStore" ("expires", "data", "createdAt", "updatedAt") VALUES `;
+    let query = `INSERT INTO "session" ("expires", "data", "createdAt", "updatedAt") VALUES `;
     const argList = [];
     let idx = 1;
     for (const it of data) {
@@ -1138,12 +1132,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
 
   /**
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input} value
-   * @param { StoreSessionStoreWhere} [where]
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input} value
+   * @param { StoreSessionWhere} [where]
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreUpdate: (sql, value, where) => {
-    let query = `UPDATE "sessionStore" ss SET `;
+  sessionUpdate: (sql, value, where) => {
+    let query = `UPDATE "session" s SET `;
     const argList = [];
     let idx = 1;
     if (value["expires"] !== undefined) {
@@ -1163,13 +1157,13 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
     query = query.substring(0, query.length - 2);
     query += ` WHERE `;
     if (where.id !== undefined) {
-      query += `ss."id" `;
+      query += `s."id" `;
       query += `= $${idx++}`;
       argList.push(where.id);
       query += " AND ";
     }
     if (where.idIn !== undefined) {
-      query += `ss."id" `;
+      query += `s."id" `;
       query += `= ANY (ARRAY[`;
       let addOne = false;
       for (const value of where.idIn || []) {
@@ -1184,73 +1178,73 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR ss."id" = ${
       query += " AND ";
     }
     if (where.expires !== undefined) {
-      query += `ss."expires" `;
+      query += `s."expires" `;
       query += `= $${idx++}`;
       argList.push(where.expires);
       query += " AND ";
     }
     if (where.expiresGreaterThan !== undefined) {
-      query += `ss."expires" `;
+      query += `s."expires" `;
       query += `> $${idx++}`;
       argList.push(where.expiresGreaterThan);
       query += " AND ";
     }
     if (where.expiresLowerThan !== undefined) {
-      query += `ss."expires" `;
+      query += `s."expires" `;
       query += `< $${idx++}`;
       argList.push(where.expiresLowerThan);
       query += " AND ";
     }
     if (where.createdAt !== undefined) {
-      query += `ss."createdAt" `;
+      query += `s."createdAt" `;
       query += `= $${idx++}`;
       argList.push(where.createdAt);
       query += " AND ";
     }
     if (where.createdAtGreaterThan !== undefined) {
-      query += `ss."createdAt" `;
+      query += `s."createdAt" `;
       query += `> $${idx++}`;
       argList.push(where.createdAtGreaterThan);
       query += " AND ";
     }
     if (where.createdAtLowerThan !== undefined) {
-      query += `ss."createdAt" `;
+      query += `s."createdAt" `;
       query += `< $${idx++}`;
       argList.push(where.createdAtLowerThan);
       query += " AND ";
     }
     if (where.updatedAt !== undefined) {
-      query += `ss."updatedAt" `;
+      query += `s."updatedAt" `;
       query += `= $${idx++}`;
       argList.push(where.updatedAt);
       query += " AND ";
     }
     if (where.updatedAtGreaterThan !== undefined) {
-      query += `ss."updatedAt" `;
+      query += `s."updatedAt" `;
       query += `> $${idx++}`;
       argList.push(where.updatedAtGreaterThan);
       query += " AND ";
     }
     if (where.updatedAtLowerThan !== undefined) {
-      query += `ss."updatedAt" `;
+      query += `s."updatedAt" `;
       query += `< $${idx++}`;
       argList.push(where.updatedAtLowerThan);
       query += " AND ";
     }
     query = query.substring(0, query.length - 4);
-    query += ` RETURNING ss."id", ss."expires", ss."data", ss."createdAt", ss."updatedAt"`;
+    query += ` RETURNING s."id", s."expires", s."data", s."createdAt", s."updatedAt"`;
     return sql.unsafe(query, argList);
   },
 
   /**
    * Note: Use only when id has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreUpsert: (sql, it) => {
+  sessionUpsert: (sql, it) => {
     return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+INSERT INTO "session" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()
@@ -1264,12 +1258,12 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
   /**
    * Note: Use only when expires has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreUpsertByExpires: (sql, it) => {
+  sessionUpsertByExpires: (sql, it) => {
     return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+INSERT INTO "session" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()
@@ -1283,12 +1277,12 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
   /**
    * Note: Use only when createdAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreUpsertByCreatedAt: (sql, it) => {
+  sessionUpsertByCreatedAt: (sql, it) => {
     return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+INSERT INTO "session" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()
@@ -1302,12 +1296,12 @@ RETURNING "id", "expires", "data", "createdAt", "updatedAt"
   /**
    * Note: Use only when updatedAt has a unique constraint
    * @param {Postgres} sql
-   * @param { StoreSessionStoreInsertPartial_Input & { id?: string } } it
-   * @returns {Promise<StoreSessionStore[]>}
+   * @param { StoreSessionInsertPartial_Input & { id?: string } } it
+   * @returns {Promise<StoreSession[]>}
    */
-  sessionStoreUpsertByUpdatedAt: (sql, it) => {
+  sessionUpsertByUpdatedAt: (sql, it) => {
     return sql`
-INSERT INTO "sessionStore" ("id", "expires", "data", "createdAt", "updatedAt"
+INSERT INTO "session" ("id", "expires", "data", "createdAt", "updatedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
       it.createdAt ?? new Date()

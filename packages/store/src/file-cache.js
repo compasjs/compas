@@ -40,7 +40,7 @@ export class FileCache {
   }
 
   /**
-   * @param {StoreFileStore} file
+   * @param {StoreFile} file
    * @param {number} [start]
    * @param {number} [end]
    * @returns {Promise<{ stream: ReadableStream, cacheControl: string }>}
