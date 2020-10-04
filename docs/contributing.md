@@ -52,7 +52,7 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 
 - Ensure you are logged in to npm with `npm whoami`, when logged out;
   `npm login`
-- Ensure you have master checked out, and are completely up-to-date
+- Ensure you have the `main`-branch checked out, and are completely up-to-date
 - Write to the changelog
   - Run `yarn lbu changelog`
   - Replace `x.x.x` with the new version (3 times) in `docs/changelog.md`
