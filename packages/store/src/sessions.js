@@ -9,7 +9,7 @@ const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
 export function newSessionStore(sql) {
   return {
     get: async (sid) => {
-      const [data] = await storeQueries.sessionStoreSelect(sql, {
+      const [data] = await storeQueries.sessionSelect(sql, {
         id: sid,
         expiresGreaterThan: new Date(),
       });
@@ -29,17 +29,17 @@ export function newSessionStore(sql) {
         expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
       }
 
-      await storeQueries.sessionStoreUpsert(sql, {
+      await storeQueries.sessionUpsert(sql, {
         id: sid,
         expires,
         data: JSON.stringify(sess),
       });
     },
     destroy: async (sid) => {
-      await storeQueries.sessionStoreDelete(sql, { id: sid });
+      await storeQueries.sessionDelete(sql, { id: sid });
     },
     clean: () => {
-      return storeQueries.sessionStoreDelete(sql, {
+      return storeQueries.sessionDelete(sql, {
         expiresLowerThan: new Date(),
       });
     },

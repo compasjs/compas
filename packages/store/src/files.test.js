@@ -27,7 +27,7 @@ test("store/files", async (t) => {
   const filePath = `${dirnameForModule(
     import.meta,
   )}/../__fixtures__/997-test.sql`;
-  const filename = "997-test.sql";
+  const name = "997-test.sql";
 
   let sql = undefined;
 
@@ -41,21 +41,21 @@ test("store/files", async (t) => {
     t.equal(result[0].sum, 3);
   });
 
-  t.test("createOrUpdateFile no filename specified", async (t) => {
+  t.test("createOrUpdateFile no name specified", async (t) => {
     try {
       await createOrUpdateFile(sql, minio, bucketName, {}, "");
-      t.fail("Should throw for unknown filename");
+      t.fail("Should throw for unknown name");
     } catch (e) {
       t.ok(e);
     }
   });
 
-  t.test("createOrUpdateFile only filename provided", async (t) => {
+  t.test("createOrUpdateFile only name provided", async (t) => {
     const file = await createOrUpdateFile(
       sql,
       minio,
       bucketName,
-      { filename },
+      { name },
       filePath,
     );
     t.ok(!!file.id);
@@ -74,7 +74,7 @@ test("store/files", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename, updatedAt },
+        { name, updatedAt },
         createReadStream(filePath),
       );
 
@@ -88,7 +88,7 @@ test("store/files", async (t) => {
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await storeQueries.fileStoreSelect(sql, {});
+    storedFiles = await storeQueries.fileSelect(sql, {});
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });
@@ -146,7 +146,7 @@ test("store/files", async (t) => {
   });
 
   t.test("update files by idIn", async (t) => {
-    const result = await storeQueries.fileStoreUpdate(
+    const result = await storeQueries.fileUpdate(
       sql,
       { updatedAt: new Date() },
       {
@@ -158,7 +158,7 @@ test("store/files", async (t) => {
   });
 
   t.test("deleteFile", async () => {
-    await storeQueries.fileStoreDeletePermanent(sql, { id: storedFiles[0].id });
+    await storeQueries.fileDeletePermanent(sql, { id: storedFiles[0].id });
   });
 
   t.test("sync deleted files", async (t) => {

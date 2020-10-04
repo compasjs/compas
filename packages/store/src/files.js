@@ -6,13 +6,13 @@ import { listObjects } from "./minio.js";
 
 const queries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
-    INSERT INTO "fileStore" ("id", "bucketName", "contentType", "contentLength", "filename")
+    INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name")
     SELECT ${targetId},
            ${targetBucket},
            "contentType",
            "contentLength",
-           "filename"
-    FROM "fileStore"
+           "name"
+    FROM "file"
     WHERE id = ${sourceId}
       AND "bucketName" = ${sourceBucket}
     RETURNING id
@@ -23,9 +23,9 @@ const queries = {
  * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
- * @param {StoreFileStoreInsertPartial_Input & { id?: string }} props
+ * @param {StoreFileInsertPartial_Input & { id?: string }} props
  * @param {ReadStream|string} streamOrPath
- * @returns {Promise<StoreFileStore>}
+ * @returns {Promise<StoreFile>}
  */
 export async function createOrUpdateFile(
   sql,
@@ -34,12 +34,12 @@ export async function createOrUpdateFile(
   props,
   streamOrPath,
 ) {
-  if (!props.filename) {
-    throw new Error("filename is required on file props");
+  if (!props.name) {
+    throw new Error("name is required on file props");
   }
 
   if (!props.contentType) {
-    props.contentType = mime.lookup(props.filename) || "*/*";
+    props.contentType = mime.lookup(props.name) || "*/*";
   }
 
   props.bucketName = bucketName;
@@ -47,7 +47,7 @@ export async function createOrUpdateFile(
   // Do a manual insert first to get an id
   if (!props.id) {
     props.contentLength = 0;
-    const [intermediate] = await storeQueries.fileStoreInsert(sql, props);
+    const [intermediate] = await storeQueries.fileInsert(sql, props);
     props.id = intermediate.id;
   }
 
@@ -61,7 +61,7 @@ export async function createOrUpdateFile(
   const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
-  const [result] = await storeQueries.fileStoreUpdate(sql, props, {
+  const [result] = await storeQueries.fileUpdate(sql, props, {
     id: props.id,
   });
 
@@ -97,7 +97,7 @@ export async function getFileStream(
  * @param {string} bucketName
  * @param {string} id
  * @param {string} [targetBucket=bucketName]
- * @returns {Promise<StoreFileStore>}
+ * @returns {Promise<StoreFile>}
  */
 export async function copyFile(
   sql,
@@ -116,7 +116,7 @@ export async function copyFile(
 
   await minio.copyObject(targetBucket, intermediate.id, `${bucketName}/${id}`);
 
-  const [result] = await storeQueries.fileStoreSelect(sql, {
+  const [result] = await storeQueries.fileSelect(sql, {
     id: intermediate.id,
   });
 
@@ -130,7 +130,7 @@ export async function copyFile(
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   const minioObjectsPromise = listObjects(minio, bucketName);
-  const knownIds = await storeQueries.fileStoreSelect(sql, {
+  const knownIds = await storeQueries.fileSelect(sql, {
     bucketName: bucketName,
     deletedAtInclude: true,
   });

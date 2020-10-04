@@ -40,7 +40,7 @@
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
 import { Logger } from "@lbu/insight";
-import { StoreFileStore } from "@lbu/store";
+import { StoreFile } from "@lbu/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
 import { Files } from "formidable";
@@ -1324,8 +1324,8 @@ export function createBodyParsers(
  * @private
  */
 type SendFileItem =
-  | StoreFileStore
-  | (Pick<StoreFileStore, "id" | "contentLength" | "contentType"> & {
+  | StoreFile
+  | (Pick<StoreFile, "id" | "contentLength" | "contentType"> & {
       lastModified: Date;
     });
 

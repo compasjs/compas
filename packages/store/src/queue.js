@@ -4,11 +4,11 @@ import { storeQueries } from "./generated/queries.js";
 const queries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
-    UPDATE "jobQueue"
+    UPDATE "job"
     SET "isComplete" = TRUE,
         "updatedAt"  = now()
     WHERE id = (SELECT "id"
-                FROM "jobQueue"
+                FROM "job"
                 WHERE NOT "isComplete"
                   AND "scheduledAt" < now()
                 ORDER BY "scheduledAt", "priority"
@@ -19,11 +19,11 @@ const queries = {
 
   // Should only run in a transaction
   getJobByName: (name, sql) => sql`
-    UPDATE "jobQueue"
+    UPDATE "job"
     SET "isComplete" = TRUE,
         "updatedAt"  = now()
     WHERE id = (SELECT "id"
-                FROM "jobQueue"
+                FROM "job"
                 WHERE NOT "isComplete"
                   AND "scheduledAt" < now()
                   AND "name" = ${name}
@@ -37,7 +37,7 @@ const queries = {
   getPendingQueueSize: (sql) => sql`
     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "jobQueue"
+    FROM "job"
     WHERE NOT "isComplete"
   `,
 
@@ -45,7 +45,7 @@ const queries = {
   getPendingQueueSizeForName: (sql, name) => sql`
     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "jobQueue"
+    FROM "job"
     WHERE NOT "isComplete"
       AND "name" = ${name}
   `,
@@ -54,7 +54,7 @@ const queries = {
   getAverageJobTime: (sql, dateStart, dateEnd) => sql`
     SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
                (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "jobQueue"
+    FROM "job"
     WHERE "isComplete"
       AND "updatedAt" > ${dateStart}
       AND "updatedAt" <= ${dateEnd};
@@ -64,7 +64,7 @@ const queries = {
   getAverageJobTimeForName: (sql, name, dateStart, dateEnd) => sql`
     SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
                (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "jobQueue"
+    FROM "job"
     WHERE "isComplete"
       AND name = ${name}
       AND "updatedAt" > ${dateStart}
@@ -215,7 +215,7 @@ export class JobQueueWorker {
           return;
         }
 
-        const [jobData] = await storeQueries.jobQueueSelect(sql, {
+        const [jobData] = await storeQueries.jobSelect(sql, {
           id: job.id,
         });
 
@@ -253,7 +253,7 @@ export class JobQueueWorker {
  * @returns {Promise<number>}
  */
 export async function addJobToQueue(sql, job) {
-  const [result] = await storeQueries.jobQueueInsert(sql, {
+  const [result] = await storeQueries.jobInsert(sql, {
     ...job,
     name: job.name ?? process.env.APP_NAME,
   });

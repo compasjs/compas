@@ -2,109 +2,109 @@
 /* eslint-disable no-unused-vars */
 
 /**
- * @name StoreFileStore
+ * @name StoreFile
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
- * @name StoreFileStore_Input
+ * @name StoreFile_Input
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
  */
 
 /**
- * @name StoreFileStoreInsertPartial
+ * @name StoreFileInsertPartial
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
- * @name StoreFileStoreInsertPartial_Input
+ * @name StoreFileInsertPartial_Input
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "filename":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
  */
 
 /**
- * @name StoreFileStoreWhere
+ * @name StoreFileWhere
  * Docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
  * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, "deletedAtInclude"?:, "deletedAt"?:Date, "deletedAtGreaterThan"?:Date, "deletedAtLowerThan"?:Date, }}
  */
 
 /**
- * @name StoreFileStoreWhere_Input
+ * @name StoreFileWhere_Input
  * Docs: By default 'where.deletedAtInclude' will only include 'null' values. To use the other generated variants like 'deletedAtGreaterThan', set this value to 'true'.
  * @typedef { { "id"?:string, "idIn"?:(string)[] , "bucketName"?:string , "bucketNameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, "deletedAtInclude"?:, "deletedAt"?:string, "deletedAtGreaterThan"?:string, "deletedAtLowerThan"?:string, }}
  */
 
 /**
- * @name StoreJobQueue
+ * @name StoreJob
  *
  * @typedef { { "id":number, "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreJobQueue_Input
+ * @name StoreJob_Input
  *
  * @typedef { { "id":number, "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
- * @name StoreJobQueueInsertPartial
+ * @name StoreJobInsertPartial
  *
  * @typedef { { "isComplete":boolean, "priority":number, "scheduledAt":Date, "name":string, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreJobQueueInsertPartial_Input
+ * @name StoreJobInsertPartial_Input
  *
  * @typedef { { "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
- * @name StoreJobQueueWhere
+ * @name StoreJobWhere
  *
  * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:Date, "scheduledAtGreaterThan"?:Date, "scheduledAtLowerThan"?:Date, "name"?:string , "nameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**
- * @name StoreJobQueueWhere_Input
+ * @name StoreJobWhere_Input
  *
  * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:string, "scheduledAtGreaterThan"?:string, "scheduledAtLowerThan"?:string, "name"?:string , "nameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */
 
 /**
- * @name StoreSessionStore
+ * @name StoreSession
  *
  * @typedef { { "id":string, "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreSessionStore_Input
+ * @name StoreSession_Input
  *
  * @typedef { { "id":string, "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
- * @name StoreSessionStoreInsertPartial
+ * @name StoreSessionInsertPartial
  *
  * @typedef { { "expires":Date, "data":*, "createdAt":Date, "updatedAt":Date, }}
  */
 
 /**
- * @name StoreSessionStoreInsertPartial_Input
+ * @name StoreSessionInsertPartial_Input
  *
  * @typedef { { "expires":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
  */
 
 /**
- * @name StoreSessionStoreWhere
+ * @name StoreSessionWhere
  *
  * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:Date, "expiresGreaterThan"?:Date, "expiresLowerThan"?:Date, "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**
- * @name StoreSessionStoreWhere_Input
+ * @name StoreSessionWhere_Input
  *
  * @typedef { { "id"?:string, "idIn"?:(string)[] , "expires"?:string, "expiresGreaterThan"?:string, "expiresLowerThan"?:string, "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */

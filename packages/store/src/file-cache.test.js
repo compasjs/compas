@@ -76,7 +76,7 @@ test("store/file-cache", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename: "small" },
+        { name: "small" },
         pathJoin(basePath, "small"),
       );
 
@@ -84,7 +84,7 @@ test("store/file-cache", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename: "medium" },
+        { name: "medium" },
         pathJoin(basePath, "medium"),
       );
 
@@ -92,7 +92,7 @@ test("store/file-cache", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename: "large" },
+        { name: "large" },
         pathJoin(basePath, "large"),
       );
     } catch (e) {
@@ -219,13 +219,13 @@ test("store/file-cache check memory usage", async (t) => {
     writeFileSync(pathJoin(basePath, "large"), files.large);
   });
 
-  t.test("populate fileStore", async (t) => {
+  t.test("populate file table", async (t) => {
     try {
       files.small = await createOrUpdateFile(
         sql,
         minio,
         bucketName,
-        { filename: "small" },
+        { name: "small" },
         pathJoin(basePath, "small"),
       );
 
@@ -233,7 +233,7 @@ test("store/file-cache check memory usage", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename: "medium" },
+        { name: "medium" },
         pathJoin(basePath, "medium"),
       );
 
@@ -241,7 +241,7 @@ test("store/file-cache check memory usage", async (t) => {
         sql,
         minio,
         bucketName,
-        { filename: "large" },
+        { name: "large" },
         pathJoin(basePath, "large"),
       );
     } catch (e) {

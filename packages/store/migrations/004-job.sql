@@ -1,4 +1,4 @@
-CREATE TABLE "jobQueue"
+CREATE TABLE "job"
 (
   "id"          BIGSERIAL PRIMARY KEY,
   "isComplete"  bool        NOT NULL,
@@ -10,6 +10,6 @@ CREATE TABLE "jobQueue"
   "updatedAt"   timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX job_queue_search_idx ON "jobQueue" ("isComplete", "scheduledAt");
-CREATE INDEX job_queue_name_idx ON "jobQueue" ("name");
-CREATE INDEX job_queue_scheduled_at_idx ON "jobQueue" ("scheduledAt");
+CREATE INDEX job_search_idx ON "job" ("isComplete", "scheduledAt");
+CREATE INDEX job_name_idx ON "job" ("name");
+CREATE INDEX job_scheduled_at_idx ON "job" ("scheduledAt");

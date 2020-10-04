@@ -1,4 +1,4 @@
-CREATE TABLE "sessionStore"
+CREATE TABLE "session"
 (
   "id"        uuid PRIMARY KEY     DEFAULT uuid_generate_v4(),
   "expires"   timestamptz NOT NULL,
@@ -7,4 +7,4 @@ CREATE TABLE "sessionStore"
   "updatedAt" timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX session_store_expires_idx ON "sessionStore" ("expires");
+CREATE INDEX session_expires_idx ON "session" ("expires");

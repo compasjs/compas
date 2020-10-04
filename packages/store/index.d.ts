@@ -153,12 +153,12 @@ export function getMigrationsToBeApplied(
  */
 export function runMigrations(mc: MigrateContext): Promise<void>;
 
-export interface StoreFileStore {
+export interface StoreFile {
   id: string;
   bucketName: string;
   contentLength: number;
   contentType: string;
-  filename: string;
+  name: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -177,12 +177,12 @@ export function createOrUpdateFile(
     bucketName?: string;
     contentLength?: number;
     contentType?: string;
-    filename: string;
+    name: string;
     createdAt?: string;
     updatedAt?: string;
   },
   streamOrPath: string | NodeJS.ReadStream,
-): Promise<StoreFileStore>;
+): Promise<StoreFile>;
 
 /**
  * Sync deleted files to the minio bucket
@@ -202,7 +202,7 @@ export function copyFile(
   bucketName: string,
   id: string,
   targetBucket?: string,
-): Promise<StoreFileStore>;
+): Promise<StoreFile>;
 
 /**
  * Open a ReadStream for a (partial) file
@@ -253,7 +253,7 @@ export class FileCache {
    * caller
    */
   public getStreamFn: (
-    file: StoreFileStore,
+    file: StoreFile,
     start?: number,
     end?: number,
   ) => Promise<{ stream: NodeJS.ReadStream; cacheControl: string }>;

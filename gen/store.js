@@ -7,19 +7,19 @@ export function applyStoreStructure(app) {
   const T = new TypeCreator("store");
 
   app.add(
-    T.object("fileStore")
+    T.object("file")
       .keys({
         id: T.uuid().primary(),
         bucketName: T.string().searchable(),
         contentLength: T.number(),
         contentType: T.string(),
-        filename: T.string(),
+        name: T.string(),
       })
       .enableQueries({ withSoftDeletes: true }),
   );
 
   app.add(
-    T.object("sessionStore")
+    T.object("session")
       .keys({
         id: T.uuid().primary(),
         expires: T.date().searchable(),
@@ -29,7 +29,7 @@ export function applyStoreStructure(app) {
   );
 
   app.add(
-    T.object("jobQueue")
+    T.object("job")
       .keys({
         id: T.number().primary(),
         isComplete: T.bool().default("false").searchable(),
