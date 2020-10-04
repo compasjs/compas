@@ -5,7 +5,6 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   FileCache,
-  newFileStoreContext,
   newMinioClient,
   newSessionStore,
   removeBucketAndObjectsInBucket,
@@ -45,13 +44,8 @@ export async function injectTestServices() {
   setSql(await createTestPostgresDatabase());
   setAppBucket(uuid());
   setMinio(newMinioClient({}));
-  setFileStore(newFileStoreContext(sql, minio, appBucket));
-  setSessionStore(
-    newSessionStore(sql, {
-      disableInterval: true,
-    }),
-  );
-  setFileCache(new FileCache(fileStore));
+  setSessionStore(newSessionStore(sql));
+  setFileCache(new FileCache(sql, minio, appBucket));
 
   setApp(createApp());
   setBodyParsers(createBodyParsers({}));

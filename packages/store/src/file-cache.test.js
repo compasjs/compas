@@ -70,7 +70,7 @@ test("store/file-cache", async (t) => {
     writeFileSync(pathJoin(basePath, "large"), files.large);
   });
 
-  t.test("populate fileStore", async (t) => {
+  t.test("populate file table", async (t) => {
     try {
       files.small = await createOrUpdateFile(
         sql,

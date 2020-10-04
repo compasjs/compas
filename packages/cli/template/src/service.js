@@ -3,7 +3,6 @@ import { createBodyParsers, session } from "@lbu/server";
 import { isStaging } from "@lbu/stdlib";
 import {
   FileCache,
-  newFileStoreContext,
   newMinioClient,
   newPostgresConnection,
   newSessionStore,
@@ -11,15 +10,14 @@ import {
 import { createApp } from "./api.js";
 import {
   app,
+  appBucket,
   ensureBuckets,
-  fileStore,
   minio,
   sessionStore,
   setApp,
   setAppBucket,
   setBodyParsers,
   setFileCache,
-  setFileStore,
   setMinio,
   setServiceLogger,
   setSessionMiddleware,
@@ -44,9 +42,8 @@ export async function injectServices() {
   );
   setAppBucket(process.env.APP_NAME);
   setMinio(newMinioClient({}));
-  setFileStore(newFileStoreContext(sql, minio, process.env.APP_NAME));
-  setSessionStore(newSessionStore(sql, {}));
-  setFileCache(new FileCache(fileStore));
+  setSessionStore(newSessionStore(sql));
+  setFileCache(new FileCache(sql, minio, appBucket));
 
   setApp(createApp());
   setBodyParsers(createBodyParsers({}));

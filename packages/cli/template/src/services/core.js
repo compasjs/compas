@@ -13,10 +13,6 @@ export let sql = undefined;
 export let minio = undefined;
 
 /**
- * @type {FileStoreContext}
- */
-export let fileStore = undefined;
-/**
  * @type {SessionStore}
  */
 export let sessionStore = undefined;
@@ -57,15 +53,6 @@ export function setMinio(newMinio) {
   serviceLogger.info("setting minio");
   minio = newMinio;
   return minio;
-}
-
-/**
- * @param newFileStore
- */
-export function setFileStore(newFileStore) {
-  serviceLogger.info("setting fileStore");
-  fileStore = newFileStore;
-  return fileStore;
 }
 
 /**
