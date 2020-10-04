@@ -55,9 +55,9 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 - Ensure you have master checked out, and are completely up-to-date
 - Write to the changelog
   - Run `yarn lbu changelog`
-  - Change the version and fix link to tag
-  - New features
-  - Breaking changes
+  - Replace `x.x.x` with the new version (3 times) in `docs/changelog.md`
+  - Write about the changes and how to use it them, in `docs/releases/x.x.x.md`
+- Run the linter with `yarn lbu lint`
 - Commit with `*: prepare release for vX.X.X` and push to master
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version

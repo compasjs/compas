@@ -66,8 +66,10 @@ async function getListOfCommitsSinceTag(logger, version) {
 function stripChangelogOfUnreleased(changelog) {
   let result = changelog.substr("changelog".length + 2).trim();
 
-  if (result.indexOf("### [Unreleased") !== -1) {
-    result = result.substr(result.indexOf("### [v"));
+  if (result.indexOf("### [vx.x.x") !== -1) {
+    result = result.substr(
+      result.indexOf("### [v", result.indexOf("### [vx.x.x") + 1),
+    );
   }
 
   return result.trim();
@@ -141,7 +143,7 @@ function combineCommits(commits) {
  */
 function makeChangelog(logger, commits) {
   const result = [
-    `### [Unreleased](https://github.com/lightbasenl/lbu/releases/)`,
+    `### [vx.x.x](https://github.com/lightbasenl/lbu/releases/tag/vx.x.x)`,
     ``,
   ];
 
@@ -155,6 +157,11 @@ function makeChangelog(logger, commits) {
       )}`,
     );
   }
+
+  result.push(
+    "",
+    "For a detailed description and more details about this release,\nplease read the [release notes](https://lbu.lightbase.nl/releases/x.x.x.html).",
+  );
 
   return result.join("\n");
 }
