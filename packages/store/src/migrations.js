@@ -1,8 +1,7 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import path from "path";
-import { dirnameForModule } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -254,7 +253,7 @@ async function readMigrationsDir(
   const result = [];
 
   for (const f of files) {
-    const fullPath = path.join(directory, f);
+    const fullPath = pathJoin(directory, f);
 
     if (f === "namespaces.txt") {
       const rawNamespaces = await readFile(fullPath, "utf-8");
@@ -270,7 +269,41 @@ async function readMigrationsDir(
 
         namespaces.unshift(sub);
 
-        const exportedItems = await import(sub);
+        // Either same level in node_modules
+        const directPath = pathJoin(process.cwd(), "node_modules", sub);
+        // Or a level deeper
+        const indirectPath = pathJoin(directory, "../node_modules", sub);
+
+        const subPath = !existsSync(directPath)
+          ? existsSync(indirectPath)
+            ? indirectPath
+            : new Error(
+                `Could not determine import path of ${sub}, while searching for migration files.`,
+              )
+          : directPath;
+
+        // Quick hack
+        if (typeof subPath !== "string") {
+          throw subPath;
+        }
+
+        // Use the package.json to find the package entrypoint
+        // Only supporting simple { exports: "file.js" }, { exports: { default: "file.js" } or { main: "file.js" }
+        const subPackageJson = JSON.parse(
+          await readFile(pathJoin(subPath, "package.json"), "utf8"),
+        );
+
+        const exportedItems = await import(
+          pathJoin(
+            subPath,
+            subPackageJson?.exports?.default ??
+              (typeof subPackageJson?.exports === "string"
+                ? subPackageJson?.exports
+                : undefined) ??
+              subPackageJson?.main ??
+              "index.js",
+          )
+        );
         if (exportedItems && exportedItems.migrations) {
           const subResult = await readMigrationsDir(
             exportedItems.migrations,
