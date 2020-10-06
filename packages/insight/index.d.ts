@@ -85,6 +85,68 @@ export function printProcessMemoryUsage(logger: Logger): void;
 export const log: Logger;
 
 /**
+ * Basic timing and call information
+ */
+export type EventCall =
+  | {
+      type: "start" | "stop";
+      name: string;
+
+      /**
+       * Time in milliseconds since some kind of epoch, this may be unix epoch or process start
+       */
+      time: number;
+    }
+  | EventCall[];
+
+/**
+ * Encapsulate the base information needed to dispatch events
+ */
+export interface Event {
+  log: Logger;
+
+  /**
+   * If event is first event dispatched in chain
+   */
+  root: boolean;
+
+  name?: string;
+
+  callStack: EventCall[];
+}
+
+/**
+ * Create a new event from a single logger
+ */
+export function newEvent(logger: Logger): Event;
+
+/**
+ * Create a 'child' event, reuses the logger, adds callstack to the passed event
+ */
+export function newEventFromEvent(event: Event): Event;
+
+/**
+ * Track event start times and set a name
+ */
+export function eventStart(event: Event, name: string): void;
+
+/**
+ * Rename event, can only be done if `eventStop` is not called yet.
+ */
+export function eventRename(event: Event, name: string): void;
+
+/**
+ * Track event stop, and log callStack if event#root === true
+ */
+export function eventStop(event: Event): void;
+
+/**
+ * Create a test event.
+ * event.log.info is a noop by default, but can be enabled via the passed in options.
+ */
+export function newTestEvent(options?: { enabledLogs?: boolean }): Event;
+
+/**
  * Get the disk size (in bytes) and estimated row count for all tables and views.
  * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
  * Postgres documentation for implications.
