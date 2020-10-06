@@ -1,8 +1,7 @@
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import path from "path";
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -254,7 +253,7 @@ async function readMigrationsDir(
   const result = [];
 
   for (const f of files) {
-    const fullPath = path.join(directory, f);
+    const fullPath = pathJoin(directory, f);
 
     if (f === "namespaces.txt") {
       const rawNamespaces = await readFile(fullPath, "utf-8");
@@ -297,7 +296,12 @@ async function readMigrationsDir(
         const exportedItems = await import(
           pathJoin(
             subPath,
-            subPackageJson?.exports ?? subPackageJson?.main ?? "index.js",
+            subPackageJson?.exports?.default ??
+              (typeof subPackageJson?.exports === "string"
+                ? subPackageJson?.exports
+                : undefined) ??
+              subPackageJson?.main ??
+              "index.js",
           )
         );
         if (exportedItems && exportedItems.migrations) {
