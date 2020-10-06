@@ -291,7 +291,7 @@ async function readMigrationsDir(
         // Use the package.json to find the package entrypoint
         // Only supporting simple { exports: "file.js" } or { main: "file.js" }
         const subPackageJson = JSON.stringify(
-          await readFile(subPath, "package.json"),
+          await readFile(pathJoin(subPath, "package.json")),
         );
 
         const exportedItems = await import(
