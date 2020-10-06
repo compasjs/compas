@@ -2,7 +2,7 @@ import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
 import path from "path";
-import { dirnameForModule } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -270,7 +270,28 @@ async function readMigrationsDir(
 
         namespaces.unshift(sub);
 
-        const exportedItems = await import(sub);
+        const directPath = pathJoin(process.cwd(), "node_modules", sub);
+        const indirectPath = pathJoin(directory, "../node_modules", sub);
+        const subPath = !existsSync(directPath)
+          ? existsSync(indirectPath)
+            ? indirectPath
+            : new Error(
+                `Could not determine import path of ${sub}, while searching for migration files.`,
+              )
+          : directPath;
+
+        if (typeof subPath !== "string") {
+          throw subPath;
+        }
+
+        const subPackageJson = JSON.stringify(await readFile(subPath));
+
+        const exportedItems = await import(
+          pathJoin(
+            subPath,
+            subPackageJson?.exports ?? subPackageJson?.main ?? "index.js",
+          )
+        );
         if (exportedItems && exportedItems.migrations) {
           const subResult = await readMigrationsDir(
             exportedItems.migrations,
