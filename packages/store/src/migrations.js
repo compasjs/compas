@@ -270,8 +270,11 @@ async function readMigrationsDir(
 
         namespaces.unshift(sub);
 
+        // Either same level in node_modules
         const directPath = pathJoin(process.cwd(), "node_modules", sub);
+        // Or a level deeper
         const indirectPath = pathJoin(directory, "../node_modules", sub);
+
         const subPath = !existsSync(directPath)
           ? existsSync(indirectPath)
             ? indirectPath
@@ -280,11 +283,16 @@ async function readMigrationsDir(
               )
           : directPath;
 
+        // Quick hack
         if (typeof subPath !== "string") {
           throw subPath;
         }
 
-        const subPackageJson = JSON.stringify(await readFile(subPath));
+        // Use the package.json to find the package entrypoint
+        // Only supporting simple { exports: "file.js" } or { main: "file.js" }
+        const subPackageJson = JSON.stringify(
+          await readFile(subPath, "package.json"),
+        );
 
         const exportedItems = await import(
           pathJoin(
