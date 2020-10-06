@@ -3,6 +3,7 @@
 
 import { compose } from "@lbu/server";
 import { AppError } from "@lbu/stdlib";
+import { eventRename } from "@lbu/insight";
 import {
 {{ for (const group of Object.keys(structure)) { }}
 {{= group }}Validators,
@@ -111,6 +112,7 @@ const handlers = {
           );
         }
 
+        eventRename(ctx.event, `{{= item.group }}.{{= item.name }}`);
         return _composed.{{= item.uniqueName }}(ctx, next);
       },
 

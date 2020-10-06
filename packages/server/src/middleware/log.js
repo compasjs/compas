@@ -1,5 +1,11 @@
 import { Transform } from "stream";
-import { bindLoggerContext, newLogger } from "@lbu/insight";
+import {
+  bindLoggerContext,
+  newLogger,
+  newEvent,
+  eventStart,
+  eventStop,
+} from "@lbu/insight";
 import { isNil, uuid } from "@lbu/stdlib";
 
 /**
@@ -21,6 +27,8 @@ export function logMiddleware() {
       type: "http",
       requestId,
     });
+    ctx.event = newEvent(ctx.log);
+    eventStart(ctx.event, `${ctx.method}.${ctx.path}`);
 
     await next();
 
@@ -79,6 +87,8 @@ function logInfo(ctx, startTime, length) {
       status: ctx.status,
     },
   });
+
+  eventStop(ctx.event);
 }
 
 /**
@@ -95,9 +105,6 @@ async function bodyCloseOrFinish(ctx) {
     ctx.body.once("finish", onFinish);
     ctx.body.once("close", onClose);
 
-    /**
-     *
-     */
     function done() {
       ctx.body.removeListener("finish", onFinish);
       ctx.body.removeListener("close", onClose);
