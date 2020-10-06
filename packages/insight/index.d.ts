@@ -83,3 +83,15 @@ export function printProcessMemoryUsage(logger: Logger): void;
  * Standard log instance
  */
 export const log: Logger;
+
+/**
+ * Get the disk size (in bytes) and estimated row count for all tables and views.
+ * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
+ * Postgres documentation for implications.
+ *
+ * Accepts the @lbu/store based sql instance, but not strongly typed so we don't have the
+ * dependency
+ */
+export function postgresTableSizes(
+  sql: any,
+): Promise<Record<string, { diskSize: number; rowCount: number }>>;
