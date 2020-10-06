@@ -9,8 +9,7 @@ jobs:
     timeout-minutes: 4
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Invoke closed source lbu e2e testing
+      - name: Invoke external lbu e2e tests
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: LBU e2e
