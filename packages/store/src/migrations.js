@@ -1,7 +1,7 @@
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -288,9 +288,9 @@ async function readMigrationsDir(
         }
 
         // Use the package.json to find the package entrypoint
-        // Only supporting simple { exports: "file.js" } or { main: "file.js" }
-        const subPackageJson = JSON.stringify(
-          await readFile(pathJoin(subPath, "package.json")),
+        // Only supporting simple { exports: "file.js" }, { exports: { default: "file.js" } or { main: "file.js" }
+        const subPackageJson = JSON.parse(
+          await readFile(pathJoin(subPath, "package.json"), "utf8"),
         );
 
         const exportedItems = await import(
