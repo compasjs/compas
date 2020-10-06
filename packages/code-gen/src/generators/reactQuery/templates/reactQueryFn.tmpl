@@ -67,14 +67,14 @@ options: QueryConfig<{{=  responseType }}, AppErrorResponse> = {},
     query: T.{{= item.query.reference.uniqueName }}_Input,
     {{ } }}
     ) => {
-      const promise = {{= item.group }}.{{= item.name }}(
+      const promise: CancellablePromise<{{= responseType }}> = {{= item.group }}.{{= item.name }}(
         {{= item.params ? "params, " : ""}}
         {{= item.query ? "query, " : "" }}
         { cancelToken: options?.cancelToken?.token },
       );
 
       if (options?.cancelToken) {
-        promise.cancel = () => options.cancelToken.cancel();
+        promise.cancel = () => options?.cancelToken?.cancel();
       }
 
       return promise;
