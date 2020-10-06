@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.80](https://github.com/lightbasenl/lbu/releases/tag/v0.0.80)
+
+- build(deps): bump @types/node from 14.11.2 to 14.11.4
+  ([#351](https://github.com/lightbasenl/lbu/pull/351))
+- code-gen: fix generated query function promise type
+  ([#352](https://github.com/lightbasenl/lbu/pull/352))
+- insight: add basic event system
+  ([#356](https://github.com/lightbasenl/lbu/pull/356))
+- insight: add function to get rowCount and diskSize per postgres table
+  ([#355](https://github.com/lightbasenl/lbu/pull/355))
+- server: implement event from insight on the context
+  ([#357](https://github.com/lightbasenl/lbu/pull/357))
+
 ### [v0.0.79](https://github.com/lightbasenl/lbu/releases/tag/v0.0.79)
 
 - build(deps): bump postgres from 2.0.0-beta.0 to 2.0.0-beta.2
