@@ -1,9 +1,5 @@
 name: External PR Checks
-on:
-  workflow_run:
-    workflows: ["PR Checks"]
-    types:
-      - completed
+on: [pull_request]
 
 env:
   CI: true
@@ -22,4 +18,4 @@ jobs:
           repo: lightbasenl/lbu-e2e
           inputs:
             '{ "ref": "${{ github.event.pull_request.head.sha }}", "pr": "${{
-            github.event.number }}" }'
+            github.event.pull_request.number }}" }'
