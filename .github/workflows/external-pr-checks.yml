@@ -16,4 +16,4 @@ jobs:
           token: ${{ secrets.LBU_E2E_TOKEN }}
           repo: lightbasenl/lbu-e2e
           ref: main
-          inputs: '{ "pr": "${{ github.event.pull_request.number }}" }'
+          inputs: '{ "lbu_pr": "${{ github.event.pull_request.number }}", "lbu_ref": "${{ github.event.pull_request.head.ref }}" }'
