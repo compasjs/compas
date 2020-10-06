@@ -32,3 +32,4 @@ coverage
 /docs/generated/*
 !/docs/generated/README.md
 /benchmark_output.txt
+foo
