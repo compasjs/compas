@@ -1,0 +1,25 @@
+name: External PR Checks
+on:
+  workflow_run:
+    workflows: ["PR Checks"]
+    types:
+      - completed
+
+env:
+  CI: true
+
+jobs:
+  external-test:
+    timeout-minutes: 4
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Invoke closed source lbu e2e testing
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: LBU e2e
+          token: ${{ secrets.LBU_E2E_TOKEN }}
+          repo: lightbasenl/lbu-e2e
+          inputs:
+            '{ "ref": "${{ github.event.pull_request.head.sha }}", "pr": "${{
+            github.event.number }}" }'
