@@ -6,12 +6,13 @@ import { listObjects } from "./minio.js";
 
 const queries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
-    INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name")
+    INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
     SELECT ${targetId},
            ${targetBucket},
            "contentType",
            "contentLength",
-           "name"
+           "name",
+           "meta"
     FROM "file"
     WHERE id = ${sourceId}
       AND "bucketName" = ${sourceBucket}

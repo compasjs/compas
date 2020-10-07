@@ -17,7 +17,7 @@ export const storeQueries = {
    */
   fileSelect: (sql, where) => sql`
 SELECT
-f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."createdAt", f."updatedAt", f."deletedAt"
+f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."meta", f."createdAt", f."updatedAt", f."deletedAt"
 FROM "file" f
 WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     where?.id ?? null
@@ -256,7 +256,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     if (data.length === 0) {
       return [];
     }
-    let query = `INSERT INTO "file" ("bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt") VALUES `;
+    let query = `INSERT INTO "file" ("bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt") VALUES `;
     const argList = [];
     let idx = 1;
     for (const it of data) {
@@ -265,15 +265,16 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
         it.contentLength ?? null,
         it.contentType ?? null,
         it.name ?? null,
+        JSON.stringify(it.meta ?? {}),
         it.createdAt ?? new Date(),
         it.updatedAt ?? new Date(),
         it.deletedAt ?? null,
       );
-      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
+      query += `($${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}, $${idx++}),`;
     }
     // Remove trailing comma
     query = query.substring(0, query.length - 1);
-    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"`;
+    query += ` RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
@@ -302,6 +303,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
     if (value["name"] !== undefined) {
       query += `"name" = $${idx++}, `;
       argList.push(value["name"]);
+    }
+    if (value["meta"] !== undefined) {
+      query += `"meta" = $${idx++}, `;
+      argList.push(JSON.stringify(value["meta"]));
     }
     if (value["createdAt"] !== undefined) {
       query += `"createdAt" = $${idx++}, `;
@@ -408,7 +413,7 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
       query += " AND ";
     }
     query = query.substring(0, query.length - 4);
-    query += ` RETURNING f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."createdAt", f."updatedAt", f."deletedAt"`;
+    query += ` RETURNING f."id", f."bucketName", f."contentLength", f."contentType", f."name", f."meta", f."createdAt", f."updatedAt", f."deletedAt"`;
     return sql.unsafe(query, argList);
   },
 
@@ -420,16 +425,16 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR f."id" = ${
    */
   fileUpsert: (sql, it) => {
     return sql`
-INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }, ${it.deletedAt ?? null}
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
 ) ON CONFLICT("id") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "meta" = EXCLUDED."meta", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -441,16 +446,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt
    */
   fileUpsertByBucketName: (sql, it) => {
     return sql`
-INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }, ${it.deletedAt ?? null}
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
 ) ON CONFLICT("bucketName") DO UPDATE SET
-"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+"contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "meta" = EXCLUDED."meta", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -462,16 +467,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt
    */
   fileUpsertByCreatedAt: (sql, it) => {
     return sql`
-INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }, ${it.deletedAt ?? null}
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
 ) ON CONFLICT("createdAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "meta" = EXCLUDED."meta", "updatedAt" = EXCLUDED."updatedAt", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -483,16 +488,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt
    */
   fileUpsertByUpdatedAt: (sql, it) => {
     return sql`
-INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }, ${it.deletedAt ?? null}
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
 ) ON CONFLICT("updatedAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "deletedAt" = EXCLUDED."deletedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "meta" = EXCLUDED."meta", "deletedAt" = EXCLUDED."deletedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 
@@ -504,16 +509,16 @@ RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt
    */
   fileUpsertByDeletedAt: (sql, it) => {
     return sql`
-INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+INSERT INTO "file" ("id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 ) VALUES (
 ${it.id ?? uuid()}, ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
       it.contentType ?? null
-    }, ${it.name ?? null}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }, ${it.deletedAt ?? null}
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
 ) ON CONFLICT("deletedAt") DO UPDATE SET
-"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "updatedAt" = EXCLUDED."updatedAt"
-RETURNING "id", "bucketName", "contentLength", "contentType", "name", "createdAt", "updatedAt", "deletedAt"
+"bucketName" = EXCLUDED."bucketName", "contentLength" = EXCLUDED."contentLength", "contentType" = EXCLUDED."contentType", "name" = EXCLUDED."name", "meta" = EXCLUDED."meta", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "bucketName", "contentLength", "contentType", "name", "meta", "createdAt", "updatedAt", "deletedAt"
 `;
   },
 

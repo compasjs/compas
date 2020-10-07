@@ -4,25 +4,37 @@
 /**
  * @name StoreFile
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "meta":StoreFileMeta, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
  * @name StoreFile_Input
  *
- * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
+ * @typedef { { "id":string, "bucketName":string, "contentLength":number, "contentType":string, "name":string, "meta":StoreFileMeta_Input, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
  */
 
 /**
  * @name StoreFileInsertPartial
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "meta":StoreFileMeta, "createdAt":Date, "updatedAt":Date, "deletedAt"?:Date, }}
  */
 
 /**
  * @name StoreFileInsertPartial_Input
  *
- * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
+ * @typedef { { "bucketName":string, "contentLength":number, "contentType":string, "name":string, "meta":StoreFileMeta_Input, "createdAt"?:string, "updatedAt"?:string, "deletedAt"?:string, }}
+ */
+
+/**
+ * @name StoreFileMeta
+ *
+ * @typedef { { }}
+ */
+
+/**
+ * @name StoreFileMeta_Input
+ *
+ * @typedef { { } |undefined}
  */
 
 /**
