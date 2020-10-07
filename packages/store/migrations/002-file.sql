@@ -5,6 +5,7 @@ CREATE TABLE "file"
   "contentLength" INT         NOT NULL,
   "contentType"   VARCHAR     NOT NULL,
   "name"          VARCHAR     NOT NULL,
+  "meta"          jsonb,
   "createdAt"     timestamptz NOT NULL DEFAULT now(),
   "updatedAt"     timestamptz NOT NULL DEFAULT now(),
   "deletedAt"     timestamptz NULL

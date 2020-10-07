@@ -63,6 +63,7 @@ test("store/files", async (t) => {
     t.ok(!!file.contentLength);
     t.ok(!!file.createdAt);
     t.ok(!!file.updatedAt);
+    t.deepEqual(file.meta, {});
   });
 
   t.test(

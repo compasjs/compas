@@ -14,6 +14,10 @@ export function applyStoreStructure(app) {
         contentLength: T.number(),
         contentType: T.string(),
         name: T.string(),
+        meta: T.object("fileMeta")
+          .keys({})
+          .default("{}")
+          .docs("User definable, optional object to store whatever you want"),
       })
       .enableQueries({ withSoftDeletes: true }),
   );
