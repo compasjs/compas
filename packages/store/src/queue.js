@@ -1,6 +1,8 @@
 import { log } from "@lbu/insight";
 import { storeQueries } from "./generated/queries.js";
 
+const LBU_RECURRING_JOB = "lbu.job.recurring";
+
 const queries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
@@ -70,11 +72,24 @@ const queries = {
       AND "updatedAt" > ${dateStart}
       AND "updatedAt" <= ${dateEnd};
   `,
+
+  /**
+   * @param {Postgres} sql
+   * @param {string} name
+   * @returns Promise<{ id: number }[]>
+   */
+  getRecurringJobForName: (sql, name) => sql`
+    SELECT id
+    FROM "job"
+    WHERE name = ${LBU_RECURRING_JOB}
+      AND "isComplete" IS FALSE
+      AND data ->> 'name' = ${name}
+  `,
 };
 
 export class JobQueueWorker {
   /**
-   * @param sql
+   * @param {Postgres} sql
    * @param {string|JobQueueWorkerOptions} nameOrOptions
    * @param {JobQueueWorkerOptions} [options]
    */
@@ -225,7 +240,11 @@ export class JobQueueWorker {
         let error = undefined;
 
         try {
-          await this.jobHandler(sql, jobData);
+          if (jobData.name === LBU_RECURRING_JOB) {
+            await handleLbuRecurring(sql, jobData);
+          } else {
+            await this.jobHandler(sql, jobData);
+          }
         } catch (err) {
           error = err;
         } finally {
@@ -248,7 +267,7 @@ export class JobQueueWorker {
 /**
  *Add a new item to the job queue
  *
- * @param sql
+ * @param {Postgres} sql
  * @param {JobInput} job
  * @returns {Promise<number>}
  */
@@ -261,9 +280,41 @@ export async function addJobToQueue(sql, job) {
 }
 
 /**
+ * Add a recurring job, if no existing job with the same name is scheduled.
+ * Does not throw when a job is already pending with the same name.
+ *
+ * @param {Postgres} sql
+ * @param {string} name
+ * @param {number} [priority]
+ * @param {StoreJobInterval} interval
+ * @returns {Promise<void>}
+ */
+export async function addRecurringJobToQueue(
+  sql,
+  { name, priority, interval },
+) {
+  priority = priority || 1;
+
+  const existingJobs = await queries.getRecurringJobForName(sql, name);
+
+  if (existingJobs.length > 0) {
+    return;
+  }
+
+  await addJobToQueue(sql, {
+    name: LBU_RECURRING_JOB,
+    priority,
+    data: {
+      interval,
+      name,
+    },
+  });
+}
+
+/**
  * Get the number of jobs that need to run
  *
- * @param sql
+ * @param {Postgres} sql
  * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
 async function getPendingQueueSize(sql) {
@@ -279,7 +330,7 @@ async function getPendingQueueSize(sql) {
 /**
  * Get the number of jobs that need to run for specified job name
  *
- * @param sql
+ * @param {Postgres} sql
  * @param {string} name
  * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
@@ -297,7 +348,7 @@ async function getPendingQueueSizeForName(sql, name) {
  * Return the average time between scheduled and completed for jobs completed in the
  * provided time range
  *
- * @param sql
+ * @param {Postgres} sql
  * @param {Date} startDate
  * @param {Date} endDate
  * @returns {Promise<number>}
@@ -312,7 +363,7 @@ async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
  * Return the average time between scheduled and completed for jobs completed in the
  * provided time range
  *
- * @param sql
+ * @param {Postgres} sql
  * @param {string} name
  * @param {Date} startDate
  * @param {Date} endDate
@@ -331,4 +382,46 @@ async function getAverageTimeToJobCompletionForName(
     endDate,
   );
   return result?.completionTime ?? 0;
+}
+
+/**
+ * Handles recurring jobs, by scheduling the 'child' and the current job again
+ *
+ * @param {Postgres} sql
+ * @param {StoreJob} job
+ */
+async function handleLbuRecurring(sql, job) {
+  const {
+    scheduledAt,
+    data: { name, interval, priority },
+  } = job;
+
+  const nextSchedule = new Date();
+  nextSchedule.setUTCFullYear(
+    scheduledAt.getUTCFullYear() + interval.years ?? 0,
+    scheduledAt.getUTCMonth() + interval.months ?? 0,
+    scheduledAt.getUTCDate() + interval.days ?? 0,
+  );
+  nextSchedule.setUTCHours(
+    scheduledAt.getUTCHours() + interval.hours ?? 0,
+    scheduledAt.getUTCMinutes() + interval.minutes ?? 0,
+    scheduledAt.getUTCSeconds() + interval.seconds ?? 0,
+    0,
+  );
+
+  // Dispatch 'job' with higher priority
+  await addJobToQueue(sql, {
+    name,
+    priority: priority + 1,
+  });
+
+  // Dispatch recurring job again for the next 'schedule'
+  await addJobToQueue(sql, {
+    name: LBU_RECURRING_JOB,
+    scheduledAt: nextSchedule,
+    data: {
+      name,
+      interval,
+    },
+  });
 }

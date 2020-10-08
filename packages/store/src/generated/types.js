@@ -27,13 +27,13 @@
 
 /**
  * @name StoreFileMeta
- *
+ * Docs: User definable, optional object to store whatever you want
  * @typedef { { }}
  */
 
 /**
  * @name StoreFileMeta_Input
- *
+ * Docs: User definable, optional object to store whatever you want
  * @typedef { { } |undefined}
  */
 
@@ -71,6 +71,18 @@
  * @name StoreJobInsertPartial_Input
  *
  * @typedef { { "isComplete"?:boolean , "priority"?:number , "scheduledAt"?:string, "name":string, "data"?:* , "createdAt"?:string, "updatedAt"?:string, }}
+ */
+
+/**
+ * @name StoreJobInterval
+ *
+ * @typedef { { "years"?:number , "months"?:number , "days"?:number , "hours"?:number , "minutes"?:number , "seconds"?:number , }}
+ */
+
+/**
+ * @name StoreJobInterval_Input
+ *
+ * @typedef { StoreJobInterval}
  */
 
 /**
