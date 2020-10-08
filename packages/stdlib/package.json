@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@lbu/insight": "0.0.80",
-    "@types/node": "14.11.5",
+    "@types/node": "14.11.6",
     "dotenv": "8.2.0",
     "lodash.merge": "4.6.2"
   },
