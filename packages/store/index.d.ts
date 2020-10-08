@@ -361,6 +361,30 @@ export class JobQueueWorker {
 export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
 
 /**
+ * Add a recurring job, if no existing job with the same name is scheduled.
+ * Does not throw when a job is already pending with the same name.
+ */
+export function addRecurringJobToQueue(
+  sql: Postgres,
+  {
+    name,
+    priority,
+    interval,
+  }: {
+    name: string;
+    priority?: number;
+    interval: {
+      years?: number;
+      months?: number;
+      days?: number;
+      hours?: number;
+      minutes?: number;
+      seconds?: number;
+    };
+  },
+): Promise<void>;
+
+/**
  * Stripped down from @lbu/server SessionStore
  */
 export interface SessionStore {

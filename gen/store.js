@@ -7,6 +7,17 @@ export function applyStoreStructure(app) {
   const T = new TypeCreator("store");
 
   app.add(
+    T.object("jobInterval").keys({
+      years: T.number().optional(),
+      months: T.number().optional(),
+      days: T.number().optional(),
+      hours: T.number().optional(),
+      minutes: T.number().optional(),
+      seconds: T.number().optional(),
+    }),
+  );
+
+  app.add(
     T.object("file")
       .keys({
         id: T.uuid().primary(),
