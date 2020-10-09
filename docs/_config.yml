@@ -1,4 +1,5 @@
 theme: jekyll-theme-minimal
+include: ["contributing.md"]
 
 navigation:
   - title: Home
