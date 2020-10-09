@@ -80,7 +80,7 @@ async function main() {
     T.object("listItem")
       .keys({
         id: T.uuid().primary(),
-        checked: T.bool().default(false).searchable(),
+        checked: T.searchable().value(T.bool().default(false)),
         value: T.string(),
       })
       .enableQueries({ withDates: true }),

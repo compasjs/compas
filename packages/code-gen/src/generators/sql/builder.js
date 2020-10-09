@@ -347,6 +347,10 @@ function getWhereFields(item) {
         isOptional: true,
         values: { ...it, ...settings, isOptional: it.isOptional },
       };
+    } else if (type === "boolean") {
+      fieldsArray.push({ key, name: key, type: "equal" });
+
+      resultType.keys[key] = { ...it, ...settings };
     }
   }
 
