@@ -88,13 +88,13 @@
 /**
  * @name StoreJobWhere
  *
- * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:Date, "scheduledAtGreaterThan"?:Date, "scheduledAtLowerThan"?:Date, "name"?:string , "nameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
+ * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "isComplete"?:boolean , "scheduledAt"?:Date, "scheduledAtGreaterThan"?:Date, "scheduledAtLowerThan"?:Date, "name"?:string , "nameLike"?:string , "createdAt"?:Date, "createdAtGreaterThan"?:Date, "createdAtLowerThan"?:Date, "updatedAt"?:Date, "updatedAtGreaterThan"?:Date, "updatedAtLowerThan"?:Date, }}
  */
 
 /**
  * @name StoreJobWhere_Input
  *
- * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "scheduledAt"?:string, "scheduledAtGreaterThan"?:string, "scheduledAtLowerThan"?:string, "name"?:string , "nameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
+ * @typedef { { "id"?:number , "idGreaterThan"?:number , "idLowerThan"?:number , "isComplete"?:boolean , "scheduledAt"?:string, "scheduledAtGreaterThan"?:string, "scheduledAtLowerThan"?:string, "name"?:string , "nameLike"?:string , "createdAt"?:string, "createdAtGreaterThan"?:string, "createdAtLowerThan"?:string, "updatedAt"?:string, "updatedAtGreaterThan"?:string, "updatedAtLowerThan"?:string, }}
  */
 
 /**

@@ -136,13 +136,15 @@ how you can create it via the TypeCreator (`T`).
 **Advanced**:
 
 - **Optional**: created with `T.optional()` can make an optional copy of the
-  passed in type
+  passed in type.
 
 - **Omit**: created with `T.omit()` allows to remove a subset of keys from a
-  passed in object
+  passed in object.
 
 - **Pick**: created with `T.pick()` allows pick a subset of keys from the passed
-  in obejct
+  in obejct.
+- **Searchable**: created with `T.searchable()` makes a copy of the provided
+  value and returns it as sql searchable.
 
 ## Inferred types
 

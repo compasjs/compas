@@ -12,6 +12,7 @@ import "./optional/index.js";
 import "./pick/index.js";
 import "./relation/index.js";
 import "./reference/index.js";
+import "./searchable/index.js";
 import "./string/index.js";
 import "./uuid/index.js";
 

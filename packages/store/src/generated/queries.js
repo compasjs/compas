@@ -538,6 +538,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
   }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
     where?.idLowerThan ?? null
   }) AND (COALESCE(${
+    where?.isComplete ?? null
+  }, NULL) IS NULL OR j."isComplete" = ${
+    where?.isComplete ?? null
+  }) AND (COALESCE(${
     where?.scheduledAt ?? null
   }, NULL) IS NULL OR j."scheduledAt" = ${
     where?.scheduledAt ?? null
@@ -596,6 +600,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
     }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
       where?.idLowerThan ?? null
     }) AND (COALESCE(${
+      where?.isComplete ?? null
+    }, NULL) IS NULL OR j."isComplete" = ${
+      where?.isComplete ?? null
+    }) AND (COALESCE(${
       where?.scheduledAt ?? null
     }, NULL) IS NULL OR j."scheduledAt" = ${
       where?.scheduledAt ?? null
@@ -651,6 +659,10 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
     where?.idGreaterThan ?? null
   }) AND (COALESCE(${where?.idLowerThan ?? null}, NULL) IS NULL OR j."id" < ${
     where?.idLowerThan ?? null
+  }) AND (COALESCE(${
+    where?.isComplete ?? null
+  }, NULL) IS NULL OR j."isComplete" = ${
+    where?.isComplete ?? null
   }) AND (COALESCE(${
     where?.scheduledAt ?? null
   }, NULL) IS NULL OR j."scheduledAt" = ${
@@ -779,6 +791,12 @@ WHERE (COALESCE(${where?.id ?? null}, NULL) IS NULL OR j."id" = ${
       argList.push(where.idLowerThan);
       query += " AND ";
     }
+    if (where.isComplete !== undefined) {
+      query += `j."isComplete" `;
+      query += `= $${idx++}`;
+      argList.push(where.isComplete);
+      query += " AND ";
+    }
     if (where.scheduledAt !== undefined) {
       query += `j."scheduledAt" `;
       query += `= $${idx++}`;
@@ -867,6 +885,27 @@ ${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
     }, ${it.updatedAt ?? new Date()}
 ) ON CONFLICT("id") DO UPDATE SET
 "isComplete" = EXCLUDED."isComplete", "priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "name" = EXCLUDED."name", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
+RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+`;
+  },
+
+  /**
+   * Note: Use only when isComplete has a unique constraint
+   * @param {Postgres} sql
+   * @param { StoreJobInsertPartial_Input & { id?: number } } it
+   * @returns {Promise<StoreJob[]>}
+   */
+  jobUpsertByIsComplete: (sql, it) => {
+    return sql`
+INSERT INTO "job" ("id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
+) VALUES (
+${it.id ?? uuid()}, ${it.isComplete ?? false}, ${it.priority ?? 0}, ${
+      it.scheduledAt ?? new Date()
+    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
+) ON CONFLICT("isComplete") DO UPDATE SET
+"priority" = EXCLUDED."priority", "scheduledAt" = EXCLUDED."scheduledAt", "name" = EXCLUDED."name", "data" = EXCLUDED."data", "updatedAt" = EXCLUDED."updatedAt"
 RETURNING "id", "isComplete", "priority", "scheduledAt", "name", "data", "createdAt", "updatedAt"
 `;
   },

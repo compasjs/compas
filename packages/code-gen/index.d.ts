@@ -342,6 +342,11 @@ export class TypeCreator {
   relation(): RelationType;
 
   /**
+   * Make a copy of the provided type, making it sql searchable
+   */
+  searchable(name?: string): SearchableType;
+
+  /**
    * Any string use case
    */
   string(name?: string): StringType;
@@ -684,6 +689,13 @@ export class RelationType extends TypeBuilder {
 }
 
 export class ReferenceType extends TypeBuilder {}
+
+export class SearchableType extends TypeBuilder {
+  /**
+   * Set the type to operate on
+   */
+  value(builder: TypeBuilderLike): this;
+}
 
 export class StringType extends TypeBuilder {
   /**
