@@ -1,5 +1,32 @@
 # CHANGELOG
 
+### [v0.0.81](https://github.com/lightbasenl/lbu/releases/tag/v0.0.81)
+
+- build(deps): bump @types/node from 14.11.4 to 14.11.8
+  ([#362](https://github.com/lightbasenl/lbu/pull/362),
+  [#368](https://github.com/lightbasenl/lbu/pull/368),
+  [#374](https://github.com/lightbasenl/lbu/pull/374))
+- build(deps): bump c8 from 7.3.1 to 7.3.3
+  ([#369](https://github.com/lightbasenl/lbu/pull/369))
+- build(deps): bump eslint from 7.10.0 to 7.11.0
+  ([#373](https://github.com/lightbasenl/lbu/pull/373))
+- build(deps): bump koa-session from 6.0.0 to 6.1.0
+  ([#365](https://github.com/lightbasenl/lbu/pull/365))
+- ci: dispatch sha and pr to external e2e test repo
+  ([#359](https://github.com/lightbasenl/lbu/pull/359))
+- code-gen: add T.searchable and support boolean in where clauses
+  ([#371](https://github.com/lightbasenl/lbu/pull/371))
+- docs: include contributing.md on Github pages
+- store: add meta field on file
+  ([#363](https://github.com/lightbasenl/lbu/pull/363))
+- store: add support for recurring jobs
+  ([#364](https://github.com/lightbasenl/lbu/pull/364))
+- store: try multiple ways of resolving a migration namespace import
+  ([#361](https://github.com/lightbasenl/lbu/pull/361))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://lbu.lightbase.nl/releases/0.0.81.html).
+
 ### [v0.0.80](https://github.com/lightbasenl/lbu/releases/tag/v0.0.80)
 
 - build(deps): bump @types/node from 14.11.2 to 14.11.4
