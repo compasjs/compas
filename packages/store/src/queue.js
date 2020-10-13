@@ -265,7 +265,7 @@ export class JobQueueWorker {
 }
 
 /**
- *Add a new item to the job queue
+ * Add a new item to the job queue
  *
  * @param {Postgres} sql
  * @param {JobInput} job
