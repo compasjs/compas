@@ -34,7 +34,11 @@ export {
 
 export { FileCache } from "./src/file-cache.js";
 
-export { JobQueueWorker, addJobToQueue } from "./src/queue.js";
+export {
+  JobQueueWorker,
+  addJobToQueue,
+  addRecurringJobToQueue,
+} from "./src/queue.js";
 
 export { newSessionStore } from "./src/sessions.js";
 
