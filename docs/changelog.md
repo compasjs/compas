@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [v0.0.82](https://github.com/lightbasenl/lbu/releases/tag/v0.0.82)
+
+- build(deps): bump chokidar from 3.4.2 to 3.4.3
+  ([#379](https://github.com/lightbasenl/lbu/pull/379))
+- store: add export for 'addRecurringJobToQueue'
+  ([#376](https://github.com/lightbasenl/lbu/pull/376))
+- store: add tests for recurring job scheduling
+  ([#380](https://github.com/lightbasenl/lbu/pull/380))
+
 ### [v0.0.81](https://github.com/lightbasenl/lbu/releases/tag/v0.0.81)
 
 - build(deps): bump @types/node from 14.11.4 to 14.11.8
