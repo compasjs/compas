@@ -390,24 +390,14 @@ async function getAverageTimeToJobCompletionForName(
  * @param {Postgres} sql
  * @param {StoreJob} job
  */
-async function handleLbuRecurring(sql, job) {
+export async function handleLbuRecurring(sql, job) {
   const {
     scheduledAt,
-    data: { name, interval, priority },
+    priority,
+    data: { name, interval },
   } = job;
 
-  const nextSchedule = new Date();
-  nextSchedule.setUTCFullYear(
-    scheduledAt.getUTCFullYear() + interval.years ?? 0,
-    scheduledAt.getUTCMonth() + interval.months ?? 0,
-    scheduledAt.getUTCDate() + interval.days ?? 0,
-  );
-  nextSchedule.setUTCHours(
-    scheduledAt.getUTCHours() + interval.hours ?? 0,
-    scheduledAt.getUTCMinutes() + interval.minutes ?? 0,
-    scheduledAt.getUTCSeconds() + interval.seconds ?? 0,
-    0,
-  );
+  const nextSchedule = getNextScheduledAt(scheduledAt, interval);
 
   // Dispatch 'job' with higher priority
   await addJobToQueue(sql, {
@@ -419,9 +409,35 @@ async function handleLbuRecurring(sql, job) {
   await addJobToQueue(sql, {
     name: LBU_RECURRING_JOB,
     scheduledAt: nextSchedule,
+    priority,
     data: {
       name,
       interval,
     },
   });
+}
+
+/**
+ * Adds the interval to the provided scheduledAt date
+ * @param {Date} scheduledAt
+ * @param {StoreJobInterval} interval
+ * @returns {Date}
+ */
+export function getNextScheduledAt(scheduledAt, interval) {
+  const nextSchedule = new Date();
+
+  nextSchedule.setUTCFullYear(
+    scheduledAt.getUTCFullYear() + (interval.years ?? 0),
+    scheduledAt.getUTCMonth() + (interval.months ?? 0),
+    scheduledAt.getUTCDate() + (interval.days ?? 0),
+  );
+
+  nextSchedule.setUTCHours(
+    scheduledAt.getUTCHours() + (interval.hours ?? 0),
+    scheduledAt.getUTCMinutes() + (interval.minutes ?? 0),
+    scheduledAt.getUTCSeconds() + (interval.seconds ?? 0),
+    0,
+  );
+
+  return nextSchedule;
 }
