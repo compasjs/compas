@@ -30,7 +30,7 @@
     "@lbu/insight": "0.0.81",
     "@lbu/stdlib": "0.0.81",
     "c8": "7.3.3",
-    "chokidar": "3.4.2",
+    "chokidar": "3.4.3",
     "http-proxy": "1.18.1",
     "tree-kill": "1.2.2"
   },
