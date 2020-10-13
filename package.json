@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "gen": "lbu generate && lbu internal_generate && lbu lint",
+    "gen": "lbu internal_generate && lbu test-gen",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
     "bump": "lerna changed && lerna version",

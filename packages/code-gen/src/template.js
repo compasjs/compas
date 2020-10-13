@@ -6,18 +6,17 @@ import {
   isNil,
   processDirectoryRecursiveSync,
 } from "@lbu/stdlib";
-import { getItem, lowerCaseFirst, upperCaseFirst } from "./utils.js";
+import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
  * @type {{context: Object<string, Function>, globals: Object<string, Function>}}
  */
-const tc = {
+export const templateContext = {
   globals: {
     isNil,
     upperCaseFirst,
     lowerCaseFirst,
     camelToSnakeCase,
-    getItem,
     inspect: (arg) => inspect(arg, { sorted: true, colors: false, depth: 15 }),
     quote: (x) => `"${x}"`,
   },
@@ -60,7 +59,7 @@ export function compileTemplate(name, str, opts = {}) {
     : "";
 
   try {
-    tc.context[name] = new Function(
+    templateContext.context[name] = new Function(
       "_ctx",
       "it",
       `
@@ -117,18 +116,18 @@ export function compileTemplateDirectory(dir, extension, opts) {
  * @returns {string}
  */
 export function executeTemplate(name, data) {
-  if (isNil(tc)) {
+  if (isNil(templateContext)) {
     throw new TypeError(
       "TemplateContext is required, please create a new one with `newTemplateContext()`",
     );
   }
 
-  if (isNil(tc.context[name])) {
+  if (isNil(templateContext.context[name])) {
     throw new Error(`Unknown template: ${name}`);
   }
 
   try {
-    return tc.context[name](getExecutionContext(), data).trim();
+    return templateContext.context[name](getExecutionContext(), data).trim();
   } catch (e) {
     const err = new Error(`Error while executing ${name} template`);
     err.originalErr = e;
@@ -141,9 +140,9 @@ export function executeTemplate(name, data) {
  */
 function getExecutionContext() {
   const result = {
-    ...tc.globals,
+    ...templateContext.globals,
   };
-  for (const [key, item] of Object.entries(tc.context)) {
+  for (const [key, item] of Object.entries(templateContext.context)) {
     result[key] = item.bind(undefined, result);
   }
 

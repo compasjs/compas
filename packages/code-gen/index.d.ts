@@ -577,9 +577,9 @@ export class NumberType extends TypeBuilder {
   convert(): this;
 
   /**
-   * Validator enforced integer
+   * Validator does not enforce an integer
    */
-  integer(): this;
+  float(): this;
 
   /**
    * Validator enforced minimum value inclusive

@@ -1,3 +1,0 @@
-{{ if (ref.queryOptions?.withDates || ref.queryOptions?.withSoftDeletes) { }}
-ORDER BY {{= item.shortName }}."createdAt", {{= item.shortName }}."updatedAt" {{= ref.keys["id"] !== undefined ? `, ${item.shortName}."id"` : "" }}
-{{ } }}

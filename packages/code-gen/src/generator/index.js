@@ -1,0 +1,128 @@
+import { mkdirSync, writeFileSync } from "fs";
+import { pathJoin } from "@lbu/stdlib";
+import { copyAndSort } from "../generate.js";
+import { templateContext } from "../template.js";
+import { generateApiClientFiles } from "./apiClient/index.js";
+import { linkupReferencesInStructure } from "./linkup-references.js";
+import { generateReactQueryFiles } from "./reactQuery/index.js";
+import { generateRouterFiles } from "./router/index.js";
+import {
+  addRootExportsForStructureFiles,
+  generateStructureFiles,
+} from "./structure.js";
+import {
+  generateTypeFile,
+  getTypeNameForType,
+  setupMemoizedTypes,
+} from "./types.js";
+import { generateValidatorFiles } from "./validator.js";
+
+/**
+ *
+ * @param {Logger} logger
+ * @param {GenerateOpts} options
+ * @param {CodeGenStructure} structure
+ * @returns {Promise<void>}
+ */
+export async function generate(logger, options, structure) {
+  // We can always use '.js' as the import extension and TS will happily resolve to the
+  // .ts files Not exactly sure how it all works, but should be good enough for now. The
+  // issue when not providing any extension in imports / exports is that TS won't add
+  // them even when targeting ESNext with moduleResolution Node
+
+  /**
+   * @type {CodeGenContext}
+   */
+  const context = {
+    logger,
+    options,
+    structure,
+    extension: options.useTypescript ? ".ts" : ".js",
+    importExtension: ".js",
+    outputFiles: [],
+    rootExports: [],
+  };
+
+  // Structure:
+  // The raw structure that is used to generate all the files.
+  // This contains all information needed to generate again, even if different options
+  // are needed.
+  generateStructureFiles(context);
+  addRootExportsForStructureFiles(context);
+
+  // Linkup all references, so we don't necessarily have to worry about them in all other
+  // places.
+  linkupReferencesInStructure(context);
+
+  const copy = {};
+  copyAndSort(context.structure, copy);
+  context.structure = copy;
+
+  templateContext.globals.getTypeNameForType = getTypeNameForType.bind(
+    undefined,
+    context,
+  );
+  setupMemoizedTypes(context);
+
+  if (context.options.enabledGenerators.indexOf("validator") !== -1) {
+    generateValidatorFiles(context);
+  }
+  if (context.options.enabledGenerators.indexOf("router") !== -1) {
+    generateRouterFiles(context);
+  }
+  if (context.options.enabledGenerators.indexOf("apiClient") !== -1) {
+    generateApiClientFiles(context);
+  }
+  if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
+    generateReactQueryFiles(context);
+  }
+  if (context.options.enabledGenerators.indexOf("type") !== -1) {
+    generateTypeFile(context);
+  }
+
+  // Create all exports so imports all happen via
+  // `{options.outputDirectory}/index${context.extension}
+  generateRootExportsFile(context);
+
+  // Add provided file headers to all files
+  annotateFilesWithHeader(context);
+  writeFiles(context);
+}
+
+/**
+ * Join all root exports in to a single index.js file
+ * @param {CodeGenContext} context
+ */
+export function generateRootExportsFile(context) {
+  context.outputFiles.push({
+    contents: context.rootExports.map((it) => it.trim()).join("\n"),
+    relativePath: `./index${context.extension}`,
+  });
+}
+
+/**
+ * Use the fileHeader from options, and prefix all file contents with it
+ * @param {CodeGenContext} context
+ */
+export function annotateFilesWithHeader(context) {
+  for (const file of context.outputFiles) {
+    file.contents = `${context.options.fileHeader}\n${file.contents}\n`;
+  }
+}
+
+/**
+ * Write out all files
+ * @param {CodeGenContext} context
+ */
+export function writeFiles(context) {
+  for (const file of context.outputFiles) {
+    const fullPath = pathJoin(
+      context.options.outputDirectory,
+      file.relativePath,
+    );
+    const directory = fullPath.split("/").slice(0, -1).join("/");
+
+    mkdirSync(directory, { recursive: true });
+    writeFileSync(fullPath, file.contents, "utf8");
+  }
+}

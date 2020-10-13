@@ -17,6 +17,56 @@ export function applyCodeGenStructure(app) {
         T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
       ),
   );
+
+  app.add(
+    T.object("generateOpts").keys({
+      enabledGroups: T.array().values(T.string()),
+      isBrowser: T.bool(),
+      isNode: T.bool(),
+      isNodeServer: T.bool(),
+      enabledGenerators: T.array().values(
+        T.string().oneOf(
+          "type",
+          "validator",
+          "router",
+          "sql",
+          "apiClient",
+          "reactQuery",
+        ),
+      ),
+      useTypescript: T.bool(),
+      dumpStructure: T.bool(),
+      fileHeader: T.string(),
+      outputDirectory: T.string(),
+    }),
+    T.object("context").keys({
+      options: T.reference("codeGen", "generateOpts"),
+      structure: T.reference("codeGen", "structure"),
+      extension: T.string().oneOf(".js", ".ts"),
+      importExtension: T.string(),
+      outputFiles: T.array().values(T.reference("codeGen", "file")),
+      rootExports: T.array().values(T.string()),
+    }),
+    T.object("file").keys({
+      relativePath: T.string(),
+      contents: T.string(),
+    }),
+    T.object("templateState").keys({
+      phase: T.string().oneOf("init", "collect", "finish"),
+    }),
+    T.object("typeSettings").keys({
+      isJSON: T.bool().optional(),
+      nestedIsJSON: T.bool().optional(),
+      useDefaults: T.bool().optional(),
+      useTypescript: T.bool().optional(),
+      isNode: T.bool().optional(),
+      isBrowser: T.bool().optional(),
+      suffix: T.string().optional(),
+      fileTypeIO: T.string()
+        .oneOf("input", "outputRouter", "outputClient")
+        .optional(),
+    }),
+  );
 }
 
 /**
@@ -121,18 +171,10 @@ function getTypes(T) {
   const referenceType = T.object("referenceType").keys({
     type: "reference",
     ...typeBase,
-    reference: T.pick().object(typeBase).keys("group", "name", "uniqueName"),
-  });
-
-  const relationType = T.object("relationType").keys({
-    type: "relation",
-    ...typeBase,
-    relationType: T.string().oneOf("oneToOne", "oneToMany", "manyToOne"),
-    left: T.reference("codeGen", "type"),
-    leftKey: T.string(),
-    right: T.reference("codeGen", "type"),
-    rightKey: T.string(),
-    substituteKey: T.string(),
+    reference: T.anyOf().values(
+      T.reference("codeGen", "type"),
+      T.pick().object(typeBase).keys("group", "name", "uniqueName"),
+    ),
   });
 
   const stringType = T.object("stringType").keys({
@@ -179,7 +221,6 @@ function getTypes(T) {
     numberType,
     objectType,
     referenceType,
-    relationType,
     stringType,
     uuidType,
     routeType,

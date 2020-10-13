@@ -1,9 +1,0 @@
-{{ if (options.validatorCollectErrors) { }}
-const { errors, data } = {{= lowerCaseFirst(item.reference.group) }}Validators.{{= lowerCaseFirst(item.reference.name) }}(value, propertyPath);
-if (errors !== undefined) {
-  errorList.push(...errors);
-}
-return data;
-{{ } else { }}
-return {{= lowerCaseFirst(item.reference.group) }}Validators.{{= lowerCaseFirst(item.reference.name) }}(value, propertyPath);
-{{ } }}

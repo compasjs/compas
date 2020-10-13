@@ -1,15 +1,14 @@
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
-import { isNil } from "@lbu/stdlib";
+import { AppError, isNil } from "@lbu/stdlib";
+import { buildOrInfer } from "./builders/utils.js";
 import {
+  addGroupsToGeneratorInput,
   addToData,
-  callGeneratorMethod,
   hoistNamedItems,
-  runGenerators,
 } from "./generate.js";
-import { codeGenValidators } from "./generated/validators.js";
-import { generators } from "./generators/index.js";
-import { TypeCreator } from "./types/index.js";
-import { buildOrInfer } from "./types/TypeBuilder.js";
+import { codeGenValidators, validatorSetError } from "./generated/index.js";
+import { generate } from "./generator/index.js";
+import { getInternalRoutes } from "./generator/router/index.js";
 import { lowerCaseFirst } from "./utils.js";
 
 /**
@@ -98,30 +97,13 @@ export class App {
    *
    * @public
    * @param {AppOpts} [options={}] Optional options
-   * @returns {Promise<App>}
+   * @returns {App}
    */
-  static async new(options = {}) {
-    const app = new App(options);
-    await app.init();
-    return app;
-  }
-
-  /**
-   * Init generators and validate types
-   *
-   * @private
-   * @returns {Promise<void>}
-   */
-  async init() {
-    if (this.verbose) {
-      this.logger.info({
-        msg: "Registered plugins: ",
-        generators: [...generators.keys()],
-        types: [...TypeCreator.types.keys()],
-      });
+  static new(options = {}) {
+    if (!isNil(codeGenValidators?.type)) {
+      validatorSetError(AppError.validationError);
     }
-
-    await callGeneratorMethod(this, generators.keys(), "init");
+    return new App(options);
   }
 
   /**
@@ -144,7 +126,8 @@ export class App {
     if (!isNil(codeGenValidators?.type)) {
       const { data, errors } = codeGenValidators.type(obj);
       if (errors) {
-        throw errors[0];
+        this.logger.error(AppError.format(errors[0]));
+        process.exit(1);
       }
 
       this.addToData(data);
@@ -164,7 +147,8 @@ export class App {
     if (!isNil(codeGenValidators?.type)) {
       const { data: value, errors } = codeGenValidators.structure(data);
       if (errors) {
-        throw errors[0];
+        this.logger.error(AppError.format(errors[0]));
+        process.exit(1);
       }
 
       for (const groupData of Object.values(value)) {
@@ -232,14 +216,18 @@ export class App {
     opts.useTypescript = options.useTypescript ?? !!opts.useTypescript;
     opts.dumpStructure = options.dumpStructure ?? !!opts.dumpStructure;
     opts.dumpPostgres = options.dumpPostgres ?? !!opts.dumpPostgres;
-    opts.validatorCollectErrors =
-      options.validatorCollectErrors ?? !!opts.validatorCollectErrors;
     opts.enabledGenerators =
       options.enabledGenerators.length > 0
         ? options.enabledGenerators
-        : opts.enabledGenerators ?? [...generators.keys()];
+        : opts.enabledGenerators;
+
+    // Add internal routes
+    for (const r of getInternalRoutes(opts)) {
+      this.unprocessedData.add(r);
+    }
 
     this.processData();
+
     hoistNamedItems(this.data, this.data);
 
     opts.enabledGroups = options.enabledGroups ?? Object.keys(this.data);
@@ -251,7 +239,30 @@ export class App {
       throw new Error("Need at least a single group in enabledGroups");
     }
 
-    await runGenerators(this, opts);
+    if (
+      opts.enabledGenerators.indexOf("router") !== -1 &&
+      opts.enabledGroups.indexOf("lbu") === -1 &&
+      opts.dumpStructure
+    ) {
+      opts.enabledGroups.push("lbu");
+    }
+
+    // Ensure that we don't mutate the current working data of the user
+    const dataCopy = JSON.parse(JSON.stringify(this.data));
+    const generatorInput = {};
+
+    addGroupsToGeneratorInput(generatorInput, dataCopy, opts.enabledGroups);
+
+    // validators may not be present, fallback to just stringify
+    if (!isNil(codeGenValidators.structure)) {
+      const { errors } = codeGenValidators.structure(generatorInput);
+      if (errors) {
+        this.logger.error(AppError.format(errors[0]));
+        process.exit(1);
+      }
+    }
+
+    await generate(this.logger, opts, generatorInput);
     printProcessMemoryUsage(this.logger);
   }
 

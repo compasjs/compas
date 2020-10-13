@@ -105,8 +105,10 @@ export class AppError extends Error {
         info: e.info,
         stack: skipStack ? [] : stack,
         originalError: e.originalError
-          ? typeof e.originalError.toJSON === "function"
-            ? e.originalError.toJSON()
+          ? !AppError.instanceOf(e.originalError)
+            ? typeof e.originalError.toJSON === "function"
+              ? e.originalError.toJSON()
+              : AppError.format(e.originalError, true)
             : AppError.format(e.originalError, true)
           : undefined,
       };

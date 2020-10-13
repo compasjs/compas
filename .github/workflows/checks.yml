@@ -76,7 +76,7 @@ jobs:
         run: |
           yarn install
           yarn lbu docker up
-          yarn lbu generate
+          yarn lbu gen
           yarn lbu migrate
           yarn lbu test
           yarn lbu docker reset

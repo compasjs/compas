@@ -1,0 +1,67 @@
+import { AxiosError, CancelTokenSource } from "axios";
+import React from "react";
+import {
+  MutationConfig,
+  MutationResultPair,
+  QueryConfig as ReactQueryConfig,
+  QueryResult,
+  useMutation,
+  useQuery,
+} from "react-query";
+import { newApiClient } from "./apiClient";
+import * as T from "./types";
+((newline))
+
+interface CancellablePromise<T> extends Promise<T> {
+  cancel?: () => void;
+}
+
+const ApiContext = React.createContext<ReturnType<typeof newApiClient> | undefined>(undefined);
+
+export function ApiProvider<T extends ReturnType<typeof newApiClient>>({
+  instance, children,
+}: {
+  instance: T;
+  children: React.ReactElement[] | React.ReactElement;
+}) {
+  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = React.useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};
+
+type AppErrorResponse = AxiosError<{
+  key?: string;
+  message?: string;
+  info?: {
+    _error?: {
+      name?: string;
+      message?: string;
+      stack?: string[];
+    };
+    [key: string]: any;
+  };
+}>;
+
+type QueryConfig<Response, Error> = ReactQueryConfig<Response, Error> & { cancelToken?: CancelTokenSource };
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    {{= reactQueryFn({ options, item, structure }) }}
+((newline))
+
+  {{ } }}
+{{ } }}
