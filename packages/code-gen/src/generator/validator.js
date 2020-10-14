@@ -313,11 +313,14 @@ function anonymousValidatorAnyOf(context, imports, type) {
 
     ${type.values.map((it) => {
       const validator = createOrUseAnonymousFunction(context, imports, it);
+
+      // Only returns the first error for anyOf types
       return js`
         result = ${validator}(value, propertyPath, subErrors);
         if (subErrors.length === errorCount) {
           return result;
         }
+        subErrors.splice(errorCount + 1, subErrors.length - errorCount);
         errorCount = subErrors.length;
       `;
     })}

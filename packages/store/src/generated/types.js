@@ -4,17 +4,17 @@
 // An export soo all things work correctly with linters, ts, ...
 export const __generated__ = true;
 /**
- * @typedef {{"id": string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, }} StoreFile
+ * @typedef {{"id": string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }} StoreFile
  */
 /**
  * @typedef {{}} StoreFileMeta
  */
 /**
- * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, }} StoreJob
+ * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "createdAt": Date, "updatedAt": Date, }} StoreJob
  */
 /**
- * @typedef {{"years": undefined|number, "months": undefined|number, "days": undefined|number, "hours": undefined|number, "minutes": undefined|number, "seconds": undefined|number, }} StoreJobInterval
+ * @typedef {{"years"?: number, "months"?: number, "days"?: number, "hours"?: number, "minutes"?: number, "seconds"?: number, }} StoreJobInterval
  */
 /**
- * @typedef {{"id": string, "expires": Date, "data": *, }} StoreSession
+ * @typedef {{"id": string, "expires": Date, "data": *, "createdAt": Date, "updatedAt": Date, }} StoreSession
  */

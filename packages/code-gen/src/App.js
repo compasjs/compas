@@ -22,7 +22,6 @@ const defaultGenerateOptionsBrowser = {
   useTypescript: true,
   dumpStructure: false,
   dumpPostgres: false,
-  validatorCollectErrors: true,
 };
 
 /**
@@ -36,7 +35,6 @@ const defaultGenerateOptionsNodeServer = {
   useTypescript: false,
   dumpStructure: true,
   dumpPostgres: true,
-  validatorCollectErrors: false,
 };
 
 /**
@@ -50,7 +48,6 @@ const defaultGenerateOptionsNode = {
   useTypescript: false,
   dumpStructure: false,
   dumpPostgres: false,
-  validatorCollectErrors: true,
 };
 
 /**

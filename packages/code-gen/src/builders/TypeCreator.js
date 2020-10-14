@@ -11,6 +11,7 @@ import { OmitType } from "./OmitType.js";
 import { OptionalType } from "./OptionalType.js";
 import { PickType } from "./PickType.js";
 import { ReferenceType } from "./ReferenceType.js";
+import { RelationType } from "./RelationType.js";
 import { RouteCreator } from "./RouteBuilder.js";
 import { SearchableType } from "./SearchableType.js";
 import { StringType } from "./StringType.js";
@@ -161,7 +162,42 @@ export class TypeCreator {
     return new UuidType(this.group, name);
   }
 
+  // Generator specific builders
+
+  /**
+   * @param {string} path
+   * @returns {RouteCreator}
+   */
   router(path) {
     return new RouteCreator(this.group, path);
+  }
+
+  /**
+   * @param {string} ownKey
+   * @param {ReferenceType} reference
+   * @returns {RelationType}
+   */
+  oneToMany(ownKey, reference) {
+    return new RelationType("oneToMany", ownKey, reference);
+  }
+
+  /**
+   * @param {string} ownKey
+   * @param {ReferenceType} reference
+   * @param {string} referencedKey
+   * @returns {RelationType}
+   */
+  manyToOne(ownKey, reference, referencedKey) {
+    return new RelationType("manyToOne", ownKey, reference, referencedKey);
+  }
+
+  /**
+   * @param {string} ownKey
+   * @param {ReferenceType} reference
+   * @param {string} referencedKey
+   * @returns {RelationType}
+   */
+  oneToOne(ownKey, reference, referencedKey) {
+    return new RelationType("oneToOne", ownKey, reference, referencedKey);
   }
 }

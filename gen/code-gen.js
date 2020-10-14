@@ -166,6 +166,7 @@ function getTypes(T) {
         withDates: T.bool().default(false),
       })
       .optional(),
+    relations: T.array().values(T.reference("codeGen", "relationType")),
   });
 
   const referenceType = T.object("referenceType").keys({
@@ -175,6 +176,15 @@ function getTypes(T) {
       T.reference("codeGen", "type"),
       T.pick().object(typeBase).keys("group", "name", "uniqueName"),
     ),
+  });
+
+  const relationType = T.object("relationType").keys({
+    type: "relation",
+    subType: T.string().oneOf("manyToOne", "oneToMany", "oneToOne"),
+    reference: T.reference("codeGen", "referenceType"),
+    ownKey: T.string(),
+    referencedKey: T.string().optional(),
+    isOptional: T.bool().default(false),
   });
 
   const stringType = T.object("stringType").keys({
@@ -221,6 +231,7 @@ function getTypes(T) {
     numberType,
     objectType,
     referenceType,
+    relationType,
     stringType,
     uuidType,
     routeType,

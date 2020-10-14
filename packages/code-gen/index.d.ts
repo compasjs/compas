@@ -118,7 +118,6 @@ interface GenerateOpts {
    *   useTypescript: true,
    *   dumpStructure: false,
    *   dumpPostgres: false,
-   *   validatorCollectErrors: true,
    */
   isBrowser?: boolean;
 
@@ -133,7 +132,6 @@ interface GenerateOpts {
    *   useTypescript: false,
    *   dumpStructure: true,
    *   dumpPostgres: true,
-   *   validatorCollectErrors: false,
    */
   isNodeServer?: boolean;
 
@@ -148,7 +146,6 @@ interface GenerateOpts {
    *   useTypescript: false,
    *   dumpStructure: false,
    *   dumpPostgres: false,
-   *   validatorCollectErrors: true,
    */
   isNode?: boolean;
 

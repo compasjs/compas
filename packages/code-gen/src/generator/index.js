@@ -6,6 +6,7 @@ import { generateApiClientFiles } from "./apiClient/index.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
+import { addFieldsOfRelations } from "./sql/add-fields.js";
 import {
   addRootExportsForStructureFiles,
   generateStructureFiles,
@@ -30,6 +31,16 @@ export async function generate(logger, options, structure) {
   // issue when not providing any extension in imports / exports is that TS won't add
   // them even when targeting ESNext with moduleResolution Node
 
+  logger.info({
+    system: !options.isBrowser
+      ? !options.isNodeServer
+        ? "isNode"
+        : "isNodeServer"
+      : "isBrowser",
+    enabledGenerators: options.enabledGenerators,
+    enabledGroups: options.enabledGroups,
+  });
+
   /**
    * @type {CodeGenContext}
    */
@@ -53,6 +64,7 @@ export async function generate(logger, options, structure) {
   // Linkup all references, so we don't necessarily have to worry about them in all other
   // places.
   linkupReferencesInStructure(context);
+  addFieldsOfRelations(context);
 
   const copy = {};
   copyAndSort(context.structure, copy);

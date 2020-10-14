@@ -6,22 +6,23 @@ import {
   anonymousValidator14,
   anonymousValidator18,
   anonymousValidator24,
-  anonymousValidator78,
+  anonymousValidator85,
   anonymousValidator29,
-  anonymousValidator90,
+  anonymousValidator97,
   anonymousValidator32,
-  anonymousValidator80,
+  anonymousValidator87,
   anonymousValidator35,
   anonymousValidator40,
   anonymousValidator45,
-  anonymousValidator54,
-  anonymousValidator69,
-  anonymousValidator60,
-  anonymousValidator84,
+  anonymousValidator59,
+  anonymousValidator55,
+  anonymousValidator76,
+  anonymousValidator67,
   anonymousValidator91,
+  anonymousValidator98,
   anonymousValidator12,
-  anonymousValidator93,
-  anonymousValidator66,
+  anonymousValidator100,
+  anonymousValidator73,
 } from "../anonymous-validators.js";
 /**
  * @param {undefined|*} value
@@ -82,7 +83,7 @@ export function booleanType(value, propertyPath = "$") {
  */
 export function context(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator78(value, propertyPath, errors);
+  const data = anonymousValidator85(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -108,7 +109,7 @@ export function dateType(value, propertyPath = "$") {
  */
 export function file(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator90(value, propertyPath, errors);
+  const data = anonymousValidator97(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -134,7 +135,7 @@ export function fileType(value, propertyPath = "$") {
  */
 export function generateOpts(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator80(value, propertyPath, errors);
+  const data = anonymousValidator87(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -186,7 +187,20 @@ export function objectType(value, propertyPath = "$") {
  */
 export function referenceType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator54(value, propertyPath, errors);
+  const data = anonymousValidator59(value, propertyPath, errors);
+  if (errors.length > 0) {
+    return { data: undefined, errors };
+  }
+  return { data, errors: undefined };
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {{ data: CodeGenRelationType | undefined, errors: (*[])|undefined}}
+ */
+export function relationType(value, propertyPath = "$") {
+  const errors = [];
+  const data = anonymousValidator55(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -199,7 +213,7 @@ export function referenceType(value, propertyPath = "$") {
  */
 export function routeType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator69(value, propertyPath, errors);
+  const data = anonymousValidator76(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -212,7 +226,7 @@ export function routeType(value, propertyPath = "$") {
  */
 export function stringType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator60(value, propertyPath, errors);
+  const data = anonymousValidator67(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -225,7 +239,7 @@ export function stringType(value, propertyPath = "$") {
  */
 export function structure(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator84(value, propertyPath, errors);
+  const data = anonymousValidator91(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -238,7 +252,7 @@ export function structure(value, propertyPath = "$") {
  */
 export function templateState(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator91(value, propertyPath, errors);
+  const data = anonymousValidator98(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -264,7 +278,7 @@ export function type(value, propertyPath = "$") {
  */
 export function typeSettings(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator93(value, propertyPath, errors);
+  const data = anonymousValidator100(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -277,7 +291,7 @@ export function typeSettings(value, propertyPath = "$") {
  */
 export function uuidType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator66(value, propertyPath, errors);
+  const data = anonymousValidator73(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }

@@ -205,7 +205,7 @@ export function generateTypeDefinition(
         let right = generateTypeDefinition(type.keys[key], recurseSettings);
 
         let separator = ":";
-        if (right.startsWith("undefined:")) {
+        if (right.startsWith("undefined|")) {
           separator = "?:";
           right = right.substring(10);
         }

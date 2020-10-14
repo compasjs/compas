@@ -11,6 +11,7 @@ export { OmitType } from "./OmitType.js";
 export { OptionalType } from "./OptionalType.js";
 export { PickType } from "./PickType.js";
 export { ReferenceType } from "./ReferenceType.js";
+export { RelationType } from "./RelationType.js";
 export { SearchableType } from "./SearchableType.js";
 export { StringType } from "./StringType.js";
 export { UuidType } from "./UuidType.js";

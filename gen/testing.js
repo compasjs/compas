@@ -123,3 +123,70 @@ export function applyTestingServerStructure(app) {
     R.post("/server-error", "serverError").response({}),
   );
 }
+
+/**
+ * Test stuff for sql.
+ * - User creates posts
+ * - Many Post belongs to many categories
+ * - Category can have optional 'categoryMeta'
+ *
+ * @param {App} app
+ */
+export function applyTestingSqlStructure(app) {
+  const T = new TypeCreator("sql");
+
+  app.add(
+    T.object("user")
+      .keys({
+        id: T.uuid().primary(),
+        nickName: T.string(),
+        email: T.string().searchable(),
+        authKey: T.string(),
+      })
+      .enableQueries({ withSoftDeletes: true })
+      .relations(T.oneToMany("posts", T.reference("sql", "post"))),
+
+    T.object("category")
+      .keys({
+        id: T.uuid().primary(),
+        label: T.string().searchable(),
+      })
+      .enableQueries({ withDates: true })
+      .relations(T.oneToMany("posts", T.reference("sql", "postCategory"))),
+
+    T.object("post")
+      .keys({
+        id: T.uuid().primary(),
+        title: T.string(),
+        body: T.string(),
+      })
+      .enableQueries({ withSoftDeletes: true })
+      .relations(
+        T.manyToOne("writer", T.reference("sql", "user"), "posts"),
+        T.oneToMany("categories", T.reference("sql", "postCategory")),
+      ),
+
+    // m-m join table
+    T.object("postCategory")
+      .keys({
+        id: T.uuid().primary(),
+      })
+      .enableQueries({ withDates: true })
+      .relations(
+        T.manyToOne("post", T.reference("sql", "post"), "categories"),
+        T.manyToOne("category", T.reference("sql", "category"), "posts"),
+      ),
+
+    // 1-1 test
+    T.object("categoryMeta")
+      .keys({
+        id: T.uuid().primary(),
+        postCount: T.number(),
+        isHighlighted: T.bool().optional().searchable(),
+      })
+      .enableQueries()
+      .relations(
+        T.oneToOne("category", T.reference("sql", "category"), "meta"),
+      ),
+  );
+}

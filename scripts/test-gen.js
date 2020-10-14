@@ -4,6 +4,7 @@ import { mainFn, pathJoin, spawn } from "@lbu/stdlib";
 import {
   applyBenchStructure,
   applyTestingServerStructure,
+  applyTestingSqlStructure,
   applyTestingValidatorsStructure,
 } from "../gen/testing.js";
 
@@ -26,6 +27,7 @@ async function main() {
   applyBenchStructure(app);
   applyTestingValidatorsStructure(app);
   applyTestingServerStructure(app);
+  applyTestingSqlStructure(app);
 
   await app.generate({
     outputDirectory: "./generated/testing/validators",
@@ -52,6 +54,13 @@ async function main() {
     enabledGroups: ["server"],
     enabledGenerators: ["apiClient", "type", "validator"],
     isBrowser: true,
+  });
+
+  await app.generate({
+    outputDirectory: "./generated/testing/sql",
+    enabledGroups: ["sql"],
+    enabledGenerators: ["type", "sql"],
+    isNodeServer: true,
   });
 
   app.logger.info("Transpiling typescript...");
