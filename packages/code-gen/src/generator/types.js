@@ -249,7 +249,7 @@ function getMemoizedNamedTypes(context) {
     if (useTypescript) {
       intermediate += `export type ${name} = `;
     } else {
-      intermediate += `/**\n * @typedef {`;
+      intermediate += `/**\n * @name ${name}\n * @typedef {`;
     }
 
     intermediate += type;
@@ -257,7 +257,7 @@ function getMemoizedNamedTypes(context) {
     if (useTypescript) {
       intermediate += `;`;
     } else {
-      intermediate += `} ${name}\n */`;
+      intermediate += `}\n */`;
     }
 
     result.push(intermediate);

@@ -1,6 +1,7 @@
 import { isNil } from "@lbu/stdlib";
 import { DateType } from "../../builders/DateType.js";
 import { buildOrInfer } from "../../builders/utils.js";
+import { getQueryEnabledObjects } from "./utils.js";
 
 /**
  * Adds the fields that are added by relations
@@ -8,26 +9,20 @@ import { buildOrInfer } from "../../builders/utils.js";
  * @param {CodeGenContext} context
  */
 export function addFieldsOfRelations(context) {
-  for (const group of Object.values(context.structure)) {
-    for (const type of Object.values(group)) {
-      if (type.type !== "object" || !type.enableQueries) {
-        continue;
-      }
+  for (const type of getQueryEnabledObjects(context)) {
+    for (const relation of type.relations) {
+      addFieldsForRelation(context, type, relation);
+    }
 
-      for (const relation of type.relations) {
-        addFieldsForRelation(context, type, relation);
-      }
-
-      if (type.queryOptions.withDates || type.queryOptions.withSoftDeletes) {
-        type.keys["createdAt"] = getSystemDate();
-        type.keys["updatedAt"] = getSystemDate();
-      }
-      if (type.queryOptions.withSoftDeletes) {
-        type.keys["deletedAt"] = {
-          ...getSystemDate(),
-          defaultValue: undefined,
-        };
-      }
+    if (type.queryOptions.withDates || type.queryOptions.withSoftDeletes) {
+      type.keys["createdAt"] = getSystemDate();
+      type.keys["updatedAt"] = getSystemDate();
+    }
+    if (type.queryOptions.withSoftDeletes) {
+      type.keys["deletedAt"] = {
+        ...getSystemDate(),
+        defaultValue: undefined,
+      };
     }
   }
 }

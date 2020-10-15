@@ -167,6 +167,29 @@ function getTypes(T) {
       })
       .optional(),
     relations: T.array().values(T.reference("codeGen", "relationType")),
+    shortName: T.string().optional(),
+    where: T.object()
+      .keys({
+        type: T.string(),
+        fields: T.array().values({
+          key: T.string(),
+          name: T.string(),
+          variant: T.string().oneOf(
+            "equal",
+            "notEqual",
+            "in",
+            "notIn",
+            "greaterThan",
+            "lowerThan",
+            "isNull",
+            "isNotNull",
+            "includeNotNull",
+            "like",
+            "notLike",
+          ),
+        }),
+      })
+      .optional(),
   });
 
   const referenceType = T.object("referenceType").keys({

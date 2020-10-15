@@ -7,6 +7,10 @@ import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
+import { generateQueryPartials } from "./sql/query-partials.js";
+import { addSqlUserBuilder } from "./sql/user-builder.js";
+import { addShortNamesToQueryEnabledObjects } from "./sql/utils.js";
+import { createWhereTypes } from "./sql/where-type.js";
 import {
   addRootExportsForStructureFiles,
   generateStructureFiles,
@@ -87,6 +91,12 @@ export async function generate(logger, options, structure) {
   }
   if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
     generateReactQueryFiles(context);
+  }
+  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+    addShortNamesToQueryEnabledObjects(context);
+    addSqlUserBuilder(context);
+    createWhereTypes(context);
+    generateQueryPartials(context);
   }
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);

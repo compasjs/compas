@@ -1,0 +1,75 @@
+import { js } from "../tag/index.js";
+
+/**
+ * Dump the query partial defined below
+ * Can be used to create some dynamic queries
+ *
+ * @param {CodeGenContext} context
+ */
+export function addSqlUserBuilder(context) {
+  context.rootExports.push(
+    `export { query } from "./query-builder${context.importExtension}";`,
+  );
+
+  context.outputFiles.push({
+    contents: getSqlUserBuilder(),
+    relativePath: `./query-builder${context.extension}`,
+  });
+}
+
+function getSqlUserBuilder() {
+  return js`
+    /**
+     * @name QueryPart
+     * @typedef {object}
+     * @property {string[]} strings
+     * @property {*[]} values
+     * @property {function(QueryPart): QueryPart} append
+     * @property {function(Postgres): postgres.PendingQuery} exec
+     */
+
+    /**
+     * Format and append query parts, and exec the final result in a safe way.
+     * Undefined values are skipped, as they are not allowed in queries.
+     *
+     * @param {string[]} strings
+     * @param {...*} values
+     * @returns {QueryPart}
+     */
+    export function query(strings, ...values) {
+      let _strings = strings;
+      const _values = values;
+      const result = {
+        get strings() {
+          return _strings;
+        }, get values() {
+          return _values;
+        }, append: append.bind(this), exec: exec.bind(this),
+      };
+      return result;
+
+      function append(query) {
+        const last = _strings[_strings.length - 1];
+        const [ first, ...rest ] = query.strings;
+        _strings = [ ..._strings.slice(0, -1), \`$\{last} $\{first}\`, ...rest ];
+        _values.push.apply(_values, query.values);
+        return result;
+      }
+
+      function exec(sql) {
+        let str = _strings[0];
+        let valueIdx = 1;
+        for (let i = 0; i < _values.length; ++i) {
+          if (_values[i] === undefined) {
+            str += \`$\{_strings[i + 1]}\`;
+          } else {
+            str += \`$$\{valueIdx++}$\{_strings[i + 1]}\`;
+          }
+        }
+
+        // Strip out undefined values
+        return sql.unsafe(str, _values.filter(it => it !== undefined));
+      }
+    }
+  `;
+}

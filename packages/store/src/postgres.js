@@ -2,14 +2,6 @@ import { isProduction, merge } from "@lbu/stdlib";
 import postgres from "postgres";
 
 /**
- * @name Postgres
- *
- * See https://github.com/porsager/postgres for docs
- *
- * @typedef {*}
- */
-
-/**
  * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
  * @returns {Postgres}

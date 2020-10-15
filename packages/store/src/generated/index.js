@@ -3,4 +3,6 @@
 
 export { storeStructure } from "./store/structure.js";
 export { structure, structureString } from "./structure.js";
+export { query } from "./query-builder.js";
+export * from "./query-partials.js";
 export * from "./types.js";

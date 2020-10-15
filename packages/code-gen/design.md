@@ -26,6 +26,15 @@ Drop relations as they are currently and implement the following:
   Contains reference to reference->key1. May dangle. Other side automatically
   filled in
 
+### SQL Generation
+
+Cleanly generate the basics:
+
+- Select, Insert, Update, Delete
+- Skip upserts for now
+- Soft deletes need manual cascading soft deletes. Possible disabling it with a
+  `{ skipCascading: true }`
+
 ### Generator design
 
 More of a top down approach, or something like that. Move all logic to JS. More
