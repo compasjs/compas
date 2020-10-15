@@ -222,7 +222,6 @@ export function getWherePartial(context, type) {
 
       return query(strings, ...values);
     }
-
   `;
 }
 

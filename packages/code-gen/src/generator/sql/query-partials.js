@@ -11,11 +11,12 @@ export function generateQueryPartials(context) {
   const partials = [];
 
   for (const type of getQueryEnabledObjects(context)) {
+    partials.push(getFieldsPartial(context, type));
     partials.push(getWherePartial(context, type));
   }
 
   const file = js`
-    import { query } from "./query-builder${context.importExtension}";
+    import { query } from "./query-helper${context.importExtension}";
 
     ${partials}
   `;
@@ -27,4 +28,21 @@ export function generateQueryPartials(context) {
   context.rootExports.push(
     `export * from "./query-partials${context.importExtension}";`,
   );
+}
+
+export function getFieldsPartial(context, type) {
+  return js`
+    /**
+     * Get all fields for ${type.name}
+     * @param {string} [tableName="${type.shortName}"]
+     * @returns {QueryPart}
+     */
+    export function ${type.name}Fields(tableName = "${type.shortName}") {
+      const strings = [ \`${Object.keys(type.keys)
+        .map((it) => `$\{tableName}."${it}"`)
+        .join(", ")}\` ];
+
+      return query(strings);
+    }
+  `;
 }

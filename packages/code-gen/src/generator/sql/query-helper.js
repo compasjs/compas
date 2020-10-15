@@ -6,14 +6,14 @@ import { js } from "../tag/index.js";
  *
  * @param {CodeGenContext} context
  */
-export function addSqlUserBuilder(context) {
+export function addSqlQueryHelper(context) {
   context.rootExports.push(
-    `export { query } from "./query-builder${context.importExtension}";`,
+    `export { query } from "./query-helper${context.importExtension}";`,
   );
 
   context.outputFiles.push({
     contents: getSqlUserBuilder(),
-    relativePath: `./query-builder${context.extension}`,
+    relativePath: `./query-helper${context.extension}`,
   });
 }
 

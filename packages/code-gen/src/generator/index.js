@@ -7,8 +7,8 @@ import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
+import { addSqlQueryHelper } from "./sql/query-helper.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
-import { addSqlUserBuilder } from "./sql/user-builder.js";
 import { addShortNamesToQueryEnabledObjects } from "./sql/utils.js";
 import { createWhereTypes } from "./sql/where-type.js";
 import {
@@ -94,7 +94,7 @@ export async function generate(logger, options, structure) {
   }
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
     addShortNamesToQueryEnabledObjects(context);
-    addSqlUserBuilder(context);
+    addSqlQueryHelper(context);
     createWhereTypes(context);
     generateQueryPartials(context);
   }
@@ -108,6 +108,8 @@ export async function generate(logger, options, structure) {
 
   // Add provided file headers to all files
   annotateFilesWithHeader(context);
+
+  // TODO: Remove context.options.outputDir before writing
   writeFiles(context);
 }
 
