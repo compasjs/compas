@@ -166,7 +166,9 @@ function getTypes(T) {
         withDates: T.bool().default(false),
       })
       .optional(),
-    relations: T.array().values(T.reference("codeGen", "relationType")),
+    relations: T.array()
+      .values(T.reference("codeGen", "relationType"))
+      .default("[]"),
     shortName: T.string().optional(),
     where: T.object()
       .keys({
@@ -203,7 +205,12 @@ function getTypes(T) {
 
   const relationType = T.object("relationType").keys({
     type: "relation",
-    subType: T.string().oneOf("manyToOne", "oneToMany", "oneToOne"),
+    subType: T.string().oneOf(
+      "manyToOne",
+      "oneToMany",
+      "oneToOne",
+      "oneToOneReverse",
+    ),
     reference: T.reference("codeGen", "referenceType"),
     ownKey: T.string(),
     referencedKey: T.string().optional(),

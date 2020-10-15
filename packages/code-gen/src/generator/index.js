@@ -9,7 +9,11 @@ import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { addSqlQueryHelper } from "./sql/query-helper.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
-import { addShortNamesToQueryEnabledObjects } from "./sql/utils.js";
+import { generateSqlStructure } from "./sql/structure.js";
+import {
+  addShortNamesToQueryEnabledObjects,
+  doSqlChecks,
+} from "./sql/utils.js";
 import { createWhereTypes } from "./sql/where-type.js";
 import {
   addRootExportsForStructureFiles,
@@ -93,8 +97,10 @@ export async function generate(logger, options, structure) {
     generateReactQueryFiles(context);
   }
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+    doSqlChecks(context);
     addShortNamesToQueryEnabledObjects(context);
     addSqlQueryHelper(context);
+    generateSqlStructure(context);
     createWhereTypes(context);
     generateQueryPartials(context);
   }
@@ -130,7 +136,13 @@ export function generateRootExportsFile(context) {
  */
 export function annotateFilesWithHeader(context) {
   for (const file of context.outputFiles) {
-    file.contents = `${context.options.fileHeader}\n${file.contents}\n`;
+    if (file.relativePath.endsWith(".sql")) {
+      file.contents = `${context.options.fileHeader.replace(/\/\//g, "--")}\n${
+        file.contents
+      }\n`;
+    } else {
+      file.contents = `${context.options.fileHeader}\n${file.contents}\n`;
+    }
   }
 }
 

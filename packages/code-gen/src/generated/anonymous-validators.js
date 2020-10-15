@@ -1822,7 +1822,7 @@ export function anonymousValidator56(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {"manyToOne"|"oneToMany"|"oneToOne"|undefined}
+ * @returns {"manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse"|undefined}
  */
 export function anonymousValidator57(
   value,
@@ -1843,8 +1843,13 @@ export function anonymousValidator57(
     errors.push(buildError(parentType, "min", { propertyPath, min }));
     return undefined;
   }
-  if (value !== "manyToOne" && value !== "oneToMany" && value !== "oneToOne") {
-    const oneOf = ["manyToOne", "oneToMany", "oneToOne"];
+  if (
+    value !== "manyToOne" &&
+    value !== "oneToMany" &&
+    value !== "oneToOne" &&
+    value !== "oneToOneReverse"
+  ) {
+    const oneOf = ["manyToOne", "oneToMany", "oneToOne", "oneToOneReverse"];
     errors.push(buildError(parentType, "oneOf", { propertyPath, oneOf }));
     return undefined;
   }
@@ -2095,7 +2100,7 @@ export function anonymousValidator58(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: string, "isOptional": boolean, }|undefined}
+ * @returns {{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: string, "isOptional": boolean, }|undefined}
  */
 export function anonymousValidator55(
   value,

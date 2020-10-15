@@ -1,7 +1,6 @@
-import { isNil } from "@lbu/stdlib";
 import { DateType } from "../../builders/DateType.js";
 import { buildOrInfer } from "../../builders/utils.js";
-import { getQueryEnabledObjects } from "./utils.js";
+import { getQueryEnabledObjects, getTypeOfPrimaryKey } from "./utils.js";
 
 /**
  * Adds the fields that are added by relations
@@ -37,28 +36,11 @@ export function addFieldsForRelation(context, type, relation) {
     case "manyToOne":
     case "oneToOne":
       type.keys[relation.ownKey] = getTypeOfPrimaryKey(type);
+      if (relation.isOptional) {
+        type.keys[relation.ownKey].isOptional = true;
+      }
       break;
   }
-}
-
-/**
- * Get primary key of object type.
- * If not exists, throw nicely.
- * The returned value is a copy, and not primary anymore.
- *
- * @param {CodeGenObjectType} type
- */
-function getTypeOfPrimaryKey(type) {
-  const primary = Object.values(type.keys).find((it) => it.sql?.primary);
-
-  if (isNil(primary)) {
-    throw new Error(
-      `Type ${type.group}.${type.name} is missing a primary key, but has enabled queries.`,
-    );
-  }
-
-  // Override 'primary'
-  return { ...primary, sql: { searchable: true } };
 }
 
 /**

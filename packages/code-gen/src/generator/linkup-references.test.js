@@ -145,6 +145,7 @@ test("code-gen/generator/linkup-references", (t) => {
                 reference: { group: "group", name: "reference" },
               },
             },
+            relations: [],
           },
           reference: {
             type: "boolean",
@@ -159,6 +160,7 @@ test("code-gen/generator/linkup-references", (t) => {
             keys: {
               key: { type: "reference", reference: { type: "boolean" } },
             },
+            relations: [],
           },
           reference: {
             type: "boolean",

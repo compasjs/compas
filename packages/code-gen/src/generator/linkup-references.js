@@ -48,11 +48,8 @@ function recursivelyLinkupReferences(context, item) {
       for (const key of Object.keys(item.keys)) {
         item.keys[key] = recursivelyLinkupReferences(context, item.keys[key]);
       }
-      for (let i = 0; i < item.relations; ++i) {
-        item.relations[i] = recursivelyLinkupReferences(
-          context,
-          item.relations[i],
-        );
+      for (let i = 0; i < item.relations.length; ++i) {
+        recursivelyLinkupReferences(context, item.relations[i]);
       }
       break;
     case "reference":

@@ -226,14 +226,15 @@ export function getWherePartial(context, type) {
 }
 
 /**
+ * Returns an object with only the searchable fields
  * @param {CodeGenObjectType} type
  * @return {Object<string, CodeGenType>}
  */
-function getSearchableFields(type) {
+export function getSearchableFields(type) {
   return Object.entries(type.keys)
-    .filter((it) => it[1].sql?.searchable)
+    .filter((it) => it[1].sql?.searchable || it[1].reference?.sql?.searchable)
     .reduce((acc, [key, value]) => {
-      acc[key] = value;
+      acc[key] = value.reference ?? value;
       return acc;
     }, {});
 }

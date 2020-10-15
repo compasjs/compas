@@ -57,7 +57,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenRelationType
- * @typedef {{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: string, "isOptional": boolean, }}
+ * @typedef {{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: string, "isOptional": boolean, }}
  */
 /**
  * @name CodeGenRouteType
