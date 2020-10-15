@@ -7,6 +7,7 @@ import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
+import { generateBaseQueries } from "./sql/query-basics.js";
 import { addSqlQueryHelper } from "./sql/query-helper.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
 import { generateSqlStructure } from "./sql/structure.js";
@@ -103,6 +104,7 @@ export async function generate(logger, options, structure) {
     generateSqlStructure(context);
     createWhereTypes(context);
     generateQueryPartials(context);
+    generateBaseQueries(context);
   }
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);

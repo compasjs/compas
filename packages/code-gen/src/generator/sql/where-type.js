@@ -115,7 +115,7 @@ export function getWherePartial(context, type) {
     if (field.variant === "includeNotNull") {
       str += `
         if ((where.${field.name} ?? false) === false) {
-          strings.push(\` AND $\{tableName}."${field.key}" IS NULL \`);
+          strings.push(\` AND $\{tableName}"${field.key}" IS NULL \`);
           values.push(undefined);
         }
       `;
@@ -125,19 +125,19 @@ export function getWherePartial(context, type) {
       switch (field.variant) {
         case "equal":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" = \`);
+            strings.push(\` AND $\{tableName}"${field.key}" = \`);
             values.push(where.${field.name});
           `;
           break;
         case "notEqual":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" != \`);
+            strings.push(\` AND $\{tableName}"${field.key}" != \`);
             values.push(where.${field.name});
           `;
           break;
         case "in":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" = ANY([\`);
+            strings.push(\` AND $\{tableName}"${field.key}" = ANY([\`);
             for (let i = 0; i < where.${field.name}.length; ++i) {
               values.push(where.${field.name}[i]);
               if (i === where.${field.name}.length - 1) {
@@ -151,7 +151,7 @@ export function getWherePartial(context, type) {
           break;
         case "notIn":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" != ANY([\`);
+            strings.push(\` AND $\{tableName}"${field.key}" != ANY([\`);
             for (let i = 0; i < where.${field.name}.length; ++i) {
               values.push(where.${field.name}[i]);
               if (i === where.${field.name}.length - 1) {
@@ -165,37 +165,37 @@ export function getWherePartial(context, type) {
           break;
         case "greaterThan":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" > \`);
+            strings.push(\` AND $\{tableName}"${field.key}" > \`);
             values.push(where.${field.name});
           `;
           break;
         case "lowerThan":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" < \`);
+            strings.push(\` AND $\{tableName}"${field.key}" < \`);
             values.push(where.${field.name});
           `;
           break;
         case "isNull":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" IS NULL \`);
+            strings.push(\` AND $\{tableName}"${field.key}" IS NULL \`);
             values.push(undefined);
           `;
           break;
         case "isNotNull":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" IS NOT NULL \`);
+            strings.push(\` AND $\{tableName}"${field.key}" IS NOT NULL \`);
             values.push(undefined);
           `;
           break;
         case "like":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" LIKE \`);
+            strings.push(\` AND $\{tableName}"${field.key}" LIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
           break;
         case "notLike":
           str += `
-            strings.push(\` AND $\{tableName}."${field.key}" NOT LIKE \`);
+            strings.push(\` AND $\{tableName}"${field.key}" NOT LIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
           break;
@@ -214,6 +214,9 @@ export function getWherePartial(context, type) {
      * @returns {QueryPart}
      */
     export function ${type.name}Where(where = {}, tableName = "${type.shortName}") {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
+      }
       const strings = [ "WHERE 1 = 1" ];
       const values = [ undefined ];
 

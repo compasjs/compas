@@ -17,8 +17,8 @@
  * @returns {QueryPart}
  */
 export function query(strings, ...values) {
-  let _strings = strings;
-  const _values = values;
+  let _strings = [];
+  const _values = [];
   const result = {
     get strings() {
       return _strings;
@@ -29,6 +29,23 @@ export function query(strings, ...values) {
     append: append.bind(this),
     exec: exec.bind(this),
   };
+  // Flatten nested query parts
+  let didFlatten = false;
+  for (let i = 0; i < strings.length - 1; ++i) {
+    if (didFlatten) {
+      didFlatten = false;
+      _strings[_strings.length - 1] += strings[i];
+    } else {
+      _strings.push(strings[i]);
+    }
+    if (Array.isArray(values[i]?.strings) && Array.isArray(values[i]?.values)) {
+      append(values[i]);
+      didFlatten = true;
+    } else {
+      _values.push(values[i]);
+    }
+  }
+  _strings.push(strings[strings.length - 1]);
   return result;
   function append(query) {
     const last = _strings[_strings.length - 1];

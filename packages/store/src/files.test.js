@@ -7,6 +7,7 @@ import {
   getFileStream,
   syncDeletedFiles,
 } from "./files.js";
+import { queries } from "./generated/index.js";
 import { storeQueries } from "./generated/queries.js";
 import {
   ensureBucket,
@@ -89,7 +90,7 @@ test("store/files", async (t) => {
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await storeQueries.fileSelect(sql, {});
+    storedFiles = await queries.fileSelect(sql);
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });
@@ -159,7 +160,7 @@ test("store/files", async (t) => {
   });
 
   t.test("deleteFile", async () => {
-    await storeQueries.fileDeletePermanent(sql, { id: storedFiles[0].id });
+    await queries.fileDeletePermanent(sql, { id: storedFiles[0].id });
   });
 
   t.test("sync deleted files", async (t) => {

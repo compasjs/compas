@@ -1,5 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { isNil } from "@lbu/stdlib";
+import { queries } from "./generated/index.js";
 import { storeQueries } from "./generated/queries.js";
 import {
   addRecurringJobToQueue,
@@ -181,7 +182,7 @@ test("store/queue - recurring jobs ", async (t) => {
   );
 
   t.test("cleanup jobs", async () => {
-    await sql`DELETE FROM job WHERE 1 = 1`;
+    await queries.jobDelete(sql);
   });
 
   t.test(

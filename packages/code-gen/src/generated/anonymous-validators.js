@@ -2194,8 +2194,7 @@ export function anonymousValidator53(
   parentType = "array",
 ) {
   if (isNil(value)) {
-    errors.push(buildError(parentType, "undefined", { propertyPath }));
-    return undefined;
+    return [];
   }
   if (!Array.isArray(value)) {
     errors.push(buildError(parentType, "type", { propertyPath }));

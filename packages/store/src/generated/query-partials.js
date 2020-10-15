@@ -8,8 +8,11 @@ import { query } from "./query-helper.js";
  * @returns {QueryPart}
  */
 export function fileFields(tableName = "f") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = [
-    `${tableName}."id", ${tableName}."bucketName", ${tableName}."contentLength", ${tableName}."contentType", ${tableName}."name", ${tableName}."meta", ${tableName}."createdAt", ${tableName}."updatedAt", ${tableName}."deletedAt"`,
+    `${tableName}"id", ${tableName}"bucketName", ${tableName}"contentLength", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
   ];
   return query(strings);
 }
@@ -20,18 +23,21 @@ export function fileFields(tableName = "f") {
  * @returns {QueryPart}
  */
 export function fileWhere(where = {}, tableName = "f") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = ["WHERE 1 = 1"];
   const values = [undefined];
   if (where.id !== undefined) {
-    strings.push(` AND ${tableName}."id" = `);
+    strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
   }
   if (where.idNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."id" != `);
+    strings.push(` AND ${tableName}"id" != `);
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    strings.push(` AND ${tableName}."id" = ANY([`);
+    strings.push(` AND ${tableName}"id" = ANY([`);
     for (let i = 0; i < where.idIn.length; ++i) {
       values.push(where.idIn[i]);
       if (i === where.idIn.length - 1) {
@@ -43,7 +49,7 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.idNotIn !== undefined) {
-    strings.push(` AND ${tableName}."id" != ANY([`);
+    strings.push(` AND ${tableName}"id" != ANY([`);
     for (let i = 0; i < where.idNotIn.length; ++i) {
       values.push(where.idNotIn[i]);
       if (i === where.idNotIn.length - 1) {
@@ -55,23 +61,23 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.idLike !== undefined) {
-    strings.push(` AND ${tableName}."id" LIKE `);
+    strings.push(` AND ${tableName}"id" LIKE `);
     values.push(`%${where.idLike}%`);
   }
   if (where.idNotLike !== undefined) {
-    strings.push(` AND ${tableName}."id" NOT LIKE `);
+    strings.push(` AND ${tableName}"id" NOT LIKE `);
     values.push(`%${where.idNotLike}%`);
   }
   if (where.bucketName !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" = `);
+    strings.push(` AND ${tableName}"bucketName" = `);
     values.push(where.bucketName);
   }
   if (where.bucketNameNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" != `);
+    strings.push(` AND ${tableName}"bucketName" != `);
     values.push(where.bucketNameNotEqual);
   }
   if (where.bucketNameIn !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" = ANY([`);
+    strings.push(` AND ${tableName}"bucketName" = ANY([`);
     for (let i = 0; i < where.bucketNameIn.length; ++i) {
       values.push(where.bucketNameIn[i]);
       if (i === where.bucketNameIn.length - 1) {
@@ -83,7 +89,7 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.bucketNameNotIn !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" != ANY([`);
+    strings.push(` AND ${tableName}"bucketName" != ANY([`);
     for (let i = 0; i < where.bucketNameNotIn.length; ++i) {
       values.push(where.bucketNameNotIn[i]);
       if (i === where.bucketNameNotIn.length - 1) {
@@ -95,23 +101,23 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.bucketNameLike !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" LIKE `);
+    strings.push(` AND ${tableName}"bucketName" LIKE `);
     values.push(`%${where.bucketNameLike}%`);
   }
   if (where.bucketNameNotLike !== undefined) {
-    strings.push(` AND ${tableName}."bucketName" NOT LIKE `);
+    strings.push(` AND ${tableName}"bucketName" NOT LIKE `);
     values.push(`%${where.bucketNameNotLike}%`);
   }
   if (where.createdAt !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = `);
+    strings.push(` AND ${tableName}"createdAt" = `);
     values.push(where.createdAt);
   }
   if (where.createdAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != `);
+    strings.push(` AND ${tableName}"createdAt" != `);
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = ANY([`);
+    strings.push(` AND ${tableName}"createdAt" = ANY([`);
     for (let i = 0; i < where.createdAtIn.length; ++i) {
       values.push(where.createdAtIn[i]);
       if (i === where.createdAtIn.length - 1) {
@@ -123,7 +129,7 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != ANY([`);
+    strings.push(` AND ${tableName}"createdAt" != ANY([`);
     for (let i = 0; i < where.createdAtNotIn.length; ++i) {
       values.push(where.createdAtNotIn[i]);
       if (i === where.createdAtNotIn.length - 1) {
@@ -135,31 +141,31 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.createdAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" > `);
+    strings.push(` AND ${tableName}"createdAt" > `);
     values.push(where.createdAtGreaterThan);
   }
   if (where.createdAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" < `);
+    strings.push(` AND ${tableName}"createdAt" < `);
     values.push(where.createdAtLowerThan);
   }
   if (where.createdAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NULL `);
     values.push(undefined);
   }
   if (where.createdAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.updatedAt !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = `);
+    strings.push(` AND ${tableName}"updatedAt" = `);
     values.push(where.updatedAt);
   }
   if (where.updatedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != `);
+    strings.push(` AND ${tableName}"updatedAt" != `);
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" = ANY([`);
     for (let i = 0; i < where.updatedAtIn.length; ++i) {
       values.push(where.updatedAtIn[i]);
       if (i === where.updatedAtIn.length - 1) {
@@ -171,7 +177,7 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" != ANY([`);
     for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
       values.push(where.updatedAtNotIn[i]);
       if (i === where.updatedAtNotIn.length - 1) {
@@ -183,31 +189,31 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.updatedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" > `);
+    strings.push(` AND ${tableName}"updatedAt" > `);
     values.push(where.updatedAtGreaterThan);
   }
   if (where.updatedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" < `);
+    strings.push(` AND ${tableName}"updatedAt" < `);
     values.push(where.updatedAtLowerThan);
   }
   if (where.updatedAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
     values.push(undefined);
   }
   if (where.updatedAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.deletedAt !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" = `);
+    strings.push(` AND ${tableName}"deletedAt" = `);
     values.push(where.deletedAt);
   }
   if (where.deletedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" != `);
+    strings.push(` AND ${tableName}"deletedAt" != `);
     values.push(where.deletedAtNotEqual);
   }
   if (where.deletedAtIn !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" = ANY([`);
+    strings.push(` AND ${tableName}"deletedAt" = ANY([`);
     for (let i = 0; i < where.deletedAtIn.length; ++i) {
       values.push(where.deletedAtIn[i]);
       if (i === where.deletedAtIn.length - 1) {
@@ -219,7 +225,7 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.deletedAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" != ANY([`);
+    strings.push(` AND ${tableName}"deletedAt" != ANY([`);
     for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
       values.push(where.deletedAtNotIn[i]);
       if (i === where.deletedAtNotIn.length - 1) {
@@ -231,15 +237,15 @@ export function fileWhere(where = {}, tableName = "f") {
     }
   }
   if (where.deletedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" > `);
+    strings.push(` AND ${tableName}"deletedAt" > `);
     values.push(where.deletedAtGreaterThan);
   }
   if (where.deletedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."deletedAt" < `);
+    strings.push(` AND ${tableName}"deletedAt" < `);
     values.push(where.deletedAtLowerThan);
   }
   if ((where.deletedAtIncludeNotNull ?? false) === false) {
-    strings.push(` AND ${tableName}."deletedAt" IS NULL `);
+    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
     values.push(undefined);
   }
   strings.push("");
@@ -251,8 +257,11 @@ export function fileWhere(where = {}, tableName = "f") {
  * @returns {QueryPart}
  */
 export function jobFields(tableName = "j") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = [
-    `${tableName}."id", ${tableName}."isComplete", ${tableName}."priority", ${tableName}."scheduledAt", ${tableName}."name", ${tableName}."data", ${tableName}."createdAt", ${tableName}."updatedAt"`,
+    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"scheduledAt", ${tableName}"name", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ];
   return query(strings);
 }
@@ -263,18 +272,21 @@ export function jobFields(tableName = "j") {
  * @returns {QueryPart}
  */
 export function jobWhere(where = {}, tableName = "j") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = ["WHERE 1 = 1"];
   const values = [undefined];
   if (where.id !== undefined) {
-    strings.push(` AND ${tableName}."id" = `);
+    strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
   }
   if (where.idNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."id" != `);
+    strings.push(` AND ${tableName}"id" != `);
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    strings.push(` AND ${tableName}."id" = ANY([`);
+    strings.push(` AND ${tableName}"id" = ANY([`);
     for (let i = 0; i < where.idIn.length; ++i) {
       values.push(where.idIn[i]);
       if (i === where.idIn.length - 1) {
@@ -286,7 +298,7 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.idNotIn !== undefined) {
-    strings.push(` AND ${tableName}."id" != ANY([`);
+    strings.push(` AND ${tableName}"id" != ANY([`);
     for (let i = 0; i < where.idNotIn.length; ++i) {
       values.push(where.idNotIn[i]);
       if (i === where.idNotIn.length - 1) {
@@ -298,35 +310,35 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.idGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."id" > `);
+    strings.push(` AND ${tableName}"id" > `);
     values.push(where.idGreaterThan);
   }
   if (where.idLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."id" < `);
+    strings.push(` AND ${tableName}"id" < `);
     values.push(where.idLowerThan);
   }
   if (where.isComplete !== undefined) {
-    strings.push(` AND ${tableName}."isComplete" = `);
+    strings.push(` AND ${tableName}"isComplete" = `);
     values.push(where.isComplete);
   }
   if (where.isCompleteIsNull !== undefined) {
-    strings.push(` AND ${tableName}."isComplete" IS NULL `);
+    strings.push(` AND ${tableName}"isComplete" IS NULL `);
     values.push(undefined);
   }
   if (where.isCompleteIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."isComplete" IS NOT NULL `);
+    strings.push(` AND ${tableName}"isComplete" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.scheduledAt !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" = `);
+    strings.push(` AND ${tableName}"scheduledAt" = `);
     values.push(where.scheduledAt);
   }
   if (where.scheduledAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" != `);
+    strings.push(` AND ${tableName}"scheduledAt" != `);
     values.push(where.scheduledAtNotEqual);
   }
   if (where.scheduledAtIn !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" = ANY([`);
+    strings.push(` AND ${tableName}"scheduledAt" = ANY([`);
     for (let i = 0; i < where.scheduledAtIn.length; ++i) {
       values.push(where.scheduledAtIn[i]);
       if (i === where.scheduledAtIn.length - 1) {
@@ -338,7 +350,7 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.scheduledAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" != ANY([`);
+    strings.push(` AND ${tableName}"scheduledAt" != ANY([`);
     for (let i = 0; i < where.scheduledAtNotIn.length; ++i) {
       values.push(where.scheduledAtNotIn[i]);
       if (i === where.scheduledAtNotIn.length - 1) {
@@ -350,31 +362,31 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.scheduledAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" > `);
+    strings.push(` AND ${tableName}"scheduledAt" > `);
     values.push(where.scheduledAtGreaterThan);
   }
   if (where.scheduledAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" < `);
+    strings.push(` AND ${tableName}"scheduledAt" < `);
     values.push(where.scheduledAtLowerThan);
   }
   if (where.scheduledAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" IS NULL `);
+    strings.push(` AND ${tableName}"scheduledAt" IS NULL `);
     values.push(undefined);
   }
   if (where.scheduledAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."scheduledAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"scheduledAt" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.name !== undefined) {
-    strings.push(` AND ${tableName}."name" = `);
+    strings.push(` AND ${tableName}"name" = `);
     values.push(where.name);
   }
   if (where.nameNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."name" != `);
+    strings.push(` AND ${tableName}"name" != `);
     values.push(where.nameNotEqual);
   }
   if (where.nameIn !== undefined) {
-    strings.push(` AND ${tableName}."name" = ANY([`);
+    strings.push(` AND ${tableName}"name" = ANY([`);
     for (let i = 0; i < where.nameIn.length; ++i) {
       values.push(where.nameIn[i]);
       if (i === where.nameIn.length - 1) {
@@ -386,7 +398,7 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.nameNotIn !== undefined) {
-    strings.push(` AND ${tableName}."name" != ANY([`);
+    strings.push(` AND ${tableName}"name" != ANY([`);
     for (let i = 0; i < where.nameNotIn.length; ++i) {
       values.push(where.nameNotIn[i]);
       if (i === where.nameNotIn.length - 1) {
@@ -398,23 +410,23 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.nameLike !== undefined) {
-    strings.push(` AND ${tableName}."name" LIKE `);
+    strings.push(` AND ${tableName}"name" LIKE `);
     values.push(`%${where.nameLike}%`);
   }
   if (where.nameNotLike !== undefined) {
-    strings.push(` AND ${tableName}."name" NOT LIKE `);
+    strings.push(` AND ${tableName}"name" NOT LIKE `);
     values.push(`%${where.nameNotLike}%`);
   }
   if (where.createdAt !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = `);
+    strings.push(` AND ${tableName}"createdAt" = `);
     values.push(where.createdAt);
   }
   if (where.createdAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != `);
+    strings.push(` AND ${tableName}"createdAt" != `);
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = ANY([`);
+    strings.push(` AND ${tableName}"createdAt" = ANY([`);
     for (let i = 0; i < where.createdAtIn.length; ++i) {
       values.push(where.createdAtIn[i]);
       if (i === where.createdAtIn.length - 1) {
@@ -426,7 +438,7 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != ANY([`);
+    strings.push(` AND ${tableName}"createdAt" != ANY([`);
     for (let i = 0; i < where.createdAtNotIn.length; ++i) {
       values.push(where.createdAtNotIn[i]);
       if (i === where.createdAtNotIn.length - 1) {
@@ -438,31 +450,31 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.createdAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" > `);
+    strings.push(` AND ${tableName}"createdAt" > `);
     values.push(where.createdAtGreaterThan);
   }
   if (where.createdAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" < `);
+    strings.push(` AND ${tableName}"createdAt" < `);
     values.push(where.createdAtLowerThan);
   }
   if (where.createdAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NULL `);
     values.push(undefined);
   }
   if (where.createdAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.updatedAt !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = `);
+    strings.push(` AND ${tableName}"updatedAt" = `);
     values.push(where.updatedAt);
   }
   if (where.updatedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != `);
+    strings.push(` AND ${tableName}"updatedAt" != `);
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" = ANY([`);
     for (let i = 0; i < where.updatedAtIn.length; ++i) {
       values.push(where.updatedAtIn[i]);
       if (i === where.updatedAtIn.length - 1) {
@@ -474,7 +486,7 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" != ANY([`);
     for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
       values.push(where.updatedAtNotIn[i]);
       if (i === where.updatedAtNotIn.length - 1) {
@@ -486,19 +498,19 @@ export function jobWhere(where = {}, tableName = "j") {
     }
   }
   if (where.updatedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" > `);
+    strings.push(` AND ${tableName}"updatedAt" > `);
     values.push(where.updatedAtGreaterThan);
   }
   if (where.updatedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" < `);
+    strings.push(` AND ${tableName}"updatedAt" < `);
     values.push(where.updatedAtLowerThan);
   }
   if (where.updatedAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
     values.push(undefined);
   }
   if (where.updatedAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
     values.push(undefined);
   }
   strings.push("");
@@ -510,8 +522,11 @@ export function jobWhere(where = {}, tableName = "j") {
  * @returns {QueryPart}
  */
 export function sessionFields(tableName = "s") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = [
-    `${tableName}."id", ${tableName}."expires", ${tableName}."data", ${tableName}."createdAt", ${tableName}."updatedAt"`,
+    `${tableName}"id", ${tableName}"expires", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ];
   return query(strings);
 }
@@ -522,18 +537,21 @@ export function sessionFields(tableName = "s") {
  * @returns {QueryPart}
  */
 export function sessionWhere(where = {}, tableName = "s") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
   const strings = ["WHERE 1 = 1"];
   const values = [undefined];
   if (where.id !== undefined) {
-    strings.push(` AND ${tableName}."id" = `);
+    strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
   }
   if (where.idNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."id" != `);
+    strings.push(` AND ${tableName}"id" != `);
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    strings.push(` AND ${tableName}."id" = ANY([`);
+    strings.push(` AND ${tableName}"id" = ANY([`);
     for (let i = 0; i < where.idIn.length; ++i) {
       values.push(where.idIn[i]);
       if (i === where.idIn.length - 1) {
@@ -545,7 +563,7 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.idNotIn !== undefined) {
-    strings.push(` AND ${tableName}."id" != ANY([`);
+    strings.push(` AND ${tableName}"id" != ANY([`);
     for (let i = 0; i < where.idNotIn.length; ++i) {
       values.push(where.idNotIn[i]);
       if (i === where.idNotIn.length - 1) {
@@ -557,23 +575,23 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.idLike !== undefined) {
-    strings.push(` AND ${tableName}."id" LIKE `);
+    strings.push(` AND ${tableName}"id" LIKE `);
     values.push(`%${where.idLike}%`);
   }
   if (where.idNotLike !== undefined) {
-    strings.push(` AND ${tableName}."id" NOT LIKE `);
+    strings.push(` AND ${tableName}"id" NOT LIKE `);
     values.push(`%${where.idNotLike}%`);
   }
   if (where.expires !== undefined) {
-    strings.push(` AND ${tableName}."expires" = `);
+    strings.push(` AND ${tableName}"expires" = `);
     values.push(where.expires);
   }
   if (where.expiresNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."expires" != `);
+    strings.push(` AND ${tableName}"expires" != `);
     values.push(where.expiresNotEqual);
   }
   if (where.expiresIn !== undefined) {
-    strings.push(` AND ${tableName}."expires" = ANY([`);
+    strings.push(` AND ${tableName}"expires" = ANY([`);
     for (let i = 0; i < where.expiresIn.length; ++i) {
       values.push(where.expiresIn[i]);
       if (i === where.expiresIn.length - 1) {
@@ -585,7 +603,7 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.expiresNotIn !== undefined) {
-    strings.push(` AND ${tableName}."expires" != ANY([`);
+    strings.push(` AND ${tableName}"expires" != ANY([`);
     for (let i = 0; i < where.expiresNotIn.length; ++i) {
       values.push(where.expiresNotIn[i]);
       if (i === where.expiresNotIn.length - 1) {
@@ -597,23 +615,23 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.expiresGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."expires" > `);
+    strings.push(` AND ${tableName}"expires" > `);
     values.push(where.expiresGreaterThan);
   }
   if (where.expiresLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."expires" < `);
+    strings.push(` AND ${tableName}"expires" < `);
     values.push(where.expiresLowerThan);
   }
   if (where.createdAt !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = `);
+    strings.push(` AND ${tableName}"createdAt" = `);
     values.push(where.createdAt);
   }
   if (where.createdAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != `);
+    strings.push(` AND ${tableName}"createdAt" != `);
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" = ANY([`);
+    strings.push(` AND ${tableName}"createdAt" = ANY([`);
     for (let i = 0; i < where.createdAtIn.length; ++i) {
       values.push(where.createdAtIn[i]);
       if (i === where.createdAtIn.length - 1) {
@@ -625,7 +643,7 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" != ANY([`);
+    strings.push(` AND ${tableName}"createdAt" != ANY([`);
     for (let i = 0; i < where.createdAtNotIn.length; ++i) {
       values.push(where.createdAtNotIn[i]);
       if (i === where.createdAtNotIn.length - 1) {
@@ -637,31 +655,31 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.createdAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" > `);
+    strings.push(` AND ${tableName}"createdAt" > `);
     values.push(where.createdAtGreaterThan);
   }
   if (where.createdAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" < `);
+    strings.push(` AND ${tableName}"createdAt" < `);
     values.push(where.createdAtLowerThan);
   }
   if (where.createdAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NULL `);
     values.push(undefined);
   }
   if (where.createdAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."createdAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
     values.push(undefined);
   }
   if (where.updatedAt !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = `);
+    strings.push(` AND ${tableName}"updatedAt" = `);
     values.push(where.updatedAt);
   }
   if (where.updatedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != `);
+    strings.push(` AND ${tableName}"updatedAt" != `);
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" = ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" = ANY([`);
     for (let i = 0; i < where.updatedAtIn.length; ++i) {
       values.push(where.updatedAtIn[i]);
       if (i === where.updatedAtIn.length - 1) {
@@ -673,7 +691,7 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" != ANY([`);
+    strings.push(` AND ${tableName}"updatedAt" != ANY([`);
     for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
       values.push(where.updatedAtNotIn[i]);
       if (i === where.updatedAtNotIn.length - 1) {
@@ -685,19 +703,19 @@ export function sessionWhere(where = {}, tableName = "s") {
     }
   }
   if (where.updatedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" > `);
+    strings.push(` AND ${tableName}"updatedAt" > `);
     values.push(where.updatedAtGreaterThan);
   }
   if (where.updatedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" < `);
+    strings.push(` AND ${tableName}"updatedAt" < `);
     values.push(where.updatedAtLowerThan);
   }
   if (where.updatedAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
     values.push(undefined);
   }
   if (where.updatedAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}."updatedAt" IS NOT NULL `);
+    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
     values.push(undefined);
   }
   strings.push("");

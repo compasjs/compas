@@ -1,9 +1,10 @@
 import { log } from "@lbu/insight";
+import { queries } from "./generated/index.js";
 import { storeQueries } from "./generated/queries.js";
 
 const LBU_RECURRING_JOB = "lbu.job.recurring";
 
-const queries = {
+const queueQueries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
     UPDATE "job"
@@ -97,12 +98,15 @@ export class JobQueueWorker {
     this.sql = sql;
 
     // Default query ignores name
-    this.newJobQuery = queries.getAnyJob.bind(undefined);
+    this.newJobQuery = queueQueries.getAnyJob.bind(undefined);
 
     if (typeof nameOrOptions === "string") {
       // Use the name query and bind the name already, else we would have to use this
       // when executing the query
-      this.newJobQuery = queries.getJobByName.bind(undefined, nameOrOptions);
+      this.newJobQuery = queueQueries.getJobByName.bind(
+        undefined,
+        nameOrOptions,
+      );
       this.name = nameOrOptions;
     } else {
       options = nameOrOptions;
@@ -230,7 +234,7 @@ export class JobQueueWorker {
           return;
         }
 
-        const [jobData] = await storeQueries.jobSelect(sql, {
+        const [jobData] = await queries.jobSelect(sql, {
           id: job.id,
         });
 
@@ -295,7 +299,7 @@ export async function addRecurringJobToQueue(
 ) {
   priority = priority || 1;
 
-  const existingJobs = await queries.getRecurringJobForName(sql, name);
+  const existingJobs = await queueQueries.getRecurringJobForName(sql, name);
 
   if (existingJobs.length > 0) {
     return;
@@ -318,7 +322,7 @@ export async function addRecurringJobToQueue(
  * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
 async function getPendingQueueSize(sql) {
-  const [result] = await queries.getPendingQueueSize(sql);
+  const [result] = await queueQueries.getPendingQueueSize(sql);
 
   // sql returns 'null' if no rows match, so coalesce in to '0'
   return {
@@ -335,7 +339,7 @@ async function getPendingQueueSize(sql) {
  * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
  */
 async function getPendingQueueSizeForName(sql, name) {
-  const [result] = await queries.getPendingQueueSizeForName(sql, name);
+  const [result] = await queueQueries.getPendingQueueSizeForName(sql, name);
 
   // sql returns 'null' if no rows match, so coalesce in to '0'
   return {
@@ -354,7 +358,11 @@ async function getPendingQueueSizeForName(sql, name) {
  * @returns {Promise<number>}
  */
 async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
-  const [result] = await queries.getAverageJobTime(sql, startDate, endDate);
+  const [result] = await queueQueries.getAverageJobTime(
+    sql,
+    startDate,
+    endDate,
+  );
 
   return parseFloat(result?.completionTime ?? 0);
 }
@@ -375,7 +383,7 @@ async function getAverageTimeToJobCompletionForName(
   startDate,
   endDate,
 ) {
-  const [result] = await queries.getAverageJobTimeForName(
+  const [result] = await queueQueries.getAverageJobTimeForName(
     sql,
     name,
     startDate,

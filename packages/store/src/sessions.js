@@ -1,3 +1,4 @@
+import { queries } from "./generated/index.js";
 import { storeQueries } from "./generated/queries.js";
 
 const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
@@ -9,7 +10,7 @@ const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
 export function newSessionStore(sql) {
   return {
     get: async (sid) => {
-      const [data] = await storeQueries.sessionSelect(sql, {
+      const [data] = await queries.sessionSelect(sql, {
         id: sid,
         expiresGreaterThan: new Date(),
       });
@@ -36,10 +37,10 @@ export function newSessionStore(sql) {
       });
     },
     destroy: async (sid) => {
-      await storeQueries.sessionDelete(sql, { id: sid });
+      await queries.sessionDelete(sql, { id: sid });
     },
     clean: () => {
-      return storeQueries.sessionDelete(sql, {
+      return queries.sessionDelete(sql, {
         expiresLowerThan: new Date(),
       });
     },

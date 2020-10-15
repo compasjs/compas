@@ -1,5 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "@lbu/stdlib";
+import { queries } from "./generated/index.js";
 import { storeQueries } from "./generated/queries.js";
 import { newSessionStore } from "./sessions.js";
 import {
@@ -53,7 +54,7 @@ test("store/sessions", async (t) => {
   });
 
   t.test("store.clean removes expired sessions", async (t) => {
-    const sessions = await storeQueries.sessionSelect(sql);
+    const sessions = await queries.sessionSelect(sql);
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);

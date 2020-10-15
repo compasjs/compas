@@ -38,8 +38,11 @@ export function getFieldsPartial(context, type) {
      * @returns {QueryPart}
      */
     export function ${type.name}Fields(tableName = "${type.shortName}") {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
+      }
       const strings = [ \`${Object.keys(type.keys)
-        .map((it) => `$\{tableName}."${it}"`)
+        .map((it) => `$\{tableName}"${it}"`)
         .join(", ")}\` ];
 
       return query(strings);
