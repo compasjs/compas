@@ -1,5 +1,5 @@
 import { AxiosError, CancelTokenSource } from "axios";
-import React from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
 import {
   MutationConfig,
   MutationResultPair,
@@ -15,20 +15,22 @@ import * as T from "./types";
 interface CancellablePromise<T> extends Promise<T> {
   cancel?: () => void;
 }
+((newline))
 
-const ApiContext = React.createContext<ReturnType<typeof newApiClient> | undefined>(undefined);
+const ApiContext = createContext<ReturnType<typeof newApiClient> | undefined>(undefined);
+((newline))
 
 export function ApiProvider<T extends ReturnType<typeof newApiClient>>({
   instance, children,
-}: {
+}: PropsWithChildren<{
   instance: T;
-  children: React.ReactElement[] | React.ReactElement;
-}) {
+}>) {
   return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
 }
+((newline))
 
 export const useApi = () => {
-  const context = React.useContext(ApiContext);
+  const context = useContext(ApiContext);
 
   if (!context) {
     throw Error("Be sure to wrap your application with <ApiProvider>.");
@@ -36,6 +38,7 @@ export const useApi = () => {
 
   return context;
 };
+((newline))
 
 type AppErrorResponse = AxiosError<{
   key?: string;
@@ -49,8 +52,10 @@ type AppErrorResponse = AxiosError<{
     [key: string]: any;
   };
 }>;
+((newline))
 
 type QueryConfig<Response, Error> = ReactQueryConfig<Response, Error> & { cancelToken?: CancelTokenSource };
+((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
