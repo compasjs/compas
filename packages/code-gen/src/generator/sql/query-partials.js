@@ -1,5 +1,5 @@
 import { js } from "../tag/index.js";
-import { getQueryEnabledObjects } from "./utils.js";
+import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
 
 /**
@@ -13,10 +13,11 @@ export function generateQueryPartials(context) {
   for (const type of getQueryEnabledObjects(context)) {
     partials.push(getFieldsPartial(context, type));
     partials.push(getWherePartial(context, type));
+    partials.push(getOrderPartial(context, type));
   }
 
   const file = js`
-    import { query } from "./query-helper${context.importExtension}";
+    import { query } from "@lbu/store";
 
     ${partials}
   `;
@@ -30,20 +31,75 @@ export function generateQueryPartials(context) {
   );
 }
 
+/**
+ * A list of fields for the provided type, with dynamic tableName
+ * @property {CodeGenContext} context
+ * @property {CodeGenObjectType} type
+ * @return {string}
+ */
 export function getFieldsPartial(context, type) {
   return js`
     /**
      * Get all fields for ${type.name}
-     * @param {string} [tableName="${type.shortName}"]
+     * @param {string} [tableName="${type.shortName}."]
      * @returns {QueryPart}
      */
-    export function ${type.name}Fields(tableName = "${type.shortName}") {
+    export function ${type.name}Fields(tableName = "${type.shortName}.") {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }
-      const strings = [ \`${Object.keys(type.keys)
-        .map((it) => `$\{tableName}"${it}"`)
-        .join(", ")}\` ];
+      const strings = [
+        \`${Object.keys(type.keys)
+          .map((it) => `$\{tableName}"${it}"`)
+          .join(", ")}\`
+      ];
+
+      return query(strings);
+    }
+  `;
+}
+
+/**
+ * A default ordering partial
+ * Working correctly, with or without dates
+ *
+ * @property {CodeGenContext} context
+ * @property {CodeGenObjectType} type
+ * @return {string}
+ */
+export function getOrderPartial(context, type) {
+  const { key: primaryKey } = getPrimaryKeyWithType(type);
+  if (type.queryOptions.withSoftDeletes || type.queryOptions.withDates) {
+    return js`
+      /**
+       * Get ORDER BY for ${type.name}
+       * @param {string} [tableName="${type.shortName}."]
+       * @returns {QueryPart}
+       */
+      export function ${type.name}OrderBy(tableName = "${type.shortName}.") {
+        if (tableName.length > 0 && !tableName.endsWith(".")) {
+          tableName = \`$\{tableName}.\`;
+        }
+
+        const strings = [ \`ORDER BY $\{tableName}"createdAt", $\{tableName}"updatedAt", $\{tableName}"${primaryKey}" \` ];
+
+        return query(strings);
+      }
+    `;
+  }
+
+  return js`
+    /**
+     * Get ORDER BY for ${type.name}
+     * @param {string} [tableName="${type.shortName}."]
+     * @returns {QueryPart}
+     */
+    export function ${type.name}OrderBy(tableName = "${type.shortName}.") {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
+      }
+
+      const strings = [ \`ORDER BY $\{tableName}"id" \` ];
 
       return query(strings);
     }

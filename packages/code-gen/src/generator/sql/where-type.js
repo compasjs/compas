@@ -210,10 +210,10 @@ export function getWherePartial(context, type) {
     /**
      * Build 'WHERE ' part for ${type.name}
      * @param {${type.where.type}} [where={}]
-     * @param {string} [tableName="${type.shortName}"]
+     * @param {string} [tableName="${type.shortName}."]
      * @returns {QueryPart}
      */
-    export function ${type.name}Where(where = {}, tableName = "${type.shortName}") {
+    export function ${type.name}Where(where = {}, tableName = "${type.shortName}.") {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }

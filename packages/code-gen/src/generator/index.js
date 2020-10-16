@@ -8,7 +8,6 @@ import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { generateBaseQueries } from "./sql/query-basics.js";
-import { addSqlQueryHelper } from "./sql/query-helper.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
 import { generateSqlStructure } from "./sql/structure.js";
 import {
@@ -100,7 +99,6 @@ export async function generate(logger, options, structure) {
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
     doSqlChecks(context);
     addShortNamesToQueryEnabledObjects(context);
-    addSqlQueryHelper(context);
     generateSqlStructure(context);
     createWhereTypes(context);
     generateQueryPartials(context);

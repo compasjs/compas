@@ -40,19 +40,23 @@ export function getQueryEnabledObjects(context) {
  * The returned value is a copy, and not primary anymore.
  *
  * @param {CodeGenObjectType} type
- * @returns {CodeGenType}
+ * @returns {{ key: string, field: CodeGenType }}
  */
-export function getTypeOfPrimaryKey(type) {
-  const primary = Object.values(type.keys).find((it) => it.sql?.primary);
+export function getPrimaryKeyWithType(type) {
+  const entry = Object.entries(type.keys).find(
+    (it) => it[1].sql?.primary || it[1].reference?.sql?.primary,
+  );
 
-  if (isNil(primary)) {
+  if (isNil(entry)) {
     throw new Error(
       `Type '${type.name}' is missing a primary key, but has enabled queries.`,
     );
   }
 
-  // Override 'primary'
-  return { ...primary, sql: { searchable: true } };
+  return {
+    key: entry[0],
+    field: entry[1].reference ?? entry[1],
+  };
 }
 
 /**
@@ -62,7 +66,7 @@ export function getTypeOfPrimaryKey(type) {
 export function doSqlChecks(context) {
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
-    getTypeOfPrimaryKey(type);
+    getPrimaryKeyWithType(type);
 
     for (const relation of type.relations) {
       staticCheckRelation(type, relation);

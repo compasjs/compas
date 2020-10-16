@@ -1,6 +1,6 @@
 import { DateType } from "../../builders/DateType.js";
 import { buildOrInfer } from "../../builders/utils.js";
-import { getQueryEnabledObjects, getTypeOfPrimaryKey } from "./utils.js";
+import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
 /**
  * Adds the fields that are added by relations
@@ -32,15 +32,18 @@ export function addFieldsOfRelations(context) {
  * @param {CodeGenRelationType} relation
  */
 export function addFieldsForRelation(context, type, relation) {
-  switch (relation.subType) {
-    case "manyToOne":
-    case "oneToOne":
-      type.keys[relation.ownKey] = getTypeOfPrimaryKey(type);
-      if (relation.isOptional) {
-        type.keys[relation.ownKey].isOptional = true;
-      }
-      break;
+  if (["manyToOne", "oneToOne"].indexOf(relation.subType) === -1) {
+    return;
   }
+
+  const { field } = getPrimaryKeyWithType(type);
+  type.keys[relation.ownKey] = {
+    ...field,
+    sql: {
+      searchable: true,
+    },
+    isOptional: true,
+  };
 }
 
 /**

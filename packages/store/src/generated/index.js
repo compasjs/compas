@@ -5,7 +5,6 @@ import * as queries from "./query-basics.js";
 
 export { storeStructure } from "./store/structure.js";
 export { structure, structureString } from "./structure.js";
-export { query } from "./query-helper.js";
 export * from "./query-partials.js";
 export { queries };
 export * from "./types.js";

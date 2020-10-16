@@ -11,10 +11,7 @@ export function generateBaseQueries(context) {
   const partials = [];
 
   const imports = importCreator();
-  imports.destructureImport(
-    "query",
-    `./query-helper${context.importExtension}`,
-  );
+  imports.destructureImport("query", `@lbu/store`);
 
   for (const type of getQueryEnabledObjects(context)) {
     imports.destructureImport(
@@ -23,6 +20,10 @@ export function generateBaseQueries(context) {
     );
     imports.destructureImport(
       `${type.name}Where`,
+      `./query-partials${context.importExtension}`,
+    );
+    imports.destructureImport(
+      `${type.name}OrderBy`,
       `./query-partials${context.importExtension}`,
     );
 
@@ -64,6 +65,7 @@ function selectQuery(context, imports, type) {
         SELECT $\{${type.name}Fields()}
         FROM "${type.name}" ${type.shortName}
         $\{${type.name}Where(where)}
+        $\{${type.name}OrderBy()}
         \`.exec(sql);
     }
   `;
@@ -83,7 +85,9 @@ function deleteQuery(context, imports, type) {
      */
     export function ${type.name}Delete${
     type.queryOptions.withSoftDeletes ? "Permanent" : ""
-  }(sql, where = {}) {
+  }(sql,
+                                                                                where = {}
+    ) {
       ${
         type.queryOptions.withSoftDeletes
           ? "where.deletedAtIncludeNotNull = true;"
