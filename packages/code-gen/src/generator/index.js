@@ -9,6 +9,7 @@ import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { generateBaseQueries } from "./sql/query-basics.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
+import { generateTraversalQueries } from "./sql/query-traversal.js";
 import { generateSqlStructure } from "./sql/structure.js";
 import {
   addShortNamesToQueryEnabledObjects,
@@ -103,6 +104,7 @@ export async function generate(logger, options, structure) {
     createWhereTypes(context);
     generateQueryPartials(context);
     generateBaseQueries(context);
+    generateTraversalQueries(context);
   }
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);
