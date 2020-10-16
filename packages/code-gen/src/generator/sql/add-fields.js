@@ -42,7 +42,7 @@ export function addFieldsForRelation(context, type, relation) {
     sql: {
       searchable: true,
     },
-    isOptional: true,
+    isOptional: relation.isOptional,
   };
 }
 

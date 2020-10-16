@@ -192,6 +192,17 @@ function getTypes(T) {
         }),
       })
       .optional(),
+    partial: T.object()
+      .keys({
+        insertType: T.string(),
+        updateType: T.string(),
+        fields: T.array().values({
+          key: T.string(),
+          defaultValue: T.string().optional(),
+          isJsonb: T.bool().default(false),
+        }),
+      })
+      .optional(),
   });
 
   const referenceType = T.object("referenceType").keys({

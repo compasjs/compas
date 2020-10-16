@@ -1,7 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "@lbu/stdlib";
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
 import { newSessionStore } from "./sessions.js";
 import {
   cleanupTestPostgresDatabase,
@@ -58,7 +57,7 @@ test("store/sessions", async (t) => {
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);
-    await storeQueries.sessionUpdate(
+    await queries.sessionUpdate(
       sql,
       { expires: new Date(0) },
       {

@@ -2,7 +2,6 @@ import { createReadStream } from "fs";
 import { uuid } from "@lbu/stdlib";
 import mime from "mime-types";
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
 import { listObjects } from "./minio.js";
 
 const fileQueries = {
@@ -49,7 +48,7 @@ export async function createOrUpdateFile(
   // Do a manual insert first to get an id
   if (!props.id) {
     props.contentLength = 0;
-    const [intermediate] = await storeQueries.fileInsert(sql, props);
+    const [intermediate] = await queries.fileInsert(sql, props);
     props.id = intermediate.id;
   }
 
@@ -63,7 +62,7 @@ export async function createOrUpdateFile(
   const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
-  const [result] = await storeQueries.fileUpdate(sql, props, {
+  const [result] = await queries.fileUpdate(sql, props, {
     id: props.id,
   });
 

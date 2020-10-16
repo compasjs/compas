@@ -115,7 +115,7 @@ function traversalQuery(context, imports, type) {
     )}(where = {}, queryPart) {
       const q = query\`
         FROM "${type.name}" ${type.shortName}
-        $\{${type.name}Where(where)}
+        WHERE $\{${type.name}Where(where)}
          $\{queryPart}
       \`;
 

@@ -26,7 +26,7 @@ import {
 export function traverseFile(where = {}, queryPart) {
   const q = query`
 FROM "file" f
-${fileWhere(where)}
+WHERE ${fileWhere(where)}
 ${queryPart}
 `;
   return {
@@ -51,7 +51,7 @@ ${fileOrderBy()}`.exec(sql);
 export function traverseJob(where = {}, queryPart) {
   const q = query`
 FROM "job" j
-${jobWhere(where)}
+WHERE ${jobWhere(where)}
 ${queryPart}
 `;
   return {
@@ -76,7 +76,7 @@ ${jobOrderBy()}`.exec(sql);
 export function traverseSession(where = {}, queryPart) {
   const q = query`
 FROM "session" s
-${sessionWhere(where)}
+WHERE ${sessionWhere(where)}
 ${queryPart}
 `;
   return {

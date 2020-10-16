@@ -1,6 +1,5 @@
 import { log } from "@lbu/insight";
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
 
 const LBU_RECURRING_JOB = "lbu.job.recurring";
 
@@ -276,7 +275,7 @@ export class JobQueueWorker {
  * @returns {Promise<number>}
  */
 export async function addJobToQueue(sql, job) {
-  const [result] = await storeQueries.jobInsert(sql, {
+  const [result] = await queries.jobInsert(sql, {
     ...job,
     name: job.name ?? process.env.APP_NAME,
   });

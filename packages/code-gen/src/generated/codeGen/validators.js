@@ -6,23 +6,23 @@ import {
   anonymousValidator14,
   anonymousValidator18,
   anonymousValidator24,
-  anonymousValidator89,
+  anonymousValidator92,
   anonymousValidator29,
-  anonymousValidator101,
+  anonymousValidator104,
   anonymousValidator32,
-  anonymousValidator91,
+  anonymousValidator94,
   anonymousValidator35,
   anonymousValidator40,
   anonymousValidator45,
   anonymousValidator59,
   anonymousValidator55,
-  anonymousValidator80,
-  anonymousValidator71,
-  anonymousValidator95,
-  anonymousValidator102,
+  anonymousValidator83,
+  anonymousValidator74,
+  anonymousValidator98,
+  anonymousValidator105,
   anonymousValidator12,
-  anonymousValidator104,
-  anonymousValidator77,
+  anonymousValidator107,
+  anonymousValidator80,
 } from "../anonymous-validators.js";
 /**
  * @param {undefined|*} value
@@ -83,7 +83,7 @@ export function booleanType(value, propertyPath = "$") {
  */
 export function context(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator89(value, propertyPath, errors);
+  const data = anonymousValidator92(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -109,7 +109,7 @@ export function dateType(value, propertyPath = "$") {
  */
 export function file(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator101(value, propertyPath, errors);
+  const data = anonymousValidator104(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -135,7 +135,7 @@ export function fileType(value, propertyPath = "$") {
  */
 export function generateOpts(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator91(value, propertyPath, errors);
+  const data = anonymousValidator94(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -213,7 +213,7 @@ export function relationType(value, propertyPath = "$") {
  */
 export function routeType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator80(value, propertyPath, errors);
+  const data = anonymousValidator83(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -226,7 +226,7 @@ export function routeType(value, propertyPath = "$") {
  */
 export function stringType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator71(value, propertyPath, errors);
+  const data = anonymousValidator74(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -239,7 +239,7 @@ export function stringType(value, propertyPath = "$") {
  */
 export function structure(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator95(value, propertyPath, errors);
+  const data = anonymousValidator98(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -252,7 +252,7 @@ export function structure(value, propertyPath = "$") {
  */
 export function templateState(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator102(value, propertyPath, errors);
+  const data = anonymousValidator105(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -278,7 +278,7 @@ export function type(value, propertyPath = "$") {
  */
 export function typeSettings(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator104(value, propertyPath, errors);
+  const data = anonymousValidator107(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -291,7 +291,7 @@ export function typeSettings(value, propertyPath = "$") {
  */
 export function uuidType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator77(value, propertyPath, errors);
+  const data = anonymousValidator80(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }

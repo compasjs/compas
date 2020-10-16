@@ -1,7 +1,35 @@
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
+import {
+  sessionFields,
+  sessionInsertValues,
+  sessionUpdateSet,
+} from "./generated/index.js";
+import { query } from "./query.js";
 
 const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
+
+const sessionQueries = {
+  /**
+   * Upsert a query by id.
+   * We can't reuse `sessionInsertValues` here since that won't account for the 'id' field
+   *
+   * @param {Postgres} sql
+   * @param {StoreSessionInsertPartial & { id?: string }} value
+   * @returns {postgres.PendingQuery<any>}
+   */
+  upsertById: (sql, value) =>
+    query`
+    INSERT INTO "session" (${sessionFields("")})
+    VALUES
+    ${sessionInsertValues(value, { includePrimaryKey: true })}
+    ON CONFLICT ("id")
+    DO UPDATE SET ${sessionUpdateSet({
+      expires: value.expires,
+      data: value.data,
+    })}
+    RETURNING ${sessionFields("")}
+  `.exec(sql),
+};
 
 /**
  * @param {Postgres} sql
@@ -17,7 +45,8 @@ export function newSessionStore(sql) {
       if (!data) {
         return false;
       }
-      return JSON.parse(data.data);
+
+      return data.data;
     },
     set: async (sid, sess, maxAge) => {
       const expires = new Date();
@@ -30,10 +59,10 @@ export function newSessionStore(sql) {
         expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
       }
 
-      await storeQueries.sessionUpsert(sql, {
+      await sessionQueries.upsertById(sql, {
         id: sid,
         expires,
-        data: JSON.stringify(sess),
+        data: sess,
       });
     },
     destroy: async (sid) => {

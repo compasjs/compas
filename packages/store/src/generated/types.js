@@ -35,3 +35,27 @@ export const __generated__ = true;
  * @name StoreSessionWhere
  * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "expires"?: Date, "expiresNotEqual"?: Date, "expiresIn"?: (Date)[], "expiresNotIn"?: (Date)[], "expiresGreaterThan"?: Date, "expiresLowerThan"?: Date, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
  */
+/**
+ * @name StoreFileInsertPartial
+ * @typedef {{"id"?: string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreFileUpdatePartial
+ * @typedef {{"bucketName"?: string, "contentLength"?: number, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreJobInsertPartial
+ * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name": string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
+/**
+ * @name StoreJobUpdatePartial
+ * @typedef {{"isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name"?: string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
+/**
+ * @name StoreSessionInsertPartial
+ * @typedef {{"id"?: string, "expires": Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
+/**
+ * @name StoreSessionUpdatePartial
+ * @typedef {{"expires"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */

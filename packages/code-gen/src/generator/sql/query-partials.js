@@ -1,4 +1,5 @@
 import { js } from "../tag/index.js";
+import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
 
@@ -14,6 +15,8 @@ export function generateQueryPartials(context) {
     partials.push(getFieldsPartial(context, type));
     partials.push(getWherePartial(context, type));
     partials.push(getOrderPartial(context, type));
+    partials.push(getInsertPartial(context, type));
+    partials.push(getUpdatePartial(context, type));
   }
 
   const file = js`
@@ -38,23 +41,35 @@ export function generateQueryPartials(context) {
  * @return {string}
  */
 export function getFieldsPartial(context, type) {
+  const { key: primaryKey } = getPrimaryKeyWithType(type);
   return js`
     /**
      * Get all fields for ${type.name}
      * @param {string} [tableName="${type.shortName}."]
+     * @param {{ excludePrimaryKey: boolean }} [options={}]
      * @returns {QueryPart}
      */
-    export function ${type.name}Fields(tableName = "${type.shortName}.") {
+    export function ${type.name}Fields(tableName = "${
+    type.shortName
+  }.", options = {}) {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }
-      const strings = [
-        \`${Object.keys(type.keys)
-          .map((it) => `$\{tableName}"${it}"`)
-          .join(", ")}\`
-      ];
 
-      return query(strings);
+      if (options.excludePrimaryKey) {
+        return query([
+                       \`${Object.keys(type.keys)
+                         .filter((it) => it !== primaryKey)
+                         .map((it) => `$\{tableName}"${it}"`)
+                         .join(", ")}\`
+                     ]);
+      }
+
+      return query([
+                     \`${Object.keys(type.keys)
+                       .map((it) => `$\{tableName}"${it}"`)
+                       .join(", ")}\`
+                   ]);
     }
   `;
 }
@@ -72,7 +87,7 @@ export function getOrderPartial(context, type) {
   if (type.queryOptions.withSoftDeletes || type.queryOptions.withDates) {
     return js`
       /**
-       * Get ORDER BY for ${type.name}
+       * Get 'ORDER BY ' for ${type.name}
        * @param {string} [tableName="${type.shortName}."]
        * @returns {QueryPart}
        */
@@ -81,7 +96,7 @@ export function getOrderPartial(context, type) {
           tableName = \`$\{tableName}.\`;
         }
 
-        const strings = [ \`ORDER BY $\{tableName}"createdAt", $\{tableName}"updatedAt", $\{tableName}"${primaryKey}" \` ];
+        const strings = [ \`$\{tableName}"createdAt", $\{tableName}"updatedAt", $\{tableName}"${primaryKey}" \` ];
 
         return query(strings);
       }
@@ -90,7 +105,7 @@ export function getOrderPartial(context, type) {
 
   return js`
     /**
-     * Get ORDER BY for ${type.name}
+     * Get 'ORDER BY ' for ${type.name}
      * @param {string} [tableName="${type.shortName}."]
      * @returns {QueryPart}
      */
@@ -99,7 +114,7 @@ export function getOrderPartial(context, type) {
         tableName = \`$\{tableName}.\`;
       }
 
-      const strings = [ \`ORDER BY $\{tableName}"id" \` ];
+      const strings = [ \`$\{tableName}"id" \` ];
 
       return query(strings);
     }

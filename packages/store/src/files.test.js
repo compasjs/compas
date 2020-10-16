@@ -8,7 +8,6 @@ import {
   syncDeletedFiles,
 } from "./files.js";
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -148,7 +147,7 @@ test("store/files", async (t) => {
   });
 
   t.test("update files by idIn", async (t) => {
-    const result = await storeQueries.fileUpdate(
+    const result = await queries.fileUpdate(
       sql,
       { updatedAt: new Date() },
       {

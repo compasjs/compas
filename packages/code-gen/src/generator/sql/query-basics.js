@@ -26,9 +26,20 @@ export function generateBaseQueries(context) {
       `${type.name}OrderBy`,
       `./query-partials${context.importExtension}`,
     );
+    imports.destructureImport(
+      `${type.name}InsertValues`,
+      `./query-partials${context.importExtension}`,
+    );
+    imports.destructureImport(
+      `${type.name}UpdateSet`,
+      `./query-partials${context.importExtension}`,
+    );
 
     partials.push(selectQuery(context, imports, type));
+    partials.push(countQuery(context, imports, type));
     partials.push(deleteQuery(context, imports, type));
+    partials.push(insertQuery(context, imports, type));
+    partials.push(updateQuery(context, imports, type));
 
     if (type.queryOptions.withSoftDeletes) {
       partials.push(softDeleteQuery(context, imports, type));
@@ -68,9 +79,34 @@ function selectQuery(context, imports, type) {
       return query\`
         SELECT $\{${type.name}Fields()}
         FROM "${type.name}" ${type.shortName}
-        $\{${type.name}Where(where)}
-        $\{${type.name}OrderBy()}
+        WHERE $\{${type.name}Where(where)}
+        ORDER BY $\{${type.name}OrderBy()}
         \`.exec(sql);
+    }
+  `;
+}
+
+/**
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ */
+function countQuery(context, imports, type) {
+  const { key: primaryKey } = getPrimaryKeyWithType(type);
+  return js`
+    /**
+     * @param {Postgres} sql
+     * @param {${type.uniqueName}Where} [where]
+     * @returns {Promise<number>}
+     */
+    export async function ${type.name}Count(sql, where) {
+      const [ result ] = await query\`
+        SELECT COUNT(${type.shortName}."${primaryKey}") as "countResult"
+        FROM "${type.name}" ${type.shortName}
+        WHERE $\{${type.name}Where(where)}
+        \`.exec(sql);
+
+      return Number(result?.countResult ?? "0")
     }
   `;
 }
@@ -99,7 +135,7 @@ function deleteQuery(context, imports, type) {
       }
       return query\`
         DELETE FROM "${type.name}" ${type.shortName}
-        $\{${type.name}Where(where)}
+        WHERE $\{${type.name}Where(where)}
         \`.exec(sql);
     }
   `;
@@ -131,10 +167,11 @@ function softDeleteQuery(context, imports, type) {
      * @returns {Promise<void>}
      */
     export async function ${type.name}Delete(sql, where = {}, options = {}) {
-      ${affectedRelations.length > 0 ? "const result =" : ""} await query\`
+      ${affectedRelations.length > 0 ? "const result =" : ""}
+      await query\`
         UPDATE "${type.name}" ${type.shortName}
         SET "deletedAt" = now()
-        $\{${type.name}Where(where)}
+        WHERE $\{${type.name}Where(where)}
         RETURNING "${primaryKey}"
         \`.exec(sql);
 
@@ -157,6 +194,53 @@ function softDeleteQuery(context, imports, type) {
           `;
         }
       }}
+    }
+  `;
+}
+
+/**
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ */
+function insertQuery(context, imports, type) {
+  return js`
+    /**
+     * @param {Postgres} sql
+     * @param {${type.partial.insertType}|(${type.partial.insertType}[])} insert
+     * @returns {Promise<${type.uniqueName}[]>}
+     */
+    export function ${type.name}Insert(sql, insert) {
+      return query\`
+        INSERT INTO "${type.name}" ($\{${type.name}Fields(
+        "", { excludePrimaryKey: true })})
+        VALUES $\{${type.name}InsertValues(insert)}
+        RETURNING $\{${type.name}Fields("")}
+      \`.exec(sql);
+    }
+  `;
+}
+
+/**
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ */
+function updateQuery(context, imports, type) {
+  return js`
+    /**
+     * @param {Postgres} sql
+     * @param {${type.partial.updateType}} update
+     * @param {${type.where.type}} [where={}]
+     * @returns {Promise<${type.uniqueName}[]>}
+     */
+    export function ${type.name}Update(sql, update, where = {}) {
+      return query\`
+        UPDATE "${type.name}" ${type.shortName}
+        SET $\{${type.name}UpdateSet(update)}
+        WHERE $\{${type.name}Where(where)}
+        RETURNING $\{${type.name}Fields()}
+      \`.exec(sql);
     }
   `;
 }

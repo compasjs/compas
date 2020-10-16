@@ -137,7 +137,7 @@ export function getWherePartial(context, type) {
           break;
         case "in":
           str += `
-            strings.push(\` AND $\{tableName}"${field.key}" = ANY([\`);
+            strings.push(\` AND $\{tableName}"${field.key}" = ANY(ARRAY[\`);
             for (let i = 0; i < where.${field.name}.length; ++i) {
               values.push(where.${field.name}[i]);
               if (i === where.${field.name}.length - 1) {
@@ -151,7 +151,7 @@ export function getWherePartial(context, type) {
           break;
         case "notIn":
           str += `
-            strings.push(\` AND $\{tableName}"${field.key}" != ANY([\`);
+            strings.push(\` AND $\{tableName}"${field.key}" != ANY(ARRAY[\`);
             for (let i = 0; i < where.${field.name}.length; ++i) {
               values.push(where.${field.name}[i]);
               if (i === where.${field.name}.length - 1) {
@@ -217,7 +217,8 @@ export function getWherePartial(context, type) {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }
-      const strings = [ "WHERE 1 = 1" ];
+
+      const strings = [ "1 = 1" ];
       const values = [ undefined ];
 
       ${partials}

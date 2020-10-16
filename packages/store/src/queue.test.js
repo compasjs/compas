@@ -1,7 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { isNil } from "@lbu/stdlib";
 import { queries } from "./generated.js";
-import { storeQueries } from "./generated/queries.js";
 import {
   addRecurringJobToQueue,
   getNextScheduledAt,
@@ -204,7 +203,7 @@ test("store/queue - recurring jobs ", async (t) => {
       const [
         recurringJob,
       ] = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
-      const count = await storeQueries.jobCount(sql);
+      const count = await queries.jobCount(sql);
 
       t.equal(count, 2);
 
