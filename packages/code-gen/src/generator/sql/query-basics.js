@@ -131,26 +131,32 @@ function softDeleteQuery(context, imports, type) {
      * @returns {Promise<void>}
      */
     export async function ${type.name}Delete(sql, where = {}, options = {}) {
-      const result = await query\`
+      ${affectedRelations.length > 0 ? "const result =" : ""} await query\`
         UPDATE "${type.name}" ${type.shortName}
         SET "deletedAt" = now()
         $\{${type.name}Where(where)}
         RETURNING "${primaryKey}"
         \`.exec(sql);
-      
-      if (options.skipCascade) {
-        return;
-      }
-      
-      const ids = result.map(it => it.${primaryKey});
-      await Promise.all([
-        ${affectedRelations
-          .map(
-            (it) =>
-              `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`,
-          )
-          .join(",\n  ")}
-      ]);
+
+      ${() => {
+        if (affectedRelations.length > 0) {
+          return js`
+            if (options.skipCascade) {
+              return;
+            }
+
+            const ids = result.map(it => it.${primaryKey});
+            await Promise.all([
+                                ${affectedRelations
+                                  .map(
+                                    (it) =>
+                                      `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`,
+                                  )
+                                  .join(",\n  ")}
+                              ]);
+          `;
+        }
+      }}
     }
   `;
 }
