@@ -1,5 +1,6 @@
 import * as minioVendor from "minio";
 import * as postgresVendor from "postgres";
+import { queries } from "./src/generated/index.js";
 
 /**
  * Reexported all of minio package
@@ -429,7 +430,8 @@ export interface QueryPart {
 /**
  * Format and append query parts, and exec the final result in a safe way.
  * Undefined values are skipped, as they are not allowed in queries.
- * The provided values may contain other 'query``' calls, and they will be inserted appropriately.
+ * The provided values may contain other 'query``' calls, and they will be inserted
+ * appropriately.
  *
  * @example
  *   ```
@@ -440,3 +442,9 @@ export interface QueryPart {
  *   ```
  */
 export function query(strings: string[], ...values: any[]): QueryPart;
+
+/**
+ * Overwrite used generated queries.
+ * This is needed when you want cascading soft deletes to any of the exposed types
+ */
+export function setStoreQueries(q: typeof queries): void;

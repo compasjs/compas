@@ -40,6 +40,25 @@ ${fileWhere(where)}
 }
 /**
  * @param {Postgres} sql
+ * @param {StoreFileWhere} [where={}]
+ * @param {{ skipCascade: boolean }} [options={}]
+ * @returns {Promise<void>}
+ */
+export async function fileDelete(sql, where = {}, options = {}) {
+  const result = await query`
+UPDATE "file" f
+SET "deletedAt" = now()
+${fileWhere(where)}
+RETURNING "id"
+`.exec(sql);
+  if (options.skipCascade) {
+    return;
+  }
+  const ids = result.map((it) => it.id);
+  await Promise.all([]);
+}
+/**
+ * @param {Postgres} sql
  * @param {StoreJobWhere} [where]
  * @returns {Promise<StoreJob[]>}
  */

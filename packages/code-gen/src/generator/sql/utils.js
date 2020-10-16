@@ -96,6 +96,7 @@ function staticCheckRelation(type, relation) {
         otherSide.subType === "oneToMany" &&
         relation.referencedKey === otherSide.ownKey
       ) {
+        otherSide.referencedKey = relation.ownKey;
         found = true;
         break;
       }
@@ -126,6 +127,7 @@ function createOneToOneReverseRelation(type, relation) {
     type: "relation",
     subType: "oneToOneReverse",
     ownKey: relation.referencedKey,
+    referencedKey: relation.ownKey,
     reference: {
       type: "reference",
       isOptional: true,

@@ -1,4 +1,4 @@
-import { queries } from "./generated/index.js";
+import { queries } from "./generated.js";
 import { storeQueries } from "./generated/queries.js";
 
 const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;

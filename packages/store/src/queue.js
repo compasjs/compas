@@ -1,5 +1,5 @@
 import { log } from "@lbu/insight";
-import { queries } from "./generated/index.js";
+import { queries } from "./generated.js";
 import { storeQueries } from "./generated/queries.js";
 
 const LBU_RECURRING_JOB = "lbu.job.recurring";

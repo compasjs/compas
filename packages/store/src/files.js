@@ -1,7 +1,7 @@
 import { createReadStream } from "fs";
 import { uuid } from "@lbu/stdlib";
 import mime from "mime-types";
-import { queries } from "./generated/index.js";
+import { queries } from "./generated.js";
 import { storeQueries } from "./generated/queries.js";
 import { listObjects } from "./minio.js";
 

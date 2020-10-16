@@ -1,6 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { isNil } from "@lbu/stdlib";
-import { queries } from "./generated/index.js";
+import { queries } from "./generated.js";
 import { storeQueries } from "./generated/queries.js";
 import {
   addRecurringJobToQueue,

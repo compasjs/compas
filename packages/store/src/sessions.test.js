@@ -1,6 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "@lbu/stdlib";
-import { queries } from "./generated/index.js";
+import { queries } from "./generated.js";
 import { storeQueries } from "./generated/queries.js";
 import { newSessionStore } from "./sessions.js";
 import {

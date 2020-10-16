@@ -1,6 +1,6 @@
 import { js } from "../tag/index.js";
 import { importCreator } from "../utils.js";
-import { getQueryEnabledObjects } from "./utils.js";
+import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
 /**
  * Generate the basic CRUD queries
@@ -29,6 +29,10 @@ export function generateBaseQueries(context) {
 
     partials.push(selectQuery(context, imports, type));
     partials.push(deleteQuery(context, imports, type));
+
+    if (type.queryOptions.withSoftDeletes) {
+      partials.push(softDeleteQuery(context, imports, type));
+    }
   }
 
   const contents = js`
@@ -97,6 +101,56 @@ function deleteQuery(context, imports, type) {
         DELETE FROM "${type.name}" ${type.shortName}
         $\{${type.name}Where(where)}
         \`.exec(sql);
+    }
+  `;
+}
+
+/**
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ */
+function softDeleteQuery(context, imports, type) {
+  const affectedRelations = [];
+  for (const relation of type.relations) {
+    if (["oneToOneReverse", "oneToMany"].indexOf(relation.subType) === -1) {
+      continue;
+    }
+    if (relation.reference.reference.queryOptions?.withSoftDeletes) {
+      affectedRelations.push(relation);
+    }
+  }
+
+  const { key: primaryKey } = getPrimaryKeyWithType(type);
+
+  return js`
+    /**
+     * @param {Postgres} sql
+     * @param {${type.uniqueName}Where} [where={}]
+     * @param {{ skipCascade: boolean }} [options={}]
+     * @returns {Promise<void>}
+     */
+    export async function ${type.name}Delete(sql, where = {}, options = {}) {
+      const result = await query\`
+        UPDATE "${type.name}" ${type.shortName}
+        SET "deletedAt" = now()
+        $\{${type.name}Where(where)}
+        RETURNING "${primaryKey}"
+        \`.exec(sql);
+      
+      if (options.skipCascade) {
+        return;
+      }
+      
+      const ids = result.map(it => it.${primaryKey});
+      await Promise.all([
+        ${affectedRelations
+          .map(
+            (it) =>
+              `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`,
+          )
+          .join(",\n  ")}
+      ]);
     }
   `;
 }
