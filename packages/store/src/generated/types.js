@@ -4,58 +4,58 @@
 // An export soo all things work correctly with linters, ts, ...
 export const __generated__ = true;
 /**
-* @name StoreFile
-* @typedef {{"id": string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
-*/
+ * @name StoreFile
+ * @typedef {{"id": string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
+ */
 /**
-* @name StoreFileMeta
-* @typedef {{}}
-*/
+ * @name StoreFileMeta
+ * @typedef {{}}
+ */
 /**
-* @name StoreJob
-* @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "createdAt": Date, "updatedAt": Date, }}
-*/
+ * @name StoreJob
+ * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "createdAt": Date, "updatedAt": Date, }}
+ */
 /**
-* @name StoreJobInterval
-* @typedef {{"years"?: number, "months"?: number, "days"?: number, "hours"?: number, "minutes"?: number, "seconds"?: number, }}
-*/
+ * @name StoreJobInterval
+ * @typedef {{"years"?: number, "months"?: number, "days"?: number, "hours"?: number, "minutes"?: number, "seconds"?: number, }}
+ */
 /**
-* @name StoreSession
-* @typedef {{"id": string, "expires": Date, "data": *, "createdAt": Date, "updatedAt": Date, }}
-*/
+ * @name StoreSession
+ * @typedef {{"id": string, "expires": Date, "data": *, "createdAt": Date, "updatedAt": Date, }}
+ */
 /**
-* @name StoreFileWhere
-* @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[], "bucketNameNotIn"?: (string)[], "bucketNameLike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[], "deletedAtNotIn"?: (Date)[], "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }}
-*/
+ * @name StoreFileWhere
+ * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[], "bucketNameNotIn"?: (string)[], "bucketNameLike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[], "deletedAtNotIn"?: (Date)[], "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }}
+ */
 /**
-* @name StoreJobWhere
-* @typedef {{"id"?: number, "idNotEqual"?: number, "idIn"?: (number)[], "idNotIn"?: (number)[], "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[], "scheduledAtNotIn"?: (Date)[], "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[], "nameNotIn"?: (string)[], "nameLike"?: string, "nameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
-*/
+ * @name StoreJobWhere
+ * @typedef {{"id"?: number, "idNotEqual"?: number, "idIn"?: (number)[], "idNotIn"?: (number)[], "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[], "scheduledAtNotIn"?: (Date)[], "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[], "nameNotIn"?: (string)[], "nameLike"?: string, "nameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
+ */
 /**
-* @name StoreSessionWhere
-* @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "expires"?: Date, "expiresNotEqual"?: Date, "expiresIn"?: (Date)[], "expiresNotIn"?: (Date)[], "expiresGreaterThan"?: Date, "expiresLowerThan"?: Date, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
-*/
+ * @name StoreSessionWhere
+ * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "expires"?: Date, "expiresNotEqual"?: Date, "expiresIn"?: (Date)[], "expiresNotIn"?: (Date)[], "expiresGreaterThan"?: Date, "expiresLowerThan"?: Date, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
+ */
 /**
-* @name StoreFileInsertPartial
-* @typedef {{"id"?: string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
-*/
+ * @name StoreFileInsertPartial
+ * @typedef {{"id"?: string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
 /**
-* @name StoreFileUpdatePartial
-* @typedef {{"bucketName"?: string, "contentLength"?: number, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
-*/
+ * @name StoreFileUpdatePartial
+ * @typedef {{"bucketName"?: string, "contentLength"?: number, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
 /**
-* @name StoreJobInsertPartial
-* @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name": string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
-*/
+ * @name StoreJobInsertPartial
+ * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name": string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
 /**
-* @name StoreJobUpdatePartial
-* @typedef {{"isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name"?: string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
-*/
+ * @name StoreJobUpdatePartial
+ * @typedef {{"isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name"?: string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
 /**
-* @name StoreSessionInsertPartial
-* @typedef {{"id"?: string, "expires": Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
-*/
+ * @name StoreSessionInsertPartial
+ * @typedef {{"id"?: string, "expires": Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */
 /**
-* @name StoreSessionUpdatePartial
-* @typedef {{"expires"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
-*/
+ * @name StoreSessionUpdatePartial
+ * @typedef {{"expires"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ */

@@ -2,5 +2,6 @@
 /* eslint-disable no-unused-vars */
 
 import { storeStructure } from "./store/structure.js";
+
 export const structure = Object.assign({}, storeStructure);
 export const structureString = JSON.stringify(structure);

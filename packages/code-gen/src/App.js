@@ -218,6 +218,12 @@ export class App {
         ? options.enabledGenerators
         : opts.enabledGenerators;
 
+    // Quick hack so we can test if we have generated
+    // before running the tests.
+    if (options.returnFiles) {
+      opts.returnFiles = true;
+    }
+
     // Add internal routes
     for (const r of getInternalRoutes(opts)) {
       this.unprocessedData.add(r);
@@ -259,8 +265,9 @@ export class App {
       }
     }
 
-    await generate(this.logger, opts, generatorInput);
+    const result = await generate(this.logger, opts, generatorInput);
     printProcessMemoryUsage(this.logger);
+    return result;
   }
 
   /**

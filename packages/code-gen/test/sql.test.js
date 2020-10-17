@@ -1,6 +1,9 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { isNil, uuid } from "@lbu/stdlib";
-import { createTestPostgresDatabase } from "../../store/src/testing.js";
+import {
+  cleanupTestPostgresDatabase,
+  createTestPostgresDatabase,
+} from "../../store/src/testing.js";
 
 mainTestFn(import.meta);
 
@@ -141,5 +144,10 @@ test("code-gen/e2e/sql", async (t) => {
 
     const postCount = await client.queries.postCount(sql);
     t.equal(postCount, 0, "soft cascading deletes");
+  });
+
+  t.test("destroy test db", async (t) => {
+    await cleanupTestPostgresDatabase(sql);
+    t.ok(true);
   });
 });

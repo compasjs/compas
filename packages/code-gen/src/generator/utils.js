@@ -70,9 +70,9 @@ export function importCreator() {
         const joinString =
           state.destructureImport[key].size > 3 ? ",\n  " : ", ";
         result.push(
-          `import { ${[...state.destructureImport[key].values()].join(
-            joinString,
-          )} } from "${key}";`,
+          `import { ${[...state.destructureImport[key].values()]
+            .sort()
+            .join(joinString)} } from "${key}";`,
         );
       }
 

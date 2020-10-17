@@ -120,6 +120,11 @@ export async function generate(logger, options, structure) {
   annotateFilesWithHeader(context);
 
   // TODO: Remove context.options.outputDir before writing
+
+  if (options.returnFiles) {
+    // Used for making sure we can check if we are all set
+    return context.outputFiles;
+  }
   writeFiles(context);
 }
 

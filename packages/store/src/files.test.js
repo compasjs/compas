@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@lbu/cli";
-import { dirnameForModule, uuid } from "@lbu/stdlib";
+import { uuid } from "@lbu/stdlib";
 import {
   copyFile,
   createOrUpdateFile,

@@ -1,0 +1,38 @@
+import { mainTestFn, test } from "@lbu/cli";
+import { createTestPostgresDatabase } from "@lbu/store";
+import {
+  getMigrationsToBeApplied,
+  newMigrateContext,
+} from "../../packages/store/src/migrations.js";
+import { cleanupTestPostgresDatabase } from "../../packages/store/src/testing.js";
+
+mainTestFn(import.meta);
+
+test("repo/migrations", (t) => {
+  let sql = undefined;
+
+  t.test("create a test db", async (t) => {
+    sql = await createTestPostgresDatabase();
+    t.ok(!!sql);
+
+    const result = await sql`
+      SELECT 1 + 2 AS sum
+    `;
+    t.equal(result[0].sum, 3);
+  });
+
+  t.test("migrations should have been applied", async (t) => {
+    const mc = await newMigrateContext(sql);
+
+    const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
+
+    const message = `Tests are not running with the latest migrations, please run 'yarn lbu docker reset && yarn lbu migrate'.`;
+    t.equal(migrationQueue.length, 0, message);
+    t.equal(hashChanges.length, 0, message);
+  });
+
+  t.test("destroy test db", async (t) => {
+    await cleanupTestPostgresDatabase(sql);
+    t.ok(true);
+  });
+});

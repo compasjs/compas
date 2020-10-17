@@ -24,44 +24,13 @@ async function main() {
   app.logger.info("Cleanup previous output");
   await rmdir("./generated/testing/", { recursive: true });
 
-  applyBenchStructure(app);
-  applyTestingValidatorsStructure(app);
-  applyTestingServerStructure(app);
-  applyTestingSqlStructure(app);
+  applyAllLocalGenerate(app);
 
-  await app.generate({
-    outputDirectory: "./generated/testing/validators",
-    enabledGroups: ["validator"],
-    isNode: true,
-  });
-
-  await app.generate({
-    outputDirectory: "./generated/testing/bench",
-    enabledGroups: ["bench"],
-    isNodeServer: true,
-    enabledGenerators: ["validator"],
-  });
-
-  await app.generate({
-    outputDirectory: "./generated/testing/server",
-    enabledGenerators: ["type", "apiClient", "router", "validator"],
-    enabledGroups: ["server"],
-    isNodeServer: true,
-  });
-
-  await app.generate({
-    outputDirectory: "./generated/testing/client",
-    enabledGroups: ["server"],
-    enabledGenerators: ["apiClient", "type", "validator"],
-    isBrowser: true,
-  });
-
-  await app.generate({
-    outputDirectory: "./generated/testing/sql",
-    enabledGroups: ["sql"],
-    enabledGenerators: ["type", "sql"],
-    isNodeServer: true,
-  });
+  await app.generate(generateSettings.validators);
+  await app.generate(generateSettings.bench);
+  await app.generate(generateSettings.server);
+  await app.generate(generateSettings.client);
+  await app.generate(generateSettings.sql);
 
   app.logger.info("Transpiling typescript...");
 
@@ -83,3 +52,42 @@ async function main() {
     },
   );
 }
+
+export function applyAllLocalGenerate(app) {
+  applyBenchStructure(app);
+  applyTestingValidatorsStructure(app);
+  applyTestingServerStructure(app);
+  applyTestingSqlStructure(app);
+}
+
+export const generateSettings = {
+  validators: {
+    outputDirectory: "./generated/testing/validators",
+    enabledGroups: ["validator"],
+    isNode: true,
+  },
+  bench: {
+    outputDirectory: "./generated/testing/bench",
+    enabledGroups: ["bench"],
+    isNodeServer: true,
+    enabledGenerators: ["validator"],
+  },
+  server: {
+    outputDirectory: "./generated/testing/server",
+    enabledGenerators: ["type", "apiClient", "router", "validator"],
+    enabledGroups: ["server"],
+    isNodeServer: true,
+  },
+  client: {
+    outputDirectory: "./generated/testing/client",
+    enabledGroups: ["server"],
+    enabledGenerators: ["apiClient", "type", "validator"],
+    isBrowser: true,
+  },
+  sql: {
+    outputDirectory: "./generated/testing/sql",
+    enabledGroups: ["sql"],
+    enabledGenerators: ["type", "sql"],
+    isNodeServer: true,
+  },
+};
