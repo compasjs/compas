@@ -1,5 +1,6 @@
 import { DateType } from "../../builders/DateType.js";
 import { buildOrInfer } from "../../builders/utils.js";
+import { UuidType } from "../../builders/UuidType.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
 /**
@@ -9,6 +10,15 @@ import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
  */
 export function addFieldsOfRelations(context) {
   for (const type of getQueryEnabledObjects(context)) {
+    if (type.queryOptions.withPrimaryKey) {
+      try {
+        getPrimaryKeyWithType(type);
+      } catch {
+        // Only add an 'id' field if none was found
+        type.keys["id"] = new UuidType().primary().build();
+      }
+    }
+
     for (const relation of type.relations) {
       addFieldsForRelation(context, type, relation);
     }

@@ -164,6 +164,7 @@ function getTypes(T) {
       .keys({
         withSoftDeletes: T.bool().default(false),
         withDates: T.bool().default(false),
+        withPrimaryKey: T.bool().default(true),
       })
       .optional(),
     relations: T.array()

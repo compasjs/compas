@@ -1,6 +1,10 @@
 import { js } from "../tag/index.js";
 import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
-import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
+import {
+  getPrimaryKeyWithType,
+  getQueryEnabledObjects,
+  getSortedKeysForType,
+} from "./utils.js";
 import { getWherePartial } from "./where-type.js";
 
 /**
@@ -58,7 +62,7 @@ export function getFieldsPartial(context, type) {
 
       if (options.excludePrimaryKey) {
         return query([
-                       \`${Object.keys(type.keys)
+                       \`${getSortedKeysForType(type)
                          .filter((it) => it !== primaryKey)
                          .map((it) => `$\{tableName}"${it}"`)
                          .join(", ")}\`
@@ -66,7 +70,7 @@ export function getFieldsPartial(context, type) {
       }
 
       return query([
-                     \`${Object.keys(type.keys)
+                     \`${getSortedKeysForType(type)
                        .map((it) => `$\{tableName}"${it}"`)
                        .join(", ")}\`
                    ]);

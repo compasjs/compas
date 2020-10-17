@@ -60,6 +60,75 @@ export function getPrimaryKeyWithType(type) {
 }
 
 /**
+ * Returns a sorted list of key names for the provided object type
+ * - Primary keys
+ * - Non nullable fields
+ * - Nullable fields
+ * - createdAt, updatedAt, deletedAt
+ * @param {CodeGenObjectType} type
+ */
+export function getSortedKeysForType(type) {
+  const typeOrder = {
+    boolean: 0,
+    number: 1,
+    uuid: 2,
+    string: 3,
+    date: 4,
+  };
+
+  const result = Object.keys(type.keys)
+    .filter(
+      (it) => it !== "createdAt" && it !== "updatedAt" && it !== "deletedAt",
+    )
+    .sort((a, b) => {
+      const fieldA = type.keys[a]?.reference ?? type.keys[a];
+      const fieldB = type.keys[b]?.reference ?? type.keys[b];
+
+      if (fieldA.sql?.primary) {
+        return -1;
+      }
+      if (fieldB.sql?.primary) {
+        return 1;
+      }
+
+      if (
+        fieldA.isOptional &&
+        isNil(fieldA.defaultValue) &&
+        !fieldB.isOptional
+      ) {
+        return 1;
+      } else if (
+        !fieldA.isOptional &&
+        fieldB.isOptional &&
+        isNil(fieldB.defaultValue)
+      ) {
+        return -1;
+      }
+
+      const typeAIndex = typeOrder[fieldA.type] ?? 9;
+      const typeBIndex = typeOrder[fieldB.type] ?? 9;
+
+      if (typeAIndex !== typeBIndex) {
+        return typeAIndex - typeBIndex;
+      }
+
+      return a.localeCompare(b);
+    });
+
+  if (type.keys["createdAt"]) {
+    result.push("createdAt");
+  }
+  if (type.keys["updatedAt"]) {
+    result.push("updatedAt");
+  }
+  if (type.keys["deletedAt"]) {
+    result.push("deletedAt");
+  }
+
+  return result;
+}
+
+/**
  * Statically check if objects are correctly setup do have queries enabled.
  * @param {CodeGenContext} context
  */

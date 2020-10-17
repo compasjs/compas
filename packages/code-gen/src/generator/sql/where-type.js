@@ -5,7 +5,7 @@ import { ObjectType } from "../../builders/ObjectType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
-import { getQueryEnabledObjects } from "./utils.js";
+import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";
 
 const whereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
@@ -235,7 +235,8 @@ export function getWherePartial(context, type) {
  * @return {Object<string, CodeGenType>}
  */
 export function getSearchableFields(type) {
-  return Object.entries(type.keys)
+  return getSortedKeysForType(type)
+    .map((it) => [it, type.keys[it]])
     .filter((it) => it[1].sql?.searchable || it[1].reference?.sql?.searchable)
     .reduce((acc, [key, value]) => {
       acc[key] = value.reference ?? value;

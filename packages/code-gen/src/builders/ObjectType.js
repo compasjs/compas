@@ -62,11 +62,14 @@ export class ObjectType extends TypeBuilder {
    * @param {object} [options={}]
    * @param {boolean} [options.withSoftDeletes]
    * @param {boolean} [options.withDates]
+   * @param {boolean} [options.withPrimaryKey=true]
    * @returns {ObjectType}
    */
   enableQueries(options = {}) {
     this.data.enableQueries = true;
     this.data.queryOptions = options;
+    this.data.queryOptions.withPrimaryKey = options.withPrimaryKey ?? true;
+
     return this;
   }
 

@@ -2,7 +2,11 @@ import { ObjectType } from "../../builders/ObjectType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
-import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
+import {
+  getPrimaryKeyWithType,
+  getQueryEnabledObjects,
+  getSortedKeysForType,
+} from "./utils.js";
 
 /**
  * Creates a where type and assigns in to the object type
@@ -29,7 +33,7 @@ export function createPartialTypes(context) {
       updatePartial.group,
     )}${upperCaseFirst(updatePartial.name)}`;
 
-    for (const key of Object.keys(type.keys)) {
+    for (const key of getSortedKeysForType(type)) {
       let fieldType = type.keys[key];
       if (fieldType.reference) {
         fieldType = fieldType.reference;

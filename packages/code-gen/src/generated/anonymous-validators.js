@@ -1748,7 +1748,7 @@ export function anonymousValidator49(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {undefined|{"withSoftDeletes": boolean, "withDates": boolean, }|undefined}
+ * @returns {undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, }|undefined}
  */
 export function anonymousValidator52(
   value,
@@ -1777,6 +1777,12 @@ export function anonymousValidator52(
     errors,
   );
   keySet.delete("withDates");
+  result["withPrimaryKey"] = anonymousValidator48(
+    value["withPrimaryKey"],
+    `${propertyPath}.withPrimaryKey`,
+    errors,
+  );
+  keySet.delete("withPrimaryKey");
   if (keySet.size !== 0) {
     const extraKeys = [...keySet];
     errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
@@ -2512,7 +2518,7 @@ export function anonymousValidator68(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator45(
   value,

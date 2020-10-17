@@ -14,11 +14,11 @@ export function fileFields(tableName = "f.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"bucketName", ${tableName}"contentLength", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+      `${tableName}"contentLength", ${tableName}"bucketName", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"bucketName", ${tableName}"contentLength", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+    `${tableName}"id", ${tableName}"contentLength", ${tableName}"bucketName", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
   ]);
 }
 /**
@@ -285,7 +285,7 @@ export function fileInsertValues(insert, options = {}) {
     const it = insert[i];
     q.append(query`(
 ${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
+${it.contentLength ?? null}, ${it.bucketName ?? null}, ${
       it.contentType ?? null
     }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
       it.createdAt ?? new Date()
@@ -305,13 +305,13 @@ ${it.bucketName ?? null}, ${it.contentLength ?? null}, ${
 export function fileUpdateSet(update) {
   const strings = [];
   const values = [];
-  if (update.bucketName !== undefined) {
-    strings.push(`, "bucketName" = `);
-    values.push(update.bucketName ?? null);
-  }
   if (update.contentLength !== undefined) {
     strings.push(`, "contentLength" = `);
     values.push(update.contentLength ?? null);
+  }
+  if (update.bucketName !== undefined) {
+    strings.push(`, "bucketName" = `);
+    values.push(update.bucketName ?? null);
   }
   if (update.contentType !== undefined) {
     strings.push(`, "contentType" = `);
@@ -352,11 +352,11 @@ export function jobFields(tableName = "j.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"isComplete", ${tableName}"priority", ${tableName}"scheduledAt", ${tableName}"name", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+      `${tableName}"isComplete", ${tableName}"priority", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"scheduledAt", ${tableName}"name", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /**
@@ -423,6 +423,46 @@ export function jobWhere(where = {}, tableName = "j.") {
     strings.push(` AND ${tableName}"isComplete" IS NOT NULL `);
     values.push(undefined);
   }
+  if (where.name !== undefined) {
+    strings.push(` AND ${tableName}"name" = `);
+    values.push(where.name);
+  }
+  if (where.nameNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"name" != `);
+    values.push(where.nameNotEqual);
+  }
+  if (where.nameIn !== undefined) {
+    strings.push(` AND ${tableName}"name" = ANY(ARRAY[`);
+    for (let i = 0; i < where.nameIn.length; ++i) {
+      values.push(where.nameIn[i]);
+      if (i === where.nameIn.length - 1) {
+        strings.push("]::varchar[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.nameNotIn !== undefined) {
+    strings.push(` AND ${tableName}"name" != ANY(ARRAY[`);
+    for (let i = 0; i < where.nameNotIn.length; ++i) {
+      values.push(where.nameNotIn[i]);
+      if (i === where.nameNotIn.length - 1) {
+        strings.push("]::varchar[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.nameLike !== undefined) {
+    strings.push(` AND ${tableName}"name" LIKE `);
+    values.push(`%${where.nameLike}%`);
+  }
+  if (where.nameNotLike !== undefined) {
+    strings.push(` AND ${tableName}"name" NOT LIKE `);
+    values.push(`%${where.nameNotLike}%`);
+  }
   if (where.scheduledAt !== undefined) {
     strings.push(` AND ${tableName}"scheduledAt" = `);
     values.push(where.scheduledAt);
@@ -470,46 +510,6 @@ export function jobWhere(where = {}, tableName = "j.") {
   if (where.scheduledAtIsNotNull !== undefined) {
     strings.push(` AND ${tableName}"scheduledAt" IS NOT NULL `);
     values.push(undefined);
-  }
-  if (where.name !== undefined) {
-    strings.push(` AND ${tableName}"name" = `);
-    values.push(where.name);
-  }
-  if (where.nameNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"name" != `);
-    values.push(where.nameNotEqual);
-  }
-  if (where.nameIn !== undefined) {
-    strings.push(` AND ${tableName}"name" = ANY(ARRAY[`);
-    for (let i = 0; i < where.nameIn.length; ++i) {
-      values.push(where.nameIn[i]);
-      if (i === where.nameIn.length - 1) {
-        strings.push("]::varchar[])");
-        values.push(undefined);
-      } else {
-        strings.push(", ");
-      }
-    }
-  }
-  if (where.nameNotIn !== undefined) {
-    strings.push(` AND ${tableName}"name" != ANY(ARRAY[`);
-    for (let i = 0; i < where.nameNotIn.length; ++i) {
-      values.push(where.nameNotIn[i]);
-      if (i === where.nameNotIn.length - 1) {
-        strings.push("]::varchar[])");
-        values.push(undefined);
-      } else {
-        strings.push(", ");
-      }
-    }
-  }
-  if (where.nameLike !== undefined) {
-    strings.push(` AND ${tableName}"name" LIKE `);
-    values.push(`%${where.nameLike}%`);
-  }
-  if (where.nameNotLike !== undefined) {
-    strings.push(` AND ${tableName}"name" NOT LIKE `);
-    values.push(`%${where.nameNotLike}%`);
   }
   if (where.createdAt !== undefined) {
     strings.push(` AND ${tableName}"createdAt" = `);
@@ -639,11 +639,11 @@ export function jobInsertValues(insert, options = {}) {
     const it = insert[i];
     q.append(query`(
 ${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.isComplete ?? false}, ${it.priority ?? 0}, ${
+${it.isComplete ?? false}, ${it.priority ?? 0}, ${it.name ?? null}, ${
       it.scheduledAt ?? new Date()
-    }, ${it.name ?? null}, ${JSON.stringify(it.data ?? {})}, ${
-      it.createdAt ?? new Date()
-    }, ${it.updatedAt ?? new Date()}
+    }, ${JSON.stringify(it.data ?? {})}, ${it.createdAt ?? new Date()}, ${
+      it.updatedAt ?? new Date()
+    }
 )`);
     if (i !== insert.length - 1) {
       q.append(query`, `);
@@ -667,13 +667,13 @@ export function jobUpdateSet(update) {
     strings.push(`, "priority" = `);
     values.push(update.priority ?? 0);
   }
-  if (update.scheduledAt !== undefined) {
-    strings.push(`, "scheduledAt" = `);
-    values.push(update.scheduledAt ?? new Date());
-  }
   if (update.name !== undefined) {
     strings.push(`, "name" = `);
     values.push(update.name ?? null);
+  }
+  if (update.scheduledAt !== undefined) {
+    strings.push(`, "scheduledAt" = `);
+    values.push(update.scheduledAt ?? new Date());
   }
   if (update.data !== undefined) {
     strings.push(`, "data" = `);

@@ -15,8 +15,16 @@ async function main() {
     verbose: true,
   });
 
-  applyStoreStructure(app);
   applyCodeGenStructure(app);
+
+  await app.generate({
+    outputDirectory: `packages/code-gen/src/generated`,
+    enabledGroups: ["codeGen"],
+    isNode: true,
+    enabledGenerators: ["type", "validator"],
+  });
+
+  applyStoreStructure(app);
 
   await app.generate({
     outputDirectory: `packages/store/src/generated`,
@@ -25,12 +33,5 @@ async function main() {
     enabledGenerators: ["type", "sql"],
     dumpStructure: true,
     dumpPostgres: true,
-  });
-
-  await app.generate({
-    outputDirectory: `packages/code-gen/src/generated`,
-    enabledGroups: ["codeGen"],
-    isNode: true,
-    enabledGenerators: ["type", "validator"],
   });
 }

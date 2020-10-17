@@ -1,6 +1,6 @@
 import { isNil } from "@lbu/stdlib";
 import { upperCaseFirst } from "../../utils.js";
-import { getQueryEnabledObjects } from "./utils.js";
+import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";
 import { getSearchableFields } from "./where-type.js";
 
 const typeTable = {
@@ -54,10 +54,11 @@ export function generateSqlStructure(context) {
 }
 
 /**
- * @param {CodeGenType} type
+ * @param {CodeGenObjectType} object
  */
-function getFields(type) {
-  return Object.entries(type.keys).map(([key, type]) => {
+function getFields(object) {
+  return getSortedKeysForType(object).map((key) => {
+    let type = object.keys[key];
     if (type.type === "reference") {
       type = type.reference;
     }

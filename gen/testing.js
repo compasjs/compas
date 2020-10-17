@@ -138,7 +138,6 @@ export function applyTestingSqlStructure(app) {
   app.add(
     T.object("user")
       .keys({
-        id: T.uuid().primary(),
         nickName: T.string(),
         email: T.string().searchable(),
         authKey: T.string(),
@@ -156,7 +155,6 @@ export function applyTestingSqlStructure(app) {
 
     T.object("post")
       .keys({
-        id: T.uuid().primary(),
         title: T.string(),
         body: T.string(),
       })
@@ -168,9 +166,7 @@ export function applyTestingSqlStructure(app) {
 
     // m-m join table
     T.object("postCategory")
-      .keys({
-        id: T.uuid().primary(),
-      })
+      .keys({})
       .enableQueries({ withDates: true })
       .relations(
         T.manyToOne("post", T.reference("sql", "post"), "categories"),
@@ -180,7 +176,6 @@ export function applyTestingSqlStructure(app) {
     // 1-1 test
     T.object("categoryMeta")
       .keys({
-        id: T.uuid().primary(),
         postCount: T.number(),
         isHighlighted: T.bool().optional().searchable(),
       })

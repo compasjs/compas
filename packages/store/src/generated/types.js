@@ -29,7 +29,7 @@ export const __generated__ = true;
  */
 /**
  * @name StoreJobWhere
- * @typedef {{"id"?: number, "idNotEqual"?: number, "idIn"?: (number)[], "idNotIn"?: (number)[], "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[], "scheduledAtNotIn"?: (Date)[], "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[], "nameNotIn"?: (string)[], "nameLike"?: string, "nameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
+ * @typedef {{"id"?: number, "idNotEqual"?: number, "idIn"?: (number)[], "idNotIn"?: (number)[], "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[], "nameNotIn"?: (string)[], "nameLike"?: string, "nameNotLike"?: string, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[], "scheduledAtNotIn"?: (Date)[], "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }}
  */
 /**
  * @name StoreSessionWhere
@@ -37,19 +37,19 @@ export const __generated__ = true;
  */
 /**
  * @name StoreFileInsertPartial
- * @typedef {{"id"?: string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ * @typedef {{"id"?: string, "contentLength": number, "bucketName": string, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
  */
 /**
  * @name StoreFileUpdatePartial
- * @typedef {{"bucketName"?: string, "contentLength"?: number, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ * @typedef {{"contentLength"?: number, "bucketName"?: string, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
  */
 /**
  * @name StoreJobInsertPartial
- * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name": string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "name": string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
  */
 /**
  * @name StoreJobUpdatePartial
- * @typedef {{"isComplete"?: boolean, "priority"?: number, "scheduledAt"?: Date, "name"?: string, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
+ * @typedef {{"isComplete"?: boolean, "priority"?: number, "name"?: string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }}
  */
 /**
  * @name StoreSessionInsertPartial
