@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "../../../../stdlib/index.js";
+import { dirnameForModule, pathJoin } from "@lbu/stdlib";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 
 /**

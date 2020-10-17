@@ -1,4 +1,4 @@
-import { merge } from "../../../stdlib/index.js";
+import { merge } from "@lbu/stdlib";
 import { buildOrInfer } from "./utils.js";
 
 export class RelationType {

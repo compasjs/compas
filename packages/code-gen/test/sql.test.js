@@ -3,7 +3,7 @@ import { isNil, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
-} from "../../store/src/testing.js";
+} from "@lbu/store";
 
 mainTestFn(import.meta);
 

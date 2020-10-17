@@ -1,10 +1,10 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { createTestPostgresDatabase } from "@lbu/store";
 import {
+  createTestPostgresDatabase,
   getMigrationsToBeApplied,
   newMigrateContext,
-} from "../../packages/store/src/migrations.js";
-import { cleanupTestPostgresDatabase } from "../../packages/store/src/testing.js";
+  cleanupTestPostgresDatabase,
+} from "@lbu/store";
 
 mainTestFn(import.meta);
 

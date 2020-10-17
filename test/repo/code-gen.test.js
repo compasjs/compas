@@ -1,10 +1,7 @@
 import { readFileSync } from "fs";
 import { mainTestFn, test } from "@lbu/cli";
 import { App } from "@lbu/code-gen";
-import {
-  isNil,
-  processDirectoryRecursiveSync,
-} from "../../packages/stdlib/index.js";
+import { isNil, processDirectoryRecursiveSync } from "@lbu/stdlib";
 import {
   applyAllLocalGenerate,
   generateSettings,
