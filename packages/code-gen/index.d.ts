@@ -1,72 +1,6 @@
 import { Logger } from "@lbu/insight";
 import { AxiosInstance } from "axios";
 
-interface TypePlugin<T extends TypeBuilder> {
-  name: string;
-  class:
-    | T
-    | {
-        Builder: T;
-        [key: string]: any;
-      };
-
-  /**
-   * Return the template that should be used to validate this type
-   */
-  validator?: () => string;
-
-  /**
-   * Return the template that should be used to create JSDoc for this type
-   */
-  jsType?: () => string;
-
-  /**
-   * Return the template that should be used to create Typescript types for this type.
-   */
-  tsType?: () => string;
-}
-
-export interface GeneratorPlugin {
-  /**
-   * Generator name
-   */
-  name: string;
-
-  /**
-   * Compile static templates and do other static checks
-   */
-  init?: () => void | Promise<void>;
-
-  /**
-   * Add dynamic types to app.
-   * Can be called multiple times
-   */
-  preGenerate?: (
-    app: App,
-    data: object,
-    options: GenerateOpts,
-  ) => void | Promise<void>;
-
-  /**
-   * Compile dynamic templates, execute templates and return the GeneratedFiles
-   * Can be called multiple times
-   */
-  generate?: (
-    app: App,
-    data: object,
-    options: GenerateOpts,
-  ) =>
-    | GeneratedFile
-    | GeneratedFile[]
-    | Promise<GeneratedFile>
-    | Promise<GeneratedFile[]>;
-}
-
-/**
- * Generator registry, with all core provided generators already added
- */
-export const generators: Map<string, GeneratorPlugin>;
-
 /**
  * Check if value may be output object from a TypeBuilder
  */
@@ -86,18 +20,6 @@ export function loadFromOpenAPISpec(defaultGroup: string, data: any): any;
 
 interface AppOpts {
   verbose?: boolean;
-}
-
-interface GeneratedFile {
-  /**
-   * Relative path to the outputDirectory
-   */
-  path: string;
-
-  /**
-   * Generated source string
-   */
-  source: string;
 }
 
 interface GenerateOpts {
@@ -246,23 +168,7 @@ interface TypeBuilderLikeObject extends Record<string, TypeBuilderLike> {}
  * provided by the core.
  */
 export class TypeCreator {
-  /**
-   * Registry of all type plugins
-   */
-  static types: Map<string, TypePlugin<any>>;
-
   constructor(group?: string);
-
-  /**
-   * Return a list of type plugins that have the specified property
-   */
-  static getTypesWithProperty(property: string): TypePlugin<any>[];
-
-  /**
-   * Create a new RouteCreator
-   * Provided by the 'router' generator
-   */
-  router(path: string): RouteCreator;
 
   /**
    * Represents any type
@@ -334,11 +240,6 @@ export class TypeCreator {
   reference(groupOrOther?: string | TypeBuilder, name?: string): ReferenceType;
 
   /**
-   * SQL object relation modelling
-   */
-  relation(): RelationType;
-
-  /**
    * Make a copy of the provided type, making it sql searchable
    */
   searchable(name?: string): SearchableType;
@@ -352,6 +253,35 @@ export class TypeCreator {
    * Verified uuid
    */
   uuid(name?: string): UuidType;
+
+  /**
+   * Create a new RouteCreator
+   * Provided by the 'router' generator
+   */
+  router(path: string): RouteCreator;
+
+  /**
+   * Create a oneToMany relation
+   */
+  oneToMany(ownKey: string, reference: ReferenceType): RelationType;
+
+  /**
+   * Create a manyToMany relation
+   */
+  manyToMany(
+    ownKey: string,
+    reference: ReferenceType,
+    referencedKey: string,
+  ): RelationType;
+
+  /**
+   * Create a oneToOne relation
+   */
+  oneToOne(
+    ownKey: string,
+    reference: ReferenceType,
+    referencedKey: string,
+  ): RelationType;
 }
 
 /**
@@ -509,11 +439,7 @@ export class RouteCreator {
   response(builder: TypeBuilderLike): this;
 }
 
-export class AnyType extends TypeBuilder {
-  typeOf(value: string): this;
-
-  instanceOf(value: string): this;
-}
+export class AnyType extends TypeBuilder {}
 
 export class AnyOfType extends TypeBuilder {
   values(...items: TypeBuilderLike[]): this;
@@ -599,14 +525,20 @@ export class ObjectType extends TypeBuilder {
 
   /**
    * Generate sql queries for this object
-   * Posibbly adding createdAt and updatedAt fields.
+   * Possibly adding createdAt and updatedAt fields.
    * When withSoftDeletes is true, it automatically enables withDates.
    * Added by the 'sql' plugin
    */
   enableQueries(options?: {
     withSoftDeletes?: boolean;
     withDates?: boolean;
+    withPrimaryKey?: false;
   }): this;
+
+  /**
+   * Add SQL relations
+   */
+  relations(...relations: RelationType[]): this;
 }
 
 export class OmitType extends TypeBuilder {
@@ -640,52 +572,25 @@ export class PickType extends TypeBuilder {
   keys(...keys: string[]): this;
 }
 
-/**
- * Stores information about a relation between 2 objects.
- * The App knows about a manyToOne relation will add the leftKey based on the rightKey if
- * needed. Other than that, this type does nothing by itself and should only aid when used by
- * another generator like the sql generator
- */
-export class RelationType extends TypeBuilder {
-  constructor();
-
-  /**
-   * Denote a 1-1 relation
-   */
-  oneToOne(
-    left: TypeBuilder,
-    leftKey: string,
-    right: TypeBuilder,
-    rightKey: string,
-    substituteKey: string,
-  ): this;
-
-  /**
-   * Denote a 1-N relation
-   * i.e User (left) has multiple Item (right)
-   */
-  oneToMany(
-    left: TypeBuilder,
-    leftKey: string,
-    right: TypeBuilder,
-    rightKey: string,
-    substituteKey: string,
-  ): this;
-
-  /**
-   * Denote a N-1 relation
-   * i.e Item (left) is owned by User (right)
-   */
-  manyToOne(
-    left: TypeBuilder,
-    leftKey: string,
-    right: TypeBuilder,
-    rightKey: string,
-    substituteKey: string,
-  ): this;
-}
-
 export class ReferenceType extends TypeBuilder {}
+
+/**
+ * Relations are created by `T.oneToMany`, `T.manyToOne`, etc
+ * The generator will warn you when relations are missing.
+ */
+export class RelationType {
+  constructor(
+    subType: string,
+    ownKey: string,
+    reference: ReferenceType,
+    referencedKey?: string,
+  );
+
+  /**
+   * Make this side of the relation optional
+   */
+  optional(): this;
+}
 
 export class SearchableType extends TypeBuilder {
   /**

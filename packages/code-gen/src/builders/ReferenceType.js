@@ -1,5 +1,5 @@
 import { isNil } from "@lbu/stdlib";
-import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
+import { upperCaseFirst } from "../utils.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -52,23 +52,5 @@ export class ReferenceType extends TypeBuilder {
     this.ref = undefined;
 
     this.set(group, name);
-  }
-
-  /**
-   * @param {string|TypeBuilder} group
-   * @param {string} [name]
-   * @returns {ReferenceType}
-   */
-  set(group, name) {
-    if (group instanceof TypeBuilder) {
-      this.ref = group;
-
-      return this;
-    }
-
-    this.data.reference.group = lowerCaseFirst(group);
-    this.data.reference.name = lowerCaseFirst(name);
-
-    return this;
   }
 }
