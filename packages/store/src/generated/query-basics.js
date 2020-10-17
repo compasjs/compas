@@ -2,30 +2,28 @@
 /* eslint-disable no-unused-vars */
 
 import { query } from "@lbu/store";
-import {
-  fileFields,
-  fileWhere,
-  fileOrderBy,
-  fileInsertValues,
-  fileUpdateSet,
-  jobFields,
-  jobWhere,
-  jobOrderBy,
-  jobInsertValues,
-  jobUpdateSet,
-  sessionFields,
-  sessionWhere,
-  sessionOrderBy,
-  sessionInsertValues,
-  sessionUpdateSet,
-} from "./query-partials.js";
+import { fileFields,
+fileWhere,
+fileOrderBy,
+fileInsertValues,
+fileUpdateSet,
+jobFields,
+jobWhere,
+jobOrderBy,
+jobInsertValues,
+jobUpdateSet,
+sessionFields,
+sessionWhere,
+sessionOrderBy,
+sessionInsertValues,
+sessionUpdateSet } from "./query-partials.js";
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where]
- * @returns {Promise<StoreFile[]>}
- */
+* @param {Postgres} sql
+* @param {StoreFileWhere} [where]
+* @returns {Promise<StoreFile[]>}
+*/
 export function fileSelect(sql, where) {
-  return query`
+return query`
 SELECT ${fileFields()}
 FROM "file" f
 WHERE ${fileWhere(where)}
@@ -33,50 +31,53 @@ ORDER BY ${fileOrderBy()}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where]
- * @returns {Promise<number>}
- */
+* @param {Postgres} sql
+* @param {StoreFileWhere} [where]
+* @returns {Promise<number>}
+*/
 export async function fileCount(sql, where) {
-  const [result] = await query`
+const [ result ] = await query`
 SELECT COUNT(f."id") as "countResult"
 FROM "file" f
 WHERE ${fileWhere(where)}
 `.exec(sql);
-  return Number(result?.countResult ?? "0");
+return Number(result?.countResult ?? "0")
 }
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where={}]
- * @returns {Promise<void>}
- */
-export function fileDeletePermanent(sql, where = {}) {
-  where.deletedAtIncludeNotNull = true;
-  return query`
+* @param {Postgres} sql
+* @param {StoreFileWhere} [where={}]
+* @returns {Promise<void>}
+*/
+export function fileDeletePermanent(sql,
+where = {}
+) {
+where.deletedAtIncludeNotNull = true;
+return query`
 DELETE FROM "file" f
 WHERE ${fileWhere(where)}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
- * @returns {Promise<StoreFile[]>}
- */
+* @param {Postgres} sql
+* @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
+* @returns {Promise<StoreFile[]>}
+*/
 export function fileInsert(sql, insert) {
-  return query`
-INSERT INTO "file" (${fileFields("", { excludePrimaryKey: true })})
+return query`
+INSERT INTO "file" (${fileFields(
+"", { excludePrimaryKey: true })})
 VALUES ${fileInsertValues(insert)}
 RETURNING ${fileFields("")}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreFileUpdatePartial} update
- * @param {StoreFileWhere} [where={}]
- * @returns {Promise<StoreFile[]>}
- */
+* @param {Postgres} sql
+* @param {StoreFileUpdatePartial} update
+* @param {StoreFileWhere} [where={}]
+* @returns {Promise<StoreFile[]>}
+*/
 export function fileUpdate(sql, update, where = {}) {
-  return query`
+return query`
 UPDATE "file" f
 SET ${fileUpdateSet(update)}
 WHERE ${fileWhere(where)}
@@ -84,13 +85,13 @@ RETURNING ${fileFields()}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where={}]
- * @param {{ skipCascade: boolean }} [options={}]
- * @returns {Promise<void>}
- */
+* @param {Postgres} sql
+* @param {StoreFileWhere} [where={}]
+* @param {{ skipCascade: boolean }} [options={}]
+* @returns {Promise<void>}
+*/
 export async function fileDelete(sql, where = {}, options = {}) {
-  await query`
+await query`
 UPDATE "file" f
 SET "deletedAt" = now()
 WHERE ${fileWhere(where)}
@@ -98,12 +99,12 @@ RETURNING "id"
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where]
- * @returns {Promise<StoreJob[]>}
- */
+* @param {Postgres} sql
+* @param {StoreJobWhere} [where]
+* @returns {Promise<StoreJob[]>}
+*/
 export function jobSelect(sql, where) {
-  return query`
+return query`
 SELECT ${jobFields()}
 FROM "job" j
 WHERE ${jobWhere(where)}
@@ -111,49 +112,52 @@ ORDER BY ${jobOrderBy()}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where]
- * @returns {Promise<number>}
- */
+* @param {Postgres} sql
+* @param {StoreJobWhere} [where]
+* @returns {Promise<number>}
+*/
 export async function jobCount(sql, where) {
-  const [result] = await query`
+const [ result ] = await query`
 SELECT COUNT(j."id") as "countResult"
 FROM "job" j
 WHERE ${jobWhere(where)}
 `.exec(sql);
-  return Number(result?.countResult ?? "0");
+return Number(result?.countResult ?? "0")
 }
 /**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where={}]
- * @returns {Promise<void>}
- */
-export function jobDelete(sql, where = {}) {
-  return query`
+* @param {Postgres} sql
+* @param {StoreJobWhere} [where={}]
+* @returns {Promise<void>}
+*/
+export function jobDelete(sql,
+where = {}
+) {
+return query`
 DELETE FROM "job" j
 WHERE ${jobWhere(where)}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
- * @returns {Promise<StoreJob[]>}
- */
+* @param {Postgres} sql
+* @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
+* @returns {Promise<StoreJob[]>}
+*/
 export function jobInsert(sql, insert) {
-  return query`
-INSERT INTO "job" (${jobFields("", { excludePrimaryKey: true })})
+return query`
+INSERT INTO "job" (${jobFields(
+"", { excludePrimaryKey: true })})
 VALUES ${jobInsertValues(insert)}
 RETURNING ${jobFields("")}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreJobUpdatePartial} update
- * @param {StoreJobWhere} [where={}]
- * @returns {Promise<StoreJob[]>}
- */
+* @param {Postgres} sql
+* @param {StoreJobUpdatePartial} update
+* @param {StoreJobWhere} [where={}]
+* @returns {Promise<StoreJob[]>}
+*/
 export function jobUpdate(sql, update, where = {}) {
-  return query`
+return query`
 UPDATE "job" j
 SET ${jobUpdateSet(update)}
 WHERE ${jobWhere(where)}
@@ -161,12 +165,12 @@ RETURNING ${jobFields()}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreSessionWhere} [where]
- * @returns {Promise<StoreSession[]>}
- */
+* @param {Postgres} sql
+* @param {StoreSessionWhere} [where]
+* @returns {Promise<StoreSession[]>}
+*/
 export function sessionSelect(sql, where) {
-  return query`
+return query`
 SELECT ${sessionFields()}
 FROM "session" s
 WHERE ${sessionWhere(where)}
@@ -174,49 +178,52 @@ ORDER BY ${sessionOrderBy()}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreSessionWhere} [where]
- * @returns {Promise<number>}
- */
+* @param {Postgres} sql
+* @param {StoreSessionWhere} [where]
+* @returns {Promise<number>}
+*/
 export async function sessionCount(sql, where) {
-  const [result] = await query`
+const [ result ] = await query`
 SELECT COUNT(s."id") as "countResult"
 FROM "session" s
 WHERE ${sessionWhere(where)}
 `.exec(sql);
-  return Number(result?.countResult ?? "0");
+return Number(result?.countResult ?? "0")
 }
 /**
- * @param {Postgres} sql
- * @param {StoreSessionWhere} [where={}]
- * @returns {Promise<void>}
- */
-export function sessionDelete(sql, where = {}) {
-  return query`
+* @param {Postgres} sql
+* @param {StoreSessionWhere} [where={}]
+* @returns {Promise<void>}
+*/
+export function sessionDelete(sql,
+where = {}
+) {
+return query`
 DELETE FROM "session" s
 WHERE ${sessionWhere(where)}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
- * @returns {Promise<StoreSession[]>}
- */
+* @param {Postgres} sql
+* @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
+* @returns {Promise<StoreSession[]>}
+*/
 export function sessionInsert(sql, insert) {
-  return query`
-INSERT INTO "session" (${sessionFields("", { excludePrimaryKey: true })})
+return query`
+INSERT INTO "session" (${sessionFields(
+"", { excludePrimaryKey: true })})
 VALUES ${sessionInsertValues(insert)}
 RETURNING ${sessionFields("")}
 `.exec(sql);
 }
 /**
- * @param {Postgres} sql
- * @param {StoreSessionUpdatePartial} update
- * @param {StoreSessionWhere} [where={}]
- * @returns {Promise<StoreSession[]>}
- */
+* @param {Postgres} sql
+* @param {StoreSessionUpdatePartial} update
+* @param {StoreSessionWhere} [where={}]
+* @returns {Promise<StoreSession[]>}
+*/
 export function sessionUpdate(sql, update, where = {}) {
-  return query`
+return query`
 UPDATE "session" s
 SET ${sessionUpdateSet(update)}
 WHERE ${sessionWhere(where)}

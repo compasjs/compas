@@ -69,6 +69,11 @@ function traversalQuery(context, imports, type) {
         ? relation.referencedKey
         : getPrimaryKeyWithType(otherSide).key;
 
+    const ownKey =
+      ["manyToOne", "oneToOne"].indexOf(relation.subType) !== -1
+        ? relation.ownKey
+        : primaryKey;
+
     const part = js`
       /**
        * @param {${otherSide.uniqueName}Where} [where={}]
@@ -80,7 +85,7 @@ function traversalQuery(context, imports, type) {
           where,
           query\`
         AND ${otherSide.shortName}."${referencedKey}"  = ANY(
-          SELECT ${type.shortName}."${primaryKey}"
+          SELECT ${type.shortName}."${ownKey}"
           $\{q}
         )
         \`);
@@ -123,9 +128,10 @@ function traversalQuery(context, imports, type) {
         ${partials}
         exec(sql) {
           return query\`
-          SELECT $\{${type.name}Fields()}
-           $\{q} 
-           $\{${type.name}OrderBy()}\`.exec(sql);
+            SELECT $\{${type.name}Fields()}
+             $\{q} 
+            ORDER BY $\{${type.name}OrderBy()}
+          \`.exec(sql);
         }
       };
     }

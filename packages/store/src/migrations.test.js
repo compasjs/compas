@@ -26,10 +26,7 @@ test("store/migrations", (t) => {
   });
 
   t.test("run full migration", async (t) => {
-    const mc = await newMigrateContext(
-      sql,
-      `${dirnameForModule(import.meta)}/../__fixtures__`,
-    );
+    const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
     t.equal(mc.files.length, 7);

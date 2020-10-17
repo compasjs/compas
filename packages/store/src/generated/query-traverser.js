@@ -2,89 +2,90 @@
 /* eslint-disable no-unused-vars */
 
 import { query } from "@lbu/store";
-import {
-  fileFields,
-  fileWhere,
-  fileOrderBy,
-  jobFields,
-  jobWhere,
-  jobOrderBy,
-  sessionFields,
-  sessionWhere,
-  sessionOrderBy,
-} from "./query-partials.js";
+import { fileFields,
+fileWhere,
+fileOrderBy,
+jobFields,
+jobWhere,
+jobOrderBy,
+sessionFields,
+sessionWhere,
+sessionOrderBy } from "./query-partials.js";
 /**
- * @name TraverseFile
- * @typedef {object}
- * @property {function(sql: Postgres): Promise<StoreFile[]>} exec
- */
+* @name TraverseFile
+* @typedef {object}
+* @property {function(sql: Postgres): Promise<StoreFile[]>} exec
+*/
 /**
- * @param {StoreFileWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
- * @returns {TraverseFile}
- */
+* @param {StoreFileWhere} [where={}]
+* @param {QueryPart|undefined} [queryPart]
+* @returns {TraverseFile}
+*/
 export function traverseFile(where = {}, queryPart) {
-  const q = query`
+const q = query`
 FROM "file" f
 WHERE ${fileWhere(where)}
 ${queryPart}
 `;
-  return {
-    exec(sql) {
-      return query`
+return {
+exec(sql) {
+return query`
 SELECT ${fileFields()}
 ${q}
-${fileOrderBy()}`.exec(sql);
-    },
-  };
+ORDER BY ${fileOrderBy()}
+`.exec(sql);
+}
+};
 }
 /**
- * @name TraverseJob
- * @typedef {object}
- * @property {function(sql: Postgres): Promise<StoreJob[]>} exec
- */
+* @name TraverseJob
+* @typedef {object}
+* @property {function(sql: Postgres): Promise<StoreJob[]>} exec
+*/
 /**
- * @param {StoreJobWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
- * @returns {TraverseJob}
- */
+* @param {StoreJobWhere} [where={}]
+* @param {QueryPart|undefined} [queryPart]
+* @returns {TraverseJob}
+*/
 export function traverseJob(where = {}, queryPart) {
-  const q = query`
+const q = query`
 FROM "job" j
 WHERE ${jobWhere(where)}
 ${queryPart}
 `;
-  return {
-    exec(sql) {
-      return query`
+return {
+exec(sql) {
+return query`
 SELECT ${jobFields()}
 ${q}
-${jobOrderBy()}`.exec(sql);
-    },
-  };
+ORDER BY ${jobOrderBy()}
+`.exec(sql);
+}
+};
 }
 /**
- * @name TraverseSession
- * @typedef {object}
- * @property {function(sql: Postgres): Promise<StoreSession[]>} exec
- */
+* @name TraverseSession
+* @typedef {object}
+* @property {function(sql: Postgres): Promise<StoreSession[]>} exec
+*/
 /**
- * @param {StoreSessionWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
- * @returns {TraverseSession}
- */
+* @param {StoreSessionWhere} [where={}]
+* @param {QueryPart|undefined} [queryPart]
+* @returns {TraverseSession}
+*/
 export function traverseSession(where = {}, queryPart) {
-  const q = query`
+const q = query`
 FROM "session" s
 WHERE ${sessionWhere(where)}
 ${queryPart}
 `;
-  return {
-    exec(sql) {
-      return query`
+return {
+exec(sql) {
+return query`
 SELECT ${sessionFields()}
 ${q}
-${sessionOrderBy()}`.exec(sql);
-    },
-  };
+ORDER BY ${sessionOrderBy()}
+`.exec(sql);
+}
+};
 }

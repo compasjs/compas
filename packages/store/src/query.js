@@ -46,7 +46,12 @@ export function query(strings, ...values) {
       _values.push(values[i]);
     }
   }
-  _strings.push(strings[strings.length - 1]);
+
+  if (didFlatten) {
+    _strings[_strings.length - 1] += strings[strings.length - 1];
+  } else {
+    _strings.push(strings[strings.length - 1]);
+  }
 
   return result;
 

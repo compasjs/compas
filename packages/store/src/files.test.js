@@ -24,9 +24,7 @@ test("store/files", async (t) => {
   const bucketName = uuid();
   const minio = newMinioClient({});
   await ensureBucket(minio, bucketName, "us-east-1");
-  const filePath = `${dirnameForModule(
-    import.meta,
-  )}/../__fixtures__/997-test.sql`;
+  const filePath = `./__fixtures__/store/997-test.sql`;
   const name = "997-test.sql";
 
   let sql = undefined;
