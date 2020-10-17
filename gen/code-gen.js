@@ -17,6 +17,56 @@ export function applyCodeGenStructure(app) {
         T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
       ),
   );
+
+  app.add(
+    T.object("generateOpts").keys({
+      enabledGroups: T.array().values(T.string()),
+      isBrowser: T.bool(),
+      isNode: T.bool(),
+      isNodeServer: T.bool(),
+      enabledGenerators: T.array().values(
+        T.string().oneOf(
+          "type",
+          "validator",
+          "router",
+          "sql",
+          "apiClient",
+          "reactQuery",
+        ),
+      ),
+      useTypescript: T.bool(),
+      dumpStructure: T.bool(),
+      fileHeader: T.string(),
+      outputDirectory: T.string(),
+    }),
+    T.object("context").keys({
+      options: T.reference("codeGen", "generateOpts"),
+      structure: T.reference("codeGen", "structure"),
+      extension: T.string().oneOf(".js", ".ts"),
+      importExtension: T.string(),
+      outputFiles: T.array().values(T.reference("codeGen", "file")),
+      rootExports: T.array().values(T.string()),
+    }),
+    T.object("file").keys({
+      relativePath: T.string(),
+      contents: T.string(),
+    }),
+    T.object("templateState").keys({
+      phase: T.string().oneOf("init", "collect", "finish"),
+    }),
+    T.object("typeSettings").keys({
+      isJSON: T.bool().optional(),
+      nestedIsJSON: T.bool().optional(),
+      useDefaults: T.bool().optional(),
+      useTypescript: T.bool().optional(),
+      isNode: T.bool().optional(),
+      isBrowser: T.bool().optional(),
+      suffix: T.string().optional(),
+      fileTypeIO: T.string()
+        .oneOf("input", "outputRouter", "outputClient")
+        .optional(),
+    }),
+  );
 }
 
 /**
@@ -114,6 +164,44 @@ function getTypes(T) {
       .keys({
         withSoftDeletes: T.bool().default(false),
         withDates: T.bool().default(false),
+        withPrimaryKey: T.bool().default(true),
+      })
+      .optional(),
+    relations: T.array()
+      .values(T.reference("codeGen", "relationType"))
+      .default("[]"),
+    shortName: T.string().optional(),
+    where: T.object()
+      .keys({
+        type: T.string(),
+        fields: T.array().values({
+          key: T.string(),
+          name: T.string(),
+          variant: T.string().oneOf(
+            "equal",
+            "notEqual",
+            "in",
+            "notIn",
+            "greaterThan",
+            "lowerThan",
+            "isNull",
+            "isNotNull",
+            "includeNotNull",
+            "like",
+            "notLike",
+          ),
+        }),
+      })
+      .optional(),
+    partial: T.object()
+      .keys({
+        insertType: T.string(),
+        updateType: T.string(),
+        fields: T.array().values({
+          key: T.string(),
+          defaultValue: T.string().optional(),
+          isJsonb: T.bool().default(false),
+        }),
       })
       .optional(),
   });
@@ -121,18 +209,24 @@ function getTypes(T) {
   const referenceType = T.object("referenceType").keys({
     type: "reference",
     ...typeBase,
-    reference: T.pick().object(typeBase).keys("group", "name", "uniqueName"),
+    reference: T.anyOf().values(
+      T.reference("codeGen", "type"),
+      T.pick().object(typeBase).keys("group", "name", "uniqueName"),
+    ),
   });
 
   const relationType = T.object("relationType").keys({
     type: "relation",
-    ...typeBase,
-    relationType: T.string().oneOf("oneToOne", "oneToMany", "manyToOne"),
-    left: T.reference("codeGen", "type"),
-    leftKey: T.string(),
-    right: T.reference("codeGen", "type"),
-    rightKey: T.string(),
-    substituteKey: T.string(),
+    subType: T.string().oneOf(
+      "manyToOne",
+      "oneToMany",
+      "oneToOne",
+      "oneToOneReverse",
+    ),
+    reference: T.reference("codeGen", "referenceType"),
+    ownKey: T.string(),
+    referencedKey: T.string().optional(),
+    isOptional: T.bool().default(false),
   });
 
   const stringType = T.object("stringType").keys({

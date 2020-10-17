@@ -1,6 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { uuid } from "@lbu/stdlib";
-import { storeQueries } from "./generated/queries.js";
+import { queries } from "./generated.js";
 import { newSessionStore } from "./sessions.js";
 import {
   cleanupTestPostgresDatabase,
@@ -53,11 +53,11 @@ test("store/sessions", async (t) => {
   });
 
   t.test("store.clean removes expired sessions", async (t) => {
-    const sessions = await storeQueries.sessionSelect(sql);
+    const sessions = await queries.sessionSelect(sql);
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);
-    await storeQueries.sessionUpdate(
+    await queries.sessionUpdate(
       sql,
       { expires: new Date(0) },
       {

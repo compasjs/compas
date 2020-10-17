@@ -1,17 +1,11 @@
 import { readFileSync } from "fs";
 import { mainTestFn, test } from "@lbu/cli";
-import { dirnameForModule } from "@lbu/stdlib";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 mainTestFn(import.meta);
 
 const loadCopy = () =>
-  JSON.parse(
-    readFileSync(
-      `${dirnameForModule(import.meta)}/__fixtures__/openapi.json`,
-      "utf-8",
-    ),
-  );
+  JSON.parse(readFileSync(`./__fixtures__/code-gen/openapi.json`, "utf-8"));
 
 test("code-gen/open-api-importer", (t) => {
   t.test("throw on invalid version", (t) => {

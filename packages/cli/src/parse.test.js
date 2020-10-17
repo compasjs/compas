@@ -124,10 +124,10 @@ test("cli/parse", (t) => {
   });
 
   t.test("accept paths for run exec", (t) => {
-    t.deepEqual(parseArgs(["run", "./scripts/generate.js"], ["foo"]), {
+    t.deepEqual(parseArgs(["run", "./scripts/changelog.js"], ["foo"]), {
       type: "exec",
       name: "run",
-      script: "./scripts/generate.js",
+      script: "./scripts/changelog.js",
       nodeArguments: [],
       toolArguments: [],
       execArguments: [],

@@ -126,7 +126,11 @@ function printFailedResults(state, result, indentCount) {
             result.push(
               `${subIndent}Expected: (${typeof expected}) ${expected}`,
             );
-            result.push(`${subIndent}Actual: (${typeof actual}) ${actual}`);
+            result.push(
+              `${subIndent}Actual: (${typeof actual}) ${JSON.stringify(
+                actual,
+              )}`,
+            );
           }
         }
       }

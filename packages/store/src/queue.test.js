@@ -1,6 +1,6 @@
 import { mainTestFn, test } from "@lbu/cli";
 import { isNil } from "@lbu/stdlib";
-import { storeQueries } from "./generated/queries.js";
+import { queries } from "./generated.js";
 import {
   addRecurringJobToQueue,
   getNextScheduledAt,
@@ -181,7 +181,7 @@ test("store/queue - recurring jobs ", async (t) => {
   );
 
   t.test("cleanup jobs", async () => {
-    await sql`DELETE FROM job WHERE 1 = 1`;
+    await queries.jobDelete(sql);
   });
 
   t.test(
@@ -203,7 +203,7 @@ test("store/queue - recurring jobs ", async (t) => {
       const [
         recurringJob,
       ] = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
-      const count = await storeQueries.jobCount(sql);
+      const count = await queries.jobCount(sql);
 
       t.equal(count, 2);
 

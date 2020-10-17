@@ -43,6 +43,20 @@ yarn lbu generate
 yarn lbu internal_generate
 ```
 
+### Improving test coverage
+
+There are a bunch of things not covered by tests, there are a few ways to
+improve coverage, but let's start by running `yarn lbu coverage` and opening
+`file:///path/to/repo/coverage/lcov-report/index.html` in your browser.
+
+If it is your first time doing this, start by checking out files in the
+`generated` directory. Most of these files are partially covered, and it should
+be pretty straight forward to find a related function that is tested, and doing
+the same for the yet untested function. For new cases related to code
+generation, add the missing case in `gen/testing.js` and regenerate with
+`yarn lbu gen && yarn lbu lint`. Then run `yarn lbu coverage` again to see that
+the new case is not yet covered by tests.
+
 ### Debugging tests
 
 Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:

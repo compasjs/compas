@@ -1,0 +1,274 @@
+import { compose } from "@lbu/server";
+import { AppError } from "@lbu/stdlib";
+import { eventRename } from "@lbu/insight";
+
+{{ for (const group of Object.keys(structure)) { }}
+    {{ const count = Object.values(structure[group]).find(it => it.type === "route" && (!isNil(it.params) || !isNil(it.query) || !isNil(it.body) || !isNil(it.files))); }}
+    {{ if (count === undefined) { continue; } }}
+
+    import {
+    {{ for (const name of Object.keys(structure[group])) { }}
+        {{ const item = structure[group][name]; }}
+        {{ if (item.type !== "route") { continue; } }}
+
+        {{ if (item.params) { }}
+        {{= item.params.reference.name }} as {{= item.params.reference.uniqueName }}Validator,
+        {{ } }}
+        {{ if (item.query) { }}
+        {{= item.query.reference.name }} as {{= item.query.reference.uniqueName }}Validator,
+        {{ } }}
+        {{ if (item.body) { }}
+        {{= item.body.reference.name }} as {{= item.body.reference.uniqueName }}Validator,
+        {{ } }}
+        {{ if (item.files) { }}
+        {{= item.files.reference.name }} as {{= item.files.reference.uniqueName }}Validator,
+        {{ } }}
+    {{ } }}
+    } from "./{{= group }}/validators{{= importExtension }}";
+{{ } }}
+
+{{ if (options.dumpStructure) { }}
+import { structureString } from "./structure{{= importExtension }}";
+{{ } }}
+((newline))
+
+let internalBodyParsers = undefined;
+/**
+ * @param {BodyParserPair} parsers
+ */
+export function setBodyParsers(parsers) {
+  internalBodyParsers = {
+    body: (ctx) =>
+      new Promise((r) => {
+        parsers.bodyParser(ctx, r).then(r);
+      }),
+    files: (ctx) =>
+      new Promise((r) => {
+        parsers.multipartBodyParser(ctx, r).then(r);
+      }),
+  };
+}
+((newline))
+
+const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
+((newline))
+
+
+/**
+ * @name GroupMiddleware
+ * @typedef {object}
+{{ for (const group of Object.keys(structure)) { }}
+ * @property {Middleware|Middleware[]|undefined} {{= group }}
+{{ } }}
+ */
+
+/**
+ * @type {GroupMiddleware}
+ */
+export const groupMiddleware = {
+  {{ for (const group of Object.keys(structure)) { }}
+    {{= group }}: undefined,
+  {{ } }}
+};
+((newline))
+
+const _composed = {
+  {{ for (const groupName of Object.keys(structure)) { }}
+    {{ for (const itemName of Object.keys(structure[groupName])) { }}
+      {{ const item = structure[groupName][itemName]; }}
+
+      {{ if (item.type !== "route") { }}
+      {{ continue; }}
+      {{ } }}
+
+      {{= item.uniqueName }}: undefined,
+
+    {{ } }}
+  {{ } }}
+};
+((newline))
+
+const handlers = {
+  {{ for (const groupName of Object.keys(structure)) { }}
+    {{ for (const itemName of Object.keys(structure[groupName])) { }}
+      {{ const item = structure[groupName][itemName]; }}
+
+      {{ if (item.type !== "route") { }}
+      {{ continue; }}
+      {{ } }}
+((newline))
+
+      {{= item.uniqueName }}: {{ if (item.body || item.query || item.files) { }} async {{ } }} (params, ctx, next) => {
+
+        ctx.request.params = params;
+
+        {{ if (item.params) { }}
+        ctx.validatedParams = {{= item.params.reference.uniqueName }}Validator(params);
+        {{ } }}
+
+        {{ if (item.files) { }}
+          await internalBodyParsers.files(ctx);
+          ctx.validatedFiles = {{= item.files.reference.uniqueName }}Validator(ctx.request.files);
+        {{ } else if (item.body || item.query) { }}
+          await internalBodyParsers.body(ctx);
+        {{ } }}
+
+        {{ if (item.query) { }}
+          ctx.validatedQuery = {{= item.query.reference.uniqueName }}Validator(ctx.request.query);
+        {{ } }}
+
+        {{ if (item.body) { }}
+          ctx.validatedBody = {{= item.body.reference.uniqueName }}Validator(ctx.request.body);
+        {{ } }}
+
+
+        if (_composed.{{= item.uniqueName }} === undefined) {
+          const currentHandler = {{= item.group }}Handlers.{{= item.name }};
+          _composed.{{= item.uniqueName }} = filterCompose(
+              ...(Array.isArray(groupMiddleware.{{= item.group }}) ? groupMiddleware.{{= item.group }} : [groupMiddleware.{{= item.group }}]),
+              ...(Array.isArray(currentHandler) ? currentHandler : [currentHandler]),
+          );
+        }
+
+        eventRename(ctx.event, `{{= item.group }}.{{= item.name }}`);
+        return _composed.{{= item.uniqueName }}(ctx, next);
+      },
+
+    {{ } }}
+  {{ } }}
+};
+((newline))
+
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    /**
+     * @name {{= item.uniqueName }}Ctx
+     * @typedef {object & Context}
+     * @property {Logger} log
+     * @property {Event} event
+     {{ if (item.response) { }}* @property { {{= item.response.reference.uniqueName }} } body {{ } }}
+     {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
+     {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
+     {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
+     {{ if (item.files) { }}* @property { {{= getTypeNameForType(item.files.reference, "Validated", { fileTypeIO: "outputRouter", }) }} } validatedFiles {{ } }}
+     */
+((newline))
+     /**
+       * @callback {{= item.uniqueName }}Fn
+       * @param { {{= item.uniqueName }}Ctx} ctx
+       * @param {Function} next
+       * @returns {void|Promise<void>}
+       */
+((newline))
+
+  {{ } }}
+{{ } }}
+
+{{ for (const groupName of Object.keys(structure)) { }}
+
+  /**
+   * @type { {
+   {{ for (const itemName of Object.keys(structure[groupName])) { }}
+       {{ const item = structure[groupName][itemName]; }}
+
+       {{ if (item.type !== "route") { }}
+       {{ continue; }}
+       {{ } }}
+
+   * {{= item.name }}: ({{= item.uniqueName }}Fn|{{= item.uniqueName }}Fn[]),
+
+   {{ } }}
+
+   * } }
+   */
+  export const {{= groupName }}Handlers = {
+((newline))
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    /**
+     * {{= item.docString.replace(/\n/g, "\n  * ") }}
+     {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+     * {{= item.method }} {{= item.path }}
+     */
+     {{= item.name }}: (ctx, next) => {
+       throw AppError.notImplemented();
+     },
+((newline))
+
+  {{ } }}
+
+  };
+((newline))
+
+  export const {{= groupName }}Tags = {
+((newline))
+
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+     {{= item.name }}: {{ if (item.tags.length > 0 ) { }}["{{= item.tags.join(`", "`) }}"]{{ } else { }}[]{{ } }},
+((newline))
+
+  {{ } }}
+
+  };
+
+((newline))
+
+{{ } }}
+
+
+{{ const context = { functions: "", counter: 0 }; }}
+((newline))
+
+export function router(ctx, next) {
+  let triePath = ctx.method + ctx.path;
+  if (triePath.endsWith("/")) {
+    triePath = triePath.substring(0, triePath.length - 1);
+  }
+
+  const params = Object.create(null);
+  let route = undefined;
+
+  {{ for (const child of routeTrie.children) { }}
+  route = routeMatcher{{= context.counter }}(triePath, params, 0);
+  {{ const src = routeMatcher({ matcher: child, context }); }}
+  {{ context.functions += src; }}
+  if (route !== undefined) {
+    return route(params, ctx, next);
+  }
+  {{ } }}
+
+  return next();
+}
+((newline))
+
+{{ if (options.dumpStructure) { }}
+lbuHandlers.structure = (ctx, next) => {
+  ctx.set("Content-Type", "application/json");
+  ctx.body = structureString;
+
+  return next();
+}
+{{ } }}
+((newline))
+
+
+{{= context.functions }}
+((newline))

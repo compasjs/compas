@@ -18,8 +18,8 @@ test("cli/utils", (t) => {
   t.test("collectScripts contains scripts", (t) => {
     const result = collectScripts();
 
-    t.ok(!isNil(result["generate"]));
-    t.equal(result["generate"].type, "user");
+    t.ok(!isNil(result["changelog"]));
+    t.equal(result["changelog"].type, "user");
   });
 
   t.test("collectScripts contains package.json scripts", (t) => {

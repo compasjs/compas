@@ -1,102 +1,13 @@
-import { existsSync } from "fs";
-import { mkdir, writeFile } from "fs/promises";
-import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
-import { codeGenValidators } from "./generated/validators.js";
-import { generators } from "./generators/index.js";
-import { recursiveLinkupReferences } from "./references.js";
-import { isNamedTypeBuilderLike, TypeBuilder } from "./types/index.js";
-import { getItem, upperCaseFirst } from "./utils.js";
-
-/**
- * The whole generate process
- *
- * @param {App} app
- * @param {GenerateOpts} options
- * @returns {Promise<void>}
- */
-export async function runGenerators(app, options) {
-  // Ensure that we don't mutate the current working data of the user
-  const dataCopy = JSON.parse(JSON.stringify(app.data));
-  const generatorInput = {};
-
-  addGroupsToGeneratorInput(generatorInput, dataCopy, options.enabledGroups);
-
-  let stringifyInput;
-
-  // validators may not be present, fallback to just stringify
-  if (!isNil(codeGenValidators.structure)) {
-    const { data, errors } = codeGenValidators.structure(generatorInput);
-    if (errors) {
-      app.logger.error(errors);
-    }
-    stringifyInput = JSON.stringify(data);
-  } else {
-    stringifyInput = JSON.stringify(generatorInput);
-  }
-
-  stringifyInput = stringifyInput.replace(/\\/g, "\\\\").replace("'", "\\'");
-
-  recursiveLinkupReferences(generatorInput, generatorInput);
-  addFieldsOfRelations(generatorInput);
-
-  let prevCount = getTopLevelItemCount(generatorInput);
-
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    await callGeneratorMethod(
-      app,
-      options.enabledGenerators,
-      "preGenerate",
-      app,
-      {
-        structure: generatorInput,
-        options,
-      },
-    );
-
-    hoistNamedItems(generatorInput, generatorInput);
-
-    recursiveLinkupReferences(generatorInput, generatorInput);
-    addFieldsOfRelations(generatorInput);
-
-    const newCount = getTopLevelItemCount(generatorInput);
-
-    if (newCount === prevCount) {
-      break;
-    }
-    prevCount = newCount;
-  }
-
-  const generatorInputCopy = {};
-  copyAndSort(generatorInput, generatorInputCopy);
-
-  const files = await callGeneratorMethod(
-    app,
-    options.enabledGenerators,
-    "generate",
-    app,
-    {
-      structure: generatorInputCopy,
-      options,
-    },
-  );
-
-  if (options.dumpStructure) {
-    files.push({
-      path: "./structure.js",
-      source: `export const structureString = '${stringifyInput}';\nexport const structure = JSON.parse(structureString);\n`,
-    });
-  }
-
-  await normalizeAndWriteFiles(options, files);
-}
+import { isNil, isPlainObject } from "@lbu/stdlib";
+import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
+import { upperCaseFirst } from "./utils.js";
 
 /**
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} structure
  * @param {string[]} groups
  */
-function addGroupsToGeneratorInput(input, structure, groups) {
+export function addGroupsToGeneratorInput(input, structure, groups) {
   for (const group of groups) {
     input[group] = structure[group] || {};
   }
@@ -112,7 +23,7 @@ function addGroupsToGeneratorInput(input, structure, groups) {
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} copy
  */
-function copyAndSort(input, copy) {
+export function copyAndSort(input, copy) {
   const groups = Object.keys(input).sort();
 
   for (const group of groups) {
@@ -123,69 +34,6 @@ function copyAndSort(input, copy) {
       copy[group][name] = input[group][name];
     }
   }
-}
-
-/**
- * @name GeneratorOptions
- * @typedef {object}
- * @property {GenerateOpts} options
- * @property {CodeGenStructure} structure
- */
-
-/**
- * Call a method on the specific generator with the specified arguments
- *
- * @param {App} app
- * @param {string} generatorName
- * @param {string} method
- * @param {...*} args
- * @returns {Promise<undefined|*>}
- */
-export async function callSpecificGeneratorWithMethod(
-  app,
-  generatorName,
-  method,
-  ...args
-) {
-  const gen = generators.get(generatorName);
-  if (!gen) {
-    throw new Error(`Could not find generator with name: ${generatorName}`);
-  }
-  if (method in gen) {
-    if (app.verbose) {
-      app.logger.info(`generator: calling ${method} on ${gen.name}`);
-    }
-    return gen[method](...args);
-  }
-
-  return undefined;
-}
-
-/**
- * Call a method on all generators
- *
- * @param {App} app
- * @param {string[]|Iterable<string>} keys
- * @param {string} method
- * @param {...*} args
- * @returns {Promise<*[]>}
- */
-export async function callGeneratorMethod(app, keys, method, ...args) {
-  const result = [];
-
-  for (const key of keys) {
-    const tmp = await callSpecificGeneratorWithMethod(
-      app,
-      key,
-      method,
-      ...args,
-    );
-    if (tmp) {
-      result.push(tmp);
-    }
-  }
-
-  return result;
 }
 
 /**
@@ -209,31 +57,6 @@ export function addToData(dataStructure, item) {
   dataStructure[item.group][item.name] = item;
 
   item.uniqueName = upperCaseFirst(item.group) + upperCaseFirst(item.name);
-}
-
-/**
- * @param {GenerateOpts} options
- * @param {(GeneratedFile|GeneratedFile[])[]} files
- */
-async function normalizeAndWriteFiles(options, files) {
-  const flattenedFiles = [];
-
-  for (const file of files) {
-    if (!Array.isArray(file) && isPlainObject(file)) {
-      flattenedFiles.push(file);
-    } else if (Array.isArray(file)) {
-      flattenedFiles.push(...file);
-    }
-  }
-
-  if (!existsSync(options.outputDirectory)) {
-    await mkdir(options.outputDirectory, { recursive: true });
-  }
-
-  for (const file of flattenedFiles) {
-    const filePath = pathJoin(options.outputDirectory, file.path);
-    await writeFile(filePath, file.source, "utf-8");
-  }
 }
 
 /**
@@ -360,49 +183,4 @@ function hoistNamedItemsRecursive(history, root, value) {
   }
 
   history.delete(value);
-}
-
-function addFieldsOfRelations(structure) {
-  for (const group of Object.values(structure)) {
-    for (const item of Object.values(group)) {
-      if (item.type !== "relation" || item.relationType !== "manyToOne") {
-        continue;
-      }
-
-      const relationLeft = getItem(item.left);
-      const relationRight = getItem(item.right);
-
-      if (isNil(relationLeft.keys[item.leftKey])) {
-        const hasPrimary = Object.values(relationLeft.keys).find(
-          (it) => it?.sql?.primary ?? false,
-        );
-
-        relationLeft.keys[item.leftKey] = {
-          ...relationRight.keys[item.rightKey],
-          sql: {
-            ...(relationRight.keys[item.rightKey] || {}),
-            searchable: true,
-            primary: !hasPrimary,
-          },
-        };
-      }
-
-      relationLeft.keys[item.leftKey].relationInfo = item;
-    }
-  }
-}
-
-/**
- * Count the number of items in data
- *
- * @param data
- * @returns {number}
- */
-function getTopLevelItemCount(data) {
-  let count = 0;
-  for (const group of Object.values(data)) {
-    count += Object.keys(group).length;
-  }
-
-  return count;
 }

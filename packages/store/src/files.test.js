@@ -1,13 +1,13 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@lbu/cli";
-import { dirnameForModule, uuid } from "@lbu/stdlib";
+import { uuid } from "@lbu/stdlib";
 import {
   copyFile,
   createOrUpdateFile,
   getFileStream,
   syncDeletedFiles,
 } from "./files.js";
-import { storeQueries } from "./generated/queries.js";
+import { queries } from "./generated.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -24,9 +24,7 @@ test("store/files", async (t) => {
   const bucketName = uuid();
   const minio = newMinioClient({});
   await ensureBucket(minio, bucketName, "us-east-1");
-  const filePath = `${dirnameForModule(
-    import.meta,
-  )}/../__fixtures__/997-test.sql`;
+  const filePath = `./__fixtures__/store/997-test.sql`;
   const name = "997-test.sql";
 
   let sql = undefined;
@@ -89,7 +87,7 @@ test("store/files", async (t) => {
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await storeQueries.fileSelect(sql, {});
+    storedFiles = await queries.fileSelect(sql);
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });
@@ -147,7 +145,7 @@ test("store/files", async (t) => {
   });
 
   t.test("update files by idIn", async (t) => {
-    const result = await storeQueries.fileUpdate(
+    const result = await queries.fileUpdate(
       sql,
       { updatedAt: new Date() },
       {
@@ -159,7 +157,7 @@ test("store/files", async (t) => {
   });
 
   t.test("deleteFile", async () => {
-    await storeQueries.fileDeletePermanent(sql, { id: storedFiles[0].id });
+    await queries.fileDeletePermanent(sql, { id: storedFiles[0].id });
   });
 
   t.test("sync deleted files", async (t) => {

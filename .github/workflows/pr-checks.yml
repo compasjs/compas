@@ -41,6 +41,7 @@ jobs:
         # New line stripping from: https://github.community/t/set-output-truncates-multiline-strings/16852/5
         run: |
           yarn install
+          yarn lbu gen
           yarn lbu bench
           RESULT="$(cat ./benchmark_output.txt)"
           RESULT="${RESULT//'%'/'%25'}"
@@ -96,7 +97,7 @@ jobs:
         run: |
           yarn install
           yarn lbu docker up
-          yarn lbu generate
+          yarn lbu gen
           yarn lbu migrate
           yarn lbu coverage
           yarn lbu docker reset

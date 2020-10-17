@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { AppError, pathJoin, uuid } from "@lbu/stdlib";
+import { AppError, uuid } from "@lbu/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
@@ -87,7 +87,7 @@ test("server/app", async (t) => {
 
   t.test("consistent x-request-id with generated api client", async (t) => {
     const imp = await import(
-      pathJoin(process.cwd(), "./generated/app/apiClient.js")
+      "./../../../generated/testing/server/apiClient.js"
     );
     imp.createApiClient(client);
 

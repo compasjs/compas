@@ -1,5 +1,6 @@
 import * as minioVendor from "minio";
 import * as postgresVendor from "postgres";
+import { queries } from "./src/generated/index.js";
 
 /**
  * Reexported all of minio package
@@ -415,3 +416,35 @@ export const migrations: string;
  * Can be used to extend functionality or reference one of the columns
  */
 export const storeStructure: any;
+
+/**
+ * Build safe, parameterized queries.
+ */
+export interface QueryPart {
+  strings: string[];
+  values: any[];
+  append(part: QueryPart): QueryPart;
+  exec(sql: Postgres): postgresVendor.PendingQuery<any>;
+}
+
+/**
+ * Format and append query parts, and exec the final result in a safe way.
+ * Undefined values are skipped, as they are not allowed in queries.
+ * The provided values may contain other 'query``' calls, and they will be inserted
+ * appropriately.
+ *
+ * @example
+ *   ```
+ *   const getWhere = (value) => query`WHERE foo = ${value}`;
+ *   const selectResult = await query`SELECT * FROM "myTable" ${getWhere(5)}`.exec(sql);
+ *   // sql: SELECT * FROM "myTable" WHERE foo = $1
+ *   // arguments: [ 5 ]
+ *   ```
+ */
+export function query(strings: string[], ...values: any[]): QueryPart;
+
+/**
+ * Overwrite used generated queries.
+ * This is needed when you want cascading soft deletes to any of the exposed types
+ */
+export function setStoreQueries(q: typeof queries): void;

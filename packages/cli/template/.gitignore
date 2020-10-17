@@ -21,3 +21,6 @@ coverage
 # Common build directories
 dist
 out
+
+# Generator output
+generated/structure.sql

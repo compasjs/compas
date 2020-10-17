@@ -1,6 +1,20 @@
 import { log } from "@lbu/insight";
 import { isNil } from "@lbu/stdlib";
-import { TypeBuilder, TypeCreator } from "./types/index.js";
+import {
+  AnyOfType,
+  AnyType,
+  ArrayType,
+  BooleanType,
+  DateType,
+  FileType,
+  GenericType,
+  NumberType,
+  ObjectType,
+  ReferenceType,
+  StringType,
+  TypeBuilder,
+  UuidType,
+} from "./builders/index.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
@@ -48,7 +62,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
   // Generate refs for all routes that operate in a different group
   for (const ref of context.crossReferences) {
     const generatedRef = {
-      ...TypeCreator.types.get("reference").class.getBaseData(),
+      ...ReferenceType.getBaseData(),
       type: "reference",
       group: defaultGroup,
       name: `ref${upperCaseFirst(ref.name)}`,
@@ -190,7 +204,7 @@ function transformQueryOrParams(context, inputList, lbuStruct, filter) {
 
   if (Object.keys(obj).length > 0) {
     return {
-      ...TypeCreator.types.get("object").class.getBaseData(),
+      ...ObjectType.getBaseData(),
       type: "object",
       group: lbuStruct.group,
       name: lbuStruct.name + upperCaseFirst(filter),
@@ -298,16 +312,53 @@ function resolveReference(context, refString) {
  *   string, group: any}}
  */
 function convertSchema(context, schema) {
+  /** @type {CodeGenType} */
   const result = {
     ...TypeBuilder.getBaseData(),
     type: "any",
   };
 
   const assignBaseData = () => {
-    Object.assign(
-      result,
-      TypeCreator.types.get(result.type)?.class.getBaseData(),
-    );
+    let data = {};
+    switch (result.type) {
+      case "any":
+        data = AnyType.getBaseData();
+        break;
+      case "anyOf":
+        data = AnyOfType.getBaseData();
+        break;
+      case "array":
+        data = ArrayType.getBaseData();
+        break;
+      case "boolean":
+        data = BooleanType.getBaseData();
+        break;
+      case "date":
+        data = DateType.getBaseData();
+        break;
+      case "file":
+        data = FileType.getBaseData();
+        break;
+      case "generic":
+        data = GenericType.getBaseData();
+        break;
+      case "number":
+        data = NumberType.getBaseData();
+        break;
+      case "object":
+        data = ObjectType.getBaseData();
+        break;
+      case "reference":
+        data = ReferenceType.getBaseData();
+        break;
+      case "string":
+        data = StringType.getBaseData();
+        break;
+      case "uuid":
+        data = UuidType.getBaseData();
+        break;
+    }
+    Object.assign(result, data);
   };
 
   if (

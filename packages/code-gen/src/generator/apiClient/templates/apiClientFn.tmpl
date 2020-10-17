@@ -1,0 +1,115 @@
+{{ const url = item.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
+
+/**
+ * {{= item.uniqueName }}
+ {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+ * Docs: {{= item.docString }}
+{{ if (!options.useTypescript) { }}
+    {{ if (item.params) { }}
+     * @param { {{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }} } params
+    {{ } }}
+    {{ if (item.query) { }}
+     * @param { {{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }} } query
+    {{ } }}
+    {{ if (item.body) { }}
+     * @param { {{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false }) }} } body
+    {{ } }}
+    {{ if (item.files) { }}
+     * @param { {{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input" }) }} } files
+    {{ } }}
+    {{ if (options.isBrowser) { }}
+     * @param { { cancelToken?: CancelToken } } [options]
+    {{ } }}
+     * @returns {Promise<{{= getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient" }) }}>}
+{{ } }}
+ */
+{{= item.name }}: async function (
+{{ if (options.useTypescript) { }}
+    {{ if (item.params) { }}
+    params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }},
+    {{ } }}
+    {{ if (item.query) { }}
+    query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }},
+    {{ } }}
+    {{ if (item.body) { }}
+    body: T.{{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false }) }},
+    {{ } }}
+    {{ if (item.files) { }}
+    files: T.{{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input" }) }},
+    {{ } }}
+{{ } else { }}
+    {{ if (item.params) { }}
+    params,
+    {{ } }}
+    {{ if (item.query) { }}
+    query,
+    {{ } }}
+    {{ if (item.body) { }}
+    body,
+    {{ } }}
+    {{ if (item.files) { }}
+    files,
+    {{ } }}
+{{ } }}
+{{ if (options.isBrowser && options.useTypescript) { }}
+options: { cancelToken?: CancelToken } = {},
+{{ } else if (options.useBrowser) { }}
+options = {},
+{{ } }}
+{{= options.useTypescript ? `): Promise<T.${getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient" })}> {` : ") {" }}
+    {{ if (!options.isBrowser) { }}
+    checkApiClient();
+    {{ } }}
+
+    {{ if (item.files) { }}
+      // eslint-disable-next-line
+      const data = new FormData();
+      for (const key of Object.keys(files)) {
+        const keyFiles = Array.isArray(files[key]) ? files[key] : [files[key]];
+        for (const file of keyFiles) {
+          data.append(key, file.data, file.name);
+        }
+      }
+    {{ } else if (item.body) { }}
+      const data = body;
+    {{ } }}
+
+    {{ if (options.isNodeServer) { }}
+    try {
+    {{ } }}
+
+    const response = await _internalClient.request({
+      url: `{{= url }}`,
+      method: "{{= item.method.toLowerCase() }}",
+      params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
+      data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
+      {{ if (item.files && options.isNode) { }}
+      headers: data.getHeaders(),
+      {{ } }}
+      {{ if (item.response && item.response.type === "file") { }}
+      responseType: "{{= options.isNode ? "stream" : "blob" }}",
+      {{ } }}
+      {{ if (options.isBrowser) { }}
+      cancelToken: options?.cancelToken,
+      {{ } }}
+    });
+
+    {{ if (!options.isNodeServer) { }}
+      return response.data;
+    {{ } else { }}
+      {{ if (item.response) { }}
+        {{ const { name, group } = item.response.reference ?? {}; }}
+        {{ if (!isNil(name)) { }}
+            {{ /* Validates response, but does not use the validated result. This implies that dates will be ISO strings, and objects don't have a 'null' prototype. */ }}
+            {{= group }}Validators.{{= name }}(response.data);
+        {{ } }}
+      {{ } }}
+      return response.data;
+    } catch (e) {
+      handleError(e, "{{= item.group }}", "{{= item.name }}");
+    }
+
+    {{ } }}
+
+},
+((newline))

@@ -1,5 +1,0 @@
-{{ if (field.stringify) { }}
-JSON.stringify(it.{{= field.source }} ?? {{= field.defaultValue ?? "null" }})
-{{ } else { }}
-it.{{= field.source }} ?? {{= field.defaultValue ?? "null" }}
-{{ } }}

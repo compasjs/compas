@@ -11,7 +11,7 @@ import { session } from "./session.js";
 
 mainTestFn(import.meta);
 
-test("Session test", async (t) => {
+test("server/session", async (t) => {
   const app = new Koa();
   const client = Axios.create();
 
