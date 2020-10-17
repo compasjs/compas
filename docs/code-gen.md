@@ -127,9 +127,6 @@ how you can create it via the TypeCreator (`T`).
 - **Reference**: created with `T.reference()`, is a reference to a 'named' type.
   This type can be used in all cases where a TypeBuilder is accepted.
 
-- **Relation**: created with `T.relation()`, is only acceptable in `app.add`
-  calls. Denotes a relation between different Object types.
-
 - **File**: created with `T.file()` has its use with the router generator for
   file uploads.
 
@@ -145,6 +142,20 @@ how you can create it via the TypeCreator (`T`).
   in obejct.
 - **Searchable**: created with `T.searchable()` makes a copy of the provided
   value and returns it as sql searchable.
+
+**Relations**:
+
+- On `T.object()` add method `.relations()`
+- `T.oneToMany("key1", reference)`: (1) side of 1 - many
+- `T.manyToOne("key2", reference, "key1")`: (m) side of many - 1. Containers
+  reference to reference->key1. Never dangling
+- `T.oneToOne("key3", reference, "key1")`: (1) side of 1 - 1. Contains reference
+  to reference->key1. Never dangling. Other side automatically filled in.
+- `T.manyToOne("key2", reference, "key1").optional()`: (m) side of many - 1.
+  Containers reference to reference->key1. May dangle
+- `T.oneToOne("key3", reference, "key1").optional()`: (1) side of 1 - 1.
+  Contains reference to reference->key1. May dangle. Other side automatically
+  filled in
 
 ## Inferred types
 
