@@ -19,8 +19,10 @@ export function generateQueryPartials(context) {
     partials.push(getFieldsPartial(context, type));
     partials.push(getWherePartial(context, type));
     partials.push(getOrderPartial(context, type));
-    partials.push(getInsertPartial(context, type));
-    partials.push(getUpdatePartial(context, type));
+    if (!type.queryOptions.isView) {
+      partials.push(getInsertPartial(context, type));
+      partials.push(getUpdatePartial(context, type));
+    }
   }
 
   const file = js`

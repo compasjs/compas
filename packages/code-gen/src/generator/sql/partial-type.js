@@ -15,6 +15,10 @@ import {
  */
 export function createPartialTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
+    if (type.queryOptions.isView) {
+      continue;
+    }
+
     const fieldsArray = [];
 
     const insertPartial = new ObjectType(
