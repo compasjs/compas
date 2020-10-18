@@ -26,8 +26,8 @@ export function query(strings, ...values) {
     get values() {
       return _values;
     },
-    append: append.bind(this),
-    exec: exec.bind(this),
+    append,
+    exec,
   };
 
   // Flatten nested query parts
@@ -80,4 +80,43 @@ export function query(strings, ...values) {
       _values.filter((it) => it !== undefined),
     );
   }
+}
+
+/**
+ * Creates a transaction, executes the query, and rollback the transaction afterwards.
+ * This is safe to use with insert, update and delete queries.
+ *
+ * By default returns text, but can also return json.
+ * Note that explain output is highly depended on the current data and usage of the tables.
+ *
+ * @param {Postgres} sql
+ * @param {QueryPart} queryItem
+ * @param {boolean} [jsonResult]=false
+ * @returns {Promise<string|object>}
+ */
+export async function explainAnalyzeQuery(sql, queryItem, { jsonResult } = {}) {
+  let result;
+
+  try {
+    await sql.begin(async (sql) => {
+      if (jsonResult) {
+        const intermediate = await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT JSON) ${queryItem}`.exec(
+          sql,
+        );
+        result = intermediate[0];
+      } else {
+        const intermediate = await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT TEXT) ${queryItem}`.exec(
+          sql,
+        );
+
+        result = intermediate.map((it) => it["QUERY PLAN"]).join("\n");
+      }
+      // Rollback the transaction
+      throw new Error();
+    });
+  } catch {
+    // Ignore
+  }
+
+  return result;
 }

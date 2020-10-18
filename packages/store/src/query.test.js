@@ -1,5 +1,10 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { query } from "./query.js";
+import { isPlainObject } from "@lbu/stdlib";
+import { explainAnalyzeQuery, query } from "./query.js";
+import {
+  cleanupTestPostgresDatabase,
+  createTestPostgresDatabase,
+} from "./testing.js";
 
 mainTestFn(import.meta);
 
@@ -113,5 +118,42 @@ test("store/query", (t) => {
 
     t.equal(sql, `FROM "foo"  WHERE 1 = $1 ORDER BY "bar"`);
     t.deepEqual(args, [1]);
+  });
+});
+
+test("store/analyze-query", (t) => {
+  let sql;
+
+  t.test("setup", async () => {
+    sql = await createTestPostgresDatabase();
+  });
+
+  t.test("analyze select query - string plan", async (t) => {
+    const result = await explainAnalyzeQuery(sql, query`SELECT 1 + 1`);
+    t.equal(typeof result, "string");
+  });
+
+  t.test("analyze select query - json plan", async (t) => {
+    const result = await explainAnalyzeQuery(sql, query`SELECT 1 + 1`, {
+      jsonResult: true,
+    });
+    t.ok(isPlainObject(result));
+  });
+
+  t.test("create test table", async () => {
+    await sql`CREATE TABLE "temp" (value int not null);`;
+  });
+
+  t.test("analyze insert does not insert", async (t) => {
+    await explainAnalyzeQuery(
+      sql,
+      query`INSERT INTO "temp" ("value") VALUES (1), (2)`,
+    );
+    const result = await sql`SELECT * FROM "temp"`;
+    t.equal(result.length, 0);
+  });
+
+  t.test("teardown", async () => {
+    await cleanupTestPostgresDatabase(sql);
   });
 });
