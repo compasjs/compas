@@ -266,9 +266,9 @@ export class TypeCreator {
   oneToMany(ownKey: string, reference: ReferenceType): RelationType;
 
   /**
-   * Create a manyToMany relation
+   * Create a manyOneMany relation
    */
-  manyToMany(
+  manyToOne(
     ownKey: string,
     reference: ReferenceType,
     referencedKey: string,

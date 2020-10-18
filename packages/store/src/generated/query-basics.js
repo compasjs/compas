@@ -4,6 +4,14 @@
 import { query } from "@lbu/store";
 import {
   fileFields,
+  fileGroupFields,
+  fileGroupInsertValues,
+  fileGroupOrderBy,
+  fileGroupUpdateSet,
+  fileGroupViewFields,
+  fileGroupViewOrderBy,
+  fileGroupViewWhere,
+  fileGroupWhere,
   fileInsertValues,
   fileOrderBy,
   fileUpdateSet,
@@ -90,10 +98,138 @@ RETURNING ${fileFields()}
  * @returns {Promise<void>}
  */
 export async function fileDelete(sql, where = {}, options = {}) {
-  await query`
+  const result = await query`
 UPDATE "file" f
 SET "deletedAt" = now()
 WHERE ${fileWhere(where)}
+RETURNING "id"
+`.exec(sql);
+  if (options.skipCascade || result.length === 0) {
+    return;
+  }
+  const ids = result.map((it) => it.id);
+  await Promise.all([fileGroupDelete(sql, { fileIn: ids })]);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupWhere} [where]
+ * @returns {Promise<StoreFileGroup[]>}
+ */
+export function fileGroupSelect(sql, where) {
+  return query`
+SELECT ${fileGroupFields()}
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(where)}
+ORDER BY ${fileGroupOrderBy()}
+`.exec(sql);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupWhere} [where]
+ * @returns {Promise<number>}
+ */
+export async function fileGroupCount(sql, where) {
+  const [result] = await query`
+SELECT COUNT(fg."id") as "countResult"
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(where)}
+`.exec(sql);
+  return Number(result?.countResult ?? "0");
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupWhere} [where={}]
+ * @returns {Promise<void>}
+ */
+export function fileGroupDeletePermanent(sql, where = {}) {
+  where.deletedAtIncludeNotNull = true;
+  return query`
+DELETE FROM "fileGroup" fg
+WHERE ${fileGroupWhere(where)}
+`.exec(sql);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupInsertPartial|(StoreFileGroupInsertPartial[])} insert
+ * @returns {Promise<StoreFileGroup[]>}
+ */
+export function fileGroupInsert(sql, insert) {
+  return query`
+INSERT INTO "fileGroup" (${fileGroupFields("", { excludePrimaryKey: true })})
+VALUES ${fileGroupInsertValues(insert)}
+RETURNING ${fileGroupFields("")}
+`.exec(sql);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupUpdatePartial} update
+ * @param {StoreFileGroupWhere} [where={}]
+ * @returns {Promise<StoreFileGroup[]>}
+ */
+export function fileGroupUpdate(sql, update, where = {}) {
+  return query`
+UPDATE "fileGroup" fg
+SET ${fileGroupUpdateSet(update)}
+WHERE ${fileGroupWhere(where)}
+RETURNING ${fileGroupFields()}
+`.exec(sql);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupWhere} [where={}]
+ * @param {{ skipCascade: boolean }} [options={}]
+ * @returns {Promise<void>}
+ */
+export async function fileGroupDelete(sql, where = {}, options = {}) {
+  const result = await query`
+UPDATE "fileGroup" fg
+SET "deletedAt" = now()
+WHERE ${fileGroupWhere(where)}
+RETURNING "id"
+`.exec(sql);
+  if (options.skipCascade || result.length === 0) {
+    return;
+  }
+  const ids = result.map((it) => it.id);
+  await Promise.all([fileGroupDelete(sql, { parentIn: ids })]);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupViewWhere} [where]
+ * @returns {Promise<StoreFileGroupView[]>}
+ */
+export function fileGroupViewSelect(sql, where) {
+  return query`
+SELECT ${fileGroupViewFields()}
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(where)}
+ORDER BY ${fileGroupViewOrderBy()}
+`.exec(sql);
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupViewWhere} [where]
+ * @returns {Promise<number>}
+ */
+export async function fileGroupViewCount(sql, where) {
+  const [result] = await query`
+SELECT COUNT(fgv."id") as "countResult"
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(where)}
+`.exec(sql);
+  return Number(result?.countResult ?? "0");
+}
+/**
+ * @param {Postgres} sql
+ * @param {StoreFileGroupViewWhere} [where={}]
+ * @param {{ skipCascade: boolean }} [options={}]
+ * @returns {Promise<void>}
+ */
+export async function fileGroupViewDelete(sql, where = {}, options = {}) {
+  await query`
+UPDATE "fileGroupView" fgv
+SET "deletedAt" = now()
+WHERE ${fileGroupViewWhere(where)}
 RETURNING "id"
 `.exec(sql);
 }

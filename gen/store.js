@@ -20,7 +20,6 @@ export function applyStoreStructure(app) {
   app.add(
     T.object("file")
       .keys({
-        id: T.uuid().primary(),
         bucketName: T.string().searchable(),
         contentLength: T.number(),
         contentType: T.string(),
@@ -30,13 +29,64 @@ export function applyStoreStructure(app) {
           .default("{}")
           .docs("User definable, optional object to store whatever you want"),
       })
-      .enableQueries({ withSoftDeletes: true }),
+      .enableQueries({ withSoftDeletes: true })
+      .relations(),
+  );
+
+  app.add(
+    T.object("fileGroup")
+      .keys({
+        name: T.string().optional(),
+        order: T.number()
+          .default("Math.floor(Date.now() / 1000000)")
+          .docs("Hack to get an increasing integer by default"),
+        meta: T.object("fileGroupMeta")
+          .keys({})
+          .default("{}")
+          .docs("User definable, optional object to store whatever you want"),
+      })
+      .enableQueries({ withSoftDeletes: true })
+      .relations(
+        T.oneToOne("file", T.reference("store", "file"), "group").optional(),
+        T.manyToOne(
+          "parent",
+          T.reference("store", "fileGroup"),
+          "children",
+        ).optional(),
+        T.oneToMany("children", T.reference("store", "fileGroup")),
+      ),
+  );
+
+  app.add(
+    T.object("fileGroupView")
+      .keys({
+        name: T.string().optional(),
+        order: T.number(),
+        meta: T.object("fileGroupMeta")
+          .keys({})
+          .default("{}")
+          .docs("User definable, optional object to store whatever you want"),
+        isDirectory: T.bool().searchable(),
+      })
+      .enableQueries({ withSoftDeletes: true, isView: true })
+      .relations(
+        T.oneToOne(
+          "file",
+          T.reference("store", "file"),
+          "groupView",
+        ).optional(),
+        T.manyToOne(
+          "parent",
+          T.reference("store", "fileGroupView"),
+          "children",
+        ).optional(),
+        T.oneToMany("children", T.reference("store", "fileGroupView")),
+      ),
   );
 
   app.add(
     T.object("session")
       .keys({
-        id: T.uuid().primary(),
         expires: T.date().searchable(),
         data: T.any().default("{}"),
       })

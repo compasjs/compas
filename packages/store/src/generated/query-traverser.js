@@ -4,6 +4,12 @@
 import { query } from "@lbu/store";
 import {
   fileFields,
+  fileGroupFields,
+  fileGroupOrderBy,
+  fileGroupViewFields,
+  fileGroupViewOrderBy,
+  fileGroupViewWhere,
+  fileGroupWhere,
   fileOrderBy,
   fileWhere,
   jobFields,
@@ -16,6 +22,8 @@ import {
 /**
  * @name TraverseFile
  * @typedef {object}
+ * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getGroup
+ * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getGroupView
  * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreFile[]>} exec
  */
@@ -31,6 +39,36 @@ WHERE ${fileWhere(where)}
 ${queryPart}
 `;
   return {
+    /**
+     * @param {StoreFileGroupWhere} [where={}]
+     * @returns {TraverseFileGroup}
+     */
+    getGroup(where = {}) {
+      return traverseFileGroup(
+        where,
+        query`
+AND fg."file"  = ANY(
+SELECT f."id"
+${q}
+)
+`,
+      );
+    },
+    /**
+     * @param {StoreFileGroupViewWhere} [where={}]
+     * @returns {TraverseFileGroupView}
+     */
+    getGroupView(where = {}) {
+      return traverseFileGroupView(
+        where,
+        query`
+AND fgv."file"  = ANY(
+SELECT f."id"
+${q}
+)
+`,
+      );
+    },
     get queryPart() {
       return query`
 SELECT ${fileFields()}
@@ -43,6 +81,170 @@ ORDER BY ${fileOrderBy()}
 SELECT ${fileFields()}
 ${q}
 ORDER BY ${fileOrderBy()}
+`.exec(sql);
+    },
+  };
+}
+/**
+ * @name TraverseFileGroup
+ * @typedef {object}
+ * @property {(where?: StoreFileWhere) => TraverseFile} getFile
+ * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getParent
+ * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getChildren
+ * @property {QueryPart} queryPart
+ * @property {function(sql: Postgres): Promise<StoreFileGroup[]>} exec
+ */
+/**
+ * @param {StoreFileGroupWhere} [where={}]
+ * @param {QueryPart|undefined} [queryPart]
+ * @returns {TraverseFileGroup}
+ */
+export function traverseFileGroup(where = {}, queryPart) {
+  const q = query`
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(where)}
+${queryPart}
+`;
+  return {
+    /**
+     * @param {StoreFileWhere} [where={}]
+     * @returns {TraverseFile}
+     */
+    getFile(where = {}) {
+      return traverseFile(
+        where,
+        query`
+AND f."id"  = ANY(
+SELECT fg."file"
+${q}
+)
+`,
+      );
+    },
+    /**
+     * @param {StoreFileGroupWhere} [where={}]
+     * @returns {TraverseFileGroup}
+     */
+    getParent(where = {}) {
+      return traverseFileGroup(
+        where,
+        query`
+AND fg."id"  = ANY(
+SELECT fg."parent"
+${q}
+)
+`,
+      );
+    },
+    /**
+     * @param {StoreFileGroupWhere} [where={}]
+     * @returns {TraverseFileGroup}
+     */
+    getChildren(where = {}) {
+      return traverseFileGroup(
+        where,
+        query`
+AND fg."parent"  = ANY(
+SELECT fg."id"
+${q}
+)
+`,
+      );
+    },
+    get queryPart() {
+      return query`
+SELECT ${fileGroupFields()}
+${q}
+ORDER BY ${fileGroupOrderBy()}
+`;
+    },
+    exec(sql) {
+      return query`
+SELECT ${fileGroupFields()}
+${q}
+ORDER BY ${fileGroupOrderBy()}
+`.exec(sql);
+    },
+  };
+}
+/**
+ * @name TraverseFileGroupView
+ * @typedef {object}
+ * @property {(where?: StoreFileWhere) => TraverseFile} getFile
+ * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getParent
+ * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getChildren
+ * @property {QueryPart} queryPart
+ * @property {function(sql: Postgres): Promise<StoreFileGroupView[]>} exec
+ */
+/**
+ * @param {StoreFileGroupViewWhere} [where={}]
+ * @param {QueryPart|undefined} [queryPart]
+ * @returns {TraverseFileGroupView}
+ */
+export function traverseFileGroupView(where = {}, queryPart) {
+  const q = query`
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(where)}
+${queryPart}
+`;
+  return {
+    /**
+     * @param {StoreFileWhere} [where={}]
+     * @returns {TraverseFile}
+     */
+    getFile(where = {}) {
+      return traverseFile(
+        where,
+        query`
+AND f."id"  = ANY(
+SELECT fgv."file"
+${q}
+)
+`,
+      );
+    },
+    /**
+     * @param {StoreFileGroupViewWhere} [where={}]
+     * @returns {TraverseFileGroupView}
+     */
+    getParent(where = {}) {
+      return traverseFileGroupView(
+        where,
+        query`
+AND fgv."id"  = ANY(
+SELECT fgv."parent"
+${q}
+)
+`,
+      );
+    },
+    /**
+     * @param {StoreFileGroupViewWhere} [where={}]
+     * @returns {TraverseFileGroupView}
+     */
+    getChildren(where = {}) {
+      return traverseFileGroupView(
+        where,
+        query`
+AND fgv."parent"  = ANY(
+SELECT fgv."id"
+${q}
+)
+`,
+      );
+    },
+    get queryPart() {
+      return query`
+SELECT ${fileGroupViewFields()}
+${q}
+ORDER BY ${fileGroupViewOrderBy()}
+`;
+    },
+    exec(sql) {
+      return query`
+SELECT ${fileGroupViewFields()}
+${q}
+ORDER BY ${fileGroupViewOrderBy()}
 `.exec(sql);
     },
   };

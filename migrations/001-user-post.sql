@@ -22,7 +22,9 @@ CREATE TABLE "post"
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now(),
   "deletedAt" timestamptz      NULL,
-  constraint "postWriterFk" foreign key ("writer") references "user" ("id") ON DELETE CASCADE
+  constraint "postWriterFk" foreign key ("writer")
+    references "user" ("id")
+    ON DELETE CASCADE
 );
 
 CREATE INDEX "postWriterIdx" ON "post" ("writer");

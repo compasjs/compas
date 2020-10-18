@@ -5,7 +5,19 @@
 export const __generated__ = true;
 /**
  * @name StoreFile
- * @typedef {{"id": string, "bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
+ * @typedef {{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreFileGroup
+ * @typedef {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreFileGroupMeta
+ * @typedef {{}}
+ */
+/**
+ * @name StoreFileGroupView
+ * @typedef {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
  */
 /**
  * @name StoreFileMeta
@@ -21,11 +33,19 @@ export const __generated__ = true;
  */
 /**
  * @name StoreSession
- * @typedef {{"id": string, "expires": Date, "data": *, "createdAt": Date, "updatedAt": Date, }}
+ * @typedef {{"expires": Date, "data": *, "id": string, "createdAt": Date, "updatedAt": Date, }}
  */
 /**
  * @name StoreFileWhere
  * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[], "bucketNameNotIn"?: (string)[], "bucketNameLike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[], "deletedAtNotIn"?: (Date)[], "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }}
+ */
+/**
+ * @name StoreFileGroupWhere
+ * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "file"?: string, "fileNotEqual"?: string, "fileIn"?: (string)[], "fileNotIn"?: (string)[], "fileLike"?: string, "fileNotLike"?: string, "fileIsNull"?: boolean, "fileIsNotNull"?: boolean, "parent"?: string, "parentNotEqual"?: string, "parentIn"?: (string)[], "parentNotIn"?: (string)[], "parentLike"?: string, "parentNotLike"?: string, "parentIsNull"?: boolean, "parentIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[], "deletedAtNotIn"?: (Date)[], "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }}
+ */
+/**
+ * @name StoreFileGroupViewWhere
+ * @typedef {{"id"?: string, "idNotEqual"?: string, "idIn"?: (string)[], "idNotIn"?: (string)[], "idLike"?: string, "idNotLike"?: string, "isDirectory"?: boolean, "file"?: string, "fileNotEqual"?: string, "fileIn"?: (string)[], "fileNotIn"?: (string)[], "fileLike"?: string, "fileNotLike"?: string, "fileIsNull"?: boolean, "fileIsNotNull"?: boolean, "parent"?: string, "parentNotEqual"?: string, "parentIn"?: (string)[], "parentNotIn"?: (string)[], "parentLike"?: string, "parentNotLike"?: string, "parentIsNull"?: boolean, "parentIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[], "createdAtNotIn"?: (Date)[], "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[], "updatedAtNotIn"?: (Date)[], "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[], "deletedAtNotIn"?: (Date)[], "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }}
  */
 /**
  * @name StoreJobWhere
@@ -42,6 +62,14 @@ export const __generated__ = true;
 /**
  * @name StoreFileUpdatePartial
  * @typedef {{"contentLength"?: number, "bucketName"?: string, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreFileGroupInsertPartial
+ * @typedef {{"id"?: string, "order"?: number, "file"?: string, "parent"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
+ */
+/**
+ * @name StoreFileGroupUpdatePartial
+ * @typedef {{"order"?: number, "file"?: string, "parent"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }}
  */
 /**
  * @name StoreJobInsertPartial

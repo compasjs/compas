@@ -341,6 +341,728 @@ export function fileUpdateSet(update) {
   return query(strings, ...values);
 }
 /**
+ * Get all fields for fileGroup
+ * @param {string} [tableName="fg."]
+ * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @returns {QueryPart}
+ */
+export function fileGroupFields(tableName = "fg.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (options.excludePrimaryKey) {
+    return query([
+      `${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+    ]);
+  }
+  return query([
+    `${tableName}"id", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+  ]);
+}
+/**
+ * Build 'WHERE ' part for fileGroup
+ * @param {StoreFileGroupWhere} [where={}]
+ * @param {string} [tableName="fg."]
+ * @returns {QueryPart}
+ */
+export function fileGroupWhere(where = {}, tableName = "fg.") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  const strings = ["1 = 1"];
+  const values = [undefined];
+  if (where.id !== undefined) {
+    strings.push(` AND ${tableName}"id" = `);
+    values.push(where.id);
+  }
+  if (where.idNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"id" != `);
+    values.push(where.idNotEqual);
+  }
+  if (where.idIn !== undefined) {
+    strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
+    for (let i = 0; i < where.idIn.length; ++i) {
+      values.push(where.idIn[i]);
+      if (i === where.idIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.idNotIn !== undefined) {
+    strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
+    for (let i = 0; i < where.idNotIn.length; ++i) {
+      values.push(where.idNotIn[i]);
+      if (i === where.idNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.idLike !== undefined) {
+    strings.push(` AND ${tableName}"id" LIKE `);
+    values.push(`%${where.idLike}%`);
+  }
+  if (where.idNotLike !== undefined) {
+    strings.push(` AND ${tableName}"id" NOT LIKE `);
+    values.push(`%${where.idNotLike}%`);
+  }
+  if (where.file !== undefined) {
+    strings.push(` AND ${tableName}"file" = `);
+    values.push(where.file);
+  }
+  if (where.fileNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"file" != `);
+    values.push(where.fileNotEqual);
+  }
+  if (where.fileIn !== undefined) {
+    strings.push(` AND ${tableName}"file" = ANY(ARRAY[`);
+    for (let i = 0; i < where.fileIn.length; ++i) {
+      values.push(where.fileIn[i]);
+      if (i === where.fileIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.fileNotIn !== undefined) {
+    strings.push(` AND ${tableName}"file" != ANY(ARRAY[`);
+    for (let i = 0; i < where.fileNotIn.length; ++i) {
+      values.push(where.fileNotIn[i]);
+      if (i === where.fileNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.fileLike !== undefined) {
+    strings.push(` AND ${tableName}"file" LIKE `);
+    values.push(`%${where.fileLike}%`);
+  }
+  if (where.fileNotLike !== undefined) {
+    strings.push(` AND ${tableName}"file" NOT LIKE `);
+    values.push(`%${where.fileNotLike}%`);
+  }
+  if (where.fileIsNull !== undefined) {
+    strings.push(` AND ${tableName}"file" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.fileIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"file" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.parent !== undefined) {
+    strings.push(` AND ${tableName}"parent" = `);
+    values.push(where.parent);
+  }
+  if (where.parentNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"parent" != `);
+    values.push(where.parentNotEqual);
+  }
+  if (where.parentIn !== undefined) {
+    strings.push(` AND ${tableName}"parent" = ANY(ARRAY[`);
+    for (let i = 0; i < where.parentIn.length; ++i) {
+      values.push(where.parentIn[i]);
+      if (i === where.parentIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.parentNotIn !== undefined) {
+    strings.push(` AND ${tableName}"parent" != ANY(ARRAY[`);
+    for (let i = 0; i < where.parentNotIn.length; ++i) {
+      values.push(where.parentNotIn[i]);
+      if (i === where.parentNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.parentLike !== undefined) {
+    strings.push(` AND ${tableName}"parent" LIKE `);
+    values.push(`%${where.parentLike}%`);
+  }
+  if (where.parentNotLike !== undefined) {
+    strings.push(` AND ${tableName}"parent" NOT LIKE `);
+    values.push(`%${where.parentNotLike}%`);
+  }
+  if (where.parentIsNull !== undefined) {
+    strings.push(` AND ${tableName}"parent" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.parentIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"parent" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.createdAt !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" = `);
+    values.push(where.createdAt);
+  }
+  if (where.createdAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" != `);
+    values.push(where.createdAtNotEqual);
+  }
+  if (where.createdAtIn !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.createdAtIn.length; ++i) {
+      values.push(where.createdAtIn[i]);
+      if (i === where.createdAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.createdAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.createdAtNotIn.length; ++i) {
+      values.push(where.createdAtNotIn[i]);
+      if (i === where.createdAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.createdAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" > `);
+    values.push(where.createdAtGreaterThan);
+  }
+  if (where.createdAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" < `);
+    values.push(where.createdAtLowerThan);
+  }
+  if (where.createdAtIsNull !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.createdAtIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.updatedAt !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" = `);
+    values.push(where.updatedAt);
+  }
+  if (where.updatedAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" != `);
+    values.push(where.updatedAtNotEqual);
+  }
+  if (where.updatedAtIn !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.updatedAtIn.length; ++i) {
+      values.push(where.updatedAtIn[i]);
+      if (i === where.updatedAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.updatedAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
+      values.push(where.updatedAtNotIn[i]);
+      if (i === where.updatedAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.updatedAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" > `);
+    values.push(where.updatedAtGreaterThan);
+  }
+  if (where.updatedAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" < `);
+    values.push(where.updatedAtLowerThan);
+  }
+  if (where.updatedAtIsNull !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.updatedAtIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.deletedAt !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" = `);
+    values.push(where.deletedAt);
+  }
+  if (where.deletedAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" != `);
+    values.push(where.deletedAtNotEqual);
+  }
+  if (where.deletedAtIn !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.deletedAtIn.length; ++i) {
+      values.push(where.deletedAtIn[i]);
+      if (i === where.deletedAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.deletedAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
+      values.push(where.deletedAtNotIn[i]);
+      if (i === where.deletedAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.deletedAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" > `);
+    values.push(where.deletedAtGreaterThan);
+  }
+  if (where.deletedAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" < `);
+    values.push(where.deletedAtLowerThan);
+  }
+  if ((where.deletedAtIncludeNotNull ?? false) === false) {
+    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
+    values.push(undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
+ * Get 'ORDER BY ' for fileGroup
+ * @param {string} [tableName="fg."]
+ * @returns {QueryPart}
+ */
+export function fileGroupOrderBy(tableName = "fg.") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'VALUES ' part for fileGroup
+ * @param {StoreFileGroupInsertPartial|StoreFileGroupInsertPartial[]} insert
+ * @param {{ includePrimaryKey: boolean }} [options={}]
+ * @returns {QueryPart}
+ */
+export function fileGroupInsertValues(insert, options = {}) {
+  if (!Array.isArray(insert)) {
+    insert = [insert];
+  }
+  const q = query``;
+  for (let i = 0; i < insert.length; ++i) {
+    const it = insert[i];
+    q.append(query`(
+${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
+${it.order ?? Math.floor(Date.now() / 1000000)}, ${it.file ?? null}, ${
+      it.parent ?? null
+    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
+)`);
+    if (i !== insert.length - 1) {
+      q.append(query`, `);
+    }
+  }
+  return q;
+}
+/**
+ * Build 'SET ' part for fileGroup
+ * @param {StoreFileGroupUpdatePartial} update
+ * @returns {QueryPart}
+ */
+export function fileGroupUpdateSet(update) {
+  const strings = [];
+  const values = [];
+  if (update.order !== undefined) {
+    strings.push(`, "order" = `);
+    values.push(update.order ?? Math.floor(Date.now() / 1000000));
+  }
+  if (update.file !== undefined) {
+    strings.push(`, "file" = `);
+    values.push(update.file ?? null);
+  }
+  if (update.parent !== undefined) {
+    strings.push(`, "parent" = `);
+    values.push(update.parent ?? null);
+  }
+  if (update.name !== undefined) {
+    strings.push(`, "name" = `);
+    values.push(update.name ?? null);
+  }
+  if (update.meta !== undefined) {
+    strings.push(`, "meta" = `);
+    values.push(JSON.stringify(update.meta ?? {}));
+  }
+  if (update.createdAt !== undefined) {
+    strings.push(`, "createdAt" = `);
+    values.push(update.createdAt ?? new Date());
+  }
+  strings.push(`, "updatedAt" = `);
+  values.push(new Date());
+  if (update.deletedAt !== undefined) {
+    strings.push(`, "deletedAt" = `);
+    values.push(update.deletedAt ?? null);
+  }
+  // Remove the comma suffix
+  strings[0] = strings[0].substring(2);
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
+ * Get all fields for fileGroupView
+ * @param {string} [tableName="fgv."]
+ * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @returns {QueryPart}
+ */
+export function fileGroupViewFields(tableName = "fgv.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (options.excludePrimaryKey) {
+    return query([
+      `${tableName}"isDirectory", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+    ]);
+  }
+  return query([
+    `${tableName}"id", ${tableName}"isDirectory", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+  ]);
+}
+/**
+ * Build 'WHERE ' part for fileGroupView
+ * @param {StoreFileGroupViewWhere} [where={}]
+ * @param {string} [tableName="fgv."]
+ * @returns {QueryPart}
+ */
+export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  const strings = ["1 = 1"];
+  const values = [undefined];
+  if (where.id !== undefined) {
+    strings.push(` AND ${tableName}"id" = `);
+    values.push(where.id);
+  }
+  if (where.idNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"id" != `);
+    values.push(where.idNotEqual);
+  }
+  if (where.idIn !== undefined) {
+    strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
+    for (let i = 0; i < where.idIn.length; ++i) {
+      values.push(where.idIn[i]);
+      if (i === where.idIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.idNotIn !== undefined) {
+    strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
+    for (let i = 0; i < where.idNotIn.length; ++i) {
+      values.push(where.idNotIn[i]);
+      if (i === where.idNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.idLike !== undefined) {
+    strings.push(` AND ${tableName}"id" LIKE `);
+    values.push(`%${where.idLike}%`);
+  }
+  if (where.idNotLike !== undefined) {
+    strings.push(` AND ${tableName}"id" NOT LIKE `);
+    values.push(`%${where.idNotLike}%`);
+  }
+  if (where.isDirectory !== undefined) {
+    strings.push(` AND ${tableName}"isDirectory" = `);
+    values.push(where.isDirectory);
+  }
+  if (where.file !== undefined) {
+    strings.push(` AND ${tableName}"file" = `);
+    values.push(where.file);
+  }
+  if (where.fileNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"file" != `);
+    values.push(where.fileNotEqual);
+  }
+  if (where.fileIn !== undefined) {
+    strings.push(` AND ${tableName}"file" = ANY(ARRAY[`);
+    for (let i = 0; i < where.fileIn.length; ++i) {
+      values.push(where.fileIn[i]);
+      if (i === where.fileIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.fileNotIn !== undefined) {
+    strings.push(` AND ${tableName}"file" != ANY(ARRAY[`);
+    for (let i = 0; i < where.fileNotIn.length; ++i) {
+      values.push(where.fileNotIn[i]);
+      if (i === where.fileNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.fileLike !== undefined) {
+    strings.push(` AND ${tableName}"file" LIKE `);
+    values.push(`%${where.fileLike}%`);
+  }
+  if (where.fileNotLike !== undefined) {
+    strings.push(` AND ${tableName}"file" NOT LIKE `);
+    values.push(`%${where.fileNotLike}%`);
+  }
+  if (where.fileIsNull !== undefined) {
+    strings.push(` AND ${tableName}"file" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.fileIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"file" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.parent !== undefined) {
+    strings.push(` AND ${tableName}"parent" = `);
+    values.push(where.parent);
+  }
+  if (where.parentNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"parent" != `);
+    values.push(where.parentNotEqual);
+  }
+  if (where.parentIn !== undefined) {
+    strings.push(` AND ${tableName}"parent" = ANY(ARRAY[`);
+    for (let i = 0; i < where.parentIn.length; ++i) {
+      values.push(where.parentIn[i]);
+      if (i === where.parentIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.parentNotIn !== undefined) {
+    strings.push(` AND ${tableName}"parent" != ANY(ARRAY[`);
+    for (let i = 0; i < where.parentNotIn.length; ++i) {
+      values.push(where.parentNotIn[i]);
+      if (i === where.parentNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.parentLike !== undefined) {
+    strings.push(` AND ${tableName}"parent" LIKE `);
+    values.push(`%${where.parentLike}%`);
+  }
+  if (where.parentNotLike !== undefined) {
+    strings.push(` AND ${tableName}"parent" NOT LIKE `);
+    values.push(`%${where.parentNotLike}%`);
+  }
+  if (where.parentIsNull !== undefined) {
+    strings.push(` AND ${tableName}"parent" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.parentIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"parent" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.createdAt !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" = `);
+    values.push(where.createdAt);
+  }
+  if (where.createdAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" != `);
+    values.push(where.createdAtNotEqual);
+  }
+  if (where.createdAtIn !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.createdAtIn.length; ++i) {
+      values.push(where.createdAtIn[i]);
+      if (i === where.createdAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.createdAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.createdAtNotIn.length; ++i) {
+      values.push(where.createdAtNotIn[i]);
+      if (i === where.createdAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.createdAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" > `);
+    values.push(where.createdAtGreaterThan);
+  }
+  if (where.createdAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" < `);
+    values.push(where.createdAtLowerThan);
+  }
+  if (where.createdAtIsNull !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.createdAtIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.updatedAt !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" = `);
+    values.push(where.updatedAt);
+  }
+  if (where.updatedAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" != `);
+    values.push(where.updatedAtNotEqual);
+  }
+  if (where.updatedAtIn !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.updatedAtIn.length; ++i) {
+      values.push(where.updatedAtIn[i]);
+      if (i === where.updatedAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.updatedAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
+      values.push(where.updatedAtNotIn[i]);
+      if (i === where.updatedAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.updatedAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" > `);
+    values.push(where.updatedAtGreaterThan);
+  }
+  if (where.updatedAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" < `);
+    values.push(where.updatedAtLowerThan);
+  }
+  if (where.updatedAtIsNull !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.updatedAtIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
+    values.push(undefined);
+  }
+  if (where.deletedAt !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" = `);
+    values.push(where.deletedAt);
+  }
+  if (where.deletedAtNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" != `);
+    values.push(where.deletedAtNotEqual);
+  }
+  if (where.deletedAtIn !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
+    for (let i = 0; i < where.deletedAtIn.length; ++i) {
+      values.push(where.deletedAtIn[i]);
+      if (i === where.deletedAtIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.deletedAtNotIn !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
+    for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
+      values.push(where.deletedAtNotIn[i]);
+      if (i === where.deletedAtNotIn.length - 1) {
+        strings.push("]::uuid[])");
+        values.push(undefined);
+      } else {
+        strings.push(", ");
+      }
+    }
+  }
+  if (where.deletedAtGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" > `);
+    values.push(where.deletedAtGreaterThan);
+  }
+  if (where.deletedAtLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"deletedAt" < `);
+    values.push(where.deletedAtLowerThan);
+  }
+  if ((where.deletedAtIncludeNotNull ?? false) === false) {
+    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
+    values.push(undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
+ * Get 'ORDER BY ' for fileGroupView
+ * @param {string} [tableName="fgv."]
+ * @returns {QueryPart}
+ */
+export function fileGroupViewOrderBy(tableName = "fgv.") {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
  * Get all fields for job
  * @param {string} [tableName="j."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]

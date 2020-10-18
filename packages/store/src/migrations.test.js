@@ -29,7 +29,7 @@ test("store/migrations", (t) => {
     const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
     t.deepEqual(mc.namespaces, ["@lbu/store", process.env.APP_NAME]);
-    t.equal(mc.files.length, 7);
+    t.equal(mc.files.length, 9);
 
     const { migrationQueue: list } = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);
