@@ -16,6 +16,7 @@ import {
 /**
  * @name TraverseFile
  * @typedef {object}
+ * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreFile[]>} exec
  */
 /**
@@ -30,6 +31,13 @@ WHERE ${fileWhere(where)}
 ${queryPart}
 `;
   return {
+    get queryPart() {
+      return query`
+SELECT ${fileFields()}
+${q}
+ORDER BY ${fileOrderBy()}
+`;
+    },
     exec(sql) {
       return query`
 SELECT ${fileFields()}
@@ -42,6 +50,7 @@ ORDER BY ${fileOrderBy()}
 /**
  * @name TraverseJob
  * @typedef {object}
+ * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreJob[]>} exec
  */
 /**
@@ -56,6 +65,13 @@ WHERE ${jobWhere(where)}
 ${queryPart}
 `;
   return {
+    get queryPart() {
+      return query`
+SELECT ${jobFields()}
+${q}
+ORDER BY ${jobOrderBy()}
+`;
+    },
     exec(sql) {
       return query`
 SELECT ${jobFields()}
@@ -68,6 +84,7 @@ ORDER BY ${jobOrderBy()}
 /**
  * @name TraverseSession
  * @typedef {object}
+ * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreSession[]>} exec
  */
 /**
@@ -82,6 +99,13 @@ WHERE ${sessionWhere(where)}
 ${queryPart}
 `;
   return {
+    get queryPart() {
+      return query`
+SELECT ${sessionFields()}
+${q}
+ORDER BY ${sessionOrderBy()}
+`;
+    },
     exec(sql) {
       return query`
 SELECT ${sessionFields()}

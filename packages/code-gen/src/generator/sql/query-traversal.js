@@ -107,6 +107,7 @@ function traversalQuery(context, imports, type) {
      * @name Traverse${upperCaseFirst(type.name)}
      * @typedef {object}
      ${docPartials}
+     * @property {QueryPart} queryPart
      * @property {function(sql: Postgres): Promise<${type.uniqueName}[]>} exec
      */
     
@@ -126,6 +127,13 @@ function traversalQuery(context, imports, type) {
 
       return {
         ${partials}
+        get queryPart() {
+          return query\`
+            SELECT $\{${type.name}Fields()}
+             $\{q} 
+            ORDER BY $\{${type.name}OrderBy()}
+          \`;
+        },
         exec(sql) {
           return query\`
             SELECT $\{${type.name}Fields()}

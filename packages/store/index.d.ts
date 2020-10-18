@@ -423,7 +423,9 @@ export const storeStructure: any;
 export interface QueryPart {
   strings: string[];
   values: any[];
+
   append(part: QueryPart): QueryPart;
+
   exec(sql: Postgres): postgresVendor.PendingQuery<any>;
 }
 
@@ -442,6 +444,19 @@ export interface QueryPart {
  *   ```
  */
 export function query(strings: string[], ...values: any[]): QueryPart;
+
+/**
+ * Creates a transaction, executes the query, and rollback the transaction afterwards.
+ * This is safe to use with insert, update and delete queries.
+ *
+ * By default returns text, but can also return json.
+ * Note that explain output is highly depended on the current data and usage of the tables.
+ */
+export function explainAnalyzeQuery(
+  sql: Postgres,
+  queryPart: QueryPart,
+  options?: { jsonResult?: true },
+): Promise<string | any>;
 
 /**
  * Overwrite used generated queries.
