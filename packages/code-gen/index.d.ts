@@ -530,9 +530,10 @@ export class ObjectType extends TypeBuilder {
    * Added by the 'sql' plugin
    */
   enableQueries(options?: {
-    withSoftDeletes?: boolean;
-    withDates?: boolean;
+    withSoftDeletes?: true;
+    withDates?: true;
     withPrimaryKey?: false;
+    isView?: true;
   }): this;
 
   /**

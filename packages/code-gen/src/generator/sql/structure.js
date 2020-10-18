@@ -37,14 +37,22 @@ export function generateSqlStructure(context) {
   ];
 
   for (const type of getQueryEnabledObjects(context)) {
-    partials.push(`
-      CREATE TABLE "${type.name}"
-      (
-        ${[].concat(getFields(type), getForeignKeys(type)).join(",\n   ")}
-      );
+    if (type.queryOptions.isView) {
+      partials.push(`
+          -- "${getSortedKeysForType(type).join(`", "`)}"
+        CREATE OR REPLACE VIEW "${type.name}" AS
+          SELECT 1 + 1 as "column";        
+      `);
+    } else {
+      partials.push(`
+        CREATE TABLE "${type.name}"
+        (
+          ${[].concat(getFields(type), getForeignKeys(type)).join(",\n   ")}
+        );
 
-      ${getIndexes(type)}
-    `);
+        ${getIndexes(type)}
+      `);
+    }
   }
 
   context.outputFiles.push({

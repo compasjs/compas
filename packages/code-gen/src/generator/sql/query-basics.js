@@ -26,20 +26,25 @@ export function generateBaseQueries(context) {
       `${type.name}OrderBy`,
       `./query-partials${context.importExtension}`,
     );
-    imports.destructureImport(
-      `${type.name}InsertValues`,
-      `./query-partials${context.importExtension}`,
-    );
-    imports.destructureImport(
-      `${type.name}UpdateSet`,
-      `./query-partials${context.importExtension}`,
-    );
+
+    if (!type.queryOptions.isView) {
+      imports.destructureImport(
+        `${type.name}InsertValues`,
+        `./query-partials${context.importExtension}`,
+      );
+      imports.destructureImport(
+        `${type.name}UpdateSet`,
+        `./query-partials${context.importExtension}`,
+      );
+    }
 
     partials.push(selectQuery(context, imports, type));
     partials.push(countQuery(context, imports, type));
-    partials.push(deleteQuery(context, imports, type));
-    partials.push(insertQuery(context, imports, type));
-    partials.push(updateQuery(context, imports, type));
+    if (!type.queryOptions.isView) {
+      partials.push(deleteQuery(context, imports, type));
+      partials.push(insertQuery(context, imports, type));
+      partials.push(updateQuery(context, imports, type));
+    }
 
     if (type.queryOptions.withSoftDeletes) {
       partials.push(softDeleteQuery(context, imports, type));
@@ -152,7 +157,12 @@ function softDeleteQuery(context, imports, type) {
     if (["oneToOneReverse", "oneToMany"].indexOf(relation.subType) === -1) {
       continue;
     }
-    if (relation.reference.reference.queryOptions?.withSoftDeletes) {
+    const referenceQueryOptions =
+      relation.reference.reference.queryOptions ?? {};
+    if (
+      referenceQueryOptions.withSoftDeletes &&
+      !referenceQueryOptions.isView
+    ) {
       affectedRelations.push(relation);
     }
   }
@@ -178,7 +188,7 @@ function softDeleteQuery(context, imports, type) {
       ${() => {
         if (affectedRelations.length > 0) {
           return js`
-            if (options.skipCascade) {
+            if (options.skipCascade || result.length === 0) {
               return;
             }
 
