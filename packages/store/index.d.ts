@@ -215,6 +215,73 @@ export function getFileStream(
   range?: { start?: number; end?: number },
 ): Promise<NodeJS.ReadStream>;
 
+export interface FileGroup {
+  id: string;
+  name?: string;
+  order: number;
+  meta: {};
+  file?: string;
+  parent?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+}
+
+export interface NestedFileGroup {
+  id: string;
+  name?: string;
+  order: number;
+  meta: {};
+  parent?: string;
+  isDirectory: boolean;
+  file?:
+    | {
+        id: string;
+        bucketName?: string;
+        contentLength?: number;
+        contentType?: string;
+        name?: string;
+        createdAt?: string;
+        updatedAt?: string;
+      }
+    | undefined
+    | string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  children?: NestedFileGroup[];
+}
+
+/**
+ * Assigns children of the provided fileGroup to the parent.
+ * Returns the affected children.
+ */
+export function hoistChildrenToParent(
+  sql: Postgres,
+  fileGroup: FileGroup,
+): Promise<FileGroup[]>;
+
+/**
+ * Update the order of the provided id's in relation to each other.
+ * This function does not check if all files are in the same group.
+ */
+export function updateFileGroupOrder(
+  sql: Postgres,
+  ids: string[],
+): Promise<void>;
+
+/**
+ * Return a result with nested file groups and files, sorted completely by the order id.
+ */
+export function getNestedFileGroups(
+  sql: Postgres,
+  where?: {
+    deletedAtIncludeNotNull?: boolean;
+    rootId?: string;
+    excludeFiles?: boolean;
+  },
+): Promise<NestedFileGroup[]>;
+
 export interface FileCacheOptions {
   /**
    * Maximum byte size of a file to be stored in memory

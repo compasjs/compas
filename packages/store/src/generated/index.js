@@ -9,6 +9,8 @@ export * from "./query-partials.js";
 export { queries };
 export {
   traverseFile,
+  traverseFileGroup,
+  traverseFileGroupView,
   traverseJob,
   traverseSession,
 } from "./query-traverser.js";

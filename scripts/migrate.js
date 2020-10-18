@@ -18,5 +18,5 @@ async function main(logger) {
 
   await runMigrations(mc);
 
-  await sql.end();
+  await sql.end({ timeout: 0.01 });
 }
