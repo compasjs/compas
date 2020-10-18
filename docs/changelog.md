@@ -1,5 +1,27 @@
 # CHANGELOG
 
+### [v0.0.83](https://github.com/lightbasenl/lbu/releases/tag/v0.0.83)
+
+- build(deps): bump @types/node from 14.11.8 to 14.11.10
+  ([#390](https://github.com/lightbasenl/lbu/pull/390))
+- build(deps): bump c8 from 7.3.3 to 7.3.4
+  ([#382](https://github.com/lightbasenl/lbu/pull/382))
+- build(deps): bump eslint-config-prettier from 6.12.0 to 6.13.0
+  ([#389](https://github.com/lightbasenl/lbu/pull/389))
+- build(deps-dev): bump react from 16.13.1 to 16.14.0
+  ([#381](https://github.com/lightbasenl/lbu/pull/381))
+- code-gen: disable some sql generation parts when type is a view
+  ([#392](https://github.com/lightbasenl/lbu/pull/392))
+- code-gen: refactor types, validator and sql generators
+  ([#377](https://github.com/lightbasenl/lbu/pull/377))
+- store: add support to explain and analyze any query
+  ([#391](https://github.com/lightbasenl/lbu/pull/391))
+- store: support nested file groups with custom ordering
+  ([#393](https://github.com/lightbasenl/lbu/pull/393))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://lbu.lightbase.nl/releases/0.0.83.html).
+
 ### [v0.0.82](https://github.com/lightbasenl/lbu/releases/tag/v0.0.82)
 
 - build(deps): bump chokidar from 3.4.2 to 3.4.3
