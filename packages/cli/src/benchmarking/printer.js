@@ -46,7 +46,7 @@ export function printBenchResults() {
     // something
     writeFileSync(
       pathJoin(process.cwd(), "benchmark_output.txt"),
-      result.join("\n"),
+      result.join("\n").trim(),
       "utf8",
     );
   }
