@@ -352,7 +352,7 @@ export function anonymousValidator15(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "typeOf"?: string, "instanceOf"?: string, }|undefined}
+ * @returns {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }|undefined}
  */
 export function anonymousValidator14(
   value,
@@ -369,72 +369,46 @@ export function anonymousValidator14(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator15(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
-  result["typeOf"] = anonymousValidator8(
-    value["typeOf"],
-    `${propertyPath}.typeOf`,
-    errors,
-  );
-  keySet.delete("typeOf");
-  result["instanceOf"] = anonymousValidator8(
-    value["instanceOf"],
-    `${propertyPath}.instanceOf`,
-    errors,
-  );
-  keySet.delete("instanceOf");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -623,72 +597,56 @@ export function anonymousValidator18(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator19(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["validator"] = anonymousValidator20(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  keySet.delete("validator");
   result["values"] = anonymousValidator22(
     value["values"],
     `${propertyPath}.values`,
     errors,
   );
-  keySet.delete("values");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -823,72 +781,56 @@ export function anonymousValidator24(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator25(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["oneOf"] = anonymousValidator26(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
   );
-  keySet.delete("oneOf");
   result["validator"] = anonymousValidator27(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  keySet.delete("validator");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -965,60 +907,46 @@ export function anonymousValidator29(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator30(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -1095,60 +1023,46 @@ export function anonymousValidator32(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator33(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -1263,72 +1177,56 @@ export function anonymousValidator35(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator36(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["keys"] = anonymousValidator37(
     value["keys"],
     `${propertyPath}.keys`,
     errors,
   );
-  keySet.delete("keys");
   result["values"] = anonymousValidator38(
     value["values"],
     `${propertyPath}.values`,
     errors,
   );
-  keySet.delete("values");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -1485,72 +1383,56 @@ export function anonymousValidator40(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator41(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["oneOf"] = anonymousValidator42(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
   );
-  keySet.delete("oneOf");
   result["validator"] = anonymousValidator43(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  keySet.delete("validator");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -2026,66 +1908,51 @@ export function anonymousValidator59(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator60(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["reference"] = anonymousValidator61(
     value["reference"],
     `${propertyPath}.reference`,
     errors,
   );
-  keySet.delete("reference");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -2129,48 +1996,36 @@ export function anonymousValidator55(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator56(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["subType"] = anonymousValidator57(
     value["subType"],
     `${propertyPath}.subType`,
     errors,
   );
-  keySet.delete("subType");
   result["reference"] = anonymousValidator58(
     value["reference"],
     `${propertyPath}.reference`,
     errors,
   );
-  keySet.delete("reference");
   result["ownKey"] = anonymousValidator50(
     value["ownKey"],
     `${propertyPath}.ownKey`,
     errors,
   );
-  keySet.delete("ownKey");
   result["referencedKey"] = anonymousValidator8(
     value["referencedKey"],
     `${propertyPath}.referencedKey`,
     errors,
   );
-  keySet.delete("referencedKey");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -2541,108 +2396,86 @@ export function anonymousValidator45(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator46(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["validator"] = anonymousValidator47(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  keySet.delete("validator");
   result["keys"] = anonymousValidator49(
     value["keys"],
     `${propertyPath}.keys`,
     errors,
   );
-  keySet.delete("keys");
   result["enableQueries"] = anonymousValidator3(
     value["enableQueries"],
     `${propertyPath}.enableQueries`,
     errors,
   );
-  keySet.delete("enableQueries");
   result["queryOptions"] = anonymousValidator52(
     value["queryOptions"],
     `${propertyPath}.queryOptions`,
     errors,
   );
-  keySet.delete("queryOptions");
   result["relations"] = anonymousValidator53(
     value["relations"],
     `${propertyPath}.relations`,
     errors,
   );
-  keySet.delete("relations");
   result["shortName"] = anonymousValidator8(
     value["shortName"],
     `${propertyPath}.shortName`,
     errors,
   );
-  keySet.delete("shortName");
   result["where"] = anonymousValidator64(
     value["where"],
     `${propertyPath}.where`,
     errors,
   );
-  keySet.delete("where");
   result["partial"] = anonymousValidator68(
     value["partial"],
     `${propertyPath}.partial`,
     errors,
   );
-  keySet.delete("partial");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -2883,72 +2716,56 @@ export function anonymousValidator74(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator75(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["oneOf"] = anonymousValidator76(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
   );
-  keySet.delete("oneOf");
   result["validator"] = anonymousValidator77(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  keySet.delete("validator");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -3025,60 +2842,46 @@ export function anonymousValidator80(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator81(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -3313,108 +3116,86 @@ export function anonymousValidator83(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator84(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["method"] = anonymousValidator85(
     value["method"],
     `${propertyPath}.method`,
     errors,
   );
-  keySet.delete("method");
   result["path"] = anonymousValidator50(
     value["path"],
     `${propertyPath}.path`,
     errors,
   );
-  keySet.delete("path");
   result["tags"] = anonymousValidator86(
     value["tags"],
     `${propertyPath}.tags`,
     errors,
   );
-  keySet.delete("tags");
   result["query"] = anonymousValidator87(
     value["query"],
     `${propertyPath}.query`,
     errors,
   );
-  keySet.delete("query");
   result["params"] = anonymousValidator88(
     value["params"],
     `${propertyPath}.params`,
     errors,
   );
-  keySet.delete("params");
   result["body"] = anonymousValidator89(
     value["body"],
     `${propertyPath}.body`,
     errors,
   );
-  keySet.delete("body");
   result["files"] = anonymousValidator90(
     value["files"],
     `${propertyPath}.files`,
     errors,
   );
-  keySet.delete("files");
   result["response"] = anonymousValidator91(
     value["response"],
     `${propertyPath}.response`,
     errors,
   );
-  keySet.delete("response");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**
@@ -3615,66 +3396,51 @@ export function anonymousValidator0(
     return undefined;
   }
   const result = Object.create(null);
-  const keySet = new Set(Object.keys(value));
   result["type"] = anonymousValidator1(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  keySet.delete("type");
   result["docString"] = anonymousValidator2(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  keySet.delete("docString");
   result["isOptional"] = anonymousValidator3(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  keySet.delete("isOptional");
   result["defaultValue"] = anonymousValidator4(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  keySet.delete("defaultValue");
   result["uniqueName"] = anonymousValidator8(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  keySet.delete("uniqueName");
   result["group"] = anonymousValidator8(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  keySet.delete("group");
   result["name"] = anonymousValidator8(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  keySet.delete("name");
   result["sql"] = anonymousValidator9(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  keySet.delete("sql");
   result["values"] = anonymousValidator10(
     value["values"],
     `${propertyPath}.values`,
     errors,
   );
-  keySet.delete("values");
-  if (keySet.size !== 0) {
-    const extraKeys = [...keySet];
-    errors.push(buildError(parentType, "strict", { propertyPath, extraKeys }));
-    return undefined;
-  }
   return result;
 }
 /**

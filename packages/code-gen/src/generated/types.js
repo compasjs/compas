@@ -9,7 +9,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenAnyType
- * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "typeOf"?: string, "instanceOf"?: string, }}
+ * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }}
  */
 /**
  * @name CodeGenArrayType

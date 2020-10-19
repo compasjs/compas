@@ -93,8 +93,6 @@ function getTypes(T) {
   const anyType = T.object("anyType").keys({
     type: "any",
     ...typeBase,
-    typeOf: T.string().optional(),
-    instanceOf: T.string().optional(),
   });
 
   const anyOfType = T.object("anyOfType").keys({
@@ -263,7 +261,7 @@ function getTypes(T) {
     response: T.reference("codeGen", "type").optional(),
   });
 
-  return [
+  const allTypes = [
     anyType,
     anyOfType,
     arrayType,
@@ -279,4 +277,6 @@ function getTypes(T) {
     uuidType,
     routeType,
   ];
+
+  return allTypes.map((it) => it.loose());
 }
