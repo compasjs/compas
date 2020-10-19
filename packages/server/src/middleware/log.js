@@ -1,10 +1,10 @@
 import { Transform } from "stream";
 import {
   bindLoggerContext,
-  newLogger,
-  newEvent,
   eventStart,
   eventStop,
+  newEvent,
+  newLogger,
 } from "@lbu/insight";
 import { isNil, uuid } from "@lbu/stdlib";
 
@@ -88,7 +88,9 @@ function logInfo(ctx, startTime, length) {
     },
   });
 
-  eventStop(ctx.event);
+  if (ctx.method !== "OPTIONS") {
+    eventStop(ctx.event);
+  }
 }
 
 /**
