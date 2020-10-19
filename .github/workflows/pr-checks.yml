@@ -38,16 +38,13 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Run benchmarks
-        # New line stripping from: https://github.community/t/set-output-truncates-multiline-strings/16852/5
         run: |
           yarn install
           yarn lbu gen
           yarn lbu bench
-          RESULT="$(cat ./benchmark_output.txt)"
-          RESULT="${RESULT//'%'/'%25'}"
-          RESULT="${RESULT//$'\n'/'%0A'}"
-          RESULT="${RESULT//$'\r'/'%0D'}"
-          echo "::set-env name=BENCH_RESULT::$RESULT"
+          echo "BENCH_RESULT<<EOF" >> $GITHUB_ENV
+          cat ./benchmark_output.txt >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Comment bench result
         uses: mshick/add-pr-comment@v1
