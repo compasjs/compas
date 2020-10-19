@@ -32,7 +32,7 @@ export function generateStructureFiles(context) {
     )
     .join("\n");
   const groups = Object.keys(context.structure)
-    .map((it) => `${it}Structure`)
+    .map((it) => `{ ${it}: ${it}Structure }`)
     .join(", ");
 
   context.outputFiles.push({
