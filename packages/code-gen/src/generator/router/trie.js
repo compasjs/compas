@@ -115,6 +115,7 @@ function addHttpMethods(trie) {
     createNode("GET"),
     createNode("POST"),
     createNode("PUT"),
+    createNode("PATCH"),
     createNode("DELETE"),
     createNode("HEAD"),
   );

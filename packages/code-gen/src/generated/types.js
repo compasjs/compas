@@ -61,7 +61,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenRouteType
- * @typedef {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }}
+ * @typedef {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }}
  */
 /**
  * @name CodeGenStringType

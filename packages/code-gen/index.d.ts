@@ -407,6 +407,11 @@ export class RouteCreator {
   put(path?: string, name?: string);
 
   /**
+   * PATCH route
+   */
+  patch(path?: string, name?: string);
+
+  /**
    * DELETE route
    */
   delete(path?: string, name?: string);

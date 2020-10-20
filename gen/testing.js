@@ -121,6 +121,8 @@ export function applyTestingServerStructure(app) {
     }),
 
     R.post("/server-error", "serverError").response({}),
+
+    R.patch("/patch", "patchTest").response({}),
   );
 }
 
