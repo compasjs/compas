@@ -2941,7 +2941,7 @@ export function anonymousValidator84(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {"GET"|"POST"|"PUT"|"DELETE"|"HEAD"|undefined}
+ * @returns {"GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH"|undefined}
  */
 export function anonymousValidator85(
   value,
@@ -2967,9 +2967,10 @@ export function anonymousValidator85(
     value !== "POST" &&
     value !== "PUT" &&
     value !== "DELETE" &&
-    value !== "HEAD"
+    value !== "HEAD" &&
+    value !== "PATCH"
   ) {
-    const oneOf = ["GET", "POST", "PUT", "DELETE", "HEAD"];
+    const oneOf = ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"];
     errors.push(buildError(parentType, "oneOf", { propertyPath, oneOf }));
     return undefined;
   }
@@ -3099,7 +3100,7 @@ export function anonymousValidator91(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }|undefined}
+ * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }|undefined}
  */
 export function anonymousValidator83(
   value,

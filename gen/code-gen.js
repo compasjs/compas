@@ -251,7 +251,7 @@ function getTypes(T) {
   const routeType = T.object("routeType").keys({
     type: "route",
     ...typeBase,
-    method: T.string().oneOf("GET", "POST", "PUT", "DELETE", "HEAD"),
+    method: T.string().oneOf("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"),
     path: T.string(),
     tags: [T.string()],
     query: T.reference("codeGen", "type").optional(),

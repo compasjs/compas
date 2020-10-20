@@ -101,6 +101,15 @@ test("code-gen/e2e-server", async (t) => {
     }
   });
 
+  t.test("server - PATCH throws not implemented", async (t) => {
+    try {
+      await server.serverApi.patchTest();
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.status, 405);
+    }
+  });
+
   t.test("server - router - tags are available", (t) => {
     t.deepEqual(server.serverTags.getId, ["tag"]);
     t.deepEqual(server.serverTags.create, []);

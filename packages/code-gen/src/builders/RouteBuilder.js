@@ -55,8 +55,8 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   body(builder) {
-    if (["POST", "PUT", "DELETE"].indexOf(this.data.method) === -1) {
-      throw new Error("Can only use body on POST, PUT or DELETE routes");
+    if (["POST", "PUT", "PATCH", "DELETE"].indexOf(this.data.method) === -1) {
+      throw new Error("Can only use body on POST, PUT, PATCH or DELETE routes");
     }
 
     this.bodyBuilder = builder;
@@ -69,8 +69,8 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   files(builder) {
-    if (["POST", "PUT"].indexOf(this.data.method) === -1) {
-      throw new Error("Can only use files on POST or PUT routes");
+    if (["POST", "PUT", "PATCH"].indexOf(this.data.method) === -1) {
+      throw new Error("Can only use files on POST, PUT or PATCH routes");
     }
 
     this.filesBuilder = builder;
@@ -320,6 +320,20 @@ export class RouteCreator {
    * @param {string} [name]
    * @returns {RouteBuilder}
    */
+  patch(path, name) {
+    return this.create(
+      "PATCH",
+      this.data.group,
+      name || "patch",
+      concatenateRoutePaths(this.data.path, path || "/"),
+    );
+  }
+
+  /**
+   * @param {string} [path]
+   * @param {string} [name]
+   * @returns {RouteBuilder}
+   */
   delete(path, name) {
     return this.create(
       "DELETE",
@@ -367,12 +381,15 @@ export class RouteCreator {
 
     if (
       !isNil(this.bodyBuilder) &&
-      ["POST", "PUT", "DELETE"].indexOf(method) !== -1
+      ["POST", "PUT", "PATCH", "DELETE"].indexOf(method) !== -1
     ) {
       b.body(this.bodyBuilder);
     }
 
-    if (!isNil(this.filesBuilder) && ["POST", "PUT"].indexOf(method) !== -1) {
+    if (
+      !isNil(this.filesBuilder) &&
+      ["POST", "PUT", "PATCH"].indexOf(method) !== -1
+    ) {
       b.files(this.filesBuilder);
     }
 
