@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [14]
+        node: [14, 15]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
@@ -55,6 +55,7 @@ jobs:
           message: |
             ==== **Benchmark result** ====
             ```
+            Node.js version: ${{ matrix.node }}
             ${{ env.BENCH_RESULT }}
             ```
           repo-token: ${{ secrets.GITHUB_TOKEN }}
