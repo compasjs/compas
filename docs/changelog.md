@@ -1,5 +1,27 @@
 # CHANGELOG
 
+### [vx.x.x](https://github.com/lightbasenl/lbu/releases/tag/vx.x.x)
+
+- build(deps): bump @types/node from 14.11.10 to 14.14.0
+  ([#405](https://github.com/lightbasenl/lbu/pull/405))
+- chore: automatically create a release on new tags
+- ci: run tests and benchmarks on Node.js 15
+  ([#403](https://github.com/lightbasenl/lbu/pull/403))
+- code-gen: do loose structure validation
+  ([#398](https://github.com/lightbasenl/lbu/pull/398))
+- code-gen: fix structure dump
+  ([#396](https://github.com/lightbasenl/lbu/pull/396))
+- code-gen: fix where 'in' and 'notIn' generation
+- code-gen: implement 'patch' method support
+  ([#404](https://github.com/lightbasenl/lbu/pull/404))
+- code-gen: support adding relations to 'foreign' structure.
+  ([#402](https://github.com/lightbasenl/lbu/pull/402))
+- server: skip event logging on OPTIONS requests
+  ([#397](https://github.com/lightbasenl/lbu/pull/397))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://lbu.lightbase.nl/releases/x.x.x.html).
+
 ### [v0.0.83](https://github.com/lightbasenl/lbu/releases/tag/v0.0.83)
 
 - build(deps): bump @types/node from 14.11.8 to 14.11.10
