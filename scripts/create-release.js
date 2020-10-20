@@ -39,8 +39,29 @@ function parseChangelog(fullChangelog) {
   const firstIndex = fullChangelog.indexOf("###");
   const secondIndex = fullChangelog.indexOf("###", firstIndex + 1);
 
-  const part = fullChangelog.substring(firstIndex, secondIndex);
+  const parts = fullChangelog
+    .substring(firstIndex, secondIndex)
+    .trim()
+    .split("\n");
 
-  // Drop header line and trim result before returning
-  return part.split("\n").slice(1).join("\n").trim();
+  const result = [];
+  let hasEmptyLine = false;
+
+  for (let i = 1; i < parts.length; ++i) {
+    const thisPart = parts[i].trim();
+
+    // Start a new line on an empty line or a new bullet point
+    if (thisPart.startsWith("-") || hasEmptyLine) {
+      result.push(thisPart);
+      hasEmptyLine = false;
+    } else if (thisPart.length === 0) {
+      hasEmptyLine = true;
+      result.push("");
+    } else {
+      // Concatenate the different sentence parts together
+      result[result.length - 1] += ` ${thisPart}`;
+    }
+  }
+
+  return result.join("\n");
 }

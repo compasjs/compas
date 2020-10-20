@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### [vx.x.x](https://github.com/lightbasenl/lbu/releases/tag/vx.x.x)
+### [v0.0.84](https://github.com/lightbasenl/lbu/releases/tag/v0.0.84)
 
 - build(deps): bump @types/node from 14.11.10 to 14.14.0
   ([#405](https://github.com/lightbasenl/lbu/pull/405))
@@ -20,7 +20,7 @@
   ([#397](https://github.com/lightbasenl/lbu/pull/397))
 
 For a detailed description and more details about this release, please read the
-[release notes](https://lbu.lightbase.nl/releases/x.x.x.html).
+[release notes](https://lbu.lightbase.nl/releases/0.0.84.html).
 
 ### [v0.0.83](https://github.com/lightbasenl/lbu/releases/tag/v0.0.83)
 
