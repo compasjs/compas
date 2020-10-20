@@ -5,7 +5,8 @@ import axios from "axios";
 mainFn(import.meta, main);
 
 async function main() {
-  const [rawRef, githubToken] = process.argv.slice(2);
+  const rawRef = process.env.GITHUB_REF;
+  const [githubToken] = process.argv.slice(2);
 
   const tag = rawRef.replace(/^refs\/tags\//, "");
   const fullChangelog = await readFile("./docs/changelog.md", "utf8");
