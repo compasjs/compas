@@ -116,6 +116,40 @@ export class App {
   }
 
   /**
+   * Add relations to the provided reference.
+   * The provided reference must already exist.
+   * This only works when referencing in to structure that you've passed in to
+   * `app.extend`.
+   *
+   * @param {ReferenceType} reference
+   * @param {...RelationType} relations
+   */
+  addRelations(reference, ...relations) {
+    const {
+      reference: { group, name },
+    } = reference.build();
+    const resolved = this.data[group][name];
+
+    if (!resolved) {
+      throw new Error(
+        `Can not resolve ${group}:${name}. Make sure to extend first via app.extend.`,
+      );
+    }
+
+    if (resolved.type !== "object") {
+      throw new Error(
+        `Can only add relations to objects. Found '${resolved.type}'.`,
+      );
+    }
+
+    for (const relation of relations) {
+      resolved.relations.push(relation.build());
+    }
+
+    return this;
+  }
+
+  /**
    * @param {object} obj
    * @returns {this}
    */

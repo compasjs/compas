@@ -130,6 +130,14 @@ export class App {
   add(...builders: TypeBuilder[]): App;
 
   /**
+   * Add relations to the provided reference.
+   * The provided reference must already exist.
+   * This only works when referencing in to structure that you've passed in to
+   * `app.extend`.
+   */
+  addRelations(reference: ReferenceType, ...relations: RelationType[]): App;
+
+  /**
    * Add a raw object to this app.
    * Note that it throws when you are not conforming to at least the structure from the
    * TypeBuilder
