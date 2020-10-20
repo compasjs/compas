@@ -124,6 +124,14 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.nickName, "TestUser");
   });
 
+  t.test("query filter by 'in' statements", async () => {
+    await client.queries.userSelect(sql, {
+      createdAtIn: [new Date()],
+      emailIn: ["Test@test.com"],
+      idNotIn: [uuid()],
+    });
+  });
+
   t.test("soft delete post", async (t) => {
     const originalCount = await client.queries.postCount(sql);
     await client.queries.postDelete(sql, { id: post.id });

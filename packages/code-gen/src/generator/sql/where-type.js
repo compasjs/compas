@@ -100,7 +100,7 @@ export function getWherePartial(context, type) {
   const partials = [];
 
   for (const field of type.where.fields) {
-    const realField = type.keys[field.key];
+    const realField = type.keys[field.key].reference ?? type.keys[field.key];
     // Type to cast arrays to, use for in & notIn
     const fieldType =
       realField.type === "number" && !realField.floatingPoint
@@ -109,6 +109,8 @@ export function getWherePartial(context, type) {
         ? "float"
         : realField.type === "string"
         ? "varchar"
+        : realField.type === "date"
+        ? "timestamptz"
         : "uuid";
 
     let str = "";
