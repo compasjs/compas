@@ -10,13 +10,32 @@ import { CancelToken, AxiosInstance } from "axios";
 {{ for (const group of Object.keys(structure)) { }}
 import * as {{= group }}Validators from "./{{= group }}/validators{{= importExtension }}";
 {{ } }}
-import { AppError } from "@lbu/stdlib";
+import { AppError, streamToBuffer } from "@lbu/stdlib";
 ((newline))
 function handleError(e, group, name) {
   // Validator error
   if (AppError.instanceOf(e)) {
     e.key = `response.${group}.${name}.${e.key}`
     throw e;
+  }
+
+  if (typeof e?.response?.data?.pipe === "function") {
+    // Handle response streams
+    return streamToBuffer(e.response.data).then(buffer => {
+      try {
+        e.response.data = JSON.parse(buffer.toString("utf-8"));
+      } catch {
+          // Unknown error
+          throw new AppError(
+            `response.${group}.${name}`,
+            e.response?.status ?? 500,
+            { data: e?.response?.data, headers: e?.response?.headers },
+            e,
+          );
+      }
+
+      return handleError(e, group, name);
+    });
   }
 
   // Server AppError
