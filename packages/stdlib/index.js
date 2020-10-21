@@ -11,6 +11,7 @@ export {
 export {
   exec,
   spawn,
+  streamToBuffer,
   pathJoin,
   processDirectoryRecursive,
   processDirectoryRecursiveSync,

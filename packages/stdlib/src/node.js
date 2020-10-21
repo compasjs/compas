@@ -2,9 +2,11 @@ import { exec as cpExec, spawn as cpSpawn } from "child_process";
 import { lstatSync, readdirSync } from "fs";
 import { lstat, readdir } from "fs/promises";
 import { join } from "path";
+import { pipeline } from "stream";
 import { promisify } from "util";
 
 const internalExec = promisify(cpExec);
+const internalPipeline = promisify(pipeline);
 
 export { join as pathJoin };
 
@@ -48,6 +50,23 @@ export function spawn(command, args, opts = {}) {
       resolve({ exitCode: code ?? 0 });
     });
   });
+}
+
+/**
+ * Read a readable stream completely, and return as Buffer
+ * @param {ReadableStream} stream
+ * @returns {Promise<Buffer>}
+ */
+export async function streamToBuffer(stream) {
+  const buffers = [];
+  await internalPipeline(stream, async function* (transform) {
+    for await (const chunk of transform) {
+      buffers.push(chunk);
+      yield chunk;
+    }
+  });
+
+  return Buffer.concat(buffers);
 }
 
 /**

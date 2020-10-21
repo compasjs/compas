@@ -221,6 +221,11 @@ export function spawn(
 ): Promise<{ exitCode: number }>;
 
 /**
+ * Read a readable stream completely, and return as Buffer
+ */
+export function streamToBuffer(stream: ReadableStream): Promise<Buffer>;
+
+/**
  * Options for processDirectoryRecursive and processDirectoryRecursiveSync
  */
 export interface ProcessDirectoryOptions {
