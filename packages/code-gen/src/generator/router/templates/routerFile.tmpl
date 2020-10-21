@@ -149,10 +149,11 @@ const handlers = {
 
     /**
      * @name {{= item.uniqueName }}Ctx
-     * @typedef {object & Context}
+     * @typedef {Context<{}, {
+     {{ if (item.response) { }}*   body: {{= item.response.reference.uniqueName }}, {{ } }}
+     * }>}
      * @property {Logger} log
      * @property {Event} event
-     {{ if (item.response) { }}* @property { {{= item.response.reference.uniqueName }} } body {{ } }}
      {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
      {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
      {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
@@ -160,10 +161,8 @@ const handlers = {
      */
 ((newline))
      /**
-       * @callback {{= item.uniqueName }}Fn
-       * @param { {{= item.uniqueName }}Ctx} ctx
-       * @param {Function} next
-       * @returns {void|Promise<void>}
+       * @name {{= item.uniqueName }}Fn
+       * @typedef {function(ctx: {{= item.uniqueName }}Ctx, next: Next): (void|Promise<void>)}
        */
 ((newline))
 

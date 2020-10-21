@@ -39,7 +39,7 @@
 //                 Tomek Łaziuk <https://github.com/tlaziuk>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
-import { Logger } from "@lbu/insight";
+import { Event, Logger } from "@lbu/insight";
 import { StoreFile } from "@lbu/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
@@ -702,6 +702,7 @@ interface BaseContext
   onerror(err: Error): void;
 
   log: Logger;
+  event: Event;
   session: Session | null;
 }
 
@@ -755,7 +756,7 @@ export type Context<
   state: StateT;
 } & CustomT;
 
-export type Next = () => Promise<any>;
+export type Next = () => void | Promise<void>;
 
 /**
  * @private
