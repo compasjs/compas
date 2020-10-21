@@ -86,7 +86,7 @@ options = {},
       {{ if (item.files && options.isNode) { }}
       headers: data.getHeaders(),
       {{ } }}
-      {{ if (item.response && item.response.type === "file") { }}
+      {{ if (item.response && item.response.reference.type === "file") { }}
       responseType: "{{= options.isNode ? "stream" : "blob" }}",
       {{ } }}
       {{ if (options.isBrowser) { }}
@@ -106,7 +106,7 @@ options = {},
       {{ } }}
       return response.data;
     } catch (e) {
-      handleError(e, "{{= item.group }}", "{{= item.name }}");
+      return handleError(e, "{{= item.group }}", "{{= item.name }}");
     }
 
     {{ } }}

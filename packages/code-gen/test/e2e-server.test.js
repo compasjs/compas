@@ -5,7 +5,7 @@ import {
   createTestAppAndClient,
   getApp,
 } from "@lbu/server";
-import { AppError } from "@lbu/stdlib";
+import { AppError, streamToBuffer } from "@lbu/stdlib";
 import Axios from "axios";
 
 mainTestFn(import.meta);
@@ -110,6 +110,27 @@ test("code-gen/e2e-server", async (t) => {
     }
   });
 
+  t.test("server - files are passed through as well", async (t) => {
+    const response = await server.serverApi.getFile({ throwError: false });
+    const buffer = await streamToBuffer(response);
+
+    t.equal(buffer.toString("utf-8"), "Hello!");
+  });
+
+  t.test(
+    "server - errors are handled even if response is a stream",
+    async (t) => {
+      try {
+        await server.serverApi.getFile({ throwError: true });
+        t.fail("Should throw");
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 400);
+        t.equal(e.key, "whoops");
+      }
+    },
+  );
+
   t.test("server - router - tags are available", (t) => {
     t.deepEqual(server.serverTags.getId, ["tag"]);
     t.deepEqual(server.serverTags.create, []);
@@ -171,6 +192,16 @@ async function buildTestApp() {
     throw new AppError("server.error", 499, {
       test: "X",
     });
+  };
+
+  server.serverHandlers.getFile = (ctx, next) => {
+    if (ctx.validatedQuery.throwError) {
+      throw AppError.validationError("whoops");
+    }
+
+    ctx.body = Buffer.from("Hello!", "utf-8");
+
+    return next();
   };
 
   server.validatorSetError(AppError.validationError);

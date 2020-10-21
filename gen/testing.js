@@ -123,6 +123,10 @@ export function applyTestingServerStructure(app) {
     R.post("/server-error", "serverError").response({}),
 
     R.patch("/patch", "patchTest").response({}),
+
+    R.get("/file", "getFile")
+      .query({ throwError: T.bool().optional().convert() })
+      .response(T.file()),
   );
 }
 
