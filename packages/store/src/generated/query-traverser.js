@@ -22,8 +22,8 @@ import {
 /**
  * @name TraverseFile
  * @typedef {object}
- * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getGroup
- * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getGroupView
+ * @property {function(where: StoreFileGroupWhere=): TraverseFileGroup} getGroup
+ * @property {function(where: StoreFileGroupViewWhere=): TraverseFileGroupView} getGroupView
  * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreFile[]>} exec
  */
@@ -88,9 +88,9 @@ ORDER BY ${fileOrderBy()}
 /**
  * @name TraverseFileGroup
  * @typedef {object}
- * @property {(where?: StoreFileWhere) => TraverseFile} getFile
- * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getParent
- * @property {(where?: StoreFileGroupWhere) => TraverseFileGroup} getChildren
+ * @property {function(where: StoreFileWhere=): TraverseFile} getFile
+ * @property {function(where: StoreFileGroupWhere=): TraverseFileGroup} getParent
+ * @property {function(where: StoreFileGroupWhere=): TraverseFileGroup} getChildren
  * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreFileGroup[]>} exec
  */
@@ -170,9 +170,9 @@ ORDER BY ${fileGroupOrderBy()}
 /**
  * @name TraverseFileGroupView
  * @typedef {object}
- * @property {(where?: StoreFileWhere) => TraverseFile} getFile
- * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getParent
- * @property {(where?: StoreFileGroupViewWhere) => TraverseFileGroupView} getChildren
+ * @property {function(where: StoreFileWhere=): TraverseFile} getFile
+ * @property {function(where: StoreFileGroupViewWhere=): TraverseFileGroupView} getParent
+ * @property {function(where: StoreFileGroupViewWhere=): TraverseFileGroupView} getChildren
  * @property {QueryPart} queryPart
  * @property {function(sql: Postgres): Promise<StoreFileGroupView[]>} exec
  */

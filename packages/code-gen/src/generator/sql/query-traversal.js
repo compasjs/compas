@@ -79,11 +79,8 @@ function traversalQuery(context, imports, type) {
        * @param {${otherSide.uniqueName}Where} [where={}]
        * @returns {Traverse${upperCaseFirst(otherSide.name)}}
        */
-      get${upperCaseFirst(relation.ownKey)}(where = {})
-      {
-        return traverse${upperCaseFirst(otherSide.name)}(
-          where,
-          query\`
+      get${upperCaseFirst(relation.ownKey)}(where = {}) {
+        return traverse${upperCaseFirst(otherSide.name)}(where, query\`
         AND ${otherSide.shortName}."${referencedKey}"  = ANY(
           SELECT ${type.shortName}."${ownKey}"
           $\{q}
@@ -94,9 +91,9 @@ function traversalQuery(context, imports, type) {
 
     partials.push(part);
     docPartials.push(
-      `* @property {(where?: ${
+      `* @property {function(where: ${
         otherSide.uniqueName
-      }Where) => Traverse${upperCaseFirst(otherSide.name)}} get${upperCaseFirst(
+      }Where=): Traverse${upperCaseFirst(otherSide.name)}} get${upperCaseFirst(
         relation.ownKey,
       )}`,
     );
@@ -106,11 +103,11 @@ function traversalQuery(context, imports, type) {
     /**
      * @name Traverse${upperCaseFirst(type.name)}
      * @typedef {object}
-     ${docPartials}
+      ${docPartials}
      * @property {QueryPart} queryPart
      * @property {function(sql: Postgres): Promise<${type.uniqueName}[]>} exec
      */
-    
+
     /**
      * @param {${type.uniqueName}Where} [where={}]
      * @param {QueryPart|undefined} [queryPart]
@@ -133,8 +130,7 @@ function traversalQuery(context, imports, type) {
              $\{q} 
             ORDER BY $\{${type.name}OrderBy()}
           \`;
-        },
-        exec(sql) {
+        }, exec(sql) {
           return query\`
             SELECT $\{${type.name}Fields()}
              $\{q} 
