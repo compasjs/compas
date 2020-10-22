@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.86](https://github.com/lightbasenl/lbu/releases/tag/v0.0.86)
+
+- server: add support for keeping a public cookie
+  ([#412](https://github.com/lightbasenl/lbu/pull/412))
+
 ### [v0.0.85](https://github.com/lightbasenl/lbu/releases/tag/v0.0.85)
 
 - build(deps): bump @types/node from 14.14.0 to 14.14.2
