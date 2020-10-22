@@ -948,10 +948,7 @@ interface SessionStore {
   destroy(id: string): Promise<void>;
 }
 
-/**
- * @private
- */
-interface SessionOptions {
+export interface SessionOptions {
   /**
    * cookie key (default is process.env.APP_NAME.sess)
    */
@@ -1020,6 +1017,14 @@ interface SessionOptions {
    * Use `newSessionStore` provided by `@lbu/store`
    */
   store?: SessionStore;
+
+  /**
+   * Keeps a plain browser JS readable cookie in sync with the session cookie.
+   * This allows the browser to do some basic conditional rendering and api calls, that are
+   * right most of the time. Note that this cookie is not signed, and the real verification
+   * and session happens in the httpOnly cookie.
+   */
+  keepPublicCookie?: boolean;
 
   /**
    * If your session store requires data or utilities from context, opts.ContextStore is alse
