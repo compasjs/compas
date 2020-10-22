@@ -99,6 +99,7 @@ const handlers = {
 ((newline))
 
       {{= item.uniqueName }}: {{ if (item.body || item.query || item.files) { }} async {{ } }} (params, ctx, next) => {
+        eventRename(ctx.event, `{{= item.group }}.{{= item.name }}`);
 
         ctx.request.params = params;
 
@@ -130,7 +131,6 @@ const handlers = {
           );
         }
 
-        eventRename(ctx.event, `{{= item.group }}.{{= item.name }}`);
         return _composed.{{= item.uniqueName }}(ctx, next);
       },
 
