@@ -1,5 +1,23 @@
 # CHANGELOG
 
+### [v0.0.85](https://github.com/lightbasenl/lbu/releases/tag/v0.0.85)
+
+- build(deps): bump @types/node from 14.14.0 to 14.14.2
+  ([#410](https://github.com/lightbasenl/lbu/pull/410))
+- build(deps): bump eslint-config-prettier from 6.13.0 to 6.14.0
+  ([#409](https://github.com/lightbasenl/lbu/pull/409))
+- build(deps-dev): bump react-query from 2.23.1 to 2.25.2
+  ([#411](https://github.com/lightbasenl/lbu/pull/411))
+- ci: fix create release workflow
+- ci: improve release note formatting
+- code-gen: fix api client error handling with streams
+  ([#408](https://github.com/lightbasenl/lbu/pull/408))
+- code-gen: improve types of generated routes
+- code-gen: improve types of sql traversal queries
+- code-gen: router rename event before validators
+- stdlib: add stream to buffer function
+  ([#407](https://github.com/lightbasenl/lbu/pull/407))
+
 ### [v0.0.84](https://github.com/lightbasenl/lbu/releases/tag/v0.0.84)
 
 - build(deps): bump @types/node from 14.11.10 to 14.14.0
