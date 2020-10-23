@@ -6,36 +6,36 @@
  * Docs: {{= item.docString }}
 {{ if (!options.useTypescript) { }}
     {{ if (item.params) { }}
-     * @param { {{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }} } params
+     * @param { {{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false, forceRegisterType: true }) }} } params
     {{ } }}
     {{ if (item.query) { }}
-     * @param { {{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }} } query
+     * @param { {{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false, forceRegisterType: true }) }} } query
     {{ } }}
     {{ if (item.body) { }}
-     * @param { {{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false }) }} } body
+     * @param { {{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false, forceRegisterType: true }) }} } body
     {{ } }}
     {{ if (item.files) { }}
-     * @param { {{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input" }) }} } files
+     * @param { {{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input", forceRegisterType: true }) }} } files
     {{ } }}
     {{ if (options.isBrowser) { }}
      * @param { { cancelToken?: CancelToken } } [options]
     {{ } }}
-     * @returns {Promise<{{= getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient" }) }}>}
+     * @returns {Promise<{{= getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient", forceRegisterType: true }) }}>}
 {{ } }}
  */
 {{= item.name }}: async function (
 {{ if (options.useTypescript) { }}
     {{ if (item.params) { }}
-    params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }},
+    params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false, forceRegisterType: true }) }},
     {{ } }}
     {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }},
+    query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false, forceRegisterType: true }) }},
     {{ } }}
     {{ if (item.body) { }}
-    body: T.{{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false }) }},
+    body: T.{{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false, forceRegisterType: true }) }},
     {{ } }}
     {{ if (item.files) { }}
-    files: T.{{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input" }) }},
+    files: T.{{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input", forceRegisterType: true }) }},
     {{ } }}
 {{ } else { }}
     {{ if (item.params) { }}
@@ -56,7 +56,7 @@ options: { cancelToken?: CancelToken } = {},
 {{ } else if (options.useBrowser) { }}
 options = {},
 {{ } }}
-{{= options.useTypescript ? `): Promise<T.${getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient" })}> {` : ") {" }}
+{{= options.useTypescript ? `): Promise<T.${getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient", forceRegisterType: true })}> {` : ") {" }}
     {{ if (!options.isBrowser) { }}
     checkApiClient();
     {{ } }}

@@ -215,7 +215,21 @@ export function generateTypeDefinition(
       result += "}";
       break;
     case "reference":
-      result += type.reference.uniqueName + upperCaseFirst(suffix ?? "");
+      if ((suffix ?? "") !== "") {
+        result += generateTypeDefinition(type.reference, {
+          isJSON,
+          nestedIsJSON,
+          useDefaults,
+          useTypescript,
+          isNode,
+          isBrowser,
+          suffix,
+          fileTypeIO,
+        });
+      } else {
+        result += type.reference.uniqueName;
+      }
+
       break;
     case "string":
       if (type.oneOf) {
