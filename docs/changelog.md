@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### [v0.0.87](https://github.com/lightbasenl/lbu/releases/tag/v0.0.87)
+
+- code-gen: follow references completely when linking up
+- code-gen: make sure apiClient types are registered
+
 ### [v0.0.86](https://github.com/lightbasenl/lbu/releases/tag/v0.0.86)
 
 - server: add support for keeping a public cookie
