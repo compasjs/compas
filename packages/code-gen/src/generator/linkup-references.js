@@ -52,10 +52,14 @@ function recursivelyLinkupReferences(context, item) {
         recursivelyLinkupReferences(context, item.relations[i]);
       }
       break;
-    case "reference":
-      item.reference =
-        context.structure[item.reference.group][item.reference.name];
+    case "reference": {
+      let nestedRef = item.reference;
+      while (nestedRef.reference && nestedRef.type === "reference") {
+        nestedRef = nestedRef.reference;
+      }
+      item.reference = context.structure[nestedRef.group][nestedRef.name];
       return item;
+    }
     case "relation":
       item.reference = recursivelyLinkupReferences(context, item.reference);
       break;
