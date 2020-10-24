@@ -39,6 +39,8 @@ async function main() {
     [
       "tsc",
       `${pathJoin(process.cwd(), "./generated/testing/client")}/*.ts`,
+      "--strict",
+      "--allowJs",
       "--target",
       "ESNext",
       "--noErrorTruncation",

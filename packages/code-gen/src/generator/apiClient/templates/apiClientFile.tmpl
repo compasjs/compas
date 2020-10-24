@@ -59,7 +59,7 @@ function handleError(e, group, name) {
  * Should set an axios compatible api client
  * @param {AxiosInstance} instance
  */
-export function newApiClient(instance) {
+export function newApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
 {{ } else { }}
 function checkApiClient() {
   if (_internalClient === undefined) {
@@ -68,15 +68,15 @@ function checkApiClient() {
 }
 {{ } }}
 
-let _internalClient = undefined;
-let requestId = undefined;
+let _internalClient {{= options.useTypescript ? ": AxiosInstance | undefined" : "" }}  = undefined;
+let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undefined;
 ((newline))
 
 /**
  * Should set an axios compatible api client
  * @param {AxiosInstance} instance
  */
-{{ if (!options.isBrowser) { }}export {{ } }} function createApiClient(instance) {
+{{ if (!options.isBrowser) { }}export {{ } }} function createApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
   _internalClient = instance;
 
   _internalClient.interceptors.request.use((config) => {

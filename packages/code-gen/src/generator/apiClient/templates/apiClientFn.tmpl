@@ -78,7 +78,7 @@ options = {},
     try {
     {{ } }}
 
-    const response = await _internalClient.request({
+    const response = await _internalClient{{= options.useTypescript ? "!" : "" }}.request({
       url: `{{= url }}`,
       method: "{{= item.method.toLowerCase() }}",
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},

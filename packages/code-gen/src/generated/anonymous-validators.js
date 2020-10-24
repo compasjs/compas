@@ -9,14 +9,11 @@ export function isNil(value) {
   return value === undefined || value === null;
 }
 /**
+ * @name {ValidationErrorFn}
  * This function should not throw as the corresponding validator will do that
- * @callback ValidationErrorFn
- * @param {string} key
- * @param {Object} info
+ * @typedef {function(string,any): Error}
  */
-/**
- * @type {ValidationErrorFn}
- */
+/** @type {ValidationErrorFn} */
 let errorFn = (key, info) => {
   const err = new Error(`ValidationError: ${key}`);
   err.key = key;
