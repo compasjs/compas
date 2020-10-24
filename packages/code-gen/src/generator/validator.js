@@ -54,6 +54,18 @@ export function generateValidatorFiles(context) {
 }
 
 /**
+ * @param {ValidatorContext} context
+ * @param {string} output
+ * @returns {string}
+ */
+function withTypescript(context, output) {
+  if (context.context.options.useTypescript) {
+    return output ?? "";
+  }
+  return "";
+}
+
+/**
  *
  * @param {ValidatorContext} context
  * @param {string} group
@@ -108,8 +120,19 @@ export function generateValidatorFileForGroup(context, group) {
            }`;
          }}
          */
-        export function ${it}(value, propertyPath = "$") {
-          const errors = [];
+        export function ${it}(value${withTypescript(
+        context,
+        ": any",
+      )}, propertyPath = "$") ${withTypescript(
+        context,
+        `: { data: ${getTypeNameForType(
+          context.context,
+          data[it],
+          "",
+          {},
+        )} } | { data: undefined, errors: any[] }`,
+      )} {
+          const errors${withTypescript(context, ": any[]")} = [];
           const data = ${mapping[it]}(value, propertyPath, errors);
 
           ${() => {
@@ -146,24 +169,34 @@ function addUtilitiesToAnonymousFunctions(context) {
      * @param {*} value
      * @returns {boolean}
      */
-    export function isNil(value) {
+    export function isNil(value
+
+    ${withTypescript(context, ": any")}
+    )
+    {
       return value === undefined || value === null;
     }
 
     /**
+     * @name {ValidationErrorFn}
      * This function should not throw as the corresponding validator will do that
-     * @callback ValidationErrorFn
-     * @param {string} key
-     * @param {Object} info
+     * @typedef {function(string,any): Error}
      */
+    ${withTypescript(
+      context,
+      "type ValidationErrorFn = (key: string, info: any) => any",
+    )}
 
-    /**
-     * @type {ValidationErrorFn}
-     */
-    let errorFn = (key, info) => {
+    /** @type {ValidationErrorFn} */
+    let errorFn = (
+      key${withTypescript(context, ": string")},
+      info${withTypescript(context, ": any")}
+    ) => {
       const err
-      ${context.context.options.useTypescript ? ": any" : ""} =
-        new Error(\`ValidationError: $\{key}\`);
+      ${withTypescript(
+        context,
+        ": any",
+      )} = new Error(\`ValidationError: $\{key}\`);
       err.key = key;
       err.info = info;
       return err;
@@ -174,7 +207,14 @@ function addUtilitiesToAnonymousFunctions(context) {
      * @param {string} key
      * @param {*} info
      */
-    export function buildError(type, key, info) {
+    export function buildError(
+      type${withTypescript(context, ": string")},
+      key${withTypescript(context, ": string")},
+      info
+
+    ${withTypescript(context, ": any")}
+    )
+    {
       return errorFn(\`validator.$\{type}.$\{key}\`, info);
     }
 
@@ -182,7 +222,10 @@ function addUtilitiesToAnonymousFunctions(context) {
      * Set a different error function, for example AppError.validationError
      * @param {ValidationErrorFn} fn
      */
-    export function validatorSetError(fn) {
+    export function validatorSetError(fn${withTypescript(
+      context,
+      ": ValidationErrorFn",
+    )}) {
       errorFn = fn;
     }
   `);
@@ -241,10 +284,22 @@ export function createOrUseAnonymousFunction(
        useDefaults: true,
      })}|undefined}
      */
-    export function anonymousValidator${idx}(value,
-                                             propertyPath,
-                                             errors = [],
-                                             parentType = "${type.type}",
+    export function anonymousValidator${idx}(value${withTypescript(
+    context,
+    ": any",
+  )},
+                                             propertyPath${withTypescript(
+                                               context,
+                                               ": string",
+                                             )},
+                                             errors${withTypescript(
+                                               context,
+                                               ": any[]",
+                                             )} = [],
+                                             parentType${withTypescript(
+                                               context,
+                                               ": string",
+                                             )} = "${type.type}",
     ) {
       if (isNil(value)) {
         ${() => {
