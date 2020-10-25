@@ -1,19 +1,11 @@
 import { Transform } from "stream";
-import {
-  bindLoggerContext,
-  eventStart,
-  eventStop,
-  newEvent,
-  newLogger,
-} from "@lbu/insight";
+import { eventStart, eventStop, newEvent, newLogger } from "@lbu/insight";
 import { isNil, uuid } from "@lbu/stdlib";
 
 /**
  * Log basic request and response information
  */
 export function logMiddleware() {
-  const logger = newLogger({});
-
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
 
@@ -23,9 +15,11 @@ export function logMiddleware() {
     }
     ctx.set("x-request-id", requestId);
 
-    ctx.log = bindLoggerContext(logger, {
-      type: "http",
-      requestId,
+    ctx.log = newLogger({
+      ctx: {
+        type: "http",
+        requestId,
+      },
     });
     ctx.event = newEvent(ctx.log);
     eventStart(ctx.event, `${ctx.method}.${ctx.path}`);

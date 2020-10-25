@@ -2,7 +2,7 @@ import { existsSync, lstatSync, mkdirSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
 import { mainTestFn, test } from "@lbu/cli";
-import { log, printProcessMemoryUsage } from "@lbu/insight";
+import { printProcessMemoryUsage } from "@lbu/insight";
 import { gc, pathJoin, uuid } from "@lbu/stdlib";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile } from "./files.js";
@@ -184,8 +184,8 @@ test("store/file-cache check memory usage", async (t) => {
   let cache = undefined;
 
   const logMemory = (t) => {
-    t.test("print memory usage", () => {
-      printProcessMemoryUsage(log);
+    t.test("print memory usage", (t) => {
+      printProcessMemoryUsage(t.log);
     });
   };
 

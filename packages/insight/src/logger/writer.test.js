@@ -15,10 +15,12 @@ test("insight/writer", (t) => {
 
     writePretty(mock, "info", now, {}, {});
 
-    t.equal(result.length, 6);
-    t.ok(result[0].match(/\d{2}:\d{2}:\d{2}.\d{3}/));
-    t.equal(result[1].trim(), "");
-    t.ok(result[2].indexOf("info") !== -1, "should print log level");
+    t.equal(result.length, 4);
+
+    const [timestamp, level] = result[0].split(" ");
+
+    t.ok(timestamp.match(/\d{2}:\d{2}:\d{2}.\d{3}/), "print time");
+    t.ok(level.indexOf("info") !== -1, "print level");
 
     result = [];
     writePretty(
@@ -31,8 +33,8 @@ test("insight/writer", (t) => {
       },
     );
 
-    t.equal(result.length, 6);
-    t.ok(result[2].indexOf("foo") !== -1, "should print log type");
+    t.equal(result.length, 4);
+    t.ok(result[0].indexOf("foo") !== -1, "should print log type");
   });
 
   t.test("writeNDJSON", (t) => {
@@ -44,28 +46,31 @@ test("insight/writer", (t) => {
       },
     };
 
-    writeNDJSON(mock, "info", now, {}, {});
+    writeNDJSON(mock, "info", now, "{}", {});
 
-    t.equal(result.length, 2);
+    t.equal(result.length, 1);
     t.equal(
       JSON.parse(result[0]).level,
       "info",
       "log output can be parsed by json",
     );
-    t.equal(result[1].trim(), "");
 
     result = [];
     writeNDJSON(
       mock,
       "info",
       now,
-      {
+      JSON.stringify({
         type: "foo",
-      },
+      }),
       { foo: { bar: { baz: "quix" } } },
     );
 
-    t.equal(result.length, 2);
-    t.equal(JSON.parse(result[0])?.type, "foo", "should print log type");
+    t.equal(result.length, 1);
+    t.equal(
+      JSON.parse(result[0])?.context?.type,
+      "foo",
+      "should print log type",
+    );
   });
 });

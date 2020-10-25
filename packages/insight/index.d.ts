@@ -58,15 +58,6 @@ export function newLogger<T extends LoggerContext>(
 ): Logger;
 
 /**
- * Bind a context object to the logger functions and returns a new Logger
- * The context is always printed
- */
-export function bindLoggerContext<T extends LoggerContext>(
-  logger: Logger,
-  ctx: T,
-): Logger;
-
-/**
  * Format bytes, with up to 2 digits after the decimal point, in a more human readable way
  * Support up to a pebibyte
  */
