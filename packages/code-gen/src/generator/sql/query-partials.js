@@ -26,7 +26,7 @@ export function generateQueryPartials(context) {
   }
 
   const file = js`
-    import { query } from "@lbu/store";
+    import { query, isQueryObject } from "@lbu/store";
 
     ${partials}
   `;
