@@ -5,6 +5,7 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * @returns {Logger}
  */
 export function newLogger(options) {
+  const app = process.env.APP_NAME;
   const isProduction =
     options?.pretty === false || process.env.NODE_ENV === "production";
   const stream = options?.stream ?? process.stdout;
@@ -13,9 +14,13 @@ export function newLogger(options) {
     ? wrapWriter(writeNDJSON)
     : wrapWriter(writePretty);
 
-  const context = isProduction
-    ? JSON.stringify(options?.ctx ?? {})
-    : options?.ctx ?? {};
+  let context = options?.ctx ?? {};
+  if (isProduction) {
+    if (app) {
+      context.application = app;
+    }
+    context = JSON.stringify(context);
+  }
 
   return {
     isProduction: () => isProduction,

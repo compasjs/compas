@@ -28,8 +28,9 @@ the project root, so other programs can use this more easily.
 
 **APP_NAME**
 
-Used for database creation and selection, default s3 bucket name. In general
-this environment variable is required.
+Used for database creation and selection, default s3 bucket name. Also, when
+running in production this value is printed under `context.application`. In
+general this environment variable is required.
 
 **APP_KEYS**
 
