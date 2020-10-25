@@ -1,5 +1,23 @@
 # CHANGELOG
 
+### [v0.0.88](https://github.com/lightbasenl/lbu/releases/tag/v0.0.88)
+
+- build(deps): bump c8 from 7.3.4 to 7.3.5
+  ([#418](https://github.com/lightbasenl/lbu/pull/418))
+- build(deps): bump eslint from 7.11.0 to 7.12.0
+  ([#415](https://github.com/lightbasenl/lbu/pull/415))
+- build(deps-dev): bump axios from 0.20.0 to 0.21.0
+  ([#414](https://github.com/lightbasenl/lbu/pull/414))
+- code-gen: subquery support in 'in' and 'notIn' sql where
+  ([#420](https://github.com/lightbasenl/lbu/pull/420))
+- code-gen: support Typescript script mode
+  ([#416](https://github.com/lightbasenl/lbu/pull/416))
+- docs: add information about test and bench to cli.md
+- insight: add application name to context
+  ([#419](https://github.com/lightbasenl/lbu/pull/419))
+- insight: improve performance of ndjson logging
+  ([#417](https://github.com/lightbasenl/lbu/pull/417))
+
 ### [v0.0.87](https://github.com/lightbasenl/lbu/releases/tag/v0.0.87)
 
 - code-gen: follow references completely when linking up
