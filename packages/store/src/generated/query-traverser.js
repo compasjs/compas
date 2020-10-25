@@ -28,58 +28,48 @@ import {
  * @property {function(sql: Postgres): Promise<StoreFile[]>} exec
  */
 /**
- * @param {StoreFileWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
+ * @param {StoreFileWhere} [thisWhere={}]
  * @returns {TraverseFile}
  */
-export function traverseFile(where = {}, queryPart) {
-  const q = query`
-FROM "file" f
-WHERE ${fileWhere(where)}
-${queryPart}
-`;
+export function traverseFile(thisWhere = {}) {
   return {
     /**
      * @param {StoreFileGroupWhere} [where={}]
      * @returns {TraverseFileGroup}
      */
     getGroup(where = {}) {
-      return traverseFileGroup(
-        where,
-        query`
-AND fg."file"  = ANY(
+      where.fileIn = query`
 SELECT f."id"
-${q}
-)
-`,
-      );
+FROM "file" f
+WHERE ${fileWhere(thisWhere)}
+`;
+      return traverseFileGroup(where);
     },
     /**
      * @param {StoreFileGroupViewWhere} [where={}]
      * @returns {TraverseFileGroupView}
      */
     getGroupView(where = {}) {
-      return traverseFileGroupView(
-        where,
-        query`
-AND fgv."file"  = ANY(
+      where.fileIn = query`
 SELECT f."id"
-${q}
-)
-`,
-      );
+FROM "file" f
+WHERE ${fileWhere(thisWhere)}
+`;
+      return traverseFileGroupView(where);
     },
     get queryPart() {
       return query`
 SELECT ${fileFields()}
-${q}
+FROM "file" f
+WHERE ${fileWhere(thisWhere)}
 ORDER BY ${fileOrderBy()}
 `;
     },
     exec(sql) {
       return query`
 SELECT ${fileFields()}
-${q}
+FROM "file" f
+WHERE ${fileWhere(thisWhere)}
 ORDER BY ${fileOrderBy()}
 `.exec(sql);
     },
@@ -95,73 +85,60 @@ ORDER BY ${fileOrderBy()}
  * @property {function(sql: Postgres): Promise<StoreFileGroup[]>} exec
  */
 /**
- * @param {StoreFileGroupWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
+ * @param {StoreFileGroupWhere} [thisWhere={}]
  * @returns {TraverseFileGroup}
  */
-export function traverseFileGroup(where = {}, queryPart) {
-  const q = query`
-FROM "fileGroup" fg
-WHERE ${fileGroupWhere(where)}
-${queryPart}
-`;
+export function traverseFileGroup(thisWhere = {}) {
   return {
     /**
      * @param {StoreFileWhere} [where={}]
      * @returns {TraverseFile}
      */
     getFile(where = {}) {
-      return traverseFile(
-        where,
-        query`
-AND f."id"  = ANY(
+      where.idIn = query`
 SELECT fg."file"
-${q}
-)
-`,
-      );
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(thisWhere)}
+`;
+      return traverseFile(where);
     },
     /**
      * @param {StoreFileGroupWhere} [where={}]
      * @returns {TraverseFileGroup}
      */
     getParent(where = {}) {
-      return traverseFileGroup(
-        where,
-        query`
-AND fg."id"  = ANY(
+      where.idIn = query`
 SELECT fg."parent"
-${q}
-)
-`,
-      );
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(thisWhere)}
+`;
+      return traverseFileGroup(where);
     },
     /**
      * @param {StoreFileGroupWhere} [where={}]
      * @returns {TraverseFileGroup}
      */
     getChildren(where = {}) {
-      return traverseFileGroup(
-        where,
-        query`
-AND fg."parent"  = ANY(
+      where.parentIn = query`
 SELECT fg."id"
-${q}
-)
-`,
-      );
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(thisWhere)}
+`;
+      return traverseFileGroup(where);
     },
     get queryPart() {
       return query`
 SELECT ${fileGroupFields()}
-${q}
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(thisWhere)}
 ORDER BY ${fileGroupOrderBy()}
 `;
     },
     exec(sql) {
       return query`
 SELECT ${fileGroupFields()}
-${q}
+FROM "fileGroup" fg
+WHERE ${fileGroupWhere(thisWhere)}
 ORDER BY ${fileGroupOrderBy()}
 `.exec(sql);
     },
@@ -177,73 +154,60 @@ ORDER BY ${fileGroupOrderBy()}
  * @property {function(sql: Postgres): Promise<StoreFileGroupView[]>} exec
  */
 /**
- * @param {StoreFileGroupViewWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
+ * @param {StoreFileGroupViewWhere} [thisWhere={}]
  * @returns {TraverseFileGroupView}
  */
-export function traverseFileGroupView(where = {}, queryPart) {
-  const q = query`
-FROM "fileGroupView" fgv
-WHERE ${fileGroupViewWhere(where)}
-${queryPart}
-`;
+export function traverseFileGroupView(thisWhere = {}) {
   return {
     /**
      * @param {StoreFileWhere} [where={}]
      * @returns {TraverseFile}
      */
     getFile(where = {}) {
-      return traverseFile(
-        where,
-        query`
-AND f."id"  = ANY(
+      where.idIn = query`
 SELECT fgv."file"
-${q}
-)
-`,
-      );
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(thisWhere)}
+`;
+      return traverseFile(where);
     },
     /**
      * @param {StoreFileGroupViewWhere} [where={}]
      * @returns {TraverseFileGroupView}
      */
     getParent(where = {}) {
-      return traverseFileGroupView(
-        where,
-        query`
-AND fgv."id"  = ANY(
+      where.idIn = query`
 SELECT fgv."parent"
-${q}
-)
-`,
-      );
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(thisWhere)}
+`;
+      return traverseFileGroupView(where);
     },
     /**
      * @param {StoreFileGroupViewWhere} [where={}]
      * @returns {TraverseFileGroupView}
      */
     getChildren(where = {}) {
-      return traverseFileGroupView(
-        where,
-        query`
-AND fgv."parent"  = ANY(
+      where.parentIn = query`
 SELECT fgv."id"
-${q}
-)
-`,
-      );
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(thisWhere)}
+`;
+      return traverseFileGroupView(where);
     },
     get queryPart() {
       return query`
 SELECT ${fileGroupViewFields()}
-${q}
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(thisWhere)}
 ORDER BY ${fileGroupViewOrderBy()}
 `;
     },
     exec(sql) {
       return query`
 SELECT ${fileGroupViewFields()}
-${q}
+FROM "fileGroupView" fgv
+WHERE ${fileGroupViewWhere(thisWhere)}
 ORDER BY ${fileGroupViewOrderBy()}
 `.exec(sql);
     },
@@ -256,28 +220,24 @@ ORDER BY ${fileGroupViewOrderBy()}
  * @property {function(sql: Postgres): Promise<StoreJob[]>} exec
  */
 /**
- * @param {StoreJobWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
+ * @param {StoreJobWhere} [thisWhere={}]
  * @returns {TraverseJob}
  */
-export function traverseJob(where = {}, queryPart) {
-  const q = query`
-FROM "job" j
-WHERE ${jobWhere(where)}
-${queryPart}
-`;
+export function traverseJob(thisWhere = {}) {
   return {
     get queryPart() {
       return query`
 SELECT ${jobFields()}
-${q}
+FROM "job" j
+WHERE ${jobWhere(thisWhere)}
 ORDER BY ${jobOrderBy()}
 `;
     },
     exec(sql) {
       return query`
 SELECT ${jobFields()}
-${q}
+FROM "job" j
+WHERE ${jobWhere(thisWhere)}
 ORDER BY ${jobOrderBy()}
 `.exec(sql);
     },
@@ -290,28 +250,24 @@ ORDER BY ${jobOrderBy()}
  * @property {function(sql: Postgres): Promise<StoreSession[]>} exec
  */
 /**
- * @param {StoreSessionWhere} [where={}]
- * @param {QueryPart|undefined} [queryPart]
+ * @param {StoreSessionWhere} [thisWhere={}]
  * @returns {TraverseSession}
  */
-export function traverseSession(where = {}, queryPart) {
-  const q = query`
-FROM "session" s
-WHERE ${sessionWhere(where)}
-${queryPart}
-`;
+export function traverseSession(thisWhere = {}) {
   return {
     get queryPart() {
       return query`
 SELECT ${sessionFields()}
-${q}
+FROM "session" s
+WHERE ${sessionWhere(thisWhere)}
 ORDER BY ${sessionOrderBy()}
 `;
     },
     exec(sql) {
       return query`
 SELECT ${sessionFields()}
-${q}
+FROM "session" s
+WHERE ${sessionWhere(thisWhere)}
 ORDER BY ${sessionOrderBy()}
 `.exec(sql);
     },

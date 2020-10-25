@@ -80,12 +80,12 @@ function traversalQuery(context, imports, type) {
        * @returns {Traverse${upperCaseFirst(otherSide.name)}}
        */
       get${upperCaseFirst(relation.ownKey)}(where = {}) {
-        return traverse${upperCaseFirst(otherSide.name)}(where, query\`
-        AND ${otherSide.shortName}."${referencedKey}"  = ANY(
+        where.${referencedKey}In = query\`
           SELECT ${type.shortName}."${ownKey}"
-          $\{q}
-        )
-        \`);
+          FROM "${type.name}" ${type.shortName}
+          WHERE $\{${type.name}Where(thisWhere)}
+        \`;
+        return traverse${upperCaseFirst(otherSide.name)}(where);
       },
     `;
 
@@ -109,31 +109,24 @@ function traversalQuery(context, imports, type) {
      */
 
     /**
-     * @param {${type.uniqueName}Where} [where={}]
-     * @param {QueryPart|undefined} [queryPart]
+     * @param {${type.uniqueName}Where} [thisWhere={}]
      * @returns {Traverse${upperCaseFirst(type.name)}}
      */
-    export function traverse${upperCaseFirst(
-      type.name,
-    )}(where = {}, queryPart) {
-      const q = query\`
-        FROM "${type.name}" ${type.shortName}
-        WHERE $\{${type.name}Where(where)}
-         $\{queryPart}
-      \`;
-
+    export function traverse${upperCaseFirst(type.name)}(thisWhere = {}) {
       return {
         ${partials}
         get queryPart() {
           return query\`
             SELECT $\{${type.name}Fields()}
-             $\{q} 
+            FROM "${type.name}" ${type.shortName}
+            WHERE $\{${type.name}Where(thisWhere)}
             ORDER BY $\{${type.name}OrderBy()}
           \`;
         }, exec(sql) {
           return query\`
             SELECT $\{${type.name}Fields()}
-             $\{q} 
+            FROM "${type.name}" ${type.shortName}
+            WHERE $\{${type.name}Where(thisWhere)}
             ORDER BY $\{${type.name}OrderBy()}
           \`.exec(sql);
         }

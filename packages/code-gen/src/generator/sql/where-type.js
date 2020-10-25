@@ -139,28 +139,38 @@ export function getWherePartial(context, type) {
           break;
         case "in":
           str += `
-            strings.push(\` AND $\{tableName}"${field.key}" = ANY(ARRAY[\`);
-            for (let i = 0; i < where.${field.name}.length; ++i) {
-              values.push(where.${field.name}[i]);
-              if (i === where.${field.name}.length - 1) {
-                strings.push("]::${fieldType}[])");
-                values.push(undefined);
-              } else {
-                strings.push(", ");
+            if (isQueryObject(where.${field.name})) {
+              strings.push(\` AND $\{tableName}"${field.key}" = ANY(\`, ")");
+              values.push(where.${field.name}, undefined);
+            } else {
+              strings.push(\` AND $\{tableName}"${field.key}" = ANY(ARRAY[\`);
+              for (let i = 0; i < where.${field.name}.length; ++i) {
+                values.push(where.${field.name}[i]);
+                if (i === where.${field.name}.length - 1) {
+                  strings.push("]::${fieldType}[])");
+                  values.push(undefined);
+                } else {
+                  strings.push(", ");
+                }
               }
             }
           `;
           break;
         case "notIn":
           str += `
-            strings.push(\` AND $\{tableName}"${field.key}" != ANY(ARRAY[\`);
-            for (let i = 0; i < where.${field.name}.length; ++i) {
-              values.push(where.${field.name}[i]);
-              if (i === where.${field.name}.length - 1) {
-                strings.push("]::${fieldType}[])");
-                values.push(undefined);
-              } else {
-                strings.push(", ");
+            if (isQueryObject(where.${field.name})) {
+              strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
+              values.push(where.${field.name}, undefined);
+            } else {
+              strings.push(\` AND $\{tableName}"${field.key}" != ANY(ARRAY[\`);
+              for (let i = 0; i < where.${field.name}.length; ++i) {
+                values.push(where.${field.name}[i]);
+                if (i === where.${field.name}.length - 1) {
+                  strings.push("]::${fieldType}[])");
+                  values.push(undefined);
+                } else {
+                  strings.push(", ");
+                }
               }
             }
           `;
