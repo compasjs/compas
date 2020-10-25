@@ -62,6 +62,7 @@ test("insight/writer", (t) => {
       now,
       JSON.stringify({
         type: "foo",
+        application: "lbu",
       }),
       { foo: { bar: { baz: "quix" } } },
     );
@@ -71,6 +72,11 @@ test("insight/writer", (t) => {
       JSON.parse(result[0])?.context?.type,
       "foo",
       "should print log type",
+    );
+    t.equal(
+      JSON.parse(result[0])?.context?.application,
+      "lbu",
+      "should print application type",
     );
   });
 });
