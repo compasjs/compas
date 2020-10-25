@@ -9,14 +9,10 @@ import { inspect } from "util";
  */
 export function writeNDJSON(stream, level, timestamp, context, message) {
   stream.write(
-    JSON.stringify({
-      level,
-      ...context,
-      timestamp: timestamp.toISOString(),
-      message: message,
-    }),
+    `{"level": "${level}", "timestamp": "${timestamp.toISOString()}", "context": ${context}, "message": ${JSON.stringify(
+      message,
+    )}}\n`,
   );
-  stream.write("\n");
 }
 
 /**
@@ -27,9 +23,9 @@ export function writeNDJSON(stream, level, timestamp, context, message) {
  * @param message
  */
 export function writePretty(stream, level, timestamp, context, message) {
-  stream.write(formatDate(timestamp));
-  stream.write(" ");
-  stream.write(formatLevelAndType(level, context?.type));
+  stream.write(
+    `${formatDate(timestamp)} ${formatLevelAndType(level, context?.type)}`,
+  );
 
   if (message) {
     stream.write(" ");
@@ -43,8 +39,7 @@ export function writePretty(stream, level, timestamp, context, message) {
       }
 
       if (Object.keys(context).length > keyCount) {
-        stream.write(formatMessagePretty(context));
-        stream.write(" ");
+        stream.write(`${formatMessagePretty(context)} `);
       }
       stream.write(formatMessagePretty(message));
     }

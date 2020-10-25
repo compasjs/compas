@@ -1,7 +1,7 @@
 import { newLogger } from "./src/logger/logger.js";
 
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
-export { newLogger, bindLoggerContext } from "./src/logger/logger.js";
+export { newLogger } from "./src/logger/logger.js";
 
 export {
   newEvent,
