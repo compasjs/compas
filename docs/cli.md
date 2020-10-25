@@ -78,3 +78,40 @@ Package.json: ...
 Custom scripts may control watch behaviour by exporting a constant called 'cliWatchOptions' with type CliWatchOptions
 from the script.
 ```
+
+## Testing
+
+The cli also contains a basic test runner. The general idea behind this test
+runner is that there is no difference between running `yarn lbu test`,
+`node ./path/file.test.js` and `yarn lbu ./path/file.test.js`, but still
+providing the necessary utilities for your assertions.
+
+This package exports two items related to testing:
+
+- mainTestFn: A wrapper around `@lbu/stdlib` to start the runner if necessary.
+  This allows the runner to work the same regardless of `node ./file.test.js` or
+  `yarn lbu test`
+- test: Registering tests happens via this function. Any callback to `test` or
+  `t.test` can be async.
+
+For some more specifics check the
+[How-to's](https://lbu.lightbase.nl/how-to.html#testing) about testing.
+
+## Benchmarking
+
+Working a lot like the test runner, this package also exposes a benchmark
+runner. We also have two exports related to benchmarking:
+
+- mainBenchFn: Inline with `mainTestFn`, wraps `mainFn` to start the runner if
+  necessary.
+- bench: Register a benchmark
+
+The runner works by calling your callback with an increasing value on `b.N`. The
+callback should then loop `b.N` times while doing the benchmarked operation. If
+a callback invocation takes longer than 1 second, or the maximum value of `b.N`
+is reached, the average nanoseconds per operation is calculated and printed with
+the other results.
+
+When setup is needed you can call `b.resetTime()` can be called. Note that
+benchmarking in JavaScript is hard, and the results should be taken with a grain
+of salt.
