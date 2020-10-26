@@ -138,7 +138,13 @@ test("store/queue - recurring jobs ", async (t) => {
       name: "test",
       interval: { seconds: 1 },
     });
-    const jobs = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
+    const jobs = await sql`
+      SELECT *
+      FROM
+        job
+      WHERE
+        name = 'lbu.job.recurring'
+    `;
     t.equal(jobs.length, 1);
     t.equal(jobs[0].data.name, "test");
   });
@@ -150,7 +156,13 @@ test("store/queue - recurring jobs ", async (t) => {
         name: "test",
         interval: { seconds: 1 },
       });
-      const jobs = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
+      const jobs = await sql`
+      SELECT *
+      FROM
+        job
+      WHERE
+        name = 'lbu.job.recurring'
+    `;
       t.equal(jobs.length, 1);
     },
   );
@@ -162,20 +174,60 @@ test("store/queue - recurring jobs ", async (t) => {
         name: "secondTest",
         interval: { seconds: 1 },
       });
-      const jobs = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
+      const jobs = await sql`
+      SELECT *
+      FROM
+        job
+      WHERE
+        name = 'lbu.job.recurring'
+    `;
       t.equal(jobs.length, 2);
+    },
+  );
+
+  t.test(
+    "adding with a different priority and interval yields an updated job",
+    async (t) => {
+      await addRecurringJobToQueue(sql, {
+        name: "secondTest",
+        interval: { minutes: 1 },
+        priority: 5,
+      });
+      const jobs = await sql`
+             SELECT *
+             FROM
+               job
+             WHERE
+               name = 'lbu.job.recurring'
+           `;
+      const secondTest = jobs.find((it) => it.data.name === "secondTest");
+
+      t.deepEqual(secondTest.data.interval, { minutes: 1 });
+      t.equal(secondTest.priority, 5);
     },
   );
 
   t.test(
     "adding again once the job is completed, yields a new job",
     async (t) => {
-      await sql`UPDATE job SET  "isComplete" = true WHERE data->>'name' = 'test'`;
+      await sql`
+      UPDATE job
+      SET
+        "isComplete" = true
+      WHERE
+        data ->> 'name' = 'test'
+    `;
       await addRecurringJobToQueue(sql, {
         name: "test",
         interval: { seconds: 1 },
       });
-      const jobs = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
+      const jobs = await sql`
+      SELECT *
+      FROM
+        job
+      WHERE
+        name = 'lbu.job.recurring'
+    `;
       t.equal(jobs.length, 3);
     },
   );
@@ -199,10 +251,20 @@ test("store/queue - recurring jobs ", async (t) => {
         },
       });
 
-      const [testJob] = await sql`SELECT * FROM job WHERE name = 'test'`;
-      const [
-        recurringJob,
-      ] = await sql`SELECT * FROM job WHERE name = 'lbu.job.recurring'`;
+      const [testJob] = await sql`
+             SELECT *
+             FROM
+               job
+             WHERE
+               name = 'test'
+           `;
+      const [recurringJob] = await sql`
+             SELECT *
+             FROM
+               job
+             WHERE
+               name = 'lbu.job.recurring'
+           `;
       const count = await queries.jobCount(sql);
 
       t.equal(count, 2);
@@ -228,6 +290,32 @@ test("store/queue - recurring jobs ", async (t) => {
       t.ok(testJob.scheduledAt.getTime() < inputDate.getTime());
     },
   );
+
+  t.test("handleLbuRecurring should recreate in to the future", async (t) => {
+    const scheduledAt = new Date();
+    scheduledAt.setUTCMinutes(scheduledAt.getUTCMinutes() - 15);
+    await handleLbuRecurring(sql, {
+      scheduledAt,
+      priority: 1,
+      data: {
+        name: "recreate_future_test",
+        interval: {
+          minutes: 1,
+        },
+      },
+    });
+
+    const [job] = await sql`
+      SELECT *
+      FROM
+        "job"
+      WHERE
+        name = 'lbu.job.recurring'
+        AND data ->> 'name' = 'recreate_future_test'
+    `;
+
+    t.ok(job.scheduledAt > scheduledAt);
+  });
 
   t.test("getNextScheduledAt - use provided scheduledAt as a base", (t) => {
     const input = new Date();

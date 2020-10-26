@@ -431,6 +431,10 @@ export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
 /**
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
+ * If already exists will update the priority and interval.
+ *
+ * The recurring job handler will reschedule the job based on it's own scheduledAt. However if
+ * the newly scheduled job is not in the future, the interval is added on to the current time.
  */
 export function addRecurringJobToQueue(
   sql: Postgres,

@@ -7,57 +7,80 @@ const queueQueries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
     UPDATE "job"
-    SET "isComplete" = TRUE,
-        "updatedAt"  = now()
-    WHERE id = (SELECT "id"
-                FROM "job"
-                WHERE NOT "isComplete"
-                  AND "scheduledAt" < now()
-                ORDER BY "scheduledAt", "priority"
-                  FOR UPDATE SKIP LOCKED
-                LIMIT 1)
+    SET
+      "isComplete" = TRUE,
+      "updatedAt"  = now()
+    WHERE
+        id = (
+        SELECT
+          "id"
+        FROM
+          "job"
+        WHERE
+          NOT "isComplete"
+          AND "scheduledAt" < now()
+        ORDER BY
+          "scheduledAt", "priority" FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
     RETURNING id
   `,
 
   // Should only run in a transaction
   getJobByName: (name, sql) => sql`
     UPDATE "job"
-    SET "isComplete" = TRUE,
-        "updatedAt"  = now()
-    WHERE id = (SELECT "id"
-                FROM "job"
-                WHERE NOT "isComplete"
-                  AND "scheduledAt" < now()
-                  AND "name" = ${name}
-                ORDER BY "scheduledAt", "priority"
-                  FOR UPDATE SKIP LOCKED
-                LIMIT 1)
+    SET
+      "isComplete" = TRUE,
+      "updatedAt"  = now()
+    WHERE
+        id = (
+        SELECT
+          "id"
+        FROM
+          "job"
+        WHERE
+          NOT "isComplete"
+          AND "scheduledAt" < now()
+          AND "name" = ${name}
+        ORDER BY
+          "scheduledAt", "priority" FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
     RETURNING "id"
   `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSize: (sql) => sql`
-    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
-           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "job"
-    WHERE NOT "isComplete"
+    SELECT
+      sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
+      sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM
+      "job"
+    WHERE
+      NOT "isComplete"
   `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (sql, name) => sql`
-    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
-           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "job"
-    WHERE NOT "isComplete"
+    SELECT
+      sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END)  AS "pendingCount",
+      sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM
+      "job"
+    WHERE
+      NOT "isComplete"
       AND "name" = ${name}
   `,
 
   // Returns time in milliseconds
   getAverageJobTime: (sql, name, dateStart, dateEnd) => sql`
-    SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-               (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "job"
-    WHERE "isComplete" IS TRUE
+    SELECT
+      avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+          (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+    FROM
+      "job"
+    WHERE
+      "isComplete" IS TRUE
       AND (COALESCE(${name ?? null}) IS NULL OR "name" = ${name ?? null})
       AND "updatedAt" > ${dateStart}
       AND "updatedAt" <= ${dateEnd};
@@ -69,11 +92,31 @@ const queueQueries = {
    * @returns Promise<{ id: number }[]>
    */
   getRecurringJobForName: (sql, name) => sql`
-    SELECT id
-    FROM "job"
-    WHERE name = ${LBU_RECURRING_JOB}
+    SELECT
+      id
+    FROM
+      "job"
+    WHERE
+      name = ${LBU_RECURRING_JOB}
       AND "isComplete" IS FALSE
       AND data ->> 'name' = ${name}
+  `,
+
+  /**
+   * @param {Postgres} sql
+   * @param {number} id
+   * @param {number} priority
+   * @param {StoreJobInterval} interval
+   */
+  updateRecurringJob: (sql, id, priority, interval) => sql`
+    UPDATE "job"
+    SET
+      "priority" = ${priority},
+      "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
+    interval,
+  )})
+    WHERE
+      id = ${id}
   `,
 };
 
@@ -280,6 +323,7 @@ export async function addJobToQueue(sql, job) {
 /**
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
+ * If exists will update the interval
  *
  * @param {Postgres} sql
  * @param {string} name
@@ -296,6 +340,12 @@ export async function addRecurringJobToQueue(
   const existingJobs = await queueQueries.getRecurringJobForName(sql, name);
 
   if (existingJobs.length > 0) {
+    await queueQueries.updateRecurringJob(
+      sql,
+      existingJobs[0].id,
+      priority,
+      interval,
+    );
     return;
   }
 
@@ -364,7 +414,8 @@ async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
 }
 
 /**
- * Handles recurring jobs, by scheduling the 'child' and the current job again
+ * Handles recurring jobs, by scheduling the 'child' and the current job again.
+ * If the next scheduled item is not in the future, the interval is added to the current Date.
  *
  * @param {Postgres} sql
  * @param {StoreJob} job
@@ -376,7 +427,10 @@ export async function handleLbuRecurring(sql, job) {
     data: { name, interval },
   } = job;
 
-  const nextSchedule = getNextScheduledAt(scheduledAt, interval);
+  let nextSchedule = getNextScheduledAt(scheduledAt, interval);
+  if (nextSchedule.getTime() < Date.now()) {
+    nextSchedule = getNextScheduledAt(new Date(), interval);
+  }
 
   // Dispatch 'job' with higher priority
   await addJobToQueue(sql, {
