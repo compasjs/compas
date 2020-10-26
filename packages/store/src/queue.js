@@ -53,22 +53,12 @@ const queueQueries = {
   `,
 
   // Returns time in milliseconds
-  getAverageJobTime: (sql, dateStart, dateEnd) => sql`
+  getAverageJobTime: (sql, name, dateStart, dateEnd) => sql`
     SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
                (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
     FROM "job"
-    WHERE "isComplete"
-      AND "updatedAt" > ${dateStart}
-      AND "updatedAt" <= ${dateEnd};
-  `,
-
-  // Returns time in milliseconds
-  getAverageJobTimeForName: (sql, name, dateStart, dateEnd) => sql`
-    SELECT avg((EXTRACT(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-               (EXTRACT(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "job"
-    WHERE "isComplete"
-      AND name = ${name}
+    WHERE "isComplete" IS TRUE
+      AND (COALESCE(${name ?? null}) IS NULL OR "name" = ${name ?? null})
       AND "updatedAt" > ${dateStart}
       AND "updatedAt" <= ${dateEnd};
   `,
@@ -164,7 +154,7 @@ export class JobQueueWorker {
    */
   averageTimeToCompletion(startDate, endDate) {
     if (this.name) {
-      return getAverageTimeToJobCompletionForName(
+      return getAverageTimeToJobCompletion(
         this.sql,
         this.name,
         startDate,
@@ -172,7 +162,12 @@ export class JobQueueWorker {
       );
     }
 
-    return getAverageTimeToJobCompletion(this.sql, startDate, endDate);
+    return getAverageTimeToJobCompletion(
+      this.sql,
+      undefined,
+      startDate,
+      endDate,
+    );
   }
 
   /**
@@ -352,43 +347,20 @@ async function getPendingQueueSizeForName(sql, name) {
  * provided time range
  *
  * @param {Postgres} sql
+ * @param {string|undefined} name
  * @param {Date} startDate
  * @param {Date} endDate
  * @returns {Promise<number>}
  */
-async function getAverageTimeToJobCompletion(sql, startDate, endDate) {
+async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
   const [result] = await queueQueries.getAverageJobTime(
-    sql,
-    startDate,
-    endDate,
-  );
-
-  return parseFloat(result?.completionTime ?? 0);
-}
-
-/**
- * Return the average time between scheduled and completed for jobs completed in the
- * provided time range
- *
- * @param {Postgres} sql
- * @param {string} name
- * @param {Date} startDate
- * @param {Date} endDate
- * @returns {Promise<number>}
- */
-async function getAverageTimeToJobCompletionForName(
-  sql,
-  name,
-  startDate,
-  endDate,
-) {
-  const [result] = await queueQueries.getAverageJobTimeForName(
     sql,
     name,
     startDate,
     endDate,
   );
-  return result?.completionTime ?? 0;
+
+  return Math.floor(parseFloat(result?.completionTime ?? "0"));
 }
 
 /**
