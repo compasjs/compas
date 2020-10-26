@@ -73,7 +73,7 @@ export function eventStop(event) {
 
   if (event.root) {
     event.log.info({
-      type: "EVENT_CALLSTACK",
+      type: "event_callstack",
       callStack: event.callStack,
     });
   }
