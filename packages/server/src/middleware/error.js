@@ -44,7 +44,7 @@ export function errorHandler({ onAppError, onError, leakError }) {
 
       const formatted = AppError.format(error);
       log({
-        type: "API_ERROR",
+        type: "api_error",
         ...formatted,
       });
 
