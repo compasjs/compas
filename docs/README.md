@@ -10,6 +10,7 @@ Collection of Lightbase backend utilities
 
 - Minimal project boilerplate
 - Script runner, can watch & reload almost anything
+- Test and benchmark runner
 - Flexible code generators supporting routers, validators, api clients, CRUD
   queries and more in the future.
 - Opinionated structured logging
@@ -34,8 +35,11 @@ tailored at monolithic projects.
 **@lbu/cli**:
 
 - Run user scripts (in watch mode)
-- Run the linter or tests
+- Run the linter
 - A LBU based boilerplate
+- Test runner
+- Benchmark runner
+- Necessary Docker container management
 
 **@lbu/lint-config**:
 
@@ -48,12 +52,12 @@ tailored at monolithic projects.
   - Writing newline delimited JSON in production
   - Pretty printing for development
 - Various utilities to get insight in the running process
+- A manual event system
 
 **@lbu/stdlib**:
 
 - Various lodash inspired utilities (isNil, isPlainObject, ...)
 - Wrappers for child_process execution and spawning
-- Basic templating system
 - A `mainFn` wrapper that reads `.env` and calls the provided function if the
   file is the process entrypoint
 - Replacements for CommonJS `__dirname` and `__filename`
@@ -64,7 +68,7 @@ tailored at monolithic projects.
 - 404 en error handling
 - Handle CORS
 - Send file helper
-- Re-exports koa-session and koa-compose
+- Session support with safe browser readable cookies
 
 **@lbu/store**:
 
@@ -74,18 +78,19 @@ tailored at monolithic projects.
 - Postgres migrations
 - Postgres and S3 combined for file storage
 - Caching files from S3 in memory or on local disk
-- Postgres powered JobQueue implementation
-  - Supports priority, scheduling, multiple async workers
+- Postgres powered queue implementation
+  - Supports priority, scheduling, multiple async workers and recurring jobs
 - koa-session compatible SessionStore backed by Postgres
 
 **@lbu/code-gen**:
 
 - Code generators for the following:
   - router, with wildcard and path parameter support
-  - validators, with pre- and postValidate hooks
-  - queries, CRUD postgres queries
+  - validators, pure JavaScript implementation
+  - sql, CRUD postgres queries, graph traversal
   - Axios based api client
-  - Typescript or JSDoc types
+  - TypeScript or JSDoc types
+  - react-query hooks
 - An extendable set of types:
   - boolean, number, string;
   - object, array, any;
@@ -112,5 +117,6 @@ New features added should fall under the following categories:
   @lbu/stdlib
 
 Although some parts heavily rely on conventions set by the packages, we
-currently aim not to be a framework. However, the idea of being a bit more of
-framework is not completely out of the door yet.
+currently aim not to be a framework. We aim to provide a good developer
+experience, useful abstractions around the basics, and a stable backend <->
+client interface.

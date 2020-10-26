@@ -11,9 +11,6 @@ export const cliWatchOptions = {
   extensions: ["md"],
 };
 
-/**
- * @param logger
- */
 function main(logger) {
   // Script to copy the root README.md to all packages
 
@@ -49,16 +46,13 @@ function main(logger) {
 }
 
 /**
- * @param pkgName
- * @param readmeSource
+ * @param {string} pkgName
+ * @param {string} readmeSource
  */
 function buildReadmeSource(pkgName, readmeSource) {
   return `# @lbu/${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=@lbu/${pkgName})](https://packagephobia.com/result?p=@lbu/${pkgName})${readmeSource}\n`;
 }
 
-/**
- *
- */
 function getReadmeSource() {
   const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
 
