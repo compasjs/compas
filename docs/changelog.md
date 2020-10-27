@@ -1,5 +1,34 @@
 # CHANGELOG
 
+### [v0.0.89](https://github.com/lightbasenl/lbu/releases/tag/v0.0.89)
+
+- build(deps): bump @types/node from 14.14.2 to 14.14.5
+  ([#422](https://github.com/lightbasenl/lbu/pull/422),
+  [#435](https://github.com/lightbasenl/lbu/pull/435))
+- build(deps): bump eslint from 7.12.0 to 7.12.1
+  ([#434](https://github.com/lightbasenl/lbu/pull/434))
+- build(deps): bump eslint-config-prettier from 6.14.0 to 6.15.0
+  ([#441](https://github.com/lightbasenl/lbu/pull/441))
+- build(deps-dev): bump typescript from 4.0.3 to 4.0.5
+  ([#433](https://github.com/lightbasenl/lbu/pull/433))
+- chore: lowercase 'type' in logs
+  ([#429](https://github.com/lightbasenl/lbu/pull/429))
+- cli: skip restart debounce on 'rs' in watch mode
+  ([#440](https://github.com/lightbasenl/lbu/pull/440))
+- code-gen: add docs to types
+  ([#442](https://github.com/lightbasenl/lbu/pull/442))
+- docs: update README.md ([#432](https://github.com/lightbasenl/lbu/pull/432))
+- stdlib: use format error on global exception handlers
+  ([#443](https://github.com/lightbasenl/lbu/pull/443))
+- store: fix typ definition of isQueryPart
+- store: floor result of average time to completion
+  ([#430](https://github.com/lightbasenl/lbu/pull/430))
+- store: queue scheduling and updating of recurring jobs
+  ([#431](https://github.com/lightbasenl/lbu/pull/431))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://lbu.lightbase.nl/releases/0.0.89.html).
+
 ### [v0.0.88](https://github.com/lightbasenl/lbu/releases/tag/v0.0.88)
 
 - build(deps): bump c8 from 7.3.4 to 7.3.5
