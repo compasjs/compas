@@ -519,7 +519,7 @@ export function query(strings: string[], ...values: any[]): QueryPart;
 /**
  * Simple check if the passed in value is a query part
  */
-export function isQueryPart(value: any): value is QueryPart;
+export function isQueryObject(value: any): value is QueryPart;
 
 /**
  * Creates a transaction, executes the query, and rollback the transaction afterwards.
