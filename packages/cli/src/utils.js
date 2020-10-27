@@ -220,18 +220,27 @@ export async function executeCommand(
     }
   }
 
-  function restart() {
+  /**
+   * Restart with debounce
+   * @param {boolean} [skipDebounce]
+   */
+  function restart(skipDebounce) {
     // Restart may be called multiple times in a row
     // We may want to add some kind of graceful back off here
     if (timeout !== undefined) {
       clearTimeout(timeout);
     }
 
-    timeout = setTimeout(() => {
+    if (skipDebounce) {
       stop();
       start();
-      clearTimeout(timeout);
-    }, 350);
+    } else {
+      timeout = setTimeout(() => {
+        stop();
+        start();
+        clearTimeout(timeout);
+      }, 250);
+    }
   }
 }
 
@@ -247,7 +256,7 @@ function prepareStdin(restart) {
 
     // Consistency with Nodemon
     if (input === "rs") {
-      restart();
+      restart(true);
     }
   });
 }
