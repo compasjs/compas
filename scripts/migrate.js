@@ -12,11 +12,16 @@ mainFn(import.meta, main);
  * @param logger
  */
 async function main(logger) {
-  const sql = await newPostgresConnection({ createIfNotExists: true });
+  const sql = await newPostgresConnection({
+    createIfNotExists: true,
+    connection: {
+      ssl: false,
+    },
+  });
   const mc = await newMigrateContext(sql);
   logger.info(getMigrationsToBeApplied(mc));
 
   await runMigrations(mc);
 
-  await sql.end({ timeout: 0.01 });
+  process.exit(0);
 }
