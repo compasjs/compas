@@ -255,15 +255,33 @@ export function generateTypeDefinition(
  */
 function getMemoizedNamedTypes(context) {
   const result = [];
-
   const { useTypescript } = context.types.defaultSettings;
+  const uniqueNameDocsMap = {};
+
+  for (const group of Object.values(context.structure)) {
+    for (const value of Object.values(group)) {
+      if (value.docString && value.docString.length > 0) {
+        uniqueNameDocsMap[upperCaseFirst(value.uniqueName)] = value.docString;
+      }
+    }
+  }
+
   for (const [name, type] of context.types.typeMap.entries()) {
     let intermediate = "";
 
     if (useTypescript) {
+      if (uniqueNameDocsMap[name]) {
+        intermediate += `// ${uniqueNameDocsMap[name]}\n`;
+      }
       intermediate += `export type ${name} = `;
     } else {
-      intermediate += `/**\n * @name ${name}\n * @typedef {`;
+      intermediate += `/**\n * @name ${name}\n`;
+
+      if (uniqueNameDocsMap[name]) {
+        intermediate += ` * ${uniqueNameDocsMap[name]}\n`;
+      }
+
+      intermediate += ` * @typedef {`;
     }
 
     intermediate += type;
