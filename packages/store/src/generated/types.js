@@ -13,6 +13,7 @@ export const __generated__ = true;
  */
 /**
  * @name StoreFileGroupMeta
+ * User definable, optional object to store whatever you want
  * @typedef {{}}
  */
 /**
@@ -21,6 +22,7 @@ export const __generated__ = true;
  */
 /**
  * @name StoreFileMeta
+ * User definable, optional object to store whatever you want
  * @typedef {{}}
  */
 /**

@@ -71,6 +71,9 @@ WHERE ${fileWhere(where)}
  * @returns {Promise<StoreFile[]>}
  */
 export function fileInsert(sql, insert) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
   return query`
 INSERT INTO "file" (${fileFields("", { excludePrimaryKey: true })})
 VALUES ${fileInsertValues(insert)}
@@ -154,6 +157,9 @@ WHERE ${fileGroupWhere(where)}
  * @returns {Promise<StoreFileGroup[]>}
  */
 export function fileGroupInsert(sql, insert) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
   return query`
 INSERT INTO "fileGroup" (${fileGroupFields("", { excludePrimaryKey: true })})
 VALUES ${fileGroupInsertValues(insert)}
@@ -276,6 +282,9 @@ WHERE ${jobWhere(where)}
  * @returns {Promise<StoreJob[]>}
  */
 export function jobInsert(sql, insert) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
   return query`
 INSERT INTO "job" (${jobFields("", { excludePrimaryKey: true })})
 VALUES ${jobInsertValues(insert)}
@@ -339,6 +348,9 @@ WHERE ${sessionWhere(where)}
  * @returns {Promise<StoreSession[]>}
  */
 export function sessionInsert(sql, insert) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
   return query`
 INSERT INTO "session" (${sessionFields("", { excludePrimaryKey: true })})
 VALUES ${sessionInsertValues(insert)}

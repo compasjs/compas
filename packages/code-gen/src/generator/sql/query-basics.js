@@ -221,6 +221,10 @@ function insertQuery(context, imports, type) {
      * @returns {Promise<${type.uniqueName}[]>}
      */
     export function ${type.name}Insert(sql, insert) {
+      if (insert === undefined || insert.length === 0) {
+        return []; 
+      }
+
       return query\`
         INSERT INTO "${type.name}" ($\{${type.name}Fields(
         "", { excludePrimaryKey: true })})
