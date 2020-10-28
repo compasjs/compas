@@ -207,9 +207,7 @@ export class RouteCreator {
    * @returns {RouteCreator}
    */
   tags(...values) {
-    for (const v of values) {
-      this.data.tags.push(lowerCaseFirst(v));
-    }
+    this.defaultTags.push(...values);
 
     return this;
   }
