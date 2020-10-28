@@ -87,12 +87,20 @@ function getTypes(T) {
         primary: T.bool().default(false),
         searchable: T.bool().default(false),
       })
-      .optional(),
+      .optional()
+      .loose(),
+    validator: T.object().loose().default("{}"),
   };
 
   const anyType = T.object("anyType").keys({
     type: "any",
     ...typeBase,
+    validator: T.object()
+      .keys({
+        allowNull: T.bool().default(false),
+      })
+      .default("{ allowNull: false }")
+      .loose(),
   });
 
   const anyOfType = T.object("anyOfType").keys({
@@ -104,11 +112,13 @@ function getTypes(T) {
   const arrayType = T.object("arrayType").keys({
     type: "array",
     ...typeBase,
-    validator: {
-      convert: T.bool().default(false),
-      min: T.number().optional(),
-      max: T.number().optional(),
-    },
+    validator: T.object()
+      .keys({
+        convert: T.bool().default(false),
+        min: T.number().optional(),
+        max: T.number().optional(),
+      })
+      .loose(),
     values: T.reference("codeGen", "type"),
   });
 
@@ -116,14 +126,23 @@ function getTypes(T) {
     type: "boolean",
     ...typeBase,
     oneOf: T.bool().optional(),
-    validator: {
-      convert: T.bool().default(false),
-    },
+    validator: T.object()
+      .keys({
+        convert: T.bool().default(false),
+        allowNull: T.bool().default(false),
+      })
+      .loose(),
   });
 
   const dateType = T.object("dateType").keys({
     type: "date",
     ...typeBase,
+    validator: T.object()
+      .keys({
+        allowNull: T.bool().default(false),
+      })
+      .default("{ allowNull: false }")
+      .loose(),
   });
 
   const fileType = T.object("fileType").keys({
@@ -142,20 +161,25 @@ function getTypes(T) {
     type: "number",
     ...typeBase,
     oneOf: T.array().values(T.number()).optional(),
-    validator: {
-      convert: T.bool().default(false),
-      floatingPoint: T.bool().default(false),
-      min: T.number().optional(),
-      max: T.number().optional(),
-    },
+    validator: T.object()
+      .keys({
+        convert: T.bool().default(false),
+        floatingPoint: T.bool().default(false),
+        min: T.number().optional(),
+        max: T.number().optional(),
+        allowNull: T.bool().default(false),
+      })
+      .loose(),
   });
 
   const objectType = T.object("objectType").keys({
     type: "object",
     ...typeBase,
-    validator: {
-      strict: T.bool().default(true),
-    },
+    validator: T.object()
+      .keys({
+        strict: T.bool().default(true),
+      })
+      .loose(),
     keys: T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
     enableQueries: T.bool().default(false),
     queryOptions: T.object()
@@ -165,7 +189,8 @@ function getTypes(T) {
         withPrimaryKey: T.bool().default(true),
         isView: T.bool().default(false),
       })
-      .optional(),
+      .optional()
+      .loose(),
     relations: T.array()
       .values(T.reference("codeGen", "relationType"))
       .default("[]"),
@@ -173,36 +198,46 @@ function getTypes(T) {
     where: T.object()
       .keys({
         type: T.string(),
-        fields: T.array().values({
-          key: T.string(),
-          name: T.string(),
-          variant: T.string().oneOf(
-            "equal",
-            "notEqual",
-            "in",
-            "notIn",
-            "greaterThan",
-            "lowerThan",
-            "isNull",
-            "isNotNull",
-            "includeNotNull",
-            "like",
-            "notLike",
-          ),
-        }),
+        fields: T.array().values(
+          T.object()
+            .keys({
+              key: T.string(),
+              name: T.string(),
+              variant: T.string().oneOf(
+                "equal",
+                "notEqual",
+                "in",
+                "notIn",
+                "greaterThan",
+                "lowerThan",
+                "isNull",
+                "isNotNull",
+                "includeNotNull",
+                "like",
+                "notLike",
+              ),
+            })
+            .loose(),
+        ),
       })
-      .optional(),
+      .optional()
+      .loose(),
     partial: T.object()
       .keys({
         insertType: T.string(),
         updateType: T.string(),
-        fields: T.array().values({
-          key: T.string(),
-          defaultValue: T.string().optional(),
-          isJsonb: T.bool().default(false),
-        }),
+        fields: T.array().values(
+          T.object()
+            .keys({
+              key: T.string(),
+              defaultValue: T.string().optional(),
+              isJsonb: T.bool().default(false),
+            })
+            .loose(),
+        ),
       })
-      .optional(),
+      .optional()
+      .loose(),
   });
 
   const referenceType = T.object("referenceType").keys({
@@ -232,20 +267,29 @@ function getTypes(T) {
     type: "string",
     ...typeBase,
     oneOf: T.array().values(T.string()).optional(),
-    validator: {
-      convert: T.bool().default(false),
-      trim: T.bool().default(false),
-      lowerCase: T.bool().default(false),
-      upperCase: T.bool().default(false),
-      min: T.number().default(1),
-      max: T.number().optional(),
-      pattern: T.string().optional(),
-    },
+    validator: T.object()
+      .keys({
+        convert: T.bool().default(false),
+        trim: T.bool().default(false),
+        lowerCase: T.bool().default(false),
+        upperCase: T.bool().default(false),
+        min: T.number().default(1),
+        max: T.number().optional(),
+        pattern: T.string().optional(),
+        allowNull: T.bool().default(false),
+      })
+      .loose(),
   });
 
   const uuidType = T.object("uuidType").keys({
     type: "uuid",
     ...typeBase,
+    validator: T.object()
+      .keys({
+        allowNull: T.bool().default(false),
+      })
+      .default("{ allowNull: true }")
+      .loose(),
   });
 
   const routeType = T.object("routeType").keys({

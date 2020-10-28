@@ -118,6 +118,9 @@ export function generateTypeDefinition(
   if (type.isOptional && (!useDefaults || isNil(type.defaultValue))) {
     result += "undefined|";
   }
+  if (type.validator?.allowNull && (!useDefaults || isNil(type.defaultValue))) {
+    result += "null|";
+  }
 
   switch (type.type) {
     case "any":

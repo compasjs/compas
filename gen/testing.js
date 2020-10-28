@@ -37,6 +37,7 @@ export function applyTestingValidatorsStructure(app) {
     T.bool("boolConvert").convert(),
     T.bool("boolOptional").optional(),
     T.bool("boolDefault").default("true"),
+    T.bool("boolAllowNull").allowNull(),
   );
 
   // Date
@@ -71,6 +72,7 @@ export function applyTestingValidatorsStructure(app) {
   // String
   app.add(
     T.string("string"),
+    T.string("stringAllowNull").allowNull(),
     T.string("stringOneOf").oneOf("north", "east"),
     T.string("stringConvert").convert(),
     T.string("stringTrim").trim(),
@@ -111,6 +113,7 @@ export function applyTestingServerStructure(app) {
       })
       .body({
         foo: T.bool(),
+        string: T.string().allowNull(),
       })
       .response({
         foo: T.bool(),

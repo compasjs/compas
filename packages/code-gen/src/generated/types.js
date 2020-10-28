@@ -5,11 +5,11 @@
 export const __generated__ = true;
 /**
  * @name CodeGenAnyOfType
- * @typedef {{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "values": (CodeGenType)[], }}
+ * @typedef {{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "values": (CodeGenType)[], }}
  */
 /**
  * @name CodeGenAnyType
- * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }}
+ * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, }}
  */
 /**
  * @name CodeGenArrayType
@@ -17,7 +17,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenBooleanType
- * @typedef {{"type": "boolean", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "oneOf"?: boolean, "validator": {"convert": boolean, }, }}
+ * @typedef {{"type": "boolean", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "allowNull": boolean, }, "oneOf"?: boolean, }}
  */
 /**
  * @name CodeGenContext
@@ -25,7 +25,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenDateType
- * @typedef {{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }}
+ * @typedef {{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, }}
  */
 /**
  * @name CodeGenFile
@@ -33,7 +33,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenFileType
- * @typedef {{"type": "file", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }}
+ * @typedef {{"type": "file", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, }}
  */
 /**
  * @name CodeGenGenerateOpts
@@ -41,11 +41,11 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenGenericType
- * @typedef {{"type": "generic", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "keys": CodeGenType, "values": CodeGenType, }}
+ * @typedef {{"type": "generic", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "keys": CodeGenType, "values": CodeGenType, }}
  */
 /**
  * @name CodeGenNumberType
- * @typedef {{"type": "number", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "oneOf"?: (number)[], "validator": {"convert": boolean, "floatingPoint": boolean, "min"?: number, "max"?: number, }, }}
+ * @typedef {{"type": "number", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "floatingPoint": boolean, "min"?: number, "max"?: number, "allowNull": boolean, }, "oneOf"?: (number)[], }}
  */
 /**
  * @name CodeGenObjectType
@@ -53,7 +53,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenReferenceType
- * @typedef {{"type": "reference", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "reference": CodeGenType|{"uniqueName"?: string, "group"?: string, "name"?: string, }, }}
+ * @typedef {{"type": "reference", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "reference": CodeGenType|{"uniqueName"?: string, "group"?: string, "name"?: string, }, }}
  */
 /**
  * @name CodeGenRelationType
@@ -61,11 +61,11 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenRouteType
- * @typedef {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }}
+ * @typedef {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }}
  */
 /**
  * @name CodeGenStringType
- * @typedef {{"type": "string", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "oneOf"?: (string)[], "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: number, "pattern"?: string, }, }}
+ * @typedef {{"type": "string", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: number, "pattern"?: string, "allowNull": boolean, }, "oneOf"?: (string)[], }}
  */
 /**
  * @name CodeGenStructure
@@ -85,5 +85,5 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenUuidType
- * @typedef {{"type": "uuid", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, }}
+ * @typedef {{"type": "uuid", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, }}
  */
