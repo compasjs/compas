@@ -327,6 +327,11 @@ export class TypeBuilder {
   optional(): this;
 
   /**
+   * Value may be null, only implemented for the primitives.
+   */
+  allowNull(): this;
+
+  /**
    * Set a raw default value, also makes the type optional
    * Can be reverted by calling this function with undefined or null
    */

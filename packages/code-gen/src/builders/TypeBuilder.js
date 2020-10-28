@@ -9,6 +9,7 @@ export class TypeBuilder {
     docString: "",
     isOptional: false,
     defaultValue: undefined,
+    validator: {},
   };
 
   static getBaseData() {
@@ -44,6 +45,16 @@ export class TypeBuilder {
    */
   optional() {
     this.data.isOptional = true;
+
+    return this;
+  }
+
+  /**
+   * @returns {this}
+   */
+  allowNull() {
+    this.data.isOptional = true;
+    this.data.validator.allowNull = true;
 
     return this;
   }

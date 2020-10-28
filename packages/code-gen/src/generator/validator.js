@@ -303,8 +303,10 @@ export function createOrUseAnonymousFunction(
     ) {
       if (isNil(value)) {
         ${() => {
-          if (type.isOptional) {
+          if (type.isOptional && type.defaultValue) {
             return `return ${type.defaultValue}`;
+          } else if (type.isOptional) {
+            return `return value`;
           }
 
           return buildError("undefined", "{ propertyPath }");
@@ -713,10 +715,16 @@ function anonymousValidatorString(context, imports, type) {
 
     ${() => {
       // Special case to default to undefined on empty & optional strings
-      if (type.isOptional) {
+      if (type.isOptional && type.defaultValue) {
         return js`
           if (value.length === 0) {
             return ${type.defaultValue};
+          }
+        `;
+      } else if (type.isOptional) {
+        return js`
+          if (value.length === 0) {
+            return ${type.validator?.allowNull ? "null" : "undefined"};
           }
         `;
       }

@@ -236,6 +236,27 @@ test("code-gen/validators", async (t) => {
     );
   });
 
+  t.test("boolAllowNull", (t) => {
+    assertAll(
+      t,
+      [
+        {
+          input: undefined,
+          expected: undefined,
+        },
+        {
+          input: null,
+          expected: null,
+        },
+        {
+          input: true,
+          expected: true,
+        },
+      ],
+      validatorValidators.boolAllowNull,
+    );
+  });
+
   t.test("date", (t) => {
     const date = new Date();
     const str = date.toISOString();
@@ -291,6 +312,31 @@ test("code-gen/validators", async (t) => {
         },
       ],
       validatorValidators.generic,
+    );
+  });
+
+  t.test("stringAllowNull", (t) => {
+    assertAll(
+      t,
+      [
+        {
+          input: "foo",
+          expected: "foo",
+        },
+        {
+          input: "",
+          expected: null,
+        },
+        {
+          input: undefined,
+          expected: undefined,
+        },
+        {
+          input: null,
+          expected: null,
+        },
+      ],
+      validatorValidators.stringAllowNull,
     );
   });
 
