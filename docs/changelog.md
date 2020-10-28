@@ -1,5 +1,16 @@
 # CHANGELOG
 
+### [v0.0.90](https://github.com/lightbasenl/lbu/releases/tag/v0.0.90)
+
+- code-gen: fix tags set on a RouteBuilder
+  ([#449](https://github.com/lightbasenl/lbu/pull/449))
+- code-gen: short circuit insert queries without values
+  ([#448](https://github.com/lightbasenl/lbu/pull/448))
+- code-gen: support allow null on various types, loosen schema
+  ([#450](https://github.com/lightbasenl/lbu/pull/450))
+
+No release notes today :S
+
 ### [v0.0.89](https://github.com/lightbasenl/lbu/releases/tag/v0.0.89)
 
 - build(deps): bump @types/node from 14.14.2 to 14.14.5
