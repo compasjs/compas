@@ -288,7 +288,7 @@ function getTypes(T) {
       .keys({
         allowNull: T.bool().default(false),
       })
-      .default("{ allowNull: true }")
+      .default("{ allowNull: false }")
       .loose(),
   });
 
