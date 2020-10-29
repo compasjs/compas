@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.91](https://github.com/lightbasenl/lbu/releases/tag/v0.0.91)
+
+- code-gen: fix default allowNull on uuid type
+
 ### [v0.0.90](https://github.com/lightbasenl/lbu/releases/tag/v0.0.90)
 
 - code-gen: fix tags set on a RouteBuilder
