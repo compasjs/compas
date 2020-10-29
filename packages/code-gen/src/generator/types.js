@@ -219,16 +219,7 @@ export function generateTypeDefinition(
       break;
     case "reference":
       if ((suffix ?? "") !== "") {
-        result += generateTypeDefinition(type.reference, {
-          isJSON,
-          nestedIsJSON,
-          useDefaults,
-          useTypescript,
-          isNode,
-          isBrowser,
-          suffix,
-          fileTypeIO,
-        });
+        result += type.reference.uniqueName + upperCaseFirst(suffix);
       } else {
         result += type.reference.uniqueName;
       }
