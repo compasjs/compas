@@ -15,7 +15,7 @@ export class ReferenceType extends TypeBuilder {
   build() {
     if (isNil(this.ref) && isNil(this.data.reference.group)) {
       throw new Error(
-        "Call .set() with either another named TypeBuilder or a valid group and name",
+        "Call T.relation() with either a named TypeBuilder or a valid group and name",
       );
     }
 

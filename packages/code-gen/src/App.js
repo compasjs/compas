@@ -1,5 +1,6 @@
 import { newLogger, printProcessMemoryUsage } from "@lbu/insight";
 import { AppError, isNil } from "@lbu/stdlib";
+import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import {
   addGroupsToGeneratorInput,
@@ -125,12 +126,18 @@ export class App {
    * @param {...RelationType} relations
    */
   addRelations(reference, ...relations) {
-    const {
-      reference: { group, name },
-    } = reference.build();
+    if (!(reference instanceof ReferenceType)) {
+      throw new Error(
+        `Expected T.relation as a first argument to App.addRelations`,
+      );
+    }
+
+    const buildRef = reference.build();
     this.processData();
 
-    const resolved = this.data[group][name];
+    const { group, name } = buildRef?.reference ?? {};
+
+    const resolved = this.data[group]?.[name];
 
     if (!resolved) {
       throw new Error(
