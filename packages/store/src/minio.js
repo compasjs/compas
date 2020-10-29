@@ -1,4 +1,4 @@
-import { isProduction, merge } from "@lbu/stdlib";
+import { environment, isProduction, merge } from "@lbu/stdlib";
 import minio from "minio";
 
 /**
@@ -7,10 +7,10 @@ import minio from "minio";
  */
 export function newMinioClient(opts) {
   const config = {
-    endPoint: process.env.MINIO_URI,
-    port: process.env.MINIO_PORT ? Number(process.env.MINIO_PORT) : undefined,
-    accessKey: process.env.MINIO_ACCESS_KEY,
-    secretKey: process.env.MINIO_SECRET_KEY,
+    endPoint: environment.MINIO_URI,
+    port: environment.MINIO_PORT ? Number(environment.MINIO_PORT) : undefined,
+    accessKey: environment.MINIO_ACCESS_KEY,
+    secretKey: environment.MINIO_SECRET_KEY,
     useSSL: isProduction(),
   };
   return new minio.Client(merge(config, opts));

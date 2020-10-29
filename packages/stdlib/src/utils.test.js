@@ -1,11 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import {
-  gc,
-  getSecondsSinceEpoch,
-  isMainFnAndReturnName,
-  isProduction,
-  isStaging,
-} from "./utils.js";
+import { gc, getSecondsSinceEpoch, isMainFnAndReturnName } from "./utils.js";
 
 mainTestFn(import.meta);
 
@@ -21,49 +15,6 @@ test("stdlib/utils", (t) => {
       t.fail("Should not throw");
       t.log.error(e);
     }
-  });
-
-  t.test("isProduction", (t) => {
-    const currentEnv = process.env.NODE_ENV;
-
-    process.env.NODE_ENV = "production";
-    t.equal(isProduction(), true);
-
-    process.env.NODE_ENV = "development";
-    t.equal(isProduction(), false);
-
-    process.env.NODE_ENV = undefined;
-    t.equal(isProduction(), false);
-
-    process.env.NODE_ENV = currentEnv;
-  });
-
-  t.test("isStaging", (t) => {
-    const currentEnv = process.env.NODE_ENV;
-    const currentIsStaging = process.env.IS_STAGING;
-
-    process.env.NODE_ENV = "production";
-    process.env.IS_STAGING = "true";
-    t.equal(isStaging(), true);
-
-    process.env.NODE_ENV = "production";
-    process.env.IS_STAGING = undefined;
-    t.equal(isStaging(), false);
-
-    process.env.NODE_ENV = "production";
-    process.env.IS_STAGING = "false";
-    t.equal(isStaging(), false);
-
-    process.env.NODE_ENV = "development";
-    process.env.IS_STAGING = "true";
-    t.equal(isStaging(), true);
-
-    process.env.NODE_ENV = "development";
-    process.env.IS_STAGING = "false";
-    t.equal(isStaging(), true);
-
-    process.env.NODE_ENV = currentEnv;
-    process.env.IS_STAGING = currentIsStaging;
   });
 
   t.test("isMainFnAndGetName", (t) => {

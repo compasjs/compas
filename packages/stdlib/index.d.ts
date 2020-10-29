@@ -310,6 +310,27 @@ export function filenameForModule(meta: ImportMeta): string;
 export function dirnameForModule(meta: ImportMeta): string;
 
 /**
+ * Cached environment, set by `refreshEnvironmentCache()`
+ */
+export const environment: typeof process.env;
+
+/**
+ * Repopulate the cached environment copy.
+ * This should only be necessary when you or a sub package mutates the environment.
+ * The `mainFn` / `mainTestFn` / `mainBenchFn` / ... will call this function by default
+ * after loading your `.env` file.
+ *
+ * Accessing process.env.XXX is relatively slow in Node.js.
+ * Benchmark of a plain object property access and accessing process.env.NODE_ENV:
+ *
+ * property access       500000000  iterations     0  ns/op
+ * process.env access      5000000  iterations   246  ns/op
+ *
+ * See this thread: https://github.com/nodejs/node/issues/3104
+ */
+export function refreshEnvironmentCache(): void;
+
+/**
  * Returns whether NODE_ENV === "production"
  */
 export function isProduction(): boolean;

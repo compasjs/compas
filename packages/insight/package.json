@@ -12,6 +12,9 @@
     "logger"
   ],
   "license": "MIT",
+  "dependencies": {
+    "@lbu/stdlib": "0.0.91"
+  },
   "maintainers": [
     {
       "name": "Dirk de Visser",

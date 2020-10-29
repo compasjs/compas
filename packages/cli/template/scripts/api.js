@@ -1,4 +1,4 @@
-import { mainFn, isProduction, isStaging } from "@lbu/stdlib";
+import { mainFn, isProduction, isStaging, environment } from "@lbu/stdlib";
 import { constructApp } from "../src/api.js";
 import { injectServices } from "../src/service.js";
 import { app } from "../src/services/index.js";
@@ -12,7 +12,7 @@ async function main(logger) {
   await injectServices();
   await constructApp();
 
-  const port = process.env.PORT || 3000;
+  const port = environment.PORT || 3000;
   app.listen(port, () => {
     logger.info({
       msg: "Listening",
