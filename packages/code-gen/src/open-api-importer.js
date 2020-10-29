@@ -245,14 +245,13 @@ function transformBody(context, input, lbuStruct) {
  * @param lbuStruct
  */
 function transformResponse(context, input, lbuStruct) {
-  if (isNil(input?.content?.["application/json"]?.schema)) {
-    return undefined;
-  }
-
-  const item = convertSchema(context, input.content["application/json"].schema);
+  const item = convertSchema(
+    context,
+    input?.content?.["application/json"]?.schema,
+  );
   item.group = lbuStruct.group;
   item.name = `${lbuStruct.name}Response`;
-  item.docString = input.description || "";
+  item.docString = input?.description || "";
 
   return item;
 }
