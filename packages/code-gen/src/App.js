@@ -128,6 +128,8 @@ export class App {
     const {
       reference: { group, name },
     } = reference.build();
+    this.processData();
+
     const resolved = this.data[group][name];
 
     if (!resolved) {
