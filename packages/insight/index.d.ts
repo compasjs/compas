@@ -71,11 +71,6 @@ export function bytesToHumanReadable(bytes?: number): string;
 export function printProcessMemoryUsage(logger: Logger): void;
 
 /**
- * Standard log instance
- */
-export const log: Logger;
-
-/**
  * Basic timing and call information
  */
 export type EventCall =

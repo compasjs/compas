@@ -1,4 +1,4 @@
-import { mainFn, spawn } from "@lbu/stdlib";
+import { mainFn, spawn, environment } from "@lbu/stdlib";
 
 mainFn(import.meta, async () => {
   const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [
@@ -9,7 +9,7 @@ mainFn(import.meta, async () => {
   ]);
 
   const prettierCommand =
-    process.env.CI === "true" ? ["--check"] : ["--write", "--list-different"];
+    environment.CI === "true" ? ["--check"] : ["--write", "--list-different"];
 
   const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
     ...prettierCommand,

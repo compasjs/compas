@@ -1,4 +1,4 @@
-import { isNil, isProduction, merge, uuid } from "@lbu/stdlib";
+import { environment, isNil, isProduction, merge, uuid } from "@lbu/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
@@ -17,11 +17,11 @@ export function session(app, opts) {
   const options = merge(
     {},
     {
-      key: `${process.env.APP_NAME.toLowerCase()}.sess`,
+      key: `${environment.APP_NAME.toLowerCase()}.sess`,
       maxAge: 6 * 24 * 60 * 60 * 1000,
       renew: true,
       secure: isProduction(),
-      domain: !isProduction() ? undefined : process.env.COOKIE_URL,
+      domain: !isProduction() ? undefined : environment.COOKIE_URL,
       sameSite: "lax",
       overwrite: true,
       httpOnly: true,
@@ -44,14 +44,14 @@ export function session(app, opts) {
  */
 function getKeys() {
   if (!isProduction()) {
-    return [process.env.APP_NAME];
+    return [environment.APP_NAME];
   }
 
-  if (isNil(process.env.APP_KEYS) || process.env.APP_KEYS.length < 20) {
+  if (isNil(environment.APP_KEYS) || environment.APP_KEYS.length < 20) {
     throw new Error("Missing APP_KEYS in environment or generate a longer key");
   }
 
-  const keys = process.env.APP_KEYS.split(",");
+  const keys = environment.APP_KEYS.split(",");
   return new KeyGrip(keys, "sha256");
 }
 

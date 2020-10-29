@@ -1,5 +1,5 @@
-import { log } from "@lbu/insight";
-import { isNil, uuid } from "@lbu/stdlib";
+import { newLogger } from "@lbu/insight";
+import { environment, isNil, uuid } from "@lbu/stdlib";
 import {
   createDatabaseIfNotExists,
   newPostgresConnection,
@@ -54,15 +54,15 @@ export async function cleanupPostgresDatabaseTemplate() {
  * @param verboseSql
  */
 export async function createTestPostgresDatabase(verboseSql = false) {
-  const name = process.env.APP_NAME + uuid().substring(0, 7);
+  const name = environment.APP_NAME + uuid().substring(0, 7);
 
   // Setup a template to work from
   if (isNil(testDatabase)) {
-    testDatabase = process.env.APP_NAME + uuid().substring(0, 7);
+    testDatabase = environment.APP_NAME + uuid().substring(0, 7);
 
     const creationSql = await createDatabaseIfNotExists(
       undefined,
-      process.env.APP_NAME,
+      environment.APP_NAME,
     );
 
     // Clean all connections
@@ -73,7 +73,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
       FROM
         pg_stat_activity
       WHERE
-        pg_stat_activity.datname = ${process.env.APP_NAME}
+        pg_stat_activity.datname = ${environment.APP_NAME}
         AND pid <> pg_backend_pid()
     `;
 
@@ -82,7 +82,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     await createDatabaseIfNotExists(
       creationSql,
       testDatabase,
-      process.env.APP_NAME,
+      environment.APP_NAME,
     );
 
     const sql = await newPostgresConnection({
@@ -122,7 +122,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
 
   const sql = await newPostgresConnection({
     database: name,
-    debug: verboseSql ? log.error : undefined,
+    debug: verboseSql ? newLogger({ ctx: { type: "sql" } }).error : undefined,
   });
 
   // Initialize new connection and kill old connection

@@ -1,4 +1,5 @@
-import { log } from "@lbu/insight";
+import { newLogger } from "@lbu/insight";
+import { environment } from "@lbu/stdlib";
 import { queries } from "./generated.js";
 
 const LBU_RECURRING_JOB = "lbu.job.recurring";
@@ -141,6 +142,7 @@ export class JobQueueWorker {
       );
       this.name = nameOrOptions;
     } else {
+      this.name = undefined;
       options = nameOrOptions;
     }
 
@@ -153,6 +155,7 @@ export class JobQueueWorker {
     this.isStarted = false;
 
     this.jobHandler = options?.handler;
+    this.logger = newLogger({ ctx: { type: this.name } });
   }
 
   start() {
@@ -300,8 +303,8 @@ export class JobQueueWorker {
         }
       })
       .catch((e) => {
-        log.error(e);
-      }); // user should have handled error already, so ignore it
+        this.logger.error(e);
+      });
   }
 }
 
@@ -315,7 +318,7 @@ export class JobQueueWorker {
 export async function addJobToQueue(sql, job) {
   const [result] = await queries.jobInsert(sql, {
     ...job,
-    name: job.name ?? process.env.APP_NAME,
+    name: job.name ?? environment.APP_NAME,
   });
   return result?.id;
 }

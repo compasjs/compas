@@ -1,4 +1,4 @@
-import { exec, spawn } from "@lbu/stdlib";
+import { environment, exec, spawn } from "@lbu/stdlib";
 
 const SUB_COMMANDS = ["up", "down", "clean", "reset"];
 
@@ -200,7 +200,7 @@ async function resetDatabase(logger, containerInfo) {
     return startExitCode;
   }
 
-  const name = process.env.APP_NAME;
+  const name = environment.APP_NAME;
 
   logger.info(`Resetting ${name} database`);
   const { exitCode: postgresExit } = await spawn(`sh`, [
@@ -253,5 +253,5 @@ async function getKnownContainers() {
 }
 
 function getPostgresVersion() {
-  return Number(process.env.POSTGRES_VERSION ?? "12");
+  return Number(environment.POSTGRES_VERSION ?? "12");
 }

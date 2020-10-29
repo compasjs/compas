@@ -1,3 +1,4 @@
+import { environment } from "@lbu/stdlib";
 import { writeNDJSON, writePretty } from "./writer.js";
 
 /**
@@ -5,9 +6,9 @@ import { writeNDJSON, writePretty } from "./writer.js";
  * @returns {Logger}
  */
 export function newLogger(options) {
-  const app = process.env.APP_NAME;
+  const app = environment.APP_NAME;
   const isProduction =
-    options?.pretty === false || process.env.NODE_ENV === "production";
+    options?.pretty === false || environment.NODE_ENV === "production";
   const stream = options?.stream ?? process.stdout;
 
   const logFn = isProduction

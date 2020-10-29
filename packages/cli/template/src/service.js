@@ -1,6 +1,6 @@
 import { newLogger } from "@lbu/insight";
 import { createBodyParsers, session } from "@lbu/server";
-import { isStaging } from "@lbu/stdlib";
+import { environment, isStaging } from "@lbu/stdlib";
 import {
   FileCache,
   newMinioClient,
@@ -40,7 +40,7 @@ export async function injectServices() {
       createIfNotExists: isStaging(),
     }),
   );
-  setAppBucket(process.env.APP_NAME);
+  setAppBucket(environment.APP_NAME);
   setMinio(newMinioClient({}));
   setSessionStore(newSessionStore(sql));
   setFileCache(new FileCache(sql, minio, appBucket));

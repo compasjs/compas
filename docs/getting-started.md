@@ -43,7 +43,6 @@ Let's start with the imports:
 
 ```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
-import { log } from "@lbu/insight";
 import { mainFn } from "@lbu/stdlib";
 ```
 

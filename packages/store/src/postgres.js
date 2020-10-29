@@ -1,4 +1,4 @@
-import { isProduction, merge } from "@lbu/stdlib";
+import { environment, isProduction, merge } from "@lbu/stdlib";
 import postgres from "postgres";
 
 /**
@@ -7,30 +7,30 @@ import postgres from "postgres";
  * @returns {Postgres}
  */
 export async function newPostgresConnection(opts) {
-  if (!process.env.POSTGRES_URI || !process.env.APP_NAME) {
+  if (!environment.POSTGRES_URI || !environment.APP_NAME) {
     throw new Error(
       "Provide the 'POSTGRES_URI' and 'APP_NAME' environment variables.",
     );
   }
 
-  if (!process.env.POSTGRES_URI.endsWith("/")) {
-    process.env.POSTGRES_URI += "/";
+  if (!environment.POSTGRES_URI.endsWith("/")) {
+    environment.POSTGRES_URI += "/";
   }
 
   if (opts && opts.createIfNotExists) {
     const oldConnection = await createDatabaseIfNotExists(
       undefined,
-      process.env.APP_NAME,
+      environment.APP_NAME,
     );
     setImmediate(() => oldConnection.end({}));
   }
 
   return postgres(
-    process.env.POSTGRES_URI + process.env.APP_NAME,
+    environment.POSTGRES_URI + environment.APP_NAME,
     merge(
       {
         connection: {
-          application_name: process.env.APP_NAME,
+          application_name: environment.APP_NAME,
           ssl: isProduction(),
         },
         no_prepare: true,
@@ -47,7 +47,7 @@ export async function newPostgresConnection(opts) {
  */
 export async function createDatabaseIfNotExists(sql, databaseName, template) {
   if (!sql) {
-    sql = postgres(process.env.POSTGRES_URI);
+    sql = postgres(environment.POSTGRES_URI);
   }
   const [db] = await sql`
     SELECT datname

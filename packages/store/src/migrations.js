@@ -1,7 +1,7 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { dirnameForModule, environment, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -239,8 +239,8 @@ async function acquireLock(sql) {
  */
 async function readMigrationsDir(
   directory,
-  namespace = process.env.APP_NAME,
-  namespaces = [process.env.APP_NAME],
+  namespace = environment.APP_NAME,
+  namespaces = [environment.APP_NAME],
 ) {
   if (!existsSync(directory)) {
     return {

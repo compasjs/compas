@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { isNil } from "@lbu/stdlib";
+import { environment, isNil } from "@lbu/stdlib";
 import proxy from "http-proxy";
 
 /**
@@ -8,7 +8,7 @@ import proxy from "http-proxy";
  */
 export async function proxyCommand(logger) {
   const port = parseInt(
-    (process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "")
+    (environment.API_URL ?? environment.NEXT_PUBLIC_API_URL ?? "")
       .split(":")
       .pop(),
   );
@@ -19,7 +19,7 @@ export async function proxyCommand(logger) {
     );
     process.exit(1);
   }
-  if ((process.env.PROXY_URL ?? "").length === 0) {
+  if ((environment.PROXY_URL ?? "").length === 0) {
     logger.error("Please set the `PROXY_URL` environment variable");
     process.exit(1);
   }
@@ -39,7 +39,7 @@ export async function proxyCommand(logger) {
 
   const allowMethods = "GET,PUT,POST,PATCH,DELETE,HEAD,OPTIONS";
   const options = {
-    target: process.env.PROXY_URL,
+    target: environment.PROXY_URL,
     changeOrigin: true,
     cookieDomainRewrite: "",
   };

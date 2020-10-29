@@ -1,4 +1,4 @@
-import { isStaging } from "@lbu/stdlib";
+import { environment, isStaging } from "@lbu/stdlib";
 
 /*
  Original copy from: https://github.com/zadzbw/koa2-cors/commit/45b6de0de6c4816b93d49335490b81995d450191
@@ -62,11 +62,11 @@ export function cors(options = {}) {
   if (typeof options.origin === "function") {
     originFn = options.origin;
   } else if (
-    process.env.CORS_URL !== undefined &&
-    process.env.CORS_URL.length > 0
+    environment.CORS_URL !== undefined &&
+    environment.CORS_URL.length > 0
   ) {
     // Use CORS_URL array provided via environment variables
-    const allowedOrigins = (process.env.CORS_URL || "").split(",");
+    const allowedOrigins = (environment.CORS_URL || "").split(",");
     const localhostRegex = /^http:\/\/localhost:\d{1,6}$/gi;
 
     if (isStaging()) {

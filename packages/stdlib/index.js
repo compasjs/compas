@@ -1,5 +1,14 @@
 export { uuid } from "./src/datatypes.js";
+
 export { AppError } from "./src/error.js";
+
+export {
+  isProduction,
+  isStaging,
+  environment,
+  refreshEnvironmentCache,
+} from "./src/env.js";
+
 export {
   isNil,
   isPlainObject,
@@ -8,6 +17,7 @@ export {
   unFlatten,
   camelToSnakeCase,
 } from "./src/lodash.js";
+
 export {
   exec,
   spawn,
@@ -16,6 +26,7 @@ export {
   processDirectoryRecursive,
   processDirectoryRecursiveSync,
 } from "./src/node.js";
+
 export {
   getSecondsSinceEpoch,
   gc,
@@ -23,6 +34,4 @@ export {
   noop,
   filenameForModule,
   dirnameForModule,
-  isProduction,
-  isStaging,
 } from "./src/utils.js";

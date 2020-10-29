@@ -1,4 +1,4 @@
-import { log } from "@lbu/insight";
+import { newLogger } from "@lbu/insight";
 import { isNil } from "@lbu/stdlib";
 import {
   AnyOfType,
@@ -45,6 +45,7 @@ export function convertOpenAPISpec(defaultGroup, data) {
    * openAPIReferences to resolve $ref's in the document
    */
   const context = {
+    logger: newLogger(),
     result,
     defaultGroup: lowerCaseFirst(defaultGroup),
     data,
@@ -399,7 +400,7 @@ function convertSchema(context, schema) {
       result.values = convertSchema(context, schema.additionalProperties);
 
       if (!isNil(schema.minProperties) || !isNil(schema.maxProperties)) {
-        log.info(
+        context.logger.info(
           "object#minProperties and object#maxProperties are not supported",
         );
       }
@@ -451,7 +452,7 @@ function convertSchema(context, schema) {
       result.validator.max = schema.maximum;
     }
     if (!isNil(schema.exclusiveMinimum) || !isNil(schema.exclusiveMaximum)) {
-      log.info(
+      context.logger.info(
         "number#exclusiveMinimum and number#exclusiveMaximum are not supported",
       );
     }
@@ -480,7 +481,9 @@ function convertSchema(context, schema) {
     assignBaseData();
 
     if (!schema.$ref.startsWith("#/")) {
-      log.info(`Only local references supported. Found ${schema.$ref}`);
+      context.logger.info(
+        `Only local references supported. Found ${schema.$ref}`,
+      );
     } else {
       result.reference = {
         group: context.defaultGroup,
