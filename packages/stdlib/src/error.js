@@ -1,3 +1,4 @@
+import { inspect } from "util";
 import { isNil } from "./lodash.js";
 
 export class AppError extends Error {
@@ -119,5 +120,14 @@ export class AppError extends Error {
       message: e.message,
       stack: skipStack ? [] : stack,
     };
+  }
+
+  /**
+   * Use AppError#format when AppError is passed to console.log / console.error.
+   * This works because it uses `util.inspect` under the hood.
+   * Util#inspect checks if the Symbol `util.inspect.custom` is available.
+   */
+  [inspect.custom]() {
+    return AppError.format(this);
   }
 }

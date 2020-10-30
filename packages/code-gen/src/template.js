@@ -2,6 +2,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { inspect } from "util";
 import {
+  AppError,
   camelToSnakeCase,
   isNil,
   processDirectoryRecursiveSync,
@@ -129,9 +130,15 @@ export function executeTemplate(name, data) {
   try {
     return templateContext.context[name](getExecutionContext(), data).trim();
   } catch (e) {
-    const err = new Error(`Error while executing ${name} template`);
-    err.originalErr = e;
-    throw err;
+    throw new AppError(
+      "codeGen.executeTemplate.error",
+      500,
+      {
+        message: "Error while executing template",
+        template: name,
+      },
+      e,
+    );
   }
 }
 
