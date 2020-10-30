@@ -45,7 +45,7 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
@@ -62,7 +62,7 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
@@ -95,7 +95,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.bucketNameIn)) {
       strings.push(` AND ${tableName}"bucketName" = ANY(`, ")");
       values.push(where.bucketNameIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.bucketNameIn) &&
+      where.bucketNameIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"bucketName" = ANY(ARRAY[`);
       for (let i = 0; i < where.bucketNameIn.length; ++i) {
         values.push(where.bucketNameIn[i]);
@@ -112,7 +115,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.bucketNameNotIn)) {
       strings.push(` AND ${tableName}"bucketName" != ANY(`, ")");
       values.push(where.bucketNameNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.bucketNameNotIn) &&
+      where.bucketNameNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"bucketName" != ANY(ARRAY[`);
       for (let i = 0; i < where.bucketNameNotIn.length; ++i) {
         values.push(where.bucketNameNotIn[i]);
@@ -145,7 +151,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtIn) &&
+      where.createdAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
@@ -162,7 +171,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtNotIn) &&
+      where.createdAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
@@ -203,7 +215,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtIn) &&
+      where.updatedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
@@ -220,7 +235,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtNotIn) &&
+      where.updatedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
@@ -261,7 +279,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtIn) &&
+      where.deletedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtIn.length; ++i) {
         values.push(where.deletedAtIn[i]);
@@ -278,7 +299,10 @@ export function fileWhere(where = {}, tableName = "f.") {
     if (isQueryObject(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtNotIn) &&
+      where.deletedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
         values.push(where.deletedAtNotIn[i]);
@@ -433,7 +457,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
@@ -450,7 +474,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
@@ -483,7 +507,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(`, ")");
       values.push(where.fileIn, undefined);
-    } else {
+    } else if (Array.isArray(where.fileIn) && where.fileIn.length > 0) {
       strings.push(` AND ${tableName}"file" = ANY(ARRAY[`);
       for (let i = 0; i < where.fileIn.length; ++i) {
         values.push(where.fileIn[i]);
@@ -500,7 +524,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(`, ")");
       values.push(where.fileNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.fileNotIn) && where.fileNotIn.length > 0) {
       strings.push(` AND ${tableName}"file" != ANY(ARRAY[`);
       for (let i = 0; i < where.fileNotIn.length; ++i) {
         values.push(where.fileNotIn[i]);
@@ -541,7 +565,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(`, ")");
       values.push(where.parentIn, undefined);
-    } else {
+    } else if (Array.isArray(where.parentIn) && where.parentIn.length > 0) {
       strings.push(` AND ${tableName}"parent" = ANY(ARRAY[`);
       for (let i = 0; i < where.parentIn.length; ++i) {
         values.push(where.parentIn[i]);
@@ -558,7 +582,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(`, ")");
       values.push(where.parentNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.parentNotIn) &&
+      where.parentNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"parent" != ANY(ARRAY[`);
       for (let i = 0; i < where.parentNotIn.length; ++i) {
         values.push(where.parentNotIn[i]);
@@ -599,7 +626,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtIn) &&
+      where.createdAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
@@ -616,7 +646,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtNotIn) &&
+      where.createdAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
@@ -657,7 +690,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtIn) &&
+      where.updatedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
@@ -674,7 +710,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtNotIn) &&
+      where.updatedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
@@ -715,7 +754,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtIn) &&
+      where.deletedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtIn.length; ++i) {
         values.push(where.deletedAtIn[i]);
@@ -732,7 +774,10 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     if (isQueryObject(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtNotIn) &&
+      where.deletedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
         values.push(where.deletedAtNotIn[i]);
@@ -887,7 +932,7 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
@@ -904,7 +949,7 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
@@ -941,7 +986,7 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(`, ")");
       values.push(where.fileIn, undefined);
-    } else {
+    } else if (Array.isArray(where.fileIn) && where.fileIn.length > 0) {
       strings.push(` AND ${tableName}"file" = ANY(ARRAY[`);
       for (let i = 0; i < where.fileIn.length; ++i) {
         values.push(where.fileIn[i]);
@@ -958,7 +1003,7 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(`, ")");
       values.push(where.fileNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.fileNotIn) && where.fileNotIn.length > 0) {
       strings.push(` AND ${tableName}"file" != ANY(ARRAY[`);
       for (let i = 0; i < where.fileNotIn.length; ++i) {
         values.push(where.fileNotIn[i]);
@@ -999,7 +1044,7 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(`, ")");
       values.push(where.parentIn, undefined);
-    } else {
+    } else if (Array.isArray(where.parentIn) && where.parentIn.length > 0) {
       strings.push(` AND ${tableName}"parent" = ANY(ARRAY[`);
       for (let i = 0; i < where.parentIn.length; ++i) {
         values.push(where.parentIn[i]);
@@ -1016,7 +1061,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(`, ")");
       values.push(where.parentNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.parentNotIn) &&
+      where.parentNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"parent" != ANY(ARRAY[`);
       for (let i = 0; i < where.parentNotIn.length; ++i) {
         values.push(where.parentNotIn[i]);
@@ -1057,7 +1105,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtIn) &&
+      where.createdAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
@@ -1074,7 +1125,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtNotIn) &&
+      where.createdAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
@@ -1115,7 +1169,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtIn) &&
+      where.updatedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
@@ -1132,7 +1189,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtNotIn) &&
+      where.updatedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
@@ -1173,7 +1233,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtIn) &&
+      where.deletedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtIn.length; ++i) {
         values.push(where.deletedAtIn[i]);
@@ -1190,7 +1253,10 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     if (isQueryObject(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.deletedAtNotIn) &&
+      where.deletedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
         values.push(where.deletedAtNotIn[i]);
@@ -1275,7 +1341,7 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
@@ -1292,7 +1358,7 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
@@ -1337,7 +1403,7 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.nameIn)) {
       strings.push(` AND ${tableName}"name" = ANY(`, ")");
       values.push(where.nameIn, undefined);
-    } else {
+    } else if (Array.isArray(where.nameIn) && where.nameIn.length > 0) {
       strings.push(` AND ${tableName}"name" = ANY(ARRAY[`);
       for (let i = 0; i < where.nameIn.length; ++i) {
         values.push(where.nameIn[i]);
@@ -1354,7 +1420,7 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.nameNotIn)) {
       strings.push(` AND ${tableName}"name" != ANY(`, ")");
       values.push(where.nameNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.nameNotIn) && where.nameNotIn.length > 0) {
       strings.push(` AND ${tableName}"name" != ANY(ARRAY[`);
       for (let i = 0; i < where.nameNotIn.length; ++i) {
         values.push(where.nameNotIn[i]);
@@ -1387,7 +1453,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.scheduledAtIn)) {
       strings.push(` AND ${tableName}"scheduledAt" = ANY(`, ")");
       values.push(where.scheduledAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.scheduledAtIn) &&
+      where.scheduledAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"scheduledAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.scheduledAtIn.length; ++i) {
         values.push(where.scheduledAtIn[i]);
@@ -1404,7 +1473,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.scheduledAtNotIn)) {
       strings.push(` AND ${tableName}"scheduledAt" != ANY(`, ")");
       values.push(where.scheduledAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.scheduledAtNotIn) &&
+      where.scheduledAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"scheduledAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.scheduledAtNotIn.length; ++i) {
         values.push(where.scheduledAtNotIn[i]);
@@ -1445,7 +1517,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtIn) &&
+      where.createdAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
@@ -1462,7 +1537,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtNotIn) &&
+      where.createdAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
@@ -1503,7 +1581,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtIn) &&
+      where.updatedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
@@ -1520,7 +1601,10 @@ export function jobWhere(where = {}, tableName = "j.") {
     if (isQueryObject(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtNotIn) &&
+      where.updatedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
@@ -1675,7 +1759,7 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
@@ -1692,7 +1776,7 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else {
+    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
@@ -1725,7 +1809,7 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.expiresIn)) {
       strings.push(` AND ${tableName}"expires" = ANY(`, ")");
       values.push(where.expiresIn, undefined);
-    } else {
+    } else if (Array.isArray(where.expiresIn) && where.expiresIn.length > 0) {
       strings.push(` AND ${tableName}"expires" = ANY(ARRAY[`);
       for (let i = 0; i < where.expiresIn.length; ++i) {
         values.push(where.expiresIn[i]);
@@ -1742,7 +1826,10 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.expiresNotIn)) {
       strings.push(` AND ${tableName}"expires" != ANY(`, ")");
       values.push(where.expiresNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.expiresNotIn) &&
+      where.expiresNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"expires" != ANY(ARRAY[`);
       for (let i = 0; i < where.expiresNotIn.length; ++i) {
         values.push(where.expiresNotIn[i]);
@@ -1775,7 +1862,10 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtIn) &&
+      where.createdAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
@@ -1792,7 +1882,10 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.createdAtNotIn) &&
+      where.createdAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
@@ -1833,7 +1926,10 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtIn) &&
+      where.updatedAtIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
@@ -1850,7 +1946,10 @@ export function sessionWhere(where = {}, tableName = "s.") {
     if (isQueryObject(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else {
+    } else if (
+      Array.isArray(where.updatedAtNotIn) &&
+      where.updatedAtNotIn.length > 0
+    ) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
