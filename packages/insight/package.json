@@ -1,6 +1,6 @@
 {
   "name": "@lbu/insight",
-  "version": "0.0.91",
+  "version": "0.0.92",
   "description": "Simple logger in NDJSON format",
   "main": "./index.js",
   "exports": "./index.js",
@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/stdlib": "0.0.91"
+    "@lbu/stdlib": "0.0.92"
   },
   "maintainers": [
     {
