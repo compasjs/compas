@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.93](https://github.com/lightbasenl/lbu/releases/tag/v0.0.93)
+
+- insight: remove dependency on stdlib
+
 ### [v0.0.92](https://github.com/lightbasenl/lbu/releases/tag/v0.0.92)
 
 - build(deps): bump @types/node from 14.14.5 to 14.14.6
