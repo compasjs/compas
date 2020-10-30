@@ -46,6 +46,26 @@ export function applyCodeGenStructure(app) {
       importExtension: T.string(),
       outputFiles: T.array().values(T.reference("codeGen", "file")),
       rootExports: T.array().values(T.string()),
+      errors: [
+        T.anyOf().values(
+          {
+            key: "sqlMissingPrimaryKey",
+            typeName: T.string(),
+          },
+          {
+            key: "sqlForgotEnableQueries",
+            typeName: T.string(),
+            referencedByType: T.string(),
+          },
+          {
+            key: "sqlMissingOneToMany",
+            referencedByGroup: T.string(),
+            referencedByType: T.string(),
+            typeName: T.string(),
+            relationOwnKey: T.string(),
+          },
+        ),
+      ],
     }),
     T.object("file").keys({
       relativePath: T.string(),
