@@ -25,12 +25,15 @@ export function generateStructureFiles(context) {
     });
   }
 
+  // Inline sort, since we didn't sort yet.
   const imports = Object.keys(context.structure)
+    .sort((a, b) => a.localeCompare(b))
     .map(
       (it) =>
         js`import { ${it}Structure } from "./${it}/structure${context.importExtension}";`,
     )
     .join("\n");
+
   const groups = Object.keys(context.structure)
     .map((it) => `{ ${it}: ${it}Structure }`)
     .join(", ");

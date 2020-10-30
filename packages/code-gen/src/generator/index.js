@@ -151,7 +151,15 @@ export async function generate(logger, options, structure) {
  */
 export function generateRootExportsFile(context) {
   context.outputFiles.push({
-    contents: context.rootExports.map((it) => it.trim()).join("\n"),
+    contents: context.rootExports
+      .map((it) => it.trim())
+      .sort((a, b) => {
+        const aExport = a.startsWith("export") ? 1 : 0;
+        const bExport = b.startsWith("export") ? 1 : 0;
+
+        return aExport - bExport;
+      })
+      .join("\n"),
     relativePath: `./index${context.extension}`,
   });
 }
