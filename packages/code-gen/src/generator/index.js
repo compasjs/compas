@@ -3,6 +3,7 @@ import { pathJoin } from "@lbu/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
+import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
@@ -62,6 +63,7 @@ export async function generate(logger, options, structure) {
     importExtension: ".js",
     outputFiles: [],
     rootExports: [],
+    errors: [],
   };
 
   // Structure:
@@ -71,10 +73,14 @@ export async function generate(logger, options, structure) {
   generateStructureFiles(context);
   addRootExportsForStructureFiles(context);
 
+  exitOnErrorsOrReturn(context);
+
   // Linkup all references, so we don't necessarily have to worry about them in all other
   // places.
   linkupReferencesInStructure(context);
   addFieldsOfRelations(context);
+
+  exitOnErrorsOrReturn(context);
 
   const copy = {};
   copyAndSort(context.structure, copy);
@@ -85,21 +91,28 @@ export async function generate(logger, options, structure) {
     context,
   );
   setupMemoizedTypes(context);
+  exitOnErrorsOrReturn(context);
 
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
     generateValidatorFiles(context);
+    exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("router") !== -1) {
     generateRouterFiles(context);
+    exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("apiClient") !== -1) {
     generateApiClientFiles(context);
+    exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
     generateReactQueryFiles(context);
+    exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
     doSqlChecks(context);
+    exitOnErrorsOrReturn(context);
+
     addShortNamesToQueryEnabledObjects(context);
     generateSqlStructure(context);
     createWhereTypes(context);
@@ -107,6 +120,8 @@ export async function generate(logger, options, structure) {
     generateQueryPartials(context);
     generateBaseQueries(context);
     generateTraversalQueries(context);
+
+    exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);
@@ -118,6 +133,8 @@ export async function generate(logger, options, structure) {
 
   // Add provided file headers to all files
   annotateFilesWithHeader(context);
+
+  exitOnErrorsOrReturn(context);
 
   // TODO: Remove context.options.outputDir before writing
 

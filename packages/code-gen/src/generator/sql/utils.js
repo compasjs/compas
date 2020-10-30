@@ -39,6 +39,26 @@ export function getQueryEnabledObjects(context) {
  * If not exists, throw nicely.
  * The returned value is a copy, and not primary anymore.
  *
+ * @param {CodeGenContext} context
+ * @param {CodeGenObjectType} type
+ */
+export function staticCheckPrimaryKey(context, type) {
+  const entry = Object.entries(type.keys).find(
+    (it) => it[1].sql?.primary || it[1].reference?.sql?.primary,
+  );
+
+  if (isNil(entry)) {
+    context.errors.push({
+      key: "sqlMissingPrimaryKey",
+      typeName: type.name,
+    });
+  }
+}
+
+/**
+ * Get primary key of object type.
+ * The returned value is a copy, and not primary anymore.
+ *
  * @param {CodeGenObjectType} type
  * @returns {{ key: string, field: CodeGenType }}
  */
@@ -46,13 +66,6 @@ export function getPrimaryKeyWithType(type) {
   const entry = Object.entries(type.keys).find(
     (it) => it[1].sql?.primary || it[1].reference?.sql?.primary,
   );
-
-  if (isNil(entry)) {
-    throw new Error(
-      `Type '${type.name}' is missing a primary key, but has enabled queries.`,
-    );
-  }
-
   return {
     key: entry[0],
     field: entry[1].reference ?? entry[1],
@@ -135,10 +148,10 @@ export function getSortedKeysForType(type) {
 export function doSqlChecks(context) {
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
-    getPrimaryKeyWithType(type);
+    staticCheckPrimaryKey(context, type);
 
     for (const relation of type.relations) {
-      staticCheckRelation(type, relation);
+      staticCheckRelation(context, type, relation);
     }
   }
 }
@@ -146,16 +159,20 @@ export function doSqlChecks(context) {
 /**
  * Check if referenced side has enabled queries
  *
+ * @param {CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
-function staticCheckRelation(type, relation) {
+function staticCheckRelation(context, type, relation) {
   // Throw errors for missing enableQueries statements
   if (!relation.reference.reference.enableQueries) {
     const { name } = relation.reference.reference;
-    throw new Error(
-      `Type '${name}' did not call .enableQueries(), but is has a relation to '${type.name}'.`,
-    );
+
+    context.errors.push({
+      key: "sqlForgotEnableQueries",
+      typeName: name,
+      referencedByType: type.name,
+    });
   }
 
   if (relation.subType === "manyToOne") {
@@ -173,9 +190,13 @@ function staticCheckRelation(type, relation) {
 
     if (!found) {
       const { name } = relation.reference.reference;
-      throw new Error(
-        `Relation from '${type.name}' to '${name}' is missing the inverse T.oneToMany relation.`,
-      );
+      context.errors.push({
+        key: "sqlMissingOneToMany",
+        referencedByGroup: type.group,
+        referencedByType: type.name,
+        typeName: name,
+        relationOwnKey: relation.referencedKey,
+      });
     }
   }
 

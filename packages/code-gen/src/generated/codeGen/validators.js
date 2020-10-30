@@ -5,8 +5,8 @@ import {
   anonymousValidator0,
   anonymousValidator100,
   anonymousValidator106,
-  anonymousValidator107,
-  anonymousValidator109,
+  anonymousValidator115,
+  anonymousValidator117,
   anonymousValidator13,
   anonymousValidator15,
   anonymousValidator20,
@@ -252,7 +252,7 @@ export function structure(value, propertyPath = "$") {
  */
 export function templateState(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator107(value, propertyPath, errors);
+  const data = anonymousValidator115(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -278,7 +278,7 @@ export function type(value, propertyPath = "$") {
  */
 export function typeSettings(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator109(value, propertyPath, errors);
+  const data = anonymousValidator117(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
