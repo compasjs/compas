@@ -16,7 +16,7 @@ test("insight/postgres", async (t) => {
     t.ok(!!sql);
 
     const result = await sql`
-      SELECT 1 + 2 AS sum
+        SELECT 1 + 2 AS sum
     `;
     t.equal(result[0].sum, 3);
 
@@ -29,6 +29,8 @@ test("insight/postgres", async (t) => {
 
   t.test("postgresTableSizes returns a result", async (t) => {
     const result = await postgresTableSizes(sql);
+
+    // Comes from @Lbu/stdlib, but doens't matter when published since this is a test file
     t.ok(isPlainObject(result));
     t.ok(result["migration"].diskSize > 16384, "migration disk size");
     t.ok(result["migration"].rowCount > 5, "migration row count");

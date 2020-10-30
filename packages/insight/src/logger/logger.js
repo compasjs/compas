@@ -1,11 +1,16 @@
-import { environment } from "@lbu/stdlib";
 import { writeNDJSON, writePretty } from "./writer.js";
+
+let environment = undefined;
 
 /**
  * @param {LoggerOptions} [options]
  * @returns {Logger}
  */
 export function newLogger(options) {
+  if (environment === undefined) {
+    environment = JSON.parse(JSON.stringify(process.env));
+  }
+
   const app = environment.APP_NAME;
   const isProduction =
     options?.pretty === false || environment.NODE_ENV === "production";
