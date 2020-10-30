@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.92](https://github.com/lightbasenl/lbu/releases/tag/v0.0.92)
+
+- build(deps): bump @types/node from 14.14.5 to 14.14.6
+  ([#451](https://github.com/lightbasenl/lbu/pull/451))
+- code-gen: add more input checks to App.addRelations
+- code-gen: fix TS strict for apiClient with file uploads
+- code-gen: fix missing response when importing from OpenApi spec
+- code-gen: fix recursive types with a suffix
+- code-gen: fix whereIn and whereNotIn generation
+- code-gen: process data before resolving addRelations
+- stdlib: cache environment variables
+  ([#454](https://github.com/lightbasenl/lbu/pull/454))
+
 ### [v0.0.91](https://github.com/lightbasenl/lbu/releases/tag/v0.0.91)
 
 - code-gen: fix default allowNull on uuid type
