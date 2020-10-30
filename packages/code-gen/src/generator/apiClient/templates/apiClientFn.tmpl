@@ -65,6 +65,7 @@ options = {},
       // eslint-disable-next-line
       const data = new FormData();
       for (const key of Object.keys(files)) {
+        {{= options.useTypescript ? `// @ts-ignore` : "" }}
         const keyFiles = Array.isArray(files[key]) ? files[key] : [files[key]];
         for (const file of keyFiles) {
           data.append(key, file.data, file.name);

@@ -130,6 +130,10 @@ export function applyTestingServerStructure(app) {
     R.get("/file", "getFile")
       .query({ throwError: T.bool().optional().convert() })
       .response(T.file()),
+
+    R.post("/file", "setFile").files({ myFile: T.file() }).response({
+      success: true,
+    }),
   );
 }
 
