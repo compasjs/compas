@@ -41,8 +41,8 @@ const assertAll = (t, cases, fn) => {
 };
 
 test("code-gen/validators", async (t) => {
-  const { validatorValidators } = await import(
-    "../../../generated/testing/validators/index.js"
+  const validators = await import(
+    "../../../generated/testing/validators/validators.js"
   );
   t.test("anyOf", (t) => {
     assertAll(
@@ -66,7 +66,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.anyOf.type",
         },
       ],
-      validatorValidators.anyOf,
+      validators.validateValidatorAnyOf,
     );
   });
 
@@ -91,7 +91,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.array.type",
         },
       ],
-      validatorValidators.array,
+      validators.validateValidatorArray,
     );
   });
 
@@ -104,7 +104,7 @@ test("code-gen/validators", async (t) => {
           expected: [true],
         },
       ],
-      validatorValidators.arrayConvert,
+      validators.validateValidatorArrayConvert,
     );
   });
 
@@ -126,7 +126,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.array.max",
         },
       ],
-      validatorValidators.arrayMinMax,
+      validators.validateValidatorArrayMinMax,
     );
   });
 
@@ -148,7 +148,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.boolean.undefined",
         },
       ],
-      validatorValidators.bool,
+      validators.validateValidatorBool,
     );
   });
 
@@ -165,7 +165,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.boolean.oneOf",
         },
       ],
-      validatorValidators.boolOneOf,
+      validators.validateValidatorBoolOneOf,
     );
   });
 
@@ -198,7 +198,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.boolean.type",
         },
       ],
-      validatorValidators.boolConvert,
+      validators.validateValidatorBoolConvert,
     );
   });
 
@@ -215,7 +215,7 @@ test("code-gen/validators", async (t) => {
           expected: true,
         },
       ],
-      validatorValidators.boolOptional,
+      validators.validateValidatorBoolOptional,
     );
   });
 
@@ -232,7 +232,7 @@ test("code-gen/validators", async (t) => {
           expected: true,
         },
       ],
-      validatorValidators.boolDefault,
+      validators.validateValidatorBoolDefault,
     );
   });
 
@@ -253,7 +253,7 @@ test("code-gen/validators", async (t) => {
           expected: true,
         },
       ],
-      validatorValidators.boolAllowNull,
+      validators.validateValidatorBoolAllowNull,
     );
   });
 
@@ -287,7 +287,7 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.date.pattern",
         },
       ],
-      validatorValidators.date,
+      validators.validateValidatorDate,
     );
   });
 
@@ -311,7 +311,7 @@ test("code-gen/validators", async (t) => {
           },
         },
       ],
-      validatorValidators.generic,
+      validators.validateValidatorGeneric,
     );
   });
 
@@ -336,7 +336,7 @@ test("code-gen/validators", async (t) => {
           expected: null,
         },
       ],
-      validatorValidators.stringAllowNull,
+      validators.validateValidatorStringAllowNull,
     );
   });
 

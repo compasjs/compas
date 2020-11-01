@@ -5,34 +5,24 @@ import { js } from "./tag/index.js";
  *
  * @param {CodeGenContext} context
  */
-export function generateStructureFiles(context) {
+export function generateStructureFile(context) {
   if (!context.options.dumpStructure) {
     return;
   }
+
+  let structureSource = "";
+
   for (const group of Object.keys(context.structure)) {
     // Make it safe to inject in contents
     const string = JSON.stringify(context.structure[group])
       .replace(/\\/g, "\\\\")
       .replace("'", "\\'");
 
-    context.outputFiles.push({
-      contents: js`
-                                 export const ${group}StructureString = '${string}';
-                                 export const ${group}Structure = JSON.parse(
-                                   ${group}StructureString);
-                               `,
-      relativePath: `./${group}/structure${context.extension}`,
-    });
+    structureSource += js`
+      export const ${group}StructureString = '${string}';
+      export const ${group}Structure = JSON.parse(${group}StructureString);
+    `;
   }
-
-  // Inline sort, since we didn't sort yet.
-  const imports = Object.keys(context.structure)
-    .sort((a, b) => a.localeCompare(b))
-    .map(
-      (it) =>
-        js`import { ${it}Structure } from "./${it}/structure${context.importExtension}";`,
-    )
-    .join("\n");
 
   const groups = Object.keys(context.structure)
     .map((it) => `{ ${it}: ${it}Structure }`)
@@ -40,8 +30,7 @@ export function generateStructureFiles(context) {
 
   context.outputFiles.push({
     contents: js`
-                               ${imports}
-
+                               ${structureSource}
                                export const structure = Object.assign({}, ${groups});
                                export const structureString = JSON.stringify(structure);
                              `,
@@ -57,13 +46,17 @@ export function addRootExportsForStructureFiles(context) {
     return;
   }
 
+  let sourceString = `
+    export {
+      structure,
+      structureString,
+  `;
+
   for (const group of Object.keys(context.structure)) {
-    context.rootExports.push(
-      `export { ${group}Structure } from "./${group}/structure${context.importExtension}";`,
-    );
+    sourceString += `${group}Structure,\n`;
   }
 
   context.rootExports.push(
-    `export { structure, structureString } from "./structure${context.importExtension}";`,
+    `${sourceString}} from "./structure${context.importExtension}";`,
   );
 }

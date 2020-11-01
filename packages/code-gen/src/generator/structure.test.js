@@ -1,13 +1,13 @@
 import { mainTestFn, test } from "@lbu/cli";
 import {
   addRootExportsForStructureFiles,
-  generateStructureFiles,
+  generateStructureFile,
 } from "./structure.js";
 
 mainTestFn(import.meta);
 
 test("code-gen/generator/structure", (t) => {
-  t.test("generateStructureFiles - dumpStructure: false", (t) => {
+  t.test("generateStructureFile - dumpStructure: false", (t) => {
     const context = {
       options: {
         dumpStructure: false,
@@ -19,12 +19,12 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFiles(context);
+    generateStructureFile(context);
 
     t.equal(context.outputFiles.length, 0);
   });
 
-  t.test("generateStructureFiles - dumpStructure: true", (t) => {
+  t.test("generateStructureFile - dumpStructure: true", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -37,15 +37,13 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFiles(context);
+    generateStructureFile(context);
 
-    t.equal(context.outputFiles.length, 3);
-    t.equal(context.outputFiles[0].relativePath, "./group/structure.js");
-    t.equal(context.outputFiles[1].relativePath, "./another/structure.js");
-    t.equal(context.outputFiles[2].relativePath, "./structure.js");
+    t.equal(context.outputFiles.length, 1);
+    t.equal(context.outputFiles[0].relativePath, "./structure.js");
   });
 
-  t.test("generateStructureFiles - extension: ts", (t) => {
+  t.test("generateStructureFile - extension: ts", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -58,15 +56,13 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFiles(context);
+    generateStructureFile(context);
 
-    t.equal(context.outputFiles.length, 3);
-    t.equal(context.outputFiles[0].relativePath, "./group/structure.ts");
-    t.equal(context.outputFiles[1].relativePath, "./another/structure.ts");
-    t.equal(context.outputFiles[2].relativePath, "./structure.ts");
+    t.equal(context.outputFiles.length, 1);
+    t.equal(context.outputFiles[0].relativePath, "./structure.ts");
   });
 
-  t.test("generateStructureFiles - zero groups", (t) => {
+  t.test("generateStructureFile - zero groups", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -76,7 +72,7 @@ test("code-gen/generator/structure", (t) => {
       structure: {},
     };
 
-    generateStructureFiles(context);
+    generateStructureFile(context);
 
     t.equal(context.outputFiles.length, 1);
     t.equal(
@@ -118,19 +114,11 @@ test("code-gen/generator/structure", (t) => {
 
     addRootExportsForStructureFiles(context);
 
-    t.equal(context.rootExports.length, 3);
-    t.equal(
-      context.rootExports[0],
-      `export { groupStructure } from "./group/structure.js";`,
-    );
-    t.equal(
-      context.rootExports[1],
-      `export { anotherStructure } from "./another/structure.js";`,
-    );
-    t.equal(
-      context.rootExports[2],
-      `export { structure, structureString } from "./structure.js";`,
-    );
+    t.equal(context.rootExports.length, 1);
+    t.ok(context.rootExports[0].indexOf("groupStructure") !== -1);
+    t.ok(context.rootExports[0].indexOf("anotherStructure") !== -1);
+    t.ok(context.rootExports[0].indexOf("structure") !== -1);
+    t.ok(context.rootExports[0].indexOf("structureString") !== -1);
   });
 
   t.test("addRootExportsForStructureFiles - extension: ts", (t) => {
@@ -149,19 +137,11 @@ test("code-gen/generator/structure", (t) => {
 
     addRootExportsForStructureFiles(context);
 
-    t.equal(context.rootExports.length, 3);
-    t.equal(
-      context.rootExports[0],
-      `export { groupStructure } from "./group/structure";`,
-    );
-    t.equal(
-      context.rootExports[1],
-      `export { anotherStructure } from "./another/structure";`,
-    );
-    t.equal(
-      context.rootExports[2],
-      `export { structure, structureString } from "./structure";`,
-    );
+    t.equal(context.rootExports.length, 1);
+    t.ok(context.rootExports[0].indexOf("groupStructure") !== -1);
+    t.ok(context.rootExports[0].indexOf("anotherStructure") !== -1);
+    t.ok(context.rootExports[0].indexOf("structure") !== -1);
+    t.ok(context.rootExports[0].indexOf("structureString") !== -1);
   });
 
   t.test("addRootExportsForStructureFiles - zero groups", (t) => {
@@ -179,9 +159,8 @@ test("code-gen/generator/structure", (t) => {
 
     t.equal(context.rootExports.length, 1);
 
-    t.equal(
-      context.rootExports[0],
-      `export { structure, structureString } from "./structure.js";`,
-    );
+    t.ok(context.rootExports[0].indexOf("structure") !== -1);
+    t.ok(context.rootExports[0].indexOf("structureString") !== -1);
+    t.ok(context.rootExports[0].indexOf("structure.js") !== -1);
   });
 });
