@@ -54,14 +54,6 @@ const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 
 
 /**
- * @name GroupMiddleware
- * @typedef {object}
-{{ for (const group of Object.keys(structure)) { }}
- * @property {Middleware|Middleware[]|undefined} {{= group }}
-{{ } }}
- */
-
-/**
  * @type {GroupMiddleware}
  */
 export const groupMiddleware = {
@@ -137,36 +129,6 @@ const handlers = {
   {{ } }}
 };
 ((newline))
-
-{{ for (const groupName of Object.keys(structure)) { }}
-  {{ for (const itemName of Object.keys(structure[groupName])) { }}
-    {{ const item = structure[groupName][itemName]; }}
-
-    {{ if (item.type !== "route") { }}
-    {{ continue; }}
-    {{ } }}
-
-    /**
-     * @name {{= item.uniqueName }}Ctx
-     * @typedef {Context<{}, {
-     {{ if (item.response) { }}*   body: {{= item.response.reference.uniqueName }}, {{ } }}
-     * }>}
-     * @property {Logger} log
-     * @property {Event} event
-     {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
-     {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
-     {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
-     {{ if (item.files) { }}* @property { {{= getTypeNameForType(item.files.reference, "Validated", { fileTypeIO: "outputRouter", }) }} } validatedFiles {{ } }}
-     */
-((newline))
-     /**
-       * @name {{= item.uniqueName }}Fn
-       * @typedef {function(ctx: {{= item.uniqueName }}Ctx, next: Next): (void|Promise<void>)}
-       */
-((newline))
-
-  {{ } }}
-{{ } }}
 
 {{ for (const groupName of Object.keys(structure)) { }}
 

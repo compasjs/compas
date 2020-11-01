@@ -587,10 +587,9 @@ interface DefaultContext extends DefaultContextExtends {
   [key: string]: any;
 }
 
-type Middleware<StateT = DefaultState, CustomT = DefaultContext> = (
-  context: Context<StateT, CustomT>,
-  next: Next,
-) => any;
+interface Middleware<StateT = DefaultState, CustomT = DefaultContext> {
+  (context: Context<StateT, CustomT>, next: Next): any | void | Promise<void>;
+}
 
 /**
  * @private

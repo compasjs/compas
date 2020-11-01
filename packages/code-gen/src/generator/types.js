@@ -1,6 +1,7 @@
 import { isNil } from "@lbu/stdlib";
 import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
+import { importCreator } from "./utils.js";
 
 export function getTypeSuffixForUseCase(options) {
   if (options.isBrowser) {
@@ -23,7 +24,7 @@ export function setupMemoizedTypes(context) {
   context.types = {
     defaultSettings: {
       isJSON: false,
-      useTypescript: context.options.useTypescript,
+      useTypescript: true,
       useDefaults: true,
       nestedIsJSON: false,
       isNode: context.options.isNode,
@@ -31,6 +32,8 @@ export function setupMemoizedTypes(context) {
       suffix: "",
       fileTypeIO: "outputClient",
     },
+    rawTypes: [],
+    imports: importCreator(),
     typeMap: new Map(),
     calculatingTypes: new Set(),
   };
@@ -108,19 +111,31 @@ export function getTypeNameForType(context, type, suffix, settings) {
  * @param {CodeGenContext} context
  */
 export function generateTypeFile(context) {
-  const typeFile = js`
+  let typeFile = `
+   ${context.types.imports.print()}
     // An export soo all things work correctly with linters, ts, ...
     export const __generated__ = true;
-
-    ${getMemoizedNamedTypes(context)}
   `;
+
+  if (!context.options.useTypescript) {
+    typeFile += `declare global {\n`;
+  }
+
+  typeFile += js`${context.types.rawTypes}`;
+  typeFile += js`${getMemoizedNamedTypes(context)}`;
+
+  if (!context.options.useTypescript) {
+    typeFile += `\n}`;
+  }
 
   context.outputFiles.push({
     contents: typeFile,
-    relativePath: `./types${context.extension}`,
+    relativePath: `./types.ts`,
   });
 
-  context.rootExports.push(`export * from "./types.js";`);
+  if (context.options.useTypescript) {
+    context.rootExports.push(`export * from "./types.js";`);
+  }
 }
 
 /**

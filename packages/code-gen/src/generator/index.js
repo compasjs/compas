@@ -91,10 +91,15 @@ export async function generate(logger, options, structure) {
     undefined,
     context,
   );
+
   templateContext.globals.typeSuffix = getTypeSuffixForUseCase(context.options);
 
   setupMemoizedTypes(context);
   exitOnErrorsOrReturn(context);
+
+  templateContext.globals.typeImports = context.types.imports;
+  templateContext.globals.addRawType = (value) =>
+    context.types.rawTypes.push(value);
 
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
     generateValidatorFile(context);

@@ -49,6 +49,9 @@ export function generateTraversalQueries(context) {
     contents: contents,
     relativePath: `./query-traverser${context.extension}`,
   });
+
+  context.types.imports.destructureImport("QueryPart", "@lbu/store");
+  context.types.imports.destructureImport("Postgres", "@lbu/store");
 }
 
 /**
@@ -91,23 +94,22 @@ function traversalQuery(context, imports, type) {
 
     partials.push(part);
     docPartials.push(
-      `* @property {function(where: ${
+      `get${upperCaseFirst(relation.ownKey)}: (where?: ${
         otherSide.uniqueName
-      }Where=): Traverse${upperCaseFirst(otherSide.name)}} get${upperCaseFirst(
-        relation.ownKey,
-      )}`,
+      }Where) => Traverse${upperCaseFirst(otherSide.name)};`,
     );
   }
 
-  return js`
-    /**
-     * @name Traverse${upperCaseFirst(type.name)}
-     * @typedef {object}
-      ${docPartials}
-     * @property {QueryPart} queryPart
-     * @property {function(sql: Postgres): Promise<${type.uniqueName}[]>} exec
-     */
+  context.types.rawTypes.push(`export interface Traverse${upperCaseFirst(
+    type.name,
+  )} {
+  ${docPartials.join("\n")}
+  queryPart: QueryPart;
+  exec: (sql: Postgres) => Promise<${type.uniqueName}[]>;
+}
+  `);
 
+  return js`
     /**
      * @param {${type.uniqueName}Where} [thisWhere={}]
      * @returns {Traverse${upperCaseFirst(type.name)}}
