@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.94](https://github.com/lightbasenl/lbu/releases/tag/v0.0.94)
+
+- code-gen: collect static check errors and pretty print
+  ([#457](https://github.com/lightbasenl/lbu/pull/457))
+- code-gen: flatten output ([#460](https://github.com/lightbasenl/lbu/pull/460))
+- code-gen: sort structure imports and root exports
+  ([#459](https://github.com/lightbasenl/lbu/pull/459))
+- stdlib: add support for util.inspect.custom to AppError
+  ([#458](https://github.com/lightbasenl/lbu/pull/458))
+
+Structure and validators imports and exports have changed. Make sure to fix
+these.
+
 ### [v0.0.93](https://github.com/lightbasenl/lbu/releases/tag/v0.0.93)
 
 - insight: remove dependency on stdlib
