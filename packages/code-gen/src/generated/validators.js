@@ -23,13 +23,13 @@ import {
   anonymousValidator85,
   anonymousValidator94,
   anonymousValidator96,
-} from "../anonymous-validators.js";
+} from "./anonymous-validators.js";
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenAnyOfType | undefined, errors: (*[])|undefined}}
  */
-export function anyOfType(value, propertyPath = "$") {
+export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator0(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -42,7 +42,7 @@ export function anyOfType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenAnyType | undefined, errors: (*[])|undefined}}
  */
-export function anyType(value, propertyPath = "$") {
+export function validateCodeGenAnyType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator15(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -55,7 +55,7 @@ export function anyType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenArrayType | undefined, errors: (*[])|undefined}}
  */
-export function arrayType(value, propertyPath = "$") {
+export function validateCodeGenArrayType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator20(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -68,7 +68,7 @@ export function arrayType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenBooleanType | undefined, errors: (*[])|undefined}}
  */
-export function booleanType(value, propertyPath = "$") {
+export function validateCodeGenBooleanType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator26(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -81,7 +81,7 @@ export function booleanType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenContext | undefined, errors: (*[])|undefined}}
  */
-export function context(value, propertyPath = "$") {
+export function validateCodeGenContext(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator94(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -94,7 +94,7 @@ export function context(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenDateType | undefined, errors: (*[])|undefined}}
  */
-export function dateType(value, propertyPath = "$") {
+export function validateCodeGenDateType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator31(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -107,7 +107,7 @@ export function dateType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenFile | undefined, errors: (*[])|undefined}}
  */
-export function file(value, propertyPath = "$") {
+export function validateCodeGenFile(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator106(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -120,7 +120,7 @@ export function file(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenFileType | undefined, errors: (*[])|undefined}}
  */
-export function fileType(value, propertyPath = "$") {
+export function validateCodeGenFileType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator34(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -133,7 +133,7 @@ export function fileType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenGenerateOpts | undefined, errors: (*[])|undefined}}
  */
-export function generateOpts(value, propertyPath = "$") {
+export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator96(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -146,7 +146,7 @@ export function generateOpts(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenGenericType | undefined, errors: (*[])|undefined}}
  */
-export function genericType(value, propertyPath = "$") {
+export function validateCodeGenGenericType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator37(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -159,7 +159,7 @@ export function genericType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenNumberType | undefined, errors: (*[])|undefined}}
  */
-export function numberType(value, propertyPath = "$") {
+export function validateCodeGenNumberType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator42(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -172,7 +172,7 @@ export function numberType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenObjectType | undefined, errors: (*[])|undefined}}
  */
-export function objectType(value, propertyPath = "$") {
+export function validateCodeGenObjectType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator47(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -185,7 +185,7 @@ export function objectType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenReferenceType | undefined, errors: (*[])|undefined}}
  */
-export function referenceType(value, propertyPath = "$") {
+export function validateCodeGenReferenceType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator61(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -198,7 +198,7 @@ export function referenceType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenRelationType | undefined, errors: (*[])|undefined}}
  */
-export function relationType(value, propertyPath = "$") {
+export function validateCodeGenRelationType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator57(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -211,7 +211,7 @@ export function relationType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenRouteType | undefined, errors: (*[])|undefined}}
  */
-export function routeType(value, propertyPath = "$") {
+export function validateCodeGenRouteType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator85(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -224,7 +224,7 @@ export function routeType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenStringType | undefined, errors: (*[])|undefined}}
  */
-export function stringType(value, propertyPath = "$") {
+export function validateCodeGenStringType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator76(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -237,7 +237,7 @@ export function stringType(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenStructure | undefined, errors: (*[])|undefined}}
  */
-export function structure(value, propertyPath = "$") {
+export function validateCodeGenStructure(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator100(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -250,7 +250,7 @@ export function structure(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenTemplateState | undefined, errors: (*[])|undefined}}
  */
-export function templateState(value, propertyPath = "$") {
+export function validateCodeGenTemplateState(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator115(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -263,7 +263,7 @@ export function templateState(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenType | undefined, errors: (*[])|undefined}}
  */
-export function type(value, propertyPath = "$") {
+export function validateCodeGenType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator13(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -276,7 +276,7 @@ export function type(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenTypeSettings | undefined, errors: (*[])|undefined}}
  */
-export function typeSettings(value, propertyPath = "$") {
+export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator117(value, propertyPath, errors);
   if (errors.length > 0) {
@@ -289,7 +289,7 @@ export function typeSettings(value, propertyPath = "$") {
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenUuidType | undefined, errors: (*[])|undefined}}
  */
-export function uuidType(value, propertyPath = "$") {
+export function validateCodeGenUuidType(value, propertyPath = "$") {
   const errors = [];
   const data = anonymousValidator82(value, propertyPath, errors);
   if (errors.length > 0) {

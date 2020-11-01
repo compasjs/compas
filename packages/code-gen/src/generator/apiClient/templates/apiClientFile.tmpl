@@ -7,9 +7,7 @@ import { CancelToken, AxiosInstance } from "axios";
 {{ } }}
 
 {{ if (options.isNodeServer) { }}
-{{ for (const group of Object.keys(structure)) { }}
-import * as {{= group }}Validators from "./{{= group }}/validators{{= importExtension }}";
-{{ } }}
+import * as validators from "./validators{{= importExtension }}";
 import { AppError, streamToBuffer } from "@lbu/stdlib";
 ((newline))
 function handleError(e, group, name) {

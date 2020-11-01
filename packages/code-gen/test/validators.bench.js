@@ -3,7 +3,7 @@ import { bench, mainBenchFn } from "@lbu/cli";
 mainBenchFn(import.meta);
 
 bench("object validator simple", async (b) => {
-  const { benchValidators } = await import(
+  const { validateBenchSimple } = await import(
     "../../../generated/testing/bench/index.js"
   );
   b.resetTime();
@@ -11,7 +11,7 @@ bench("object validator simple", async (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = benchValidators.simple({
+    y = validateBenchSimple({
       foo: "true",
       bar: "5",
       baz: "Ok",
@@ -20,7 +20,7 @@ bench("object validator simple", async (b) => {
 });
 
 bench("object validator nested", async (b) => {
-  const { benchValidators } = await import(
+  const { validateBenchNested } = await import(
     "../../../generated/testing/bench/index.js"
   );
   b.resetTime();
@@ -28,7 +28,7 @@ bench("object validator nested", async (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = benchValidators.nested({
+    y = validateBenchNested({
       foo: true,
       bar: 5,
       nest: [

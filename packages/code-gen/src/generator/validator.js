@@ -18,7 +18,7 @@ import { importCreator } from "./utils.js";
 /**
  * @param {CodeGenContext} context
  */
-export function generateValidatorFiles(context) {
+export function generateValidatorFile(context) {
   /**
    * @type {ValidatorContext}
    */
@@ -32,25 +32,40 @@ export function generateValidatorFiles(context) {
 
   addUtilitiesToAnonymousFunctions(subContext);
 
+  const imports = importCreator();
+  const rootExports = [];
+  const validatorSources = [];
+
   for (const group of Object.keys(context.structure)) {
-    const validators = generateValidatorFileForGroup(subContext, group);
-
-    const relativePath = `./${group}/validators${context.extension}`;
-
-    context.outputFiles.push({
-      contents: validators,
-      relativePath,
-    });
-    context.rootExports.push(
-      `import * as ${group}Validators from "./${group}/validators${context.importExtension}";`,
-      `export { ${group}Validators };`,
+    const { exportNames, sources } = generateValidatorsForGroup(
+      subContext,
+      imports,
+      group,
     );
+
+    rootExports.push(...exportNames);
+    validatorSources.push(...sources);
   }
 
   context.outputFiles.push({
     contents: subContext.anonymousFunctions.join("\n"),
     relativePath: `./anonymous-validators${context.extension}`,
   });
+
+  context.outputFiles.push({
+    contents: js`
+                               ${imports.print()}
+
+                               ${validatorSources}
+                             `,
+    relativePath: `./validators${context.extension}`,
+  });
+
+  context.rootExports.push(
+    `export { ${rootExports.join(",\n  ")} } from "./validators${
+      context.importExtension
+    }";`,
+  );
 }
 
 /**
@@ -68,14 +83,17 @@ function withTypescript(context, output) {
 /**
  *
  * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
  * @param {string} group
+ * @returns {{ exportNames: string[], sources: string[] }}
  */
-export function generateValidatorFileForGroup(context, group) {
+export function generateValidatorsForGroup(context, imports, group) {
   const data = context.context.structure[group];
 
-  const imports = importCreator();
-
   const mapping = {};
+  const exportNames = [];
+  const sources = [];
+
   for (const name of Object.keys(data)) {
     const type = data[name];
 
@@ -83,80 +101,85 @@ export function generateValidatorFileForGroup(context, group) {
       continue;
     }
 
-    if (context.context.extension === ".ts") {
+    if (context.context.options.useTypescript) {
       imports.destructureImport(
         getTypeNameForType(context.context, data[name], "", {}),
-        "../types",
+        "./types",
       );
     }
 
     mapping[name] = createOrUseAnonymousFunction(context, imports, type, true);
+    exportNames.push(`validate${type.uniqueName}`);
   }
 
-  return js`
-    ${imports.print()}
+  for (const name of Object.keys(mapping)) {
+    sources.push(js`
+      /**
+       * ${data[name].docString ?? ""}
+       * @param {${generateTypeDefinition({
+         type: "any",
+         isOptional: true,
+       })}} value
+       * @param {string|undefined} [propertyPath]
+       ${() => {
+         if (context.collectErrors) {
+           return `* @returns {{ data: ${getTypeNameForType(
+             context.context,
+             data[name],
+             "",
+             {},
+           )} | undefined, errors: (*[])|undefined}}`;
+         }
+         return js`*
+         @returns {
+           ${getTypeNameForType(context.context, data[name], "", {})}
+         }`;
+       }}
+       */
+      export function validate${data[name].uniqueName}(
+        value${withTypescript(context, ": any")},
+        propertyPath = "$"
+      )
 
-    ${Object.keys(mapping).map((it) => {
-      return js`
-        /**
-         * ${data[it].docString ?? ""}
-         * @param {${generateTypeDefinition({
-           type: "any",
-           isOptional: true,
-         })}} value
-         * @param {string|undefined} [propertyPath]
-         ${() => {
-           if (context.collectErrors) {
-             return `* @returns {{ data: ${getTypeNameForType(
-               context.context,
-               data[it],
-               "",
-               {},
-             )} | undefined, errors: (*[])|undefined}}`;
-           }
-           return js`*
-           @returns {
-             ${getTypeNameForType(context.context, data[it], "", {})}
-           }`;
-         }}
-         */
-        export function ${it}(value${withTypescript(
-        context,
-        ": any",
-      )}, propertyPath = "$") ${withTypescript(
+      ${withTypescript(
         context,
         `: { data: ${getTypeNameForType(
           context.context,
-          data[it],
+          data[name],
           "",
           {},
-        )} } | { data: undefined, errors: any[] }`,
-      )} {
-          const errors${withTypescript(context, ": any[]")} = [];
-          const data = ${mapping[it]}(value, propertyPath, errors);
+        )}, errors: undefined } | { data: undefined, errors: any[] }`,
+      )}
+      {
+        const errors${withTypescript(context, ": any[]")} = [];
+        const data = ${mapping[name]}(value, propertyPath, errors);
 
-          ${() => {
-            if (context.collectErrors) {
-              return js`
-                if (errors.length > 0) {
-                  return { data: undefined, errors };
-                } else {
-                  return { data, errors: undefined };
-                }
-              `;
-            }
+        ${() => {
+          if (context.collectErrors) {
             return js`
               if (errors.length > 0) {
-                throw errors[0];
+                return { data: undefined, errors };
               } else {
-                return data;
+                return { data, errors: undefined };
               }
             `;
-          }}
-        }
-      `;
-    })}
-  `;
+          }
+          return js`
+            if (errors.length > 0) {
+              throw errors[0];
+            } else {
+              return data;
+            }
+          `;
+        }}
+      }
+    `);
+  }
+
+  return {
+    exportNames,
+    sources,
+  };
 }
 
 /**
@@ -188,9 +211,8 @@ function addUtilitiesToAnonymousFunctions(context) {
     )}
 
     /** @type {ValidationErrorFn} */
-    let errorFn = (
-      key${withTypescript(context, ": string")},
-      info${withTypescript(context, ": any")}
+    let errorFn = (key${withTypescript(context, ": string")},
+                   info${withTypescript(context, ": any")}
     ) => {
       const err
       ${withTypescript(
@@ -207,10 +229,9 @@ function addUtilitiesToAnonymousFunctions(context) {
      * @param {string} key
      * @param {*} info
      */
-    export function buildError(
-      type${withTypescript(context, ": string")},
-      key${withTypescript(context, ": string")},
-      info
+    export function buildError(type${withTypescript(context, ": string")},
+                               key${withTypescript(context, ": string")},
+                               info
 
     ${withTypescript(context, ": any")}
     )
@@ -257,7 +278,7 @@ export function createOrUseAnonymousFunction(
     if (isTypeRoot) {
       imports.destructureImport(
         name,
-        `../anonymous-validators${context.context.importExtension}`,
+        `./anonymous-validators${context.context.importExtension}`,
       );
     }
     return name;
@@ -270,7 +291,7 @@ export function createOrUseAnonymousFunction(
   if (isTypeRoot) {
     imports.destructureImport(
       name,
-      `../anonymous-validators${context.context.importExtension}`,
+      `./anonymous-validators${context.context.importExtension}`,
     );
   }
 

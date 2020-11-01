@@ -7,7 +7,11 @@ import {
   addToData,
   hoistNamedItems,
 } from "./generate.js";
-import { codeGenValidators, validatorSetError } from "./generated/index.js";
+import {
+  validateCodeGenStructure,
+  validateCodeGenType,
+  validatorSetError,
+} from "./generated/index.js";
 import { generate } from "./generator/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
 import { lowerCaseFirst } from "./utils.js";
@@ -98,7 +102,7 @@ export class App {
    * @returns {App}
    */
   static new(options = {}) {
-    if (!isNil(codeGenValidators?.type)) {
+    if (!isNil(validateCodeGenType)) {
       validatorSetError(AppError.validationError);
     }
     return new App(options);
@@ -163,8 +167,8 @@ export class App {
    * @returns {this}
    */
   addRaw(obj) {
-    if (!isNil(codeGenValidators?.type)) {
-      const { data, errors } = codeGenValidators.type(obj);
+    if (!isNil(validateCodeGenType)) {
+      const { data, errors } = validateCodeGenType(obj);
       if (errors) {
         this.logger.error(AppError.format(errors[0]));
         process.exit(1);
@@ -184,8 +188,8 @@ export class App {
    * @returns {this}
    */
   extend(data) {
-    if (!isNil(codeGenValidators?.type)) {
-      const { data: value, errors } = codeGenValidators.structure(data);
+    if (!isNil(validateCodeGenType)) {
+      const { data: value, errors } = validateCodeGenStructure(data);
       if (errors) {
         this.logger.error(AppError.format(errors[0]));
         process.exit(1);
@@ -300,8 +304,8 @@ export class App {
     addGroupsToGeneratorInput(generatorInput, dataCopy, opts.enabledGroups);
 
     // validators may not be present, fallback to just stringify
-    if (!isNil(codeGenValidators.structure)) {
-      const { errors } = codeGenValidators.structure(generatorInput);
+    if (!isNil(validateCodeGenStructure)) {
+      const { errors } = validateCodeGenStructure(generatorInput);
       if (errors) {
         this.logger.error(AppError.format(errors[0]));
         process.exit(1);

@@ -20,14 +20,14 @@ import {
 import { createWhereTypes } from "./sql/where-type.js";
 import {
   addRootExportsForStructureFiles,
-  generateStructureFiles,
+  generateStructureFile,
 } from "./structure.js";
 import {
   generateTypeFile,
   getTypeNameForType,
   setupMemoizedTypes,
 } from "./types.js";
-import { generateValidatorFiles } from "./validator.js";
+import { generateValidatorFile } from "./validator.js";
 
 /**
  *
@@ -70,7 +70,7 @@ export async function generate(logger, options, structure) {
   // The raw structure that is used to generate all the files.
   // This contains all information needed to generate again, even if different options
   // are needed.
-  generateStructureFiles(context);
+  generateStructureFile(context);
   addRootExportsForStructureFiles(context);
 
   exitOnErrorsOrReturn(context);
@@ -94,7 +94,7 @@ export async function generate(logger, options, structure) {
   exitOnErrorsOrReturn(context);
 
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
-    generateValidatorFiles(context);
+    generateValidatorFile(context);
     exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("router") !== -1) {
