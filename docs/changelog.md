@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.95](https://github.com/lightbasenl/lbu/releases/tag/v0.0.95)
+
+- code-gen: some refactoring for more correct type output
+
 ### [v0.0.94](https://github.com/lightbasenl/lbu/releases/tag/v0.0.94)
 
 - code-gen: collect static check errors and pretty print
