@@ -8,22 +8,22 @@ export const __generated__ = true;
  * @typedef {{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
  */
 /**
+ * @name StoreFileMeta
+ * User definable, optional object to store whatever you want
+ * @typedef {{}}
+ */
+/**
  * @name StoreFileGroup
  * @typedef {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
  */
 /**
  * @name StoreFileGroupMeta
  * User definable, optional object to store whatever you want
- * @typedef {{}}
+ * @typedef {StoreFileMeta}
  */
 /**
  * @name StoreFileGroupView
  * @typedef {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
- */
-/**
- * @name StoreFileMeta
- * User definable, optional object to store whatever you want
- * @typedef {{}}
  */
 /**
  * @name StoreJob

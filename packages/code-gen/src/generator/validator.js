@@ -116,7 +116,7 @@ export function generateValidatorsForGroup(context, imports, group) {
     sources.push(js`
       /**
        * ${data[name].docString ?? ""}
-       * @param {${generateTypeDefinition({
+       * @param {${generateTypeDefinition(context.context, {
          type: "any",
          isOptional: true,
        })}} value
@@ -160,7 +160,10 @@ export function generateValidatorsForGroup(context, imports, group) {
               if (errors.length > 0) {
                 return { data: undefined, errors };
               } else {
-                return { data, errors: undefined };
+                return { data${withTypescript(
+                  context,
+                  ": data!",
+                )}, errors: undefined };
               }
             `;
           }
@@ -301,7 +304,7 @@ export function createOrUseAnonymousFunction(
      * @param {string} propertyPath
      * @param {*[]} errors
      * @param {string} parentType
-     * @returns {${generateTypeDefinition(type, {
+     * @returns {${generateTypeDefinition(context.context, type, {
        useDefaults: true,
      })}|undefined}
      */
@@ -386,7 +389,7 @@ function anonymousValidatorForType(context, imports, type) {
 function anonymousValidatorAnyOf(context, imports, type) {
   return js`
     let errorCount = 0;
-    const subErrors = [];
+    const subErrors${withTypescript(context, ": any[]")} = [];
     let result = undefined;
 
     ${type.values.map((it) => {
@@ -558,8 +561,10 @@ function anonymousValidatorGeneric(context, imports, type) {
 
     const result = Object.create(null);
     for (const key of Object.keys(value)) {
-      result[${keyValidator}(key, propertyPath + ".$key[" + key + "]", errors)] =
-        ${valueValidator}(value[key], propertyPath + ".$value[" + key + "]", errors);
+      const genericKey = ${keyValidator}(key, propertyPath + ".$key[" + key + "]", errors);
+      if (genericKey !== undefined) { 
+       result[genericKey] = ${valueValidator}(value[key], propertyPath + ".$value[" + key + "]", errors);
+      }
     }
 
     return result;

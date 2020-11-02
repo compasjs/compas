@@ -2,6 +2,19 @@ import { isNil } from "@lbu/stdlib";
 import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 
+export function getTypeSuffixForUseCase(options) {
+  if (options.isBrowser) {
+    return {
+      apiResponse: "Api",
+      apiInput: "Input",
+    };
+  }
+  return {
+    apiResponse: "ApiResponse",
+    apiInput: "Input",
+  };
+}
+
 /**
  * Setup stores for memoized types, so we can reuse types if necessary
  * @param {CodeGenContext} context
@@ -19,11 +32,14 @@ export function setupMemoizedTypes(context) {
       fileTypeIO: "outputClient",
     },
     typeMap: new Map(),
+    calculatingTypes: new Set(),
   };
 
-  for (const group of Object.values(context.structure)) {
-    for (const type of Object.values(group)) {
-      getTypeNameForType(context, type, "", { forceRegisterType: true });
+  if (!context.options.isBrowser) {
+    for (const group of Object.values(context.structure)) {
+      for (const type of Object.values(group)) {
+        getTypeNameForType(context, type, "", {});
+      }
     }
   }
 }
@@ -33,31 +49,59 @@ export function setupMemoizedTypes(context) {
  * @param {CodeGenContext} context
  * @param {CodeGenType} type
  * @param {string} suffix
- * @param {CodeGenTypeSettings & { forceRegisterType?: boolean }} settings
+ * @param {CodeGenTypeSettings} settings
  */
 export function getTypeNameForType(context, type, suffix, settings) {
-  const stringOfType = generateTypeDefinition(type, {
+  const hasName = !isNil(type?.uniqueName);
+
+  // Potential new name, should be registered any way
+  const name = `${type?.uniqueName ?? ""}${upperCaseFirst(suffix ?? "")}`;
+
+  if (hasName && context.types.typeMap.has(name)) {
+    return name;
+  }
+
+  // Recursive type handling
+  if (hasName && context.types.calculatingTypes.has(name)) {
+    return name;
+  }
+
+  // Setup type
+  if (hasName) {
+    context.types.calculatingTypes.add(name);
+    context.types.typeMap.set(name, "");
+  }
+
+  const stringOfType = generateTypeDefinition(context, type, {
     ...context.types.defaultSettings,
     ...settings,
     suffix,
   });
 
-  if (!settings.forceRegisterType) {
-    let found = undefined;
-    for (const [foundName, foundValue] of context.types.typeMap.entries()) {
-      if (foundValue === stringOfType) {
-        found = foundName;
-        break;
-      }
-    }
-
-    return found;
+  if (!hasName) {
+    return stringOfType;
   }
 
-  const name = `${type?.uniqueName ?? ""}${upperCaseFirst(suffix)}`;
-  context.types.typeMap.set(name, stringOfType);
+  // Check if the same type value already exists
+  let found = undefined;
+  for (const [foundName, foundValue] of context.types.typeMap.entries()) {
+    if (foundValue === stringOfType) {
+      found = foundName;
+      break;
+    }
+  }
 
-  return name;
+  if (!found) {
+    context.types.typeMap.set(name, stringOfType);
+    found = name;
+  } else if (found && name !== found) {
+    context.types.typeMap.set(name, found);
+    found = name;
+  }
+
+  context.types.calculatingTypes.delete(name);
+
+  return found;
 }
 
 /**
@@ -65,7 +109,6 @@ export function getTypeNameForType(context, type, suffix, settings) {
  */
 export function generateTypeFile(context) {
   const typeFile = js`
-
     // An export soo all things work correctly with linters, ts, ...
     export const __generated__ = true;
 
@@ -81,10 +124,12 @@ export function generateTypeFile(context) {
 }
 
 /**
+ * @param {CodeGenContext} context
  * @param {CodeGenType} type
  * @param {CodeGenTypeSettings} settings
  */
 export function generateTypeDefinition(
+  context,
   type,
   {
     isJSON,
@@ -132,12 +177,12 @@ export function generateTypeDefinition(
       break;
     case "anyOf":
       result += type.values
-        .map((it) => generateTypeDefinition(it, recurseSettings))
+        .map((it) => generateTypeDefinition(context, it, recurseSettings))
         .join("|");
       break;
     case "array":
       result += "(";
-      result += generateTypeDefinition(type.values, recurseSettings);
+      result += generateTypeDefinition(context, type.values, recurseSettings);
       result += ")[]";
       break;
     case "boolean":
@@ -180,19 +225,20 @@ export function generateTypeDefinition(
       if (useTypescript) {
         if (Array.isArray(type.keys.oneOf)) {
           result += `{ [ key in `;
-          result += generateTypeDefinition(type.keys, recurseSettings);
+          result += generateTypeDefinition(context, type.keys, recurseSettings);
         } else {
           result += `{ [ key: `;
-          result += generateTypeDefinition(type.keys, recurseSettings);
+          result += generateTypeDefinition(context, type.keys, recurseSettings);
         }
         result += "]:";
-        result += generateTypeDefinition(type.values, recurseSettings);
+        result += generateTypeDefinition(context, type.values, recurseSettings);
         result += "}";
       } else {
         result += `Object<${generateTypeDefinition(
+          context,
           type.keys,
           recurseSettings,
-        )}, ${generateTypeDefinition(type.values, recurseSettings)}>`;
+        )}, ${generateTypeDefinition(context, type.values, recurseSettings)}>`;
       }
       break;
     case "number":
@@ -205,7 +251,11 @@ export function generateTypeDefinition(
     case "object":
       result += "{";
       for (const key of Object.keys(type.keys)) {
-        let right = generateTypeDefinition(type.keys[key], recurseSettings);
+        let right = generateTypeDefinition(
+          context,
+          type.keys[key],
+          recurseSettings,
+        );
 
         let separator = ":";
         if (right.startsWith("undefined|")) {
@@ -217,14 +267,16 @@ export function generateTypeDefinition(
       }
       result += "}";
       break;
-    case "reference":
-      if ((suffix ?? "") !== "") {
-        result += type.reference.uniqueName + upperCaseFirst(suffix);
-      } else {
-        result += type.reference.uniqueName;
-      }
+    case "reference": {
+      result += getTypeNameForType(
+        context,
+        type.reference,
+        suffix,
+        recurseSettings,
+      );
 
       break;
+    }
     case "string":
       if (type.oneOf) {
         result += `"${type.oneOf.join(`"|"`)}"`;
@@ -237,7 +289,7 @@ export function generateTypeDefinition(
       break;
     default:
       // Just use the 'undefined' flow, so an any type
-      return generateTypeDefinition(undefined, recurseSettings);
+      return generateTypeDefinition(context, undefined, recurseSettings);
   }
 
   return result;

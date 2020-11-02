@@ -1,6 +1,6 @@
 {{ /* Keep in sync with apiClientFn */ }}
 {{ const funcName = "use" + upperCaseFirst(item.uniqueName); }}
-{{ const responseType = `T.${getTypeNameForType(item.response.reference, "ApiResponse", { isJSON: true, fileTypeIO: "outputClient" })}`; }}
+{{ const responseType = `T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient" })}`; }}
 
 {{ if (item.method === "GET") { }}
 
@@ -12,10 +12,10 @@
  */
 export function {{= funcName }}(
 {{ if (item.params) { }}
-params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }},
+params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
 {{ if (item.query) { }}
-query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }},
+query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
 options: QueryConfig<{{= responseType }}, AppErrorResponse> = {},
 ): QueryResult<{{= responseType }}, AppErrorResponse> {
@@ -52,10 +52,10 @@ options: QueryConfig<{{= responseType }}, AppErrorResponse> = {},
     (
     _,
     {{ if (item.params) { }}
-    params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }},
+    params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
     {{ } }}
     {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }},
+    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
     {{ } }}
     ) => {
       const promise: CancellablePromise<{{= responseType }}> = {{= item.group }}.{{= item.name }}(
@@ -78,16 +78,16 @@ options: QueryConfig<{{= responseType }}, AppErrorResponse> = {},
 
 interface {{= upperCaseFirst(funcName) }}Props {
    {{ if (item.params) { }}
-   params: T.{{= getTypeNameForType(item.params.reference, "Input", { useDefaults: false }) }};
+   params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }};
    {{ } }}
    {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, "Input", { useDefaults: false }) }};
+    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }};
    {{ } }}
    {{ if (item.body) { }}
-   body: T.{{= getTypeNameForType(item.body.reference, "Input", { useDefaults: false }) }};
+   body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }};
    {{ } }}
    {{ if (item.files) { }}
-   files: T.{{= getTypeNameForType(item.files.reference, "Input", { useDefaults: false, fileTypeIO: "input" }) }};
+   files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input" }) }};
    {{ } }}
 }
 

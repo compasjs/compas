@@ -84,7 +84,6 @@ export function createWhereTypes(context) {
     type.where = {
       type: getTypeNameForType(context, whereType, "", {
         useDefaults: false,
-        forceRegisterType: true,
       }),
       fields: fieldsArray,
     };

@@ -25,6 +25,7 @@ import {
 import {
   generateTypeFile,
   getTypeNameForType,
+  getTypeSuffixForUseCase,
   setupMemoizedTypes,
 } from "./types.js";
 import { generateValidatorFile } from "./validator.js";
@@ -90,6 +91,8 @@ export async function generate(logger, options, structure) {
     undefined,
     context,
   );
+  templateContext.globals.typeSuffix = getTypeSuffixForUseCase(context.options);
+
   setupMemoizedTypes(context);
   exitOnErrorsOrReturn(context);
 

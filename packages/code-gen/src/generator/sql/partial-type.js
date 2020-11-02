@@ -78,11 +78,9 @@ export function createPartialTypes(context) {
     type.partial = {
       insertType: getTypeNameForType(context, insertPartial, "", {
         useDefaults: false,
-        forceRegisterType: true,
       }),
       updateType: getTypeNameForType(context, updatePartial, "", {
         useDefaults: false,
-        forceRegisterType: true,
       }),
       fields: fieldsArray,
     };
