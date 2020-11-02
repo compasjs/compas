@@ -39,7 +39,7 @@
 //                 Tomek Łaziuk <https://github.com/tlaziuk>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
-import { Event, Logger } from "@lbu/insight";
+import type * as insight from "@lbu/insight";
 import { StoreFile } from "@lbu/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
@@ -580,12 +580,7 @@ type DefaultContextExtends = {};
  * This interface can be augmented by users to add types to Koa's default context
  * @private
  */
-interface DefaultContext extends DefaultContextExtends {
-  /**
-   * Custom properties.
-   */
-  [key: string]: any;
-}
+interface DefaultContext extends DefaultContextExtends {}
 
 interface Middleware<StateT = DefaultState, CustomT = DefaultContext> {
   (context: Context<StateT, CustomT>, next: Next): any | void | Promise<void>;
@@ -700,8 +695,8 @@ interface BaseContext
    */
   onerror(err: Error): void;
 
-  log: Logger;
-  event: Event;
+  log: insight.Logger;
+  event: insight.Event;
   session: Session | null;
 }
 
