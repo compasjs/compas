@@ -1652,13 +1652,18 @@ export function anonymousValidator51(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    result[
-      anonymousValidator52(key, `${propertyPath}.$key[${key}]`, errors)
-    ] = anonymousValidator53(
-      value[key],
-      `${propertyPath}.$value[${key}]`,
+    const genericKey = anonymousValidator52(
+      key,
+      `${propertyPath}.$key[${key}]`,
       errors,
     );
+    if (genericKey !== undefined) {
+      result[genericKey] = anonymousValidator53(
+        value[key],
+        `${propertyPath}.$value[${key}]`,
+        errors,
+      );
+    }
   }
   return result;
 }
@@ -3669,13 +3674,18 @@ export function anonymousValidator101(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    result[
-      anonymousValidator52(key, `${propertyPath}.$key[${key}]`, errors)
-    ] = anonymousValidator102(
-      value[key],
-      `${propertyPath}.$value[${key}]`,
+    const genericKey = anonymousValidator52(
+      key,
+      `${propertyPath}.$key[${key}]`,
       errors,
     );
+    if (genericKey !== undefined) {
+      result[genericKey] = anonymousValidator102(
+        value[key],
+        `${propertyPath}.$value[${key}]`,
+        errors,
+      );
+    }
   }
   return result;
 }
@@ -3702,13 +3712,18 @@ export function anonymousValidator100(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    result[
-      anonymousValidator52(key, `${propertyPath}.$key[${key}]`, errors)
-    ] = anonymousValidator101(
-      value[key],
-      `${propertyPath}.$value[${key}]`,
+    const genericKey = anonymousValidator52(
+      key,
+      `${propertyPath}.$key[${key}]`,
       errors,
     );
+    if (genericKey !== undefined) {
+      result[genericKey] = anonymousValidator101(
+        value[key],
+        `${propertyPath}.$value[${key}]`,
+        errors,
+      );
+    }
   }
   return result;
 }
