@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { pathJoin } from "@lbu/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
@@ -53,6 +53,8 @@ export async function generate(logger, options, structure) {
     enabledGroups: options.enabledGroups,
   });
 
+  const isModule = shouldGenerateModules();
+
   /**
    * @type {CodeGenContext}
    */
@@ -61,7 +63,7 @@ export async function generate(logger, options, structure) {
     options,
     structure,
     extension: options.useTypescript ? ".ts" : ".js",
-    importExtension: ".js",
+    importExtension: isModule ? ".js" : "",
     outputFiles: [],
     rootExports: [],
     errors: [],
@@ -197,5 +199,22 @@ export function writeFiles(context) {
 
     mkdirSync(directory, { recursive: true });
     writeFileSync(fullPath, file.contents, "utf8");
+  }
+}
+
+/**
+ * Check if we should generate ES Modules based on the package.json
+ * @returns {boolean}
+ */
+export async function shouldGenerateModules() {
+  try {
+    const packageJsonSource = readFileSync(
+      pathJoin(process.cwd(), "package.json"),
+      "utf8",
+    );
+    const packageJson = JSON.parse(packageJsonSource);
+    return packageJson?.type === "module";
+  } catch {
+    return true;
   }
 }
