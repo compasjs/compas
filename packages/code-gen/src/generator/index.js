@@ -53,7 +53,7 @@ export async function generate(logger, options, structure) {
     enabledGroups: options.enabledGroups,
   });
 
-  const isModule = shouldGenerateModules();
+  const isModule = shouldGenerateModules(logger);
 
   /**
    * @type {CodeGenContext}
@@ -204,9 +204,10 @@ export function writeFiles(context) {
 
 /**
  * Check if we should generate ES Modules based on the package.json
+ * @param {Logger} logger
  * @returns {boolean}
  */
-export async function shouldGenerateModules() {
+export function shouldGenerateModules(logger) {
   try {
     const packageJsonSource = readFileSync(
       pathJoin(process.cwd(), "package.json"),
@@ -215,6 +216,9 @@ export async function shouldGenerateModules() {
     const packageJson = JSON.parse(packageJsonSource);
     return packageJson?.type === "module";
   } catch {
+    logger.error(
+      "Could not determine if we should not generate ES Modules. Defaulting to ES modules.\n  Make sure you run the generator in the root of your project.",
+    );
     return true;
   }
 }
