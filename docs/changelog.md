@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [v0.0.97](https://github.com/lightbasenl/lbu/releases/tag/v0.0.97)
+
+- code-gen: fix generating ES Modules when it's not needed
+
 ### [v0.0.96](https://github.com/lightbasenl/lbu/releases/tag/v0.0.96)
 
 - bench: add yup and fastest-validators to the benchmarks
