@@ -200,7 +200,7 @@ export function generateTypeDefinition(
       }
       break;
     case "date":
-      if (isJSON) {
+      if (isJSON || isBrowser) {
         result += "string";
       } else {
         result += "Date";
