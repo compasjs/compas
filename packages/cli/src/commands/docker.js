@@ -23,9 +23,9 @@ export async function dockerCommand(logger, command) {
   const subCommand = command.arguments[0];
   if (SUB_COMMANDS.indexOf(subCommand) === -1) {
     logger.info(
-      `Unknown command: 'lbu docker ${subCommand}'. Please use one of ${SUB_COMMANDS.join(
-        ", ",
-      )}`,
+      `Unknown command: 'lbu docker ${
+        subCommand ?? ""
+      }'. Please use one of ${SUB_COMMANDS.join(", ")}`,
     );
     return { exitCode: 1 };
   }

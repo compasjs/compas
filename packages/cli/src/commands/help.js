@@ -29,6 +29,7 @@ Usage:
 - bench             : lbu bench [--watch] [--verbose] [--node-arg]
 - coverage          : lbu coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
 - lint              : lbu lint [--watch] [--verbose] [--any-node-arg]
+- visualise         : lbu visualise [sql,router] {path/to/generated/index.js}
 
 
 Available script names:

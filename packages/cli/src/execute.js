@@ -8,6 +8,7 @@ import {
   proxyCommand,
   runCommand,
   testCommand,
+  visualiseCommand,
 } from "./commands/index.js";
 
 const utilCommands = {
@@ -15,6 +16,7 @@ const utilCommands = {
   init: initCommand,
   docker: dockerCommand,
   proxy: proxyCommand,
+  visualise: visualiseCommand,
 };
 
 const execCommands = {

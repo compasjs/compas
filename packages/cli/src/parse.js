@@ -4,7 +4,7 @@ import { existsSync } from "fs";
  * List of commands that don't need to parse node args, script args and tooling args
  * @type {string[]}
  */
-const utilCommands = ["init", "help", "docker", "proxy"];
+const utilCommands = ["init", "help", "docker", "proxy", "visualise"];
 
 /**
  * Object of commands that accept special input like node arguments, script name or
