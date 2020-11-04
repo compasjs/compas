@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [v0.0.96](https://github.com/lightbasenl/lbu/releases/tag/v0.0.96)
+
+- bench: add yup and fastest-validators to the benchmarks
+  ([#463](https://github.com/lightbasenl/lbu/pull/463))
+- code-gen: always use string for date in browser environments
+- code-gen: only use an extensions in imports in ES Modules
+  ([#464](https://github.com/lightbasenl/lbu/pull/464))
+
 ### [v0.0.95](https://github.com/lightbasenl/lbu/releases/tag/v0.0.95)
 
 - code-gen: some refactoring for more correct type output
