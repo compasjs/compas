@@ -111,6 +111,8 @@ export function getInsertPartial(context, type) {
 
       for (let i = 0; i < insert.length; ++i) {
         const it = insert[i];
+        checkFieldsInSet("${type.name}", "insert", ${type.name}FieldSet, it);
+
         q.append(query\`(
           $\{options?.includePrimaryKey ? query\`$\{it.${primaryKey}}, \` : undefined}
           $\{${type.partial.fields
@@ -181,6 +183,8 @@ export function getUpdatePartial(context, type) {
     export function ${type.name}UpdateSet(update) {
       const strings = [];
       const values = [];
+
+      checkFieldsInSet("${type.name}", "update", ${type.name}FieldSet, update);
 
       ${partials}
       // Remove the comma suffix

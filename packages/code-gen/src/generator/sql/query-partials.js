@@ -5,7 +5,7 @@ import {
   getQueryEnabledObjects,
   getSortedKeysForType,
 } from "./utils.js";
-import { getWherePartial } from "./where-type.js";
+import { getWhereFieldSet, getWherePartial } from "./where-type.js";
 
 /**
  * Generate all usefull query partials
@@ -15,6 +15,16 @@ import { getWherePartial } from "./where-type.js";
 export function generateQueryPartials(context) {
   const partials = [];
 
+  // Generate field sets and the check function
+  partials.push(knownFieldsCheckFunction());
+  for (const type of getQueryEnabledObjects(context)) {
+    partials.push(getWhereFieldSet(context, type));
+    if (!type.queryOptions.isView) {
+      partials.push(getFieldSet(context, type));
+    }
+  }
+
+  // Generate the query partials
   for (const type of getQueryEnabledObjects(context)) {
     partials.push(getFieldsPartial(context, type));
     partials.push(getWherePartial(context, type));
@@ -26,6 +36,7 @@ export function generateQueryPartials(context) {
   }
 
   const file = js`
+    import { AppError, isStaging } from "@lbu/stdlib";
     import { query, isQueryObject } from "@lbu/store";
 
     ${partials}
@@ -38,6 +49,48 @@ export function generateQueryPartials(context) {
   context.rootExports.push(
     `export * from "./query-partials${context.importExtension}";`,
   );
+}
+
+/**
+ * Static field in set check function
+ *
+ * @returns {string}
+ */
+export function knownFieldsCheckFunction() {
+  // We create a copy of the Set & convert to array before throwing, in case someone
+  // tries to mutate it. We can also safely skip 'undefined' values, since they will
+  // never be used in queries.
+  return js`
+    /**
+     *
+     * @param {string} entity
+     * @param {string} subType
+     * @param {Set} set
+     * @param {*} value
+     */
+    function checkFieldsInSet(entity, subType, set, value) {
+      if (isStaging()) {      
+        for (const key of Object.keys(value)) {
+          if (!set.has(key) && value[key] !== undefined) {
+            throw new AppError(\`query.$\{entity}.$\{subType}Fields\`, 500, {
+              unknownKey: key, knownKeys: [ ...set ],
+            });
+          }
+        }
+      }
+    }
+  `;
+}
+
+/**
+ *
+ * @param {CodeGenContext} context
+ * @param {CodeGenObjectType} type
+ */
+export function getFieldSet(context, type) {
+  return `const ${type.name}FieldSet = new Set(["${Object.keys(type.keys).join(
+    `", "`,
+  )}"]);`;
 }
 
 /**

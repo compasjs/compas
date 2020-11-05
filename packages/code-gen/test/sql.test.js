@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { isNil, uuid } from "@lbu/stdlib";
+import { AppError, isNil, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
@@ -152,6 +152,39 @@ test("code-gen/e2e/sql", async (t) => {
 
     const postCount = await client.queries.postCount(sql);
     t.equal(postCount, 0, "soft cascading deletes");
+  });
+
+  t.test("unknown key 'where'", async (t) => {
+    try {
+      await client.queries.userSelect(sql, { foo: "bar" });
+      t.fail("Should throw with AppError, based on checkFields function.");
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, `query.user.whereFields`);
+      t.equal(e.info.unknownKey, "foo");
+    }
+  });
+
+  t.test("unknown key 'update'", async (t) => {
+    try {
+      await client.queries.postUpdate(sql, { baz: true }, { foo: "bar" });
+      t.fail("Should throw with AppError, based on checkFields function.");
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, `query.post.updateFields`);
+      t.equal(e.info.unknownKey, "baz");
+    }
+  });
+
+  t.test("unknown key 'insert'", async (t) => {
+    try {
+      await client.queries.categoryInsert(sql, { quix: 6 });
+      t.fail("Should throw with AppError, based on checkFields function.");
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, `query.category.insertFields`);
+      t.equal(e.info.unknownKey, "quix");
+    }
   });
 
   t.test("destroy test db", async (t) => {

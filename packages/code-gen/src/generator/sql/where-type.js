@@ -95,6 +95,17 @@ export function createWhereTypes(context) {
  * @param {CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
+export function getWhereFieldSet(context, type) {
+  return `const ${type.name}WhereFieldSet = new Set(["${type.where.fields
+    .map((it) => it.name)
+    .join(`", "`)}"]);`;
+}
+
+/**
+ *
+ * @param {CodeGenContext} context
+ * @param {CodeGenObjectType} type
+ */
 export function getWherePartial(context, type) {
   const partials = [];
 
@@ -228,6 +239,8 @@ export function getWherePartial(context, type) {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }
+
+      checkFieldsInSet("${type.name}", "where", ${type.name}WhereFieldSet, where);
 
       const strings = [ "1 = 1" ];
       const values = [ undefined ];
