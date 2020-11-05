@@ -1,7 +1,7 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import { dirnameForModule, environment, pathJoin } from "@lbu/stdlib";
+import { AppError, dirnameForModule, environment, pathJoin } from "@lbu/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -56,7 +56,18 @@ export async function newMigrateContext(
   } catch (error) {
     // Help user by dropping the sql connection so the application will exit
     sql?.end();
-    throw error;
+    if (AppError.instanceOf(error)) {
+      throw error;
+    } else {
+      throw new AppError(
+        "store.migrateContext.error",
+        500,
+        {
+          message: "Could not create migration context",
+        },
+        error,
+      );
+    }
   }
 }
 
@@ -99,16 +110,41 @@ export function getMigrationsToBeApplied(mc) {
  * @param {MigrateContext} mc
  */
 export async function runMigrations(mc) {
+  let current;
   try {
     const migrationFiles = filterMigrationsToBeApplied(mc);
 
     for (const migration of migrationFiles) {
+      current = migration;
       await runMigration(mc.sql, migration);
     }
   } catch (error) {
     // Help user by dropping the sql connection so the application will exit
     mc?.sql?.end();
-    throw error;
+    if (AppError.instanceOf(error)) {
+      throw error;
+    } else {
+      throw new AppError(
+        "store.migrateRun.error",
+        500,
+        {
+          message: "Could not run migration",
+          namespace: current?.namespace,
+          number: current?.number,
+          name: current?.name,
+          postgres: {
+            severity_local: error?.severity_local,
+            severity: error?.severity,
+            code: error?.code,
+            position: error?.position,
+            file: error?.file,
+            line: error?.line,
+            routine: error?.routine,
+          },
+        },
+        error,
+      );
+    }
   }
 }
 
@@ -141,20 +177,14 @@ async function runMigration(sql, migration) {
   const useTransaction =
     migration.source.indexOf("-- disable auto transaction") === -1;
 
-  try {
-    if (useTransaction) {
-      await sql.begin(async (sql) => [
-        await sql.unsafe(migration.source),
-        await runInsert(sql, migration),
-      ]);
-    } else {
-      await sql.unsafe(migration.source);
-      await runInsert(sql, migration);
-    }
-  } catch (e) {
-    throw new Error(
-      `migration: error while applying ${migration.namespace}/${migration.number}-${migration.name}.\n${e.message}`,
-    );
+  if (useTransaction) {
+    await sql.begin(async (sql) => [
+      await sql.unsafe(migration.source),
+      await runInsert(sql, migration),
+    ]);
+  } else {
+    await sql.unsafe(migration.source);
+    await runInsert(sql, migration);
   }
 }
 
@@ -164,13 +194,8 @@ async function runMigration(sql, migration) {
  */
 async function runInsert(sql, migration) {
   return sql`
-    INSERT INTO migration ${sql(
-      migration,
-      "namespace",
-      "name",
-      "number",
-      "hash",
-    )}
+    INSERT INTO
+      migration ${sql(migration, "namespace", "name", "number", "hash")}
   `;
 }
 
@@ -182,15 +207,25 @@ async function syncWithSchemaState(mc) {
   let rows = [];
   try {
     rows = await mc.sql`
-      SELECT DISTINCT ON (namespace, number) namespace,
-                                             number,
-                                             hash
-      FROM migration
-      ORDER BY namespace, number, "createdAt" DESC
+      SELECT DISTINCT ON (namespace, number)
+        namespace,
+        number,
+        hash
+      FROM
+        migration
+      ORDER BY
+        namespace, number, "createdAt" DESC
     `;
   } catch (e) {
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
-      throw e;
+      throw new AppError(
+        "store.migrateSync.error",
+        500,
+        {
+          message: "Could not read existing migration table",
+        },
+        e,
+      );
     }
     return;
   }
@@ -288,7 +323,8 @@ async function readMigrationsDir(
         }
 
         // Use the package.json to find the package entrypoint
-        // Only supporting simple { exports: "file.js" }, { exports: { default: "file.js" } or { main: "file.js" }
+        // Only supporting simple { exports: "file.js" }, { exports: { default: "file.js"
+        // } or { main: "file.js" }
         const subPackageJson = JSON.parse(
           await readFile(pathJoin(subPath, "package.json"), "utf8"),
         );
