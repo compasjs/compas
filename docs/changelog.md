@@ -1,5 +1,23 @@
 # CHANGELOG
 
+### [v0.0.98](https://github.com/lightbasenl/lbu/releases/tag/v0.0.98)
+
+- build(deps-dev): bump react-query from 2.25.2 to 2.26.2
+  ([#465](https://github.com/lightbasenl/lbu/pull/465),
+  [#474](https://github.com/lightbasenl/lbu/pull/474))
+- cli: add visualise command, sql only
+  ([#472](https://github.com/lightbasenl/lbu/pull/472))
+- code-gen: add field checks to partials when on staging
+  ([#477](https://github.com/lightbasenl/lbu/pull/477))
+- code-gen: various small fixes
+  ([#475](https://github.com/lightbasenl/lbu/pull/475))
+- store: various migration error handling improvements
+  ([#476](https://github.com/lightbasenl/lbu/pull/476))
+
+No release notes, but migration file has changed, so a database reset is
+necessary. We also are stricter on input values in the query partials, so expect
+tests breaking.
+
 ### [v0.0.97](https://github.com/lightbasenl/lbu/releases/tag/v0.0.97)
 
 - code-gen: fix generating ES Modules when it's not needed
