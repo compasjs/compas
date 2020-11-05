@@ -9,4 +9,4 @@ CREATE TABLE migration
   "hash"      VARCHAR
 );
 
-CREATE UNIQUE INDEX migration_namespace_number_idx ON "migration" ("namespace", "number");
+CREATE INDEX migration_namespace_number_idx ON "migration" ("namespace", "number");
