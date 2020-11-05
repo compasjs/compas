@@ -130,4 +130,12 @@ export class AppError extends Error {
   [inspect.custom]() {
     return AppError.format(this);
   }
+
+  /**
+   * Use AppError#format when AppError is passed to JSON.stringify().
+   * This is used in the lbu insight logger in production mode.
+   */
+  toJSON() {
+    return AppError.format(this);
+  }
 }
