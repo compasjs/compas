@@ -79,6 +79,7 @@ export function getPrimaryKeyWithType(type) {
  * - Nullable fields
  * - createdAt, updatedAt, deletedAt
  * @param {CodeGenObjectType} type
+ * @returns {string[]}
  */
 export function getSortedKeysForType(type) {
   const typeOrder = {
