@@ -91,6 +91,17 @@ export function applyTestingValidatorsStructure(app) {
       recursive: T.reference("validator", "recursive").optional(),
     }),
   );
+
+  // Nested named objects
+  app.add(
+    T.object("namedLevelOne").keys({
+      levelOne: T.object("namedLevelTwo").keys({
+        two: T.object("namedLevelThree").keys({
+          foo: T.reference("validator", "namedLevelOne").optional(),
+        }),
+      }),
+    }),
+  );
 }
 
 export function applyTestingServerStructure(app) {
@@ -167,6 +178,7 @@ export function applyTestingSqlStructure(app) {
       .relations(T.oneToMany("posts", T.reference("sql", "postCategory"))),
 
     T.object("post")
+      .docs("Store a 'user' post.")
       .keys({
         title: T.string(),
         body: T.string(),

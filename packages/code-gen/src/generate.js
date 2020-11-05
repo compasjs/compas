@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "@lbu/stdlib";
+import { AppError, isNil, isPlainObject } from "@lbu/stdlib";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
 import { upperCaseFirst } from "./utils.js";
 
@@ -12,7 +12,10 @@ export function addGroupsToGeneratorInput(input, structure, groups) {
     input[group] = structure[group] || {};
   }
 
-  includeReferenceTypes(structure, input, input);
+  const error = includeReferenceTypes(structure, input, input);
+  if (error) {
+    throw error;
+  }
 }
 
 /**
@@ -89,19 +92,41 @@ function includeReferenceTypes(rootData, generatorInput, value) {
 
       const refValue = rootData[group][name];
       generatorInput[group][name] = refValue;
-      includeReferenceTypes(rootData, generatorInput, refValue);
+
+      const err = includeReferenceTypes(rootData, generatorInput, refValue);
+      if (err) {
+        if (value.uniqueName) {
+          err.info.foundAt = value.uniqueName;
+        }
+        return err;
+      }
     } else if (isNil(rootData[group]?.[name])) {
-      throw new Error(`Missing item at ${value.reference.uniqueName}`);
+      return new AppError("codeGen.app.followReferences", 500, {
+        message: `Could not resolve reference '${value.reference.uniqueName}'.`,
+        foundAt: "unknown",
+      });
     }
   }
 
   if (isPlainObject(value)) {
     for (const key of Object.keys(value)) {
-      includeReferenceTypes(rootData, generatorInput, value[key]);
+      const err = includeReferenceTypes(rootData, generatorInput, value[key]);
+      if (err) {
+        if (value.uniqueName) {
+          err.info.foundAt = value.uniqueName;
+        }
+        return err;
+      }
     }
   } else if (Array.isArray(value)) {
     for (let i = 0; i < value.length; ++i) {
-      includeReferenceTypes(rootData, generatorInput, value[i]);
+      const err = includeReferenceTypes(rootData, generatorInput, value[i]);
+      if (err) {
+        if (value.uniqueName) {
+          err.info.foundAt = value.uniqueName;
+        }
+        return err;
+      }
     }
   }
 }

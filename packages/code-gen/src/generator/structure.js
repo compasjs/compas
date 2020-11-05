@@ -16,7 +16,7 @@ export function generateStructureFile(context) {
     // Make it safe to inject in contents
     const string = JSON.stringify(context.structure[group])
       .replace(/\\/g, "\\\\")
-      .replace("'", "\\'");
+      .replace(/[^\\]'/g, "\\'");
 
     structureSource += js`
       export const ${group}StructureString = '${string}';
