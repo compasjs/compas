@@ -94,20 +94,31 @@ export async function visualiseCommand(logger, command) {
   writeFileSync(tmpPathDot, graph, "utf8");
 
   logger.info(`Dot file written to temporary directory. Spawning 'dot'.`);
-  const { exitCode } = await spawn(`dot`, [
-    "-Tsvg",
-    `-o`,
-    tmpOutputPath,
-    tmpPathDot,
-  ]);
+  try {
+    const { exitCode } = await spawn(`dot`, [
+      "-Tsvg",
+      `-o`,
+      tmpOutputPath,
+      tmpPathDot,
+    ]);
 
-  if (exitCode !== 0) {
+    if (exitCode !== 0) {
+      logger.error(
+        "'Dot' returned with an error. Please check the above output.",
+      );
+      return { exitCode };
+    }
+  } catch (e) {
     logger.error(
-      "'Dot' returned with an error. Please check the above output.",
+      `'Dot' could not be found. Please install 'graphviz' via your package manager and try again.`,
     );
+    return { exitCode: 1 };
   }
 
   logger.info(`Image of '${subCommand}' is available at ${tmpOutputPath}`);
+  return {
+    exitCode: 0,
+  };
 }
 
 /**
