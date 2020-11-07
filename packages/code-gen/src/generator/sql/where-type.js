@@ -127,7 +127,7 @@ export function getWherePartial(context, type) {
     if (field.variant === "includeNotNull") {
       str += `
         if ((where.${field.name} ?? false) === false) {
-          strings.push(\` AND $\{tableName}"${field.key}" IS NULL \`);
+          strings.push(\` AND ($\{tableName}"${field.key}" IS NULL OR $\{tableName}"${field.key}" > now()) \`);
           values.push(undefined);
         }
       `;

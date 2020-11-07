@@ -586,7 +586,9 @@ export function fileWhere(where = {}, tableName = "f.") {
     values.push(where.deletedAtLowerThan);
   }
   if ((where.deletedAtIncludeNotNull ?? false) === false) {
-    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
+    strings.push(
+      ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
+    );
     values.push(undefined);
   }
   strings.push("");
@@ -1064,7 +1066,9 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
     values.push(where.deletedAtLowerThan);
   }
   if ((where.deletedAtIncludeNotNull ?? false) === false) {
-    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
+    strings.push(
+      ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
+    );
     values.push(undefined);
   }
   strings.push("");
@@ -1546,7 +1550,9 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
     values.push(where.deletedAtLowerThan);
   }
   if ((where.deletedAtIncludeNotNull ?? false) === false) {
-    strings.push(` AND ${tableName}"deletedAt" IS NULL `);
+    strings.push(
+      ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
+    );
     values.push(undefined);
   }
   strings.push("");
