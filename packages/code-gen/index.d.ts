@@ -457,7 +457,12 @@ export class RouteCreator {
   response(builder: TypeBuilderLike): this;
 }
 
-export class AnyType extends TypeBuilder {}
+export class AnyType extends TypeBuilder {
+  raw(
+    value: string,
+    importValue?: { javaScript?: string; typeScript?: string },
+  ): this;
+}
 
 export class AnyOfType extends TypeBuilder {
   values(...items: TypeBuilderLike[]): this;

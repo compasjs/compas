@@ -121,6 +121,14 @@ function getTypes(T) {
       })
       .default("{ allowNull: false }")
       .loose(),
+    rawValue: T.string().optional(),
+    importRaw: T.object()
+      .keys({
+        javaScript: T.string().optional(),
+        typeScript: T.string().optional(),
+      })
+      .default("{}")
+      .loose(),
   });
 
   const anyOfType = T.object("anyOfType").keys({

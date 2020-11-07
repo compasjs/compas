@@ -3,6 +3,7 @@ import { AppError, isNil, uuid } from "@lbu/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
+  query,
 } from "@lbu/store";
 
 mainTestFn(import.meta);
@@ -129,6 +130,12 @@ test("code-gen/e2e/sql", async (t) => {
       createdAtIn: [new Date()],
       emailIn: ["Test@test.com"],
       idNotIn: [uuid()],
+    });
+  });
+
+  t.test("query filter by 'in' sub query", async () => {
+    await client.queries.userSelect(sql, {
+      emailIn: query`SELECT 'test@test.com' as foo`,
     });
   });
 

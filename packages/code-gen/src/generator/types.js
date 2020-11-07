@@ -31,6 +31,7 @@ export function setupMemoizedTypes(context) {
       suffix: "",
       fileTypeIO: "outputClient",
     },
+    rawImports: new Set(),
     typeMap: new Map(),
     calculatingTypes: new Set(),
   };
@@ -109,6 +110,7 @@ export function getTypeNameForType(context, type, suffix, settings) {
  */
 export function generateTypeFile(context) {
   const typeFile = js`
+    ${[...context.types.rawImports]}
     // An export soo all things work correctly with linters, ts, ...
     export const __generated__ = true;
 
@@ -171,17 +173,53 @@ export function generateTypeDefinition(
 
   switch (type.type) {
     case "any":
-      if (useTypescript) {
-        result += "any";
+      if (!isNil(type.rawValue)) {
+        result += type.rawValue;
+        if (useTypescript && type.importRaw.typeScript) {
+          context.types.rawImports.add(type.importRaw.typeScript);
+        } else if (!useTypescript && type.importRaw.javaScript) {
+          context.types.rawImports.add(type.importRaw.javaScript);
+        }
       } else {
-        result += "*";
+        if (useTypescript) {
+          result += "any";
+        } else {
+          result += "*";
+        }
       }
       break;
-    case "anyOf":
+    case "anyOf": {
+      let didHaveUndefined = result.startsWith("undefined");
+      let didHaveNull = result.startsWith("null");
+
       result += type.values
-        .map((it) => generateTypeDefinition(context, it, recurseSettings))
+        .map((it) => {
+          {
+            let partial = generateTypeDefinition(context, it, recurseSettings);
+
+            if (partial.startsWith("undefined")) {
+              if (didHaveUndefined) {
+                partial = partial.substring(10);
+              } else {
+                didHaveUndefined = true;
+              }
+            }
+
+            if (partial.startsWith("null")) {
+              if (didHaveNull) {
+                partial = partial.substring(10);
+              } else {
+                didHaveNull = true;
+              }
+            }
+
+            return partial;
+          }
+        })
         .join("|");
+
       break;
+    }
     case "array":
       result += "(";
       result += generateTypeDefinition(context, type.values, recurseSettings);

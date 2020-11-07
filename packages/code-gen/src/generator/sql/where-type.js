@@ -1,4 +1,6 @@
 import { isNil } from "@lbu/stdlib";
+import { AnyOfType } from "../../builders/AnyOfType.js";
+import { AnyType } from "../../builders/AnyType.js";
 import { ArrayType } from "../../builders/ArrayType.js";
 import { BooleanType } from "../../builders/BooleanType.js";
 import { ObjectType } from "../../builders/ObjectType.js";
@@ -67,8 +69,21 @@ export function createWhereTypes(context) {
           // Accept an array, instead of the plain type
           // Uses 'true' as a temporary placeholder to get the correct structure
           whereType.keys[name] = {
-            ...new ArrayType().values(true).optional().build(),
-            values: { ...fieldType, ...defaults, isOptional: false },
+            ...new AnyOfType().values(true).optional().build(),
+            values: [
+              {
+                ...new ArrayType().values(true).optional().build(),
+                values: { ...fieldType, ...defaults, isOptional: false },
+              },
+              {
+                ...new AnyType().optional().build(),
+                rawValue: "QueryPart",
+                importRaw: {
+                  javaScript: undefined,
+                  typeScript: `import { QueryPart } from "@lbu/store";`,
+                },
+              },
+            ],
           };
         } else if (
           ["isNull", "isNotNull", "includeNotNull"].indexOf(variant) !== -1
