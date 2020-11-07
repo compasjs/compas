@@ -24,7 +24,7 @@ const codeGenImportPath = pathJoin(
  * @returns {Promise<{ exitCode?: number }>}
  */
 export async function visualiseCommand(logger, command) {
-  const [subCommand, structureFile] = command.arguments;
+  const [subCommand, structureFile, ...args] = command.arguments;
 
   // All pre-checks
 
@@ -59,6 +59,12 @@ export async function visualiseCommand(logger, command) {
     return { exitCode: 1 };
   }
 
+  const { format, output } = parseFormatAndOutputArguments(
+    logger,
+    subCommand,
+    args,
+  );
+
   // Get the structure
 
   const { structure, trie } = await getStructure(
@@ -89,16 +95,15 @@ export async function visualiseCommand(logger, command) {
   }
 
   const tmpPathDot = `/tmp/${uuid()}.gv`;
-  const tmpOutputPath = `/tmp/${environment.APP_NAME.toLowerCase()}_${subCommand}.svg`;
 
   writeFileSync(tmpPathDot, graph, "utf8");
 
   logger.info(`Dot file written to temporary directory. Spawning 'dot'.`);
   try {
     const { exitCode } = await spawn(`dot`, [
-      "-Tsvg",
+      `-T${format}`,
       `-o`,
-      tmpOutputPath,
+      output,
       tmpPathDot,
     ]);
 
@@ -108,14 +113,14 @@ export async function visualiseCommand(logger, command) {
       );
       return { exitCode };
     }
-  } catch (e) {
+  } catch {
     logger.error(
       `'Dot' could not be found. Please install 'graphviz' via your package manager and try again.`,
     );
     return { exitCode: 1 };
   }
 
-  logger.info(`Image of '${subCommand}' is available at ${tmpOutputPath}`);
+  logger.info(`Graph of '${subCommand}' is available at ${output}`);
   return {
     exitCode: 0,
   };
@@ -197,4 +202,52 @@ async function structureFileExists(structureFile) {
   } catch {
     return false;
   }
+}
+
+/**
+ * Get format and output path from arguments or supply defaults
+ *
+ * @param {Logger} logger
+ * @param {string} subCommand
+ * @param {string[]} args
+ * @returns {{ format: string, outputL: string }}
+ */
+function parseFormatAndOutputArguments(logger, subCommand, args) {
+  const supportedFormats = ["png", "svg", "pdf", "webp"];
+  const result = {
+    format: "svg",
+    output: undefined,
+  };
+
+  const formatIdx = args.indexOf("--format");
+  if (formatIdx !== -1) {
+    const formatValue = args[formatIdx + 1];
+    if (supportedFormats.indexOf(formatValue) === -1) {
+      logger.error(
+        `Supplied format '${formatValue}' is invalid. Please use one of '${supportedFormats.join(
+          `', '`,
+        )}'.\nDefaulting to '${result.format}'.`,
+      );
+    } else {
+      result.format = formatValue;
+    }
+  }
+
+  result.output = `/tmp/${environment.APP_NAME.toLowerCase()}_${subCommand}.${
+    result.format
+  }`;
+
+  const outputIdx = args.indexOf("--output");
+  if (outputIdx !== -1) {
+    const outputValue = args[outputIdx + 1];
+    if (isNil(outputValue)) {
+      logger.error(
+        `No value given to '--output' option. Defaulting to '${result.output}'`,
+      );
+    } else {
+      result.output = outputValue;
+    }
+  }
+
+  return result;
 }
