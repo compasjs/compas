@@ -187,6 +187,21 @@ test("code-gen/e2e/sql", async (t) => {
     }
   });
 
+  t.test("deletedAt in the future", async (t) => {
+    const future = new Date();
+    future.setUTCDate(future.getUTCDate() + 1);
+    const [user] = await client.queries.userInsert(sql, {
+      nickName: "Foo",
+      email: "foo@example.com",
+      authKey: uuid(),
+      deletedAt: future,
+    });
+    const [selectUser] = await client.queries.userSelect(sql, { id: user.id });
+
+    t.ok(selectUser);
+    t.deepEqual(selectUser.deletedAt, future);
+  });
+
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     t.ok(true);
