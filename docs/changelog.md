@@ -1,5 +1,26 @@
 # CHANGELOG
 
+### [v0.0.99](https://github.com/lightbasenl/lbu/releases/tag/v0.0.99)
+
+- build(deps): bump eslint from 7.12.1 to 7.13.0
+  ([#485](https://github.com/lightbasenl/lbu/pull/485))
+- build(deps-dev): bump react from 16.14.0 to 17.0.1
+  ([#478](https://github.com/lightbasenl/lbu/pull/478))
+- cli: better error messages when graphviz is not installed
+  ([#480](https://github.com/lightbasenl/lbu/pull/480))
+- cli: visualise use format and output from cli arguments
+  ([#484](https://github.com/lightbasenl/lbu/pull/484))
+- code-gen: add raw value support to AnyType
+- code-gen: fix deletedAt check with Date in the future
+  ([#483](https://github.com/lightbasenl/lbu/pull/483))
+- code-gen: micro optimization in array validators
+
+The most notable feature is
+`T.any().raw("QueryPart", { typeScript: "import { QueryPart } from '@lbu/store';" })`
+support. This allows you to generate correct typings and integrate with native
+types provided by the platform or other packages. There should be no breaking
+changes.
+
 ### [v0.0.98](https://github.com/lightbasenl/lbu/releases/tag/v0.0.98)
 
 - build(deps-dev): bump react-query from 2.25.2 to 2.26.2
