@@ -455,9 +455,9 @@ function anonymousValidatorArray(context, imports, type) {
       }
     }}
 
-    const result = [];
+    const result = Array.from({ length: value.length });
     for (let i = 0; i < value.length; ++i) {
-      result.push(${validator}(value[i], propertyPath + "[" + i + "]", errors));
+      result[i] = ${validator}(value[i], propertyPath + "[" + i + "]", errors);
     }
 
     return result;

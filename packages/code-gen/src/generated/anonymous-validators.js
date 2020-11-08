@@ -1442,9 +1442,9 @@ export function anonymousValidator46(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(anonymousValidator7(value[i], `${propertyPath}[${i}]`, errors));
+    result[i] = anonymousValidator7(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -2147,11 +2147,9 @@ export function anonymousValidator56(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator57(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator57(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -2272,11 +2270,9 @@ export function anonymousValidator68(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator69(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator69(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -2373,11 +2369,9 @@ export function anonymousValidator72(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator73(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator73(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -2723,11 +2717,9 @@ export function anonymousValidator81(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -3039,11 +3031,9 @@ export function anonymousValidator89(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -3414,11 +3404,9 @@ export function anonymousValidator11(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator12(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator12(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -3564,11 +3552,9 @@ export function anonymousValidator98(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator99(value[i], `${propertyPath}[${i}]`, errors),
-    );
+    result[i] = anonymousValidator99(value[i], `${propertyPath}[${i}]`, errors);
   }
   return result;
 }
@@ -3904,10 +3890,12 @@ export function anonymousValidator105(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator106(value[i], `${propertyPath}[${i}]`, errors),
+    result[i] = anonymousValidator106(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
     );
   }
   return result;
@@ -4225,10 +4213,12 @@ export function anonymousValidator108(
     errors.push(buildError(parentType, "type", { propertyPath }));
     return undefined;
   }
-  const result = [];
+  const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result.push(
-      anonymousValidator109(value[i], `${propertyPath}[${i}]`, errors),
+    result[i] = anonymousValidator109(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
     );
   }
   return result;
