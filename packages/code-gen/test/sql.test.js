@@ -194,6 +194,17 @@ test("code-gen/e2e/sql", async (t) => {
     }
   });
 
+  t.test("Insert with primary key", async (t) => {
+    const id = uuid();
+    const [category] = await client.queries.categoryInsert(
+      sql,
+      { id, label: "TestPK" },
+      { withPrimaryKey: true },
+    );
+
+    t.equal(category.id, id);
+  });
+
   t.test("deletedAt in the future", async (t) => {
     const future = new Date();
     future.setUTCDate(future.getUTCDate() + 1);
