@@ -26,7 +26,7 @@ export async function proxyCommand(logger) {
 
   const localProxy = proxy.createProxyServer({});
 
-  localProxy.on("proxyRes", (proxyResponse) => {
+  localProxy.on("proxyRes", (proxyResponse, req) => {
     // Remove secure flag since localhost connection is not secure
     if (proxyResponse.headers["set-cookie"]) {
       const cookies = proxyResponse.headers["set-cookie"];
@@ -35,6 +35,12 @@ export async function proxyCommand(logger) {
         cookies[i] = cookies[i].replace(/; secure/gi, "");
       }
     }
+
+    logger.info({
+      method: req.method,
+      path: req.url,
+      status: proxyResponse.statusCode,
+    });
   });
 
   const allowMethods = "GET,PUT,POST,PATCH,DELETE,HEAD,OPTIONS";
@@ -51,11 +57,6 @@ export async function proxyCommand(logger) {
   });
 
   createServer((req, res) => {
-    logger.info({
-      method: req.method,
-      path: req.url,
-    });
-
     res.setHeader("Vary", "Origin");
     const origin = req.headers["origin"];
 
@@ -77,9 +78,9 @@ export async function proxyCommand(logger) {
       }
 
       // Proxy handles the other stuff
-      // Uses a custom error handler to make sure errors are logged and responses are 'ended'
+      // Uses a custom error handler to make sure errors are logged and responses are
+      // 'ended'
       localProxy.web(req, res, options, (error) => {
-        logger.error();
         logger.error({
           message: "Proxy error",
           error,
