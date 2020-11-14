@@ -26,7 +26,13 @@ export async function runTestsRecursively(testState) {
               () =>
                 reject(
                   new Error(
-                    `Exceeded test timeout of ${timeout / 1000} seconds.`,
+                    `Exceeded test timeout of ${
+                      timeout / 1000
+                    } seconds. You can increase the timeout by calling 't.timeout = ${
+                      timeout + 1000
+                    };' on the parent test function. Or by setting 'export const timeout = ${
+                      timeout + 1000
+                    };' in 'test/config.js'.`,
                   ),
                 ),
               timeout,
