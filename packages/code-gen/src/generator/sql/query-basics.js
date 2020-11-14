@@ -218,17 +218,19 @@ function insertQuery(context, imports, type) {
     /**
      * @param {Postgres} sql
      * @param {${type.partial.insertType}|(${type.partial.insertType}[])} insert
+     * @param {{ withPrimaryKey: boolean }=} options
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export function ${type.name}Insert(sql, insert) {
+    export function ${type.name}Insert(sql, insert, options = {}) {
       if (insert === undefined || insert.length === 0) {
         return []; 
       }
+      options.withPrimaryKey = options.withPrimaryKey ?? false;
 
       return query\`
         INSERT INTO "${type.name}" ($\{${type.name}Fields(
-        "", { excludePrimaryKey: true })})
-        VALUES $\{${type.name}InsertValues(insert)}
+        "", { excludePrimaryKey: !options.withPrimaryKey })})
+        VALUES $\{${type.name}InsertValues(insert, { includePrimaryKey: options.withPrimaryKey })}
         RETURNING $\{${type.name}Fields("")}
       \`.exec(sql);
     }

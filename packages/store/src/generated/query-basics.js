@@ -68,15 +68,21 @@ WHERE ${fileWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
+ * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreFile[]>}
  */
-export function fileInsert(sql, insert) {
+export function fileInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
+  options.withPrimaryKey = options.withPrimaryKey ?? false;
   return query`
-INSERT INTO "file" (${fileFields("", { excludePrimaryKey: true })})
-VALUES ${fileInsertValues(insert)}
+INSERT INTO "file" (${fileFields("", {
+    excludePrimaryKey: !options.withPrimaryKey,
+  })})
+VALUES ${fileInsertValues(insert, {
+    includePrimaryKey: options.withPrimaryKey,
+  })}
 RETURNING ${fileFields("")}
 `.exec(sql);
 }
@@ -154,15 +160,21 @@ WHERE ${fileGroupWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupInsertPartial|(StoreFileGroupInsertPartial[])} insert
+ * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreFileGroup[]>}
  */
-export function fileGroupInsert(sql, insert) {
+export function fileGroupInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
+  options.withPrimaryKey = options.withPrimaryKey ?? false;
   return query`
-INSERT INTO "fileGroup" (${fileGroupFields("", { excludePrimaryKey: true })})
-VALUES ${fileGroupInsertValues(insert)}
+INSERT INTO "fileGroup" (${fileGroupFields("", {
+    excludePrimaryKey: !options.withPrimaryKey,
+  })})
+VALUES ${fileGroupInsertValues(insert, {
+    includePrimaryKey: options.withPrimaryKey,
+  })}
 RETURNING ${fileGroupFields("")}
 `.exec(sql);
 }
@@ -279,15 +291,19 @@ WHERE ${jobWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
+ * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreJob[]>}
  */
-export function jobInsert(sql, insert) {
+export function jobInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
+  options.withPrimaryKey = options.withPrimaryKey ?? false;
   return query`
-INSERT INTO "job" (${jobFields("", { excludePrimaryKey: true })})
-VALUES ${jobInsertValues(insert)}
+INSERT INTO "job" (${jobFields("", {
+    excludePrimaryKey: !options.withPrimaryKey,
+  })})
+VALUES ${jobInsertValues(insert, { includePrimaryKey: options.withPrimaryKey })}
 RETURNING ${jobFields("")}
 `.exec(sql);
 }
@@ -345,15 +361,21 @@ WHERE ${sessionWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
+ * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreSession[]>}
  */
-export function sessionInsert(sql, insert) {
+export function sessionInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
+  options.withPrimaryKey = options.withPrimaryKey ?? false;
   return query`
-INSERT INTO "session" (${sessionFields("", { excludePrimaryKey: true })})
-VALUES ${sessionInsertValues(insert)}
+INSERT INTO "session" (${sessionFields("", {
+    excludePrimaryKey: !options.withPrimaryKey,
+  })})
+VALUES ${sessionInsertValues(insert, {
+    includePrimaryKey: options.withPrimaryKey,
+  })}
 RETURNING ${sessionFields("")}
 `.exec(sql);
 }
