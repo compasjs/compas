@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### [v0.0.100](https://github.com/lightbasenl/lbu/releases/tag/v0.0.100)
+
+- build(deps): bump @types/node from 14.14.6 to 14.14.7
+  ([#486](https://github.com/lightbasenl/lbu/pull/486))
+- cli: better timeout error message in the test runner
+- cli: log response status in proxy
+  ([#489](https://github.com/lightbasenl/lbu/pull/489))
+- code-gen: better error message when loading from remote.
+- code-gen: support setting primary key in generated insert queries
+  ([#491](https://github.com/lightbasenl/lbu/pull/491))
+- server: expose x-request-id in CORS headers
+  ([#490](https://github.com/lightbasenl/lbu/pull/490))
+
 ### [v0.0.99](https://github.com/lightbasenl/lbu/releases/tag/v0.0.99)
 
 - build(deps): bump eslint from 7.12.1 to 7.13.0
