@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### [vv0.0.101](https://github.com/lightbasenl/lbu/releases/tag/vv0.0.101)
+
+- store: support POSTGRES\_{HOST,USER,PASSWORD,DATABASE}
+
 ### [v0.0.100](https://github.com/lightbasenl/lbu/releases/tag/v0.0.100)
 
 - build(deps): bump @types/node from 14.14.6 to 14.14.7
