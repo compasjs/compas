@@ -3,6 +3,7 @@ import { environment, isNil, uuid } from "@lbu/stdlib";
 import {
   createDatabaseIfNotExists,
   newPostgresConnection,
+  postgresEnvCheck,
 } from "./postgres.js";
 
 /**
@@ -54,15 +55,16 @@ export async function cleanupPostgresDatabaseTemplate() {
  * @param verboseSql
  */
 export async function createTestPostgresDatabase(verboseSql = false) {
-  const name = environment.APP_NAME + uuid().substring(0, 7);
+  postgresEnvCheck();
+  const name = environment.POSTGRES_DATABASE + uuid().substring(0, 7);
 
   // Setup a template to work from
   if (isNil(testDatabase)) {
-    testDatabase = environment.APP_NAME + uuid().substring(0, 7);
+    testDatabase = environment.POSTGRES_DATABASE + uuid().substring(0, 7);
 
     const creationSql = await createDatabaseIfNotExists(
       undefined,
-      environment.APP_NAME,
+      environment.POSTGRES_DATABASE,
     );
 
     // Clean all connections
@@ -73,7 +75,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
       FROM
         pg_stat_activity
       WHERE
-        pg_stat_activity.datname = ${environment.APP_NAME}
+        pg_stat_activity.datname = ${environment.POSTGRES_DATABASE}
         AND pid <> pg_backend_pid()
     `;
 
@@ -82,7 +84,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     await createDatabaseIfNotExists(
       creationSql,
       testDatabase,
-      environment.APP_NAME,
+      environment.POSTGRES_DATABASE,
     );
 
     const sql = await newPostgresConnection({

@@ -46,6 +46,12 @@ generate these.
 **POSTGRES_URI**
 
 Connection string to Postgres. Should not include a database name.
+Alternatively, `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_HOST` can be
+used.
+
+**POSTGRES_DATABASE**
+
+Set the Postgres database to use. Defaults to `APP_NAME`.
 
 **MINIO_URI**
 
