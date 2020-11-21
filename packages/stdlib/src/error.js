@@ -91,34 +91,64 @@ export class AppError extends Error {
    *
    * @param {AppError|Error} e
    * @param {boolean} [skipStack=false]
-   * @returns {{ name: string, message: string, stack: string[] }|{ key: string, status:
-   *   number, info: *, stack: string[], originalError: object }}
+   * @returns {object}
    */
   static format(e, skipStack = false) {
-    const stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
-    // Remove first element as this is the Error name
-    stack.shift();
+    let stack;
+    if (skipStack) {
+      stack = [];
+    } else {
+      stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
+      // Remove first element as this is the Error name
+      stack.shift();
+    }
 
     if (AppError.instanceOf(e)) {
       return {
         key: e.key,
         status: e.status,
         info: e.info,
-        stack: skipStack ? [] : stack,
+        stack,
         originalError: e.originalError
-          ? !AppError.instanceOf(e.originalError)
-            ? typeof e.originalError.toJSON === "function"
-              ? e.originalError.toJSON()
-              : AppError.format(e.originalError, true)
-            : AppError.format(e.originalError, true)
+          ? AppError.format(e.originalError, true)
           : undefined,
       };
+    } else if (e.name === "PostgresError") {
+      return {
+        name: e.name,
+        message: e.message,
+        postgres: {
+          severity: e?.severity,
+          code: e?.code,
+          position: e?.position,
+          routine: e?.routine,
+        },
+        stack,
+      };
+    } else if (e.isAxiosError) {
+      return {
+        name: e.name,
+        message: e.message,
+        axios: {
+          requestPath: e.request?.path,
+          requestMethod: e.request?.method,
+          responseStatus: e.response?.status,
+          responseHeaders: e.response?.headers,
+          responseBody: e.response?.data,
+        },
+        stack,
+      };
+    } else if (typeof e.toJSON === "function") {
+      const result = e.toJSON();
+      result.stack = stack;
+      return result;
     }
 
+    // Any unhandled case
     return {
       name: e.name,
       message: e.message,
-      stack: skipStack ? [] : stack,
+      stack,
     };
   }
 

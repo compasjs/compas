@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { AppError, uuid } from "@lbu/stdlib";
+import { AppError, isPlainObject, uuid } from "@lbu/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
@@ -69,6 +69,21 @@ test("server/app", async (t) => {
       t.equal(response.data.key, response.data.message);
       t.equal(response.data.key, "error.server.internal");
       t.ok(Array.isArray(response.data.info._error.stack));
+    }
+  });
+
+  t.test("AppError format of Axios errors", async (t) => {
+    try {
+      await client.get("/wrap-500");
+      t.fail("wrap-500, so axios should have thrown");
+    } catch (e) {
+      const formatted = AppError.format(e);
+      t.equal(formatted.name, "Error");
+      t.ok(isPlainObject(formatted.axios.responseHeaders));
+      t.ok(isPlainObject(formatted.axios.responseBody));
+      t.equal(formatted.axios.responseStatus, 500);
+      t.equal(formatted.axios.requestPath, "/wrap-500");
+      t.equal(formatted.axios.requestMethod, "GET");
     }
   });
 

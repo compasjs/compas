@@ -109,28 +109,20 @@ function printErrorResults(result, state) {
     const indent = "  ";
     const exception = AppError.format(bench.caughtException);
 
-    const stack = exception.stack.map((it) => `${indent}  ${it.trim()}`);
-
     if (AppError.instanceOf(bench.caughtException)) {
       result.push(`${indent}AppError: ${exception.key} - ${exception.status}`);
-
-      // Pretty print info object
-      const infoObject = inspect(exception.info, {
-        depth: null,
-        colors: true,
-      }).split("\n");
-
-      for (const it of infoObject) {
-        result.push(`${indent}  ${it}`);
-      }
     } else {
-      result.push(
-        `${indent}${bench.caughtException.name} - ${bench.caughtException.message}`,
-      );
+      result.push(`${indent}${exception.name} - ${exception.message}`);
     }
 
-    for (const item of stack) {
-      result.push(item);
+    // Pretty print info object
+    const errorPretty = inspect(exception, {
+      depth: null,
+      colors: true,
+    }).split("\n");
+
+    for (const it of errorPretty) {
+      result.push(`${indent}  ${it}`);
     }
   }
 }
