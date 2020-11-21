@@ -21,7 +21,7 @@ export function applyTestingValidatorsStructure(app) {
   const T = new TypeCreator("validator");
 
   // AnyOf
-  app.add(T.anyOf("anyOf").values(T.bool(), T.number()));
+  app.add(T.anyOf("anyOf").values(T.bool(), T.number(), T.bool()));
 
   // Array
   app.add(
