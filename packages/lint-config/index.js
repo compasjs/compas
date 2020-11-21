@@ -29,7 +29,13 @@ module.exports = {
     "prefer-template": "error",
 
     // ESLint plugin import
+    "import/export": "off",
+    "import/first": "error",
+    "import/named": "off",
+    "import/namespace": "off",
+    "import/newline-after-import": ["error", { count: 1 }],
     "import/no-commonjs": "error",
+    "import/no-default-export": "error",
     "import/order": [
       "error",
       {
@@ -37,9 +43,6 @@ module.exports = {
         alphabetize: { order: "asc", caseInsensitive: true },
       },
     ],
-    "import/first": "error",
-    "import/newline-after-import": ["error", { count: 1 }],
-    "import/no-default-export": "error",
   },
   env: {
     node: true,

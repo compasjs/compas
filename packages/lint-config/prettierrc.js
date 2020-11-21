@@ -12,4 +12,12 @@ module.exports = {
   arrowParens: "always",
   proseWrap: "always",
   endOfLine: "lf",
+  overrides: [
+    {
+      files: "*.js",
+      options: {
+        parser: "meriyah",
+      },
+    },
+  ],
 };
