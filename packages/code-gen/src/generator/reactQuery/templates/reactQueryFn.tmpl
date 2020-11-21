@@ -1,6 +1,6 @@
 {{ /* Keep in sync with apiClientFn */ }}
 {{ const funcName = "use" + upperCaseFirst(item.uniqueName); }}
-{{ const responseType = `T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient" })}`; }}
+{{ const responseType = item.response ? `T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient" })}` : any; }}
 
 {{ if (item.method === "GET") { }}
 

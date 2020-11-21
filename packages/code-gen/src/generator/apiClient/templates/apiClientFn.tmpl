@@ -20,7 +20,9 @@
     {{ if (options.isBrowser) { }}
      * @param { { cancelToken?: CancelToken } } [options]
     {{ } }}
+    {{ if (item.response) { }}
      * @returns {Promise<{{= getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", }) }}>}
+    {{ } }}
 {{ } }}
  */
 {{= item.name }}: async function (
@@ -56,7 +58,7 @@ options: { cancelToken?: CancelToken } = {},
 {{ } else if (options.useBrowser) { }}
 options = {},
 {{ } }}
-{{= options.useTypescript ? `): Promise<T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", })}> {` : ") {" }}
+{{= options.useTypescript && item.response ? `): Promise<T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", })}> {` : ") {" }}
     {{ if (!options.isBrowser) { }}
     checkApiClient();
     {{ } }}
