@@ -43,10 +43,8 @@ export function errorHandler({ onAppError, onError, leakError }) {
       ctx.body = onAppError(ctx, err.key, err.info);
 
       const formatted = AppError.format(error);
-      log({
-        type: "api_error",
-        ...formatted,
-      });
+      formatted.type = "api_error";
+      log(formatted);
 
       if (!isNil(err.originalError) && leakError) {
         ctx.body.info = ctx.body.info || {};

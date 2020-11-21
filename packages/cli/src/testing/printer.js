@@ -71,40 +71,22 @@ function printFailedResults(state, result, indentCount) {
     if (state.caughtException) {
       const exception = AppError.format(state.caughtException);
 
-      const stack = exception.stack.map((it) => `${indent}  ${it.trim()}`);
-
       if (AppError.instanceOf(state.caughtException)) {
         result.push(
           `${indent}AppError: ${exception.key} - ${exception.status}`,
         );
-
-        // Pretty print info object
-        const infoObject = inspect(exception.info, {
-          depth: null,
-          colors: true,
-        }).split("\n");
-
-        for (const it of infoObject) {
-          result.push(`${indent}  ${it}`);
-        }
       } else {
         result.push(`${indent}${exception.name} - ${exception.message}`);
       }
 
-      for (const item of stack) {
-        result.push(item);
-      }
+      // Pretty print info object
+      const errorPretty = inspect(exception, {
+        depth: null,
+        colors: true,
+      }).split("\n");
 
-      if (exception.originalError) {
-        // Pretty print original error object
-        const originalError = inspect(exception.originalError, {
-          depth: null,
-          colors: true,
-        }).split("\n");
-
-        for (const it of originalError) {
-          result.push(`${indent}    ${it}`);
-        }
+      for (const it of errorPretty) {
+        result.push(`${indent}  ${it}`);
       }
     } else {
       for (const assertion of failedAssertions) {

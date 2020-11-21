@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@lbu/cli";
-import { isPlainObject } from "@lbu/stdlib";
+import { AppError, isPlainObject } from "@lbu/stdlib";
 import { explainAnalyzeQuery, query } from "./query.js";
 import {
   cleanupTestPostgresDatabase,
@@ -151,6 +151,19 @@ test("store/analyze-query", (t) => {
     );
     const result = await sql`SELECT * FROM "temp"`;
     t.equal(result.length, 0);
+  });
+
+  t.test("AppError format Postgres errors", async (t) => {
+    try {
+      await sql`SELECT 1 + 1 FROM "foo"`;
+      t.fail("should throw");
+    } catch (e) {
+      const formatted = AppError.format(e);
+
+      t.equal(formatted.name, "PostgresError");
+      t.equal(formatted.postgres.severity, "ERROR");
+      t.equal(formatted.postgres.routine, "parserOpenTable");
+    }
   });
 
   t.test("teardown", async () => {
