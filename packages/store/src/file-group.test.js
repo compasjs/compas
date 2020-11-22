@@ -7,7 +7,7 @@ import {
 } from "./file-group.js";
 import { createOrUpdateFile } from "./files.js";
 import { queries } from "./generated.js";
-import { traverseFile } from "./generated/query-traverser.js";
+import { queryFileGroup } from "./generated/query-builder.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -160,7 +160,12 @@ test("store/file-group", async (t) => {
   });
 
   t.test("get parents of all files", async (t) => {
-    const result = await traverseFile().getGroup().getParent({}).exec(sql);
+    const result = await queryFileGroup({
+      viaChildren: {
+        viaFile: {},
+      },
+    }).exec(sql);
+    // const result = await traverseFile().getGroup().getParent({}).exec(sql);
     t.equal(result.length, 2);
   });
 

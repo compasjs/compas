@@ -1,12 +1,3 @@
-/**
- * @name QueryPart
- * @typedef {object}
- * @property {string[]} strings
- * @property {*[]} values
- * @property {function(QueryPart): QueryPart} append
- * @property {function(Postgres): postgres.PendingQuery} exec
- */
-
 import { isNil } from "@lbu/stdlib";
 
 /**

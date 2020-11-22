@@ -7,10 +7,10 @@ export { structure, structureString, storeStructure } from "./structure.js";
 export * from "./query-partials.js";
 export { queries };
 export {
-  traverseFile,
-  traverseFileGroup,
-  traverseFileGroupView,
-  traverseJob,
-  traverseSession,
-} from "./query-traverser.js";
+  queryFile,
+  queryFileGroup,
+  queryFileGroupView,
+  queryJob,
+  querySession,
+} from "./query-builder.js";
 export * from "./types.js";

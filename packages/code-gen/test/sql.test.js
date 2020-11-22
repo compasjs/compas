@@ -120,12 +120,21 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("get posts for user", async (t) => {
     const result = await client
-      .traversePost({ id: post.id })
-      .getWriter()
-      .getPosts()
+      .queryPost({
+        viaWriter: {
+          viaPosts: {
+            where: {
+              id: post.id,
+            },
+          },
+        },
+      })
       .exec(sql);
 
     t.equal(result.length, 2);
+    t.equal(typeof result[0].createdAt, "object");
+    t.equal(typeof result[0].updatedAt, "object");
+    t.notEqual(result[0].deletedAt, null, "deletedAt is undefined");
   });
 
   t.test("update user nick name", async (t) => {
