@@ -1,6 +1,43 @@
 # CHANGELOG
 
-### [vv0.0.101](https://github.com/lightbasenl/lbu/releases/tag/vv0.0.101)
+### [v0.0.102](https://github.com/lightbasenl/lbu/releases/tag/v0.0.102)
+
+- build(deps): bump @types/node from 14.14.7 to 14.14.9
+  ([#493](https://github.com/lightbasenl/lbu/pull/493),
+  [#501](https://github.com/lightbasenl/lbu/pull/501))
+- build(deps): bump eslint from 7.13.0 to 7.14.0
+  ([#504](https://github.com/lightbasenl/lbu/pull/504))
+- build(deps): bump prettier from 2.1.2 to 2.2.0
+  ([#505](https://github.com/lightbasenl/lbu/pull/505))
+- build(deps-dev): bump fastest-validator from 1.8.0 to 1.9.0
+  ([#492](https://github.com/lightbasenl/lbu/pull/492))
+- build(deps-dev): bump react-query from 2.26.2 to 2.26.3
+  ([#503](https://github.com/lightbasenl/lbu/pull/503))
+- build(deps-dev): bump typescript from 4.0.5 to 4.1.2
+  ([#500](https://github.com/lightbasenl/lbu/pull/500))
+- build(deps-dev): bump yup from 0.29.3 to 0.30.0
+  ([#499](https://github.com/lightbasenl/lbu/pull/499))
+- ci: move to new set-env way
+  ([#496](https://github.com/lightbasenl/lbu/pull/496))
+- code-gen: deduplicate values passed to anyOf
+  ([#506](https://github.com/lightbasenl/lbu/pull/506))
+- code-gen: support not defined route responses
+  ([#507](https://github.com/lightbasenl/lbu/pull/507))
+- lint-config: use meriyah parser in prettier, disable eslint import rules
+- stdlib: improve error formatting
+  ([#502](https://github.com/lightbasenl/lbu/pull/502))
+
+Overall a few small breaking changes. We format errors with AppError#format in
+more places now, which should result in consistent behaviour. Running
+`yarn lbu lint` should be 10 - 20 % faster than before, however this also meant
+disabling some slow rules related to analyzing imports, namely
+`import/named, import/namespace & import/export`.
+
+Not sure what the timeline will be on the next release, because the
+[query-builder](https://github.com/lightbasenl/lbu/issues/388) is somewhat more
+complex than expected.
+
+### [v0.0.101](https://github.com/lightbasenl/lbu/releases/tag/v0.0.101)
 
 - store: support POSTGRES\_{HOST,USER,PASSWORD,DATABASE}
 
