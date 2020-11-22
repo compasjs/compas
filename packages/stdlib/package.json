@@ -1,6 +1,6 @@
 {
   "name": "@lbu/stdlib",
-  "version": "0.0.101",
+  "version": "0.0.102",
   "description": "All kinds of utility functions",
   "main": "./index.js",
   "exports": "./index.js",
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.101",
+    "@lbu/insight": "0.0.102",
     "@types/node": "14.14.9",
     "dotenv": "8.2.0",
     "lodash.merge": "4.6.2"
