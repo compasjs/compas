@@ -1,3 +1,4 @@
+import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { importCreator } from "../utils.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
@@ -25,6 +26,10 @@ export function generateBaseQueries(context) {
     imports.destructureImport(
       `${type.name}OrderBy`,
       `./query-partials${context.importExtension}`,
+    );
+    imports.destructureImport(
+      `transform${upperCaseFirst(type.name)}`,
+      `./query-builder${context.importExtension}`,
     );
 
     if (!type.queryOptions.isView) {
@@ -80,13 +85,17 @@ function selectQuery(context, imports, type) {
      * @param {${type.uniqueName}Where} [where]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export function ${type.name}Select(sql, where) {
-      return query\`
+    export async function ${type.name}Select(sql, where) {
+      const result = await query\`
         SELECT $\{${type.name}Fields()}
         FROM "${type.name}" ${type.shortName}
         WHERE $\{${type.name}Where(where)}
         ORDER BY $\{${type.name}OrderBy()}
         \`.exec(sql);
+
+      transform${upperCaseFirst(type.name)}(result);
+
+      return result;
     }
   `;
 }
@@ -221,18 +230,23 @@ function insertQuery(context, imports, type) {
      * @param {{ withPrimaryKey: boolean }=} options
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export function ${type.name}Insert(sql, insert, options = {}) {
+    export async function ${type.name}Insert(sql, insert, options = {}) {
       if (insert === undefined || insert.length === 0) {
-        return []; 
+        return [];
       }
       options.withPrimaryKey = options.withPrimaryKey ?? false;
 
-      return query\`
+      const result = await query\`
         INSERT INTO "${type.name}" ($\{${type.name}Fields(
         "", { excludePrimaryKey: !options.withPrimaryKey })})
-        VALUES $\{${type.name}InsertValues(insert, { includePrimaryKey: options.withPrimaryKey })}
+        VALUES $\{${type.name}InsertValues(
+        insert, { includePrimaryKey: options.withPrimaryKey })}
         RETURNING $\{${type.name}Fields("")}
       \`.exec(sql);
+
+      transform${upperCaseFirst(type.name)}(result);
+
+      return result;
     }
   `;
 }
@@ -250,13 +264,17 @@ function updateQuery(context, imports, type) {
      * @param {${type.where.type}} [where={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export function ${type.name}Update(sql, update, where = {}) {
-      return query\`
+    export async function ${type.name}Update(sql, update, where = {}) {
+      const result = await query\`
         UPDATE "${type.name}" ${type.shortName}
         SET $\{${type.name}UpdateSet(update)}
         WHERE $\{${type.name}Where(where)}
         RETURNING $\{${type.name}Fields()}
       \`.exec(sql);
+
+      transform${upperCaseFirst(type.name)}(result);
+
+      return result;
     }
   `;
 }

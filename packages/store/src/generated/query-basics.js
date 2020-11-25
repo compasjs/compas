@@ -3,6 +3,13 @@
 
 import { query } from "@lbu/store";
 import {
+  transformFile,
+  transformFileGroup,
+  transformFileGroupView,
+  transformJob,
+  transformSession,
+} from "./query-builder.js";
+import {
   fileFields,
   fileGroupFields,
   fileGroupInsertValues,
@@ -32,13 +39,15 @@ import {
  * @param {StoreFileWhere} [where]
  * @returns {Promise<StoreFile[]>}
  */
-export function fileSelect(sql, where) {
-  return query`
+export async function fileSelect(sql, where) {
+  const result = await query`
 SELECT ${fileFields()}
 FROM "file" f
 WHERE ${fileWhere(where)}
 ORDER BY ${fileOrderBy()}
 `.exec(sql);
+  transformFile(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -71,12 +80,12 @@ WHERE ${fileWhere(where)}
  * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreFile[]>}
  */
-export function fileInsert(sql, insert, options = {}) {
+export async function fileInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
-  return query`
+  const result = await query`
 INSERT INTO "file" (${fileFields("", {
     excludePrimaryKey: !options.withPrimaryKey,
   })})
@@ -85,6 +94,8 @@ VALUES ${fileInsertValues(insert, {
   })}
 RETURNING ${fileFields("")}
 `.exec(sql);
+  transformFile(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -92,13 +103,15 @@ RETURNING ${fileFields("")}
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<StoreFile[]>}
  */
-export function fileUpdate(sql, update, where = {}) {
-  return query`
+export async function fileUpdate(sql, update, where = {}) {
+  const result = await query`
 UPDATE "file" f
 SET ${fileUpdateSet(update)}
 WHERE ${fileWhere(where)}
 RETURNING ${fileFields()}
 `.exec(sql);
+  transformFile(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -124,13 +137,15 @@ RETURNING "id"
  * @param {StoreFileGroupWhere} [where]
  * @returns {Promise<StoreFileGroup[]>}
  */
-export function fileGroupSelect(sql, where) {
-  return query`
+export async function fileGroupSelect(sql, where) {
+  const result = await query`
 SELECT ${fileGroupFields()}
 FROM "fileGroup" fg
 WHERE ${fileGroupWhere(where)}
 ORDER BY ${fileGroupOrderBy()}
 `.exec(sql);
+  transformFileGroup(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -163,12 +178,12 @@ WHERE ${fileGroupWhere(where)}
  * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreFileGroup[]>}
  */
-export function fileGroupInsert(sql, insert, options = {}) {
+export async function fileGroupInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
-  return query`
+  const result = await query`
 INSERT INTO "fileGroup" (${fileGroupFields("", {
     excludePrimaryKey: !options.withPrimaryKey,
   })})
@@ -177,6 +192,8 @@ VALUES ${fileGroupInsertValues(insert, {
   })}
 RETURNING ${fileGroupFields("")}
 `.exec(sql);
+  transformFileGroup(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -184,13 +201,15 @@ RETURNING ${fileGroupFields("")}
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
-export function fileGroupUpdate(sql, update, where = {}) {
-  return query`
+export async function fileGroupUpdate(sql, update, where = {}) {
+  const result = await query`
 UPDATE "fileGroup" fg
 SET ${fileGroupUpdateSet(update)}
 WHERE ${fileGroupWhere(where)}
 RETURNING ${fileGroupFields()}
 `.exec(sql);
+  transformFileGroup(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -216,13 +235,15 @@ RETURNING "id"
  * @param {StoreFileGroupViewWhere} [where]
  * @returns {Promise<StoreFileGroupView[]>}
  */
-export function fileGroupViewSelect(sql, where) {
-  return query`
+export async function fileGroupViewSelect(sql, where) {
+  const result = await query`
 SELECT ${fileGroupViewFields()}
 FROM "fileGroupView" fgv
 WHERE ${fileGroupViewWhere(where)}
 ORDER BY ${fileGroupViewOrderBy()}
 `.exec(sql);
+  transformFileGroupView(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -256,13 +277,15 @@ RETURNING "id"
  * @param {StoreJobWhere} [where]
  * @returns {Promise<StoreJob[]>}
  */
-export function jobSelect(sql, where) {
-  return query`
+export async function jobSelect(sql, where) {
+  const result = await query`
 SELECT ${jobFields()}
 FROM "job" j
 WHERE ${jobWhere(where)}
 ORDER BY ${jobOrderBy()}
 `.exec(sql);
+  transformJob(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -294,18 +317,20 @@ WHERE ${jobWhere(where)}
  * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreJob[]>}
  */
-export function jobInsert(sql, insert, options = {}) {
+export async function jobInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
-  return query`
+  const result = await query`
 INSERT INTO "job" (${jobFields("", {
     excludePrimaryKey: !options.withPrimaryKey,
   })})
 VALUES ${jobInsertValues(insert, { includePrimaryKey: options.withPrimaryKey })}
 RETURNING ${jobFields("")}
 `.exec(sql);
+  transformJob(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -313,26 +338,30 @@ RETURNING ${jobFields("")}
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
  */
-export function jobUpdate(sql, update, where = {}) {
-  return query`
+export async function jobUpdate(sql, update, where = {}) {
+  const result = await query`
 UPDATE "job" j
 SET ${jobUpdateSet(update)}
 WHERE ${jobWhere(where)}
 RETURNING ${jobFields()}
 `.exec(sql);
+  transformJob(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
  * @param {StoreSessionWhere} [where]
  * @returns {Promise<StoreSession[]>}
  */
-export function sessionSelect(sql, where) {
-  return query`
+export async function sessionSelect(sql, where) {
+  const result = await query`
 SELECT ${sessionFields()}
 FROM "session" s
 WHERE ${sessionWhere(where)}
 ORDER BY ${sessionOrderBy()}
 `.exec(sql);
+  transformSession(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -364,12 +393,12 @@ WHERE ${sessionWhere(where)}
  * @param {{ withPrimaryKey: boolean }=} options
  * @returns {Promise<StoreSession[]>}
  */
-export function sessionInsert(sql, insert, options = {}) {
+export async function sessionInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
-  return query`
+  const result = await query`
 INSERT INTO "session" (${sessionFields("", {
     excludePrimaryKey: !options.withPrimaryKey,
   })})
@@ -378,6 +407,8 @@ VALUES ${sessionInsertValues(insert, {
   })}
 RETURNING ${sessionFields("")}
 `.exec(sql);
+  transformSession(result);
+  return result;
 }
 /**
  * @param {Postgres} sql
@@ -385,11 +416,13 @@ RETURNING ${sessionFields("")}
  * @param {StoreSessionWhere} [where={}]
  * @returns {Promise<StoreSession[]>}
  */
-export function sessionUpdate(sql, update, where = {}) {
-  return query`
+export async function sessionUpdate(sql, update, where = {}) {
+  const result = await query`
 UPDATE "session" s
 SET ${sessionUpdateSet(update)}
 WHERE ${sessionWhere(where)}
 RETURNING ${sessionFields()}
 `.exec(sql);
+  transformSession(result);
+  return result;
 }

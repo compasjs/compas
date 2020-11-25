@@ -246,9 +246,8 @@ function queryBuilderForType(context, imports, type) {
 
         builder.where.${ownKey}In = query\`
           SELECT DISTINCT ${otherSide.shortName}."${referencedKey}"
-           $\{internalQuery${upperCaseFirst(
-             otherSide.name,
-           )}(builder.via${upperCaseFirst(relationKey)})}
+           $\{internalQuery${upperCaseFirst(otherSide.name)}(
+          builder.via${upperCaseFirst(relationKey)})}
            $\{offsetLimitQb} 
         \`;
       }
@@ -338,13 +337,8 @@ function transformerForType(context, imports, type) {
         value.${key} = value.${key} ?? undefined;
       `);
     }
-    if (keyType.type === "date") {
-      partials.push(`
-        if (typeof value.${key} === "string") { 
-          value.${key} = new Date(value.${key});
-        }
-      `);
-    }
+
+    traverseTypeForTransformer(keyType, `value.${key}`, partials);
   }
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
@@ -377,13 +371,18 @@ function transformerForType(context, imports, type) {
 
   return js`
     /**
+     * NOTE: At the moment only intended for internal use by the generated queries!
+     *
      * Transform results from the query builder that adhere to the known structure
      * of '${type.name}' and its relations.
      *
+     *
      * @param {*[]} values
-     * @param {${type.uniqueName}QueryBuilder} builder
+     * @param {${type.uniqueName}QueryBuilder=} builder
      */
-    function transform${upperCaseFirst(type.name)}(values, builder) {
+    export function transform${upperCaseFirst(
+      type.name,
+    )}(values, builder = {}) {
       for (let i = 0; i < values.length; ++i) {
         let value = values[i];
         if (isPlainObject(value.result) && Object.keys(value).length === 1) {
@@ -395,4 +394,96 @@ function transformerForType(context, imports, type) {
       }
     }
   `;
+}
+
+/**
+ * @param {CodeGenType} type
+ * @param {string} path
+ * @param {string[]} partials
+ */
+function traverseTypeForTransformer(type, path, partials, depth = 0) {
+  switch (type.type) {
+    case "anyOf": {
+      const partialLength = partials.length;
+      for (const subType of type.values) {
+        traverseTypeForTransformer(subType, path, partials, depth + 1);
+      }
+
+      // Fixme: create an error or something out of this
+      if (partialLength !== partials.length) {
+        partials.push(
+          `// Note: AnyOf types most likely won't work correctly, especially if it is a anyOf between a Date and string type.`,
+        );
+      }
+      break;
+    }
+    case "array": {
+      const subPartials = [];
+      traverseTypeForTransformer(
+        type.values,
+        `${path}[idx${depth}]`,
+        subPartials,
+        depth + 1,
+      );
+      if (subPartials.length > 0) {
+        partials.push(js`
+          if (Array.isArray(${path})) {
+            for (let idx${depth} = 0; idx${depth} < ${path}.length; idx${depth}++) {
+              ${subPartials}
+            }
+          }
+        `);
+      }
+      break;
+    }
+    case "date":
+      partials.push(`
+        if (typeof ${path} === "string") { 
+          ${path} = new Date(${path});
+        }
+      `);
+      break;
+    case "generic": {
+      const subPartials = [];
+      traverseTypeForTransformer(
+        type.values,
+        `${path}.[key${depth}]`,
+        subPartials,
+        depth + 1,
+      );
+      if (subPartials.length > 0) {
+        partials.push(js`
+          if (isPlainObject(${path})) {
+            for (const key${depth} of Object.keys(${path})) {
+              ${subPartials}
+            }
+          }
+        `);
+      }
+      break;
+    }
+    case "object": {
+      const subPartials = [];
+      for (const key of Object.keys(type.keys)) {
+        traverseTypeForTransformer(
+          type.keys[key],
+          `${path}.${key}`,
+          subPartials,
+          depth + 1,
+        );
+      }
+      if (subPartials.length > 0) {
+        partials.push(js`
+          if (isPlainObject(${path})) {
+            ${subPartials}
+          }
+        `);
+      }
+
+      break;
+    }
+    case "reference":
+      traverseTypeForTransformer(type.reference, path, partials, depth + 1);
+      break;
+  }
 }
