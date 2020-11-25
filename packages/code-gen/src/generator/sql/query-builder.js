@@ -19,6 +19,7 @@ export function generateQueryBuilders(context) {
   const imports = importCreator();
   imports.destructureImport("query", `@lbu/store`);
   imports.destructureImport("isPlainObject", "@lbu/stdlib");
+  imports.destructureImport("isNil", "@lbu/stdlib");
 
   for (const type of getQueryEnabledObjects(context)) {
     imports.destructureImport(
@@ -190,14 +191,13 @@ function queryBuilderForType(context, imports, type) {
     const getLimitOffset = (isVia = false) => {
       const key = isVia ? `via${upperCaseFirst(relationKey)}` : relationKey;
       return `
-          let offsetLimitQb = builder.${key}.offset ? query\`OFFSET $\{builder.${key}.offset}\`
+          let offsetLimitQb = !isNil(builder.${key}.offset) ? query\`OFFSET $\{builder.${key}.offset}\`
                                              : query\`\`;
-          if (builder.${key}.limit) {
-            offsetLimitQb.append(query\`FETCH FIRST $\{builder.${key}.limit} ROWS ONLY\`)
+          if (!isNil(builder.${key}.limit)) {
+            offsetLimitQb.append(query\`FETCH NEXT $\{builder.${key}.limit} ROWS ONLY\`)
           }
   `;
     };
-    // TODO: Where only joins
 
     const nestedPart = js`
       if (builder.${relationKey}) {
@@ -312,6 +312,13 @@ function queryBuilderForType(context, imports, type) {
          $\{internalQuery${upperCaseFirst(type.name)}(builder)}
          ORDER BY $\{${type.name}OrderBy()}
         \`;
+      
+      if (!isNil(builder.offset)) {
+        qb.append(query\`OFFSET $\{builder.offset}\`);
+      }
+      if (!isNil(builder.limit)) {
+        qb.append(query\`FETCH NEXT $\{builder.limit} ROWS ONLY\`);
+      }
 
       return {
         execRaw: (sql) => qb.exec(sql), exec: (sql) => {
