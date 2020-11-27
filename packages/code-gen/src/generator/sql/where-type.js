@@ -78,9 +78,14 @@ export function createWhereTypes(context) {
               {
                 ...new AnyType().optional().build(),
                 rawValue: "QueryPart",
-                importRaw: {
+                rawValueImport: {
                   javaScript: undefined,
                   typeScript: `import { QueryPart } from "@lbu/store";`,
+                },
+                rawValidator: "isQueryObject",
+                rawValidatorImport: {
+                  javaScript: `import { isQueryObject } from "@lbu/store";`,
+                  typeScript: `import { isQueryObject } from "@lbu/store";`,
                 },
               },
             ],

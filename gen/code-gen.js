@@ -122,7 +122,15 @@ function getTypes(T) {
       .default("{ allowNull: false }")
       .loose(),
     rawValue: T.string().optional(),
-    importRaw: T.object()
+    rawValueImport: T.object()
+      .keys({
+        javaScript: T.string().optional(),
+        typeScript: T.string().optional(),
+      })
+      .default("{}")
+      .loose(),
+    rawValidator: T.string().optional(),
+    rawValidatorImport: T.object()
       .keys({
         javaScript: T.string().optional(),
         typeScript: T.string().optional(),

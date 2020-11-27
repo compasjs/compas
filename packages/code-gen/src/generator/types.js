@@ -175,10 +175,10 @@ export function generateTypeDefinition(
     case "any":
       if (!isNil(type.rawValue)) {
         result += type.rawValue;
-        if (useTypescript && type.importRaw.typeScript) {
-          context.types.rawImports.add(type.importRaw.typeScript);
-        } else if (!useTypescript && type.importRaw.javaScript) {
-          context.types.rawImports.add(type.importRaw.javaScript);
+        if (useTypescript && type.rawValueImport.typeScript) {
+          context.types.rawImports.add(type.rawValueImport.typeScript);
+        } else if (!useTypescript && type.rawValueImport.javaScript) {
+          context.types.rawImports.add(type.rawValueImport.javaScript);
         }
       } else {
         if (useTypescript) {
@@ -194,27 +194,25 @@ export function generateTypeDefinition(
 
       result += type.values
         .map((it) => {
-          {
-            let partial = generateTypeDefinition(context, it, recurseSettings);
+          let partial = generateTypeDefinition(context, it, recurseSettings);
 
-            if (partial.startsWith("undefined")) {
-              if (didHaveUndefined) {
-                partial = partial.substring(10);
-              } else {
-                didHaveUndefined = true;
-              }
+          if (partial.startsWith("undefined")) {
+            if (didHaveUndefined) {
+              partial = partial.substring(10);
+            } else {
+              didHaveUndefined = true;
             }
-
-            if (partial.startsWith("null")) {
-              if (didHaveNull) {
-                partial = partial.substring(10);
-              } else {
-                didHaveNull = true;
-              }
-            }
-
-            return partial;
           }
+
+          if (partial.startsWith("null")) {
+            if (didHaveNull) {
+              partial = partial.substring(10);
+            } else {
+              didHaveNull = true;
+            }
+          }
+
+          return partial;
         })
         .join("|");
 

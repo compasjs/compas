@@ -13,7 +13,7 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenAnyType
- * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, "rawValue"?: string, "importRaw": {"javaScript"?: string, "typeScript"?: string, }, }}
+ * @typedef {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, "rawValue"?: string, "rawValueImport": {"javaScript"?: string, "typeScript"?: string, }, "rawValidator"?: string, "rawValidatorImport": {"javaScript"?: string, "typeScript"?: string, }, }}
  */
 /**
  * @name CodeGenArrayType

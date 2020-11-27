@@ -425,7 +425,7 @@ export function anonymousValidator18(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, "rawValue"?: string, "importRaw": {"javaScript"?: string, "typeScript"?: string, }, }|undefined}
+ * @returns {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, "rawValue"?: string, "rawValueImport": {"javaScript"?: string, "typeScript"?: string, }, "rawValidator"?: string, "rawValidatorImport": {"javaScript"?: string, "typeScript"?: string, }, }|undefined}
  */
 export function anonymousValidator15(
   value,
@@ -492,9 +492,19 @@ export function anonymousValidator15(
     `${propertyPath}.rawValue`,
     errors,
   );
-  result["importRaw"] = anonymousValidator18(
-    value["importRaw"],
-    `${propertyPath}.importRaw`,
+  result["rawValueImport"] = anonymousValidator18(
+    value["rawValueImport"],
+    `${propertyPath}.rawValueImport`,
+    errors,
+  );
+  result["rawValidator"] = anonymousValidator8(
+    value["rawValidator"],
+    `${propertyPath}.rawValidator`,
+    errors,
+  );
+  result["rawValidatorImport"] = anonymousValidator18(
+    value["rawValidatorImport"],
+    `${propertyPath}.rawValidatorImport`,
     errors,
   );
   return result;
