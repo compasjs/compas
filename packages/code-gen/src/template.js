@@ -18,7 +18,7 @@ export const templateContext = {
     upperCaseFirst,
     lowerCaseFirst,
     camelToSnakeCase,
-    inspect: (arg) => inspect(arg, { sorted: true, colors: false, depth: 15 }),
+    inspect: (arg) => inspect(arg, { sorted: true, colors: false, depth: 18 }),
     quote: (x) => `"${x}"`,
   },
   context: {},

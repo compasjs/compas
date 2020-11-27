@@ -10,10 +10,21 @@ import { importCreator } from "./utils.js";
  * @typedef {object}
  * @property {CodeGenContext} context
  * @property {boolean} collectErrors
- * @property {number} anonymousFunctionIdx
  * @property {Map<string, number>} anonymousFunctionMapping
  * @property {string[]} anonymousFunctions
  */
+
+/**
+ * @name GeneratorBuildError
+ * Calls generated buildError function to construct an error
+ *
+ * @typedef {function(key: string, info: string): string}
+ */
+
+/**
+ * @type {GeneratorBuildError}
+ */
+let buildError = undefined;
 
 /**
  * @param {CodeGenContext} context
@@ -25,10 +36,20 @@ export function generateValidatorFile(context) {
   const subContext = {
     context,
     collectErrors: !context.options.isNodeServer,
-    anonymousFunctionIdx: 0,
     anonymousFunctionMapping: new Map(),
     anonymousFunctions: [],
   };
+
+  if (subContext.collectErrors) {
+    buildError = (key, info) => js`
+      errors.push(buildError(parentType, "${key}", ${info}));
+      return undefined;
+    `;
+  } else {
+    buildError = (key, info) => js`
+      throw buildError(parentType, "${key}", ${info});
+    `;
+  }
 
   addUtilitiesToAnonymousFunctions(subContext);
 
@@ -87,7 +108,7 @@ function withTypescript(context, output) {
  * @param {string} group
  * @returns {{ exportNames: string[], sources: string[] }}
  */
-export function generateValidatorsForGroup(context, imports, group) {
+function generateValidatorsForGroup(context, imports, group) {
   const data = context.context.structure[group];
 
   const mapping = {};
@@ -167,11 +188,7 @@ export function generateValidatorsForGroup(context, imports, group) {
             `;
           }
           return js`
-            if (errors.length > 0) {
-              throw errors[0];
-            } else {
-              return data;
-            }
+            return data;
           `;
         }}
       }
@@ -264,13 +281,13 @@ function addUtilitiesToAnonymousFunctions(context) {
  * @param {CodeGenType} type
  * @param {boolean} [isTypeRoot=false]
  */
-export function createOrUseAnonymousFunction(
+function createOrUseAnonymousFunction(
   context,
   imports,
   type,
   isTypeRoot = false,
 ) {
-  const string = inspect(type, { colors: false, depth: 15 });
+  const string = inspect(type, { colors: false, depth: 18 });
 
   // Function for this type already exists
   if (context.anonymousFunctionMapping.has(string)) {
@@ -286,10 +303,17 @@ export function createOrUseAnonymousFunction(
     return name;
   }
 
-  const idx = context.anonymousFunctionIdx++;
-  const name = `anonymousValidator${idx}`;
+  let hash = 0;
+  let i = 0;
+  const len = string.length;
+  while (i < len) {
+    hash = ((hash << 5) - hash + string.charCodeAt(i++)) << 0;
+  }
+  hash = Math.abs(hash);
 
-  context.anonymousFunctionMapping.set(string, idx);
+  const name = `anonymousValidator${hash}`;
+
+  context.anonymousFunctionMapping.set(string, hash);
   if (isTypeRoot) {
     imports.destructureImport(
       name,
@@ -307,7 +331,7 @@ export function createOrUseAnonymousFunction(
        useDefaults: true,
      })}|undefined}
      */
-    export function anonymousValidator${idx}(value${withTypescript(
+    export function anonymousValidator${hash}(value${withTypescript(
     context,
     ": any",
   )},
@@ -416,21 +440,37 @@ function anonymousValidatorAny(context, imports, type) {
  */
 function anonymousValidatorAnyOf(context, imports, type) {
   return js`
-    let errorCount = 0;
     const subErrors${withTypescript(context, ": any[]")} = [];
+
+    ${
+      context.collectErrors
+        ? `
+    let errorCount = 0;
     let result = undefined;
+    `
+        : ""
+    }
 
     ${type.values.map((it) => {
       const validator = createOrUseAnonymousFunction(context, imports, it);
 
       // Only returns the first error for anyOf types
+      if (context.collectErrors) {
+        return js`
+          result = ${validator}(value, propertyPath, subErrors);
+          if (subErrors.length === errorCount) {
+            return result;
+          }
+          subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+          errorCount = subErrors.length;
+        `;
+      }
       return js`
-        result = ${validator}(value, propertyPath, subErrors);
-        if (subErrors.length === errorCount) {
-          return result;
+        try {
+          return ${validator}(value, propertyPath, subErrors);
+        } catch (e) {
+          subErrors.push(e);
         }
-        subErrors.splice(errorCount + 1, subErrors.length - errorCount);
-        errorCount = subErrors.length;
       `;
     })}
 
@@ -869,12 +909,5 @@ function anonymousValidatorUuid(context, imports) {
 
   return js`
     return ${validator}(value, propertyPath, errors, parentType);
-  `;
-}
-
-function buildError(key, info) {
-  return js`
-    errors.push(buildError(parentType, "${key}", ${info}));
-    return undefined;
   `;
 }
