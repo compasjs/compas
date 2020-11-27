@@ -6,6 +6,7 @@ import { isNil } from "@lbu/stdlib";
  *   destructureImport: (function(value: string, pkg: string): undefined),
  *   starImport: (function(alias: string, pkg: string): undefined),
  *   commonjsImport: (function(alias: string, pkg: string): undefined),
+ *   rawImport: (function(value: string): undefined),
  * }} ImportCreator
  */
 
@@ -36,6 +37,7 @@ export function importCreator() {
     destructureImport: {},
     starImport: new Map(),
     commonjsImport: new Map(),
+    rawImports: new Set(),
   };
 
   return {
@@ -53,6 +55,10 @@ export function importCreator() {
 
     commonjsImport: (alias, pkg) => {
       state.commonjsImport.set(pkg, alias);
+    },
+
+    rawImport: (value) => {
+      state.rawImports.add(value);
     },
 
     print: () => {
@@ -76,7 +82,7 @@ export function importCreator() {
         );
       }
 
-      return result.join("\n");
+      return result.concat(...state.rawImports).join("\n");
     },
   };
 }

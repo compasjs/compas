@@ -136,10 +136,10 @@ export function generateValidatorsForGroup(context, imports, group) {
          }`;
        }}
        */
-      export function validate${data[name].uniqueName}(
-        value${withTypescript(context, ": any")},
-        propertyPath = "$"
-      )
+      export function validate${data[name].uniqueName}(value${withTypescript(
+      context,
+      ": any",
+    )}, propertyPath = "$")
 
       ${withTypescript(
         context,
@@ -160,10 +160,9 @@ export function generateValidatorsForGroup(context, imports, group) {
               if (errors.length > 0) {
                 return { data: undefined, errors };
               } else {
-                return { data${withTypescript(
-                  context,
-                  ": data!",
-                )}, errors: undefined };
+                return {
+                  data${withTypescript(context, ": data!")}, errors: undefined
+                };
               }
             `;
           }
@@ -353,8 +352,7 @@ export function createOrUseAnonymousFunction(
 function anonymousValidatorForType(context, imports, type) {
   switch (type.type) {
     case "any":
-      // TODO: Implement custom imports?
-      return `return value;`;
+      return anonymousValidatorAny(context, imports, type);
     case "anyOf":
       return anonymousValidatorAnyOf(context, imports, type);
     case "array":
@@ -379,6 +377,36 @@ function anonymousValidatorForType(context, imports, type) {
     case "uuid":
       return anonymousValidatorUuid(context, imports);
   }
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenAnyType} type
+ */
+function anonymousValidatorAny(context, imports, type) {
+  if (isNil(type.rawValidator)) {
+    return `return value;`;
+  }
+
+  if (
+    !isNil(type.rawValidatorImport.typeScript) &&
+    context.context.options.useTypescript
+  ) {
+    imports.rawImport(type.rawValidatorImport.typeScript);
+  } else if (
+    !isNil(type.rawValidatorImport.javaScript) &&
+    !context.context.options.useTypescript
+  ) {
+    imports.rawImport(type.rawValidatorImport.javaScript);
+  }
+
+  return js`
+    if (!${type.rawValidator}(value)) {
+      ${buildError("custom", "{ propertyPath }")}
+    }
+    return value;
+  `;
 }
 
 /**
@@ -561,9 +589,11 @@ function anonymousValidatorGeneric(context, imports, type) {
 
     const result = Object.create(null);
     for (const key of Object.keys(value)) {
-      const genericKey = ${keyValidator}(key, propertyPath + ".$key[" + key + "]", errors);
-      if (genericKey !== undefined) { 
-       result[genericKey] = ${valueValidator}(value[key], propertyPath + ".$value[" + key + "]", errors);
+      const genericKey = ${keyValidator}(
+        key, propertyPath + ".$key[" + key + "]", errors);
+      if (genericKey !== undefined) {
+        result[genericKey] =
+          ${valueValidator}(value[key], propertyPath + ".$value[" + key + "]", errors);
       }
     }
 

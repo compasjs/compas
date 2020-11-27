@@ -35,7 +35,10 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -48,7 +51,10 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -61,7 +67,10 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -74,7 +83,10 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -87,7 +99,10 @@ export function validateCodeGenContext(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -100,7 +115,10 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -113,7 +131,10 @@ export function validateCodeGenFile(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -126,7 +147,10 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -139,7 +163,10 @@ export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -152,7 +179,10 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -165,7 +195,10 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -178,7 +211,10 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -191,7 +227,10 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -204,7 +243,10 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -217,7 +259,10 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -230,7 +275,10 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -243,7 +291,10 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -256,7 +307,10 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -269,7 +323,10 @@ export function validateCodeGenType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -282,7 +339,10 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }
 /**
  * @param {undefined|*} value
@@ -295,5 +355,8 @@ export function validateCodeGenUuidType(value, propertyPath = "$") {
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
-  return { data, errors: undefined };
+  return {
+    data,
+    errors: undefined,
+  };
 }

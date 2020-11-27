@@ -458,7 +458,19 @@ export class RouteCreator {
 }
 
 export class AnyType extends TypeBuilder {
+  /**
+   * Add raw type string instead of any.
+   */
   raw(
+    value: string,
+    importValue?: { javaScript?: string; typeScript?: string },
+  ): this;
+
+  /**
+   * Add raw validator instead of only undefined check.
+   * This is validator is called with a value and should return a boolean.
+   */
+  validator(
     value: string,
     importValue?: { javaScript?: string; typeScript?: string },
   ): this;
