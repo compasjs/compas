@@ -85,6 +85,20 @@ test("code-gen/e2e/sql", async (t) => {
       },
     ]);
 
+    // where.$or testing
+    const postCount = await client.queries.postCount(sql, {
+      $or: [
+        {
+          id: dbPost1.id,
+        },
+        {
+          id: dbPost2.id,
+        },
+      ],
+    });
+
+    t.equal(postCount, 2);
+
     post = dbPost1;
   });
 
