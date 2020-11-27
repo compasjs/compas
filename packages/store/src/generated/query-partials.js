@@ -22,6 +22,7 @@ function checkFieldsInSet(entity, subType, set, value) {
   }
 }
 const fileWhereFieldSet = new Set([
+  "$or",
   "id",
   "idNotEqual",
   "idIn",
@@ -70,6 +71,7 @@ const fileFieldSet = new Set([
   "deletedAt",
 ]);
 const fileGroupWhereFieldSet = new Set([
+  "$or",
   "id",
   "idNotEqual",
   "idIn",
@@ -128,6 +130,7 @@ const fileGroupFieldSet = new Set([
   "deletedAt",
 ]);
 const fileGroupViewWhereFieldSet = new Set([
+  "$or",
   "id",
   "idNotEqual",
   "idIn",
@@ -176,6 +179,7 @@ const fileGroupViewWhereFieldSet = new Set([
   "deletedAtIncludeNotNull",
 ]);
 const jobWhereFieldSet = new Set([
+  "$or",
   "id",
   "idNotEqual",
   "idIn",
@@ -227,6 +231,7 @@ const jobFieldSet = new Set([
   "updatedAt",
 ]);
 const sessionWhereFieldSet = new Set([
+  "$or",
   "id",
   "idNotEqual",
   "idIn",
@@ -295,6 +300,18 @@ export function fileWhere(where = {}, tableName = "f.") {
   checkFieldsInSet("file", "where", fileWhereFieldSet, where);
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (Array.isArray(where.$or) && where.$or.length > 0) {
+    strings.push(" AND ((");
+    for (let i = 0; i < where.$or.length; i++) {
+      values.push(fileWhere(where.$or[i], tableName));
+      if (i === where.$or.length - 1) {
+        strings.push("))");
+        values.push(undefined);
+      } else {
+        strings.push(") OR (");
+      }
+    }
+  }
   if (where.id !== undefined) {
     strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
@@ -712,6 +729,18 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
   checkFieldsInSet("fileGroup", "where", fileGroupWhereFieldSet, where);
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (Array.isArray(where.$or) && where.$or.length > 0) {
+    strings.push(" AND ((");
+    for (let i = 0; i < where.$or.length; i++) {
+      values.push(fileGroupWhere(where.$or[i], tableName));
+      if (i === where.$or.length - 1) {
+        strings.push("))");
+        values.push(undefined);
+      } else {
+        strings.push(") OR (");
+      }
+    }
+  }
   if (where.id !== undefined) {
     strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
@@ -1192,6 +1221,18 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
   checkFieldsInSet("fileGroupView", "where", fileGroupViewWhereFieldSet, where);
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (Array.isArray(where.$or) && where.$or.length > 0) {
+    strings.push(" AND ((");
+    for (let i = 0; i < where.$or.length; i++) {
+      values.push(fileGroupViewWhere(where.$or[i], tableName));
+      if (i === where.$or.length - 1) {
+        strings.push("))");
+        values.push(undefined);
+      } else {
+        strings.push(") OR (");
+      }
+    }
+  }
   if (where.id !== undefined) {
     strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
@@ -1604,6 +1645,18 @@ export function jobWhere(where = {}, tableName = "j.") {
   checkFieldsInSet("job", "where", jobWhereFieldSet, where);
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (Array.isArray(where.$or) && where.$or.length > 0) {
+    strings.push(" AND ((");
+    for (let i = 0; i < where.$or.length; i++) {
+      values.push(jobWhere(where.$or[i], tableName));
+      if (i === where.$or.length - 1) {
+        strings.push("))");
+        values.push(undefined);
+      } else {
+        strings.push(") OR (");
+      }
+    }
+  }
   if (where.id !== undefined) {
     strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);
@@ -2025,6 +2078,18 @@ export function sessionWhere(where = {}, tableName = "s.") {
   checkFieldsInSet("session", "where", sessionWhereFieldSet, where);
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (Array.isArray(where.$or) && where.$or.length > 0) {
+    strings.push(" AND ((");
+    for (let i = 0; i < where.$or.length; i++) {
+      values.push(sessionWhere(where.$or[i], tableName));
+      if (i === where.$or.length - 1) {
+        strings.push("))");
+        values.push(undefined);
+      } else {
+        strings.push(") OR (");
+      }
+    }
+  }
   if (where.id !== undefined) {
     strings.push(` AND ${tableName}"id" = `);
     values.push(where.id);

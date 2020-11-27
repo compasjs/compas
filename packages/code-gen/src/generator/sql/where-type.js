@@ -4,6 +4,7 @@ import { AnyType } from "../../builders/AnyType.js";
 import { ArrayType } from "../../builders/ArrayType.js";
 import { BooleanType } from "../../builders/BooleanType.js";
 import { ObjectType } from "../../builders/ObjectType.js";
+import { ReferenceType } from "../../builders/ReferenceType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
@@ -39,6 +40,12 @@ export function createWhereTypes(context) {
     whereType.uniqueName = `${upperCaseFirst(whereType.group)}${upperCaseFirst(
       whereType.name,
     )}`;
+
+    // new ReferenceType(type.group, `${type.name}Where`)
+    whereType.keys["$or"] = {
+      ...new ArrayType().values(true).optional().build(),
+      values: new ReferenceType(type.group, `${type.name}Where`).build(),
+    };
 
     for (const key of Object.keys(fields)) {
       const fieldType = fields[key];
@@ -116,7 +123,9 @@ export function createWhereTypes(context) {
  * @param {CodeGenObjectType} type
  */
 export function getWhereFieldSet(context, type) {
-  return `const ${type.name}WhereFieldSet = new Set(["${type.where.fields
+  return `const ${
+    type.name
+  }WhereFieldSet = new Set(["$or", "${type.where.fields
     .map((it) => it.name)
     .join(`", "`)}"]);`;
 }
@@ -128,6 +137,22 @@ export function getWhereFieldSet(context, type) {
  */
 export function getWherePartial(context, type) {
   const partials = [];
+
+  partials.push(`
+    if (Array.isArray(where.$or) && where.$or.length > 0) {
+      strings.push(" AND ((");
+      for (let i = 0; i < where.$or.length; i++) {
+        values.push(${type.name}Where(where.$or[i], tableName));
+        
+        if (i === where.$or.length - 1) {
+          strings.push("))");
+          values.push(undefined);
+        } else {
+          strings.push(") OR (");
+        }
+      }
+    }
+  `);
 
   for (const field of type.where.fields) {
     const realField = type.keys[field.key].reference ?? type.keys[field.key];
