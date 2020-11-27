@@ -42,7 +42,7 @@ export function validatorSetError(fn) {
  * @param {string} parentType
  * @returns {"anyOf"|undefined}
  */
-export function anonymousValidator1(
+export function anonymousValidator934197946(
   value,
   propertyPath,
   errors = [],
@@ -75,7 +75,7 @@ export function anonymousValidator1(
  * @param {string} parentType
  * @returns {string|undefined}
  */
-export function anonymousValidator2(
+export function anonymousValidator1707981923(
   value,
   propertyPath,
   errors = [],
@@ -105,7 +105,7 @@ export function anonymousValidator2(
  * @param {string} parentType
  * @returns {boolean|undefined}
  */
-export function anonymousValidator3(
+export function anonymousValidator652858792(
   value,
   propertyPath,
   errors = [],
@@ -127,7 +127,7 @@ export function anonymousValidator3(
  * @param {string} parentType
  * @returns {string|undefined}
  */
-export function anonymousValidator5(
+export function anonymousValidator913531259(
   value,
   propertyPath,
   errors = [],
@@ -155,7 +155,7 @@ export function anonymousValidator5(
  * @param {string} parentType
  * @returns {boolean|undefined}
  */
-export function anonymousValidator6(
+export function anonymousValidator1308064958(
   value,
   propertyPath,
   errors = [],
@@ -178,7 +178,7 @@ export function anonymousValidator6(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator7(
+export function anonymousValidator9037802(
   value,
   propertyPath,
   errors = [],
@@ -205,7 +205,7 @@ export function anonymousValidator7(
  * @param {string} parentType
  * @returns {undefined|string|boolean|number|undefined}
  */
-export function anonymousValidator4(
+export function anonymousValidator23848295(
   value,
   propertyPath,
   errors = [],
@@ -214,22 +214,22 @@ export function anonymousValidator4(
   if (isNil(value)) {
     return value;
   }
-  let errorCount = 0;
   const subErrors = [];
+  let errorCount = 0;
   let result = undefined;
-  result = anonymousValidator5(value, propertyPath, subErrors);
+  result = anonymousValidator913531259(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator6(value, propertyPath, subErrors);
+  result = anonymousValidator1308064958(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator7(value, propertyPath, subErrors);
+  result = anonymousValidator9037802(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -247,7 +247,7 @@ export function anonymousValidator4(
  * @param {string} parentType
  * @returns {undefined|string|undefined}
  */
-export function anonymousValidator8(
+export function anonymousValidator69329591(
   value,
   propertyPath,
   errors = [],
@@ -277,7 +277,7 @@ export function anonymousValidator8(
  * @param {string} parentType
  * @returns {undefined|{"primary": boolean, "searchable": boolean, }|undefined}
  */
-export function anonymousValidator9(
+export function anonymousValidator1230176889(
   value,
   propertyPath,
   errors = [],
@@ -291,12 +291,12 @@ export function anonymousValidator9(
     return undefined;
   }
   const result = Object.create(null);
-  result["primary"] = anonymousValidator3(
+  result["primary"] = anonymousValidator652858792(
     value["primary"],
     `${propertyPath}.primary`,
     errors,
   );
-  result["searchable"] = anonymousValidator3(
+  result["searchable"] = anonymousValidator652858792(
     value["searchable"],
     `${propertyPath}.searchable`,
     errors,
@@ -310,7 +310,7 @@ export function anonymousValidator9(
  * @param {string} parentType
  * @returns {{}|undefined}
  */
-export function anonymousValidator10(
+export function anonymousValidator617718471(
   value,
   propertyPath,
   errors = [],
@@ -333,7 +333,7 @@ export function anonymousValidator10(
  * @param {string} parentType
  * @returns {"any"|undefined}
  */
-export function anonymousValidator16(
+export function anonymousValidator703895761(
   value,
   propertyPath,
   errors = [],
@@ -366,7 +366,7 @@ export function anonymousValidator16(
  * @param {string} parentType
  * @returns {{"allowNull": boolean, }|undefined}
  */
-export function anonymousValidator17(
+export function anonymousValidator492417938(
   value,
   propertyPath,
   errors = [],
@@ -380,7 +380,7 @@ export function anonymousValidator17(
     return undefined;
   }
   const result = Object.create(null);
-  result["allowNull"] = anonymousValidator3(
+  result["allowNull"] = anonymousValidator652858792(
     value["allowNull"],
     `${propertyPath}.allowNull`,
     errors,
@@ -394,7 +394,7 @@ export function anonymousValidator17(
  * @param {string} parentType
  * @returns {{"javaScript"?: string, "typeScript"?: string, }|undefined}
  */
-export function anonymousValidator18(
+export function anonymousValidator532136879(
   value,
   propertyPath,
   errors = [],
@@ -408,12 +408,12 @@ export function anonymousValidator18(
     return undefined;
   }
   const result = Object.create(null);
-  result["javaScript"] = anonymousValidator8(
+  result["javaScript"] = anonymousValidator69329591(
     value["javaScript"],
     `${propertyPath}.javaScript`,
     errors,
   );
-  result["typeScript"] = anonymousValidator8(
+  result["typeScript"] = anonymousValidator69329591(
     value["typeScript"],
     `${propertyPath}.typeScript`,
     errors,
@@ -427,7 +427,7 @@ export function anonymousValidator18(
  * @param {string} parentType
  * @returns {{"type": "any", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, "rawValue"?: string, "rawValueImport": {"javaScript"?: string, "typeScript"?: string, }, "rawValidator"?: string, "rawValidatorImport": {"javaScript"?: string, "typeScript"?: string, }, }|undefined}
  */
-export function anonymousValidator15(
+export function anonymousValidator368260888(
   value,
   propertyPath,
   errors = [],
@@ -442,67 +442,67 @@ export function anonymousValidator15(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator16(
+  result["type"] = anonymousValidator703895761(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator17(
+  result["validator"] = anonymousValidator492417938(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["rawValue"] = anonymousValidator8(
+  result["rawValue"] = anonymousValidator69329591(
     value["rawValue"],
     `${propertyPath}.rawValue`,
     errors,
   );
-  result["rawValueImport"] = anonymousValidator18(
+  result["rawValueImport"] = anonymousValidator532136879(
     value["rawValueImport"],
     `${propertyPath}.rawValueImport`,
     errors,
   );
-  result["rawValidator"] = anonymousValidator8(
+  result["rawValidator"] = anonymousValidator69329591(
     value["rawValidator"],
     `${propertyPath}.rawValidator`,
     errors,
   );
-  result["rawValidatorImport"] = anonymousValidator18(
+  result["rawValidatorImport"] = anonymousValidator532136879(
     value["rawValidatorImport"],
     `${propertyPath}.rawValidatorImport`,
     errors,
@@ -516,7 +516,7 @@ export function anonymousValidator15(
  * @param {string} parentType
  * @returns {CodeGenAnyType|undefined}
  */
-export function anonymousValidator14(
+export function anonymousValidator784003226(
   value,
   propertyPath,
   errors = [],
@@ -526,7 +526,7 @@ export function anonymousValidator14(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator15(value, propertyPath, errors);
+  return anonymousValidator368260888(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -535,7 +535,7 @@ export function anonymousValidator14(
  * @param {string} parentType
  * @returns {CodeGenAnyOfType|undefined}
  */
-export function anonymousValidator19(
+export function anonymousValidator1233348590(
   value,
   propertyPath,
   errors = [],
@@ -545,7 +545,7 @@ export function anonymousValidator19(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator0(value, propertyPath, errors);
+  return anonymousValidator1448768479(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -554,7 +554,7 @@ export function anonymousValidator19(
  * @param {string} parentType
  * @returns {"array"|undefined}
  */
-export function anonymousValidator22(
+export function anonymousValidator1976272124(
   value,
   propertyPath,
   errors = [],
@@ -587,7 +587,7 @@ export function anonymousValidator22(
  * @param {string} parentType
  * @returns {undefined|number|undefined}
  */
-export function anonymousValidator24(
+export function anonymousValidator629315207(
   value,
   propertyPath,
   errors = [],
@@ -613,7 +613,7 @@ export function anonymousValidator24(
  * @param {string} parentType
  * @returns {{"convert": boolean, "min"?: number, "max"?: number, }|undefined}
  */
-export function anonymousValidator23(
+export function anonymousValidator736640171(
   value,
   propertyPath,
   errors = [],
@@ -628,17 +628,17 @@ export function anonymousValidator23(
     return undefined;
   }
   const result = Object.create(null);
-  result["convert"] = anonymousValidator3(
+  result["convert"] = anonymousValidator652858792(
     value["convert"],
     `${propertyPath}.convert`,
     errors,
   );
-  result["min"] = anonymousValidator24(
+  result["min"] = anonymousValidator629315207(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator24(
+  result["max"] = anonymousValidator629315207(
     value["max"],
     `${propertyPath}.max`,
     errors,
@@ -652,7 +652,7 @@ export function anonymousValidator23(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator25(
+export function anonymousValidator588045408(
   value,
   propertyPath,
   errors = [],
@@ -662,7 +662,7 @@ export function anonymousValidator25(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -671,7 +671,7 @@ export function anonymousValidator25(
  * @param {string} parentType
  * @returns {{"type": "array", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "min"?: number, "max"?: number, }, "values": CodeGenType, }|undefined}
  */
-export function anonymousValidator21(
+export function anonymousValidator1210796142(
   value,
   propertyPath,
   errors = [],
@@ -686,52 +686,52 @@ export function anonymousValidator21(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator22(
+  result["type"] = anonymousValidator1976272124(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator23(
+  result["validator"] = anonymousValidator736640171(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["values"] = anonymousValidator25(
+  result["values"] = anonymousValidator588045408(
     value["values"],
     `${propertyPath}.values`,
     errors,
@@ -745,7 +745,7 @@ export function anonymousValidator21(
  * @param {string} parentType
  * @returns {CodeGenArrayType|undefined}
  */
-export function anonymousValidator20(
+export function anonymousValidator1634248208(
   value,
   propertyPath,
   errors = [],
@@ -755,7 +755,7 @@ export function anonymousValidator20(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator21(value, propertyPath, errors);
+  return anonymousValidator1210796142(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -764,7 +764,7 @@ export function anonymousValidator20(
  * @param {string} parentType
  * @returns {"boolean"|undefined}
  */
-export function anonymousValidator28(
+export function anonymousValidator86619883(
   value,
   propertyPath,
   errors = [],
@@ -797,7 +797,7 @@ export function anonymousValidator28(
  * @param {string} parentType
  * @returns {{"convert": boolean, "allowNull": boolean, }|undefined}
  */
-export function anonymousValidator29(
+export function anonymousValidator1270069781(
   value,
   propertyPath,
   errors = [],
@@ -812,12 +812,12 @@ export function anonymousValidator29(
     return undefined;
   }
   const result = Object.create(null);
-  result["convert"] = anonymousValidator3(
+  result["convert"] = anonymousValidator652858792(
     value["convert"],
     `${propertyPath}.convert`,
     errors,
   );
-  result["allowNull"] = anonymousValidator3(
+  result["allowNull"] = anonymousValidator652858792(
     value["allowNull"],
     `${propertyPath}.allowNull`,
     errors,
@@ -831,7 +831,7 @@ export function anonymousValidator29(
  * @param {string} parentType
  * @returns {undefined|boolean|undefined}
  */
-export function anonymousValidator30(
+export function anonymousValidator334567203(
   value,
   propertyPath,
   errors = [],
@@ -853,7 +853,7 @@ export function anonymousValidator30(
  * @param {string} parentType
  * @returns {{"type": "boolean", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "allowNull": boolean, }, "oneOf"?: boolean, }|undefined}
  */
-export function anonymousValidator27(
+export function anonymousValidator1065028911(
   value,
   propertyPath,
   errors = [],
@@ -868,52 +868,52 @@ export function anonymousValidator27(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator28(
+  result["type"] = anonymousValidator86619883(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator29(
+  result["validator"] = anonymousValidator1270069781(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["oneOf"] = anonymousValidator30(
+  result["oneOf"] = anonymousValidator334567203(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
@@ -927,7 +927,7 @@ export function anonymousValidator27(
  * @param {string} parentType
  * @returns {CodeGenBooleanType|undefined}
  */
-export function anonymousValidator26(
+export function anonymousValidator1722504433(
   value,
   propertyPath,
   errors = [],
@@ -937,7 +937,7 @@ export function anonymousValidator26(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator27(value, propertyPath, errors);
+  return anonymousValidator1065028911(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -946,7 +946,7 @@ export function anonymousValidator26(
  * @param {string} parentType
  * @returns {"date"|undefined}
  */
-export function anonymousValidator33(
+export function anonymousValidator325981885(
   value,
   propertyPath,
   errors = [],
@@ -979,7 +979,7 @@ export function anonymousValidator33(
  * @param {string} parentType
  * @returns {{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, }|undefined}
  */
-export function anonymousValidator32(
+export function anonymousValidator1371848646(
   value,
   propertyPath,
   errors = [],
@@ -994,47 +994,47 @@ export function anonymousValidator32(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator33(
+  result["type"] = anonymousValidator325981885(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator17(
+  result["validator"] = anonymousValidator492417938(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -1048,7 +1048,7 @@ export function anonymousValidator32(
  * @param {string} parentType
  * @returns {CodeGenDateType|undefined}
  */
-export function anonymousValidator31(
+export function anonymousValidator1687516022(
   value,
   propertyPath,
   errors = [],
@@ -1058,7 +1058,7 @@ export function anonymousValidator31(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator32(value, propertyPath, errors);
+  return anonymousValidator1371848646(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1067,7 +1067,7 @@ export function anonymousValidator31(
  * @param {string} parentType
  * @returns {"file"|undefined}
  */
-export function anonymousValidator36(
+export function anonymousValidator1393404875(
   value,
   propertyPath,
   errors = [],
@@ -1100,7 +1100,7 @@ export function anonymousValidator36(
  * @param {string} parentType
  * @returns {{"type": "file", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, }|undefined}
  */
-export function anonymousValidator35(
+export function anonymousValidator98797027(
   value,
   propertyPath,
   errors = [],
@@ -1115,47 +1115,47 @@ export function anonymousValidator35(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator36(
+  result["type"] = anonymousValidator1393404875(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator10(
+  result["validator"] = anonymousValidator617718471(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -1169,7 +1169,7 @@ export function anonymousValidator35(
  * @param {string} parentType
  * @returns {CodeGenFileType|undefined}
  */
-export function anonymousValidator34(
+export function anonymousValidator1358179163(
   value,
   propertyPath,
   errors = [],
@@ -1179,7 +1179,7 @@ export function anonymousValidator34(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator35(value, propertyPath, errors);
+  return anonymousValidator98797027(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1188,7 +1188,7 @@ export function anonymousValidator34(
  * @param {string} parentType
  * @returns {"generic"|undefined}
  */
-export function anonymousValidator39(
+export function anonymousValidator689103046(
   value,
   propertyPath,
   errors = [],
@@ -1221,7 +1221,7 @@ export function anonymousValidator39(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator40(
+export function anonymousValidator646440792(
   value,
   propertyPath,
   errors = [],
@@ -1231,7 +1231,7 @@ export function anonymousValidator40(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1240,7 +1240,7 @@ export function anonymousValidator40(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator41(
+export function anonymousValidator434996452(
   value,
   propertyPath,
   errors = [],
@@ -1250,7 +1250,7 @@ export function anonymousValidator41(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1259,7 +1259,7 @@ export function anonymousValidator41(
  * @param {string} parentType
  * @returns {{"type": "generic", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "keys": CodeGenType, "values": CodeGenType, }|undefined}
  */
-export function anonymousValidator38(
+export function anonymousValidator2080078377(
   value,
   propertyPath,
   errors = [],
@@ -1274,57 +1274,57 @@ export function anonymousValidator38(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator39(
+  result["type"] = anonymousValidator689103046(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator10(
+  result["validator"] = anonymousValidator617718471(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["keys"] = anonymousValidator40(
+  result["keys"] = anonymousValidator646440792(
     value["keys"],
     `${propertyPath}.keys`,
     errors,
   );
-  result["values"] = anonymousValidator41(
+  result["values"] = anonymousValidator434996452(
     value["values"],
     `${propertyPath}.values`,
     errors,
@@ -1338,7 +1338,7 @@ export function anonymousValidator38(
  * @param {string} parentType
  * @returns {CodeGenGenericType|undefined}
  */
-export function anonymousValidator37(
+export function anonymousValidator14075299(
   value,
   propertyPath,
   errors = [],
@@ -1348,7 +1348,7 @@ export function anonymousValidator37(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator38(value, propertyPath, errors);
+  return anonymousValidator2080078377(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1357,7 +1357,7 @@ export function anonymousValidator37(
  * @param {string} parentType
  * @returns {"number"|undefined}
  */
-export function anonymousValidator44(
+export function anonymousValidator161888264(
   value,
   propertyPath,
   errors = [],
@@ -1390,7 +1390,7 @@ export function anonymousValidator44(
  * @param {string} parentType
  * @returns {{"convert": boolean, "floatingPoint": boolean, "min"?: number, "max"?: number, "allowNull": boolean, }|undefined}
  */
-export function anonymousValidator45(
+export function anonymousValidator1874959607(
   value,
   propertyPath,
   errors = [],
@@ -1405,27 +1405,27 @@ export function anonymousValidator45(
     return undefined;
   }
   const result = Object.create(null);
-  result["convert"] = anonymousValidator3(
+  result["convert"] = anonymousValidator652858792(
     value["convert"],
     `${propertyPath}.convert`,
     errors,
   );
-  result["floatingPoint"] = anonymousValidator3(
+  result["floatingPoint"] = anonymousValidator652858792(
     value["floatingPoint"],
     `${propertyPath}.floatingPoint`,
     errors,
   );
-  result["min"] = anonymousValidator24(
+  result["min"] = anonymousValidator629315207(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator24(
+  result["max"] = anonymousValidator629315207(
     value["max"],
     `${propertyPath}.max`,
     errors,
   );
-  result["allowNull"] = anonymousValidator3(
+  result["allowNull"] = anonymousValidator652858792(
     value["allowNull"],
     `${propertyPath}.allowNull`,
     errors,
@@ -1439,7 +1439,7 @@ export function anonymousValidator45(
  * @param {string} parentType
  * @returns {undefined|(number)[]|undefined}
  */
-export function anonymousValidator46(
+export function anonymousValidator1024188572(
   value,
   propertyPath,
   errors = [],
@@ -1454,7 +1454,11 @@ export function anonymousValidator46(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator7(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator9037802(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -1465,7 +1469,7 @@ export function anonymousValidator46(
  * @param {string} parentType
  * @returns {{"type": "number", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "floatingPoint": boolean, "min"?: number, "max"?: number, "allowNull": boolean, }, "oneOf"?: (number)[], }|undefined}
  */
-export function anonymousValidator43(
+export function anonymousValidator267932131(
   value,
   propertyPath,
   errors = [],
@@ -1480,52 +1484,52 @@ export function anonymousValidator43(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator44(
+  result["type"] = anonymousValidator161888264(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator45(
+  result["validator"] = anonymousValidator1874959607(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["oneOf"] = anonymousValidator46(
+  result["oneOf"] = anonymousValidator1024188572(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
@@ -1539,7 +1543,7 @@ export function anonymousValidator43(
  * @param {string} parentType
  * @returns {CodeGenNumberType|undefined}
  */
-export function anonymousValidator42(
+export function anonymousValidator1065206241(
   value,
   propertyPath,
   errors = [],
@@ -1549,7 +1553,7 @@ export function anonymousValidator42(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator43(value, propertyPath, errors);
+  return anonymousValidator267932131(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1558,7 +1562,7 @@ export function anonymousValidator42(
  * @param {string} parentType
  * @returns {"object"|undefined}
  */
-export function anonymousValidator49(
+export function anonymousValidator1853163054(
   value,
   propertyPath,
   errors = [],
@@ -1591,7 +1595,7 @@ export function anonymousValidator49(
  * @param {string} parentType
  * @returns {boolean|undefined}
  */
-export function anonymousValidator51(
+export function anonymousValidator846879133(
   value,
   propertyPath,
   errors = [],
@@ -1613,7 +1617,7 @@ export function anonymousValidator51(
  * @param {string} parentType
  * @returns {{"strict": boolean, }|undefined}
  */
-export function anonymousValidator50(
+export function anonymousValidator1735626528(
   value,
   propertyPath,
   errors = [],
@@ -1628,7 +1632,7 @@ export function anonymousValidator50(
     return undefined;
   }
   const result = Object.create(null);
-  result["strict"] = anonymousValidator51(
+  result["strict"] = anonymousValidator846879133(
     value["strict"],
     `${propertyPath}.strict`,
     errors,
@@ -1642,7 +1646,7 @@ export function anonymousValidator50(
  * @param {string} parentType
  * @returns {string|undefined}
  */
-export function anonymousValidator53(
+export function anonymousValidator1801034940(
   value,
   propertyPath,
   errors = [],
@@ -1670,7 +1674,7 @@ export function anonymousValidator53(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator54(
+export function anonymousValidator1858831168(
   value,
   propertyPath,
   errors = [],
@@ -1680,7 +1684,7 @@ export function anonymousValidator54(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1689,7 +1693,7 @@ export function anonymousValidator54(
  * @param {string} parentType
  * @returns {Object<string, CodeGenType>|undefined}
  */
-export function anonymousValidator52(
+export function anonymousValidator1306491404(
   value,
   propertyPath,
   errors = [],
@@ -1705,13 +1709,13 @@ export function anonymousValidator52(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    const genericKey = anonymousValidator53(
+    const genericKey = anonymousValidator1801034940(
       key,
       `${propertyPath}.$key[${key}]`,
       errors,
     );
     if (genericKey !== undefined) {
-      result[genericKey] = anonymousValidator54(
+      result[genericKey] = anonymousValidator1858831168(
         value[key],
         `${propertyPath}.$value[${key}]`,
         errors,
@@ -1727,7 +1731,7 @@ export function anonymousValidator52(
  * @param {string} parentType
  * @returns {undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }|undefined}
  */
-export function anonymousValidator55(
+export function anonymousValidator217883487(
   value,
   propertyPath,
   errors = [],
@@ -1741,22 +1745,22 @@ export function anonymousValidator55(
     return undefined;
   }
   const result = Object.create(null);
-  result["withSoftDeletes"] = anonymousValidator3(
+  result["withSoftDeletes"] = anonymousValidator652858792(
     value["withSoftDeletes"],
     `${propertyPath}.withSoftDeletes`,
     errors,
   );
-  result["withDates"] = anonymousValidator3(
+  result["withDates"] = anonymousValidator652858792(
     value["withDates"],
     `${propertyPath}.withDates`,
     errors,
   );
-  result["withPrimaryKey"] = anonymousValidator51(
+  result["withPrimaryKey"] = anonymousValidator846879133(
     value["withPrimaryKey"],
     `${propertyPath}.withPrimaryKey`,
     errors,
   );
-  result["isView"] = anonymousValidator3(
+  result["isView"] = anonymousValidator652858792(
     value["isView"],
     `${propertyPath}.isView`,
     errors,
@@ -1770,7 +1774,7 @@ export function anonymousValidator55(
  * @param {string} parentType
  * @returns {"relation"|undefined}
  */
-export function anonymousValidator59(
+export function anonymousValidator1522475701(
   value,
   propertyPath,
   errors = [],
@@ -1803,7 +1807,7 @@ export function anonymousValidator59(
  * @param {string} parentType
  * @returns {"manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse"|undefined}
  */
-export function anonymousValidator60(
+export function anonymousValidator1313728869(
   value,
   propertyPath,
   errors = [],
@@ -1841,7 +1845,7 @@ export function anonymousValidator60(
  * @param {string} parentType
  * @returns {"reference"|undefined}
  */
-export function anonymousValidator63(
+export function anonymousValidator1523035566(
   value,
   propertyPath,
   errors = [],
@@ -1874,7 +1878,7 @@ export function anonymousValidator63(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator65(
+export function anonymousValidator1108377968(
   value,
   propertyPath,
   errors = [],
@@ -1884,7 +1888,7 @@ export function anonymousValidator65(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -1893,7 +1897,7 @@ export function anonymousValidator65(
  * @param {string} parentType
  * @returns {{"uniqueName"?: string, "group"?: string, "name"?: string, }|undefined}
  */
-export function anonymousValidator66(
+export function anonymousValidator1283136356(
   value,
   propertyPath,
   errors = [],
@@ -1909,19 +1913,19 @@ export function anonymousValidator66(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
   keySet.delete("uniqueName");
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
   keySet.delete("group");
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
@@ -1941,7 +1945,7 @@ export function anonymousValidator66(
  * @param {string} parentType
  * @returns {CodeGenType|{"uniqueName"?: string, "group"?: string, "name"?: string, }|undefined}
  */
-export function anonymousValidator64(
+export function anonymousValidator419495106(
   value,
   propertyPath,
   errors = [],
@@ -1951,16 +1955,16 @@ export function anonymousValidator64(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  let errorCount = 0;
   const subErrors = [];
+  let errorCount = 0;
   let result = undefined;
-  result = anonymousValidator65(value, propertyPath, subErrors);
+  result = anonymousValidator1108377968(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator66(value, propertyPath, subErrors);
+  result = anonymousValidator1283136356(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -1978,7 +1982,7 @@ export function anonymousValidator64(
  * @param {string} parentType
  * @returns {{"type": "reference", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "reference": CodeGenType|{"uniqueName"?: string, "group"?: string, "name"?: string, }, }|undefined}
  */
-export function anonymousValidator62(
+export function anonymousValidator1199721884(
   value,
   propertyPath,
   errors = [],
@@ -1993,52 +1997,52 @@ export function anonymousValidator62(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator63(
+  result["type"] = anonymousValidator1523035566(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator10(
+  result["validator"] = anonymousValidator617718471(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["reference"] = anonymousValidator64(
+  result["reference"] = anonymousValidator419495106(
     value["reference"],
     `${propertyPath}.reference`,
     errors,
@@ -2052,7 +2056,7 @@ export function anonymousValidator62(
  * @param {string} parentType
  * @returns {CodeGenReferenceType|undefined}
  */
-export function anonymousValidator61(
+export function anonymousValidator1182868587(
   value,
   propertyPath,
   errors = [],
@@ -2062,7 +2066,7 @@ export function anonymousValidator61(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator62(value, propertyPath, errors);
+  return anonymousValidator1199721884(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2071,7 +2075,7 @@ export function anonymousValidator61(
  * @param {string} parentType
  * @returns {{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: string, "isOptional": boolean, }|undefined}
  */
-export function anonymousValidator58(
+export function anonymousValidator2029007679(
   value,
   propertyPath,
   errors = [],
@@ -2086,32 +2090,32 @@ export function anonymousValidator58(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator59(
+  result["type"] = anonymousValidator1522475701(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["subType"] = anonymousValidator60(
+  result["subType"] = anonymousValidator1313728869(
     value["subType"],
     `${propertyPath}.subType`,
     errors,
   );
-  result["reference"] = anonymousValidator61(
+  result["reference"] = anonymousValidator1182868587(
     value["reference"],
     `${propertyPath}.reference`,
     errors,
   );
-  result["ownKey"] = anonymousValidator53(
+  result["ownKey"] = anonymousValidator1801034940(
     value["ownKey"],
     `${propertyPath}.ownKey`,
     errors,
   );
-  result["referencedKey"] = anonymousValidator8(
+  result["referencedKey"] = anonymousValidator69329591(
     value["referencedKey"],
     `${propertyPath}.referencedKey`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
@@ -2125,7 +2129,7 @@ export function anonymousValidator58(
  * @param {string} parentType
  * @returns {CodeGenRelationType|undefined}
  */
-export function anonymousValidator57(
+export function anonymousValidator1908476996(
   value,
   propertyPath,
   errors = [],
@@ -2135,7 +2139,7 @@ export function anonymousValidator57(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator58(value, propertyPath, errors);
+  return anonymousValidator2029007679(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2144,7 +2148,7 @@ export function anonymousValidator57(
  * @param {string} parentType
  * @returns {(CodeGenRelationType)[]|undefined}
  */
-export function anonymousValidator56(
+export function anonymousValidator347229834(
   value,
   propertyPath,
   errors = [],
@@ -2159,7 +2163,11 @@ export function anonymousValidator56(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator57(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1908476996(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -2170,7 +2178,7 @@ export function anonymousValidator56(
  * @param {string} parentType
  * @returns {"equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike"|undefined}
  */
-export function anonymousValidator70(
+export function anonymousValidator1516506862(
   value,
   propertyPath,
   errors = [],
@@ -2227,7 +2235,7 @@ export function anonymousValidator70(
  * @param {string} parentType
  * @returns {{"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", }|undefined}
  */
-export function anonymousValidator69(
+export function anonymousValidator1337139037(
   value,
   propertyPath,
   errors = [],
@@ -2242,17 +2250,17 @@ export function anonymousValidator69(
     return undefined;
   }
   const result = Object.create(null);
-  result["key"] = anonymousValidator53(
+  result["key"] = anonymousValidator1801034940(
     value["key"],
     `${propertyPath}.key`,
     errors,
   );
-  result["name"] = anonymousValidator53(
+  result["name"] = anonymousValidator1801034940(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["variant"] = anonymousValidator70(
+  result["variant"] = anonymousValidator1516506862(
     value["variant"],
     `${propertyPath}.variant`,
     errors,
@@ -2266,7 +2274,7 @@ export function anonymousValidator69(
  * @param {string} parentType
  * @returns {({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[]|undefined}
  */
-export function anonymousValidator68(
+export function anonymousValidator1136555662(
   value,
   propertyPath,
   errors = [],
@@ -2282,7 +2290,11 @@ export function anonymousValidator68(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator69(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1337139037(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -2293,7 +2305,7 @@ export function anonymousValidator68(
  * @param {string} parentType
  * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }|undefined}
  */
-export function anonymousValidator67(
+export function anonymousValidator230282048(
   value,
   propertyPath,
   errors = [],
@@ -2307,12 +2319,12 @@ export function anonymousValidator67(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator53(
+  result["type"] = anonymousValidator1801034940(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["fields"] = anonymousValidator68(
+  result["fields"] = anonymousValidator1136555662(
     value["fields"],
     `${propertyPath}.fields`,
     errors,
@@ -2326,7 +2338,7 @@ export function anonymousValidator67(
  * @param {string} parentType
  * @returns {{"key": string, "defaultValue"?: string, "isJsonb": boolean, }|undefined}
  */
-export function anonymousValidator73(
+export function anonymousValidator887501550(
   value,
   propertyPath,
   errors = [],
@@ -2341,17 +2353,17 @@ export function anonymousValidator73(
     return undefined;
   }
   const result = Object.create(null);
-  result["key"] = anonymousValidator53(
+  result["key"] = anonymousValidator1801034940(
     value["key"],
     `${propertyPath}.key`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator8(
+  result["defaultValue"] = anonymousValidator69329591(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["isJsonb"] = anonymousValidator3(
+  result["isJsonb"] = anonymousValidator652858792(
     value["isJsonb"],
     `${propertyPath}.isJsonb`,
     errors,
@@ -2365,7 +2377,7 @@ export function anonymousValidator73(
  * @param {string} parentType
  * @returns {({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[]|undefined}
  */
-export function anonymousValidator72(
+export function anonymousValidator1348405273(
   value,
   propertyPath,
   errors = [],
@@ -2381,7 +2393,11 @@ export function anonymousValidator72(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator73(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator887501550(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -2392,7 +2408,7 @@ export function anonymousValidator72(
  * @param {string} parentType
  * @returns {undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }|undefined}
  */
-export function anonymousValidator71(
+export function anonymousValidator1957121873(
   value,
   propertyPath,
   errors = [],
@@ -2406,17 +2422,17 @@ export function anonymousValidator71(
     return undefined;
   }
   const result = Object.create(null);
-  result["insertType"] = anonymousValidator53(
+  result["insertType"] = anonymousValidator1801034940(
     value["insertType"],
     `${propertyPath}.insertType`,
     errors,
   );
-  result["updateType"] = anonymousValidator53(
+  result["updateType"] = anonymousValidator1801034940(
     value["updateType"],
     `${propertyPath}.updateType`,
     errors,
   );
-  result["fields"] = anonymousValidator72(
+  result["fields"] = anonymousValidator1348405273(
     value["fields"],
     `${propertyPath}.fields`,
     errors,
@@ -2430,7 +2446,7 @@ export function anonymousValidator71(
  * @param {string} parentType
  * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
  */
-export function anonymousValidator48(
+export function anonymousValidator2003332250(
   value,
   propertyPath,
   errors = [],
@@ -2445,82 +2461,82 @@ export function anonymousValidator48(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator49(
+  result["type"] = anonymousValidator1853163054(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator50(
+  result["validator"] = anonymousValidator1735626528(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["keys"] = anonymousValidator52(
+  result["keys"] = anonymousValidator1306491404(
     value["keys"],
     `${propertyPath}.keys`,
     errors,
   );
-  result["enableQueries"] = anonymousValidator3(
+  result["enableQueries"] = anonymousValidator652858792(
     value["enableQueries"],
     `${propertyPath}.enableQueries`,
     errors,
   );
-  result["queryOptions"] = anonymousValidator55(
+  result["queryOptions"] = anonymousValidator217883487(
     value["queryOptions"],
     `${propertyPath}.queryOptions`,
     errors,
   );
-  result["relations"] = anonymousValidator56(
+  result["relations"] = anonymousValidator347229834(
     value["relations"],
     `${propertyPath}.relations`,
     errors,
   );
-  result["shortName"] = anonymousValidator8(
+  result["shortName"] = anonymousValidator69329591(
     value["shortName"],
     `${propertyPath}.shortName`,
     errors,
   );
-  result["where"] = anonymousValidator67(
+  result["where"] = anonymousValidator230282048(
     value["where"],
     `${propertyPath}.where`,
     errors,
   );
-  result["partial"] = anonymousValidator71(
+  result["partial"] = anonymousValidator1957121873(
     value["partial"],
     `${propertyPath}.partial`,
     errors,
@@ -2534,7 +2550,7 @@ export function anonymousValidator48(
  * @param {string} parentType
  * @returns {CodeGenObjectType|undefined}
  */
-export function anonymousValidator47(
+export function anonymousValidator1584823615(
   value,
   propertyPath,
   errors = [],
@@ -2544,7 +2560,7 @@ export function anonymousValidator47(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator48(value, propertyPath, errors);
+  return anonymousValidator2003332250(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2553,7 +2569,7 @@ export function anonymousValidator47(
  * @param {string} parentType
  * @returns {CodeGenReferenceType|undefined}
  */
-export function anonymousValidator74(
+export function anonymousValidator1823186121(
   value,
   propertyPath,
   errors = [],
@@ -2563,7 +2579,7 @@ export function anonymousValidator74(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator62(value, propertyPath, errors);
+  return anonymousValidator1199721884(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2572,7 +2588,7 @@ export function anonymousValidator74(
  * @param {string} parentType
  * @returns {CodeGenRelationType|undefined}
  */
-export function anonymousValidator75(
+export function anonymousValidator876386868(
   value,
   propertyPath,
   errors = [],
@@ -2582,7 +2598,7 @@ export function anonymousValidator75(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator58(value, propertyPath, errors);
+  return anonymousValidator2029007679(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2591,7 +2607,7 @@ export function anonymousValidator75(
  * @param {string} parentType
  * @returns {"string"|undefined}
  */
-export function anonymousValidator78(
+export function anonymousValidator2086309824(
   value,
   propertyPath,
   errors = [],
@@ -2624,7 +2640,7 @@ export function anonymousValidator78(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator80(
+export function anonymousValidator1158137534(
   value,
   propertyPath,
   errors = [],
@@ -2650,7 +2666,7 @@ export function anonymousValidator80(
  * @param {string} parentType
  * @returns {{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: number, "pattern"?: string, "allowNull": boolean, }|undefined}
  */
-export function anonymousValidator79(
+export function anonymousValidator1756583008(
   value,
   propertyPath,
   errors = [],
@@ -2665,42 +2681,42 @@ export function anonymousValidator79(
     return undefined;
   }
   const result = Object.create(null);
-  result["convert"] = anonymousValidator3(
+  result["convert"] = anonymousValidator652858792(
     value["convert"],
     `${propertyPath}.convert`,
     errors,
   );
-  result["trim"] = anonymousValidator3(
+  result["trim"] = anonymousValidator652858792(
     value["trim"],
     `${propertyPath}.trim`,
     errors,
   );
-  result["lowerCase"] = anonymousValidator3(
+  result["lowerCase"] = anonymousValidator652858792(
     value["lowerCase"],
     `${propertyPath}.lowerCase`,
     errors,
   );
-  result["upperCase"] = anonymousValidator3(
+  result["upperCase"] = anonymousValidator652858792(
     value["upperCase"],
     `${propertyPath}.upperCase`,
     errors,
   );
-  result["min"] = anonymousValidator80(
+  result["min"] = anonymousValidator1158137534(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator24(
+  result["max"] = anonymousValidator629315207(
     value["max"],
     `${propertyPath}.max`,
     errors,
   );
-  result["pattern"] = anonymousValidator8(
+  result["pattern"] = anonymousValidator69329591(
     value["pattern"],
     `${propertyPath}.pattern`,
     errors,
   );
-  result["allowNull"] = anonymousValidator3(
+  result["allowNull"] = anonymousValidator652858792(
     value["allowNull"],
     `${propertyPath}.allowNull`,
     errors,
@@ -2714,7 +2730,7 @@ export function anonymousValidator79(
  * @param {string} parentType
  * @returns {undefined|(string)[]|undefined}
  */
-export function anonymousValidator81(
+export function anonymousValidator1241648372(
   value,
   propertyPath,
   errors = [],
@@ -2729,7 +2745,11 @@ export function anonymousValidator81(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1801034940(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -2740,7 +2760,7 @@ export function anonymousValidator81(
  * @param {string} parentType
  * @returns {{"type": "string", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: number, "pattern"?: string, "allowNull": boolean, }, "oneOf"?: (string)[], }|undefined}
  */
-export function anonymousValidator77(
+export function anonymousValidator722636964(
   value,
   propertyPath,
   errors = [],
@@ -2755,52 +2775,52 @@ export function anonymousValidator77(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator78(
+  result["type"] = anonymousValidator2086309824(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator79(
+  result["validator"] = anonymousValidator1756583008(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["oneOf"] = anonymousValidator81(
+  result["oneOf"] = anonymousValidator1241648372(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
@@ -2814,7 +2834,7 @@ export function anonymousValidator77(
  * @param {string} parentType
  * @returns {CodeGenStringType|undefined}
  */
-export function anonymousValidator76(
+export function anonymousValidator514702170(
   value,
   propertyPath,
   errors = [],
@@ -2824,7 +2844,7 @@ export function anonymousValidator76(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator77(value, propertyPath, errors);
+  return anonymousValidator722636964(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2833,7 +2853,7 @@ export function anonymousValidator76(
  * @param {string} parentType
  * @returns {"uuid"|undefined}
  */
-export function anonymousValidator84(
+export function anonymousValidator1692703402(
   value,
   propertyPath,
   errors = [],
@@ -2866,7 +2886,7 @@ export function anonymousValidator84(
  * @param {string} parentType
  * @returns {{"type": "uuid", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, }, }|undefined}
  */
-export function anonymousValidator83(
+export function anonymousValidator158572615(
   value,
   propertyPath,
   errors = [],
@@ -2881,47 +2901,47 @@ export function anonymousValidator83(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator84(
+  result["type"] = anonymousValidator1692703402(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator17(
+  result["validator"] = anonymousValidator492417938(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -2935,7 +2955,7 @@ export function anonymousValidator83(
  * @param {string} parentType
  * @returns {CodeGenUuidType|undefined}
  */
-export function anonymousValidator82(
+export function anonymousValidator909043453(
   value,
   propertyPath,
   errors = [],
@@ -2945,7 +2965,7 @@ export function anonymousValidator82(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator83(value, propertyPath, errors);
+  return anonymousValidator158572615(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2954,7 +2974,7 @@ export function anonymousValidator82(
  * @param {string} parentType
  * @returns {"route"|undefined}
  */
-export function anonymousValidator87(
+export function anonymousValidator148943124(
   value,
   propertyPath,
   errors = [],
@@ -2987,7 +3007,7 @@ export function anonymousValidator87(
  * @param {string} parentType
  * @returns {"GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH"|undefined}
  */
-export function anonymousValidator88(
+export function anonymousValidator1863169307(
   value,
   propertyPath,
   errors = [],
@@ -3027,7 +3047,7 @@ export function anonymousValidator88(
  * @param {string} parentType
  * @returns {(string)[]|undefined}
  */
-export function anonymousValidator89(
+export function anonymousValidator376609007(
   value,
   propertyPath,
   errors = [],
@@ -3043,7 +3063,11 @@ export function anonymousValidator89(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator53(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1801034940(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -3054,7 +3078,7 @@ export function anonymousValidator89(
  * @param {string} parentType
  * @returns {undefined|CodeGenType|undefined}
  */
-export function anonymousValidator90(
+export function anonymousValidator519519900(
   value,
   propertyPath,
   errors = [],
@@ -3063,7 +3087,7 @@ export function anonymousValidator90(
   if (isNil(value)) {
     return value;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3072,7 +3096,7 @@ export function anonymousValidator90(
  * @param {string} parentType
  * @returns {undefined|CodeGenType|undefined}
  */
-export function anonymousValidator91(
+export function anonymousValidator1723792468(
   value,
   propertyPath,
   errors = [],
@@ -3081,7 +3105,7 @@ export function anonymousValidator91(
   if (isNil(value)) {
     return value;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3090,7 +3114,7 @@ export function anonymousValidator91(
  * @param {string} parentType
  * @returns {undefined|CodeGenType|undefined}
  */
-export function anonymousValidator92(
+export function anonymousValidator1108942180(
   value,
   propertyPath,
   errors = [],
@@ -3099,7 +3123,7 @@ export function anonymousValidator92(
   if (isNil(value)) {
     return value;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3108,7 +3132,7 @@ export function anonymousValidator92(
  * @param {string} parentType
  * @returns {undefined|CodeGenType|undefined}
  */
-export function anonymousValidator93(
+export function anonymousValidator1391332452(
   value,
   propertyPath,
   errors = [],
@@ -3117,7 +3141,7 @@ export function anonymousValidator93(
   if (isNil(value)) {
     return value;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3126,7 +3150,7 @@ export function anonymousValidator93(
  * @param {string} parentType
  * @returns {undefined|CodeGenType|undefined}
  */
-export function anonymousValidator94(
+export function anonymousValidator1768060116(
   value,
   propertyPath,
   errors = [],
@@ -3135,7 +3159,7 @@ export function anonymousValidator94(
   if (isNil(value)) {
     return value;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3144,7 +3168,7 @@ export function anonymousValidator94(
  * @param {string} parentType
  * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }|undefined}
  */
-export function anonymousValidator86(
+export function anonymousValidator647792494(
   value,
   propertyPath,
   errors = [],
@@ -3159,87 +3183,87 @@ export function anonymousValidator86(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator87(
+  result["type"] = anonymousValidator148943124(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator10(
+  result["validator"] = anonymousValidator617718471(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["method"] = anonymousValidator88(
+  result["method"] = anonymousValidator1863169307(
     value["method"],
     `${propertyPath}.method`,
     errors,
   );
-  result["path"] = anonymousValidator53(
+  result["path"] = anonymousValidator1801034940(
     value["path"],
     `${propertyPath}.path`,
     errors,
   );
-  result["tags"] = anonymousValidator89(
+  result["tags"] = anonymousValidator376609007(
     value["tags"],
     `${propertyPath}.tags`,
     errors,
   );
-  result["query"] = anonymousValidator90(
+  result["query"] = anonymousValidator519519900(
     value["query"],
     `${propertyPath}.query`,
     errors,
   );
-  result["params"] = anonymousValidator91(
+  result["params"] = anonymousValidator1723792468(
     value["params"],
     `${propertyPath}.params`,
     errors,
   );
-  result["body"] = anonymousValidator92(
+  result["body"] = anonymousValidator1108942180(
     value["body"],
     `${propertyPath}.body`,
     errors,
   );
-  result["files"] = anonymousValidator93(
+  result["files"] = anonymousValidator1391332452(
     value["files"],
     `${propertyPath}.files`,
     errors,
   );
-  result["response"] = anonymousValidator94(
+  result["response"] = anonymousValidator1768060116(
     value["response"],
     `${propertyPath}.response`,
     errors,
@@ -3253,7 +3277,7 @@ export function anonymousValidator86(
  * @param {string} parentType
  * @returns {CodeGenRouteType|undefined}
  */
-export function anonymousValidator85(
+export function anonymousValidator1747747990(
   value,
   propertyPath,
   errors = [],
@@ -3263,7 +3287,7 @@ export function anonymousValidator85(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator86(value, propertyPath, errors);
+  return anonymousValidator647792494(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3272,7 +3296,7 @@ export function anonymousValidator85(
  * @param {string} parentType
  * @returns {CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenObjectType|CodeGenReferenceType|CodeGenRelationType|CodeGenStringType|CodeGenUuidType|CodeGenRouteType|undefined}
  */
-export function anonymousValidator13(
+export function anonymousValidator1985175360(
   value,
   propertyPath,
   errors = [],
@@ -3282,88 +3306,88 @@ export function anonymousValidator13(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  let errorCount = 0;
   const subErrors = [];
+  let errorCount = 0;
   let result = undefined;
-  result = anonymousValidator14(value, propertyPath, subErrors);
+  result = anonymousValidator784003226(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator19(value, propertyPath, subErrors);
+  result = anonymousValidator1233348590(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator20(value, propertyPath, subErrors);
+  result = anonymousValidator1634248208(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator26(value, propertyPath, subErrors);
+  result = anonymousValidator1722504433(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator31(value, propertyPath, subErrors);
+  result = anonymousValidator1687516022(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator34(value, propertyPath, subErrors);
+  result = anonymousValidator1358179163(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator37(value, propertyPath, subErrors);
+  result = anonymousValidator14075299(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator42(value, propertyPath, subErrors);
+  result = anonymousValidator1065206241(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator47(value, propertyPath, subErrors);
+  result = anonymousValidator1584823615(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator74(value, propertyPath, subErrors);
+  result = anonymousValidator1823186121(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator75(value, propertyPath, subErrors);
+  result = anonymousValidator876386868(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator76(value, propertyPath, subErrors);
+  result = anonymousValidator514702170(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator82(value, propertyPath, subErrors);
+  result = anonymousValidator909043453(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator85(value, propertyPath, subErrors);
+  result = anonymousValidator1747747990(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -3381,7 +3405,7 @@ export function anonymousValidator13(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator12(
+export function anonymousValidator1085150401(
   value,
   propertyPath,
   errors = [],
@@ -3391,7 +3415,7 @@ export function anonymousValidator12(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3400,7 +3424,7 @@ export function anonymousValidator12(
  * @param {string} parentType
  * @returns {(CodeGenType)[]|undefined}
  */
-export function anonymousValidator11(
+export function anonymousValidator207738441(
   value,
   propertyPath,
   errors = [],
@@ -3416,7 +3440,11 @@ export function anonymousValidator11(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator12(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1085150401(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -3427,7 +3455,7 @@ export function anonymousValidator11(
  * @param {string} parentType
  * @returns {{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "values": (CodeGenType)[], }|undefined}
  */
-export function anonymousValidator0(
+export function anonymousValidator1448768479(
   value,
   propertyPath,
   errors = [],
@@ -3442,52 +3470,52 @@ export function anonymousValidator0(
     return undefined;
   }
   const result = Object.create(null);
-  result["type"] = anonymousValidator1(
+  result["type"] = anonymousValidator934197946(
     value["type"],
     `${propertyPath}.type`,
     errors,
   );
-  result["docString"] = anonymousValidator2(
+  result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
     errors,
   );
-  result["isOptional"] = anonymousValidator3(
+  result["isOptional"] = anonymousValidator652858792(
     value["isOptional"],
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator4(
+  result["defaultValue"] = anonymousValidator23848295(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
   );
-  result["uniqueName"] = anonymousValidator8(
+  result["uniqueName"] = anonymousValidator69329591(
     value["uniqueName"],
     `${propertyPath}.uniqueName`,
     errors,
   );
-  result["group"] = anonymousValidator8(
+  result["group"] = anonymousValidator69329591(
     value["group"],
     `${propertyPath}.group`,
     errors,
   );
-  result["name"] = anonymousValidator8(
+  result["name"] = anonymousValidator69329591(
     value["name"],
     `${propertyPath}.name`,
     errors,
   );
-  result["sql"] = anonymousValidator9(
+  result["sql"] = anonymousValidator1230176889(
     value["sql"],
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator10(
+  result["validator"] = anonymousValidator617718471(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
   );
-  result["values"] = anonymousValidator11(
+  result["values"] = anonymousValidator207738441(
     value["values"],
     `${propertyPath}.values`,
     errors,
@@ -3501,7 +3529,7 @@ export function anonymousValidator0(
  * @param {string} parentType
  * @returns {"type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery"|undefined}
  */
-export function anonymousValidator99(
+export function anonymousValidator1694484208(
   value,
   propertyPath,
   errors = [],
@@ -3548,7 +3576,7 @@ export function anonymousValidator99(
  * @param {string} parentType
  * @returns {("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[]|undefined}
  */
-export function anonymousValidator98(
+export function anonymousValidator1009589157(
   value,
   propertyPath,
   errors = [],
@@ -3564,7 +3592,11 @@ export function anonymousValidator98(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator99(value[i], `${propertyPath}[${i}]`, errors);
+    result[i] = anonymousValidator1694484208(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
   }
   return result;
 }
@@ -3575,7 +3607,7 @@ export function anonymousValidator98(
  * @param {string} parentType
  * @returns {{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "fileHeader": string, "outputDirectory": string, }|undefined}
  */
-export function anonymousValidator97(
+export function anonymousValidator1311847056(
   value,
   propertyPath,
   errors = [],
@@ -3591,55 +3623,55 @@ export function anonymousValidator97(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["enabledGroups"] = anonymousValidator89(
+  result["enabledGroups"] = anonymousValidator376609007(
     value["enabledGroups"],
     `${propertyPath}.enabledGroups`,
     errors,
   );
   keySet.delete("enabledGroups");
-  result["isBrowser"] = anonymousValidator6(
+  result["isBrowser"] = anonymousValidator1308064958(
     value["isBrowser"],
     `${propertyPath}.isBrowser`,
     errors,
   );
   keySet.delete("isBrowser");
-  result["isNode"] = anonymousValidator6(
+  result["isNode"] = anonymousValidator1308064958(
     value["isNode"],
     `${propertyPath}.isNode`,
     errors,
   );
   keySet.delete("isNode");
-  result["isNodeServer"] = anonymousValidator6(
+  result["isNodeServer"] = anonymousValidator1308064958(
     value["isNodeServer"],
     `${propertyPath}.isNodeServer`,
     errors,
   );
   keySet.delete("isNodeServer");
-  result["enabledGenerators"] = anonymousValidator98(
+  result["enabledGenerators"] = anonymousValidator1009589157(
     value["enabledGenerators"],
     `${propertyPath}.enabledGenerators`,
     errors,
   );
   keySet.delete("enabledGenerators");
-  result["useTypescript"] = anonymousValidator6(
+  result["useTypescript"] = anonymousValidator1308064958(
     value["useTypescript"],
     `${propertyPath}.useTypescript`,
     errors,
   );
   keySet.delete("useTypescript");
-  result["dumpStructure"] = anonymousValidator6(
+  result["dumpStructure"] = anonymousValidator1308064958(
     value["dumpStructure"],
     `${propertyPath}.dumpStructure`,
     errors,
   );
   keySet.delete("dumpStructure");
-  result["fileHeader"] = anonymousValidator53(
+  result["fileHeader"] = anonymousValidator1801034940(
     value["fileHeader"],
     `${propertyPath}.fileHeader`,
     errors,
   );
   keySet.delete("fileHeader");
-  result["outputDirectory"] = anonymousValidator53(
+  result["outputDirectory"] = anonymousValidator1801034940(
     value["outputDirectory"],
     `${propertyPath}.outputDirectory`,
     errors,
@@ -3659,7 +3691,7 @@ export function anonymousValidator97(
  * @param {string} parentType
  * @returns {CodeGenGenerateOpts|undefined}
  */
-export function anonymousValidator96(
+export function anonymousValidator1662492116(
   value,
   propertyPath,
   errors = [],
@@ -3669,7 +3701,7 @@ export function anonymousValidator96(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator97(value, propertyPath, errors);
+  return anonymousValidator1311847056(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3678,7 +3710,7 @@ export function anonymousValidator96(
  * @param {string} parentType
  * @returns {CodeGenType|undefined}
  */
-export function anonymousValidator103(
+export function anonymousValidator1930802540(
   value,
   propertyPath,
   errors = [],
@@ -3688,7 +3720,7 @@ export function anonymousValidator103(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator13(value, propertyPath, errors);
+  return anonymousValidator1985175360(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3697,7 +3729,7 @@ export function anonymousValidator103(
  * @param {string} parentType
  * @returns {Object<string, CodeGenType>|undefined}
  */
-export function anonymousValidator102(
+export function anonymousValidator2095439669(
   value,
   propertyPath,
   errors = [],
@@ -3713,13 +3745,13 @@ export function anonymousValidator102(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    const genericKey = anonymousValidator53(
+    const genericKey = anonymousValidator1801034940(
       key,
       `${propertyPath}.$key[${key}]`,
       errors,
     );
     if (genericKey !== undefined) {
-      result[genericKey] = anonymousValidator103(
+      result[genericKey] = anonymousValidator1930802540(
         value[key],
         `${propertyPath}.$value[${key}]`,
         errors,
@@ -3735,7 +3767,7 @@ export function anonymousValidator102(
  * @param {string} parentType
  * @returns {Object<string, Object<string, CodeGenType>>|undefined}
  */
-export function anonymousValidator101(
+export function anonymousValidator1207910150(
   value,
   propertyPath,
   errors = [],
@@ -3751,13 +3783,13 @@ export function anonymousValidator101(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    const genericKey = anonymousValidator53(
+    const genericKey = anonymousValidator1801034940(
       key,
       `${propertyPath}.$key[${key}]`,
       errors,
     );
     if (genericKey !== undefined) {
-      result[genericKey] = anonymousValidator102(
+      result[genericKey] = anonymousValidator2095439669(
         value[key],
         `${propertyPath}.$value[${key}]`,
         errors,
@@ -3773,7 +3805,7 @@ export function anonymousValidator101(
  * @param {string} parentType
  * @returns {CodeGenStructure|undefined}
  */
-export function anonymousValidator100(
+export function anonymousValidator2078855440(
   value,
   propertyPath,
   errors = [],
@@ -3783,7 +3815,7 @@ export function anonymousValidator100(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator101(value, propertyPath, errors);
+  return anonymousValidator1207910150(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3792,7 +3824,7 @@ export function anonymousValidator100(
  * @param {string} parentType
  * @returns {".js"|".ts"|undefined}
  */
-export function anonymousValidator104(
+export function anonymousValidator956850375(
   value,
   propertyPath,
   errors = [],
@@ -3825,7 +3857,7 @@ export function anonymousValidator104(
  * @param {string} parentType
  * @returns {{"relativePath": string, "contents": string, }|undefined}
  */
-export function anonymousValidator107(
+export function anonymousValidator1192877590(
   value,
   propertyPath,
   errors = [],
@@ -3841,13 +3873,13 @@ export function anonymousValidator107(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["relativePath"] = anonymousValidator53(
+  result["relativePath"] = anonymousValidator1801034940(
     value["relativePath"],
     `${propertyPath}.relativePath`,
     errors,
   );
   keySet.delete("relativePath");
-  result["contents"] = anonymousValidator53(
+  result["contents"] = anonymousValidator1801034940(
     value["contents"],
     `${propertyPath}.contents`,
     errors,
@@ -3867,7 +3899,7 @@ export function anonymousValidator107(
  * @param {string} parentType
  * @returns {CodeGenFile|undefined}
  */
-export function anonymousValidator106(
+export function anonymousValidator1038899750(
   value,
   propertyPath,
   errors = [],
@@ -3877,7 +3909,7 @@ export function anonymousValidator106(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  return anonymousValidator107(value, propertyPath, errors);
+  return anonymousValidator1192877590(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -3886,7 +3918,7 @@ export function anonymousValidator106(
  * @param {string} parentType
  * @returns {(CodeGenFile)[]|undefined}
  */
-export function anonymousValidator105(
+export function anonymousValidator753804591(
   value,
   propertyPath,
   errors = [],
@@ -3902,7 +3934,7 @@ export function anonymousValidator105(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator106(
+    result[i] = anonymousValidator1038899750(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3917,7 +3949,7 @@ export function anonymousValidator105(
  * @param {string} parentType
  * @returns {"sqlMissingPrimaryKey"|undefined}
  */
-export function anonymousValidator111(
+export function anonymousValidator473929340(
   value,
   propertyPath,
   errors = [],
@@ -3950,7 +3982,7 @@ export function anonymousValidator111(
  * @param {string} parentType
  * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|undefined}
  */
-export function anonymousValidator110(
+export function anonymousValidator1503040121(
   value,
   propertyPath,
   errors = [],
@@ -3966,13 +3998,13 @@ export function anonymousValidator110(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["key"] = anonymousValidator111(
+  result["key"] = anonymousValidator473929340(
     value["key"],
     `${propertyPath}.key`,
     errors,
   );
   keySet.delete("key");
-  result["typeName"] = anonymousValidator53(
+  result["typeName"] = anonymousValidator1801034940(
     value["typeName"],
     `${propertyPath}.typeName`,
     errors,
@@ -3992,7 +4024,7 @@ export function anonymousValidator110(
  * @param {string} parentType
  * @returns {"sqlForgotEnableQueries"|undefined}
  */
-export function anonymousValidator113(
+export function anonymousValidator1463176289(
   value,
   propertyPath,
   errors = [],
@@ -4025,7 +4057,7 @@ export function anonymousValidator113(
  * @param {string} parentType
  * @returns {{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|undefined}
  */
-export function anonymousValidator112(
+export function anonymousValidator966425260(
   value,
   propertyPath,
   errors = [],
@@ -4041,19 +4073,19 @@ export function anonymousValidator112(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["key"] = anonymousValidator113(
+  result["key"] = anonymousValidator1463176289(
     value["key"],
     `${propertyPath}.key`,
     errors,
   );
   keySet.delete("key");
-  result["typeName"] = anonymousValidator53(
+  result["typeName"] = anonymousValidator1801034940(
     value["typeName"],
     `${propertyPath}.typeName`,
     errors,
   );
   keySet.delete("typeName");
-  result["referencedByType"] = anonymousValidator53(
+  result["referencedByType"] = anonymousValidator1801034940(
     value["referencedByType"],
     `${propertyPath}.referencedByType`,
     errors,
@@ -4073,7 +4105,7 @@ export function anonymousValidator112(
  * @param {string} parentType
  * @returns {"sqlMissingOneToMany"|undefined}
  */
-export function anonymousValidator115(
+export function anonymousValidator1181131883(
   value,
   propertyPath,
   errors = [],
@@ -4106,7 +4138,7 @@ export function anonymousValidator115(
  * @param {string} parentType
  * @returns {{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|undefined}
  */
-export function anonymousValidator114(
+export function anonymousValidator1239750152(
   value,
   propertyPath,
   errors = [],
@@ -4122,31 +4154,31 @@ export function anonymousValidator114(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["key"] = anonymousValidator115(
+  result["key"] = anonymousValidator1181131883(
     value["key"],
     `${propertyPath}.key`,
     errors,
   );
   keySet.delete("key");
-  result["referencedByGroup"] = anonymousValidator53(
+  result["referencedByGroup"] = anonymousValidator1801034940(
     value["referencedByGroup"],
     `${propertyPath}.referencedByGroup`,
     errors,
   );
   keySet.delete("referencedByGroup");
-  result["referencedByType"] = anonymousValidator53(
+  result["referencedByType"] = anonymousValidator1801034940(
     value["referencedByType"],
     `${propertyPath}.referencedByType`,
     errors,
   );
   keySet.delete("referencedByType");
-  result["typeName"] = anonymousValidator53(
+  result["typeName"] = anonymousValidator1801034940(
     value["typeName"],
     `${propertyPath}.typeName`,
     errors,
   );
   keySet.delete("typeName");
-  result["relationOwnKey"] = anonymousValidator53(
+  result["relationOwnKey"] = anonymousValidator1801034940(
     value["relationOwnKey"],
     `${propertyPath}.relationOwnKey`,
     errors,
@@ -4166,7 +4198,7 @@ export function anonymousValidator114(
  * @param {string} parentType
  * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|undefined}
  */
-export function anonymousValidator109(
+export function anonymousValidator149646704(
   value,
   propertyPath,
   errors = [],
@@ -4176,22 +4208,22 @@ export function anonymousValidator109(
     errors.push(buildError(parentType, "undefined", { propertyPath }));
     return undefined;
   }
-  let errorCount = 0;
   const subErrors = [];
+  let errorCount = 0;
   let result = undefined;
-  result = anonymousValidator110(value, propertyPath, subErrors);
+  result = anonymousValidator1503040121(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator112(value, propertyPath, subErrors);
+  result = anonymousValidator966425260(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator114(value, propertyPath, subErrors);
+  result = anonymousValidator1239750152(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -4209,7 +4241,7 @@ export function anonymousValidator109(
  * @param {string} parentType
  * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, })[]|undefined}
  */
-export function anonymousValidator108(
+export function anonymousValidator1017675387(
   value,
   propertyPath,
   errors = [],
@@ -4225,7 +4257,7 @@ export function anonymousValidator108(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator109(
+    result[i] = anonymousValidator149646704(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -4240,7 +4272,7 @@ export function anonymousValidator108(
  * @param {string} parentType
  * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, })[], }|undefined}
  */
-export function anonymousValidator95(
+export function anonymousValidator511866956(
   value,
   propertyPath,
   errors = [],
@@ -4256,43 +4288,43 @@ export function anonymousValidator95(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["options"] = anonymousValidator96(
+  result["options"] = anonymousValidator1662492116(
     value["options"],
     `${propertyPath}.options`,
     errors,
   );
   keySet.delete("options");
-  result["structure"] = anonymousValidator100(
+  result["structure"] = anonymousValidator2078855440(
     value["structure"],
     `${propertyPath}.structure`,
     errors,
   );
   keySet.delete("structure");
-  result["extension"] = anonymousValidator104(
+  result["extension"] = anonymousValidator956850375(
     value["extension"],
     `${propertyPath}.extension`,
     errors,
   );
   keySet.delete("extension");
-  result["importExtension"] = anonymousValidator53(
+  result["importExtension"] = anonymousValidator1801034940(
     value["importExtension"],
     `${propertyPath}.importExtension`,
     errors,
   );
   keySet.delete("importExtension");
-  result["outputFiles"] = anonymousValidator105(
+  result["outputFiles"] = anonymousValidator753804591(
     value["outputFiles"],
     `${propertyPath}.outputFiles`,
     errors,
   );
   keySet.delete("outputFiles");
-  result["rootExports"] = anonymousValidator89(
+  result["rootExports"] = anonymousValidator376609007(
     value["rootExports"],
     `${propertyPath}.rootExports`,
     errors,
   );
   keySet.delete("rootExports");
-  result["errors"] = anonymousValidator108(
+  result["errors"] = anonymousValidator1017675387(
     value["errors"],
     `${propertyPath}.errors`,
     errors,
@@ -4312,7 +4344,7 @@ export function anonymousValidator95(
  * @param {string} parentType
  * @returns {"init"|"collect"|"finish"|undefined}
  */
-export function anonymousValidator117(
+export function anonymousValidator353071056(
   value,
   propertyPath,
   errors = [],
@@ -4345,7 +4377,7 @@ export function anonymousValidator117(
  * @param {string} parentType
  * @returns {{"phase": "init"|"collect"|"finish", }|undefined}
  */
-export function anonymousValidator116(
+export function anonymousValidator427792324(
   value,
   propertyPath,
   errors = [],
@@ -4361,7 +4393,7 @@ export function anonymousValidator116(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["phase"] = anonymousValidator117(
+  result["phase"] = anonymousValidator353071056(
     value["phase"],
     `${propertyPath}.phase`,
     errors,
@@ -4381,7 +4413,7 @@ export function anonymousValidator116(
  * @param {string} parentType
  * @returns {undefined|"input"|"outputRouter"|"outputClient"|undefined}
  */
-export function anonymousValidator119(
+export function anonymousValidator1249541486(
   value,
   propertyPath,
   errors = [],
@@ -4420,7 +4452,7 @@ export function anonymousValidator119(
  * @param {string} parentType
  * @returns {{"isJSON"?: boolean, "nestedIsJSON"?: boolean, "useDefaults"?: boolean, "useTypescript"?: boolean, "isNode"?: boolean, "isBrowser"?: boolean, "suffix"?: string, "fileTypeIO"?: "input"|"outputRouter"|"outputClient", }|undefined}
  */
-export function anonymousValidator118(
+export function anonymousValidator2093265039(
   value,
   propertyPath,
   errors = [],
@@ -4436,49 +4468,49 @@ export function anonymousValidator118(
   }
   const result = Object.create(null);
   const keySet = new Set(Object.keys(value));
-  result["isJSON"] = anonymousValidator30(
+  result["isJSON"] = anonymousValidator334567203(
     value["isJSON"],
     `${propertyPath}.isJSON`,
     errors,
   );
   keySet.delete("isJSON");
-  result["nestedIsJSON"] = anonymousValidator30(
+  result["nestedIsJSON"] = anonymousValidator334567203(
     value["nestedIsJSON"],
     `${propertyPath}.nestedIsJSON`,
     errors,
   );
   keySet.delete("nestedIsJSON");
-  result["useDefaults"] = anonymousValidator30(
+  result["useDefaults"] = anonymousValidator334567203(
     value["useDefaults"],
     `${propertyPath}.useDefaults`,
     errors,
   );
   keySet.delete("useDefaults");
-  result["useTypescript"] = anonymousValidator30(
+  result["useTypescript"] = anonymousValidator334567203(
     value["useTypescript"],
     `${propertyPath}.useTypescript`,
     errors,
   );
   keySet.delete("useTypescript");
-  result["isNode"] = anonymousValidator30(
+  result["isNode"] = anonymousValidator334567203(
     value["isNode"],
     `${propertyPath}.isNode`,
     errors,
   );
   keySet.delete("isNode");
-  result["isBrowser"] = anonymousValidator30(
+  result["isBrowser"] = anonymousValidator334567203(
     value["isBrowser"],
     `${propertyPath}.isBrowser`,
     errors,
   );
   keySet.delete("isBrowser");
-  result["suffix"] = anonymousValidator8(
+  result["suffix"] = anonymousValidator69329591(
     value["suffix"],
     `${propertyPath}.suffix`,
     errors,
   );
   keySet.delete("suffix");
-  result["fileTypeIO"] = anonymousValidator119(
+  result["fileTypeIO"] = anonymousValidator1249541486(
     value["fileTypeIO"],
     `${propertyPath}.fileTypeIO`,
     errors,
