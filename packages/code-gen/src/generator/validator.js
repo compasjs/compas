@@ -18,7 +18,7 @@ import { importCreator } from "./utils.js";
  * @name GeneratorBuildError
  * Calls generated buildError function to construct an error
  *
- * @typedef {function(key: string, info: string): string}
+ * @typedef {function(key: string, info: string, errors: string=): string}
  */
 
 /**
@@ -41,8 +41,8 @@ export function generateValidatorFile(context) {
   };
 
   if (subContext.collectErrors) {
-    buildError = (key, info) => js`
-      errors.push(buildError(parentType, "${key}", ${info}));
+    buildError = (key, info, errors = "errors") => js`
+      ${errors}.push(buildError(parentType, "${key}", ${info}));
       return undefined;
     `;
   } else {
@@ -279,6 +279,48 @@ function addUtilitiesToAnonymousFunctions(context) {
  * @param {ValidatorContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @param {string=} parentType
+ * @returns {string}
+ */
+function generateAnonymousValidatorCall(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+  parentType,
+) {
+  const inlineCall = createInlineValidator(
+    context,
+    imports,
+    type,
+    valueString,
+    propertyPath,
+    errors,
+    prefix,
+  );
+
+  if (inlineCall !== undefined) {
+    return inlineCall;
+  }
+
+  const anonFn = createOrUseAnonymousFunction(context, imports, type);
+
+  return `${prefix} ${anonFn}(${valueString}, ${propertyPath}, ${errors} ${
+    parentType ? `, ${parentType}` : ""
+  });`;
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenType} type
  * @param {boolean} [isTypeRoot=false]
  */
 function createOrUseAnonymousFunction(
@@ -335,18 +377,18 @@ function createOrUseAnonymousFunction(
     context,
     ": any",
   )},
-                                             propertyPath${withTypescript(
-                                               context,
-                                               ": string",
-                                             )},
-                                             errors${withTypescript(
-                                               context,
-                                               ": any[]",
-                                             )} = [],
-                                             parentType${withTypescript(
-                                               context,
-                                               ": string",
-                                             )} = "${type.type}",
+                                              propertyPath${withTypescript(
+                                                context,
+                                                ": string",
+                                              )},
+                                              errors${withTypescript(
+                                                context,
+                                                ": any[]",
+                                              )} = [],
+                                              parentType${withTypescript(
+                                                context,
+                                                ": string",
+                                              )} = "${type.type}",
     ) {
       if (isNil(value)) {
         ${() => {
@@ -452,12 +494,19 @@ function anonymousValidatorAnyOf(context, imports, type) {
     }
 
     ${type.values.map((it) => {
-      const validator = createOrUseAnonymousFunction(context, imports, it);
-
       // Only returns the first error for anyOf types
       if (context.collectErrors) {
         return js`
-          result = ${validator}(value, propertyPath, subErrors);
+          ${generateAnonymousValidatorCall(
+            context,
+            imports,
+            it,
+            "value",
+            "propertyPath",
+            "subErrors",
+            "result = ",
+          )}
+
           if (subErrors.length === errorCount) {
             return result;
           }
@@ -467,7 +516,15 @@ function anonymousValidatorAnyOf(context, imports, type) {
       }
       return js`
         try {
-          return ${validator}(value, propertyPath, subErrors);
+          ${generateAnonymousValidatorCall(
+            context,
+            imports,
+            it,
+            "value",
+            "propertyPath",
+            "subErrors",
+            "return ",
+          )}
         } catch (e) {
           subErrors.push(e);
         }
@@ -484,7 +541,6 @@ function anonymousValidatorAnyOf(context, imports, type) {
  * @param {CodeGenArrayType} type
  */
 function anonymousValidatorArray(context, imports, type) {
-  const validator = createOrUseAnonymousFunction(context, imports, type.values);
   return js`
     ${() => {
       if (type.validator.convert) {
@@ -525,7 +581,15 @@ function anonymousValidatorArray(context, imports, type) {
 
     const result = Array.from({ length: value.length });
     for (let i = 0; i < value.length; ++i) {
-      result[i] = ${validator}(value[i], propertyPath + "[" + i + "]", errors);
+      ${generateAnonymousValidatorCall(
+        context,
+        imports,
+        type.values,
+        `value[i]`,
+        `propertyPath + "[" + i + "]"`,
+        "errors",
+        `result[i] =`,
+      )}
     }
 
     return result;
@@ -577,7 +641,7 @@ function anonymousValidatorBoolean(context, imports, type) {
  * @param {ImportCreator} imports
  */
 function anonymousValidatorDate(context, imports) {
-  const validator = createOrUseAnonymousFunction(context, imports, {
+  const stringType = {
     ...TypeBuilder.getBaseData(),
     type: "string",
     validator: {
@@ -586,11 +650,20 @@ function anonymousValidatorDate(context, imports) {
       pattern:
         "/^(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))$/gi",
     },
-  });
+  };
 
   return js`
     if (typeof value === "string") {
-      value = ${validator}(value, propertyPath, errors, parentType);
+      ${generateAnonymousValidatorCall(
+        context,
+        imports,
+        stringType,
+        "value",
+        "propertyPath",
+        "errors",
+        "value =",
+        `"date"`,
+      )}
     }
     try {
       const date = new Date(value);
@@ -611,17 +684,6 @@ function anonymousValidatorDate(context, imports) {
  * @param {CodeGenGenericType} type
  */
 function anonymousValidatorGeneric(context, imports, type) {
-  const keyValidator = createOrUseAnonymousFunction(
-    context,
-    imports,
-    type.keys,
-  );
-  const valueValidator = createOrUseAnonymousFunction(
-    context,
-    imports,
-    type.values,
-  );
-
   return js`
     if (typeof value !== "object") {
       ${buildError("type", "{ propertyPath }")}
@@ -629,11 +691,25 @@ function anonymousValidatorGeneric(context, imports, type) {
 
     const result = Object.create(null);
     for (const key of Object.keys(value)) {
-      const genericKey = ${keyValidator}(
-        key, propertyPath + ".$key[" + key + "]", errors);
+      ${generateAnonymousValidatorCall(
+        context,
+        imports,
+        type.keys,
+        "key",
+        `propertyPath + ".$key[" + key + "]"`,
+        "errors",
+        `const genericKey = `,
+      )}
       if (genericKey !== undefined) {
-        result[genericKey] =
-          ${valueValidator}(value[key], propertyPath + ".$value[" + key + "]", errors);
+        ${generateAnonymousValidatorCall(
+          context,
+          imports,
+          type.values,
+          "value[key]",
+          `propertyPath + ".$value[" + key + "]"`,
+          "errors",
+          `result[genericKey] = `,
+        )}
       }
     }
 
@@ -731,14 +807,16 @@ function anonymousValidatorObject(context, imports, type) {
 
     ${() => {
       return Object.keys(type.keys).map((it) => {
-        const validator = createOrUseAnonymousFunction(
-          context,
-          imports,
-          type.keys[it],
-        );
-
         return js`
-          result["${it}"] = ${validator}(value["${it}"], propertyPath + ".${it}", errors);
+          ${generateAnonymousValidatorCall(
+            context,
+            imports,
+            type.keys[it],
+            `value["${it}"]`,
+            `propertyPath + ".${it}"`,
+            "errors",
+            `result["${it}"]= `,
+          )}
 
           ${() => {
             if (type.validator.strict) {
@@ -770,14 +848,15 @@ function anonymousValidatorObject(context, imports, type) {
  * @param {CodeGenReferenceType} type
  */
 function anonymousValidatorReference(context, imports, type) {
-  const validator = createOrUseAnonymousFunction(
+  return generateAnonymousValidatorCall(
     context,
     imports,
     type.reference,
+    "value",
+    "propertyPath",
+    "errors",
+    "return ",
   );
-  return js`
-    return ${validator}(value, propertyPath, errors);
-  `;
 }
 
 /**
@@ -894,7 +973,7 @@ function anonymousValidatorString(context, imports, type) {
  * @param {ImportCreator} imports
  */
 function anonymousValidatorUuid(context, imports) {
-  const validator = createOrUseAnonymousFunction(context, imports, {
+  const stringType = {
     ...TypeBuilder.baseData,
     type: "string",
     validator: {
@@ -905,9 +984,216 @@ function anonymousValidatorUuid(context, imports) {
       pattern:
         "/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/gi",
     },
-  });
+  };
+
+  return generateAnonymousValidatorCall(
+    context,
+    imports,
+    stringType,
+    "value",
+    "propertyPath",
+    "errors",
+    "return ",
+    `"uuid"`,
+  );
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @returns {string}
+ */
+function createInlineValidator(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+) {
+  // Just don't deal with default values
+  if (type.isOptional && !isNil(type.defaultValue)) {
+    return undefined;
+  }
+  // Don't deal with nullable types
+  if (type.validator?.allowNull) {
+    return undefined;
+  }
+
+  switch (type.type) {
+    case "any":
+      break;
+    case "anyOf":
+      break;
+    case "array":
+      break;
+    case "boolean":
+      break;
+    case "file":
+      break;
+    case "generic":
+      break;
+    case "number":
+      return inlineValidatorNumber(
+        context,
+        imports,
+        type,
+        valueString,
+        propertyPath,
+        errors,
+        prefix,
+      );
+    case "object":
+      break;
+    case "reference":
+      return inlineValidatorReference(
+        context,
+        imports,
+        type,
+        valueString,
+        propertyPath,
+        errors,
+        prefix,
+      );
+    case "string":
+      return inlineValidatorString(
+        context,
+        imports,
+        type,
+        valueString,
+        propertyPath,
+        errors,
+        prefix,
+      );
+  }
+
+  return undefined;
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenReferenceType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @returns {string}
+ */
+function inlineValidatorReference(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+) {
+  if (!type.isOptional || (type.isOptional && type.reference.isOptional)) {
+    return generateAnonymousValidatorCall(
+      context,
+      imports,
+      type.reference,
+      valueString,
+      propertyPath,
+      errors,
+      prefix,
+    );
+  }
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenNumberType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @returns {string}
+ */
+function inlineValidatorNumber(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+) {
+  if (type.validator.convert || type.validator.floatingPoint) {
+    return;
+  }
+
+  if (isNil(type.oneOf)) {
+    return;
+  }
+
+  const oneOfArray = [...type.oneOf.map((it) => `${it}`)];
+  if (type.isOptional) {
+    oneOfArray.push("undefined");
+  }
 
   return js`
-    return ${validator}(value, propertyPath, errors, parentType);
+    if (${oneOfArray.map((it) => `${valueString} !== ${it}`).join(" && ")}) {
+      const parentType = "number";
+      const oneOf = [ ${type.oneOf.join(", ")} ];
+      ${buildError("oneOf", `{ propertyPath: ${propertyPath}, oneOf }`, errors)}
+    }
+    ${prefix} ${valueString}
+  `;
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenStringType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @returns {string}
+ */
+function inlineValidatorString(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+) {
+  if (
+    type.validator.trim ||
+    type.validator.upperCase ||
+    type.validator.lowerCase ||
+    type.validator.pattern ||
+    type.validator.convert
+  ) {
+    return;
+  }
+
+  if (isNil(type.oneOf)) {
+    return;
+  }
+
+  const oneOfArray = [...type.oneOf.map((it) => `"${it}"`)];
+  if (type.isOptional) {
+    oneOfArray.push("undefined");
+  }
+
+  return js`
+    if (${oneOfArray.map((it) => `${valueString} !== ${it}`).join(" && ")}) {
+      const parentType = "string";
+      const oneOf = [ "${type.oneOf.join('", "')}" ];
+      ${buildError("oneOf", `{ propertyPath: ${propertyPath}, oneOf }`, errors)}
+    }
+    ${prefix} ${valueString}
   `;
 }
