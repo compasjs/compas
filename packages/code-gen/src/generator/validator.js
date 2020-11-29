@@ -12,6 +12,7 @@ import { importCreator } from "./utils.js";
  * @property {boolean} collectErrors
  * @property {Map<string, number>} anonymousFunctionMapping
  * @property {string[]} anonymousFunctions
+ * @property {Map<string, string>} objectSets
  */
 
 /**
@@ -38,6 +39,7 @@ export function generateValidatorFile(context) {
     collectErrors: !context.options.isNodeServer,
     anonymousFunctionMapping: new Map(),
     anonymousFunctions: [],
+    objectSets: new Map(),
   };
 
   if (subContext.collectErrors) {
@@ -68,8 +70,13 @@ export function generateValidatorFile(context) {
     validatorSources.push(...sources);
   }
 
+  const result = [
+    ...subContext.objectSets.values(),
+    ...subContext.anonymousFunctions,
+  ];
+
   context.outputFiles.push({
-    contents: subContext.anonymousFunctions.join("\n"),
+    contents: result.join("\n"),
     relativePath: `./anonymous-validators${context.extension}`,
   });
 
@@ -318,6 +325,27 @@ function generateAnonymousValidatorCall(
 }
 
 /**
+ * Get hash for any object, for max 18 properties deep.
+ * Used to have stable output of unchanged validators
+ *
+ * @param {object} type
+ * @returns {number}
+ */
+function getHashForType(type) {
+  const string = inspect(type, { colors: false, depth: 18 });
+
+  let hash = 0;
+  let i = 0;
+  const len = string.length;
+  while (i < len) {
+    hash = ((hash << 5) - hash + string.charCodeAt(i++)) << 0;
+  }
+  hash = Math.abs(hash);
+
+  return hash;
+}
+
+/**
  * @param {ValidatorContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenType} type
@@ -345,13 +373,7 @@ function createOrUseAnonymousFunction(
     return name;
   }
 
-  let hash = 0;
-  let i = 0;
-  const len = string.length;
-  while (i < len) {
-    hash = ((hash << 5) - hash + string.charCodeAt(i++)) << 0;
-  }
-  hash = Math.abs(hash);
+  const hash = getHashForType(type);
 
   const name = `anonymousValidator${hash}`;
 
@@ -791,6 +813,16 @@ function anonymousValidatorNumber(context, imports, type) {
  * @param {CodeGenObjectType} type
  */
 function anonymousValidatorObject(context, imports, type) {
+  const hash = getHashForType(type);
+  if (type.validator.strict && !context.objectSets.has(hash)) {
+    context.objectSets.set(
+      hash,
+      `const objectKeys${hash} = new Set(["${Object.keys(type.keys).join(
+        `", "`,
+      )}"])`,
+    );
+  }
+
   return js`
     if (typeof value !== "object") {
       ${buildError("type", "{ propertyPath }")}
@@ -801,7 +833,13 @@ function anonymousValidatorObject(context, imports, type) {
     ${() => {
       // Setup a keySet, so we can error when extra keys are present
       if (type.validator.strict) {
-        return js`const keySet = new Set(Object.keys(value));`;
+        return js`
+          for (const key of Object.keys(value)) {
+            if (!objectKeys${hash}.has(key)) {
+              ${buildError("strict", "{ propertyPath, extraKey: key }")}
+            }
+          }
+        `;
       }
     }}
 
@@ -817,25 +855,8 @@ function anonymousValidatorObject(context, imports, type) {
             "errors",
             `result["${it}"]= `,
           )}
-
-          ${() => {
-            if (type.validator.strict) {
-              return js`keySet.delete("${it}")`;
-            }
-          }}
         `;
       });
-    }}
-
-    ${() => {
-      if (type.validator.strict) {
-        return js`
-          if (keySet.size !== 0) {
-            const extraKeys = [ ...keySet ];
-            ${buildError("strict", "{ propertyPath, extraKeys }")}
-          }
-        `;
-      }
     }}
 
     return result;
@@ -1146,7 +1167,8 @@ function inlineValidatorNumber(
       const oneOf = [ ${type.oneOf.join(", ")} ];
       ${buildError("oneOf", `{ propertyPath: ${propertyPath}, oneOf }`, errors)}
     }
-    ${prefix} ${valueString}
+    ${prefix}
+    ${valueString}
   `;
 }
 
@@ -1194,6 +1216,6 @@ function inlineValidatorString(
       const oneOf = [ "${type.oneOf.join('", "')}" ];
       ${buildError("oneOf", `{ propertyPath: ${propertyPath}, oneOf }`, errors)}
     }
-    ${prefix} ${valueString}
+    ${`${prefix} ${valueString}`}
   `;
 }
