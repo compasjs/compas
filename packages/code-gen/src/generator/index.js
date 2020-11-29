@@ -10,8 +10,11 @@ import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { createPartialTypes } from "./sql/partial-type.js";
 import { generateBaseQueries } from "./sql/query-basics.js";
+import {
+  createQueryBuilderTypes,
+  generateQueryBuilders,
+} from "./sql/query-builder.js";
 import { generateQueryPartials } from "./sql/query-partials.js";
-import { generateTraversalQueries } from "./sql/query-traversal.js";
 import { generateSqlStructure } from "./sql/structure.js";
 import {
   addShortNamesToQueryEnabledObjects,
@@ -120,11 +123,14 @@ export async function generate(logger, options, structure) {
 
     addShortNamesToQueryEnabledObjects(context);
     generateSqlStructure(context);
+
     createWhereTypes(context);
     createPartialTypes(context);
+    createQueryBuilderTypes(context);
+
     generateQueryPartials(context);
     generateBaseQueries(context);
-    generateTraversalQueries(context);
+    generateQueryBuilders(context);
 
     exitOnErrorsOrReturn(context);
   }

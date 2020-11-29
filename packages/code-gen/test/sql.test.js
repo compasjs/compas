@@ -36,6 +36,12 @@ test("code-gen/e2e/sql", async (t) => {
     t.ok(isNil(dbUser.deletedAt));
     t.equal(dbUser.nickName, "test");
 
+    // Transformer
+    t.equal(typeof dbUser.createdAt, "object");
+    t.equal(typeof dbUser.updatedAt, "object");
+    t.ok(dbUser.createdAt.toISOString());
+    t.equal(dbUser.deletedAt, undefined);
+
     user = dbUser;
   });
 
@@ -51,6 +57,13 @@ test("code-gen/e2e/sql", async (t) => {
 
     t.ok(dbCategory);
     t.equal(dbCategory.label, "Category A");
+
+    // Transformer
+    t.equal(typeof dbCategory.createdAt, "object");
+    t.equal(typeof dbCategory.updatedAt, "object");
+    t.ok(dbCategory.createdAt.toISOString());
+    t.equal(dbCategory.deletedAt, undefined);
+
     category = dbCategory;
   });
 
@@ -73,6 +86,12 @@ test("code-gen/e2e/sql", async (t) => {
 
     t.equal(dbPost1.writer, user.id);
     t.equal(dbPost2.writer, user.id);
+
+    // Transformer
+    t.equal(typeof dbPost1.createdAt, "object");
+    t.equal(typeof dbPost1.updatedAt, "object");
+    t.ok(dbPost1.createdAt.toISOString());
+    t.equal(dbPost1.deletedAt, undefined);
 
     await client.queries.postCategoryInsert(sql, [
       {
@@ -120,12 +139,23 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("get posts for user", async (t) => {
     const result = await client
-      .traversePost({ id: post.id })
-      .getWriter()
-      .getPosts()
+      .queryPost({
+        viaWriter: {
+          viaPosts: {
+            where: {
+              id: post.id,
+            },
+          },
+        },
+      })
       .exec(sql);
 
     t.equal(result.length, 2);
+
+    // Transformer
+    t.equal(typeof result[0].createdAt, "object");
+    t.equal(typeof result[0].updatedAt, "object");
+    t.notEqual(result[0].deletedAt, null, "deletedAt is undefined");
   });
 
   t.test("update user nick name", async (t) => {
@@ -137,6 +167,12 @@ test("code-gen/e2e/sql", async (t) => {
 
     t.notEqual(dbUser.updatedAt.getTime(), user.updatedAt.getTime());
     t.equal(dbUser.nickName, "TestUser");
+
+    // Transformer
+    t.equal(typeof dbUser.createdAt, "object");
+    t.equal(typeof dbUser.updatedAt, "object");
+    t.ok(dbUser.createdAt.toISOString());
+    t.equal(dbUser.deletedAt, undefined);
   });
 
   t.test("query filter by 'in' statements", async () => {
@@ -153,9 +189,120 @@ test("code-gen/e2e/sql", async (t) => {
     });
   });
 
+  t.test("user QueryBuilder", async (t) => {
+    const [dbUser] = await client
+      .queryUser({
+        where: {
+          id: user.id,
+        },
+        posts: {
+          writer: {
+            posts: {},
+          },
+        },
+      })
+      .exec(sql);
+
+    t.ok(Array.isArray(dbUser.posts));
+    t.equal(dbUser.posts.length, 2);
+    t.equal(dbUser.id, user.id);
+
+    // Nested posts contain the same writer id
+    for (const post of dbUser.posts) {
+      t.equal(post.writer.id, user.id);
+      t.ok(Array.isArray(post.writer.posts));
+      t.equal(post.writer.posts.length, 2);
+      t.equal(post.writer.posts[0].writer, dbUser.id);
+    }
+  });
+
+  t.test("category queryBuilder", async (t) => {
+    // For each category:
+    // - Get a single post,
+    // - For that post get the writer as author with all posts
+    // - Also get all categories for that post
+    const categories = await client
+      .queryCategory({
+        where: {
+          label: category.label,
+        },
+        posts: {
+          limit: 1,
+          post: {
+            writer: {
+              as: "author",
+              where: {
+                id: user.id,
+              },
+              posts: {},
+            },
+            categories: {
+              category: {},
+            },
+          },
+        },
+        meta: {},
+      })
+      .exec(sql);
+
+    t.ok(Array.isArray(categories));
+    t.equal(categories.length, 1);
+    t.equal(categories[0].posts[0].post.author.id, user.id);
+  });
+
+  t.test("traverse via queryUser", async (t) => {
+    const [dbUser] = await client
+      .queryUser({
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
+        },
+      })
+      .exec(sql);
+
+    t.equal(dbUser.id, user.id);
+  });
+
+  t.test("traverse via queryCategory", async (t) => {
+    const builder = {
+      viaPosts: {
+        viaPost: {
+          viaWriter: {
+            where: {
+              id: user.id,
+            },
+            viaPosts: {
+              viaCategories: {
+                viaCategory: {
+                  viaMeta: {
+                    where: {
+                      isHighlighted: false,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      meta: {},
+      posts: {
+        post: {},
+      },
+      offset: 0,
+      limit: 1,
+    };
+
+    const [dbCategory] = await client.queryCategory(builder).exec(sql);
+
+    t.equal(dbCategory.id, category.id);
+  });
+
   t.test("soft delete post", async (t) => {
     const originalCount = await client.queries.postCount(sql);
     await client.queries.postDelete(sql, { id: post.id });
+
     const newCount = await client.queries.postCount(sql);
     const newCountWithDeleted = await client.queries.postCount(sql, {
       deletedAtIncludeNotNull: true,
@@ -173,6 +320,19 @@ test("code-gen/e2e/sql", async (t) => {
 
     const postCount = await client.queries.postCount(sql);
     t.equal(postCount, 0, "soft cascading deletes");
+
+    const [dbUser] = await client.queries.userSelect(sql, {
+      id: user.id,
+      deletedAtIncludeNotNull: true,
+    });
+
+    // Transformer
+    t.equal(typeof dbUser.createdAt, "object");
+    t.ok(dbUser.createdAt.toISOString());
+    t.equal(typeof dbUser.updatedAt, "object");
+    t.ok(dbUser.updatedAt.toISOString());
+    t.equal(typeof dbUser.deletedAt, "object");
+    t.ok(dbUser.deletedAt.toISOString());
   });
 
   t.test("unknown key 'where'", async (t) => {
