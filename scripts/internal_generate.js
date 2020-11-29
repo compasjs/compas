@@ -30,7 +30,7 @@ async function main() {
     outputDirectory: `packages/store/src/generated`,
     enabledGroups: ["store"],
     isNode: true,
-    enabledGenerators: ["type", "sql"],
+    enabledGenerators: ["type", "sql", "validator"],
     dumpStructure: true,
     dumpPostgres: true,
   });

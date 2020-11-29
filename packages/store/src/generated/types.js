@@ -94,24 +94,24 @@ export const __generated__ = true;
  * @typedef {{"where"?: StoreFileWhere, "as"?: string, "limit"?: number, "offset"?: number, "group"?: StoreFileGroupQueryBuilder, "viaGroup"?: StoreFileGroupQueryTraverser, "groupView"?: StoreFileGroupViewQueryBuilder, "viaGroupView"?: StoreFileGroupViewQueryTraverser, }}
  */
 /**
- * @name StoreFileQueryTraverser
- * @typedef {{"where"?: StoreFileWhere, "limit"?: number, "offset"?: number, "viaGroup"?: StoreFileGroupQueryTraverser, "viaGroupView"?: StoreFileGroupViewQueryTraverser, }}
- */
-/**
  * @name StoreFileGroupQueryBuilder
  * @typedef {{"where"?: StoreFileGroupWhere, "as"?: string, "limit"?: number, "offset"?: number, "file"?: StoreFileQueryBuilder, "viaFile"?: StoreFileQueryTraverser, "parent"?: StoreFileGroupQueryBuilder, "viaParent"?: StoreFileGroupQueryTraverser, "children"?: StoreFileGroupQueryBuilder, "viaChildren"?: StoreFileGroupQueryTraverser, }}
+ */
+/**
+ * @name StoreFileQueryTraverser
+ * @typedef {{"where"?: StoreFileWhere, "limit"?: number, "offset"?: number, "viaGroup"?: StoreFileGroupQueryTraverser, "viaGroupView"?: StoreFileGroupViewQueryTraverser, }}
  */
 /**
  * @name StoreFileGroupQueryTraverser
  * @typedef {{"where"?: StoreFileGroupWhere, "limit"?: number, "offset"?: number, "viaFile"?: StoreFileQueryTraverser, "viaParent"?: StoreFileGroupQueryTraverser, "viaChildren"?: StoreFileGroupQueryTraverser, }}
  */
 /**
- * @name StoreFileGroupViewQueryBuilder
- * @typedef {{"where"?: StoreFileGroupViewWhere, "as"?: string, "limit"?: number, "offset"?: number, "file"?: StoreFileQueryBuilder, "viaFile"?: StoreFileQueryTraverser, "parent"?: StoreFileGroupViewQueryBuilder, "viaParent"?: StoreFileGroupViewQueryTraverser, "children"?: StoreFileGroupViewQueryBuilder, "viaChildren"?: StoreFileGroupViewQueryTraverser, }}
- */
-/**
  * @name StoreFileGroupViewQueryTraverser
  * @typedef {{"where"?: StoreFileGroupViewWhere, "limit"?: number, "offset"?: number, "viaFile"?: StoreFileQueryTraverser, "viaParent"?: StoreFileGroupViewQueryTraverser, "viaChildren"?: StoreFileGroupViewQueryTraverser, }}
+ */
+/**
+ * @name StoreFileGroupViewQueryBuilder
+ * @typedef {{"where"?: StoreFileGroupViewWhere, "as"?: string, "limit"?: number, "offset"?: number, "file"?: StoreFileQueryBuilder, "viaFile"?: StoreFileQueryTraverser, "parent"?: StoreFileGroupViewQueryBuilder, "viaParent"?: StoreFileGroupViewQueryTraverser, "children"?: StoreFileGroupViewQueryBuilder, "viaChildren"?: StoreFileGroupViewQueryTraverser, }}
  */
 /**
  * @name StoreJobQueryBuilder

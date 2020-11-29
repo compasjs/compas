@@ -4,6 +4,32 @@
 import * as queries from "./query-basics.js";
 
 export { structure, structureString, storeStructure } from "./structure.js";
+export { validatorSetError } from "./anonymous-validators.js";
+export {
+  validateStoreFile,
+  validateStoreFileGroup,
+  validateStoreFileGroupMeta,
+  validateStoreFileGroupView,
+  validateStoreFileMeta,
+  validateStoreJob,
+  validateStoreJobInterval,
+  validateStoreSession,
+  validateStoreFileWhere,
+  validateStoreFileGroupWhere,
+  validateStoreFileGroupViewWhere,
+  validateStoreJobWhere,
+  validateStoreSessionWhere,
+  validateStoreFileQueryBuilder,
+  validateStoreFileQueryTraverser,
+  validateStoreFileGroupQueryBuilder,
+  validateStoreFileGroupQueryTraverser,
+  validateStoreFileGroupViewQueryBuilder,
+  validateStoreFileGroupViewQueryTraverser,
+  validateStoreJobQueryBuilder,
+  validateStoreJobQueryTraverser,
+  validateStoreSessionQueryBuilder,
+  validateStoreSessionQueryTraverser,
+} from "./validators.js";
 export * from "./query-partials.js";
 export { queries };
 export {

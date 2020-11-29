@@ -101,6 +101,22 @@ export async function generate(logger, options, structure) {
   setupMemoizedTypes(context);
   exitOnErrorsOrReturn(context);
 
+  // Do initial sql checks and load in the types
+  // This way the validators are generated
+  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+    doSqlChecks(context);
+    exitOnErrorsOrReturn(context);
+
+    addShortNamesToQueryEnabledObjects(context);
+    generateSqlStructure(context);
+
+    createWhereTypes(context);
+    createPartialTypes(context);
+    createQueryBuilderTypes(context);
+
+    exitOnErrorsOrReturn(context);
+  }
+
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
     generateValidatorFile(context);
     exitOnErrorsOrReturn(context);
@@ -118,22 +134,13 @@ export async function generate(logger, options, structure) {
     exitOnErrorsOrReturn(context);
   }
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
-    doSqlChecks(context);
-    exitOnErrorsOrReturn(context);
-
-    addShortNamesToQueryEnabledObjects(context);
-    generateSqlStructure(context);
-
-    createWhereTypes(context);
-    createPartialTypes(context);
-    createQueryBuilderTypes(context);
-
     generateQueryPartials(context);
     generateBaseQueries(context);
     generateQueryBuilders(context);
 
     exitOnErrorsOrReturn(context);
   }
+
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);
   }

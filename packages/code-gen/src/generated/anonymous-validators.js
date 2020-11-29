@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 const objectKeys1283136356 = new Set(["uniqueName", "group", "name"]);
-const objectKeys511866956 = new Set([
+const objectKeys710084980 = new Set([
   "options",
   "structure",
   "extension",
@@ -32,6 +32,7 @@ const objectKeys1239750152 = new Set([
   "typeName",
   "relationOwnKey",
 ]);
+const objectKeys1573063370 = new Set(["key"]);
 const objectKeys427792324 = new Set(["phase"]);
 const objectKeys2093265039 = new Set([
   "isJSON",
@@ -3124,9 +3125,52 @@ export function anonymousValidator1239750152(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|undefined}
+ * @returns {{"key": "sqlEnableValidator", }|undefined}
  */
-export function anonymousValidator149646704(
+export function anonymousValidator1573063370(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    errors.push(buildError(parentType, "undefined", { propertyPath }));
+    return undefined;
+  }
+  if (typeof value !== "object") {
+    errors.push(buildError(parentType, "type", { propertyPath }));
+    return undefined;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1573063370.has(key)) {
+      errors.push(
+        buildError(parentType, "strict", { propertyPath, extraKey: key }),
+      );
+      return undefined;
+    }
+  }
+  if (value["key"] !== "sqlEnableValidator") {
+    const parentType = "string";
+    const oneOf = ["sqlEnableValidator"];
+    errors.push(
+      buildError(parentType, "oneOf", {
+        propertyPath: `${propertyPath}.key`,
+        oneOf,
+      }),
+    );
+  }
+  result["key"] = value["key"] ?? undefined;
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {*[]} errors
+ * @param {string} parentType
+ * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|undefined}
+ */
+export function anonymousValidator527840024(
   value,
   propertyPath,
   errors = [],
@@ -3157,6 +3201,12 @@ export function anonymousValidator149646704(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  result = anonymousValidator1573063370(value, propertyPath, subErrors);
+  if (subErrors.length === errorCount) {
+    return result;
+  }
+  subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+  errorCount = subErrors.length;
   errors.push(
     buildError(parentType, "type", { propertyPath, errors: subErrors }),
   );
@@ -3167,9 +3217,9 @@ export function anonymousValidator149646704(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, })[]|undefined}
+ * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", })[]|undefined}
  */
-export function anonymousValidator1017675387(
+export function anonymousValidator1686428333(
   value,
   propertyPath,
   errors = [],
@@ -3185,7 +3235,7 @@ export function anonymousValidator1017675387(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator149646704(
+    result[i] = anonymousValidator527840024(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3198,9 +3248,9 @@ export function anonymousValidator1017675387(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", })[], }|undefined}
  */
-export function anonymousValidator511866956(
+export function anonymousValidator710084980(
   value,
   propertyPath,
   errors = [],
@@ -3216,7 +3266,7 @@ export function anonymousValidator511866956(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    if (!objectKeys511866956.has(key)) {
+    if (!objectKeys710084980.has(key)) {
       errors.push(
         buildError(parentType, "strict", { propertyPath, extraKey: key }),
       );
@@ -3259,7 +3309,7 @@ export function anonymousValidator511866956(
     `${propertyPath}.rootExports`,
     errors,
   );
-  result["errors"] = anonymousValidator1017675387(
+  result["errors"] = anonymousValidator1686428333(
     value["errors"],
     `${propertyPath}.errors`,
     errors,

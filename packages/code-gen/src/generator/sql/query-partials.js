@@ -1,11 +1,12 @@
 import { js } from "../tag/index.js";
+import { importCreator } from "../utils.js";
 import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
 import {
   getPrimaryKeyWithType,
   getQueryEnabledObjects,
   getSortedKeysForType,
 } from "./utils.js";
-import { getWhereFieldSet, getWherePartial } from "./where-type.js";
+import { getWherePartial } from "./where-type.js";
 
 /**
  * Generate all usefull query partials
@@ -15,10 +16,23 @@ import { getWhereFieldSet, getWherePartial } from "./where-type.js";
 export function generateQueryPartials(context) {
   const partials = [];
 
+  const imports = importCreator();
+  imports.destructureImport("AppError", "@lbu/stdlib");
+  imports.destructureImport("isStaging", "@lbu/stdlib");
+  imports.destructureImport("query", "@lbu/store");
+  imports.destructureImport("isQueryObject", "@lbu/store");
+  imports.destructureImport(
+    "validatorSetError",
+    `./anonymous-validators${context.importExtension}`,
+  );
+
   // Generate field sets and the check function
-  partials.push(knownFieldsCheckFunction());
+  partials.push(
+    knownFieldsCheckFunction(),
+    "validatorSetError((key, info) => AppError.serverError({ key, info }));",
+  );
+
   for (const type of getQueryEnabledObjects(context)) {
-    partials.push(getWhereFieldSet(context, type));
     if (!type.queryOptions.isView) {
       partials.push(getFieldSet(context, type));
     }
@@ -27,8 +41,14 @@ export function generateQueryPartials(context) {
   // Generate the query partials
   for (const type of getQueryEnabledObjects(context)) {
     partials.push(getFieldsPartial(context, type));
-    partials.push(getWherePartial(context, type));
     partials.push(getOrderPartial(context, type));
+
+    imports.destructureImport(
+      `validate${type.uniqueName}Where`,
+      `./validators${context.importExtension}`,
+    );
+    partials.push(getWherePartial(context, type));
+
     if (!type.queryOptions.isView) {
       partials.push(getInsertPartial(context, type));
       partials.push(getUpdatePartial(context, type));
@@ -36,8 +56,7 @@ export function generateQueryPartials(context) {
   }
 
   const file = js`
-    import { AppError, isStaging } from "@lbu/stdlib";
-    import { query, isQueryObject } from "@lbu/store";
+    ${imports.print()}
 
     ${partials}
   `;
@@ -69,11 +88,11 @@ export function knownFieldsCheckFunction() {
      * @param {*} value
      */
     function checkFieldsInSet(entity, subType, set, value) {
-      if (isStaging()) {      
+      if (isStaging()) {
         for (const key of Object.keys(value)) {
           if (!set.has(key) && value[key] !== undefined) {
             throw new AppError(\`query.$\{entity}.$\{subType}Fields\`, 500, {
-              unknownKey: key, knownKeys: [ ...set ],
+              extraKey: key, knownKeys: [ ...set ],
             });
           }
         }

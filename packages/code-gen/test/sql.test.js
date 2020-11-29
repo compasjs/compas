@@ -10,6 +10,11 @@ mainTestFn(import.meta);
 
 test("code-gen/e2e/sql", async (t) => {
   const client = await import("../../../generated/testing/sql/index.js");
+  const validators = await import(
+    "../../../generated/testing/sql/anonymous-validators.js"
+  );
+
+  validators.validatorSetError(AppError.validationError);
 
   let sql = undefined;
 
@@ -341,30 +346,31 @@ test("code-gen/e2e/sql", async (t) => {
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
-      t.equal(e.key, `query.user.whereFields`);
-      t.equal(e.info.unknownKey, "foo");
+      t.equal(e.key, `validator.object.strict`);
+
+      t.equal(e.info.extraKey, "foo");
     }
   });
 
-  t.test("unknown key 'update'", async (t) => {
+  t.test("extra key 'update'", async (t) => {
     try {
       await client.queries.postUpdate(sql, { baz: true }, { foo: "bar" });
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.key, `query.post.updateFields`);
-      t.equal(e.info.unknownKey, "baz");
+      t.equal(e.info.extraKey, "baz");
     }
   });
 
-  t.test("unknown key 'insert'", async (t) => {
+  t.test("extra key 'insert'", async (t) => {
     try {
       await client.queries.categoryInsert(sql, { quix: 6 });
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.key, `query.category.insertFields`);
-      t.equal(e.info.unknownKey, "quix");
+      t.equal(e.info.extraKey, "quix");
     }
   });
 

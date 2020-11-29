@@ -15,6 +15,13 @@ import {
   sessionOrderBy,
   sessionWhere,
 } from "./query-partials.js";
+import {
+  validateStoreFileGroupQueryBuilder,
+  validateStoreFileGroupViewQueryBuilder,
+  validateStoreFileQueryBuilder,
+  validateStoreJobQueryBuilder,
+  validateStoreSessionQueryBuilder,
+} from "./validators.js";
 /**
  * @param {StoreFileQueryBuilder|StoreFileQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial
@@ -129,7 +136,7 @@ ${offsetLimitQb}
   return query`
 FROM "file" f
 ${joinQb}
-WHERE ${fileWhere(builder.where)} ${wherePartial}
+WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
@@ -144,6 +151,7 @@ WHERE ${fileWhere(builder.where)} ${wherePartial}
  */
 export function queryFile(builder = {}) {
   const joinedKeys = [];
+  validateStoreFileQueryBuilder(builder);
   if (builder.group) {
     joinedKeys.push(`'${builder.group?.as ?? "group"}'`, '"ljl_0"."result"');
   }
@@ -339,7 +347,9 @@ ${offsetLimitQb}
   return query`
 FROM "fileGroup" fg
 ${joinQb}
-WHERE ${fileGroupWhere(builder.where)} ${wherePartial}
+WHERE ${fileGroupWhere(builder.where, "fg.", {
+    skipValidator: true,
+  })} ${wherePartial}
 `;
 }
 /**
@@ -354,6 +364,7 @@ WHERE ${fileGroupWhere(builder.where)} ${wherePartial}
  */
 export function queryFileGroup(builder = {}) {
   const joinedKeys = [];
+  validateStoreFileGroupQueryBuilder(builder);
   if (builder.file) {
     joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_2"."result"');
   }
@@ -558,7 +569,9 @@ ${offsetLimitQb}
   return query`
 FROM "fileGroupView" fgv
 ${joinQb}
-WHERE ${fileGroupViewWhere(builder.where)} ${wherePartial}
+WHERE ${fileGroupViewWhere(builder.where, "fgv.", {
+    skipValidator: true,
+  })} ${wherePartial}
 `;
 }
 /**
@@ -573,6 +586,7 @@ WHERE ${fileGroupViewWhere(builder.where)} ${wherePartial}
  */
 export function queryFileGroupView(builder = {}) {
   const joinedKeys = [];
+  validateStoreFileGroupViewQueryBuilder(builder);
   if (builder.file) {
     joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_5"."result"');
   }
@@ -621,7 +635,7 @@ function internalQueryJob(builder = {}, wherePartial) {
   return query`
 FROM "job" j
 ${joinQb}
-WHERE ${jobWhere(builder.where)} ${wherePartial}
+WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
@@ -636,6 +650,7 @@ WHERE ${jobWhere(builder.where)} ${wherePartial}
  */
 export function queryJob(builder = {}) {
   const joinedKeys = [];
+  validateStoreJobQueryBuilder(builder);
   const qb = query`
 SELECT to_jsonb(j.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
@@ -672,7 +687,9 @@ function internalQuerySession(builder = {}, wherePartial) {
   return query`
 FROM "session" s
 ${joinQb}
-WHERE ${sessionWhere(builder.where)} ${wherePartial}
+WHERE ${sessionWhere(builder.where, "s.", {
+    skipValidator: true,
+  })} ${wherePartial}
 `;
 }
 /**
@@ -687,6 +704,7 @@ WHERE ${sessionWhere(builder.where)} ${wherePartial}
  */
 export function querySession(builder = {}) {
   const joinedKeys = [];
+  validateStoreSessionQueryBuilder(builder);
   const qb = query`
 SELECT to_jsonb(s.*) || jsonb_build_object(${query([
     joinedKeys.join(","),

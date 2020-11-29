@@ -89,7 +89,7 @@ export const generateSettings = {
   sql: {
     outputDirectory: "./generated/testing/sql",
     enabledGroups: ["sql"],
-    enabledGenerators: ["type", "sql"],
+    enabledGenerators: ["type", "sql", "validator"],
     isNodeServer: true,
   },
 };

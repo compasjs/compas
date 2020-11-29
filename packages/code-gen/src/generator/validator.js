@@ -57,6 +57,7 @@ export function generateValidatorFile(context) {
   addUtilitiesToAnonymousFunctions(subContext);
 
   const imports = importCreator();
+  const anonymousValidatorImports = importCreator();
   const rootExports = [];
   const validatorSources = [];
 
@@ -64,6 +65,7 @@ export function generateValidatorFile(context) {
     const { exportNames, sources } = generateValidatorsForGroup(
       subContext,
       imports,
+      anonymousValidatorImports,
       group,
     );
 
@@ -72,6 +74,7 @@ export function generateValidatorFile(context) {
   }
 
   const result = [
+    anonymousValidatorImports.print(),
     ...subContext.objectSets.values(),
     ...subContext.anonymousFunctions,
   ];
@@ -113,10 +116,11 @@ function withTypescript(context, output) {
  *
  * @param {ValidatorContext} context
  * @param {ImportCreator} imports
+ * @param {ImportCreator} anonymousImports
  * @param {string} group
  * @returns {{ exportNames: string[], sources: string[] }}
  */
-function generateValidatorsForGroup(context, imports, group) {
+function generateValidatorsForGroup(context, imports, anonymousImports, group) {
   const data = context.context.structure[group];
 
   const mapping = {};
@@ -137,7 +141,15 @@ function generateValidatorsForGroup(context, imports, group) {
       );
     }
 
-    mapping[name] = createOrUseAnonymousFunction(context, imports, type, true);
+    mapping[name] = createOrUseAnonymousFunction(
+      context,
+      anonymousImports,
+      type,
+    );
+    imports.destructureImport(
+      mapping[name],
+      `./anonymous-validators${context.context.importExtension}`,
+    );
     exportNames.push(`validate${type.uniqueName}`);
   }
 
@@ -180,12 +192,12 @@ function generateValidatorsForGroup(context, imports, group) {
         )}, errors: undefined } | { data: undefined, errors: any[] }`,
       )}
       {
-        const errors${withTypescript(context, ": any[]")} = [];
-        const data = ${mapping[name]}(value, propertyPath, errors);
 
         ${() => {
           if (context.collectErrors) {
             return js`
+              const errors${withTypescript(context, ": any[]")} = [];
+              const data = ${mapping[name]}(value, propertyPath, errors);
               if (errors.length > 0) {
                 return { data: undefined, errors };
               } else {
@@ -196,7 +208,7 @@ function generateValidatorsForGroup(context, imports, group) {
             `;
           }
           return js`
-            return data;
+            return ${mapping[name]}(value, propertyPath, []);
           `;
         }}
       }
@@ -350,28 +362,13 @@ function getHashForType(type) {
  * @param {ValidatorContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenType} type
- * @param {boolean} [isTypeRoot=false]
  */
-function createOrUseAnonymousFunction(
-  context,
-  imports,
-  type,
-  isTypeRoot = false,
-) {
+function createOrUseAnonymousFunction(context, imports, type) {
   const string = inspect(type, { colors: false, depth: 18 });
 
   // Function for this type already exists
   if (context.anonymousFunctionMapping.has(string)) {
-    const name = `anonymousValidator${context.anonymousFunctionMapping.get(
-      string,
-    )}`;
-    if (isTypeRoot) {
-      imports.destructureImport(
-        name,
-        `./anonymous-validators${context.context.importExtension}`,
-      );
-    }
-    return name;
+    return `anonymousValidator${context.anonymousFunctionMapping.get(string)}`;
   }
 
   const hash = getHashForType(type);
@@ -379,12 +376,6 @@ function createOrUseAnonymousFunction(
   const name = `anonymousValidator${hash}`;
 
   context.anonymousFunctionMapping.set(string, hash);
-  if (isTypeRoot) {
-    imports.destructureImport(
-      name,
-      `./anonymous-validators${context.context.importExtension}`,
-    );
-  }
 
   const fn = js`
     /**
@@ -1236,8 +1227,7 @@ function inlineValidatorBoolean(
       type.isOptional
         ? `!isNil(${valueString}) && `
         : `isNil(${valueString}) ||`
-    }typeof ${valueString} !==
-    "boolean"
+    }typeof ${valueString} !== "boolean"
     )
     {
       const parentType = "boolean";

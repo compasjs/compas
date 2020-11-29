@@ -2,7 +2,15 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isStaging } from "@lbu/stdlib";
-import { query, isQueryObject } from "@lbu/store";
+import { isQueryObject, query } from "@lbu/store";
+import { validatorSetError } from "./anonymous-validators.js";
+import {
+  validateStoreFileGroupViewWhere,
+  validateStoreFileGroupWhere,
+  validateStoreFileWhere,
+  validateStoreJobWhere,
+  validateStoreSessionWhere,
+} from "./validators.js";
 /**
  * @param {string} entity
  * @param {string} subType
@@ -14,51 +22,14 @@ function checkFieldsInSet(entity, subType, set, value) {
     for (const key of Object.keys(value)) {
       if (!set.has(key) && value[key] !== undefined) {
         throw new AppError(`query.${entity}.${subType}Fields`, 500, {
-          unknownKey: key,
+          extraKey: key,
           knownKeys: [...set],
         });
       }
     }
   }
 }
-const fileWhereFieldSet = new Set([
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idLike",
-  "idNotLike",
-  "bucketName",
-  "bucketNameNotEqual",
-  "bucketNameIn",
-  "bucketNameNotIn",
-  "bucketNameLike",
-  "bucketNameNotLike",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-  "deletedAt",
-  "deletedAtNotEqual",
-  "deletedAtIn",
-  "deletedAtNotIn",
-  "deletedAtGreaterThan",
-  "deletedAtLowerThan",
-  "deletedAtIncludeNotNull",
-]);
+validatorSetError((key, info) => AppError.serverError({ key, info }));
 const fileFieldSet = new Set([
   "bucketName",
   "contentLength",
@@ -69,54 +40,6 @@ const fileFieldSet = new Set([
   "createdAt",
   "updatedAt",
   "deletedAt",
-]);
-const fileGroupWhereFieldSet = new Set([
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idLike",
-  "idNotLike",
-  "file",
-  "fileNotEqual",
-  "fileIn",
-  "fileNotIn",
-  "fileLike",
-  "fileNotLike",
-  "fileIsNull",
-  "fileIsNotNull",
-  "parent",
-  "parentNotEqual",
-  "parentIn",
-  "parentNotIn",
-  "parentLike",
-  "parentNotLike",
-  "parentIsNull",
-  "parentIsNotNull",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-  "deletedAt",
-  "deletedAtNotEqual",
-  "deletedAtIn",
-  "deletedAtNotIn",
-  "deletedAtGreaterThan",
-  "deletedAtLowerThan",
-  "deletedAtIncludeNotNull",
 ]);
 const fileGroupFieldSet = new Set([
   "name",
@@ -129,97 +52,6 @@ const fileGroupFieldSet = new Set([
   "updatedAt",
   "deletedAt",
 ]);
-const fileGroupViewWhereFieldSet = new Set([
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idLike",
-  "idNotLike",
-  "isDirectory",
-  "file",
-  "fileNotEqual",
-  "fileIn",
-  "fileNotIn",
-  "fileLike",
-  "fileNotLike",
-  "fileIsNull",
-  "fileIsNotNull",
-  "parent",
-  "parentNotEqual",
-  "parentIn",
-  "parentNotIn",
-  "parentLike",
-  "parentNotLike",
-  "parentIsNull",
-  "parentIsNotNull",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-  "deletedAt",
-  "deletedAtNotEqual",
-  "deletedAtIn",
-  "deletedAtNotIn",
-  "deletedAtGreaterThan",
-  "deletedAtLowerThan",
-  "deletedAtIncludeNotNull",
-]);
-const jobWhereFieldSet = new Set([
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idGreaterThan",
-  "idLowerThan",
-  "isComplete",
-  "isCompleteIsNull",
-  "isCompleteIsNotNull",
-  "name",
-  "nameNotEqual",
-  "nameIn",
-  "nameNotIn",
-  "nameLike",
-  "nameNotLike",
-  "scheduledAt",
-  "scheduledAtNotEqual",
-  "scheduledAtIn",
-  "scheduledAtNotIn",
-  "scheduledAtGreaterThan",
-  "scheduledAtLowerThan",
-  "scheduledAtIsNull",
-  "scheduledAtIsNotNull",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-]);
 const jobFieldSet = new Set([
   "id",
   "isComplete",
@@ -229,37 +61,6 @@ const jobFieldSet = new Set([
   "data",
   "createdAt",
   "updatedAt",
-]);
-const sessionWhereFieldSet = new Set([
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idLike",
-  "idNotLike",
-  "expires",
-  "expiresNotEqual",
-  "expiresIn",
-  "expiresNotIn",
-  "expiresGreaterThan",
-  "expiresLowerThan",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
 ]);
 const sessionFieldSet = new Set([
   "expires",
@@ -288,16 +89,33 @@ export function fileFields(tableName = "f.", options = {}) {
   ]);
 }
 /**
- * Build 'WHERE ' part for file
- * @param {StoreFileWhere} [where={}]
+ * Get 'ORDER BY ' for file
  * @param {string} [tableName="f."]
  * @returns {QueryPart}
  */
-export function fileWhere(where = {}, tableName = "f.") {
+export function fileOrderBy(tableName = "f.") {
   if (tableName.length > 0 && !tableName.endsWith(".")) {
     tableName = `${tableName}.`;
   }
-  checkFieldsInSet("file", "where", fileWhereFieldSet, where);
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'WHERE ' part for file
+ * @param {StoreFileWhere} [where={}]
+ * @param {string} [tableName="f."]
+ * @param {{ skipValidator?: boolean }=} options
+ * @returns {QueryPart}
+ */
+export function fileWhere(where = {}, tableName = "f.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    where = validateStoreFileWhere(where);
+  }
   const strings = ["1 = 1"];
   const values = [undefined];
   if (Array.isArray(where.$or) && where.$or.length > 0) {
@@ -612,20 +430,6 @@ export function fileWhere(where = {}, tableName = "f.") {
   return query(strings, ...values);
 }
 /**
- * Get 'ORDER BY ' for file
- * @param {string} [tableName="f."]
- * @returns {QueryPart}
- */
-export function fileOrderBy(tableName = "f.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
-}
-/**
  * Build 'VALUES ' part for file
  * @param {StoreFileInsertPartial|StoreFileInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
@@ -717,16 +521,33 @@ export function fileGroupFields(tableName = "fg.", options = {}) {
   ]);
 }
 /**
- * Build 'WHERE ' part for fileGroup
- * @param {StoreFileGroupWhere} [where={}]
+ * Get 'ORDER BY ' for fileGroup
  * @param {string} [tableName="fg."]
  * @returns {QueryPart}
  */
-export function fileGroupWhere(where = {}, tableName = "fg.") {
+export function fileGroupOrderBy(tableName = "fg.") {
   if (tableName.length > 0 && !tableName.endsWith(".")) {
     tableName = `${tableName}.`;
   }
-  checkFieldsInSet("fileGroup", "where", fileGroupWhereFieldSet, where);
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'WHERE ' part for fileGroup
+ * @param {StoreFileGroupWhere} [where={}]
+ * @param {string} [tableName="fg."]
+ * @param {{ skipValidator?: boolean }=} options
+ * @returns {QueryPart}
+ */
+export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    where = validateStoreFileGroupWhere(where);
+  }
   const strings = ["1 = 1"];
   const values = [undefined];
   if (Array.isArray(where.$or) && where.$or.length > 0) {
@@ -1104,20 +925,6 @@ export function fileGroupWhere(where = {}, tableName = "fg.") {
   return query(strings, ...values);
 }
 /**
- * Get 'ORDER BY ' for fileGroup
- * @param {string} [tableName="fg."]
- * @returns {QueryPart}
- */
-export function fileGroupOrderBy(tableName = "fg.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
-}
-/**
  * Build 'VALUES ' part for fileGroup
  * @param {StoreFileGroupInsertPartial|StoreFileGroupInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
@@ -1209,16 +1016,37 @@ export function fileGroupViewFields(tableName = "fgv.", options = {}) {
   ]);
 }
 /**
- * Build 'WHERE ' part for fileGroupView
- * @param {StoreFileGroupViewWhere} [where={}]
+ * Get 'ORDER BY ' for fileGroupView
  * @param {string} [tableName="fgv."]
  * @returns {QueryPart}
  */
-export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
+export function fileGroupViewOrderBy(tableName = "fgv.") {
   if (tableName.length > 0 && !tableName.endsWith(".")) {
     tableName = `${tableName}.`;
   }
-  checkFieldsInSet("fileGroupView", "where", fileGroupViewWhereFieldSet, where);
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'WHERE ' part for fileGroupView
+ * @param {StoreFileGroupViewWhere} [where={}]
+ * @param {string} [tableName="fgv."]
+ * @param {{ skipValidator?: boolean }=} options
+ * @returns {QueryPart}
+ */
+export function fileGroupViewWhere(
+  where = {},
+  tableName = "fgv.",
+  options = {},
+) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    where = validateStoreFileGroupViewWhere(where);
+  }
   const strings = ["1 = 1"];
   const values = [undefined];
   if (Array.isArray(where.$or) && where.$or.length > 0) {
@@ -1600,20 +1428,6 @@ export function fileGroupViewWhere(where = {}, tableName = "fgv.") {
   return query(strings, ...values);
 }
 /**
- * Get 'ORDER BY ' for fileGroupView
- * @param {string} [tableName="fgv."]
- * @returns {QueryPart}
- */
-export function fileGroupViewOrderBy(tableName = "fgv.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
-}
-/**
  * Get all fields for job
  * @param {string} [tableName="j."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
@@ -1633,16 +1447,33 @@ export function jobFields(tableName = "j.", options = {}) {
   ]);
 }
 /**
- * Build 'WHERE ' part for job
- * @param {StoreJobWhere} [where={}]
+ * Get 'ORDER BY ' for job
  * @param {string} [tableName="j."]
  * @returns {QueryPart}
  */
-export function jobWhere(where = {}, tableName = "j.") {
+export function jobOrderBy(tableName = "j.") {
   if (tableName.length > 0 && !tableName.endsWith(".")) {
     tableName = `${tableName}.`;
   }
-  checkFieldsInSet("job", "where", jobWhereFieldSet, where);
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'WHERE ' part for job
+ * @param {StoreJobWhere} [where={}]
+ * @param {string} [tableName="j."]
+ * @param {{ skipValidator?: boolean }=} options
+ * @returns {QueryPart}
+ */
+export function jobWhere(where = {}, tableName = "j.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    where = validateStoreJobWhere(where);
+  }
   const strings = ["1 = 1"];
   const values = [undefined];
   if (Array.isArray(where.$or) && where.$or.length > 0) {
@@ -1965,20 +1796,6 @@ export function jobWhere(where = {}, tableName = "j.") {
   return query(strings, ...values);
 }
 /**
- * Get 'ORDER BY ' for job
- * @param {string} [tableName="j."]
- * @returns {QueryPart}
- */
-export function jobOrderBy(tableName = "j.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
-}
-/**
  * Build 'VALUES ' part for job
  * @param {StoreJobInsertPartial|StoreJobInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
@@ -2066,16 +1883,33 @@ export function sessionFields(tableName = "s.", options = {}) {
   ]);
 }
 /**
- * Build 'WHERE ' part for session
- * @param {StoreSessionWhere} [where={}]
+ * Get 'ORDER BY ' for session
  * @param {string} [tableName="s."]
  * @returns {QueryPart}
  */
-export function sessionWhere(where = {}, tableName = "s.") {
+export function sessionOrderBy(tableName = "s.") {
   if (tableName.length > 0 && !tableName.endsWith(".")) {
     tableName = `${tableName}.`;
   }
-  checkFieldsInSet("session", "where", sessionWhereFieldSet, where);
+  const strings = [
+    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
+  ];
+  return query(strings);
+}
+/**
+ * Build 'WHERE ' part for session
+ * @param {StoreSessionWhere} [where={}]
+ * @param {string} [tableName="s."]
+ * @param {{ skipValidator?: boolean }=} options
+ * @returns {QueryPart}
+ */
+export function sessionWhere(where = {}, tableName = "s.", options = {}) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    where = validateStoreSessionWhere(where);
+  }
   const strings = ["1 = 1"];
   const values = [undefined];
   if (Array.isArray(where.$or) && where.$or.length > 0) {
@@ -2323,20 +2157,6 @@ export function sessionWhere(where = {}, tableName = "s.") {
   }
   strings.push("");
   return query(strings, ...values);
-}
-/**
- * Get 'ORDER BY ' for session
- * @param {string} [tableName="s."]
- * @returns {QueryPart}
- */
-export function sessionOrderBy(tableName = "s.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
 }
 /**
  * Build 'VALUES ' part for session

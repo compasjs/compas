@@ -82,7 +82,9 @@ export function importCreator() {
         );
       }
 
-      return result.concat(...state.rawImports).join("\n");
+      result.push(...state.rawImports);
+
+      return result.join("\n");
     },
   };
 }
