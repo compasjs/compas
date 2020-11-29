@@ -135,7 +135,6 @@ WHERE ${fileWhere(builder.where)} ${wherePartial}
 /**
  * Query Builder for file
  * Note that nested limit and offset don't work yet.
- *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,

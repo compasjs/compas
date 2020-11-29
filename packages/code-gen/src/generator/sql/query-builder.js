@@ -358,7 +358,7 @@ function transformerForType(context, imports, type) {
       `);
     }
 
-    traverseTypeForTransformer(keyType, `value.${key}`, partials);
+    traverseTypeForTransformer(keyType, `value.${key}`, partials, 0, new Set());
   }
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
@@ -423,13 +423,26 @@ function transformerForType(context, imports, type) {
  * @param {CodeGenType} type
  * @param {string} path
  * @param {string[]} partials
+ * @param {number} depth Used for unique variables in loops
+ * @param {Set} stack Used to ignore recursive types
  */
-function traverseTypeForTransformer(type, path, partials, depth = 0) {
+function traverseTypeForTransformer(type, path, partials, depth, stack) {
+  if (type.enableQueries) {
+    // We only have named transformers for query enabled objects
+    return `transform${upperCaseFirst(type.name)}(${path});`;
+  }
+
+  if (stack.has(type)) {
+    return;
+  }
+
+  stack.add(type);
+
   switch (type.type) {
     case "anyOf": {
       const partialLength = partials.length;
       for (const subType of type.values) {
-        traverseTypeForTransformer(subType, path, partials, depth + 1);
+        traverseTypeForTransformer(subType, path, partials, depth + 1, stack);
       }
 
       // Fixme: create an error or something out of this
@@ -447,6 +460,7 @@ function traverseTypeForTransformer(type, path, partials, depth = 0) {
         `${path}[idx${depth}]`,
         subPartials,
         depth + 1,
+        stack,
       );
       if (subPartials.length > 0) {
         partials.push(js`
@@ -473,6 +487,7 @@ function traverseTypeForTransformer(type, path, partials, depth = 0) {
         `${path}.[key${depth}]`,
         subPartials,
         depth + 1,
+        stack,
       );
       if (subPartials.length > 0) {
         partials.push(js`
@@ -493,6 +508,7 @@ function traverseTypeForTransformer(type, path, partials, depth = 0) {
           `${path}.${key}`,
           subPartials,
           depth + 1,
+          stack,
         );
       }
       if (subPartials.length > 0) {
@@ -506,7 +522,15 @@ function traverseTypeForTransformer(type, path, partials, depth = 0) {
       break;
     }
     case "reference":
-      traverseTypeForTransformer(type.reference, path, partials, depth + 1);
+      traverseTypeForTransformer(
+        type.reference,
+        path,
+        partials,
+        depth + 1,
+        stack,
+      );
       break;
   }
+
+  stack.delete(type);
 }
