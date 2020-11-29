@@ -133,6 +133,9 @@ WHERE ${fileWhere(builder.where)} ${wherePartial}
 `;
 }
 /**
+ * Query Builder for file
+ * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,
@@ -341,6 +344,8 @@ WHERE ${fileGroupWhere(builder.where)} ${wherePartial}
 `;
 }
 /**
+ * Query Builder for fileGroup
+ * Note that nested limit and offset don't work yet.
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,
@@ -558,6 +563,8 @@ WHERE ${fileGroupViewWhere(builder.where)} ${wherePartial}
 `;
 }
 /**
+ * Query Builder for fileGroupView
+ * Note that nested limit and offset don't work yet.
  * @param {StoreFileGroupViewQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,
@@ -619,6 +626,8 @@ WHERE ${jobWhere(builder.where)} ${wherePartial}
 `;
 }
 /**
+ * Query Builder for job
+ * Note that nested limit and offset don't work yet.
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,
@@ -668,6 +677,8 @@ WHERE ${sessionWhere(builder.where)} ${wherePartial}
 `;
 }
 /**
+ * Query Builder for session
+ * Note that nested limit and offset don't work yet.
  * @param {StoreSessionQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<*[]>,
