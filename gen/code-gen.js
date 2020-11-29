@@ -64,6 +64,9 @@ export function applyCodeGenStructure(app) {
             typeName: T.string(),
             relationOwnKey: T.string(),
           },
+          {
+            key: "sqlEnableValidator",
+          },
         ),
       ],
     }),

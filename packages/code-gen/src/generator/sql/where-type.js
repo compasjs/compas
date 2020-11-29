@@ -5,6 +5,7 @@ import { ArrayType } from "../../builders/ArrayType.js";
 import { BooleanType } from "../../builders/BooleanType.js";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { ReferenceType } from "../../builders/ReferenceType.js";
+import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
@@ -46,6 +47,8 @@ export function createWhereTypes(context) {
       ...new ArrayType().values(true).optional().build(),
       values: new ReferenceType(type.group, `${type.name}Where`).build(),
     };
+
+    whereType.keys["$or"].values.reference = whereType;
 
     for (const key of Object.keys(fields)) {
       const fieldType = fields[key];
@@ -105,8 +108,14 @@ export function createWhereTypes(context) {
         } else {
           whereType.keys[name] = { ...fieldType, ...defaults };
         }
+
+        if (fieldType.sql?.primary && fieldType.type === "number") {
+          whereType.keys[name].validator.convert = true;
+        }
       }
     }
+
+    addToData(context.structure, whereType);
 
     type.where = {
       type: getTypeNameForType(context, whereType, "", {
@@ -115,19 +124,6 @@ export function createWhereTypes(context) {
       fields: fieldsArray,
     };
   }
-}
-
-/**
- *
- * @param {CodeGenContext} context
- * @param {CodeGenObjectType} type
- */
-export function getWhereFieldSet(context, type) {
-  return `const ${
-    type.name
-  }WhereFieldSet = new Set(["$or", "${type.where.fields
-    .map((it) => it.name)
-    .join(`", "`)}"]);`;
 }
 
 /**
@@ -278,14 +274,17 @@ export function getWherePartial(context, type) {
      * Build 'WHERE ' part for ${type.name}
      * @param {${type.where.type}} [where={}]
      * @param {string} [tableName="${type.shortName}."]
+     * @param {{ skipValidator?: boolean }=} options
      * @returns {QueryPart}
      */
-    export function ${type.name}Where(where = {}, tableName = "${type.shortName}.") {
+    export function ${type.name}Where(where = {}, tableName = "${type.shortName}.", options = {}) {
       if (tableName.length > 0 && !tableName.endsWith(".")) {
         tableName = \`$\{tableName}.\`;
       }
 
-      checkFieldsInSet("${type.name}", "where", ${type.name}WhereFieldSet, where);
+      if (!options.skipValidator) {
+        where = validate${type.uniqueName}Where(where);
+      }
 
       const strings = [ "1 = 1" ];
       const values = [ undefined ];

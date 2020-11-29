@@ -1,6 +1,7 @@
 import { isNil } from "@lbu/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { TypeCreator } from "../../builders/TypeCreator.js";
+import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
 import { getTypeNameForType } from "../types.js";
@@ -64,6 +65,7 @@ export function createQueryBuilderTypes(context) {
   const T = new TypeCreator();
   let joinIndex = 0;
 
+  // Short loop to setup the types
   for (const type of getQueryEnabledObjects(context)) {
     // We use quick hacks with the AnyType, to use reuse the Where and QueryBuilder types.
     // This is necessary, since we don't add these types to the structure.
@@ -73,29 +75,41 @@ export function createQueryBuilderTypes(context) {
       `${type.name}QueryBuilder`,
     )
       .keys({
-        where: T.any().raw(`${type.uniqueName}Where`).optional(),
+        where: T.reference(type.group, `${type.name}Where`).optional(),
         as: T.string().optional(),
         limit: T.number().optional(),
         offset: T.number().optional(),
       })
       .build();
-    queryBuilderType.uniqueName = `${upperCaseFirst(
-      queryBuilderType.group,
-    )}${upperCaseFirst(queryBuilderType.name)}`;
 
     const queryTraverserType = new ObjectType(
       type.group,
       `${type.name}QueryTraverser`,
     )
       .keys({
-        where: T.any().raw(`${type.uniqueName}Where`).optional(),
+        where: T.reference(type.group, `${type.name}Where`).optional(),
         limit: T.number().optional(),
         offset: T.number().optional(),
       })
       .build();
-    queryTraverserType.uniqueName = `${upperCaseFirst(
-      queryTraverserType.group,
-    )}${upperCaseFirst(queryTraverserType.name)}`;
+
+    addToData(context.structure, queryBuilderType);
+    addToData(context.structure, queryTraverserType);
+
+    // Link reference manually
+    queryBuilderType.keys.where.reference =
+      context.structure[type.group][`${type.name}Where`];
+    queryTraverserType.keys.where.reference =
+      context.structure[type.group][`${type.name}Where`];
+  }
+
+  // Longer loop that fills the type with the fields
+  // At this point all types are added so we can resolve references as well
+  for (const type of getQueryEnabledObjects(context)) {
+    const queryBuilderType =
+      context.structure[type.group][`${type.name}QueryBuilder`];
+    const queryTraverserType =
+      context.structure[type.group][`${type.name}QueryTraverser`];
 
     const relations = {};
 
@@ -113,23 +127,21 @@ export function createQueryBuilderTypes(context) {
           ? relation.ownKey
           : primaryKey;
 
-      queryBuilderType.keys[relation.ownKey] = T.any()
-        .raw(
-          `${upperCaseFirst(otherSide.group)}${upperCaseFirst(
-            otherSide.name,
-          )}QueryBuilder`,
-        )
-        .optional()
-        .build();
+      queryBuilderType.keys[relation.ownKey] = {
+        ...T.reference(otherSide.group, `${otherSide.name}QueryBuilder`)
+          .optional()
+          .build(),
+        reference:
+          context.structure[otherSide.group][`${otherSide.name}QueryBuilder`],
+      };
 
-      queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`] = T.any()
-        .raw(
-          `${upperCaseFirst(otherSide.group)}${upperCaseFirst(
-            otherSide.name,
-          )}QueryTraverser`,
-        )
-        .optional()
-        .build();
+      queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`] = {
+        ...T.reference(otherSide.group, `${otherSide.name}QueryTraverser`)
+          .optional()
+          .build(),
+        reference:
+          context.structure[otherSide.group][`${otherSide.name}QueryTraverser`],
+      };
 
       queryTraverserType.keys[`via${upperCaseFirst(relation.ownKey)}`] =
         queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`];
@@ -144,14 +156,31 @@ export function createQueryBuilderTypes(context) {
     }
 
     type.queryBuilder = {
-      type: getTypeNameForType(context, queryBuilderType, "", {
-        useDefaults: false,
-      }),
-      traverseType: getTypeNameForType(context, queryTraverserType, "", {
-        useDefaults: false,
-      }),
+      type: undefined,
+      traverseType: undefined,
       relations,
     };
+  }
+
+  // Last for-loop to build the final types
+  for (const type of getQueryEnabledObjects(context)) {
+    const queryBuilderType =
+      context.structure[type.group][`${type.name}QueryBuilder`];
+    const queryTraverserType =
+      context.structure[type.group][`${type.name}QueryTraverser`];
+
+    type.queryBuilder.type = getTypeNameForType(context, queryBuilderType, "", {
+      useDefaults: false,
+    });
+
+    type.queryBuilder.traverseType = getTypeNameForType(
+      context,
+      queryTraverserType,
+      "",
+      {
+        useDefaults: false,
+      },
+    );
   }
 }
 
@@ -166,6 +195,11 @@ function queryBuilderForType(context, imports, type) {
   const nestedJoinPartials = [];
   const traverseJoinPartials = [];
   const { key: typePrimaryKey } = getPrimaryKeyWithType(type);
+
+  imports.destructureImport(
+    `validate${type.uniqueName}QueryBuilder`,
+    `./validators${context.importExtension}`,
+  );
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
     const {
@@ -280,7 +314,9 @@ if (!isNil(builder.${key}.limit)) {
       return query\`
         FROM "${type.name}" ${type.shortName}
         $\{joinQb}
-        WHERE $\{${type.name}Where(builder.where)} $\{wherePartial}
+        WHERE $\{${type.name}Where(builder.where, "${
+    type.shortName
+  }.", { skipValidator: true })} $\{wherePartial}
         \`;
     }
 
@@ -297,6 +333,8 @@ if (!isNil(builder.${key}.limit)) {
      */
     export function query${upperCaseFirst(type.name)}(builder = {}) {
       const joinedKeys = [];
+      
+      validate${type.uniqueName}QueryBuilder(builder);
 
       ${Object.entries(type.queryBuilder.relations).map(
         ([key, { joinKey, subType }]) => {

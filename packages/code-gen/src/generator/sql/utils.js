@@ -147,6 +147,12 @@ export function getSortedKeysForType(type) {
  * @param {CodeGenContext} context
  */
 export function doSqlChecks(context) {
+  if (context.options.enabledGenerators.indexOf("validator") === -1) {
+    context.errors.push({
+      key: "sqlEnableValidator",
+    });
+  }
+
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
     staticCheckPrimaryKey(context, type);

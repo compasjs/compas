@@ -19,8 +19,8 @@ import {
   anonymousValidator267932131,
   anonymousValidator368260888,
   anonymousValidator427792324,
-  anonymousValidator511866956,
   anonymousValidator647792494,
+  anonymousValidator710084980,
   anonymousValidator722636964,
   anonymousValidator98797027,
 } from "./anonymous-validators.js";
@@ -95,7 +95,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
  */
 export function validateCodeGenContext(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator511866956(value, propertyPath, errors);
+  const data = anonymousValidator710084980(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }

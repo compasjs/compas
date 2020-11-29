@@ -1,10 +1,10 @@
+import { isNil } from "@lbu/stdlib";
+
 /**
  * Links up references in the structure.
  *
  * @param {CodeGenContext} context
  */
-import { isNil } from "@lbu/stdlib";
-
 export function linkupReferencesInStructure(context) {
   for (const group of Object.values(context.structure)) {
     for (const item of Object.values(group)) {
