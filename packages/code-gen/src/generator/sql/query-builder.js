@@ -505,7 +505,7 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       for (const key of Object.keys(type.keys)) {
         traverseTypeForTransformer(
           type.keys[key],
-          `${path}.${key}`,
+          `${path}["${key}"]`,
           subPartials,
           depth + 1,
           stack,
