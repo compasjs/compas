@@ -484,7 +484,7 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       const subPartials = [];
       traverseTypeForTransformer(
         type.values,
-        `${path}.[key${depth}]`,
+        `${path}[key${depth}]`,
         subPartials,
         depth + 1,
         stack,
