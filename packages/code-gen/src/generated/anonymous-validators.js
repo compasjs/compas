@@ -162,29 +162,6 @@ export function anonymousValidator913531259(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {boolean|undefined}
- */
-export function anonymousValidator1308064958(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "boolean",
-) {
-  if (isNil(value)) {
-    errors.push(buildError(parentType, "undefined", { propertyPath }));
-    return undefined;
-  }
-  if (typeof value !== "boolean") {
-    errors.push(buildError(parentType, "type", { propertyPath }));
-    return undefined;
-  }
-  return value;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {*[]} errors
- * @param {string} parentType
  * @returns {number|undefined}
  */
 export function anonymousValidator9037802(
@@ -232,7 +209,13 @@ export function anonymousValidator23848295(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator1308064958(value, propertyPath, subErrors);
+  if (isNil(value) || typeof value !== "boolean") {
+    const parentType = "boolean";
+    subErrors.push(
+      buildError(parentType, "type", { propertyPath: propertyPath }),
+    );
+  }
+  result = value ?? undefined;
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -427,9 +410,8 @@ export function anonymousValidator368260888(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -588,9 +570,8 @@ export function anonymousValidator1210796142(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -677,28 +658,6 @@ export function anonymousValidator1270069781(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {undefined|boolean|undefined}
- */
-export function anonymousValidator334567203(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "boolean",
-) {
-  if (isNil(value)) {
-    return value;
-  }
-  if (typeof value !== "boolean") {
-    errors.push(buildError(parentType, "type", { propertyPath }));
-    return undefined;
-  }
-  return value;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {*[]} errors
- * @param {string} parentType
  * @returns {{"type": "boolean", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "allowNull": boolean, }, "oneOf"?: boolean, }|undefined}
  */
 export function anonymousValidator1065028911(
@@ -725,9 +684,8 @@ export function anonymousValidator1065028911(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -768,11 +726,13 @@ export function anonymousValidator1065028911(
     `${propertyPath}.validator`,
     errors,
   );
-  result["oneOf"] = anonymousValidator334567203(
-    value["oneOf"],
-    `${propertyPath}.oneOf`,
-    errors,
-  );
+  if (!isNil(value["oneOf"]) && typeof value["oneOf"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", { propertyPath: `${propertyPath}.oneOf` }),
+    );
+  }
+  result["oneOf"] = value["oneOf"] ?? undefined;
   return result;
 }
 /**
@@ -806,9 +766,8 @@ export function anonymousValidator1371848646(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -882,9 +841,8 @@ export function anonymousValidator98797027(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -958,9 +916,8 @@ export function anonymousValidator2080078377(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -1123,9 +1080,8 @@ export function anonymousValidator267932131(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -1448,9 +1404,8 @@ export function anonymousValidator1199721884(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -1529,9 +1484,8 @@ export function anonymousValidator2029007679(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   if (
     value["subType"] !== "manyToOne" &&
     value["subType"] !== "oneToMany" &&
@@ -1546,9 +1500,8 @@ export function anonymousValidator2029007679(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["subType"] = value["subType"];
+  result["subType"] = value["subType"] ?? undefined;
   result["reference"] = anonymousValidator1199721884(
     value["reference"],
     `${propertyPath}.reference`,
@@ -1666,9 +1619,8 @@ export function anonymousValidator1337139037(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["variant"] = value["variant"];
+  result["variant"] = value["variant"] ?? undefined;
   return result;
 }
 /**
@@ -1874,9 +1826,8 @@ export function anonymousValidator2003332250(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -2105,9 +2056,8 @@ export function anonymousValidator722636964(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -2186,9 +2136,8 @@ export function anonymousValidator158572615(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -2383,9 +2332,8 @@ export function anonymousValidator647792494(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -2442,9 +2390,8 @@ export function anonymousValidator647792494(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["method"] = value["method"];
+  result["method"] = value["method"] ?? undefined;
   result["path"] = anonymousValidator1801034940(
     value["path"],
     `${propertyPath}.path`,
@@ -2653,9 +2600,8 @@ export function anonymousValidator1448768479(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["type"] = value["type"];
+  result["type"] = value["type"] ?? undefined;
   result["docString"] = anonymousValidator1707981923(
     value["docString"],
     `${propertyPath}.docString`,
@@ -2749,9 +2695,8 @@ export function anonymousValidator1009589157(
           oneOf,
         }),
       );
-      return undefined;
     }
-    result[i] = value[i];
+    result[i] = value[i] ?? undefined;
   }
   return result;
 }
@@ -2790,36 +2735,65 @@ export function anonymousValidator1311847056(
     `${propertyPath}.enabledGroups`,
     errors,
   );
-  result["isBrowser"] = anonymousValidator1308064958(
-    value["isBrowser"],
-    `${propertyPath}.isBrowser`,
-    errors,
-  );
-  result["isNode"] = anonymousValidator1308064958(
-    value["isNode"],
-    `${propertyPath}.isNode`,
-    errors,
-  );
-  result["isNodeServer"] = anonymousValidator1308064958(
-    value["isNodeServer"],
-    `${propertyPath}.isNodeServer`,
-    errors,
-  );
+  if (isNil(value["isBrowser"]) || typeof value["isBrowser"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isBrowser`,
+      }),
+    );
+  }
+  result["isBrowser"] = value["isBrowser"] ?? undefined;
+  if (isNil(value["isNode"]) || typeof value["isNode"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isNode`,
+      }),
+    );
+  }
+  result["isNode"] = value["isNode"] ?? undefined;
+  if (
+    isNil(value["isNodeServer"]) ||
+    typeof value["isNodeServer"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isNodeServer`,
+      }),
+    );
+  }
+  result["isNodeServer"] = value["isNodeServer"] ?? undefined;
   result["enabledGenerators"] = anonymousValidator1009589157(
     value["enabledGenerators"],
     `${propertyPath}.enabledGenerators`,
     errors,
   );
-  result["useTypescript"] = anonymousValidator1308064958(
-    value["useTypescript"],
-    `${propertyPath}.useTypescript`,
-    errors,
-  );
-  result["dumpStructure"] = anonymousValidator1308064958(
-    value["dumpStructure"],
-    `${propertyPath}.dumpStructure`,
-    errors,
-  );
+  if (
+    isNil(value["useTypescript"]) ||
+    typeof value["useTypescript"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.useTypescript`,
+      }),
+    );
+  }
+  result["useTypescript"] = value["useTypescript"] ?? undefined;
+  if (
+    isNil(value["dumpStructure"]) ||
+    typeof value["dumpStructure"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.dumpStructure`,
+      }),
+    );
+  }
+  result["dumpStructure"] = value["dumpStructure"] ?? undefined;
   result["fileHeader"] = anonymousValidator1801034940(
     value["fileHeader"],
     `${propertyPath}.fileHeader`,
@@ -3020,9 +2994,8 @@ export function anonymousValidator1503040121(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["key"] = value["key"];
+  result["key"] = value["key"] ?? undefined;
   result["typeName"] = anonymousValidator1801034940(
     value["typeName"],
     `${propertyPath}.typeName`,
@@ -3069,9 +3042,8 @@ export function anonymousValidator966425260(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["key"] = value["key"];
+  result["key"] = value["key"] ?? undefined;
   result["typeName"] = anonymousValidator1801034940(
     value["typeName"],
     `${propertyPath}.typeName`,
@@ -3123,9 +3095,8 @@ export function anonymousValidator1239750152(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["key"] = value["key"];
+  result["key"] = value["key"] ?? undefined;
   result["referencedByGroup"] = anonymousValidator1801034940(
     value["referencedByGroup"],
     `${propertyPath}.referencedByGroup`,
@@ -3271,9 +3242,8 @@ export function anonymousValidator511866956(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["extension"] = value["extension"];
+  result["extension"] = value["extension"] ?? undefined;
   result["importExtension"] = anonymousValidator1801034940(
     value["importExtension"],
     `${propertyPath}.importExtension`,
@@ -3339,9 +3309,8 @@ export function anonymousValidator427792324(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["phase"] = value["phase"];
+  result["phase"] = value["phase"] ?? undefined;
   return result;
 }
 /**
@@ -3374,36 +3343,69 @@ export function anonymousValidator2093265039(
       return undefined;
     }
   }
-  result["isJSON"] = anonymousValidator334567203(
-    value["isJSON"],
-    `${propertyPath}.isJSON`,
-    errors,
-  );
-  result["nestedIsJSON"] = anonymousValidator334567203(
-    value["nestedIsJSON"],
-    `${propertyPath}.nestedIsJSON`,
-    errors,
-  );
-  result["useDefaults"] = anonymousValidator334567203(
-    value["useDefaults"],
-    `${propertyPath}.useDefaults`,
-    errors,
-  );
-  result["useTypescript"] = anonymousValidator334567203(
-    value["useTypescript"],
-    `${propertyPath}.useTypescript`,
-    errors,
-  );
-  result["isNode"] = anonymousValidator334567203(
-    value["isNode"],
-    `${propertyPath}.isNode`,
-    errors,
-  );
-  result["isBrowser"] = anonymousValidator334567203(
-    value["isBrowser"],
-    `${propertyPath}.isBrowser`,
-    errors,
-  );
+  if (!isNil(value["isJSON"]) && typeof value["isJSON"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isJSON`,
+      }),
+    );
+  }
+  result["isJSON"] = value["isJSON"] ?? undefined;
+  if (
+    !isNil(value["nestedIsJSON"]) &&
+    typeof value["nestedIsJSON"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.nestedIsJSON`,
+      }),
+    );
+  }
+  result["nestedIsJSON"] = value["nestedIsJSON"] ?? undefined;
+  if (
+    !isNil(value["useDefaults"]) &&
+    typeof value["useDefaults"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.useDefaults`,
+      }),
+    );
+  }
+  result["useDefaults"] = value["useDefaults"] ?? undefined;
+  if (
+    !isNil(value["useTypescript"]) &&
+    typeof value["useTypescript"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.useTypescript`,
+      }),
+    );
+  }
+  result["useTypescript"] = value["useTypescript"] ?? undefined;
+  if (!isNil(value["isNode"]) && typeof value["isNode"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isNode`,
+      }),
+    );
+  }
+  result["isNode"] = value["isNode"] ?? undefined;
+  if (!isNil(value["isBrowser"]) && typeof value["isBrowser"] !== "boolean") {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.isBrowser`,
+      }),
+    );
+  }
+  result["isBrowser"] = value["isBrowser"] ?? undefined;
   result["suffix"] = anonymousValidator69329591(
     value["suffix"],
     `${propertyPath}.suffix`,
@@ -3413,7 +3415,8 @@ export function anonymousValidator2093265039(
     value["fileTypeIO"] !== "input" &&
     value["fileTypeIO"] !== "outputRouter" &&
     value["fileTypeIO"] !== "outputClient" &&
-    value["fileTypeIO"] !== undefined
+    value["fileTypeIO"] !== undefined &&
+    value["fileTypeIO"] !== null
   ) {
     const parentType = "string";
     const oneOf = ["input", "outputRouter", "outputClient"];
@@ -3423,8 +3426,7 @@ export function anonymousValidator2093265039(
         oneOf,
       }),
     );
-    return undefined;
   }
-  result["fileTypeIO"] = value["fileTypeIO"];
+  result["fileTypeIO"] = value["fileTypeIO"] ?? undefined;
   return result;
 }
