@@ -1049,7 +1049,15 @@ function createInlineValidator(
 
   switch (type.type) {
     case "any":
-      break;
+      return inlineValidatorAny(
+        context,
+        imports,
+        type,
+        valueString,
+        propertyPath,
+        errors,
+        prefix,
+      );
     case "anyOf":
       break;
     case "array":
@@ -1095,6 +1103,64 @@ function createInlineValidator(
   }
 
   return undefined;
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenAnyType} type
+ * @param {string} valueString
+ * @param {string} propertyPath
+ * @param {string} errors
+ * @param {string} prefix
+ * @returns {string}
+ */
+function inlineValidatorAny(
+  context,
+  imports,
+  type,
+  valueString,
+  propertyPath,
+  errors,
+  prefix,
+) {
+  if (isNil(type.rawValidator) && type.isOptional) {
+    return js`
+      ${prefix} ${valueString} ?? undefined;
+    `;
+  }
+
+  if (isNil(type.rawValidator) && !type.isOptional) {
+    return js`
+      if (isNil(${valueString})) {
+        const parentType = "any";
+        ${buildError("undefined", `{ propertyPath: ${propertyPath} }`)}
+      }
+      ${`${prefix} ${valueString}`}
+    `;
+  }
+
+  if (
+    !isNil(type.rawValidatorImport.typeScript) &&
+    context.context.options.useTypescript
+  ) {
+    imports.rawImport(type.rawValidatorImport.typeScript);
+  } else if (
+    !isNil(type.rawValidatorImport.javaScript) &&
+    !context.context.options.useTypescript
+  ) {
+    imports.rawImport(type.rawValidatorImport.javaScript);
+  }
+
+  return js`
+    if (${type.isOptional ? `isNil(${valueString}) || ` : ""}!${
+    type.rawValidator
+  }(${valueString})) {
+      const parentType = "any";
+      ${buildError("custom", `{ propertyPath: ${propertyPath} }`)}
+    }
+    ${`${prefix} ${valueString}`};
+  `;
 }
 
 /**
