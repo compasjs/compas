@@ -1,4 +1,4 @@
-import { bench, mainBenchFn } from "@lbu/cli";
+import { bench, mainBenchFn } from "@compas/cli";
 import { isNil, isPlainObject } from "./lodash.js";
 
 mainBenchFn(import.meta);

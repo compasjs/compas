@@ -2,7 +2,7 @@ import {
   cleanupPostgresDatabaseTemplate,
   createTestPostgresDatabase,
   setPostgresDatabaseTemplate,
-} from "@lbu/store";
+} from "@compas/store";
 
 export const timeout = 2000;
 

@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { lowerCaseFirst } from "../utils.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";

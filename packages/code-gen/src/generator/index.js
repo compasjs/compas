@@ -1,5 +1,5 @@
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
-import { pathJoin } from "@lbu/stdlib";
+import { pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";

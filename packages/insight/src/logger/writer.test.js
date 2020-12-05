@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { writeNDJSON, writePretty } from "./writer.js";
 
 mainTestFn(import.meta);
@@ -62,7 +62,7 @@ test("insight/writer", (t) => {
       now,
       JSON.stringify({
         type: "foo",
-        application: "lbu",
+        application: "compas",
       }),
       { foo: { bar: { baz: "quix" } } },
     );
@@ -75,7 +75,7 @@ test("insight/writer", (t) => {
     );
     t.equal(
       JSON.parse(result[0])?.context?.application,
-      "lbu",
+      "compas",
       "should print application type",
     );
   });

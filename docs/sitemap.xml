@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://lbu.lightbase.nl/</loc>
+        <loc>https://compasjs.com/</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/changelog.html</loc>
+        <loc>https://compasjs.com/changelog.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/getting-started.html</loc>
+        <loc>https://compasjs.com/getting-started.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/cli.html</loc>
+        <loc>https://compasjs.com/cli.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/code-gen.html</loc>
+        <loc>https://compasjs.com/code-gen.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/insight.html</loc>
+        <loc>https://compasjs.com/insight.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/server.html</loc>
+        <loc>https://compasjs.com/server.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/store.html</loc>
+        <loc>https://compasjs.com/store.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/lint-config.html</loc>
+        <loc>https://compasjs.com/lint-config.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/env.html</loc>
+        <loc>https://compasjs.com/env.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/how-to.html</loc>
+        <loc>https://compasjs.com/how-to.html</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://lbu.lightbase.nl/contributing.html</loc>
+        <loc>https://compasjs.com/contributing.html</loc>
         <changefreq>daily</changefreq>
     </url>
 </urlset>

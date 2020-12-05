@@ -2,51 +2,51 @@
 
 ### Development & scripts
 
-Development should be pretty straight forward. Run `yarn lbu test --watch` to
-run the test suite. Before making a commit, make sure to run `yarn lbu lint`.
+Development should be pretty straight forward. Run `yarn compas test --watch` to
+run the test suite. Before making a commit, make sure to run `yarn compas lint`.
 Note that this automatically will try to fix most issues that popup. All
-commands in this repo can be run vai the 'self-hosted' `@lbu/cli`. Run
-`yarn lbu help` for an overview. Below a few commands related to things you
+commands in this repo can be run vai the 'self-hosted' `@compas/cli`. Run
+`yarn compas help` for an overview. Below a few commands related to things you
 could be working on:
 
 **General**:
 
 ```
 # Format with ESLint & Prettier
-yarn lbu lint (--watch)
+yarn compas lint (--watch)
 # Run the tests
-yarn lbu test (--watch)
+yarn compas test (--watch)
 # Run coverage test
-yarn lbu coverage -- --check-coverage
-yarn lbu coverage -- report --reporter lcov
-# Link your local lbu checkout to another project
-yarn lbu link && yarn lbu linkExternally ../other-project/
+yarn compas coverage -- --check-coverage
+yarn compas coverage -- report --reporter lcov
+# Link your local compas checkout to another project
+yarn compas link && yarn compas linkExternally ../other-project/
 ```
 
 **Documentation & Typescript types**:
 
 ```
 # Build docs from index.d.ts files and put in /docs/api.md
-yarn lbu typedoc
+yarn compas typedoc
 # Sync content of README.md's based on the README.md in the root
-yarn lbu syncMetadata
+yarn compas syncMetadata
 # Sync assets/examples to the documentation files
-yarn lbu syncDocExamples
+yarn compas syncDocExamples
 ```
 
-**Code generation, @lbu/store structure changes**:
+**Code generation, @compas/store structure changes**:
 
 ```
 # Generate to ignored files for testing stuff out
-yarn lbu generate
-# Generate for @lbu/ packages
-yarn lbu internal_generate
+yarn compas generate
+# Generate for @compas/ packages
+yarn compas internal_generate
 ```
 
 ### Improving test coverage
 
 There are a bunch of things not covered by tests, there are a few ways to
-improve coverage, but let's start by running `yarn lbu coverage` and opening
+improve coverage, but let's start by running `yarn compas coverage` and opening
 `file:///path/to/repo/coverage/lcov-report/index.html` in your browser.
 
 If it is your first time doing this, start by checking out files in the
@@ -54,8 +54,8 @@ If it is your first time doing this, start by checking out files in the
 be pretty straight forward to find a related function that is tested, and doing
 the same for the yet untested function. For new cases related to code
 generation, add the missing case in `gen/testing.js` and regenerate with
-`yarn lbu gen && yarn lbu lint`. Then run `yarn lbu coverage` again to see that
-the new case is not yet covered by tests.
+`yarn compas gen && yarn compas lint`. Then run `yarn compas coverage` again to
+see that the new case is not yet covered by tests.
 
 ### Debugging tests
 
@@ -68,10 +68,10 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
   `npm login`
 - Ensure you have the `main`-branch checked out, and are completely up-to-date
 - Write to the changelog
-  - Run `yarn lbu changelog`
+  - Run `yarn compas changelog`
   - Replace `x.x.x` with the new version (3 times) in `docs/changelog.md`
   - Write about the changes and how to use it them, in `docs/releases/x.x.x.md`
-- Run the linter with `yarn lbu lint`
+- Run the linter with `yarn compas lint`
 - Commit with `*: prepare release for vX.X.X` and push to master
 - Run `yarn release`. This will build & publish all packages
   - Specify the new version

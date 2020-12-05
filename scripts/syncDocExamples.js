@@ -4,7 +4,7 @@ import {
   mainFn,
   pathJoin,
   processDirectoryRecursive,
-} from "@lbu/stdlib";
+} from "@compas/stdlib";
 
 mainFn(import.meta, main);
 

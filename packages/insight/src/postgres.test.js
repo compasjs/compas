@@ -1,9 +1,9 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { isPlainObject } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { isPlainObject } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
-} from "@lbu/store";
+} from "@compas/store";
 import { postgresTableSizes } from "./postgres.js";
 
 mainTestFn(import.meta);
@@ -23,14 +23,14 @@ test("insight/postgres", async (t) => {
     // Force analyze, so we get results
     await sql`SELECT *
               FROM migration
-              WHERE namespace = '@lbu/store'`;
+              WHERE namespace = '@compas/store'`;
     await sql`ANALYZE`;
   });
 
   t.test("postgresTableSizes returns a result", async (t) => {
     const result = await postgresTableSizes(sql);
 
-    // Comes from @Lbu/stdlib, but doens't matter when published since this is a test file
+    // Comes from @compas/stdlib, but doesn't matter when published since this is a test file
     t.ok(isPlainObject(result));
     t.ok(result["migration"].diskSize > 16384, "migration disk size");
     t.ok(result["migration"].rowCount > 5, "migration row count");

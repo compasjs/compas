@@ -37,7 +37,7 @@ jobs:
       - name: Run lint
         run: |
           yarn install
-          yarn lbu lint
+          yarn compas lint
   test:
     timeout-minutes: 15
     strategy:
@@ -75,8 +75,8 @@ jobs:
       - name: Run tests
         run: |
           yarn install
-          yarn lbu docker up
-          yarn lbu gen
-          yarn lbu migrate
-          yarn lbu test
-          yarn lbu docker reset
+          yarn compas docker up
+          yarn compas gen
+          yarn compas migrate
+          yarn compas test
+          yarn compas docker reset

@@ -1,4 +1,4 @@
-const base = require("@lbu/lint-config");
+const base = require("@compas/lint-config");
 
 base.root = true;
 

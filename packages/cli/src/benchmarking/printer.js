@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
 import { inspect } from "util";
-import { AppError, environment, isNil, pathJoin } from "@lbu/stdlib";
+import { AppError, environment, isNil, pathJoin } from "@compas/stdlib";
 import { benchLogger, state } from "./state.js";
 
 export function printBenchResults() {

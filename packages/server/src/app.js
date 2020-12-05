@@ -1,4 +1,4 @@
-import { isProduction } from "@lbu/stdlib";
+import { isProduction } from "@compas/stdlib";
 import Koa from "koa";
 import {
   defaultHeaders,

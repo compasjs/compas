@@ -1,12 +1,12 @@
-import { bench, mainBenchFn } from "@lbu/cli";
+import { bench, mainBenchFn } from "@compas/cli";
 import FastestValidator from "fastest-validator";
 import * as yup from "yup";
 
 mainBenchFn(import.meta);
 
 // Expected output when logging all options
-// lbuSimple: [Object: null prototype] { foo: true, bar: 5, baz: 'ok' }
-// lbuNested: [Object: null prototype] {
+// compasSimple: [Object: null prototype] { foo: true, bar: 5, baz: 'ok' }
+// compasNested: [Object: null prototype] {
 //     foo: true,
 //     bar: 5,
 //     nest: [
@@ -98,7 +98,7 @@ const fastestValidatorNested = fastestValidator.compile({
   $$strict: true,
 });
 
-bench("lbu validator simple", async (b) => {
+bench("compas validator simple", async (b) => {
   const { validateBenchSimple } = await import(
     "../../../generated/testing/bench/index.js"
   );
@@ -149,7 +149,7 @@ bench("fastest-validator validator simple", (b) => {
   }
 });
 
-bench("lbu validator nested", async (b) => {
+bench("compas validator nested", async (b) => {
   const { validateBenchNested } = await import(
     "../../../generated/testing/bench/index.js"
   );

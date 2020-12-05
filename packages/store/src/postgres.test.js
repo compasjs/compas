@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { environment, refreshEnvironmentCache } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { environment, refreshEnvironmentCache } from "@compas/stdlib";
 import { postgresEnvCheck } from "./postgres.js";
 
 mainTestFn(import.meta);
@@ -46,12 +46,12 @@ test("store/postgres", (t) => {
   });
 
   t.test("Should set POSTGRES_DATABASE based on APP_NAME", (t) => {
-    process.env.APP_NAME = "lbu";
+    process.env.APP_NAME = "compas";
 
     refreshEnvironmentCache();
     postgresEnvCheck();
-    t.equal(environment.POSTGRES_DATABASE, "lbu", "env cache");
-    t.equal(process.env.POSTGRES_DATABASE, "lbu", "process.env");
+    t.equal(environment.POSTGRES_DATABASE, "compas", "env cache");
+    t.equal(process.env.POSTGRES_DATABASE, "compas", "process.env");
   });
 
   t.test("teardown", () => {

@@ -1,4 +1,4 @@
-import { AppError, isNil, isPlainObject } from "@lbu/stdlib";
+import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
 import { upperCaseFirst } from "./utils.js";
 

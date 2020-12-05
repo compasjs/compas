@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 mainTestFn(import.meta);

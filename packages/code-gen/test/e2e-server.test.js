@@ -1,11 +1,11 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import {
   closeTestApp,
   createBodyParsers,
   createTestAppAndClient,
   getApp,
-} from "@lbu/server";
-import { AppError, streamToBuffer } from "@lbu/stdlib";
+} from "@compas/server";
+import { AppError, streamToBuffer } from "@compas/stdlib";
 import Axios from "axios";
 
 mainTestFn(import.meta);

@@ -1,10 +1,10 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import {
   createTestPostgresDatabase,
   getMigrationsToBeApplied,
   newMigrateContext,
   cleanupTestPostgresDatabase,
-} from "@lbu/store";
+} from "@compas/store";
 
 mainTestFn(import.meta);
 
@@ -26,7 +26,7 @@ test("repo/migrations", (t) => {
 
     const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
 
-    const message = `Tests are not running with the latest migrations, please run 'yarn lbu docker reset && yarn lbu migrate'.`;
+    const message = `Tests are not running with the latest migrations, please run 'yarn compas docker reset && yarn compas migrate'.`;
     t.equal(migrationQueue.length, 0, message);
     t.equal(hashChanges.length, 0, message);
   });

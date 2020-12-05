@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { environment, isNil } from "@lbu/stdlib";
+import { environment, isNil } from "@compas/stdlib";
 import proxy from "http-proxy";
 
 /**

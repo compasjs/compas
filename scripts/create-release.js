@@ -1,5 +1,5 @@
 import { readFile } from "fs/promises";
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import axios from "axios";
 
 mainFn(import.meta, main);
@@ -13,7 +13,7 @@ async function main() {
   const changelogPart = parseChangelog(fullChangelog);
 
   await axios.request({
-    url: "https://api.github.com/repos/lightbasenl/lbu/releases",
+    url: "https://api.github.com/repos/compasjs/compas/releases",
     method: "POST",
     auth: {
       username: "github-actions[bot]",

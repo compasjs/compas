@@ -7,10 +7,10 @@ import {
   pathJoin,
   spawn,
   uuid,
-} from "@lbu/stdlib";
+} from "@compas/stdlib";
 import { formatGraphOfSql } from "../visualise/sql.js";
 
-const SUB_COMMANDS = ["sql", "router"];
+const SUB_COMMANDS = ["sql"];
 const codeGenImportPath = pathJoin(
   dirnameForModule(import.meta),
   "../../../code-gen/src/internal-exports.js",
@@ -29,9 +29,7 @@ export async function visualiseCommand(logger, command) {
   // All pre-checks
 
   if (isNil(subCommand) || isNil(structureFile)) {
-    logger.error(
-      `Usage: lbu visualise [sql,router] {path/to/generated/index.js}`,
-    );
+    logger.error(`Usage: compas visualise sql {path/to/generated/index.js}`);
     return { exitCode: 1 };
   }
 
@@ -39,7 +37,7 @@ export async function visualiseCommand(logger, command) {
 
   if (SUB_COMMANDS.indexOf(subCommand) === -1) {
     logger.info(
-      `Unknown command: 'lbu visualise ${
+      `Unknown command: 'compas visualise ${
         subCommand ?? ""
       }'. Please use one of '${SUB_COMMANDS.join("', '")}'`,
     );
@@ -48,7 +46,7 @@ export async function visualiseCommand(logger, command) {
 
   const codeGen = await getCodeGenExports();
   if (!codeGen) {
-    logger.error(`The visualiser needs @lbu/code-gen to run.`);
+    logger.error(`The visualiser needs @compas/code-gen to run.`);
     return { exitCode: 1 };
   }
 
@@ -127,7 +125,7 @@ export async function visualiseCommand(logger, command) {
 }
 
 /**
- * Get the structure using @lbu/code-gen internal functions. This ensures all references
+ * Get the structure using @compas/code-gen internal functions. This ensures all references
  * are linked and the structure is valid.
  *
  * @param {Logger} logger

@@ -1,6 +1,6 @@
-import { compose } from "@lbu/server";
-import { AppError } from "@lbu/stdlib";
-import { eventRename } from "@lbu/insight";
+import { compose } from "@compas/server";
+import { AppError } from "@compas/stdlib";
+import { eventRename } from "@compas/insight";
 import {
 {{ for (const group of Object.keys(structure)) { }}
     {{ const count = Object.values(structure[group]).find(it => it.type === "route" && (!isNil(it.params) || !isNil(it.query) || !isNil(it.body) || !isNil(it.files))); }}
@@ -258,7 +258,7 @@ export function router(ctx, next) {
 ((newline))
 
 {{ if (options.dumpStructure) { }}
-lbuHandlers.structure = (ctx, next) => {
+compasHandlers.structure = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
   ctx.body = structureString;
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import { execute } from "./execute.js";
 import { parseArgs } from "./parse.js";
 import { collectScripts } from "./utils.js";

@@ -1,10 +1,10 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { AppError, isNil, uuid } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { AppError, isNil, uuid } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   query,
-} from "@lbu/store";
+} from "@compas/store";
 
 mainTestFn(import.meta);
 

@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@compas/stdlib";
 import { TypeCreator } from "../../builders/index.js";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { buildTrie } from "./trie.js";
@@ -37,9 +37,9 @@ export function generateRouterFiles(context) {
  * @param {GenerateOpts} options
  */
 export function getInternalRoutes(options) {
-  const T = new TypeCreator("lbu");
-  const G = T.router("_lbu/");
-  const tags = ["_lbu"];
+  const T = new TypeCreator("compas");
+  const G = T.router("_compas/");
+  const tags = ["_compas"];
 
   const result = [];
 

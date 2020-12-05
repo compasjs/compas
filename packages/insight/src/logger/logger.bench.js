@@ -1,11 +1,11 @@
 import { createWriteStream } from "fs";
-import { bench, mainBenchFn } from "@lbu/cli";
+import { bench, mainBenchFn } from "@compas/cli";
 import { newLogger } from "./logger.js";
 
 mainBenchFn(import.meta);
 
 bench("logger - strings", (b) => {
-  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const stream = createWriteStream("/tmp/logger_bench_compas.txt", "utf-8");
   const logger = newLogger({
     pretty: false,
     stream,
@@ -19,7 +19,7 @@ bench("logger - strings", (b) => {
 });
 
 bench("logger - objects", (b) => {
-  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const stream = createWriteStream("/tmp/logger_bench_compas.txt", "utf-8");
   const logger = newLogger({
     pretty: false,
     stream,
@@ -37,7 +37,7 @@ bench("logger - objects", (b) => {
 });
 
 bench("logger - deep objects", (b) => {
-  const stream = createWriteStream("/tmp/logger_bench_lbu.txt", "utf-8");
+  const stream = createWriteStream("/tmp/logger_bench_compas.txt", "utf-8");
   const logger = newLogger({
     pretty: false,
     stream,

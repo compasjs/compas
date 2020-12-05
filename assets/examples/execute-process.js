@@ -1,4 +1,4 @@
-import { exec, mainFn, spawn } from "@lbu/stdlib";
+import { exec, mainFn, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 

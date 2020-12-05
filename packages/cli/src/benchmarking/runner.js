@@ -2,7 +2,7 @@
  * @param {BenchState[]} state
  * @returns {Promise<void>}
  */
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { state } from "./state.js";
 
 export async function runBenchmarks(state) {

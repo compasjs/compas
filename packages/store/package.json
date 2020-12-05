@@ -1,5 +1,5 @@
 {
-  "name": "@lbu/store",
+  "name": "@compas/store",
   "version": "0.0.102",
   "description": "Postgres & S3-compatible wrappers for common things",
   "main": "./index.js",
@@ -7,16 +7,15 @@
   "types": "./index.d.ts",
   "type": "module",
   "keywords": [
-    "lightbase",
-    "lbu",
+    "compas",
     "s3",
     "postgres",
     "persistence"
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.102",
-    "@lbu/stdlib": "0.0.102",
+    "@compas/insight": "0.0.102",
+    "@compas/stdlib": "0.0.102",
     "@types/minio": "7.0.6",
     "mime-types": "2.1.27",
     "minio": "7.0.17",
@@ -31,10 +30,10 @@
       "name": "Daniël Hansen"
     }
   ],
-  "homepage": "https://lbu.lightbase.nl",
+  "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/compasjs/compas.git",
     "directory": "packages/store"
   },
   "publishConfig": {

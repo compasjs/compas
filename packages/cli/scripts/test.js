@@ -2,7 +2,7 @@ import {
   filenameForModule,
   mainFn,
   processDirectoryRecursive,
-} from "@lbu/stdlib";
+} from "@compas/stdlib";
 import { mainTestFn } from "../index.js";
 
 const __filename = filenameForModule(import.meta);

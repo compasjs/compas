@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 

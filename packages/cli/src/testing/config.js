@@ -1,5 +1,5 @@
 import { existsSync } from "fs";
-import { noop, pathJoin } from "@lbu/stdlib";
+import { noop, pathJoin } from "@compas/stdlib";
 import { setTestTimeout } from "./state.js";
 
 const configPath = pathJoin(process.cwd(), "test/config.js");

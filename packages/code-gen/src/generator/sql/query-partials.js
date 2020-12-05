@@ -17,10 +17,10 @@ export function generateQueryPartials(context) {
   const partials = [];
 
   const imports = importCreator();
-  imports.destructureImport("AppError", "@lbu/stdlib");
-  imports.destructureImport("isStaging", "@lbu/stdlib");
-  imports.destructureImport("query", "@lbu/store");
-  imports.destructureImport("isQueryObject", "@lbu/store");
+  imports.destructureImport("AppError", "@compas/stdlib");
+  imports.destructureImport("isStaging", "@compas/stdlib");
+  imports.destructureImport("query", "@compas/store");
+  imports.destructureImport("isQueryObject", "@compas/store");
   imports.destructureImport(
     "validatorSetError",
     `./anonymous-validators${context.importExtension}`,

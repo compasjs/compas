@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
-import { newLogger } from "@lbu/insight";
+import { newLogger } from "@compas/insight";
 import dotenv from "dotenv";
 import { isProduction, refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";

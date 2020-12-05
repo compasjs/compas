@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
@@ -19,17 +19,17 @@ export function helpCommand(logger, command, scriptCollection) {
 
 Usage:
 
-- init              : lbu init [projectName]
-- help              : lbu help
-- docker            : lbu docker [up,down,clean,reset]
-- proxy             : lbu proxy
-- run (explicit)    : lbu run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
-- run (implicit)    : lbu [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
-- test              : lbu test [--watch] [--verbose] [--node-arg]
-- bench             : lbu bench [--watch] [--verbose] [--node-arg]
-- coverage          : lbu coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
-- lint              : lbu lint [--watch] [--verbose] [--any-node-arg]
-- visualise         : lbu visualise [sql,router] {path/to/generated/index.js} [--format png|svg|webp|pdf] [--output ./path/to/output.ext]
+- init              : compas init [projectName]
+- help              : compas help
+- docker            : compas docker [up,down,clean,reset]
+- proxy             : compas proxy
+- run (explicit)    : compas run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
+- run (implicit)    : compas [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
+- test              : compas test [--watch] [--verbose] [--node-arg]
+- bench             : compas bench [--watch] [--verbose] [--node-arg]
+- coverage          : compas coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
+- lint              : compas lint [--watch] [--verbose] [--any-node-arg]
+- visualise         : compas visualise [sql,router] {path/to/generated/index.js} [--format png|svg|webp|pdf] [--output ./path/to/output.ext]
 
 
 Available script names:

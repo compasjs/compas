@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { isNil, isPlainObject, pathJoin } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
 import {
   collectScripts,
   watchOptionsToIgnoredArray,

@@ -302,7 +302,7 @@ export interface FileCacheOptions {
  *   after The FileCache#clear does not remove files from disk, but will overwrite the
  *   file when added to the cache again
  *
- * FileCache#getFileStream is compatible with `sendFile` in @lbu/server
+ * FileCache#getFileStream is compatible with `sendFile` in @compas/server
  */
 export class FileCache {
   static fileCachePath: string;
@@ -457,7 +457,7 @@ export function addRecurringJobToQueue(
 ): Promise<void>;
 
 /**
- * Stripped down from @lbu/server SessionStore
+ * Stripped down from @compas/server SessionStore
  */
 export interface SessionStore {
   get(id: string): Promise<object | boolean>;
@@ -473,7 +473,7 @@ export interface SessionStore {
 }
 
 /**
- * Create a session store compatible with @lbu/server#session
+ * Create a session store compatible with @compas/server#session
  */
 export function newSessionStore(sql: Postgres): SessionStore;
 
@@ -483,7 +483,7 @@ export function newSessionStore(sql: Postgres): SessionStore;
 export const migrations: string;
 
 /**
- * LBU structure.
+ * Compas structure.
  * Can be used to extend functionality or reference one of the columns
  */
 export const storeStructure: any;

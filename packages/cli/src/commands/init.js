@@ -6,7 +6,7 @@ import {
   readFileSync,
   writeFileSync,
 } from "fs";
-import { dirnameForModule, pathJoin, spawn } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin, spawn } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
@@ -36,14 +36,14 @@ export async function initCommand(logger, command) {
   );
 
   await spawn(`yarn`, []);
-  await spawn(`yarn`, [`lbu`, `generate`]);
-  await spawn(`yarn`, [`lbu`, `lint`]);
+  await spawn(`yarn`, [`compas`, `generate`]);
+  await spawn(`yarn`, [`compas`, `lint`]);
 
   logger.info(`
 We already completed your first code generation.
 
-- Try the api with 'yarn lbu api' and try 'http://localhost:3000/app' in your browser
-- Discover the utilities of lbu with 'yarn lbu help'
+- Try the api with 'yarn compas api' and try 'http://localhost:3000/app' in your browser
+- Discover the utilities of Compas with 'yarn compas help'
 
 Have fun ;)
 `);

@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "fs/promises";
-import { exec, isNil, mainFn, pathJoin } from "@lbu/stdlib";
+import { exec, isNil, mainFn, pathJoin } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
@@ -143,7 +143,7 @@ function combineCommits(commits) {
  */
 function makeChangelog(logger, commits) {
   const result = [
-    `### [vx.x.x](https://github.com/lightbasenl/lbu/releases/tag/vx.x.x)`,
+    `### [vx.x.x](https://github.com/compasjs/compas/releases/tag/vx.x.x)`,
     ``,
   ];
 
@@ -153,14 +153,14 @@ function makeChangelog(logger, commits) {
     result.push(
       `- ${commit.replace(
         /#(\d+)/g,
-        `[#$1](https://github.com/lightbasenl/lbu/pull/$1)`,
+        `[#$1](https://github.com/compasjs/compas/pull/$1)`,
       )}`,
     );
   }
 
   result.push(
     "",
-    "For a detailed description and more details about this release,\nplease read the [release notes](https://lbu.lightbase.nl/releases/x.x.x.html).",
+    "For a detailed description and more details about this release,\nplease read the [release notes](https://compasjs.com/releases/x.x.x.html).",
   );
 
   return result.join("\n");

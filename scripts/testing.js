@@ -1,6 +1,6 @@
-import { createBodyParsers, getApp, session } from "@lbu/server";
-import { isProduction, isStaging, mainFn } from "@lbu/stdlib";
-import { newPostgresConnection, newSessionStore } from "@lbu/store";
+import { createBodyParsers, getApp, session } from "@compas/server";
+import { isProduction, isStaging, mainFn } from "@compas/stdlib";
+import { newPostgresConnection, newSessionStore } from "@compas/store";
 
 mainFn(import.meta, main);
 

@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { bytesToHumanReadable, printProcessMemoryUsage } from "./memory.js";
 
 mainTestFn(import.meta);

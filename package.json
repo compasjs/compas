@@ -1,9 +1,9 @@
 {
-  "name": "lbu",
+  "name": "compas",
   "private": true,
   "type": "module",
   "scripts": {
-    "gen": "lbu internal_generate && lbu generate",
+    "gen": "compas internal_generate && compas generate",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
     "bump": "lerna changed && lerna version",
@@ -32,12 +32,12 @@
       "name": "Daniël Hansen"
     }
   ],
-  "homepage": "https://lbu.lightbase.nl",
+  "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git"
+    "url": "https://github.com/compasjs/compas.git"
   },
-  "prettier": "@lbu/lint-config/prettierrc",
+  "prettier": "@compas/lint-config/prettierrc",
   "workspaces": [
     "packages/*"
   ]

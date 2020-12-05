@@ -1,4 +1,4 @@
-import { dirnameForModule } from "@lbu/stdlib";
+import { dirnameForModule } from "@compas/stdlib";
 
 export {
   newMinioClient,

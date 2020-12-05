@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { AppError, isPlainObject, uuid } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { AppError, isPlainObject, uuid } from "@compas/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 

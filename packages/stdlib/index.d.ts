@@ -1,4 +1,4 @@
-import { Logger } from "@lbu/insight";
+import { Logger } from "@compas/insight";
 import { ExecOptions, SpawnOptions } from "child_process";
 
 interface UuidFunc {

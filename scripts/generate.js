@@ -1,6 +1,6 @@
 import { rmdir } from "fs/promises";
-import { App } from "@lbu/code-gen";
-import { mainFn, pathJoin, spawn } from "@lbu/stdlib";
+import { App } from "@compas/code-gen";
+import { mainFn, pathJoin, spawn } from "@compas/stdlib";
 import {
   applyBenchStructure,
   applyTestingServerStructure,

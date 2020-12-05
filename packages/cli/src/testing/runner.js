@@ -1,5 +1,5 @@
 import { AssertionError, deepStrictEqual } from "assert";
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**

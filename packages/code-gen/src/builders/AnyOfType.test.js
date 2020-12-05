@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { AnyOfType } from "./AnyOfType.js";
 import { BooleanType } from "./BooleanType.js";
 import { StringType } from "./StringType.js";

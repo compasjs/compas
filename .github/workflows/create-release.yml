@@ -41,4 +41,4 @@ jobs:
       - name: Create release
         run: |
           yarn install
-          yarn lbu create-release ${{ secrets.GITHUB_TOKEN }}
+          yarn compas create-release ${{ secrets.GITHUB_TOKEN }}

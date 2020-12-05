@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "@lbu/stdlib";
+import { isNil, isPlainObject } from "@compas/stdlib";
 import { ObjectType } from "./ObjectType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";

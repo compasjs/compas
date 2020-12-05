@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { AnyOfType } from "../../builders/AnyOfType.js";
 import { AnyType } from "../../builders/AnyType.js";
 import { ArrayType } from "../../builders/ArrayType.js";
@@ -90,12 +90,12 @@ export function createWhereTypes(context) {
                 rawValue: "QueryPart",
                 rawValueImport: {
                   javaScript: undefined,
-                  typeScript: `import { QueryPart } from "@lbu/store";`,
+                  typeScript: `import { QueryPart } from "@compas/store";`,
                 },
                 rawValidator: "isQueryObject",
                 rawValidatorImport: {
-                  javaScript: `import { isQueryObject } from "@lbu/store";`,
-                  typeScript: `import { isQueryObject } from "@lbu/store";`,
+                  javaScript: `import { isQueryObject } from "@compas/store";`,
+                  typeScript: `import { isQueryObject } from "@compas/store";`,
                 },
               },
             ],

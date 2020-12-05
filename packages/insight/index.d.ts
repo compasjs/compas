@@ -137,7 +137,7 @@ export function newTestEvent(options?: { enabledLogs?: boolean }): Event;
  * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
  * Postgres documentation for implications.
  *
- * Accepts the @lbu/store based sql instance, but not strongly typed so we don't have the
+ * Accepts the @compas/store based sql instance, but not strongly typed so we don't have the
  * dependency
  */
 export function postgresTableSizes(

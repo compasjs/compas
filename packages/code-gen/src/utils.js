@@ -1,4 +1,4 @@
-import { isPlainObject } from "@lbu/stdlib";
+import { isPlainObject } from "@compas/stdlib";
 
 /**
  * @param {*} data

@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 
 /**
  * Format and append query parts, and exec the final result in a safe way.

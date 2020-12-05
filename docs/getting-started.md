@@ -43,7 +43,7 @@ Let's start with the imports:
 
 ```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 ```
 
 From `code-gen` we import the following:
@@ -61,7 +61,7 @@ Let's tie all imported functions together in to a single main function:
 
 ```javascript
 import { App, generators, loadFromRemote } from "@lbu/code-gen";
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 
 async function main() {
   const app = new App({

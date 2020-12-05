@@ -12,7 +12,7 @@ the program entrypoint.
 <!-- howto-entrypoint -->
 
 ```js
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 
 mainFn(import.meta, (logger) => {
   logger.info("Process entrypoint running.");
@@ -70,7 +70,7 @@ file directly like `node ./file.test.js` or `yarn lbu run ./file.test.js`.
 However, to do this you need to add the following to your test file:
 
 ```js
-import { mainTestFn } from "@lbu/cli";
+import { mainTestFn } from "@compas/cli";
 
 mainTestFn(import.meta);
 ```

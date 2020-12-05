@@ -1,10 +1,10 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { isNil } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { isNil } from "@compas/stdlib";
 import { queries } from "./generated.js";
 import {
   addRecurringJobToQueue,
   getNextScheduledAt,
-  handleLbuRecurring,
+  handleCompasRecurring,
   JobQueueWorker,
 } from "./queue.js";
 import {
@@ -133,7 +133,7 @@ test("store/queue - recurring jobs ", async (t) => {
     t.equal(result[0].sum, 3);
   });
 
-  t.test("add recurring job to queue creates an lbu job", async (t) => {
+  t.test("add recurring job to queue creates an compas job", async (t) => {
     await addRecurringJobToQueue(sql, {
       name: "test",
       interval: { seconds: 1 },
@@ -143,7 +143,7 @@ test("store/queue - recurring jobs ", async (t) => {
       FROM
         job
       WHERE
-        name = 'lbu.job.recurring'
+        name = 'compas.job.recurring'
     `;
     t.equal(jobs.length, 1);
     t.equal(jobs[0].data.name, "test");
@@ -161,7 +161,7 @@ test("store/queue - recurring jobs ", async (t) => {
       FROM
         job
       WHERE
-        name = 'lbu.job.recurring'
+        name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 1);
     },
@@ -179,7 +179,7 @@ test("store/queue - recurring jobs ", async (t) => {
       FROM
         job
       WHERE
-        name = 'lbu.job.recurring'
+        name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 2);
     },
@@ -198,7 +198,7 @@ test("store/queue - recurring jobs ", async (t) => {
              FROM
                job
              WHERE
-               name = 'lbu.job.recurring'
+               name = 'compas.job.recurring'
            `;
       const secondTest = jobs.find((it) => it.data.name === "secondTest");
 
@@ -226,7 +226,7 @@ test("store/queue - recurring jobs ", async (t) => {
       FROM
         job
       WHERE
-        name = 'lbu.job.recurring'
+        name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 3);
     },
@@ -237,10 +237,10 @@ test("store/queue - recurring jobs ", async (t) => {
   });
 
   t.test(
-    "handleLbuRecurring should dispatch and create a new schedule job",
+    "handleCompasRecurring should dispatch and create a new schedule job",
     async (t) => {
       const inputDate = new Date();
-      await handleLbuRecurring(sql, {
+      await handleCompasRecurring(sql, {
         scheduledAt: new Date(),
         priority: 1,
         data: {
@@ -263,7 +263,7 @@ test("store/queue - recurring jobs ", async (t) => {
              FROM
                job
              WHERE
-               name = 'lbu.job.recurring'
+               name = 'compas.job.recurring'
            `;
       const count = await queries.jobCount(sql);
 
@@ -291,31 +291,34 @@ test("store/queue - recurring jobs ", async (t) => {
     },
   );
 
-  t.test("handleLbuRecurring should recreate in to the future", async (t) => {
-    const scheduledAt = new Date();
-    scheduledAt.setUTCMinutes(scheduledAt.getUTCMinutes() - 15);
-    await handleLbuRecurring(sql, {
-      scheduledAt,
-      priority: 1,
-      data: {
-        name: "recreate_future_test",
-        interval: {
-          minutes: 1,
+  t.test(
+    "handleCompasRecurring should recreate in to the future",
+    async (t) => {
+      const scheduledAt = new Date();
+      scheduledAt.setUTCMinutes(scheduledAt.getUTCMinutes() - 15);
+      await handleCompasRecurring(sql, {
+        scheduledAt,
+        priority: 1,
+        data: {
+          name: "recreate_future_test",
+          interval: {
+            minutes: 1,
+          },
         },
-      },
-    });
+      });
 
-    const [job] = await sql`
+      const [job] = await sql`
       SELECT *
       FROM
         "job"
       WHERE
-        name = 'lbu.job.recurring'
+        name = 'compas.job.recurring'
         AND data ->> 'name' = 'recreate_future_test'
     `;
 
-    t.ok(job.scheduledAt > scheduledAt);
-  });
+      t.ok(job.scheduledAt > scheduledAt);
+    },
+  );
 
   t.test("getNextScheduledAt - use provided scheduledAt as a base", (t) => {
     const input = new Date();

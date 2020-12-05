@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 
 /**
  * This short name is used in the default basic queries an can be overwritten / used in

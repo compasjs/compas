@@ -1,5 +1,5 @@
 import { match, strictEqual } from "assert";
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { runTestsRecursively } from "./runner.js";
 
 mainTestFn(import.meta);

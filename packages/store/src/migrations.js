@@ -1,7 +1,12 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import { AppError, dirnameForModule, environment, pathJoin } from "@lbu/stdlib";
+import {
+  AppError,
+  dirnameForModule,
+  environment,
+  pathJoin,
+} from "@compas/stdlib";
 
 /**
  * @param {Postgres} sql
@@ -17,17 +22,17 @@ export async function newMigrateContext(
 
     // Automatically add this package to the migrations,
     // and make sure it is at the front
-    const storeMigrationIndex = migrations.namespaces.indexOf("@lbu/store");
+    const storeMigrationIndex = migrations.namespaces.indexOf("@compas/store");
     if (storeMigrationIndex !== 0) {
       if (storeMigrationIndex !== -1) {
         migrations.namespaces.splice(storeMigrationIndex, 1);
-        migrations.namespaces.unshift("@lbu/store");
+        migrations.namespaces.unshift("@compas/store");
       } else {
-        migrations.namespaces.unshift("@lbu/store");
+        migrations.namespaces.unshift("@compas/store");
 
         const { migrationFiles } = await readMigrationsDir(
           `${dirnameForModule(import.meta)}/../migrations`,
-          "@lbu/store",
+          "@compas/store",
           migrations.namespaces,
         );
 

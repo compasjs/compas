@@ -39,8 +39,8 @@
 //                 Tomek Łaziuk <https://github.com/tlaziuk>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
-import { Event, Logger } from "@lbu/insight";
-import { StoreFile } from "@lbu/store";
+import { Event, Logger } from "@compas/insight";
+import { StoreFile } from "@compas/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";
 import { Files } from "formidable";
@@ -1014,7 +1014,7 @@ export interface SessionOptions {
 
   /**
    * You can store the session content in external stores(redis, mongodb or other DBs)
-   * Use `newSessionStore` provided by `@lbu/store`
+   * Use `newSessionStore` provided by `@compas/store`
    */
   store?: SessionStore;
 
@@ -1326,7 +1326,7 @@ export function createBodyParsers(
 ): BodyParserPair;
 
 /**
- * Compatible with @lbu/store files. Needs either updated_at or last_modified
+ * Compatible with @compas/store files. Needs either updated_at or last_modified
  * @private
  */
 type SendFileItem =

@@ -1,7 +1,7 @@
 import { spawnSync } from "child_process";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { dirnameForModule, mainFn } from "@lbu/stdlib";
+import { dirnameForModule, mainFn } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
@@ -34,14 +34,10 @@ function main(logger) {
     );
   }
 
-  writeFileSync(
-    "./docs/README.md",
-    `# @lbu (Lightbase Backend Utilities)\n${readmeSource}`,
-    "utf-8",
-  );
+  writeFileSync("./docs/README.md", `# @compas\n${readmeSource}`, "utf-8");
 
   logger.info("Running linter");
-  spawnSync("yarn", ["lbu", "lint"], { stdio: "inherit" });
+  spawnSync("yarn", ["compas", "lint"], { stdio: "inherit" });
   logger.info("Done");
 }
 
@@ -50,7 +46,7 @@ function main(logger) {
  * @param {string} readmeSource
  */
 function buildReadmeSource(pkgName, readmeSource) {
-  return `# @lbu/${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=@lbu/${pkgName})](https://packagephobia.com/result?p=@lbu/${pkgName})${readmeSource}\n`;
+  return `# @compas/${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=@compas/${pkgName})](https://packagephobia.com/result?p=@compas/${pkgName})${readmeSource}\n`;
 }
 
 function getReadmeSource() {

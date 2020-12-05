@@ -6,7 +6,7 @@ import {
   camelToSnakeCase,
   isNil,
   processDirectoryRecursiveSync,
-} from "@lbu/stdlib";
+} from "@compas/stdlib";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**

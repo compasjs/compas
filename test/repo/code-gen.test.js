@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
-import { mainTestFn, test } from "@lbu/cli";
-import { App } from "@lbu/code-gen";
-import { isNil, processDirectoryRecursiveSync } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { App } from "@compas/code-gen";
+import { isNil, processDirectoryRecursiveSync } from "@compas/stdlib";
 import {
   applyAllLocalGenerate,
   generateSettings,
@@ -28,7 +28,7 @@ test("repo/code-gen", async (t) => {
     Object.keys(existingFileMap).length !== Object.keys(generatedFileMap).length
   ) {
     t.fail(
-      "A new generate call contains more/less files than the existing directory. Call 'yarn lbu gen' to fix this.",
+      "A new generate call contains more/less files than the existing directory. Call 'yarn compas gen' to fix this.",
     );
     return;
   }
@@ -37,7 +37,7 @@ test("repo/code-gen", async (t) => {
   for (const key of Object.keys(existingFileMap)) {
     if (generatedFileMap[key] !== existingFileMap[key]) {
       t.fail(
-        `File ./generated/testing${key} is outdated. Call 'yarn lbu gen' to fix this.`,
+        `File ./generated/testing${key} is outdated. Call 'yarn compas gen' to fix this.`,
       );
     } else {
       t.pass(`Generated file ${key} is up to date.`);

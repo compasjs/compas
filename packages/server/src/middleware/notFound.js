@@ -1,4 +1,4 @@
-import { AppError } from "@lbu/stdlib";
+import { AppError } from "@compas/stdlib";
 
 /**
  * Middleware that sets a 404 and throws a NotFoundError

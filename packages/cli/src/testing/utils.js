@@ -1,4 +1,4 @@
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
 import { runTestsRecursively } from "./runner.js";

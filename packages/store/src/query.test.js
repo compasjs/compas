@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { AppError, isPlainObject } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { AppError, isPlainObject } from "@compas/stdlib";
 import { explainAnalyzeQuery, query } from "./query.js";
 import {
   cleanupTestPostgresDatabase,

@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin } from "@compas/stdlib";
 import { executeCommand } from "../utils.js";
 
 const lintFile = pathJoin(

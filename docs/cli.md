@@ -95,7 +95,7 @@ This package exports two items related to testing:
   `t.test` can be async.
 
 For some more specifics check the
-[How-to's](https://lbu.lightbase.nl/how-to.html#testing) about testing.
+[How-to's](https://compasjs.com/how-to.html#testing) about testing.
 
 ## Benchmarking
 

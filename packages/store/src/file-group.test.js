@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { isNil, uuid } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { isNil, uuid } from "@compas/stdlib";
 import {
   getNestedFileGroups,
   hoistChildrenToParent,

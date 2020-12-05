@@ -1,4 +1,4 @@
-import { bench, mainBenchFn } from "@lbu/cli";
+import { bench, mainBenchFn } from "@compas/cli";
 import { uuid } from "./datatypes.js";
 
 mainBenchFn(import.meta);

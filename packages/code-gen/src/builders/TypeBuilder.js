@@ -1,4 +1,4 @@
-import { isNil, merge } from "@lbu/stdlib";
+import { isNil, merge } from "@compas/stdlib";
 import { lowerCaseFirst } from "../utils.js";
 
 export class TypeBuilder {

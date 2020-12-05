@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { cleanTemplateOutput } from "./utils.js";
 
 mainTestFn(import.meta);

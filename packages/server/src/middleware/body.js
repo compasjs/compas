@@ -1,4 +1,4 @@
-import { AppError } from "@lbu/stdlib";
+import { AppError } from "@compas/stdlib";
 import formidable from "formidable";
 import koaBody from "koa-body";
 

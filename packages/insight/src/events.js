@@ -1,4 +1,4 @@
-import { newLogger } from "@lbu/insight";
+import { newLogger } from "@compas/insight";
 
 /**
  * Create a new event from a single logger

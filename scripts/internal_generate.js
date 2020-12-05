@@ -1,5 +1,5 @@
-import { App } from "@lbu/code-gen";
-import { mainFn } from "@lbu/stdlib";
+import { App } from "@compas/code-gen";
+import { mainFn } from "@compas/stdlib";
 import { applyCodeGenStructure, applyStoreStructure } from "../gen/index.js";
 
 mainFn(import.meta, main);

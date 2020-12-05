@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin, spawn } from "@lbu/stdlib";
+import { dirnameForModule, pathJoin, spawn } from "@compas/stdlib";
 import { App } from "../index.js";
 
 export const baseTestDir = pathJoin(

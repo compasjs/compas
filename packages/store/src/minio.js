@@ -1,4 +1,4 @@
-import { environment, isProduction, merge } from "@lbu/stdlib";
+import { environment, isProduction, merge } from "@compas/stdlib";
 import minio from "minio";
 
 /**

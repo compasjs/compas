@@ -1,4 +1,4 @@
-import { merge } from "@lbu/stdlib";
+import { merge } from "@compas/stdlib";
 import { RelationType } from "./RelationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";

@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { TypeCreator } from "../../builders/TypeCreator.js";
 import { addToData } from "../../generate.js";
@@ -19,9 +19,9 @@ export function generateQueryBuilders(context) {
   const names = [];
 
   const imports = importCreator();
-  imports.destructureImport("query", `@lbu/store`);
-  imports.destructureImport("isPlainObject", "@lbu/stdlib");
-  imports.destructureImport("isNil", "@lbu/stdlib");
+  imports.destructureImport("query", `@compas/store`);
+  imports.destructureImport("isPlainObject", "@compas/stdlib");
+  imports.destructureImport("isNil", "@compas/stdlib");
 
   for (const type of getQueryEnabledObjects(context)) {
     imports.destructureImport(

@@ -1,5 +1,5 @@
 {
-  "name": "@lbu/server",
+  "name": "@compas/server",
   "version": "0.0.102",
   "description": "Koa server and common middleware",
   "main": "./index.js",
@@ -7,8 +7,7 @@
   "types": "./index.d.ts",
   "type": "module",
   "keywords": [
-    "lightbase",
-    "lbu",
+    "compas",
     "koa",
     "api",
     "http",
@@ -16,8 +15,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.102",
-    "@lbu/stdlib": "0.0.102",
+    "@compas/insight": "0.0.102",
+    "@compas/stdlib": "0.0.102",
     "formidable": "2.0.0-canary.20200504.1",
     "keygrip": "1.1.0",
     "koa": "2.13.0",
@@ -33,10 +32,10 @@
       "name": "Daniël Hansen"
     }
   ],
-  "homepage": "https://lbu.lightbase.nl",
+  "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/compasjs/compas.git",
     "directory": "packages/server"
   },
   "publishConfig": {

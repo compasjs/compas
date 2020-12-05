@@ -1,5 +1,5 @@
-import { newLogger } from "@lbu/insight";
-import { isNil } from "@lbu/stdlib";
+import { newLogger } from "@compas/insight";
+import { isNil } from "@compas/stdlib";
 import {
   AnyOfType,
   AnyType,
@@ -20,7 +20,7 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 /**
  * Try some 'free'-form conversion
  * A lot of things are not mappable between the structures, and some have a different
- * meaning between OpenAPI and LBU.
+ * meaning between OpenAPI and Compas.
  * We convert the routes first, using the first tag where possible, else the default
  * group. We then try to resolve the path-params and query params. Followed by the
  * request body and 200-response. There are some extra generated references to make sure
@@ -98,7 +98,7 @@ function extractRoute(context, path, method) {
   }
 
   // Use tags[0] for the group or the defaultGroup
-  const lbuStruct = {
+  const compasStruct = {
     ...TypeBuilder.getBaseData(),
     type: "route",
     group: transformRouteName(item.tags?.[0] ?? context.defaultGroup),
@@ -109,36 +109,36 @@ function extractRoute(context, path, method) {
     tags: [],
   };
 
-  if (context.defaultGroup !== lbuStruct.group) {
+  if (context.defaultGroup !== compasStruct.group) {
     context.crossReferences.push({
-      name: lbuStruct.name,
-      group: lbuStruct.group,
+      name: compasStruct.name,
+      group: compasStruct.group,
     });
   }
 
   // OpenAPI has the path & query params in a single list
-  lbuStruct.query = transformQueryOrParams(
+  compasStruct.query = transformQueryOrParams(
     context,
     item.parameters || [],
-    lbuStruct,
+    compasStruct,
     "query",
   );
-  lbuStruct.params = transformQueryOrParams(
+  compasStruct.params = transformQueryOrParams(
     context,
     item.parameters || [],
-    lbuStruct,
+    compasStruct,
     "path",
   );
 
-  lbuStruct.body = transformBody(context, item.requestBody, lbuStruct);
-  lbuStruct.response = transformResponse(
+  compasStruct.body = transformBody(context, item.requestBody, compasStruct);
+  compasStruct.response = transformResponse(
     context,
     item.responses?.["200"],
-    lbuStruct,
+    compasStruct,
   );
 
-  context.result[lbuStruct.group] = context.result[lbuStruct.group] || {};
-  context.result[lbuStruct.group][lbuStruct.name] = lbuStruct;
+  context.result[compasStruct.group] = context.result[compasStruct.group] || {};
+  context.result[compasStruct.group][compasStruct.name] = compasStruct;
 }
 
 /**
@@ -179,10 +179,10 @@ function transformRoutePath(path) {
  *
  * @param context
  * @param inputList
- * @param lbuStruct
+ * @param compasStruct
  * @param filter
  */
-function transformQueryOrParams(context, inputList, lbuStruct, filter) {
+function transformQueryOrParams(context, inputList, compasStruct, filter) {
   const obj = {};
 
   for (let input of inputList) {
@@ -207,8 +207,8 @@ function transformQueryOrParams(context, inputList, lbuStruct, filter) {
     return {
       ...ObjectType.getBaseData(),
       type: "object",
-      group: lbuStruct.group,
-      name: lbuStruct.name + upperCaseFirst(filter),
+      group: compasStruct.group,
+      name: compasStruct.name + upperCaseFirst(filter),
       keys: obj,
       validator: {
         strict: false,
@@ -222,16 +222,16 @@ function transformQueryOrParams(context, inputList, lbuStruct, filter) {
  *
  * @param context
  * @param input
- * @param lbuStruct
+ * @param compasStruct
  */
-function transformBody(context, input, lbuStruct) {
+function transformBody(context, input, compasStruct) {
   if (isNil(input?.content?.["application/json"]?.schema)) {
     return undefined;
   }
 
   const item = convertSchema(context, input.content["application/json"].schema);
-  item.group = lbuStruct.group;
-  item.name = `${lbuStruct.name}Body`;
+  item.group = compasStruct.group;
+  item.name = `${compasStruct.name}Body`;
   item.docString = input.description || "";
   item.isOptional = !input.required;
 
@@ -243,15 +243,15 @@ function transformBody(context, input, lbuStruct) {
  *
  * @param context
  * @param input
- * @param lbuStruct
+ * @param compasStruct
  */
-function transformResponse(context, input, lbuStruct) {
+function transformResponse(context, input, compasStruct) {
   const item = convertSchema(
     context,
     input?.content?.["application/json"]?.schema,
   );
-  item.group = lbuStruct.group;
-  item.name = `${lbuStruct.name}Response`;
+  item.group = compasStruct.group;
+  item.name = `${compasStruct.name}Response`;
   item.docString = input?.description || "";
 
   return item;
@@ -301,10 +301,10 @@ function resolveReference(context, refString) {
 }
 
 /**
- * Make an effort ot convert to native lbu types.
- * LBU and OpenAPI offer flexibility in different places:
- * - allOf, oneOf and anyOf from OpenAPI all result into a LBU anyOf
- * - Unknown types result in a lbu AnyType
+ * Make an effort ot convert to native compas types.
+ * Compas and OpenAPI offer flexibility in different places:
+ * - allOf, oneOf and anyOf from OpenAPI all result into a compas anyOf
+ * - Unknown types result in a compas AnyType
  *
  * @param context
  * @param schema

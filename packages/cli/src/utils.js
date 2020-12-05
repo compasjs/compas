@@ -1,6 +1,6 @@
 import { spawn as cpSpawn } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
-import { pathJoin, spawn } from "@lbu/stdlib";
+import { pathJoin, spawn } from "@compas/stdlib";
 import chokidar from "chokidar";
 import treeKill from "tree-kill";
 

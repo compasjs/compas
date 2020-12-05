@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { queries } from "./generated.js";
 import { query } from "./query.js";
 

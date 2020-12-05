@@ -1,4 +1,4 @@
-import { exec, pathJoin } from "@lbu/stdlib";
+import { exec, pathJoin } from "@compas/stdlib";
 
 /**
  * @param {string} testName

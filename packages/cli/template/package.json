@@ -7,20 +7,20 @@
     "start": "NODE_ENV=production node ./scripts/api.js"
   },
   "dependencies": {
-    "@lbu/insight": "{{version}}",
-    "@lbu/server": "{{version}}",
-    "@lbu/stdlib": "{{version}}",
-    "@lbu/store": "{{version}}"
+    "@compas/insight": "{{version}}",
+    "@compas/server": "{{version}}",
+    "@compas/stdlib": "{{version}}",
+    "@compas/store": "{{version}}"
   },
   "devDependencies": {
-    "@lbu/cli": "{{version}}",
-    "@lbu/code-gen": "{{version}}",
-    "@lbu/lint-config": "{{version}}",
+    "@compas/cli": "{{version}}",
+    "@compas/code-gen": "{{version}}",
+    "@compas/lint-config": "{{version}}",
     "axios": "0.19.2",
     "axios-cookiejar-support": "1.0.0",
     "tough-cookie": "4.0.0"
   },
-  "prettier": "@lbu/lint-config/prettierrc",
+  "prettier": "@compas/lint-config/prettierrc",
   "engines": {
     "node": ">=14"
   }

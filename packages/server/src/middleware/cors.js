@@ -1,4 +1,4 @@
-import { environment, isStaging } from "@lbu/stdlib";
+import { environment, isStaging } from "@compas/stdlib";
 
 /*
  Original copy from: https://github.com/zadzbw/koa2-cors/commit/45b6de0de6c4816b93d49335490b81995d450191

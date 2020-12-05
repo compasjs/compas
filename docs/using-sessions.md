@@ -16,7 +16,7 @@ Mounting sessions is pretty straight forward. First of all create a database
 connection and session store:
 
 ```javascript
-import { newPostgresConnection, newSessionStore } from "@lbu/store";
+import { newPostgresConnection, newSessionStore } from "@compas/store";
 
 const sql = newPostgresConnection({});
 const store = newSessionStore(sql, {});
@@ -29,7 +29,7 @@ task every 45 minutes. It is also possible to disable with `disableInterval`.
 Next we will mount the session middleware:
 
 ```javascript
-import { getApp, session } from "@lbu/server";
+import { getApp, session } from "@compas/server";
 
 const app = getApp({
   /* ... */

@@ -1,8 +1,8 @@
-# @lbu (Lightbase Backend Utilities)
+# @compas
 
-![lint-build-test](https://github.com/lightbasenl/lbu/workflows/lint-build-test/badge.svg)
+![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
 
-Collection of Lightbase backend utilities
+Unified backend tooling
 
 ---
 
@@ -25,28 +25,28 @@ Collection of Lightbase backend utilities
 
 ## Why
 
-Here at [lightbase](https://lightbase.nl) we had a constantly growing
-boilerplate for new projects. To facilitate our needs more and to stop copying
-and pasting things around this project was born. This project is for now
-tailored at monolithic projects.
+My work involved doing many small projects. I had a hard time backporting
+incremental fixes to existing projects. To facilitate my needs more and to stop
+copying and pasting things around, this project was born.
 
 ## Features breakdown
 
-**@lbu/cli**:
+**@compas/cli**:
 
 - Run user scripts (in watch mode)
 - Run the linter
-- A LBU based boilerplate
+- A Compas based boilerplate
 - Test runner
 - Benchmark runner
 - Necessary Docker container management
+- Visualise the known database structure of @compas/code-gen
 
-**@lbu/lint-config**:
+**@compas/lint-config**:
 
 - All necessary ESLint and Prettier dependencies
 - Default configuration for ESLint and Prettier
 
-**@lbu/insight**:
+**@compas/insight**:
 
 - A structured logger
   - Writing newline delimited JSON in production
@@ -54,7 +54,7 @@ tailored at monolithic projects.
 - Various utilities to get insight in the running process
 - A manual event system
 
-**@lbu/stdlib**:
+**@compas/stdlib**:
 
 - Various lodash inspired utilities (isNil, isPlainObject, ...)
 - Wrappers for child_process execution and spawning
@@ -62,15 +62,15 @@ tailored at monolithic projects.
   file is the process entrypoint
 - Replacements for CommonJS `__dirname` and `__filename`
 
-**@lbu/server**:
+**@compas/server**:
 
 - Wrapper around Koa instance creation
 - 404 en error handling
 - Handle CORS
 - Send file helper
-- Session support with safe browser readable cookies
+- Session support with safe, browser readable cookies
 
-**@lbu/store**:
+**@compas/store**:
 
 - Wrapper around the Minio S3 client
 - Wrapper around Postgres connection
@@ -82,12 +82,12 @@ tailored at monolithic projects.
   - Supports priority, scheduling, multiple async workers and recurring jobs
 - koa-session compatible SessionStore backed by Postgres
 
-**@lbu/code-gen**:
+**@compas/code-gen**:
 
 - Code generators for the following:
   - router, with wildcard and path parameter support
   - validators, pure JavaScript implementation
-  - sql, CRUD postgres queries, graph traversal
+  - sql, CRUD Postgres queries and nested result support
   - Axios based api client
   - TypeScript or JSDoc types
   - react-query hooks
@@ -97,24 +97,24 @@ tailored at monolithic projects.
   - date, uuid;
   - generic, anyOf, reference;
 - Remote structure loader
-- OpenAPI to LBU converter
+- OpenAPI to Compas structure converter
 
 ## Docs and development
 
-See [the website](https://lbu.lightbase.nl) for the changelog, all available
-APIs and various guides.
+See [the website](https://compasjs.com) for the changelog, all available APIs
+and various guides.
 
-For contributing see [contributing.md](https://lbu.lightbase.nl/#/contributing).
+For contributing see [contributing.md](https://compasjs.com/contributing).
 
 ## New features
 
 New features added should fall under the following categories:
 
 - It improves the interface between api and client in some way. An example may
-  be to support websockets in @lbu/code-gen
+  be to support websockets in @compas/code-gen
 - It improves the developer experience one way or another while developing an
-  api For example the `lbu docker` commands or various utilities provided by
-  @lbu/stdlib
+  api For example the `compas docker` commands or various utilities provided by
+  @compas/stdlib
 
 Although some parts heavily rely on conventions set by the packages, we
 currently aim not to be a framework. We aim to provide a good developer

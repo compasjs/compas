@@ -1,4 +1,4 @@
-import { AppError, isNil, isStaging } from "@lbu/stdlib";
+import { AppError, isNil, isStaging } from "@compas/stdlib";
 
 /**
  * @type CustomErrorHandler

@@ -163,7 +163,7 @@ export class AppError extends Error {
 
   /**
    * Use AppError#format when AppError is passed to JSON.stringify().
-   * This is used in the lbu insight logger in production mode.
+   * This is used in the compas insight logger in production mode.
    */
   toJSON() {
     return AppError.format(this);

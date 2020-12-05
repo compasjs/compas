@@ -40,8 +40,8 @@ jobs:
       - name: Run benchmarks
         run: |
           yarn install
-          yarn lbu gen
-          yarn lbu bench
+          yarn compas gen
+          yarn compas bench
           echo -e "BENCH_RESULT<<EOF\n$(cat ./benchmark_output.txt)\nEOF" | tee -a $GITHUB_ENV
 
       - name: Comment bench result
@@ -92,11 +92,11 @@ jobs:
       - name: Run benchmarks
         run: |
           yarn install
-          yarn lbu docker up
-          yarn lbu gen
-          yarn lbu migrate
-          yarn lbu coverage
-          yarn lbu docker reset
+          yarn compas docker up
+          yarn compas gen
+          yarn compas migrate
+          yarn compas coverage
+          yarn compas docker reset
 
       - name: Comment test coverage
         uses: AthleticNet/comment-test-coverage@1.1

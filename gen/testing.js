@@ -1,4 +1,4 @@
-import { TypeCreator } from "@lbu/code-gen";
+import { TypeCreator } from "@compas/code-gen";
 
 export function applyBenchStructure(app) {
   const T = new TypeCreator("bench");

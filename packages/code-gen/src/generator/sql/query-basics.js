@@ -12,7 +12,7 @@ export function generateBaseQueries(context) {
   const partials = [];
 
   const imports = importCreator();
-  imports.destructureImport("query", `@lbu/store`);
+  imports.destructureImport("query", `@compas/store`);
 
   for (const type of getQueryEnabledObjects(context)) {
     imports.destructureImport(

@@ -1,4 +1,4 @@
-import { Logger } from "@lbu/insight";
+import { Logger } from "@compas/insight";
 
 /**
  * Top level test function for registering tests

@@ -1,6 +1,6 @@
 import { Transform } from "stream";
-import { eventStart, eventStop, newEvent, newLogger } from "@lbu/insight";
-import { isNil, uuid } from "@lbu/stdlib";
+import { eventStart, eventStop, newEvent, newLogger } from "@compas/insight";
+import { isNil, uuid } from "@compas/stdlib";
 
 /**
  * Log basic request and response information

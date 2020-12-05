@@ -8,7 +8,7 @@ import { CancelToken, AxiosInstance } from "axios";
 
 {{ if (options.isNodeServer) { }}
 import * as validators from "./validators{{= importExtension }}";
-import { AppError, streamToBuffer } from "@lbu/stdlib";
+import { AppError, streamToBuffer } from "@compas/stdlib";
 ((newline))
 function handleError(e, group, name) {
   // Validator error

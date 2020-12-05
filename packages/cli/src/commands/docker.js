@@ -1,16 +1,16 @@
-import { environment, exec, spawn } from "@lbu/stdlib";
+import { environment, exec, spawn } from "@compas/stdlib";
 
 const SUB_COMMANDS = ["up", "down", "clean", "reset"];
 
 const containers = {
-  "lbu-postgres-12": {
-    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres-12:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres-12 postgres:12`,
+  "compas-postgres-12": {
+    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-12:/var/lib/postgresql/data/pgdata -p 5432:5432 --name compas-postgres-12 postgres:12`,
   },
-  "lbu-postgres-13": {
-    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v lbu-postgres-13:/var/lib/postgresql/data/pgdata -p 5432:5432 --name lbu-postgres-13 postgres:13`,
+  "compas-postgres-13": {
+    createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-13:/var/lib/postgresql/data/pgdata -p 5432:5432 --name compas-postgres-13 postgres:13`,
   },
-  "lbu-minio": {
-    createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v lbu-minio:/data -p 9000:9000 --name lbu-minio minio/minio server /data`,
+  "compas-minio": {
+    createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000 --name compas-minio minio/minio server /data`,
   },
 };
 
@@ -23,7 +23,7 @@ export async function dockerCommand(logger, command) {
   const subCommand = command.arguments[0];
   if (SUB_COMMANDS.indexOf(subCommand) === -1) {
     logger.info(
-      `Unknown command: 'lbu docker ${
+      `Unknown command: 'compas docker ${
         subCommand ?? ""
       }'. Please use one of ${SUB_COMMANDS.join(", ")}`,
     );
@@ -49,8 +49,8 @@ export async function dockerCommand(logger, command) {
   }
 
   const enabledContainers = [
-    `lbu-postgres-${getPostgresVersion()}`,
-    `lbu-minio`,
+    `compas-postgres-${getPostgresVersion()}`,
+    `compas-minio`,
   ];
 
   const disabledContainers = Object.keys(containers).filter(
@@ -114,7 +114,7 @@ async function startContainers(logger, containerInfo) {
   // Race for 30 seconds against the pg_isready command
   await Promise.race([
     exec(
-      `until docker exec lbu-postgres-${getPostgresVersion()} pg_isready ; do sleep 1 ; done`,
+      `until docker exec compas-postgres-${getPostgresVersion()} pg_isready ; do sleep 1 ; done`,
       { shell: true },
     ),
     new Promise((resolve, reject) => {
@@ -205,7 +205,7 @@ async function resetDatabase(logger, containerInfo) {
   logger.info(`Resetting ${name} database`);
   const { exitCode: postgresExit } = await spawn(`sh`, [
     "-c",
-    `echo 'DROP DATABASE IF EXISTS ${name}; CREATE DATABASE ${name}' | docker exec -i lbu-postgres-${getPostgresVersion()} psql --user postgres`,
+    `echo 'DROP DATABASE IF EXISTS ${name}; CREATE DATABASE ${name}' | docker exec -i compas-postgres-${getPostgresVersion()} psql --user postgres`,
   ]);
 
   if (postgresExit !== 0) {

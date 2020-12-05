@@ -1,5 +1,5 @@
 {
-  "name": "@lbu/code-gen",
+  "name": "@compas/code-gen",
   "version": "0.0.102",
   "description": "Generate various boring parts of your server",
   "main": "./index.js",
@@ -7,8 +7,7 @@
   "types": "./index.d.ts",
   "type": "module",
   "keywords": [
-    "lightbase",
-    "lbu",
+    "compas",
     "generate",
     "router",
     "validation",
@@ -16,9 +15,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/cli": "0.0.102",
-    "@lbu/insight": "0.0.102",
-    "@lbu/stdlib": "0.0.102"
+    "@compas/cli": "0.0.102",
+    "@compas/insight": "0.0.102",
+    "@compas/stdlib": "0.0.102"
   },
   "maintainers": [
     {
@@ -29,10 +28,10 @@
       "name": "Daniël Hansen"
     }
   ],
-  "homepage": "https://lbu.lightbase.nl",
+  "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/compasjs/compas.git",
     "directory": "packages/code-gen"
   },
   "publishConfig": {

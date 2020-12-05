@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { cleanTemplateOutput } from "../utils.js";
 
 const MAX_COLLECT_LOOP = 13;

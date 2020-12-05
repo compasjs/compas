@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 

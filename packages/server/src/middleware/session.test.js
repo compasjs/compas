@@ -1,9 +1,9 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   newSessionStore,
-} from "@lbu/store";
+} from "@compas/store";
 import Axios from "axios";
 import Koa from "koa";
 import { closeTestApp, createTestAppAndClient } from "../testing.js";

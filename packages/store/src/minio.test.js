@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { uuid } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { uuid } from "@compas/stdlib";
 import { ensureBucket, newMinioClient, removeBucket } from "./minio.js";
 
 mainTestFn(import.meta);

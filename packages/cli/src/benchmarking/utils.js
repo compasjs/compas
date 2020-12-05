@@ -1,4 +1,4 @@
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import { printBenchResults } from "./printer.js";
 import { runBenchmarks } from "./runner.js";
 import {

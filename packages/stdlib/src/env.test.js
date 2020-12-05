@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { isProduction, isStaging, refreshEnvironmentCache } from "./env.js";
 
 mainTestFn(import.meta);

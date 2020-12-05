@@ -51,13 +51,13 @@ should be all that you need. Run `yarn lbu migrate` and the thing should run,
 provided that you already had a working database connection in this project.
 
 ```javascript
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import {
   getMigrationsToBeApplied,
   newMigrateContext,
   newPostgresConnection,
   runMigrations,
-} from "@lbu/store";
+} from "@compas/store";
 
 mainFn(import.meta, main);
 
@@ -203,7 +203,7 @@ this package exports its structure used for code generation with
 This can be used as follows:
 
 ```js
-import { storeStructure } from "@lbu/store";
+import { storeStructure } from "@compas/store";
 
 // setup app
 app.extend(storeStructure);

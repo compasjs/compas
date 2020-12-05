@@ -1,5 +1,5 @@
-import { mainTestFn, test } from "@lbu/cli";
-import { dirnameForModule, environment } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { dirnameForModule, environment } from "@compas/stdlib";
 import {
   getMigrationsToBeApplied,
   newMigrateContext,
@@ -28,7 +28,7 @@ test("store/migrations", (t) => {
   t.test("run full migration", async (t) => {
     const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
-    t.deepEqual(mc.namespaces, ["@lbu/store", environment.APP_NAME]);
+    t.deepEqual(mc.namespaces, ["@compas/store", environment.APP_NAME]);
     t.equal(mc.files.length, 9);
 
     const { migrationQueue: list } = getMigrationsToBeApplied(mc);

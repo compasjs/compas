@@ -1,4 +1,4 @@
-import { isPlainObject } from "@lbu/stdlib";
+import { isPlainObject } from "@compas/stdlib";
 import { ArrayType } from "./ArrayType.js";
 import { BooleanType } from "./BooleanType.js";
 import { NumberType } from "./NumberType.js";

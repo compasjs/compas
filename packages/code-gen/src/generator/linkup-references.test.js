@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 
 mainTestFn(import.meta);

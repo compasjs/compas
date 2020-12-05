@@ -1,10 +1,10 @@
-import { mainFn } from "@lbu/stdlib";
+import { mainFn } from "@compas/stdlib";
 import {
   getMigrationsToBeApplied,
   newMigrateContext,
   newPostgresConnection,
   runMigrations,
-} from "@lbu/store";
+} from "@compas/store";
 
 mainFn(import.meta, main);
 

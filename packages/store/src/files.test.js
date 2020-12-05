@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
-import { mainTestFn, test } from "@lbu/cli";
-import { uuid } from "@lbu/stdlib";
+import { mainTestFn, test } from "@compas/cli";
+import { uuid } from "@compas/stdlib";
 import {
   copyFile,
   createOrUpdateFile,
@@ -93,7 +93,7 @@ test("store/files", async (t) => {
   });
 
   t.test("get file stream by id", async (t) => {
-    const testPath = "/tmp/lbu_store_stream_test";
+    const testPath = "/tmp/compas_store_stream_test";
     const ws = createWriteStream(testPath);
 
     const stream = await getFileStream(minio, bucketName, storedFiles[1].id);
@@ -112,7 +112,7 @@ test("store/files", async (t) => {
   t.test("stream ranges", async (t) => {
     const inputs = [{ end: 14 }, { start: 2 }, { start: 2, end: 14 }];
     const original = readFileSync(filePath, "utf-8");
-    const testPath = "/tmp/lbu_store_stream_test";
+    const testPath = "/tmp/compas_store_stream_test";
 
     for (const input of inputs) {
       const ws = createWriteStream(testPath);

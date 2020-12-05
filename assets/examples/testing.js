@@ -1,4 +1,4 @@
-import { mainTestFn, test } from "@lbu/cli";
+import { mainTestFn, test } from "@compas/cli";
 
 mainTestFn(import.meta);
 
@@ -55,7 +55,7 @@ test("Throws vs not throws", async (t) => {
   } catch (e) {
     t.fail(`The 'doesNotThrow' function did throw.`);
 
-    // A logger from @lbu/insight is available
+    // A logger from @compas/insight is available
     t.log.error(e);
   }
 });

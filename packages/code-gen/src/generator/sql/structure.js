@@ -1,4 +1,4 @@
-import { isNil } from "@lbu/stdlib";
+import { isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";
 import { getSearchableFields } from "./where-type.js";

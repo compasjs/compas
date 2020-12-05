@@ -1,4 +1,4 @@
-import { environment, isNil, isProduction, merge, uuid } from "@lbu/stdlib";
+import { environment, isNil, isProduction, merge, uuid } from "@compas/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 

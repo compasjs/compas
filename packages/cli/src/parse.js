@@ -142,14 +142,14 @@ export function parseArgs(args, knownScripts = []) {
 
   let watch = false;
   let verbose = false;
-  const lbuAndNodeArguments = args.slice(
+  const compasAndNodeArguments = args.slice(
     defaultedToRun ? 0 : 1,
     foundScriptIdx === -1 ? args.length : foundScriptIdx,
   );
 
   const nodeArguments = [];
 
-  for (const arg of lbuAndNodeArguments) {
+  for (const arg of compasAndNodeArguments) {
     if (!watch && arg === "--watch") {
       watch = true;
       continue;

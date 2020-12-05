@@ -1,4 +1,4 @@
-import { pathJoin } from "@lbu/stdlib";
+import { pathJoin } from "@compas/stdlib";
 import { executeCommand, watchOptionsWithDefaults } from "../utils.js";
 
 /**

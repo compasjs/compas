@@ -1,4 +1,4 @@
-import { mainFn, spawn, environment } from "@lbu/stdlib";
+import { mainFn, spawn, environment } from "@compas/stdlib";
 
 mainFn(import.meta, async () => {
   const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [

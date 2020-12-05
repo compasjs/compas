@@ -2,13 +2,13 @@ import { once } from "events";
 import { mkdirSync, createReadStream, createWriteStream } from "fs";
 import { pipeline as pipelineCallbacks, Readable } from "stream";
 import { promisify } from "util";
-import { isNil, pathJoin, uuid } from "@lbu/stdlib";
+import { isNil, pathJoin, uuid } from "@compas/stdlib";
 import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);
 
 export class FileCache {
-  static fileCachePath = `/tmp/lbu-cache/${uuid()}/`;
+  static fileCachePath = `/tmp/compas-cache/${uuid()}/`;
 
   /**
    * @param {Postgres} sql

@@ -1,8 +1,8 @@
-import { newLogger } from "@lbu/insight";
-import { environment } from "@lbu/stdlib";
+import { newLogger } from "@compas/insight";
+import { environment } from "@compas/stdlib";
 import { queries } from "./generated.js";
 
-const LBU_RECURRING_JOB = "lbu.job.recurring";
+const COMPAS_RECURRING_JOB = "compas.job.recurring";
 
 const queueQueries = {
   // Should only run in a transaction
@@ -98,7 +98,7 @@ const queueQueries = {
     FROM
       "job"
     WHERE
-      name = ${LBU_RECURRING_JOB}
+      name = ${COMPAS_RECURRING_JOB}
       AND "isComplete" IS FALSE
       AND data ->> 'name' = ${name}
   `,
@@ -284,8 +284,12 @@ export class JobQueueWorker {
         let error = undefined;
 
         try {
-          if (jobData.name === LBU_RECURRING_JOB) {
-            await handleLbuRecurring(sql, jobData);
+          // TODO: Remove old recurring job name
+          if (
+            jobData.name === COMPAS_RECURRING_JOB ||
+            jobData.name === "compas.job.recurring"
+          ) {
+            await handleCompasRecurring(sql, jobData);
           } else {
             await this.jobHandler(sql, jobData);
           }
@@ -353,7 +357,7 @@ export async function addRecurringJobToQueue(
   }
 
   await addJobToQueue(sql, {
-    name: LBU_RECURRING_JOB,
+    name: COMPAS_RECURRING_JOB,
     priority,
     data: {
       interval,
@@ -423,7 +427,7 @@ async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
  * @param {Postgres} sql
  * @param {StoreJob} job
  */
-export async function handleLbuRecurring(sql, job) {
+export async function handleCompasRecurring(sql, job) {
   const {
     scheduledAt,
     priority,
@@ -443,7 +447,7 @@ export async function handleLbuRecurring(sql, job) {
 
   // Dispatch recurring job again for the next 'schedule'
   await addJobToQueue(sql, {
-    name: LBU_RECURRING_JOB,
+    name: COMPAS_RECURRING_JOB,
     scheduledAt: nextSchedule,
     priority,
     data: {

@@ -1,5 +1,5 @@
 {
-  "name": "@lbu/cli",
+  "name": "@compas/cli",
   "version": "0.0.102",
   "description": "CLI containing utilities and simple script runner",
   "main": "./index.js",
@@ -7,11 +7,10 @@
   "types": "./index.d.ts",
   "type": "module",
   "bin": {
-    "lbu": "src/cli.js"
+    "compas": "src/cli.js"
   },
   "keywords": [
-    "lbu",
-    "lightbase",
+    "compas",
     "cli",
     "scripts",
     "template",
@@ -27,8 +26,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@lbu/insight": "0.0.102",
-    "@lbu/stdlib": "0.0.102",
+    "@compas/insight": "0.0.102",
+    "@compas/stdlib": "0.0.102",
     "c8": "7.3.5",
     "chokidar": "3.4.3",
     "http-proxy": "1.18.1",
@@ -43,10 +42,10 @@
       "name": "Daniël Hansen"
     }
   ],
-  "homepage": "https://lbu.lightbase.nl",
+  "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lightbasenl/lbu.git",
+    "url": "https://github.com/compasjs/compas.git",
     "directory": "packages/cli"
   },
   "publishConfig": {

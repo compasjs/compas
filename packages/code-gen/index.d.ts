@@ -1,4 +1,4 @@
-import { Logger } from "@lbu/insight";
+import { Logger } from "@compas/insight";
 import { AxiosInstance } from "axios";
 
 /**
@@ -7,12 +7,12 @@ import { AxiosInstance } from "axios";
 export function isNamedTypeBuilderLike(value: any): boolean;
 
 /**
- * Load a LBU structure from an LBU enabled API
+ * Load a Compas structure from an Compas enabled API
  */
 export function loadFromRemote(axios: AxiosInstance, baseUrl: string): any;
 
 /**
- * Try to convert a OpenAPI spec object to LBU structure
+ * Try to convert a OpenAPI spec object to Compas structure
  * @param defaultGroup Default to group to use for non tagged items in the spec
  * @param data Raw OpenAPI 3 json object
  */
