@@ -17,6 +17,10 @@ module.exports = {
     "no-process-exit": "off",
     "no-console": ["error", { allow: ["dir", "time", "timeEnd"] }],
     "no-promise-executor-return": "error",
+    "no-unsafe-optional-chaining": [
+      "error",
+      { disallowArithmeticOperators: true },
+    ],
     "default-case-last": "error",
     "no-else-return": "error",
     "no-return-assign": "error",
