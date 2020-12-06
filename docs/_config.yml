@@ -1,6 +1,7 @@
 theme: jekyll-theme-minimal
 include: ["contributing.md"]
-
+plugins:
+  - jekyll-sitemap
 navigation:
   - title: Home
     url: /
