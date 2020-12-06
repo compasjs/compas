@@ -43,23 +43,24 @@ export function generateValidatorFile(context) {
     objectSets: new Map(),
   };
 
-  if (subContext.collectErrors) {
-    buildError = (key, info, errors = "errors", errorsReturn = true) => js`
-      ${errors}.push(buildError(parentType, "${key}", ${info}));
-      ${errorsReturn ? "return undefined" : ""};
-    `;
-  } else {
-    buildError = (key, info) => js`
-      throw buildError(parentType, "${key}", ${info});
-    `;
-  }
-
   addUtilitiesToAnonymousFunctions(subContext);
 
   const imports = importCreator();
   const anonymousValidatorImports = importCreator();
   const rootExports = [];
   const validatorSources = [];
+
+  if (subContext.collectErrors) {
+    buildError = (key, info, errors = "errors", errorsReturn = true) => js`
+      ${errors}.push({ key: \`validator.$\{parentType}.${key}\`, info: ${info} });
+      ${errorsReturn ? "return undefined" : ""};
+    `;
+  } else {
+    anonymousValidatorImports.destructureImport("AppError", "@compas/stdlib");
+    buildError = (key, info) => js`
+      throw AppError.validationError(\`validator.$\{parentType}.${key}\`, ${info});
+    `;
+  }
 
   for (const group of Object.keys(context.structure)) {
     const { exportNames, sources } = generateValidatorsForGroup(
@@ -169,7 +170,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
              data[name],
              "",
              {},
-           )} | undefined, errors: (*[])|undefined}}`;
+           )} | undefined, errors: ({ key: string, info: any }[])|undefined}}`;
          }
          return js`*
          @returns {
@@ -189,7 +190,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
           data[name],
           "",
           {},
-        )}, errors: undefined } | { data: undefined, errors: any[] }`,
+        )}, errors: undefined } | { data: undefined, errors: { key: string, info: any }[] }`,
       )}
       {
 
@@ -238,61 +239,7 @@ function addUtilitiesToAnonymousFunctions(context) {
     {
       return value === undefined || value === null;
     }
-
-    /**
-     * @name {ValidationErrorFn}
-     * This function should not throw as the corresponding validator will do that
-     * @typedef {function(string,any): Error}
-     */
-    ${withTypescript(
-      context,
-      "type ValidationErrorFn = (key: string, info: any) => any",
-    )}
-
-    /** @type {ValidationErrorFn} */
-    let errorFn = (key${withTypescript(context, ": string")},
-                   info${withTypescript(context, ": any")}
-    ) => {
-      const err
-      ${withTypescript(
-        context,
-        ": any",
-      )} = new Error(\`ValidationError: $\{key}\`);
-      err.key = key;
-      err.info = info;
-      return err;
-    };
-
-    /**
-     * @param {string} type
-     * @param {string} key
-     * @param {*} info
-     */
-    export function buildError(type${withTypescript(context, ": string")},
-                               key${withTypescript(context, ": string")},
-                               info
-
-    ${withTypescript(context, ": any")}
-    )
-    {
-      return errorFn(\`validator.$\{type}.$\{key}\`, info);
-    }
-
-    /**
-     * Set a different error function, for example AppError.validationError
-     * @param {ValidationErrorFn} fn
-     */
-    export function validatorSetError(fn${withTypescript(
-      context,
-      ": ValidationErrorFn",
-    )}) {
-      errorFn = fn;
-    }
   `);
-
-  context.context.rootExports.push(
-    `export { validatorSetError } from "./anonymous-validators${context.context.importExtension}";`,
-  );
 }
 
 /**
@@ -381,7 +328,7 @@ function createOrUseAnonymousFunction(context, imports, type) {
     /**
      * @param {*} value
      * @param {string} propertyPath
-     * @param {*[]} errors
+     * @param {{ key: string, info: any }[]} errors
      * @param {string} parentType
      * @returns {${generateTypeDefinition(context.context, type, {
        useDefaults: true,
@@ -397,7 +344,7 @@ function createOrUseAnonymousFunction(context, imports, type) {
                                               )},
                                               errors${withTypescript(
                                                 context,
-                                                ": any[]",
+                                                ": { key: string, info: any }[]",
                                               )} = [],
                                               parentType${withTypescript(
                                                 context,

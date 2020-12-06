@@ -10,7 +10,6 @@ import {
 import {
   validateCodeGenStructure,
   validateCodeGenType,
-  validatorSetError,
 } from "./generated/index.js";
 import { generate } from "./generator/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
@@ -108,9 +107,6 @@ export class App {
    * @returns {App}
    */
   static new(options = {}) {
-    if (!isNil(validateCodeGenType)) {
-      validatorSetError(AppError.validationError);
-    }
     return new App(options);
   }
 

@@ -21,16 +21,9 @@ export function generateQueryPartials(context) {
   imports.destructureImport("isStaging", "@compas/stdlib");
   imports.destructureImport("query", "@compas/store");
   imports.destructureImport("isQueryObject", "@compas/store");
-  imports.destructureImport(
-    "validatorSetError",
-    `./anonymous-validators${context.importExtension}`,
-  );
 
   // Generate field sets and the check function
-  partials.push(
-    knownFieldsCheckFunction(),
-    "validatorSetError((key, info) => AppError.serverError({ key, info }));",
-  );
+  partials.push(knownFieldsCheckFunction());
 
   for (const type of getQueryEnabledObjects(context)) {
     if (!type.queryOptions.isView) {

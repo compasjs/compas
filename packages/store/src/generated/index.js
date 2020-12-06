@@ -4,7 +4,6 @@
 import * as queries from "./query-basics.js";
 
 export { structure, structureString, storeStructure } from "./structure.js";
-export { validatorSetError } from "./anonymous-validators.js";
 export {
   validateStoreFile,
   validateStoreFileGroup,

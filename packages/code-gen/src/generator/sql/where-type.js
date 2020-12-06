@@ -283,7 +283,7 @@ export function getWherePartial(context, type) {
       }
 
       if (!options.skipValidator) {
-        where = validate${type.uniqueName}Where(where);
+        where = validate${type.uniqueName}Where(where, "$.${type.name}Where.");
       }
 
       const strings = [ "1 = 1" ];
