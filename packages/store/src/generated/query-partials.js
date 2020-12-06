@@ -3,7 +3,6 @@
 
 import { AppError, isStaging } from "@compas/stdlib";
 import { isQueryObject, query } from "@compas/store";
-import { validatorSetError } from "./anonymous-validators.js";
 import {
   validateStoreFileGroupViewWhere,
   validateStoreFileGroupWhere,
@@ -29,7 +28,6 @@ function checkFieldsInSet(entity, subType, set, value) {
     }
   }
 }
-validatorSetError((key, info) => AppError.serverError({ key, info }));
 const fileFieldSet = new Set([
   "bucketName",
   "contentLength",
@@ -114,7 +112,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileWhere(where);
+    where = validateStoreFileWhere(where, "$.fileWhere.");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -546,7 +544,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileGroupWhere(where);
+    where = validateStoreFileGroupWhere(where, "$.fileGroupWhere.");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1045,7 +1043,7 @@ export function fileGroupViewWhere(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileGroupViewWhere(where);
+    where = validateStoreFileGroupViewWhere(where, "$.fileGroupViewWhere.");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1472,7 +1470,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreJobWhere(where);
+    where = validateStoreJobWhere(where, "$.jobWhere.");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1908,7 +1906,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreSessionWhere(where);
+    where = validateStoreSessionWhere(where, "$.sessionWhere.");
   }
   const strings = ["1 = 1"];
   const values = [undefined];

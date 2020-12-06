@@ -10,11 +10,6 @@ mainTestFn(import.meta);
 
 test("code-gen/e2e/sql", async (t) => {
   const client = await import("../../../generated/testing/sql/index.js");
-  const validators = await import(
-    "../../../generated/testing/sql/anonymous-validators.js"
-  );
-
-  validators.validatorSetError(AppError.validationError);
 
   let sql = undefined;
 

@@ -204,6 +204,5 @@ async function buildTestApp() {
     return next();
   };
 
-  server.validatorSetError(AppError.validationError);
   return app;
 }

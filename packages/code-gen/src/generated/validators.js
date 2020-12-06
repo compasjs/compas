@@ -27,7 +27,7 @@ import {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenAnyOfType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenAnyOfType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   const errors = [];
@@ -43,7 +43,7 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenAnyType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenAnyType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenAnyType(value, propertyPath = "$") {
   const errors = [];
@@ -59,7 +59,7 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenArrayType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenArrayType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenArrayType(value, propertyPath = "$") {
   const errors = [];
@@ -75,7 +75,7 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenBooleanType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenBooleanType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenBooleanType(value, propertyPath = "$") {
   const errors = [];
@@ -91,7 +91,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenContext | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenContext | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenContext(value, propertyPath = "$") {
   const errors = [];
@@ -107,7 +107,7 @@ export function validateCodeGenContext(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenDateType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenDateType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenDateType(value, propertyPath = "$") {
   const errors = [];
@@ -123,7 +123,7 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenFile | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenFile | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenFile(value, propertyPath = "$") {
   const errors = [];
@@ -139,7 +139,7 @@ export function validateCodeGenFile(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenFileType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenFileType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenFileType(value, propertyPath = "$") {
   const errors = [];
@@ -155,7 +155,7 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenGenerateOpts | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenGenerateOpts | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   const errors = [];
@@ -171,7 +171,7 @@ export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenGenericType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenGenericType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenGenericType(value, propertyPath = "$") {
   const errors = [];
@@ -187,7 +187,7 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenNumberType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenNumberType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenNumberType(value, propertyPath = "$") {
   const errors = [];
@@ -203,7 +203,7 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenObjectType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenObjectType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenObjectType(value, propertyPath = "$") {
   const errors = [];
@@ -219,7 +219,7 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenReferenceType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenReferenceType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenReferenceType(value, propertyPath = "$") {
   const errors = [];
@@ -235,7 +235,7 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenRelationType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenRelationType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenRelationType(value, propertyPath = "$") {
   const errors = [];
@@ -251,7 +251,7 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenRouteType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenRouteType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenRouteType(value, propertyPath = "$") {
   const errors = [];
@@ -267,7 +267,7 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenStringType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenStringType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenStringType(value, propertyPath = "$") {
   const errors = [];
@@ -283,7 +283,7 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenStructure | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenStructure | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenStructure(value, propertyPath = "$") {
   const errors = [];
@@ -299,7 +299,7 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenTemplateState | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenTemplateState | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenTemplateState(value, propertyPath = "$") {
   const errors = [];
@@ -315,7 +315,7 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenType(value, propertyPath = "$") {
   const errors = [];
@@ -331,7 +331,7 @@ export function validateCodeGenType(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenTypeSettings | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenTypeSettings | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   const errors = [];
@@ -347,7 +347,7 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenUuidType | undefined, errors: (*[])|undefined}}
+ * @returns {{ data: CodeGenUuidType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
 export function validateCodeGenUuidType(value, propertyPath = "$") {
   const errors = [];

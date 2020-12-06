@@ -1,5 +1,4 @@
 import { inspect } from "util";
-import { isNil } from "./lodash.js";
 
 export class AppError extends Error {
   /**
@@ -18,12 +17,7 @@ export class AppError extends Error {
 
     Object.setPrototypeOf(this, AppError.prototype);
 
-    if (
-      isNil(key) ||
-      isNil(status) ||
-      typeof status !== "number" ||
-      typeof key !== "string"
-    ) {
+    if (typeof status !== "number" || typeof key !== "string") {
       return AppError.serverError(
         {
           appErrorConstructParams: {
