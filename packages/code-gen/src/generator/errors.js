@@ -18,6 +18,9 @@ export function exitOnErrorsOrReturn(context) {
     if (error.key === "sqlEnableValidator") {
       str += `Validator generator not enabled. The sql generator requires this.
   Please add 'validator' to the 'App.generate({ enabledGenerators: ["sql"] })' array.`;
+    } else if (error.key === "sqlThrowingValidators") {
+      str += `Option 'throwingValidators' not enabled. The sql generator requires this.
+  Please add 'throwingValidators' to the 'App.generate({ throwingValidators: true })' call.`;
     } else if (error.key === "sqlMissingPrimaryKey") {
       str += `Type '${error.typeName}' is missing a primary key.
   Either remove 'withPrimaryKey' from the options passed to 'enableQueries()' or add 'T.uuid().primary()' / 'T.number().primary()' to your type.

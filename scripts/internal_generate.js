@@ -29,9 +29,11 @@ async function main() {
   await app.generate({
     outputDirectory: `packages/store/src/generated`,
     enabledGroups: ["store"],
-    isNode: true,
     enabledGenerators: ["type", "sql", "validator"],
+    throwingValidators: true,
+    isNode: true,
     dumpStructure: true,
+    dumpApiStructure: false,
     dumpPostgres: true,
   });
 }

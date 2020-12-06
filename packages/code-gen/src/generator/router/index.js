@@ -7,6 +7,11 @@ import { buildTrie } from "./trie.js";
  * @param {CodeGenContext} context
  */
 export function generateRouterFiles(context) {
+  if (!context.options.throwingValidators) {
+    throw new Error(`Option 'throwingValidators' not enabled. The router generator requires this.
+  Please add 'throwingValidators' to the 'App.generate({ throwingValidators: true })' call.`);
+  }
+
   const routeTrie = buildTrie(context.structure);
   const routeTags = buildRouteTags(context.structure);
 
@@ -43,7 +48,7 @@ export function getInternalRoutes(options) {
 
   const result = [];
 
-  if (options.dumpStructure) {
+  if (options.dumpApiStructure) {
     result.push(
       G.get("structure.json", "structure")
         .response(T.any())

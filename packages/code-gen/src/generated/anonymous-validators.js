@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 const objectKeys1283136356 = new Set(["uniqueName", "group", "name"]);
-const objectKeys710084980 = new Set([
+const objectKeys1289628375 = new Set([
   "options",
   "structure",
   "extension",
@@ -11,7 +11,7 @@ const objectKeys710084980 = new Set([
   "rootExports",
   "errors",
 ]);
-const objectKeys1311847056 = new Set([
+const objectKeys2050316243 = new Set([
   "enabledGroups",
   "isBrowser",
   "isNode",
@@ -19,6 +19,9 @@ const objectKeys1311847056 = new Set([
   "enabledGenerators",
   "useTypescript",
   "dumpStructure",
+  "dumpApiStructure",
+  "dumpPostgres",
+  "throwingValidators",
   "fileHeader",
   "outputDirectory",
 ]);
@@ -33,6 +36,7 @@ const objectKeys1239750152 = new Set([
   "relationOwnKey",
 ]);
 const objectKeys1573063370 = new Set(["key"]);
+const objectKeys212814474 = new Set(["key"]);
 const objectKeys427792324 = new Set(["phase"]);
 const objectKeys2093265039 = new Set([
   "isJSON",
@@ -2706,9 +2710,9 @@ export function anonymousValidator1009589157(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "fileHeader": string, "outputDirectory": string, }|undefined}
+ * @returns {{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "dumpApiStructure": boolean, "dumpPostgres": boolean, "throwingValidators": boolean, "fileHeader": string, "outputDirectory": string, }|undefined}
  */
-export function anonymousValidator1311847056(
+export function anonymousValidator2050316243(
   value,
   propertyPath,
   errors = [],
@@ -2724,7 +2728,7 @@ export function anonymousValidator1311847056(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    if (!objectKeys1311847056.has(key)) {
+    if (!objectKeys2050316243.has(key)) {
       errors.push(
         buildError(parentType, "strict", { propertyPath, extraKey: key }),
       );
@@ -2795,6 +2799,42 @@ export function anonymousValidator1311847056(
     );
   }
   result["dumpStructure"] = value["dumpStructure"] ?? undefined;
+  if (
+    isNil(value["dumpApiStructure"]) ||
+    typeof value["dumpApiStructure"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.dumpApiStructure`,
+      }),
+    );
+  }
+  result["dumpApiStructure"] = value["dumpApiStructure"] ?? undefined;
+  if (
+    isNil(value["dumpPostgres"]) ||
+    typeof value["dumpPostgres"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.dumpPostgres`,
+      }),
+    );
+  }
+  result["dumpPostgres"] = value["dumpPostgres"] ?? undefined;
+  if (
+    isNil(value["throwingValidators"]) ||
+    typeof value["throwingValidators"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    errors.push(
+      buildError(parentType, "type", {
+        propertyPath: `${propertyPath}.throwingValidators`,
+      }),
+    );
+  }
+  result["throwingValidators"] = value["throwingValidators"] ?? undefined;
   result["fileHeader"] = anonymousValidator1801034940(
     value["fileHeader"],
     `${propertyPath}.fileHeader`,
@@ -3168,9 +3208,52 @@ export function anonymousValidator1573063370(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|undefined}
+ * @returns {{"key": "sqlThrowingValidators", }|undefined}
  */
-export function anonymousValidator527840024(
+export function anonymousValidator212814474(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    errors.push(buildError(parentType, "undefined", { propertyPath }));
+    return undefined;
+  }
+  if (typeof value !== "object") {
+    errors.push(buildError(parentType, "type", { propertyPath }));
+    return undefined;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys212814474.has(key)) {
+      errors.push(
+        buildError(parentType, "strict", { propertyPath, extraKey: key }),
+      );
+      return undefined;
+    }
+  }
+  if (value["key"] !== "sqlThrowingValidators") {
+    const parentType = "string";
+    const oneOf = ["sqlThrowingValidators"];
+    errors.push(
+      buildError(parentType, "oneOf", {
+        propertyPath: `${propertyPath}.key`,
+        oneOf,
+      }),
+    );
+  }
+  result["key"] = value["key"] ?? undefined;
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {*[]} errors
+ * @param {string} parentType
+ * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|undefined}
+ */
+export function anonymousValidator1621069940(
   value,
   propertyPath,
   errors = [],
@@ -3207,6 +3290,12 @@ export function anonymousValidator527840024(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  result = anonymousValidator212814474(value, propertyPath, subErrors);
+  if (subErrors.length === errorCount) {
+    return result;
+  }
+  subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+  errorCount = subErrors.length;
   errors.push(
     buildError(parentType, "type", { propertyPath, errors: subErrors }),
   );
@@ -3217,9 +3306,9 @@ export function anonymousValidator527840024(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", })[]|undefined}
+ * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", })[]|undefined}
  */
-export function anonymousValidator1686428333(
+export function anonymousValidator1002720483(
   value,
   propertyPath,
   errors = [],
@@ -3235,7 +3324,7 @@ export function anonymousValidator1686428333(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator527840024(
+    result[i] = anonymousValidator1621069940(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3248,9 +3337,9 @@ export function anonymousValidator1686428333(
  * @param {string} propertyPath
  * @param {*[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", })[], }|undefined}
  */
-export function anonymousValidator710084980(
+export function anonymousValidator1289628375(
   value,
   propertyPath,
   errors = [],
@@ -3266,14 +3355,14 @@ export function anonymousValidator710084980(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    if (!objectKeys710084980.has(key)) {
+    if (!objectKeys1289628375.has(key)) {
       errors.push(
         buildError(parentType, "strict", { propertyPath, extraKey: key }),
       );
       return undefined;
     }
   }
-  result["options"] = anonymousValidator1311847056(
+  result["options"] = anonymousValidator2050316243(
     value["options"],
     `${propertyPath}.options`,
     errors,
@@ -3309,7 +3398,7 @@ export function anonymousValidator710084980(
     `${propertyPath}.rootExports`,
     errors,
   );
-  result["errors"] = anonymousValidator1686428333(
+  result["errors"] = anonymousValidator1002720483(
     value["errors"],
     `${propertyPath}.errors`,
     errors,
