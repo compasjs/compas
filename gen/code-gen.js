@@ -36,6 +36,9 @@ export function applyCodeGenStructure(app) {
       ),
       useTypescript: T.bool(),
       dumpStructure: T.bool(),
+      dumpApiStructure: T.bool(),
+      dumpPostgres: T.bool(),
+      throwingValidators: T.bool(),
       fileHeader: T.string(),
       outputDirectory: T.string(),
     }),
@@ -66,6 +69,9 @@ export function applyCodeGenStructure(app) {
           },
           {
             key: "sqlEnableValidator",
+          },
+          {
+            key: "sqlThrowingValidators",
           },
         ),
       ],

@@ -65,11 +65,11 @@ export const __generated__ = true;
  */
 /**
  * @name CodeGenContext
- * @typedef {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", })[], }}
+ * @typedef {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", })[], }}
  */
 /**
  * @name CodeGenGenerateOpts
- * @typedef {{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "fileHeader": string, "outputDirectory": string, }}
+ * @typedef {{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "dumpApiStructure": boolean, "dumpPostgres": boolean, "throwingValidators": boolean, "fileHeader": string, "outputDirectory": string, }}
  */
 /**
  * @name CodeGenStructure

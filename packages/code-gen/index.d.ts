@@ -38,7 +38,9 @@ interface GenerateOpts {
    *   isNode: false,
    *   enabledGenerators: ["type", "validator", "apiClient", "reactQuery"],
    *   useTypescript: true,
+   *   throwingValidators: false,
    *   dumpStructure: false,
+   *   dumpApiStructure: false,
    *   dumpPostgres: false,
    */
   isBrowser?: boolean;
@@ -52,7 +54,9 @@ interface GenerateOpts {
    *   isNode: true,
    *   enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
    *   useTypescript: false,
-   *   dumpStructure: true,
+   *   throwingValidators: true,
+   *   dumpStructure: false,
+   *   dumpApiStructure: true,
    *   dumpPostgres: true,
    */
   isNodeServer?: boolean;
@@ -66,7 +70,9 @@ interface GenerateOpts {
    *   isNode: true,
    *   enabledGenerators: ["type", "validator"],
    *   useTypescript: false,
+   *   throwingValidators: false,
    *   dumpStructure: false,
+   *   dumpApiStructure: false,
    *   dumpPostgres: false,
    */
   isNode?: boolean;
@@ -83,9 +89,22 @@ interface GenerateOpts {
   useTypescript?: boolean;
 
   /**
-   * Dump a structure.js file with the used payload in it
+   * Generate throwing validators.
+   * This is expected by the router and sql generator.
+   */
+  throwingValidators?: boolean;
+
+  /**
+   * Dump a structure.js file with the used payload in it.
+   * This is useful when creating packages.
    */
   dumpStructure?: boolean;
+
+  /**
+   * An api only variant of dumpStructure.
+   * This should be used when you want others to generate api clients.
+   */
+  dumpApiStructure?: boolean;
 
   /**
    * Custom file header to for example disable linting or something

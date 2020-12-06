@@ -153,6 +153,12 @@ export function doSqlChecks(context) {
     });
   }
 
+  if (context.options.throwingValidators === false) {
+    context.errors.push({
+      key: "sqlThrowingValidators",
+    });
+  }
+
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
     staticCheckPrimaryKey(context, type);

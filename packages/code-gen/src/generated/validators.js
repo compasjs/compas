@@ -7,20 +7,20 @@ import {
   anonymousValidator1199721884,
   anonymousValidator1207910150,
   anonymousValidator1210796142,
-  anonymousValidator1311847056,
+  anonymousValidator1289628375,
   anonymousValidator1371848646,
   anonymousValidator1448768479,
   anonymousValidator158572615,
   anonymousValidator1985175360,
   anonymousValidator2003332250,
   anonymousValidator2029007679,
+  anonymousValidator2050316243,
   anonymousValidator2080078377,
   anonymousValidator2093265039,
   anonymousValidator267932131,
   anonymousValidator368260888,
   anonymousValidator427792324,
   anonymousValidator647792494,
-  anonymousValidator710084980,
   anonymousValidator722636964,
   anonymousValidator98797027,
 } from "./anonymous-validators.js";
@@ -95,7 +95,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
  */
 export function validateCodeGenContext(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator710084980(value, propertyPath, errors);
+  const data = anonymousValidator1289628375(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -159,7 +159,7 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
  */
 export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1311847056(value, propertyPath, errors);
+  const data = anonymousValidator2050316243(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }

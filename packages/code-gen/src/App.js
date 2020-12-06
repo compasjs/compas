@@ -25,7 +25,9 @@ const defaultGenerateOptionsBrowser = {
   isNode: false,
   enabledGenerators: ["type", "validator", "apiClient", "reactQuery"],
   useTypescript: true,
+  throwingValidators: false,
   dumpStructure: false,
+  dumpApiStructure: false,
   dumpPostgres: false,
 };
 
@@ -38,7 +40,9 @@ const defaultGenerateOptionsNodeServer = {
   isNode: true,
   enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
   useTypescript: false,
-  dumpStructure: true,
+  throwingValidators: true,
+  dumpStructure: false,
+  dumpApiStructure: true,
   dumpPostgres: true,
 };
 
@@ -51,7 +55,9 @@ const defaultGenerateOptionsNode = {
   isNode: true,
   enabledGenerators: ["type", "validator"],
   useTypescript: false,
+  throwingValidators: false,
   dumpStructure: false,
+  dumpApiStructure: false,
   dumpPostgres: false,
 };
 
@@ -246,7 +252,6 @@ export class App {
       Object.assign(opts, defaultGenerateOptionsBrowser);
     } else if (
       options.isNodeServer ||
-      options.enabledGenerators.indexOf("sql") !== -1 ||
       options.enabledGenerators.indexOf("router") !== -1
     ) {
       Object.assign(opts, defaultGenerateOptionsNodeServer);
@@ -258,7 +263,10 @@ export class App {
     }
 
     opts.useTypescript = options.useTypescript ?? !!opts.useTypescript;
+    opts.throwingValidators =
+      options.throwingValidators ?? !!opts.throwingValidators;
     opts.dumpStructure = options.dumpStructure ?? !!opts.dumpStructure;
+    opts.dumpApiStructure = options.dumpApiStructure ?? !!opts.dumpApiStructure;
     opts.dumpPostgres = options.dumpPostgres ?? !!opts.dumpPostgres;
     opts.enabledGenerators =
       options.enabledGenerators.length > 0
@@ -289,10 +297,12 @@ export class App {
       throw new Error("Need at least a single group in enabledGroups");
     }
 
+    // Make sure _compas/structure.json is enabled.
+    // This is only needed when we have a router and dumpApiStructure is true
     if (
       opts.enabledGenerators.indexOf("router") !== -1 &&
       opts.enabledGroups.indexOf("compas") === -1 &&
-      opts.dumpStructure
+      opts.dumpApiStructure
     ) {
       opts.enabledGroups.push("compas");
     }

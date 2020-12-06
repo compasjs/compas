@@ -26,8 +26,8 @@ import {
 {{ } }}
 } from "./validators{{= importExtension }}";
 
-{{ if (options.dumpStructure) { }}
-import { structureString } from "./structure{{= importExtension }}";
+{{ if (options.dumpApiStructure) { }}
+import { compasApiStructureString } from "./structure{{= importExtension }}";
 {{ } }}
 ((newline))
 
@@ -257,10 +257,10 @@ export function router(ctx, next) {
 }
 ((newline))
 
-{{ if (options.dumpStructure) { }}
+{{ if (options.dumpApiStructure) { }}
 compasHandlers.structure = (ctx, next) => {
   ctx.set("Content-Type", "application/json");
-  ctx.body = structureString;
+  ctx.body = compasApiStructureString;
 
   return next();
 }

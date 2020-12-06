@@ -37,7 +37,7 @@ export function generateValidatorFile(context) {
    */
   const subContext = {
     context,
-    collectErrors: !context.options.isNodeServer,
+    collectErrors: !context.options.throwingValidators,
     anonymousFunctionMapping: new Map(),
     anonymousFunctions: [],
     objectSets: new Map(),

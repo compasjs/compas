@@ -69,7 +69,7 @@ export function addToData(dataStructure, item) {
  * @param generatorInput
  * @param value
  */
-function includeReferenceTypes(rootData, generatorInput, value) {
+export function includeReferenceTypes(rootData, generatorInput, value) {
   if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
     // Skip primitives & null / undefined
     return;
