@@ -4,34 +4,28 @@ import * as yup from "yup";
 
 mainBenchFn(import.meta);
 
-// Expected output when logging all options
-// compasSimple: [Object: null prototype] { foo: true, bar: 5, baz: 'ok' }
-// compasNested: [Object: null prototype] {
-//     foo: true,
-//     bar: 5,
-//     nest: [
-//       'foo',
-//       [Object: null prototype] { foo: true, bar: 15, baz: 'yes' },
-//       [Object: null prototype] { foo: true, bar: 15, baz: 'yes' },
-//       'bar'
-//     ]
-//   }
+const simpleInput = {
+  foo: true,
+  bar: 5,
+  baz: "Ok ",
+};
 
-// fvSimple: true
-// fvNested: true
-
-// yupSimple: { baz: 'ok', bar: 5, foo: true }
-// yupNested: {
-//     foo: true,
-//     bar: 5,
-//     nest: [
-//       'foo',
-//       { foo: true, bar: 15, baz: 'Yes ' },
-//       { foo: true, bar: 15, baz: 'Yes ' },
-//       'bar'
-//     ]
-//   }
-// }
+const nestedInput = {
+  foo: true,
+  bar: 5,
+  nest: [
+    {
+      foo: true,
+      bar: 15,
+      baz: "Yes ",
+    },
+    {
+      foo: true,
+      bar: 15,
+      baz: "Yes ",
+    },
+  ],
+};
 
 const yupSimple = yup.object().shape({
   foo: yup.bool().required(),
@@ -39,8 +33,6 @@ const yupSimple = yup.object().shape({
   baz: yup.string().required().trim().lowercase(),
 });
 
-// A bit convoluted, since Yup doesn't allow for nested schema's in oneOf
-// https://github.com/jquense/yup/issues/662
 const yupNested = yup.object().shape({
   foo: yup.mixed().required().oneOf([true]),
   bar: yup.mixed().required().oneOf([5]),
@@ -48,10 +40,9 @@ const yupNested = yup.object().shape({
     .array()
     .required()
     .of(
-      yup.mixed().when({
-        is: (value) => typeof value === "string",
-        then: yup.mixed().required().oneOf(["foo", yupSimple, "bar"]),
-        otherWise: yupSimple,
+      yup.object().shape({
+        foo: yup.mixed().required().oneOf([true]),
+        bar: yup.number().required().integer(),
       }),
     ),
 });
@@ -60,13 +51,13 @@ const fastestValidator = new FastestValidator({});
 
 const simpleFastestValidatorReusable = {
   foo: { type: "boolean" },
-  bar: { type: "number", integer: true, convert: true },
+  bar: { type: "number", integer: true },
   baz: { type: "string", trim: true, lowercase: true },
-  $$strict: true,
 };
-const fastestValidatorSimple = fastestValidator.compile(
-  simpleFastestValidatorReusable,
-);
+const fastestValidatorSimple = fastestValidator.compile({
+  ...simpleFastestValidatorReusable,
+  $$strict: true,
+});
 
 const fastestValidatorNested = fastestValidator.compile({
   foo: {
@@ -81,19 +72,11 @@ const fastestValidatorNested = fastestValidator.compile({
   },
   nest: {
     type: "array",
-    items: [
-      {
-        type: "equal",
-        value: "foo",
-        strict: true,
-      },
-      { type: "object", ...simpleFastestValidatorReusable },
-      {
-        type: "equal",
-        value: "bar",
-        strict: true,
-      },
-    ],
+    items: {
+      type: "object",
+      strict: true,
+      props: simpleFastestValidatorReusable,
+    },
   },
   $$strict: true,
 });
@@ -107,11 +90,7 @@ bench("compas validator simple", async (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = validateBenchSimple({
-      foo: true,
-      bar: 5,
-      baz: "Ok ",
-    });
+    y = validateBenchSimple(simpleInput);
   }
 });
 
@@ -119,16 +98,9 @@ bench("yup validator simple", (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = yupSimple.validateSync(
-      {
-        foo: true,
-        bar: 5,
-        baz: "Ok ",
-      },
-      {
-        stripUnknown: true,
-      },
-    );
+    y = yupSimple.validateSync(simpleInput, {
+      stripUnknown: true,
+    });
   }
 });
 
@@ -136,16 +108,7 @@ bench("fastest-validator validator simple", (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = fastestValidatorSimple(
-      {
-        foo: true,
-        bar: 5,
-        baz: "Ok ",
-      },
-      {
-        stripUnknown: true,
-      },
-    );
+    y = fastestValidatorSimple(simpleInput);
   }
 });
 
@@ -158,24 +121,7 @@ bench("compas validator nested", async (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = validateBenchNested({
-      foo: true,
-      bar: 5,
-      nest: [
-        "foo",
-        {
-          foo: true,
-          bar: 15,
-          baz: "Yes ",
-        },
-        {
-          foo: true,
-          bar: 15,
-          baz: "Yes ",
-        },
-        "bar",
-      ],
-    });
+    y = validateBenchNested(nestedInput);
   }
 });
 
@@ -183,29 +129,9 @@ bench("yup validator nested", (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = yupNested.validateSync(
-      {
-        foo: true,
-        bar: 5,
-        nest: [
-          "foo",
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          "bar",
-        ],
-      },
-      {
-        stripUnknown: true,
-      },
-    );
+    y = yupNested.validateSync(nestedInput, {
+      stripUnknown: true,
+    });
   }
 });
 
@@ -213,28 +139,6 @@ bench("fastest-validator validator nested", (b) => {
   let y;
   for (let i = 0; i < b.N; ++i) {
     // eslint-disable-next-line no-unused-vars
-    y = fastestValidatorNested(
-      {
-        foo: true,
-        bar: 5,
-        nest: [
-          "foo",
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          {
-            foo: true,
-            bar: 15,
-            baz: "Yes ",
-          },
-          "bar",
-        ],
-      },
-      {
-        stripUnknown: true,
-      },
-    );
+    y = fastestValidatorNested(nestedInput);
   }
 });

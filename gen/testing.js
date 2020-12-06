@@ -5,14 +5,14 @@ export function applyBenchStructure(app) {
 
   app.add(
     T.object("simple").keys({
-      foo: T.bool().convert(),
-      bar: T.number().convert(),
+      foo: T.bool(),
+      bar: T.number(),
       baz: T.string().trim().lowerCase(),
     }),
     T.object("nested").keys({
       foo: true,
       bar: 5,
-      nest: [T.anyOf().values("foo", T.reference("bench", "simple"), "bar")],
+      nest: [T.reference("bench", "simple")],
     }),
   );
 }
