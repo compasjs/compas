@@ -1,5 +1,63 @@
 # CHANGELOG
 
+### [v0.0.103](https://github.com/compasjs/compas/releases/tag/v0.0.103)
+
+- bench: make validator benchmarks more comparable
+  ([#536](https://github.com/compasjs/compas/pull/536))
+- build(deps): bump @types/node from 14.14.9 to 14.14.11
+  ([#541](https://github.com/compasjs/compas/pull/541),
+  [#513](https://github.com/compasjs/compas/pull/513))
+- build(deps): bump eslint from 7.14.0 to 7.15.0
+  ([#531](https://github.com/compasjs/compas/pull/531))
+- build(deps): bump eslint-config-prettier from 6.15.0 to 7.0.0
+  ([#537](https://github.com/compasjs/compas/pull/537))
+- build(deps): bump minio from 7.0.16 to 7.0.17
+  ([#512](https://github.com/compasjs/compas/pull/512))
+- build(deps): bump prettier from 2.2.0 to 2.2.1
+  ([#520](https://github.com/compasjs/compas/pull/520))
+- build(deps-dev): bump react-query from 2.26.3 to 2.26.4
+  ([#538](https://github.com/compasjs/compas/pull/538))
+- build(deps-dev): bump yup from 0.30.0 to 0.32.6
+  ([#510](https://github.com/compasjs/compas/pull/510),
+  [#528](https://github.com/compasjs/compas/pull/528),
+  [#529](https://github.com/compasjs/compas/pull/529),
+  [#530](https://github.com/compasjs/compas/pull/530),
+  [#539](https://github.com/compasjs/compas/pull/539),
+  [#540](https://github.com/compasjs/compas/pull/540))
+- chore: bump dependabot config so github picks it up
+- chore: checkout CodeQL
+- chore: initial release notes for 0.0.103
+  ([#527](https://github.com/compasjs/compas/pull/527))
+- chore: remove external checks on CI
+- chore: rename lbu to compas
+- code-gen: add dumpApiStructure and throwingValidators options
+  ([#534](https://github.com/compasjs/compas/pull/534))
+- code-gen: add support for OR in the sql where partials
+  ([#518](https://github.com/compasjs/compas/pull/518))
+- code-gen: add support for custom any validators
+  ([#517](https://github.com/compasjs/compas/pull/517))
+- code-gen: almost always inline 'any' validators
+- code-gen: decently stable hash calculation for anonymous validators
+  ([#519](https://github.com/compasjs/compas/pull/519))
+- code-gen: fix generic type sql transformer
+- code-gen: fix property access quoting in sql result transformers
+- code-gen: inline basic validators
+  ([#521](https://github.com/compasjs/compas/pull/521))
+- code-gen: introduce query-builder, drop query-traverser
+  ([#511](https://github.com/compasjs/compas/pull/511))
+- code-gen: remove validatorSetError
+  ([#535](https://github.com/compasjs/compas/pull/535))
+- code-gen: simplify object strict validation
+- code-gen: validators for sql where and builders
+  ([#526](https://github.com/compasjs/compas/pull/526))
+- code-gen: various inline validator fixes, inline booleans
+- docs: use a Jekyll plugin to generate the sitemap
+- lint-config: add no-unsafe-optional-chain rule to lint config
+  ([#533](https://github.com/compasjs/compas/pull/533))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.103.html).
+
 ### [v0.0.102](https://github.com/compasjs/compas/releases/tag/v0.0.102)
 
 - build(deps): bump @types/node from 14.14.7 to 14.14.9
