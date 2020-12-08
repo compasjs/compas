@@ -151,7 +151,7 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
  */
 export function queryFile(builder = {}) {
   const joinedKeys = [];
-  validateStoreFileQueryBuilder(builder, "$.fileBuilder.");
+  validateStoreFileQueryBuilder(builder, "$.fileBuilder");
   if (builder.group) {
     joinedKeys.push(`'${builder.group?.as ?? "group"}'`, '"ljl_0"."result"');
   }
@@ -364,7 +364,7 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
  */
 export function queryFileGroup(builder = {}) {
   const joinedKeys = [];
-  validateStoreFileGroupQueryBuilder(builder, "$.fileGroupBuilder.");
+  validateStoreFileGroupQueryBuilder(builder, "$.fileGroupBuilder");
   if (builder.file) {
     joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_2"."result"');
   }
@@ -586,7 +586,7 @@ WHERE ${fileGroupViewWhere(builder.where, "fgv.", {
  */
 export function queryFileGroupView(builder = {}) {
   const joinedKeys = [];
-  validateStoreFileGroupViewQueryBuilder(builder, "$.fileGroupViewBuilder.");
+  validateStoreFileGroupViewQueryBuilder(builder, "$.fileGroupViewBuilder");
   if (builder.file) {
     joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_5"."result"');
   }
@@ -650,7 +650,7 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
  */
 export function queryJob(builder = {}) {
   const joinedKeys = [];
-  validateStoreJobQueryBuilder(builder, "$.jobBuilder.");
+  validateStoreJobQueryBuilder(builder, "$.jobBuilder");
   const qb = query`
 SELECT to_jsonb(j.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
@@ -704,7 +704,7 @@ WHERE ${sessionWhere(builder.where, "s.", {
  */
 export function querySession(builder = {}) {
   const joinedKeys = [];
-  validateStoreSessionQueryBuilder(builder, "$.sessionBuilder.");
+  validateStoreSessionQueryBuilder(builder, "$.sessionBuilder");
   const qb = query`
 SELECT to_jsonb(s.*) || jsonb_build_object(${query([
     joinedKeys.join(","),

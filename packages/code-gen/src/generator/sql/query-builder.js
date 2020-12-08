@@ -334,7 +334,7 @@ if (!isNil(builder.${key}.limit)) {
     export function query${upperCaseFirst(type.name)}(builder = {}) {
       const joinedKeys = [];
       
-      validate${type.uniqueName}QueryBuilder(builder, "$.${type.name}Builder.");
+      validate${type.uniqueName}QueryBuilder(builder, "$.${type.name}Builder");
 
       ${Object.entries(type.queryBuilder.relations).map(
         ([key, { joinKey, subType }]) => {
