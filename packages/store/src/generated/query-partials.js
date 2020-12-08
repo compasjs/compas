@@ -112,7 +112,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileWhere(where, "$.fileWhere.");
+    where = validateStoreFileWhere(where, "$.fileWhere");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -544,7 +544,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileGroupWhere(where, "$.fileGroupWhere.");
+    where = validateStoreFileGroupWhere(where, "$.fileGroupWhere");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1043,7 +1043,7 @@ export function fileGroupViewWhere(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileGroupViewWhere(where, "$.fileGroupViewWhere.");
+    where = validateStoreFileGroupViewWhere(where, "$.fileGroupViewWhere");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1470,7 +1470,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreJobWhere(where, "$.jobWhere.");
+    where = validateStoreJobWhere(where, "$.jobWhere");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
@@ -1906,7 +1906,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreSessionWhere(where, "$.sessionWhere.");
+    where = validateStoreSessionWhere(where, "$.sessionWhere");
   }
   const strings = ["1 = 1"];
   const values = [undefined];
