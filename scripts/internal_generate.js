@@ -11,7 +11,7 @@ export const cliWatchOptions = {
 };
 
 async function main() {
-  const app = await App.new({
+  const app = new App({
     verbose: true,
   });
 

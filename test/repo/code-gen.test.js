@@ -64,7 +64,7 @@ function getExportCountInFile(input) {
  * @returns {Promise<Object<string, number>>}
  */
 async function getGeneratedFileMap(fileFilter) {
-  const app = await App.new({});
+  const app = new App();
   applyAllLocalGenerate(app);
   const fileMap = {};
 

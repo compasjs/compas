@@ -139,9 +139,9 @@ export class App {
   public logger: Logger;
 
   /**
-   * Create a new App instance and inits generators
+   * Create a new App instance
    */
-  static new(options: AppOpts): Promise<App>;
+  constructor(options?: AppOpts);
 
   /**
    * Add new TypeBuilders to this app

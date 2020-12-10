@@ -70,9 +70,10 @@ export class App {
   static defaultEslintIgnore = ["no-unused-vars"];
 
   /**
-   * @param {AppOpts} options
+   * Create a new App.
+   * @param {AppOpts=} options
    */
-  constructor({ verbose }) {
+  constructor({ verbose } = {}) {
     /**
      * @type {string}
      */
@@ -97,17 +98,6 @@ export class App {
 
     /** @type {CodeGenStructure} */
     this.data = {};
-  }
-
-  /**
-   * Create a new App instance
-   *
-   * @public
-   * @param {AppOpts} [options={}] Optional options
-   * @returns {App}
-   */
-  static new(options = {}) {
-    return new App(options);
   }
 
   /**
