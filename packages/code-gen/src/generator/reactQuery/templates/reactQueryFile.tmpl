@@ -1,10 +1,10 @@
 import { AxiosError, CancelTokenSource } from "axios";
 import { createContext, PropsWithChildren, useContext } from "react";
 import {
-  MutationConfig,
-  MutationResultPair,
-  QueryConfig as ReactQueryConfig,
-  QueryResult,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions as ReactUseQueryOptions,
+  UseQueryResult,
   useMutation,
   useQuery,
 } from "react-query";
@@ -54,7 +54,7 @@ type AppErrorResponse = AxiosError<{
 }>;
 ((newline))
 
-type QueryConfig<Response, Error> = ReactQueryConfig<Response, Error> & { cancelToken?: CancelTokenSource };
+type UseQueryOptions<Response, Error> = ReactUseQueryOptions<Response, Error> & { cancelToken?: CancelTokenSource };
 ((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}

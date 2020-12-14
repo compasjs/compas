@@ -48,6 +48,8 @@ async function main() {
       "node",
       "--esModuleInterop",
       "--downlevelIteration",
+      "--jsx",
+      "preserve",
     ],
     {
       shell: true,
@@ -83,7 +85,7 @@ export const generateSettings = {
   client: {
     outputDirectory: "./generated/testing/client",
     enabledGroups: ["server"],
-    enabledGenerators: ["apiClient", "type", "validator"],
+    enabledGenerators: ["apiClient", "type", "validator" /*, "reactQuery"*/],
     isBrowser: true,
   },
   sql: {
