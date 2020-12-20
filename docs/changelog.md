@@ -1,5 +1,29 @@
 # CHANGELOG
 
+### [v0.0.104](https://github.com/compasjs/compas/releases/tag/v0.0.104)
+
+- build(deps): bump @types/node from 14.14.11 to 14.14.14
+  ([#545](https://github.com/compasjs/compas/pull/545),
+  [#548](https://github.com/compasjs/compas/pull/548),
+  [#552](https://github.com/compasjs/compas/pull/552))
+- build(deps): bump ini from 1.3.5 to 1.3.7
+  ([#546](https://github.com/compasjs/compas/pull/546))
+- build(deps): bump minio from 7.0.17 to 7.0.18
+  ([#553](https://github.com/compasjs/compas/pull/553))
+- build(deps-dev): bump react-query from 2.26.4 to 3.4.0
+  ([#550](https://github.com/compasjs/compas/pull/550),
+  [#554](https://github.com/compasjs/compas/pull/554),
+  [#555](https://github.com/compasjs/compas/pull/555))
+- build(deps-dev): bump typescript from 4.1.2 to 4.1.3
+  ([#549](https://github.com/compasjs/compas/pull/549))
+- build(deps-dev): bump yup from 0.32.6 to 0.32.8
+  ([#544](https://github.com/compasjs/compas/pull/544))
+- chore: only run CodeQL checks on main
+- code-gen: remove App#new
+- code-gen: remove trailing dot from propertyPath when validating query
+  arguments ([#543](https://github.com/compasjs/compas/pull/543))
+- code-gen: support react-query v3
+
 ### [v0.0.103](https://github.com/compasjs/compas/releases/tag/v0.0.103)
 
 - bench: make validator benchmarks more comparable
