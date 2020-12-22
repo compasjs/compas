@@ -57,6 +57,13 @@ export async function visualiseCommand(logger, command) {
     return { exitCode: 1 };
   }
 
+  if (!(await structureFileExportsStructure(resolvedStructureFile, codeGen))) {
+    logger.error(
+      `The specified path '${structureFile}' does not export a valid structure. Did you enable 'dumpStructure' when generating?`,
+    );
+    return { exitCode: 1 };
+  }
+
   const { format, output } = parseFormatAndOutputArguments(
     logger,
     subCommand,
@@ -125,8 +132,8 @@ export async function visualiseCommand(logger, command) {
 }
 
 /**
- * Get the structure using @compas/code-gen internal functions. This ensures all references
- * are linked and the structure is valid.
+ * Get the structure using @compas/code-gen internal functions. This ensures all
+ * references are linked and the structure is valid.
  *
  * @param {Logger} logger
  * @param codeGen
@@ -140,7 +147,11 @@ async function getStructure(logger, codeGen, subCommand, structureFile) {
   let trie;
   const context = {
     structure,
+    logger,
     errors: [],
+    options: {
+      enabledGenerators: ["sql", "validator"],
+    },
   };
 
   try {
@@ -187,6 +198,8 @@ async function getCodeGenExports() {
 
 /**
  * Check if the passed in structure file exists
+ * @param {string} structureFile
+ * @returns {Promise<boolean>}
  */
 async function structureFileExists(structureFile) {
   if (!existsSync(structureFile)) {
@@ -194,12 +207,27 @@ async function structureFileExists(structureFile) {
   }
 
   try {
-    const imported = await import(structureFile);
-
-    return !isNil(imported?.structure);
+    await import(structureFile);
+    return true;
   } catch {
     return false;
   }
+}
+
+/**
+ * Check if the exported structure conforms to the Compas structure
+ * @param structureFile
+ * @param codeGen
+ * @returns {Promise<boolean>}
+ */
+async function structureFileExportsStructure(structureFile, codeGen) {
+  const imported = await import(structureFile);
+  if (isNil(imported?.structure)) {
+    return false;
+  }
+
+  codeGen.validateCodeGenStructure(imported.structure);
+  return true;
 }
 
 /**

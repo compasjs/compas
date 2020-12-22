@@ -13,3 +13,4 @@ export {
   getSortedKeysForType,
   getPrimaryKeyWithType,
 } from "./generator/sql/utils.js";
+export { validateCodeGenStructure } from "./generated/index.js";
