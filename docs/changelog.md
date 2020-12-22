@@ -1,5 +1,22 @@
 # CHANGELOG
 
+### [v0.0.105](https://github.com/compasjs/compas/releases/tag/v0.0.105)
+
+- build(deps): bump eslint from 7.15.0 to 7.16.0
+  ([#557](https://github.com/compasjs/compas/pull/557))
+- build(deps): bump eslint-config-prettier from 7.0.0 to 7.1.0
+  ([#556](https://github.com/compasjs/compas/pull/556))
+- build(deps-dev): bump axios from 0.21.0 to 0.21.1
+  ([#561](https://github.com/compasjs/compas/pull/561))
+- build(deps-dev): bump react-query from 3.4.0 to 3.4.1
+  ([#562](https://github.com/compasjs/compas/pull/562))
+- cli: fix usage of code-gen internals in visualise
+  ([#563](https://github.com/compasjs/compas/pull/563))
+- code-gen: fix duplicate check and hash calculation for validators
+  ([#565](https://github.com/compasjs/compas/pull/565))
+- code-gen: remove getGroupsThatIncludeType
+  ([#564](https://github.com/compasjs/compas/pull/564))
+
 ### [v0.0.104](https://github.com/compasjs/compas/releases/tag/v0.0.104)
 
 - build(deps): bump @types/node from 14.14.11 to 14.14.14
