@@ -698,9 +698,3 @@ export class StringType extends TypeBuilder {
 }
 
 export class UuidType extends TypeBuilder {}
-
-/**
- * Returns the list of groups that contain an item with the specified type.
- * Can be used to find all groups that expose part of the apiClient.
- */
-export function getGroupsThatIncludeType(data: any, type: string): string[];
