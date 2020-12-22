@@ -2,27 +2,27 @@
 /* eslint-disable no-unused-vars */
 
 import {
-  anonymousValidator1065028911,
-  anonymousValidator1192877590,
-  anonymousValidator1199721884,
-  anonymousValidator1207910150,
-  anonymousValidator1210796142,
-  anonymousValidator1289628375,
-  anonymousValidator1371848646,
-  anonymousValidator1448768479,
-  anonymousValidator158572615,
-  anonymousValidator1985175360,
-  anonymousValidator2003332250,
-  anonymousValidator2029007679,
-  anonymousValidator2050316243,
-  anonymousValidator2080078377,
-  anonymousValidator2093265039,
-  anonymousValidator267932131,
-  anonymousValidator368260888,
-  anonymousValidator427792324,
-  anonymousValidator647792494,
-  anonymousValidator722636964,
-  anonymousValidator98797027,
+  anonymousValidator127554530,
+  anonymousValidator1287070944,
+  anonymousValidator1312175728,
+  anonymousValidator1377926226,
+  anonymousValidator1390215584,
+  anonymousValidator1413365072,
+  anonymousValidator1441913722,
+  anonymousValidator1519740867,
+  anonymousValidator1664519436,
+  anonymousValidator1672152398,
+  anonymousValidator17105276,
+  anonymousValidator17476225,
+  anonymousValidator1836970168,
+  anonymousValidator2019605291,
+  anonymousValidator20588538,
+  anonymousValidator2069957416,
+  anonymousValidator243901689,
+  anonymousValidator508679687,
+  anonymousValidator682118687,
+  anonymousValidator682551261,
+  anonymousValidator980814292,
 } from "./anonymous-validators.js";
 /**
  * @param {undefined|*} value
@@ -31,7 +31,7 @@ import {
  */
 export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1448768479(value, propertyPath, errors);
+  const data = anonymousValidator20588538(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -47,7 +47,7 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
  */
 export function validateCodeGenAnyType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator368260888(value, propertyPath, errors);
+  const data = anonymousValidator1519740867(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -63,7 +63,7 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
  */
 export function validateCodeGenArrayType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1210796142(value, propertyPath, errors);
+  const data = anonymousValidator1312175728(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -79,7 +79,7 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
  */
 export function validateCodeGenBooleanType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1065028911(value, propertyPath, errors);
+  const data = anonymousValidator17476225(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -95,7 +95,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
  */
 export function validateCodeGenContext(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1289628375(value, propertyPath, errors);
+  const data = anonymousValidator980814292(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -111,7 +111,7 @@ export function validateCodeGenContext(value, propertyPath = "$") {
  */
 export function validateCodeGenDateType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1371848646(value, propertyPath, errors);
+  const data = anonymousValidator2019605291(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -127,7 +127,7 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
  */
 export function validateCodeGenFile(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1192877590(value, propertyPath, errors);
+  const data = anonymousValidator682118687(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -143,7 +143,7 @@ export function validateCodeGenFile(value, propertyPath = "$") {
  */
 export function validateCodeGenFileType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator98797027(value, propertyPath, errors);
+  const data = anonymousValidator508679687(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -159,7 +159,7 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
  */
 export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator2050316243(value, propertyPath, errors);
+  const data = anonymousValidator2069957416(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -175,7 +175,7 @@ export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
  */
 export function validateCodeGenGenericType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator2080078377(value, propertyPath, errors);
+  const data = anonymousValidator1377926226(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -191,7 +191,7 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
  */
 export function validateCodeGenNumberType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator267932131(value, propertyPath, errors);
+  const data = anonymousValidator1441913722(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -207,7 +207,7 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
  */
 export function validateCodeGenObjectType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator2003332250(value, propertyPath, errors);
+  const data = anonymousValidator17105276(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -223,7 +223,7 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
  */
 export function validateCodeGenReferenceType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1199721884(value, propertyPath, errors);
+  const data = anonymousValidator127554530(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -239,7 +239,7 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
  */
 export function validateCodeGenRelationType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator2029007679(value, propertyPath, errors);
+  const data = anonymousValidator243901689(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -255,7 +255,7 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
  */
 export function validateCodeGenRouteType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator647792494(value, propertyPath, errors);
+  const data = anonymousValidator1390215584(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -271,7 +271,7 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
  */
 export function validateCodeGenStringType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator722636964(value, propertyPath, errors);
+  const data = anonymousValidator1672152398(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -287,7 +287,7 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
  */
 export function validateCodeGenStructure(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1207910150(value, propertyPath, errors);
+  const data = anonymousValidator1413365072(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -303,7 +303,7 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
  */
 export function validateCodeGenTemplateState(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator427792324(value, propertyPath, errors);
+  const data = anonymousValidator1664519436(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -319,7 +319,7 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
  */
 export function validateCodeGenType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator1985175360(value, propertyPath, errors);
+  const data = anonymousValidator682551261(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -335,7 +335,7 @@ export function validateCodeGenType(value, propertyPath = "$") {
  */
 export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator2093265039(value, propertyPath, errors);
+  const data = anonymousValidator1287070944(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }
@@ -351,7 +351,7 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
  */
 export function validateCodeGenUuidType(value, propertyPath = "$") {
   const errors = [];
-  const data = anonymousValidator158572615(value, propertyPath, errors);
+  const data = anonymousValidator1836970168(value, propertyPath, errors);
   if (errors.length > 0) {
     return { data: undefined, errors };
   }

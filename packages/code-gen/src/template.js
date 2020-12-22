@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import path from "path";
-import { inspect } from "util";
 import {
   AppError,
   camelToSnakeCase,
@@ -18,7 +17,6 @@ export const templateContext = {
     upperCaseFirst,
     lowerCaseFirst,
     camelToSnakeCase,
-    inspect: (arg) => inspect(arg, { sorted: true, colors: false, depth: 18 }),
     quote: (x) => `"${x}"`,
   },
   context: {},
