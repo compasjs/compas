@@ -1,5 +1,5 @@
-import { inspect } from "util";
 import { isNil } from "@compas/stdlib";
+import { stringifyType } from "../stringify.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -14,11 +14,7 @@ export class AnyOfType extends TypeBuilder {
 
     for (const v of this.internalValues) {
       const buildValue = buildOrInfer(v);
-      const stringValueOfBuild = inspect(buildValue, {
-        colors: false,
-        pretty: false,
-        depth: 18, // About 5 levels of object types
-      });
+      const stringValueOfBuild = stringifyType(buildValue, true);
 
       if (!set.has(stringValueOfBuild)) {
         set.add(stringValueOfBuild);
