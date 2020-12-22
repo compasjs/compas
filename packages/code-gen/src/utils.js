@@ -1,29 +1,3 @@
-import { isPlainObject } from "@compas/stdlib";
-
-/**
- * @param {*} data
- * @param {string} type
- * @returns {string[]}
- */
-export function getGroupsThatIncludeType(data, type) {
-  if (!isPlainObject(data)) {
-    throw new Error(`data should be an object.`);
-  }
-
-  const result = [];
-
-  for (const groupData of Object.values(data)) {
-    for (const item of Object.values(groupData)) {
-      if (item.type === type) {
-        result.push(item.group);
-        break;
-      }
-    }
-  }
-
-  return result;
-}
-
 /**
  * Uppercase first character of the input string
  *
