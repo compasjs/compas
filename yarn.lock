@@ -5211,10 +5211,10 @@ raw-body@^2.2.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-query@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.4.1.tgz#85b510609a4066d04a1882636e10e1c8fdb42107"
-  integrity sha512-CufnV+3XePVK8sZsU13LjWV870qlicvKuVdALgpEIygjwlSETwvC6+UML59BokBWWYO6dXOH5+9iHJK8MvaFtg==
+react-query@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.5.1.tgz#5d78d40a49702dc7e6cb9cbf6222a4b41278c7cb"
+  integrity sha512-zQHaiHcMJqRIDc+iVlDnltItOxQ/QHdQSJ2FBEDD4Rmk/2FgrAdo699ovBHxyBtxzxzrgldxOAKArPnquNTMMQ==
   dependencies:
     "@babel/runtime" "^7.5.5"
     match-sorter "^6.0.2"
