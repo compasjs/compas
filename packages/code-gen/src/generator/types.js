@@ -110,12 +110,13 @@ export function getTypeNameForType(context, type, suffix, settings) {
  */
 export function generateTypeFile(context) {
   const typeFile = js`
-    ${[...context.types.rawImports]}
-    // An export soo all things work correctly with linters, ts, ...
-    export const __generated__ = true;
+      ${[...context.types.rawImports]}
+      // An export soo all things work correctly with linters, ts, ...
+      export const __generated__ = true;
 
-    ${getMemoizedNamedTypes(context)}
-  `;
+      ${getStaticImportedTypesForPackages(context)}
+      ${getMemoizedNamedTypes(context)}
+   `;
 
   context.outputFiles.push({
     contents: typeFile,
@@ -377,6 +378,41 @@ function getMemoizedNamedTypes(context) {
     }
 
     result.push(intermediate);
+  }
+
+  return result;
+}
+
+/**
+ * Import types from packages that are used.
+ * Link of things like QueryParts
+ *
+ * @param {CodeGenContext} context
+ * @returns {string[]}
+ */
+function getStaticImportedTypesForPackages(context) {
+  if (context.options.useTypescript) {
+    return [];
+  }
+
+  const result = [
+    '/**\n * @typedef {import("@compas/code-gen").App} App\n */',
+    '/**\n * @typedef {import("@compas/code-gen").TypeCreator} TypeCreator\n */',
+    '/**\n * @typedef {import("@compas/code-gen").RouteCreator} RouteCreator\n */',
+  ];
+
+  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+    result.push(
+      '/**\n * @typedef {import("@compas/store").Postgres} Postgres\n */',
+      '/**\n * @typedef import("@compas/store").QueryPart} QueryPart\n */',
+      '/**\n * @typedef import("@compas/store").Minio} Minio\n */',
+    );
+  }
+  if (context.options.enabledGenerators.indexOf("router") !== -1) {
+    result.push(
+      '/**\n * @typedef {import("@compas/server").Middleware} Middleware\n */',
+      '/**\n * @typedef {import("@compas/server").Context} Context\n */',
+    );
   }
 
   return result;

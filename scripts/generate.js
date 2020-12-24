@@ -74,12 +74,12 @@ export const generateSettings = {
     outputDirectory: "./generated/testing/bench",
     enabledGroups: ["bench"],
     isNodeServer: true,
-    enabledGenerators: ["validator"],
+    enabledGenerators: ["validator", "type"],
   },
   server: {
     outputDirectory: "./generated/testing/server",
     enabledGenerators: ["type", "apiClient", "router", "validator"],
-    enabledGroups: ["server"],
+    enabledGroups: ["server", "type"],
     isNodeServer: true,
   },
   client: {

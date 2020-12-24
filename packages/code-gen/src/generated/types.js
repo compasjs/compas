@@ -4,6 +4,15 @@
 // An export soo all things work correctly with linters, ts, ...
 export const __generated__ = true;
 /**
+ * @typedef {import("@compas/code-gen").App} App
+ */
+/**
+ * @typedef {import("@compas/code-gen").TypeCreator} TypeCreator
+ */
+/**
+ * @typedef {import("@compas/code-gen").RouteCreator} RouteCreator
+ */
+/**
  * @name CodeGenAnyOfType
  * @typedef {{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "values": (CodeGenType)[], }}
  */

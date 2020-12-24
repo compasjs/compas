@@ -4,6 +4,24 @@
 // An export soo all things work correctly with linters, ts, ...
 export const __generated__ = true;
 /**
+ * @typedef {import("@compas/code-gen").App} App
+ */
+/**
+ * @typedef {import("@compas/code-gen").TypeCreator} TypeCreator
+ */
+/**
+ * @typedef {import("@compas/code-gen").RouteCreator} RouteCreator
+ */
+/**
+ * @typedef {import("@compas/store").Postgres} Postgres
+ */
+/**
+ * @typedef import("@compas/store").QueryPart} QueryPart
+ */
+/**
+ * @typedef import("@compas/store").Minio} Minio
+ */
+/**
  * @name StoreFile
  * @typedef {{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }}
  */
