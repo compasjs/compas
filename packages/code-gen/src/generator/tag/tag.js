@@ -4,8 +4,7 @@ import { cleanTemplateOutput } from "../utils.js";
 const MAX_COLLECT_LOOP = 13;
 
 /**
- * @name StateFn
- * @callback
+ * @callback StateFn
  * @param {CodeGenTemplateState} state
  * @returns {boolean|number|string|undefined|StateFn|Function}
  */

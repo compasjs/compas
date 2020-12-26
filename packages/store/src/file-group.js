@@ -3,22 +3,20 @@ import { queries } from "./generated.js";
 import { query } from "./query.js";
 
 /**
- * @name NestedFileGroupWithFiles
  * @typedef {StoreFileGroupView & {
  *   file?: StoreFile|undefined,
  *   children?: NestedFileGroupWithFiles[]
- * }}
+ * }} NestedFileGroupWithFiles
  */
 
 const fileGroupQueries = {
   updateOrderByIds: (sql, ids) => {
     const q = query`
-      UPDATE "fileGroup" fg
-      SET
-        "order" = CAST(temp.position AS INTEGER)
-      FROM
-        (values
-    `;
+        UPDATE "fileGroup" fg
+        SET
+          "order" = cast(temp.position AS integer)
+        FROM (values
+      `;
 
     for (let i = 0; i < ids.length; ++i) {
       q.append(query`(${ids[i]}, ${i + 1})`);
@@ -46,73 +44,64 @@ const fileGroupQueries = {
    * @returns {Promise<StoreFileGroupView[]>}
    */
   getNestedFiles: (sql, where) => sql`
-    WITH
-      RECURSIVE
-      cte AS (
-        SELECT
-          fgv."id",
-          fgv."name",
-          jsonb_build_object('id', fgv."file") as "file",
-          fgv."parent",
-          fgv."order",
-          fgv."createdAt",
-          fgv."updatedAt",
-          fgv."deletedAt",
-          fgv."isDirectory",
-          lpad(fgv."order"::text, 8)           as "sortKey"
-        FROM
-          "fileGroupView" fgv
-        WHERE
-          ((COALESCE(${
-            where?.rootId ?? null
-          }, NULL) IS NULL AND fgv."parent" IS NULL) OR
-           fgv."id" = ${where?.rootId ?? null})
-          AND (${
-            where?.deletedAtIncludeNotNull ?? false
-          } IS TRUE OR fgv."deletedAt" IS NULL)
+     WITH
+       RECURSIVE
+       cte AS (
+         SELECT fgv."id",
+                fgv."name",
+                jsonb_build_object('id', fgv."file") AS "file",
+                fgv."parent",
+                fgv."order",
+                fgv."createdAt",
+                fgv."updatedAt",
+                fgv."deletedAt",
+                fgv."isDirectory",
+                lpad(fgv."order"::text, 8) AS "sortKey"
+         FROM "fileGroupView" fgv
+         WHERE
+             ((coalesce(${
+               where?.rootId ?? null
+             }, NULL) IS NULL AND fgv."parent" IS NULL) OR
+              fgv."id" = ${where?.rootId ?? null})
+         AND (${
+           where?.deletedAtIncludeNotNull ?? false
+         } IS TRUE OR fgv."deletedAt" IS NULL)
 
-        UNION ALL
+         UNION ALL
 
-        SELECT
-          fgv."id",
-          fgv."name",
-          to_jsonb(file.*) AS                                       "file",
-          fgv."parent",
-          fgv."order",
-          fgv."createdAt",
-          fgv."updatedAt",
-          fgv."deletedAt",
-          fgv."isDirectory",
-          concat(cte."sortKey", ':', lpad(fgv."order"::text, 8)) as "sortKey"
-        FROM
-          "fileGroupView" fgv
-            INNER JOIN cte
-                       ON fgv."parent" = cte.id
-            LEFT JOIN  file
-                       ON fgv.file = file.id
-        WHERE
-          (${
-            where?.deletedAtIncludeNotNull ?? false
-          } IS TRUE OR fgv."deletedAt" IS NULL)
-          AND (${
-            where?.excludeFiles ?? false
-          } IS FALSE OR fgv."isDirectory" IS TRUE)
-      )
-    SELECT
-      "id",
-      "name",
-      "file",
-      "parent",
-      "order",
-      "createdAt",
-      "updatedAt",
-      "deletedAt",
-      "isDirectory"
-    FROM
-      cte
-    ORDER BY
-      "sortKey";
-  `,
+         SELECT fgv."id",
+                fgv."name",
+                to_jsonb(file.*) AS "file",
+                fgv."parent",
+                fgv."order",
+                fgv."createdAt",
+                fgv."updatedAt",
+                fgv."deletedAt",
+                fgv."isDirectory",
+                concat(cte."sortKey", ':', lpad(fgv."order"::text, 8)) AS "sortKey"
+         FROM "fileGroupView" fgv
+                INNER JOIN cte ON fgv."parent" = cte.id
+                LEFT JOIN  file ON fgv.file = file.id
+         WHERE
+             (${
+               where?.deletedAtIncludeNotNull ?? false
+             } IS TRUE OR fgv."deletedAt" IS NULL)
+         AND (${
+           where?.excludeFiles ?? false
+         } IS FALSE OR fgv."isDirectory" IS TRUE)
+       )
+     SELECT "id",
+            "name",
+            "file",
+            "parent",
+            "order",
+            "createdAt",
+            "updatedAt",
+            "deletedAt",
+            "isDirectory"
+     FROM cte
+     ORDER BY "sortKey";
+   `,
 };
 
 /**

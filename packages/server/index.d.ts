@@ -346,7 +346,7 @@ interface ContextDelegatedResponse {
   /**
    * Get/Set response body.
    */
-  body: any;
+  body: unknown;
 
   /**
    * Return parsed response Content-Length when present.

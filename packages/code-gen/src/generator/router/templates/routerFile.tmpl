@@ -54,10 +54,9 @@ const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 
 
 /**
- * @name GroupMiddleware
- * @typedef {object}
+  * @typedef GroupMiddleware
 {{ for (const group of Object.keys(structure)) { }}
- * @property {Middleware|Middleware[]|undefined} {{= group }}
+ * @property {CMiddleware|CMiddleware[]|undefined} {{= group }}
 {{ } }}
  */
 
@@ -138,6 +137,18 @@ const handlers = {
 };
 ((newline))
 
+/**
+ * @typedef {import("@compas/server").Context} CContext
+ */
+
+/**
+ * @typedef {import("@compas/server").Next} CNext
+ */
+
+/**
+ * @typedef {import("@compas/server").Middleware} CMiddleware
+ */
+
 {{ for (const groupName of Object.keys(structure)) { }}
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
@@ -147,12 +158,9 @@ const handlers = {
     {{ } }}
 
     /**
-     * @name {{= item.uniqueName }}Ctx
-     * @typedef {Context<{}, {
+     * @typedef {CContext<{}, {
      {{ if (item.response) { }}*   body: {{= item.response.reference.uniqueName }}, {{ } }}
-     * }>}
-     * @property {Logger} log
-     * @property {Event} event
+     * }>} {{= item.uniqueName }}Ctx
      {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
      {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
      {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
@@ -160,8 +168,10 @@ const handlers = {
      */
 ((newline))
      /**
-       * @name {{= item.uniqueName }}Fn
-       * @typedef {function(ctx: {{= item.uniqueName }}Ctx, next: Next): (void|Promise<void>)}
+       * @callback {{= item.uniqueName }}Fn
+       * @param { {{= item.uniqueName }}Ctx} ctx
+       * @param {CNext} next
+       * @returns {void|Promise<void>}
        */
 ((newline))
 

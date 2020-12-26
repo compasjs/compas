@@ -359,22 +359,18 @@ function getMemoizedNamedTypes(context) {
         intermediate += `// ${uniqueNameDocsMap[name]}\n`;
       }
       intermediate += `export type ${name} = `;
+      intermediate += type;
+      intermediate += `;`;
     } else {
-      intermediate += `/**\n * @name ${name}\n`;
+      intermediate += `/**\n`;
 
       if (uniqueNameDocsMap[name]) {
         intermediate += ` * ${uniqueNameDocsMap[name]}\n`;
       }
 
       intermediate += ` * @typedef {`;
-    }
-
-    intermediate += type;
-
-    if (useTypescript) {
-      intermediate += `;`;
-    } else {
-      intermediate += `}\n */`;
+      intermediate += type;
+      intermediate += `} ${name}\n */`;
     }
 
     result.push(intermediate);
@@ -410,8 +406,11 @@ function getStaticImportedTypesForPackages(context) {
   }
   if (context.options.enabledGenerators.indexOf("router") !== -1) {
     result.push(
-      '/**\n * @typedef {import("@compas/server").Middleware} Middleware\n */',
+      '/**\n * @typedef {import("@compas/insight").Logger} Logger\n */',
+      '/**\n * @typedef {import("@compas/insight").Event} Event\n */',
       '/**\n * @typedef {import("@compas/server").Context} Context\n */',
+      '/**\n * @typedef {import("@compas/server").Next} Next\n */',
+      '/**\n * @typedef {import("@compas/server").Middleware} Middleware\n */',
     );
   }
 

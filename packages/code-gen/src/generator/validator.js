@@ -6,8 +6,7 @@ import { generateTypeDefinition, getTypeNameForType } from "./types.js";
 import { importCreator } from "./utils.js";
 
 /**
- * @name ValidatorContext
- * @typedef {object}
+ * @typedef ValidatorContext
  * @property {CodeGenContext} context
  * @property {boolean} collectErrors
  * @property {Map<string, number>} anonymousFunctionMapping
@@ -16,11 +15,10 @@ import { importCreator } from "./utils.js";
  */
 
 /**
- * @name GeneratorBuildError
  * Calls generated buildError function to construct an error
  *
  * @typedef {function(key: string, info: string, errors: string=, errorsReturn:
- *   boolean=): string}
+ *   boolean=): string} GeneratorBuildError
  */
 
 /**
@@ -328,46 +326,46 @@ function createOrUseAnonymousFunction(context, imports, type) {
   context.anonymousFunctionMapping.set(string, hash);
 
   const fn = js`
-    /**
-     * @param {*} value
-     * @param {string} propertyPath
-     * @param {{ key: string, info: any }[]} errors
-     * @param {string} parentType
-     * @returns {${generateTypeDefinition(context.context, type, {
-       useDefaults: true,
-     })}|undefined}
-     */
-    export function anonymousValidator${hash}(value${withTypescript(
+      /**
+       * @param {*} value
+       * @param {string} propertyPath
+       * @param {{ key: string, info: any }[]} errors
+       * @param {string} parentType
+       * @returns {${generateTypeDefinition(context.context, type, {
+         useDefaults: true,
+       })}|undefined}
+       */
+      export function anonymousValidator${hash}(value${withTypescript(
     context,
     ": any",
   )},
-                                              propertyPath${withTypescript(
-                                                context,
-                                                ": string",
-                                              )},
-                                              errors${withTypescript(
-                                                context,
-                                                ": { key: string, info: any }[]",
-                                              )} = [],
-                                              parentType${withTypescript(
-                                                context,
-                                                ": string",
-                                              )} = "${type.type}",
-    ) {
-      if (isNil(value)) {
-        ${() => {
-          if (type.isOptional && type.defaultValue) {
-            return `return ${type.defaultValue}`;
-          } else if (type.isOptional) {
-            return `return value`;
-          }
+                                                propertyPath${withTypescript(
+                                                  context,
+                                                  ": string",
+                                                )},
+                                                errors${withTypescript(
+                                                  context,
+                                                  ": { key: string, info: any }[]",
+                                                )} = [],
+                                                parentType${withTypescript(
+                                                  context,
+                                                  ": string",
+                                                )} = "${type.type}",
+      ) {
+         if (isNil(value)) {
+            ${() => {
+              if (type.isOptional && type.defaultValue) {
+                return `return ${type.defaultValue}`;
+              } else if (type.isOptional) {
+                return `return value`;
+              }
 
-          return buildError("undefined", "{ propertyPath }");
-        }}
+              return buildError("undefined", "{ propertyPath }");
+            }}
+         }
+         ${anonymousValidatorForType(context, imports, type)}
       }
-      ${anonymousValidatorForType(context, imports, type)}
-    }
-  `;
+   `;
 
   context.anonymousFunctions.push(fn);
 
