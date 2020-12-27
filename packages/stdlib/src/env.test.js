@@ -17,7 +17,7 @@ test("stdlib/env", (t) => {
 
     process.env.NODE_ENV = undefined;
     refreshEnvironmentCache();
-    t.equal(isProduction(), false);
+    t.equal(isProduction(), true);
 
     process.env.NODE_ENV = currentEnv;
     refreshEnvironmentCache();
