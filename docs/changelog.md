@@ -1,5 +1,19 @@
 # CHANGELOG
 
+### [v0.0.106](https://github.com/compasjs/compas/releases/tag/v0.0.106)
+
+- \*: remove @name usage in JSDoc
+- build(deps): bump @types/node from 14.14.14 to 14.14.16
+  ([#569](https://github.com/compasjs/compas/pull/569))
+- build(deps-dev): bump react-query from 3.4.1 to 3.5.5
+  ([#570](https://github.com/compasjs/compas/pull/570))
+- code-gen: generate some default type imports for sql and router generator
+  ([#571](https://github.com/compasjs/compas/pull/571))
+- insight,stdlib: stricter NODE_ENV checks
+  ([#572](https://github.com/compasjs/compas/pull/572))
+- store: rename isQueryObject to isQueryPart
+  ([#573](https://github.com/compasjs/compas/pull/573))
+
 ### [v0.0.105](https://github.com/compasjs/compas/releases/tag/v0.0.105)
 
 - build(deps): bump eslint from 7.15.0 to 7.16.0
