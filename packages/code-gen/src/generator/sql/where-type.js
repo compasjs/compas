@@ -92,10 +92,10 @@ export function createWhereTypes(context) {
                   javaScript: undefined,
                   typeScript: `import { QueryPart } from "@compas/store";`,
                 },
-                rawValidator: "isQueryObject",
+                rawValidator: "isQueryPart",
                 rawValidatorImport: {
-                  javaScript: `import { isQueryObject } from "@compas/store";`,
-                  typeScript: `import { isQueryObject } from "@compas/store";`,
+                  javaScript: `import { isQueryPart } from "@compas/store";`,
+                  typeScript: `import { isQueryPart } from "@compas/store";`,
                 },
               },
             ],
@@ -190,7 +190,7 @@ export function getWherePartial(context, type) {
           break;
         case "in":
           str += `
-            if (isQueryObject(where.${field.name})) {
+            if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" = ANY(\`, ")");
               values.push(where.${field.name}, undefined);
             } else if (Array.isArray(where.${field.name}) && where.${field.name}.length > 0) {
@@ -209,7 +209,7 @@ export function getWherePartial(context, type) {
           break;
         case "notIn":
           str += `
-            if (isQueryObject(where.${field.name})) {
+            if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
               values.push(where.${field.name}, undefined);
             } else if (Array.isArray(where.${field.name}) && where.${field.name}.length > 0) {

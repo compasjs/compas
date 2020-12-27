@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isStaging } from "@compas/stdlib";
-import { isQueryObject, query } from "@compas/store";
+import { isQueryPart, query } from "@compas/store";
 import {
   validateStoreFileGroupViewWhere,
   validateStoreFileGroupWhere,
@@ -137,7 +137,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    if (isQueryObject(where.idIn)) {
+    if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
     } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
@@ -154,7 +154,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
   }
   if (where.idNotIn !== undefined) {
-    if (isQueryObject(where.idNotIn)) {
+    if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
@@ -187,7 +187,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     values.push(where.bucketNameNotEqual);
   }
   if (where.bucketNameIn !== undefined) {
-    if (isQueryObject(where.bucketNameIn)) {
+    if (isQueryPart(where.bucketNameIn)) {
       strings.push(` AND ${tableName}"bucketName" = ANY(`, ")");
       values.push(where.bucketNameIn, undefined);
     } else if (
@@ -207,7 +207,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
   }
   if (where.bucketNameNotIn !== undefined) {
-    if (isQueryObject(where.bucketNameNotIn)) {
+    if (isQueryPart(where.bucketNameNotIn)) {
       strings.push(` AND ${tableName}"bucketName" != ANY(`, ")");
       values.push(where.bucketNameNotIn, undefined);
     } else if (
@@ -243,7 +243,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    if (isQueryObject(where.createdAtIn)) {
+    if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
     } else if (
@@ -263,7 +263,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    if (isQueryObject(where.createdAtNotIn)) {
+    if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (
@@ -307,7 +307,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    if (isQueryObject(where.updatedAtIn)) {
+    if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
     } else if (
@@ -327,7 +327,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    if (isQueryObject(where.updatedAtNotIn)) {
+    if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (
@@ -371,7 +371,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     values.push(where.deletedAtNotEqual);
   }
   if (where.deletedAtIn !== undefined) {
-    if (isQueryObject(where.deletedAtIn)) {
+    if (isQueryPart(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
     } else if (
@@ -391,7 +391,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
   }
   if (where.deletedAtNotIn !== undefined) {
-    if (isQueryObject(where.deletedAtNotIn)) {
+    if (isQueryPart(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
     } else if (
@@ -569,7 +569,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    if (isQueryObject(where.idIn)) {
+    if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
     } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
@@ -586,7 +586,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.idNotIn !== undefined) {
-    if (isQueryObject(where.idNotIn)) {
+    if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
@@ -619,7 +619,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.fileNotEqual);
   }
   if (where.fileIn !== undefined) {
-    if (isQueryObject(where.fileIn)) {
+    if (isQueryPart(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(`, ")");
       values.push(where.fileIn, undefined);
     } else if (Array.isArray(where.fileIn) && where.fileIn.length > 0) {
@@ -636,7 +636,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.fileNotIn !== undefined) {
-    if (isQueryObject(where.fileNotIn)) {
+    if (isQueryPart(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(`, ")");
       values.push(where.fileNotIn, undefined);
     } else if (Array.isArray(where.fileNotIn) && where.fileNotIn.length > 0) {
@@ -677,7 +677,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.parentNotEqual);
   }
   if (where.parentIn !== undefined) {
-    if (isQueryObject(where.parentIn)) {
+    if (isQueryPart(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(`, ")");
       values.push(where.parentIn, undefined);
     } else if (Array.isArray(where.parentIn) && where.parentIn.length > 0) {
@@ -694,7 +694,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.parentNotIn !== undefined) {
-    if (isQueryObject(where.parentNotIn)) {
+    if (isQueryPart(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(`, ")");
       values.push(where.parentNotIn, undefined);
     } else if (
@@ -738,7 +738,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    if (isQueryObject(where.createdAtIn)) {
+    if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
     } else if (
@@ -758,7 +758,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    if (isQueryObject(where.createdAtNotIn)) {
+    if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (
@@ -802,7 +802,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    if (isQueryObject(where.updatedAtIn)) {
+    if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
     } else if (
@@ -822,7 +822,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    if (isQueryObject(where.updatedAtNotIn)) {
+    if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (
@@ -866,7 +866,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     values.push(where.deletedAtNotEqual);
   }
   if (where.deletedAtIn !== undefined) {
-    if (isQueryObject(where.deletedAtIn)) {
+    if (isQueryPart(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
     } else if (
@@ -886,7 +886,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     }
   }
   if (where.deletedAtNotIn !== undefined) {
-    if (isQueryObject(where.deletedAtNotIn)) {
+    if (isQueryPart(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
     } else if (
@@ -1068,7 +1068,7 @@ export function fileGroupViewWhere(
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    if (isQueryObject(where.idIn)) {
+    if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
     } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
@@ -1085,7 +1085,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.idNotIn !== undefined) {
-    if (isQueryObject(where.idNotIn)) {
+    if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
@@ -1122,7 +1122,7 @@ export function fileGroupViewWhere(
     values.push(where.fileNotEqual);
   }
   if (where.fileIn !== undefined) {
-    if (isQueryObject(where.fileIn)) {
+    if (isQueryPart(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(`, ")");
       values.push(where.fileIn, undefined);
     } else if (Array.isArray(where.fileIn) && where.fileIn.length > 0) {
@@ -1139,7 +1139,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.fileNotIn !== undefined) {
-    if (isQueryObject(where.fileNotIn)) {
+    if (isQueryPart(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(`, ")");
       values.push(where.fileNotIn, undefined);
     } else if (Array.isArray(where.fileNotIn) && where.fileNotIn.length > 0) {
@@ -1180,7 +1180,7 @@ export function fileGroupViewWhere(
     values.push(where.parentNotEqual);
   }
   if (where.parentIn !== undefined) {
-    if (isQueryObject(where.parentIn)) {
+    if (isQueryPart(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(`, ")");
       values.push(where.parentIn, undefined);
     } else if (Array.isArray(where.parentIn) && where.parentIn.length > 0) {
@@ -1197,7 +1197,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.parentNotIn !== undefined) {
-    if (isQueryObject(where.parentNotIn)) {
+    if (isQueryPart(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(`, ")");
       values.push(where.parentNotIn, undefined);
     } else if (
@@ -1241,7 +1241,7 @@ export function fileGroupViewWhere(
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    if (isQueryObject(where.createdAtIn)) {
+    if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
     } else if (
@@ -1261,7 +1261,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    if (isQueryObject(where.createdAtNotIn)) {
+    if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (
@@ -1305,7 +1305,7 @@ export function fileGroupViewWhere(
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    if (isQueryObject(where.updatedAtIn)) {
+    if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
     } else if (
@@ -1325,7 +1325,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    if (isQueryObject(where.updatedAtNotIn)) {
+    if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (
@@ -1369,7 +1369,7 @@ export function fileGroupViewWhere(
     values.push(where.deletedAtNotEqual);
   }
   if (where.deletedAtIn !== undefined) {
-    if (isQueryObject(where.deletedAtIn)) {
+    if (isQueryPart(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
     } else if (
@@ -1389,7 +1389,7 @@ export function fileGroupViewWhere(
     }
   }
   if (where.deletedAtNotIn !== undefined) {
-    if (isQueryObject(where.deletedAtNotIn)) {
+    if (isQueryPart(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
     } else if (
@@ -1495,7 +1495,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    if (isQueryObject(where.idIn)) {
+    if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
     } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
@@ -1512,7 +1512,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
   }
   if (where.idNotIn !== undefined) {
-    if (isQueryObject(where.idNotIn)) {
+    if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
@@ -1557,7 +1557,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     values.push(where.nameNotEqual);
   }
   if (where.nameIn !== undefined) {
-    if (isQueryObject(where.nameIn)) {
+    if (isQueryPart(where.nameIn)) {
       strings.push(` AND ${tableName}"name" = ANY(`, ")");
       values.push(where.nameIn, undefined);
     } else if (Array.isArray(where.nameIn) && where.nameIn.length > 0) {
@@ -1574,7 +1574,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
   }
   if (where.nameNotIn !== undefined) {
-    if (isQueryObject(where.nameNotIn)) {
+    if (isQueryPart(where.nameNotIn)) {
       strings.push(` AND ${tableName}"name" != ANY(`, ")");
       values.push(where.nameNotIn, undefined);
     } else if (Array.isArray(where.nameNotIn) && where.nameNotIn.length > 0) {
@@ -1607,7 +1607,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     values.push(where.scheduledAtNotEqual);
   }
   if (where.scheduledAtIn !== undefined) {
-    if (isQueryObject(where.scheduledAtIn)) {
+    if (isQueryPart(where.scheduledAtIn)) {
       strings.push(` AND ${tableName}"scheduledAt" = ANY(`, ")");
       values.push(where.scheduledAtIn, undefined);
     } else if (
@@ -1627,7 +1627,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
   }
   if (where.scheduledAtNotIn !== undefined) {
-    if (isQueryObject(where.scheduledAtNotIn)) {
+    if (isQueryPart(where.scheduledAtNotIn)) {
       strings.push(` AND ${tableName}"scheduledAt" != ANY(`, ")");
       values.push(where.scheduledAtNotIn, undefined);
     } else if (
@@ -1671,7 +1671,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    if (isQueryObject(where.createdAtIn)) {
+    if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
     } else if (
@@ -1691,7 +1691,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    if (isQueryObject(where.createdAtNotIn)) {
+    if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (
@@ -1735,7 +1735,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    if (isQueryObject(where.updatedAtIn)) {
+    if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
     } else if (
@@ -1755,7 +1755,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    if (isQueryObject(where.updatedAtNotIn)) {
+    if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (
@@ -1931,7 +1931,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     values.push(where.idNotEqual);
   }
   if (where.idIn !== undefined) {
-    if (isQueryObject(where.idIn)) {
+    if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
     } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
@@ -1948,7 +1948,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     }
   }
   if (where.idNotIn !== undefined) {
-    if (isQueryObject(where.idNotIn)) {
+    if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
@@ -1981,7 +1981,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     values.push(where.expiresNotEqual);
   }
   if (where.expiresIn !== undefined) {
-    if (isQueryObject(where.expiresIn)) {
+    if (isQueryPart(where.expiresIn)) {
       strings.push(` AND ${tableName}"expires" = ANY(`, ")");
       values.push(where.expiresIn, undefined);
     } else if (Array.isArray(where.expiresIn) && where.expiresIn.length > 0) {
@@ -1998,7 +1998,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     }
   }
   if (where.expiresNotIn !== undefined) {
-    if (isQueryObject(where.expiresNotIn)) {
+    if (isQueryPart(where.expiresNotIn)) {
       strings.push(` AND ${tableName}"expires" != ANY(`, ")");
       values.push(where.expiresNotIn, undefined);
     } else if (
@@ -2034,7 +2034,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     values.push(where.createdAtNotEqual);
   }
   if (where.createdAtIn !== undefined) {
-    if (isQueryObject(where.createdAtIn)) {
+    if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
     } else if (
@@ -2054,7 +2054,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     }
   }
   if (where.createdAtNotIn !== undefined) {
-    if (isQueryObject(where.createdAtNotIn)) {
+    if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (
@@ -2098,7 +2098,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     values.push(where.updatedAtNotEqual);
   }
   if (where.updatedAtIn !== undefined) {
-    if (isQueryObject(where.updatedAtIn)) {
+    if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
     } else if (
@@ -2118,7 +2118,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     }
   }
   if (where.updatedAtNotIn !== undefined) {
-    if (isQueryObject(where.updatedAtNotIn)) {
+    if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (

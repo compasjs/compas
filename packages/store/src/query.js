@@ -32,7 +32,7 @@ export function query(strings, ...values) {
     } else {
       _strings.push(strings[i]);
     }
-    if (isQueryObject(values[i])) {
+    if (isQueryPart(values[i])) {
       append(values[i]);
       didFlatten = true;
     } else {
@@ -80,7 +80,7 @@ export function query(strings, ...values) {
  * @param {*} query
  * @returns {boolean}
  */
-export function isQueryObject(query) {
+export function isQueryPart(query) {
   return (
     !isNil(query) &&
     Array.isArray(query?.strings) &&
