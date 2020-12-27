@@ -20,7 +20,7 @@ export function generateQueryPartials(context) {
   imports.destructureImport("AppError", "@compas/stdlib");
   imports.destructureImport("isStaging", "@compas/stdlib");
   imports.destructureImport("query", "@compas/store");
-  imports.destructureImport("isQueryObject", "@compas/store");
+  imports.destructureImport("isQueryPart", "@compas/store");
 
   // Generate field sets and the check function
   partials.push(knownFieldsCheckFunction());

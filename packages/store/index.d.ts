@@ -491,13 +491,13 @@ export const storeStructure: any;
 /**
  * Build safe, parameterized queries.
  */
-export interface QueryPart {
+export interface QueryPart<T = any> {
   strings: string[];
   values: any[];
 
-  append(part: QueryPart): QueryPart;
+  append(part: QueryPart): QueryPart<T>;
 
-  exec(sql: Postgres): postgresVendor.PendingQuery<any>;
+  exec(sql: Postgres): postgresVendor.PendingQuery<T[]>;
 }
 
 /**
@@ -519,7 +519,7 @@ export function query(strings: string[], ...values: any[]): QueryPart;
 /**
  * Simple check if the passed in value is a query part
  */
-export function isQueryObject(value: any): value is QueryPart;
+export function isQueryPart(value: any): value is QueryPart;
 
 /**
  * Creates a transaction, executes the query, and rollback the transaction afterwards.

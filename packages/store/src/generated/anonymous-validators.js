@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError } from "@compas/stdlib";
-import { isQueryObject } from "@compas/store";
+import { isQueryPart } from "@compas/store";
 
 const objectKeys599447075 = new Set([
   "bucketName",
@@ -1424,7 +1424,7 @@ export function anonymousValidator1024905514(
     subErrors.push(e);
   }
   try {
-    if (!isNil(value) && !isQueryObject(value)) {
+    if (!isNil(value) && !isQueryPart(value)) {
       const parentType = "any";
       throw AppError.validationError(`validator.${parentType}.custom`, {
         propertyPath: propertyPath,
@@ -1493,7 +1493,7 @@ export function anonymousValidator972289697(
     subErrors.push(e);
   }
   try {
-    if (!isNil(value) && !isQueryObject(value)) {
+    if (!isNil(value) && !isQueryPart(value)) {
       const parentType = "any";
       throw AppError.validationError(`validator.${parentType}.custom`, {
         propertyPath: propertyPath,
@@ -1562,7 +1562,7 @@ export function anonymousValidator978954249(
     subErrors.push(e);
   }
   try {
-    if (!isNil(value) && !isQueryObject(value)) {
+    if (!isNil(value) && !isQueryPart(value)) {
       const parentType = "any";
       throw AppError.validationError(`validator.${parentType}.custom`, {
         propertyPath: propertyPath,
@@ -2619,7 +2619,7 @@ export function anonymousValidator102852585(
     subErrors.push(e);
   }
   try {
-    if (!isNil(value) && !isQueryObject(value)) {
+    if (!isNil(value) && !isQueryPart(value)) {
       const parentType = "any";
       throw AppError.validationError(`validator.${parentType}.custom`, {
         propertyPath: propertyPath,
