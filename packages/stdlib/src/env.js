@@ -25,7 +25,7 @@ export function refreshEnvironmentCache() {
  * @returns {boolean}
  */
 export function isProduction() {
-  return environment.NODE_ENV === "production";
+  return environment.NODE_ENV !== "development";
 }
 
 /**
@@ -33,6 +33,6 @@ export function isProduction() {
  */
 export function isStaging() {
   return (
-    environment.NODE_ENV !== "production" || environment.IS_STAGING === "true"
+    environment.NODE_ENV === "development" || environment.IS_STAGING === "true"
   );
 }

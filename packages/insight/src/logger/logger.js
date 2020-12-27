@@ -13,7 +13,7 @@ export function newLogger(options) {
 
   const app = environment.APP_NAME;
   const isProduction =
-    options?.pretty === false || environment.NODE_ENV === "production";
+    options?.pretty === false || environment.NODE_ENV !== "development";
   const stream = options?.stream ?? process.stdout;
 
   const logFn = isProduction
