@@ -4,6 +4,7 @@ import {
   createDatabaseIfNotExists,
   newPostgresConnection,
   postgresEnvCheck,
+  postgres,
 } from "./postgres.js";
 
 /**
@@ -70,14 +71,12 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     // Clean all connections
     // They prevent from using this as a template
     await creationSql`
-      SELECT
-        pg_terminate_backend(pg_stat_activity.pid)
-      FROM
-        pg_stat_activity
-      WHERE
-        pg_stat_activity.datname = ${environment.POSTGRES_DATABASE}
+        SELECT pg_terminate_backend(pg_stat_activity.pid)
+        FROM pg_stat_activity
+        WHERE
+            pg_stat_activity.datname = ${environment.POSTGRES_DATABASE}
         AND pid <> pg_backend_pid()
-    `;
+      `;
 
     // Use the current 'app' database as a base.
     // We expect the user to have done all necessary migrations
@@ -93,15 +92,13 @@ export async function createTestPostgresDatabase(verboseSql = false) {
 
     // Cleanup all tables, except migrations
     const tables = await sql`
-      SELECT
-        table_name
-      FROM
-        information_schema.tables
-      WHERE
-        table_schema = 'public'
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE
+            table_schema = 'public'
         AND table_name != 'migration'
         AND table_type = 'BASE TABLE'
-    `;
+      `;
     if (tables.length > 0) {
       await sql.unsafe(`
         TRUNCATE ${tables.map((it) => `"${it.table_name}"`).join(", ")} CASCADE
@@ -109,10 +106,7 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     }
 
     // Cleanup all connections
-    await Promise.all([
-      creationSql.end({ timeout: 0.01 }),
-      sql.end({ timeout: 0.01 }),
-    ]);
+    await Promise.all([creationSql.end(), sql.end()]);
   }
 
   // Real database creation
@@ -128,23 +122,20 @@ export async function createTestPostgresDatabase(verboseSql = false) {
   });
 
   // Initialize new connection and kill old connection
-  await Promise.all([
-    creationSql.end({ timeout: 0.01 }),
-    sql`SELECT 1 + 1 AS sum`,
-  ]);
+  await Promise.all([creationSql.end(), sql`SELECT 1 + 1 AS sum`]);
 
   return sql;
 }
 
 /**
- * @param sql
+ * @param {Postgres} sql
  */
 export async function cleanupTestPostgresDatabase(sql) {
   const dbName = sql.options.database;
-  await sql.end({ timeout: 0.01 });
+  await sql.end();
 
-  const deletionSql = await newPostgresConnection({});
+  const deletionSql = postgres(environment.POSTGRES_URI);
   // language=PostgreSQL
-  await deletionSql.unsafe(`DROP DATABASE ${dbName}`);
-  await deletionSql.end({ timeout: 0.01 });
+  await deletionSql`DROP DATABASE ${deletionSql(dbName)}`;
+  await deletionSql.end();
 }

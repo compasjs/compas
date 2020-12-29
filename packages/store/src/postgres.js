@@ -42,7 +42,7 @@ export function postgresEnvCheck() {
 /**
  * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
- * @returns {Postgres}
+ * @returns {Promise<Postgres>}
  */
 export async function newPostgresConnection(opts) {
   postgresEnvCheck();
@@ -52,7 +52,7 @@ export async function newPostgresConnection(opts) {
       undefined,
       environment.POSTGRES_DATABASE,
     );
-    setImmediate(() => oldConnection.end({}));
+    setImmediate(() => oldConnection.end());
   }
 
   return postgres(
@@ -74,6 +74,7 @@ export async function newPostgresConnection(opts) {
  * @param sql
  * @param databaseName
  * @param template
+ * @returns {Promise<Postgres>}
  */
 export async function createDatabaseIfNotExists(sql, databaseName, template) {
   if (!sql) {
