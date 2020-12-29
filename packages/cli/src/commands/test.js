@@ -17,7 +17,7 @@ export function testCommand(logger, command) {
     command.verbose,
     command.watch,
     "node",
-    [...command.nodeArguments, testFile],
+    [...command.nodeArguments, testFile, ...command.execArguments],
     {},
   );
 }

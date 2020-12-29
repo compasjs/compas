@@ -9,34 +9,23 @@ const utilCommands = ["init", "help", "docker", "proxy", "visualise"];
 /**
  * Object of commands that accept special input like node arguments, script name or
  * tooling args
- * @type {object<string, {canWatch: boolean, useArgDelimiter: string, useScriptOrFile:
- *   boolean, useArgDelimiter: boolean, }>}
+ * @type {object<string, { useScriptOrFile: boolean, }>}
  */
 const execCommands = {
   run: {
-    canWatch: true,
     useScriptOrFile: true,
-    useArgDelimiter: false,
   },
   test: {
-    canWatch: true,
     useScriptOrFile: false,
-    useArgDelimiter: false,
   },
   bench: {
-    canWatch: true,
     useScriptOrFile: false,
-    useArgDelimiter: false,
   },
   lint: {
-    canWatch: true,
     useScriptOrFile: false,
-    useArgDelimiter: false,
   },
   coverage: {
-    canWatch: true,
     useScriptOrFile: false,
-    useArgDelimiter: true,
   },
 };
 
@@ -63,7 +52,6 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  * @property {boolean} verbose
  * @property {string[]} nodeArguments
  * @property {string[]} execArguments
- * @property {string[]} toolArguments
  */
 
 /**
@@ -71,11 +59,12 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  */
 
 /**
+ * @param {string[]} knownNodeArgs
+ * @param {string[]} knownScripts
  * @param {string[]} args
- * @param {string[]} [knownScripts]
  * @returns {ParsedArgs}
  */
-export function parseArgs(args, knownScripts = []) {
+export function parseArgs(knownNodeArgs, knownScripts, args) {
   // Default to help
   if (args.length === 0) {
     return {
@@ -85,6 +74,7 @@ export function parseArgs(args, knownScripts = []) {
     };
   }
 
+  // Util commands get their args passed raw. Node.js and V8 args can't be passed.
   if (utilCommands.indexOf(args[0]) !== -1) {
     return {
       type: "util",
@@ -93,6 +83,8 @@ export function parseArgs(args, knownScripts = []) {
     };
   }
 
+  // Determine command to use, defaulting to 'run'.
+  // Which enables `yarn compas generate` instead of `yarn compas run generate`
   let defaultedToRun = false;
   let execName = Object.keys(execCommands).find((it) => it === args[0]);
 
@@ -100,25 +92,28 @@ export function parseArgs(args, knownScripts = []) {
     defaultedToRun = true;
     execName = "run";
   }
+
   const command = execCommands[execName];
 
   // Find the index in the argument list of a named script or path to script
   let foundScriptIdx = -1;
-  for (let i = 0; i < args.length; ++i) {
-    if (i === 0 && !defaultedToRun) {
-      continue;
-    }
+  if (command.useScriptOrFile) {
+    for (let i = 0; i < args.length; ++i) {
+      // If default to run, the first argument needs evaluation.
+      if (i === 0 && !defaultedToRun) {
+        continue;
+      }
 
-    const item = args[i];
+      const item = args[i];
+      const isNamedScript = knownScripts.indexOf(item) !== -1;
 
-    const isNamedScript = knownScripts.indexOf(item) !== -1;
+      const isPathScript =
+        !isNamedScript && pathRegex.test(item) && existsSync(item);
 
-    const isPathScript =
-      !isNamedScript && pathRegex.test(item) && existsSync(item);
-
-    if (isNamedScript || isPathScript) {
-      foundScriptIdx = i;
-      break;
+      if (isNamedScript || isPathScript) {
+        foundScriptIdx = i;
+        break;
+      }
     }
   }
 
@@ -127,55 +122,62 @@ export function parseArgs(args, knownScripts = []) {
       args,
       "Could not find script or valid path in the arguments",
     );
-  } else if (foundScriptIdx !== -1 && !command.useScriptOrFile) {
-    return buildHelpError(
-      args,
-      `Can not execute ${execName} with a named script or path`,
-    );
   }
+
+  const nodeArguments = [];
+  const execArguments = [];
 
   let watch = false;
   let verbose = false;
-  const compasAndNodeArguments = args.slice(
-    defaultedToRun ? 0 : 1,
-    foundScriptIdx === -1 ? args.length : foundScriptIdx,
-  );
 
-  const nodeArguments = [];
+  let lastKnownNodeArgIdx = -1;
 
-  for (const arg of compasAndNodeArguments) {
-    if (!watch && arg === "--watch") {
+  for (let i = 0; i < args.length; ++i) {
+    // If default to run, the first argument needs evaluation.
+    if (i === 0 && !defaultedToRun) {
+      continue;
+    }
+
+    // This is the named script, so ignore
+    if (i === foundScriptIdx) {
+      continue;
+    }
+
+    // Compas specific args
+    if (args[i] === "--watch") {
       watch = true;
       continue;
     }
-    if (!verbose && arg === "--verbose") {
+
+    if (args[i] === "--verbose") {
       verbose = true;
       continue;
     }
 
-    // Use '--' as a special arg delimiter for passing args to other tools
-    if (command.useArgDelimiter && arg === "--") {
-      break;
+    // Found script so split is where the script is
+    if (i < foundScriptIdx) {
+      nodeArguments.push(args[i]);
+      continue;
+    }
+    if (foundScriptIdx !== -1 && i > foundScriptIdx) {
+      execArguments.push(args[i]);
+      continue;
     }
 
-    nodeArguments.push(arg);
-  }
-
-  // Either have execArguments or tool arguments
-  // This is checked based on command.useArgDelimiter
-  let execArguments = [];
-  let toolArguments = [];
-
-  if (command.useArgDelimiter) {
-    const delimiterIndex = args.indexOf("--");
-    if (delimiterIndex !== -1) {
-      toolArguments = args.slice(delimiterIndex + 1);
+    // If args is known arg or if last argument was a known arg, we assume it may be a
+    // argument to the previous argument.
+    const trimmedArg = args[i].split("=")[0];
+    const knownNodeArgIdx = knownNodeArgs.indexOf(trimmedArg);
+    if (
+      knownNodeArgIdx !== -1 ||
+      (knownNodeArgIdx - 1 === lastKnownNodeArgIdx && !args[i].startsWith("--"))
+    ) {
+      nodeArguments.push(args[i]);
+      lastKnownNodeArgIdx = knownNodeArgIdx;
+      continue;
     }
-  } else {
-    execArguments =
-      foundScriptIdx === -1
-        ? args.slice(defaultedToRun ? 0 : 1)
-        : args.slice(foundScriptIdx + 1);
+
+    execArguments.push(args[i]);
   }
 
   return {
@@ -185,7 +187,6 @@ export function parseArgs(args, knownScripts = []) {
     watch,
     verbose,
     nodeArguments,
-    toolArguments,
     execArguments,
   };
 }

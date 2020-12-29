@@ -4,10 +4,8 @@ import { state, testLogger } from "./state.js";
 
 /**
  * Prints test results and returns the exit code
- * Returns the exit code
  * @returns {number}
  */
-
 export function printTestResults() {
   markTestFailuresRecursively(state);
 
@@ -40,6 +38,49 @@ export function printTestResults() {
 }
 
 /**
+ * Prints test results from workers and return the exit code
+ *
+ * @param {{
+ *   isFailed: boolean,
+ *   assertions: { passed: number, failed: number, },
+ *   failedResult: string[]
+ * }[]} testResults
+ * @returns {number}
+ */
+export function printTestResultsFromWorkers(testResults) {
+  const hasFailure = testResults.find((it) => it.isFailed);
+  let passed = 0;
+  let failed = 0;
+
+  const result = [];
+
+  for (const partial of testResults) {
+    passed += partial.assertions.passed;
+    failed += partial.assertions.failed;
+  }
+
+  result.push("");
+  result.push(`Total assertions: ${passed + failed}`);
+  result.push(`          Passed: ${passed}`);
+  result.push(`          Failed: ${failed}`);
+  result.push(`-----------`);
+
+  if (hasFailure) {
+    for (const partial of testResults) {
+      result.push(...partial.failedResult);
+    }
+  }
+
+  if (hasFailure) {
+    testLogger.error(result.join("\n"));
+  } else {
+    testLogger.info(result.join("\n"));
+  }
+
+  return hasFailure ? 1 : 0;
+}
+
+/**
  * Prints a quick test summary for the provided state
  * @param {TestState} state
  * @param {string[]} result
@@ -57,7 +98,7 @@ function printSuccessResults(state, result, indentCount) {
  * @param {string[]} result
  * @param {number} indentCount
  */
-function printFailedResults(state, result, indentCount) {
+export function printFailedResults(state, result, indentCount) {
   const { passed, failed } = sumAssertions(state);
   const failedAssertions = state.assertions.filter((it) => !it.passed);
 
@@ -133,7 +174,7 @@ function printFailedResults(state, result, indentCount) {
  * pass
  * @param {TestState} state
  */
-function markTestFailuresRecursively(state) {
+export function markTestFailuresRecursively(state) {
   if (state.caughtException) {
     markFailure(state);
   }
@@ -154,6 +195,7 @@ function markTestFailuresRecursively(state) {
 
 /**
  * Marks this state as hasFailure and recursively the parents as well
+ *
  * @param {TestState} state
  */
 function markFailure(state) {
@@ -165,10 +207,12 @@ function markFailure(state) {
 }
 
 /**
+ * Returns a sum of all assertions recursively, ignoring caught exceptions.
+ *
  * @param {TestState} state
  * @returns {{ passed: number, failed: number }}
  */
-function sumAssertions(state) {
+export function sumAssertions(state) {
   let passed = 0;
   let failed = 0;
 

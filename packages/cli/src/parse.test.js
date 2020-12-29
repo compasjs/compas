@@ -5,7 +5,7 @@ mainTestFn(import.meta);
 
 test("cli/parse", (t) => {
   t.test("default to help", (t) => {
-    t.deepEqual(parseArgs([], []), {
+    t.deepEqual(parseArgs([], [], []), {
       type: "util",
       name: "help",
       arguments: [],
@@ -13,7 +13,7 @@ test("cli/parse", (t) => {
   });
 
   t.test("init is util", (t) => {
-    t.deepEqual(parseArgs(["init"], []), {
+    t.deepEqual(parseArgs([], [], ["init"]), {
       type: "util",
       name: "init",
       arguments: [],
@@ -21,7 +21,7 @@ test("cli/parse", (t) => {
   });
 
   t.test("help is util", (t) => {
-    t.deepEqual(parseArgs(["help"], []), {
+    t.deepEqual(parseArgs([], [], ["help"]), {
       type: "util",
       name: "help",
       arguments: [],
@@ -29,7 +29,7 @@ test("cli/parse", (t) => {
   });
 
   t.test("extra arguments for util scripts are passed through", (t) => {
-    t.deepEqual(parseArgs(["init", "--name=foo"], []), {
+    t.deepEqual(parseArgs([], [], ["init", "--name=foo"]), {
       type: "util",
       name: "init",
       arguments: ["--name=foo"],
@@ -37,12 +37,11 @@ test("cli/parse", (t) => {
   });
 
   t.test("exec default to run", (t) => {
-    t.deepEqual(parseArgs(["foo"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["foo"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -50,34 +49,33 @@ test("cli/parse", (t) => {
   });
 
   t.test("throw help with error when nothing is found", (t) => {
-    let parseResult = parseArgs(["run"], []);
+    let parseResult = parseArgs([], [], ["run"]);
     t.ok(parseResult.error, "string");
     t.equal(parseResult.type, "util");
     t.equal(parseResult.name, "help");
 
-    parseResult = parseArgs(["run", "scripts/non-existent.js"], []);
+    parseResult = parseArgs([], [], ["run", "scripts/non-existent.js"]);
     t.ok(parseResult.error, "string");
     t.equal(parseResult.type, "util");
     t.equal(parseResult.name, "help");
 
-    parseResult = parseArgs(["scripts/non-existent.js"], []);
+    parseResult = parseArgs([], [], ["scripts/non-existent.js"]);
     t.ok(parseResult.error, "string");
     t.equal(parseResult.type, "util");
     t.equal(parseResult.name, "help");
 
-    parseResult = parseArgs(["bar"], ["foo"]);
+    parseResult = parseArgs([], ["foo"], ["bar"]);
     t.ok(parseResult.error, "string");
     t.equal(parseResult.type, "util");
     t.equal(parseResult.name, "help");
   });
 
   t.test("include node args on run exec", (t) => {
-    t.deepEqual(parseArgs(["--cpu-prof", "foo"], ["foo"]), {
+    t.deepEqual(parseArgs(["--cpu-prof"], ["foo"], ["--cpu-prof", "foo"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: ["--cpu-prof"],
-      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -85,25 +83,26 @@ test("cli/parse", (t) => {
   });
 
   t.test("include node args on explicit run exec", (t) => {
-    t.deepEqual(parseArgs(["run", "--cpu-prof", "foo"], ["foo"]), {
-      type: "exec",
-      name: "run",
-      script: "foo",
-      nodeArguments: ["--cpu-prof"],
-      toolArguments: [],
-      execArguments: [],
-      watch: false,
-      verbose: false,
-    });
+    t.deepEqual(
+      parseArgs(["--cpu-prof"], ["foo"], ["run", "--cpu-prof", "foo"]),
+      {
+        type: "exec",
+        name: "run",
+        script: "foo",
+        nodeArguments: ["--cpu-prof"],
+        execArguments: [],
+        watch: false,
+        verbose: false,
+      },
+    );
   });
 
   t.test("include exec args on run exec", (t) => {
-    t.deepEqual(parseArgs(["foo", "--cache"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["foo", "--cache"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: ["--cache"],
       watch: false,
       verbose: false,
@@ -111,12 +110,11 @@ test("cli/parse", (t) => {
   });
 
   t.test("include exec args on explicit run exec", (t) => {
-    t.deepEqual(parseArgs(["run", "foo", "--cache"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["run", "foo", "--cache"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: ["--cache"],
       watch: false,
       verbose: false,
@@ -124,12 +122,11 @@ test("cli/parse", (t) => {
   });
 
   t.test("accept paths for run exec", (t) => {
-    t.deepEqual(parseArgs(["run", "./scripts/changelog.js"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["run", "./scripts/changelog.js"]), {
       type: "exec",
       name: "run",
       script: "./scripts/changelog.js",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: false,
@@ -139,6 +136,8 @@ test("cli/parse", (t) => {
   t.test("combined exec", (t) => {
     t.deepEqual(
       parseArgs(
+        ["--cpu-prof-interval"],
+        ["foo", "bar"],
         [
           "run",
           "--watch",
@@ -148,14 +147,12 @@ test("cli/parse", (t) => {
           "bar",
           "--no-cache",
         ],
-        ["foo", "bar"],
       ),
       {
         type: "exec",
         name: "run",
         script: "bar",
-        nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
-        toolArguments: [],
+        nodeArguments: ["--cpu-prof-interval=10"],
         execArguments: ["--no-cache"],
         watch: true,
         verbose: true,
@@ -165,25 +162,27 @@ test("cli/parse", (t) => {
 
   t.test("get verbose correctly", (t) => {
     t.deepEqual(
-      parseArgs(["run", "--verbose", "--cpu-prof-interval=10", "foo"], ["foo"]),
+      parseArgs(
+        ["--cpu-prof-interval"],
+        ["foo"],
+        ["run", "--verbose", "--cpu-prof-interval=10", "foo"],
+      ),
       {
         type: "exec",
         name: "run",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
-        toolArguments: [],
         execArguments: [],
         watch: false,
         verbose: true,
       },
     );
 
-    t.deepEqual(parseArgs(["run", "--verbose", "foo"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["run", "--verbose", "foo"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: [],
       watch: false,
       verbose: true,
@@ -191,15 +190,15 @@ test("cli/parse", (t) => {
 
     t.deepEqual(
       parseArgs(
-        ["run", "--verbose", "--verbose", "--cpu-prof-interval=10", "foo"],
+        ["--cpu-prof-interval"],
         ["foo"],
+        ["run", "--verbose", "--cpu-prof-interval=10", "foo"],
       ),
       {
         type: "exec",
         name: "run",
         script: "foo",
-        nodeArguments: ["--verbose", "--cpu-prof-interval=10"],
-        toolArguments: [],
+        nodeArguments: ["--cpu-prof-interval=10"],
         execArguments: [],
         watch: false,
         verbose: true,
@@ -209,25 +208,27 @@ test("cli/parse", (t) => {
 
   t.test("get watch correctly", (t) => {
     t.deepEqual(
-      parseArgs(["run", "--watch", "--cpu-prof-interval=10", "foo"], ["foo"]),
+      parseArgs(
+        ["--cpu-prof-interval"],
+        ["foo"],
+        ["run", "--watch", "--cpu-prof-interval=10", "foo"],
+      ),
       {
         type: "exec",
         name: "run",
         script: "foo",
         nodeArguments: ["--cpu-prof-interval=10"],
-        toolArguments: [],
         execArguments: [],
         watch: true,
         verbose: false,
       },
     );
 
-    t.deepEqual(parseArgs(["run", "--watch", "foo"], ["foo"]), {
+    t.deepEqual(parseArgs([], ["foo"], ["run", "--watch", "foo"]), {
       type: "exec",
       name: "run",
       script: "foo",
       nodeArguments: [],
-      toolArguments: [],
       execArguments: [],
       watch: true,
       verbose: false,
@@ -235,42 +236,15 @@ test("cli/parse", (t) => {
 
     t.deepEqual(
       parseArgs(
-        ["run", "--watch", "--watch", "--cpu-prof-interval=10", "foo"],
+        ["--cpu-prof-interval"],
         ["foo"],
+        ["run", "--watch", "--watch", "--cpu-prof-interval=10", "foo"],
       ),
       {
         type: "exec",
         name: "run",
         script: "foo",
-        nodeArguments: ["--watch", "--cpu-prof-interval=10"],
-        toolArguments: [],
-        execArguments: [],
-        watch: true,
-        verbose: false,
-      },
-    );
-  });
-
-  t.test("error on named script", (t) => {
-    let parseResult = parseArgs(["test", "foo"], ["foo"]);
-    t.ok(parseResult.error, "string");
-    t.equal(parseResult.type, "util");
-    t.equal(parseResult.name, "help");
-
-    parseResult = parseArgs(["test", "./foo/"], []);
-    t.equal(parseResult.type, "exec");
-    t.equal(parseResult.name, "test");
-  });
-
-  t.test("accept -- delimiter", (t) => {
-    t.deepEqual(
-      parseArgs(["coverage", "--watch", "--foo", "--", "--check-coverage"]),
-      {
-        type: "exec",
-        name: "coverage",
-        script: undefined,
-        nodeArguments: ["--foo"],
-        toolArguments: ["--check-coverage"],
+        nodeArguments: ["--cpu-prof-interval=10"],
         execArguments: [],
         watch: true,
         verbose: false,

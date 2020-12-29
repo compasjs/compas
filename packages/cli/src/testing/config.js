@@ -1,6 +1,6 @@
 import { existsSync } from "fs";
-import { noop, pathJoin } from "@compas/stdlib";
-import { setTestTimeout } from "./state.js";
+import { pathJoin } from "@compas/stdlib";
+import { setGlobalSetup, setGlobalTeardown, setTestTimeout } from "./state.js";
 
 const configPath = pathJoin(process.cwd(), "test/config.js");
 
@@ -10,10 +10,7 @@ const configPath = pathJoin(process.cwd(), "test/config.js");
  * - timeout, used as timeout per test case
  * - setup, function called once before tests run
  * - teardown, function called once after all tests run
- * @returns {Promise<{
- *    setup: function(): (void|Promise<void>)
- *    teardown: function(): (void|Promise<void>)
- * }>}
+ * @returns {Promise<void>}
  */
 export async function loadTestConfig() {
   if (!existsSync(configPath)) {
@@ -31,8 +28,6 @@ export async function loadTestConfig() {
     setTestTimeout(config.timeout);
   }
 
-  return {
-    setup: config?.setup ?? noop,
-    teardown: config?.teardown ?? noop,
-  };
+  setGlobalSetup(config?.setup);
+  setGlobalTeardown(config?.teardown);
 }

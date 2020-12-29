@@ -4,6 +4,8 @@ import { printTestResults } from "./printer.js";
 import { runTestsRecursively } from "./runner.js";
 import {
   areTestsRunning,
+  globalSetup,
+  globalTeardown,
   setAreTestRunning,
   setTestLogger,
   state,
@@ -28,17 +30,11 @@ export function mainTestFn(meta) {
       setTimeout(r, 2);
     });
 
-    const config = await loadTestConfig();
-
-    if (typeof config?.setup === "function") {
-      await config.setup();
-    }
-
+    await loadTestConfig();
+    await globalSetup();
     await runTestsRecursively(state);
+    await globalTeardown();
 
-    if (typeof config?.teardown === "function") {
-      await config.teardown();
-    }
     const exitCode = printTestResults();
 
     process.exit(exitCode);

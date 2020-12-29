@@ -18,7 +18,13 @@ export function coverageCommand(logger, command) {
     command.verbose,
     command.watch,
     c8Path,
-    [...command.toolArguments, "node", ...command.nodeArguments, testFile],
+    [
+      ...command.execArguments,
+      "node",
+      ...command.nodeArguments,
+      testFile,
+      "--serial",
+    ],
     {},
   );
 }

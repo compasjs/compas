@@ -26,12 +26,5 @@ test("stdlib/utils", (t) => {
     t.equal(nonMainFnResult.isMainFn, false);
     // Still returns the name of the file that is the process entrypoint
     t.equal(nonMainFnResult.name, "test");
-
-    const isMainFnResult = isMainFnAndReturnName({
-      url: `${baseUrl}/packages/cli/scripts/test.js`,
-    });
-
-    t.equal(isMainFnResult.isMainFn, true);
-    t.equal(isMainFnResult.name, "test");
   });
 });
