@@ -60,7 +60,7 @@ export async function newMigrateContext(
     return mc;
   } catch (error) {
     // Help user by dropping the sql connection so the application will exit
-    sql?.end();
+    await sql?.end();
     if (AppError.instanceOf(error)) {
       throw error;
     } else {
@@ -125,7 +125,7 @@ export async function runMigrations(mc) {
     }
   } catch (error) {
     // Help user by dropping the sql connection so the application will exit
-    mc?.sql?.end();
+    await mc?.sql?.end();
     if (AppError.instanceOf(error)) {
       throw error;
     } else {
