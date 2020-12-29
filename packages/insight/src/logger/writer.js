@@ -23,14 +23,17 @@ export function writeNDJSON(stream, level, timestamp, context, message) {
  * @param message
  */
 export function writePretty(stream, level, timestamp, context, message) {
-  stream.write(
-    `${formatDate(timestamp)} ${formatLevelAndType(level, context?.type)}`,
-  );
+  let prefix = `${formatDate(timestamp)} ${formatLevelAndType(
+    level,
+    context?.type,
+  )}`;
 
   if (message) {
-    stream.write(" ");
+    prefix += " ";
     if (Array.isArray(message)) {
-      stream.write(message.map((it) => formatMessagePretty(it)).join(", "));
+      stream.write(
+        `${prefix + message.map((it) => formatMessagePretty(it)).join(", ")}\n`,
+      );
     } else {
       let keyCount = 0;
       if (context?.type) {
@@ -39,13 +42,11 @@ export function writePretty(stream, level, timestamp, context, message) {
       }
 
       if (Object.keys(context).length > keyCount) {
-        stream.write(`${formatMessagePretty(context)} `);
+        prefix += `${formatMessagePretty(context)} `;
       }
-      stream.write(formatMessagePretty(message));
+      stream.write(`${prefix + formatMessagePretty(message)}\n`);
     }
   }
-
-  stream.write("\n");
 }
 
 /**

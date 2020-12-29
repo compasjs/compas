@@ -15,7 +15,7 @@ test("insight/writer", (t) => {
 
     writePretty(mock, "info", now, {}, {});
 
-    t.equal(result.length, 4);
+    t.equal(result.length, 1);
 
     const [timestamp, level] = result[0].split(" ");
 
@@ -33,7 +33,7 @@ test("insight/writer", (t) => {
       },
     );
 
-    t.equal(result.length, 4);
+    t.equal(result.length, 1);
     t.ok(result[0].indexOf("foo") !== -1, "should print log type");
   });
 
