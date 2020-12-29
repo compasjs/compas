@@ -10,7 +10,7 @@ export async function setup() {
   const sql = await createTestPostgresDatabase();
   await setPostgresDatabaseTemplate(sql);
 
-  await sql.end({ timeout: 0.01 });
+  await sql.end({ timeout: 0 });
 }
 
 export async function teardown() {

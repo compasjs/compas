@@ -17,7 +17,7 @@ export function benchCommand(logger, command) {
     command.verbose,
     command.watch,
     "node",
-    [...command.nodeArguments, benchFile],
+    [...command.nodeArguments, benchFile, ...command.execArguments],
     {},
   );
 }

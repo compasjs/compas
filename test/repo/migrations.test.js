@@ -1,9 +1,9 @@
 import { mainTestFn, test } from "@compas/cli";
 import {
+  cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   getMigrationsToBeApplied,
   newMigrateContext,
-  cleanupTestPostgresDatabase,
 } from "@compas/store";
 
 mainTestFn(import.meta);
@@ -16,8 +16,8 @@ test("repo/migrations", (t) => {
     t.ok(!!sql);
 
     const result = await sql`
-      SELECT 1 + 2 AS sum
-    `;
+        SELECT 1 + 2 AS sum
+      `;
     t.equal(result[0].sum, 3);
   });
 

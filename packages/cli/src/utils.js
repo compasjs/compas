@@ -1,6 +1,6 @@
 import { spawn as cpSpawn } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
-import { pathJoin, spawn } from "@compas/stdlib";
+import { exec, pathJoin, spawn } from "@compas/stdlib";
 import chokidar from "chokidar";
 import treeKill from "tree-kill";
 
@@ -41,6 +41,27 @@ export function collectScripts() {
   }
 
   return result;
+}
+
+/**
+ * Not so fool proof way of returning the accepted cli arguments of Node.js and v8
+ * @returns {Promise<string[]>}
+ */
+export async function collectNodeArgs() {
+  const [{ stdout: nodeStdout }, { stdout: v8Stdout }] = await Promise.all([
+    exec(`node --help`),
+    exec(`node --v8-options`),
+  ]);
+
+  return `${nodeStdout}\n${v8Stdout}`
+    .split("\n")
+    .filter((it) => it.trim() && it.length > 2)
+    .map((it) => it.trim())
+    .filter((it) => it.startsWith("--"))
+    .map((it) => {
+      return it.split(" ")[0].replace(/[=\\.]+/g, "");
+    })
+    .filter((it) => it.length > 2);
 }
 
 /**
@@ -205,7 +226,8 @@ export async function executeCommand(
 
   function stop() {
     if (instance) {
-      // Needs tree-kill since `instance.kill` does not kill spawned processes by this instance
+      // Needs tree-kill since `instance.kill` does not kill spawned processes by this
+      // instance
       treeKill(instance.pid, "SIGKILL", (error) => {
         logger.error({
           message: "Could not kill process",
