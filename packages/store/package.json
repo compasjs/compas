@@ -17,7 +17,7 @@
     "@compas/insight": "0.0.106",
     "@compas/stdlib": "0.0.106",
     "@types/minio": "7.0.6",
-    "mime-types": "2.1.27",
+    "mime-types": "2.1.28",
     "minio": "7.0.18",
     "postgres": "2.0.0-beta.2"
   },
