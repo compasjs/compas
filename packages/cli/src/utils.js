@@ -196,7 +196,7 @@ export async function executeCommand(
       logger.info(`Restarted because of ${path}`);
     }
 
-    restart();
+    debounceRestart();
   });
 
   watcher.on("ready", () => {
@@ -207,38 +207,51 @@ export async function executeCommand(
     }
 
     start();
-    prepareStdin(restart);
+    prepareStdin(debounceRestart);
   });
+
+  function exitListener(code, signal) {
+    // Print normal exit behaviour or if verbose is requested.
+    if (!instanceKilled || verbose) {
+      logger.info({
+        message: "Process exited",
+        code: code ?? 0,
+        signal,
+      });
+    }
+
+    // We don't need to kill this instance, and just let it be garbage collected.
+    instance = undefined;
+  }
 
   function start() {
     instance = cpSpawn(command, commandArgs, {
       stdio: "inherit",
     });
-    instanceKilled = false;
 
-    instance.on("close", (code) => {
-      if (!instanceKilled || verbose) {
-        logger.info(`Process exited with code ${code ?? 0}`);
-      }
-      instance = undefined;
-    });
+    instanceKilled = false;
+    instance.once("exit", exitListener);
   }
 
-  function stop() {
-    if (instance) {
+  function killAndStart() {
+    if (instance && !instanceKilled) {
+      instanceKilled = true;
+      instance.removeListener("exit", exitListener);
+
       // Needs tree-kill since `instance.kill` does not kill spawned processes by this
       // instance
-      treeKill(instance.pid, "SIGKILL", (error) => {
-        logger.error({
-          message: "Could not kill process",
-          error,
-        });
-      });
+      treeKill(instance.pid, "SIGTERM", (error) => {
+        if (error) {
+          logger.error({
+            message: "Could not kill process",
+            error,
+          });
+        }
 
-      // We don't way for the process to be killed
-      // This may leak some instances in edge cases
-      instanceKilled = true;
-      instance = undefined;
+        start();
+      });
+    } else {
+      start();
     }
   }
 
@@ -246,21 +259,20 @@ export async function executeCommand(
    * Restart with debounce
    * @param {boolean} [skipDebounce]
    */
-  function restart(skipDebounce) {
+  function debounceRestart(skipDebounce) {
     // Restart may be called multiple times in a row
     // We may want to add some kind of graceful back off here
     if (timeout !== undefined) {
       clearTimeout(timeout);
+      timeout = undefined;
     }
 
     if (skipDebounce) {
-      stop();
-      start();
+      killAndStart();
     } else {
       timeout = setTimeout(() => {
-        stop();
-        start();
-        clearTimeout(timeout);
+        killAndStart();
+        timeout = undefined;
       }, 250);
     }
   }
