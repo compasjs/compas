@@ -9,7 +9,7 @@ async function main() {
   const [githubToken] = process.argv.slice(2);
 
   const tag = rawRef.replace(/^refs\/tags\//, "");
-  const fullChangelog = await readFile("./docs/changelog.md", "utf8");
+  const fullChangelog = await readFile("./changelog.md", "utf8");
   const changelogPart = parseChangelog(fullChangelog);
 
   await axios.request({

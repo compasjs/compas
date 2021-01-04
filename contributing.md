@@ -31,16 +31,14 @@ yarn compas coverage -- report --reporter lcov
 yarn compas link && yarn compas linkExternally ../other-project/
 ```
 
-**Documentation & Typescript types**:
+**Documentation**:
 
 ```
-# Build docs from index.d.ts files and put in /docs/api.md
-yarn compas typedoc
 # Sync content of README.md's based on the README.md in the root
 yarn compas syncMetadata
-# Sync assets/examples to the documentation files
-yarn compas syncDocExamples
 ```
+
+For more information see the [docs repository](https://github.com/compasjs/docs)
 
 **Code generation, @compas/store structure changes**:
 

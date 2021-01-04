@@ -34,8 +34,6 @@ function main(logger) {
     );
   }
 
-  writeFileSync("./docs/README.md", `# @compas\n${readmeSource}`, "utf-8");
-
   logger.info("Running linter");
   spawnSync("yarn", ["compas", "lint"], { stdio: "inherit" });
   logger.info("Done");

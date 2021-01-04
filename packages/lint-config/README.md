@@ -105,7 +105,7 @@ copying and pasting things around, this project was born.
 See [the website](https://compasjs.com) for the changelog, all available APIs
 and various guides.
 
-For contributing see [contributing.md](https://compasjs.com/contributing).
+For contributing see [contributing.md](https://compasjs.com/contributing.html).
 
 ## New features
 

@@ -21,7 +21,7 @@ async function main(logger) {
   );
   const commits = combineCommits(commitsSinceLastVersion);
 
-  const changelogPath = pathJoin(process.cwd(), "docs/changelog.md");
+  const changelogPath = pathJoin(process.cwd(), "changelog.md");
   const changelog = await readFile(changelogPath, "utf8");
   const trimmedChangelog = stripChangelogOfUnreleased(changelog);
   const unreleasedChangelog = makeChangelog(logger, commits);
