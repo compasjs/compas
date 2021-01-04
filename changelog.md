@@ -8,6 +8,36 @@ order: 2
 
 # CHANGELOG
 
+### [vx.x.x](https://github.com/compasjs/compas/releases/tag/vx.x.x)
+
+- build(deps): bump @types/node from 14.14.16 to 14.14.19
+  ([#577](https://github.com/compasjs/compas/pull/577),
+  [#580](https://github.com/compasjs/compas/pull/580))
+- build(deps): bump c8 from 7.3.5 to 7.4.0
+  ([#578](https://github.com/compasjs/compas/pull/578))
+- build(deps): bump eslint from 7.16.0 to 7.17.0
+  ([#581](https://github.com/compasjs/compas/pull/581))
+- build(deps): bump mime-types from 2.1.27 to 2.1.28
+  ([#579](https://github.com/compasjs/compas/pull/579))
+- build(deps-dev): bump react-query from 3.5.5 to 3.5.9
+  ([#576](https://github.com/compasjs/compas/pull/576),
+  [#582](https://github.com/compasjs/compas/pull/582))
+- chore: fix changelog script to accomadate for front-matter
+- chore: remove all references to docs in this repo
+- cli: add parallel test running and order randomizer
+  ([#575](https://github.com/compasjs/compas/pull/575))
+- cli: add test case for visualise with arguments
+- cli: fix watch and restart behaviour of long running processes
+  ([#583](https://github.com/compasjs/compas/pull/583))
+- docs: move all docs to the docs repo
+- insight: logger write pretty in a single call
+- stdlib: fix promise printing on unhandledRejections
+- store: await connection closes on errors in migrations
+- store: fix flaky test postgres connections
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/x.x.x.html).
+
 ### [v0.0.106](https://github.com/compasjs/compas/releases/tag/v0.0.106)
 
 - \*: remove @name usage in JSDoc
