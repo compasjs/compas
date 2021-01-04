@@ -1,3 +1,11 @@
+---
+type: page
+title: Changelog
+description: Compas changelog
+tags: []
+order: 2
+---
+
 # CHANGELOG
 
 ### [v0.0.106](https://github.com/compasjs/compas/releases/tag/v0.0.106)

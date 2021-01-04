@@ -1,5 +1,0 @@
-# Foo
-
-<--- timeout -->
-
-`<--- timeout -->
