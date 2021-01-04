@@ -23,12 +23,13 @@ async function main(logger) {
 
   const changelogPath = pathJoin(process.cwd(), "changelog.md");
   const changelog = await readFile(changelogPath, "utf8");
-  const trimmedChangelog = stripChangelogOfUnreleased(changelog);
+  const { header, source } = getChangelogHeaderAndSource(changelog);
+  const trimmedChangelog = stripChangelogOfUnreleased(source);
   const unreleasedChangelog = makeChangelog(logger, commits);
 
   await writeFile(
     changelogPath,
-    `# CHANGELOG\n\n${unreleasedChangelog}\n\n${trimmedChangelog}`,
+    `${header}\n\n${unreleasedChangelog}\n\n${trimmedChangelog}`,
     "utf8",
   );
 }
@@ -59,12 +60,27 @@ async function getListOfCommitsSinceTag(logger, version) {
 }
 
 /**
+ * Get changelog header including front matter
+ * @param {string} changelog
+ * @returns {{ header: string, source: string }}
+ */
+function getChangelogHeaderAndSource(changelog) {
+  const string = "# CHANGELOG";
+  const splitIndex = changelog.indexOf(string) + string.length + 1;
+
+  return {
+    header: changelog.substring(0, splitIndex),
+    source: changelog.substring(splitIndex),
+  };
+}
+
+/**
  * Remove initial changelog contents, including the already existing 'unreleased' part
  * @param {string} changelog
  * @returns {string}
  */
 function stripChangelogOfUnreleased(changelog) {
-  let result = changelog.substr("changelog".length + 2).trim();
+  let result = changelog.trim();
 
   if (result.indexOf("### [vx.x.x") !== -1) {
     result = result.substr(
