@@ -8,7 +8,7 @@ order: 2
 
 # CHANGELOG
 
-### [vx.x.x](https://github.com/compasjs/compas/releases/tag/vx.x.x)
+### [v0.0.107](https://github.com/compasjs/compas/releases/tag/v0.0.107)
 
 - build(deps): bump @types/node from 14.14.16 to 14.14.19
   ([#577](https://github.com/compasjs/compas/pull/577),
@@ -34,9 +34,6 @@ order: 2
 - stdlib: fix promise printing on unhandledRejections
 - store: await connection closes on errors in migrations
 - store: fix flaky test postgres connections
-
-For a detailed description and more details about this release, please read the
-[release notes](https://compasjs.com/releases/x.x.x.html).
 
 ### [v0.0.106](https://github.com/compasjs/compas/releases/tag/v0.0.106)
 
