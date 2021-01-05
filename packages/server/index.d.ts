@@ -1304,6 +1304,16 @@ export interface GetAppOptions {
    * Argument for defaultHeader middleware
    */
   headers?: HeaderOptions;
+
+  /**
+   * Options passed to the log middleware
+   */
+  logOptions?: {
+    /**
+     * Disable event creation on ctx.event
+     */
+    disableRootEvent?: boolean;
+  };
 }
 
 /**
