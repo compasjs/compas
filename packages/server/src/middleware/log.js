@@ -4,8 +4,41 @@ import { isNil, uuid } from "@compas/stdlib";
 
 /**
  * Log basic request and response information
+ * @param {GetAppOptions.logOptions} options
  */
-export function logMiddleware() {
+export function logMiddleware(options) {
+  /**
+   * Real log function
+   *
+   * @param ctx
+   * @param {bigint} startTime
+   * @param {number} length
+   */
+  function logInfo(ctx, startTime, length) {
+    const duration = Math.round(
+      Number(process.hrtime.bigint() - startTime) / 1000000,
+    );
+
+    ctx.log.info({
+      request: {
+        method: ctx.method,
+        path: ctx.path,
+        length: Number(ctx.get("Content-Length") || "0"),
+      },
+      response: {
+        duration,
+        length,
+        status: ctx.status,
+      },
+    });
+
+    // Skip eventStop if we don't have events enabled.
+    // Skip eventStop for CORS requests, this gives a bit cleaner logs.
+    if (options.disableRootEvent !== true && ctx.method !== "OPTIONS") {
+      eventStop(ctx.event);
+    }
+  }
+
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
 
@@ -21,8 +54,11 @@ export function logMiddleware() {
         requestId,
       },
     });
-    ctx.event = newEvent(ctx.log);
-    eventStart(ctx.event, `${ctx.method}.${ctx.path}`);
+
+    if (options.disableRootEvent !== true) {
+      ctx.event = newEvent(ctx.log);
+      eventStart(ctx.event, `${ctx.method}.${ctx.path}`);
+    }
 
     await next();
 
@@ -54,36 +90,6 @@ class StreamLength extends Transform {
     this.length += chunk.length;
     this.push(chunk, encoding);
     callback();
-  }
-}
-
-/**
- * Real log function
- *
- * @param ctx
- * @param {bigint} startTime
- * @param {number} length
- */
-function logInfo(ctx, startTime, length) {
-  const duration = Math.round(
-    Number(process.hrtime.bigint() - startTime) / 1000000,
-  );
-
-  ctx.log.info({
-    request: {
-      method: ctx.method,
-      path: ctx.path,
-      length: Number(ctx.get("Content-Length") || "0"),
-    },
-    response: {
-      duration,
-      length,
-      status: ctx.status,
-    },
-  });
-
-  if (ctx.method !== "OPTIONS") {
-    eventStop(ctx.event);
   }
 }
 
