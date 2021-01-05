@@ -4,9 +4,11 @@ import proxy from "http-proxy";
 
 /**
  * @param {Logger} logger
+ * @param {UtilCommand} command
  * @returns {Promise<void>}
  */
-export async function proxyCommand(logger) {
+export async function proxyCommand(logger, command) {
+  const verbose = command.arguments.indexOf("--verbose") !== -1;
   const port = parseInt(
     (environment.API_URL ?? environment.NEXT_PUBLIC_API_URL ?? "")
       .split(":")
@@ -36,11 +38,20 @@ export async function proxyCommand(logger) {
       }
     }
 
-    logger.info({
-      method: req.method,
-      path: req.url,
-      status: proxyResponse.statusCode,
-    });
+    if (verbose) {
+      logger.info({
+        method: req.method,
+        path: req.url,
+        status: proxyResponse.statusCode,
+        headers: proxyResponse.headers,
+      });
+    } else {
+      logger.info({
+        method: req.method,
+        path: req.url,
+        status: proxyResponse.statusCode,
+      });
+    }
   });
 
   const allowMethods = "GET,PUT,POST,PATCH,DELETE,HEAD,OPTIONS";
@@ -54,6 +65,7 @@ export async function proxyCommand(logger) {
     message: "Starting proxy",
     target: options.target,
     port,
+    verbose,
   });
 
   createServer((req, res) => {

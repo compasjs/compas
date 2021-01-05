@@ -22,7 +22,7 @@ Usage:
 - init              : compas init [projectName]
 - help              : compas help
 - docker            : compas docker [up,down,clean,reset]
-- proxy             : compas proxy
+- proxy             : compas proxy [--verbose]
 - run (explicit)    : compas run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : compas [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - test              : compas test [--watch] [--verbose] [--node-arg]
