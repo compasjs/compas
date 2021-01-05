@@ -16,8 +16,8 @@
     "@compas/cli": "{{version}}",
     "@compas/code-gen": "{{version}}",
     "@compas/lint-config": "{{version}}",
-    "axios": "0.19.2",
-    "axios-cookiejar-support": "1.0.0",
+    "axios": "0.21.1",
+    "axios-cookiejar-support": "1.0.1",
     "tough-cookie": "4.0.0"
   },
   "prettier": "@compas/lint-config/prettierrc",
