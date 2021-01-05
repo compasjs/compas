@@ -19,7 +19,7 @@
     "@compas/stdlib": "0.0.107",
     "formidable": "2.0.0-canary.20200504.1",
     "keygrip": "1.1.0",
-    "koa": "2.13.0",
+    "koa": "2.13.1",
     "koa-body": "4.2.0",
     "koa-session": "6.1.0"
   },
