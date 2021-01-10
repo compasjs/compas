@@ -18,7 +18,7 @@ const queueQueries = {
          WHERE
              NOT "isComplete"
          AND "scheduledAt" < now()
-         ORDER BY "scheduledAt", "priority" FOR UPDATE SKIP LOCKED
+         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
          LIMIT 1
        )
      RETURNING id
@@ -38,7 +38,7 @@ const queueQueries = {
              NOT "isComplete"
          AND "scheduledAt" < now()
          AND "name" = ${name}
-         ORDER BY "scheduledAt", "priority" FOR UPDATE SKIP LOCKED
+         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
          LIMIT 1
        )
      RETURNING "id"
