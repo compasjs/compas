@@ -122,20 +122,6 @@ function getForeignKeys(type) {
       otherSide.name
     }" ("${primaryKeyOfOtherSide}") `;
 
-    // Truth table:
-    // this:withSoftDeletes | other:withSoftDeletes | this:isOptional | onDelete |
-    //        -             |           -           |          -      |  CASCADE |
-    //
-    //        x             |           -           |          -      |  CASCADE |
-    //        -             |           x           |          -      |  CASCADE |
-    //        -             |           -           |          x      |  NULL    |
-    //
-    //        x             |           x           |          -      |  CASCADE |
-    //        x             |           -           |          x      |  NULL    |
-    //        -             |           x           |          x      |  NULL    |
-    //
-    //        x             |           x           |          x      |  NULL    |
-
     if (relation.isOptional) {
       base += "ON DELETE SET NULL";
     } else {

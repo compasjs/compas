@@ -1,6 +1,7 @@
 import { rmdir } from "fs/promises";
 import { App } from "@compas/code-gen";
 import { mainFn, pathJoin, spawn } from "@compas/stdlib";
+import { storeStructure } from "@compas/store";
 import {
   applyBenchStructure,
   applyTestingServerStructure,
@@ -58,6 +59,8 @@ async function main() {
 }
 
 export function applyAllLocalGenerate(app) {
+  app.extend(storeStructure);
+
   applyBenchStructure(app);
   applyTestingValidatorsStructure(app);
   applyTestingServerStructure(app);
