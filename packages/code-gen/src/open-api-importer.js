@@ -432,7 +432,8 @@ function convertSchema(context, schema) {
     } else {
       assignBaseData();
       if (schema.pattern) {
-        result.validator.pattern = schema.pattern;
+        const intermediate = RegExp(schema.pattern);
+        result.validator.pattern = `/${intermediate.source}/${intermediate.flags}`;
       }
       if (!isNil(schema.minLength)) {
         result.validator.min = schema.minLength;
