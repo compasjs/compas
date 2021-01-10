@@ -78,6 +78,7 @@ const objectKeys2074494218 = new Set([
   "bucketNameIn",
   "bucketNameNotIn",
   "bucketNameLike",
+  "bucketNameILike",
   "bucketNameNotLike",
   "createdAt",
   "createdAtNotEqual",
@@ -216,6 +217,7 @@ const objectKeys1257773835 = new Set([
   "nameIn",
   "nameNotIn",
   "nameLike",
+  "nameILike",
   "nameNotLike",
   "scheduledAt",
   "scheduledAtNotEqual",
@@ -1582,7 +1584,7 @@ export function anonymousValidator978954249(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$or"?: (StoreFileWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[]|QueryPart, "bucketNameNotIn"?: (string)[]|QueryPart, "bucketNameLike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[]|QueryPart, "deletedAtNotIn"?: (Date)[]|QueryPart, "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }|undefined}
+ * @returns {{"$or"?: (StoreFileWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[]|QueryPart, "bucketNameNotIn"?: (string)[]|QueryPart, "bucketNameLike"?: string, "bucketNameILike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[]|QueryPart, "deletedAtNotIn"?: (Date)[]|QueryPart, "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }|undefined}
  */
 export function anonymousValidator2074494218(
   value,
@@ -1667,6 +1669,11 @@ export function anonymousValidator2074494218(
   result["bucketNameLike"] = anonymousValidator1443576836(
     value["bucketNameLike"],
     `${propertyPath}.bucketNameLike`,
+    errors,
+  );
+  result["bucketNameILike"] = anonymousValidator1443576836(
+    value["bucketNameILike"],
+    `${propertyPath}.bucketNameILike`,
     errors,
   );
   result["bucketNameNotLike"] = anonymousValidator1443576836(
@@ -2639,7 +2646,7 @@ export function anonymousValidator102852585(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$or"?: (StoreJobWhere)[], "id"?: number, "idNotEqual"?: number, "idIn"?: (number)[]|QueryPart, "idNotIn"?: (number)[]|QueryPart, "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[]|QueryPart, "nameNotIn"?: (string)[]|QueryPart, "nameLike"?: string, "nameNotLike"?: string, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[]|QueryPart, "scheduledAtNotIn"?: (Date)[]|QueryPart, "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }|undefined}
+ * @returns {{"$or"?: (StoreJobWhere)[], "id"?: number, "idNotEqual"?: number, "idIn"?: (number)[]|QueryPart, "idNotIn"?: (number)[]|QueryPart, "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[]|QueryPart, "nameNotIn"?: (string)[]|QueryPart, "nameLike"?: string, "nameILike"?: string, "nameNotLike"?: string, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[]|QueryPart, "scheduledAtNotIn"?: (Date)[]|QueryPart, "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }|undefined}
  */
 export function anonymousValidator1257773835(
   value,
@@ -2751,6 +2758,11 @@ export function anonymousValidator1257773835(
   result["nameLike"] = anonymousValidator1443576836(
     value["nameLike"],
     `${propertyPath}.nameLike`,
+    errors,
+  );
+  result["nameILike"] = anonymousValidator1443576836(
+    value["nameILike"],
+    `${propertyPath}.nameILike`,
     errors,
   );
   result["nameNotLike"] = anonymousValidator1443576836(

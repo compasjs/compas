@@ -189,6 +189,14 @@ test("code-gen/e2e/sql", async (t) => {
     });
   });
 
+  t.test("query filter by 'ILIKE'", async (t) => {
+    const [dbUser] = await client.queries.userSelect(sql, {
+      emailILike: "Test",
+    });
+
+    t.ok(dbUser);
+  });
+
   t.test("user QueryBuilder", async (t) => {
     const [dbUser] = await client
       .queryUser({

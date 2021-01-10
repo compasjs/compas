@@ -230,6 +230,10 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     strings.push(` AND ${tableName}"bucketName" LIKE `);
     values.push(`%${where.bucketNameLike}%`);
   }
+  if (where.bucketNameILike !== undefined) {
+    strings.push(` AND ${tableName}"bucketName" ILIKE `);
+    values.push(`%${where.bucketNameILike}%`);
+  }
   if (where.bucketNameNotLike !== undefined) {
     strings.push(` AND ${tableName}"bucketName" NOT LIKE `);
     values.push(`%${where.bucketNameNotLike}%`);
@@ -1593,6 +1597,10 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
   if (where.nameLike !== undefined) {
     strings.push(` AND ${tableName}"name" LIKE `);
     values.push(`%${where.nameLike}%`);
+  }
+  if (where.nameILike !== undefined) {
+    strings.push(` AND ${tableName}"name" ILIKE `);
+    values.push(`%${where.nameILike}%`);
   }
   if (where.nameNotLike !== undefined) {
     strings.push(` AND ${tableName}"name" NOT LIKE `);
