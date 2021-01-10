@@ -87,6 +87,7 @@ const queueQueries = {
          name = ${COMPAS_RECURRING_JOB}
      AND "isComplete" IS FALSE
      AND data ->> 'name' = ${name}
+     ORDER BY "scheduledAt"
    `,
 
   /**
@@ -340,6 +341,13 @@ export async function addRecurringJobToQueue(
       priority,
       interval,
     );
+
+    if (existingJobs.length > 1) {
+      // Remove to many scheduled jobs
+      await queries.jobDelete(sql, {
+        idIn: existingJobs.slice(1).map((it) => it.id),
+      });
+    }
     return;
   }
 
