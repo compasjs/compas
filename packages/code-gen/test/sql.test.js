@@ -5,7 +5,6 @@ import {
   createTestPostgresDatabase,
   query,
 } from "@compas/store";
-import { queryPost } from "../../../generated/testing/sql/query-builder.js";
 
 mainTestFn(import.meta);
 
@@ -19,8 +18,8 @@ test("code-gen/e2e/sql", async (t) => {
     t.ok(!!sql);
 
     const result = await sql`
-        SELECT 1 + 2 AS sum
-      `;
+      SELECT 1 + 2 AS sum
+    `;
     t.equal(result[0].sum, 3);
   });
 
@@ -278,37 +277,39 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query builder calls", async () => {
-    await queryPost({
-      postages: {
-        images: {
-          file: {
-            group: {
-              postageImages: {},
-              children: {
-                file: {
-                  group: {
-                    parent: {},
+    await client
+      .queryPost({
+        postages: {
+          images: {
+            file: {
+              group: {
+                postageImages: {},
+                children: {
+                  file: {
+                    group: {
+                      parent: {},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      viaCategories: {
-        viaCategory: {
-          viaPosts: {
-            viaPost: {
-              viaWriter: {
-                viaPosts: {
-                  viaPostages: {},
+        viaCategories: {
+          viaCategory: {
+            viaPosts: {
+              viaPost: {
+                viaWriter: {
+                  viaPosts: {
+                    viaPostages: {},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).exec(sql);
+      })
+      .exec(sql);
   });
 
   t.test("traverse via queryUser", async (t) => {
