@@ -37,6 +37,12 @@ const objectKeys210116167 = new Set([
 ]);
 const objectKeys2008271825 = new Set(["key"]);
 const objectKeys347072999 = new Set(["key"]);
+const objectKeys281316554 = new Set([
+  "key",
+  "shortName",
+  "firstName",
+  "secondName",
+]);
 const objectKeys1664519436 = new Set(["phase"]);
 const objectKeys1287070944 = new Set([
   "isJSON",
@@ -1958,7 +1964,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "shortName"?: string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2030,6 +2036,11 @@ export function anonymousValidator17105276(
     `${propertyPath}.validator`,
     errors,
   );
+  result["shortName"] = anonymousValidator1443576836(
+    value["shortName"],
+    `${propertyPath}.shortName`,
+    errors,
+  );
   result["keys"] = anonymousValidator1529527338(
     value["keys"],
     `${propertyPath}.keys`,
@@ -2048,11 +2059,6 @@ export function anonymousValidator17105276(
   result["relations"] = anonymousValidator1064092154(
     value["relations"],
     `${propertyPath}.relations`,
-    errors,
-  );
-  result["shortName"] = anonymousValidator1443576836(
-    value["shortName"],
-    `${propertyPath}.shortName`,
     errors,
   );
   result["where"] = anonymousValidator1209434737(
@@ -3390,9 +3396,72 @@ export function anonymousValidator347072999(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|undefined}
+ * @returns {{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|undefined}
  */
-export function anonymousValidator1911141469(
+export function anonymousValidator281316554(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    errors.push({
+      key: `validator.${parentType}.undefined`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (typeof value !== "object") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys281316554.has(key)) {
+      errors.push({
+        key: `validator.${parentType}.strict`,
+        info: { propertyPath, extraKey: key },
+      });
+      return undefined;
+    }
+  }
+  if (value["key"] !== "duplicateShortName") {
+    const parentType = "string";
+    const oneOf = ["duplicateShortName"];
+    errors.push({
+      key: `validator.${parentType}.oneOf`,
+      info: { propertyPath: `${propertyPath}.key`, oneOf },
+    });
+  }
+  result["key"] = value["key"] ?? undefined;
+  result["shortName"] = anonymousValidator186795873(
+    value["shortName"],
+    `${propertyPath}.shortName`,
+    errors,
+  );
+  result["firstName"] = anonymousValidator186795873(
+    value["firstName"],
+    `${propertyPath}.firstName`,
+    errors,
+  );
+  result["secondName"] = anonymousValidator186795873(
+    value["secondName"],
+    `${propertyPath}.secondName`,
+    errors,
+  );
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|undefined}
+ */
+export function anonymousValidator1794513959(
   value,
   propertyPath,
   errors = [],
@@ -3438,6 +3507,12 @@ export function anonymousValidator1911141469(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  result = anonymousValidator281316554(value, propertyPath, subErrors);
+  if (subErrors.length === errorCount) {
+    return result;
+  }
+  subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+  errorCount = subErrors.length;
   errors.push({
     key: `validator.${parentType}.type`,
     info: { propertyPath, errors: subErrors },
@@ -3449,9 +3524,9 @@ export function anonymousValidator1911141469(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", })[]|undefined}
+ * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, })[]|undefined}
  */
-export function anonymousValidator638492325(
+export function anonymousValidator1228387163(
   value,
   propertyPath,
   errors = [],
@@ -3473,7 +3548,7 @@ export function anonymousValidator638492325(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1911141469(
+    result[i] = anonymousValidator1794513959(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3486,7 +3561,7 @@ export function anonymousValidator638492325(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, })[], }|undefined}
  */
 export function anonymousValidator980814292(
   value,
@@ -3552,7 +3627,7 @@ export function anonymousValidator980814292(
     `${propertyPath}.rootExports`,
     errors,
   );
-  result["errors"] = anonymousValidator638492325(
+  result["errors"] = anonymousValidator1228387163(
     value["errors"],
     `${propertyPath}.errors`,
     errors,

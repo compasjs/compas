@@ -186,8 +186,19 @@ export function applyTestingSqlStructure(app) {
       .enableQueries({ withSoftDeletes: true })
       .relations(
         T.manyToOne("writer", T.reference("sql", "user"), "posts"),
+
         T.oneToMany("categories", T.reference("sql", "postCategory")),
+        T.oneToMany("postages", T.reference("sql", "postage")),
       ),
+
+    T.object("postage")
+      .shortName("pst")
+      .docs("o.0")
+      .keys({
+        value: T.number(),
+      })
+      .enableQueries({ withSoftDeletes: true })
+      .relations(T.manyToOne("post", T.reference("sql", "post"), "postages")),
 
     // m-m join table
     T.object("postCategory")

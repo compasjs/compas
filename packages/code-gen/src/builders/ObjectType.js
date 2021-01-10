@@ -8,6 +8,7 @@ export class ObjectType extends TypeBuilder {
     validator: {
       strict: true,
     },
+    shortName: undefined,
   };
 
   build() {
@@ -55,6 +56,17 @@ export class ObjectType extends TypeBuilder {
   loose() {
     this.data.validator.strict = false;
 
+    return this;
+  }
+
+  /**
+   * Specify shortName used in the query builders
+   *
+   * @param {string} value
+   * @returns {ObjectType}
+   */
+  shortName(value) {
+    this.data.shortName = value;
     return this;
   }
 
