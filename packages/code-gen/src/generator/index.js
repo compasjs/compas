@@ -108,6 +108,8 @@ export async function generate(logger, options, structure) {
     exitOnErrorsOrReturn(context);
 
     addShortNamesToQueryEnabledObjects(context);
+    exitOnErrorsOrReturn(context);
+
     generateSqlStructure(context);
 
     createWhereTypes(context);

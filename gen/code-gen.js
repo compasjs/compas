@@ -73,6 +73,12 @@ export function applyCodeGenStructure(app) {
           {
             key: "sqlThrowingValidators",
           },
+          {
+            key: "duplicateShortName",
+            shortName: T.string(),
+            firstName: T.string(),
+            secondName: T.string(),
+          },
         ),
       ],
     }),
@@ -220,6 +226,7 @@ function getTypes(T) {
   const objectType = T.object("objectType").keys({
     type: "object",
     ...typeBase,
+    shortName: T.string().optional(),
     validator: T.object()
       .keys({
         strict: T.bool().default(true),
@@ -239,7 +246,6 @@ function getTypes(T) {
     relations: T.array()
       .values(T.reference("codeGen", "relationType"))
       .default("[]"),
-    shortName: T.string().optional(),
     where: T.object()
       .keys({
         type: T.string(),

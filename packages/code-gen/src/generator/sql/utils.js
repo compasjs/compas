@@ -6,11 +6,26 @@ import { isNil } from "@compas/stdlib";
  * @param {CodeGenContext} context
  */
 export function addShortNamesToQueryEnabledObjects(context) {
+  const knownShortNames = {};
+
   for (const type of getQueryEnabledObjects(context)) {
-    type.shortName = type.name
-      .split(/(?=[A-Z])/)
-      .map((it) => (it[0] || "").toLowerCase())
-      .join("");
+    if (!type.shortName) {
+      type.shortName = type.name
+        .split(/(?=[A-Z])/)
+        .map((it) => (it[0] || "").toLowerCase())
+        .join("");
+    }
+
+    if (knownShortNames[type.shortName]) {
+      context.errors.push({
+        key: "duplicateShortName",
+        shortName: type.shortName,
+        firstName: type.name,
+        secondName: knownShortNames[type.shortName],
+      });
+    } else {
+      knownShortNames[type.shortName] = type.name;
+    }
   }
 }
 

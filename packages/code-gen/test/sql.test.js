@@ -197,6 +197,24 @@ test("code-gen/e2e/sql", async (t) => {
     t.ok(dbUser);
   });
 
+  t.test("query same 'shortName' originally", async () => {
+    await client
+      .queryUser({
+        posts: {
+          postages: {},
+        },
+      })
+      .exec(sql);
+
+    await client
+      .queryPostage({
+        post: {
+          writer: {},
+        },
+      })
+      .exec(sql);
+  });
+
   t.test("user QueryBuilder", async (t) => {
     const [dbUser] = await client
       .queryUser({

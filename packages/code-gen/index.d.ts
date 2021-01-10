@@ -578,6 +578,11 @@ export class ObjectType extends TypeBuilder {
   loose(): this;
 
   /**
+   * Specify shortName used in the query builders
+   */
+  shortName(value: string): this;
+
+  /**
    * Generate sql queries for this object
    * Possibly adding createdAt and updatedAt fields.
    * When withSoftDeletes is true, it automatically enables withDates.
