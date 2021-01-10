@@ -1687,9 +1687,9 @@ export function anonymousValidator1064092154(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", }|undefined}
+ * @returns {{"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", }|undefined}
  */
-export function anonymousValidator1648134272(
+export function anonymousValidator1861729288(
   value,
   propertyPath,
   errors = [],
@@ -1731,6 +1731,7 @@ export function anonymousValidator1648134272(
     value["variant"] !== "isNotNull" &&
     value["variant"] !== "includeNotNull" &&
     value["variant"] !== "like" &&
+    value["variant"] !== "iLike" &&
     value["variant"] !== "notLike"
   ) {
     const parentType = "string";
@@ -1745,6 +1746,7 @@ export function anonymousValidator1648134272(
       "isNotNull",
       "includeNotNull",
       "like",
+      "iLike",
       "notLike",
     ];
     errors.push({
@@ -1760,9 +1762,9 @@ export function anonymousValidator1648134272(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[]|undefined}
+ * @returns {({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[]|undefined}
  */
-export function anonymousValidator1866088638(
+export function anonymousValidator237528902(
   value,
   propertyPath,
   errors = [],
@@ -1784,7 +1786,7 @@ export function anonymousValidator1866088638(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1648134272(
+    result[i] = anonymousValidator1861729288(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -1797,9 +1799,9 @@ export function anonymousValidator1866088638(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }|undefined}
+ * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }|undefined}
  */
-export function anonymousValidator1266661097(
+export function anonymousValidator1209434737(
   value,
   propertyPath,
   errors = [],
@@ -1821,7 +1823,7 @@ export function anonymousValidator1266661097(
     `${propertyPath}.type`,
     errors,
   );
-  result["fields"] = anonymousValidator1866088638(
+  result["fields"] = anonymousValidator237528902(
     value["fields"],
     `${propertyPath}.fields`,
     errors,
@@ -1956,7 +1958,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: {"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "shortName"?: string, "where"?: {"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "partial"?: {"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2053,7 +2055,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.shortName`,
     errors,
   );
-  result["where"] = anonymousValidator1266661097(
+  result["where"] = anonymousValidator1209434737(
     value["where"],
     `${propertyPath}.where`,
     errors,

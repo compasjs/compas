@@ -15,7 +15,7 @@ const whereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   date: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   uuid: ["equal", "notEqual", "in", "notIn", "like", "notLike"],
-  string: ["equal", "notEqual", "in", "notIn", "like", "notLike"],
+  string: ["equal", "notEqual", "in", "notIn", "like", "iLike", "notLike"],
   boolean: ["equal"],
 };
 
@@ -253,6 +253,12 @@ export function getWherePartial(context, type) {
         case "like":
           str += `
             strings.push(\` AND $\{tableName}"${field.key}" LIKE \`);
+            values.push(\`%$\{where.${field.name}}%\`);
+          `;
+          break;
+        case "iLike":
+          str += `
+            strings.push(\` AND $\{tableName}"${field.key}" ILIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
           break;

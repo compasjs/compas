@@ -259,6 +259,7 @@ function getTypes(T) {
                 "isNotNull",
                 "includeNotNull",
                 "like",
+                "iLike",
                 "notLike",
               ),
             })
