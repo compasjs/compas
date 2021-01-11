@@ -75,9 +75,9 @@ export const generateSettings = {
   },
   bench: {
     outputDirectory: "./generated/testing/bench",
-    enabledGroups: ["bench"],
+    enabledGroups: ["bench", "githubApi"],
     isNodeServer: true,
-    enabledGenerators: ["validator", "type"],
+    enabledGenerators: ["validator", "type", "router"],
   },
   server: {
     outputDirectory: "./generated/testing/server",
