@@ -197,9 +197,9 @@ function transformQueryOrParams(context, inputList, compasStruct, filter) {
     }
 
     obj[input.name] = {
+      ...convertSchema(context, input.schema),
       isOptional: !input.required,
       docString: input.description || "",
-      ...convertSchema(context, input.schema),
     };
   }
 
@@ -265,7 +265,7 @@ function transformResponse(context, input, compasStruct) {
  */
 function resolveReferenceAndConvert(context, refString) {
   const path = refString.split("/").slice(1);
-  const name = path[path.length - 1];
+  const name = transformTypeName(path[path.length - 1]);
 
   let currentItem = context.data;
   while (path.length > 0) {
@@ -477,6 +477,10 @@ function convertSchema(context, schema) {
     result.oneOf = [...schema.enum];
   }
 
+  if (!isNil(schema.default)) {
+    result.defaultValue = JSON.stringify(schema.default);
+  }
+
   if (!isNil(schema.$ref)) {
     result.type = "reference";
     assignBaseData();
@@ -488,7 +492,9 @@ function convertSchema(context, schema) {
     } else {
       result.reference = {
         group: context.defaultGroup,
-        name: lowerCaseFirst(schema.$ref.split("/").slice(-1)[0]),
+        name: lowerCaseFirst(
+          transformTypeName(schema.$ref.split("/").slice(-1)[0]),
+        ),
       };
 
       result.reference.uniqueName =
@@ -500,4 +506,17 @@ function convertSchema(context, schema) {
   }
 
   return result;
+}
+
+/**
+ * @param {string} name
+ * @returns {string}
+ */
+function transformTypeName(name) {
+  const parts = name.split(/[-_]/);
+  for (let i = 1; i < parts.length; ++i) {
+    parts[i] = upperCaseFirst(parts[i]);
+  }
+
+  return parts.join("");
 }

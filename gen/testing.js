@@ -1,5 +1,15 @@
-import { TypeCreator } from "@compas/code-gen";
+import { readFileSync } from "fs";
+import { loadFromOpenAPISpec, TypeCreator } from "@compas/code-gen";
+import { pathJoin } from "../packages/stdlib/index.js";
 
+const githubApiFixture = pathJoin(
+  process.cwd(),
+  "__fixtures__/code-gen/githubapi.json",
+);
+
+/**
+ * @param {App} app
+ */
 export function applyBenchStructure(app) {
   const T = new TypeCreator("bench");
 
@@ -14,6 +24,13 @@ export function applyBenchStructure(app) {
       bar: 5,
       nest: [T.reference("bench", "simple")],
     }),
+  );
+
+  app.extend(
+    loadFromOpenAPISpec(
+      "githubApi",
+      JSON.parse(readFileSync(githubApiFixture, "utf-8")),
+    ),
   );
 }
 
