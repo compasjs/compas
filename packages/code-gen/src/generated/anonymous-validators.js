@@ -2431,7 +2431,7 @@ export function anonymousValidator708039854(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }|undefined}
+ * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: string|boolean|number, "uniqueName"?: string, "group"?: string, "name"?: string, "sql"?: {"primary": boolean, "searchable": boolean, }, "validator": {}, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: CodeGenType, "params"?: CodeGenType, "body"?: CodeGenType, "files"?: CodeGenType, "response"?: CodeGenType, }|undefined}
  */
 export function anonymousValidator1390215584(
   value,
@@ -2519,6 +2519,11 @@ export function anonymousValidator1390215584(
     });
   }
   result["method"] = value["method"] ?? undefined;
+  result["idempotent"] = anonymousValidator1174857441(
+    value["idempotent"],
+    `${propertyPath}.idempotent`,
+    errors,
+  );
   result["path"] = anonymousValidator186795873(
     value["path"],
     `${propertyPath}.path`,

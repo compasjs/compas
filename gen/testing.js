@@ -118,6 +118,15 @@ export function applyTestingServerStructure(app) {
       })
       .tags("tag"),
 
+    R.post("/search", "search")
+      .idempotent()
+      .body({
+        foo: T.bool(),
+      })
+      .response({
+        bar: T.bool(),
+      }),
+
     R.post("/", "create")
       .query({
         alwaysTrue: T.bool().optional(),

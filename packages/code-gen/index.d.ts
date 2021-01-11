@@ -382,6 +382,13 @@ export class RouteBuilder extends TypeBuilder {
   tags(...value: string[]): this;
 
   /**
+   * Guarantee to the client that this call does not have any side-effects.
+   * Can only be used for "POST" requests. Doesn't do anything to the generated router,
+   * but some clients may use it to their advantage like the react-query generator.
+   */
+  idempotent(): this;
+
+  /**
    * Type of accepted query parameters
    */
   query(builder: TypeBuilderLike): this;
@@ -418,32 +425,32 @@ export class RouteCreator {
   /**
    * GET route
    */
-  get(path?: string, name?: string);
+  get(path?: string, name?: string): RouteBuilder;
 
   /**
    * POST route
    */
-  post(path?: string, name?: string);
+  post(path?: string, name?: string): RouteBuilder;
 
   /**
    * PUT route
    */
-  put(path?: string, name?: string);
+  put(path?: string, name?: string): RouteBuilder;
 
   /**
    * PATCH route
    */
-  patch(path?: string, name?: string);
+  patch(path?: string, name?: string): RouteBuilder;
 
   /**
    * DELETE route
    */
-  delete(path?: string, name?: string);
+  delete(path?: string, name?: string): RouteBuilder;
 
   /**
    * HEAD route
    */
-  head(path?: string, name?: string);
+  head(path?: string, name?: string): RouteBuilder;
 
   /**
    * Default tags for all routes created by this RouteCreator.

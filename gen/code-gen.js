@@ -348,6 +348,7 @@ function getTypes(T) {
     type: "route",
     ...typeBase,
     method: T.string().oneOf("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"),
+    idempotent: T.bool().default(false),
     path: T.string(),
     tags: [T.string()],
     query: T.reference("codeGen", "type").optional(),
