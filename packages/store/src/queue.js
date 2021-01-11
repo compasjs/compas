@@ -1,5 +1,5 @@
 import { newLogger } from "@compas/insight";
-import { environment } from "@compas/stdlib";
+import { AppError, environment } from "@compas/stdlib";
 import { queries } from "./generated.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
@@ -272,11 +272,7 @@ export class JobQueueWorker {
         let error = undefined;
 
         try {
-          // TODO: Remove old recurring job name
-          if (
-            jobData.name === COMPAS_RECURRING_JOB ||
-            jobData.name === "lbu.job.recurring"
-          ) {
+          if (jobData.name === COMPAS_RECURRING_JOB) {
             await handleCompasRecurring(sql, jobData);
           } else {
             await this.jobHandler(sql, jobData);
@@ -295,7 +291,7 @@ export class JobQueueWorker {
         }
       })
       .catch((e) => {
-        this.logger.error(e);
+        this.logger.error(AppError.format(e));
       });
   }
 }
