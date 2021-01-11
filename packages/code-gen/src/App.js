@@ -1,5 +1,5 @@
 import { newLogger, printProcessMemoryUsage } from "@compas/insight";
-import { AppError, isNil } from "@compas/stdlib";
+import { AppError, isNil, merge } from "@compas/stdlib";
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import {
@@ -160,17 +160,18 @@ export class App {
    */
   addRaw(obj) {
     if (!isNil(validateCodeGenType)) {
+      // Validators present, use the result of them.
       const { data, errors } = validateCodeGenType(obj);
       if (errors) {
         this.logger.error(AppError.format(errors[0]));
         process.exit(1);
       }
 
-      this.addToData(data);
-    } else {
-      // No validators present, most likely in development environment of compas
-      this.addToData(obj);
+      // Make a deep copy without null prototypes
+      obj = {};
+      merge(obj, data);
     }
+    this.addToData(obj);
 
     return this;
   }
@@ -181,23 +182,21 @@ export class App {
    */
   extend(data) {
     if (!isNil(validateCodeGenType)) {
+      // Validators present, use the result of them.
       const { data: value, errors } = validateCodeGenStructure(data);
       if (errors) {
         this.logger.error(AppError.format(errors[0]));
         process.exit(1);
       }
 
-      for (const groupData of Object.values(value)) {
-        for (const item of Object.values(groupData)) {
-          this.addToData(item);
-        }
-      }
-    } else {
-      // No validators present, most likely in development environment of compas
-      for (const groupData of Object.values(data)) {
-        for (const item of Object.values(groupData)) {
-          this.addToData(item);
-        }
+      // Make a deep copy without null prototypes
+      data = {};
+      merge(data, value);
+    }
+
+    for (const groupData of Object.values(data)) {
+      for (const item of Object.values(groupData)) {
+        this.addToData(item);
       }
     }
 
