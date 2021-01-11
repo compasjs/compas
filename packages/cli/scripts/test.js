@@ -77,16 +77,13 @@ async function main(logger) {
       process.exit(exitCode);
     }
 
-    // Only keep success results
+    // Only keep results needed to print out a success response
     results.push(
       ...testResult.map((it) => ({
         isFailed: it.isFailed,
         assertions: it.assertions,
       })),
     );
-
-    // Kill workers
-    await Promise.all(workers.map((it) => it.terminate()));
   }
 
   const exitCode = printTestResultsFromWorkers(results);
@@ -127,18 +124,27 @@ async function runTests(workers, files) {
     });
   }
 
-  // Wait till all workers have exited. They should do this once they have provided the
-  // results.
-  const pArr = [];
-  for (const worker of workers) {
-    pArr.push(
-      new Promise((r) => {
-        worker.once("exit", r);
-      }),
-    );
-  }
+  let resolve = undefined;
+  let timeout = undefined;
+  const deferredPromise = new Promise((r) => {
+    resolve = r;
+  });
 
-  await Promise.all(pArr);
+  const checkResults = () => {
+    clearTimeout(timeout);
+    if (results.length === workers.length) {
+      resolve();
+      return;
+    }
+
+    timeout = setTimeout(() => {
+      checkResults();
+    }, 10);
+  };
+
+  checkResults();
+  await deferredPromise;
+
   return results;
 }
 

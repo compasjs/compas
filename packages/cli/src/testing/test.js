@@ -30,7 +30,13 @@ async function main(logger) {
   await loadTestConfig();
   await globalSetup();
 
-  parentPort.on("message", dispatchMessage);
+  const teardown = async () => {
+    await globalTeardown();
+    process.exit(0);
+  };
+
+  const messageDispatcher = createMessageDispatcher(logger, teardown);
+  parentPort.on("message", messageDispatcher);
   // Start requesting files as soon as possible
   parentPort.postMessage({ type: "request_file" });
 }
@@ -41,36 +47,38 @@ async function main(logger) {
  * does not have any files left, it will request a result. Once the worker provided the
  * results, it can safely exit.
  *
- * @param {*} message
+ * @param {Logger} logger
+ * @param {function(): void} callback
+ * @returns {function(message: *): void}
  */
-function dispatchMessage(message) {
-  if (message.type === "request_result") {
-    markTestFailuresRecursively(state);
+function createMessageDispatcher(logger, callback) {
+  return function (message) {
+    if (message.type === "request_result") {
+      markTestFailuresRecursively(state);
 
-    // Provide a summary of the results
-    parentPort.postMessage({
-      type: "provide_result",
-      threadId,
-      isFailed: state.hasFailure,
-      assertions: sumAssertions(state),
-      failedResult: getFailedResult(),
-    });
+      // Provide a summary of the results
+      parentPort.postMessage({
+        type: "provide_result",
+        threadId,
+        isFailed: state.hasFailure,
+        assertions: sumAssertions(state),
+        failedResult: getFailedResult(),
+      });
 
-    globalTeardown().then(() => {
-      process.exit(0);
-    });
-  } else if (message.type === "provide_file") {
-    const idx = state.children.length;
-    import(message.file).then(async () => {
-      if (state.children[idx]) {
-        // Handle multiple added suites for a single import
-        for (let i = idx; i < state.children.length; ++i) {
-          await runTestsRecursively(state.children[i]);
+      callback();
+    } else if (message.type === "provide_file") {
+      const idx = state.children.length;
+      import(message.file).then(async () => {
+        if (state.children[idx]) {
+          // Handle multiple added suites for a single import
+          for (let i = idx; i < state.children.length; ++i) {
+            await runTestsRecursively(state.children[i]);
+          }
         }
-      }
-      parentPort.postMessage({ type: "request_file" });
-    });
-  }
+        parentPort.postMessage({ type: "request_file" });
+      });
+    }
+  };
 }
 
 /**
