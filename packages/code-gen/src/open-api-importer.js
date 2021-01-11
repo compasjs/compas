@@ -197,9 +197,9 @@ function transformQueryOrParams(context, inputList, compasStruct, filter) {
     }
 
     obj[input.name] = {
+      ...convertSchema(context, input.schema),
       isOptional: !input.required,
       docString: input.description || "",
-      ...convertSchema(context, input.schema),
     };
   }
 
@@ -475,6 +475,10 @@ function convertSchema(context, schema) {
     (schema.type === "string" || schema.type === "number")
   ) {
     result.oneOf = [...schema.enum];
+  }
+
+  if (!isNil(schema.default)) {
+    result.defaultValue = JSON.stringify(schema.default);
   }
 
   if (!isNil(schema.$ref)) {
