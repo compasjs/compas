@@ -10,6 +10,7 @@ export class RouteBuilder extends TypeBuilder {
     this.data.method = method;
     this.data.path = path;
     this.data.tags = [];
+    this.data.idempotent = false;
 
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
@@ -26,6 +27,22 @@ export class RouteBuilder extends TypeBuilder {
     for (const v of values) {
       this.data.tags.push(lowerCaseFirst(v));
     }
+
+    return this;
+  }
+
+  /**
+   * Guarantee to the client that this call does not have any side-effects.
+   * Can only be used for "POST" requests. Doesn't do anything to the generated router,
+   * but some clients may use it to their advantage like the react-query generator.
+   *
+   * @returns {RouteBuilder}
+   */
+  idempotent() {
+    if (this.data.method !== "POST") {
+      throw new Error(`Can only set idempotent on POST routes`);
+    }
+    this.data.idempotent = true;
 
     return this;
   }

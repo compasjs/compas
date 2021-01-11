@@ -2,12 +2,13 @@
 {{ const funcName = "use" + upperCaseFirst(item.uniqueName); }}
 {{ const responseType = item.response ? `T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient" })}` : any; }}
 
-{{ if (item.method === "GET") { }}
+{{ if (item.method === "GET" || item.idempotent) { }}
 
 ((newline))
 /**
  * {{= funcName }}
   {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+  {{ if (item.idempotent) { }}* Note that a custom options.enabled may be beneficial for your use case{{ } }}
  * Docs: {{= item.docString.replace(/\n/g, "\n  * ") }}
  */
 export function {{= funcName }}(
@@ -16,6 +17,9 @@ params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { u
 {{ } }}
 {{ if (item.query) { }}
 query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+{{ } }}
+{{ if (item.body) { }}
+body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
 options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
 ): UseQueryResult<{{= responseType }}, AppErrorResponse> {
@@ -37,6 +41,13 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
         {{ } }}
       {{ } }}
     {{ } }}
+    {{ if (item.body) { }}
+      {{ for (const key of Object.keys(item.body?.keys ?? {})) { }}
+        {{ if (!item.body.keys[key].isOptional) { }}
+          && !!body.{{= key }}
+        {{ } }}
+      {{ } }}
+    {{ } }}
   ));
 
   return useQuery([
@@ -48,11 +59,15 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
     {{ if (item.query) { }}
     query,
     {{ } }}
+    {{ if (item.body) { }}
+    body,
+    {{ } }}
     ],
     () => {
       const promise: CancellablePromise<{{= responseType }}> = {{= item.group }}.{{= item.name }}(
         {{= item.params ? "params, " : ""}}
         {{= item.query ? "query, " : "" }}
+        {{= item.body ? "body, " : "" }}
         { cancelToken: options?.cancelToken?.token },
       );
 
