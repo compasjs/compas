@@ -8,6 +8,24 @@ order: 2
 
 # CHANGELOG
 
+### [v0.0.109](https://github.com/compasjs/compas/releases/tag/v0.0.109)
+
+- build(deps-dev): bump react-query from 3.5.11 to 3.5.12
+  ([#608](https://github.com/compasjs/compas/pull/608))
+- chore: fix linting on CI
+- chore: various code-gen OpenAPI fixes + bench using Github API spec
+  ([#609](https://github.com/compasjs/compas/pull/609))
+- cli: harden test runner by waiting till all results are collected from the
+  workers
+- code-gen: add support for idempotent routes
+  ([#607](https://github.com/compasjs/compas/pull/607))
+- store: format caught job queue errors
+- bench: create benchmark against the Github v3 API
+- code-gen: transform named types in the OpenAPI importer
+- code-gen: support default and optional path and query params in openAPI
+  converter
+- code-gen: deep copy validation result on App extend
+
 ### [v0.0.108](https://github.com/compasjs/compas/releases/tag/v0.0.108)
 
 - build(deps): bump @types/minio from 7.0.6 to 7.0.7
