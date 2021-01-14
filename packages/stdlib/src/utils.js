@@ -68,7 +68,7 @@ export function mainFn(meta, cb) {
   process.on("unhandledRejection", (reason, promise) =>
     unhandled({
       reason: AppError.format(reason),
-      promise: promise,
+      promise,
     }),
   );
 

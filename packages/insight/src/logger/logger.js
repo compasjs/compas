@@ -7,6 +7,7 @@ let environment = undefined;
  * @returns {Logger}
  */
 export function newLogger(options) {
+  // Make a copy of of env, process.env fetching is slow
   if (environment === undefined) {
     environment = JSON.parse(JSON.stringify(process.env));
   }
@@ -25,6 +26,7 @@ export function newLogger(options) {
     if (app) {
       context.application = app;
     }
+    // Stringify context once
     context = JSON.stringify(context);
   }
 

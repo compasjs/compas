@@ -24,7 +24,7 @@ const fileQueries = {
  * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
- * @param {StoreFileInsertPartial_Input & { id?: string }} props
+ * @param {StoreFileInsertPartial} props
  * @param {ReadStream|string} streamOrPath
  * @returns {Promise<StoreFile>}
  */
