@@ -8,6 +8,24 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.110](https://github.com/compasjs/compas/releases/tag/v0.0.110)
+
+- build(deps): bump @types/node from 14.14.20 to 14.14.21
+  ([#610](https://github.com/compasjs/compas/pull/610))
+- build(deps): bump chokidar from 3.5.0 to 3.5.1
+  ([#614](https://github.com/compasjs/compas/pull/614))
+- build(deps): bump eslint from 7.17.0 to 7.18.0
+  ([#613](https://github.com/compasjs/compas/pull/613))
+- build(deps-dev): bump react-query from 3.5.12 to 3.5.15
+  ([#612](https://github.com/compasjs/compas/pull/612) ,
+  [#615](https://github.com/compasjs/compas/pull/615))
+- chore: minor comment and type fixes
+- chore: update order of changelog and contributing
+- code-gen: add possible type results to the query builder functions
+  ([#618](https://github.com/compasjs/compas/pull/618))
+- code-gen: fix name clash for self referencing tables in the query-builder
+  ([#616](https://github.com/compasjs/compas/pull/616))
+
 ### [v0.0.109](https://github.com/compasjs/compas/releases/tag/v0.0.109)
 
 - build(deps-dev): bump react-query from 3.5.11 to 3.5.12
