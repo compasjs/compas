@@ -201,12 +201,32 @@ function queryBuilderForType(context, imports, type) {
       ${internalQueryBuilderForType(context, imports, type)}
 
       /**
+       * @typedef {${type.uniqueName}} QueryResult${type.uniqueName}
+       ${Object.entries(type.queryBuilder.relations).map(
+         ([
+           key,
+           {
+             otherSide,
+             relation: { subType },
+           },
+         ]) => {
+           if (subType === "oneToMany") {
+             return `* @property {QueryResult${otherSide.uniqueName}[]} [${key}]`;
+           }
+           return `* @property {QueryResult${otherSide.uniqueName}|string|number} [${key}]`;
+         },
+       )}
+       */
+
+      /**
        * Query Builder for ${type.name}
        * Note that nested limit and offset don't work yet.
        *
        * @param {${type.queryBuilder.type}} [builder={}]
        * @returns {{
-       *  exec: function(sql: Postgres): Promise<*[]>,
+       *  exec: function(sql: Postgres): Promise<QueryResult${
+         type.uniqueName
+       }[]>,
        *  execRaw: function(sql: Postgres): Promise<*[]>
        *  queryPart: QueryPart,
        * }}
@@ -219,14 +239,20 @@ function queryBuilderForType(context, imports, type) {
   }Builder");
 
          ${Object.entries(type.queryBuilder.relations).map(
-           ([key, { joinKey, subType }]) => {
+           ([
+             key,
+             {
+               joinKey,
+               relation: { subType },
+             },
+           ]) => {
              const coalescedValue =
                subType === "oneToMany"
                  ? `coalesce("${joinKey}"."result", '{}')`
                  : `"${joinKey}"."result"`;
              return `
             if (builder.${key}) {
-              joinedKeys.push("'" + (builder.${key}?.as ?? "${key}") + "'", '${coalescedValue}');
+              joinedKeys.push("'" + (builder.${key}?.as ?? "${key}") + "'", \`${coalescedValue}\`);
             }
           `;
            },
