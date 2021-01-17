@@ -1,10 +1,12 @@
+import crypto from "crypto";
 import { v4 } from "./vendor/uuid.js";
 
 /**
  * @function
  * @returns {string}
  */
-export const uuid = v4;
+export const uuid =
+  typeof crypto.randomUUID === "function" ? crypto.randomUUID : v4;
 
 /**
  * @param {*} value
