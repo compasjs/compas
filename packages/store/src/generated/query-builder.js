@@ -140,11 +140,16 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
+ * @typedef {StoreFile} QueryResultStoreFile
+ * @property {QueryResultStoreFileGroup|string|number} [group]
+ * @property {QueryResultStoreFileGroupView|string|number} [groupView]
+ */
+/**
  * Query Builder for file
  * Note that nested limit and offset don't work yet.
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<*[]>,
+ *  exec: function(sql: Postgres): Promise<QueryResultStoreFile[]>,
  *  execRaw: function(sql: Postgres): Promise<*[]>
  *  queryPart: QueryPart,
  * }}
@@ -153,12 +158,12 @@ export function queryFile(builder = {}) {
   const joinedKeys = [];
   validateStoreFileQueryBuilder(builder, "$.fileBuilder");
   if (builder.group) {
-    joinedKeys.push(`'${builder.group?.as ?? "group"}'`, '"ljl_0"."result"');
+    joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"ljl_0"."result"`);
   }
   if (builder.groupView) {
     joinedKeys.push(
       `'${builder.groupView?.as ?? "groupView"}'`,
-      '"ljl_1"."result"',
+      `"ljl_1"."result"`,
     );
   }
   const qb = query`
@@ -518,11 +523,17 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
 `;
 }
 /**
+ * @typedef {StoreFileGroup} QueryResultStoreFileGroup
+ * @property {QueryResultStoreFile|string|number} [file]
+ * @property {QueryResultStoreFileGroup|string|number} [parent]
+ * @property {QueryResultStoreFileGroup[]} [children]
+ */
+/**
  * Query Builder for fileGroup
  * Note that nested limit and offset don't work yet.
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<*[]>,
+ *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroup[]>,
  *  execRaw: function(sql: Postgres): Promise<*[]>
  *  queryPart: QueryPart,
  * }}
@@ -531,15 +542,15 @@ export function queryFileGroup(builder = {}) {
   const joinedKeys = [];
   validateStoreFileGroupQueryBuilder(builder, "$.fileGroupBuilder");
   if (builder.file) {
-    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_2"."result"');
+    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"ljl_2"."result"`);
   }
   if (builder.parent) {
-    joinedKeys.push(`'${builder.parent?.as ?? "parent"}'`, '"ljl_3"."result"');
+    joinedKeys.push(`'${builder.parent?.as ?? "parent"}'`, `"ljl_3"."result"`);
   }
   if (builder.children) {
     joinedKeys.push(
       `'${builder.children?.as ?? "children"}'`,
-      '"ljl_4"."result"',
+      `coalesce("ljl_4"."result", '{}')`,
     );
   }
   const qb = query`
@@ -911,11 +922,17 @@ WHERE ${fileGroupViewWhere(builder.where, "fgv.", {
 `;
 }
 /**
+ * @typedef {StoreFileGroupView} QueryResultStoreFileGroupView
+ * @property {QueryResultStoreFile|string|number} [file]
+ * @property {QueryResultStoreFileGroupView|string|number} [parent]
+ * @property {QueryResultStoreFileGroupView[]} [children]
+ */
+/**
  * Query Builder for fileGroupView
  * Note that nested limit and offset don't work yet.
  * @param {StoreFileGroupViewQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<*[]>,
+ *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroupView[]>,
  *  execRaw: function(sql: Postgres): Promise<*[]>
  *  queryPart: QueryPart,
  * }}
@@ -924,15 +941,15 @@ export function queryFileGroupView(builder = {}) {
   const joinedKeys = [];
   validateStoreFileGroupViewQueryBuilder(builder, "$.fileGroupViewBuilder");
   if (builder.file) {
-    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, '"ljl_5"."result"');
+    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"ljl_5"."result"`);
   }
   if (builder.parent) {
-    joinedKeys.push(`'${builder.parent?.as ?? "parent"}'`, '"ljl_6"."result"');
+    joinedKeys.push(`'${builder.parent?.as ?? "parent"}'`, `"ljl_6"."result"`);
   }
   if (builder.children) {
     joinedKeys.push(
       `'${builder.children?.as ?? "children"}'`,
-      '"ljl_7"."result"',
+      `coalesce("ljl_7"."result", '{}')`,
     );
   }
   const qb = query`
@@ -975,11 +992,14 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
+ * @typedef {StoreJob} QueryResultStoreJob
+ */
+/**
  * Query Builder for job
  * Note that nested limit and offset don't work yet.
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<*[]>,
+ *  exec: function(sql: Postgres): Promise<QueryResultStoreJob[]>,
  *  execRaw: function(sql: Postgres): Promise<*[]>
  *  queryPart: QueryPart,
  * }}
@@ -1029,11 +1049,14 @@ WHERE ${sessionWhere(builder.where, "s.", {
 `;
 }
 /**
+ * @typedef {StoreSession} QueryResultStoreSession
+ */
+/**
  * Query Builder for session
  * Note that nested limit and offset don't work yet.
  * @param {StoreSessionQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<*[]>,
+ *  exec: function(sql: Postgres): Promise<QueryResultStoreSession[]>,
  *  execRaw: function(sql: Postgres): Promise<*[]>
  *  queryPart: QueryPart,
  * }}
