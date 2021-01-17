@@ -39,11 +39,11 @@ export function generateQueryBuilders(context) {
   }
 
   const contents = js`
-    ${imports.print()}
+      ${imports.print()}
 
-    ${builderPartials}
-    ${transformPartials}
-  `;
+      ${builderPartials}
+      ${transformPartials}
+   `;
 
   context.rootExports.push(
     `export { ${names.join(", ")} } from "./query-builder${
@@ -67,8 +67,8 @@ export function createQueryBuilderTypes(context) {
 
   // Short loop to setup the types
   for (const type of getQueryEnabledObjects(context)) {
-    // We use quick hacks with the AnyType, to use reuse the Where and QueryBuilder types.
-    // This is necessary, since we don't add these types to the structure.
+    // We use quick hacks with the AnyType, to use reuse the Where and QueryBuilder
+    // types. This is necessary, since we don't add these types to the structure.
 
     const queryBuilderType = new ObjectType(
       type.group,
@@ -192,14 +192,100 @@ export function createQueryBuilderTypes(context) {
  * @param {CodeGenObjectType} type
  */
 function queryBuilderForType(context, imports, type) {
-  const nestedJoinPartials = [];
-  const traverseJoinPartials = [];
-  const { key: typePrimaryKey } = getPrimaryKeyWithType(type);
-
   imports.destructureImport(
     `validate${type.uniqueName}QueryBuilder`,
     `./validators${context.importExtension}`,
   );
+
+  return js`
+      ${internalQueryBuilderForType(context, imports, type)}
+
+      /**
+       * Query Builder for ${type.name}
+       * Note that nested limit and offset don't work yet.
+       *
+       * @param {${type.queryBuilder.type}} [builder={}]
+       * @returns {{
+       *  exec: function(sql: Postgres): Promise<*[]>,
+       *  execRaw: function(sql: Postgres): Promise<*[]>
+       *  queryPart: QueryPart,
+       * }}
+       */
+      export function query${upperCaseFirst(type.name)}(builder = {}) {
+         const joinedKeys = [];
+
+         validate${type.uniqueName}QueryBuilder(builder, "$.${
+    type.name
+  }Builder");
+
+         ${Object.entries(type.queryBuilder.relations).map(
+           ([key, { joinKey, subType }]) => {
+             const coalescedValue =
+               subType === "oneToMany"
+                 ? `coalesce("${joinKey}"."result", '{}')`
+                 : `"${joinKey}"."result"`;
+             return `
+            if (builder.${key}) {
+              joinedKeys.push("'" + (builder.${key}?.as ?? "${key}") + "'", '${coalescedValue}');
+            }
+          `;
+           },
+         )}
+
+         const qb = query\`
+        SELECT to_jsonb(${type.shortName}.*) || jsonb_build_object($\{query(
+            [ joinedKeys.join(",") ])}) as "result"
+         $\{internalQuery${upperCaseFirst(type.name)}(builder)}
+         ORDER BY $\{${type.name}OrderBy()}
+        \`;
+
+         if (!isNil(builder.offset)) {
+            qb.append(query\`OFFSET $\{builder.offset}\`);
+         }
+         if (!isNil(builder.limit)) {
+            qb.append(query\`FETCH NEXT $\{builder.limit} ROWS ONLY\`);
+         }
+
+         return {
+            execRaw: (sql) => qb.exec(sql), exec: (sql) => {
+               return qb.exec(sql).then(result => {
+                  transform${upperCaseFirst(type.name)}(result, builder);
+                  return result;
+               });
+            }, get queryPart() {
+               return qb;
+            }
+         };
+      }
+   `;
+}
+
+/**
+ * Create an internal query builder for the specified type
+ * Handling all of the following:
+ *    - Nested joins
+ *    - Query traversal 'via'-quries
+ *    - Self referencing tables, by generating the same function with a different
+ * shortName
+ *    - limit and offset
+ *
+ * Self referencing works now based on name shadowing
+ *
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ * @param {string} shortName
+ */
+function internalQueryBuilderForType(
+  context,
+  imports,
+  type,
+  shortName = type.shortName,
+) {
+  const nestedJoinPartials = [];
+  const traverseJoinPartials = [];
+  const { key: typePrimaryKey } = getPrimaryKeyWithType(type);
+  let secondInternalBuilder = ``;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
     const {
@@ -210,7 +296,30 @@ function queryBuilderForType(context, imports, type) {
       joinKey,
     } = type.queryBuilder.relations[relationKey];
 
-    const selectValue = `to_jsonb(${otherSide.shortName}.*) || jsonb_build_object($\{query(
+    // Determine shortName of other side of the relation
+    const otherShortName =
+      otherSide === type
+        ? shortName === type.shortName
+          ? `${type.shortName}2`
+          : otherSide.shortName
+        : otherSide.shortName;
+
+    if (
+      secondInternalBuilder === `` &&
+      otherSide === type &&
+      otherShortName !== type.shortName
+    ) {
+      // Generate another internal query builder with a different shortName
+      // This way we can hop back and forth in self referencing queries
+      secondInternalBuilder = internalQueryBuilderForType(
+        context,
+        imports,
+        type,
+        otherShortName,
+      );
+    }
+
+    const selectValue = `to_jsonb(${otherShortName}.*) || jsonb_build_object($\{query(
           [ joinedKeys.join(",") ])})`;
 
     const getLimitOffset = (isVia = false) => {
@@ -229,153 +338,101 @@ if (!isNil(builder.${key}.limit)) {
     let select = ``;
 
     if (relation.subType === "oneToMany") {
-      select = `array_remove(array_agg(${selectValue} ORDER BY $\{${otherSide.name}OrderBy()}), NULL) as "result"`;
-      groupBy = `GROUP BY ${type.shortName}."${typePrimaryKey}"`;
-      orderBy = `ORDER BY ${type.shortName}."${typePrimaryKey}"`;
+      select = `array_remove(array_agg(${selectValue} ORDER BY $\{${otherSide.name}OrderBy("${otherShortName}.")}), NULL) as "result"`;
+      groupBy = `GROUP BY ${shortName}."${typePrimaryKey}"`;
+      orderBy = `ORDER BY ${shortName}."${typePrimaryKey}"`;
     } else {
       select = `${selectValue} as "result"`;
-      orderBy = `ORDER BY $\{${otherSide.name}OrderBy()}`;
+      orderBy = `ORDER BY $\{${otherSide.name}OrderBy("${otherShortName}.")}`;
     }
 
     // Base with join keys
     const queryBuilderPart = js`
-      if (builder.${relationKey}) {
-        const joinedKeys = [];
-        ${getLimitOffset()}
+         if (builder.${relationKey}) {
+            const joinedKeys = [];
+            ${getLimitOffset()}
 
-        ${Object.entries(otherSide.queryBuilder.relations).map(
-          ([key, { joinKey: otherJoinKey, subType: otherSubType }]) => {
-            const coalescedValue =
-              otherSubType === "oneToMany"
-                ? `coalesce("${otherJoinKey}"."result", '{}')`
-                : `"${otherJoinKey}"."result"`;
-            return `
+            ${Object.entries(otherSide.queryBuilder.relations).map(
+              ([key, { joinKey: otherJoinKey, subType: otherSubType }]) => {
+                const coalescedValue =
+                  otherSubType === "oneToMany"
+                    ? `coalesce("${otherJoinKey}"."result", '{}')`
+                    : `"${otherJoinKey}"."result"`;
+                return `
             if (builder.${relationKey}.${key}) {
               joinedKeys.push("'" + (builder.${relationKey}.${key}?.as ?? "${key}") + "'", '${coalescedValue}');
             }
           `;
-          },
-        )}
+              },
+            )}
 
-        joinQb.append(query\`LEFT JOIN LATERAL (
+            joinQb.append(query\`LEFT JOIN LATERAL (
           SELECT ${select} 
-          $\{internalQuery${upperCaseFirst(
-            otherSide.name,
-          )}(builder.${relationKey},
-                                                             query\`AND ${
-                                                               otherSide.shortName
-                                                             }."${referencedKey}" = ${
-      type.shortName
-    }."${ownKey}"\`
-        )}
+          $\{internalQuery${
+            upperCaseFirst(otherSide.name) +
+            (otherSide === type && otherShortName !== type.shortName ? "2" : "")
+          }(
+               builder.${relationKey},
+               query\`AND ${otherShortName}."${referencedKey}" = ${shortName}."${ownKey}"\`
+            )}
         ${groupBy}
         ${orderBy}
       $\{offsetLimitQb} 
         ) as "${joinKey}" ON TRUE\`);
-      }
-    `;
+         }
+      `;
 
     const traverseJoinPart = js`
-      if (builder.via${upperCaseFirst(relationKey)}) {
-        builder.where = builder.where ?? {};
+         if (builder.via${upperCaseFirst(relationKey)}) {
+            builder.where = builder.where ?? {};
 
-        ${getLimitOffset(true)}
+            ${getLimitOffset(true)}
 
-        builder.where.${ownKey}In = query\`
-          SELECT DISTINCT ${otherSide.shortName}."${referencedKey}"
-           $\{internalQuery${upperCaseFirst(otherSide.name)}(
-          builder.via${upperCaseFirst(relationKey)})}
+            builder.where.${ownKey}In = query\`
+          SELECT DISTINCT ${otherShortName}."${referencedKey}"
+           $\{internalQuery${
+             upperCaseFirst(otherSide.name) +
+             (otherSide === type && otherShortName !== type.shortName
+               ? "2"
+               : "")
+           }(
+               builder.via${upperCaseFirst(relationKey)})}
            $\{offsetLimitQb} 
         \`;
-      }
-    `;
+         }
+      `;
 
     traverseJoinPartials.push(traverseJoinPart);
     nestedJoinPartials.push(queryBuilderPart);
   }
 
   return js`
+      ${secondInternalBuilder}
 
-    /**
-     * @param {${type.queryBuilder.type}|${
+      /**
+       * @param {${type.queryBuilder.type}|${
     type.queryBuilder.traverseType
   }} [builder={}]
-     * @param {QueryPart} wherePartial
-     * @returns {QueryPart}
-     */
-    function internalQuery${upperCaseFirst(
-      type.name,
-    )}(builder = {}, wherePartial) {
-      let joinQb = query\`\`;
+       * @param {QueryPart} wherePartial
+       * @returns {QueryPart}
+       */
+      function internalQuery${
+        upperCaseFirst(type.name) + (shortName !== type.shortName ? "2" : "")
+      }(builder = {}, wherePartial) {
+         let joinQb = query\`\`;
 
-      ${traverseJoinPartials}
-      ${nestedJoinPartials}
+         ${traverseJoinPartials}
+         ${nestedJoinPartials}
 
-      return query\`
-        FROM "${type.name}" ${type.shortName}
+         return query\`
+        FROM "${type.name}" ${shortName}
         $\{joinQb}
-        WHERE $\{${type.name}Where(builder.where, "${
-    type.shortName
-  }.", { skipValidator: true })} $\{wherePartial}
+        WHERE $\{${type.name}Where(
+            builder.where, "${shortName}.", { skipValidator: true })} $\{wherePartial}
         \`;
-    }
-
-    /**
-     * Query Builder for ${type.name}
-     * Note that nested limit and offset don't work yet.
-     *
-     * @param {${type.queryBuilder.type}} [builder={}]
-     * @returns {{
-     *  exec: function(sql: Postgres): Promise<*[]>,
-     *  execRaw: function(sql: Postgres): Promise<*[]>
-     *  queryPart: QueryPart,
-     * }}
-     */
-    export function query${upperCaseFirst(type.name)}(builder = {}) {
-      const joinedKeys = [];
-      
-      validate${type.uniqueName}QueryBuilder(builder, "$.${type.name}Builder");
-
-      ${Object.entries(type.queryBuilder.relations).map(
-        ([key, { joinKey, subType }]) => {
-          const coalescedValue =
-            subType === "oneToMany"
-              ? `coalesce("${joinKey}"."result", '{}')`
-              : `"${joinKey}"."result"`;
-          return `
-            if (builder.${key}) {
-              joinedKeys.push("'" + (builder.${key}?.as ?? "${key}") + "'", '${coalescedValue}');
-            }
-          `;
-        },
-      )}
-
-      const qb = query\`
-        SELECT to_jsonb(${type.shortName}.*) || jsonb_build_object($\{query(
-        [ joinedKeys.join(",") ])}) as "result"
-         $\{internalQuery${upperCaseFirst(type.name)}(builder)}
-         ORDER BY $\{${type.name}OrderBy()}
-        \`;
-
-      if (!isNil(builder.offset)) {
-        qb.append(query\`OFFSET $\{builder.offset}\`);
-      }
-      if (!isNil(builder.limit)) {
-        qb.append(query\`FETCH NEXT $\{builder.limit} ROWS ONLY\`);
       }
 
-      return {
-        execRaw: (sql) => qb.exec(sql), exec: (sql) => {
-          return qb.exec(sql).then(result => {
-            transform${upperCaseFirst(type.name)}(result, builder);
-            return result;
-          });
-        }, get queryPart() {
-          return qb;
-        }
-      };
-    }
-  `;
+   `;
 }
 
 /**
@@ -428,30 +485,30 @@ function transformerForType(context, imports, type) {
   }
 
   return js`
-    /**
-     * NOTE: At the moment only intended for internal use by the generated queries!
-     *
-     * Transform results from the query builder that adhere to the known structure
-     * of '${type.name}' and its relations.
-     *
-     *
-     * @param {*[]} values
-     * @param {${type.uniqueName}QueryBuilder=} builder
-     */
-    export function transform${upperCaseFirst(
-      type.name,
-    )}(values, builder = {}) {
-      for (let i = 0; i < values.length; ++i) {
-        let value = values[i];
-        if (isPlainObject(value.result) && Object.keys(value).length === 1) {
-          values[i] = value.result;
-          value = value.result;
-        }
+      /**
+       * NOTE: At the moment only intended for internal use by the generated queries!
+       *
+       * Transform results from the query builder that adhere to the known structure
+       * of '${type.name}' and its relations.
+       *
+       *
+       * @param {*[]} values
+       * @param {${type.uniqueName}QueryBuilder=} builder
+       */
+      export function transform${upperCaseFirst(
+        type.name,
+      )}(values, builder = {}) {
+         for (let i = 0; i < values.length; ++i) {
+            let value = values[i];
+            if (isPlainObject(value.result) && Object.keys(value).length === 1) {
+               values[i] = value.result;
+               value = value.result;
+            }
 
-        ${partials}
+            ${partials}
+         }
       }
-    }
-  `;
+   `;
 }
 
 /**
@@ -502,12 +559,12 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       );
       if (subPartials.length > 0) {
         partials.push(js`
-          if (Array.isArray(${path})) {
-            for (let idx${depth} = 0; idx${depth} < ${path}.length; idx${depth}++) {
-              ${subPartials}
-            }
-          }
-        `);
+               if (Array.isArray(${path})) {
+                  for (let idx${depth} = 0; idx${depth} < ${path}.length; idx${depth}++) {
+                     ${subPartials}
+                  }
+               }
+            `);
       }
       break;
     }
@@ -529,12 +586,12 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       );
       if (subPartials.length > 0) {
         partials.push(js`
-          if (isPlainObject(${path})) {
-            for (const key${depth} of Object.keys(${path})) {
-              ${subPartials}
-            }
-          }
-        `);
+               if (isPlainObject(${path})) {
+                  for (const key${depth} of Object.keys(${path})) {
+                     ${subPartials}
+                  }
+               }
+            `);
       }
       break;
     }
@@ -551,10 +608,10 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       }
       if (subPartials.length > 0) {
         partials.push(js`
-          if (isPlainObject(${path})) {
-            ${subPartials}
-          }
-        `);
+               if (isPlainObject(${path})) {
+                  ${subPartials}
+               }
+            `);
       }
 
       break;

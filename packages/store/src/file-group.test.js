@@ -127,6 +127,24 @@ test("store/file-group", async (t) => {
     t.ok(!isNil(result[0].children[0].file.id));
   });
 
+  t.test("query builder self referencing tables work", async (t) => {
+    const result = await queryFileGroup({
+      children: {
+        parent: {
+          children: {},
+        },
+      },
+      where: {
+        id: groups.top2,
+      },
+    }).exec(sql);
+
+    t.equal(result.length, 1);
+    t.equal(result[0].children.length, 3);
+    t.equal(result[0].children[0].parent.id, groups.top2);
+    t.equal(result[0].children[0].parent.children.length, 3);
+  });
+
   t.test("delete file should also delete fileGroup reference", async (t) => {
     const files = await queries.fileGroupSelect(sql, {
       parent: groups.top2,
@@ -165,7 +183,7 @@ test("store/file-group", async (t) => {
         viaFile: {},
       },
     }).exec(sql);
-    // const result = await traverseFile().getGroup().getParent({}).exec(sql);
+
     t.equal(result.length, 2);
   });
 
