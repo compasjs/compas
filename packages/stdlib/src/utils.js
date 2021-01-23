@@ -67,6 +67,7 @@ export function mainFn(meta, cb) {
 
   process.on("unhandledRejection", (reason, promise) =>
     unhandled({
+      type: "unhandledRejection",
       reason: AppError.format(reason),
       promise,
     }),
@@ -74,15 +75,25 @@ export function mainFn(meta, cb) {
 
   process.on("uncaughtExceptionMonitor", (error, origin) =>
     logger.error({
+      type: "uncaughtException",
       error: AppError.format(error),
       origin,
     }),
   );
 
-  process.on("warning", (warn) => logger.error(AppError.format(warn)));
+  process.on("warning", (warn) =>
+    logger.error({
+      type: "warning",
+      warning: AppError.format(warn),
+    }),
+  );
 
   Promise.resolve(cb(logger)).catch((e) => {
-    unhandled(AppError.format(e));
+    unhandled({
+      type: "error",
+      message: "Error caught from callback passed in `mainFn`",
+      error: AppError.format(e),
+    });
   });
 }
 
