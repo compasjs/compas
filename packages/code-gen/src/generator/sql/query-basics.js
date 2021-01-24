@@ -1,76 +1,41 @@
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
-import { importCreator } from "../utils.js";
-import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
+import { getPrimaryKeyWithType } from "./utils.js";
 
 /**
  * Generate the basic CRUD queries
  *
  * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ * @param {string[]} src
+ * @returns {string[]}
  */
-export function generateBaseQueries(context) {
-  const partials = [];
-
-  const imports = importCreator();
+export function generateBaseQueries(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
 
-  for (const type of getQueryEnabledObjects(context)) {
-    imports.destructureImport(
-      `${type.name}Fields`,
-      `./query-partials${context.importExtension}`,
-    );
-    imports.destructureImport(
-      `${type.name}Where`,
-      `./query-partials${context.importExtension}`,
-    );
-    imports.destructureImport(
-      `${type.name}OrderBy`,
-      `./query-partials${context.importExtension}`,
-    );
-    imports.destructureImport(
-      `transform${upperCaseFirst(type.name)}`,
-      `./query-builder${context.importExtension}`,
-    );
+  const names = [`${type.name}Select`, `${type.name}Count`];
 
-    if (!type.queryOptions.isView) {
-      imports.destructureImport(
-        `${type.name}InsertValues`,
-        `./query-partials${context.importExtension}`,
-      );
-      imports.destructureImport(
-        `${type.name}UpdateSet`,
-        `./query-partials${context.importExtension}`,
-      );
-    }
+  src.push(selectQuery(context, imports, type));
+  src.push(countQuery(context, imports, type));
 
-    partials.push(selectQuery(context, imports, type));
-    partials.push(countQuery(context, imports, type));
-    if (!type.queryOptions.isView) {
-      partials.push(deleteQuery(context, imports, type));
-      partials.push(insertQuery(context, imports, type));
-      partials.push(updateQuery(context, imports, type));
-    }
+  if (!type.queryOptions.isView) {
+    names.push(
+      `${type.name}Delete`,
+      `${type.name}Insert`,
+      `${type.name}Update`,
+    );
+    src.push(deleteQuery(context, imports, type));
+    src.push(insertQuery(context, imports, type));
+    src.push(updateQuery(context, imports, type));
 
     if (type.queryOptions.withSoftDeletes) {
-      partials.push(softDeleteQuery(context, imports, type));
+      names.push(`${type.name}DeletePermanent`);
+      src.push(softDeleteQuery(context, imports, type));
     }
   }
 
-  const contents = js`
-    ${imports.print()}
-
-    ${partials}
-  `;
-
-  context.rootExports.push(
-    `import * as queries from "./query-basics${context.importExtension}";`,
-    `export { queries };`,
-  );
-
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./query-basics${context.extension}`,
-  });
+  return names;
 }
 
 /**
@@ -204,10 +169,20 @@ function softDeleteQuery(context, imports, type) {
             const ids = result.map(it => it.${primaryKey});
             await Promise.all([
                                 ${affectedRelations
-                                  .map(
+                                  .filter(
                                     (it) =>
-                                      `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`,
+                                      !it.reference.reference.queryOptions
+                                        .isView,
                                   )
+                                  .map((it) => {
+                                    if (it.reference.reference !== type) {
+                                      imports.destructureImport(
+                                        `${it.reference.reference.name}Delete`,
+                                        `./${it.reference.reference.name}.js`,
+                                      );
+                                    }
+                                    return `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`;
+                                  })
                                   .join(",\n  ")}
                               ]);
           `;

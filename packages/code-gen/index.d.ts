@@ -188,8 +188,7 @@ interface TypeBuilderLikeArray extends Array<TypeBuilderLike> {}
 interface TypeBuilderLikeObject extends Record<string, TypeBuilderLike> {}
 
 /**
- * Create new instances of registered types and manages grups
- * Also keeps a Map of registered types on TypeCreator.types
+ * Create new instances of registered types and manages groups
  *
  * Note that all functions that return a `T extends TypeBuilder` are dynamically added and
  * provided by the core.

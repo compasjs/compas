@@ -18,9 +18,6 @@ import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
 
 export class TypeCreator {
-  /** @type {Map<string, TypePlugin>} */
-  static types = new Map();
-
   constructor(group) {
     this.group = group || "app";
 
