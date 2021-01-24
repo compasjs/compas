@@ -8,6 +8,28 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.111](https://github.com/compasjs/compas/releases/tag/v0.0.111)
+
+- build(deps): bump @types/node from 14.14.21 to 14.14.22
+  ([#622](https://github.com/compasjs/compas/pull/622))
+- build(deps): bump eslint-config-prettier from 7.1.0 to 7.2.0
+  ([#621](https://github.com/compasjs/compas/pull/621))
+- build(deps): bump postgres from 2.0.0-beta.2 to 2.0.0-beta.3
+  ([#623](https://github.com/compasjs/compas/pull/623))
+- build(deps-dev): bump react-query from 3.5.15 to 3.6.0
+  ([#620](https://github.com/compasjs/compas/pull/620),
+  [#627](https://github.com/compasjs/compas/pull/627))
+- cli: cleaner test output on failed results
+  ([#628](https://github.com/compasjs/compas/pull/628))
+- code-gen: generate queries per model in a file
+  ([#629](https://github.com/compasjs/compas/pull/629))
+- stdlib: add types to process errors
+  ([#626](https://github.com/compasjs/compas/pull/626))
+- stdlib: use crypto randomUUID if available
+  ([#619](https://github.com/compasjs/compas/pull/619))
+- store: force call `setStoreQueries`
+  ([#630](https://github.com/compasjs/compas/pull/630))
+
 ### [v0.0.110](https://github.com/compasjs/compas/releases/tag/v0.0.110)
 
 - build(deps): bump @types/node from 14.14.20 to 14.14.21
