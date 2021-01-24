@@ -5,56 +5,23 @@ import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
 import { getTypeNameForType } from "../types.js";
-import { importCreator } from "../utils.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
 /**
  * Generate query builders that include relations in to the query result via left joins
  *
  * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ * @param {string[]} src
  */
-export function generateQueryBuilders(context) {
-  const builderPartials = [];
-  const transformPartials = [];
-  const names = [];
-
-  const imports = importCreator();
+export function generateQueryBuilder(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
   imports.destructureImport("isPlainObject", "@compas/stdlib");
   imports.destructureImport("isNil", "@compas/stdlib");
 
-  for (const type of getQueryEnabledObjects(context)) {
-    imports.destructureImport(
-      `${type.name}Where`,
-      `./query-partials${context.importExtension}`,
-    );
-    imports.destructureImport(
-      `${type.name}OrderBy`,
-      `./query-partials${context.importExtension}`,
-    );
-
-    names.push(`query${upperCaseFirst(type.name)}`);
-    builderPartials.push(queryBuilderForType(context, imports, type));
-    transformPartials.push(transformerForType(context, imports, type));
-  }
-
-  const contents = js`
-      ${imports.print()}
-
-      ${builderPartials}
-      ${transformPartials}
-   `;
-
-  context.rootExports.push(
-    `export { ${names.join(", ")} } from "./query-builder${
-      context.importExtension
-    }";`,
-  );
-
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./query-builder${context.extension}`,
-  });
+  src.push(queryBuilderForType(context, imports, type));
+  src.push(transformerForType(context, imports, type));
 }
 
 /**
@@ -194,7 +161,7 @@ export function createQueryBuilderTypes(context) {
 function queryBuilderForType(context, imports, type) {
   imports.destructureImport(
     `validate${type.uniqueName}QueryBuilder`,
-    `./validators${context.importExtension}`,
+    `../validators${context.importExtension}`,
   );
 
   return js`
@@ -345,6 +312,21 @@ function internalQueryBuilderForType(
       );
     }
 
+    if (otherSide !== type) {
+      imports.destructureImport(
+        `internalQuery${upperCaseFirst(otherSide.name)}`,
+        `./${otherSide.name}.js`,
+      );
+      imports.destructureImport(
+        `${otherSide.name}OrderBy`,
+        `./${otherSide.name}.js`,
+      );
+      imports.destructureImport(
+        `transform${upperCaseFirst(otherSide.name)}`,
+        `./${otherSide.name}.js`,
+      );
+    }
+
     const selectValue = `to_jsonb(${otherShortName}.*) || jsonb_build_object($\{query(
           [ joinedKeys.join(",") ])})`;
 
@@ -442,7 +424,7 @@ if (!isNil(builder.${key}.limit)) {
        * @param {QueryPart} wherePartial
        * @returns {QueryPart}
        */
-      function internalQuery${
+      export function internalQuery${
         upperCaseFirst(type.name) + (shortName !== type.shortName ? "2" : "")
       }(builder = {}, wherePartial) {
          let joinQb = query\`\`;

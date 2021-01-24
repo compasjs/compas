@@ -7,7 +7,7 @@ import {
 } from "./file-group.js";
 import { createOrUpdateFile } from "./files.js";
 import { queries } from "./generated.js";
-import { queryFileGroup } from "./generated/query-builder.js";
+import { queryFileGroup } from "./generated/database/fileGroup.js";
 import {
   ensureBucket,
   newMinioClient,
