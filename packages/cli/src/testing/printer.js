@@ -20,11 +20,7 @@ export function printTestResults() {
 
   if (state.hasFailure) {
     for (const child of state.children) {
-      if (!child.hasFailure) {
-        printSuccessResults(child, result, 0);
-      } else {
-        printFailedResults(child, result, 0);
-      }
+      printFailedResults(child, result, 0);
     }
   }
 
@@ -86,10 +82,10 @@ export function printTestResultsFromWorkers(testResults) {
  * @param {string[]} result
  * @param {number} indentCount
  */
-function printSuccessResults(state, result, indentCount) {
-  const { passed } = sumAssertions(state);
+function printTreeSummary(state, result, indentCount) {
+  const { passed, failed } = sumAssertions(state);
   const indent = `  `.repeat(indentCount);
-  result.push(`${indent}${state.name} (${passed}/${passed})`);
+  result.push(`${indent}${state.name} (${passed}/${passed + failed})`);
 }
 
 /**
@@ -99,72 +95,75 @@ function printSuccessResults(state, result, indentCount) {
  * @param {number} indentCount
  */
 export function printFailedResults(state, result, indentCount) {
-  const { passed, failed } = sumAssertions(state);
+  // Failed assertions directly from this state, without children
   const failedAssertions = state.assertions.filter((it) => !it.passed);
 
-  if (state.caughtException || failedAssertions.length > 0) {
-    let indent = "  ".repeat(indentCount);
-    result.push(`${indent}${state.name} (${passed}/${passed + failed})`);
+  printTreeSummary(state, result, indentCount);
 
-    // Increase indent so error info is nested in relation to test name
-    indent += "  ";
+  if (!state.hasFailure) {
+    // No failures in this sub tree, so skip printing it's assertions, exceptions and children
+    return;
+  }
 
-    if (state.caughtException) {
-      const exception = AppError.format(state.caughtException);
-
-      if (AppError.instanceOf(state.caughtException)) {
-        result.push(
-          `${indent}AppError: ${exception.key} - ${exception.status}`,
-        );
-      } else {
-        result.push(`${indent}${exception.name} - ${exception.message}`);
-      }
-
-      // Pretty print info object
-      const errorPretty = inspect(exception, {
-        depth: null,
-        colors: true,
-      }).split("\n");
-
-      for (const it of errorPretty) {
-        result.push(`${indent}  ${it}`);
-      }
-    } else {
-      for (const assertion of failedAssertions) {
-        if (assertion.message) {
-          result.push(`${indent}${assertion.type}: ${assertion.message}`);
-        } else {
-          result.push(`${indent}${assertion.type}`);
-        }
-
-        if (assertion.meta) {
-          const subIndent = `${indent}  `;
-          if (assertion.meta.message) {
-            const parts = assertion.meta.message.split("\n");
-            for (const part of parts) {
-              result.push(`${subIndent}${part}`);
-            }
-          } else {
-            const { expected, actual } = assertion.meta;
-            result.push(
-              `${subIndent}Expected: (${typeof expected}) ${expected}`,
-            );
-            result.push(
-              `${subIndent}Actual: (${typeof actual}) ${JSON.stringify(
-                actual,
-              )}`,
-            );
-          }
-        }
-      }
-    }
-    for (const child of state.children) {
-      printFailedResults(child, result, indentCount + 2);
-    }
-  } else {
-    printSuccessResults(state, result, indentCount);
+  if (!state.caughtException && failedAssertions.length === 0) {
+    // Some child has a failure, loop through the children
     for (const child of state.children) {
       printFailedResults(child, result, indentCount + 1);
+    }
+    return;
+  }
+
+  // Increase indent so error and assertion is nested in relation to the tree summary
+  const indent = "  ".repeat(indentCount + 1);
+
+  // Prioritize caught exceptions over assertions, as this may be more unexpected
+  if (state.caughtException) {
+    const exception = AppError.format(state.caughtException);
+
+    if (AppError.instanceOf(state.caughtException)) {
+      result.push(`${indent}AppError: ${exception.key} - ${exception.status}`);
+    } else {
+      result.push(`${indent}${exception.name} - ${exception.message}`);
+    }
+
+    // Pretty print info object
+    const errorPretty = inspect(exception, {
+      depth: null,
+      colors: true,
+    }).split("\n");
+
+    // Add pretty printed error plus some indentation to the result
+    for (const it of errorPretty) {
+      result.push(`${indent}  ${it}`);
+    }
+  } else if (failedAssertions.length > 0) {
+    for (const assertion of failedAssertions) {
+      if (assertion.message) {
+        result.push(`${indent}${assertion.type}: ${assertion.message}`);
+      } else {
+        result.push(`${indent}${assertion.type}`);
+      }
+
+      if (!assertion.meta) {
+        continue;
+      }
+
+      const subIndent = `${indent}  `;
+
+      if (assertion.meta.message) {
+        // Assertion may already have a message, for example in case of a deepEqual
+        const parts = assertion.meta.message.split("\n");
+        for (const part of parts) {
+          result.push(`${subIndent}${part}`);
+        }
+      } else {
+        const { expected, actual } = assertion.meta;
+        // We print the `typeof` as well, so it's more clear that "5" !== 5
+        result.push(`${subIndent}Expected: (${typeof expected}) ${expected}`);
+        result.push(
+          `${subIndent}Actual: (${typeof actual}) ${JSON.stringify(actual)}`,
+        );
+      }
     }
   }
 }
