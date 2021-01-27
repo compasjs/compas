@@ -8,6 +8,15 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.112](https://github.com/compasjs/compas/releases/tag/v0.0.112)
+
+- code-gen: add $raw to generated where clause builder
+  ([#633](https://github.com/compasjs/compas/pull/633))
+- code-gen: simplify generated select query via query builder
+  ([#632](https://github.com/compasjs/compas/pull/632))
+- code-gen: throw when generated queryBuilder function is awaited
+  ([#631](https://github.com/compasjs/compas/pull/631))
+
 ### [v0.0.111](https://github.com/compasjs/compas/releases/tag/v0.0.111)
 
 - build(deps): bump @types/node from 14.14.21 to 14.14.22
