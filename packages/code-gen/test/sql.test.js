@@ -442,7 +442,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(category.id, id);
   });
 
-  t.test("deletedAt in the future", async (t) => {
+  t.test("deletedAt in the future should return result", async (t) => {
     const future = new Date();
     future.setUTCDate(future.getUTCDate() + 1);
     const [user] = await client.queries.userInsert(sql, {
@@ -455,6 +455,16 @@ test("code-gen/e2e/sql", async (t) => {
 
     t.ok(selectUser);
     t.deepEqual(selectUser.deletedAt, future);
+  });
+
+  t.test("await of queryBuilder should throw", async (t) => {
+    try {
+      await client.queryUser({});
+      t.fail("QueryBuilder should throw");
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.status, 500);
+    }
   });
 
   t.test("destroy test db", async (t) => {

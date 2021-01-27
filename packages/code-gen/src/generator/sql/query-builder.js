@@ -19,6 +19,7 @@ export function generateQueryBuilder(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
   imports.destructureImport("isPlainObject", "@compas/stdlib");
   imports.destructureImport("isNil", "@compas/stdlib");
+  imports.destructureImport("AppError", "@compas/stdlib");
 
   src.push(queryBuilderForType(context, imports, type));
   src.push(transformerForType(context, imports, type));
@@ -240,7 +241,13 @@ function queryBuilderForType(context, imports, type) {
          }
 
          return {
-            execRaw: (sql) => qb.exec(sql), exec: (sql) => {
+            then: () => {
+               throw AppError.serverError({
+                                             message: "Awaited 'query${upperCaseFirst(
+                                               type.name,
+                                             )}' directly. Please use '.exec' or '.execRaw'."
+                                          });
+            }, execRaw: (sql) => qb.exec(sql), exec: (sql) => {
                return qb.exec(sql).then(result => {
                   transform${upperCaseFirst(type.name)}(result, builder);
                   return result;
