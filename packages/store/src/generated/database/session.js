@@ -505,6 +505,12 @@ ORDER BY ${sessionOrderBy()}
     qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
   }
   return {
+    then: () => {
+      throw AppError.serverError({
+        message:
+          "Awaited 'querySession' directly. Please use '.exec' or '.execRaw'.",
+      });
+    },
     execRaw: (sql) => qb.exec(sql),
     exec: (sql) => {
       return qb.exec(sql).then((result) => {
