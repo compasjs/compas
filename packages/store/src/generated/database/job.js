@@ -482,14 +482,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreJob[]>}
  */
 export async function jobSelect(sql, where) {
-  const result = await query`
-SELECT ${jobFields()}
-FROM "job" j
-WHERE ${jobWhere(where)}
-ORDER BY ${jobOrderBy()}
-`.exec(sql);
-  transformJob(result);
-  return result;
+  return queryJob({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql

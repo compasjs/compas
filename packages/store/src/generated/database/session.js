@@ -388,14 +388,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreSession[]>}
  */
 export async function sessionSelect(sql, where) {
-  const result = await query`
-SELECT ${sessionFields()}
-FROM "session" s
-WHERE ${sessionWhere(where)}
-ORDER BY ${sessionOrderBy()}
-`.exec(sql);
-  transformSession(result);
-  return result;
+  return querySession({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
