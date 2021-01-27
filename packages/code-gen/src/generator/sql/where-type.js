@@ -42,7 +42,19 @@ export function createWhereTypes(context) {
       whereType.name,
     )}`;
 
-    // new ReferenceType(type.group, `${type.name}Where`)
+    whereType.keys["$raw"] = {
+      ...new AnyType().optional().build(),
+      rawValue: "QueryPart",
+      rawValueImport: {
+        javaScript: undefined,
+        typeScript: `import { QueryPart } from "@compas/store";`,
+      },
+      rawValidator: "isQueryPart",
+      rawValidatorImport: {
+        javaScript: `import { isQueryPart } from "@compas/store";`,
+        typeScript: `import { isQueryPart } from "@compas/store";`,
+      },
+    };
     whereType.keys["$or"] = {
       ...new ArrayType().values(true).optional().build(),
       values: new ReferenceType(type.group, `${type.name}Where`).build(),
@@ -135,6 +147,10 @@ export function getWherePartial(context, type) {
   const partials = [];
 
   partials.push(`
+    if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
+      strings.push(" AND ");
+      values.push(where.$raw);
+    }
     if (Array.isArray(where.$or) && where.$or.length > 0) {
       strings.push(" AND ((");
       for (let i = 0; i < where.$or.length; i++) {

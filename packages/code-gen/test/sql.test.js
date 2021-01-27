@@ -197,6 +197,15 @@ test("code-gen/e2e/sql", async (t) => {
     t.ok(dbUser);
   });
 
+  t.test("query filter via $raw", async (t) => {
+    const [dbUser] = await client.queries.userSelect(sql, {
+      $raw: query`"email" ILIKE ${"Test@test.com"}`,
+    });
+
+    t.ok(dbUser);
+    t.equal(dbUser.email, "test@test.com");
+  });
+
   t.test("query same 'shortName' originally", async () => {
     await client
       .queryUser({
