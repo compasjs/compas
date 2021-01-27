@@ -51,16 +51,7 @@ function selectQuery(context, imports, type) {
      * @returns {Promise<${type.uniqueName}[]>}
      */
     export async function ${type.name}Select(sql, where) {
-      const result = await query\`
-        SELECT $\{${type.name}Fields()}
-        FROM "${type.name}" ${type.shortName}
-        WHERE $\{${type.name}Where(where)}
-        ORDER BY $\{${type.name}OrderBy()}
-        \`.exec(sql);
-
-      transform${upperCaseFirst(type.name)}(result);
-
-      return result;
+      return query${upperCaseFirst(type.name)}({ where }).exec(sql);
     }
   `;
 }

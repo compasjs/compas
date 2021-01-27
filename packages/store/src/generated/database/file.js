@@ -490,14 +490,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFile[]>}
  */
 export async function fileSelect(sql, where) {
-  const result = await query`
-SELECT ${fileFields()}
-FROM "file" f
-WHERE ${fileWhere(where)}
-ORDER BY ${fileOrderBy()}
-`.exec(sql);
-  transformFile(result);
-  return result;
+  return queryFile({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql

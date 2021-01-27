@@ -463,14 +463,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFileGroupView[]>}
  */
 export async function fileGroupViewSelect(sql, where) {
-  const result = await query`
-SELECT ${fileGroupViewFields()}
-FROM "fileGroupView" fgv
-WHERE ${fileGroupViewWhere(where)}
-ORDER BY ${fileGroupViewOrderBy()}
-`.exec(sql);
-  transformFileGroupView(result);
-  return result;
+  return queryFileGroupView({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql

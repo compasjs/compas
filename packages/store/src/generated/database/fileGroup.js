@@ -539,14 +539,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFileGroup[]>}
  */
 export async function fileGroupSelect(sql, where) {
-  const result = await query`
-SELECT ${fileGroupFields()}
-FROM "fileGroup" fg
-WHERE ${fileGroupWhere(where)}
-ORDER BY ${fileGroupOrderBy()}
-`.exec(sql);
-  transformFileGroup(result);
-  return result;
+  return queryFileGroup({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
