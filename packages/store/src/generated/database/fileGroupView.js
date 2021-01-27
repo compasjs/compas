@@ -61,6 +61,10 @@ export function fileGroupViewWhere(
   }
   const strings = ["1 = 1"];
   const values = [undefined];
+  if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
+    strings.push(" AND ");
+    values.push(where.$raw);
+  }
   if (Array.isArray(where.$or) && where.$or.length > 0) {
     strings.push(" AND ((");
     for (let i = 0; i < where.$or.length; i++) {
