@@ -1,14 +1,43 @@
 import { readFile } from "fs/promises";
-import { mainFn } from "@compas/stdlib";
+import { exec, mainFn, spawn } from "@compas/stdlib";
 import axios from "axios";
 
 mainFn(import.meta, main);
 
-async function main() {
-  const rawRef = process.env.GITHUB_REF;
+async function main(logger) {
   const [githubToken] = process.argv.slice(2);
 
-  const tag = rawRef.replace(/^refs\/tags\//, "");
+  const newVersion = await getVersionFromGitLog();
+  if (!/^\d+\.\d+\.\d+$/g.test(newVersion)) {
+    logger.error(`Invalid version, found: ${newVersion}`);
+
+    process.exit(1);
+  }
+
+  const { exitCode } = await spawn(`yarn`, [
+    "lerna",
+    "publish",
+    "--exact",
+    "--yes",
+    newVersion,
+  ]);
+
+  if (exitCode !== 0) {
+    process.exit(exitCode);
+  }
+
+  await addChangelogToGithubRelease(`v${newVersion}`, githubToken);
+}
+
+async function getVersionFromGitLog() {
+  const { stdout } = await exec(`git log -1 --pretty=format:"%s"`);
+  const versionString = stdout.trim().split(" ").pop();
+
+  // Drop the 'v'
+  return versionString.substring(1);
+}
+
+async function addChangelogToGithubRelease(version, githubToken) {
   const fullChangelog = await readFile("./changelog.md", "utf8");
   const changelogPart = parseChangelog(fullChangelog);
 
@@ -20,8 +49,8 @@ async function main() {
       password: githubToken,
     },
     data: {
-      tag_name: tag,
-      name: tag,
+      tag_name: version,
+      name: version,
       body: changelogPart,
       draft: false,
       prerelease: false,
