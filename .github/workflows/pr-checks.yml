@@ -116,4 +116,3 @@ jobs:
           'pull_request' }}
         with:
           github-token: ${{secrets.github_token}}
-          merge-method: squash
