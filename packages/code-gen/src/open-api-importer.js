@@ -501,7 +501,10 @@ function convertSchema(context, schema) {
         upperCaseFirst(result.reference.group) +
         upperCaseFirst(result.reference.name);
 
-      context.openAPIReferences.push(schema.$ref);
+      // Already going to resolve the reference, so skip it
+      if (context.openAPIReferences.indexOf(schema.$ref) === -1) {
+        context.openAPIReferences.push(schema.$ref);
+      }
     }
   }
 
