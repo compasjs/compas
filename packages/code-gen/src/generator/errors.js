@@ -33,9 +33,11 @@ export function exitOnErrorsOrReturn(context) {
       str += `Relation from '${error.referencedByType}' is missing the inverse 'T.oneToMany()' on '${error.typeName}'.
   Add 'T.oneToMany("${error.relationOwnKey}", T.reference("${error.referencedByGroup}", "${error.referencedByType}"))' to the 'relations()' call on '${error.typeName}'.
 `;
-    } else if (error.key === "duplicateShortName") {
+    } else if (error.key === "sqlDuplicateShortName") {
       str += `Short name '${error.shortName}' is used by both '${error.firstName}' and '${error.secondName}'.
   These short name values should be unique. Please call '.shortName()' on one or both of these types to set a custom value.`;
+    } else if (error.key === "coreReservedGroupName") {
+      str += `Group '${error.groupName}' is a JavaScript or TypeScript reserved keyword. Please use another group name.`;
     } else {
       str += `[${error.key}]: ${JSON.stringify(error, null, 2)}`;
     }

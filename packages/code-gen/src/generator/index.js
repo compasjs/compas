@@ -97,6 +97,9 @@ export async function generate(logger, options, structure) {
   setupMemoizedTypes(context);
   exitOnErrorsOrReturn(context);
 
+  checkReservedGroupNames(context);
+  exitOnErrorsOrReturn(context);
+
   // Do initial sql checks and load in the types
   // This way the validators are generated
   if (context.options.enabledGenerators.indexOf("sql") !== -1) {
@@ -228,5 +231,73 @@ export function shouldGenerateModules(logger) {
       "Could not determine if we should not generate ES Modules. Defaulting to ES modules.\n  Make sure you run the generator in the root of your project.",
     );
     return true;
+  }
+}
+
+/**
+ * Check if a group uses one of the reserved keywords
+ * Sourced from
+ * https://github.com/microsoft/TypeScript/blob/66ecfcbd04b8234855a673adb85e5cff3f8458d4/src/compiler/types.ts#L112
+ *
+ * @param {CodeGenContext} context
+ */
+function checkReservedGroupNames(context) {
+  const keywords = [
+    // Reserved words
+    "break",
+    "case",
+    "catch",
+    "class",
+    "const",
+    "continue",
+    "debugger",
+    "default",
+    "delete",
+    "do",
+    "else",
+    "enum",
+    "export",
+    "extends",
+    "false",
+    "final",
+    "for",
+    "function",
+    "if",
+    "import",
+    "in",
+    "instanceof",
+    "new",
+    "null",
+    "return",
+    "super",
+    "switch",
+    "this",
+    "throw",
+    "true",
+    "try",
+    "typeof",
+    "var",
+    "void",
+    "while",
+    "with",
+    // And strict mode included
+    "implements",
+    "interface",
+    "let",
+    "package",
+    "private",
+    "protected",
+    "public",
+    "static",
+    "yield",
+  ];
+
+  for (const group of Object.keys(context.structure)) {
+    if (keywords.indexOf(group.toLowerCase()) !== -1) {
+      context.errors.push({
+        key: "coreReservedGroupName",
+        groupName: group,
+      });
+    }
   }
 }

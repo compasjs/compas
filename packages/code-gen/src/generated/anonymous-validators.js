@@ -37,12 +37,13 @@ const objectKeys210116167 = new Set([
 ]);
 const objectKeys2008271825 = new Set(["key"]);
 const objectKeys347072999 = new Set(["key"]);
-const objectKeys281316554 = new Set([
+const objectKeys914281176 = new Set([
   "key",
   "shortName",
   "firstName",
   "secondName",
 ]);
+const objectKeys451802958 = new Set(["key", "groupName"]);
 const objectKeys1664519436 = new Set(["phase"]);
 const objectKeys1287070944 = new Set([
   "isJSON",
@@ -3401,9 +3402,9 @@ export function anonymousValidator347072999(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|undefined}
+ * @returns {{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|undefined}
  */
-export function anonymousValidator281316554(
+export function anonymousValidator914281176(
   value,
   propertyPath,
   errors = [],
@@ -3425,7 +3426,7 @@ export function anonymousValidator281316554(
   }
   const result = Object.create(null);
   for (const key of Object.keys(value)) {
-    if (!objectKeys281316554.has(key)) {
+    if (!objectKeys914281176.has(key)) {
       errors.push({
         key: `validator.${parentType}.strict`,
         info: { propertyPath, extraKey: key },
@@ -3433,9 +3434,9 @@ export function anonymousValidator281316554(
       return undefined;
     }
   }
-  if (value["key"] !== "duplicateShortName") {
+  if (value["key"] !== "sqlDuplicateShortName") {
     const parentType = "string";
-    const oneOf = ["duplicateShortName"];
+    const oneOf = ["sqlDuplicateShortName"];
     errors.push({
       key: `validator.${parentType}.oneOf`,
       info: { propertyPath: `${propertyPath}.key`, oneOf },
@@ -3464,9 +3465,62 @@ export function anonymousValidator281316554(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|undefined}
+ * @returns {{"key": "coreReservedGroupName", "groupName": string, }|undefined}
  */
-export function anonymousValidator1794513959(
+export function anonymousValidator451802958(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    errors.push({
+      key: `validator.${parentType}.undefined`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (typeof value !== "object") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys451802958.has(key)) {
+      errors.push({
+        key: `validator.${parentType}.strict`,
+        info: { propertyPath, extraKey: key },
+      });
+      return undefined;
+    }
+  }
+  if (value["key"] !== "coreReservedGroupName") {
+    const parentType = "string";
+    const oneOf = ["coreReservedGroupName"];
+    errors.push({
+      key: `validator.${parentType}.oneOf`,
+      info: { propertyPath: `${propertyPath}.key`, oneOf },
+    });
+  }
+  result["key"] = value["key"] ?? undefined;
+  result["groupName"] = anonymousValidator186795873(
+    value["groupName"],
+    `${propertyPath}.groupName`,
+    errors,
+  );
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, }|undefined}
+ */
+export function anonymousValidator153494877(
   value,
   propertyPath,
   errors = [],
@@ -3512,7 +3566,13 @@ export function anonymousValidator1794513959(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator281316554(value, propertyPath, subErrors);
+  result = anonymousValidator914281176(value, propertyPath, subErrors);
+  if (subErrors.length === errorCount) {
+    return result;
+  }
+  subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+  errorCount = subErrors.length;
+  result = anonymousValidator451802958(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -3529,9 +3589,9 @@ export function anonymousValidator1794513959(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, })[]|undefined}
+ * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]|undefined}
  */
-export function anonymousValidator1228387163(
+export function anonymousValidator174246559(
   value,
   propertyPath,
   errors = [],
@@ -3553,7 +3613,7 @@ export function anonymousValidator1228387163(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1794513959(
+    result[i] = anonymousValidator153494877(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3566,7 +3626,7 @@ export function anonymousValidator1228387163(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "duplicateShortName", "shortName": string, "firstName": string, "secondName": string, })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }|undefined}
  */
 export function anonymousValidator980814292(
   value,
@@ -3632,7 +3692,7 @@ export function anonymousValidator980814292(
     `${propertyPath}.rootExports`,
     errors,
   );
-  result["errors"] = anonymousValidator1228387163(
+  result["errors"] = anonymousValidator174246559(
     value["errors"],
     `${propertyPath}.errors`,
     errors,
