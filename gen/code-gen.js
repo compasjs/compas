@@ -74,10 +74,14 @@ export function applyCodeGenStructure(app) {
             key: "sqlThrowingValidators",
           },
           {
-            key: "duplicateShortName",
+            key: "sqlDuplicateShortName",
             shortName: T.string(),
             firstName: T.string(),
             secondName: T.string(),
+          },
+          {
+            key: "coreReservedGroupName",
+            groupName: T.string(),
           },
         ),
       ],

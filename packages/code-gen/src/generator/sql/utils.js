@@ -18,7 +18,7 @@ export function addShortNamesToQueryEnabledObjects(context) {
 
     if (knownShortNames[type.shortName]) {
       context.errors.push({
-        key: "duplicateShortName",
+        key: "sqlDuplicateShortName",
         shortName: type.shortName,
         firstName: type.name,
         secondName: knownShortNames[type.shortName],
