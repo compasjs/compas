@@ -14,7 +14,7 @@ export class SearchableType extends TypeBuilder {
     const buildResult = buildOrInfer(this.builder);
 
     if (isNil(this.data.name) && !isNil(buildResult.name)) {
-      this.name(`${buildResult.name}Searchable`);
+      this.data.name = `${buildResult.name}Searchable`;
     }
 
     const thisResult = super.build();
