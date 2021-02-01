@@ -8,6 +8,22 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.113](https://github.com/compasjs/compas/releases/tag/v0.0.113)
+
+- build(deps): bump eslint from 7.18.0 to 7.19.0
+  ([#634](https://github.com/compasjs/compas/pull/634))
+- chore: fix lint of workflow files
+- ci: auto-merge dependabot PR's
+- ci: automate release process
+  ([#635](https://github.com/compasjs/compas/pull/635))
+- ci: use default merge method for dependabot PR's
+- code-gen: detect reference recursion when converting from OpenApi
+  ([#640](https://github.com/compasjs/compas/pull/640))
+- code-gen: error when JS keywords are used as group names
+  ([#638](https://github.com/compasjs/compas/pull/638))
+- code-gen: fix names for optional, pick, omit and searchable type
+  ([#639](https://github.com/compasjs/compas/pull/639))
+
 ### [v0.0.112](https://github.com/compasjs/compas/releases/tag/v0.0.112)
 
 - code-gen: add $raw to generated where clause builder
