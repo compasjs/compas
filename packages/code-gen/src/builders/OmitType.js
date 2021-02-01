@@ -17,7 +17,7 @@ export class OmitType extends TypeBuilder {
     const buildResult = buildOrInfer(this.builder);
 
     if (isNil(this.data.name) && !isNil(buildResult.name)) {
-      this.name(`${buildResult.name}Omit`);
+      this.data.name = `${buildResult.name}Omit`;
     }
 
     const thisResult = super.build();

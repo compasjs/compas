@@ -14,7 +14,7 @@ export class OptionalType extends TypeBuilder {
     const buildResult = buildOrInfer(this.builder);
 
     if (isNil(this.data.name) && !isNil(buildResult.name)) {
-      this.name(`${buildResult.name}Optional`);
+      this.data.name = `${buildResult.name}Optional`;
     }
 
     const thisResult = super.build();
