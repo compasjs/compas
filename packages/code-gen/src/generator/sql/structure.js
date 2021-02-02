@@ -10,9 +10,13 @@ const typeTable = {
   boolean: "boolean",
   date: "timestamptz",
   generic: "jsonb",
-  number: (type) =>
+  /**
+   *
+   * @param {CodeGenNumberType} type
+   * @returns {string}
+   */ number: (type) =>
     !type.sql?.primary
-      ? type.floatingPoint
+      ? type.validator.floatingPoint
         ? "float"
         : "int"
       : "BIGSERIAL PRIMARY KEY",
