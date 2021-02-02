@@ -1,3 +1,4 @@
+import { createReadStream } from "fs";
 import { mainTestFn, test } from "@compas/cli";
 import {
   closeTestApp,
@@ -131,6 +132,17 @@ test("code-gen/e2e-server", async (t) => {
     },
   );
 
+  t.test("server - serverside validator of file is ok", async (t) => {
+    const { success } = await server.serverApi.setFile({
+      myFile: {
+        name: "foo.json",
+        data: createReadStream("./__fixtures__/code-gen/openapi.json"),
+      },
+    });
+
+    t.ok(success);
+  });
+
   t.test("server - router - tags are available", (t) => {
     t.deepEqual(server.serverTags.getId, ["tag"]);
     t.deepEqual(server.serverTags.create, []);
@@ -200,6 +212,14 @@ async function buildTestApp() {
     }
 
     ctx.body = Buffer.from("Hello!", "utf-8");
+
+    return next();
+  };
+
+  server.serverHandlers.setFile = (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
 
     return next();
   };
