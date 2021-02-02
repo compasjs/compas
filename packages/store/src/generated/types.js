@@ -66,13 +66,13 @@ export const __generated__ = true;
  * @typedef {{"id"?: string, "contentLength": number, "bucketName": string, "contentType": string, "name": string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }} StoreFileInsertPartial
  */
 /**
- * @typedef {{"contentLength"?: number, "bucketName"?: string, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }} StoreFileUpdatePartial
+ * @typedef {{"contentLength"?: number, "bucketName"?: string, "contentType"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: null|Date, }} StoreFileUpdatePartial
  */
 /**
  * @typedef {{"id"?: string, "order"?: number, "file"?: string, "parent"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }} StoreFileGroupInsertPartial
  */
 /**
- * @typedef {{"order"?: number, "file"?: string, "parent"?: string, "name"?: string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: Date, }} StoreFileGroupUpdatePartial
+ * @typedef {{"order"?: number, "file"?: null|string, "parent"?: null|string, "name"?: null|string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: null|Date, }} StoreFileGroupUpdatePartial
  */
 /**
  * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "name": string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreJobInsertPartial
