@@ -170,10 +170,13 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
                 {},
               )} | undefined, errors: ({ key: string, info: any }[])|undefined}}`;
             }
-            return js`*
-             @returns {
-                ${getTypeNameForType(context.context, data[name], "", {})}
-             }`;
+            return js`
+             * @returns {${getTypeNameForType(
+               context.context,
+               data[name],
+               "",
+               {},
+             )}}`;
           }}
           */
          export function validate${data[name].uniqueName}(value${withTypescript(
@@ -390,8 +393,7 @@ function anonymousValidatorForType(context, imports, type) {
     case "date":
       return anonymousValidatorDate(context, imports);
     case "file":
-      // TODO: Implement for possible locations
-      return `return value;`;
+      return anonymousValidatorFile(context);
     case "generic":
       return anonymousValidatorGeneric(context, imports, type);
     case "number":
@@ -638,6 +640,44 @@ function anonymousValidatorDate(context, imports) {
 
       ${buildError("invalid", "{ propertyPath }")}
    `;
+}
+
+/**
+ * @param {ValidatorContext} context
+ * @returns {string}
+ */
+function anonymousValidatorFile(context) {
+  if (context.context.options.isBrowser) {
+    return js`
+         // Blob result from api client
+         if (value instanceof Blob) {
+           return value;
+         }
+         // Blob input as post argument
+         if (value && value.blob instanceof Blob) {
+           return value;
+         }
+         
+         ${buildError("unknown", "{ propertyPath }")}
+      `;
+  }
+
+  return js`
+      // ReadableStream input to api call
+      if (typeof value.data?.pipe === "function" && typeof value.data?._read === "function") {
+         return value;
+      }
+      // ReadableStream as output of an api call
+      if (typeof value?.pipe === "function" && typeof value?._read === "function") {
+         return value;
+      }
+      // Object as parsed by the file body parsers
+      if (typeof value?.path === "string" && typeof value?.size === "number") {
+         return value;
+      }
+
+      ${buildError("unknown", "{ propertyPath }")}
+  `;
 }
 
 /**

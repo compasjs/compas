@@ -2,3 +2,4 @@ packages/cli/template/*
 coverage
 packages/code-gen/test-generated
 lerna.json
+generated/testing/client/anonymous-validators.js
