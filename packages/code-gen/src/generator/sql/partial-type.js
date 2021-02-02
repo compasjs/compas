@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
@@ -73,6 +74,15 @@ export function createPartialTypes(context) {
         ...fieldType,
         isOptional: true,
       };
+
+      // Create correct types by setting allowNull, since the value will be used in the update statement
+      if (fieldType.isOptional && isNil(fieldType.defaultValue)) {
+        updatePartial.keys[key].validator = Object.assign(
+          {},
+          updatePartial.keys[key].validator,
+          { allowNull: true },
+        );
+      }
     }
 
     type.partial = {
