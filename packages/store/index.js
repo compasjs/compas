@@ -51,5 +51,10 @@ export { newSessionStore } from "./src/sessions.js";
 export const migrations = `${dirnameForModule(import.meta)}/migrations`;
 export { structure as storeStructure } from "./src/generated/index.js";
 
-export { query, isQueryPart, explainAnalyzeQuery } from "./src/query.js";
+export {
+  query,
+  isQueryPart,
+  stringifyQueryPart,
+  explainAnalyzeQuery,
+} from "./src/query.js";
 export { setStoreQueries } from "./src/generated.js";
