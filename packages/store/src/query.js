@@ -4,9 +4,10 @@ import { isNil } from "@compas/stdlib";
  * Format and append query parts, and exec the final result in a safe way.
  * Undefined values are skipped, as they are not allowed in queries.
  *
+ * @template {*} T
  * @param {string[]} strings
  * @param {...*} values
- * @returns {QueryPart}
+ * @returns {QueryPart<T>}
  */
 export function query(strings, ...values) {
   let _strings = [];
@@ -89,11 +90,55 @@ export function isQueryPart(query) {
 }
 
 /**
+ * Stringify a queryPart.
+ * When interpolateParameters is true, we do a best effort in replacing the parameterized
+ * query with the real params. If the result doesn't look right, please turn it off.
+ *
+ * @param {QueryPart} queryPart
+ * @param {{ interpolateParameters?: boolean }} options
+ * @returns {string|{ sql: string, params: *[] }}
+ */
+export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
+  if (!isQueryPart(queryPart)) {
+    throw new Error(
+      `'stringifyQueryPart' expects a query part produced by calling 'query\`\`'`,
+    );
+  }
+
+  let sql = undefined;
+  let params = undefined;
+  queryPart.exec({
+    unsafe(queryString, parameters) {
+      sql = queryString.trim();
+      params = parameters;
+    },
+  });
+
+  if (!interpolateParameters) {
+    return {
+      sql,
+      params,
+    };
+  }
+
+  return sql.replace(/\$\d+/g, (match) => {
+    const idx = parseInt(match.substring(1));
+    const value = params[idx - 1];
+
+    if (typeof value === "string") {
+      return `'${value}'`;
+    }
+    return params[idx - 1];
+  });
+}
+
+/**
  * Creates a transaction, executes the query, and rollback the transaction afterwards.
  * This is safe to use with insert, update and delete queries.
  *
  * By default returns text, but can also return json.
- * Note that explain output is highly depended on the current data and usage of the tables.
+ * Note that explain output is highly depended on the current data and usage of the
+ * tables.
  *
  * @param {Postgres} sql
  * @param {QueryPart} queryItem
