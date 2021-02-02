@@ -8,6 +8,20 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.114](https://github.com/compasjs/compas/releases/tag/v0.0.114)
+
+- build(deps): bump c8 from 7.4.0 to 7.5.0
+  ([#641](https://github.com/compasjs/compas/pull/641))
+- ci: revert release automation, go back to auto changelog
+- code-gen: add file validator support
+  ([#649](https://github.com/compasjs/compas/pull/649))
+- code-gen: fix field types of update partial for optional fields
+  ([#647](https://github.com/compasjs/compas/pull/647))
+- code-gen: fix float support in sql structure generator
+  ([#646](https://github.com/compasjs/compas/pull/646))
+- store: add stringifyQueryPart function
+  ([#648](https://github.com/compasjs/compas/pull/648))
+
 ### [v0.0.113](https://github.com/compasjs/compas/releases/tag/v0.0.113)
 
 - build(deps): bump eslint from 7.18.0 to 7.19.0
