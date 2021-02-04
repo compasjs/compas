@@ -226,6 +226,27 @@ function staticCheckRelation(context, type, relation) {
         relationOwnKey: relation.referencedKey,
       });
     }
+  } else if (relation.subType === "oneToMany") {
+    let found = false;
+    for (const otherSide of relation.reference.reference.relations) {
+      if (
+        otherSide.subType === "manyToOne" &&
+        relation.ownKey === otherSide.referencedKey
+      ) {
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      const { name } = relation.reference.reference;
+      context.errors.push({
+        key: "sqlUnusedOneToMany",
+        type: type.name,
+        referencedType: name,
+        ownKey: relation.ownKey,
+      });
+    }
   }
 
   if (relation.subType === "oneToOne") {

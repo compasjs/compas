@@ -35,6 +35,12 @@ const objectKeys210116167 = new Set([
   "typeName",
   "relationOwnKey",
 ]);
+const objectKeys1331366345 = new Set([
+  "key",
+  "type",
+  "referencedType",
+  "ownKey",
+]);
 const objectKeys2008271825 = new Set(["key"]);
 const objectKeys347072999 = new Set(["key"]);
 const objectKeys914281176 = new Set([
@@ -3306,6 +3312,69 @@ export function anonymousValidator210116167(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
+ * @returns {{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|undefined}
+ */
+export function anonymousValidator1331366345(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    errors.push({
+      key: `validator.${parentType}.undefined`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (typeof value !== "object") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1331366345.has(key)) {
+      errors.push({
+        key: `validator.${parentType}.strict`,
+        info: { propertyPath, extraKey: key },
+      });
+      return undefined;
+    }
+  }
+  if (value["key"] !== "sqlUnusedOneToMany") {
+    const parentType = "string";
+    const oneOf = ["sqlUnusedOneToMany"];
+    errors.push({
+      key: `validator.${parentType}.oneOf`,
+      info: { propertyPath: `${propertyPath}.key`, oneOf },
+    });
+  }
+  result["key"] = value["key"] ?? undefined;
+  result["type"] = anonymousValidator186795873(
+    value["type"],
+    `${propertyPath}.type`,
+    errors,
+  );
+  result["referencedType"] = anonymousValidator186795873(
+    value["referencedType"],
+    `${propertyPath}.referencedType`,
+    errors,
+  );
+  result["ownKey"] = anonymousValidator186795873(
+    value["ownKey"],
+    `${propertyPath}.ownKey`,
+    errors,
+  );
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
  * @returns {{"key": "sqlEnableValidator", }|undefined}
  */
 export function anonymousValidator2008271825(
@@ -3518,9 +3587,9 @@ export function anonymousValidator451802958(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, }|undefined}
+ * @returns {{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, }|undefined}
  */
-export function anonymousValidator153494877(
+export function anonymousValidator1080303482(
   value,
   propertyPath,
   errors = [],
@@ -3549,6 +3618,12 @@ export function anonymousValidator153494877(
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
   result = anonymousValidator210116167(value, propertyPath, subErrors);
+  if (subErrors.length === errorCount) {
+    return result;
+  }
+  subErrors.splice(errorCount + 1, subErrors.length - errorCount);
+  errorCount = subErrors.length;
+  result = anonymousValidator1331366345(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -3589,9 +3664,9 @@ export function anonymousValidator153494877(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]|undefined}
+ * @returns {({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]|undefined}
  */
-export function anonymousValidator174246559(
+export function anonymousValidator1364098500(
   value,
   propertyPath,
   errors = [],
@@ -3613,7 +3688,7 @@ export function anonymousValidator174246559(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator153494877(
+    result[i] = anonymousValidator1080303482(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -3626,7 +3701,7 @@ export function anonymousValidator174246559(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }|undefined}
  */
 export function anonymousValidator980814292(
   value,
@@ -3692,7 +3767,7 @@ export function anonymousValidator980814292(
     `${propertyPath}.rootExports`,
     errors,
   );
-  result["errors"] = anonymousValidator174246559(
+  result["errors"] = anonymousValidator1364098500(
     value["errors"],
     `${propertyPath}.errors`,
     errors,
