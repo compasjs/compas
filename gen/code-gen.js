@@ -68,6 +68,12 @@ export function applyCodeGenStructure(app) {
             relationOwnKey: T.string(),
           },
           {
+            key: "sqlUnusedOneToMany",
+            type: T.string(),
+            referencedType: T.string(),
+            ownKey: T.string(),
+          },
+          {
             key: "sqlEnableValidator",
           },
           {
