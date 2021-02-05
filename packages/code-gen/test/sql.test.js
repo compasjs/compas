@@ -335,6 +335,23 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.id, user.id);
   });
 
+  t.test("traverse with 'via' and idIn", async (t) => {
+    const [dbUser] = await client
+      .queryUser({
+        where: {
+          idIn: [post.writer],
+        },
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
+        },
+      })
+      .exec(sql);
+
+    t.equal(dbUser.id, user.id);
+  });
+
   t.test("traverse via queryCategory", async (t) => {
     const builder = {
       viaPosts: {

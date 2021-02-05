@@ -3,7 +3,7 @@ import { upperCaseFirst } from "../../utils.js";
 import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";
 import { getSearchableFields } from "./where-type.js";
 
-const typeTable = {
+export const typeTable = {
   any: "jsonb",
   anyOf: "jsonb",
   array: "jsonb",
@@ -13,16 +13,19 @@ const typeTable = {
   /**
    *
    * @param {CodeGenNumberType} type
+   * @param {boolean} skipPrimary
    * @returns {string}
-   */ number: (type) =>
-    !type.sql?.primary
+   */ number: (type, skipPrimary) =>
+    !type.sql?.primary || skipPrimary
       ? type.validator.floatingPoint
         ? "float"
         : "int"
       : "BIGSERIAL PRIMARY KEY",
   object: "jsonb",
-  string: (type) => (type.sql?.primary ? "varchar PRIMARY KEY" : "varchar"),
-  uuid: (type) => (type.sql?.primary ? "uuid PRIMARY KEY" : "uuid"),
+  string: (type, skipPrimary) =>
+    type.sql?.primary && !skipPrimary ? "varchar PRIMARY KEY" : "varchar",
+  uuid: (type, skipPrimary) =>
+    type.sql?.primary && !skipPrimary ? "uuid PRIMARY KEY" : "uuid",
 };
 
 /**
@@ -77,7 +80,7 @@ function getFields(object) {
 
     let sqlType = typeTable[type.type];
     if (typeof sqlType === "function") {
-      sqlType = sqlType(type);
+      sqlType = sqlType(type, false);
     }
 
     let defaultValue = "";
