@@ -637,6 +637,24 @@ export function internalQueryFileGroup2(builder = {}, wherePartial) {
   const joinQb = query``;
   if (builder.viaFile) {
     builder.where = builder.where ?? {};
+    // Prepare fileIn
+    if (isQueryPart(builder.where.fileIn)) {
+      builder.where.fileIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.fileIn) &&
+      builder.where.fileIn.length > 0
+    ) {
+      builder.where.fileIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.fileIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.fileIn,
+      );
+    } else {
+      builder.where.fileIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaFile.offset)
       ? query`OFFSET ${builder.viaFile.offset}`
       : query``;
@@ -645,14 +663,32 @@ export function internalQueryFileGroup2(builder = {}, wherePartial) {
         query`FETCH NEXT ${builder.viaFile.limit} ROWS ONLY`,
       );
     }
-    builder.where.fileIn = query`
+    builder.where.fileIn.append(query`
 SELECT DISTINCT f."id"
 ${internalQueryFile(builder.viaFile)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.viaParent) {
     builder.where = builder.where ?? {};
+    // Prepare parentIn
+    if (isQueryPart(builder.where.parentIn)) {
+      builder.where.parentIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.parentIn) &&
+      builder.where.parentIn.length > 0
+    ) {
+      builder.where.parentIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.parentIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.parentIn,
+      );
+    } else {
+      builder.where.parentIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaParent.offset)
       ? query`OFFSET ${builder.viaParent.offset}`
       : query``;
@@ -661,14 +697,32 @@ ${offsetLimitQb}
         query`FETCH NEXT ${builder.viaParent.limit} ROWS ONLY`,
       );
     }
-    builder.where.parentIn = query`
+    builder.where.parentIn.append(query`
 SELECT DISTINCT fg."id"
 ${internalQueryFileGroup(builder.viaParent)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.viaChildren) {
     builder.where = builder.where ?? {};
+    // Prepare idIn
+    if (isQueryPart(builder.where.idIn)) {
+      builder.where.idIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.idIn) &&
+      builder.where.idIn.length > 0
+    ) {
+      builder.where.idIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.idIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.idIn,
+      );
+    } else {
+      builder.where.idIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaChildren.offset)
       ? query`OFFSET ${builder.viaChildren.offset}`
       : query``;
@@ -677,11 +731,11 @@ ${offsetLimitQb}
         query`FETCH NEXT ${builder.viaChildren.limit} ROWS ONLY`,
       );
     }
-    builder.where.idIn = query`
+    builder.where.idIn.append(query`
 SELECT DISTINCT fg."parent"
 ${internalQueryFileGroup(builder.viaChildren)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.file) {
     const joinedKeys = [];
@@ -802,6 +856,24 @@ export function internalQueryFileGroup(builder = {}, wherePartial) {
   const joinQb = query``;
   if (builder.viaFile) {
     builder.where = builder.where ?? {};
+    // Prepare fileIn
+    if (isQueryPart(builder.where.fileIn)) {
+      builder.where.fileIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.fileIn) &&
+      builder.where.fileIn.length > 0
+    ) {
+      builder.where.fileIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.fileIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.fileIn,
+      );
+    } else {
+      builder.where.fileIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaFile.offset)
       ? query`OFFSET ${builder.viaFile.offset}`
       : query``;
@@ -810,14 +882,32 @@ export function internalQueryFileGroup(builder = {}, wherePartial) {
         query`FETCH NEXT ${builder.viaFile.limit} ROWS ONLY`,
       );
     }
-    builder.where.fileIn = query`
+    builder.where.fileIn.append(query`
 SELECT DISTINCT f."id"
 ${internalQueryFile(builder.viaFile)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.viaParent) {
     builder.where = builder.where ?? {};
+    // Prepare parentIn
+    if (isQueryPart(builder.where.parentIn)) {
+      builder.where.parentIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.parentIn) &&
+      builder.where.parentIn.length > 0
+    ) {
+      builder.where.parentIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.parentIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.parentIn,
+      );
+    } else {
+      builder.where.parentIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaParent.offset)
       ? query`OFFSET ${builder.viaParent.offset}`
       : query``;
@@ -826,14 +916,32 @@ ${offsetLimitQb}
         query`FETCH NEXT ${builder.viaParent.limit} ROWS ONLY`,
       );
     }
-    builder.where.parentIn = query`
+    builder.where.parentIn.append(query`
 SELECT DISTINCT fg2."id"
 ${internalQueryFileGroup2(builder.viaParent)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.viaChildren) {
     builder.where = builder.where ?? {};
+    // Prepare idIn
+    if (isQueryPart(builder.where.idIn)) {
+      builder.where.idIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.idIn) &&
+      builder.where.idIn.length > 0
+    ) {
+      builder.where.idIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.idIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.idIn,
+      );
+    } else {
+      builder.where.idIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaChildren.offset)
       ? query`OFFSET ${builder.viaChildren.offset}`
       : query``;
@@ -842,11 +950,11 @@ ${offsetLimitQb}
         query`FETCH NEXT ${builder.viaChildren.limit} ROWS ONLY`,
       );
     }
-    builder.where.idIn = query`
+    builder.where.idIn.append(query`
 SELECT DISTINCT fg2."parent"
 ${internalQueryFileGroup2(builder.viaChildren)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.file) {
     const joinedKeys = [];

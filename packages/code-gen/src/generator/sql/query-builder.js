@@ -5,6 +5,7 @@ import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
 import { getTypeNameForType } from "../types.js";
+import { typeTable } from "./structure.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
 /**
@@ -397,13 +398,35 @@ if (!isNil(builder.${key}.limit)) {
          }
       `;
 
+    // Note that we need to the xxxIn params first before we can add xxxIn and set it
+    // to a query. The user may have set it to an array or another traverser may have
+    // set a query object already. To get the same guarantees ('AND') we convert
+    // arrays with values to a query part & if a query part exists, add 'INTERSECT'.
+    let sqlCastType = typeTable[type.keys[ownKey].type];
+    if (typeof sqlCastType === "function") {
+      sqlCastType = sqlCastType(type.keys[ownKey].type, false);
+    }
     const traverseJoinPart = js`
          if (builder.via${upperCaseFirst(relationKey)}) {
             builder.where = builder.where ?? {};
 
+            // Prepare ${ownKey}In
+            if (isQueryPart(builder.where.${ownKey}In)) {
+               builder.where.${ownKey}In.append(query\` INTERSECT \`);
+            } else if (Array.isArray(builder.where.${ownKey}In) && builder.where.${ownKey}In.length > 0) {
+               builder.where.${ownKey}In =
+                  query([
+                           "(SELECT value::${sqlCastType} FROM(values (",
+                           ...builder.where.${ownKey}In.map(() => "").join("), ("),
+                           ")) as ids(value)) INTERSECT "
+                        ], ...builder.where.${ownKey}In)
+            } else {
+               builder.where.${ownKey}In = query\`\`;
+            }
+
             ${getLimitOffset(true)}
 
-            builder.where.${ownKey}In = query\`
+            builder.where.${ownKey}In.append(query\`
           SELECT DISTINCT ${otherShortName}."${referencedKey}"
            $\{internalQuery${
              upperCaseFirst(otherSide.name) +
@@ -413,7 +436,7 @@ if (!isNil(builder.${key}.limit)) {
            }(
                builder.via${upperCaseFirst(relationKey)})}
            $\{offsetLimitQb} 
-        \`;
+        \`);
          }
       `;
 

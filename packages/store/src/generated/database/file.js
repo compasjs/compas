@@ -588,6 +588,24 @@ export function internalQueryFile(builder = {}, wherePartial) {
   const joinQb = query``;
   if (builder.viaGroup) {
     builder.where = builder.where ?? {};
+    // Prepare idIn
+    if (isQueryPart(builder.where.idIn)) {
+      builder.where.idIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.idIn) &&
+      builder.where.idIn.length > 0
+    ) {
+      builder.where.idIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.idIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.idIn,
+      );
+    } else {
+      builder.where.idIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaGroup.offset)
       ? query`OFFSET ${builder.viaGroup.offset}`
       : query``;
@@ -596,14 +614,32 @@ export function internalQueryFile(builder = {}, wherePartial) {
         query`FETCH NEXT ${builder.viaGroup.limit} ROWS ONLY`,
       );
     }
-    builder.where.idIn = query`
+    builder.where.idIn.append(query`
 SELECT DISTINCT fg."file"
 ${internalQueryFileGroup(builder.viaGroup)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.viaGroupView) {
     builder.where = builder.where ?? {};
+    // Prepare idIn
+    if (isQueryPart(builder.where.idIn)) {
+      builder.where.idIn.append(query` INTERSECT `);
+    } else if (
+      Array.isArray(builder.where.idIn) &&
+      builder.where.idIn.length > 0
+    ) {
+      builder.where.idIn = query(
+        [
+          "(SELECT value::uuid FROM(values (",
+          ...builder.where.idIn.map(() => "").join("), ("),
+          ")) as ids(value)) INTERSECT ",
+        ],
+        ...builder.where.idIn,
+      );
+    } else {
+      builder.where.idIn = query``;
+    }
     const offsetLimitQb = !isNil(builder.viaGroupView.offset)
       ? query`OFFSET ${builder.viaGroupView.offset}`
       : query``;
@@ -612,11 +648,11 @@ ${offsetLimitQb}
         query`FETCH NEXT ${builder.viaGroupView.limit} ROWS ONLY`,
       );
     }
-    builder.where.idIn = query`
+    builder.where.idIn.append(query`
 SELECT DISTINCT fgv."file"
 ${internalQueryFileGroupView(builder.viaGroupView)}
 ${offsetLimitQb}
-`;
+`);
   }
   if (builder.group) {
     const joinedKeys = [];
