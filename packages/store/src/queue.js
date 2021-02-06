@@ -1,5 +1,5 @@
 import { newLogger } from "@compas/insight";
-import { AppError, environment } from "@compas/stdlib";
+import { AppError, environment, uuid } from "@compas/stdlib";
 import { queries } from "./generated.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
@@ -134,6 +134,7 @@ export class JobQueueWorker {
     }
 
     this.pollInterval = options?.pollInterval ?? 1500;
+    this.maxRetryCount = options?.maxRetryCount ?? 5;
 
     // Setup the worker array, each value is either undefined or a running Promise
     this.workers = Array(options?.parallelCount ?? 1).fill(undefined);
@@ -142,7 +143,7 @@ export class JobQueueWorker {
     this.isStarted = false;
 
     this.jobHandler = options?.handler;
-    this.logger = newLogger({ ctx: { type: this.name } });
+    this.logger = newLogger({ ctx: { type: this.name ?? "queue" } });
   }
 
   start() {
@@ -250,49 +251,57 @@ export class JobQueueWorker {
    * @param {number} idx
    */
   handleJob(idx) {
-    this.workers[idx] = this.sql
-      .begin(async (sql) => {
-        // run in transaction
+    this.workers[idx] = this.sql.begin(async (sql) => {
+      // run in transaction
 
-        const [job] = await this.newJobQuery(sql);
-        if (job === undefined || job.id === undefined) {
-          // reset this 'worker'
-          this.workers[idx] = undefined;
-          return;
+      const [job] = await this.newJobQuery(sql);
+      if (job === undefined || job.id === undefined) {
+        // reset this 'worker'
+        this.workers[idx] = undefined;
+        return;
+      }
+
+      const [jobData] = await queries.jobSelect(sql, {
+        id: job.id,
+      });
+
+      const savepointId = uuid().replace(/-/g, "_");
+      // We start a unique save point so we can still increase the retryCount safely,
+      // while the job is still row locked.
+      await sql`SAVEPOINT ${sql(savepointId)}`;
+
+      try {
+        if (jobData.name === COMPAS_RECURRING_JOB) {
+          await handleCompasRecurring(sql, jobData);
+        } else {
+          await this.jobHandler(sql, jobData);
         }
-
-        const [jobData] = await queries.jobSelect(sql, {
-          id: job.id,
+      } catch (err) {
+        this.logger.error({
+          type: "job_error",
+          id: jobData.id,
+          name: jobData.name,
+          retryCount: jobData.retryCount,
+          error: AppError.format(err),
         });
 
-        // We need to catch errors to be able to reset the
-        // worker. We throw this error afterwards, so the
-        // Postgres library will automatically call ROLLBACK for
-        // us.
-        let error = undefined;
+        // Roll back to before the handler did it's thing
+        await sql`ROLLBACK TO SAVEPOINT ${sql(savepointId)}`;
+        await queries.jobUpdate(
+          sql,
+          {
+            isComplete: jobData.retryCount + 1 >= this.maxRetryCount,
+            retryCount: jobData.retryCount + 1,
+          },
+          { id: jobData.id },
+        );
+      } finally {
+        this.workers[idx] = undefined;
 
-        try {
-          if (jobData.name === COMPAS_RECURRING_JOB) {
-            await handleCompasRecurring(sql, jobData);
-          } else {
-            await this.jobHandler(sql, jobData);
-          }
-        } catch (err) {
-          error = err;
-        } finally {
-          this.workers[idx] = undefined;
-        }
-
-        if (error) {
-          throw error;
-        } else {
-          // Run again as soon as possible
-          setImmediate(this.run.bind(this));
-        }
-      })
-      .catch((e) => {
-        this.logger.error(AppError.format(e));
-      });
+        // Run again as soon as possible
+        setImmediate(this.run.bind(this));
+      }
+    });
   }
 }
 

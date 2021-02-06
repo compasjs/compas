@@ -39,7 +39,7 @@ export const __generated__ = true;
  * @typedef {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }} StoreFileGroupView
  */
 /**
- * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "createdAt": Date, "updatedAt": Date, }} StoreJob
+ * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "createdAt": Date, "updatedAt": Date, }} StoreJob
  */
 /**
  * @typedef {{"years"?: number, "months"?: number, "days"?: number, "hours"?: number, "minutes"?: number, "seconds"?: number, }} StoreJobInterval
@@ -75,10 +75,10 @@ export const __generated__ = true;
  * @typedef {{"order"?: number, "file"?: null|string, "parent"?: null|string, "name"?: null|string, "meta"?: {}, "createdAt"?: Date, "updatedAt"?: Date, "deletedAt"?: null|Date, }} StoreFileGroupUpdatePartial
  */
 /**
- * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "name": string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreJobInsertPartial
+ * @typedef {{"id"?: number, "isComplete"?: boolean, "priority"?: number, "retryCount"?: number, "name": string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreJobInsertPartial
  */
 /**
- * @typedef {{"isComplete"?: boolean, "priority"?: number, "name"?: string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreJobUpdatePartial
+ * @typedef {{"isComplete"?: boolean, "priority"?: number, "retryCount"?: number, "name"?: string, "scheduledAt"?: Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreJobUpdatePartial
  */
 /**
  * @typedef {{"id"?: string, "expires": Date, "data"?: *, "createdAt"?: Date, "updatedAt"?: Date, }} StoreSessionInsertPartial
