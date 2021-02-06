@@ -15,6 +15,11 @@ import {
 
 mainTestFn(import.meta);
 
+const promiseSleep = (ms) =>
+  new Promise((r) => {
+    setTimeout(() => r(), ms);
+  });
+
 test("store/queue", async (t) => {
   let sql = undefined;
 
@@ -89,13 +94,9 @@ test("store/queue", async (t) => {
 
   t.test("quick start / stop sequence", async (t) => {
     qw.start();
-    await new Promise((r) => {
-      setTimeout(r, 15);
-    });
+    await promiseSleep(15);
     qw.stop();
-    await new Promise((r) => {
-      setTimeout(r, 15);
-    });
+    await promiseSleep(15);
     t.ok(!qw.isStarted);
   });
 
@@ -119,20 +120,19 @@ test("store/queue", async (t) => {
     await queries.jobDelete(sql, {
       $or: [{ isComplete: true }, { isComplete: false }],
     });
-    await addJobToQueue(sql, { name: "foo" });
+    await addJobToQueue(sql, { name: "retryTestJob" });
 
     qw.jobHandler = (sql, job) => {
-      if (job.name === "foo") {
+      if (job.name === "retryTestJob") {
         throw AppError.serverError("oops");
       }
     };
 
     // Start a job manually
     qw.handleJob(0);
-    await new Promise((r) => {
-      setTimeout(r, 20);
-    });
-    const [job] = await queries.jobSelect(sql, { name: "foo" });
+    await promiseSleep(20);
+
+    const [job] = await queries.jobSelect(sql, { name: "retryTestJob" });
 
     t.equal(job.isComplete, false);
     t.equal(job.retryCount, 1);
@@ -143,14 +143,45 @@ test("store/queue", async (t) => {
     qw.maxRetryCount = 1;
     // Start a job manually
     qw.handleJob(0);
-    await new Promise((r) => {
-      setTimeout(r, 20);
-    });
+    await promiseSleep(20);
 
-    const [job] = await queries.jobSelect(sql, { name: "foo" });
+    const [job] = await queries.jobSelect(sql, { name: "retryTestJob" });
 
     t.equal(job.isComplete, true);
     t.equal(job.retryCount, 2);
+  });
+
+  t.test("handler timeout", async (t) => {
+    await addJobToQueue(sql, { name: "timeoutTest" });
+
+    // Setup settings
+    qw.handlerTimeout = 2;
+    qw.maxRetryCount = 10;
+    qw.jobHandler = async () => {
+      await promiseSleep(10);
+    };
+
+    qw.handleJob(0);
+    await promiseSleep(20);
+
+    const [job] = await queries.jobSelect(sql, { name: "timeoutTest" });
+
+    t.equal(job.isComplete, false);
+    t.equal(job.retryCount, 1);
+
+    // Immediate resolve handler, and 10ms handler timeout
+    qw.jobHandler = () => {};
+    qw.handlerTimeout = 10;
+
+    qw.handleJob(0);
+    await promiseSleep(20);
+
+    const [dbJob] = await queries.jobSelect(sql, {
+      name: "timeoutTest",
+    });
+
+    t.equal(dbJob.isComplete, true);
+    t.equal(dbJob.retryCount, 1);
   });
 
   t.test("destroy test db", async (t) => {

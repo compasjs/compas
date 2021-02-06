@@ -386,6 +386,12 @@ export interface JobQueueWorkerOptions {
    * Defaults to 5 retries
    */
   maxRetryCount?: number;
+
+  /**
+   * Maximum time the handler could take to fulfill a job in milliseconds
+   * Defaults to 30 seconds.
+   */
+  handlerTimeout?: number;
 }
 
 /**
