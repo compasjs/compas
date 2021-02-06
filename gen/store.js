@@ -102,6 +102,7 @@ export function applyStoreStructure(app) {
         scheduledAt: T.date().defaultToNow().searchable(),
         name: T.string().searchable(),
         data: T.any().default("{}"),
+        retryCount: T.number().default(0),
       })
       .enableQueries({ withDates: true }),
   );

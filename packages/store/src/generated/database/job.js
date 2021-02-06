@@ -15,6 +15,7 @@ const jobFieldSet = new Set([
   "scheduledAt",
   "name",
   "data",
+  "retryCount",
   "createdAt",
   "updatedAt",
 ]);
@@ -30,11 +31,11 @@ export function jobFields(tableName = "j.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"isComplete", ${tableName}"priority", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+      `${tableName}"isComplete", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /**
@@ -410,11 +411,11 @@ export function jobInsertValues(insert, options = {}) {
     checkFieldsInSet("job", "insert", jobFieldSet, it);
     q.append(query`(
 ${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.isComplete ?? false}, ${it.priority ?? 0}, ${it.name ?? null}, ${
-      it.scheduledAt ?? new Date()
-    }, ${JSON.stringify(it.data ?? {})}, ${it.createdAt ?? new Date()}, ${
-      it.updatedAt ?? new Date()
-    }
+${it.isComplete ?? false}, ${it.priority ?? 0}, ${it.retryCount ?? 0}, ${
+      it.name ?? null
+    }, ${it.scheduledAt ?? new Date()}, ${JSON.stringify(it.data ?? {})}, ${
+      it.createdAt ?? new Date()
+    }, ${it.updatedAt ?? new Date()}
 )`);
     if (i !== insert.length - 1) {
       q.append(query`, `);
@@ -438,6 +439,10 @@ export function jobUpdateSet(update) {
   if (update.priority !== undefined) {
     strings.push(`, "priority" = `);
     values.push(update.priority ?? 0);
+  }
+  if (update.retryCount !== undefined) {
+    strings.push(`, "retryCount" = `);
+    values.push(update.retryCount ?? 0);
   }
   if (update.name !== undefined) {
     strings.push(`, "name" = `);

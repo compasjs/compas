@@ -1,7 +1,8 @@
 import { mainTestFn, test } from "@compas/cli";
-import { isNil } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { queries } from "./generated.js";
 import {
+  addJobToQueue,
   addRecurringJobToQueue,
   getNextScheduledAt,
   handleCompasRecurring,
@@ -112,6 +113,44 @@ test("store/queue", async (t) => {
     start.setHours(start.getHours() - 1);
 
     t.ok((await qw.averageTimeToCompletion(start, end)) > 0);
+  });
+
+  t.test("on failure retryCount should be up", async (t) => {
+    await queries.jobDelete(sql, {
+      $or: [{ isComplete: true }, { isComplete: false }],
+    });
+    await addJobToQueue(sql, { name: "foo" });
+
+    qw.jobHandler = (sql, job) => {
+      if (job.name === "foo") {
+        throw AppError.serverError("oops");
+      }
+    };
+
+    // Start a job manually
+    qw.handleJob(0);
+    await new Promise((r) => {
+      setTimeout(r, 20);
+    });
+    const [job] = await queries.jobSelect(sql, { name: "foo" });
+
+    t.equal(job.isComplete, false);
+    t.equal(job.retryCount, 1);
+  });
+
+  t.test("on max retries, job should be completed", async (t) => {
+    // Note that we use the setup of the previous function here as well
+    qw.maxRetryCount = 1;
+    // Start a job manually
+    qw.handleJob(0);
+    await new Promise((r) => {
+      setTimeout(r, 20);
+    });
+
+    const [job] = await queries.jobSelect(sql, { name: "foo" });
+
+    t.equal(job.isComplete, true);
+    t.equal(job.retryCount, 2);
   });
 
   t.test("destroy test db", async (t) => {

@@ -47,6 +47,7 @@ const objectKeys1781782332 = new Set([
   "scheduledAt",
   "name",
   "data",
+  "retryCount",
   "createdAt",
   "updatedAt",
 ]);
@@ -1091,7 +1092,7 @@ export function anonymousValidator1471603504(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "createdAt": Date, "updatedAt": Date, }|undefined}
+ * @returns {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "createdAt": Date, "updatedAt": Date, }|undefined}
  */
 export function anonymousValidator1781782332(
   value,
@@ -1146,6 +1147,11 @@ export function anonymousValidator1781782332(
   result["data"] = anonymousValidator1471603504(
     value["data"],
     `${propertyPath}.data`,
+    errors,
+  );
+  result["retryCount"] = anonymousValidator1430232428(
+    value["retryCount"],
+    `${propertyPath}.retryCount`,
     errors,
   );
   result["createdAt"] = anonymousValidator1389014320(
