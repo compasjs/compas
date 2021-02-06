@@ -135,6 +135,7 @@ export class JobQueueWorker {
 
     this.pollInterval = options?.pollInterval ?? 1500;
     this.maxRetryCount = options?.maxRetryCount ?? 5;
+    this.handlerTimeout = options?.handlerTimeout ?? 30000;
 
     // Setup the worker array, each value is either undefined or a running Promise
     this.workers = Array(options?.parallelCount ?? 1).fill(undefined);
@@ -271,11 +272,21 @@ export class JobQueueWorker {
       await sql`SAVEPOINT ${sql(savepointId)}`;
 
       try {
+        let handlerPromise;
         if (jobData.name === COMPAS_RECURRING_JOB) {
-          await handleCompasRecurring(sql, jobData);
+          handlerPromise = handleCompasRecurring(sql, jobData);
         } else {
-          await this.jobHandler(sql, jobData);
+          handlerPromise = this.jobHandler(sql, jobData);
         }
+
+        await Promise.race([
+          new Promise((_, reject) => {
+            setTimeout(() => {
+              reject(AppError.serverError("queue.handlerTimeout"));
+            }, this.handlerTimeout);
+          }),
+          handlerPromise,
+        ]);
       } catch (err) {
         this.logger.error({
           type: "job_error",
