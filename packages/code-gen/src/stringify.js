@@ -6,7 +6,7 @@
  *
  * @param {CodeGenType} type
  * @param {boolean=} includeSqlRelated
- * @return {string}
+ * @returns {string}
  */
 export function stringifyType(type, includeSqlRelated = false) {
   const {

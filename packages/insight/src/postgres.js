@@ -3,20 +3,24 @@
  * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
  * Postgres documentation for implications.
  *
+ * @since 0.1.0
+ * @summary Get the estimated disk size and row count for all tables
+ *
  * @param {Postgres} sql
  * @returns {Promise<Object<string, { diskSize: number, rowCount: number }>>}
  */
 export async function postgresTableSizes(sql) {
   const queryResult = await sql`
-    SELECT relname                       AS "relation",
-           pg_total_relation_size(c.oid) AS "diskSize",
-           c.reltuples                   as "rowCount"
-    FROM pg_class c
-           LEFT JOIN pg_namespace n ON (n.oid = c.relnamespace)
-    WHERE nspname NOT IN ('pg_catalog', 'information_schema')
-      AND c.relkind = ANY (ARRAY ['r', 'v', 'm'])
-      AND nspname !~ '^pg_toast'
-  `;
+     SELECT relname AS "relation",
+            pg_total_relation_size(c.oid) AS "diskSize",
+            c.reltuples AS "rowCount"
+     FROM pg_class c
+            LEFT JOIN pg_namespace n ON (n.oid = c.relnamespace)
+     WHERE
+         nspname NOT IN ('pg_catalog', 'information_schema')
+     AND c.relkind = ANY (ARRAY ['r', 'v', 'm'])
+     AND nspname !~ '^pg_toast'
+   `;
 
   const result = {};
 

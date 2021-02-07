@@ -10,7 +10,7 @@ License specifier: https://github.com/koajs/compose/blob/06e82e65a368ac12cd6405b
  * of all those which are passed.
  *
  * @param {Array} middleware
- * @return {Function}
+ * @returns {Function}
  */
 export function compose(middleware) {
   if (!Array.isArray(middleware))

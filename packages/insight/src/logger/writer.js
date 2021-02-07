@@ -1,11 +1,12 @@
 import { inspect } from "util";
 
 /**
- * @param stream
- * @param level
- * @param timestamp
- * @param context
- * @param message
+ * @param {NodeJS.WritableStream} stream
+ * @param {string} level
+ * @param {Date} timestamp
+ * @param {string} context
+ * @param {*} message
+ * @returns {void}
  */
 export function writeNDJSON(stream, level, timestamp, context, message) {
   stream.write(
@@ -16,11 +17,12 @@ export function writeNDJSON(stream, level, timestamp, context, message) {
 }
 
 /**
- * @param stream
- * @param level
- * @param timestamp
- * @param context
- * @param message
+ * @param {NodeJS.WritableStream} stream
+ * @param {string} level
+ * @param {Date} timestamp
+ * @param {string} context
+ * @param {*} message
+ * @returns {void}
  */
 export function writePretty(stream, level, timestamp, context, message) {
   let prefix = `${formatDate(timestamp)} ${formatLevelAndType(

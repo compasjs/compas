@@ -105,7 +105,7 @@ export function watchOptionsWithDefaults(options) {
 /**
  * Compiles an chokidar ignore array for the specified options
  * @param {CliWatchOptions} options
- * @return {function(string): boolean}
+ * @returns {function(string): boolean}
  */
 export function watchOptionsToIgnoredArray(options) {
   // Compiled patterns contains extension filter and ignores dotfiles and node_modules

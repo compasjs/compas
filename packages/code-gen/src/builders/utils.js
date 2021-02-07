@@ -29,7 +29,7 @@ export function isNamedTypeBuilderLike(value) {
  * - array
  * - object
  * @param {TypeBuilderLike|undefined} value
- * @return {*}
+ * @returns {*}
  */
 export function buildOrInfer(value) {
   if (value && value.build && typeof value.build === "function") {

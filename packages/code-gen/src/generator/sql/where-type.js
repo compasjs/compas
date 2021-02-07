@@ -322,7 +322,7 @@ export function getWherePartial(context, type) {
 /**
  * Returns an object with only the searchable fields
  * @param {CodeGenObjectType} type
- * @return {Object<string, CodeGenType>}
+ * @returns {Object<string, CodeGenType>}
  */
 export function getSearchableFields(type) {
   return getSortedKeysForType(type)

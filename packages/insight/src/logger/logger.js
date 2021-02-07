@@ -3,6 +3,10 @@ import { writeNDJSON, writePretty } from "./writer.js";
 let environment = undefined;
 
 /**
+ * Create a new logger instance
+ *
+ * @since 0.1.0
+ *
  * @param {LoggerOptions} [options]
  * @returns {Logger}
  */
@@ -39,6 +43,9 @@ export function newLogger(options) {
 
 /**
  * Wrap provided writer function to be used in the Logger
+ *
+ * @param {function} fn
+ * @returns {function}
  */
 function wrapWriter(fn) {
   return (stream, level, context, message) => {

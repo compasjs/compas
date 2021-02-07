@@ -1,6 +1,10 @@
 const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 
 /**
+ * Convert bytes to a human readable value
+ *
+ * @since 0.1.0
+ *
  * @param {number} [bytes]
  * @returns {string}
  */
@@ -24,7 +28,12 @@ export function bytesToHumanReadable(bytes) {
 }
 
 /**
+ * Print memory usage of this Node.js process
+ *
+ * @since 0.1.0
+ *
  * @param {Logger} logger
+ * @returns {void}
  */
 export function printProcessMemoryUsage(logger) {
   const {

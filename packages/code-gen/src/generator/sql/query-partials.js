@@ -84,7 +84,7 @@ export function getFieldSet(context, type) {
  * A list of fields for the provided type, with dynamic tableName
  * @property {CodeGenContext} context
  * @property {CodeGenObjectType} type
- * @return {string}
+ * @returns {string}
  */
 export function getFieldsPartial(context, type) {
   const { key: primaryKey } = getPrimaryKeyWithType(type);
@@ -126,7 +126,7 @@ export function getFieldsPartial(context, type) {
  *
  * @property {CodeGenContext} context
  * @property {CodeGenObjectType} type
- * @return {string}
+ * @returns {string}
  */
 export function getOrderPartial(context, type) {
   const { key: primaryKey } = getPrimaryKeyWithType(type);

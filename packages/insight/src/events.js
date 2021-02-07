@@ -1,7 +1,9 @@
 import { newLogger } from "@compas/insight";
 
 /**
- * Create a new event from a single logger
+ * Create a new event from a logger
+ *
+ * @since 0.1.0
  *
  * @param {Logger} logger Logger should have a context, like the default `ctx.log`
  * @returns {Event}
@@ -17,6 +19,8 @@ export function newEvent(logger) {
 
 /**
  * Create a 'child' event, reuses the logger, adds callstack to the passed event
+ *
+ * @since 0.1.0
  *
  * @param {Event} event
  * @returns {Event}
@@ -35,8 +39,11 @@ export function newEventFromEvent(event) {
 /**
  * Track event start times
  *
+ * @since 0.1.0
+ *
  * @param {Event} event
  * @param {string} name
+ * @returns {void}
  */
 export function eventStart(event, name) {
   event.name = name;
@@ -51,8 +58,11 @@ export function eventStart(event, name) {
 /**
  * Rename an event, can only be done if `eventStop` is not called yet.
  *
+ * @since 0.1.0
+ *
  * @param {Event} event
  * @param {string} name
+ * @returns {void}
  */
 export function eventRename(event, name) {
   event.name = name;
@@ -62,7 +72,10 @@ export function eventRename(event, name) {
 /**
  * Track event end times and log if necessary
  *
+ * @since 0.1.0
+ *
  * @param {Event} event
+ * @returns {void}
  */
 export function eventStop(event) {
   event.callStack.push({
@@ -81,8 +94,11 @@ export function eventStop(event) {
 
 /**
  * Create a new test event
+ *
+ * @since 0.1.0
+ *
  * @param {{ enableLogs?: boolean }} [options={}]
- * @return {Event}
+ * @returns {Event}
  */
 export function newTestEvent(options = {}) {
   const log = newLogger({ ctx: { type: "test-event" } });
