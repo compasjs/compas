@@ -1,6 +1,6 @@
 {
   "name": "@compas/server",
-  "version": "0.0.114",
+  "version": "0.0.115",
   "description": "Koa server and common middleware",
   "main": "./index.js",
   "exports": "./index.js",
@@ -15,8 +15,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/insight": "0.0.114",
-    "@compas/stdlib": "0.0.114",
+    "@compas/insight": "0.0.115",
+    "@compas/stdlib": "0.0.115",
     "formidable": "2.0.0-canary.20200504.1",
     "keygrip": "1.1.0",
     "koa": "2.13.1",
