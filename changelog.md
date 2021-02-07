@@ -8,6 +8,33 @@ order: 3
 
 # CHANGELOG
 
+### [v0.0.115](https://github.com/compasjs/compas/releases/tag/v0.0.115)
+
+- build(deps): bump @types/node from 14.14.22 to 14.14.25
+  ([#652](https://github.com/compasjs/compas/pull/652),
+  [#658](https://github.com/compasjs/compas/pull/658))
+- build(deps-dev): bump @types/react from 17.0.0 to 17.0.1
+  ([#650](https://github.com/compasjs/compas/pull/650))
+- build(deps-dev): bump fastest-validator from 1.9.0 to 1.10.0
+  ([#653](https://github.com/compasjs/compas/pull/653))
+- build(deps-dev): bump react-query from 3.6.0 to 3.8.2
+  ([#659](https://github.com/compasjs/compas/pull/659),
+  [#664](https://github.com/compasjs/compas/pull/664))
+- code-gen: add error for unused oneToMany relations
+  ([#657](https://github.com/compasjs/compas/pull/657))
+- code-gen: support multiple 'viaXxx' in the query builder
+  ([#661](https://github.com/compasjs/compas/pull/661))
+- docs: consistent JSDoc return usage, add since tag to insight exports
+- feat(store): handler timeout for job queue
+  ([#663](https://github.com/compasjs/compas/pull/663))
+- feat(store): max retry count on job failures
+  ([#662](https://github.com/compasjs/compas/pull/662))
+- server: catch errors while creating and closing a test app
+  ([#656](https://github.com/compasjs/compas/pull/656))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.115.html).
+
 ### [v0.0.114](https://github.com/compasjs/compas/releases/tag/v0.0.114)
 
 - build(deps): bump c8 from 7.4.0 to 7.5.0
