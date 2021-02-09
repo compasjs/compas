@@ -1,4 +1,5 @@
 import { cpus } from "os";
+import { pathToFileURL } from "url";
 import { isMainThread, Worker } from "worker_threads";
 import {
   dirnameForModule,
@@ -32,7 +33,7 @@ async function main(logger) {
     // Allow same process execution for coverage collecting
     const files = listTestFiles();
     for (const file of files) {
-      await import(file);
+      await import(pathToFileURL(file));
     }
     mainTestFn(import.meta);
     return;
