@@ -1,3 +1,4 @@
+import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
 import { mainFn } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
@@ -68,7 +69,7 @@ function createMessageDispatcher(logger, callback) {
       callback();
     } else if (message.type === "provide_file") {
       const idx = state.children.length;
-      import(message.file).then(async () => {
+      import(pathToFileURL(message.file)).then(async () => {
         if (state.children[idx]) {
           // Handle multiple added suites for a single import
           for (let i = idx; i < state.children.length; ++i) {

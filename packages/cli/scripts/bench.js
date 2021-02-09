@@ -1,3 +1,4 @@
+import { pathToFileURL } from "url";
 import {
   filenameForModule,
   mainFn,
@@ -15,7 +16,7 @@ const contentHandler = async (file) => {
   if (!file.endsWith(".bench.js")) {
     return;
   }
-  await import(file);
+  await import(pathToFileURL(file));
 };
 
 mainFn(import.meta, main);

@@ -1,3 +1,4 @@
+import { pathToFileURL } from "url";
 import { pathJoin } from "@compas/stdlib";
 import { executeCommand, watchOptionsWithDefaults } from "../utils.js";
 
@@ -33,7 +34,7 @@ export async function runCommand(logger, command, scriptCollection) {
     if (command.watch) {
       // Try to import script, to see if it wants to control watch behaviour
       // See CliWatchOptions
-      const f = await import(src);
+      const f = await import(pathToFileURL(src));
 
       watchOptions = watchOptionsWithDefaults(f?.cliWatchOptions);
       if (watchOptions.disable) {

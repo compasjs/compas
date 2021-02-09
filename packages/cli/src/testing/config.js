@@ -1,4 +1,5 @@
 import { existsSync } from "fs";
+import { pathToFileURL } from "url";
 import { pathJoin } from "@compas/stdlib";
 import { setGlobalSetup, setGlobalTeardown, setTestTimeout } from "./state.js";
 
@@ -17,7 +18,7 @@ export async function loadTestConfig() {
     return;
   }
 
-  const config = await import(configPath);
+  const config = await import(pathToFileURL(configPath));
 
   if (config.timeout) {
     if (typeof config.timeout !== "number") {

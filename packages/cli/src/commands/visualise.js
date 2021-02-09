@@ -1,4 +1,5 @@
 import { existsSync, writeFileSync } from "fs";
+import { pathToFileURL } from "url";
 import {
   AppError,
   dirnameForModule,
@@ -142,7 +143,7 @@ export async function visualiseCommand(logger, command) {
  * @returns {Promise<{trie, structure: CodeGenStructure}|undefined>}
  */
 async function getStructure(logger, codeGen, subCommand, structureFile) {
-  const { structure } = await import(structureFile);
+  const { structure } = await import(pathToFileURL(structureFile));
 
   let trie;
   const context = {
@@ -190,7 +191,7 @@ async function getCodeGenExports() {
   }
 
   try {
-    return await import(codeGenImportPath);
+    return await import(pathToFileURL(codeGenImportPath));
   } catch {
     return undefined;
   }
@@ -207,7 +208,7 @@ async function structureFileExists(structureFile) {
   }
 
   try {
-    await import(structureFile);
+    await import(pathToFileURL(structureFile));
     return true;
   } catch {
     return false;
@@ -221,7 +222,7 @@ async function structureFileExists(structureFile) {
  * @returns {Promise<boolean>}
  */
 async function structureFileExportsStructure(structureFile, codeGen) {
-  const imported = await import(structureFile);
+  const imported = await import(pathToFileURL(structureFile));
   if (isNil(imported?.structure)) {
     return false;
   }

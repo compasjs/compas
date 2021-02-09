@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
+import { pathToFileURL } from "url";
 import {
   AppError,
   dirnameForModule,
@@ -335,14 +336,16 @@ async function readMigrationsDir(
         );
 
         const exportedItems = await import(
-          pathJoin(
-            subPath,
-            subPackageJson?.exports?.default ??
-              (typeof subPackageJson?.exports === "string"
-                ? subPackageJson?.exports
-                : undefined) ??
-              subPackageJson?.main ??
-              "index.js",
+          pathToFileURL(
+            pathJoin(
+              subPath,
+              subPackageJson?.exports?.default ??
+                (typeof subPackageJson?.exports === "string"
+                  ? subPackageJson?.exports
+                  : undefined) ??
+                subPackageJson?.main ??
+                "index.js",
+            ),
           )
         );
         if (exportedItems && exportedItems.migrations) {
