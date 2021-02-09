@@ -103,6 +103,28 @@ async function runTests(workers, files) {
   const results = [];
 
   for (const worker of workers) {
+    worker.on("exit", (exitValue) => {
+      if (exitValue !== 0) {
+        results.push({
+          isFailed: true,
+          failedResult: [
+            `Compas unexpected test runner exit (0/1)
+  Failure in either setup or teardown as specified in the config.
+  Check the above logs to find out what went wrong.
+  It may be easier to debug when running the tests with '--serial'.`,
+          ],
+          assertions: {
+            passed: 0,
+            failed: 1,
+          },
+        });
+
+        // Set idx to file length, so the other workers will post their results.
+        // Or in other words, a quick hack to terminate the workers.
+        idx = files.length;
+      }
+    });
+
     worker.on("message", (message) => {
       if (message.type === "request_file") {
         if (idx === files.length) {
