@@ -1,7 +1,6 @@
 import { spawnSync } from "child_process";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-import { dirnameForModule, mainFn } from "@compas/stdlib";
+import { dirnameForModule, mainFn, pathJoin } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
@@ -14,21 +13,21 @@ export const cliWatchOptions = {
 function main(logger) {
   // Script to copy the root README.md to all packages
 
-  if (join(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
+  if (pathJoin(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
     throw new Error("Wrong directory. Run in root.");
   }
 
-  const packagesDir = join(process.cwd(), "packages");
+  const packagesDir = pathJoin(process.cwd(), "packages");
   const packages = readdirSync(packagesDir);
   const readmeSource = getReadmeSource();
 
   logger.info(`Updating ${packages.length} README.md's`);
 
   for (const pkg of packages) {
-    const pkgDir = join(packagesDir, pkg);
+    const pkgDir = pathJoin(packagesDir, pkg);
 
     writeFileSync(
-      join(pkgDir, "README.md"),
+      pathJoin(pkgDir, "README.md"),
       buildReadmeSource(pkg, readmeSource),
       "utf-8",
     );
@@ -48,7 +47,7 @@ function buildReadmeSource(pkgName, readmeSource) {
 }
 
 function getReadmeSource() {
-  const src = readFileSync(join(process.cwd(), "README.md"), "utf-8");
+  const src = readFileSync(pathJoin(process.cwd(), "README.md"), "utf-8");
 
   return src.split("\n").slice(1).join("\n");
 }

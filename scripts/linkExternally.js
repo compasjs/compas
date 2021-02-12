@@ -1,6 +1,5 @@
 import { readdirSync } from "fs";
-import { join } from "path";
-import { isNil, mainFn, spawn } from "@compas/stdlib";
+import { isNil, mainFn, pathJoin, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
@@ -20,12 +19,12 @@ async function main(logger) {
     process.exit(1);
   }
 
-  const packagesDir = join(process.cwd(), "packages");
+  const packagesDir = pathJoin(process.cwd(), "packages");
   const packages = readdirSync(packagesDir);
 
   for (const pkg of packages) {
     await spawn("yarn", ["link", `@compas/${pkg}`], {
-      cwd: join(process.cwd(), workingDir),
+      cwd: pathJoin(process.cwd(), workingDir),
     });
   }
 }
