@@ -1,14 +1,24 @@
 import { exec as cpExec, spawn as cpSpawn } from "child_process";
 import { lstatSync, readdirSync } from "fs";
 import { lstat, readdir } from "fs/promises";
-import { join } from "path";
+import { posix } from "path";
 import { pipeline } from "stream";
 import { promisify } from "util";
 
 const internalExec = promisify(cpExec);
 const internalPipeline = promisify(pipeline);
 
-export { join as pathJoin };
+/**
+ * Join all arguments together and normalize the resulting path. Arguments must be
+ * strings. Using Node.js built-in path.posix.join().
+ * Which forces use of Posix path separators, '/'.
+ *
+ * @param {...string} paths
+ * @returns {string}
+ */
+export function pathJoin(...paths) {
+  return posix.join(...paths);
+}
 
 /**
  * @callback Exec
@@ -90,7 +100,7 @@ export async function processDirectoryRecursive(
       continue;
     }
 
-    const newPath = join(dir, file);
+    const newPath = pathJoin(dir, file);
     const stat = await lstat(newPath);
     if (stat.isDirectory()) {
       await processDirectoryRecursive(newPath, cb, opts);
@@ -125,7 +135,7 @@ export function processDirectoryRecursiveSync(
       continue;
     }
 
-    const newPath = join(dir, file);
+    const newPath = pathJoin(dir, file);
     const stat = lstatSync(newPath);
     if (stat.isDirectory()) {
       processDirectoryRecursiveSync(newPath, cb, opts);
