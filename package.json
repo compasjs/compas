@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@types/node": "14.14.26",
-    "@types/react": "17.0.1",
+    "@types/react": "17.0.2",
     "axios": "0.21.1",
     "fastest-validator": "1.10.0",
     "form-data": "3.0.0",
