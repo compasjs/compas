@@ -1,5 +1,6 @@
 import { mainTestFn, test } from "@compas/cli";
 import { AppError, isNil } from "@compas/stdlib";
+import { eventStart, eventStop, newTestEvent } from "../../insight/index.js";
 import { queries } from "./generated.js";
 import {
   addJobToQueue,
@@ -36,7 +37,7 @@ test("store/queue", async (t) => {
   /** @type {JobQueueWorker|undefined} */
   let qw = undefined;
   const handlerCalls = [];
-  const handler = (sql, data) => {
+  const handler = (event, sql, data) => {
     handlerCalls.push(data);
   };
 
@@ -122,7 +123,8 @@ test("store/queue", async (t) => {
     });
     await addJobToQueue(sql, { name: "retryTestJob" });
 
-    qw.jobHandler = (sql, job) => {
+    qw.jobHandler = (event, sql, job) => {
+      eventStart(event, "test.handler");
       if (job.name === "retryTestJob") {
         throw AppError.serverError("oops");
       }
@@ -157,8 +159,10 @@ test("store/queue", async (t) => {
     // Setup settings
     qw.handlerTimeout = 2;
     qw.maxRetryCount = 10;
-    qw.jobHandler = async () => {
+    qw.jobHandler = async (event) => {
+      eventStart(event, "test.handler");
       await promiseSleep(10);
+      eventStop(event);
     };
 
     qw.handleJob(0);
@@ -211,8 +215,7 @@ test("store/queue - recurring jobs ", async (t) => {
     });
     const jobs = await sql`
       SELECT *
-      FROM
-        job
+      FROM job
       WHERE
         name = 'compas.job.recurring'
     `;
@@ -229,8 +232,7 @@ test("store/queue - recurring jobs ", async (t) => {
       });
       const jobs = await sql`
       SELECT *
-      FROM
-        job
+      FROM job
       WHERE
         name = 'compas.job.recurring'
     `;
@@ -247,8 +249,7 @@ test("store/queue - recurring jobs ", async (t) => {
       });
       const jobs = await sql`
       SELECT *
-      FROM
-        job
+      FROM job
       WHERE
         name = 'compas.job.recurring'
     `;
@@ -266,8 +267,7 @@ test("store/queue - recurring jobs ", async (t) => {
       });
       const jobs = await sql`
              SELECT *
-             FROM
-               job
+             FROM job
              WHERE
                name = 'compas.job.recurring'
            `;
@@ -284,7 +284,7 @@ test("store/queue - recurring jobs ", async (t) => {
       await sql`
       UPDATE job
       SET
-        "isComplete" = true
+        "isComplete" = TRUE
       WHERE
         data ->> 'name' = 'test'
     `;
@@ -294,8 +294,7 @@ test("store/queue - recurring jobs ", async (t) => {
       });
       const jobs = await sql`
       SELECT *
-      FROM
-        job
+      FROM job
       WHERE
         name = 'compas.job.recurring'
     `;
@@ -311,7 +310,7 @@ test("store/queue - recurring jobs ", async (t) => {
     "handleCompasRecurring should dispatch and create a new schedule job",
     async (t) => {
       const inputDate = new Date();
-      await handleCompasRecurring(sql, {
+      await handleCompasRecurring(newTestEvent(), sql, {
         scheduledAt: new Date(),
         priority: 1,
         data: {
@@ -324,15 +323,13 @@ test("store/queue - recurring jobs ", async (t) => {
 
       const [testJob] = await sql`
              SELECT *
-             FROM
-               job
+             FROM job
              WHERE
                name = 'test'
            `;
       const [recurringJob] = await sql`
              SELECT *
-             FROM
-               job
+             FROM job
              WHERE
                name = 'compas.job.recurring'
            `;
@@ -367,7 +364,7 @@ test("store/queue - recurring jobs ", async (t) => {
     async (t) => {
       const scheduledAt = new Date();
       scheduledAt.setUTCMinutes(scheduledAt.getUTCMinutes() - 15);
-      await handleCompasRecurring(sql, {
+      await handleCompasRecurring(newTestEvent(), sql, {
         scheduledAt,
         priority: 1,
         data: {
@@ -380,11 +377,10 @@ test("store/queue - recurring jobs ", async (t) => {
 
       const [job] = await sql`
       SELECT *
-      FROM
-        "job"
+      FROM "job"
       WHERE
         name = 'compas.job.recurring'
-        AND data ->> 'name' = 'recreate_future_test'
+      AND data ->> 'name' = 'recreate_future_test'
     `;
 
       t.ok(job.scheduledAt > scheduledAt);

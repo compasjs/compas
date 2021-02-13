@@ -1,4 +1,4 @@
-import { newLogger } from "@compas/insight";
+import { eventStart, eventStop, newEvent, newLogger } from "@compas/insight";
 import { AppError, environment, uuid } from "@compas/stdlib";
 import { queries } from "./generated.js";
 
@@ -266,17 +266,28 @@ export class JobQueueWorker {
         id: job.id,
       });
 
-      const savepointId = uuid().replace(/-/g, "_");
+      const event = newEvent(
+        newLogger({
+          ctx: {
+            type: "queue_handler",
+            id: jobData.id,
+            name: jobData.name,
+            priority: jobData.priority,
+          },
+        }),
+      );
+
       // We start a unique save point so we can still increase the retryCount safely,
       // while the job is still row locked.
+      const savepointId = uuid().replace(/-/g, "_");
       await sql`SAVEPOINT ${sql(savepointId)}`;
 
       try {
         let handlerPromise;
         if (jobData.name === COMPAS_RECURRING_JOB) {
-          handlerPromise = handleCompasRecurring(sql, jobData);
+          handlerPromise = handleCompasRecurring(event, sql, jobData);
         } else {
-          handlerPromise = this.jobHandler(sql, jobData);
+          handlerPromise = this.jobHandler(event, sql, jobData);
         }
 
         await Promise.race([
@@ -288,10 +299,10 @@ export class JobQueueWorker {
           handlerPromise,
         ]);
       } catch (err) {
-        this.logger.error({
+        event.log.error({
           type: "job_error",
-          id: jobData.id,
-          name: jobData.name,
+          scheduledAt: jobData.scheduledAt,
+          now: new Date(),
           retryCount: jobData.retryCount,
           error: AppError.format(err),
         });
@@ -307,6 +318,7 @@ export class JobQueueWorker {
           { id: jobData.id },
         );
       } finally {
+        eventStop(event);
         this.workers[idx] = undefined;
 
         // Run again as soon as possible
@@ -436,10 +448,13 @@ async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
  * If the next scheduled item is not in the future, the interval is added to the current
  * Date.
  *
+ * @param {Event} event
  * @param {Postgres} sql
  * @param {StoreJob} job
  */
-export async function handleCompasRecurring(sql, job) {
+export async function handleCompasRecurring(event, sql, job) {
+  eventStart(event, "queueHandler.compasRecurring");
+
   const {
     scheduledAt,
     priority,
@@ -467,6 +482,8 @@ export async function handleCompasRecurring(sql, job) {
       interval,
     },
   });
+
+  eventStop(event);
 }
 
 /**

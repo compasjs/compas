@@ -1,3 +1,4 @@
+import * as insight from "@compas/insight";
 import * as minioVendor from "minio";
 import * as postgresVendor from "postgres";
 import { queries } from "./src/generated/index.js";
@@ -341,6 +342,7 @@ export interface JobData {
   scheduledAt: Date;
   name: string;
   data: any;
+  priority: number;
 }
 
 /**
@@ -366,7 +368,11 @@ export interface JobInput {
 }
 
 export interface JobQueueWorkerOptions {
-  handler: (sql: Postgres, data: JobData) => void | Promise<void>;
+  handler: (
+    event: insight.Event,
+    sql: Postgres,
+    data: JobData,
+  ) => void | Promise<void>;
 
   /**
    * Determine the poll interval in milliseconds if the queue was empty. Defaults to 1500 ms
