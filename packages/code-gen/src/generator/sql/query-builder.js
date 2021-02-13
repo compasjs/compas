@@ -32,7 +32,13 @@ export function generateQueryBuilder(context, imports, type, src) {
  */
 export function createQueryBuilderTypes(context) {
   const T = new TypeCreator();
-  let joinIndex = 0;
+
+  // We want to create unique join keys for the query builder.
+  // To enforce uniqueness and to get stable output, we build unique names based on the
+  // combination of `shortName1_shortName2`. We always go through our objects and
+  // relations in the same order, so now only the join keys of affected tables will
+  // change.
+  const joinKeyMapping = new Map();
 
   // Short loop to setup the types
   for (const type of getQueryEnabledObjects(context)) {
@@ -115,12 +121,19 @@ export function createQueryBuilderTypes(context) {
       queryTraverserType.keys[`via${upperCaseFirst(relation.ownKey)}`] =
         queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`];
 
+      const joinKey = `${type.shortName}_${otherSide.shortName}`;
+      if (!joinKeyMapping.has(joinKey)) {
+        joinKeyMapping.set(joinKey, 0);
+      }
+      const joinKeyIdx = joinKeyMapping.get(joinKey);
+      joinKeyMapping.set(joinKey, joinKeyIdx + 1);
+
       relations[relation.ownKey] = {
         relation,
         otherSide,
         referencedKey,
         ownKey,
-        joinKey: `ljl_${joinIndex++}`,
+        joinKey: `${joinKey}_${joinKeyIdx}`,
       };
     }
 
@@ -410,16 +423,17 @@ if (!isNil(builder.${key}.limit)) {
          if (builder.via${upperCaseFirst(relationKey)}) {
             builder.where = builder.where ?? {};
 
-            // Prepare ${ownKey}In
+               // Prepare ${ownKey}In
             if (isQueryPart(builder.where.${ownKey}In)) {
                builder.where.${ownKey}In.append(query\` INTERSECT \`);
-            } else if (Array.isArray(builder.where.${ownKey}In) && builder.where.${ownKey}In.length > 0) {
-               builder.where.${ownKey}In =
-                  query([
-                           "(SELECT value::${sqlCastType} FROM(values (",
-                           ...builder.where.${ownKey}In.map(() => "").join("), ("),
-                           ")) as ids(value)) INTERSECT "
-                        ], ...builder.where.${ownKey}In)
+            } else if (Array.isArray(builder.where.${ownKey}In) &&
+               builder.where.${ownKey}In.length > 0) {
+               builder.where.${ownKey}In = query([
+                                                    "(SELECT value::${sqlCastType} FROM(values (",
+                                                    ...builder.where.${ownKey}In.map(
+                                                       () => "").join("), ("),
+                                                    ")) as ids(value)) INTERSECT "
+                                                 ], ...builder.where.${ownKey}In)
             } else {
                builder.where.${ownKey}In = query\`\`;
             }

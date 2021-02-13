@@ -748,13 +748,13 @@ ${offsetLimitQb}
     if (builder.file.group) {
       joinedKeys.push(
         `'${builder.file.group?.as ?? "group"}'`,
-        '"ljl_0"."result"',
+        '"f_fg_0"."result"',
       );
     }
     if (builder.file.groupView) {
       joinedKeys.push(
         `'${builder.file.groupView?.as ?? "groupView"}'`,
-        '"ljl_1"."result"',
+        '"f_fgv_0"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -764,7 +764,7 @@ SELECT to_jsonb(f.*) || jsonb_build_object(${query([
 ${internalQueryFile(builder.file, query`AND f."id" = fg2."file"`)}
 ORDER BY ${fileOrderBy("f.")}
 ${offsetLimitQb}
-) as "ljl_2" ON TRUE`);
+) as "fg_f_0" ON TRUE`);
   }
   if (builder.parent) {
     const joinedKeys = [];
@@ -777,19 +777,19 @@ ${offsetLimitQb}
     if (builder.parent.file) {
       joinedKeys.push(
         `'${builder.parent.file?.as ?? "file"}'`,
-        '"ljl_2"."result"',
+        '"fg_f_0"."result"',
       );
     }
     if (builder.parent.parent) {
       joinedKeys.push(
         `'${builder.parent.parent?.as ?? "parent"}'`,
-        '"ljl_3"."result"',
+        '"fg_fg_0"."result"',
       );
     }
     if (builder.parent.children) {
       joinedKeys.push(
         `'${builder.parent.children?.as ?? "children"}'`,
-        '"ljl_4"."result"',
+        '"fg_fg_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -799,7 +799,7 @@ SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
 ${internalQueryFileGroup(builder.parent, query`AND fg."id" = fg2."parent"`)}
 ORDER BY ${fileGroupOrderBy("fg.")}
 ${offsetLimitQb}
-) as "ljl_3" ON TRUE`);
+) as "fg_fg_0" ON TRUE`);
   }
   if (builder.children) {
     const joinedKeys = [];
@@ -814,19 +814,19 @@ ${offsetLimitQb}
     if (builder.children.file) {
       joinedKeys.push(
         `'${builder.children.file?.as ?? "file"}'`,
-        '"ljl_2"."result"',
+        '"fg_f_0"."result"',
       );
     }
     if (builder.children.parent) {
       joinedKeys.push(
         `'${builder.children.parent?.as ?? "parent"}'`,
-        '"ljl_3"."result"',
+        '"fg_fg_0"."result"',
       );
     }
     if (builder.children.children) {
       joinedKeys.push(
         `'${builder.children.children?.as ?? "children"}'`,
-        '"ljl_4"."result"',
+        '"fg_fg_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -837,7 +837,7 @@ ${internalQueryFileGroup(builder.children, query`AND fg."parent" = fg2."id"`)}
 GROUP BY fg2."id"
 ORDER BY fg2."id"
 ${offsetLimitQb}
-) as "ljl_4" ON TRUE`);
+) as "fg_fg_1" ON TRUE`);
   }
   return query`
 FROM "fileGroup" fg2
@@ -967,13 +967,13 @@ ${offsetLimitQb}
     if (builder.file.group) {
       joinedKeys.push(
         `'${builder.file.group?.as ?? "group"}'`,
-        '"ljl_0"."result"',
+        '"f_fg_0"."result"',
       );
     }
     if (builder.file.groupView) {
       joinedKeys.push(
         `'${builder.file.groupView?.as ?? "groupView"}'`,
-        '"ljl_1"."result"',
+        '"f_fgv_0"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -983,7 +983,7 @@ SELECT to_jsonb(f.*) || jsonb_build_object(${query([
 ${internalQueryFile(builder.file, query`AND f."id" = fg."file"`)}
 ORDER BY ${fileOrderBy("f.")}
 ${offsetLimitQb}
-) as "ljl_2" ON TRUE`);
+) as "fg_f_0" ON TRUE`);
   }
   if (builder.parent) {
     const joinedKeys = [];
@@ -996,19 +996,19 @@ ${offsetLimitQb}
     if (builder.parent.file) {
       joinedKeys.push(
         `'${builder.parent.file?.as ?? "file"}'`,
-        '"ljl_2"."result"',
+        '"fg_f_0"."result"',
       );
     }
     if (builder.parent.parent) {
       joinedKeys.push(
         `'${builder.parent.parent?.as ?? "parent"}'`,
-        '"ljl_3"."result"',
+        '"fg_fg_0"."result"',
       );
     }
     if (builder.parent.children) {
       joinedKeys.push(
         `'${builder.parent.children?.as ?? "children"}'`,
-        '"ljl_4"."result"',
+        '"fg_fg_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -1018,7 +1018,7 @@ SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
 ${internalQueryFileGroup2(builder.parent, query`AND fg2."id" = fg."parent"`)}
 ORDER BY ${fileGroupOrderBy("fg2.")}
 ${offsetLimitQb}
-) as "ljl_3" ON TRUE`);
+) as "fg_fg_0" ON TRUE`);
   }
   if (builder.children) {
     const joinedKeys = [];
@@ -1033,19 +1033,19 @@ ${offsetLimitQb}
     if (builder.children.file) {
       joinedKeys.push(
         `'${builder.children.file?.as ?? "file"}'`,
-        '"ljl_2"."result"',
+        '"fg_f_0"."result"',
       );
     }
     if (builder.children.parent) {
       joinedKeys.push(
         `'${builder.children.parent?.as ?? "parent"}'`,
-        '"ljl_3"."result"',
+        '"fg_fg_0"."result"',
       );
     }
     if (builder.children.children) {
       joinedKeys.push(
         `'${builder.children.children?.as ?? "children"}'`,
-        '"ljl_4"."result"',
+        '"fg_fg_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -1056,7 +1056,7 @@ ${internalQueryFileGroup2(builder.children, query`AND fg2."parent" = fg."id"`)}
 GROUP BY fg."id"
 ORDER BY fg."id"
 ${offsetLimitQb}
-) as "ljl_4" ON TRUE`);
+) as "fg_fg_1" ON TRUE`);
   }
   return query`
 FROM "fileGroup" fg
@@ -1086,15 +1086,18 @@ export function queryFileGroup(builder = {}) {
   const joinedKeys = [];
   validateStoreFileGroupQueryBuilder(builder, "$.fileGroupBuilder");
   if (builder.file) {
-    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"ljl_2"."result"`);
+    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"fg_f_0"."result"`);
   }
   if (builder.parent) {
-    joinedKeys.push(`'${builder.parent?.as ?? "parent"}'`, `"ljl_3"."result"`);
+    joinedKeys.push(
+      `'${builder.parent?.as ?? "parent"}'`,
+      `"fg_fg_0"."result"`,
+    );
   }
   if (builder.children) {
     joinedKeys.push(
       `'${builder.children?.as ?? "children"}'`,
-      `coalesce("ljl_4"."result", '{}')`,
+      `coalesce("fg_fg_1"."result", '{}')`,
     );
   }
   const qb = query`
