@@ -665,19 +665,19 @@ ${offsetLimitQb}
     if (builder.group.file) {
       joinedKeys.push(
         `'${builder.group.file?.as ?? "file"}'`,
-        '"ljl_2"."result"',
+        '"fg_f_0"."result"',
       );
     }
     if (builder.group.parent) {
       joinedKeys.push(
         `'${builder.group.parent?.as ?? "parent"}'`,
-        '"ljl_3"."result"',
+        '"fg_fg_0"."result"',
       );
     }
     if (builder.group.children) {
       joinedKeys.push(
         `'${builder.group.children?.as ?? "children"}'`,
-        '"ljl_4"."result"',
+        '"fg_fg_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -687,7 +687,7 @@ SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
 ${internalQueryFileGroup(builder.group, query`AND fg."file" = f."id"`)}
 ORDER BY ${fileGroupOrderBy("fg.")}
 ${offsetLimitQb}
-) as "ljl_0" ON TRUE`);
+) as "f_fg_0" ON TRUE`);
   }
   if (builder.groupView) {
     const joinedKeys = [];
@@ -702,19 +702,19 @@ ${offsetLimitQb}
     if (builder.groupView.file) {
       joinedKeys.push(
         `'${builder.groupView.file?.as ?? "file"}'`,
-        '"ljl_5"."result"',
+        '"fgv_f_0"."result"',
       );
     }
     if (builder.groupView.parent) {
       joinedKeys.push(
         `'${builder.groupView.parent?.as ?? "parent"}'`,
-        '"ljl_6"."result"',
+        '"fgv_fgv_0"."result"',
       );
     }
     if (builder.groupView.children) {
       joinedKeys.push(
         `'${builder.groupView.children?.as ?? "children"}'`,
-        '"ljl_7"."result"',
+        '"fgv_fgv_1"."result"',
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -724,7 +724,7 @@ SELECT to_jsonb(fgv.*) || jsonb_build_object(${query([
 ${internalQueryFileGroupView(builder.groupView, query`AND fgv."file" = f."id"`)}
 ORDER BY ${fileGroupViewOrderBy("fgv.")}
 ${offsetLimitQb}
-) as "ljl_1" ON TRUE`);
+) as "f_fgv_0" ON TRUE`);
   }
   return query`
 FROM "file" f
@@ -751,12 +751,12 @@ export function queryFile(builder = {}) {
   const joinedKeys = [];
   validateStoreFileQueryBuilder(builder, "$.fileBuilder");
   if (builder.group) {
-    joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"ljl_0"."result"`);
+    joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"f_fg_0"."result"`);
   }
   if (builder.groupView) {
     joinedKeys.push(
       `'${builder.groupView?.as ?? "groupView"}'`,
-      `"ljl_1"."result"`,
+      `"f_fgv_0"."result"`,
     );
   }
   const qb = query`
