@@ -2,11 +2,9 @@ import { exec as cpExec, spawn as cpSpawn } from "child_process";
 import { lstatSync, readdirSync } from "fs";
 import { lstat, readdir } from "fs/promises";
 import { posix } from "path";
-import { pipeline } from "stream";
 import { promisify } from "util";
 
 const internalExec = promisify(cpExec);
-const internalPipeline = promisify(pipeline);
 
 /**
  * Join all arguments together and normalize the resulting path. Arguments must be
@@ -77,19 +75,27 @@ export function spawn(command, args, opts = {}) {
  *
  * @since 0.1.0
  *
- * @param {ReadableStream} stream
+ * @param {NodeJS.ReadableStream} stream
  * @returns {Promise<Buffer>}
  */
 export async function streamToBuffer(stream) {
-  const buffers = [];
-  await internalPipeline(stream, async function* (transform) {
-    for await (const chunk of transform) {
-      buffers.push(chunk);
-      yield chunk;
-    }
-  });
+  if (!stream || typeof stream._read !== "function") {
+    return Buffer.from([]);
+  }
 
-  return Buffer.concat(buffers);
+  return new Promise((resolve, reject) => {
+    const buffers = [];
+
+    stream.on("data", function (chunk) {
+      buffers.push(chunk);
+    });
+    stream.on("end", function () {
+      resolve(Buffer.concat(buffers));
+    });
+    stream.on("error", function (err) {
+      reject(err);
+    });
+  });
 }
 
 /**

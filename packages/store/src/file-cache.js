@@ -1,8 +1,8 @@
 import { once } from "events";
-import { mkdirSync, createReadStream, createWriteStream } from "fs";
+import { createReadStream, createWriteStream, mkdirSync } from "fs";
 import { pipeline as pipelineCallbacks, Readable } from "stream";
 import { promisify } from "util";
-import { isNil, pathJoin, uuid } from "@compas/stdlib";
+import { isNil, pathJoin, streamToBuffer, uuid } from "@compas/stdlib";
 import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);
@@ -126,18 +126,10 @@ export class FileCache {
    * @param end
    */
   async cacheFileInMemory(key, id, start, end) {
-    const buffers = [];
-    await pipeline(
-      await getFileStream(this.minio, this.bucketName, id),
-      async function* (transform) {
-        for await (const chunk of transform) {
-          buffers.push(chunk);
-          yield chunk;
-        }
-      },
-    );
+    const stream = await getFileStream(this.minio, this.bucketName, id);
+    const buffer = await streamToBuffer(stream);
 
-    this.memoryCache.set(key, Buffer.concat(buffers));
+    this.memoryCache.set(key, buffer);
 
     return {
       stream: Readable.from(this.memoryCache.get(key).slice(start, end)),
