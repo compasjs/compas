@@ -3,7 +3,7 @@ type: page
 title: Contributing
 description: Compas contributing guide
 tags: []
-order: 5
+order: 6
 ---
 
 # CONTRIBUTING

@@ -3,7 +3,7 @@ type: page
 title: Changelog
 description: Compas changelog
 tags: []
-order: 3
+order: 4
 ---
 
 # CHANGELOG
