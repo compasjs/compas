@@ -8,6 +8,42 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.116](https://github.com/compasjs/compas/releases/tag/v0.0.116)
+
+- build(deps): bump @types/node from 14.14.25 to 14.14.27
+  ([#672](https://github.com/compasjs/compas/pull/672),
+  [#680](https://github.com/compasjs/compas/pull/680))
+- build(deps): bump eslint from 7.19.0 to 7.20.0
+  ([#681](https://github.com/compasjs/compas/pull/681))
+- build(deps): bump postgres from 2.0.0-beta.3 to 2.0.0-beta.4
+  ([#683](https://github.com/compasjs/compas/pull/683))
+- build(deps-dev): bump @types/react from 17.0.1 to 17.0.2
+  ([#679](https://github.com/compasjs/compas/pull/679))
+- build(deps-dev): bump react-query from 3.8.2 to 3.9.4
+  ([#671](https://github.com/compasjs/compas/pull/671),
+  [#682](https://github.com/compasjs/compas/pull/682),
+  [#686](https://github.com/compasjs/compas/pull/686))
+- build(deps-dev): bump typescript from 4.1.3 to 4.1.5
+  ([#669](https://github.com/compasjs/compas/pull/669),
+  [#670](https://github.com/compasjs/compas/pull/670))
+- docs(stdlib): expand a bunch of doc blocks on exported functions
+- docs: fix order of website synced files
+- feat(code-gen): stable query builder join key generation
+  ([#684](https://github.com/compasjs/compas/pull/684))
+- feat(stdlib): remove pipeline from streamToBuffer
+  ([#687](https://github.com/compasjs/compas/pull/687))
+- feat(store): add event to queue worker handler
+  ([#685](https://github.com/compasjs/compas/pull/685))
+- fix(cli): proper exit on test worker failure
+  ([#668](https://github.com/compasjs/compas/pull/668))
+- fix(cli,store): fix dynamic imports with absolute url on windows
+  ([#667](https://github.com/compasjs/compas/pull/667))
+- fix(stdlib): force use of Posix path join
+  ([#676](https://github.com/compasjs/compas/pull/676))
+
+The only breaking change can be found in
+[this issue](https://github.com/compasjs/compas/issues/674).
+
 ### [v0.0.115](https://github.com/compasjs/compas/releases/tag/v0.0.115)
 
 - build(deps): bump @types/node from 14.14.22 to 14.14.25
