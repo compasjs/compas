@@ -10,6 +10,10 @@ import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
 /**
+ * Get the number of seconds since Unix epoch (1-1-1970).
+ *
+ * @since 0.1.0
+ *
  * @returns {number}
  */
 export function getSecondsSinceEpoch() {
@@ -17,6 +21,10 @@ export function getSecondsSinceEpoch() {
 }
 
 /**
+ * A function that returns 'undefined'.
+ *
+ * @since 0.1.0
+ *
  * @returns {undefined}
  */
 export function noop() {
@@ -24,14 +32,18 @@ export function noop() {
 }
 
 /**
- * Internal gc function reference
+ * Internal gc function reference.
  * Note that this is undefined if the gc function is not called and Node is not running
- * with --expose-gc on
+ * with --expose-gc on.
  */
 let internalGc = global.gc;
 
 /**
  * HACKY
+ *
+ * @since 0.1.0
+ *
+ * @returns {undefined}
  */
 export function gc() {
   if (isNil(internalGc)) {
@@ -43,8 +55,16 @@ export function gc() {
 }
 
 /**
+ * Checks if the provided import.meta source is used as the project entrypoint.
+ * If so, reads the .env file, prepares the environmentCache, adds some handlers for
+ * uncaught exceptions,  and calls the provided callback
+ *
+ * @since 0.1.0
+ * @summary Process entrypoint executor
+ *
  * @param {ImportMeta} meta
  * @param {MainFnCallback} cb
+ * @returns {undefined}
  */
 export function mainFn(meta, cb) {
   const { isMainFn, name } = isMainFnAndReturnName(meta);
@@ -98,6 +118,10 @@ export function mainFn(meta, cb) {
 }
 
 /**
+ * ES module compatibility counterpart of the CommonJS __filename
+ *
+ * @since 0.1.0
+ *
  * @param {ImportMeta} meta
  * @returns {string}
  */
@@ -106,6 +130,10 @@ export function filenameForModule(meta) {
 }
 
 /**
+ * ES module compatibility counterpart of the CommonJS __dirname
+ *
+ * @since 0.1.0
+ *
  * @param {ImportMeta} meta
  * @returns {string}
  */

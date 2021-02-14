@@ -1,5 +1,12 @@
 import { inspect } from "util";
 
+/**
+ * Standard error to use. This contains a key, status code and info object.
+ * Mostly provided to make it easier to return errors from your API's.
+ *
+ * @since 0.1.0
+ * @class
+ */
 export class AppError extends Error {
   /**
    * @param {string} key

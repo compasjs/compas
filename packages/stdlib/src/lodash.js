@@ -1,7 +1,11 @@
 import lodashMerge from "lodash.merge";
 
 /**
- * @param {*=} item
+ * Check if a value is `null` or `undefined`
+ *
+ * @since 0.1.0
+ *
+ * @param {*} [item]
  * @returns {boolean}
  */
 export function isNil(item) {
@@ -9,7 +13,11 @@ export function isNil(item) {
 }
 
 /**
- * @param {*=} item
+ * Check if a value is a plain JavaScript object.
+ *
+ * @since 0.1.0
+ *
+ * @param {*} [item]
  * @returns {boolean}
  */
 export function isPlainObject(item) {
@@ -22,16 +30,26 @@ export function isPlainObject(item) {
 }
 
 /**
- * @param {object} object The destination object.
+ * Deep merge source objects on to 'target'. Mutates 'target' in place.
+ *
+ * @function
+ * @since 0.1.0
+ *
+ * @param {object} target The destination object.
  * @param {...object} [sources] The source objects.
  * @returns {object} Returns `object`.
  */
 export const merge = lodashMerge;
 
 /**
+ * Flatten nested objects in to a new object where the keys represent the original access
+ * path. Only goes through plain JavaScript objects and ignores arrays.
+ *
+ * @since 0.1.0
+ *
  * @param {object} data The object to serialize
- * @param [result]
- * @param [path]
+ * @param {*} [result]
+ * @param {string} [path]
  * @returns {object.<string, *>}
  */
 export function flatten(data, result = {}, path = "") {
@@ -53,6 +71,10 @@ export function flatten(data, result = {}, path = "") {
 }
 
 /**
+ * The opposite of 'flatten'.
+ *
+ * @since 0.1.0
+ *
  * @param {object} data
  * @returns {object}
  */
@@ -76,7 +98,11 @@ export function unFlatten(data) {
 }
 
 /**
- * @param input
+ *
+ * @since 0.1.0
+ *
+ * @param {string} input
+ * @returns {string}
  */
 export function camelToSnakeCase(input) {
   return input

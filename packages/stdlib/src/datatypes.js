@@ -2,6 +2,15 @@ import crypto from "crypto";
 import { v4 } from "./vendor/uuid.js";
 
 /**
+ * Vendor uuid v4 generator from uuidjs/uuid.
+ * If we are on Node.js 15 or above, we use the built-in import("crypto").randomUUID.
+ * This variant is a bit faster and allows us to drop the vendor code.
+ * This function also has an `uuid.isValid` function, which returns a boolean depending
+ * on if the passed in string is a valid uuid.
+ *
+ * @since 0.1.0
+ * @summary Returns a new uuid v4
+ *
  * @function
  * @returns {string}
  */

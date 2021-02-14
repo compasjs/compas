@@ -21,7 +21,11 @@ export function pathJoin(...paths) {
 }
 
 /**
- * @callback Exec
+ * Wrap around Node.js child_process#exec. Resolving when the sub process has exited. The
+ * resulting object contains the 'exitCode' of the sub process.
+ *
+ * @since 0.1.0
+ *
  * @param {string} command
  * @param {ExecOptions} [opts={}]
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
@@ -46,6 +50,12 @@ export async function exec(command, opts = {}) {
 }
 
 /**
+ * Wrap around Node.js child_process#spawn. Resolving when the sub process has exited. The
+ * resulting object contains the 'exitCode' of the sub process.
+ * By default 'stdio' is inherited from the current process.
+ *
+ * @since 0.1.0
+ *
  * @param {string} command
  * @param {string[]} args
  * @param {object} [opts={}]
@@ -64,6 +74,9 @@ export function spawn(command, args, opts = {}) {
 
 /**
  * Read a readable stream completely, and return as Buffer
+ *
+ * @since 0.1.0
+ *
  * @param {ReadableStream} stream
  * @returns {Promise<Buffer>}
  */
@@ -80,6 +93,10 @@ export async function streamToBuffer(stream) {
 }
 
 /**
+ * Recursively act on all files in a directory, awaiting on callback calls.
+ *
+ * @since 0.1.0
+ *
  * @param {string} dir
  * @param {Function} cb
  * @param {ProcessDirectoryOptions} [opts]
@@ -112,6 +129,8 @@ export async function processDirectoryRecursive(
 
 /**
  * Sync version of processDirectoryRecursive
+ *
+ * @since 0.1.0
  *
  * @param {string} dir
  * @param {Function} cb

@@ -74,7 +74,7 @@ export async function runTestsRecursively(testState) {
  * @function
  * @param {string} name
  * @param {TestCallback} callback
- * @returns {void}
+ * @returns {undefined}
  */
 export const test = subTest.bind(undefined, state);
 
