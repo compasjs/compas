@@ -107,7 +107,7 @@ jobs:
 
   automerge:
     # Coverage runs tests, so should be fine
-    needs: coverage
+    needs: [coverage, bench]
     runs-on: ubuntu-latest
     steps:
       - uses: fastify/github-action-merge-dependabot@v1
