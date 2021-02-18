@@ -71,9 +71,14 @@ export async function runTestsRecursively(testState) {
 }
 
 /**
+ * Register top-level tests. The main entry point of the test runner
+ *
+ * @since 0.1.0
  * @function
- * @param {string} name
- * @param {TestCallback} callback
+ *
+ * @param {string} name The test name
+ * @param {TestCallback} callback The function that is executed by the test runner. This
+ *    can do async setup, register child tests and run assertions
  * @returns {undefined}
  */
 export const test = subTest.bind(undefined, state);

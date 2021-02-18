@@ -32,8 +32,14 @@ export async function runBenchmarks(state) {
 }
 
 /**
+ * Benchmark entry point. The benchmark runner will wait a bit till now new benchmarks
+ * are registered and then start execution.
+ *
+ * @since 0.1.0
+ *
  * @param {string} name
  * @param {BenchCallback} callback
+ * @returns {undefined}
  */
 export function bench(name, callback) {
   state.push({ name, callback });

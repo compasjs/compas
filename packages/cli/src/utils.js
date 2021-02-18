@@ -5,7 +5,8 @@ import chokidar from "chokidar";
 import treeKill from "tree-kill";
 
 /**
- * Load scripts directory and package.json scripts
+ * Load scripts directory and package.json scripts.
+ *
  * @returns {ScriptCollection}
  */
 export function collectScripts() {
