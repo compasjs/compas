@@ -382,14 +382,20 @@ if (!isNil(builder.${key}.limit)) {
             ${getLimitOffset()}
 
             ${Object.entries(otherSide.queryBuilder.relations).map(
-              ([key, { joinKey: otherJoinKey, subType: otherSubType }]) => {
+              ([
+                key,
+                {
+                  joinKey: otherJoinKey,
+                  relation: { subType: otherSubType },
+                },
+              ]) => {
                 const coalescedValue =
                   otherSubType === "oneToMany"
                     ? `coalesce("${otherJoinKey}"."result", '{}')`
                     : `"${otherJoinKey}"."result"`;
                 return `
             if (builder.${relationKey}.${key}) {
-              joinedKeys.push("'" + (builder.${relationKey}.${key}?.as ?? "${key}") + "'", '${coalescedValue}');
+              joinedKeys.push("'" + (builder.${relationKey}.${key}?.as ?? "${key}") + "'", \`${coalescedValue}\`);
             }
           `;
               },

@@ -748,13 +748,13 @@ ${offsetLimitQb}
     if (builder.file.group) {
       joinedKeys.push(
         `'${builder.file.group?.as ?? "group"}'`,
-        '"f_fg_0"."result"',
+        `"f_fg_0"."result"`,
       );
     }
     if (builder.file.groupView) {
       joinedKeys.push(
         `'${builder.file.groupView?.as ?? "groupView"}'`,
-        '"f_fgv_0"."result"',
+        `"f_fgv_0"."result"`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -777,19 +777,19 @@ ${offsetLimitQb}
     if (builder.parent.file) {
       joinedKeys.push(
         `'${builder.parent.file?.as ?? "file"}'`,
-        '"fg_f_0"."result"',
+        `"fg_f_0"."result"`,
       );
     }
     if (builder.parent.parent) {
       joinedKeys.push(
         `'${builder.parent.parent?.as ?? "parent"}'`,
-        '"fg_fg_0"."result"',
+        `"fg_fg_0"."result"`,
       );
     }
     if (builder.parent.children) {
       joinedKeys.push(
         `'${builder.parent.children?.as ?? "children"}'`,
-        '"fg_fg_1"."result"',
+        `coalesce("fg_fg_1"."result", '{}')`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -814,19 +814,19 @@ ${offsetLimitQb}
     if (builder.children.file) {
       joinedKeys.push(
         `'${builder.children.file?.as ?? "file"}'`,
-        '"fg_f_0"."result"',
+        `"fg_f_0"."result"`,
       );
     }
     if (builder.children.parent) {
       joinedKeys.push(
         `'${builder.children.parent?.as ?? "parent"}'`,
-        '"fg_fg_0"."result"',
+        `"fg_fg_0"."result"`,
       );
     }
     if (builder.children.children) {
       joinedKeys.push(
         `'${builder.children.children?.as ?? "children"}'`,
-        '"fg_fg_1"."result"',
+        `coalesce("fg_fg_1"."result", '{}')`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -967,13 +967,13 @@ ${offsetLimitQb}
     if (builder.file.group) {
       joinedKeys.push(
         `'${builder.file.group?.as ?? "group"}'`,
-        '"f_fg_0"."result"',
+        `"f_fg_0"."result"`,
       );
     }
     if (builder.file.groupView) {
       joinedKeys.push(
         `'${builder.file.groupView?.as ?? "groupView"}'`,
-        '"f_fgv_0"."result"',
+        `"f_fgv_0"."result"`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -996,19 +996,19 @@ ${offsetLimitQb}
     if (builder.parent.file) {
       joinedKeys.push(
         `'${builder.parent.file?.as ?? "file"}'`,
-        '"fg_f_0"."result"',
+        `"fg_f_0"."result"`,
       );
     }
     if (builder.parent.parent) {
       joinedKeys.push(
         `'${builder.parent.parent?.as ?? "parent"}'`,
-        '"fg_fg_0"."result"',
+        `"fg_fg_0"."result"`,
       );
     }
     if (builder.parent.children) {
       joinedKeys.push(
         `'${builder.parent.children?.as ?? "children"}'`,
-        '"fg_fg_1"."result"',
+        `coalesce("fg_fg_1"."result", '{}')`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
@@ -1033,19 +1033,19 @@ ${offsetLimitQb}
     if (builder.children.file) {
       joinedKeys.push(
         `'${builder.children.file?.as ?? "file"}'`,
-        '"fg_f_0"."result"',
+        `"fg_f_0"."result"`,
       );
     }
     if (builder.children.parent) {
       joinedKeys.push(
         `'${builder.children.parent?.as ?? "parent"}'`,
-        '"fg_fg_0"."result"',
+        `"fg_fg_0"."result"`,
       );
     }
     if (builder.children.children) {
       joinedKeys.push(
         `'${builder.children.children?.as ?? "children"}'`,
-        '"fg_fg_1"."result"',
+        `coalesce("fg_fg_1"."result", '{}')`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
