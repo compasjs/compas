@@ -1,4 +1,5 @@
 import { inspect } from "util";
+import { isNil } from "./lodash.js";
 
 /**
  * Standard error to use. This contains a key, status code and info object.
@@ -104,7 +105,9 @@ export class AppError extends Error {
       stack.shift();
     }
 
-    if (AppError.instanceOf(e)) {
+    if (isNil(e)) {
+      return e;
+    } else if (AppError.instanceOf(e)) {
       return {
         key: e.key,
         status: e.status,
