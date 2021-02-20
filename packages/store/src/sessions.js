@@ -32,6 +32,10 @@ const sessionQueries = {
 };
 
 /**
+ * Create a new session store, to be used in combination with the `session` as provided in `@compas/server`.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @returns {SessionStore}
  */

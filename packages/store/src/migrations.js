@@ -10,6 +10,11 @@ import {
 } from "@compas/stdlib";
 
 /**
+ * Create a new  migration context, resolves all migrations and collects the current
+ * migration state.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
@@ -78,6 +83,12 @@ export async function newMigrateContext(
 }
 
 /**
+ * Get the migrations to be applied from the provided migration context.
+ * Note that 'repeatable' migrations are always in both the `migrationQueue` and
+ * `hashChanges`.
+ *
+ * @since 0.1.0
+ *
  * @param {MigrateContext} mc
  * @returns {{
  *   migrationQueue: ({ namespace: string, name: string, number: number, repeatable:
@@ -113,7 +124,12 @@ export function getMigrationsToBeApplied(mc) {
 }
 
 /**
+ * Run the migrations currently pending in the migration context.
+ *
+ * @since 0.1.0
+ *
  * @param {MigrateContext} mc
+ * @returns {Promise<undefined>}
  */
 export async function runMigrations(mc) {
   let current;
@@ -200,9 +216,14 @@ async function runMigration(sql, migration) {
  */
 async function runInsert(sql, migration) {
   return sql`
-    INSERT INTO
-      migration ${sql(migration, "namespace", "name", "number", "hash")}
-  `;
+     INSERT INTO migration ${sql(
+       migration,
+       "namespace",
+       "name",
+       "number",
+       "hash",
+     )}
+   `;
 }
 
 /**
@@ -213,15 +234,12 @@ async function syncWithSchemaState(mc) {
   let rows = [];
   try {
     rows = await mc.sql`
-      SELECT DISTINCT ON (namespace, number)
-        namespace,
-        number,
-        hash
-      FROM
-        migration
-      ORDER BY
-        namespace, number, "createdAt" DESC
-    `;
+        SELECT DISTINCT ON (namespace, number) namespace,
+                                               number,
+                                               hash
+        FROM migration
+        ORDER BY namespace, number, "createdAt" DESC
+      `;
   } catch (e) {
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
       throw new AppError(
@@ -329,8 +347,8 @@ async function readMigrationsDir(
         }
 
         // Use the package.json to find the package entrypoint
-        // Only supporting simple { exports: "file.js" }, { exports: { default: "file.js"
-        // } or { main: "file.js" }
+        // Only supporting simple { exports: "file.js" }, { exports: { default:
+        // "file.js" } or { main: "file.js" }
         const subPackageJson = JSON.parse(
           await readFile(pathJoin(subPath, "package.json"), "utf8"),
         );

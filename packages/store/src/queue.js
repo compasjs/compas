@@ -329,7 +329,9 @@ export class JobQueueWorker {
 }
 
 /**
- * Add a new item to the job queue
+ * Add a new item to the job queue.
+ *
+ * @since 0.1.0
  *
  * @param {Postgres} sql
  * @param {JobInput} job
@@ -346,7 +348,9 @@ export async function addJobToQueue(sql, job) {
 /**
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
- * If exists will update the interval
+ * If exists will update the interval.
+ *
+ * @since 0.1.0
  *
  * @param {Postgres} sql
  * @param {string} name

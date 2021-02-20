@@ -6,21 +6,26 @@ import { listObjects } from "./minio.js";
 
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
-    INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
-    SELECT ${targetId},
-           ${targetBucket},
-           "contentType",
-           "contentLength",
-           "name",
-           "meta"
-    FROM "file"
-    WHERE id = ${sourceId}
-      AND "bucketName" = ${sourceBucket}
-    RETURNING id
-  `,
+     INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
+     SELECT ${targetId},
+            ${targetBucket},
+            "contentType",
+            "contentLength",
+            "name",
+            "meta"
+     FROM "file"
+     WHERE
+       id = ${sourceId}
+     AND "bucketName" = ${sourceBucket}
+     RETURNING id
+   `,
 };
 
 /**
+ * Create or update a file. The file store is backed by a Postgres table and S3 object.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
@@ -70,6 +75,11 @@ export async function createOrUpdateFile(
 }
 
 /**
+ * Get a file stream based on the 'id'. It is expected that an object exists with the
+ * 'id'. A 'start' and 'end' value can optionally be specified.
+ *
+ * @since 0.1.0
+ *
  * @param {minio.Client} minio
  * @param {string} bucketName
  * @param {string} id
@@ -93,6 +103,11 @@ export async function getFileStream(
 }
 
 /**
+ * Create both a Postgres record copy and an S3 object copy of the provided file id, into
+ * the provided bucket.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
@@ -125,9 +140,16 @@ export async function copyFile(
 }
 
 /**
+ * File deletes should be done via `queries.storeFileDeletePermanent()`. By calling this
+ * function, all files that don't exist in the database will be removed from the S3
+ * bucket.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {minio.Client} minio
  * @param {string} bucketName
+ * @returns {Promise<undefined>}
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   const minioObjectsPromise = listObjects(minio, bucketName);

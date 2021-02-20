@@ -3,8 +3,8 @@ import { environment, isNil, uuid } from "@compas/stdlib";
 import {
   createDatabaseIfNotExists,
   newPostgresConnection,
-  postgresEnvCheck,
   postgres,
+  postgresEnvCheck,
 } from "./postgres.js";
 
 /**
@@ -16,8 +16,12 @@ let testDatabase = undefined;
 /**
  * Set test database.
  * New createTestPostgresConnection calls will use this as a template,
- * so things like seeding only need to happen once
+ * so things like seeding only need to happen once.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres|string} databaseNameOrConnection
+ * @returns {Promise<undefined>}
  */
 export async function setPostgresDatabaseTemplate(databaseNameOrConnection) {
   if (!isNil(testDatabase)) {
@@ -36,7 +40,10 @@ export async function setPostgresDatabaseTemplate(databaseNameOrConnection) {
 }
 
 /**
- * Cleanup the test template
+ * Cleanup the test template database.
+ *
+ * @since 0.1.0
+ *
  * @returns {Promise<void>}
  */
 export async function cleanupPostgresDatabaseTemplate() {
@@ -53,7 +60,15 @@ export async function cleanupPostgresDatabaseTemplate() {
 }
 
 /**
- * @param verboseSql
+ * Create a new test database, using the default database as it's template.
+ * The copied database will be fully truncated, except for the 'migrations' table.
+ * To do this, all connections to the default database are forcefully killed.
+ * Returns a connection to the new database.
+ *
+ * @since 0.1.0
+ *
+ * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all queries.
+ * @returns {Promise<Postgres>}
  */
 export async function createTestPostgresDatabase(verboseSql = false) {
   postgresEnvCheck();
@@ -128,7 +143,12 @@ export async function createTestPostgresDatabase(verboseSql = false) {
 }
 
 /**
+ * Remove a created test database
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
+ * @returns {Promise<undefined>}
  */
 export async function cleanupTestPostgresDatabase(sql) {
   const dbName = sql.options.database;

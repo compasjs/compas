@@ -40,6 +40,11 @@ export function postgresEnvCheck() {
 }
 
 /**
+ * Create a new postgres connection, using the default environment variables.
+ * A database may be created using the provided credentials.
+ *
+ * @since 0.1.0
+ *
  * @param {object} [opts]
  * @param {boolean} [opts.createIfNotExists]
  * @returns {Promise<Postgres>}

@@ -105,7 +105,9 @@ const fileGroupQueries = {
 };
 
 /**
- * Assigns children of the provided fileGroup to the parent
+ * Assigns children of the provided fileGroup to the parent.
+ *
+ * @since 0.1.0
  *
  * @param {Postgres} sql
  * @param {StoreFileGroup} fileGroup
@@ -120,18 +122,26 @@ export async function hoistChildrenToParent(sql, fileGroup) {
 }
 
 /**
- * Update the order of the provided id's in relation to each other
+ * Update the order of the provided id's in relation to each other.
  * This function does not check if all files are in the same group, please use
- * getFileGroupParents for that
+ * getFileGroupParents for that.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {string[]} ids
+ * @returns {Promise<undefined>}
  */
-export function updateFileGroupOrder(sql, ids) {
-  return fileGroupQueries.updateOrderByIds(sql, ids);
+export async function updateFileGroupOrder(sql, ids) {
+  await fileGroupQueries.updateOrderByIds(sql, ids);
 }
 
 /**
- * Return a result with nested file groups and files, sorted completely by the order id
+ * Return a result with nested file groups and files, sorted completely by the order id.
+ * Note that this will be removed when the query builder is able to use `order by` clauses.
+ *
+ * @since 0.1.0
+ *
  * @param {Postgres} sql
  * @param {{
  *   deletedAtIncludeNotNull?: boolean,
