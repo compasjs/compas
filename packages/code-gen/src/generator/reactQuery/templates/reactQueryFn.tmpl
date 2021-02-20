@@ -50,9 +50,7 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
     {{ } }}
   ));
 
-  return useQuery([
-     "{{= item.uniqueName }}",
-
+  return useQuery({{= funcName }}.queryKey(
     {{ if (item.params) { }}
     params,
     {{ } }}
@@ -62,7 +60,7 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
     {{ if (item.body) { }}
     body,
     {{ } }}
-    ],
+    ),
     () => {
       const promise: CancellablePromise<{{= responseType }}> = {{= item.group }}.{{= item.name }}(
         {{= item.params ? "params, " : ""}}
@@ -79,6 +77,35 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
     },
     options,
   );
+}
+
+((newline))
+/**
+ * Query key used by {{= funcName }}
+ */
+{{= funcName }}.queryKey = function(
+{{ if (item.params) { }}
+params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+{{ } }}
+{{ if (item.query) { }}
+query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+{{ } }}
+{{ if (item.body) { }}
+body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+{{ } }}
+): QueryKey {
+  return [
+      "{{= item.uniqueName }}",
+     {{ if (item.params) { }}
+     params,
+     {{ } }}
+     {{ if (item.query) { }}
+     query,
+     {{ } }}
+     {{ if (item.body) { }}
+     body,
+     {{ } }}
+ ];
 }
 
 {{ } else { }}
