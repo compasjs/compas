@@ -1,6 +1,12 @@
 /**
+ * Open the provided Koa app on a random port, and use the port to set the 'baseURL' on
+ * the provided Axios instance.
+ *
+ * @since 0.1.0
+ *
  * @param {Application} app
  * @param {AxiosInstance} axios
+ * @returns {Promise<undefined>}
  */
 export async function createTestAppAndClient(app, axios) {
   await new Promise((resolve, reject) => {
@@ -24,8 +30,12 @@ export async function createTestAppAndClient(app, axios) {
 }
 
 /**
+ * Close the test app as created by `createTestAppAndClient`.
+ *
+ * @since 0.1.0
+ *
  * @param {Application} app
- * @returns {Promise<void>}
+ * @returns {Promise<undefined>}
  */
 export function closeTestApp(app) {
   return new Promise((resolve, reject) => {

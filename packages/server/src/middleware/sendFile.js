@@ -1,9 +1,16 @@
 import { isNil } from "@compas/stdlib";
 
 /**
- * @param ctx
+ * Send a `StoreFile` instance from @compas/store as a `ctx` response.
+ * Handles byte range requests as well. May need some improvements to set some better
+ * cache headers.
+ *
+ * @since 0.1.0
+ *
+ * @param {Context} ctx
  * @param {SendFileItem} file
  * @param {GetStreamFn} getStreamFn
+ * @returns {Promise<undefined>}
  */
 export async function sendFile(ctx, file, getStreamFn) {
   ctx.set("Accept-Ranges", "bytes");

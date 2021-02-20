@@ -3,13 +3,16 @@ import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
 /**
- * Session middleware
- * Requires process.env.APP_KEYS
- * To generate a key use something like
- * node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+ * Session middleware. Requires process.env.APP_KEYS to be set. To generate a key use
+ * something like:
+ * `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
+ * This also accepts the session store as provided by `@compas/store`.
+ *
+ * @since 0.1.0
  *
  * @param {Application} app
  * @param {SessionOptions} opts KoaSession options
+ * @returns {Middleware}
  */
 export function session(app, opts) {
   app.keys = getKeys();

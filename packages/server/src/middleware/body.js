@@ -3,8 +3,10 @@ import formidable from "formidable";
 import koaBody from "koa-body";
 
 /**
- * Creates a body parser and a body parser with multipart enabled
- * Note that koa-body parses url-encoded, form data, json and text by default
+ * Creates a body parser and a body parser with multipart enabled.
+ * Note that koa-body parses url-encoded, form data, json and text by default.
+ *
+ * @since 0.1.0
  *
  * @param {IKoaBodyOptions} [bodyOpts={}] Options that will be passed to koa-body
  * @param {IFormidableBodyOptions} [multipartBodyOpts={}] Options that will be passed to

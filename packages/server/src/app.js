@@ -9,7 +9,24 @@ import {
 } from "./middleware/index.js";
 
 /**
- * @param {GetAppOptions} [opts]
+ * Create a new Koa instance with default middleware applied.
+ * Adds the following:
+ *
+ * - Health check route on `/_health`
+ *
+ * - Log middleware to add the Logger from @compas/insight on `ctx.log`
+ *
+ * - Error handler to catch any errors thrown by route handlers
+ *
+ * - A 404 handler when no response is set by other middleware
+ *
+ * - Default headers to respond to things like CORS requests
+ *
+ * @since 0.1.0
+ * @summary Create a new Koa instance with default middleware applied.
+ *
+ * @param {GetAppOptions} [opts={}]
+ * @returns {Application}
  */
 export function getApp(opts = {}) {
   const app = new Koa();
