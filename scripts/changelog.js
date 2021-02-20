@@ -139,6 +139,11 @@ function combineCommits(commits) {
   for (const pkg of Object.keys(combinable)) {
     const { buildType, prs, fromVersion, toVersion } = combinable[pkg];
 
+    if (buildType === "deps-dev") {
+      // We don't need development dependency updates in the changelog
+      continue;
+    }
+
     // Format PR numbers so the writer can create correct urls
     const finalPrs =
       prs.length > 0 ? ` (${prs.map((it) => `#${it}`).join(", ")})` : "";
