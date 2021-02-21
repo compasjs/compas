@@ -22,6 +22,7 @@ const fileGroupFieldSet = new Set([
 ]);
 /**
  * Get all fields for fileGroup
+ *
  * @param {string} [tableName="fg."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -41,6 +42,7 @@ export function fileGroupFields(tableName = "fg.", options = {}) {
 }
 /**
  * Get 'ORDER BY ' for fileGroup
+ *
  * @param {string} [tableName="fg."]
  * @returns {QueryPart}
  */
@@ -55,9 +57,10 @@ export function fileGroupOrderBy(tableName = "fg.") {
 }
 /**
  * Build 'WHERE ' part for fileGroup
+ *
  * @param {StoreFileGroupWhere} [where={}]
  * @param {string} [tableName="fg."]
- * @param {{ skipValidator?: boolean }=} options
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
 export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
@@ -449,6 +452,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
 }
 /**
  * Build 'VALUES ' part for fileGroup
+ *
  * @param {StoreFileGroupInsertPartial|StoreFileGroupInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -477,6 +481,7 @@ ${it.order ?? Math.floor(Date.now() / 1000000)}, ${it.file ?? null}, ${
 }
 /**
  * Build 'SET ' part for fileGroup
+ *
  * @param {StoreFileGroupUpdatePartial} update
  * @returns {QueryPart}
  */
@@ -573,7 +578,7 @@ WHERE ${fileGroupWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupInsertPartial|(StoreFileGroupInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }=} options
+ * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
 export async function fileGroupInsert(sql, insert, options = {}) {
@@ -1075,6 +1080,7 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
 /**
  * Query Builder for fileGroup
  * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroup[]>,
@@ -1136,8 +1142,9 @@ ORDER BY ${fileGroupOrderBy()}
  * NOTE: At the moment only intended for internal use by the generated queries!
  * Transform results from the query builder that adhere to the known structure
  * of 'fileGroup' and its relations.
+ *
  * @param {*[]} values
- * @param {StoreFileGroupQueryBuilder=} builder
+ * @param {StoreFileGroupQueryBuilder} [builder={}]
  */
 export function transformFileGroup(values, builder = {}) {
   for (let i = 0; i < values.length; ++i) {

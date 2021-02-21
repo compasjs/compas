@@ -5,7 +5,7 @@
  * queryOptions, sql and relations
  *
  * @param {CodeGenType} type
- * @param {boolean=} includeSqlRelated
+ * @param {boolean} [includeSqlRelated=false]
  * @returns {string}
  */
 export function stringifyType(type, includeSqlRelated = false) {

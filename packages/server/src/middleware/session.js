@@ -63,9 +63,7 @@ function getKeys() {
  * This allows us to set extra cookies that are JS readable but don't contain any
  * sensitive information.
  *
- * @param {SessionStore} store
- * @param {string} key
- * @param {*} cookieOpts
+ * @param {{ store: SessionStore, key: string, } & SessionOptions} opts
  */
 function wrapStoreCalls({ store, key, ...cookieOpts }) {
   cookieOpts.httpOnly = false;

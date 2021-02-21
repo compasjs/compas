@@ -4,6 +4,7 @@ import { state, testLogger } from "./state.js";
 
 /**
  * Prints test results and returns the exit code
+ *
  * @returns {number}
  */
 export function printTestResults() {
@@ -78,6 +79,7 @@ export function printTestResultsFromWorkers(testResults) {
 
 /**
  * Prints a quick test summary for the provided state
+ *
  * @param {TestState} state
  * @param {string[]} result
  * @param {number} indentCount
@@ -90,6 +92,7 @@ function printTreeSummary(state, result, indentCount) {
 
 /**
  * Prints information over test failures
+ *
  * @param {TestState} state
  * @param {string[]} result
  * @param {number} indentCount
@@ -171,6 +174,7 @@ export function printFailedResults(state, result, indentCount) {
 /**
  * Recursively marks hasFailure if test has a caughtException or if an assertion did not
  * pass
+ *
  * @param {TestState} state
  */
 export function markTestFailuresRecursively(state) {

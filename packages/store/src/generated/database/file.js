@@ -32,6 +32,7 @@ const fileFieldSet = new Set([
 ]);
 /**
  * Get all fields for file
+ *
  * @param {string} [tableName="f."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -51,6 +52,7 @@ export function fileFields(tableName = "f.", options = {}) {
 }
 /**
  * Get 'ORDER BY ' for file
+ *
  * @param {string} [tableName="f."]
  * @returns {QueryPart}
  */
@@ -65,9 +67,10 @@ export function fileOrderBy(tableName = "f.") {
 }
 /**
  * Build 'WHERE ' part for file
+ *
  * @param {StoreFileWhere} [where={}]
  * @param {string} [tableName="f."]
- * @param {{ skipValidator?: boolean }=} options
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
 export function fileWhere(where = {}, tableName = "f.", options = {}) {
@@ -400,6 +403,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
 }
 /**
  * Build 'VALUES ' part for file
+ *
  * @param {StoreFileInsertPartial|StoreFileInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -428,6 +432,7 @@ ${it.contentLength ?? null}, ${it.bucketName ?? null}, ${
 }
 /**
  * Build 'SET ' part for file
+ *
  * @param {StoreFileUpdatePartial} update
  * @returns {QueryPart}
  */
@@ -524,7 +529,7 @@ WHERE ${fileWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }=} options
+ * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreFile[]>}
  */
 export async function fileInsert(sql, insert, options = {}) {
@@ -740,6 +745,7 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
 /**
  * Query Builder for file
  * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreFile[]>,
@@ -795,8 +801,9 @@ ORDER BY ${fileOrderBy()}
  * NOTE: At the moment only intended for internal use by the generated queries!
  * Transform results from the query builder that adhere to the known structure
  * of 'file' and its relations.
+ *
  * @param {*[]} values
- * @param {StoreFileQueryBuilder=} builder
+ * @param {StoreFileQueryBuilder} [builder={}]
  */
 export function transformFile(values, builder = {}) {
   for (let i = 0; i < values.length; ++i) {

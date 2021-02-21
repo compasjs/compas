@@ -33,7 +33,7 @@ export function bytesToHumanReadable(bytes) {
  * @since 0.1.0
  *
  * @param {Logger} logger
- * @returns {undefined}
+ * @returns {void}
  */
 export function printProcessMemoryUsage(logger) {
   const {

@@ -6,7 +6,7 @@ import { inspect } from "util";
  * @param {Date} timestamp
  * @param {string} context
  * @param {*} message
- * @returns {undefined}
+ * @returns {void}
  */
 export function writeNDJSON(stream, level, timestamp, context, message) {
   stream.write(
@@ -22,7 +22,7 @@ export function writeNDJSON(stream, level, timestamp, context, message) {
  * @param {Date} timestamp
  * @param {string} context
  * @param {*} message
- * @returns {undefined}
+ * @returns {void}
  */
 export function writePretty(stream, level, timestamp, context, message) {
   let prefix = `${formatDate(timestamp)} ${formatLevelAndType(

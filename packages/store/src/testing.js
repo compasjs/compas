@@ -9,6 +9,7 @@ import {
 
 /**
  * If set, new databases are derived from this database
+ *
  * @type {undefined}
  */
 let testDatabase = undefined;

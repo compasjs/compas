@@ -254,7 +254,7 @@ function addUtilitiesToAnonymousFunctions(context) {
  * @param {string} propertyPath
  * @param {string} errors
  * @param {string} prefix
- * @param {string=} parentType
+ * @param {string} [parentType]
  * @returns {string}
  */
 function generateAnonymousValidatorCall(

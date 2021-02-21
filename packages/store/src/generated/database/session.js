@@ -17,6 +17,7 @@ const sessionFieldSet = new Set([
 ]);
 /**
  * Get all fields for session
+ *
  * @param {string} [tableName="s."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -36,6 +37,7 @@ export function sessionFields(tableName = "s.", options = {}) {
 }
 /**
  * Get 'ORDER BY ' for session
+ *
  * @param {string} [tableName="s."]
  * @returns {QueryPart}
  */
@@ -50,9 +52,10 @@ export function sessionOrderBy(tableName = "s.") {
 }
 /**
  * Build 'WHERE ' part for session
+ *
  * @param {StoreSessionWhere} [where={}]
  * @param {string} [tableName="s."]
- * @param {{ skipValidator?: boolean }=} options
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
 export function sessionWhere(where = {}, tableName = "s.", options = {}) {
@@ -316,6 +319,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
 }
 /**
  * Build 'VALUES ' part for session
+ *
  * @param {StoreSessionInsertPartial|StoreSessionInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -342,6 +346,7 @@ ${it.expires ?? null}, ${JSON.stringify(it.data ?? {})}, ${
 }
 /**
  * Build 'SET ' part for session
+ *
  * @param {StoreSessionUpdatePartial} update
  * @returns {QueryPart}
  */
@@ -421,7 +426,7 @@ WHERE ${sessionWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }=} options
+ * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreSession[]>}
  */
 export async function sessionInsert(sql, insert, options = {}) {
@@ -478,6 +483,7 @@ WHERE ${sessionWhere(builder.where, "s.", {
 /**
  * Query Builder for session
  * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreSessionQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreSession[]>,
@@ -524,8 +530,9 @@ ORDER BY ${sessionOrderBy()}
  * NOTE: At the moment only intended for internal use by the generated queries!
  * Transform results from the query builder that adhere to the known structure
  * of 'session' and its relations.
+ *
  * @param {*[]} values
- * @param {StoreSessionQueryBuilder=} builder
+ * @param {StoreSessionQueryBuilder} [builder={}]
  */
 export function transformSession(values, builder = {}) {
   for (let i = 0; i < values.length; ++i) {

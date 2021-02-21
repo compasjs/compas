@@ -10,6 +10,7 @@ import {
 import { fileOrderBy, internalQueryFile, transformFile } from "./file.js";
 /**
  * Get all fields for fileGroupView
+ *
  * @param {string} [tableName="fgv."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -29,6 +30,7 @@ export function fileGroupViewFields(tableName = "fgv.", options = {}) {
 }
 /**
  * Get 'ORDER BY ' for fileGroupView
+ *
  * @param {string} [tableName="fgv."]
  * @returns {QueryPart}
  */
@@ -43,9 +45,10 @@ export function fileGroupViewOrderBy(tableName = "fgv.") {
 }
 /**
  * Build 'WHERE ' part for fileGroupView
+ *
  * @param {StoreFileGroupViewWhere} [where={}]
  * @param {string} [tableName="fgv."]
- * @param {{ skipValidator?: boolean }=} options
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
 export function fileGroupViewWhere(
@@ -941,6 +944,7 @@ WHERE ${fileGroupViewWhere(builder.where, "fgv.", {
 /**
  * Query Builder for fileGroupView
  * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreFileGroupViewQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroupView[]>,
@@ -1002,8 +1006,9 @@ ORDER BY ${fileGroupViewOrderBy()}
  * NOTE: At the moment only intended for internal use by the generated queries!
  * Transform results from the query builder that adhere to the known structure
  * of 'fileGroupView' and its relations.
+ *
  * @param {*[]} values
- * @param {StoreFileGroupViewQueryBuilder=} builder
+ * @param {StoreFileGroupViewQueryBuilder} [builder={}]
  */
 export function transformFileGroupView(values, builder = {}) {
   for (let i = 0; i < values.length; ++i) {

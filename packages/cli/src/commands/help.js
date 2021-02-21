@@ -5,7 +5,7 @@ import { dirnameForModule, pathJoin } from "@compas/stdlib";
  * @param {Logger} logger
  * @param {UtilCommand} command
  * @param {ScriptCollection} scriptCollection
- * @returns {undefined}
+ * @returns {void}
  */
 export function helpCommand(logger, command, scriptCollection) {
   const { name, version } = JSON.parse(

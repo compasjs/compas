@@ -12,7 +12,7 @@ mainTestFn(import.meta);
  *   expected?: *,
  *   input?: *
  * }[]} cases
- * @param {function} fn
+ * @param {Function} fn
  */
 const assertAll = (t, cases, fn) => {
   for (const item of cases) {

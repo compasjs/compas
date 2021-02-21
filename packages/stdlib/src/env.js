@@ -25,7 +25,7 @@ export let environment = {};
  * @since 0.1.0
  * @summary Repopulate the cached environment copy.
  *
- * @returns {undefined}
+ * @returns {void}
  */
 export function refreshEnvironmentCache() {
   environment = JSON.parse(JSON.stringify(process.env));

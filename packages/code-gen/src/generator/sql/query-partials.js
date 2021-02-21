@@ -82,6 +82,7 @@ export function getFieldSet(context, type) {
 
 /**
  * A list of fields for the provided type, with dynamic tableName
+ *
  * @property {CodeGenContext} context
  * @property {CodeGenObjectType} type
  * @returns {string}
