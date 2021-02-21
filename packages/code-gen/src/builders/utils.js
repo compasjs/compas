@@ -28,6 +28,7 @@ export function isNamedTypeBuilderLike(value) {
  * - string oneOf
  * - array
  * - object
+ *
  * @param {TypeBuilderLike|undefined} value
  * @returns {*}
  */

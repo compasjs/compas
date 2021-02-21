@@ -37,6 +37,7 @@ async function main(logger) {
 /**
  * Uses `git log` to quickly get the first commit line of all commits since the provided
  * version
+ *
  * @param {Logger} logger
  * @param {string} version
  * @returns {Promise<string[]>}
@@ -61,6 +62,7 @@ async function getListOfCommitsSinceTag(logger, version) {
 
 /**
  * Get changelog header including front matter
+ *
  * @param {string} changelog
  * @returns {{ header: string, source: string }}
  */
@@ -76,6 +78,7 @@ function getChangelogHeaderAndSource(changelog) {
 
 /**
  * Remove initial changelog contents, including the already existing 'unreleased' part
+ *
  * @param {string} changelog
  * @returns {string}
  */
@@ -94,6 +97,7 @@ function stripChangelogOfUnreleased(changelog) {
 /**
  * Tries to combine the dependency bump commits
  * Resorts before returning the new array
+ *
  * @param {string[]} commits
  * @returns {string[]}
  */
@@ -189,6 +193,7 @@ function makeChangelog(logger, commits) {
 
 /**
  * Basic semver check, does not work for all cases
+ *
  * @param first
  * @param second
  */

@@ -49,6 +49,7 @@ test("repo/code-gen", async (t) => {
 
 /**
  * Quick hack to count the amount of exports in a file
+ *
  * @param {string} input
  * @returns {number}
  */
@@ -105,6 +106,7 @@ async function getGeneratedFileMap(fileFilter) {
 /**
  * Traverser the generated/testing output directory to read the necessary files and count
  * the number of exports.
+ *
  * @param {string[]} fileFilter
  * @returns {Object<string, number>}
  */

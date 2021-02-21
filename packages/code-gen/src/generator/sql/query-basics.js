@@ -193,7 +193,7 @@ function insertQuery(context, imports, type) {
     /**
      * @param {Postgres} sql
      * @param {${type.partial.insertType}|(${type.partial.insertType}[])} insert
-     * @param {{ withPrimaryKey: boolean }=} options
+     * @param {{ withPrimaryKey: boolean }} [options={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
     export async function ${type.name}Insert(sql, insert, options = {}) {

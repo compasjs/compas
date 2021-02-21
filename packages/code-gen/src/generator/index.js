@@ -163,6 +163,7 @@ export async function generate(logger, options, structure) {
 
 /**
  * Join all root exports in to a single index.js file
+ *
  * @param {CodeGenContext} context
  */
 export function generateRootExportsFile(context) {
@@ -182,6 +183,7 @@ export function generateRootExportsFile(context) {
 
 /**
  * Use the fileHeader from options, and prefix all file contents with it
+ *
  * @param {CodeGenContext} context
  */
 export function annotateFilesWithHeader(context) {
@@ -198,6 +200,7 @@ export function annotateFilesWithHeader(context) {
 
 /**
  * Write out all files
+ *
  * @param {CodeGenContext} context
  */
 export function writeFiles(context) {
@@ -215,6 +218,7 @@ export function writeFiles(context) {
 
 /**
  * Check if we should generate ES Modules based on the package.json
+ *
  * @param {Logger} logger
  * @returns {boolean}
  */

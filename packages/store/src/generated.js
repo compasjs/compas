@@ -10,7 +10,7 @@ export let queries = undefined;
  * @since 0.1.0
  *
  * @param {typeof import("./generated/index.js").queries} q
- * @returns {undefined}
+ * @returns {void}
  */
 export function setStoreQueries(q) {
   queries = q;

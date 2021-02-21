@@ -518,7 +518,7 @@ export function anonymousValidator56355924(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
-d * @returns {undefined|string|undefined}
+ * @returns {undefined|string|undefined}
  */
 export function anonymousValidator852571656(
   value,
@@ -642,7 +642,7 @@ export function anonymousValidator1988053796(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }|undefined}
+ * @returns {{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }|undefined}
  */
 export function anonymousValidator599447075(
   value,
@@ -832,7 +832,7 @@ export function anonymousValidator1802076175(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }|undefined}
+ * @returns {{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }|undefined}
  */
 export function anonymousValidator2060025506(
   value,
@@ -911,7 +911,7 @@ export function anonymousValidator2060025506(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"name"?: string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: string, "parent"?: string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: Date, }|undefined}
+ * @returns {{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }|undefined}
  */
 export function anonymousValidator420606873(
   value,
@@ -1209,7 +1209,7 @@ export function anonymousValidator2045286580(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"years"?: number, "months"?: number, "days"?: number, "hours"?: number, "minutes"?: number, "seconds"?: number, }|undefined}
+ * @returns {{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }|undefined}
  */
 export function anonymousValidator430889951(
   value,
@@ -1653,7 +1653,7 @@ export function anonymousValidator978954249(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: QueryPart, "$or"?: (StoreFileWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "bucketName"?: string, "bucketNameNotEqual"?: string, "bucketNameIn"?: (string)[]|QueryPart, "bucketNameNotIn"?: (string)[]|QueryPart, "bucketNameLike"?: string, "bucketNameILike"?: string, "bucketNameNotLike"?: string, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[]|QueryPart, "deletedAtNotIn"?: (Date)[]|QueryPart, "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart, "bucketNameNotIn"?: undefined|(string)[]|QueryPart, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
  */
 export function anonymousValidator2074494218(
   value,
@@ -1936,7 +1936,7 @@ export function anonymousValidator58972158(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: QueryPart, "$or"?: (StoreFileGroupWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "file"?: string, "fileNotEqual"?: string, "fileIn"?: (string)[]|QueryPart, "fileNotIn"?: (string)[]|QueryPart, "fileLike"?: string, "fileNotLike"?: string, "fileIsNull"?: boolean, "fileIsNotNull"?: boolean, "parent"?: string, "parentNotEqual"?: string, "parentIn"?: (string)[]|QueryPart, "parentNotIn"?: (string)[]|QueryPart, "parentLike"?: string, "parentNotLike"?: string, "parentIsNull"?: boolean, "parentIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[]|QueryPart, "deletedAtNotIn"?: (Date)[]|QueryPart, "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
  */
 export function anonymousValidator153017499(
   value,
@@ -2281,7 +2281,7 @@ export function anonymousValidator1842665181(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: QueryPart, "$or"?: (StoreFileGroupViewWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "isDirectory"?: boolean, "file"?: string, "fileNotEqual"?: string, "fileIn"?: (string)[]|QueryPart, "fileNotIn"?: (string)[]|QueryPart, "fileLike"?: string, "fileNotLike"?: string, "fileIsNull"?: boolean, "fileIsNotNull"?: boolean, "parent"?: string, "parentNotEqual"?: string, "parentIn"?: (string)[]|QueryPart, "parentNotIn"?: (string)[]|QueryPart, "parentLike"?: string, "parentNotLike"?: string, "parentIsNull"?: boolean, "parentIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, "deletedAt"?: Date, "deletedAtNotEqual"?: Date, "deletedAtIn"?: (Date)[]|QueryPart, "deletedAtNotIn"?: (Date)[]|QueryPart, "deletedAtGreaterThan"?: Date, "deletedAtLowerThan"?: Date, "deletedAtIncludeNotNull"?: boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupViewWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "isDirectory"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
  */
 export function anonymousValidator1823959232(
   value,
@@ -2736,7 +2736,7 @@ export function anonymousValidator102852585(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: QueryPart, "$or"?: (StoreJobWhere)[], "id"?: number, "idNotEqual"?: number, "idIn"?: (number)[]|QueryPart, "idNotIn"?: (number)[]|QueryPart, "idGreaterThan"?: number, "idLowerThan"?: number, "isComplete"?: boolean, "isCompleteIsNull"?: boolean, "isCompleteIsNotNull"?: boolean, "name"?: string, "nameNotEqual"?: string, "nameIn"?: (string)[]|QueryPart, "nameNotIn"?: (string)[]|QueryPart, "nameLike"?: string, "nameILike"?: string, "nameNotLike"?: string, "scheduledAt"?: Date, "scheduledAtNotEqual"?: Date, "scheduledAtIn"?: (Date)[]|QueryPart, "scheduledAtNotIn"?: (Date)[]|QueryPart, "scheduledAtGreaterThan"?: Date, "scheduledAtLowerThan"?: Date, "scheduledAtIsNull"?: boolean, "scheduledAtIsNotNull"?: boolean, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreJobWhere)[], "id"?: undefined|number, "idNotEqual"?: undefined|number, "idIn"?: undefined|(number)[]|QueryPart, "idNotIn"?: undefined|(number)[]|QueryPart, "idGreaterThan"?: undefined|number, "idLowerThan"?: undefined|number, "isComplete"?: undefined|boolean, "isCompleteIsNull"?: undefined|boolean, "isCompleteIsNotNull"?: undefined|boolean, "name"?: undefined|string, "nameNotEqual"?: undefined|string, "nameIn"?: undefined|(string)[]|QueryPart, "nameNotIn"?: undefined|(string)[]|QueryPart, "nameLike"?: undefined|string, "nameILike"?: undefined|string, "nameNotLike"?: undefined|string, "scheduledAt"?: undefined|Date, "scheduledAtNotEqual"?: undefined|Date, "scheduledAtIn"?: undefined|(Date)[]|QueryPart, "scheduledAtNotIn"?: undefined|(Date)[]|QueryPart, "scheduledAtGreaterThan"?: undefined|Date, "scheduledAtLowerThan"?: undefined|Date, "scheduledAtIsNull"?: undefined|boolean, "scheduledAtIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }|undefined}
  */
 export function anonymousValidator1257773835(
   value,
@@ -3055,7 +3055,7 @@ export function anonymousValidator688866095(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: QueryPart, "$or"?: (StoreSessionWhere)[], "id"?: string, "idNotEqual"?: string, "idIn"?: (string)[]|QueryPart, "idNotIn"?: (string)[]|QueryPart, "idLike"?: string, "idNotLike"?: string, "expires"?: Date, "expiresNotEqual"?: Date, "expiresIn"?: (Date)[]|QueryPart, "expiresNotIn"?: (Date)[]|QueryPart, "expiresGreaterThan"?: Date, "expiresLowerThan"?: Date, "createdAt"?: Date, "createdAtNotEqual"?: Date, "createdAtIn"?: (Date)[]|QueryPart, "createdAtNotIn"?: (Date)[]|QueryPart, "createdAtGreaterThan"?: Date, "createdAtLowerThan"?: Date, "createdAtIsNull"?: boolean, "createdAtIsNotNull"?: boolean, "updatedAt"?: Date, "updatedAtNotEqual"?: Date, "updatedAtIn"?: (Date)[]|QueryPart, "updatedAtNotIn"?: (Date)[]|QueryPart, "updatedAtGreaterThan"?: Date, "updatedAtLowerThan"?: Date, "updatedAtIsNull"?: boolean, "updatedAtIsNotNull"?: boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreSessionWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "expires"?: undefined|Date, "expiresNotEqual"?: undefined|Date, "expiresIn"?: undefined|(Date)[]|QueryPart, "expiresNotIn"?: undefined|(Date)[]|QueryPart, "expiresGreaterThan"?: undefined|Date, "expiresLowerThan"?: undefined|Date, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }|undefined}
  */
 export function anonymousValidator500057262(
   value,
@@ -3315,7 +3315,7 @@ export function anonymousValidator2119152283(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileGroupWhere, "limit"?: number, "offset"?: number, "viaFile"?: StoreFileQueryTraverser, "viaParent"?: StoreFileGroupQueryTraverser, "viaChildren"?: StoreFileGroupQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }|undefined}
  */
 export function anonymousValidator1274599578(
   value,
@@ -3415,7 +3415,7 @@ export function anonymousValidator1561713483(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileGroupViewWhere, "limit"?: number, "offset"?: number, "viaFile"?: StoreFileQueryTraverser, "viaParent"?: StoreFileGroupViewQueryTraverser, "viaChildren"?: StoreFileGroupViewQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileGroupViewWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupViewQueryTraverser, "viaChildren"?: undefined|StoreFileGroupViewQueryTraverser, }|undefined}
  */
 export function anonymousValidator1468307041(
   value,
@@ -3497,7 +3497,7 @@ export function anonymousValidator1166782134(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileWhere, "limit"?: number, "offset"?: number, "viaGroup"?: StoreFileGroupQueryTraverser, "viaGroupView"?: StoreFileGroupViewQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, "viaGroupView"?: undefined|StoreFileGroupViewQueryTraverser, }|undefined}
  */
 export function anonymousValidator1069465749(
   value,
@@ -3574,7 +3574,7 @@ export function anonymousValidator1978760330(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileGroupWhere, "as"?: string, "limit"?: number, "offset"?: number, "file"?: StoreFileQueryBuilder, "viaFile"?: StoreFileQueryTraverser, "parent"?: StoreFileGroupQueryBuilder, "viaParent"?: StoreFileGroupQueryTraverser, "children"?: StoreFileGroupQueryBuilder, "viaChildren"?: StoreFileGroupQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileGroupWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }|undefined}
  */
 export function anonymousValidator1862233461(
   value,
@@ -3676,7 +3676,7 @@ export function anonymousValidator1996607136(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileGroupViewWhere, "as"?: string, "limit"?: number, "offset"?: number, "file"?: StoreFileQueryBuilder, "viaFile"?: StoreFileQueryTraverser, "parent"?: StoreFileGroupViewQueryBuilder, "viaParent"?: StoreFileGroupViewQueryTraverser, "children"?: StoreFileGroupViewQueryBuilder, "viaChildren"?: StoreFileGroupViewQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileGroupViewWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupViewQueryBuilder, "viaParent"?: undefined|StoreFileGroupViewQueryTraverser, "children"?: undefined|StoreFileGroupViewQueryBuilder, "viaChildren"?: undefined|StoreFileGroupViewQueryTraverser, }|undefined}
  */
 export function anonymousValidator2056027066(
   value,
@@ -3778,7 +3778,7 @@ export function anonymousValidator778129957(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreFileWhere, "as"?: string, "limit"?: number, "offset"?: number, "group"?: StoreFileGroupQueryBuilder, "viaGroup"?: StoreFileGroupQueryTraverser, "groupView"?: StoreFileGroupViewQueryBuilder, "viaGroupView"?: StoreFileGroupViewQueryTraverser, }|undefined}
+ * @returns {{"where"?: undefined|StoreFileWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, "groupView"?: undefined|StoreFileGroupViewQueryBuilder, "viaGroupView"?: undefined|StoreFileGroupViewQueryTraverser, }|undefined}
  */
 export function anonymousValidator310044624(
   value,
@@ -3870,7 +3870,7 @@ export function anonymousValidator634541376(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreJobWhere, "as"?: string, "limit"?: number, "offset"?: number, }|undefined}
+ * @returns {{"where"?: undefined|StoreJobWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }|undefined}
  */
 export function anonymousValidator343387919(
   value,
@@ -3924,7 +3924,7 @@ export function anonymousValidator343387919(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreJobWhere, "limit"?: number, "offset"?: number, }|undefined}
+ * @returns {{"where"?: undefined|StoreJobWhere, "limit"?: undefined|number, "offset"?: undefined|number, }|undefined}
  */
 export function anonymousValidator1952914356(
   value,
@@ -3991,7 +3991,7 @@ export function anonymousValidator196488441(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreSessionWhere, "as"?: string, "limit"?: number, "offset"?: number, }|undefined}
+ * @returns {{"where"?: undefined|StoreSessionWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }|undefined}
  */
 export function anonymousValidator647856360(
   value,
@@ -4045,7 +4045,7 @@ export function anonymousValidator647856360(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"where"?: StoreSessionWhere, "limit"?: number, "offset"?: number, }|undefined}
+ * @returns {{"where"?: undefined|StoreSessionWhere, "limit"?: undefined|number, "offset"?: undefined|number, }|undefined}
  */
 export function anonymousValidator1805657267(
   value,

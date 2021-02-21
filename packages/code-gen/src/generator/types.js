@@ -17,6 +17,7 @@ export function getTypeSuffixForUseCase(options) {
 
 /**
  * Setup stores for memoized types, so we can reuse types if necessary
+ *
  * @param {CodeGenContext} context
  */
 export function setupMemoizedTypes(context) {
@@ -47,6 +48,7 @@ export function setupMemoizedTypes(context) {
 
 /**
  * Use the memoized types and the provided settings to create a new type
+ *
  * @param {CodeGenContext} context
  * @param {CodeGenType} type
  * @param {string} suffix
@@ -290,7 +292,7 @@ export function generateTypeDefinition(
     case "object":
       result += "{";
       for (const key of Object.keys(type.keys)) {
-        let right = generateTypeDefinition(
+        const right = generateTypeDefinition(
           context,
           type.keys[key],
           recurseSettings,
@@ -299,7 +301,6 @@ export function generateTypeDefinition(
         let separator = ":";
         if (right.startsWith("undefined|")) {
           separator = "?:";
-          right = right.substring(10);
         }
 
         result += `"${key}"${separator} ${right}, `;

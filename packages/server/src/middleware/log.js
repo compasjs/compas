@@ -4,6 +4,7 @@ import { isNil, uuid } from "@compas/stdlib";
 
 /**
  * Log basic request and response information
+ *
  * @param {GetAppOptions.logOptions} options
  */
 export function logMiddleware(options) {

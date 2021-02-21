@@ -7,6 +7,7 @@ import { getQueryEnabledObjects } from "./utils.js";
 
 /**
  * Generate model files with query basic, partials and builder
+ *
  * @param {CodeGenContext} context
  */
 export function generateModelFiles(context) {

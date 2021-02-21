@@ -199,6 +199,7 @@ async function getCodeGenExports() {
 
 /**
  * Check if the passed in structure file exists
+ *
  * @param {string} structureFile
  * @returns {Promise<boolean>}
  */
@@ -217,6 +218,7 @@ async function structureFileExists(structureFile) {
 
 /**
  * Check if the exported structure conforms to the Compas structure
+ *
  * @param structureFile
  * @param codeGen
  * @returns {Promise<boolean>}

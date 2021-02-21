@@ -28,6 +28,7 @@ export function generateQueryBuilder(context, imports, type, src) {
 
 /**
  * Generate the necessary query builder types
+ *
  * @param {CodeGenContext} context
  */
 export function createQueryBuilderTypes(context) {
@@ -551,7 +552,7 @@ function transformerForType(context, imports, type) {
        *
        *
        * @param {*[]} values
-       * @param {${type.uniqueName}QueryBuilder=} builder
+       * @param {${type.uniqueName}QueryBuilder} [builder={}]
        */
       export function transform${upperCaseFirst(
         type.name,

@@ -44,6 +44,7 @@ export function validateStoreFileGroup(value, propertyPath = "$") {
 }
 /**
  * User definable, optional object to store whatever you want
+ *
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupMeta}
@@ -61,6 +62,7 @@ export function validateStoreFileGroupView(value, propertyPath = "$") {
 }
 /**
  * User definable, optional object to store whatever you want
+ *
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileMeta}

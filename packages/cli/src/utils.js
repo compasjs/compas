@@ -46,6 +46,7 @@ export function collectScripts() {
 
 /**
  * Not so fool proof way of returning the accepted cli arguments of Node.js and v8
+ *
  * @returns {Promise<string[]>}
  */
 export async function collectNodeArgs() {
@@ -105,6 +106,7 @@ export function watchOptionsWithDefaults(options) {
 
 /**
  * Compiles an chokidar ignore array for the specified options
+ *
  * @param {CliWatchOptions} options
  * @returns {function(string): boolean}
  */
@@ -258,6 +260,7 @@ export async function executeCommand(
 
   /**
    * Restart with debounce
+   *
    * @param {boolean} [skipDebounce]
    */
   function debounceRestart(skipDebounce) {
@@ -281,6 +284,7 @@ export async function executeCommand(
 
 /**
  * Prepare stdin to be used for manual restarting
+ *
  * @param {Function} restart
  */
 function prepareStdin(restart) {

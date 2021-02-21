@@ -43,7 +43,7 @@ export function newEventFromEvent(event) {
  *
  * @param {Event} event
  * @param {string} name
- * @returns {undefined}
+ * @returns {void}
  */
 export function eventStart(event, name) {
   event.name = name;
@@ -62,7 +62,7 @@ export function eventStart(event, name) {
  *
  * @param {Event} event
  * @param {string} name
- * @returns {undefined}
+ * @returns {void}
  */
 export function eventRename(event, name) {
   event.name = name;
@@ -75,7 +75,7 @@ export function eventRename(event, name) {
  * @since 0.1.0
  *
  * @param {Event} event
- * @returns {undefined}
+ * @returns {void}
  */
 export function eventStop(event) {
   event.callStack.push({

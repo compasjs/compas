@@ -195,6 +195,7 @@ function listTestFiles() {
 
 /**
  * Create workers and wait till they are initialized.
+ *
  * @returns {Promise<Worker[]>}
  */
 async function initializeWorkers() {

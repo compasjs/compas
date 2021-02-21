@@ -15,6 +15,7 @@ export const state = [];
 
 /**
  * Mutate the global areBenchRunning
+ *
  * @param {boolean} running
  */
 export function setAreBenchRunning(running) {
@@ -23,6 +24,7 @@ export function setAreBenchRunning(running) {
 
 /**
  * Set the bench logger
+ *
  * @param {Logger} logger
  */
 export function setBenchLogger(logger) {

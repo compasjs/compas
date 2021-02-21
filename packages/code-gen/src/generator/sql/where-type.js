@@ -296,7 +296,7 @@ export function getWherePartial(context, type) {
      * Build 'WHERE ' part for ${type.name}
      * @param {${type.where.type}} [where={}]
      * @param {string} [tableName="${type.shortName}."]
-     * @param {{ skipValidator?: boolean }=} options
+     * @param {{ skipValidator?: boolean|undefined }} [options={}]
      * @returns {QueryPart}
      */
     export function ${type.name}Where(where = {}, tableName = "${type.shortName}.", options = {}) {
@@ -321,6 +321,7 @@ export function getWherePartial(context, type) {
 
 /**
  * Returns an object with only the searchable fields
+ *
  * @param {CodeGenObjectType} type
  * @returns {Object<string, CodeGenType>}
  */

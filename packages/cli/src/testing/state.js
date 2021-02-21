@@ -36,6 +36,7 @@ export const state = {
 
 /**
  * Mutate the global areTestsRunning
+ *
  * @param {boolean} running
  */
 export function setAreTestRunning(running) {
@@ -44,6 +45,7 @@ export function setAreTestRunning(running) {
 
 /**
  * Set the test logger
+ *
  * @param {Logger} logger
  */
 export function setTestLogger(logger) {
@@ -52,6 +54,7 @@ export function setTestLogger(logger) {
 
 /**
  * Set test timeout value in milliseconds
+ *
  * @param value
  */
 export function setTestTimeout(value) {

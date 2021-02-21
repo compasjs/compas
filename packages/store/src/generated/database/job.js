@@ -21,6 +21,7 @@ const jobFieldSet = new Set([
 ]);
 /**
  * Get all fields for job
+ *
  * @param {string} [tableName="j."]
  * @param {{ excludePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -40,6 +41,7 @@ export function jobFields(tableName = "j.", options = {}) {
 }
 /**
  * Get 'ORDER BY ' for job
+ *
  * @param {string} [tableName="j."]
  * @returns {QueryPart}
  */
@@ -54,9 +56,10 @@ export function jobOrderBy(tableName = "j.") {
 }
 /**
  * Build 'WHERE ' part for job
+ *
  * @param {StoreJobWhere} [where={}]
  * @param {string} [tableName="j."]
- * @param {{ skipValidator?: boolean }=} options
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
 export function jobWhere(where = {}, tableName = "j.", options = {}) {
@@ -397,6 +400,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
 }
 /**
  * Build 'VALUES ' part for job
+ *
  * @param {StoreJobInsertPartial|StoreJobInsertPartial[]} insert
  * @param {{ includePrimaryKey: boolean }} [options={}]
  * @returns {QueryPart}
@@ -425,6 +429,7 @@ ${it.isComplete ?? false}, ${it.priority ?? 0}, ${it.retryCount ?? 0}, ${
 }
 /**
  * Build 'SET ' part for job
+ *
  * @param {StoreJobUpdatePartial} update
  * @returns {QueryPart}
  */
@@ -520,7 +525,7 @@ WHERE ${jobWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }=} options
+ * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreJob[]>}
  */
 export async function jobInsert(sql, insert, options = {}) {
@@ -573,6 +578,7 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
 /**
  * Query Builder for job
  * Note that nested limit and offset don't work yet.
+ *
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreJob[]>,
@@ -619,8 +625,9 @@ ORDER BY ${jobOrderBy()}
  * NOTE: At the moment only intended for internal use by the generated queries!
  * Transform results from the query builder that adhere to the known structure
  * of 'job' and its relations.
+ *
  * @param {*[]} values
- * @param {StoreJobQueryBuilder=} builder
+ * @param {StoreJobQueryBuilder} [builder={}]
  */
 export function transformJob(values, builder = {}) {
   for (let i = 0; i < values.length; ++i) {

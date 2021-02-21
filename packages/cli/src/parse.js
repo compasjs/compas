@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 
 /**
  * List of commands that don't need to parse node args, script args and tooling args
+ *
  * @type {string[]}
  */
 const utilCommands = ["init", "help", "docker", "proxy", "visualise"];
@@ -9,6 +10,7 @@ const utilCommands = ["init", "help", "docker", "proxy", "visualise"];
 /**
  * Object of commands that accept special input like node arguments, script name or
  * tooling args
+ *
  * @type {object<string, { useScriptOrFile: boolean, }>}
  */
 const execCommands = {
@@ -31,6 +33,7 @@ const execCommands = {
 
 /**
  * Used for checking if an argument is a valid script path
+ *
  * @type {RegExp}
  */
 const pathRegex = /^([^/]*\/)+(.*)$/;

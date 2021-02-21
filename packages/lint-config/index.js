@@ -3,7 +3,7 @@
 /**
  * @type {object} Eslint settings
  */
-module.exports = {
+const settings = {
   root: true,
   extends: [
     "eslint:recommended",
@@ -53,3 +53,53 @@ module.exports = {
     es2020: true,
   },
 };
+/**
+ * @type {object} Eslint settings
+ */
+const jsdocSettings = {
+  plugins: ["jsdoc"],
+  rules: {
+    // ESLint plugin jsdoc
+    "jsdoc/check-alignment": "error",
+    "jsdoc/check-examples": ["off", { padding: 2 }],
+    "jsdoc/check-param-names": "error",
+    "jsdoc/check-property-names": "error",
+    "jsdoc/check-syntax": "error",
+    "jsdoc/check-tag-names": ["error", { definedTags: [] }],
+    "jsdoc/check-types": ["error"],
+    "jsdoc/check-values": "error",
+    "jsdoc/empty-tags": "error",
+    "jsdoc/newline-after-description": ["error", "always"],
+    "jsdoc/require-param-name": "error",
+    "jsdoc/require-property": "error",
+    "jsdoc/require-property-type": "error",
+    "jsdoc/require-property-name": "error",
+    "jsdoc/require-returns-check": [
+      "off",
+      { reportMissingReturnForUndefinedTypes: true },
+    ],
+    "jsdoc/require-returns-description": "off",
+    "jsdoc/require-returns-type": "off",
+    "jsdoc/valid-types": "off",
+  },
+  settings: {
+    jsdoc: {
+      mode: "typescript",
+    },
+  },
+};
+
+/**
+ * @type {object} Eslint settings
+ */
+module.exports =
+  process.env.CI === "true"
+    ? {
+        ...settings,
+        ...jsdocSettings,
+        rules: {
+          ...settings.rules,
+          ...jsdocSettings.rules,
+        },
+      }
+    : settings;

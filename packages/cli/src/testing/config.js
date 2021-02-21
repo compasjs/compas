@@ -11,6 +11,7 @@ const configPath = pathJoin(process.cwd(), "test/config.js");
  * - timeout, used as timeout per test case
  * - setup, function called once before tests run
  * - teardown, function called once after all tests run
+ *
  * @returns {Promise<void>}
  */
 export async function loadTestConfig() {

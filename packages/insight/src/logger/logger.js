@@ -44,8 +44,8 @@ export function newLogger(options) {
 /**
  * Wrap provided writer function to be used in the Logger
  *
- * @param {function} fn
- * @returns {function}
+ * @param {Function} fn
+ * @returns {Function}
  */
 function wrapWriter(fn) {
   return (stream, level, context, message) => {

@@ -353,9 +353,7 @@ export async function addJobToQueue(sql, job) {
  * @since 0.1.0
  *
  * @param {Postgres} sql
- * @param {string} name
- * @param {number} [priority]
- * @param {StoreJobInterval} interval
+ * @param {{ name: string, priority?: number|undefined, interval: StoreJobInterval }} job
  * @returns {Promise<void>}
  */
 export async function addRecurringJobToQueue(
@@ -492,6 +490,7 @@ export async function handleCompasRecurring(event, sql, job) {
 
 /**
  * Adds the interval to the provided scheduledAt date
+ *
  * @param {Date} scheduledAt
  * @param {StoreJobInterval} interval
  * @returns {Date}

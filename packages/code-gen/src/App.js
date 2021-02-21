@@ -71,7 +71,8 @@ export class App {
 
   /**
    * Create a new App.
-   * @param {AppOpts=} options
+   *
+   * @param {AppOpts} [options={}]
    */
   constructor({ verbose } = {}) {
     /**

@@ -25,7 +25,7 @@ export function getSecondsSinceEpoch() {
  *
  * @since 0.1.0
  *
- * @returns {undefined}
+ * @returns {void}
  */
 export function noop() {
   return undefined;
@@ -43,7 +43,7 @@ let internalGc = global.gc;
  *
  * @since 0.1.0
  *
- * @returns {undefined}
+ * @returns {void}
  */
 export function gc() {
   if (isNil(internalGc)) {
@@ -64,7 +64,7 @@ export function gc() {
  *
  * @param {ImportMeta} meta
  * @param {MainFnCallback} cb
- * @returns {undefined}
+ * @returns {void}
  */
 export function mainFn(meta, cb) {
   const { isMainFn, name } = isMainFnAndReturnName(meta);
@@ -144,6 +144,7 @@ export function dirnameForModule(meta) {
 /**
  * Checks if the provided meta.url is the process entrypoint and also returns the name of
  * the entrypoint file
+ *
  * @param {ImportMeta} meta
  * @returns {{ isMainFn: boolean, name?: string}}
  */

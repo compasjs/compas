@@ -12,6 +12,7 @@ import { isNil } from "@compas/stdlib";
 
 /**
  * Clean template output by removing redundant new lines
+ *
  * @param {string} str
  * @returns {string}
  */

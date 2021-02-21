@@ -27,7 +27,7 @@ export class AnyType extends TypeBuilder {
    * Add raw type string instead of any.
    *
    * @param {string} value
-   * @param {{ javaScript?: string, typeScript?: string }=} importValue
+   * @param {{ javaScript?: string, typeScript?: string }} [importValue={}]
    * @returns {AnyType}
    */
   raw(value, importValue = {}) {
@@ -42,7 +42,7 @@ export class AnyType extends TypeBuilder {
    * This is validator is called with a value and should return a boolean.
    *
    * @param {string} value
-   * @param {{ javaScript?: string, typeScript?: string }=} importValue
+   * @param {{ javaScript?: string, typeScript?: string }} [importValue={}]
    * @returns {AnyType}
    */
   validator(value, importValue = {}) {

@@ -3,6 +3,7 @@ import { isNil } from "@compas/stdlib";
 /**
  * This short name is used in the default basic queries an can be overwritten / used in
  * other queries
+ *
  * @param {CodeGenContext} context
  */
 export function addShortNamesToQueryEnabledObjects(context) {
@@ -93,6 +94,7 @@ export function getPrimaryKeyWithType(type) {
  * - Non nullable fields
  * - Nullable fields
  * - createdAt, updatedAt, deletedAt
+ *
  * @param {CodeGenObjectType} type
  * @returns {string[]}
  */
@@ -159,6 +161,7 @@ export function getSortedKeysForType(type) {
 
 /**
  * Statically check if objects are correctly setup do have queries enabled.
+ *
  * @param {CodeGenContext} context
  */
 export function doSqlChecks(context) {

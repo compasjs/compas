@@ -39,7 +39,7 @@ export async function runBenchmarks(state) {
  *
  * @param {string} name
  * @param {BenchCallback} callback
- * @returns {undefined}
+ * @returns {void}
  */
 export function bench(name, callback) {
   state.push({ name, callback });
