@@ -58,7 +58,12 @@ export function applyTestingValidatorsStructure(app) {
   );
 
   // Date
-  app.add(T.date("date"));
+  app.add(
+    T.date("date"),
+    T.date("dateOptional").optional(),
+    T.date("dateAllowNull").allowNull(),
+    T.date("dateDefault").defaultToNow(),
+  );
 
   // Generic
   app.add(T.generic("generic").keys(T.number().convert()).values(T.bool()));

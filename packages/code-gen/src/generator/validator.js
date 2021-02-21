@@ -391,7 +391,7 @@ function anonymousValidatorForType(context, imports, type) {
     case "boolean":
       return anonymousValidatorBoolean(context, imports, type);
     case "date":
-      return anonymousValidatorDate(context, imports);
+      return anonymousValidatorDate(context, imports, type);
     case "file":
       return anonymousValidatorFile(context);
     case "generic":
@@ -603,12 +603,15 @@ function anonymousValidatorBoolean(context, imports, type) {
 /**
  * @param {ValidatorContext} context
  * @param {ImportCreator} imports
+ * @param {CodeGenDateType} type
  */
-function anonymousValidatorDate(context, imports) {
+function anonymousValidatorDate(context, imports, type) {
   const stringType = {
     ...TypeBuilder.getBaseData(),
     type: "string",
+    isOptional: type.isOptional,
     validator: {
+      allowNull: type.validator.allowNull,
       min: 24,
       max: 29,
       pattern:
@@ -628,6 +631,13 @@ function anonymousValidatorDate(context, imports) {
            "value =",
            `"date"`,
          )}
+         
+         ${
+           type.isOptional && type.defaultValue
+             ? `if (!value) { return ${type.defaultValue}; }`
+             : ""
+         }
+         ${type.isOptional ? `if (!value) { return value; }` : ""}
       }
       try {
          const date = new Date(value);
