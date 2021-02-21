@@ -8,6 +8,38 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.117](https://github.com/compasjs/compas/releases/tag/v0.0.117)
+
+- build(deps): bump @types/node from 14.14.27 to 14.14.31
+  ([#689](https://github.com/compasjs/compas/pull/689),
+  [#698](https://github.com/compasjs/compas/pull/698),
+  [#705](https://github.com/compasjs/compas/pull/705))
+- build(deps): bump c8 from 7.5.0 to 7.6.0
+  ([#695](https://github.com/compasjs/compas/pull/695))
+- build(deps): bump mime-types from 2.1.28 to 2.1.29
+  ([#693](https://github.com/compasjs/compas/pull/693))
+- chore(changelog): skip dev-deps updates in the changelog generator
+- ci: add benchmarks as a requirement for dependabot auto merge
+- docs(cli): expand exported function documentation for the cli
+  ([#696](https://github.com/compasjs/compas/pull/696))
+- docs(server): expand exported function documentation
+- docs(store): expand exported function documentation
+- feat(code-gen): expose query key functions for generated hooks
+  ([#702](https://github.com/compasjs/compas/pull/702))
+- feat(lint-config): add support for JSDoc linting
+  ([#707](https://github.com/compasjs/compas/pull/707))
+- fix(code-gen): date validator should support special string cases
+  ([#706](https://github.com/compasjs/compas/pull/706))
+- fix(code-gen): fix missing relation type in sub query builder
+  ([#700](https://github.com/compasjs/compas/pull/700))
+- fix(stdlib): handle 'undefined' in AppError#format
+  ([#701](https://github.com/compasjs/compas/pull/701))
+
+It is expected that react-query generator consumers move to the generated
+`queryKey` functions in this release, as the next release may break the query
+keys. For JSDoc linting it currenlty is only enabled when the env variable `CI`
+is set to `true`, so `CI=true yarn compas lint`.
+
 ### [v0.0.116](https://github.com/compasjs/compas/releases/tag/v0.0.116)
 
 - build(deps): bump @types/node from 14.14.25 to 14.14.27
