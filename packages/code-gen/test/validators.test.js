@@ -291,6 +291,56 @@ test("code-gen/validators", async (t) => {
     );
   });
 
+  t.test("dateOptional", (t) => {
+    const date = new Date();
+
+    assertAll(
+      t,
+      [
+        {
+          input: date,
+          expected: date,
+        },
+        {
+          input: "",
+          expected: undefined,
+        },
+        {
+          input: undefined,
+          expected: undefined,
+        },
+      ],
+      validators.validateValidatorDateOptional,
+    );
+  });
+
+  t.test("dateAllowNull", (t) => {
+    const date = new Date();
+
+    assertAll(
+      t,
+      [
+        {
+          input: date,
+          expected: date,
+        },
+        {
+          input: "",
+          expected: null,
+        },
+        {
+          input: undefined,
+          expected: undefined,
+        },
+        {
+          input: null,
+          expected: null,
+        },
+      ],
+      validators.validateValidatorDateAllowNull,
+    );
+  });
+
   t.test("generic", (t) => {
     assertAll(
       t,

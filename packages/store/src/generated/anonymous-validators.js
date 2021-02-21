@@ -518,23 +518,24 @@ export function anonymousValidator56355924(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {string|undefined}
+d * @returns {undefined|string|undefined}
  */
-export function anonymousValidator1135331723(
+export function anonymousValidator852571656(
   value,
   propertyPath,
   errors = [],
   parentType = "string",
 ) {
   if (isNil(value)) {
-    throw AppError.validationError(`validator.${parentType}.undefined`, {
-      propertyPath,
-    });
+    return value;
   }
   if (typeof value !== "string") {
     throw AppError.validationError(`validator.${parentType}.type`, {
       propertyPath,
     });
+  }
+  if (value.length === 0) {
+    return undefined;
   }
   if (value.length < 24) {
     const min = 24;
@@ -578,7 +579,13 @@ export function anonymousValidator1389014320(
     return new Date();
   }
   if (typeof value === "string") {
-    value = anonymousValidator1135331723(value, propertyPath, errors, "date");
+    value = anonymousValidator852571656(value, propertyPath, errors, "date");
+    if (!value) {
+      return new Date();
+    }
+    if (!value) {
+      return value;
+    }
   }
   try {
     const date = new Date(value);
@@ -611,7 +618,10 @@ export function anonymousValidator1988053796(
     return value;
   }
   if (typeof value === "string") {
-    value = anonymousValidator1135331723(value, propertyPath, errors, "date");
+    value = anonymousValidator852571656(value, propertyPath, errors, "date");
+    if (!value) {
+      return value;
+    }
   }
   try {
     const date = new Date(value);
@@ -1257,6 +1267,54 @@ export function anonymousValidator430889951(
     errors,
   );
   return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {string|undefined}
+ */
+export function anonymousValidator1135331723(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    throw AppError.validationError(`validator.${parentType}.undefined`, {
+      propertyPath,
+    });
+  }
+  if (typeof value !== "string") {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (value.length < 24) {
+    const min = 24;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value.length > 29) {
+    const max = 29;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
+    });
+  }
+  if (
+    !/^(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))$/gi.test(
+      value,
+    )
+  ) {
+    throw AppError.validationError(`validator.${parentType}.pattern`, {
+      propertyPath,
+    });
+  }
+  return value;
 }
 /**
  * @param {*} value
