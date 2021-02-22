@@ -89,7 +89,7 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
 /**
  * Query key used by {{= funcName }}
  */
-{{= funcName }}.queryKey = function(
+{{= funcName }}.queryKey = (
 {{ if (item.params) { }}
 params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
@@ -99,20 +99,18 @@ query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { use
 {{ if (item.body) { }}
 body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
-): QueryKey {
-  return [
-      {{= funcName }}.baseKey(),
-     {{ if (item.params) { }}
-     params,
-     {{ } }}
-     {{ if (item.query) { }}
-     query,
-     {{ } }}
-     {{ if (item.body) { }}
-     body,
-     {{ } }}
- ];
-}
+): QueryKey => [
+  {{= funcName }}.baseKey(),
+ {{ if (item.params) { }}
+ params,
+ {{ } }}
+ {{ if (item.query) { }}
+ query,
+ {{ } }}
+ {{ if (item.body) { }}
+ body,
+ {{ } }}
+];
 
 {{ } else { }}
 
