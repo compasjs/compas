@@ -10,7 +10,8 @@ async function main() {
 
   const tag = rawRef.replace(/^refs\/tags\//, "");
   const fullChangelog = await readFile("./changelog.md", "utf8");
-  const changelogPart = parseChangelog(fullChangelog);
+  let changelogPart = parseChangelog(fullChangelog);
+  changelogPart = replaceContributorNames(changelogPart);
 
   await axios.request({
     url: "https://api.github.com/repos/compasjs/compas/releases",
@@ -64,4 +65,15 @@ function parseChangelog(fullChangelog) {
   }
 
   return result.join("\n");
+}
+
+/**
+ * Replace full contributor Github profile links with just the username as Github will
+ * automatically link them correctly.
+ *
+ * @param {string} changelog
+ * @returns {string}
+ */
+function replaceContributorNames(changelog) {
+  return changelog.replace(/\[(@\w+)]\(.*\)/g, "$1");
 }
