@@ -8,6 +8,25 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.118](https://github.com/compasjs/compas/releases/tag/v0.0.118)
+
+- build(deps): bump eslint-config-prettier from 7.2.0 to 8.0.0
+  ([#708](https://github.com/compasjs/compas/pull/708))
+- chore(ci): improve CI for external contributors
+  ([#712](https://github.com/compasjs/compas/pull/712))
+- chore(ci): remove test and lint dependency for benchmark and coverage jobs
+- feat(cli): support `--jsdoc` flag on `compas lint`
+  ([#713](https://github.com/compasjs/compas/pull/713))
+- feat(code-gen): expose baseKeys for generated hooks
+  ([#709](https://github.com/compasjs/compas/pull/709))
+- feat(code-gen): make `queryKey()` generation consistent with `baseKey()`
+  ([#714](https://github.com/compasjs/compas/pull/714))
+- fix(code-gen): ensure a jsdoc stable output without jsdoc linter
+  ([#711](https://github.com/compasjs/compas/pull/711))
+
+Thanks to [@rodymolenaar](https://github.com/rodymolenaar) for the baseKey
+generation!
+
 ### [v0.0.117](https://github.com/compasjs/compas/releases/tag/v0.0.117)
 
 - build(deps): bump @types/node from 14.14.27 to 14.14.31
@@ -38,7 +57,8 @@ order: 4
 It is expected that react-query generator consumers move to the generated
 `queryKey` functions in this release, as the next release may break the query
 keys. For JSDoc linting it currenlty is only enabled when the env variable `CI`
-is set to `true`, so `CI=true yarn compas lint`.
+is set to `true`, so `CI=true yarn compas lint`. Thanks to
+[@tjonger](https://github.com/tjonger) for the query builder fix!
 
 ### [v0.0.116](https://github.com/compasjs/compas/releases/tag/v0.0.116)
 
