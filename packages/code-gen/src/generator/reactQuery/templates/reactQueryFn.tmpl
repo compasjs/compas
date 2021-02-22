@@ -81,6 +81,12 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
 
 ((newline))
 /**
+ * Base key used by {{= funcName }}.queryKey()
+ */
+{{= funcName }}.baseKey = (): QueryKey => "{{= item.uniqueName }}";
+
+((newline))
+/**
  * Query key used by {{= funcName }}
  */
 {{= funcName }}.queryKey = function(
@@ -95,7 +101,7 @@ body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDe
 {{ } }}
 ): QueryKey {
   return [
-      "{{= item.uniqueName }}",
+      {{= funcName }}.baseKey(),
      {{ if (item.params) { }}
      params,
      {{ } }}
