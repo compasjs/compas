@@ -550,7 +550,6 @@ function transformerForType(context, imports, type) {
        * Transform results from the query builder that adhere to the known structure
        * of '${type.name}' and its relations.
        *
-       *
        * @param {*[]} values
        * @param {${type.uniqueName}QueryBuilder} [builder={}]
        */

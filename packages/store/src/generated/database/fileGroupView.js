@@ -1004,6 +1004,7 @@ ORDER BY ${fileGroupViewOrderBy()}
 }
 /**
  * NOTE: At the moment only intended for internal use by the generated queries!
+ *
  * Transform results from the query builder that adhere to the known structure
  * of 'fileGroupView' and its relations.
  *

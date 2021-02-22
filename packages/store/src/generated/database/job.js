@@ -623,6 +623,7 @@ ORDER BY ${jobOrderBy()}
 }
 /**
  * NOTE: At the moment only intended for internal use by the generated queries!
+ *
  * Transform results from the query builder that adhere to the known structure
  * of 'job' and its relations.
  *

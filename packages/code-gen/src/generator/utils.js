@@ -22,9 +22,10 @@ export function cleanTemplateOutput(str) {
     .map((it) => it.trim())
     .filter((it) => it.length > 0)
     .join("\n")
-    .replace(/^(\s*\n){1,}/gm, "\n") // Replace multiple new lines
-    .replace(/^\s*\*\s*\n+/gm, "") // replace empty lines in JSDoc (i.e. line is with ` *`)
-    .replace(/^(\s*\*.*\n)\s*\n/gm, "$1")
+    .replace(/^(\s*\n)+/gm, "\n") // Replace multiple new lines
+    .replace(/^(\s*\*\s*\n)+/gm, " *\n") // replace empty lines in JSDoc (i.e. line is with ` *`)
+    .replace(/^(\s*\*.*\n)\s*\n/gm, "$1") // Strip empty new lines after a doc line
+    .replace(/^\/\*\*\s*(\n\s*\*\s*)+$/gm, "/**\n") // Stip empty lines at the start of a doc block
     .replace(/(\n){3,}/gm, "\n\n"); // Remove too much empty lines
 }
 

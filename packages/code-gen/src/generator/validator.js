@@ -154,8 +154,11 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
 
   for (const name of Object.keys(mapping)) {
     sources.push(js`
-         /**
-          * ${data[name].docString ?? ""}
+         /**${
+           data[name].docString && data[name].docString.length > 0
+             ? `\n * ${data[name].docString}\n *`
+             : ""
+         }
           * @param {${generateTypeDefinition(context.context, {
             type: "any",
             isOptional: true,
@@ -183,7 +186,6 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
       context,
       ": any",
     )}, propertyPath = "$")
-
          ${withTypescript(
            context,
            `: { data: ${getTypeNameForType(
@@ -194,7 +196,6 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
            )}, errors: undefined } | { data: undefined, errors: { key: string, info: any }[] }`,
          )}
          {
-
             ${() => {
               if (context.collectErrors) {
                 return js`

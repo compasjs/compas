@@ -92,6 +92,7 @@ export function getFieldsPartial(context, type) {
   return js`
     /**
      * Get all fields for ${type.name}
+     * 
      * @param {string} [tableName="${type.shortName}."]
      * @param {{ excludePrimaryKey: boolean }} [options={}]
      * @returns {QueryPart}
@@ -135,6 +136,7 @@ export function getOrderPartial(context, type) {
     return js`
       /**
        * Get 'ORDER BY ' for ${type.name}
+       * 
        * @param {string} [tableName="${type.shortName}."]
        * @returns {QueryPart}
        */
@@ -153,6 +155,7 @@ export function getOrderPartial(context, type) {
   return js`
     /**
      * Get 'ORDER BY ' for ${type.name}
+     * 
      * @param {string} [tableName="${type.shortName}."]
      * @returns {QueryPart}
      */
