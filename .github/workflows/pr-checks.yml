@@ -5,6 +5,85 @@ env:
   CI: true
 
 jobs:
+  lint:
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key:
+            ${{ runner.os }}-yarn-${{ matrix.node }}-${{
+            hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ matrix.node }}-
+            ${{ runner.os }}-yarn-
+
+      - name: Run lint
+        run: |
+          yarn install
+          yarn compas lint
+
+  test:
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14, 15]
+        postgres_version: [12, 13]
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: true
+      POSTGRES_VERSION: ${{ matrix.postgres_version }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key:
+            ${{ runner.os }}-yarn-${{ matrix.node }}-${{
+            hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ matrix.node }}-
+            ${{ runner.os }}-yarn-
+
+      - name: Run tests
+        run: |
+          yarn install
+          yarn compas docker up
+          yarn compas gen
+          yarn compas migrate
+          yarn compas test
+
   bench:
     timeout-minutes: 15
     strategy:
@@ -12,6 +91,9 @@ jobs:
         os: [ubuntu-latest]
         node: [14, 15]
     runs-on: ${{ matrix.os }}
+    needs:
+      - test
+      - lint
     env:
       CI: true
     steps:
@@ -46,6 +128,9 @@ jobs:
 
       - name: Comment bench result
         uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ env.GITHUB_TOKEN != null }}
         with:
           message: |
             ==== **Benchmark result** ====
@@ -64,6 +149,9 @@ jobs:
         os: [ubuntu-latest]
         node: [14]
     runs-on: ${{ matrix.os }}
+    needs:
+      - test
+      - lint
     env:
       CI: true
     steps:
@@ -100,6 +188,9 @@ jobs:
 
       - name: Comment test coverage
         uses: AthleticNet/comment-test-coverage@1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ env.GITHUB_TOKEN != null }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: coverage/coverage-summary.json
@@ -111,8 +202,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: fastify/github-action-merge-dependabot@v1
-        if:
-          ${{ github.actor == 'dependabot[bot]' && github.event_name ==
-          'pull_request' }}
+        if: ${{ github.actor == 'dependabot[bot]' }}
         with:
           github-token: ${{secrets.github_token}}
