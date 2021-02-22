@@ -109,6 +109,7 @@ export function getInsertPartial(context, type) {
   return js`
     /**
      * Build 'VALUES ' part for ${type.name}
+     * 
      * @param {${type.partial.insertType}|${type.partial.insertType}[]} insert
      * @param {{ includePrimaryKey: boolean }} [options={}]
      * @returns {QueryPart}
@@ -189,6 +190,7 @@ export function getUpdatePartial(context, type) {
   return js`
     /**
      * Build 'SET ' part for ${type.name}
+     *
      * @param {${type.partial.updateType}} update
      * @returns {QueryPart}
      */

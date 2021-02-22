@@ -366,7 +366,7 @@ function getMemoizedNamedTypes(context) {
       intermediate += `/**\n`;
 
       if (uniqueNameDocsMap[name]) {
-        intermediate += ` * ${uniqueNameDocsMap[name]}\n`;
+        intermediate += ` * ${uniqueNameDocsMap[name]}\n *\n`;
       }
 
       intermediate += ` * @typedef {`;

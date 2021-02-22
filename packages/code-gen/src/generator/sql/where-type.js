@@ -294,6 +294,7 @@ export function getWherePartial(context, type) {
   return js`
     /**
      * Build 'WHERE ' part for ${type.name}
+     *
      * @param {${type.where.type}} [where={}]
      * @param {string} [tableName="${type.shortName}."]
      * @param {{ skipValidator?: boolean|undefined }} [options={}]
