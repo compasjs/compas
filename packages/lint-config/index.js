@@ -93,7 +93,7 @@ const jsdocSettings = {
  * @type {object} Eslint settings
  */
 module.exports =
-  process.env.CI === "true"
+  process.env.CI === "true" || process.env.LINT_JSDOC === "true"
     ? {
         ...settings,
         ...jsdocSettings,

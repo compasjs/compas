@@ -17,7 +17,7 @@ export function lintCommand(logger, command) {
     command.verbose,
     command.watch,
     "node",
-    [...command.nodeArguments, lintFile],
+    [...command.nodeArguments, lintFile, ...command.execArguments],
     {},
   );
 }
