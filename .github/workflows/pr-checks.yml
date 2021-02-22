@@ -91,9 +91,6 @@ jobs:
         os: [ubuntu-latest]
         node: [14, 15]
     runs-on: ${{ matrix.os }}
-    needs:
-      - test
-      - lint
     env:
       CI: true
     steps:
@@ -149,9 +146,6 @@ jobs:
         os: [ubuntu-latest]
         node: [14]
     runs-on: ${{ matrix.os }}
-    needs:
-      - test
-      - lint
     env:
       CI: true
     steps:
@@ -198,7 +192,7 @@ jobs:
 
   automerge:
     # Coverage runs tests, so should be fine
-    needs: [coverage, bench]
+    needs: [bench, coverage, lint, test]
     runs-on: ubuntu-latest
     steps:
       - uses: fastify/github-action-merge-dependabot@v1
