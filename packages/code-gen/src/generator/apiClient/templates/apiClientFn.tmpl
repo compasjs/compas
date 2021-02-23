@@ -3,7 +3,8 @@
 /**
  * {{= item.uniqueName }}
  {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
- * Docs: {{= item.docString }}
+ {{ if (item.docString && item.docString.length > 0) { }}* Docs: {{= item.docString }}{{ } }}
+ *
 {{ if (!options.useTypescript) { }}
     {{ if (item.params) { }}
      * @param { {{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }} } params

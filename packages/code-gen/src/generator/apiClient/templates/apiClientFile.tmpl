@@ -55,6 +55,7 @@ function handleError(e, group, name) {
 {{ if (options.isBrowser) { }}
 /**
  * Should set an axios compatible api client
+ *
  * @param {AxiosInstance} instance
  */
 export function newApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
@@ -72,6 +73,7 @@ let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undef
 
 /**
  * Should set an axios compatible api client
+ *
  * @param {AxiosInstance} instance
  */
 {{ if (!options.isBrowser) { }}export {{ } }} function createApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
