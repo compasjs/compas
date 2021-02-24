@@ -1,10 +1,6 @@
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, uuid } from "@compas/stdlib";
-import {
-  getNestedFileGroups,
-  hoistChildrenToParent,
-  updateFileGroupOrder,
-} from "./file-group.js";
+import { hoistChildrenToParent, updateFileGroupOrder } from "./file-group.js";
 import { createOrUpdateFile } from "./files.js";
 import { queries } from "./generated.js";
 import { queryFileGroup } from "./generated/database/fileGroup.js";
@@ -108,19 +104,39 @@ test("store/file-group", async (t) => {
   });
 
   t.test("getNestedFiles without files, but preserve order", async (t) => {
-    const result = await getNestedFileGroups(sql, { excludeFiles: true });
+    const result = await queryFileGroup({
+      orderBy: ["order"],
+      children: {
+        orderBy: ["order"],
+        children: {
+          orderBy: ["order"],
+        },
+      },
+      where: {
+        parentIsNull: true,
+      },
+    }).exec(sql);
 
     t.equal(result[0].id, groups.top1, "correct order");
     t.equal(result[1].id, groups.top2, "correct order");
 
     t.equal(result[0].children.length, 1);
     t.equal(result[0].children[0].id, groups.sub1);
-    t.equal(result[0].children[0].children.length, 0);
-    t.equal(result[1].children.length, 0);
+    t.equal(result[0].children[0].children.length, 3);
+    t.equal(result[1].children.length, 3);
   });
 
   t.test("getNestedFiles with files", async (t) => {
-    const result = await getNestedFileGroups(sql, { rootId: groups.top2 });
+    const result = await queryFileGroup({
+      orderBy: ["order"],
+      children: {
+        orderBy: ["order"],
+        file: {},
+      },
+      where: {
+        id: groups.top2,
+      },
+    }).exec(sql);
 
     t.equal(result.length, 1);
     t.equal(result[0].children.length, 3);
@@ -171,7 +187,12 @@ test("store/file-group", async (t) => {
     await hoistChildrenToParent(sql, files[0]);
     await queries.fileGroupDelete(sql, { id: files[0].id });
 
-    const result = await getNestedFileGroups(sql, { rootId: groups.top1 });
+    const result = await queryFileGroup({
+      children: {},
+      where: {
+        id: groups.top1,
+      },
+    }).exec(sql);
 
     t.equal(result.length, 1);
     t.equal(result[0].children.length, 2);
