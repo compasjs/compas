@@ -8,6 +8,25 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.119](https://github.com/compasjs/compas/releases/tag/v0.0.119)
+
+- build(deps): bump eslint-config-prettier from 8.0.0 to 8.1.0
+  ([#724](https://github.com/compasjs/compas/pull/724))
+- build(deps): bump eslint-plugin-jsdoc from 32.1.0 to 32.2.0
+  ([#715](https://github.com/compasjs/compas/pull/715),
+  [#719](https://github.com/compasjs/compas/pull/719))
+- feat(code-gen): add sql order by support
+  ([#721](https://github.com/compasjs/compas/pull/721))
+- feat(store): remove getNestedFileGroup
+  ([#723](https://github.com/compasjs/compas/pull/723))
+- fix(code-gen): fix empty where xxIn behaviour in the sql generator
+  ([#722](https://github.com/compasjs/compas/pull/722))
+- fix(code-gen): jsdoc lint compliant output of the api client
+  ([#717](https://github.com/compasjs/compas/pull/717))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.119.html).
+
 ### [v0.0.118](https://github.com/compasjs/compas/releases/tag/v0.0.118)
 
 - build(deps): bump eslint-config-prettier from 7.2.0 to 8.0.0
