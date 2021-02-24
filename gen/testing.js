@@ -211,7 +211,7 @@ export function applyTestingSqlStructure(app) {
     T.object("post")
       .docs("Store a 'user' post.")
       .keys({
-        title: T.string(),
+        title: T.string().searchable(),
         body: T.string(),
       })
       .enableQueries({ withSoftDeletes: true })

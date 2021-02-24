@@ -4,6 +4,8 @@
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import { isQueryPart, query } from "@compas/store";
 import {
+  validateStoreJobOrderBy,
+  validateStoreJobOrderBySpec,
   validateStoreJobQueryBuilder,
   validateStoreJobWhere,
 } from "../validators.js";
@@ -38,21 +40,6 @@ export function jobFields(tableName = "j.", options = {}) {
   return query([
     `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
-}
-/**
- * Get 'ORDER BY ' for job
- *
- * @param {string} [tableName="j."]
- * @returns {QueryPart}
- */
-export function jobOrderBy(tableName = "j.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
 }
 /**
  * Build 'WHERE ' part for job
@@ -399,6 +386,49 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
   return query(strings, ...values);
 }
 /**
+ * Build 'ORDER BY ' part for job
+ *
+ * @param {StoreJobOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
+ * @param {StoreJobOrderBySpec} [orderBySpec={}]
+ * @param {string} [tableName="j."]
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
+ * @returns {QueryPart}
+ */
+export function jobOrderBy(
+  orderBy = ["createdAt", "updatedAt", "id"],
+  orderBySpec = {},
+  tableName = "j.",
+  options = {},
+) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    orderBy = validateStoreJobOrderBy(orderBy, "$.StoreJobOrderBy");
+    orderBySpec = validateStoreJobOrderBySpec(
+      orderBySpec,
+      "$.StoreJobOrderBySpec",
+    );
+  }
+  if (isQueryPart(orderBy)) {
+    return orderBy;
+  }
+  const strings = [];
+  const values = [];
+  let i = 0;
+  for (const value of orderBy) {
+    if (i !== 0) {
+      strings.push(", ");
+      values.push(undefined);
+    }
+    i++;
+    strings.push(`${tableName}"${value}" `, orderBySpec[value] ?? "ASC");
+    values.push(undefined, undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
  * Build 'VALUES ' part for job
  *
  * @param {StoreJobInsertPartial|StoreJobInsertPartial[]} insert
@@ -594,7 +624,7 @@ SELECT to_jsonb(j.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
 ${internalQueryJob(builder)}
-ORDER BY ${jobOrderBy()}
+ORDER BY ${jobOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
     qb.append(query`OFFSET ${builder.offset}`);

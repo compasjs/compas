@@ -1,4 +1,3 @@
-import { isNil } from "@compas/stdlib";
 import { stringifyType } from "../stringify.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
@@ -32,6 +31,8 @@ export class AnyOfType extends TypeBuilder {
       ...this.data,
       ...AnyOfType.getBaseData(),
     };
+
+    this.internalValues = [];
   }
 
   /**
@@ -39,10 +40,6 @@ export class AnyOfType extends TypeBuilder {
    * @returns {AnyOfType}
    */
   values(...items) {
-    if (isNil(this.internalValues)) {
-      this.internalValues = [];
-    }
-
     this.internalValues.push(...items);
 
     return this;

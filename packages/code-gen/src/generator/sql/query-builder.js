@@ -52,6 +52,11 @@ export function createQueryBuilderTypes(context) {
     )
       .keys({
         where: T.reference(type.group, `${type.name}Where`).optional(),
+        orderBy: T.reference(type.group, `${type.name}OrderBy`).optional(),
+        orderBySpec: T.reference(
+          type.group,
+          `${type.name}OrderBySpec`,
+        ).optional(),
         as: T.string().optional(),
         limit: T.number().optional(),
         offset: T.number().optional(),
@@ -77,6 +82,11 @@ export function createQueryBuilderTypes(context) {
       context.structure[type.group][`${type.name}Where`];
     queryTraverserType.keys.where.reference =
       context.structure[type.group][`${type.name}Where`];
+
+    queryBuilderType.keys.orderBy.reference =
+      context.structure[type.group][`${type.name}OrderBy`];
+    queryBuilderType.keys.orderBySpec.reference =
+      context.structure[type.group][`${type.name}OrderBySpec`];
   }
 
   // Longer loop that fills the type with the fields
@@ -245,7 +255,7 @@ function queryBuilderForType(context, imports, type) {
         SELECT to_jsonb(${type.shortName}.*) || jsonb_build_object($\{query(
             [ joinedKeys.join(",") ])}) as "result"
          $\{internalQuery${upperCaseFirst(type.name)}(builder)}
-         ORDER BY $\{${type.name}OrderBy()}
+         ORDER BY $\{${type.name}OrderBy(builder.orderBy, builder.orderBySpec)}
         \`;
 
          if (!isNil(builder.offset)) {
@@ -368,12 +378,12 @@ if (!isNil(builder.${key}.limit)) {
     let select = ``;
 
     if (relation.subType === "oneToMany") {
-      select = `array_remove(array_agg(${selectValue} ORDER BY $\{${otherSide.name}OrderBy("${otherShortName}.")}), NULL) as "result"`;
+      select = `array_remove(array_agg(${selectValue} ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}), NULL) as "result"`;
       groupBy = `GROUP BY ${shortName}."${typePrimaryKey}"`;
       orderBy = `ORDER BY ${shortName}."${typePrimaryKey}"`;
     } else {
       select = `${selectValue} as "result"`;
-      orderBy = `ORDER BY $\{${otherSide.name}OrderBy("${otherShortName}.")}`;
+      orderBy = `ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}`;
     }
 
     // Base with join keys

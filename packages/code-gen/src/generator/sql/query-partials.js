@@ -1,4 +1,5 @@
 import { js } from "../tag/index.js";
+import { getOrderByPartial } from "./order-by-type.js";
 import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
 import { getPrimaryKeyWithType, getSortedKeysForType } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
@@ -22,13 +23,22 @@ export function generateQueryPartials(context, imports, type, src) {
   }
 
   src.push(getFieldsPartial(context, type));
-  src.push(getOrderPartial(context, type));
 
   imports.destructureImport(
     `validate${type.uniqueName}Where`,
     `../validators${context.importExtension}`,
   );
+  imports.destructureImport(
+    `validate${type.uniqueName}OrderBy`,
+    `../validators${context.importExtension}`,
+  );
+  imports.destructureImport(
+    `validate${type.uniqueName}OrderBySpec`,
+    `../validators${context.importExtension}`,
+  );
+
   src.push(getWherePartial(context, type));
+  src.push(getOrderByPartial(context, type));
 
   if (!type.queryOptions.isView) {
     src.push(getInsertPartial(context, type));
@@ -118,55 +128,6 @@ export function getFieldsPartial(context, type) {
                        .map((it) => `$\{tableName}"${it}"`)
                        .join(", ")}\`
                    ]);
-    }
-  `;
-}
-
-/**
- * A default ordering partial
- * Working correctly, with or without dates
- *
- * @property {CodeGenContext} context
- * @property {CodeGenObjectType} type
- * @returns {string}
- */
-export function getOrderPartial(context, type) {
-  const { key: primaryKey } = getPrimaryKeyWithType(type);
-  if (type.queryOptions.withSoftDeletes || type.queryOptions.withDates) {
-    return js`
-      /**
-       * Get 'ORDER BY ' for ${type.name}
-       * 
-       * @param {string} [tableName="${type.shortName}."]
-       * @returns {QueryPart}
-       */
-      export function ${type.name}OrderBy(tableName = "${type.shortName}.") {
-        if (tableName.length > 0 && !tableName.endsWith(".")) {
-          tableName = \`$\{tableName}.\`;
-        }
-
-        const strings = [ \`$\{tableName}"createdAt", $\{tableName}"updatedAt", $\{tableName}"${primaryKey}" \` ];
-
-        return query(strings);
-      }
-    `;
-  }
-
-  return js`
-    /**
-     * Get 'ORDER BY ' for ${type.name}
-     * 
-     * @param {string} [tableName="${type.shortName}."]
-     * @returns {QueryPart}
-     */
-    export function ${type.name}OrderBy(tableName = "${type.shortName}.") {
-      if (tableName.length > 0 && !tableName.endsWith(".")) {
-        tableName = \`$\{tableName}.\`;
-      }
-
-      const strings = [ \`$\{tableName}"id" \` ];
-
-      return query(strings);
     }
   `;
 }

@@ -4,6 +4,8 @@
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import { isQueryPart, query } from "@compas/store";
 import {
+  validateStoreFileGroupViewOrderBy,
+  validateStoreFileGroupViewOrderBySpec,
   validateStoreFileGroupViewQueryBuilder,
   validateStoreFileGroupViewWhere,
 } from "../validators.js";
@@ -27,21 +29,6 @@ export function fileGroupViewFields(tableName = "fgv.", options = {}) {
   return query([
     `${tableName}"id", ${tableName}"isDirectory", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
   ]);
-}
-/**
- * Get 'ORDER BY ' for fileGroupView
- *
- * @param {string} [tableName="fgv."]
- * @returns {QueryPart}
- */
-export function fileGroupViewOrderBy(tableName = "fgv.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
 }
 /**
  * Build 'WHERE ' part for fileGroupView
@@ -447,6 +434,52 @@ export function fileGroupViewWhere(
   return query(strings, ...values);
 }
 /**
+ * Build 'ORDER BY ' part for fileGroupView
+ *
+ * @param {StoreFileGroupViewOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
+ * @param {StoreFileGroupViewOrderBySpec} [orderBySpec={}]
+ * @param {string} [tableName="fgv."]
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
+ * @returns {QueryPart}
+ */
+export function fileGroupViewOrderBy(
+  orderBy = ["createdAt", "updatedAt", "id"],
+  orderBySpec = {},
+  tableName = "fgv.",
+  options = {},
+) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    orderBy = validateStoreFileGroupViewOrderBy(
+      orderBy,
+      "$.StoreFileGroupViewOrderBy",
+    );
+    orderBySpec = validateStoreFileGroupViewOrderBySpec(
+      orderBySpec,
+      "$.StoreFileGroupViewOrderBySpec",
+    );
+  }
+  if (isQueryPart(orderBy)) {
+    return orderBy;
+  }
+  const strings = [];
+  const values = [];
+  let i = 0;
+  for (const value of orderBy) {
+    if (i !== 0) {
+      strings.push(", ");
+      values.push(undefined);
+    }
+    i++;
+    strings.push(`${tableName}"${value}" `, orderBySpec[value] ?? "ASC");
+    values.push(undefined, undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -619,7 +652,7 @@ SELECT to_jsonb(f.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
 ${internalQueryFile(builder.file, query`AND f."id" = fgv2."file"`)}
-ORDER BY ${fileOrderBy("f.")}
+ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
 ${offsetLimitQb}
 ) as "fgv_f_0" ON TRUE`);
   }
@@ -657,7 +690,11 @@ ${internalQueryFileGroupView(
   builder.parent,
   query`AND fgv."id" = fgv2."parent"`,
 )}
-ORDER BY ${fileGroupViewOrderBy("fgv.")}
+ORDER BY ${fileGroupViewOrderBy(
+      builder.parent.orderBy,
+      builder.parent.orderBySpec,
+      "fgv.",
+    )}
 ${offsetLimitQb}
 ) as "fgv_fgv_0" ON TRUE`);
   }
@@ -692,7 +729,11 @@ ${offsetLimitQb}
     joinQb.append(query`LEFT JOIN LATERAL (
 SELECT array_remove(array_agg(to_jsonb(fgv.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupViewOrderBy("fgv.")}), NULL) as "result"
+    ])}) ORDER BY ${fileGroupViewOrderBy(
+      builder.children.orderBy,
+      builder.children.orderBySpec,
+      "fgv.",
+    )}), NULL) as "result"
 ${internalQueryFileGroupView(
   builder.children,
   query`AND fgv."parent" = fgv2."id"`,
@@ -844,7 +885,7 @@ SELECT to_jsonb(f.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
 ${internalQueryFile(builder.file, query`AND f."id" = fgv."file"`)}
-ORDER BY ${fileOrderBy("f.")}
+ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
 ${offsetLimitQb}
 ) as "fgv_f_0" ON TRUE`);
   }
@@ -882,7 +923,11 @@ ${internalQueryFileGroupView2(
   builder.parent,
   query`AND fgv2."id" = fgv."parent"`,
 )}
-ORDER BY ${fileGroupViewOrderBy("fgv2.")}
+ORDER BY ${fileGroupViewOrderBy(
+      builder.parent.orderBy,
+      builder.parent.orderBySpec,
+      "fgv2.",
+    )}
 ${offsetLimitQb}
 ) as "fgv_fgv_0" ON TRUE`);
   }
@@ -917,7 +962,11 @@ ${offsetLimitQb}
     joinQb.append(query`LEFT JOIN LATERAL (
 SELECT array_remove(array_agg(to_jsonb(fgv2.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupViewOrderBy("fgv2.")}), NULL) as "result"
+    ])}) ORDER BY ${fileGroupViewOrderBy(
+      builder.children.orderBy,
+      builder.children.orderBySpec,
+      "fgv2.",
+    )}), NULL) as "result"
 ${internalQueryFileGroupView2(
   builder.children,
   query`AND fgv2."parent" = fgv."id"`,
@@ -975,7 +1024,7 @@ SELECT to_jsonb(fgv.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
 ${internalQueryFileGroupView(builder)}
-ORDER BY ${fileGroupViewOrderBy()}
+ORDER BY ${fileGroupViewOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
     qb.append(query`OFFSET ${builder.offset}`);

@@ -4,6 +4,8 @@
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import { isQueryPart, query } from "@compas/store";
 import {
+  validateStoreFileOrderBy,
+  validateStoreFileOrderBySpec,
   validateStoreFileQueryBuilder,
   validateStoreFileWhere,
 } from "../validators.js";
@@ -49,21 +51,6 @@ export function fileFields(tableName = "f.", options = {}) {
   return query([
     `${tableName}"id", ${tableName}"contentLength", ${tableName}"bucketName", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
   ]);
-}
-/**
- * Get 'ORDER BY ' for file
- *
- * @param {string} [tableName="f."]
- * @returns {QueryPart}
- */
-export function fileOrderBy(tableName = "f.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
 }
 /**
  * Build 'WHERE ' part for file
@@ -402,6 +389,49 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
   return query(strings, ...values);
 }
 /**
+ * Build 'ORDER BY ' part for file
+ *
+ * @param {StoreFileOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
+ * @param {StoreFileOrderBySpec} [orderBySpec={}]
+ * @param {string} [tableName="f."]
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
+ * @returns {QueryPart}
+ */
+export function fileOrderBy(
+  orderBy = ["createdAt", "updatedAt", "id"],
+  orderBySpec = {},
+  tableName = "f.",
+  options = {},
+) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    orderBy = validateStoreFileOrderBy(orderBy, "$.StoreFileOrderBy");
+    orderBySpec = validateStoreFileOrderBySpec(
+      orderBySpec,
+      "$.StoreFileOrderBySpec",
+    );
+  }
+  if (isQueryPart(orderBy)) {
+    return orderBy;
+  }
+  const strings = [];
+  const values = [];
+  let i = 0;
+  for (const value of orderBy) {
+    if (i !== 0) {
+      strings.push(", ");
+      values.push(undefined);
+    }
+    i++;
+    strings.push(`${tableName}"${value}" `, orderBySpec[value] ?? "ASC");
+    values.push(undefined, undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
  * Build 'VALUES ' part for file
  *
  * @param {StoreFileInsertPartial|StoreFileInsertPartial[]} insert
@@ -690,7 +720,11 @@ SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
 ${internalQueryFileGroup(builder.group, query`AND fg."file" = f."id"`)}
-ORDER BY ${fileGroupOrderBy("fg.")}
+ORDER BY ${fileGroupOrderBy(
+      builder.group.orderBy,
+      builder.group.orderBySpec,
+      "fg.",
+    )}
 ${offsetLimitQb}
 ) as "f_fg_0" ON TRUE`);
   }
@@ -727,7 +761,11 @@ SELECT to_jsonb(fgv.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
 ${internalQueryFileGroupView(builder.groupView, query`AND fgv."file" = f."id"`)}
-ORDER BY ${fileGroupViewOrderBy("fgv.")}
+ORDER BY ${fileGroupViewOrderBy(
+      builder.groupView.orderBy,
+      builder.groupView.orderBySpec,
+      "fgv.",
+    )}
 ${offsetLimitQb}
 ) as "f_fgv_0" ON TRUE`);
   }
@@ -770,7 +808,7 @@ SELECT to_jsonb(f.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
 ${internalQueryFile(builder)}
-ORDER BY ${fileOrderBy()}
+ORDER BY ${fileOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
     qb.append(query`OFFSET ${builder.offset}`);
