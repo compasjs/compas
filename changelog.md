@@ -8,6 +8,11 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.120](https://github.com/compasjs/compas/releases/tag/v0.0.120)
+
+- fix(code-gen): allow 'optional' order by for deletedAt column
+  ([#725](https://github.com/compasjs/compas/pull/725))
+
 ### [v0.0.119](https://github.com/compasjs/compas/releases/tag/v0.0.119)
 
 - build(deps): bump eslint-config-prettier from 8.0.0 to 8.1.0
