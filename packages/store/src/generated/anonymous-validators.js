@@ -3530,7 +3530,64 @@ export function anonymousValidator1795948632(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id"?: undefined|"ASC"|"DESC", "bucketName"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }|undefined}
+ * @returns {undefined|CompasSqlOrderBy|undefined}
+ */
+export function anonymousValidator20803901(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  if (value !== "ASC" && value !== "DESC") {
+    const parentType = "string";
+    const oneOf = ["ASC", "DESC"];
+    throw AppError.validationError(`validator.${parentType}.oneOf`, {
+      propertyPath: propertyPath,
+      oneOf,
+    });
+  }
+  return value ?? undefined;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|CompasSqlOrderByOptionalField|undefined}
+ */
+export function anonymousValidator198346889(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  if (
+    value !== "ASC" &&
+    value !== "DESC" &&
+    value !== "ASC NULLS FIRST" &&
+    value !== "DESC NULLS LAST"
+  ) {
+    const parentType = "string";
+    const oneOf = ["ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST"];
+    throw AppError.validationError(`validator.${parentType}.oneOf`, {
+      propertyPath: propertyPath,
+      oneOf,
+    });
+  }
+  return value ?? undefined;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }|undefined}
  */
 export function anonymousValidator163358845(
   value,
@@ -3557,76 +3614,31 @@ export function anonymousValidator163358845(
       });
     }
   }
-  if (
-    value["id"] !== "ASC" &&
-    value["id"] !== "DESC" &&
-    value["id"] !== undefined &&
-    value["id"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.id`,
-      oneOf,
-    });
-  }
-  result["id"] = value["id"] ?? undefined;
-  if (
-    value["bucketName"] !== "ASC" &&
-    value["bucketName"] !== "DESC" &&
-    value["bucketName"] !== undefined &&
-    value["bucketName"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.bucketName`,
-      oneOf,
-    });
-  }
-  result["bucketName"] = value["bucketName"] ?? undefined;
-  if (
-    value["createdAt"] !== "ASC" &&
-    value["createdAt"] !== "DESC" &&
-    value["createdAt"] !== undefined &&
-    value["createdAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.createdAt`,
-      oneOf,
-    });
-  }
-  result["createdAt"] = value["createdAt"] ?? undefined;
-  if (
-    value["updatedAt"] !== "ASC" &&
-    value["updatedAt"] !== "DESC" &&
-    value["updatedAt"] !== undefined &&
-    value["updatedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.updatedAt`,
-      oneOf,
-    });
-  }
-  result["updatedAt"] = value["updatedAt"] ?? undefined;
-  if (
-    value["deletedAt"] !== "ASC" &&
-    value["deletedAt"] !== "DESC" &&
-    value["deletedAt"] !== undefined &&
-    value["deletedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.deletedAt`,
-      oneOf,
-    });
-  }
-  result["deletedAt"] = value["deletedAt"] ?? undefined;
+  result["id"] = anonymousValidator20803901(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["bucketName"] = anonymousValidator20803901(
+    value["bucketName"],
+    `${propertyPath}.bucketName`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator20803901(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["updatedAt"] = anonymousValidator20803901(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
+  result["deletedAt"] = anonymousValidator198346889(
+    value["deletedAt"],
+    `${propertyPath}.deletedAt`,
+    errors,
+  );
   return result;
 }
 /**
@@ -3727,7 +3739,7 @@ export function anonymousValidator753972035(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id"?: undefined|"ASC"|"DESC", "order"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }|undefined}
+ * @returns {{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }|undefined}
  */
 export function anonymousValidator322356638(
   value,
@@ -3754,137 +3766,41 @@ export function anonymousValidator322356638(
       });
     }
   }
-  if (
-    value["id"] !== "ASC" &&
-    value["id"] !== "DESC" &&
-    value["id"] !== undefined &&
-    value["id"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.id`,
-      oneOf,
-    });
-  }
-  result["id"] = value["id"] ?? undefined;
-  if (
-    value["order"] !== "ASC" &&
-    value["order"] !== "DESC" &&
-    value["order"] !== "ASC NULLS FIRST" &&
-    value["order"] !== "ASC NULLS LAST" &&
-    value["order"] !== "DESC NULLS FIRST" &&
-    value["order"] !== "DESC NULLS LAST" &&
-    value["order"] !== undefined &&
-    value["order"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.order`,
-      oneOf,
-    });
-  }
-  result["order"] = value["order"] ?? undefined;
-  if (
-    value["file"] !== "ASC" &&
-    value["file"] !== "DESC" &&
-    value["file"] !== "ASC NULLS FIRST" &&
-    value["file"] !== "ASC NULLS LAST" &&
-    value["file"] !== "DESC NULLS FIRST" &&
-    value["file"] !== "DESC NULLS LAST" &&
-    value["file"] !== undefined &&
-    value["file"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.file`,
-      oneOf,
-    });
-  }
-  result["file"] = value["file"] ?? undefined;
-  if (
-    value["parent"] !== "ASC" &&
-    value["parent"] !== "DESC" &&
-    value["parent"] !== "ASC NULLS FIRST" &&
-    value["parent"] !== "ASC NULLS LAST" &&
-    value["parent"] !== "DESC NULLS FIRST" &&
-    value["parent"] !== "DESC NULLS LAST" &&
-    value["parent"] !== undefined &&
-    value["parent"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.parent`,
-      oneOf,
-    });
-  }
-  result["parent"] = value["parent"] ?? undefined;
-  if (
-    value["createdAt"] !== "ASC" &&
-    value["createdAt"] !== "DESC" &&
-    value["createdAt"] !== undefined &&
-    value["createdAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.createdAt`,
-      oneOf,
-    });
-  }
-  result["createdAt"] = value["createdAt"] ?? undefined;
-  if (
-    value["updatedAt"] !== "ASC" &&
-    value["updatedAt"] !== "DESC" &&
-    value["updatedAt"] !== undefined &&
-    value["updatedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.updatedAt`,
-      oneOf,
-    });
-  }
-  result["updatedAt"] = value["updatedAt"] ?? undefined;
-  if (
-    value["deletedAt"] !== "ASC" &&
-    value["deletedAt"] !== "DESC" &&
-    value["deletedAt"] !== undefined &&
-    value["deletedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.deletedAt`,
-      oneOf,
-    });
-  }
-  result["deletedAt"] = value["deletedAt"] ?? undefined;
+  result["id"] = anonymousValidator20803901(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["order"] = anonymousValidator198346889(
+    value["order"],
+    `${propertyPath}.order`,
+    errors,
+  );
+  result["file"] = anonymousValidator198346889(
+    value["file"],
+    `${propertyPath}.file`,
+    errors,
+  );
+  result["parent"] = anonymousValidator198346889(
+    value["parent"],
+    `${propertyPath}.parent`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator20803901(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["updatedAt"] = anonymousValidator20803901(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
+  result["deletedAt"] = anonymousValidator198346889(
+    value["deletedAt"],
+    `${propertyPath}.deletedAt`,
+    errors,
+  );
   return result;
 }
 /**
@@ -3985,7 +3901,7 @@ export function anonymousValidator2041901602(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id"?: undefined|"ASC"|"DESC", "isDirectory"?: undefined|"ASC"|"DESC", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }|undefined}
+ * @returns {{"id"?: undefined|CompasSqlOrderBy, "isDirectory"?: undefined|CompasSqlOrderBy, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }|undefined}
  */
 export function anonymousValidator744250041(
   value,
@@ -4012,126 +3928,41 @@ export function anonymousValidator744250041(
       });
     }
   }
-  if (
-    value["id"] !== "ASC" &&
-    value["id"] !== "DESC" &&
-    value["id"] !== undefined &&
-    value["id"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.id`,
-      oneOf,
-    });
-  }
-  result["id"] = value["id"] ?? undefined;
-  if (
-    value["isDirectory"] !== "ASC" &&
-    value["isDirectory"] !== "DESC" &&
-    value["isDirectory"] !== undefined &&
-    value["isDirectory"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.isDirectory`,
-      oneOf,
-    });
-  }
-  result["isDirectory"] = value["isDirectory"] ?? undefined;
-  if (
-    value["file"] !== "ASC" &&
-    value["file"] !== "DESC" &&
-    value["file"] !== "ASC NULLS FIRST" &&
-    value["file"] !== "ASC NULLS LAST" &&
-    value["file"] !== "DESC NULLS FIRST" &&
-    value["file"] !== "DESC NULLS LAST" &&
-    value["file"] !== undefined &&
-    value["file"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.file`,
-      oneOf,
-    });
-  }
-  result["file"] = value["file"] ?? undefined;
-  if (
-    value["parent"] !== "ASC" &&
-    value["parent"] !== "DESC" &&
-    value["parent"] !== "ASC NULLS FIRST" &&
-    value["parent"] !== "ASC NULLS LAST" &&
-    value["parent"] !== "DESC NULLS FIRST" &&
-    value["parent"] !== "DESC NULLS LAST" &&
-    value["parent"] !== undefined &&
-    value["parent"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.parent`,
-      oneOf,
-    });
-  }
-  result["parent"] = value["parent"] ?? undefined;
-  if (
-    value["createdAt"] !== "ASC" &&
-    value["createdAt"] !== "DESC" &&
-    value["createdAt"] !== undefined &&
-    value["createdAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.createdAt`,
-      oneOf,
-    });
-  }
-  result["createdAt"] = value["createdAt"] ?? undefined;
-  if (
-    value["updatedAt"] !== "ASC" &&
-    value["updatedAt"] !== "DESC" &&
-    value["updatedAt"] !== undefined &&
-    value["updatedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.updatedAt`,
-      oneOf,
-    });
-  }
-  result["updatedAt"] = value["updatedAt"] ?? undefined;
-  if (
-    value["deletedAt"] !== "ASC" &&
-    value["deletedAt"] !== "DESC" &&
-    value["deletedAt"] !== undefined &&
-    value["deletedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.deletedAt`,
-      oneOf,
-    });
-  }
-  result["deletedAt"] = value["deletedAt"] ?? undefined;
+  result["id"] = anonymousValidator20803901(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["isDirectory"] = anonymousValidator20803901(
+    value["isDirectory"],
+    `${propertyPath}.isDirectory`,
+    errors,
+  );
+  result["file"] = anonymousValidator198346889(
+    value["file"],
+    `${propertyPath}.file`,
+    errors,
+  );
+  result["parent"] = anonymousValidator198346889(
+    value["parent"],
+    `${propertyPath}.parent`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator20803901(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["updatedAt"] = anonymousValidator20803901(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
+  result["deletedAt"] = anonymousValidator198346889(
+    value["deletedAt"],
+    `${propertyPath}.deletedAt`,
+    errors,
+  );
   return result;
 }
 /**
@@ -4230,7 +4061,7 @@ export function anonymousValidator685221527(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id"?: undefined|"ASC"|"DESC", "isComplete"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "name"?: undefined|"ASC"|"DESC", "scheduledAt"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }|undefined}
+ * @returns {{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }|undefined}
  */
 export function anonymousValidator280827708(
   value,
@@ -4257,112 +4088,36 @@ export function anonymousValidator280827708(
       });
     }
   }
-  if (
-    value["id"] !== "ASC" &&
-    value["id"] !== "DESC" &&
-    value["id"] !== undefined &&
-    value["id"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.id`,
-      oneOf,
-    });
-  }
-  result["id"] = value["id"] ?? undefined;
-  if (
-    value["isComplete"] !== "ASC" &&
-    value["isComplete"] !== "DESC" &&
-    value["isComplete"] !== "ASC NULLS FIRST" &&
-    value["isComplete"] !== "ASC NULLS LAST" &&
-    value["isComplete"] !== "DESC NULLS FIRST" &&
-    value["isComplete"] !== "DESC NULLS LAST" &&
-    value["isComplete"] !== undefined &&
-    value["isComplete"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.isComplete`,
-      oneOf,
-    });
-  }
-  result["isComplete"] = value["isComplete"] ?? undefined;
-  if (
-    value["name"] !== "ASC" &&
-    value["name"] !== "DESC" &&
-    value["name"] !== undefined &&
-    value["name"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.name`,
-      oneOf,
-    });
-  }
-  result["name"] = value["name"] ?? undefined;
-  if (
-    value["scheduledAt"] !== "ASC" &&
-    value["scheduledAt"] !== "DESC" &&
-    value["scheduledAt"] !== "ASC NULLS FIRST" &&
-    value["scheduledAt"] !== "ASC NULLS LAST" &&
-    value["scheduledAt"] !== "DESC NULLS FIRST" &&
-    value["scheduledAt"] !== "DESC NULLS LAST" &&
-    value["scheduledAt"] !== undefined &&
-    value["scheduledAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = [
-      "ASC",
-      "DESC",
-      "ASC NULLS FIRST",
-      "ASC NULLS LAST",
-      "DESC NULLS FIRST",
-      "DESC NULLS LAST",
-    ];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.scheduledAt`,
-      oneOf,
-    });
-  }
-  result["scheduledAt"] = value["scheduledAt"] ?? undefined;
-  if (
-    value["createdAt"] !== "ASC" &&
-    value["createdAt"] !== "DESC" &&
-    value["createdAt"] !== undefined &&
-    value["createdAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.createdAt`,
-      oneOf,
-    });
-  }
-  result["createdAt"] = value["createdAt"] ?? undefined;
-  if (
-    value["updatedAt"] !== "ASC" &&
-    value["updatedAt"] !== "DESC" &&
-    value["updatedAt"] !== undefined &&
-    value["updatedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.updatedAt`,
-      oneOf,
-    });
-  }
-  result["updatedAt"] = value["updatedAt"] ?? undefined;
+  result["id"] = anonymousValidator20803901(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["isComplete"] = anonymousValidator198346889(
+    value["isComplete"],
+    `${propertyPath}.isComplete`,
+    errors,
+  );
+  result["name"] = anonymousValidator20803901(
+    value["name"],
+    `${propertyPath}.name`,
+    errors,
+  );
+  result["scheduledAt"] = anonymousValidator198346889(
+    value["scheduledAt"],
+    `${propertyPath}.scheduledAt`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator20803901(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["updatedAt"] = anonymousValidator20803901(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
   return result;
 }
 /**
@@ -4452,7 +4207,7 @@ export function anonymousValidator2038758416(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id"?: undefined|"ASC"|"DESC", "expires"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }|undefined}
+ * @returns {{"id"?: undefined|CompasSqlOrderBy, "expires"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }|undefined}
  */
 export function anonymousValidator144635851(
   value,
@@ -4479,62 +4234,26 @@ export function anonymousValidator144635851(
       });
     }
   }
-  if (
-    value["id"] !== "ASC" &&
-    value["id"] !== "DESC" &&
-    value["id"] !== undefined &&
-    value["id"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.id`,
-      oneOf,
-    });
-  }
-  result["id"] = value["id"] ?? undefined;
-  if (
-    value["expires"] !== "ASC" &&
-    value["expires"] !== "DESC" &&
-    value["expires"] !== undefined &&
-    value["expires"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.expires`,
-      oneOf,
-    });
-  }
-  result["expires"] = value["expires"] ?? undefined;
-  if (
-    value["createdAt"] !== "ASC" &&
-    value["createdAt"] !== "DESC" &&
-    value["createdAt"] !== undefined &&
-    value["createdAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.createdAt`,
-      oneOf,
-    });
-  }
-  result["createdAt"] = value["createdAt"] ?? undefined;
-  if (
-    value["updatedAt"] !== "ASC" &&
-    value["updatedAt"] !== "DESC" &&
-    value["updatedAt"] !== undefined &&
-    value["updatedAt"] !== null
-  ) {
-    const parentType = "string";
-    const oneOf = ["ASC", "DESC"];
-    throw AppError.validationError(`validator.${parentType}.oneOf`, {
-      propertyPath: `${propertyPath}.updatedAt`,
-      oneOf,
-    });
-  }
-  result["updatedAt"] = value["updatedAt"] ?? undefined;
+  result["id"] = anonymousValidator20803901(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["expires"] = anonymousValidator20803901(
+    value["expires"],
+    `${propertyPath}.expires`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator20803901(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["updatedAt"] = anonymousValidator20803901(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
   return result;
 }
 /**
@@ -5599,4 +5318,87 @@ export function anonymousValidator1805657267(
     errors,
   );
   return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {"ASC"|"DESC"|undefined}
+ */
+export function anonymousValidator446238440(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    throw AppError.validationError(`validator.${parentType}.undefined`, {
+      propertyPath,
+    });
+  }
+  if (typeof value !== "string") {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (value.length < 1) {
+    const min = 1;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value !== "ASC" && value !== "DESC") {
+    const oneOf = ["ASC", "DESC"];
+    throw AppError.validationError(`validator.${parentType}.oneOf`, {
+      propertyPath,
+      oneOf,
+    });
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST"|undefined}
+ */
+export function anonymousValidator572766398(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    throw AppError.validationError(`validator.${parentType}.undefined`, {
+      propertyPath,
+    });
+  }
+  if (typeof value !== "string") {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (value.length < 1) {
+    const min = 1;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (
+    value !== "ASC" &&
+    value !== "DESC" &&
+    value !== "ASC NULLS FIRST" &&
+    value !== "DESC NULLS LAST"
+  ) {
+    const oneOf = ["ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST"];
+    throw AppError.validationError(`validator.${parentType}.oneOf`, {
+      propertyPath,
+      oneOf,
+    });
+  }
+  return value;
 }

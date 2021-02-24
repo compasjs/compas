@@ -293,16 +293,6 @@ function getTypes(T) {
             .keys({
               key: T.string(),
               optional: T.bool(),
-              options: [
-                T.string().oneOf(
-                  "ASC",
-                  "DESC",
-                  "ASC NULLS FIRST",
-                  "ASC NULLS LAST",
-                  "DESC NULLS FIRST",
-                  "DESC NULLS LAST",
-                ),
-              ],
             })
             .loose(),
         ),

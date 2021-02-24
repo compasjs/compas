@@ -1848,64 +1848,9 @@ export function anonymousValidator1209434737(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {("ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST")[]|undefined}
+ * @returns {{"key": string, "optional": boolean, }|undefined}
  */
-export function anonymousValidator1245103210(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "array",
-) {
-  if (isNil(value)) {
-    errors.push({
-      key: `validator.${parentType}.undefined`,
-      info: { propertyPath },
-    });
-    return undefined;
-  }
-  if (!Array.isArray(value)) {
-    errors.push({
-      key: `validator.${parentType}.type`,
-      info: { propertyPath },
-    });
-    return undefined;
-  }
-  const result = Array.from({ length: value.length });
-  for (let i = 0; i < value.length; ++i) {
-    if (
-      value[i] !== "ASC" &&
-      value[i] !== "DESC" &&
-      value[i] !== "ASC NULLS FIRST" &&
-      value[i] !== "ASC NULLS LAST" &&
-      value[i] !== "DESC NULLS FIRST" &&
-      value[i] !== "DESC NULLS LAST"
-    ) {
-      const parentType = "string";
-      const oneOf = [
-        "ASC",
-        "DESC",
-        "ASC NULLS FIRST",
-        "ASC NULLS LAST",
-        "DESC NULLS FIRST",
-        "DESC NULLS LAST",
-      ];
-      errors.push({
-        key: `validator.${parentType}.oneOf`,
-        info: { propertyPath: `${propertyPath}[${i}]`, oneOf },
-      });
-    }
-    result[i] = value[i] ?? undefined;
-  }
-  return result;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
- * @returns {{"key": string, "optional": boolean, "options": ("ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST")[], }|undefined}
- */
-export function anonymousValidator1402264523(
+export function anonymousValidator244788999(
   value,
   propertyPath,
   errors = [],
@@ -1939,11 +1884,6 @@ export function anonymousValidator1402264523(
     });
   }
   result["optional"] = value["optional"] ?? undefined;
-  result["options"] = anonymousValidator1245103210(
-    value["options"],
-    `${propertyPath}.options`,
-    errors,
-  );
   return result;
 }
 /**
@@ -1951,9 +1891,9 @@ export function anonymousValidator1402264523(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": string, "optional": boolean, "options": ("ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST")[], })[]|undefined}
+ * @returns {({"key": string, "optional": boolean, })[]|undefined}
  */
-export function anonymousValidator990824119(
+export function anonymousValidator273243195(
   value,
   propertyPath,
   errors = [],
@@ -1975,7 +1915,7 @@ export function anonymousValidator990824119(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1402264523(
+    result[i] = anonymousValidator244788999(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -1988,9 +1928,9 @@ export function anonymousValidator990824119(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, "options": ("ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST")[], })[], }|undefined}
+ * @returns {undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }|undefined}
  */
-export function anonymousValidator264349650(
+export function anonymousValidator1449958994(
   value,
   propertyPath,
   errors = [],
@@ -2017,7 +1957,7 @@ export function anonymousValidator264349650(
     `${propertyPath}.specType`,
     errors,
   );
-  result["fields"] = anonymousValidator990824119(
+  result["fields"] = anonymousValidator273243195(
     value["fields"],
     `${propertyPath}.fields`,
     errors,
@@ -2152,7 +2092,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, "options": ("ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST")[], })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"strict": boolean, }, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2254,7 +2194,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.where`,
     errors,
   );
-  result["orderBy"] = anonymousValidator264349650(
+  result["orderBy"] = anonymousValidator1449958994(
     value["orderBy"],
     `${propertyPath}.orderBy`,
     errors,

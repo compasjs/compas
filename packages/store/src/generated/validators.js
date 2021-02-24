@@ -29,7 +29,9 @@ import {
   anonymousValidator420606873,
   anonymousValidator420878393,
   anonymousValidator430889951,
+  anonymousValidator446238440,
   anonymousValidator500057262,
+  anonymousValidator572766398,
   anonymousValidator599447075,
   anonymousValidator647856360,
   anonymousValidator685221527,
@@ -315,4 +317,23 @@ export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
  */
 export function validateStoreSessionQueryTraverser(value, propertyPath = "$") {
   return anonymousValidator1805657267(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {CompasSqlOrderBy}
+ */
+export function validateCompasSqlOrderBy(value, propertyPath = "$") {
+  return anonymousValidator446238440(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {CompasSqlOrderByOptionalField}
+ */
+export function validateCompasSqlOrderByOptionalField(
+  value,
+  propertyPath = "$",
+) {
+  return anonymousValidator572766398(value, propertyPath, []);
 }

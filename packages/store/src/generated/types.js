@@ -68,31 +68,37 @@ export const __generated__ = true;
  * @typedef {QueryPart|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileOrderBy
  */
 /**
- * @typedef {{"id"?: undefined|"ASC"|"DESC", "bucketName"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileOrderBySpec
+ * @typedef {{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }} StoreFileOrderBySpec
+ */
+/**
+ * @typedef {"ASC"|"DESC"} CompasSqlOrderBy
+ */
+/**
+ * @typedef {"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST"} CompasSqlOrderByOptionalField
  */
 /**
  * @typedef {QueryPart|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileGroupOrderBy
  */
 /**
- * @typedef {{"id"?: undefined|"ASC"|"DESC", "order"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileGroupOrderBySpec
+ * @typedef {{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }} StoreFileGroupOrderBySpec
  */
 /**
  * @typedef {QueryPart|("id"|"isDirectory"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileGroupViewOrderBy
  */
 /**
- * @typedef {{"id"?: undefined|"ASC"|"DESC", "isDirectory"?: undefined|"ASC"|"DESC", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileGroupViewOrderBySpec
+ * @typedef {{"id"?: undefined|CompasSqlOrderBy, "isDirectory"?: undefined|CompasSqlOrderBy, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }} StoreFileGroupViewOrderBySpec
  */
 /**
  * @typedef {QueryPart|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]} StoreJobOrderBy
  */
 /**
- * @typedef {{"id"?: undefined|"ASC"|"DESC", "isComplete"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "name"?: undefined|"ASC"|"DESC", "scheduledAt"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }} StoreJobOrderBySpec
+ * @typedef {{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }} StoreJobOrderBySpec
  */
 /**
  * @typedef {QueryPart|("id"|"expires"|"createdAt"|"updatedAt")[]} StoreSessionOrderBy
  */
 /**
- * @typedef {{"id"?: undefined|"ASC"|"DESC", "expires"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }} StoreSessionOrderBySpec
+ * @typedef {{"id"?: undefined|CompasSqlOrderBy, "expires"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }} StoreSessionOrderBySpec
  */
 /**
  * @typedef {{"id"?: undefined|string, "contentLength": number, "bucketName": string, "contentType": string, "name": string, "meta"?: undefined|{}, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, "deletedAt"?: undefined|Date, }} StoreFileInsertPartial
