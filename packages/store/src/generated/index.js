@@ -36,6 +36,8 @@ export {
   validateStoreJobQueryTraverser,
   validateStoreSessionQueryBuilder,
   validateStoreSessionQueryTraverser,
+  validateCompasSqlOrderBy,
+  validateCompasSqlOrderByOptionalField,
 } from "./validators.js";
 export * from "./database/file.js";
 export * from "./database/fileGroup.js";
