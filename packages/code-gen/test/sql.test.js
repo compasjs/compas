@@ -206,6 +206,14 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.email, "test@test.com");
   });
 
+  t.test("query filter with empty idIn", async (t) => {
+    const categories = await client.queries.categorySelect(sql, {
+      idIn: [],
+    });
+
+    t.equal(categories.length, 0);
+  });
+
   t.test("query same 'shortName' originally", async () => {
     await client
       .queryUser({
