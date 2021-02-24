@@ -38,6 +38,7 @@ export function applyStoreStructure(app) {
       .keys({
         name: T.string().optional(),
         order: T.number()
+          .searchable()
           .default("Math.floor(Date.now() / 1000000)")
           .docs("Hack to get an increasing integer by default"),
         meta: T.object("fileGroupMeta")

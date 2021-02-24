@@ -123,6 +123,62 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     strings.push(` AND ${tableName}"id" NOT LIKE `);
     values.push(`%${where.idNotLike}%`);
   }
+  if (where.order !== undefined) {
+    strings.push(` AND ${tableName}"order" = `);
+    values.push(where.order);
+  }
+  if (where.orderNotEqual !== undefined) {
+    strings.push(` AND ${tableName}"order" != `);
+    values.push(where.orderNotEqual);
+  }
+  if (where.orderIn !== undefined) {
+    if (isQueryPart(where.orderIn)) {
+      strings.push(` AND ${tableName}"order" = ANY(`, ")");
+      values.push(where.orderIn, undefined);
+    } else if (Array.isArray(where.orderIn)) {
+      strings.push(` AND ${tableName}"order" = ANY(ARRAY[`);
+      for (let i = 0; i < where.orderIn.length; ++i) {
+        values.push(where.orderIn[i]);
+        if (i !== where.orderIn.length - 1) {
+          strings.push(", ");
+        }
+      }
+      strings.push("]::int[])");
+      values.push(undefined);
+    }
+  }
+  if (where.orderNotIn !== undefined) {
+    if (isQueryPart(where.orderNotIn)) {
+      strings.push(` AND ${tableName}"order" != ANY(`, ")");
+      values.push(where.orderNotIn, undefined);
+    } else if (Array.isArray(where.orderNotIn)) {
+      strings.push(` AND ${tableName}"order" != ANY(ARRAY[`);
+      for (let i = 0; i < where.orderNotIn.length; ++i) {
+        values.push(where.orderNotIn[i]);
+        if (i !== where.orderNotIn.length - 1) {
+          strings.push(", ");
+        }
+      }
+      strings.push("]::int[])");
+      values.push(undefined);
+    }
+  }
+  if (where.orderGreaterThan !== undefined) {
+    strings.push(` AND ${tableName}"order" > `);
+    values.push(where.orderGreaterThan);
+  }
+  if (where.orderLowerThan !== undefined) {
+    strings.push(` AND ${tableName}"order" < `);
+    values.push(where.orderLowerThan);
+  }
+  if (where.orderIsNull !== undefined) {
+    strings.push(` AND ${tableName}"order" IS NULL `);
+    values.push(undefined);
+  }
+  if (where.orderIsNotNull !== undefined) {
+    strings.push(` AND ${tableName}"order" IS NOT NULL `);
+    values.push(undefined);
+  }
   if (where.file !== undefined) {
     strings.push(` AND ${tableName}"file" = `);
     values.push(where.file);

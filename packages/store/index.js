@@ -35,7 +35,6 @@ export {
 export {
   hoistChildrenToParent,
   updateFileGroupOrder,
-  getNestedFileGroups,
 } from "./src/file-group.js";
 
 export { FileCache } from "./src/file-cache.js";
