@@ -87,34 +87,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(`, ")");
       values.push(where.idIn, undefined);
-    } else if (Array.isArray(where.idIn) && where.idIn.length > 0) {
+    } else if (Array.isArray(where.idIn)) {
       strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idIn.length; ++i) {
         values.push(where.idIn[i]);
-        if (i === where.idIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.idIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.idNotIn !== undefined) {
     if (isQueryPart(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
-    } else if (Array.isArray(where.idNotIn) && where.idNotIn.length > 0) {
+    } else if (Array.isArray(where.idNotIn)) {
       strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
-        if (i === where.idNotIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.idNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.idLike !== undefined) {
@@ -137,34 +135,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(`, ")");
       values.push(where.fileIn, undefined);
-    } else if (Array.isArray(where.fileIn) && where.fileIn.length > 0) {
+    } else if (Array.isArray(where.fileIn)) {
       strings.push(` AND ${tableName}"file" = ANY(ARRAY[`);
       for (let i = 0; i < where.fileIn.length; ++i) {
         values.push(where.fileIn[i]);
-        if (i === where.fileIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.fileIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.fileNotIn !== undefined) {
     if (isQueryPart(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(`, ")");
       values.push(where.fileNotIn, undefined);
-    } else if (Array.isArray(where.fileNotIn) && where.fileNotIn.length > 0) {
+    } else if (Array.isArray(where.fileNotIn)) {
       strings.push(` AND ${tableName}"file" != ANY(ARRAY[`);
       for (let i = 0; i < where.fileNotIn.length; ++i) {
         values.push(where.fileNotIn[i]);
-        if (i === where.fileNotIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.fileNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.fileLike !== undefined) {
@@ -195,37 +191,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(`, ")");
       values.push(where.parentIn, undefined);
-    } else if (Array.isArray(where.parentIn) && where.parentIn.length > 0) {
+    } else if (Array.isArray(where.parentIn)) {
       strings.push(` AND ${tableName}"parent" = ANY(ARRAY[`);
       for (let i = 0; i < where.parentIn.length; ++i) {
         values.push(where.parentIn[i]);
-        if (i === where.parentIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.parentIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.parentNotIn !== undefined) {
     if (isQueryPart(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(`, ")");
       values.push(where.parentNotIn, undefined);
-    } else if (
-      Array.isArray(where.parentNotIn) &&
-      where.parentNotIn.length > 0
-    ) {
+    } else if (Array.isArray(where.parentNotIn)) {
       strings.push(` AND ${tableName}"parent" != ANY(ARRAY[`);
       for (let i = 0; i < where.parentNotIn.length; ++i) {
         values.push(where.parentNotIn[i]);
-        if (i === where.parentNotIn.length - 1) {
-          strings.push("]::uuid[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.parentNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::uuid[])");
+      values.push(undefined);
     }
   }
   if (where.parentLike !== undefined) {
@@ -256,40 +247,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
       values.push(where.createdAtIn, undefined);
-    } else if (
-      Array.isArray(where.createdAtIn) &&
-      where.createdAtIn.length > 0
-    ) {
+    } else if (Array.isArray(where.createdAtIn)) {
       strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtIn.length; ++i) {
         values.push(where.createdAtIn[i]);
-        if (i === where.createdAtIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.createdAtIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.createdAtNotIn !== undefined) {
     if (isQueryPart(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
-    } else if (
-      Array.isArray(where.createdAtNotIn) &&
-      where.createdAtNotIn.length > 0
-    ) {
+    } else if (Array.isArray(where.createdAtNotIn)) {
       strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
-        if (i === where.createdAtNotIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.createdAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.createdAtGreaterThan !== undefined) {
@@ -320,40 +303,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
       values.push(where.updatedAtIn, undefined);
-    } else if (
-      Array.isArray(where.updatedAtIn) &&
-      where.updatedAtIn.length > 0
-    ) {
+    } else if (Array.isArray(where.updatedAtIn)) {
       strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtIn.length; ++i) {
         values.push(where.updatedAtIn[i]);
-        if (i === where.updatedAtIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.updatedAtIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.updatedAtNotIn !== undefined) {
     if (isQueryPart(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
-    } else if (
-      Array.isArray(where.updatedAtNotIn) &&
-      where.updatedAtNotIn.length > 0
-    ) {
+    } else if (Array.isArray(where.updatedAtNotIn)) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
-        if (i === where.updatedAtNotIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.updatedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.updatedAtGreaterThan !== undefined) {
@@ -384,40 +359,32 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     if (isQueryPart(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
       values.push(where.deletedAtIn, undefined);
-    } else if (
-      Array.isArray(where.deletedAtIn) &&
-      where.deletedAtIn.length > 0
-    ) {
+    } else if (Array.isArray(where.deletedAtIn)) {
       strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtIn.length; ++i) {
         values.push(where.deletedAtIn[i]);
-        if (i === where.deletedAtIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.deletedAtIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.deletedAtNotIn !== undefined) {
     if (isQueryPart(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
-    } else if (
-      Array.isArray(where.deletedAtNotIn) &&
-      where.deletedAtNotIn.length > 0
-    ) {
+    } else if (Array.isArray(where.deletedAtNotIn)) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
         values.push(where.deletedAtNotIn[i]);
-        if (i === where.deletedAtNotIn.length - 1) {
-          strings.push("]::timestamptz[])");
-          values.push(undefined);
-        } else {
+        if (i !== where.deletedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
+      strings.push("]::timestamptz[])");
+      values.push(undefined);
     }
   }
   if (where.deletedAtGreaterThan !== undefined) {

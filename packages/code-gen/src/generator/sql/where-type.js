@@ -209,17 +209,16 @@ export function getWherePartial(context, type) {
             if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" = ANY(\`, ")");
               values.push(where.${field.name}, undefined);
-            } else if (Array.isArray(where.${field.name}) && where.${field.name}.length > 0) {
+            } else if (Array.isArray(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" = ANY(ARRAY[\`);
               for (let i = 0; i < where.${field.name}.length; ++i) {
                 values.push(where.${field.name}[i]);
-                if (i === where.${field.name}.length - 1) {
-                  strings.push("]::${fieldType}[])");
-                  values.push(undefined);
-                } else {
+                if (i !== where.${field.name}.length - 1) {
                   strings.push(", ");
                 }
               }
+              strings.push("]::${fieldType}[])");
+              values.push(undefined);
             }
           `;
           break;
@@ -228,17 +227,16 @@ export function getWherePartial(context, type) {
             if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
               values.push(where.${field.name}, undefined);
-            } else if (Array.isArray(where.${field.name}) && where.${field.name}.length > 0) {
+            } else if (Array.isArray(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" != ANY(ARRAY[\`);
               for (let i = 0; i < where.${field.name}.length; ++i) {
                 values.push(where.${field.name}[i]);
-                if (i === where.${field.name}.length - 1) {
-                  strings.push("]::${fieldType}[])");
-                  values.push(undefined);
-                } else {
+                if (i !== where.${field.name}.length - 1) {
                   strings.push(", ");
                 }
               }
+              strings.push("]::${fieldType}[])");
+              values.push(undefined);
             }
           `;
           break;
