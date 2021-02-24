@@ -387,6 +387,66 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbCategory.id, category.id);
   });
 
+  t.test("category orderBy name", async (t) => {
+    const categories = await client
+      .queryCategory({
+        orderBy: ["label"],
+        orderBySpec: {
+          label: "DESC",
+        },
+      })
+      .exec(sql);
+
+    t.equal(categories.length, 2);
+    t.equal(categories[0].label, "Category B");
+    t.equal(categories[1].label, "Category A");
+  });
+
+  t.test("category orderBy multiple columns", async (t) => {
+    const categories = await client
+      .queryCategory({
+        orderBy: ["label", "createdAt"],
+        orderBySpec: {
+          label: "ASC",
+          createdAt: "DESC",
+        },
+      })
+      .exec(sql);
+
+    t.equal(categories[0].label, "Category A");
+  });
+
+  t.test("post orderBy nested ordering", async (t) => {
+    const [user] = await client
+      .queryUser({
+        posts: {
+          orderBy: ["title"],
+          orderBySpec: {
+            title: "DESC",
+          },
+        },
+      })
+      .exec(sql);
+
+    t.equal(user.posts.length, 2);
+    t.equal(user.posts[0].title, "Post 2");
+    t.equal(user.posts[1].title, "Post 1");
+  });
+
+  t.test("post orderBy nested defaults to ascending", async (t) => {
+    const [user] = await client
+      .queryUser({
+        posts: {
+          orderBy: ["title"],
+        },
+      })
+      .exec(sql);
+
+    t.equal(user.posts.length, 2);
+    t.equal(user.posts[0].title, "Post 1");
+    t.equal(user.posts[1].title, "Post 2");
+  });
+
   t.test("soft delete post", async (t) => {
     const originalCount = await client.queries.postCount(sql);
     await client.queries.postDelete(sql, { id: post.id });

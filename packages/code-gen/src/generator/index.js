@@ -9,6 +9,7 @@ import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { generateModelFiles } from "./sql/models.js";
+import { createOrderByTypes } from "./sql/order-by-type.js";
 import { createPartialTypes } from "./sql/partial-type.js";
 import { createQueryBuilderTypes } from "./sql/query-builder.js";
 import { generateSqlStructure } from "./sql/structure.js";
@@ -112,6 +113,7 @@ export async function generate(logger, options, structure) {
     generateSqlStructure(context);
 
     createWhereTypes(context);
+    createOrderByTypes(context);
     createPartialTypes(context);
     createQueryBuilderTypes(context);
 

@@ -284,6 +284,31 @@ function getTypes(T) {
       })
       .optional()
       .loose(),
+    orderBy: T.object()
+      .keys({
+        type: T.string(),
+        specType: T.string(),
+        fields: T.array().values(
+          T.object()
+            .keys({
+              key: T.string(),
+              optional: T.bool(),
+              options: [
+                T.string().oneOf(
+                  "ASC",
+                  "DESC",
+                  "ASC NULLS FIRST",
+                  "ASC NULLS LAST",
+                  "DESC NULLS FIRST",
+                  "DESC NULLS LAST",
+                ),
+              ],
+            })
+            .loose(),
+        ),
+      })
+      .optional()
+      .loose(),
     partial: T.object()
       .keys({
         insertType: T.string(),

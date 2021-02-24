@@ -6,18 +6,25 @@ import {
   anonymousValidator1108679019,
   anonymousValidator1257773835,
   anonymousValidator1274599578,
+  anonymousValidator144635851,
   anonymousValidator1468307041,
   anonymousValidator153017499,
+  anonymousValidator163358845,
   anonymousValidator1781782332,
+  anonymousValidator1795948632,
   anonymousValidator1805657267,
   anonymousValidator1823959232,
   anonymousValidator1862233461,
   anonymousValidator1952914356,
+  anonymousValidator2038758416,
+  anonymousValidator2041901602,
   anonymousValidator2056027066,
   anonymousValidator2060025506,
   anonymousValidator2074494218,
   anonymousValidator2144828802,
+  anonymousValidator280827708,
   anonymousValidator310044624,
+  anonymousValidator322356638,
   anonymousValidator343387919,
   anonymousValidator420606873,
   anonymousValidator420878393,
@@ -25,6 +32,9 @@ import {
   anonymousValidator500057262,
   anonymousValidator599447075,
   anonymousValidator647856360,
+  anonymousValidator685221527,
+  anonymousValidator744250041,
+  anonymousValidator753972035,
 } from "./anonymous-validators.js";
 /**
  * @param {undefined|*} value
@@ -133,6 +143,89 @@ export function validateStoreJobWhere(value, propertyPath = "$") {
  */
 export function validateStoreSessionWhere(value, propertyPath = "$") {
   return anonymousValidator500057262(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileOrderBy}
+ */
+export function validateStoreFileOrderBy(value, propertyPath = "$") {
+  return anonymousValidator1795948632(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileOrderBySpec}
+ */
+export function validateStoreFileOrderBySpec(value, propertyPath = "$") {
+  return anonymousValidator163358845(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileGroupOrderBy}
+ */
+export function validateStoreFileGroupOrderBy(value, propertyPath = "$") {
+  return anonymousValidator753972035(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileGroupOrderBySpec}
+ */
+export function validateStoreFileGroupOrderBySpec(value, propertyPath = "$") {
+  return anonymousValidator322356638(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileGroupViewOrderBy}
+ */
+export function validateStoreFileGroupViewOrderBy(value, propertyPath = "$") {
+  return anonymousValidator2041901602(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreFileGroupViewOrderBySpec}
+ */
+export function validateStoreFileGroupViewOrderBySpec(
+  value,
+  propertyPath = "$",
+) {
+  return anonymousValidator744250041(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreJobOrderBy}
+ */
+export function validateStoreJobOrderBy(value, propertyPath = "$") {
+  return anonymousValidator685221527(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreJobOrderBySpec}
+ */
+export function validateStoreJobOrderBySpec(value, propertyPath = "$") {
+  return anonymousValidator280827708(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreSessionOrderBy}
+ */
+export function validateStoreSessionOrderBy(value, propertyPath = "$") {
+  return anonymousValidator2038758416(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreSessionOrderBySpec}
+ */
+export function validateStoreSessionOrderBySpec(value, propertyPath = "$") {
+  return anonymousValidator144635851(value, propertyPath, []);
 }
 /**
  * @param {undefined|*} value

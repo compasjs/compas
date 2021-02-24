@@ -4,6 +4,8 @@
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import { isQueryPart, query } from "@compas/store";
 import {
+  validateStoreSessionOrderBy,
+  validateStoreSessionOrderBySpec,
   validateStoreSessionQueryBuilder,
   validateStoreSessionWhere,
 } from "../validators.js";
@@ -34,21 +36,6 @@ export function sessionFields(tableName = "s.", options = {}) {
   return query([
     `${tableName}"id", ${tableName}"expires", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
-}
-/**
- * Get 'ORDER BY ' for session
- *
- * @param {string} [tableName="s."]
- * @returns {QueryPart}
- */
-export function sessionOrderBy(tableName = "s.") {
-  if (tableName.length > 0 && !tableName.endsWith(".")) {
-    tableName = `${tableName}.`;
-  }
-  const strings = [
-    `${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"id" `,
-  ];
-  return query(strings);
 }
 /**
  * Build 'WHERE ' part for session
@@ -318,6 +305,49 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
   return query(strings, ...values);
 }
 /**
+ * Build 'ORDER BY ' part for session
+ *
+ * @param {StoreSessionOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
+ * @param {StoreSessionOrderBySpec} [orderBySpec={}]
+ * @param {string} [tableName="s."]
+ * @param {{ skipValidator?: boolean|undefined }} [options={}]
+ * @returns {QueryPart}
+ */
+export function sessionOrderBy(
+  orderBy = ["createdAt", "updatedAt", "id"],
+  orderBySpec = {},
+  tableName = "s.",
+  options = {},
+) {
+  if (tableName.length > 0 && !tableName.endsWith(".")) {
+    tableName = `${tableName}.`;
+  }
+  if (!options.skipValidator) {
+    orderBy = validateStoreSessionOrderBy(orderBy, "$.StoreSessionOrderBy");
+    orderBySpec = validateStoreSessionOrderBySpec(
+      orderBySpec,
+      "$.StoreSessionOrderBySpec",
+    );
+  }
+  if (isQueryPart(orderBy)) {
+    return orderBy;
+  }
+  const strings = [];
+  const values = [];
+  let i = 0;
+  for (const value of orderBy) {
+    if (i !== 0) {
+      strings.push(", ");
+      values.push(undefined);
+    }
+    i++;
+    strings.push(`${tableName}"${value}" `, orderBySpec[value] ?? "ASC");
+    values.push(undefined, undefined);
+  }
+  strings.push("");
+  return query(strings, ...values);
+}
+/**
  * Build 'VALUES ' part for session
  *
  * @param {StoreSessionInsertPartial|StoreSessionInsertPartial[]} insert
@@ -499,7 +529,7 @@ SELECT to_jsonb(s.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
 ${internalQuerySession(builder)}
-ORDER BY ${sessionOrderBy()}
+ORDER BY ${sessionOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
     qb.append(query`OFFSET ${builder.offset}`);

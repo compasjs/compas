@@ -10,7 +10,7 @@ import {
 } from "./utils.js";
 
 /**
- * Creates a where type and assigns in to the object type
+ * Creates the partial types for inserts and updates and assigns in to the object type
  *
  * @param {CodeGenContext} context
  */

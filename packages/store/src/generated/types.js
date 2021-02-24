@@ -65,6 +65,36 @@ export const __generated__ = true;
  * @typedef {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreSessionWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "expires"?: undefined|Date, "expiresNotEqual"?: undefined|Date, "expiresIn"?: undefined|(Date)[]|QueryPart, "expiresNotIn"?: undefined|(Date)[]|QueryPart, "expiresGreaterThan"?: undefined|Date, "expiresLowerThan"?: undefined|Date, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }} StoreSessionWhere
  */
 /**
+ * @typedef {QueryPart|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileOrderBy
+ */
+/**
+ * @typedef {{"id"?: undefined|"ASC"|"DESC", "bucketName"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileOrderBySpec
+ */
+/**
+ * @typedef {QueryPart|("id"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileGroupOrderBy
+ */
+/**
+ * @typedef {{"id"?: undefined|"ASC"|"DESC", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileGroupOrderBySpec
+ */
+/**
+ * @typedef {QueryPart|("id"|"isDirectory"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]} StoreFileGroupViewOrderBy
+ */
+/**
+ * @typedef {{"id"?: undefined|"ASC"|"DESC", "isDirectory"?: undefined|"ASC"|"DESC", "file"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "parent"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", "deletedAt"?: undefined|"ASC"|"DESC", }} StoreFileGroupViewOrderBySpec
+ */
+/**
+ * @typedef {QueryPart|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]} StoreJobOrderBy
+ */
+/**
+ * @typedef {{"id"?: undefined|"ASC"|"DESC", "isComplete"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "name"?: undefined|"ASC"|"DESC", "scheduledAt"?: undefined|"ASC"|"DESC"|"ASC NULLS FIRST"|"ASC NULLS LAST"|"DESC NULLS FIRST"|"DESC NULLS LAST", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }} StoreJobOrderBySpec
+ */
+/**
+ * @typedef {QueryPart|("id"|"expires"|"createdAt"|"updatedAt")[]} StoreSessionOrderBy
+ */
+/**
+ * @typedef {{"id"?: undefined|"ASC"|"DESC", "expires"?: undefined|"ASC"|"DESC", "createdAt"?: undefined|"ASC"|"DESC", "updatedAt"?: undefined|"ASC"|"DESC", }} StoreSessionOrderBySpec
+ */
+/**
  * @typedef {{"id"?: undefined|string, "contentLength": number, "bucketName": string, "contentType": string, "name": string, "meta"?: undefined|{}, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, "deletedAt"?: undefined|Date, }} StoreFileInsertPartial
  */
 /**
@@ -89,10 +119,10 @@ export const __generated__ = true;
  * @typedef {{"expires"?: undefined|Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreSessionUpdatePartial
  */
 /**
- * @typedef {{"where"?: undefined|StoreFileWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, "groupView"?: undefined|StoreFileGroupViewQueryBuilder, "viaGroupView"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileQueryBuilder
+ * @typedef {{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, "groupView"?: undefined|StoreFileGroupViewQueryBuilder, "viaGroupView"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileQueryBuilder
  */
 /**
- * @typedef {{"where"?: undefined|StoreFileGroupWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }} StoreFileGroupQueryBuilder
+ * @typedef {{"where"?: undefined|StoreFileGroupWhere, "orderBy"?: undefined|StoreFileGroupOrderBy, "orderBySpec"?: undefined|StoreFileGroupOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }} StoreFileGroupQueryBuilder
  */
 /**
  * @typedef {{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, "viaGroupView"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileQueryTraverser
@@ -104,16 +134,16 @@ export const __generated__ = true;
  * @typedef {{"where"?: undefined|StoreFileGroupViewWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupViewQueryTraverser, "viaChildren"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileGroupViewQueryTraverser
  */
 /**
- * @typedef {{"where"?: undefined|StoreFileGroupViewWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupViewQueryBuilder, "viaParent"?: undefined|StoreFileGroupViewQueryTraverser, "children"?: undefined|StoreFileGroupViewQueryBuilder, "viaChildren"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileGroupViewQueryBuilder
+ * @typedef {{"where"?: undefined|StoreFileGroupViewWhere, "orderBy"?: undefined|StoreFileGroupViewOrderBy, "orderBySpec"?: undefined|StoreFileGroupViewOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupViewQueryBuilder, "viaParent"?: undefined|StoreFileGroupViewQueryTraverser, "children"?: undefined|StoreFileGroupViewQueryBuilder, "viaChildren"?: undefined|StoreFileGroupViewQueryTraverser, }} StoreFileGroupViewQueryBuilder
  */
 /**
- * @typedef {{"where"?: undefined|StoreJobWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreJobQueryBuilder
+ * @typedef {{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreJobQueryBuilder
  */
 /**
  * @typedef {{"where"?: undefined|StoreJobWhere, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreJobQueryTraverser
  */
 /**
- * @typedef {{"where"?: undefined|StoreSessionWhere, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreSessionQueryBuilder
+ * @typedef {{"where"?: undefined|StoreSessionWhere, "orderBy"?: undefined|StoreSessionOrderBy, "orderBySpec"?: undefined|StoreSessionOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreSessionQueryBuilder
  */
 /**
  * @typedef {{"where"?: undefined|StoreSessionWhere, "limit"?: undefined|number, "offset"?: undefined|number, }} StoreSessionQueryTraverser
