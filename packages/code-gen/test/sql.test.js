@@ -181,6 +181,13 @@ test("code-gen/e2e/sql", async (t) => {
       emailIn: ["Test@test.com"],
       idNotIn: [uuid()],
     });
+
+    // Also combine different array lengths, since we need to place comma's and such
+    await client.queries.userSelect(sql, {
+      idNotIn: [uuid(), uuid()],
+      createdAtIn: [],
+      emailIn: ["Test@test.com"],
+    });
   });
 
   t.test("query filter by 'in' sub query", async () => {
@@ -209,6 +216,15 @@ test("code-gen/e2e/sql", async (t) => {
   t.test("query filter with empty idIn", async (t) => {
     const categories = await client.queries.categorySelect(sql, {
       idIn: [],
+    });
+
+    t.equal(categories.length, 0);
+  });
+
+  t.test("query filter with empty idIn and other filter", async (t) => {
+    const categories = await client.queries.categorySelect(sql, {
+      idIn: [],
+      label: "Category A",
     });
 
     t.equal(categories.length, 0);

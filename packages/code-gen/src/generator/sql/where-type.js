@@ -218,6 +218,9 @@ export function getWherePartial(context, type) {
                 }
               }
               strings.push("]::${fieldType}[])");
+              if (where.${field.name}.length === 0) {
+                values.push(undefined);
+              }
               values.push(undefined);
             }
           `;
@@ -236,6 +239,9 @@ export function getWherePartial(context, type) {
                 }
               }
               strings.push("]::${fieldType}[])");
+              if (where.${field.name}.length === 0) {
+                values.push(undefined);
+              }
               values.push(undefined);
             }
           `;
