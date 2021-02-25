@@ -8,6 +8,11 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.121](https://github.com/compasjs/compas/releases/tag/v0.0.121)
+
+- fix(code-gen): fix usage of sql 'where in' with an empty array and other where
+  field ([#726](https://github.com/compasjs/compas/pull/726))
+
 ### [v0.0.120](https://github.com/compasjs/compas/releases/tag/v0.0.120)
 
 - fix(code-gen): allow 'optional' order by for deletedAt column
