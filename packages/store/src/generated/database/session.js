@@ -91,6 +91,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::uuid[])");
+      if (where.idIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -107,6 +110,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::uuid[])");
+      if (where.idNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -139,6 +145,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.expiresIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -155,6 +164,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.expiresNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -187,6 +199,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -203,6 +218,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -243,6 +261,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -259,6 +280,9 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }

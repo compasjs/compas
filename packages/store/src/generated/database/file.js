@@ -106,6 +106,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::uuid[])");
+      if (where.idIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -122,6 +125,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::uuid[])");
+      if (where.idNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -154,6 +160,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::varchar[])");
+      if (where.bucketNameIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -170,6 +179,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::varchar[])");
+      if (where.bucketNameNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -206,6 +218,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -222,6 +237,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -262,6 +280,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -278,6 +299,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -318,6 +342,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.deletedAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -334,6 +361,9 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.deletedAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }

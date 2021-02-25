@@ -95,6 +95,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::int[])");
+      if (where.idIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -111,6 +114,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::int[])");
+      if (where.idNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -155,6 +161,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::varchar[])");
+      if (where.nameIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -171,6 +180,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::varchar[])");
+      if (where.nameNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -207,6 +219,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.scheduledAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -223,6 +238,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.scheduledAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -263,6 +281,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -279,6 +300,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.createdAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -319,6 +343,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
@@ -335,6 +362,9 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
         }
       }
       strings.push("]::timestamptz[])");
+      if (where.updatedAtNotIn.length === 0) {
+        values.push(undefined);
+      }
       values.push(undefined);
     }
   }
