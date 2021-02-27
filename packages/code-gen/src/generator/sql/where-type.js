@@ -231,14 +231,14 @@ export function getWherePartial(context, type) {
               strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
               values.push(where.${field.name}, undefined);
             } else if (Array.isArray(where.${field.name})) {
-              strings.push(\` AND $\{tableName}"${field.key}" != ANY(ARRAY[\`);
+              strings.push(\` AND NOT ($\{tableName}"${field.key}" = ANY(ARRAY[\`);
               for (let i = 0; i < where.${field.name}.length; ++i) {
                 values.push(where.${field.name}[i]);
                 if (i !== where.${field.name}.length - 1) {
                   strings.push(", ");
                 }
               }
-              strings.push("]::${fieldType}[])");
+              strings.push("]::${fieldType}[]))");
               if (where.${field.name}.length === 0) {
                 values.push(undefined);
               }

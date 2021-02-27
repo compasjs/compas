@@ -117,14 +117,14 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn)) {
-      strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
         if (i !== where.idNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::uuid[])");
+      strings.push("]::uuid[]))");
       if (where.idNotIn.length === 0) {
         values.push(undefined);
       }
@@ -171,14 +171,14 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       strings.push(` AND ${tableName}"bucketName" != ANY(`, ")");
       values.push(where.bucketNameNotIn, undefined);
     } else if (Array.isArray(where.bucketNameNotIn)) {
-      strings.push(` AND ${tableName}"bucketName" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"bucketName" = ANY(ARRAY[`);
       for (let i = 0; i < where.bucketNameNotIn.length; ++i) {
         values.push(where.bucketNameNotIn[i]);
         if (i !== where.bucketNameNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::varchar[])");
+      strings.push("]::varchar[]))");
       if (where.bucketNameNotIn.length === 0) {
         values.push(undefined);
       }
@@ -229,14 +229,14 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (Array.isArray(where.createdAtNotIn)) {
-      strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
         if (i !== where.createdAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.createdAtNotIn.length === 0) {
         values.push(undefined);
       }
@@ -291,14 +291,14 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (Array.isArray(where.updatedAtNotIn)) {
-      strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
         if (i !== where.updatedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.updatedAtNotIn.length === 0) {
         values.push(undefined);
       }
@@ -353,14 +353,14 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
       values.push(where.deletedAtNotIn, undefined);
     } else if (Array.isArray(where.deletedAtNotIn)) {
-      strings.push(` AND ${tableName}"deletedAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"deletedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
         values.push(where.deletedAtNotIn[i]);
         if (i !== where.deletedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.deletedAtNotIn.length === 0) {
         values.push(undefined);
       }
