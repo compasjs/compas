@@ -190,6 +190,34 @@ test("code-gen/e2e/sql", async (t) => {
     });
   });
 
+  t.test("query filter empty 'notIn' statement", async (t) => {
+    const users = await client
+      .queryUser({
+        where: {
+          createdAtNotIn: [],
+        },
+      })
+      .exec(sql);
+
+    t.equal(users.length, 1);
+  });
+
+  t.test(
+    "query filter empty 'notIn' statement with other filter",
+    async (t) => {
+      const users = await client
+        .queryUser({
+          where: {
+            createdAtNotIn: [],
+            email: "test@test.com",
+          },
+        })
+        .exec(sql);
+
+      t.equal(users.length, 1);
+    },
+  );
+
   t.test("query filter by 'in' sub query", async () => {
     await client.queries.userSelect(sql, {
       emailIn: query`SELECT 'test@test.com' as foo`,

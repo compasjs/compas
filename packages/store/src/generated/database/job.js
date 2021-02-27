@@ -106,14 +106,14 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn)) {
-      strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
         if (i !== where.idNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::int[])");
+      strings.push("]::int[]))");
       if (where.idNotIn.length === 0) {
         values.push(undefined);
       }
@@ -172,14 +172,14 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
       strings.push(` AND ${tableName}"name" != ANY(`, ")");
       values.push(where.nameNotIn, undefined);
     } else if (Array.isArray(where.nameNotIn)) {
-      strings.push(` AND ${tableName}"name" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"name" = ANY(ARRAY[`);
       for (let i = 0; i < where.nameNotIn.length; ++i) {
         values.push(where.nameNotIn[i]);
         if (i !== where.nameNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::varchar[])");
+      strings.push("]::varchar[]))");
       if (where.nameNotIn.length === 0) {
         values.push(undefined);
       }
@@ -230,14 +230,14 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
       strings.push(` AND ${tableName}"scheduledAt" != ANY(`, ")");
       values.push(where.scheduledAtNotIn, undefined);
     } else if (Array.isArray(where.scheduledAtNotIn)) {
-      strings.push(` AND ${tableName}"scheduledAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"scheduledAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.scheduledAtNotIn.length; ++i) {
         values.push(where.scheduledAtNotIn[i]);
         if (i !== where.scheduledAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.scheduledAtNotIn.length === 0) {
         values.push(undefined);
       }
@@ -292,14 +292,14 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (Array.isArray(where.createdAtNotIn)) {
-      strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
         if (i !== where.createdAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.createdAtNotIn.length === 0) {
         values.push(undefined);
       }
@@ -354,14 +354,14 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (Array.isArray(where.updatedAtNotIn)) {
-      strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
         if (i !== where.updatedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.updatedAtNotIn.length === 0) {
         values.push(undefined);
       }

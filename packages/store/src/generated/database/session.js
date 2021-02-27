@@ -102,14 +102,14 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
       strings.push(` AND ${tableName}"id" != ANY(`, ")");
       values.push(where.idNotIn, undefined);
     } else if (Array.isArray(where.idNotIn)) {
-      strings.push(` AND ${tableName}"id" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"id" = ANY(ARRAY[`);
       for (let i = 0; i < where.idNotIn.length; ++i) {
         values.push(where.idNotIn[i]);
         if (i !== where.idNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::uuid[])");
+      strings.push("]::uuid[]))");
       if (where.idNotIn.length === 0) {
         values.push(undefined);
       }
@@ -156,14 +156,14 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
       strings.push(` AND ${tableName}"expires" != ANY(`, ")");
       values.push(where.expiresNotIn, undefined);
     } else if (Array.isArray(where.expiresNotIn)) {
-      strings.push(` AND ${tableName}"expires" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"expires" = ANY(ARRAY[`);
       for (let i = 0; i < where.expiresNotIn.length; ++i) {
         values.push(where.expiresNotIn[i]);
         if (i !== where.expiresNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.expiresNotIn.length === 0) {
         values.push(undefined);
       }
@@ -210,14 +210,14 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
       strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
       values.push(where.createdAtNotIn, undefined);
     } else if (Array.isArray(where.createdAtNotIn)) {
-      strings.push(` AND ${tableName}"createdAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"createdAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.createdAtNotIn.length; ++i) {
         values.push(where.createdAtNotIn[i]);
         if (i !== where.createdAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.createdAtNotIn.length === 0) {
         values.push(undefined);
       }
@@ -272,14 +272,14 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
       strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
       values.push(where.updatedAtNotIn, undefined);
     } else if (Array.isArray(where.updatedAtNotIn)) {
-      strings.push(` AND ${tableName}"updatedAt" != ANY(ARRAY[`);
+      strings.push(` AND NOT (${tableName}"updatedAt" = ANY(ARRAY[`);
       for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
         values.push(where.updatedAtNotIn[i]);
         if (i !== where.updatedAtNotIn.length - 1) {
           strings.push(", ");
         }
       }
-      strings.push("]::timestamptz[])");
+      strings.push("]::timestamptz[]))");
       if (where.updatedAtNotIn.length === 0) {
         values.push(undefined);
       }
