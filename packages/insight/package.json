@@ -1,6 +1,6 @@
 {
   "name": "@compas/insight",
-  "version": "0.0.121",
+  "version": "0.0.122",
   "description": "Simple logger in NDJSON format",
   "main": "./index.js",
   "exports": "./index.js",
