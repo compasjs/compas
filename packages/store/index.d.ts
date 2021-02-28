@@ -323,7 +323,7 @@ export interface JobInput {
 
 export interface JobQueueWorkerOptions {
   handler: (
-    event: insight.Event,
+    event: insight.InsightEvent,
     sql: Postgres,
     data: JobData,
   ) => void | Promise<void>;

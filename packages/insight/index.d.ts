@@ -73,7 +73,7 @@ export function printProcessMemoryUsage(logger: Logger): void;
 /**
  * Basic timing and call information
  */
-export type EventCall =
+export type InsightEventCall =
   | {
       type: "start" | "stop";
       name: string;
@@ -83,13 +83,15 @@ export type EventCall =
        */
       time: number;
     }
-  | EventCall[];
+  | InsightEventCall[];
 
 /**
  * Encapsulate the base information needed to dispatch events
  */
-export interface Event {
+export interface InsightEvent {
   log: Logger;
+
+  signal?: AbortSignal;
 
   /**
    * If event is first event dispatched in chain
@@ -98,39 +100,33 @@ export interface Event {
 
   name?: string;
 
-  callStack: EventCall[];
+  callStack: InsightEventCall[];
 }
 
 /**
  * Create a new event from a single logger
  */
-export function newEvent(logger: Logger): Event;
+export function newEvent(logger: Logger, signal?: AbortSignal): InsightEvent;
 
 /**
  * Create a 'child' event, reuses the logger, adds callstack to the passed event
  */
-export function newEventFromEvent(event: Event): Event;
+export function newEventFromEvent(event: InsightEvent): InsightEvent;
 
 /**
  * Track event start times and set a name
  */
-export function eventStart(event: Event, name: string): void;
+export function eventStart(event: InsightEvent, name: string): void;
 
 /**
  * Rename event, can only be done if `eventStop` is not called yet.
  */
-export function eventRename(event: Event, name: string): void;
+export function eventRename(event: InsightEvent, name: string): void;
 
 /**
  * Track event stop, and log callStack if event#root === true
  */
-export function eventStop(event: Event): void;
-
-/**
- * Create a test event.
- * event.log.info is a noop by default, but can be enabled via the passed in options.
- */
-export function newTestEvent(options?: { enabledLogs?: boolean }): Event;
+export function eventStop(event: InsightEvent): void;
 
 /**
  * Get the disk size (in bytes) and estimated row count for all tables and views.

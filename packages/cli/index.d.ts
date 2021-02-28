@@ -1,4 +1,4 @@
-import { Logger } from "@compas/insight";
+import { InsightEvent, Logger } from "@compas/insight";
 
 /**
  * Top level test function for registering tests
@@ -9,6 +9,15 @@ export function test(name: string, callback: TestCallback): void;
  * Run the registered tests
  */
 export function mainTestFn(meta: ImportMeta): void;
+
+/**
+ * Create a test event.
+ * event.log.info is a noop by default, but can be enabled via the passed in options.
+ */
+export function newTestEvent(
+  t: TestRunner,
+  options?: { enabledLogs?: boolean },
+): InsightEvent;
 
 /**
  * Available assertions and the option of doing nested tests
@@ -23,6 +32,11 @@ interface TestRunner {
    * Configurable timeout used for sub tests
    */
   timeout?: number;
+
+  /**
+   * Signal to abort when the tests time out
+   */
+  signal?: AbortSignal;
 
   /**
    * Expect value to be truthy

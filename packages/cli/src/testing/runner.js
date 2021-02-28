@@ -7,7 +7,8 @@ import { setTestTimeout, state, testLogger, timeout } from "./state.js";
  * @returns {Promise<void>}
  */
 export async function runTestsRecursively(testState) {
-  const runner = createRunnerForState(testState);
+  const abortController = new AbortController();
+  const runner = createRunnerForState(testState, abortController.signal);
 
   if (!isNil(testState.callback)) {
     if (testState.parent === state) {
@@ -22,21 +23,20 @@ export async function runTestsRecursively(testState) {
         await Promise.race([
           result,
           new Promise((_, reject) => {
-            setTimeout(
-              () =>
-                reject(
-                  new Error(
-                    `Exceeded test timeout of ${
-                      timeout / 1000
-                    } seconds. You can increase the timeout by calling 't.timeout = ${
-                      timeout + 1000
-                    };' on the parent test function. Or by setting 'export const timeout = ${
-                      timeout + 1000
-                    };' in 'test/config.js'.`,
-                  ),
+            setTimeout(() => {
+              abortController.abort();
+              reject(
+                new Error(
+                  `Exceeded test timeout of ${
+                    timeout / 1000
+                  } seconds. You can increase the timeout by calling 't.timeout = ${
+                    timeout + 1000
+                  };' on the parent test function. Or by setting 'export const timeout = ${
+                    timeout + 1000
+                  };' in 'test/config.js'.`,
                 ),
-              timeout,
-            );
+              );
+            }, timeout);
           }),
         ]);
       }
@@ -83,9 +83,10 @@ export async function runTestsRecursively(testState) {
  */
 export const test = subTest.bind(undefined, state);
 
-function createRunnerForState(testState) {
+function createRunnerForState(testState, abortSignal) {
   return {
     log: testLogger,
+    signal: abortSignal,
     ok: ok.bind(undefined, testState),
     notOk: notOk.bind(undefined, testState),
     equal: equal.bind(undefined, testState),

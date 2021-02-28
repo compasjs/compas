@@ -1,6 +1,6 @@
-import { mainTestFn, test } from "@compas/cli";
+import { mainTestFn, test, newTestEvent } from "@compas/cli";
+import { eventStart, eventStop } from "@compas/insight";
 import { AppError, isNil } from "@compas/stdlib";
-import { eventStart, eventStop, newTestEvent } from "../../insight/index.js";
 import { queries } from "./generated.js";
 import {
   addJobToQueue,
@@ -310,7 +310,7 @@ test("store/queue - recurring jobs ", async (t) => {
     "handleCompasRecurring should dispatch and create a new schedule job",
     async (t) => {
       const inputDate = new Date();
-      await handleCompasRecurring(newTestEvent(), sql, {
+      await handleCompasRecurring(newTestEvent(t), sql, {
         scheduledAt: new Date(),
         priority: 1,
         data: {
@@ -364,7 +364,7 @@ test("store/queue - recurring jobs ", async (t) => {
     async (t) => {
       const scheduledAt = new Date();
       scheduledAt.setUTCMinutes(scheduledAt.getUTCMinutes() - 15);
-      await handleCompasRecurring(newTestEvent(), sql, {
+      await handleCompasRecurring(newTestEvent(t), sql, {
         scheduledAt,
         priority: 1,
         data: {
