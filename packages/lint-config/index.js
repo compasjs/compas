@@ -5,6 +5,9 @@
  */
 const settings = {
   root: true,
+  globals: {
+    AbortController: "readonly",
+  },
   extends: [
     "eslint:recommended",
     "plugin:import/errors",
