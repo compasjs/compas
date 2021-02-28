@@ -6,7 +6,7 @@ import {
 } from "./generated/index.js";
 import { query } from "./query.js";
 
-const EIGHTEEN_HOURS = 18 * 60 * 60 * 1000;
+const THIRTY_MINUTES = 30 * 60 * 1000;
 
 const sessionQueries = {
   /**
@@ -55,12 +55,12 @@ export function newSessionStore(sql) {
     set: async (sid, sess, maxAge) => {
       const expires = new Date();
       if (maxAge === "session") {
-        expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
+        expires.setMilliseconds(expires.getMilliseconds() + THIRTY_MINUTES);
       } else if (typeof maxAge === "number") {
         expires.setMilliseconds(expires.getMilliseconds() + maxAge);
       } else {
         // Unknown max age
-        expires.setMilliseconds(expires.getMilliseconds() + EIGHTEEN_HOURS);
+        expires.setMilliseconds(expires.getMilliseconds() + THIRTY_MINUTES);
       }
 
       await sessionQueries.upsertById(sql, {
