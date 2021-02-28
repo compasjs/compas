@@ -8,6 +8,19 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.112](https://github.com/compasjs/compas/releases/tag/v0.0.112)
+
+- build(deps): bump eslint from 7.20.0 to 7.21.0
+  ([#729](https://github.com/compasjs/compas/pull/729))
+- chore,feat(insight,cli,store): move to Node.js 15 & integrate AbortSignal
+  ([#733](https://github.com/compasjs/compas/pull/733))
+- feat(store): default session maxAge to 30 minutes
+- fix(code-gen): sql where notIn should return all results on empty array
+  ([#728](https://github.com/compasjs/compas/pull/728))
+
+There are some breaking changes related to events, see the commit message for
+[#733](https://github.com/compasjs/compas/pull/733) for more details.
+
 ### [v0.0.121](https://github.com/compasjs/compas/releases/tag/v0.0.121)
 
 - fix(code-gen): fix usage of sql 'where in' with an empty array and other where
