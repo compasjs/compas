@@ -7,7 +7,6 @@ export {
   eventStart,
   eventRename,
   eventStop,
-  newTestEvent,
   newEventFromEvent,
 } from "./src/events.js";
 

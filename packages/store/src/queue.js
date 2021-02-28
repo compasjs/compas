@@ -266,6 +266,7 @@ export class JobQueueWorker {
         id: job.id,
       });
 
+      const abortController = new AbortController();
       const event = newEvent(
         newLogger({
           ctx: {
@@ -275,6 +276,7 @@ export class JobQueueWorker {
             priority: jobData.priority,
           },
         }),
+        abortController.signal,
       );
 
       // We start a unique save point so we can still increase the retryCount safely,
@@ -293,6 +295,7 @@ export class JobQueueWorker {
         await Promise.race([
           new Promise((_, reject) => {
             setTimeout(() => {
+              abortController.abort();
               reject(AppError.serverError("queue.handlerTimeout"));
             }, this.handlerTimeout);
           }),
@@ -450,7 +453,7 @@ async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
  * If the next scheduled item is not in the future, the interval is added to the current
  * Date.
  *
- * @param {Event} event
+ * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {StoreJob} job
  */
