@@ -8,7 +8,7 @@ order: 4
 
 # CHANGELOG
 
-### [v0.0.112](https://github.com/compasjs/compas/releases/tag/v0.0.112)
+### [v0.0.122](https://github.com/compasjs/compas/releases/tag/v0.0.122)
 
 - build(deps): bump eslint from 7.20.0 to 7.21.0
   ([#729](https://github.com/compasjs/compas/pull/729))
