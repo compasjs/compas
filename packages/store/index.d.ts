@@ -1,7 +1,7 @@
 import * as insight from "@compas/insight";
 import * as minioVendor from "minio";
 import * as postgresVendor from "postgres";
-import { queries } from "./src/generated/index.js";
+import { queries } from "./src/generated";
 
 /**
  * Reexported all of minio package
@@ -65,6 +65,7 @@ export function copyAllObjects(
   minio: minioVendor.Client,
   sourceBucket: string,
   destinationBucket: string,
+  region: string,
 ): Promise<void>;
 
 /**

@@ -94,32 +94,41 @@ export async function removeBucketAndObjectsInBucket(minio, bucketName) {
 }
 
 /**
- * Copy all objects from a bucket to the other bucket. Not safe to use when the bucket
- * has many files.
+ * Copy all objects from a bucket to the other bucket.
+ * Batches the files in groups of 10 while copying.
  *
  * @since 0.1.0
  *
  * @param {minio.Client} minio
  * @param {string} sourceBucket
  * @param {string} destinationBucket
+ * @param {string} region
  * @returns {Promise<undefined>}
  */
-export async function copyAllObjects(minio, sourceBucket, destinationBucket) {
-  await ensureBucket(minio, destinationBucket);
+export async function copyAllObjects(
+  minio,
+  sourceBucket,
+  destinationBucket,
+  region,
+) {
+  await ensureBucket(minio, destinationBucket, region);
   const objects = await listObjects(minio, sourceBucket);
 
-  const pArr = [];
-  for (const object of objects) {
-    pArr.push(
-      minio.copyObject(
-        destinationBucket,
-        object.name,
-        `${sourceBucket}/${object.name}`,
-      ),
-    );
-  }
+  while (objects.length) {
+    const subset = objects.splice(0, 10);
 
-  await Promise.all(pArr);
+    const pArr = [];
+    for (const object of subset) {
+      pArr.push(
+        minio.copyObject(
+          destinationBucket,
+          object.name,
+          `${sourceBucket}/${object.name}`,
+        ),
+      );
+    }
+    await Promise.all(pArr);
+  }
 }
 
 export { minio };
