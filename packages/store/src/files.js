@@ -84,7 +84,7 @@ export async function createOrUpdateFile(
  * @param {string} bucketName
  * @param {string} id
  * @param {{ start?: number|undefined, end?: number|undefined }} [seek={}]
- * @returns {Promise<ReadableStream>}
+ * @returns {Promise<NodeJS.ReadableStream>}
  */
 export async function getFileStream(
   minio,

@@ -15,7 +15,7 @@ import koaBody from "koa-body";
  */
 export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
   // disable formidable
-  bodyOpts.mutipart = false;
+  bodyOpts.multipart = false;
 
   return {
     bodyParser: koaBody(bodyOpts),
@@ -24,8 +24,8 @@ export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
 }
 
 /**
- * Wrapper around Formidable, making it compatible iwth KoaMiddaleware
- * Implemantion is based on formidable.parse calback method, with some
+ * Wrapper around Formidable, making it compatible with KoaMiddleware
+ * Implementation is based on formidable.parse callback method, with some
  * changes for 'boolean' and 'array' support. multiples enabled and required.
  *
  * Source;
@@ -62,11 +62,11 @@ function koaFormidable(opts = {}) {
         reject(AppError.serverError({ files }, err));
       });
       form.on("end", () => {
-        resolve({ files });
+        ctx.request.files = files;
+        resolve();
       });
       form.parse(ctx.req);
-    }).then(({ files }) => {
-      ctx.request.files = files;
+    }).then(() => {
       return next();
     });
   };

@@ -120,10 +120,14 @@ export class FileCache {
    * Load file from memory.
    * Transforms the buffer to a stream for consistency
    *
-   * @param key
-   * @param id
-   * @param start
-   * @param end
+   * @param {string} key
+   * @param {string} id
+   * @param {number} start
+   * @param {number} end
+   * @returns {{
+   *    stream: NodeJS.ReadableStream,
+   *    cacheControl: string,
+   * }}
    */
   async cacheFileInMemory(key, id, start, end) {
     const stream = await getFileStream(this.minio, this.bucketName, id);

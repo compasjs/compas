@@ -40,7 +40,7 @@ export function copyAndSort(input, copy) {
 }
 
 /**
- * Add item to correct group and nmame
+ * Add item to correct group and add uniqueName
  *
  * @param {CodeGenStructure} dataStructure
  * @param {CodeGenType} item

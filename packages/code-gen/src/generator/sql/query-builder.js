@@ -289,7 +289,7 @@ function queryBuilderForType(context, imports, type) {
  * Create an internal query builder for the specified type
  * Handling all of the following:
  *    - Nested joins
- *    - Query traversal 'via'-quries
+ *    - Query traversal 'via'-queries
  *    - Self referencing tables, by generating the same function with a different
  * shortName
  *    - limit and offset

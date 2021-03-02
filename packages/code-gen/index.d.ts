@@ -224,7 +224,8 @@ export class TypeCreator {
   date(name?: string): DateType;
 
   /**
-   * Formidable file object, Blob or Stream depending on the usecase
+   * Formidable file object, Blob or Stream depending on the use case.
+   *
    * @param name
    */
   file(name?: string): FileType;

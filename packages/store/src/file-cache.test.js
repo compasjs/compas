@@ -63,6 +63,7 @@ test("store/file-cache", async (t) => {
     });
   });
 
+  // noinspection DuplicatedCode
   t.test("write fixtures to disk", () => {
     mkdirSync(basePath, { recursive: true });
     writeFileSync(pathJoin(basePath, "small"), files.small);
@@ -189,6 +190,26 @@ test("store/file-cache check memory usage", async (t) => {
     });
   };
 
+  const runFileStreamRounds = (t) => {
+    t.test("run a decent number of rounds", async () => {
+      console.time("file-cache");
+      for (let i = 0; i < 1000; ++i) {
+        const pArr = [];
+        pArr.push(
+          cache.getFileStream(files.small, Math.round(Math.random() * i)),
+          cache.getFileStream(files.medium, Math.round(Math.random() * i)),
+          cache.getFileStream(files.large, Math.round(Math.random() * i)),
+        );
+
+        const result = await Promise.all(pArr);
+        for (const it of result) {
+          it?.stream?.destroy();
+        }
+      }
+      console.timeEnd("file-cache");
+    });
+  };
+
   logMemory(t);
 
   t.test("create a test db", async (t) => {
@@ -212,6 +233,7 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
+  // noinspection DuplicatedCode
   t.test("write fixtures to disk", () => {
     mkdirSync(basePath, { recursive: true });
     writeFileSync(pathJoin(basePath, "small"), files.small);
@@ -250,42 +272,9 @@ test("store/file-cache check memory usage", async (t) => {
   });
 
   logMemory(t);
-
-  t.test("run a decent number of rounds", async () => {
-    for (let i = 0; i < 1000; ++i) {
-      const pArr = [];
-      pArr.push(
-        cache.getFileStream(files.small, Math.round(Math.random() * i)),
-        cache.getFileStream(files.medium, Math.round(Math.random() * i)),
-        cache.getFileStream(files.large, Math.round(Math.random() * i)),
-      );
-
-      const result = await Promise.all(pArr);
-      for (const it of result) {
-        it?.stream?.destroy();
-      }
-    }
-  });
-
+  runFileStreamRounds(t);
   logMemory(t);
-
-  t.test("run a decent number of rounds", async () => {
-    console.time("file-cache");
-    for (let i = 0; i < 1000; ++i) {
-      const pArr = [];
-      pArr.push(
-        cache.getFileStream(files.small, Math.round(Math.random() * i)),
-        cache.getFileStream(files.medium, Math.round(Math.random() * i)),
-        cache.getFileStream(files.large, Math.round(Math.random() * i)),
-      );
-
-      const result = await Promise.all(pArr);
-      for (const it of result) {
-        it?.stream?.destroy();
-      }
-    }
-    console.timeEnd("file-cache");
-  });
+  runFileStreamRounds(t);
 
   t.test("run gc", async () => {
     gc();

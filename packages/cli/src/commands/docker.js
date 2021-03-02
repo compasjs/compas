@@ -76,14 +76,18 @@ export async function dockerCommand(logger, command) {
 
 /**
  * @param {Logger} logger
- * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
- *   string[] }} containerInfo
+ * @param {{
+ *   enabledContainers: string[],
+ *   disabledContainers: string[],
+ *   knownContainers: string[]
+ * }} containerInfo
  * @returns {Promise<number>}
  */
 async function startContainers(logger, containerInfo) {
   const stopExitCode = await stopContainers(logger, {
     knownContainers: containerInfo.knownContainers,
     enabledContainers: containerInfo.disabledContainers,
+    disabledContainers: [],
   });
 
   if (stopExitCode !== 0) {
@@ -131,8 +135,11 @@ async function startContainers(logger, containerInfo) {
  * created.
  *
  * @param {Logger} logger
- * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
- *   string[] }} containerInfo
+ * @param {{
+ *   enabledContainers: string[],
+ *   disabledContainers: string[],
+ *   knownContainers: string[]
+ * }} containerInfo
  * @returns {Promise<number>}
  */
 async function stopContainers(logger, containerInfo) {
@@ -156,8 +163,11 @@ async function stopContainers(logger, containerInfo) {
  * created.
  *
  * @param {Logger} logger
- * @param {{ enabledContainers: string[], disabledContainers: string[], knownContainers:
- *   string[] }} containerInfo
+ * @param {{
+ *   enabledContainers: string[],
+ *   disabledContainers: string[],
+ *   knownContainers: string[]
+ * }} containerInfo
  * @returns {Promise<number>}
  */
 async function cleanContainers(logger, containerInfo) {

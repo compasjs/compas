@@ -44,7 +44,7 @@ interface TestRunner {
   ok(value: any, message?: string): void;
 
   /**
-   * Expect value to be falsey
+   * Expect value to be falsy
    */
   notOk(value: any, message?: string): void;
 

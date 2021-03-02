@@ -30,7 +30,7 @@ export declare const uuid: UuidFunc;
  * ```js
  * new AppError(401, "error.server.unauthorized");
  * AppError.validationError("validation.string.length", { message: "String should have at
- *   least 3 characters" }); AppError.serverError({}, new Error("Oopsie"));
+ *   least 3 characters" }); AppError.serverError({}, new Error("Oops"));
  * ```
  */
 export class AppError<T extends any> extends Error {

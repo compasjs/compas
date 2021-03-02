@@ -26,7 +26,7 @@ Unified backend tooling
 
 ## Why
 
-My work involved doing many small projects. I had a hard time backporting
+My work involved doing many small projects. I had a hard time back-porting
 incremental fixes to existing projects. To facilitate my needs more and to stop
 copying and pasting things around, this project was born.
 

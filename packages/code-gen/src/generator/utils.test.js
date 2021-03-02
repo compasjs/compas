@@ -16,7 +16,7 @@ test("code-gen/generate/utils", (t) => {
     t.equal(result, `f`);
   });
 
-  t.test("cleanTempalteOutput - replace empty lines in JSDoc", (t) => {
+  t.test("cleanTemplateOutput - replace empty lines in JSDoc", (t) => {
     const result = cleanTemplateOutput(`/*\n * Foo\n \n * Bar\n */`);
 
     t.equal(result, `/*\n* Foo\n* Bar\n*/`);

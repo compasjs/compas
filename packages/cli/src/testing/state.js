@@ -16,12 +16,12 @@ export let areTestsRunning = false;
 export let timeout = 2500;
 
 /**
- * @type {function(): void|Promise<void>}
+ * @type {function(): (void|Promise<void>)}
  */
 export let globalSetup = noop;
 
 /**
- * @type {function(): void|Promise<void>}
+ * @type {function(): (void|Promise<void>)}
  */
 export let globalTeardown = noop;
 

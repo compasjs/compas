@@ -85,13 +85,11 @@ function formatEntityTable(codeGen, entity) {
   } </font></td></tr>
 ${keys
   .map((key, idx) => {
-    const result = `<tr><td bgcolor="grey${colorForKey(
+    return `<tr><td bgcolor="grey${colorForKey(
       key,
     )}" align="left" port="${idx}"><font face="Times-bold"> ${key} </font></td><td align="left" port="${idx}_right"><font color="#535353"> ${formatType(
       key,
     )} </font></td></tr>`;
-
-    return result;
   })
   .join("\n")}
 </table>`;

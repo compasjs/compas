@@ -177,7 +177,7 @@ export class JobQueueWorker {
    */
   pendingQueueSize() {
     if (this.name) {
-      return getPendingQueueSizeForName(this.sql);
+      return getPendingQueueSizeForName(this.sql, this.name);
     }
     return getPendingQueueSize(this.sql);
   }

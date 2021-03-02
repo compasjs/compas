@@ -5,7 +5,7 @@ import { isNil, uuid } from "@compas/stdlib";
 /**
  * Log basic request and response information
  *
- * @param {GetAppOptions.logOptions} options
+ * @param {{ disableRootEvent?: boolean }} options
  */
 export function logMiddleware(options) {
   /**

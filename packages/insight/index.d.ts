@@ -40,7 +40,7 @@ export interface LoggerOptions<T extends LoggerContext> {
   /**
    * The stream to write the logs to
    */
-  stream?: NodeJS.WritableStream;
+  stream?: NodeJS.WriteStream;
 
   /**
    * Context that should be logged in all log lines. e.g

@@ -16,7 +16,7 @@ test("code-gen/generator/linkup-references", (t) => {
     },
   );
 
-  t.test("linkupReferencesInStructure - does nothing for baisc types", (t) => {
+  t.test("linkupReferencesInStructure - does nothing for basic types", (t) => {
     for (const type of [
       "any",
       "boolean",
