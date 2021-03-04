@@ -61,7 +61,11 @@ export async function collectNodeArgs() {
     .map((it) => it.trim())
     .filter((it) => it.startsWith("--"))
     .map((it) => {
-      return it.split(" ")[0].replace(/[=\\.]+/g, "");
+      // May look like:
+      // `--c Docs for this`
+      // `--foo-bar=... And some docs`
+      // `--foo-bar[=...] More docs for optional arg`
+      return it.split(" ")[0].replace(/[[=.].*/g, "");
     })
     .filter((it) => it.length > 2);
 }

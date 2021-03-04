@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { cpus } from "os";
 import { pathToFileURL } from "url";
 import { isMainThread, Worker } from "worker_threads";
@@ -30,7 +31,7 @@ async function main(logger) {
   }
 
   if (process.argv.indexOf("--serial") !== -1) {
-    // Allow same process execution for coverage collecting
+    // Allow same process execution for coverage collecting and easier debugging
     const files = listTestFiles();
     for (const file of files) {
       await import(pathToFileURL(file));
@@ -99,6 +100,7 @@ async function main(logger) {
  * @param {string[]} files
  */
 async function runTests(workers, files) {
+  const isDebugging = !!url();
   let idx = 0;
   const results = [];
 
@@ -134,7 +136,7 @@ async function runTests(workers, files) {
           const file = files[idx];
           idx++;
 
-          worker.postMessage({ type: "provide_file", file });
+          worker.postMessage({ type: "provide_file", file, isDebugging });
         }
       } else if (message.type === "provide_result") {
         results.push(message);

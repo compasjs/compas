@@ -18,7 +18,7 @@ test("cli/testing/runner", (t) => {
         assertions: [],
         children: [],
       };
-      await runTestsRecursively(state);
+      await runTestsRecursively(state, false);
 
       t.equal(state.assertions.length, 1);
       t.equal(state.assertions[0].type, "strictEqual");
@@ -37,7 +37,7 @@ test("cli/testing/runner", (t) => {
       assertions: [],
       children: [],
     };
-    await runTestsRecursively(state);
+    await runTestsRecursively(state, false);
 
     t.equal(state.assertions.length, 1);
     t.equal(state.assertions[0].type, "match");
