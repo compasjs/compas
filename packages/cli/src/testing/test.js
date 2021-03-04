@@ -73,7 +73,7 @@ function createMessageDispatcher(logger, callback) {
         if (state.children[idx]) {
           // Handle multiple added suites for a single import
           for (let i = idx; i < state.children.length; ++i) {
-            await runTestsRecursively(state.children[i]);
+            await runTestsRecursively(state.children[i], message.isDebugging);
           }
         }
         parentPort.postMessage({ type: "request_file" });

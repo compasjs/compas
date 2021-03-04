@@ -1,12 +1,14 @@
 import { AssertionError, deepStrictEqual } from "assert";
+import { url } from "inspector";
 import { isNil } from "@compas/stdlib";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**
  * @param {TestState} testState
+ * @param {boolean} [isDebugging] If debugging, we should ignore the timeout
  * @returns {Promise<void>}
  */
-export async function runTestsRecursively(testState) {
+export async function runTestsRecursively(testState, isDebugging = !!url()) {
   const abortController = new AbortController();
   const runner = createRunnerForState(testState, abortController.signal);
 
@@ -19,26 +21,37 @@ export async function runTestsRecursively(testState) {
       const result = testState.callback(runner);
 
       if (typeof result?.then === "function") {
-        // Does a race so tests don't run for too long
-        await Promise.race([
-          result,
-          new Promise((_, reject) => {
-            setTimeout(() => {
-              abortController.abort();
-              reject(
-                new Error(
-                  `Exceeded test timeout of ${
-                    timeout / 1000
-                  } seconds. You can increase the timeout by calling 't.timeout = ${
-                    timeout + 1000
-                  };' on the parent test function. Or by setting 'export const timeout = ${
-                    timeout + 1000
-                  };' in 'test/config.js'.`,
-                ),
-              );
-            }, timeout);
-          }),
-        ]);
+        if (isDebugging) {
+          const timeoutReminder = setTimeout(() => {
+            testLogger.info(
+              `Ignoring timeout for '${testState.name}', detected an active inspector.`,
+            );
+          }, timeout);
+
+          await result;
+          clearTimeout(timeoutReminder);
+        } else {
+          // Does a race so tests don't run for too long
+          await Promise.race([
+            result,
+            new Promise((_, reject) => {
+              setTimeout(() => {
+                abortController.abort();
+                reject(
+                  new Error(
+                    `Exceeded test timeout of ${
+                      timeout / 1000
+                    } seconds. You can increase the timeout by calling 't.timeout = ${
+                      timeout + 1000
+                    };' on the parent test function. Or by setting 'export const timeout = ${
+                      timeout + 1000
+                    };' in 'test/config.js'.`,
+                  ),
+                );
+              }, timeout);
+            }),
+          ]);
+        }
       }
     } catch (e) {
       if (e instanceof AssertionError) {
@@ -64,7 +77,7 @@ export async function runTestsRecursively(testState) {
   mutateRunnerEnablingWarnings(runner);
 
   for (const child of testState.children) {
-    await runTestsRecursively(child);
+    await runTestsRecursively(child, isDebugging);
   }
 
   setTestTimeout(originalTimeout);
