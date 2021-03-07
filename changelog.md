@@ -8,6 +8,17 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.123](https://github.com/compasjs/compas/releases/tag/v0.0.123)
+
+- chore: fix version number in changelog for v0.0.122
+- chore: various typos and type fixes
+- feat(cli): ignore test runner timeout when detecting open inspector
+  ([#736](https://github.com/compasjs/compas/pull/736))
+- feat(code-gen): date validators min,max,future and past options
+  ([#739](https://github.com/compasjs/compas/pull/739))
+- feat(stdlib): drop the vendor uuid implementation
+- feat(store): batch objects when copying all files over buckets
+
 ### [v0.0.122](https://github.com/compasjs/compas/releases/tag/v0.0.122)
 
 - build(deps): bump eslint from 7.20.0 to 7.21.0
