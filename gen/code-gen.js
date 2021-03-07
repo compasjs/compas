@@ -201,6 +201,10 @@ function getTypes(T) {
     validator: T.object()
       .keys({
         allowNull: T.bool().default(false),
+        min: T.date().optional(),
+        max: T.date().optional(),
+        inFuture: T.bool().optional(),
+        inPast: T.bool().optional(),
       })
       .default("{ allowNull: false }")
       .loose(),
@@ -239,6 +243,7 @@ function getTypes(T) {
     shortName: T.string().optional(),
     validator: T.object()
       .keys({
+        allowNull: T.bool().default(false),
         strict: T.bool().default(true),
       })
       .loose(),

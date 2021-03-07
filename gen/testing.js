@@ -63,6 +63,10 @@ export function applyTestingValidatorsStructure(app) {
     T.date("dateOptional").optional(),
     T.date("dateAllowNull").allowNull(),
     T.date("dateDefault").defaultToNow(),
+    T.date("dateMin").min(new Date(2020, 0, 0, 0, 0, 0, 0)),
+    T.date("dateMax").max(new Date(2020, 0, 0, 0, 0, 0, 0)),
+    T.date("datePast").inThePast(),
+    T.date("dateFuture").inTheFuture(),
   );
 
   // Generic

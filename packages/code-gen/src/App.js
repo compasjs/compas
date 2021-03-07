@@ -1,5 +1,5 @@
 import { newLogger, printProcessMemoryUsage } from "@compas/insight";
-import { AppError, isNil, merge } from "@compas/stdlib";
+import { isNil, merge } from "@compas/stdlib";
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import {
@@ -164,7 +164,7 @@ export class App {
       // Validators present, use the result of them.
       const { data, errors } = validateCodeGenType(obj);
       if (errors) {
-        this.logger.error(AppError.format(errors[0]));
+        this.logger.error(errors[0]);
         process.exit(1);
       }
 
@@ -186,7 +186,7 @@ export class App {
       // Validators present, use the result of them.
       const { data: value, errors } = validateCodeGenStructure(data);
       if (errors) {
-        this.logger.error(AppError.format(errors[0]));
+        this.logger.error(errors[0]);
         process.exit(1);
       }
 
@@ -303,7 +303,7 @@ export class App {
     if (!isNil(validateCodeGenStructure)) {
       const { errors } = validateCodeGenStructure(generatorInput);
       if (errors) {
-        this.logger.error(AppError.format(errors[0]));
+        this.logger.error(errors[0]);
         process.exit(1);
       }
     }
