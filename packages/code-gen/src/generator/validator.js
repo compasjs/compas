@@ -621,6 +621,10 @@ function anonymousValidatorDate(context, imports, type) {
   };
 
   return js`
+      if (typeof value !== "string" && typeof value !== "number" && !(value instanceof Date)) {
+         ${buildError("invalid", "{ propertyPath }")}
+      }
+
       if (typeof value === "string") {
          ${generateAnonymousValidatorCall(
            context,
@@ -640,16 +644,61 @@ function anonymousValidatorDate(context, imports, type) {
          }
          ${type.isOptional ? `if (!value) { return value; }` : ""}
       }
-      try {
-         const date = new Date(value);
-         if (!isNaN(date.getTime())) {
-            return date;
-         }
-      } catch {
+      
+      const date = new Date(value);
+      if (isNaN(date.getTime())) {
          ${buildError("invalid", "{ propertyPath }")}
       }
 
-      ${buildError("invalid", "{ propertyPath }")}
+      ${() => {
+        if (!isNil(type.validator.min)) {
+          const time = new Date(type.validator.min).getTime();
+
+          return js`
+               // ${type.validator.min}
+               if (date.getTime() < ${time}) {
+                  const min = "${type.validator.min}";
+                  ${buildError("dateMin", "{ propertyPath, min }")}
+               }
+            `;
+        }
+      }}
+
+      ${() => {
+        if (!isNil(type.validator.max)) {
+          const time = new Date(type.validator.max).getTime();
+
+          return js`
+               // ${type.validator.max}
+               if (date.getTime() > ${time}) {
+                  const max = "${type.validator.max}";
+                  ${buildError("dateMax", "{ propertyPath, max }")}
+               }
+            `;
+        }
+      }}
+
+      ${() => {
+        if (type.validator.inFuture === true) {
+          return js`
+               if (date.getTime() < Date.now()) {
+                  ${buildError("future", "{ propertyPath }")}
+               }
+            `;
+        }
+      }}
+
+      ${() => {
+        if (type.validator.inPast === true) {
+          return js`
+               if (date.getTime() > Date.now()) {
+                  ${buildError("past", "{ propertyPath }")}
+               }
+            `;
+        }
+      }}
+      
+      return date;
    `;
 }
 

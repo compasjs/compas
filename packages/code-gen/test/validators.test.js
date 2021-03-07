@@ -341,6 +341,90 @@ test("code-gen/validators", async (t) => {
     );
   });
 
+  t.test("dateMin", (t) => {
+    const date = new Date();
+    const belowMin = new Date(1900, 0, 0, 0, 0, 0, 0);
+
+    assertAll(
+      t,
+      [
+        {
+          input: date,
+          expected: date,
+        },
+        {
+          input: belowMin,
+          errorKey: "validator.date.dateMin",
+        },
+      ],
+      validators.validateValidatorDateMin,
+    );
+  });
+
+  t.test("dateMax", (t) => {
+    const date = new Date(2000, 0, 0, 0, 0, 0, 0);
+    const afterMax = new Date(2900, 0, 0, 0, 0, 0, 0);
+
+    assertAll(
+      t,
+      [
+        {
+          input: date,
+          expected: date,
+        },
+        {
+          input: afterMax,
+          errorKey: "validator.date.dateMax",
+        },
+      ],
+      validators.validateValidatorDateMax,
+    );
+  });
+
+  t.test("datePast", (t) => {
+    const datePast = new Date();
+    datePast.setSeconds(datePast.getSeconds() - 1);
+    const dateFuture = new Date();
+    dateFuture.setSeconds(dateFuture.getSeconds() + 1);
+
+    assertAll(
+      t,
+      [
+        {
+          input: datePast,
+          expected: datePast,
+        },
+        {
+          input: dateFuture,
+          errorKey: "validator.date.past",
+        },
+      ],
+      validators.validateValidatorDatePast,
+    );
+  });
+
+  t.test("dateFuture", (t) => {
+    const datePast = new Date();
+    datePast.setSeconds(datePast.getSeconds() - 1);
+    const dateFuture = new Date();
+    dateFuture.setSeconds(dateFuture.getSeconds() + 1);
+
+    assertAll(
+      t,
+      [
+        {
+          input: dateFuture,
+          expected: dateFuture,
+        },
+        {
+          input: datePast,
+          errorKey: "validator.date.future",
+        },
+      ],
+      validators.validateValidatorDateFuture,
+    );
+  });
+
   t.test("generic", (t) => {
     assertAll(
       t,

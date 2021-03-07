@@ -645,6 +645,15 @@ export function anonymousValidator1389014320(
   if (isNil(value)) {
     return new Date();
   }
+  if (
+    typeof value !== "string" &&
+    typeof value !== "number" &&
+    !(value instanceof Date)
+  ) {
+    throw AppError.validationError(`validator.${parentType}.invalid`, {
+      propertyPath,
+    });
+  }
   if (typeof value === "string") {
     value = anonymousValidator852571656(value, propertyPath, errors, "date");
     if (!value) {
@@ -654,19 +663,13 @@ export function anonymousValidator1389014320(
       return value;
     }
   }
-  try {
-    const date = new Date(value);
-    if (!isNaN(date.getTime())) {
-      return date;
-    }
-  } catch {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
     throw AppError.validationError(`validator.${parentType}.invalid`, {
       propertyPath,
     });
   }
-  throw AppError.validationError(`validator.${parentType}.invalid`, {
-    propertyPath,
-  });
+  return date;
 }
 /**
  * @param {*} value
@@ -684,25 +687,28 @@ export function anonymousValidator1988053796(
   if (isNil(value)) {
     return value;
   }
+  if (
+    typeof value !== "string" &&
+    typeof value !== "number" &&
+    !(value instanceof Date)
+  ) {
+    throw AppError.validationError(`validator.${parentType}.invalid`, {
+      propertyPath,
+    });
+  }
   if (typeof value === "string") {
     value = anonymousValidator852571656(value, propertyPath, errors, "date");
     if (!value) {
       return value;
     }
   }
-  try {
-    const date = new Date(value);
-    if (!isNaN(date.getTime())) {
-      return date;
-    }
-  } catch {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
     throw AppError.validationError(`validator.${parentType}.invalid`, {
       propertyPath,
     });
   }
-  throw AppError.validationError(`validator.${parentType}.invalid`, {
-    propertyPath,
-  });
+  return date;
 }
 /**
  * @param {*} value
@@ -1401,22 +1407,25 @@ export function anonymousValidator448481401(
       propertyPath,
     });
   }
-  if (typeof value === "string") {
-    value = anonymousValidator1135331723(value, propertyPath, errors, "date");
-  }
-  try {
-    const date = new Date(value);
-    if (!isNaN(date.getTime())) {
-      return date;
-    }
-  } catch {
+  if (
+    typeof value !== "string" &&
+    typeof value !== "number" &&
+    !(value instanceof Date)
+  ) {
     throw AppError.validationError(`validator.${parentType}.invalid`, {
       propertyPath,
     });
   }
-  throw AppError.validationError(`validator.${parentType}.invalid`, {
-    propertyPath,
-  });
+  if (typeof value === "string") {
+    value = anonymousValidator1135331723(value, propertyPath, errors, "date");
+  }
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
+    throw AppError.validationError(`validator.${parentType}.invalid`, {
+      propertyPath,
+    });
+  }
+  return date;
 }
 /**
  * @param {*} value

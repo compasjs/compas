@@ -539,6 +539,14 @@ export class BooleanType extends TypeBuilder {
 
 export class DateType extends TypeBuilder {
   defaultToNow(): this;
+
+  min(value: number | string | Date): this;
+
+  max(value: number | string | Date): this;
+
+  inTheFuture(): this;
+
+  inThePast(): this;
 }
 
 export class FileType extends TypeBuilder {}
