@@ -1,10 +1,10 @@
+import { isNil } from "@compas/stdlib";
+import { state } from "./state.js";
+
 /**
  * @param {BenchState[]} state
  * @returns {Promise<void>}
  */
-import { isNil } from "@compas/stdlib";
-import { state } from "./state.js";
-
 export async function runBenchmarks(state) {
   let i = 0;
 
