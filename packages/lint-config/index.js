@@ -14,7 +14,13 @@ const settings = {
     "plugin:import/warnings",
     "prettier",
   ],
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
+  parserOptions: {
+    requireConfigFile: false,
+    babelOptions: {
+      plugins: ["@babel/plugin-syntax-class-properties"],
+    },
+  },
   rules: {
     // ESLint base
     "no-process-exit": "off",
