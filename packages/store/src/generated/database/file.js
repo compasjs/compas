@@ -525,7 +525,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFile[]>}
  */
 export async function fileSelect(sql, where) {
-  return queryFile({ where }).exec(sql);
+  return await queryFile({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
@@ -545,9 +545,9 @@ WHERE ${fileWhere(where)}
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<void>}
  */
-export function fileDeletePermanent(sql, where = {}) {
+export async function fileDeletePermanent(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
-  return query`
+  return await query`
 DELETE FROM "file" f
 WHERE ${fileWhere(where)}
 `.exec(sql);
@@ -819,12 +819,11 @@ ORDER BY ${fileOrderBy(builder.orderBy, builder.orderBySpec)}
           "Awaited 'queryFile' directly. Please use '.exec' or '.execRaw'.",
       });
     },
-    execRaw: (sql) => qb.exec(sql),
-    exec: (sql) => {
-      return qb.exec(sql).then((result) => {
-        transformFile(result, builder);
-        return result;
-      });
+    execRaw: async (sql) => await qb.exec(sql),
+    exec: async (sql) => {
+      const result = await qb.exec(sql);
+      transformFile(result, builder);
+      return result;
     },
     get queryPart() {
       return qb;

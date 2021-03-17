@@ -159,7 +159,7 @@ export function watchOptionsToIgnoredArray(options) {
  * @param commandArgs
  * @param {CliWatchOptions} watchOptions
  */
-export async function executeCommand(
+export function executeCommand(
   logger,
   verbose,
   watch,

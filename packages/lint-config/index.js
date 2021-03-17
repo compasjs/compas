@@ -33,13 +33,13 @@ const settings = {
     "default-case-last": "error",
     "no-else-return": "error",
     "no-return-assign": "error",
-    "no-return-await": "error",
     "no-sequences": "error",
     "no-throw-literal": "error",
     "prefer-promise-reject-errors": "error",
     "no-var": "error",
     "prefer-const": "error",
     "prefer-template": "error",
+    "require-await": "error",
 
     // ESLint plugin import
     "import/export": "off",

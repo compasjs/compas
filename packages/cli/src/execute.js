@@ -33,7 +33,7 @@ const execCommands = {
  * @param {ScriptCollection} scriptCollection
  * @returns {Promise<void>}
  */
-export async function execute(logger, command, scriptCollection) {
+export function execute(logger, command, scriptCollection) {
   if (command.type === "util") {
     const fn = utilCommands[command.name];
     if (fn) {

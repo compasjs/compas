@@ -37,7 +37,7 @@ import { generateValidatorFile } from "./validator.js";
  * @param {CodeGenStructure} structure
  * @returns {Promise<void>}
  */
-export async function generate(logger, options, structure) {
+export function generate(logger, options, structure) {
   // We can always use '.js' as the import extension and TS will happily resolve to the
   // .ts files Not exactly sure how it all works, but should be good enough for now. The
   // issue when not providing any extension in imports / exports is that TS won't add

@@ -51,7 +51,7 @@ export async function ensureBucket(minio, bucketName, region) {
  */
 export async function listObjects(minio, bucketName, filter = "") {
   const result = [];
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     const str = minio.listObjectsV2(bucketName, filter);
 
     str.once("end", () => resolve(result));

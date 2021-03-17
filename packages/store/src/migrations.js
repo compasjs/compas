@@ -214,7 +214,7 @@ async function runMigration(sql, migration) {
  * @param {Postgres} sql
  * @param {MigrateFile} migration
  */
-async function runInsert(sql, migration) {
+function runInsert(sql, migration) {
   return sql`
      INSERT INTO migration ${sql(
        migration,

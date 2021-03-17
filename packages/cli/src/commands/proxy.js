@@ -5,9 +5,9 @@ import proxy from "http-proxy";
 /**
  * @param {Logger} logger
  * @param {UtilCommand} command
- * @returns {Promise<void>}
+ * @returns {void}
  */
-export async function proxyCommand(logger, command) {
+export function proxyCommand(logger, command) {
   const verbose = command.arguments.indexOf("--verbose") !== -1;
   const port = parseInt(
     (environment.API_URL ?? environment.NEXT_PUBLIC_API_URL ?? "")

@@ -428,7 +428,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreSession[]>}
  */
 export async function sessionSelect(sql, where) {
-  return querySession({ where }).exec(sql);
+  return await querySession({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
@@ -448,8 +448,8 @@ WHERE ${sessionWhere(where)}
  * @param {StoreSessionWhere} [where={}]
  * @returns {Promise<void>}
  */
-export function sessionDelete(sql, where = {}) {
-  return query`
+export async function sessionDelete(sql, where = {}) {
+  return await query`
 DELETE FROM "session" s
 WHERE ${sessionWhere(where)}
 `.exec(sql);
@@ -545,12 +545,11 @@ ORDER BY ${sessionOrderBy(builder.orderBy, builder.orderBySpec)}
           "Awaited 'querySession' directly. Please use '.exec' or '.execRaw'.",
       });
     },
-    execRaw: (sql) => qb.exec(sql),
-    exec: (sql) => {
-      return qb.exec(sql).then((result) => {
-        transformSession(result, builder);
-        return result;
-      });
+    execRaw: async (sql) => await qb.exec(sql),
+    exec: async (sql) => {
+      const result = await qb.exec(sql);
+      transformSession(result, builder);
+      return result;
     },
     get queryPart() {
       return qb;

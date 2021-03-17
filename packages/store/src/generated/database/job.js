@@ -528,7 +528,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreJob[]>}
  */
 export async function jobSelect(sql, where) {
-  return queryJob({ where }).exec(sql);
+  return await queryJob({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
@@ -548,8 +548,8 @@ WHERE ${jobWhere(where)}
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<void>}
  */
-export function jobDelete(sql, where = {}) {
-  return query`
+export async function jobDelete(sql, where = {}) {
+  return await query`
 DELETE FROM "job" j
 WHERE ${jobWhere(where)}
 `.exec(sql);
@@ -641,12 +641,11 @@ ORDER BY ${jobOrderBy(builder.orderBy, builder.orderBySpec)}
           "Awaited 'queryJob' directly. Please use '.exec' or '.execRaw'.",
       });
     },
-    execRaw: (sql) => qb.exec(sql),
-    exec: (sql) => {
-      return qb.exec(sql).then((result) => {
-        transformJob(result, builder);
-        return result;
-      });
+    execRaw: async (sql) => await qb.exec(sql),
+    exec: async (sql) => {
+      const result = await qb.exec(sql);
+      transformJob(result, builder);
+      return result;
     },
     get queryPart() {
       return qb;

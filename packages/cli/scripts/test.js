@@ -69,7 +69,7 @@ async function main(logger) {
       }
     }
 
-    const workers = await initializeWorkers();
+    const workers = initializeWorkers();
     const testResult = await runTests(workers, files);
 
     // Early exit on test failure
@@ -198,9 +198,9 @@ function listTestFiles() {
 /**
  * Create workers and wait till they are initialized.
  *
- * @returns {Promise<Worker[]>}
+ * @returns {Worker[]}
  */
-async function initializeWorkers() {
+function initializeWorkers() {
   const workers = [];
 
   for (let i = 0; i < cpus().length - 1; ++i) {

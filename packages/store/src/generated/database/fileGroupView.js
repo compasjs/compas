@@ -506,7 +506,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFileGroupView[]>}
  */
 export async function fileGroupViewSelect(sql, where) {
-  return queryFileGroupView({ where }).exec(sql);
+  return await queryFileGroupView({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
@@ -1042,12 +1042,11 @@ ORDER BY ${fileGroupViewOrderBy(builder.orderBy, builder.orderBySpec)}
           "Awaited 'queryFileGroupView' directly. Please use '.exec' or '.execRaw'.",
       });
     },
-    execRaw: (sql) => qb.exec(sql),
-    exec: (sql) => {
-      return qb.exec(sql).then((result) => {
-        transformFileGroupView(result, builder);
-        return result;
-      });
+    execRaw: async (sql) => await qb.exec(sql),
+    exec: async (sql) => {
+      const result = await qb.exec(sql);
+      transformFileGroupView(result, builder);
+      return result;
     },
     get queryPart() {
       return qb;
