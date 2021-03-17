@@ -51,7 +51,7 @@ function selectQuery(context, imports, type) {
      * @returns {Promise<${type.uniqueName}[]>}
      */
     export async function ${type.name}Select(sql, where) {
-      return query${upperCaseFirst(type.name)}({ where }).exec(sql);
+      return await query${upperCaseFirst(type.name)}({ where }).exec(sql);
     }
   `;
 }
@@ -93,7 +93,7 @@ function deleteQuery(context, imports, type) {
      * @param {${type.uniqueName}Where} [where={}]
      * @returns {Promise<void>}
      */
-    export function ${type.name}Delete${
+    export async function ${type.name}Delete${
     type.queryOptions.withSoftDeletes ? "Permanent" : ""
   }(sql,
                                                                                 where = {}
@@ -103,7 +103,7 @@ function deleteQuery(context, imports, type) {
           ? "where.deletedAtIncludeNotNull = true;"
           : ""
       }
-      return query\`
+      return await query\`
         DELETE FROM "${type.name}" ${type.shortName}
         WHERE $\{${type.name}Where(where)}
         \`.exec(sql);

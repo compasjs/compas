@@ -9,7 +9,7 @@ import {
 
 mainTestFn(import.meta);
 
-test("store/sessions", async (t) => {
+test("store/sessions", (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {

@@ -83,7 +83,7 @@ export async function streamToBuffer(stream) {
     return Buffer.from([]);
   }
 
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     const buffers = [];
 
     stream.on("data", function (chunk) {

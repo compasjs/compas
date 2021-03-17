@@ -272,11 +272,10 @@ function queryBuilderForType(context, imports, type) {
                                                type.name,
                                              )}' directly. Please use '.exec' or '.execRaw'."
                                           });
-            }, execRaw: (sql) => qb.exec(sql), exec: (sql) => {
-               return qb.exec(sql).then(result => {
-                  transform${upperCaseFirst(type.name)}(result, builder);
-                  return result;
-               });
+            }, execRaw: async (sql) => await qb.exec(sql), exec: async (sql) => {
+               const result = await qb.exec(sql);
+               transform${upperCaseFirst(type.name)}(result, builder);
+               return result;
             }, get queryPart() {
                return qb;
             }

@@ -11,7 +11,7 @@ import { session } from "./session.js";
 
 mainTestFn(import.meta);
 
-test("server/session", async (t) => {
+test("server/session", (t) => {
   const app = new Koa();
   const client = Axios.create();
 
@@ -70,7 +70,7 @@ test("server/session", async (t) => {
   });
 });
 
-test("server/session synced cookie", async (t) => {
+test("server/session synced cookie", (t) => {
   const app = new Koa();
   const client = Axios.create();
 

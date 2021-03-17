@@ -21,7 +21,7 @@ const promiseSleep = (ms) =>
     setTimeout(() => r(), ms);
   });
 
-test("store/queue", async (t) => {
+test("store/queue", (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {
@@ -41,7 +41,7 @@ test("store/queue", async (t) => {
     handlerCalls.push(data);
   };
 
-  t.test("create a JobQueueWorker", async (t) => {
+  t.test("create a JobQueueWorker", (t) => {
     qw = new JobQueueWorker(sql, {
       parallelCount: 1,
       pollInterval: 10,
@@ -195,7 +195,7 @@ test("store/queue", async (t) => {
   });
 });
 
-test("store/queue - recurring jobs ", async (t) => {
+test("store/queue - recurring jobs ", (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {

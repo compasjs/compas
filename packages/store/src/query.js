@@ -60,7 +60,7 @@ export function query(strings, ...values) {
     return result;
   }
 
-  function exec(sql) {
+  async function exec(sql) {
     let str = _strings[0];
     let valueIdx = 1;
     for (let i = 0; i < _values.length; ++i) {
@@ -72,7 +72,7 @@ export function query(strings, ...values) {
     }
 
     // Strip out undefined values
-    return sql.unsafe(
+    return await sql.unsafe(
       str,
       _values.filter((it) => it !== undefined),
     );

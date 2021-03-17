@@ -91,7 +91,7 @@ test("Koa Compose", (t) => {
     t.deepEqual(out, ctx2.arr);
   });
 
-  t.test("should only accept an array", async (t) => {
+  t.test("should only accept an array", (t) => {
     try {
       compose();
       t.fail("should throw");
@@ -100,7 +100,7 @@ test("Koa Compose", (t) => {
     }
   });
 
-  t.test("should create next functions that return a Promise", async (t) => {
+  t.test("should create next functions that return a Promise", (t) => {
     const stack = [];
     const arr = [];
     for (let i = 0; i < 5; i++) {
@@ -124,7 +124,7 @@ test("Koa Compose", (t) => {
     }
   });
 
-  t.test("should only accept middleware as functions", async (t) => {
+  t.test("should only accept middleware as functions", (t) => {
     try {
       compose([{}]);
       t.fail("should throw");
@@ -200,7 +200,7 @@ test("Koa Compose", (t) => {
       arr.push(3);
     });
 
-    stack.push(async () => {
+    stack.push(() => {
       arr.push(4);
       throw new Error();
     });
@@ -212,7 +212,7 @@ test("Koa Compose", (t) => {
   t.test("should compose w/ next", async (t) => {
     let called = false;
 
-    await compose([])({}, async () => {
+    await compose([])({}, () => {
       called = true;
     });
     t.ok(called);
@@ -313,7 +313,7 @@ test("Koa Compose", (t) => {
     t.equal(val, 1);
   });
 
-  t.test("should not affect the original middleware array", async (t) => {
+  t.test("should not affect the original middleware array", (t) => {
     const middleware = [];
     const fn1 = (ctx, next) => {
       return next();

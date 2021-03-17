@@ -96,9 +96,9 @@ export async function getFileStream(
     start = start || 0;
     const size = end === undefined ? 0 : end - start;
 
-    return minio.getPartialObject(bucketName, id, start, size);
+    return await minio.getPartialObject(bucketName, id, start, size);
   }
-  return minio.getObject(bucketName, id);
+  return await minio.getObject(bucketName, id);
 }
 
 /**

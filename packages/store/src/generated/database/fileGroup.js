@@ -643,7 +643,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @returns {Promise<StoreFileGroup[]>}
  */
 export async function fileGroupSelect(sql, where) {
-  return queryFileGroup({ where }).exec(sql);
+  return await queryFileGroup({ where }).exec(sql);
 }
 /**
  * @param {Postgres} sql
@@ -663,9 +663,9 @@ WHERE ${fileGroupWhere(where)}
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<void>}
  */
-export function fileGroupDeletePermanent(sql, where = {}) {
+export async function fileGroupDeletePermanent(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
-  return query`
+  return await query`
 DELETE FROM "fileGroup" fg
 WHERE ${fileGroupWhere(where)}
 `.exec(sql);
@@ -1237,12 +1237,11 @@ ORDER BY ${fileGroupOrderBy(builder.orderBy, builder.orderBySpec)}
           "Awaited 'queryFileGroup' directly. Please use '.exec' or '.execRaw'.",
       });
     },
-    execRaw: (sql) => qb.exec(sql),
-    exec: (sql) => {
-      return qb.exec(sql).then((result) => {
-        transformFileGroup(result, builder);
-        return result;
-      });
+    execRaw: async (sql) => await qb.exec(sql),
+    exec: async (sql) => {
+      const result = await qb.exec(sql);
+      transformFileGroup(result, builder);
+      return result;
     },
     get queryPart() {
       return qb;

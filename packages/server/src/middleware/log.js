@@ -100,7 +100,7 @@ class StreamLength extends Transform {
  * @param ctx
  * @returns {Promise<void>}
  */
-async function bodyCloseOrFinish(ctx) {
+function bodyCloseOrFinish(ctx) {
   return new Promise((resolve) => {
     const onFinish = done.bind(null, "finish");
     const onClose = done.bind(null, "close");

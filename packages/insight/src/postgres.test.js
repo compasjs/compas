@@ -8,7 +8,7 @@ import { postgresTableSizes } from "./postgres.js";
 
 mainTestFn(import.meta);
 
-test("insight/postgres", async (t) => {
+test("insight/postgres", (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {

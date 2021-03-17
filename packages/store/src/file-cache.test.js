@@ -137,7 +137,7 @@ test("store/file-cache", async (t) => {
     );
   });
 
-  t.test("clear file removes from cache", async () => {
+  t.test("clear file removes from cache", () => {
     cache.clear(files.large.id);
   });
 

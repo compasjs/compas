@@ -5,7 +5,7 @@ import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
 mainTestFn(import.meta);
 
-test("server/app", async (t) => {
+test("server/app", (t) => {
   const app = getApp();
   const client = Axios.create();
 
