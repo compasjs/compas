@@ -104,7 +104,8 @@ test("server/app", (t) => {
     const imp = await import(
       "./../../../generated/testing/server/apiClient.js"
     );
-    imp.createApiClient(client);
+
+    imp.addRequestIdInterceptors(client);
 
     const response = await client.get("/200");
     const secondResponse = await client.get("/200");

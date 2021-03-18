@@ -16,17 +16,17 @@ test("code-gen/e2e-server", async (t) => {
   const client = await import("../../../generated/testing/client/index.js");
 
   const app = await buildTestApp();
-  const serverClient = Axios.create({});
-  await createTestAppAndClient(app, serverClient);
+  const axiosInstance = Axios.create({});
+  await createTestAppAndClient(app, axiosInstance);
 
-  const apiClient = client.newApiClient(serverClient);
-  server.createApiClient(serverClient);
+  client.addRequestIdInterceptors(axiosInstance);
 
   t.test("client - request cancellation works", async (t) => {
     try {
       const cancelToken = Axios.CancelToken.source();
 
-      const requestPromise = apiClient.server.getId(
+      const requestPromise = client.apiServerGetId(
+        axiosInstance,
         { id: "5" },
         { cancelToken: cancelToken.token },
       );
@@ -45,7 +45,7 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("client - GET /:id validation", async (t) => {
     try {
-      await apiClient.server.getId({});
+      await client.apiServerGetId(axiosInstance, {});
       t.fail("Expected validator error for missing id");
     } catch (e) {
       t.equal(e.response.status, 400);
@@ -54,7 +54,7 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("client - GET /:id", async (t) => {
-    const result = await apiClient.server.getId({
+    const result = await client.apiServerGetId(axiosInstance, {
       id: "5",
     });
 
@@ -62,14 +62,18 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("client - POST /", async (t) => {
-    const result = await apiClient.server.create({}, { foo: false });
+    const result = await client.apiServerCreate(
+      axiosInstance,
+      {},
+      { foo: false },
+    );
 
     t.deepEqual(result, { foo: false });
   });
 
   t.test("server - GET /:id validation", async (t) => {
     try {
-      await server.serverApi.getId({});
+      await server.apiServerGetId(axiosInstance, {});
       t.fail("Expected validator error for missing id");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
@@ -79,7 +83,7 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("server - GET /:id", async (t) => {
-    const result = await server.serverApi.getId({
+    const result = await server.apiServerGetId(axiosInstance, {
       id: "5",
     });
 
@@ -87,14 +91,18 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("server - POST /", async (t) => {
-    const result = await server.serverApi.create({}, { foo: false });
+    const result = await server.apiServerCreate(
+      axiosInstance,
+      {},
+      { foo: false },
+    );
 
     t.deepEqual(result, { foo: false });
   });
 
   t.test("server - POST /invalid-response", async (t) => {
     try {
-      await server.serverApi.invalidResponse();
+      await server.apiServerInvalidResponse(axiosInstance);
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.status, 400);
@@ -104,7 +112,7 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("server - PATCH throws not implemented", async (t) => {
     try {
-      await server.serverApi.patchTest();
+      await server.apiServerPatchTest(axiosInstance);
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.status, 405);
@@ -112,7 +120,9 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("server - files are passed through as well", async (t) => {
-    const response = await server.serverApi.getFile({ throwError: false });
+    const response = await server.apiServerGetFile(axiosInstance, {
+      throwError: false,
+    });
     const buffer = await streamToBuffer(response);
 
     t.equal(buffer.toString("utf-8"), "Hello!");
@@ -122,7 +132,7 @@ test("code-gen/e2e-server", async (t) => {
     "server - errors are handled even if response is a stream",
     async (t) => {
       try {
-        await server.serverApi.getFile({ throwError: true });
+        await server.apiServerGetFile(axiosInstance, { throwError: true });
         t.fail("Should throw");
       } catch (e) {
         t.ok(AppError.instanceOf(e));
@@ -133,7 +143,7 @@ test("code-gen/e2e-server", async (t) => {
   );
 
   t.test("server - serverside validator of file is ok", async (t) => {
-    const { success } = await server.serverApi.setFile({
+    const { success } = await server.apiServerSetFile(axiosInstance, {
       myFile: {
         name: "foo.json",
         data: createReadStream("./__fixtures__/code-gen/openapi.json"),
@@ -150,7 +160,7 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("apiClient - caught server error", async (t) => {
     try {
-      await server.serverApi.serverError();
+      await server.apiServerServerError(axiosInstance);
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.key, "server.error");

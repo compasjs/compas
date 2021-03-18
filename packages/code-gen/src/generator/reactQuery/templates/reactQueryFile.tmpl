@@ -1,4 +1,4 @@
-import { AxiosError, CancelTokenSource } from "axios";
+import { AxiosError, AxiosInstance, CancelTokenSource } from "axios";
 import { createContext, PropsWithChildren, useContext } from "react";
 import {
   QueryKey,
@@ -9,8 +9,22 @@ import {
   useMutation,
   useQuery,
 } from "react-query";
-import { newApiClient } from "./apiClient";
 import * as T from "./types";
+import {
+{{ for (const groupName of Object.keys(structure)) { }}
+  {{ for (const itemName of Object.keys(structure[groupName])) { }}
+    {{ const item = structure[groupName][itemName]; }}
+
+    {{ if (item.type !== "route") { }}
+    {{ continue; }}
+    {{ } }}
+
+    api{{= item.uniqueName }},
+((newline))
+
+  {{ } }}
+{{ } }}
+} from "./apiClient";
 ((newline))
 
 interface CancellablePromise<T> extends Promise<T> {
@@ -18,13 +32,13 @@ interface CancellablePromise<T> extends Promise<T> {
 }
 ((newline))
 
-const ApiContext = createContext<ReturnType<typeof newApiClient> | undefined>(undefined);
+const ApiContext = createContext<AxiosInstance | undefined>(undefined);
 ((newline))
 
-export function ApiProvider<T extends ReturnType<typeof newApiClient>>({
+export function ApiProvider({
   instance, children,
 }: PropsWithChildren<{
-  instance: T;
+  instance: AxiosInstance;
 }>) {
   return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
 }

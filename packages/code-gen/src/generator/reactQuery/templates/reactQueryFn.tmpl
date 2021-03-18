@@ -23,7 +23,7 @@ body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDe
 {{ } }}
 options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
 ): UseQueryResult<{{= responseType }}, AppErrorResponse> {
-  const { {{= item.group }} } = useApi();
+  const axiosInstance = useApi();
 
   options.enabled = (
     options.enabled === true || (options.enabled !== false
@@ -62,7 +62,8 @@ options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
     {{ } }}
     ),
     () => {
-      const promise: CancellablePromise<{{= responseType }}> = {{= item.group }}.{{= item.name }}(
+      const promise: CancellablePromise<{{= responseType }}> = api{{= item.uniqueName }}(
+        axiosInstance,
         {{= item.params ? "params, " : ""}}
         {{= item.query ? "query, " : "" }}
         {{= item.body ? "body, " : "" }}
@@ -139,10 +140,11 @@ interface {{= upperCaseFirst(funcName) }}Props {
 export function {{= funcName }}(
   options: UseMutationOptions<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},
 ): UseMutationResult<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props, unknown> {
-  const { {{= item.group }} } = useApi();
+  const axiosInstance = useApi();
 
   return useMutation(
-    (variables) => {{= item.group }}.{{= item.name }}(
+    (variables) => api{{= item.uniqueName }}(
+      axiosInstance,
       {{= item.params ? "variables.params, " : ""}}
       {{= item.query ? "variables.query, " : "" }}
       {{= item.body ? "variables.body, " : "" }}
