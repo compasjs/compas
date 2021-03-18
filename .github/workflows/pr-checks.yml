@@ -126,8 +126,8 @@ jobs:
       - name: Comment bench result
         uses: mshick/add-pr-comment@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ env.GITHUB_TOKEN != null }}
+          GITHUB_TOKEN: ${{ secrets.COMPAS_GITHUB_TOKEN }}
+        if: ${{ env.COMPAS_GITHUB_TOKEN != null }}
         with:
           message: |
             ==== **Benchmark result** ====
@@ -135,7 +135,7 @@ jobs:
             Node.js version: ${{ matrix.node }}
             ${{ env.BENCH_RESULT }}
             ```
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.COMPAS_GITHUB_TOKEN }}
           repo-token-user-login: "github-actions[bot]"
           allow-repeats: false
 
@@ -183,10 +183,10 @@ jobs:
       - name: Comment test coverage
         uses: AthleticNet/comment-test-coverage@1.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ env.GITHUB_TOKEN != null }}
+          GITHUB_TOKEN: ${{ secrets.COMPAS_GITHUB_TOKEN }}
+        if: ${{ env.COMPAS_GITHUB_TOKEN != null }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.COMPAS_GITHUB_TOKEN }}
           path: coverage/coverage-summary.json
           title: C8 test coverage
 
