@@ -1,6 +1,7 @@
 {{ if (options.isNode) { }}
 import FormData from "form-data";
 {{ } }}
+
 {{ if (options.useTypescript) { }}
 import * as T from "./types";
 import { CancelToken, AxiosInstance } from "axios";
@@ -52,63 +53,34 @@ function handleError(e, group, name) {
 }
 {{ } }}
 
-{{ if (options.isBrowser) { }}
-/**
- * Should set an axios compatible api client
- *
- * @param {AxiosInstance} instance
- */
-export function newApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
-{{ } else { }}
-function checkApiClient() {
-  if (_internalClient === undefined) {
-    throw new Error("Initialize api client with createApiClient");
-  }
-}
-{{ } }}
-
-let _internalClient {{= options.useTypescript ? ": AxiosInstance | undefined" : "" }}  = undefined;
-let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undefined;
 ((newline))
 
-/**
- * Should set an axios compatible api client
- *
- * @param {AxiosInstance} instance
- */
-{{ if (!options.isBrowser) { }}export {{ } }} function createApiClient(instance {{= options.useTypescript ? ": AxiosInstance" : "" }}) {
-  _internalClient = instance;
-
-  _internalClient.interceptors.request.use((config) => {
-      if (requestId) {
-        config.headers["x-request-id"] = requestId;
-      }
-      return config;
+export function addRequestIdInterceptors(instance{{= options.useTypescript ? ": AxiosInstance" : "" }}) {
+  let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undefined;
+  instance.interceptors.request.use((config) => {
+    if (requestId) {
+      config.headers["x-request-id"] = requestId;
+    }
+    return config;
   });
 
-  _internalClient.interceptors.response.use((response) => {
+  instance.interceptors.response.use((response) => {
     if (response.headers["x-request-id"]) {
       requestId = response.headers["x-request-id"];
     }
     return response;
-  },
-  (error) => {
-    if (error.response && error.response.headers["x-request-id"]) {
-      requestId = error.response.headers["x-request-id"];
-    }
-    return Promise.reject(error);
+    },
+    (error) => {
+      if (error.response && error.response.headers["x-request-id"]) {
+        requestId = error.response.headers["x-request-id"];
+      }
+      return Promise.reject(error);
   });
 }
+
 ((newline))
 
 {{ for (const groupName of Object.keys(structure)) { }}
-
-  {{ if (!options.isBrowser) { }}
-  export const {{= groupName }}Api = {
-  {{ } else { }}
-  const {{= groupName }} = {
-  {{ } }}
-
   {{ for (const itemName of Object.keys(structure[groupName])) { }}
     {{ const item = structure[groupName][itemName]; }}
 
@@ -119,22 +91,7 @@ let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undef
 
     {{= apiClientFn({ options, item }) }}
 ((newline))
-
   {{ } }}
-
-  };
 ((newline))
-
 {{ } }}
 
-{{ if (options.isBrowser) { }}
-
-  createApiClient(instance);
-
-  return {
-    {{ for (const group of Object.keys(structure)) { }}
-    {{= group }},
-    {{ } }}
-  };
-}
-{{ } }}

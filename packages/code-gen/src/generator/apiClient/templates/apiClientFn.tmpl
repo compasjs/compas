@@ -6,6 +6,7 @@
  {{ if (item.docString && item.docString.length > 0) { }}* Docs: {{= item.docString }}{{ } }}
  *
 {{ if (!options.useTypescript) { }}
+    * @param {AxiosInstance} instance
     {{ if (item.params) { }}
      * @param { {{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }} } params
     {{ } }}
@@ -26,8 +27,9 @@
     {{ } }}
 {{ } }}
  */
-{{= item.name }}: async function (
+export async function api{{= item.uniqueName }}(
 {{ if (options.useTypescript) { }}
+    instance: AxiosInstance,
     {{ if (item.params) { }}
     params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, }) }},
     {{ } }}
@@ -41,6 +43,7 @@
     files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }},
     {{ } }}
 {{ } else { }}
+    instance,
     {{ if (item.params) { }}
     params,
     {{ } }}
@@ -60,10 +63,6 @@ options: { cancelToken?: CancelToken } = {},
 options = {},
 {{ } }}
 {{= options.useTypescript && item.response ? `): Promise<T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", })}> {` : ") {" }}
-    {{ if (!options.isBrowser) { }}
-    checkApiClient();
-    {{ } }}
-
     {{ if (item.files) { }}
       // eslint-disable-next-line
       const data = new FormData();
@@ -82,7 +81,7 @@ options = {},
     try {
     {{ } }}
 
-    const response = await _internalClient{{= options.useTypescript ? "!" : "" }}.request({
+    const response = await instance.request({
       url: `{{= url }}`,
       method: "{{= item.method.toLowerCase() }}",
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
@@ -115,5 +114,5 @@ options = {},
 
     {{ } }}
 
-},
+}
 ((newline))
