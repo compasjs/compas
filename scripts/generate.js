@@ -39,7 +39,7 @@ async function main() {
     "yarn",
     [
       "tsc",
-      `${pathJoin(process.cwd(), "./generated/testing/client")}/*.ts`,
+      `${pathJoin(process.cwd(), "./generated/testing/client")}/**/*.ts`,
       "--strict",
       "--allowJs",
       "--target",

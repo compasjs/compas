@@ -10,18 +10,17 @@ export function generateApiClientFiles(context) {
     ".tmpl",
   );
 
-  const contents = executeTemplate("apiClientFile", {
-    extension: context.extension,
-    importExtension: context.importExtension,
-    structure: context.structure,
-    options: context.options,
-  });
+  for (const group of Object.keys(context.structure)) {
+    const contents = executeTemplate("apiClientFile", {
+      extension: context.extension,
+      importExtension: context.importExtension,
+      groupStructure: context.structure[group],
+      options: context.options,
+    });
 
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./apiClient${context.extension}`,
-  });
-  context.rootExports.push(
-    `export * from "./apiClient${context.importExtension}";`,
-  );
+    context.outputFiles.push({
+      contents,
+      relativePath: `./${group}/apiClient${context.extension}`,
+    });
+  }
 }

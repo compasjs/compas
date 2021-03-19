@@ -3,6 +3,7 @@ import { pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
+import { generateCommonFiles } from "./common.js";
 import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
@@ -119,6 +120,8 @@ export function generate(logger, options, structure) {
 
     exitOnErrorsOrReturn(context);
   }
+
+  generateCommonFiles(context);
 
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
     generateValidatorFile(context);
@@ -296,6 +299,8 @@ function checkReservedGroupNames(context) {
     "public",
     "static",
     "yield",
+    // Other reserved names
+    "common",
   ];
 
   for (const group of Object.keys(context.structure)) {

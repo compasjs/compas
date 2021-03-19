@@ -101,11 +101,11 @@ test("server/app", (t) => {
   });
 
   t.test("consistent x-request-id with generated api client", async (t) => {
-    const imp = await import(
-      "./../../../generated/testing/server/apiClient.js"
+    const commonApiClientImport = await import(
+      "./../../../generated/testing/server/common/apiClient.js"
     );
 
-    imp.addRequestIdInterceptors(client);
+    commonApiClientImport.addRequestIdInterceptors(client);
 
     const response = await client.get("/200");
     const secondResponse = await client.get("/200");
