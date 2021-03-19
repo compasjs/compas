@@ -8,8 +8,15 @@ import { js } from "./tag/tag.js";
 export function generateCommonFiles(context) {
   if (context.options.enabledGenerators.includes("apiClient")) {
     context.outputFiles.push({
-      contents: generateCommonApiClientFiles(context),
+      contents: generateCommonApiClientFile(context),
       relativePath: `./common/apiClient${context.extension}`,
+    });
+  }
+
+  if (context.options.enabledGenerators.includes("reactQuery")) {
+    context.outputFiles.push({
+      contents: generateCommonReactQueryFile(),
+      relativePath: `./common/reactQuery${context.extension}`,
     });
   }
 }
@@ -18,7 +25,7 @@ export function generateCommonFiles(context) {
  * @param {CodeGenContext} context
  * @returns {string}
  */
-function generateCommonApiClientFiles(context) {
+function generateCommonApiClientFile(context) {
   let contents = "";
 
   if (context.options.isNodeServer) {
@@ -102,4 +109,56 @@ function generateCommonApiClientFiles(context) {
    `;
 
   return contents;
+}
+
+/**
+ * @returns {string}
+ */
+function generateCommonReactQueryFile() {
+  return `
+import { AxiosError, AxiosInstance, CancelTokenSource } from "axios";
+import { createContext, PropsWithChildren, useContext } from "react";
+import {
+  UseQueryOptions as ReactUseQueryOptions,
+} from "react-query";
+
+export interface CancellablePromise<T> extends Promise<T> {
+  cancel?: () => void;
+}
+
+const ApiContext = createContext<AxiosInstance | undefined>(undefined);
+
+export function ApiProvider({
+  instance, children,
+}: PropsWithChildren<{
+  instance: AxiosInstance;
+}>) {
+  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};
+
+export type AppErrorResponse = AxiosError<{
+  key?: string;
+  message?: string;
+  info?: {
+    _error?: {
+      name?: string;
+      message?: string;
+      stack?: string[];
+    };
+    [key: string]: any;
+  };
+}>;
+
+export type UseQueryOptions<Response, Error> = ReactUseQueryOptions<Response, Error> & { cancelToken?: CancelTokenSource };
+`;
 }

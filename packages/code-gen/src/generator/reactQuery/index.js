@@ -10,20 +10,17 @@ export function generateReactQueryFiles(context) {
     ".tmpl",
   );
 
-  const contents = executeTemplate("reactQueryFile", {
-    extension: context.extension,
-    importExtension: context.importExtension,
-    structure: context.structure,
-    options: context.options,
-  });
+  for (const group of Object.keys(context.structure)) {
+    const contents = executeTemplate("reactQueryFile", {
+      extension: context.extension,
+      importExtension: context.importExtension,
+      groupStructure: context.structure[group],
+      options: context.options,
+    });
 
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./reactQueries${context.extension}x`,
-  });
-  context.rootExports.push(
-    `export * from "./reactQueries${
-      context.importExtension === "" ? "" : `${context.importExtension}x`
-    }";`,
-  );
+    context.outputFiles.push({
+      contents: contents,
+      relativePath: `./${group}/reactQueries${context.extension}x`,
+    });
+  }
 }

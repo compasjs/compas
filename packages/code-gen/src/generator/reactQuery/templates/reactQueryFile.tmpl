@@ -1,87 +1,34 @@
-import { AxiosError, AxiosInstance, CancelTokenSource } from "axios";
-import { createContext, PropsWithChildren, useContext } from "react";
+import { CancellablePromise, useApi, AppErrorResponse, UseQueryOptions } from "../common/reactQuery";
 import {
   QueryKey,
   UseMutationOptions,
   UseMutationResult,
-  UseQueryOptions as ReactUseQueryOptions,
   UseQueryResult,
   useMutation,
   useQuery,
 } from "react-query";
-import * as T from "./types";
+import * as T from "../types";
 import {
-{{ for (const groupName of Object.keys(structure)) { }}
-  {{ for (const itemName of Object.keys(structure[groupName])) { }}
-    {{ const item = structure[groupName][itemName]; }}
+{{ for (const itemName of Object.keys(groupStructure)) { }}
+  {{ const item = groupStructure[itemName]; }}
 
-    {{ if (item.type !== "route") { }}
-    {{ continue; }}
-    {{ } }}
-
-    api{{= item.uniqueName }},
-((newline))
-
+  {{ if (item.type !== "route") { }}
+  {{ continue; }}
   {{ } }}
+
+  api{{= item.uniqueName }},
+((newline))
 {{ } }}
 } from "./apiClient";
 ((newline))
 
-interface CancellablePromise<T> extends Promise<T> {
-  cancel?: () => void;
-}
-((newline))
+{{ for (const itemName of Object.keys(groupStructure)) { }}
+  {{ const item = groupStructure[itemName]; }}
 
-const ApiContext = createContext<AxiosInstance | undefined>(undefined);
-((newline))
-
-export function ApiProvider({
-  instance, children,
-}: PropsWithChildren<{
-  instance: AxiosInstance;
-}>) {
-  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
-}
-((newline))
-
-export const useApi = () => {
-  const context = useContext(ApiContext);
-
-  if (!context) {
-    throw Error("Be sure to wrap your application with <ApiProvider>.");
-  }
-
-  return context;
-};
-((newline))
-
-type AppErrorResponse = AxiosError<{
-  key?: string;
-  message?: string;
-  info?: {
-    _error?: {
-      name?: string;
-      message?: string;
-      stack?: string[];
-    };
-    [key: string]: any;
-  };
-}>;
-((newline))
-
-type UseQueryOptions<Response, Error> = ReactUseQueryOptions<Response, Error> & { cancelToken?: CancelTokenSource };
-((newline))
-
-{{ for (const groupName of Object.keys(structure)) { }}
-  {{ for (const itemName of Object.keys(structure[groupName])) { }}
-    {{ const item = structure[groupName][itemName]; }}
-
-    {{ if (item.type !== "route") { }}
-    {{ continue; }}
-    {{ } }}
-
-    {{= reactQueryFn({ options, item, structure }) }}
-((newline))
-
+  {{ if (item.type !== "route") { }}
+  {{ continue; }}
   {{ } }}
+
+  {{= reactQueryFn({ options, item }) }}
+((newline))
 {{ } }}
