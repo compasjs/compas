@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
@@ -157,12 +157,19 @@ export function generate(logger, options, structure) {
 
   exitOnErrorsOrReturn(context);
 
-  // TODO: Remove context.options.outputDir before writing
-
   if (options.returnFiles) {
     // Used for making sure we can check if we are all set
     return context.outputFiles;
   }
+
+  logger.info(`Cleaning output directory and writing files.`);
+  rmSync(context.options.outputDirectory, {
+    recursive: true,
+    force: true,
+    maxRetries: 3,
+    retryDelay: 10,
+  });
+
   writeFiles(context);
 }
 

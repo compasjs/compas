@@ -18,8 +18,8 @@ test("code-gen/e2e-server", async (t) => {
   const serverApiClientImport = await import(
     "../../../generated/testing/server/server/apiClient.js"
   );
-  const serverRootImport = await import(
-    "../../../generated/testing/server/index.js"
+  const serverControllerImport = await import(
+    "../../../generated/testing/server/server/controller.js"
   );
   const clientApiClientImport = await import(
     "../../../generated/testing/client/server/apiClient.js"
@@ -172,8 +172,8 @@ test("code-gen/e2e-server", async (t) => {
   });
 
   t.test("server - router - tags are available", (t) => {
-    t.deepEqual(serverRootImport.serverTags.getId, ["tag"]);
-    t.deepEqual(serverRootImport.serverTags.create, []);
+    t.deepEqual(serverControllerImport.serverTags.getId, ["tag"]);
+    t.deepEqual(serverControllerImport.serverTags.create, []);
   });
 
   t.test("apiClient - caught server error", async (t) => {
@@ -193,19 +193,24 @@ test("code-gen/e2e-server", async (t) => {
 });
 
 async function buildTestApp() {
-  const server = await import("../../../generated/testing/server/index.js");
+  const controllerImport = await import(
+    "../../../generated/testing/server/server/controller.js"
+  );
+  const commonImport = await import(
+    "../../../generated/testing/server/common/router.js"
+  );
 
   const app = getApp();
-  app.use(server.router);
-  server.setBodyParsers(createBodyParsers({}));
+  app.use(commonImport.router);
+  commonImport.setBodyParsers(createBodyParsers({}));
 
-  server.serverHandlers.getId = (ctx, next) => {
+  controllerImport.serverHandlers.getId = (ctx, next) => {
     const { id } = ctx.validatedParams;
     ctx.body = { id };
     return next();
   };
 
-  server.serverHandlers.create = (ctx, next) => {
+  controllerImport.serverHandlers.create = (ctx, next) => {
     const { alwaysTrue } = ctx.validatedQuery;
     const { foo } = ctx.validatedBody;
     if (alwaysTrue) {
@@ -220,7 +225,7 @@ async function buildTestApp() {
     return next();
   };
 
-  server.serverHandlers.invalidResponse = (ctx, next) => {
+  controllerImport.serverHandlers.invalidResponse = (ctx, next) => {
     ctx.body = {
       id: 5,
     };
@@ -228,13 +233,13 @@ async function buildTestApp() {
     return next();
   };
 
-  server.serverHandlers.serverError = () => {
+  controllerImport.serverHandlers.serverError = () => {
     throw new AppError("server.error", 499, {
       test: "X",
     });
   };
 
-  server.serverHandlers.getFile = (ctx, next) => {
+  controllerImport.serverHandlers.getFile = (ctx, next) => {
     if (ctx.validatedQuery.throwError) {
       throw AppError.validationError("whoops");
     }
@@ -244,7 +249,7 @@ async function buildTestApp() {
     return next();
   };
 
-  server.serverHandlers.setFile = (ctx, next) => {
+  controllerImport.serverHandlers.setFile = (ctx, next) => {
     ctx.body = {
       success: true,
     };

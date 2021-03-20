@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "@compas/stdlib";
+import { dirnameForModule, isNil, pathJoin } from "@compas/stdlib";
 import { TypeCreator } from "../../builders/index.js";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { buildTrie } from "./trie.js";
@@ -20,6 +20,32 @@ export function generateRouterFiles(context) {
     ".tmpl",
   );
 
+  for (const group of Object.keys(context.structure)) {
+    const groupStructure = context.structure[group];
+    const hasRouteType = Object.values(groupStructure).find(
+      (it) => it.type === "route",
+    );
+
+    if (isNil(hasRouteType)) {
+      continue;
+    }
+
+    const contents = executeTemplate("routerGroupFile", {
+      routeTrie,
+      routeTags,
+      extension: context.extension,
+      importExtension: context.extension,
+      groupStructure,
+      options: context.options,
+      groupName: group,
+    });
+
+    context.outputFiles.push({
+      contents,
+      relativePath: `./${group}/controller${context.extension}`,
+    });
+  }
+
   const contents = executeTemplate("routerFile", {
     routeTrie,
     routeTags,
@@ -30,12 +56,9 @@ export function generateRouterFiles(context) {
   });
 
   context.outputFiles.push({
-    contents: contents,
-    relativePath: `./router${context.extension}`,
+    contents,
+    relativePath: `./common/router${context.extension}`,
   });
-  context.rootExports.push(
-    `export * from "./router${context.importExtension}";`,
-  );
 }
 
 /**
