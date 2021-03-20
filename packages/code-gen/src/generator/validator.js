@@ -136,7 +136,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
     if (context.context.options.useTypescript) {
       imports.destructureImport(
         getTypeNameForType(context.context, data[name], "", {}),
-        "./types",
+        "../common/types",
       );
     }
 

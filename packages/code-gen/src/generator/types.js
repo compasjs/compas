@@ -122,12 +122,8 @@ export function generateTypeFile(context) {
 
   context.outputFiles.push({
     contents: typeFile,
-    relativePath: `./types${context.extension}`,
+    relativePath: `./common/types${context.extension}`,
   });
-
-  context.rootExports.push(
-    `export * from "./types${context.importExtension}";`,
-  );
 }
 
 /**

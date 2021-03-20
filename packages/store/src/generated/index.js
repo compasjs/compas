@@ -45,4 +45,3 @@ export * from "./database/fileGroupView.js";
 export * from "./database/job.js";
 export * from "./database/session.js";
 export { queries } from "./database/index.js";
-export * from "./types.js";

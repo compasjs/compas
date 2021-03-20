@@ -24,4 +24,3 @@ export {
   validateCodeGenTypeSettings,
   validateCodeGenUuidType,
 } from "./validators.js";
-export * from "./types.js";
