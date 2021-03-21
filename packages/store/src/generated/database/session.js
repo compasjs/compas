@@ -8,7 +8,7 @@ import {
   validateStoreSessionOrderBySpec,
   validateStoreSessionQueryBuilder,
   validateStoreSessionWhere,
-} from "../validators.js";
+} from "../store/validators.js";
 
 const sessionFieldSet = new Set([
   "expires",

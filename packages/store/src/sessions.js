@@ -3,7 +3,7 @@ import {
   sessionFields,
   sessionInsertValues,
   sessionUpdateSet,
-} from "./generated/index.js";
+} from "./generated/database/session.js";
 import { query } from "./query.js";
 
 const THIRTY_MINUTES = 30 * 60 * 1000;

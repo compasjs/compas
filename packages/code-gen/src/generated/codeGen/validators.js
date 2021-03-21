@@ -23,7 +23,7 @@ import {
   anonymousValidator682118687,
   anonymousValidator682551261,
   anonymousValidator980814292,
-} from "./anonymous-validators.js";
+} from "../common/anonymous-validators.js";
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]

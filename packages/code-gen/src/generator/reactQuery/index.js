@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "@compas/stdlib";
+import { dirnameForModule, isNil, pathJoin } from "@compas/stdlib";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 
 /**
@@ -10,20 +10,26 @@ export function generateReactQueryFiles(context) {
     ".tmpl",
   );
 
-  const contents = executeTemplate("reactQueryFile", {
-    extension: context.extension,
-    importExtension: context.importExtension,
-    structure: context.structure,
-    options: context.options,
-  });
+  for (const group of Object.keys(context.structure)) {
+    const groupStructure = context.structure[group];
+    const hasRouteType = Object.values(groupStructure).find(
+      (it) => it.type === "route",
+    );
 
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./reactQueries${context.extension}x`,
-  });
-  context.rootExports.push(
-    `export * from "./reactQueries${
-      context.importExtension === "" ? "" : `${context.importExtension}x`
-    }";`,
-  );
+    if (isNil(hasRouteType)) {
+      continue;
+    }
+
+    const contents = executeTemplate("reactQueryFile", {
+      extension: context.extension,
+      importExtension: context.importExtension,
+      groupStructure,
+      options: context.options,
+    });
+
+    context.outputFiles.push({
+      contents: contents,
+      relativePath: `./${group}/reactQueries${context.extension}x`,
+    });
+  }
 }

@@ -9,7 +9,21 @@ import {
 mainTestFn(import.meta);
 
 test("code-gen/e2e/sql", async (t) => {
-  const client = await import("../../../generated/testing/sql/index.js");
+  const queriesImport = await import(
+    "../../../generated/testing/sql/database/index.js"
+  );
+  const postEntityImport = await import(
+    "../../../generated/testing/sql/database/post.js"
+  );
+  const userEntityImport = await import(
+    "../../../generated/testing/sql/database/user.js"
+  );
+  const postageEntityImport = await import(
+    "../../../generated/testing/sql/database/postage.js"
+  );
+  const categoryEntityImport = await import(
+    "../../../generated/testing/sql/database/category.js"
+  );
 
   let sql = undefined;
 
@@ -26,7 +40,7 @@ test("code-gen/e2e/sql", async (t) => {
   let user, category, post;
 
   t.test("insert user", async (t) => {
-    const [dbUser] = await client.queries.userInsert(sql, {
+    const [dbUser] = await queriesImport.queries.userInsert(sql, {
       nickName: "test",
       authKey: uuid(),
       email: "test@test.com",
@@ -46,7 +60,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("insert category", async (t) => {
-    const [dbCategory] = await client.queries.categoryInsert(sql, [
+    const [dbCategory] = await queriesImport.queries.categoryInsert(sql, [
       {
         label: "Category A",
       },
@@ -68,7 +82,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("insert posts", async (t) => {
-    const [dbPost1, dbPost2] = await client.queries.postInsert(sql, [
+    const [dbPost1, dbPost2] = await queriesImport.queries.postInsert(sql, [
       {
         writer: user.id,
         title: "Post 1",
@@ -93,7 +107,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.ok(dbPost1.createdAt.toISOString());
     t.equal(dbPost1.deletedAt, undefined);
 
-    await client.queries.postCategoryInsert(sql, [
+    await queriesImport.queries.postCategoryInsert(sql, [
       {
         category: category.id,
         post: dbPost1.id,
@@ -105,7 +119,7 @@ test("code-gen/e2e/sql", async (t) => {
     ]);
 
     // where.$or testing
-    const postCount = await client.queries.postCount(sql, {
+    const postCount = await queriesImport.queries.postCount(sql, {
       $or: [
         {
           id: dbPost1.id,
@@ -122,23 +136,23 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("add category meta", async (t) => {
-    const categories = await client.queries.categorySelect(sql);
+    const categories = await queriesImport.queries.categorySelect(sql);
 
     for (const cat of categories) {
-      await client.queries.categoryMetaInsert(sql, {
+      await queriesImport.queries.categoryMetaInsert(sql, {
         category: cat.id,
-        postCount: await client.queries.postCategoryCount(sql, {
+        postCount: await queriesImport.queries.postCategoryCount(sql, {
           category: cat.id,
         }),
         isHighlighted: category.id !== cat.id,
       });
     }
 
-    t.equal(await client.queries.categoryMetaCount(sql), 2);
+    t.equal(await queriesImport.queries.categoryMetaCount(sql), 2);
   });
 
   t.test("get posts for user", async (t) => {
-    const result = await client
+    const result = await postEntityImport
       .queryPost({
         viaWriter: {
           viaPosts: {
@@ -159,7 +173,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("update user nick name", async (t) => {
-    const [dbUser] = await client.queries.userUpdate(
+    const [dbUser] = await queriesImport.queries.userUpdate(
       sql,
       { nickName: "TestUser" },
       { id: user.id },
@@ -176,14 +190,14 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query filter by 'in' statements", async () => {
-    await client.queries.userSelect(sql, {
+    await queriesImport.queries.userSelect(sql, {
       createdAtIn: [new Date()],
       emailIn: ["Test@test.com"],
       idNotIn: [uuid()],
     });
 
     // Also combine different array lengths, since we need to place comma's and such
-    await client.queries.userSelect(sql, {
+    await queriesImport.queries.userSelect(sql, {
       idNotIn: [uuid(), uuid()],
       createdAtIn: [],
       emailIn: ["Test@test.com"],
@@ -191,7 +205,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query filter empty 'notIn' statement", async (t) => {
-    const users = await client
+    const users = await userEntityImport
       .queryUser({
         where: {
           createdAtNotIn: [],
@@ -205,7 +219,7 @@ test("code-gen/e2e/sql", async (t) => {
   t.test(
     "query filter empty 'notIn' statement with other filter",
     async (t) => {
-      const users = await client
+      const users = await userEntityImport
         .queryUser({
           where: {
             createdAtNotIn: [],
@@ -219,13 +233,13 @@ test("code-gen/e2e/sql", async (t) => {
   );
 
   t.test("query filter by 'in' sub query", async () => {
-    await client.queries.userSelect(sql, {
+    await queriesImport.queries.userSelect(sql, {
       emailIn: query`SELECT 'test@test.com' as foo`,
     });
   });
 
   t.test("query filter by 'ILIKE'", async (t) => {
-    const [dbUser] = await client.queries.userSelect(sql, {
+    const [dbUser] = await queriesImport.queries.userSelect(sql, {
       emailILike: "Test",
     });
 
@@ -233,7 +247,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query filter via $raw", async (t) => {
-    const [dbUser] = await client.queries.userSelect(sql, {
+    const [dbUser] = await queriesImport.queries.userSelect(sql, {
       $raw: query`"email" ILIKE ${"Test@test.com"}`,
     });
 
@@ -242,7 +256,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query filter with empty idIn", async (t) => {
-    const categories = await client.queries.categorySelect(sql, {
+    const categories = await queriesImport.queries.categorySelect(sql, {
       idIn: [],
     });
 
@@ -250,7 +264,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query filter with empty idIn and other filter", async (t) => {
-    const categories = await client.queries.categorySelect(sql, {
+    const categories = await queriesImport.queries.categorySelect(sql, {
       idIn: [],
       label: "Category A",
     });
@@ -259,7 +273,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query same 'shortName' originally", async () => {
-    await client
+    await userEntityImport
       .queryUser({
         posts: {
           postages: {},
@@ -267,7 +281,7 @@ test("code-gen/e2e/sql", async (t) => {
       })
       .exec(sql);
 
-    await client
+    await postageEntityImport
       .queryPostage({
         post: {
           writer: {},
@@ -277,7 +291,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("user QueryBuilder", async (t) => {
-    const [dbUser] = await client
+    const [dbUser] = await userEntityImport
       .queryUser({
         where: {
           id: user.id,
@@ -308,7 +322,7 @@ test("code-gen/e2e/sql", async (t) => {
     // - Get a single post,
     // - For that post get the writer as author with all posts
     // - Also get all categories for that post
-    const categories = await client
+    const categories = await categoryEntityImport
       .queryCategory({
         where: {
           label: category.label,
@@ -338,7 +352,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("query builder calls", async () => {
-    await client
+    await postEntityImport
       .queryPost({
         postages: {
           images: {
@@ -374,7 +388,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("traverse via queryUser", async (t) => {
-    const [dbUser] = await client
+    const [dbUser] = await userEntityImport
       .queryUser({
         viaPosts: {
           where: {
@@ -388,7 +402,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("traverse with 'via' and idIn", async (t) => {
-    const [dbUser] = await client
+    const [dbUser] = await userEntityImport
       .queryUser({
         where: {
           idIn: [post.writer],
@@ -434,13 +448,15 @@ test("code-gen/e2e/sql", async (t) => {
       limit: 1,
     };
 
-    const [dbCategory] = await client.queryCategory(builder).exec(sql);
+    const [dbCategory] = await categoryEntityImport
+      .queryCategory(builder)
+      .exec(sql);
 
     t.equal(dbCategory.id, category.id);
   });
 
   t.test("category orderBy name", async (t) => {
-    const categories = await client
+    const categories = await categoryEntityImport
       .queryCategory({
         orderBy: ["label"],
         orderBySpec: {
@@ -455,7 +471,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("category orderBy multiple columns", async (t) => {
-    const categories = await client
+    const categories = await categoryEntityImport
       .queryCategory({
         orderBy: ["label", "createdAt"],
         orderBySpec: {
@@ -469,7 +485,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("post orderBy nested ordering", async (t) => {
-    const [user] = await client
+    const [user] = await userEntityImport
       .queryUser({
         posts: {
           orderBy: ["title"],
@@ -486,7 +502,7 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("post orderBy nested defaults to ascending", async (t) => {
-    const [user] = await client
+    const [user] = await userEntityImport
       .queryUser({
         posts: {
           orderBy: ["title"],
@@ -500,11 +516,11 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("soft delete post", async (t) => {
-    const originalCount = await client.queries.postCount(sql);
-    await client.queries.postDelete(sql, { id: post.id });
+    const originalCount = await queriesImport.queries.postCount(sql);
+    await queriesImport.queries.postDelete(sql, { id: post.id });
 
-    const newCount = await client.queries.postCount(sql);
-    const newCountWithDeleted = await client.queries.postCount(sql, {
+    const newCount = await queriesImport.queries.postCount(sql);
+    const newCountWithDeleted = await queriesImport.queries.postCount(sql, {
       deletedAtIncludeNotNull: true,
     });
 
@@ -513,15 +529,15 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("soft delete user", async (t) => {
-    await client.queries.userDelete(sql, { id: user.id });
+    await queriesImport.queries.userDelete(sql, { id: user.id });
 
-    const userCount = await client.queries.userCount(sql);
+    const userCount = await queriesImport.queries.userCount(sql);
     t.equal(userCount, 0);
 
-    const postCount = await client.queries.postCount(sql);
+    const postCount = await queriesImport.queries.postCount(sql);
     t.equal(postCount, 0, "soft cascading deletes");
 
-    const [dbUser] = await client.queries.userSelect(sql, {
+    const [dbUser] = await queriesImport.queries.userSelect(sql, {
       id: user.id,
       deletedAtIncludeNotNull: true,
     });
@@ -537,7 +553,7 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("unknown key 'where'", async (t) => {
     try {
-      await client.queries.userSelect(sql, { foo: "bar" });
+      await queriesImport.queries.userSelect(sql, { foo: "bar" });
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
@@ -549,7 +565,11 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("extra key 'update'", async (t) => {
     try {
-      await client.queries.postUpdate(sql, { baz: true }, { foo: "bar" });
+      await queriesImport.queries.postUpdate(
+        sql,
+        { baz: true },
+        { foo: "bar" },
+      );
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
@@ -560,7 +580,7 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("extra key 'insert'", async (t) => {
     try {
-      await client.queries.categoryInsert(sql, { quix: 6 });
+      await queriesImport.queries.categoryInsert(sql, { quix: 6 });
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
@@ -571,7 +591,7 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("Insert with primary key", async (t) => {
     const id = uuid();
-    const [category] = await client.queries.categoryInsert(
+    const [category] = await queriesImport.queries.categoryInsert(
       sql,
       { id, label: "TestPK" },
       { withPrimaryKey: true },
@@ -583,13 +603,15 @@ test("code-gen/e2e/sql", async (t) => {
   t.test("deletedAt in the future should return result", async (t) => {
     const future = new Date();
     future.setUTCDate(future.getUTCDate() + 1);
-    const [user] = await client.queries.userInsert(sql, {
+    const [user] = await queriesImport.queries.userInsert(sql, {
       nickName: "Foo",
       email: "foo@example.com",
       authKey: uuid(),
       deletedAt: future,
     });
-    const [selectUser] = await client.queries.userSelect(sql, { id: user.id });
+    const [selectUser] = await queriesImport.queries.userSelect(sql, {
+      id: user.id,
+    });
 
     t.ok(selectUser);
     t.deepEqual(selectUser.deletedAt, future);
@@ -597,7 +619,7 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("await of queryBuilder should throw", async (t) => {
     try {
-      await client.queryUser({});
+      await userEntityImport.queryUser({});
       t.fail("QueryBuilder should throw");
     } catch (e) {
       t.ok(AppError.instanceOf(e));

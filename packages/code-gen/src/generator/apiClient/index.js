@@ -1,4 +1,4 @@
-import { dirnameForModule, pathJoin } from "@compas/stdlib";
+import { dirnameForModule, isNil, pathJoin } from "@compas/stdlib";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 
 /**
@@ -10,18 +10,26 @@ export function generateApiClientFiles(context) {
     ".tmpl",
   );
 
-  const contents = executeTemplate("apiClientFile", {
-    extension: context.extension,
-    importExtension: context.importExtension,
-    structure: context.structure,
-    options: context.options,
-  });
+  for (const group of Object.keys(context.structure)) {
+    const groupStructure = context.structure[group];
+    const hasRouteType = Object.values(groupStructure).find(
+      (it) => it.type === "route",
+    );
 
-  context.outputFiles.push({
-    contents: contents,
-    relativePath: `./apiClient${context.extension}`,
-  });
-  context.rootExports.push(
-    `export * from "./apiClient${context.importExtension}";`,
-  );
+    if (isNil(hasRouteType)) {
+      continue;
+    }
+
+    const contents = executeTemplate("apiClientFile", {
+      extension: context.extension,
+      importExtension: context.importExtension,
+      groupStructure,
+      options: context.options,
+    });
+
+    context.outputFiles.push({
+      contents,
+      relativePath: `./${group}/apiClient${context.extension}`,
+    });
+  }
 }

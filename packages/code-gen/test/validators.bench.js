@@ -83,7 +83,7 @@ const fastestValidatorNested = fastestValidator.compile({
 
 bench("compas validator simple", async (b) => {
   const { validateBenchSimple } = await import(
-    "../../../generated/testing/bench/index.js"
+    "../../../generated/testing/bench/bench/validators.js"
   );
   b.resetTime();
 
@@ -114,7 +114,7 @@ bench("fastest-validator validator simple", (b) => {
 
 bench("compas validator nested", async (b) => {
   const { validateBenchNested } = await import(
-    "../../../generated/testing/bench/index.js"
+    "../../../generated/testing/bench/bench/validators.js"
   );
   b.resetTime();
 

@@ -1,4 +1,3 @@
-import { rmdir } from "fs/promises";
 import { App } from "@compas/code-gen";
 import { mainFn, pathJoin, spawn } from "@compas/stdlib";
 import { storeStructure } from "@compas/store";
@@ -9,63 +8,11 @@ import {
   applyTestingValidatorsStructure,
 } from "../gen/testing.js";
 
-mainFn(import.meta, main);
-
 /** @type {CliWatchOptions} */
 export const cliWatchOptions = {
   ignoredPatterns: ["generated"],
   extensions: ["tmpl", "js", "json"],
 };
-
-async function main() {
-  const app = new App({
-    verbose: true,
-  });
-
-  app.logger.info("Cleanup previous output");
-  await rmdir("./generated/testing/", { recursive: true });
-
-  applyAllLocalGenerate(app);
-
-  await app.generate(generateSettings.validators);
-  await app.generate(generateSettings.bench);
-  await app.generate(generateSettings.server);
-  await app.generate(generateSettings.client);
-  await app.generate(generateSettings.sql);
-
-  app.logger.info("Transpiling typescript...");
-
-  await spawn(
-    "yarn",
-    [
-      "tsc",
-      `${pathJoin(process.cwd(), "./generated/testing/client")}/*.ts`,
-      "--strict",
-      "--allowJs",
-      "--target",
-      "ESNext",
-      "--noErrorTruncation",
-      "--moduleResolution",
-      "node",
-      "--esModuleInterop",
-      "--downlevelIteration",
-      "--jsx",
-      "preserve",
-    ],
-    {
-      shell: true,
-    },
-  );
-}
-
-export function applyAllLocalGenerate(app) {
-  app.extend(storeStructure);
-
-  applyBenchStructure(app);
-  applyTestingValidatorsStructure(app);
-  applyTestingServerStructure(app);
-  applyTestingSqlStructure(app);
-}
 
 export const generateSettings = {
   validators: {
@@ -98,3 +45,53 @@ export const generateSettings = {
     isNodeServer: true,
   },
 };
+
+mainFn(import.meta, main);
+
+async function main() {
+  const app = new App({
+    verbose: true,
+  });
+
+  applyAllLocalGenerate(app);
+  generateSettings;
+
+  await app.generate(generateSettings.validators);
+  await app.generate(generateSettings.bench);
+  await app.generate(generateSettings.server);
+  await app.generate(generateSettings.client);
+  await app.generate(generateSettings.sql);
+
+  app.logger.info("Transpiling typescript...");
+
+  await spawn(
+    "yarn",
+    [
+      "tsc",
+      `${pathJoin(process.cwd(), "./generated/testing/client")}/**/*.ts`,
+      "--strict",
+      "--allowJs",
+      "--target",
+      "ESNext",
+      "--noErrorTruncation",
+      "--moduleResolution",
+      "node",
+      "--esModuleInterop",
+      "--downlevelIteration",
+      "--jsx",
+      "preserve",
+    ],
+    {
+      shell: true,
+    },
+  );
+}
+
+export function applyAllLocalGenerate(app) {
+  app.extend(storeStructure);
+
+  applyBenchStructure(app);
+  applyTestingValidatorsStructure(app);
+  applyTestingServerStructure(app);
+  applyTestingSqlStructure(app);
+}

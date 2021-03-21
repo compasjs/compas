@@ -8,7 +8,7 @@ import {
   validateStoreFileGroupViewOrderBySpec,
   validateStoreFileGroupViewQueryBuilder,
   validateStoreFileGroupViewWhere,
-} from "../validators.js";
+} from "../store/validators.js";
 import { fileOrderBy, internalQueryFile, transformFile } from "./file.js";
 /**
  * Get all fields for fileGroupView

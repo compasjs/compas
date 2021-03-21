@@ -8,7 +8,7 @@ import {
   validateStoreFileOrderBySpec,
   validateStoreFileQueryBuilder,
   validateStoreFileWhere,
-} from "../validators.js";
+} from "../store/validators.js";
 import {
   fileGroupDelete,
   fileGroupOrderBy,

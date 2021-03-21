@@ -33,7 +33,6 @@ export function generateModelFiles(context) {
     });
 
     indexSrc.push(`import { ${baseQueryNames} } from "./${type.name}.js";`);
-    context.rootExports.push(`export * from "./database/${type.name}.js";`);
   }
 
   indexSrc.push(`export const queries = { ${allBasicNames.join(", ")} };`);
@@ -41,6 +40,4 @@ export function generateModelFiles(context) {
     contents: indexSrc.join("\n"),
     relativePath: "./database/index.js",
   });
-
-  context.rootExports.push(`export { queries } from "./database/index.js";`);
 }

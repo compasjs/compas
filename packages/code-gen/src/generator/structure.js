@@ -72,30 +72,7 @@ export function generateStructureFile(context) {
   if (structureSource.length > 0) {
     context.outputFiles.push({
       contents: js`${structureSource}`,
-      relativePath: `./structure${context.extension}`,
+      relativePath: `./common/structure${context.extension}`,
     });
   }
-}
-
-/**
- * @param {CodeGenContext} context
- */
-export function addRootExportsForStructureFiles(context) {
-  if (!context.options.dumpStructure) {
-    return;
-  }
-
-  let sourceString = `
-    export {
-      structure,
-      structureString,
-  `;
-
-  for (const group of Object.keys(context.structure)) {
-    sourceString += `${group}Structure,\n`;
-  }
-
-  context.rootExports.push(
-    `${sourceString}} from "./structure${context.importExtension}";`,
-  );
 }

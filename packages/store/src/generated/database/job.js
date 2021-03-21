@@ -8,7 +8,7 @@ import {
   validateStoreJobOrderBySpec,
   validateStoreJobQueryBuilder,
   validateStoreJobWhere,
-} from "../validators.js";
+} from "../store/validators.js";
 
 const jobFieldSet = new Set([
   "id",

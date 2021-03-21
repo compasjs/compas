@@ -1,8 +1,9 @@
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
+import { generateCommonFiles } from "./common.js";
 import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
@@ -18,10 +19,7 @@ import {
   doSqlChecks,
 } from "./sql/utils.js";
 import { createWhereTypes } from "./sql/where-type.js";
-import {
-  addRootExportsForStructureFiles,
-  generateStructureFile,
-} from "./structure.js";
+import { generateStructureFile } from "./structure.js";
 import {
   generateTypeFile,
   getTypeNameForType,
@@ -65,7 +63,6 @@ export function generate(logger, options, structure) {
     extension: options.useTypescript ? ".ts" : ".js",
     importExtension: isModule ? ".js" : "",
     outputFiles: [],
-    rootExports: [],
     errors: [],
   };
 
@@ -74,7 +71,6 @@ export function generate(logger, options, structure) {
   // This contains all information needed to generate again, even if different options
   // are needed.
   generateStructureFile(context);
-  addRootExportsForStructureFiles(context);
 
   exitOnErrorsOrReturn(context);
 
@@ -120,6 +116,8 @@ export function generate(logger, options, structure) {
     exitOnErrorsOrReturn(context);
   }
 
+  generateCommonFiles(context);
+
   if (context.options.enabledGenerators.indexOf("validator") !== -1) {
     generateValidatorFile(context);
     exitOnErrorsOrReturn(context);
@@ -144,43 +142,25 @@ export function generate(logger, options, structure) {
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);
   }
-
-  // Create all exports so imports all happen via
-  // `{options.outputDirectory}/index${context.extension}
-  generateRootExportsFile(context);
-
   // Add provided file headers to all files
   annotateFilesWithHeader(context);
 
   exitOnErrorsOrReturn(context);
 
-  // TODO: Remove context.options.outputDir before writing
-
   if (options.returnFiles) {
     // Used for making sure we can check if we are all set
     return context.outputFiles;
   }
-  writeFiles(context);
-}
 
-/**
- * Join all root exports in to a single index.js file
- *
- * @param {CodeGenContext} context
- */
-export function generateRootExportsFile(context) {
-  context.outputFiles.push({
-    contents: context.rootExports
-      .map((it) => it.trim())
-      .sort((a, b) => {
-        const aExport = a.startsWith("export") ? 1 : 0;
-        const bExport = b.startsWith("export") ? 1 : 0;
-
-        return aExport - bExport;
-      })
-      .join("\n"),
-    relativePath: `./index${context.extension}`,
+  logger.info(`Cleaning output directory and writing files.`);
+  rmSync(context.options.outputDirectory, {
+    recursive: true,
+    force: true,
+    maxRetries: 3,
+    retryDelay: 10,
   });
+
+  writeFiles(context);
 }
 
 /**
@@ -296,6 +276,8 @@ function checkReservedGroupNames(context) {
     "public",
     "static",
     "yield",
+    // Other reserved names
+    "common",
   ];
 
   for (const group of Object.keys(context.structure)) {

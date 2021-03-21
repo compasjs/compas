@@ -8,7 +8,7 @@ import {
   validateStoreFileGroupOrderBySpec,
   validateStoreFileGroupQueryBuilder,
   validateStoreFileGroupWhere,
-} from "../validators.js";
+} from "../store/validators.js";
 import { fileOrderBy, internalQueryFile, transformFile } from "./file.js";
 
 const fileGroupFieldSet = new Set([

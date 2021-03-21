@@ -48,7 +48,9 @@ export {
 export { newSessionStore } from "./src/sessions.js";
 
 export const migrations = `${dirnameForModule(import.meta)}/migrations`;
-export { structure as storeStructure } from "./src/generated/index.js";
+
+export { structure as storeStructure } from "./src/generated/common/structure.js";
+export { queries as storeQueries } from "./src/generated/database/index.js";
 
 export {
   query,

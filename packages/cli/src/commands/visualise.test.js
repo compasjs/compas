@@ -15,7 +15,7 @@ test("cli/commands/visualise", (t) => {
       "compas",
       "visualise",
       "sql",
-      "./packages/store/src/generated/index.js",
+      "./packages/store/src/generated/common/structure.js",
     ]);
 
     t.equal(exitCode, 0);
@@ -26,7 +26,7 @@ test("cli/commands/visualise", (t) => {
       "compas",
       "visualise",
       "sql",
-      "./packages/store/src/generated/index.js",
+      "./packages/store/src/generated/common/structure.js",
       "--format",
       "png",
       "--output",

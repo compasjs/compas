@@ -48,7 +48,6 @@ export function applyCodeGenStructure(app) {
       extension: T.string().oneOf(".js", ".ts"),
       importExtension: T.string(),
       outputFiles: T.array().values(T.reference("codeGen", "file")),
-      rootExports: T.array().values(T.string()),
       errors: [
         T.anyOf().values(
           {

@@ -3,8 +3,8 @@ import {
   createTestPostgresDatabase,
   setPostgresDatabaseTemplate,
   setStoreQueries,
+  storeQueries,
 } from "@compas/store";
-import { queries as storeQueries } from "../packages/store/src/generated/index.js";
 
 export const timeout = 2000;
 

@@ -3,95 +3,25 @@ import FormData from "form-data";
 {{ } }}
 
 {{ if (options.useTypescript) { }}
-import * as T from "./types";
+import * as T from "../common/types";
 import { CancelToken, AxiosInstance } from "axios";
 {{ } }}
 
 {{ if (options.isNodeServer) { }}
 import * as validators from "./validators{{= importExtension }}";
-import { AppError, streamToBuffer } from "@compas/stdlib";
+import { handleError } from "../common/apiClient{{= importExtension }}";
 ((newline))
-function handleError(e, group, name) {
-  // Validator error
-  if (AppError.instanceOf(e)) {
-    e.key = `response.${group}.${name}.${e.key}`
-    throw e;
-  }
-
-  if (typeof e?.response?.data?.pipe === "function") {
-    // Handle response streams
-    return streamToBuffer(e.response.data).then(buffer => {
-      try {
-        e.response.data = JSON.parse(buffer.toString("utf-8"));
-      } catch {
-          // Unknown error
-          throw new AppError(
-            `response.${group}.${name}`,
-            e.response?.status ?? 500,
-            { data: e?.response?.data, headers: e?.response?.headers },
-            e,
-          );
-      }
-
-      return handleError(e, group, name);
-    });
-  }
-
-  // Server AppError
-  const { key, info } = e.response?.data ?? {};
-  if (typeof key === "string" && !!info && typeof info === "object") {
-    throw new AppError(key, e.response.status, info, e);
-  }
-
-  // Unknown error
-  throw new AppError(
-    `response.${group}.${name}`,
-    e.response?.status ?? 500,
-    { data: e?.response?.data, headers: e?.response?.headers },
-    e,
-  );
-}
 {{ } }}
 
 ((newline))
 
-export function addRequestIdInterceptors(instance{{= options.useTypescript ? ": AxiosInstance" : "" }}) {
-  let requestId {{= options.useTypescript ? ": string | undefined" : "" }} = undefined;
-  instance.interceptors.request.use((config) => {
-    if (requestId) {
-      config.headers["x-request-id"] = requestId;
-    }
-    return config;
-  });
+{{ for (const itemName of Object.keys(groupStructure)) { }}
+  {{ const item = groupStructure[itemName]; }}
 
-  instance.interceptors.response.use((response) => {
-    if (response.headers["x-request-id"]) {
-      requestId = response.headers["x-request-id"];
-    }
-    return response;
-    },
-    (error) => {
-      if (error.response && error.response.headers["x-request-id"]) {
-        requestId = error.response.headers["x-request-id"];
-      }
-      return Promise.reject(error);
-  });
-}
-
-((newline))
-
-{{ for (const groupName of Object.keys(structure)) { }}
-  {{ for (const itemName of Object.keys(structure[groupName])) { }}
-    {{ const item = structure[groupName][itemName]; }}
-
-    {{ if (item.type !== "route") { }}
-    {{ continue; }}
-    {{ } }}
-
+  {{ if (item.type !== "route") { }}
+  {{ continue; }}
+  {{ } }}
 
     {{= apiClientFn({ options, item }) }}
 ((newline))
-  {{ } }}
-((newline))
 {{ } }}
-
