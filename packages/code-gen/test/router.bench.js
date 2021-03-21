@@ -5,8 +5,12 @@ import { createBodyParsers } from "@compas/server";
 mainBenchFn(import.meta);
 
 bench("router - github static path", async (b) => {
-  const { router, reposHandlers, setBodyParsers } = await import(
-    "../../../generated/testing/bench/index.js"
+  const { router, setBodyParsers } = await import(
+    "../../../generated/testing/bench/common/router.js"
+  );
+
+  const { reposHandlers } = await import(
+    "../../../generated/testing/bench/repos/controller.js"
   );
 
   reposHandlers.reposListForAuthenticatedUser = (ctx, next) => {
@@ -34,8 +38,12 @@ bench("router - github static path", async (b) => {
 });
 
 bench("router - github path params", async (b) => {
-  const { router, activityHandlers, setBodyParsers } = await import(
-    "../../../generated/testing/bench/index.js"
+  const { router, setBodyParsers } = await import(
+    "../../../generated/testing/bench/common/router.js"
+  );
+
+  const { activityHandlers } = await import(
+    "../../../generated/testing/bench/activity/controller.js"
   );
 
   activityHandlers.activityListStargazersForRepo = (ctx, next) => {
