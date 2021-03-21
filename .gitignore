@@ -33,4 +33,4 @@ coverage
 !/docs/generated/README.md
 /benchmark_output.txt
 
-**/generated/structure.sql
+**/generated/common/structure.sql

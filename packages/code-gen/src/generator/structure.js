@@ -72,7 +72,7 @@ export function generateStructureFile(context) {
   if (structureSource.length > 0) {
     context.outputFiles.push({
       contents: js`${structureSource}`,
-      relativePath: `./structure${context.extension}`,
+      relativePath: `./common/structure${context.extension}`,
     });
   }
 }

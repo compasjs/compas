@@ -65,7 +65,7 @@ export function generateSqlStructure(context) {
 
   context.outputFiles.push({
     contents: partials.join("\n\n"),
-    relativePath: "./structure.sql",
+    relativePath: "./common/structure.sql",
   });
 }
 

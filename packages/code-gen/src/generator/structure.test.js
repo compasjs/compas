@@ -37,7 +37,7 @@ test("code-gen/generator/structure", (t) => {
     generateStructureFile(context);
 
     t.equal(context.outputFiles.length, 1);
-    t.equal(context.outputFiles[0].relativePath, "./structure.js");
+    t.equal(context.outputFiles[0].relativePath, "./common/structure.js");
   });
 
   t.test("generateStructureFile - extension: ts", (t) => {
@@ -56,7 +56,7 @@ test("code-gen/generator/structure", (t) => {
     generateStructureFile(context);
 
     t.equal(context.outputFiles.length, 1);
-    t.equal(context.outputFiles[0].relativePath, "./structure.ts");
+    t.equal(context.outputFiles[0].relativePath, "./common/structure.ts");
   });
 
   t.test("generateStructureFile - zero groups", (t) => {

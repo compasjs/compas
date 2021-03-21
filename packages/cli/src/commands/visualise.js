@@ -30,7 +30,9 @@ export async function visualiseCommand(logger, command) {
   // All pre-checks
 
   if (isNil(subCommand) || isNil(structureFile)) {
-    logger.error(`Usage: compas visualise sql {path/to/generated/index.js}`);
+    logger.error(
+      `Usage: compas visualise sql {path/to/generated/common/structure.js}`,
+    );
     return { exitCode: 1 };
   }
 
