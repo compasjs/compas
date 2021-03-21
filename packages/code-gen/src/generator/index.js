@@ -19,10 +19,7 @@ import {
   doSqlChecks,
 } from "./sql/utils.js";
 import { createWhereTypes } from "./sql/where-type.js";
-import {
-  addRootExportsForStructureFiles,
-  generateStructureFile,
-} from "./structure.js";
+import { generateStructureFile } from "./structure.js";
 import {
   generateTypeFile,
   getTypeNameForType,
@@ -66,7 +63,6 @@ export function generate(logger, options, structure) {
     extension: options.useTypescript ? ".ts" : ".js",
     importExtension: isModule ? ".js" : "",
     outputFiles: [],
-    rootExports: [],
     errors: [],
   };
 
@@ -75,7 +71,6 @@ export function generate(logger, options, structure) {
   // This contains all information needed to generate again, even if different options
   // are needed.
   generateStructureFile(context);
-  addRootExportsForStructureFiles(context);
 
   exitOnErrorsOrReturn(context);
 
@@ -147,11 +142,6 @@ export function generate(logger, options, structure) {
   if (context.options.enabledGenerators.indexOf("type") !== -1) {
     generateTypeFile(context);
   }
-
-  // Create all exports so imports all happen via
-  // `{options.outputDirectory}/index${context.extension}
-  generateRootExportsFile(context);
-
   // Add provided file headers to all files
   annotateFilesWithHeader(context);
 
@@ -171,26 +161,6 @@ export function generate(logger, options, structure) {
   });
 
   writeFiles(context);
-}
-
-/**
- * Join all root exports in to a single index.js file
- *
- * @param {CodeGenContext} context
- */
-export function generateRootExportsFile(context) {
-  context.outputFiles.push({
-    contents: context.rootExports
-      .map((it) => it.trim())
-      .sort((a, b) => {
-        const aExport = a.startsWith("export") ? 1 : 0;
-        const bExport = b.startsWith("export") ? 1 : 0;
-
-        return aExport - bExport;
-      })
-      .join("\n"),
-    relativePath: `./index${context.extension}`,
-  });
 }
 
 /**

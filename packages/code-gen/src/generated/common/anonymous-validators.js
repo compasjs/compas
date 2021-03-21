@@ -8,7 +8,6 @@ const objectKeys980814292 = new Set([
   "extension",
   "importExtension",
   "outputFiles",
-  "rootExports",
   "errors",
 ]);
 const objectKeys2069957416 = new Set([
@@ -3987,7 +3986,7 @@ export function anonymousValidator1364098500(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "rootExports": (string)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }|undefined}
+ * @returns {{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlThrowingValidators", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }|undefined}
  */
 export function anonymousValidator980814292(
   value,
@@ -4046,11 +4045,6 @@ export function anonymousValidator980814292(
   result["outputFiles"] = anonymousValidator1979163207(
     value["outputFiles"],
     `${propertyPath}.outputFiles`,
-    errors,
-  );
-  result["rootExports"] = anonymousValidator1898391521(
-    value["rootExports"],
-    `${propertyPath}.rootExports`,
     errors,
   );
   result["errors"] = anonymousValidator1364098500(
