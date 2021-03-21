@@ -8,6 +8,31 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.124](https://github.com/compasjs/compas/releases/tag/v0.0.124)
+
+- build(deps): bump @types/node from 14.14.31 to 14.14.35
+  ([#740](https://github.com/compasjs/compas/pull/740),
+  [#743](https://github.com/compasjs/compas/pull/743),
+  [#745](https://github.com/compasjs/compas/pull/745),
+  [#748](https://github.com/compasjs/compas/pull/748))
+- build(deps): bump eslint from 7.21.0 to 7.22.0
+  ([#746](https://github.com/compasjs/compas/pull/746))
+- build(deps): bump eslint-plugin-jsdoc from 32.2.0 to 32.3.0
+  ([#749](https://github.com/compasjs/compas/pull/749))
+- chore(ci): use custom token to comment on PR's
+- chore: move to fastify/github-action-merge-dependabot@v2.0.0
+- feat(code-gen): generate a code splittable api client
+  ([#756](https://github.com/compasjs/compas/pull/756))
+- feat(code-gen): introduce common, split generator output per 'group'
+  ([#758](https://github.com/compasjs/compas/pull/758))
+- feat(lint-config): move to @babel/eslint-parser
+  ([#747](https://github.com/compasjs/compas/pull/747))
+- feat(lint-config): remove no-return-await add require-await
+  ([#752](https://github.com/compasjs/compas/pull/752))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.124.html).
+
 ### [v0.0.123](https://github.com/compasjs/compas/releases/tag/v0.0.123)
 
 - chore: fix version number in changelog for v0.0.122
