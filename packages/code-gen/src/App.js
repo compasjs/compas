@@ -10,7 +10,7 @@ import {
 import {
   validateCodeGenStructure,
   validateCodeGenType,
-} from "./generated/index.js";
+} from "./generated/codeGen/validators.js";
 import { generate } from "./generator/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
 import { lowerCaseFirst } from "./utils.js";

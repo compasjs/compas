@@ -8,7 +8,7 @@ import { CancelToken, AxiosInstance } from "axios";
 {{ } }}
 
 {{ if (options.isNodeServer) { }}
-import * as validators from "../validators{{= importExtension }}";
+import * as validators from "./validators{{= importExtension }}";
 import { handleError } from "../common/apiClient{{= importExtension }}";
 ((newline))
 {{ } }}

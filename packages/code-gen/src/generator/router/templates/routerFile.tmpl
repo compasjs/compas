@@ -1,35 +1,11 @@
 import { compose } from "@compas/server";
 import { AppError } from "@compas/stdlib";
 import { eventRename } from "@compas/insight";
-import {
-{{ for (const group of Object.keys(structure)) { }}
-    {{ const hasRouteObject = Object.values(structure[group]).find(it => it.type === "route" && (!isNil(it.params) || !isNil(it.query) || !isNil(it.body) || !isNil(it.files))); }}
-    {{ if (hasRouteObject === undefined) { continue; } }}
-
-    {{ for (const name of Object.keys(structure[group])) { }}
-        {{ const item = structure[group][name]; }}
-        {{ if (item.type !== "route") { continue; } }}
-
-        {{ if (item.params) { }}
-        validate{{= item.params.reference.uniqueName }},
-        {{ } }}
-        {{ if (item.query) { }}
-        validate{{= item.query.reference.uniqueName }},
-        {{ } }}
-        {{ if (item.body) { }}
-        validate{{= item.body.reference.uniqueName }},
-        {{ } }}
-        {{ if (item.files) { }}
-        validate{{= item.files.reference.uniqueName }},
-        {{ } }}
-    {{ } }}
-{{ } }}
-} from "../validators{{= importExtension }}";
-
 {{ for (const group of Object.keys(structure)) { }}
     {{ const hasRouteObject = Object.values(structure[group]).find(it => it.type === "route"); }}
     {{ if (hasRouteObject === undefined) { continue; } }}
     import { {{= group }}Handlers } from "../{{=group }}/controller{{= importExtension }}";
+    import * as {{= group }}Validators from "../{{= group }}/validators{{= importExtension }}";
 {{ } }}
 
 
@@ -111,22 +87,22 @@ const handlers = {
         ctx.request.params = params;
 
         {{ if (item.params) { }}
-        ctx.validatedParams = validate{{= item.params.reference.uniqueName }}(params);
+        ctx.validatedParams = {{= item.params.reference.group }}Validators.validate{{= item.params.reference.uniqueName }}(params);
         {{ } }}
 
         {{ if (item.files) { }}
           await internalBodyParsers.files(ctx);
-          ctx.validatedFiles = validate{{= item.files.reference.uniqueName }}(ctx.request.files);
+          ctx.validatedFiles = {{= item.files.reference.group }}Validators.validate{{= item.files.reference.uniqueName }}(ctx.request.files);
         {{ } else if (item.body || item.query) { }}
           await internalBodyParsers.body(ctx);
         {{ } }}
 
         {{ if (item.query) { }}
-          ctx.validatedQuery = validate{{= item.query.reference.uniqueName }}(ctx.request.query);
+          ctx.validatedQuery = {{= item.query.reference.group }}Validators.validate{{= item.query.reference.uniqueName }}(ctx.request.query);
         {{ } }}
 
         {{ if (item.body) { }}
-          ctx.validatedBody = validate{{= item.body.reference.uniqueName }}(ctx.request.body);
+          ctx.validatedBody = {{= item.body.reference.group }}Validators.validate{{= item.body.reference.uniqueName }}(ctx.request.body);
         {{ } }}
 
 

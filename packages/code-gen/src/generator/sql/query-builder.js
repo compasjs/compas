@@ -187,7 +187,7 @@ export function createQueryBuilderTypes(context) {
 function queryBuilderForType(context, imports, type) {
   imports.destructureImport(
     `validate${type.uniqueName}QueryBuilder`,
-    `../validators${context.importExtension}`,
+    `../${type.group}/validators${context.importExtension}`,
   );
 
   return js`

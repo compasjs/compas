@@ -43,10 +43,7 @@ export function generateValidatorFile(context) {
 
   addUtilitiesToAnonymousFunctions(subContext);
 
-  const imports = importCreator();
   const anonymousValidatorImports = importCreator();
-  const rootExports = [];
-  const validatorSources = [];
 
   if (subContext.collectErrors) {
     buildError = (key, info, errors = "errors", errorsReturn = true) => js`
@@ -61,15 +58,20 @@ export function generateValidatorFile(context) {
   }
 
   for (const group of Object.keys(context.structure)) {
-    const { exportNames, sources } = generateValidatorsForGroup(
+    const imports = importCreator();
+
+    const { sources } = generateValidatorsForGroup(
       subContext,
       imports,
       anonymousValidatorImports,
       group,
     );
 
-    rootExports.push(...exportNames);
-    validatorSources.push(...sources);
+    context.outputFiles.push({
+      contents: js`${imports.print()}
+                                  ${sources}`,
+      relativePath: `./${group}/validators${context.extension}`,
+    });
   }
 
   const result = [
@@ -80,23 +82,8 @@ export function generateValidatorFile(context) {
 
   context.outputFiles.push({
     contents: result.join("\n"),
-    relativePath: `./anonymous-validators${context.extension}`,
+    relativePath: `./common/anonymous-validators${context.extension}`,
   });
-
-  context.outputFiles.push({
-    contents: js`
-                                  ${imports.print()}
-
-                                  ${validatorSources}
-                               `,
-    relativePath: `./validators${context.extension}`,
-  });
-
-  context.rootExports.push(
-    `export { ${rootExports.join(",\n  ")} } from "./validators${
-      context.importExtension
-    }";`,
-  );
 }
 
 /**
@@ -117,13 +104,12 @@ function withTypescript(context, output) {
  * @param {ImportCreator} imports
  * @param {ImportCreator} anonymousImports
  * @param {string} group
- * @returns {{ exportNames: string[], sources: string[] }}
+ * @returns {{ sources: string[] }}
  */
 function generateValidatorsForGroup(context, imports, anonymousImports, group) {
   const data = context.context.structure[group];
 
   const mapping = {};
-  const exportNames = [];
   const sources = [];
 
   for (const name of Object.keys(data)) {
@@ -147,9 +133,8 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
     );
     imports.destructureImport(
       mapping[name],
-      `./anonymous-validators${context.context.importExtension}`,
+      `../common/anonymous-validators${context.context.importExtension}`,
     );
-    exportNames.push(`validate${type.uniqueName}`);
   }
 
   for (const name of Object.keys(mapping)) {
@@ -174,18 +159,17 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
               )} | undefined, errors: ({ key: string, info: any }[])|undefined}}`;
             }
             return js`
-             * @returns {${getTypeNameForType(
-               context.context,
-               data[name],
-               "",
-               {},
-             )}}`;
+                * @returns
+                {
+                   ${getTypeNameForType(context.context, data[name], "", {})}
+                }`;
           }}
           */
          export function validate${data[name].uniqueName}(value${withTypescript(
       context,
       ": any",
     )}, propertyPath = "$")
+
          ${withTypescript(
            context,
            `: { data: ${getTypeNameForType(
@@ -222,7 +206,6 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
   }
 
   return {
-    exportNames,
     sources,
   };
 }
@@ -621,7 +604,8 @@ function anonymousValidatorDate(context, imports, type) {
   };
 
   return js`
-      if (typeof value !== "string" && typeof value !== "number" && !(value instanceof Date)) {
+      if (typeof value !== "string" && typeof value !== "number" &&
+         !(value instanceof Date)) {
          ${buildError("invalid", "{ propertyPath }")}
       }
 
@@ -636,7 +620,7 @@ function anonymousValidatorDate(context, imports, type) {
            "value =",
            `"date"`,
          )}
-         
+
          ${
            type.isOptional && type.defaultValue
              ? `if (!value) { return ${type.defaultValue}; }`
@@ -644,7 +628,7 @@ function anonymousValidatorDate(context, imports, type) {
          }
          ${type.isOptional ? `if (!value) { return value; }` : ""}
       }
-      
+
       const date = new Date(value);
       if (isNaN(date.getTime())) {
          ${buildError("invalid", "{ propertyPath }")}
@@ -697,7 +681,7 @@ function anonymousValidatorDate(context, imports, type) {
             `;
         }
       }}
-      
+
       return date;
    `;
 }
@@ -711,20 +695,21 @@ function anonymousValidatorFile(context) {
     return js`
          // Blob result from api client
          if (value instanceof Blob) {
-           return value;
+            return value;
          }
          // Blob input as post argument
          if (value && value.blob instanceof Blob) {
-           return value;
+            return value;
          }
-         
+
          ${buildError("unknown", "{ propertyPath }")}
       `;
   }
 
   return js`
       // ReadableStream input to api call
-      if (typeof value.data?.pipe === "function" && typeof value.data?._read === "function") {
+      if (typeof value.data?.pipe === "function" && typeof value.data?._read ===
+         "function") {
          return value;
       }
       // ReadableStream as output of an api call
@@ -737,7 +722,7 @@ function anonymousValidatorFile(context) {
       }
 
       ${buildError("unknown", "{ propertyPath }")}
-  `;
+   `;
 }
 
 /**

@@ -42,7 +42,7 @@ const assertAll = (t, cases, fn) => {
 
 test("code-gen/validators", async (t) => {
   const validators = await import(
-    "../../../generated/testing/validators/validators.js"
+    "../../../generated/testing/validators/validator/validators.js"
   );
   t.test("anyOf", (t) => {
     assertAll(

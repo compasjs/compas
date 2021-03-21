@@ -26,15 +26,15 @@ export function generateQueryPartials(context, imports, type, src) {
 
   imports.destructureImport(
     `validate${type.uniqueName}Where`,
-    `../validators${context.importExtension}`,
+    `../${type.group}/validators${context.importExtension}`,
   );
   imports.destructureImport(
     `validate${type.uniqueName}OrderBy`,
-    `../validators${context.importExtension}`,
+    `../${type.group}/validators${context.importExtension}`,
   );
   imports.destructureImport(
     `validate${type.uniqueName}OrderBySpec`,
-    `../validators${context.importExtension}`,
+    `../${type.group}/validators${context.importExtension}`,
   );
 
   src.push(getWherePartial(context, type));
