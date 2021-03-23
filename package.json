@@ -16,7 +16,7 @@
     "@types/node": "14.14.35",
     "@types/react": "17.0.3",
     "axios": "0.21.1",
-    "fastest-validator": "1.10.0",
+    "fastest-validator": "1.10.1",
     "form-data": "4.0.0",
     "lerna": "4.0.0",
     "react": "17.0.1",
