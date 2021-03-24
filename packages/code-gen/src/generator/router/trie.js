@@ -139,6 +139,30 @@ function addRoute(trie, path, uniqueName) {
   }
 
   if (path.length === 1) {
+    if (child.uniqueName) {
+      let fullPath = `${path[0]}`;
+      if (!trie.parent) {
+        // The root path is POST / so handle that case
+        fullPath += ` /`;
+      }
+
+      let _trie = trie;
+      while (_trie.parent) {
+        _trie = _trie.parent;
+
+        if (!_trie.parent?.parent) {
+          // The root is `POST` or `GET` so handle that case
+          fullPath = `${_trie.path} /${fullPath}`;
+          break;
+        } else {
+          fullPath = `${_trie.path}/${fullPath}`;
+        }
+      }
+
+      throw new Error(
+        `Duplicate route for path '${fullPath}'. Both '${child.uniqueName}' and '${uniqueName}' have the same route path.`,
+      );
+    }
     child.uniqueName = uniqueName;
   } else {
     addRoute(child, path.slice(1), uniqueName);
