@@ -45,8 +45,15 @@ export function buildOrInfer(value) {
     return new StringType().oneOf(value).build();
   } else if (isPlainObject(value)) {
     return new ObjectType().keys(value).build();
-  } else if (Array.isArray(value) && value.length !== 0) {
+  } else if (Array.isArray(value) && value.length === 1) {
     return new ArrayType().values(value[0]).build();
   }
+
+  if (Array.isArray(value) && value.length !== 1) {
+    throw new Error(
+      `Inferred arrays can only have a single element. Found '${value}' which has ${value.length} elements.`,
+    );
+  }
+
   throw new Error(`Could not infer type of '${value}'`);
 }
