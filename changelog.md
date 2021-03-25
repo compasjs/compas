@@ -8,6 +8,15 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.125](https://github.com/compasjs/compas/releases/tag/v0.0.125)
+
+- chore: add changelog for v0.0.124
+- feat(code-gen): throw error on duplicate routes
+  ([#763](https://github.com/compasjs/compas/pull/763))
+- feat(code-gen): throw on inferred array with more than a single element
+  ([#764](https://github.com/compasjs/compas/pull/764))
+- fix(code-gen): use tsx extension for the `common` react-query file
+
 ### [v0.0.124](https://github.com/compasjs/compas/releases/tag/v0.0.124)
 
 - build(deps): bump @types/node from 14.14.31 to 14.14.35
