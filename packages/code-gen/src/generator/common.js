@@ -19,7 +19,7 @@ export function generateCommonFiles(context) {
   if (context.options.enabledGenerators.includes("reactQuery")) {
     context.outputFiles.push({
       contents: generateCommonReactQueryFile(),
-      relativePath: `./common/reactQuery${context.extension}`,
+      relativePath: `./common/reactQuery${context.extension}x`,
     });
   }
 }
