@@ -13,6 +13,8 @@ import {
 } from "./generated/codeGen/validators.js";
 import { generate } from "./generator/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
+import { recursivelyRemoveInternalFields } from "./internal.js";
+import { loadFromOpenAPISpec } from "./loaders.js";
 import { lowerCaseFirst } from "./utils.js";
 
 /**
@@ -182,26 +184,18 @@ export class App {
    * @returns {this}
    */
   extend(data) {
-    if (!isNil(validateCodeGenType)) {
-      // Validators present, use the result of them.
-      const { data: value, errors } = validateCodeGenStructure(data);
-      if (errors) {
-        this.logger.error(errors[0]);
-        process.exit(1);
-      }
+    return this.extendInternal(data, false);
+  }
 
-      // Make a deep copy without null prototypes
-      data = {};
-      merge(data, value);
-    }
-
-    for (const groupData of Object.values(data)) {
-      for (const item of Object.values(groupData)) {
-        this.addToData(item);
-      }
-    }
-
-    return this;
+  /**
+   * Extend from the OpenAPI spec
+   *
+   * @param {string} defaultGroup
+   * @param {object} data
+   * @returns {this}
+   */
+  extendWithOpenApi(defaultGroup, data) {
+    return this.extendInternal(loadFromOpenAPISpec(defaultGroup, data), true);
   }
 
   /**
@@ -311,6 +305,40 @@ export class App {
     const result = await generate(this.logger, opts, generatorInput);
     printProcessMemoryUsage(this.logger);
     return result;
+  }
+
+  /**
+   * Internally used extend
+   *
+   * @param {object} rawStructure
+   * @param {boolean} allowInternalProperties
+   * @returns {this}
+   */
+  extendInternal(rawStructure, allowInternalProperties) {
+    if (!isNil(validateCodeGenType)) {
+      // Validators present, use the result of them.
+      const { data: value, errors } = validateCodeGenStructure(rawStructure);
+      if (errors) {
+        this.logger.error(errors[0]);
+        process.exit(1);
+      }
+
+      // Make a deep copy without null prototypes
+      rawStructure = {};
+      merge(rawStructure, value);
+    }
+
+    if (!allowInternalProperties) {
+      recursivelyRemoveInternalFields(rawStructure);
+    }
+
+    for (const groupData of Object.values(rawStructure)) {
+      for (const item of Object.values(groupData)) {
+        this.addToData(item);
+      }
+    }
+
+    return this;
   }
 
   /**

@@ -130,10 +130,28 @@ function extractRoute(context, path, method) {
     "path",
   );
 
-  compasStruct.body = transformBody(context, item.requestBody, compasStruct);
+  let contentKey = "application/json";
+  compasStruct.internalSettings = {
+    requestBodyType: "json",
+  };
+
+  if (
+    isNil(item.requestBody?.content?.["application/json"]) &&
+    !isNil(item.requestBody?.content?.["multipart/form-data"])
+  ) {
+    contentKey = "multipart/form-data";
+    compasStruct.internalSettings.requestBodyType = "form-data";
+  }
+
+  compasStruct.body = transformBody(
+    context,
+    contentKey,
+    item.requestBody,
+    compasStruct,
+  );
   compasStruct.response = transformResponse(
     context,
-    item.responses?.["200"],
+    item.responses?.["200"] ?? item.responses?.["201"],
     compasStruct,
   );
 
@@ -221,15 +239,16 @@ function transformQueryOrParams(context, inputList, compasStruct, filter) {
  * Transform the post body
  *
  * @param context
+ * @param contentKey
  * @param input
  * @param compasStruct
  */
-function transformBody(context, input, compasStruct) {
-  if (isNil(input?.content?.["application/json"]?.schema)) {
+function transformBody(context, contentKey, input, compasStruct) {
+  if (isNil(input?.content?.[contentKey])) {
     return undefined;
   }
 
-  const item = convertSchema(context, input.content["application/json"].schema);
+  const item = convertSchema(context, input.content[contentKey].schema);
   item.group = compasStruct.group;
   item.name = `${compasStruct.name}Body`;
   item.docString = input.description || "";

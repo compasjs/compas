@@ -169,6 +169,12 @@ export class App {
   extend(data: any): App;
 
   /**
+   * Convert OpenAPI to Compas spec and add to this app instance.
+   * Add all unreferenced items to the default group for easier discoverability.
+   */
+  extendWithOpenApi(defaultGroup: string, data: any): App;
+
+  /**
    * Call the generators with the provided options
    * and writes the output
    */
