@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { loadFromOpenAPISpec, TypeCreator } from "@compas/code-gen";
+import { TypeCreator } from "@compas/code-gen";
 import { pathJoin } from "../packages/stdlib/index.js";
 
 const githubApiFixture = pathJoin(
@@ -26,11 +26,9 @@ export function applyBenchStructure(app) {
     }),
   );
 
-  app.extend(
-    loadFromOpenAPISpec(
-      "githubApi",
-      JSON.parse(readFileSync(githubApiFixture, "utf-8")),
-    ),
+  app.extendWithOpenApi(
+    "githubApi",
+    JSON.parse(readFileSync(githubApiFixture, "utf-8")),
   );
 }
 

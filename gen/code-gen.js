@@ -134,6 +134,12 @@ function getTypes(T) {
       .optional()
       .loose(),
     validator: T.object().loose().default("{}"),
+    internalSettings: T.object()
+      .loose()
+      .default("{}")
+      .docs(
+        "Used where the public spec isn't complete enough for all things we want to support for OpenAPI.",
+      ),
   };
 
   const anyType = T.object("anyType").keys({
@@ -385,6 +391,12 @@ function getTypes(T) {
     body: T.reference("codeGen", "type").optional(),
     files: T.reference("codeGen", "type").optional(),
     response: T.reference("codeGen", "type").optional(),
+    internalSettings: T.object()
+      .keys({
+        requestBodyType: T.string().oneOf("json", "form-data"),
+      })
+      .loose()
+      .default("{}"),
   });
 
   const allTypes = [

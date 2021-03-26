@@ -74,7 +74,17 @@ options = {},
         }
       }
     {{ } else if (item.body) { }}
-      const data = body;
+      {{ if (item.internalSettings?.requestBodyType === "form-data") { }}
+        let data = body;
+        if (isPlainObject(body)) {
+          data = new FormData();
+          for (const key of Object.keys(body)) {
+            data.set(key, body[key]);
+          }
+        }
+      {{ } else { }}
+        const data = body;
+      {{ } }}
     {{ } }}
 
     {{ if (options.isNodeServer) { }}
@@ -86,8 +96,8 @@ options = {},
       method: "{{= item.method.toLowerCase() }}",
       params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
       data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
-      {{ if (item.files && options.isNode) { }}
-      headers: data.getHeaders(),
+      {{ if ((item.files || item.internalSettings?.requestBodyType === "form-data") && options.isNode) { }}
+      headers: typeof data?.getHeaders === "function" ? data.getHeaders() : {},
       {{ } }}
       {{ if (item.response?.reference?.type === "file") { }}
       responseType: "{{= options.isNode ? "stream" : "blob" }}",
