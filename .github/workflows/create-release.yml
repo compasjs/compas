@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: compasjs/docs
-          token: secrets.COMPAS_GITHUB_TOKEN
+          token: ${{ secrets.COMPAS_GITHUB_TOKEN }}
           path: compas-docs
 
       - name: Node.js ${{ matrix.node }}
