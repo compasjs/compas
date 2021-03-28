@@ -8,6 +8,23 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.126](https://github.com/compasjs/compas/releases/tag/v0.0.126)
+
+- build(deps): bump @babel/core from 7.13.10 to 7.13.13
+  ([#770](https://github.com/compasjs/compas/pull/770))
+- build(deps): bump @types/node from 14.14.35 to 14.14.37
+  ([#765](https://github.com/compasjs/compas/pull/765),
+  [#769](https://github.com/compasjs/compas/pull/769))
+- build(deps): bump eslint from 7.22.0 to 7.23.0
+  ([#768](https://github.com/compasjs/compas/pull/768))
+- chore(ci): add git push when updating compas docs
+- chore(ci): automate docs sync on release
+- feat(code-gen): add error handling case when inferring type on function
+- feat(code-gen): add internal setting support, utilize it for OpenAPI form data
+  conversion ([#767](https://github.com/compasjs/compas/pull/767))
+
+Removed `loadFromOpenAPISpec` in favor of `app.extendWithOpenApi`
+
 ### [v0.0.125](https://github.com/compasjs/compas/releases/tag/v0.0.125)
 
 - chore: add changelog for v0.0.124
