@@ -33,9 +33,20 @@ interface LoggerContext {
 
 export interface LoggerOptions<T extends LoggerContext> {
   /**
-   * Use the pretty formatter instead of the NDJSON formatter
+   * Replaces log.info with a 'noop'.Defaults to 'false'.
    */
-  pretty?: boolean;
+  disableInfoLogger?: true | undefined;
+
+  /**
+   * Replaces log.error with a 'noop'.Defaults to 'false'.
+   */
+  disableErrorLogger?: true | undefined;
+
+  /**
+   * Set the printer to be used. Defaults to "pretty" when 'NODE_ENV===development',
+   * "github-actions" when 'GITHUB_ACTIONS===true' and "ndjson" by default.
+   */
+  printer?: "pretty" | "ndjson" | "github-actions" | undefined;
 
   /**
    * The stream to write the logs to

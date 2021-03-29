@@ -5,7 +5,7 @@ import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
 import { newLogger } from "@compas/insight";
 import dotenv from "dotenv";
-import { isProduction, refreshEnvironmentCache } from "./env.js";
+import { refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
@@ -77,7 +77,6 @@ export function mainFn(meta, cb) {
 
   const logger = newLogger({
     ctx: { type: name },
-    pretty: !isProduction(),
   });
 
   const unhandled = (error) => {

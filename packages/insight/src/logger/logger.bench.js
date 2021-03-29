@@ -21,7 +21,7 @@ bench("logger - strings", (b) => {
 bench("logger - objects", (b) => {
   const stream = createWriteStream("/tmp/logger_bench_compas.txt", "utf-8");
   const logger = newLogger({
-    pretty: false,
+    printer: "ndjson",
     stream,
   });
 
@@ -39,7 +39,7 @@ bench("logger - objects", (b) => {
 bench("logger - deep objects", (b) => {
   const stream = createWriteStream("/tmp/logger_bench_compas.txt", "utf-8");
   const logger = newLogger({
-    pretty: false,
+    printer: "ndjson",
     stream,
   });
 

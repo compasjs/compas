@@ -1,3 +1,5 @@
+import { relative } from "path";
+import { fileURLToPath } from "url";
 import { inspect } from "util";
 
 /**
@@ -25,29 +27,65 @@ export function writeNDJSON(stream, level, timestamp, context, message) {
  * @returns {void}
  */
 export function writePretty(stream, level, timestamp, context, message) {
-  let prefix = `${formatDate(timestamp)} ${formatLevelAndType(
-    level,
-    context?.type,
-  )}`;
+  stream.write(`${formatPretty(level, timestamp, context, message)}\n`);
+}
+
+/**
+ * @param {NodeJS.WritableStream} stream
+ * @param {string} level
+ * @param {Date} timestamp
+ * @param {string} context
+ * @param {*} message
+ * @returns {void}
+ */
+export function writeGithubActions(stream, level, timestamp, context, message) {
+  if (level === "error") {
+    // file=app.js,line=10,col=15
+    const { relativePath, column, line } = getErrorLogCaller();
+
+    // See https://github.com/actions/toolkit/issues/193#issuecomment-605394935 for the replace hack
+    stream.write(
+      `::error file=${relativePath},line=${line},col=${column}::${formatPretty(
+        undefined, // Always an error
+        timestamp,
+        context,
+        message,
+      ).replace(/\n/g, "%0A")}\n`,
+    );
+  } else {
+    writePretty(stream, level, timestamp, context, message);
+  }
+}
+
+/**
+ * @param {string} level
+ * @param {Date} timestamp
+ * @param {string} context
+ * @param {*} message
+ * @returns {string}
+ */
+export function formatPretty(level, timestamp, context, message) {
+  let prefix = level
+    ? `${formatDate(timestamp)} ${formatLevelAndType(level, context?.type)} `
+    : "";
 
   if (message) {
-    prefix += " ";
     if (Array.isArray(message)) {
-      stream.write(
-        `${prefix + message.map((it) => formatMessagePretty(it)).join(", ")}\n`,
-      );
-    } else {
-      let keyCount = 0;
-      if (context?.type) {
-        // Dynamic conditional for context writing
-        keyCount = 1;
-      }
-
-      if (Object.keys(context).length > keyCount) {
-        prefix += `${formatMessagePretty(context)} `;
-      }
-      stream.write(`${prefix + formatMessagePretty(message)}\n`);
+      return `${
+        prefix + message.map((it) => formatMessagePretty(it)).join(", ")
+      }`;
     }
+    let keyCount = 0;
+    if (context?.type) {
+      // Dynamic conditional for context writing
+      keyCount = 1;
+    }
+
+    if (Object.keys(context).length > keyCount) {
+      prefix += `${formatMessagePretty(context)} `;
+    }
+
+    return `${prefix + formatMessagePretty(message)}`;
   }
 }
 
@@ -94,4 +132,49 @@ function formatLevelAndType(level, type) {
   return level === "error"
     ? `\x1b[31m${str}\x1b[39m`
     : `\x1b[34m${str}\x1b[39m`;
+}
+
+/**
+ * Get the caller of the error function, by parsing the stack. May fail
+ *
+ * @returns {{
+ *    relativePath: string,
+ *    line: number,
+ *    column: number,
+ * }}
+ */
+function getErrorLogCaller() {
+  const err = {};
+  Error.captureStackTrace(err);
+
+  // Input:
+  // [0] Error title
+  // [1] writeXxx
+  // [2] error fn
+  // [3] caller
+  // at main (file:///home/dirk/projects/compas/scripts/brr.js:11:7)
+  const stackLine = (err.stack.split("\n")[3] ?? "").trim();
+  const rawLocation = stackLine.split(" ")[2];
+
+  if (stackLine.length === 0 || rawLocation.length < 5) {
+    return {
+      relativePath: "unknown.js",
+      line: 1,
+      column: 1,
+    };
+  }
+
+  const rawLocationParts = rawLocation
+    .substring(1, rawLocation.length - 1)
+    .split(":");
+
+  const rawFile = rawLocationParts
+    .splice(0, rawLocationParts.length - 2)
+    .join(":");
+
+  return {
+    relativePath: relative(process.cwd(), fileURLToPath(rawFile)),
+    line: rawLocationParts[0],
+    column: rawLocationParts[1],
+  };
 }
