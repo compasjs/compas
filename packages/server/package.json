@@ -21,7 +21,7 @@
     "keygrip": "1.1.0",
     "koa": "2.13.1",
     "koa-body": "4.2.0",
-    "koa-session": "6.1.0"
+    "koa-session": "6.2.0"
   },
   "maintainers": [
     {
