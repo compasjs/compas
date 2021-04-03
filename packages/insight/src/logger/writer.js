@@ -43,14 +43,20 @@ export function writeGithubActions(stream, level, timestamp, context, message) {
     // file=app.js,line=10,col=15
     const { relativePath, column, line } = getErrorLogCaller();
 
-    // See https://github.com/actions/toolkit/issues/193#issuecomment-605394935 for the replace hack
+    // See https://github.com/actions/toolkit/issues/193#issuecomment-605394935 for the
+    // replace hack
     stream.write(
       `::error file=${relativePath},line=${line},col=${column}::${formatPretty(
         undefined, // Always an error
         timestamp,
         context,
         message,
-      ).replace(/\n/g, "%0A")}\n`,
+      )
+        .replace(/\n/g, "%0A")
+
+        // Removes ansi color codes from logs
+        // eslint-disable-next-line no-control-regex
+        .replace(/\u001B\\[[;\\d]*[ -/]*[@-~]/g, "")}\n`,
     );
   } else {
     writePretty(stream, level, timestamp, context, message);
