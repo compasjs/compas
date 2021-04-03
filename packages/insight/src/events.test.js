@@ -19,6 +19,14 @@ test("insight/events", (t) => {
     t.equal(event.callStack.length, 0);
   });
 
+  t.test("error log", (t) => {
+    t.log.error("oops");
+  });
+
+  t.test("faling test", (t) => {
+    t.fail("bah");
+  });
+
   t.test("create event from event", (t) => {
     const event = newEvent(log);
     const child = newEventFromEvent(event);
