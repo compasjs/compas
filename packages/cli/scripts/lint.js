@@ -14,7 +14,13 @@ mainFn(import.meta, async () => {
 
   const { exitCode: lint } = await spawn(
     "./node_modules/.bin/eslint",
-    ["./**/*.js", "--ignore-pattern", "node_modules", "--fix"],
+    [
+      "./**/*.js",
+      "--ignore-pattern",
+      "node_modules",
+      "--fix",
+      "--no-error-on-unmatched-pattern",
+    ],
     eslintOptions,
   );
 
