@@ -160,12 +160,28 @@ function getErrorLogCaller() {
   // [3] wrapWriter
   // [4] caller
   // at main (file:///home/dirk/projects/compas/scripts/brr.js:11:7)
-  const stackLine = (err.stack.split("\n")[4] ?? "").trim();
-  const rawLocation = stackLine.split(" ")[2];
+  const stackLines = err.stack.split("\n").slice(1);
 
-  if (stackLine.length === 0 || rawLocation.length < 5) {
+  let callerStackLine = stackLines[0].trim();
+  for (const line of stackLines) {
+    if (
+      line.includes("getErrorLogCaller") ||
+      line.includes("writeGithubActions") ||
+      line.includes("wrapWriter") ||
+      line.includes("Object.error")
+    ) {
+      continue;
+    }
+
+    callerStackLine = line.trim();
+    break;
+  }
+
+  const rawLocation = callerStackLine.split(" ")[2];
+
+  if (callerStackLine.length === 0 || (rawLocation?.length ?? 0) < 5) {
     return {
-      relativePath: "unknown.js",
+      relativePath: rawLocation,
       line: 1,
       column: 1,
     };
