@@ -56,7 +56,7 @@ export function writeGithubActions(stream, level, timestamp, context, message) {
 
         // Removes ansi color codes from logs
         // eslint-disable-next-line no-control-regex
-        .replace(/\u001B\\[[;\\d]*[ -/]*[@-~]/g, "")}\n`,
+        .replace(/\u001b\[.*?m/g, "")}\n`,
     );
   } else {
     writePretty(stream, level, timestamp, context, message);
