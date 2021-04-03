@@ -157,9 +157,10 @@ function getErrorLogCaller() {
   // [0] Error title
   // [1] writeXxx
   // [2] error fn
-  // [3] caller
+  // [3] wrapWriter
+  // [4] caller
   // at main (file:///home/dirk/projects/compas/scripts/brr.js:11:7)
-  const stackLine = (err.stack.split("\n")[3] ?? "").trim();
+  const stackLine = (err.stack.split("\n")[4] ?? "").trim();
   const rawLocation = stackLine.split(" ")[2];
 
   if (stackLine.length === 0 || rawLocation.length < 5) {
