@@ -79,7 +79,7 @@ options = {},
         if (isPlainObject(body)) {
           data = new FormData();
           for (const key of Object.keys(body)) {
-            data.set(key, body[key]);
+            data.append(key, body[key]);
           }
         }
       {{ } else { }}
