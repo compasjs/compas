@@ -228,6 +228,14 @@ export interface FileGroup {
   updatedAt: Date;
   deletedAt: Date;
 }
+/**
+ * Update the order of the provided id's in relation to each other.
+ * This function does not check if all files are in the same group.
+ */
+export function updateFileGroupOrder(
+  sql: Postgres,
+  ids: string[],
+): Promise<void>;
 
 /**
  * Assigns children of the provided fileGroup to the parent.
