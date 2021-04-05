@@ -8,6 +8,28 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.127](https://github.com/compasjs/compas/releases/tag/v0.0.127)
+
+- build(deps): bump @babel/core from 7.13.13 to 7.13.14
+  ([#773](https://github.com/compasjs/compas/pull/773))
+- build(deps): bump @babel/eslint-parser from 7.13.10 to 7.13.14
+  ([#772](https://github.com/compasjs/compas/pull/772))
+- build(deps): bump c8 from 7.6.0 to 7.7.0
+  ([#775](https://github.com/compasjs/compas/pull/775))
+- build(deps): bump koa-session from 6.1.0 to 6.2.0
+  ([#774](https://github.com/compasjs/compas/pull/774))
+- build(deps): bump mime-types from 2.1.29 to 2.1.30
+  ([#784](https://github.com/compasjs/compas/pull/784))
+- chore(ci): fix token for docs sync after release
+- feat(insight): support error formatting for Github actions
+  ([#771](https://github.com/compasjs/compas/pull/771))
+- fix(cli): prevent ESLint from throwing errors when no JS files are found
+  ([#783](https://github.com/compasjs/compas/pull/783))
+- fix(code-gen): use formatData.append for multipart body in the api client
+  ([#782](https://github.com/compasjs/compas/pull/782))
+- fix(store): add TS type definition for `updateFileGroupOrder`
+  ([#781](https://github.com/compasjs/compas/pull/781))
+
 ### [v0.0.126](https://github.com/compasjs/compas/releases/tag/v0.0.126)
 
 - build(deps): bump @babel/core from 7.13.10 to 7.13.13
