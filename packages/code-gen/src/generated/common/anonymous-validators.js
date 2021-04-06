@@ -172,7 +172,7 @@ export function anonymousValidator657675998(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator105524495(
+export function anonymousValidator293751998(
   value,
   propertyPath,
   errors = [],
@@ -199,6 +199,22 @@ export function anonymousValidator105524495(
     });
     return undefined;
   }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    errors.push({
+      key: `validator.${parentType}.max`,
+      info: { propertyPath, max },
+    });
+    return undefined;
+  }
   return value;
 }
 /**
@@ -208,7 +224,7 @@ export function anonymousValidator105524495(
  * @param {string} parentType
  * @returns {undefined|string|boolean|number|undefined}
  */
-export function anonymousValidator1101855489(
+export function anonymousValidator219305298(
   value,
   propertyPath,
   errors = [],
@@ -239,7 +255,7 @@ export function anonymousValidator1101855489(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
-  result = anonymousValidator105524495(value, propertyPath, subErrors);
+  result = anonymousValidator293751998(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
@@ -463,7 +479,7 @@ export function anonymousValidator1519740867(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -527,7 +543,7 @@ export function anonymousValidator1519740867(
  * @param {string} parentType
  * @returns {undefined|number|undefined}
  */
-export function anonymousValidator2045286580(
+export function anonymousValidator963028965(
   value,
   propertyPath,
   errors = [],
@@ -550,6 +566,22 @@ export function anonymousValidator2045286580(
     });
     return undefined;
   }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    errors.push({
+      key: `validator.${parentType}.max`,
+      info: { propertyPath, max },
+    });
+    return undefined;
+  }
   return value;
 }
 /**
@@ -559,7 +591,7 @@ export function anonymousValidator2045286580(
  * @param {string} parentType
  * @returns {{"convert": boolean, "min"?: undefined|number, "max"?: undefined|number, }|undefined}
  */
-export function anonymousValidator2043902290(
+export function anonymousValidator914179656(
   value,
   propertyPath,
   errors = [],
@@ -585,12 +617,12 @@ export function anonymousValidator2043902290(
     `${propertyPath}.convert`,
     errors,
   );
-  result["min"] = anonymousValidator2045286580(
+  result["min"] = anonymousValidator963028965(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator2045286580(
+  result["max"] = anonymousValidator963028965(
     value["max"],
     `${propertyPath}.max`,
     errors,
@@ -644,7 +676,7 @@ export function anonymousValidator1312175728(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -669,7 +701,7 @@ export function anonymousValidator1312175728(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator2043902290(
+  result["validator"] = anonymousValidator914179656(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -773,7 +805,7 @@ export function anonymousValidator17476225(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -1020,7 +1052,7 @@ export function anonymousValidator2019605291(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -1104,7 +1136,7 @@ export function anonymousValidator508679687(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -1188,7 +1220,7 @@ export function anonymousValidator1377926226(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -1242,7 +1274,7 @@ export function anonymousValidator1377926226(
  * @param {string} parentType
  * @returns {{"convert": boolean, "floatingPoint": boolean, "min"?: undefined|number, "max"?: undefined|number, "allowNull": boolean, }|undefined}
  */
-export function anonymousValidator1221128624(
+export function anonymousValidator1608555242(
   value,
   propertyPath,
   errors = [],
@@ -1273,12 +1305,12 @@ export function anonymousValidator1221128624(
     `${propertyPath}.floatingPoint`,
     errors,
   );
-  result["min"] = anonymousValidator2045286580(
+  result["min"] = anonymousValidator963028965(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator2045286580(
+  result["max"] = anonymousValidator963028965(
     value["max"],
     `${propertyPath}.max`,
     errors,
@@ -1297,7 +1329,7 @@ export function anonymousValidator1221128624(
  * @param {string} parentType
  * @returns {undefined|(number)[]|undefined}
  */
-export function anonymousValidator1367113100(
+export function anonymousValidator1370653763(
   value,
   propertyPath,
   errors = [],
@@ -1315,7 +1347,7 @@ export function anonymousValidator1367113100(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator105524495(
+    result[i] = anonymousValidator293751998(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -1370,7 +1402,7 @@ export function anonymousValidator1441913722(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -1395,7 +1427,7 @@ export function anonymousValidator1441913722(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator1221128624(
+  result["validator"] = anonymousValidator1608555242(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -1405,7 +1437,7 @@ export function anonymousValidator1441913722(
     `${propertyPath}.internalSettings`,
     errors,
   );
-  result["oneOf"] = anonymousValidator1367113100(
+  result["oneOf"] = anonymousValidator1370653763(
     value["oneOf"],
     `${propertyPath}.oneOf`,
     errors,
@@ -1746,7 +1778,7 @@ export function anonymousValidator127554530(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -2333,7 +2365,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -2417,7 +2449,7 @@ export function anonymousValidator17105276(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator946557101(
+export function anonymousValidator731977090(
   value,
   propertyPath,
   errors = [],
@@ -2440,6 +2472,22 @@ export function anonymousValidator946557101(
     });
     return undefined;
   }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    errors.push({
+      key: `validator.${parentType}.max`,
+      info: { propertyPath, max },
+    });
+    return undefined;
+  }
   return value;
 }
 /**
@@ -2449,7 +2497,7 @@ export function anonymousValidator946557101(
  * @param {string} parentType
  * @returns {{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, }|undefined}
  */
-export function anonymousValidator1549436230(
+export function anonymousValidator1723376928(
   value,
   propertyPath,
   errors = [],
@@ -2490,12 +2538,12 @@ export function anonymousValidator1549436230(
     `${propertyPath}.upperCase`,
     errors,
   );
-  result["min"] = anonymousValidator946557101(
+  result["min"] = anonymousValidator731977090(
     value["min"],
     `${propertyPath}.min`,
     errors,
   );
-  result["max"] = anonymousValidator2045286580(
+  result["max"] = anonymousValidator963028965(
     value["max"],
     `${propertyPath}.max`,
     errors,
@@ -2592,7 +2640,7 @@ export function anonymousValidator1672152398(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -2617,7 +2665,7 @@ export function anonymousValidator1672152398(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator1549436230(
+  result["validator"] = anonymousValidator1723376928(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -2681,7 +2729,7 @@ export function anonymousValidator1836970168(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -2858,7 +2906,7 @@ export function anonymousValidator1390215584(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,
@@ -3148,7 +3196,7 @@ export function anonymousValidator20588538(
     `${propertyPath}.isOptional`,
     errors,
   );
-  result["defaultValue"] = anonymousValidator1101855489(
+  result["defaultValue"] = anonymousValidator219305298(
     value["defaultValue"],
     `${propertyPath}.defaultValue`,
     errors,

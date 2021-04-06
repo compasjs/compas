@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class NumberType extends TypeBuilder {
@@ -18,6 +19,22 @@ export class NumberType extends TypeBuilder {
       ...this.data,
       ...NumberType.getBaseData(),
     };
+  }
+
+  build() {
+    const result = super.build();
+
+    if (
+      !result.validator.floatingPoint &&
+      isNil(result.validator.min) &&
+      isNil(result.validator.max)
+    ) {
+      // Add default integer sizes when no min & max is specified
+      result.validator.min = -2_147_483_647;
+      result.validator.max = 2_147_483_647;
+    }
+
+    return result;
   }
 
   /**

@@ -8,10 +8,7 @@ import {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns
-{
-CompasSqlOrderBy
-}
+ * @returns {CompasSqlOrderBy}
  */
 export function validateCompasSqlOrderBy(value, propertyPath = "$") {
   return anonymousValidator446238440(value, propertyPath, []);
@@ -19,10 +16,7 @@ export function validateCompasSqlOrderBy(value, propertyPath = "$") {
 /**
  * @param {undefined|*} value
  * @param {string|undefined} [propertyPath]
- * @returns
-{
-CompasSqlOrderByOptionalField
-}
+ * @returns {CompasSqlOrderByOptionalField}
  */
 export function validateCompasSqlOrderByOptionalField(
   value,
