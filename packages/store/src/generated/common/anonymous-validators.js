@@ -455,7 +455,7 @@ export function anonymousValidator186795873(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator105524495(
+export function anonymousValidator293751998(
   value,
   propertyPath,
   errors = [],
@@ -474,6 +474,20 @@ export function anonymousValidator105524495(
   if (!Number.isInteger(value)) {
     throw AppError.validationError(`validator.${parentType}.integer`, {
       propertyPath,
+    });
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
     });
   }
   return value;
@@ -747,7 +761,7 @@ export function anonymousValidator599447075(
     `${propertyPath}.bucketName`,
     errors,
   );
-  result["contentLength"] = anonymousValidator105524495(
+  result["contentLength"] = anonymousValidator293751998(
     value["contentLength"],
     `${propertyPath}.contentLength`,
     errors,
@@ -829,7 +843,7 @@ export function anonymousValidator1443576836(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator1580775110(
+export function anonymousValidator1789497143(
   value,
   propertyPath,
   errors = [],
@@ -846,6 +860,20 @@ export function anonymousValidator1580775110(
   if (!Number.isInteger(value)) {
     throw AppError.validationError(`validator.${parentType}.integer`, {
       propertyPath,
+    });
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
     });
   }
   return value;
@@ -937,7 +965,7 @@ export function anonymousValidator2060025506(
     `${propertyPath}.name`,
     errors,
   );
-  result["order"] = anonymousValidator1580775110(
+  result["order"] = anonymousValidator1789497143(
     value["order"],
     `${propertyPath}.order`,
     errors,
@@ -1016,7 +1044,7 @@ export function anonymousValidator420606873(
     `${propertyPath}.name`,
     errors,
   );
-  result["order"] = anonymousValidator105524495(
+  result["order"] = anonymousValidator293751998(
     value["order"],
     `${propertyPath}.order`,
     errors,
@@ -1075,7 +1103,7 @@ export function anonymousValidator420606873(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator840286224(
+export function anonymousValidator1483765921(
   value,
   propertyPath,
   errors = [],
@@ -1097,6 +1125,20 @@ export function anonymousValidator840286224(
   if (!Number.isInteger(value)) {
     throw AppError.validationError(`validator.${parentType}.integer`, {
       propertyPath,
+    });
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
     });
   }
   return value;
@@ -1131,7 +1173,7 @@ export function anonymousValidator1174857441(
  * @param {string} parentType
  * @returns {number|undefined}
  */
-export function anonymousValidator1430232428(
+export function anonymousValidator1103865757(
   value,
   propertyPath,
   errors = [],
@@ -1148,6 +1190,20 @@ export function anonymousValidator1430232428(
   if (!Number.isInteger(value)) {
     throw AppError.validationError(`validator.${parentType}.integer`, {
       propertyPath,
+    });
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
     });
   }
   return value;
@@ -1202,7 +1258,7 @@ export function anonymousValidator1781782332(
       });
     }
   }
-  result["id"] = anonymousValidator840286224(
+  result["id"] = anonymousValidator1483765921(
     value["id"],
     `${propertyPath}.id`,
     errors,
@@ -1212,7 +1268,7 @@ export function anonymousValidator1781782332(
     `${propertyPath}.isComplete`,
     errors,
   );
-  result["priority"] = anonymousValidator1430232428(
+  result["priority"] = anonymousValidator1103865757(
     value["priority"],
     `${propertyPath}.priority`,
     errors,
@@ -1232,7 +1288,7 @@ export function anonymousValidator1781782332(
     `${propertyPath}.data`,
     errors,
   );
-  result["retryCount"] = anonymousValidator1430232428(
+  result["retryCount"] = anonymousValidator1103865757(
     value["retryCount"],
     `${propertyPath}.retryCount`,
     errors,
@@ -1256,7 +1312,7 @@ export function anonymousValidator1781782332(
  * @param {string} parentType
  * @returns {undefined|number|undefined}
  */
-export function anonymousValidator2045286580(
+export function anonymousValidator963028965(
   value,
   propertyPath,
   errors = [],
@@ -1273,6 +1329,20 @@ export function anonymousValidator2045286580(
   if (!Number.isInteger(value)) {
     throw AppError.validationError(`validator.${parentType}.integer`, {
       propertyPath,
+    });
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
     });
   }
   return value;
@@ -1309,32 +1379,32 @@ export function anonymousValidator430889951(
       });
     }
   }
-  result["years"] = anonymousValidator2045286580(
+  result["years"] = anonymousValidator963028965(
     value["years"],
     `${propertyPath}.years`,
     errors,
   );
-  result["months"] = anonymousValidator2045286580(
+  result["months"] = anonymousValidator963028965(
     value["months"],
     `${propertyPath}.months`,
     errors,
   );
-  result["days"] = anonymousValidator2045286580(
+  result["days"] = anonymousValidator963028965(
     value["days"],
     `${propertyPath}.days`,
     errors,
   );
-  result["hours"] = anonymousValidator2045286580(
+  result["hours"] = anonymousValidator963028965(
     value["hours"],
     `${propertyPath}.hours`,
     errors,
   );
-  result["minutes"] = anonymousValidator2045286580(
+  result["minutes"] = anonymousValidator963028965(
     value["minutes"],
     `${propertyPath}.minutes`,
     errors,
   );
-  result["seconds"] = anonymousValidator2045286580(
+  result["seconds"] = anonymousValidator963028965(
     value["seconds"],
     `${propertyPath}.seconds`,
     errors,
@@ -2014,7 +2084,7 @@ export function anonymousValidator58972158(
  * @param {string} parentType
  * @returns {undefined|(number)[]|undefined}
  */
-export function anonymousValidator1367113100(
+export function anonymousValidator1370653763(
   value,
   propertyPath,
   errors = [],
@@ -2030,7 +2100,7 @@ export function anonymousValidator1367113100(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator105524495(
+    result[i] = anonymousValidator293751998(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -2045,7 +2115,7 @@ export function anonymousValidator1367113100(
  * @param {string} parentType
  * @returns {undefined|(number)[]|QueryPart|undefined}
  */
-export function anonymousValidator1512312943(
+export function anonymousValidator2102014144(
   value,
   propertyPath,
   errors = [],
@@ -2056,7 +2126,7 @@ export function anonymousValidator1512312943(
   }
   const subErrors = [];
   try {
-    return anonymousValidator1367113100(value, propertyPath, subErrors);
+    return anonymousValidator1370653763(value, propertyPath, subErrors);
   } catch (e) {
     subErrors.push(e);
   }
@@ -2150,32 +2220,32 @@ export function anonymousValidator153017499(
     `${propertyPath}.idNotLike`,
     errors,
   );
-  result["order"] = anonymousValidator2045286580(
+  result["order"] = anonymousValidator963028965(
     value["order"],
     `${propertyPath}.order`,
     errors,
   );
-  result["orderNotEqual"] = anonymousValidator2045286580(
+  result["orderNotEqual"] = anonymousValidator963028965(
     value["orderNotEqual"],
     `${propertyPath}.orderNotEqual`,
     errors,
   );
-  result["orderIn"] = anonymousValidator1512312943(
+  result["orderIn"] = anonymousValidator2102014144(
     value["orderIn"],
     `${propertyPath}.orderIn`,
     errors,
   );
-  result["orderNotIn"] = anonymousValidator1512312943(
+  result["orderNotIn"] = anonymousValidator2102014144(
     value["orderNotIn"],
     `${propertyPath}.orderNotIn`,
     errors,
   );
-  result["orderGreaterThan"] = anonymousValidator2045286580(
+  result["orderGreaterThan"] = anonymousValidator963028965(
     value["orderGreaterThan"],
     `${propertyPath}.orderGreaterThan`,
     errors,
   );
-  result["orderLowerThan"] = anonymousValidator2045286580(
+  result["orderLowerThan"] = anonymousValidator963028965(
     value["orderLowerThan"],
     `${propertyPath}.orderLowerThan`,
     errors,
@@ -2833,7 +2903,7 @@ export function anonymousValidator807003800(
  * @param {string} parentType
  * @returns {undefined|number|undefined}
  */
-export function anonymousValidator2000041421(
+export function anonymousValidator1108665246(
   value,
   propertyPath,
   errors = [],
@@ -2855,6 +2925,20 @@ export function anonymousValidator2000041421(
       propertyPath,
     });
   }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
+    });
+  }
   return value;
 }
 /**
@@ -2864,7 +2948,7 @@ export function anonymousValidator2000041421(
  * @param {string} parentType
  * @returns {undefined|(number)[]|undefined}
  */
-export function anonymousValidator1839617525(
+export function anonymousValidator1033385158(
   value,
   propertyPath,
   errors = [],
@@ -2880,7 +2964,7 @@ export function anonymousValidator1839617525(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator840286224(
+    result[i] = anonymousValidator1483765921(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -2895,7 +2979,7 @@ export function anonymousValidator1839617525(
  * @param {string} parentType
  * @returns {undefined|(number)[]|QueryPart|undefined}
  */
-export function anonymousValidator102852585(
+export function anonymousValidator1971955962(
   value,
   propertyPath,
   errors = [],
@@ -2906,7 +2990,7 @@ export function anonymousValidator102852585(
   }
   const subErrors = [];
   try {
-    return anonymousValidator1839617525(value, propertyPath, subErrors);
+    return anonymousValidator1033385158(value, propertyPath, subErrors);
   } catch (e) {
     subErrors.push(e);
   }
@@ -2970,32 +3054,32 @@ export function anonymousValidator1257773835(
     `${propertyPath}.$or`,
     errors,
   );
-  result["id"] = anonymousValidator2000041421(
+  result["id"] = anonymousValidator1108665246(
     value["id"],
     `${propertyPath}.id`,
     errors,
   );
-  result["idNotEqual"] = anonymousValidator2000041421(
+  result["idNotEqual"] = anonymousValidator1108665246(
     value["idNotEqual"],
     `${propertyPath}.idNotEqual`,
     errors,
   );
-  result["idIn"] = anonymousValidator102852585(
+  result["idIn"] = anonymousValidator1971955962(
     value["idIn"],
     `${propertyPath}.idIn`,
     errors,
   );
-  result["idNotIn"] = anonymousValidator102852585(
+  result["idNotIn"] = anonymousValidator1971955962(
     value["idNotIn"],
     `${propertyPath}.idNotIn`,
     errors,
   );
-  result["idGreaterThan"] = anonymousValidator2000041421(
+  result["idGreaterThan"] = anonymousValidator1108665246(
     value["idGreaterThan"],
     `${propertyPath}.idGreaterThan`,
     errors,
   );
-  result["idLowerThan"] = anonymousValidator2000041421(
+  result["idLowerThan"] = anonymousValidator1108665246(
     value["idLowerThan"],
     `${propertyPath}.idLowerThan`,
     errors,
@@ -4428,12 +4512,12 @@ export function anonymousValidator1274599578(
     `${propertyPath}.where`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -4528,12 +4612,12 @@ export function anonymousValidator1468307041(
     `${propertyPath}.where`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -4610,12 +4694,12 @@ export function anonymousValidator1069465749(
     `${propertyPath}.where`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -4702,12 +4786,12 @@ export function anonymousValidator1862233461(
     `${propertyPath}.as`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -4850,12 +4934,12 @@ export function anonymousValidator2056027066(
     `${propertyPath}.as`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -4962,12 +5046,12 @@ export function anonymousValidator310044624(
     `${propertyPath}.as`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -5100,12 +5184,12 @@ export function anonymousValidator343387919(
     `${propertyPath}.as`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -5149,12 +5233,12 @@ export function anonymousValidator1952914356(
     `${propertyPath}.where`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -5267,12 +5351,12 @@ export function anonymousValidator647856360(
     `${propertyPath}.as`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
@@ -5316,12 +5400,12 @@ export function anonymousValidator1805657267(
     `${propertyPath}.where`,
     errors,
   );
-  result["limit"] = anonymousValidator2045286580(
+  result["limit"] = anonymousValidator963028965(
     value["limit"],
     `${propertyPath}.limit`,
     errors,
   );
-  result["offset"] = anonymousValidator2045286580(
+  result["offset"] = anonymousValidator963028965(
     value["offset"],
     `${propertyPath}.offset`,
     errors,
