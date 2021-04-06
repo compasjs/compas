@@ -2725,14 +2725,14 @@ export function anonymousValidator1836970168(
  * @param {string} parentType
  * @returns {{"requestBodyType": "json"|"form-data", }|undefined}
  */
-export function anonymousValidator1079751185(
+export function anonymousValidator1234860786(
   value,
   propertyPath,
   errors = [],
   parentType = "object",
 ) {
   if (isNil(value)) {
-    return {};
+    return { requestBodyType: "json" };
   }
   if (typeof value !== "object") {
     errors.push({
@@ -2888,7 +2888,7 @@ export function anonymousValidator1390215584(
     `${propertyPath}.validator`,
     errors,
   );
-  result["internalSettings"] = anonymousValidator1079751185(
+  result["internalSettings"] = anonymousValidator1234860786(
     value["internalSettings"],
     `${propertyPath}.internalSettings`,
     errors,
