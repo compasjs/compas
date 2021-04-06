@@ -396,7 +396,7 @@ function getTypes(T) {
         requestBodyType: T.string().oneOf("json", "form-data"),
       })
       .loose()
-      .default("{}"),
+      .default(`{ "requestBodyType": "json" }`),
   });
 
   const allTypes = [
