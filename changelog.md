@@ -8,6 +8,11 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.129](https://github.com/compasjs/compas/releases/tag/v0.0.129)
+
+- chore(ci): another attempt at auto syncing the docs repo
+- fix(code-gen): fix setting default value of internal code-gen settings
+
 ### [v0.0.128](https://github.com/compasjs/compas/releases/tag/v0.0.128)
 
 - build(deps): bump c8 from 7.7.0 to 7.7.1
