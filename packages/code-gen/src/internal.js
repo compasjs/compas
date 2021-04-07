@@ -22,7 +22,9 @@ export function recursivelyRemoveInternalFields(structure, value) {
   }
 
   if (value.internalSettings) {
-    value.internalSettings = {};
+    value.internalSettings = {
+      requestBodyType: "json",
+    };
   }
 
   switch (value.type) {

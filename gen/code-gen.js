@@ -391,6 +391,8 @@ function getTypes(T) {
     body: T.reference("codeGen", "type").optional(),
     files: T.reference("codeGen", "type").optional(),
     response: T.reference("codeGen", "type").optional(),
+
+    // Needs to be in sync with `recursivelyRemoveInternalFields`
     internalSettings: T.object()
       .keys({
         requestBodyType: T.string().oneOf("json", "form-data"),
