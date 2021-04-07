@@ -57,7 +57,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          path: compas
+
+      - name: Checkout docs
+        uses: actions/checkout@v2
+        with:
           repository: compasjs/docs
+          path: compas-docs
           token: ${{ secrets.COMPAS_GITHUB_TOKEN }}
 
       - name: Node.js ${{ matrix.node }}
@@ -82,6 +88,7 @@ jobs:
 
       - name: Create release
         run: |
+          cd ./compas-docs
           yarn install
           yarn upgrade --latest --exact --scope @compas
           yarn compas generate
