@@ -8,6 +8,18 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.128](https://github.com/compasjs/compas/releases/tag/v0.0.128)
+
+- build(deps): bump c8 from 7.7.0 to 7.7.1
+  ([#793](https://github.com/compasjs/compas/pull/793))
+- chore(ci): fix doc sync after release
+- feat(stdlib): add helpers to calculate cookie and cors urls
+  ([#792](https://github.com/compasjs/compas/pull/792))
+- fix(code-gen): default for internal settings is correct for the type
+  definition ([#788](https://github.com/compasjs/compas/pull/788))
+- fix(code-gen): validate for signed integer with default number settings
+  ([#789](https://github.com/compasjs/compas/pull/789))
+
 ### [v0.0.127](https://github.com/compasjs/compas/releases/tag/v0.0.127)
 
 - build(deps): bump @babel/core from 7.13.13 to 7.13.14
