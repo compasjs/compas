@@ -1,8 +1,6 @@
 /**
  * Cached process.env
  */
-import { cors } from "../../server/src/middleware/cors.js";
-
 export let environment = {};
 
 /**
