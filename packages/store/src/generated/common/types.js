@@ -41,7 +41,7 @@ export const __generated__ = true;
  * @typedef {{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "isDirectory": boolean, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }} StoreFileGroupView
  */
 /**
- * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "createdAt": Date, "updatedAt": Date, }} StoreJob
+ * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "handlerTimeout"?: undefined|number, "createdAt": Date, "updatedAt": Date, }} StoreJob
  */
 /**
  * @typedef {{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }} StoreJobInterval
@@ -113,10 +113,10 @@ export const __generated__ = true;
  * @typedef {{"order"?: undefined|number, "file"?: undefined|null|string, "parent"?: undefined|null|string, "name"?: undefined|null|string, "meta"?: undefined|{}, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, "deletedAt"?: undefined|null|Date, }} StoreFileGroupUpdatePartial
  */
 /**
- * @typedef {{"id"?: undefined|number, "isComplete"?: undefined|boolean, "priority"?: undefined|number, "retryCount"?: undefined|number, "name": string, "scheduledAt"?: undefined|Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreJobInsertPartial
+ * @typedef {{"id"?: undefined|number, "isComplete"?: undefined|boolean, "handlerTimeout"?: undefined|number, "priority"?: undefined|number, "retryCount"?: undefined|number, "name": string, "scheduledAt"?: undefined|Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreJobInsertPartial
  */
 /**
- * @typedef {{"isComplete"?: undefined|boolean, "priority"?: undefined|number, "retryCount"?: undefined|number, "name"?: undefined|string, "scheduledAt"?: undefined|Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreJobUpdatePartial
+ * @typedef {{"isComplete"?: undefined|boolean, "handlerTimeout"?: undefined|null|number, "priority"?: undefined|number, "retryCount"?: undefined|number, "name"?: undefined|string, "scheduledAt"?: undefined|Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreJobUpdatePartial
  */
 /**
  * @typedef {{"id"?: undefined|string, "expires": Date, "data"?: undefined|*, "createdAt"?: undefined|Date, "updatedAt"?: undefined|Date, }} StoreSessionInsertPartial

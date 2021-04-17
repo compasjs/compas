@@ -1,5 +1,11 @@
 import { eventStart, eventStop, newEvent, newLogger } from "@compas/insight";
-import { AppError, environment, uuid } from "@compas/stdlib";
+import {
+  AppError,
+  environment,
+  isNil,
+  isPlainObject,
+  uuid,
+} from "@compas/stdlib";
 import { queries } from "./generated.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
@@ -7,73 +13,73 @@ const COMPAS_RECURRING_JOB = "compas.job.recurring";
 const queueQueries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
-     UPDATE "job"
-     SET
-       "isComplete" = TRUE,
-       "updatedAt" = now()
-     WHERE
-         id = (
-         SELECT "id"
-         FROM "job"
-         WHERE
-             NOT "isComplete"
-         AND "scheduledAt" < now()
-         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-         LIMIT 1
-       )
-     RETURNING id
-   `,
+    UPDATE "job"
+    SET
+      "isComplete" = TRUE,
+      "updatedAt" = now()
+    WHERE
+        id = (
+        SELECT "id"
+        FROM "job"
+        WHERE
+            NOT "isComplete"
+        AND "scheduledAt" < now()
+        ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
+    RETURNING id
+  `,
 
   // Should only run in a transaction
   getJobByName: (name, sql) => sql`
-     UPDATE "job"
-     SET
-       "isComplete" = TRUE,
-       "updatedAt" = now()
-     WHERE
-         id = (
-         SELECT "id"
-         FROM "job"
-         WHERE
-             NOT "isComplete"
-         AND "scheduledAt" < now()
-         AND "name" = ${name}
-         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-         LIMIT 1
-       )
-     RETURNING "id"
-   `,
+    UPDATE "job"
+    SET
+      "isComplete" = TRUE,
+      "updatedAt" = now()
+    WHERE
+        id = (
+        SELECT "id"
+        FROM "job"
+        WHERE
+            NOT "isComplete"
+        AND "scheduledAt" < now()
+        AND "name" = ${name}
+        ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
+    RETURNING "id"
+  `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSize: (sql) => sql`
-     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-     FROM "job"
-     WHERE
-       NOT "isComplete"
-   `,
+    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
+           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM "job"
+    WHERE
+      NOT "isComplete"
+  `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (sql, name) => sql`
-     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-     FROM "job"
-     WHERE
-         NOT "isComplete"
-     AND "name" = ${name}
-   `,
+    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
+           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM "job"
+    WHERE
+        NOT "isComplete"
+    AND "name" = ${name}
+  `,
 
   // Returns time in milliseconds
   getAverageJobTime: (sql, name, dateStart, dateEnd) => sql`
-     SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-                (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-     FROM "job"
-     WHERE
-         "isComplete" IS TRUE
-     AND (coalesce(${name ?? null}) IS NULL OR "name" = ${name ?? null})
-     AND "updatedAt" > ${dateStart}
-     AND "updatedAt" <= ${dateEnd};
-   `,
+    SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+               (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+    FROM "job"
+    WHERE
+        "isComplete" IS TRUE
+    AND (coalesce(${name ?? null}) IS NULL OR "name" = ${name ?? null})
+    AND "updatedAt" > ${dateStart}
+    AND "updatedAt" <= ${dateEnd};
+  `,
 
   /**
    * @param {Postgres} sql
@@ -81,14 +87,14 @@ const queueQueries = {
    * @returns Promise<{ id: number }[]>
    */
   getRecurringJobForName: (sql, name) => sql`
-     SELECT id
-     FROM "job"
-     WHERE
-         name = ${COMPAS_RECURRING_JOB}
-     AND "isComplete" IS FALSE
-     AND data ->> 'name' = ${name}
-     ORDER BY "scheduledAt"
-   `,
+    SELECT id
+    FROM "job"
+    WHERE
+        name = ${COMPAS_RECURRING_JOB}
+    AND "isComplete" IS FALSE
+    AND data ->> 'name' = ${name}
+    ORDER BY "scheduledAt"
+  `,
 
   /**
    * @param {Postgres} sql
@@ -97,17 +103,58 @@ const queueQueries = {
    * @param {StoreJobInterval} interval
    */
   updateRecurringJob: (sql, id, priority, interval) => sql`
-     UPDATE "job"
-     SET
-       "priority" = ${priority},
-       "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
+    UPDATE "job"
+    SET
+      "priority" = ${priority},
+      "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
     interval,
   )})
-     WHERE
-       id = ${id}
-   `,
+    WHERE
+      id = ${id}
+  `,
 };
 
+/**
+ * @see addEventToQueue
+ * @see addJobToQueue
+ * @see addRecurringJobToQueue
+ * @see addJobWithCustomTimeoutToQueue
+ *
+ * The queue system is based on 'static' units of work to be done in the background.
+ * It supports the following:
+ * - Job priority's. Lower value means higher priority.
+ * - Scheduling jobs at a set time
+ * - Customizable handler timeouts
+ * - Recurring job handling
+ * - Concurrent workers pulling from the same queue
+ * - Specific workers for a specific job
+ *
+ * When to use which function of adding a job:
+ * - addEventToQueue: use the queue as an 'external' message bus to do things based on
+ *    user flows, like sending an verification email on when registering.
+ *
+ * - addJobToQueue: use the queue as background processing of defined units. Like
+ *    converting a file to different formats, sending async or scheduled notifications
+ *
+ * - addRecurringJobToQueue: use the queue for recurring background processing, like
+ *    cleaning up sessions, generating daily reports. The interval can be as low as a
+ *    second.
+ *
+ * - addJobWithCustomTimeoutToQueue: when the unit of work is hard to define statically
+ *    for the job. For example an external api that needs all information in a single
+ *    call, but the amount of information is of value N. And N doesn't have any bounds
+ *    and is only known when the job is created. However, this sort of still enforces
+ *    that the unit of work is related to some other property to consistently calculate a
+ *    custom timeout.
+ *
+ * The handler can be passed in in 2 ways;
+ *  - A single handler dispatching over the different jobs in application code
+ *  - A plain JS object containing job names as strings, and handler with optional
+ *    timeout as value.
+ *
+ *  The timeout of a created job overwrites the specific job timeout which overwrites the
+ *    'handlerTimeout' option.
+ */
 export class JobQueueWorker {
   /**
    * @param {Postgres} sql
@@ -206,22 +253,6 @@ export class JobQueueWorker {
   }
 
   /**
-   * Uses this queue name and connection to add a job to the queue
-   *
-   * @public
-   * @param {JobInput} job
-   * @returns {Promise<number>}
-   */
-  addJob(job) {
-    if (this.name && !job.name) {
-      // If this JobQueueWorker has a name, and the job input doesn't use that name.
-      job.name = this.name;
-    }
-
-    return addJobToQueue(this.sql, job);
-  }
-
-  /**
    * @private
    */
   run() {
@@ -287,11 +318,35 @@ export class JobQueueWorker {
       eventStart(event, `job.handler.${jobData.name}`);
 
       try {
-        let handlerPromise;
+        let handlerFn = this.jobHandler;
+        let timeout = jobData.timeout ?? this.handlerTimeout;
+
         if (jobData.name === COMPAS_RECURRING_JOB) {
-          handlerPromise = handleCompasRecurring(event, sql, jobData);
-        } else {
-          handlerPromise = this.jobHandler(event, sql, jobData);
+          handlerFn = handleCompasRecurring;
+        } else if (
+          typeof handlerFn !== "function" &&
+          isPlainObject(handlerFn) &&
+          typeof handlerFn[jobData.name] === "function"
+        ) {
+          handlerFn = handlerFn[jobData.name];
+        } else if (
+          typeof handlerFn !== "function" &&
+          isPlainObject(handlerFn) &&
+          isPlainObject(handlerFn[jobData.name]) &&
+          typeof handlerFn[jobData.name].handler === "function"
+        ) {
+          handlerFn = handlerFn[jobData.name].handler;
+          timeout =
+            handlerFn[jobData.name].timeout ??
+            jobData.timeout ??
+            this.handlerTimeout;
+        } else if (typeof handlerFn !== "function") {
+          handlerFn = (event) => {
+            event.log.info({
+              message: "No handler registered for the following job.",
+              jobData,
+            });
+          };
         }
 
         await Promise.race([
@@ -299,9 +354,9 @@ export class JobQueueWorker {
             setTimeout(() => {
               abortController.abort();
               reject(AppError.serverError("queue.handlerTimeout"));
-            }, this.handlerTimeout);
+            }, timeout);
           }),
-          handlerPromise,
+          handlerFn(event, sql, jobData),
         ]);
       } catch (err) {
         event.log.error({
@@ -334,7 +389,37 @@ export class JobQueueWorker {
 }
 
 /**
- * Add a new item to the job queue.
+ * @see JobQueueWorker
+ *
+ * Add an event to the job queue.
+ * Use this if the default priority is important, like sending the user an email to
+ *    verify their email. Runs with priority '2', the only higher priority values are
+ *    priority '0' and '1'.
+ *
+ * Custom timeouts can't be described via this mechanism.
+ *
+ * @since 0.1.0
+ *
+ * @param {Postgres} sql
+ * @param {string} eventName
+ * @param {object} data
+ * @returns {Promise<number>}
+ */
+export async function addEventToQueue(sql, eventName, data) {
+  const [result] = await queries.jobInsert(sql, {
+    data,
+    name: eventName,
+    priority: 2,
+  });
+  return result?.id;
+}
+
+/**
+ * @see JobQueueWorker
+ *
+ * Add a new job to the queue.
+ * Use this for normal jobs or to customize the job priority.
+ * The default priority is '5'.
  *
  * @since 0.1.0
  *
@@ -343,17 +428,68 @@ export class JobQueueWorker {
  * @returns {Promise<number>}
  */
 export async function addJobToQueue(sql, job) {
+  if (isNil(job.priority)) {
+    job.priority = 5;
+  }
+
   const [result] = await queries.jobInsert(sql, {
     ...job,
     name: job.name ?? environment.APP_NAME,
+
+    // Always overwrite the timeout
+    handlerTimeout: null,
   });
   return result?.id;
 }
 
 /**
+ * @see JobQueueWorker
+ *
+ * Add a new job to the queue.
+ * Use this for normal jobs or to customize the job priority.
+ * The default priority is '5'.
+ *
+ * The timeout value must be an integer higher than 10. The timeout value represents the
+ *    number of milliseconds the handler may run, before the 'InsightEvent' is aborted.
+ *
+ * @since 0.1.0
+ *
+ * @param {Postgres} sql
+ * @param {JobInput} job
+ * @param {number} timeout
+ * @returns {Promise<number>}
+ */
+export async function addJobWithCustomTimeoutToQueue(sql, job, timeout) {
+  if (
+    isNaN(timeout) ||
+    !isFinite(timeout) ||
+    !Number.isInteger(timeout) ||
+    timeout < 10
+  ) {
+    throw new TypeError(
+      "Argument 'timeout' should be an integer value higher than 10. Timeout value represents milliseconds.",
+    );
+  }
+
+  if (isNil(job.priority)) {
+    job.priority = 5;
+  }
+
+  const [result] = await queries.jobInsert(sql, {
+    ...job,
+    name: job.name ?? environment.APP_NAME,
+    handlerTimeout: timeout,
+  });
+  return result?.id;
+}
+
+/**
+ * @see JobQueueWorker
+ *
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
  * If exists will update the interval.
+ * The default priority is '5', which is equal to other jobs.
  *
  * @since 0.1.0
  *
@@ -365,7 +501,7 @@ export async function addRecurringJobToQueue(
   sql,
   { name, priority, interval },
 ) {
-  priority = priority || 1;
+  priority = priority || 5;
 
   const existingJobs = await queueQueries.getRecurringJobForName(sql, name);
 

@@ -59,7 +59,7 @@ test("store/queue", (t) => {
   });
 
   t.test("add normal job returns id", async (t) => {
-    const id = await qw.addJob({ name: "job1" });
+    const id = await addJobToQueue(sql, { name: "job1" });
     t.ok(!isNil(id));
   });
 
@@ -74,7 +74,7 @@ test("store/queue", (t) => {
     const d = new Date();
     d.setSeconds(d.getSeconds() + 1);
 
-    const id = await qw.addJob({ name: "job1", scheduledAt: d });
+    const id = await addJobToQueue(sql, { name: "job1", scheduledAt: d });
     t.ok(!isNil(id));
   });
 

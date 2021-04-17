@@ -41,7 +41,9 @@ export { FileCache } from "./src/file-cache.js";
 
 export {
   JobQueueWorker,
+  addEventToQueue,
   addJobToQueue,
+  addJobWithCustomTimeoutToQueue,
   addRecurringJobToQueue,
 } from "./src/queue.js";
 

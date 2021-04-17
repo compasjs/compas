@@ -18,6 +18,7 @@ const jobFieldSet = new Set([
   "name",
   "data",
   "retryCount",
+  "handlerTimeout",
   "createdAt",
   "updatedAt",
 ]);
@@ -34,11 +35,11 @@ export function jobFields(tableName = "j.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"isComplete", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+      `${tableName}"isComplete", ${tableName}"handlerTimeout", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"isComplete", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+    `${tableName}"id", ${tableName}"isComplete", ${tableName}"handlerTimeout", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /**
@@ -447,11 +448,11 @@ export function jobInsertValues(insert, options = {}) {
     checkFieldsInSet("job", "insert", jobFieldSet, it);
     q.append(query`(
 ${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.isComplete ?? false}, ${it.priority ?? 0}, ${it.retryCount ?? 0}, ${
-      it.name ?? null
-    }, ${it.scheduledAt ?? new Date()}, ${JSON.stringify(it.data ?? {})}, ${
-      it.createdAt ?? new Date()
-    }, ${it.updatedAt ?? new Date()}
+${it.isComplete ?? false}, ${it.handlerTimeout ?? null}, ${it.priority ?? 0}, ${
+      it.retryCount ?? 0
+    }, ${it.name ?? null}, ${it.scheduledAt ?? new Date()}, ${JSON.stringify(
+      it.data ?? {},
+    )}, ${it.createdAt ?? new Date()}, ${it.updatedAt ?? new Date()}
 )`);
     if (i !== insert.length - 1) {
       q.append(query`, `);
@@ -472,6 +473,10 @@ export function jobUpdateSet(update) {
   if (update.isComplete !== undefined) {
     strings.push(`, "isComplete" = `);
     values.push(update.isComplete ?? false);
+  }
+  if (update.handlerTimeout !== undefined) {
+    strings.push(`, "handlerTimeout" = `);
+    values.push(update.handlerTimeout ?? null);
   }
   if (update.priority !== undefined) {
     strings.push(`, "priority" = `);
@@ -671,6 +676,7 @@ export function transformJob(values, builder = {}) {
     if (typeof value.scheduledAt === "string") {
       value.scheduledAt = new Date(value.scheduledAt);
     }
+    value.handlerTimeout = value.handlerTimeout ?? undefined;
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
