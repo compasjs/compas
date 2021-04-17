@@ -1,6 +1,27 @@
 import { AppError } from "@compas/stdlib";
+import coBody from "co-body";
 import formidable from "formidable";
-import koaBody from "koa-body";
+
+/**
+ * @typedef {object} KoaBodyOptions
+ * @property {boolean|undefined} [urlencoded]
+ * @property {boolean|undefined} [json]
+ * @property {boolean|undefined} [text]
+ * @property {string|undefined} [encoding]
+ * @property {object|undefined} [queryString] Options for the 'qs' package
+ * @property {string|undefined} [jsonLimit]
+ * @property {string|undefined} [textLimit]
+ * @property {string|undefined} [formLimit]
+ * @property {string[]|undefined} [parsedMethods]
+ *
+ */
+
+const jsonTypes = [
+  "application/json",
+  "application/json-patch+json",
+  "application/vnd.api+json",
+  "application/csp-report",
+];
 
 /**
  * Creates a body parser and a body parser with multipart enabled.
@@ -8,18 +29,90 @@ import koaBody from "koa-body";
  *
  * @since 0.1.0
  *
- * @param {IKoaBodyOptions} [bodyOpts={}] Options that will be passed to koa-body
+ * @param {KoaBodyOptions} [bodyOpts={}] Options that will be passed to koa-body
  * @param {IFormidableBodyOptions} [multipartBodyOpts={}] Options that will be passed to
  *   formidable
  * @returns {BodyParserPair}
  */
 export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
-  // disable formidable
-  bodyOpts.multipart = false;
-
   return {
     bodyParser: koaBody(bodyOpts),
     multipartBodyParser: koaFormidable(multipartBodyOpts),
+  };
+}
+
+/**
+ * Wrapper around Co-Body.
+ * Forked from "Koa-Body" with original license:
+ * https://github.com/dlau/koa-body/blob/a6ca8c78015e326154269d272410a11bf40e1a07/LICENSE
+ *
+ *
+ * @param {KoaBodyOptions} [opts={}] Options that will be passed to koa-body
+ */
+function koaBody(opts = {}) {
+  opts.urlencoded = opts.urlencoded ?? true;
+  opts.json = opts.json ?? true;
+  opts.text = opts.text ?? true;
+
+  opts.encoding = opts.encoding ?? "utf-8";
+  opts.queryString = opts.queryString ?? null;
+
+  opts.jsonLimit = opts.jsonLimit ?? "1mb";
+  opts.formLimit = opts.formLimit ?? "1mb";
+  opts.textLimit = opts.textLimit ?? "56kb";
+
+  opts.parsedMethods = opts.parsedMethods ?? ["POST", "PUT", "PATCH"];
+
+  return async function (ctx, next) {
+    let bodyResult;
+    // only parse the body on specifically chosen methods
+    if (opts.parsedMethods.includes(ctx.method.toUpperCase())) {
+      try {
+        if (opts.json && ctx.is(jsonTypes)) {
+          bodyResult = await coBody.json(ctx, {
+            encoding: opts.encoding,
+            limit: opts.jsonLimit,
+            strict: true,
+            returnRawBody: false,
+          });
+        } else if (opts.urlencoded && ctx.is("urlencoded")) {
+          bodyResult = await coBody.form(ctx, {
+            encoding: opts.encoding,
+            limit: opts.formLimit,
+            queryString: opts.queryString,
+            returnRawBody: false,
+          });
+        } else if (opts.text && ctx.is("text/*")) {
+          bodyResult = await coBody.text(ctx, {
+            encoding: opts.encoding,
+            limit: opts.textLimit,
+            returnRawBody: false,
+          });
+        }
+      } catch (parsingError) {
+        if (parsingError instanceof SyntaxError) {
+          delete parsingError.stack;
+          throw AppError.validationError("error.server.unsupportedBodyFormat", {
+            name: parsingError.name,
+            message: parsingError.message,
+            fileName: parsingError.fileName,
+            lineNumber: parsingError.lineNumber,
+            columnNumber: parsingError.columnNumber,
+            rawBody: parsingError.body,
+          });
+        } else {
+          throw AppError.validationError(
+            "error.server.unsupportedBodyFormat",
+            {},
+            parsingError,
+          );
+        }
+      }
+    }
+
+    ctx.request.body = bodyResult;
+
+    return next();
   };
 }
 

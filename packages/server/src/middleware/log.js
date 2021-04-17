@@ -64,8 +64,15 @@ export function logMiddleware(options) {
     await next();
 
     let counter;
-    if (!isNil(ctx.response.length)) {
-      logInfo(ctx, startTime, ctx.response.length);
+
+    let responseLength = undefined;
+    try {
+      responseLength = ctx.response.length;
+    } catch {
+      // May throw on circular objects
+    }
+    if (!isNil(responseLength)) {
+      logInfo(ctx, startTime, responseLength);
       return;
     } else if (ctx.body && ctx.body.readable) {
       const body = ctx.body;
