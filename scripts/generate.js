@@ -54,7 +54,6 @@ async function main() {
   });
 
   applyAllLocalGenerate(app);
-  generateSettings;
 
   await app.generate(generateSettings.validators);
   await app.generate(generateSettings.bench);

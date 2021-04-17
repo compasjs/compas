@@ -433,7 +433,7 @@ if (!isNil(builder.${key}.limit)) {
     // arrays with values to a query part & if a query part exists, add 'INTERSECT'.
     let sqlCastType = typeTable[type.keys[ownKey].type];
     if (typeof sqlCastType === "function") {
-      sqlCastType = sqlCastType(type.keys[ownKey].type, false);
+      sqlCastType = sqlCastType(type.keys[ownKey], true);
     }
     const traverseJoinPart = js`
          if (builder.via${upperCaseFirst(relationKey)}) {
