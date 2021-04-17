@@ -284,6 +284,8 @@ export class JobQueueWorker {
       const savepointId = uuid().replace(/-/g, "_");
       await sql`SAVEPOINT ${sql(savepointId)}`;
 
+      eventStart(event, `job.handler.${jobData.name}`);
+
       try {
         let handlerPromise;
         if (jobData.name === COMPAS_RECURRING_JOB) {
@@ -458,8 +460,6 @@ async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
  * @param {StoreJob} job
  */
 export async function handleCompasRecurring(event, sql, job) {
-  eventStart(event, "queueHandler.compasRecurring");
-
   const {
     scheduledAt,
     priority,
@@ -487,8 +487,6 @@ export async function handleCompasRecurring(event, sql, job) {
       interval,
     },
   });
-
-  eventStop(event);
 }
 
 /**
