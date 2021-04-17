@@ -2776,9 +2776,9 @@ export function anonymousValidator1836970168(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"requestBodyType": "json"|"form-data", }|undefined}
+ * @returns {{"requestBodyType"?: undefined|"json"|"form-data", }|undefined}
  */
-export function anonymousValidator1234860786(
+export function anonymousValidator1139247391(
   value,
   propertyPath,
   errors = [],
@@ -2797,7 +2797,9 @@ export function anonymousValidator1234860786(
   const result = Object.create(null);
   if (
     value["requestBodyType"] !== "json" &&
-    value["requestBodyType"] !== "form-data"
+    value["requestBodyType"] !== "form-data" &&
+    value["requestBodyType"] !== undefined &&
+    value["requestBodyType"] !== null
   ) {
     const parentType = "string";
     const oneOf = ["json", "form-data"];
@@ -2869,7 +2871,7 @@ export function anonymousValidator708039854(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {}, "internalSettings": {"requestBodyType": "json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|CodeGenType, "params"?: undefined|CodeGenType, "body"?: undefined|CodeGenType, "files"?: undefined|CodeGenType, "response"?: undefined|CodeGenType, }|undefined}
+ * @returns {{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|CodeGenType, "params"?: undefined|CodeGenType, "body"?: undefined|CodeGenType, "files"?: undefined|CodeGenType, "response"?: undefined|CodeGenType, }|undefined}
  */
 export function anonymousValidator1390215584(
   value,
@@ -2941,7 +2943,7 @@ export function anonymousValidator1390215584(
     `${propertyPath}.validator`,
     errors,
   );
-  result["internalSettings"] = anonymousValidator1234860786(
+  result["internalSettings"] = anonymousValidator1139247391(
     value["internalSettings"],
     `${propertyPath}.internalSettings`,
     errors,

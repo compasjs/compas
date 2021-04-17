@@ -82,6 +82,7 @@ export function getPrimaryKeyWithType(type) {
   const entry = Object.entries(type.keys).find(
     (it) => it[1].sql?.primary || it[1].reference?.sql?.primary,
   );
+
   return {
     key: entry[0],
     field: entry[1].reference ?? entry[1],

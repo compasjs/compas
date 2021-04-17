@@ -395,7 +395,7 @@ function getTypes(T) {
     // Needs to be in sync with `recursivelyRemoveInternalFields`
     internalSettings: T.object()
       .keys({
-        requestBodyType: T.string().oneOf("json", "form-data"),
+        requestBodyType: T.string().oneOf("json", "form-data").optional(),
       })
       .loose()
       .default(`{ "requestBodyType": "json" }`),

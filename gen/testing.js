@@ -267,5 +267,11 @@ export function applyTestingSqlStructure(app) {
       .relations(
         T.oneToOne("category", T.reference("sql", "category"), "meta"),
       ),
+
+    // Reference to number primary key
+    T.object("jobStatusAggregate")
+      .keys({})
+      .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
+      .enableQueries(),
   );
 }
