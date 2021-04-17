@@ -178,6 +178,14 @@ export function applyTestingServerStructure(app) {
     R.post("/file", "setFile").files({ myFile: T.file() }).response({
       success: true,
     }),
+
+    R.post("/validate", "validatorShim")
+      .body({
+        anyOf: T.anyOf().values(T.bool(), T.string()),
+      })
+      .response({
+        success: true,
+      }),
   );
 }
 

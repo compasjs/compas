@@ -461,6 +461,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                }
                subErrors.splice(errorCount + 1, subErrors.length - errorCount);
                errorCount = subErrors.length;
+               delete subErrors[errorCount-1].stack;
             `;
         }
         return js`
@@ -475,6 +476,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                  "return ",
                )}
             } catch (e) {
+               delete e.stack;
                subErrors.push(e);
             }
          `;

@@ -242,6 +242,7 @@ export function anonymousValidator219305298(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   if (isNil(value) || typeof value !== "boolean") {
     const parentType = "boolean";
     subErrors.push({
@@ -255,12 +256,14 @@ export function anonymousValidator219305298(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator293751998(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
     info: { propertyPath, errors: subErrors },
@@ -1719,12 +1722,14 @@ export function anonymousValidator2139331922(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator815277285(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
     info: { propertyPath, errors: subErrors },
@@ -3028,84 +3033,98 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator20588538(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1312175728(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator17476225(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator2019605291(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator508679687(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1377926226(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1441913722(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator17105276(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator127554530(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator243901689(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1672152398(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1836970168(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1390215584(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
     info: { propertyPath, errors: subErrors },
@@ -4047,48 +4066,56 @@ export function anonymousValidator1080303482(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator564383959(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator210116167(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1331366345(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator2008271825(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator347072999(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator914281176(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   result = anonymousValidator451802958(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
     return result;
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
     info: { propertyPath, errors: subErrors },
