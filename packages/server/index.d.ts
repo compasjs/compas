@@ -1043,124 +1043,52 @@ export interface SessionOptions {
 // ===========
 // END OF @types
 // ============
-// From koa-body/index.d.ts
-// https://github.com/dlau/koa-body/tree/a6ca8c78015e326154269d272410a11bf40e1a07 The MIT
-// License (MIT)  Copyright (c) 2014 Charlike Mike Reagent <mameto_100@mail.bg> and Daryl Lau
-// <daryl@weak.io>  Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"), to deal in the
-// Software without restriction, including without limitation the rights to use, copy, modify,
-// merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the following conditions:
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-// OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/**
- * @private
- */
-interface IKoaBodyOptions {
+interface KoaBodyOptions {
   /**
-   * {Boolean} Patch request body to Node's ctx.req, default false
-   *
-   * Note: You can patch request body to Node or Koa in same time if you want.
+   * Defaults to 'true'
    */
-  patchNode?: boolean;
+  urlencoded?: boolean | undefined;
 
   /**
-   * {Boolean} Patch request body to Koa's ctx.request, default true
-   *
-   * Note: You can patch request body to Node or Koa in same time if you want.
+   * Defaults to 'true'
    */
-  patchKoa?: boolean;
+  json?: boolean | undefined;
 
   /**
-   * {String|Integer} The byte (if integer) limit of the JSON body, default 1mb
+   * Defaults to 'true'
    */
-  jsonLimit?: string | number;
+  text?: boolean | undefined;
 
   /**
-   * {String|Integer} The byte (if integer) limit of the form body, default 56kb
+   * Defaults to 'utf-8'
    */
-  formLimit?: string | number;
+  encoding?: string | undefined;
 
   /**
-   * {String|Integer} The byte (if integer) limit of the text body, default 56kb
+   * See 'https://github.com/ljharb/qs' for available options
    */
-  textLimit?: string | number;
+  queryString?: any | undefined;
 
   /**
-   * {String} Sets encoding for incoming form fields, default utf-8
+   * Defaults to '1mb'
    */
-  encoding?: string;
+  jsonLimit?: string | undefined;
 
   /**
-   * {Boolean} Parse urlencoded bodies, default true
+   * Defaults to '1mb'
    */
-  urlencoded?: boolean;
+  formLimit?: string | undefined;
 
   /**
-   * {Boolean} Parse text bodies, default true
+   * Defaults to '56kb'
    */
-  text?: boolean;
+  textLimit?: string | undefined;
 
   /**
-   * {Boolean} Parse json bodies, default true
+   * Defaults to '["POST", "PUT", "PATCH"]'
    */
-  json?: boolean;
-
-  /**
-   * Toggles co-body strict mode; if true, only parses arrays or objects, default true
-   */
-  jsonStrict?: boolean;
-
-  /**
-   * Toggles co-body returnRawBody mode; if true,
-   * the raw body will be available using a Symbol for 'unparsedBody'.
-   *
-   * ```
-   // Either:
-   const unparsed = require('koa-body/unparsed.js');
-   const unparsed = Symbol.for('unparsedBody');
-
-   // Then later, to access:
-   ctx.request.body[unparsed]
-   ```
-   * default false
-   */
-  includeUnparsed?: boolean;
-
-  /**
-   * {Function} Custom error handle, if throw an error, you can customize the response -
-   * onError(error, context), default will throw
-   */
-  onError?: (err: Error, ctx: Context) => void;
-
-  /**
-   * {Boolean} If enabled, don't parse GET, HEAD, DELETE requests; deprecated.
-   *
-   * GET, HEAD, and DELETE requests have no defined semantics for the request body,
-   * but this doesn't mean they may not be valid in certain use cases.
-   * koa-body is strict by default
-   *
-   * see http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-19#section-6.3
-   */
-  strict?: boolean;
-
-  /**
-   * {String[]} What HTTP methods to enable body parsing for; should be used in preference to
-   * strict mode.
-   *
-   * GET, HEAD, and DELETE requests have no defined semantics for the request body,
-   * but this doesn't mean they may not be valid in certain use cases.
-   * koa-body will only parse HTTP request bodies for POST, PUT, and PATCH by default
-   *
-   * see http://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-19#section-6.3
-   */
-  parsedMethods?: string[];
+  parsedMethods?: string[] | undefined;
 }
 
 /**
@@ -1206,10 +1134,6 @@ interface IFormidableBodyOptions {
    */
   hash?: boolean;
 }
-
-// ==========
-// LICENSE OF below as in ./LICENSE.md OR this project root
-// ===========
 
 /**
  * Extract data for the response from the AppError data
@@ -1331,7 +1255,7 @@ export interface BodyParserPair {
  * Note that koa-body parses url-encoded, form data, json and text by default
  */
 export function createBodyParsers(
-  bodyOptions?: IKoaBodyOptions,
+  bodyOptions?: KoaBodyOptions,
   multipartBodyOptions?: IFormidableBodyOptions,
 ): BodyParserPair;
 
