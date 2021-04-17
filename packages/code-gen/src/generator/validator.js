@@ -475,6 +475,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                  "return ",
                )}
             } catch (e) {
+               delete e.stack;
                subErrors.push(e);
             }
          `;
