@@ -116,11 +116,6 @@ const queueQueries = {
 };
 
 /**
- * @see addEventToQueue
- * @see addJobToQueue
- * @see addRecurringJobToQueue
- * @see addJobWithCustomTimeoutToQueue
- *
  * The queue system is based on 'static' units of work to be done in the background.
  * It supports the following:
  * - Job priority's. Lower value means higher priority.
@@ -162,6 +157,11 @@ const queueQueries = {
  *  The timeout of a created job overwrites the specific job timeout which overwrites the
  *    'handlerTimeout' option.
  *  Note that a lower priority value means a higher priority.
+ *
+ * @see addEventToQueue
+ * @see addJobToQueue
+ * @see addRecurringJobToQueue
+ * @see addJobWithCustomTimeoutToQueue
  */
 export class JobQueueWorker {
   /**
@@ -395,8 +395,6 @@ export class JobQueueWorker {
 }
 
 /**
- * @see JobQueueWorker
- *
  * Add an event to the job queue.
  * Use this if the default priority is important, like sending the user an email to
  *    verify their email. Runs with priority '2', the only higher priority values are
@@ -404,6 +402,7 @@ export class JobQueueWorker {
  *
  * Custom timeouts can't be described via this mechanism.
  *
+ * @see JobQueueWorker
  * @since 0.1.0
  *
  * @param {Postgres} sql
@@ -421,12 +420,11 @@ export async function addEventToQueue(sql, eventName, data) {
 }
 
 /**
- * @see JobQueueWorker
- *
  * Add a new job to the queue.
  * Use this for normal jobs or to customize the job priority.
  * The default priority is '5'.
  *
+ * @see JobQueueWorker
  * @since 0.1.0
  *
  * @param {Postgres} sql
@@ -449,8 +447,6 @@ export async function addJobToQueue(sql, job) {
 }
 
 /**
- * @see JobQueueWorker
- *
  * Add a new job to the queue.
  * Use this for normal jobs or to customize the job priority.
  * The default priority is '5'.
@@ -458,6 +454,7 @@ export async function addJobToQueue(sql, job) {
  * The timeout value must be an integer higher than 10. The timeout value represents the
  *    number of milliseconds the handler may run, before the 'InsightEvent' is aborted.
  *
+ * @see JobQueueWorker
  * @since 0.1.0
  *
  * @param {Postgres} sql
@@ -490,13 +487,12 @@ export async function addJobWithCustomTimeoutToQueue(sql, job, timeout) {
 }
 
 /**
- * @see JobQueueWorker
- *
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
  * If exists will update the interval.
  * The default priority is '4', which is a bit more important than other jobs.
  *
+ * @see JobQueueWorker
  * @since 0.1.0
  *
  * @param {Postgres} sql
