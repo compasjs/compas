@@ -1,7 +1,6 @@
-import { mainTestFn, test, newTestEvent } from "@compas/cli";
+import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { eventStart, eventStop } from "@compas/insight";
 import { AppError, isNil } from "@compas/stdlib";
-import { timeout } from "../../../test/config.js";
 import { queries } from "./generated.js";
 import {
   addEventToQueue,
