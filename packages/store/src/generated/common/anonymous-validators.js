@@ -48,6 +48,7 @@ const objectKeys1781782332 = new Set([
   "name",
   "data",
   "retryCount",
+  "handlerTimeout",
   "createdAt",
   "updatedAt",
 ]);
@@ -1173,6 +1174,59 @@ export function anonymousValidator1174857441(
  * @param {string} parentType
  * @returns {number|undefined}
  */
+export function anonymousValidator326842456(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "number",
+) {
+  if (isNil(value)) {
+    return 0;
+  }
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (!Number.isInteger(value)) {
+    throw AppError.validationError(`validator.${parentType}.integer`, {
+      propertyPath,
+    });
+  }
+  if (value < 0) {
+    const min = 0;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {*|undefined}
+ */
+export function anonymousValidator1471603504(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "any",
+) {
+  if (isNil(value)) {
+    return {};
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {number|undefined}
+ */
 export function anonymousValidator1103865757(
   value,
   propertyPath,
@@ -1213,16 +1267,33 @@ export function anonymousValidator1103865757(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {*|undefined}
+ * @returns {undefined|number|undefined}
  */
-export function anonymousValidator1471603504(
+export function anonymousValidator1065942849(
   value,
   propertyPath,
   errors = [],
-  parentType = "any",
+  parentType = "number",
 ) {
   if (isNil(value)) {
-    return {};
+    return value;
+  }
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (!Number.isInteger(value)) {
+    throw AppError.validationError(`validator.${parentType}.integer`, {
+      propertyPath,
+    });
+  }
+  if (value < 1000) {
+    const min = 1000;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
   }
   return value;
 }
@@ -1231,7 +1302,7 @@ export function anonymousValidator1471603504(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "createdAt": Date, "updatedAt": Date, }|undefined}
+ * @returns {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "handlerTimeout"?: undefined|number, "createdAt": Date, "updatedAt": Date, }|undefined}
  */
 export function anonymousValidator1781782332(
   value,
@@ -1268,7 +1339,7 @@ export function anonymousValidator1781782332(
     `${propertyPath}.isComplete`,
     errors,
   );
-  result["priority"] = anonymousValidator1103865757(
+  result["priority"] = anonymousValidator326842456(
     value["priority"],
     `${propertyPath}.priority`,
     errors,
@@ -1291,6 +1362,11 @@ export function anonymousValidator1781782332(
   result["retryCount"] = anonymousValidator1103865757(
     value["retryCount"],
     `${propertyPath}.retryCount`,
+    errors,
+  );
+  result["handlerTimeout"] = anonymousValidator1065942849(
+    value["handlerTimeout"],
+    `${propertyPath}.handlerTimeout`,
     errors,
   );
   result["createdAt"] = anonymousValidator1389014320(

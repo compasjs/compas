@@ -228,6 +228,7 @@ export interface FileGroup {
   updatedAt: Date;
   deletedAt: Date;
 }
+
 /**
  * Update the order of the provided id's in relation to each other.
  * This function does not check if all files are in the same group.
@@ -306,7 +307,17 @@ export interface JobData {
   name: string;
   data: any;
   priority: number;
+  handlerTimeout?: number;
+  retryCount: number;
 }
+
+/**
+ * Get all uncompleted jobs from the queue.
+ * Useful for testing if jobs are created.
+ */
+export function getUncompletedJobsByName(
+  sql: Postgres,
+): Promise<Record<string, JobData[]>>;
 
 /**
  * Job creation parameters
@@ -330,12 +341,26 @@ export interface JobInput {
   name: string;
 }
 
+export type JobQueueHandlerFunction = (
+  event: insight.InsightEvent,
+  sql: Postgres,
+  data: JobData,
+) => void | Promise<void>;
+
 export interface JobQueueWorkerOptions {
-  handler: (
-    event: insight.InsightEvent,
-    sql: Postgres,
-    data: JobData,
-  ) => void | Promise<void>;
+  /**
+   * Set a global handler, a handler based on job name, or also specify a different timeout
+   * for the specific job handler.
+   * If no timeout for a specific handler is provided, the handlerTimeout value is used.
+   * The timeout should be in milliseconds.
+   */
+  handler:
+    | JobQueueHandlerFunction
+    | Record<
+        string,
+        | JobQueueHandlerFunction
+        | { handler: JobQueueHandlerFunction; timeout: number }
+      >;
 
   /**
    * Determine the poll interval in milliseconds if the queue was empty. Defaults to 1500 ms
@@ -397,12 +422,6 @@ export class JobQueueWorker {
    * provided time range in milliseconds
    */
   averageTimeToCompletion(startDate: Date, endDate: Date): Promise<number>;
-
-  /**
-   * Uses this queue name and connection to add a job to the queue.
-   * If name is already set, it will not be overwritten
-   */
-  addJob(job: JobInput): Promise<number>;
 }
 
 /**

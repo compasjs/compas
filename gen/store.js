@@ -99,11 +99,12 @@ export function applyStoreStructure(app) {
       .keys({
         id: T.number().primary(),
         isComplete: T.bool().default("false").searchable(),
-        priority: T.number().default("0"),
+        priority: T.number().default("0").min(0),
         scheduledAt: T.date().defaultToNow().searchable(),
         name: T.string().searchable(),
         data: T.any().default("{}"),
         retryCount: T.number().default(0),
+        handlerTimeout: T.number().min(1000).optional(),
       })
       .enableQueries({ withDates: true }),
   );

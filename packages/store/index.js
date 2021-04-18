@@ -41,8 +41,11 @@ export { FileCache } from "./src/file-cache.js";
 
 export {
   JobQueueWorker,
+  addEventToQueue,
   addJobToQueue,
+  addJobWithCustomTimeoutToQueue,
   addRecurringJobToQueue,
+  getUncompletedJobsByName,
 } from "./src/queue.js";
 
 export { newSessionStore } from "./src/sessions.js";
