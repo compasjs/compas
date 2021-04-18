@@ -8,6 +8,36 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.130](https://github.com/compasjs/compas/releases/tag/v0.0.130)
+
+- build(deps): bump @babel/core from 7.13.14 to 7.13.15
+  ([#795](https://github.com/compasjs/compas/pull/795))
+- build(deps): bump @types/node from 14.14.37 to 14.14.41
+  ([#807](https://github.com/compasjs/compas/pull/807),
+  [#808](https://github.com/compasjs/compas/pull/808))
+- build(deps): bump eslint from 7.23.0 to 7.24.0
+  ([#798](https://github.com/compasjs/compas/pull/798))
+- build(deps): bump eslint-config-prettier from 8.1.0 to 8.2.0
+  ([#802](https://github.com/compasjs/compas/pull/802))
+- build(deps): bump postgres from 2.0.0-beta.4 to 2.0.0-beta.5
+  ([#799](https://github.com/compasjs/compas/pull/799))
+- feat(server): replace koa-body with just co-body
+  ([#812](https://github.com/compasjs/compas/pull/812))
+- feat(store): support specific job handlers and more timeout options
+  ([#816](https://github.com/compasjs/compas/pull/816))
+- fix(code-gen): fix sql type resolve call
+  ([#814](https://github.com/compasjs/compas/pull/814))
+- fix(code-gen): remove stacktraces from anyOf sub errors
+  ([#813](https://github.com/compasjs/compas/pull/813))
+- fix(store): call eventStart on event passed to handler
+  ([#815](https://github.com/compasjs/compas/pull/815))
+- fix(store): move 'see' jsdoc tags below the description
+
+The only breaking change is in the `JobQueueWorker` which doesn't have the
+`addJob` method. See
+[background jobs](https://compasjs.com/features/background-jobs.html) for more
+information on the current supported features.
+
 ### [v0.0.129](https://github.com/compasjs/compas/releases/tag/v0.0.129)
 
 - chore(ci): another attempt at auto syncing the docs repo
