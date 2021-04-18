@@ -133,13 +133,18 @@ const queueQueries = {
  * When to use which function of adding a job:
  * - addEventToQueue: use the queue as an 'external' message bus to do things based on
  *    user flows, like sending an verification email on when registering.
+ *    Jobs created will have a priority of '2'.
  *
  * - addJobToQueue: use the queue as background processing of defined units. Like
- *    converting a file to different formats, sending async or scheduled notifications
+ *    converting a file to different formats, sending async or scheduled notifications.
+ *    Jobs created will have a priority of '5'.
  *
  * - addRecurringJobToQueue: use the queue for recurring background processing, like
  *    cleaning up sessions, generating daily reports. The interval can be as low as a
  *    second.
+ *    Jobs created will have a priority of '4'. This means the recurring jobs are by
+ *    default more important than normal jobs. However there are no guarantees that jobs
+ *    are running exactly on the time they are scheduled.
  *
  * - addJobWithCustomTimeoutToQueue: when the unit of work is hard to define statically
  *    for the job. For example an external api that needs all information in a single
@@ -147,6 +152,7 @@ const queueQueries = {
  *    and is only known when the job is created. However, this sort of still enforces
  *    that the unit of work is related to some other property to consistently calculate a
  *    custom timeout.
+ *    These jobs have a priority of '5' by default.
  *
  * The handler can be passed in in 2 ways;
  *  - A single handler dispatching over the different jobs in application code
@@ -155,6 +161,7 @@ const queueQueries = {
  *
  *  The timeout of a created job overwrites the specific job timeout which overwrites the
  *    'handlerTimeout' option.
+ *  Note that a lower priority value means a higher priority.
  */
 export class JobQueueWorker {
   /**
