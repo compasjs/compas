@@ -45,6 +45,7 @@ export {
   addJobToQueue,
   addJobWithCustomTimeoutToQueue,
   addRecurringJobToQueue,
+  getUncompletedJobsByName,
 } from "./src/queue.js";
 
 export { newSessionStore } from "./src/sessions.js";

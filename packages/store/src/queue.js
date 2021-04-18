@@ -7,6 +7,7 @@ import {
   uuid,
 } from "@compas/stdlib";
 import { queries } from "./generated.js";
+import { queryJob } from "./generated/database/job.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
 
@@ -319,27 +320,25 @@ export class JobQueueWorker {
 
       try {
         let handlerFn = this.jobHandler;
-        let timeout = jobData.timeout ?? this.handlerTimeout;
+        let handlerTimeout = jobData.handlerTimeout ?? this.handlerTimeout;
 
         if (jobData.name === COMPAS_RECURRING_JOB) {
           handlerFn = handleCompasRecurring;
         } else if (
-          typeof handlerFn !== "function" &&
           isPlainObject(handlerFn) &&
           typeof handlerFn[jobData.name] === "function"
         ) {
           handlerFn = handlerFn[jobData.name];
         } else if (
-          typeof handlerFn !== "function" &&
           isPlainObject(handlerFn) &&
           isPlainObject(handlerFn[jobData.name]) &&
           typeof handlerFn[jobData.name].handler === "function"
         ) {
-          handlerFn = handlerFn[jobData.name].handler;
-          timeout =
+          handlerTimeout =
+            jobData.handlerTimeout ??
             handlerFn[jobData.name].timeout ??
-            jobData.timeout ??
             this.handlerTimeout;
+          handlerFn = handlerFn[jobData.name].handler;
         } else if (typeof handlerFn !== "function") {
           handlerFn = (event) => {
             event.log.info({
@@ -354,7 +353,7 @@ export class JobQueueWorker {
             setTimeout(() => {
               abortController.abort();
               reject(AppError.serverError("queue.handlerTimeout"));
-            }, timeout);
+            }, handlerTimeout);
           }),
           handlerFn(event, sql, jobData),
         ]);
@@ -489,7 +488,7 @@ export async function addJobWithCustomTimeoutToQueue(sql, job, timeout) {
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
  * If exists will update the interval.
- * The default priority is '5', which is equal to other jobs.
+ * The default priority is '4', which is a bit more important than other jobs.
  *
  * @since 0.1.0
  *
@@ -501,7 +500,7 @@ export async function addRecurringJobToQueue(
   sql,
   { name, priority, interval },
 ) {
-  priority = priority || 5;
+  priority = priority || 4;
 
   const existingJobs = await queueQueries.getRecurringJobForName(sql, name);
 
@@ -649,4 +648,31 @@ export function getNextScheduledAt(scheduledAt, interval) {
   );
 
   return nextSchedule;
+}
+
+/**
+ * Get all uncompleted jobs from the queue.
+ * Useful for testing if jobs are created.
+ *
+ * @param {Postgres} sql
+ * @returns {Promise<Object<string, QueryResultStoreJob[]>>}
+ */
+export async function getUncompletedJobsByName(sql) {
+  const jobs = await queryJob({
+    where: {
+      isComplete: false,
+    },
+  }).exec(sql);
+
+  const result = {};
+
+  for (const job of jobs) {
+    if (isNil(result[job.name])) {
+      result[job.name] = [];
+    }
+
+    result[job.name].push(job);
+  }
+
+  return result;
 }

@@ -307,7 +307,17 @@ export interface JobData {
   name: string;
   data: any;
   priority: number;
+  handlerTimeout?: number;
+  retryCount: number;
 }
+
+/**
+ * Get all uncompleted jobs from the queue.
+ * Useful for testing if jobs are created.
+ */
+export function getUncompletedJobsByName(
+  sql: Postgres,
+): Promise<Record<string, JobData[]>>;
 
 /**
  * Job creation parameters

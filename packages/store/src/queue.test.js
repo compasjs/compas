@@ -1,11 +1,15 @@
 import { mainTestFn, test, newTestEvent } from "@compas/cli";
 import { eventStart, eventStop } from "@compas/insight";
 import { AppError, isNil } from "@compas/stdlib";
+import { timeout } from "../../../test/config.js";
 import { queries } from "./generated.js";
 import {
+  addEventToQueue,
   addJobToQueue,
+  addJobWithCustomTimeoutToQueue,
   addRecurringJobToQueue,
   getNextScheduledAt,
+  getUncompletedJobsByName,
   handleCompasRecurring,
   JobQueueWorker,
 } from "./queue.js";
@@ -186,6 +190,131 @@ test("store/queue", (t) => {
 
     t.equal(dbJob.isComplete, true);
     t.equal(dbJob.retryCount, 1);
+  });
+
+  t.test("object job handler", async (t) => {
+    // Setup settings
+    qw.handlerTimeout = 10;
+    qw.maxRetryCount = 10;
+    qw.jobHandler = {
+      "test.object.handler": async () => {
+        await promiseSleep(5);
+      },
+      "test.object.handler2": {
+        handler: async () => {
+          await promiseSleep(11);
+        },
+        timeout: 15,
+      },
+    };
+
+    await addJobToQueue(sql, { name: "test.object.handler" });
+    qw.handleJob(0);
+    await promiseSleep(10);
+
+    await addJobToQueue(sql, { name: "test.object.handler2" });
+    qw.handleJob(0);
+    await promiseSleep(15);
+
+    await addJobToQueue(sql, { name: "test.object.handler.missingKey" });
+    qw.handleJob(0);
+    await promiseSleep(5);
+
+    const [job] = await queries.jobSelect(sql, { name: "test.object.handler" });
+    t.equal(job.isComplete, true);
+
+    const [job2] = await queries.jobSelect(sql, {
+      name: "test.object.handler2",
+    });
+    t.equal(job2.isComplete, true);
+
+    const [job3] = await queries.jobSelect(sql, {
+      name: "test.object.handler.missingKey",
+    });
+    t.equal(job3.isComplete, true);
+
+    t.log.info({
+      job3,
+      job2,
+      job,
+    });
+  });
+
+  t.test("addEventToQueue", async (t) => {
+    const name = "event.test.add";
+    const payload = { foo: true };
+    const initialJobs = await getUncompletedJobsByName(sql);
+
+    await addEventToQueue(sql, name, payload);
+    const currentJobs = await getUncompletedJobsByName(sql);
+
+    const job = currentJobs[name][initialJobs[name]?.length ?? 0];
+    t.ok(job);
+    t.equal(job.isComplete, false);
+    t.equal(job.priority, 2);
+    t.deepEqual(job.data, payload);
+  });
+
+  t.test("addJobToQueue", async (t) => {
+    const name = "job.test.add";
+    const payload = { foo: true };
+    const initialJobs = await getUncompletedJobsByName(sql);
+
+    await addJobToQueue(sql, {
+      name,
+      data: payload,
+    });
+    const currentJobs = await getUncompletedJobsByName(sql);
+
+    const job = currentJobs[name][initialJobs[name]?.length ?? 0];
+    t.ok(job);
+    t.equal(job.isComplete, false);
+    t.equal(job.priority, 5);
+    t.deepEqual(job.data, payload);
+  });
+
+  t.test("addRecurringJobToQueue", async (t) => {
+    const name = "job.recurring.test.add";
+    const internalName = "compas.job.recurring";
+    const initialJobs = await getUncompletedJobsByName(sql);
+
+    await addRecurringJobToQueue(sql, {
+      name,
+      interval: {
+        minutes: 1,
+      },
+    });
+    const currentJobs = await getUncompletedJobsByName(sql);
+
+    const job =
+      currentJobs[internalName][initialJobs[internalName]?.length ?? 0];
+    t.ok(job);
+    t.equal(job.isComplete, false);
+    t.equal(job.priority, 4);
+    t.deepEqual(job.data, { name, interval: { minutes: 1 } });
+  });
+
+  t.test("addJobWithCustomTimeoutToQueue", async (t) => {
+    const name = "job.test.add.recurring";
+    const payload = { foo: true };
+    const initialJobs = await getUncompletedJobsByName(sql);
+
+    await addJobWithCustomTimeoutToQueue(
+      sql,
+      {
+        name,
+        data: payload,
+      },
+      100,
+    );
+    const currentJobs = await getUncompletedJobsByName(sql);
+
+    const job = currentJobs[name][initialJobs[name]?.length ?? 0];
+    t.ok(job);
+    t.equal(job.isComplete, false);
+    t.equal(job.priority, 5);
+    t.equal(job.handlerTimeout, 100);
+    t.deepEqual(job.data, payload);
   });
 
   t.test("destroy test db", async (t) => {
