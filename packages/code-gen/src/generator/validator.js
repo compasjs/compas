@@ -158,10 +158,12 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
                 {},
               )} | undefined, errors: ({ key: string, info: any }[])|undefined}}`;
             }
-            return js`* @returns
-             {
-                ${getTypeNameForType(context.context, data[name], "", {})}
-             }`;
+            return js`* @returns {${getTypeNameForType(
+              context.context,
+              data[name],
+              "",
+              {},
+            )}}`;
           }}
           */
          export function validate${data[name].uniqueName}(value${withTypescript(
