@@ -185,11 +185,9 @@ export type TypeBuilderLike =
   | boolean
   | number
   | string
-  | TypeBuilderLikeArray
+  | TypeBuilderLike[]
   | TypeBuilderLikeObject
   | TypeBuilder;
-
-interface TypeBuilderLikeArray extends Array<TypeBuilderLike> {}
 
 interface TypeBuilderLikeObject extends Record<string, TypeBuilderLike> {}
 
