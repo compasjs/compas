@@ -158,12 +158,10 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
                 {},
               )} | undefined, errors: ({ key: string, info: any }[])|undefined}}`;
             }
-            return js`* @returns {${getTypeNameForType(
-              context.context,
-              data[name],
-              "",
-              {},
-            )}}`;
+            return js`* @returns
+             {
+                ${getTypeNameForType(context.context, data[name], "", {})}
+             }`;
           }}
           */
          export function validate${data[name].uniqueName}(value${withTypescript(
@@ -461,7 +459,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                }
                subErrors.splice(errorCount + 1, subErrors.length - errorCount);
                errorCount = subErrors.length;
-               delete subErrors[errorCount-1].stack;
+               delete subErrors[errorCount - 1].stack;
             `;
         }
         return js`
@@ -1015,6 +1013,26 @@ function anonymousValidatorString(context, imports, type) {
         }
       }}
 
+      ${() => {
+        if (!isNil(type.validator.disallowedCharacters)) {
+          return js`
+               for (const char of value) {
+                  if (${type.validator.disallowedCharacters
+                    .map((it) => `char === "${it}"`)
+                    .join(" || ")}) {
+                     const disallowedCharacters = [ "${type.validator.disallowedCharacters.join(
+                       '", "',
+                     )}" ];
+                     ${buildError(
+                       "disallowedCharacter",
+                       "{ propertyPath, disallowedCharacters, character: char }",
+                     )}
+                  }
+               }
+            `;
+        }
+      }}
+
       return value;
    `;
 }
@@ -1368,7 +1386,7 @@ function inlineValidatorNumber(
  * @param {string} propertyPath
  * @param {string} errors
  * @param {string} prefix
- * @returns {string}
+ * @returns {string|undefined}
  */
 function inlineValidatorString(
   context,
@@ -1384,7 +1402,8 @@ function inlineValidatorString(
     type.validator.upperCase ||
     type.validator.lowerCase ||
     type.validator.pattern ||
-    type.validator.convert
+    type.validator.convert ||
+    Array.isArray(type.validator.disallowedCharacters)
   ) {
     return;
   }

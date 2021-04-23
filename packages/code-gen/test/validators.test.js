@@ -474,6 +474,31 @@ test("code-gen/validators", async (t) => {
     );
   });
 
+  t.test("stringDisallowCharacters", (t) => {
+    assertAll(
+      t,
+      [
+        {
+          input: "foo",
+          expected: "foo",
+        },
+        {
+          input: "fo>",
+          errorKey: "validator.string.disallowedCharacter",
+        },
+        {
+          input: "fobarff>asdf",
+          errorKey: "validator.string.max",
+        },
+        {
+          input: "Foo&gt;",
+          expected: "Foo&gt;",
+        },
+      ],
+      validators.validateValidatorStringDisallowedCharacters,
+    );
+  });
+
   // TODO:
   // - number, object, string
 });
