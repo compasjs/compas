@@ -719,6 +719,11 @@ export class StringType extends TypeBuilder {
    * Validator enforced pattern
    */
   pattern(pattern: RegExp): this;
+
+  /**
+   * Validator enforced characters that should not exist in a string
+   */
+  disallowCharacters(characterArray: string[]): this;
 }
 
 export class UuidType extends TypeBuilder {}
