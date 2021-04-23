@@ -425,18 +425,45 @@ export class JobQueueWorker {
 }
 
 /**
- * Add a new item to the job queue
- * Defaults to `process.env.APP_NAME` if name is not specified
+ * Add an event to the job queue.
+ * Use this if the default priority is important, like sending the user an email to
+ *    verify their email. Runs with priority '2', the only higher priority values are
+ *    priority '0' and '1'.
+ *
+ * Custom timeouts can't be described via this mechanism.
+ */
+export function addEventToQueue(
+  sql: Postgres,
+  eventName: string,
+  data: Record<string, any>,
+): Promise<number>;
+
+/**
+ * Add a new job to the queue.
+ * Use this for normal jobs or to customize the job priority.
+ * The default priority is '5'.
  */
 export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
 
 /**
+ * Add a new job to the queue.
+ * Use this for normal jobs or to customize the job priority.
+ * The default priority is '5'.
+ *
+ * The timeout value must be an integer higher than 10. The timeout value represents the
+ *    number of milliseconds the handler may run, before the 'InsightEvent' is aborted.
+ */
+export function addJobWithCustomTimeoutToQueue(
+  sql: Postgres,
+  job: JobInput,
+  timeout: number,
+): Promise<number>;
+
+/**
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
- * If already exists will update the priority and interval.
- *
- * The recurring job handler will reschedule the job based on it's own scheduledAt. However if
- * the newly scheduled job is not in the future, the interval is added on to the current time.
+ * If exists will update the interval.
+ * The default priority is '4', which is a bit more important than other jobs.
  */
 export function addRecurringJobToQueue(
   sql: Postgres,
