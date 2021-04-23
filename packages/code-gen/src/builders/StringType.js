@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class StringType extends TypeBuilder {
@@ -11,8 +12,24 @@ export class StringType extends TypeBuilder {
       min: 1,
       max: undefined,
       pattern: undefined,
+      disallowedCharacters: undefined,
     },
   };
+
+  build() {
+    const result = super.build();
+
+    if (
+      Array.isArray(result.validator.disallowedCharacters) &&
+      isNil(result.validator.max)
+    ) {
+      throw new Error(
+        `T.string().max() is required when '.disallowCharacters()' is used.`,
+      );
+    }
+
+    return result;
+  }
 
   constructor(group, name) {
     super("string", group, name);
@@ -95,6 +112,30 @@ export class StringType extends TypeBuilder {
    */
   pattern(pattern) {
     this.data.validator.pattern = `/${pattern.source}/${pattern.flags}`;
+
+    return this;
+  }
+
+  /**
+   * @param {string[]} characterArray
+   * @returns {StringType}
+   */
+  disallowCharacters(characterArray) {
+    if (!Array.isArray(characterArray) || characterArray.length === 0) {
+      throw new TypeError(
+        `Expects 'characterArray' to be an array with at least a single value.`,
+      );
+    }
+
+    for (const char of characterArray) {
+      if (char.length !== 1) {
+        throw new TypeError(
+          `T.string().disallowCharacters() needs an array with single character strings as values. Found '${char}' with length ${char.length}.`,
+        );
+      }
+    }
+
+    this.data.validator.disallowedCharacters = characterArray;
 
     return this;
   }

@@ -2500,9 +2500,87 @@ export function anonymousValidator731977090(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, }|undefined}
+ * @returns {string|undefined}
  */
-export function anonymousValidator1723376928(
+export function anonymousValidator1947457078(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    errors.push({
+      key: `validator.${parentType}.undefined`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (typeof value !== "string") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (value.length < 1) {
+    const min = 1;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  if (value.length > 1) {
+    const max = 1;
+    errors.push({
+      key: `validator.${parentType}.max`,
+      info: { propertyPath, max },
+    });
+    return undefined;
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|(string)[]|undefined}
+ */
+export function anonymousValidator1468206159(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "array",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  if (!Array.isArray(value)) {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Array.from({ length: value.length });
+  for (let i = 0; i < value.length; ++i) {
+    result[i] = anonymousValidator1947457078(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
+  }
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, "disallowedCharacters"?: undefined|(string)[], }|undefined}
+ */
+export function anonymousValidator137368673(
   value,
   propertyPath,
   errors = [],
@@ -2563,6 +2641,11 @@ export function anonymousValidator1723376928(
     `${propertyPath}.allowNull`,
     errors,
   );
+  result["disallowedCharacters"] = anonymousValidator1468206159(
+    value["disallowedCharacters"],
+    `${propertyPath}.disallowedCharacters`,
+    errors,
+  );
   return result;
 }
 /**
@@ -2603,7 +2686,7 @@ export function anonymousValidator890105892(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "string", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, }, "internalSettings": {}, "oneOf"?: undefined|(string)[], }|undefined}
+ * @returns {{"type": "string", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, "disallowedCharacters"?: undefined|(string)[], }, "internalSettings": {}, "oneOf"?: undefined|(string)[], }|undefined}
  */
 export function anonymousValidator1672152398(
   value,
@@ -2670,7 +2753,7 @@ export function anonymousValidator1672152398(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator1723376928(
+  result["validator"] = anonymousValidator137368673(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
