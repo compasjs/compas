@@ -8,6 +8,26 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.131](https://github.com/compasjs/compas/releases/tag/v0.0.131)
+
+- build(deps): bump @babel/core from 7.13.15 to 7.13.16
+  ([#819](https://github.com/compasjs/compas/pull/819))
+- build(deps): bump eslint from 7.24.0 to 7.25.0
+  ([#826](https://github.com/compasjs/compas/pull/826))
+- build(deps): bump eslint-config-prettier from 8.2.0 to 8.3.0
+  ([#828](https://github.com/compasjs/compas/pull/828))
+- build(deps): bump eslint-plugin-jsdoc from 32.3.0 to 32.3.1
+  ([#823](https://github.com/compasjs/compas/pull/823))
+- chore(ci): test against Node.js 16
+- chore: change default nvm version to Node.js 16
+- feat(code-gen): add TypeScript definition for 'disallowCharacters'
+- feat(code-gen): always export basic queries via an object
+  ([#829](https://github.com/compasjs/compas/pull/829))
+- feat(code-gen): support T.string().disallowCharacters()
+  ([#825](https://github.com/compasjs/compas/pull/825))
+- fix(code-gen): improve TypeBuilderLike TypeScript type
+- fix(store): update type definitions with new job related functions
+
 ### [v0.0.130](https://github.com/compasjs/compas/releases/tag/v0.0.130)
 
 - build(deps): bump @babel/core from 7.13.14 to 7.13.15
