@@ -10,8 +10,8 @@ import {
   validateStoreFileWhere,
 } from "../store/validators.js";
 import {
-  fileGroupDelete,
   fileGroupOrderBy,
+  fileGroupQueries,
   internalQueryFileGroup,
   transformFileGroup,
 } from "./fileGroup.js";
@@ -524,7 +524,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @param {StoreFileWhere} [where]
  * @returns {Promise<StoreFile[]>}
  */
-export async function fileSelect(sql, where) {
+async function fileSelect(sql, where) {
   return await queryFile({ where }).exec(sql);
 }
 /**
@@ -532,7 +532,7 @@ export async function fileSelect(sql, where) {
  * @param {StoreFileWhere} [where]
  * @returns {Promise<number>}
  */
-export async function fileCount(sql, where) {
+async function fileCount(sql, where) {
   const [result] = await query`
 SELECT COUNT(f."id") as "countResult"
 FROM "file" f
@@ -545,7 +545,7 @@ WHERE ${fileWhere(where)}
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<void>}
  */
-export async function fileDeletePermanent(sql, where = {}) {
+async function fileDeletePermanent(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
   return await query`
 DELETE FROM "file" f
@@ -558,7 +558,7 @@ WHERE ${fileWhere(where)}
  * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreFile[]>}
  */
-export async function fileInsert(sql, insert, options = {}) {
+async function fileInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
@@ -581,7 +581,7 @@ RETURNING ${fileFields("")}
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<StoreFile[]>}
  */
-export async function fileUpdate(sql, update, where = {}) {
+async function fileUpdate(sql, update, where = {}) {
   const result = await query`
 UPDATE "file" f
 SET ${fileUpdateSet(update)}
@@ -597,7 +597,7 @@ RETURNING ${fileFields()}
  * @param {{ skipCascade: boolean }} [options={}]
  * @returns {Promise<void>}
  */
-export async function fileDelete(sql, where = {}, options = {}) {
+async function fileDelete(sql, where = {}, options = {}) {
   const result = await query`
 UPDATE "file" f
 SET "deletedAt" = now()
@@ -608,8 +608,16 @@ RETURNING "id"
     return;
   }
   const ids = result.map((it) => it.id);
-  await Promise.all([fileGroupDelete(sql, { fileIn: ids })]);
+  await Promise.all([fileGroupQueries.fileGroupDelete(sql, { fileIn: ids })]);
 }
+export const fileQueries = {
+  fileSelect,
+  fileCount,
+  fileDelete,
+  fileInsert,
+  fileUpdate,
+  fileDeletePermanent,
+};
 /**
  * @param {StoreFileQueryBuilder|StoreFileQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

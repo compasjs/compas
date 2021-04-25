@@ -642,7 +642,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @param {StoreFileGroupWhere} [where]
  * @returns {Promise<StoreFileGroup[]>}
  */
-export async function fileGroupSelect(sql, where) {
+async function fileGroupSelect(sql, where) {
   return await queryFileGroup({ where }).exec(sql);
 }
 /**
@@ -650,7 +650,7 @@ export async function fileGroupSelect(sql, where) {
  * @param {StoreFileGroupWhere} [where]
  * @returns {Promise<number>}
  */
-export async function fileGroupCount(sql, where) {
+async function fileGroupCount(sql, where) {
   const [result] = await query`
 SELECT COUNT(fg."id") as "countResult"
 FROM "fileGroup" fg
@@ -663,7 +663,7 @@ WHERE ${fileGroupWhere(where)}
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<void>}
  */
-export async function fileGroupDeletePermanent(sql, where = {}) {
+async function fileGroupDeletePermanent(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
   return await query`
 DELETE FROM "fileGroup" fg
@@ -676,7 +676,7 @@ WHERE ${fileGroupWhere(where)}
  * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
-export async function fileGroupInsert(sql, insert, options = {}) {
+async function fileGroupInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
@@ -699,7 +699,7 @@ RETURNING ${fileGroupFields("")}
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
-export async function fileGroupUpdate(sql, update, where = {}) {
+async function fileGroupUpdate(sql, update, where = {}) {
   const result = await query`
 UPDATE "fileGroup" fg
 SET ${fileGroupUpdateSet(update)}
@@ -715,7 +715,7 @@ RETURNING ${fileGroupFields()}
  * @param {{ skipCascade: boolean }} [options={}]
  * @returns {Promise<void>}
  */
-export async function fileGroupDelete(sql, where = {}, options = {}) {
+async function fileGroupDelete(sql, where = {}, options = {}) {
   const result = await query`
 UPDATE "fileGroup" fg
 SET "deletedAt" = now()
@@ -726,8 +726,16 @@ RETURNING "id"
     return;
   }
   const ids = result.map((it) => it.id);
-  await Promise.all([fileGroupDelete(sql, { parentIn: ids })]);
+  await Promise.all([fileGroupQueries.fileGroupDelete(sql, { parentIn: ids })]);
 }
+export const fileGroupQueries = {
+  fileGroupSelect,
+  fileGroupCount,
+  fileGroupDelete,
+  fileGroupInsert,
+  fileGroupUpdate,
+  fileGroupDeletePermanent,
+};
 /**
  * @param {StoreFileGroupQueryBuilder|StoreFileGroupQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

@@ -11,7 +11,7 @@ import { getQueryEnabledObjects } from "./utils.js";
  * @param {CodeGenContext} context
  */
 export function generateModelFiles(context) {
-  const allBasicNames = [];
+  const queryObjectNames = [];
   const indexSrc = [];
 
   for (const type of getQueryEnabledObjects(context)) {
@@ -19,10 +19,10 @@ export function generateModelFiles(context) {
     const imports = importCreator();
 
     generateQueryPartials(context, imports, type, src);
-    const baseQueryNames = generateBaseQueries(context, imports, type, src);
+    generateBaseQueries(context, imports, type, src);
     generateQueryBuilder(context, imports, type, src);
 
-    allBasicNames.push(...baseQueryNames);
+    queryObjectNames.push(`...${type.name}Queries`);
 
     context.outputFiles.push({
       contents: js`
@@ -32,10 +32,10 @@ export function generateModelFiles(context) {
       relativePath: `./database/${type.name}.js`,
     });
 
-    indexSrc.push(`import { ${baseQueryNames} } from "./${type.name}.js";`);
+    indexSrc.push(`import { ${type.name}Queries } from "./${type.name}.js";`);
   }
 
-  indexSrc.push(`export const queries = { ${allBasicNames.join(", ")} };`);
+  indexSrc.push(`export const queries = { ${queryObjectNames.join(", ")} };`);
   context.outputFiles.push({
     contents: indexSrc.join("\n"),
     relativePath: "./database/index.js",

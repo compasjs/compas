@@ -532,7 +532,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @param {StoreJobWhere} [where]
  * @returns {Promise<StoreJob[]>}
  */
-export async function jobSelect(sql, where) {
+async function jobSelect(sql, where) {
   return await queryJob({ where }).exec(sql);
 }
 /**
@@ -540,7 +540,7 @@ export async function jobSelect(sql, where) {
  * @param {StoreJobWhere} [where]
  * @returns {Promise<number>}
  */
-export async function jobCount(sql, where) {
+async function jobCount(sql, where) {
   const [result] = await query`
 SELECT COUNT(j."id") as "countResult"
 FROM "job" j
@@ -553,7 +553,7 @@ WHERE ${jobWhere(where)}
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<void>}
  */
-export async function jobDelete(sql, where = {}) {
+async function jobDelete(sql, where = {}) {
   return await query`
 DELETE FROM "job" j
 WHERE ${jobWhere(where)}
@@ -565,7 +565,7 @@ WHERE ${jobWhere(where)}
  * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreJob[]>}
  */
-export async function jobInsert(sql, insert, options = {}) {
+async function jobInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
@@ -586,7 +586,7 @@ RETURNING ${jobFields("")}
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
  */
-export async function jobUpdate(sql, update, where = {}) {
+async function jobUpdate(sql, update, where = {}) {
   const result = await query`
 UPDATE "job" j
 SET ${jobUpdateSet(update)}
@@ -596,6 +596,13 @@ RETURNING ${jobFields()}
   transformJob(result);
   return result;
 }
+export const jobQueries = {
+  jobSelect,
+  jobCount,
+  jobDelete,
+  jobInsert,
+  jobUpdate,
+};
 /**
  * @param {StoreJobQueryBuilder|StoreJobQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial
