@@ -182,9 +182,6 @@ jobs:
 
       - name: Comment test coverage
         uses: codecov/codecov-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ env.CODECOV_TOKEN != null }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
