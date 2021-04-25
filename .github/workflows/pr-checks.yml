@@ -171,7 +171,7 @@ jobs:
             ${{ runner.os }}-yarn-${{ matrix.node }}-
             ${{ runner.os }}-yarn-
 
-      - name: Run benchmarks
+      - name: Run coverage
         run: |
           yarn install
           yarn compas docker up
@@ -181,14 +181,13 @@ jobs:
           yarn compas docker reset
 
       - name: Comment test coverage
-        uses: AthleticNet/comment-test-coverage@1.1
+        uses: codecov/codecov-action@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.COMPAS_GITHUB_TOKEN }}
-        if: ${{ env.COMPAS_GITHUB_TOKEN != null }}
+          GITHUB_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        if: ${{ env.CODECOV_TOKEN != null }}
         with:
-          token: ${{ secrets.COMPAS_GITHUB_TOKEN }}
-          path: coverage/coverage-summary.json
-          title: C8 test coverage
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
 
   automerge:
     # Coverage runs tests, so should be fine
