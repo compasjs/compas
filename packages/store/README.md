@@ -2,6 +2,7 @@
 
 [![install size store](https://packagephobia.com/badge?p=@compas/store)](https://packagephobia.com/result?p=@compas/store)
 ![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
+[![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
 
 Unified backend tooling
 
@@ -26,7 +27,7 @@ Unified backend tooling
 
 ## Why
 
-My work involved doing many small projects. I had a hard time back-porting
+My work involved doing many small projects. I had a hard time back porting
 incremental fixes to existing projects. To facilitate my needs more and to stop
 copying and pasting things around, this project was born.
 
