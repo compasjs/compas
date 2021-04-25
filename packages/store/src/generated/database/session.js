@@ -427,7 +427,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @param {StoreSessionWhere} [where]
  * @returns {Promise<StoreSession[]>}
  */
-export async function sessionSelect(sql, where) {
+async function sessionSelect(sql, where) {
   return await querySession({ where }).exec(sql);
 }
 /**
@@ -435,7 +435,7 @@ export async function sessionSelect(sql, where) {
  * @param {StoreSessionWhere} [where]
  * @returns {Promise<number>}
  */
-export async function sessionCount(sql, where) {
+async function sessionCount(sql, where) {
   const [result] = await query`
 SELECT COUNT(s."id") as "countResult"
 FROM "session" s
@@ -448,7 +448,7 @@ WHERE ${sessionWhere(where)}
  * @param {StoreSessionWhere} [where={}]
  * @returns {Promise<void>}
  */
-export async function sessionDelete(sql, where = {}) {
+async function sessionDelete(sql, where = {}) {
   return await query`
 DELETE FROM "session" s
 WHERE ${sessionWhere(where)}
@@ -460,7 +460,7 @@ WHERE ${sessionWhere(where)}
  * @param {{ withPrimaryKey: boolean }} [options={}]
  * @returns {Promise<StoreSession[]>}
  */
-export async function sessionInsert(sql, insert, options = {}) {
+async function sessionInsert(sql, insert, options = {}) {
   if (insert === undefined || insert.length === 0) {
     return [];
   }
@@ -483,7 +483,7 @@ RETURNING ${sessionFields("")}
  * @param {StoreSessionWhere} [where={}]
  * @returns {Promise<StoreSession[]>}
  */
-export async function sessionUpdate(sql, update, where = {}) {
+async function sessionUpdate(sql, update, where = {}) {
   const result = await query`
 UPDATE "session" s
 SET ${sessionUpdateSet(update)}
@@ -493,6 +493,13 @@ RETURNING ${sessionFields()}
   transformSession(result);
   return result;
 }
+export const sessionQueries = {
+  sessionSelect,
+  sessionCount,
+  sessionDelete,
+  sessionInsert,
+  sessionUpdate,
+};
 /**
  * @param {StoreSessionQueryBuilder|StoreSessionQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

@@ -505,7 +505,7 @@ function checkFieldsInSet(entity, subType, set, value) {
  * @param {StoreFileGroupViewWhere} [where]
  * @returns {Promise<StoreFileGroupView[]>}
  */
-export async function fileGroupViewSelect(sql, where) {
+async function fileGroupViewSelect(sql, where) {
   return await queryFileGroupView({ where }).exec(sql);
 }
 /**
@@ -513,7 +513,7 @@ export async function fileGroupViewSelect(sql, where) {
  * @param {StoreFileGroupViewWhere} [where]
  * @returns {Promise<number>}
  */
-export async function fileGroupViewCount(sql, where) {
+async function fileGroupViewCount(sql, where) {
   const [result] = await query`
 SELECT COUNT(fgv."id") as "countResult"
 FROM "fileGroupView" fgv
@@ -521,6 +521,7 @@ WHERE ${fileGroupViewWhere(where)}
 `.exec(sql);
   return Number(result?.countResult ?? "0");
 }
+export const fileGroupViewQueries = { fileGroupViewSelect, fileGroupViewCount };
 /**
  * @param {StoreFileGroupViewQueryBuilder|StoreFileGroupViewQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

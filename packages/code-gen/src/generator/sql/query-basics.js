@@ -9,7 +9,7 @@ import { getPrimaryKeyWithType } from "./utils.js";
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
- * @returns {string[]}
+ * @returns {void}
  */
 export function generateBaseQueries(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
@@ -35,7 +35,7 @@ export function generateBaseQueries(context, imports, type, src) {
     }
   }
 
-  return names;
+  src.push(`export const ${type.name}Queries = { ${names.join(", ")} };`);
 }
 
 /**
@@ -50,7 +50,7 @@ function selectQuery(context, imports, type) {
      * @param {${type.uniqueName}Where} [where]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export async function ${type.name}Select(sql, where) {
+    async function ${type.name}Select(sql, where) {
       return await query${upperCaseFirst(type.name)}({ where }).exec(sql);
     }
   `;
@@ -69,7 +69,7 @@ function countQuery(context, imports, type) {
      * @param {${type.uniqueName}Where} [where]
      * @returns {Promise<number>}
      */
-    export async function ${type.name}Count(sql, where) {
+    async function ${type.name}Count(sql, where) {
       const [ result ] = await query\`
         SELECT COUNT(${type.shortName}."${primaryKey}") as "countResult"
         FROM "${type.name}" ${type.shortName}
@@ -93,7 +93,7 @@ function deleteQuery(context, imports, type) {
      * @param {${type.uniqueName}Where} [where={}]
      * @returns {Promise<void>}
      */
-    export async function ${type.name}Delete${
+    async function ${type.name}Delete${
     type.queryOptions.withSoftDeletes ? "Permanent" : ""
   }(sql,
                                                                                 where = {}
@@ -141,7 +141,7 @@ function softDeleteQuery(context, imports, type) {
      * @param {{ skipCascade: boolean }} [options={}]
      * @returns {Promise<void>}
      */
-    export async function ${type.name}Delete(sql, where = {}, options = {}) {
+    async function ${type.name}Delete(sql, where = {}, options = {}) {
       ${affectedRelations.length > 0 ? "const result =" : ""}
       await query\`
         UPDATE "${type.name}" ${type.shortName}
@@ -168,11 +168,11 @@ function softDeleteQuery(context, imports, type) {
                                   .map((it) => {
                                     if (it.reference.reference !== type) {
                                       imports.destructureImport(
-                                        `${it.reference.reference.name}Delete`,
+                                        `${it.reference.reference.name}Queries`,
                                         `./${it.reference.reference.name}.js`,
                                       );
                                     }
-                                    return `${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`;
+                                    return `${it.reference.reference.name}Queries.${it.reference.reference.name}Delete(sql, { ${it.referencedKey}In: ids })`;
                                   })
                                   .join(",\n  ")}
                               ]);
@@ -196,7 +196,7 @@ function insertQuery(context, imports, type) {
      * @param {{ withPrimaryKey: boolean }} [options={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export async function ${type.name}Insert(sql, insert, options = {}) {
+    async function ${type.name}Insert(sql, insert, options = {}) {
       if (insert === undefined || insert.length === 0) {
         return [];
       }
@@ -230,7 +230,7 @@ function updateQuery(context, imports, type) {
      * @param {${type.where.type}} [where={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    export async function ${type.name}Update(sql, update, where = {}) {
+    async function ${type.name}Update(sql, update, where = {}) {
       const result = await query\`
         UPDATE "${type.name}" ${type.shortName}
         SET $\{${type.name}UpdateSet(update)}
