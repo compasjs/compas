@@ -1,5 +1,10 @@
 import { readFileSync } from "fs";
-import { dirnameForModule, pathJoin } from "@compas/stdlib";
+import {
+  dirnameForModule,
+  isNil,
+  pathJoin,
+  processDirectoryRecursiveSync,
+} from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
@@ -15,8 +20,10 @@ export function helpCommand(logger, command, scriptCollection) {
     ),
   );
 
-  let log = `${name} -- ${version}
+  const foundCompasVersions = findOtherCompasStdlibVersions(version);
 
+  let log = `${name} -- ${version}
+${formatOtherVersions(foundCompasVersions)}
 Usage:
 
 - init              : compas init [projectName]
@@ -62,4 +69,55 @@ function formatScripts(coll) {
   }
 
   return `User: ${user.join(", ")}\nPackage.json: ${packageJson.join(", ")}`;
+}
+
+/**
+ * @param {{ version: string, path: string }[]} versions
+ * @returns {string}
+ */
+function formatOtherVersions(versions) {
+  if (versions.length === 0) {
+    return "";
+  }
+
+  let result = `\nMultiple @compas versions found, to ensure a stable experience use the version that is commonly accepted by all your dependencies.\n`;
+  for (const { path, version } of versions) {
+    result += `@compas/stdlib@${version} - ${path}\n`;
+  }
+
+  return result;
+}
+
+/**
+ * Try to find other compas versions, by recursively going through the node_modules
+ *
+ * @param {string} cliVersion
+ * @returns {{ version: string, path: string }[]}
+ */
+function findOtherCompasStdlibVersions(cliVersion) {
+  const foundVersions = [];
+
+  processDirectoryRecursiveSync(
+    pathJoin(process.cwd()),
+    (file) => {
+      if (file.endsWith("/@compas/stdlib/package.json")) {
+        const { version } = JSON.parse(readFileSync(file, "utf-8"));
+
+        if (
+          cliVersion !== version &&
+          isNil(foundVersions.find((it) => it.version === version))
+        ) {
+          foundVersions.push({
+            path: file,
+            version,
+          });
+        }
+      }
+    },
+    {
+      skipNodeModules: false,
+    },
+  );
+
+  return foundVersions;
 }
