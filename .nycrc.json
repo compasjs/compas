@@ -1,3 +1,4 @@
 {
-  "reporter": ["lcov", "text", "json-summary"]
+  "reporter": ["lcov", "text", "json-summary"],
+  "exclude": ["**/generated/**", "**/*.test.js"]
 }
