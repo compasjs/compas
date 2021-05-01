@@ -20,8 +20,7 @@ export async function sendFile(ctx, file, getStreamFn) {
   if (ctx.headers.range) {
     try {
       const rangeHeader = ctx.headers.range;
-      const rangeValue = /=(.*)$/.exec(rangeHeader)[1];
-      const range = /^[\w]*?(\d*)-(\d*)$/.exec(rangeValue);
+      const range = /=(\d*)-(\d*)$/.exec(rangeHeader);
 
       let start = range[1] ? parseInt(range[1]) : undefined;
       let end = range[2] ? parseInt(range[2]) : file.contentLength;
