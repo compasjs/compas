@@ -1,5 +1,5 @@
 import { isNil } from "@compas/stdlib";
-import { state } from "./state.js";
+import { benchLogger, state } from "./state.js";
 
 /**
  * @param {BenchState[]} state
@@ -78,8 +78,13 @@ class InternalRunner {
   async exec() {
     let i = 0;
     while (i < InternalRunner.iterations.length) {
-      this.start = process.hrtime.bigint();
       this.N = InternalRunner.iterations[i];
+      benchLogger.info({
+        name: this.state.name,
+        N: this.N,
+      });
+
+      this.start = process.hrtime.bigint();
 
       const res = this.state.callback(createBenchRunner(this));
       if (res && typeof res.then === "function") {
@@ -93,13 +98,13 @@ class InternalRunner {
         break;
       }
 
-      if (diff < 50_00_000) {
+      if (diff < 10_00_000) {
         i = Math.min(i + 5, InternalRunner.iterations.length - 1);
-      } else if (diff < 100_000_000) {
+      } else if (diff < 50_000_000) {
         i = Math.min(i + 4, InternalRunner.iterations.length - 1);
-      } else if (diff < 200_000_000) {
+      } else if (diff < 100_000_000) {
         i = Math.min(i + 3, InternalRunner.iterations.length - 1);
-      } else if (diff < 300_000_000) {
+      } else if (diff < 200_000_000) {
         i = Math.min(i + 2, InternalRunner.iterations.length - 1);
       } else {
         i++;
