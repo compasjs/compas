@@ -1,5 +1,6 @@
 import { pathToFileURL } from "url";
 import {
+  AppError,
   filenameForModule,
   mainFn,
   processDirectoryRecursive,
@@ -16,7 +17,17 @@ const contentHandler = async (file) => {
   if (!file.endsWith(".bench.js")) {
     return;
   }
-  await import(pathToFileURL(file));
+
+  try {
+    await import(pathToFileURL(file));
+  } catch (e) {
+    throw AppError.serverError(
+      {
+        file,
+      },
+      e,
+    );
+  }
 };
 
 mainFn(import.meta, main);
