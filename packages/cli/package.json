@@ -28,7 +28,7 @@
   "dependencies": {
     "@compas/insight": "0.0.131",
     "@compas/stdlib": "0.0.131",
-    "c8": "7.7.1",
+    "c8": "7.7.2",
     "chokidar": "3.5.1",
     "http-proxy": "1.18.1",
     "tree-kill": "1.2.2"
