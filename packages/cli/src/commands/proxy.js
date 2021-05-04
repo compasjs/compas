@@ -9,18 +9,26 @@ import proxy from "http-proxy";
  */
 export function proxyCommand(logger, command) {
   const verbose = command.arguments.indexOf("--verbose") !== -1;
-  const port = parseInt(
-    (environment.API_URL ?? environment.NEXT_PUBLIC_API_URL ?? "")
-      .split(":")
-      .pop(),
-  );
 
-  if (isNaN(port)) {
+  const apiUrlUsed =
+    environment.API_URL ?? environment.NEXT_PUBLIC_API_URL ?? "";
+
+  if (apiUrlUsed.length === 0) {
     logger.error(
-      "Please set the `API_URL` or `NEXT_PUBLIC_API_URL` environment variable",
+      "Please add the `API_URL` or `NEXT_PUBLIC_API_URL` to your '.env' file.",
     );
     process.exit(1);
   }
+
+  const port = parseInt(apiUrlUsed.split(":").pop());
+
+  if (isNaN(port)) {
+    logger.error(
+      "Make sure the `API_URL` or `NEXT_PUBLIC_API_URL` is in the format `http://localhost:$port` so the proxy knows on which port to listen.",
+    );
+    process.exit(1);
+  }
+
   if ((environment.PROXY_URL ?? "").length === 0) {
     logger.error("Please set the `PROXY_URL` environment variable");
     process.exit(1);
