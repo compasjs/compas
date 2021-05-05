@@ -1,8 +1,6 @@
+import { environment, isProduction } from "../env.js";
+import { noop } from "../utils.js";
 import { writeGithubActions, writeNDJSON, writePretty } from "./writer.js";
-
-let environment = undefined;
-
-const noop = () => {};
 
 const writersLookup = {
   ndjson: writeNDJSON,
@@ -39,25 +37,19 @@ const writersLookup = {
  * @returns {Logger}
  */
 export function newLogger(options) {
-  // Make a copy of of env, process.env fetching is slow
-  if (environment === undefined) {
-    environment = JSON.parse(JSON.stringify(process.env));
-  }
-
   const app = environment.APP_NAME;
-  const isProduction = environment.NODE_ENV !== "development";
   const stream = options?.stream ?? process.stdout;
 
   const printer =
     options?.printer ??
     (environment.GITHUB_ACTIONS !== "true"
-      ? isProduction
+      ? isProduction()
         ? "ndjson"
         : "pretty"
       : "github-actions");
 
   let context = options?.ctx ?? {};
-  if (isProduction) {
+  if (isProduction()) {
     if (app) {
       context.application = app;
     }
@@ -73,7 +65,6 @@ export function newLogger(options) {
     : wrapWriter(writersLookup[printer], stream, "error", context);
 
   return {
-    isProduction: () => isProduction,
     info,
     error,
   };

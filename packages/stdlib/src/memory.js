@@ -1,3 +1,5 @@
+import { isProduction } from "./env.js";
+
 const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 
 /**
@@ -43,7 +45,7 @@ export function printProcessMemoryUsage(logger) {
     rss,
     arrayBuffers,
   } = process.memoryUsage();
-  if (logger.isProduction()) {
+  if (isProduction()) {
     logger.info({
       rss,
       heapUsed,
