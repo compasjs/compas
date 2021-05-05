@@ -1,5 +1,4 @@
-import { newLogger } from "@compas/insight";
-import { isNil } from "@compas/stdlib";
+import { newLogger, isNil } from "@compas/stdlib";
 import {
   AnyOfType,
   AnyType,

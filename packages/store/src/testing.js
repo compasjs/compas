@@ -1,5 +1,4 @@
-import { newLogger } from "@compas/insight";
-import { environment, isNil, uuid } from "@compas/stdlib";
+import { newLogger, environment, isNil, uuid } from "@compas/stdlib";
 import {
   createDatabaseIfNotExists,
   newPostgresConnection,

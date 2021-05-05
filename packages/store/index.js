@@ -62,3 +62,5 @@ export {
   explainAnalyzeQuery,
 } from "./src/query.js";
 export { setStoreQueries } from "./src/generated.js";
+
+export { postgresTableSizes } from "./src/insight.js";

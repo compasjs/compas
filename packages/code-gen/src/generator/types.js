@@ -403,8 +403,8 @@ function getStaticImportedTypesForPackages(context) {
   }
   if (context.options.enabledGenerators.indexOf("router") !== -1) {
     result.push(
-      '/**\n * @typedef {import("@compas/insight").Logger} Logger\n */',
-      '/**\n * @typedef {import("@compas/insight").InsightEvent} InsightEvent\n */',
+      '/**\n * @typedef {import("@compas/stdlib").Logger} Logger\n */',
+      '/**\n * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent\n */',
       '/**\n * @typedef {import("@compas/server").Context} Context\n */',
       '/**\n * @typedef {import("@compas/server").Next} Next\n */',
       '/**\n * @typedef {import("@compas/server").Middleware} Middleware\n */',

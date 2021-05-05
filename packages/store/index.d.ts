@@ -1,4 +1,4 @@
-import * as insight from "@compas/insight";
+import * as stdlib from "@compas/stdlib";
 import * as minioVendor from "minio";
 import * as postgresVendor from "postgres";
 import { queries } from "./src/generated";
@@ -342,7 +342,7 @@ export interface JobInput {
 }
 
 export type JobQueueHandlerFunction = (
-  event: insight.InsightEvent,
+  event: stdlib.InsightEvent,
   sql: Postgres,
   data: JobData,
 ) => void | Promise<void>;
@@ -587,3 +587,15 @@ export function explainAnalyzeQuery(
  * This is needed when you want cascading soft deletes to any of the exposed types
  */
 export function setStoreQueries(q: typeof queries): void;
+
+/**
+ * Get the disk size (in bytes) and estimated row count for all tables and views.
+ * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
+ * Postgres documentation for implications.
+ *
+ * Accepts the @compas/store based sql instance, but not strongly typed so we don't have the
+ * dependency
+ */
+export function postgresTableSizes(
+  sql: any,
+): Promise<Record<string, { diskSize: number; rowCount: number }>>;

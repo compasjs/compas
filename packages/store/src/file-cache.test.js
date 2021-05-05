@@ -2,8 +2,7 @@ import { existsSync, lstatSync, mkdirSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
 import { mainTestFn, test } from "@compas/cli";
-import { printProcessMemoryUsage } from "@compas/insight";
-import { gc, pathJoin, uuid } from "@compas/stdlib";
+import { printProcessMemoryUsage, gc, pathJoin, uuid } from "@compas/stdlib";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile } from "./files.js";
 import {

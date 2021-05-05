@@ -26,7 +26,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/insight": "0.0.132",
     "@compas/stdlib": "0.0.132",
     "c8": "7.7.2",
     "chokidar": "3.5.1",

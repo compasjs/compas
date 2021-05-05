@@ -47,14 +47,6 @@ copying and pasting things around, this project was born.
 - All necessary ESLint and Prettier dependencies
 - Default configuration for ESLint and Prettier
 
-**@compas/insight**:
-
-- A structured logger
-  - Writing newline delimited JSON in production
-  - Pretty printing for development
-- Various utilities to get insight in the running process
-- A manual event system
-
 **@compas/stdlib**:
 
 - Various lodash inspired utilities (isNil, isPlainObject, ...)
@@ -62,6 +54,11 @@ copying and pasting things around, this project was born.
 - A `mainFn` wrapper that reads `.env` and calls the provided function if the
   file is the process entrypoint
 - Replacements for CommonJS `__dirname` and `__filename`
+- A structured logger
+  - Writing newline delimited JSON in production
+  - Pretty printing for development
+- Various utilities to get insight in the running process
+- A manual event system
 
 **@compas/server**:
 

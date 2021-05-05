@@ -9,11 +9,11 @@
   "keywords": [
     "compas",
     "stdlib",
-    "standard"
+    "standard",
+    "logger"
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/insight": "0.0.132",
     "@types/node": "15.0.2",
     "dotenv": "8.4.0",
     "lodash.merge": "4.6.2"
