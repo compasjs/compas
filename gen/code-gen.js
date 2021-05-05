@@ -365,7 +365,7 @@ function getTypes(T) {
         pattern: T.string().optional(),
         allowNull: T.bool().default(false),
         disallowedCharacters: T.optional()
-          .value([T.string().min(1).max(1)])
+          .value([T.string().min(1).max(2)])
           .optional(),
       })
       .loose(),

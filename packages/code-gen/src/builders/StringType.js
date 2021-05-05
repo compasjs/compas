@@ -128,7 +128,7 @@ export class StringType extends TypeBuilder {
     }
 
     for (const char of characterArray) {
-      if (char.length !== 1) {
+      if (char.length === 0 || char.length > 2) {
         throw new TypeError(
           `T.string().disallowCharacters() needs an array with single character strings as values. Found '${char}' with length ${char.length}.`,
         );

@@ -105,7 +105,7 @@ export function applyTestingValidatorsStructure(app) {
     T.string("stringMinMax").min(1).max(10),
     T.string("stringPattern").pattern(/[a-z]+/gi),
     T.string("stringDisallowedCharacters")
-      .disallowCharacters([">", "<"])
+      .disallowCharacters([">", "<", "\\\\"])
       .max(10),
   );
 

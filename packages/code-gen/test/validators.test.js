@@ -487,6 +487,10 @@ test("code-gen/validators", async (t) => {
           errorKey: "validator.string.disallowedCharacter",
         },
         {
+          input: "fo\\",
+          errorKey: "validator.string.disallowedCharacter",
+        },
+        {
           input: "fobarff>asdf",
           errorKey: "validator.string.max",
         },
