@@ -2502,7 +2502,7 @@ export function anonymousValidator731977090(
  * @param {string} parentType
  * @returns {string|undefined}
  */
-export function anonymousValidator1947457078(
+export function anonymousValidator1503038347(
   value,
   propertyPath,
   errors = [],
@@ -2530,8 +2530,8 @@ export function anonymousValidator1947457078(
     });
     return undefined;
   }
-  if (value.length > 1) {
-    const max = 1;
+  if (value.length > 2) {
+    const max = 2;
     errors.push({
       key: `validator.${parentType}.max`,
       info: { propertyPath, max },
@@ -2547,7 +2547,7 @@ export function anonymousValidator1947457078(
  * @param {string} parentType
  * @returns {undefined|(string)[]|undefined}
  */
-export function anonymousValidator1468206159(
+export function anonymousValidator623734288(
   value,
   propertyPath,
   errors = [],
@@ -2565,7 +2565,7 @@ export function anonymousValidator1468206159(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1947457078(
+    result[i] = anonymousValidator1503038347(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -2580,7 +2580,7 @@ export function anonymousValidator1468206159(
  * @param {string} parentType
  * @returns {{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, "disallowedCharacters"?: undefined|(string)[], }|undefined}
  */
-export function anonymousValidator137368673(
+export function anonymousValidator981840544(
   value,
   propertyPath,
   errors = [],
@@ -2641,7 +2641,7 @@ export function anonymousValidator137368673(
     `${propertyPath}.allowNull`,
     errors,
   );
-  result["disallowedCharacters"] = anonymousValidator1468206159(
+  result["disallowedCharacters"] = anonymousValidator623734288(
     value["disallowedCharacters"],
     `${propertyPath}.disallowedCharacters`,
     errors,
@@ -2753,7 +2753,7 @@ export function anonymousValidator1672152398(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator137368673(
+  result["validator"] = anonymousValidator981840544(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
