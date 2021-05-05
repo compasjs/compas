@@ -15,7 +15,7 @@
   "dependencies": {
     "@compas/insight": "0.0.131",
     "@types/node": "15.0.2",
-    "dotenv": "8.2.0",
+    "dotenv": "8.4.0",
     "lodash.merge": "4.6.2"
   },
   "maintainers": [
