@@ -15,7 +15,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/insight": "0.0.132",
     "@compas/stdlib": "0.0.132",
     "co-body": "6.1.0",
     "formidable": "2.0.0-canary.20200504.1",

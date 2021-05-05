@@ -39,7 +39,7 @@
 //                 Tomek Łaziuk <https://github.com/tlaziuk>
 //                 Hiroshi Ioka <https://github.com/hirochachacha>
 
-import { InsightEvent, Logger } from "@compas/insight";
+import { InsightEvent, Logger } from "@compas/stdlib";
 import { StoreFile } from "@compas/store";
 import { AxiosInstance } from "axios";
 import { EventEmitter } from "events";

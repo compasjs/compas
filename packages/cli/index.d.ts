@@ -1,4 +1,4 @@
-import { InsightEvent, Logger } from "@compas/insight";
+import { InsightEvent, Logger } from "@compas/stdlib";
 
 /**
  * Top level test function for registering tests

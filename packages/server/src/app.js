@@ -14,7 +14,7 @@ import {
  *
  * - Health check route on `/_health`
  *
- * - Log middleware to add the Logger from @compas/insight on `ctx.log`
+ * - Log middleware to add the Logger from @compas/stdlib on `ctx.log`
  *
  * - Error handler to catch any errors thrown by route handlers
  *

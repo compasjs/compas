@@ -1,6 +1,5 @@
 import { compose } from "@compas/server";
-import { AppError } from "@compas/stdlib";
-import { eventRename } from "@compas/insight";
+import { AppError, eventRename } from "@compas/stdlib";
 {{ for (const group of Object.keys(structure)) { }}
     {{ const hasRouteObject = Object.values(structure[group]).find(it => it.type === "route"); }}
     {{ if (hasRouteObject === undefined) { continue; } }}

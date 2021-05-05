@@ -1,5 +1,9 @@
-import { newLogger, printProcessMemoryUsage } from "@compas/insight";
-import { isNil, merge } from "@compas/stdlib";
+import {
+  newLogger,
+  printProcessMemoryUsage,
+  isNil,
+  merge,
+} from "@compas/stdlib";
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import {

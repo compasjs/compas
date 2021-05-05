@@ -1,4 +1,4 @@
-import { Logger } from "@compas/insight";
+import { Logger } from "@compas/stdlib";
 import { AxiosInstance } from "axios";
 
 /**

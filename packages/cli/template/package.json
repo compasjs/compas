@@ -7,7 +7,6 @@
     "start": "NODE_ENV=production node ./scripts/api.js"
   },
   "dependencies": {
-    "@compas/insight": "{{version}}",
     "@compas/server": "{{version}}",
     "@compas/stdlib": "{{version}}",
     "@compas/store": "{{version}}"

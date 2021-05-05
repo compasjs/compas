@@ -4,11 +4,11 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "@compas/store";
-import { postgresTableSizes } from "./postgres.js";
+import { postgresTableSizes } from "./insight.js";
 
 mainTestFn(import.meta);
 
-test("insight/postgres", (t) => {
+test("store/insight", (t) => {
   let sql = undefined;
 
   t.test("create a test db", async (t) => {

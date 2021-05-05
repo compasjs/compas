@@ -1,5 +1,8 @@
-import { eventStart, eventStop, newEvent, newLogger } from "@compas/insight";
 import {
+  eventStart,
+  eventStop,
+  newEvent,
+  newLogger,
   AppError,
   environment,
   isNil,
