@@ -8,6 +8,40 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.132](https://github.com/compasjs/compas/releases/tag/v0.0.132)
+
+- bench(store): add benchmarks for the query function
+  ([#844](https://github.com/compasjs/compas/pull/844))
+- build(deps): bump @babel/core from 7.13.16 to 7.14.0
+  ([#843](https://github.com/compasjs/compas/pull/843))
+- build(deps): bump @types/node from 14.14.41 to 15.0.2
+  ([#835](https://github.com/compasjs/compas/pull/835),
+  [#837](https://github.com/compasjs/compas/pull/837),
+  [#851](https://github.com/compasjs/compas/pull/851))
+- build(deps): bump c8 from 7.7.1 to 7.7.2
+  ([#847](https://github.com/compasjs/compas/pull/847))
+- build(deps): bump dotenv from 8.2.0 to 8.4.0
+  ([#853](https://github.com/compasjs/compas/pull/853))
+- build(deps): bump eslint-plugin-jsdoc from 32.3.1 to 33.0.0
+  ([#836](https://github.com/compasjs/compas/pull/836),
+  [#838](https://github.com/compasjs/compas/pull/838),
+  [#842](https://github.com/compasjs/compas/pull/842))
+- chore: add codecov badge ([#831](https://github.com/compasjs/compas/pull/831))
+- chore: add simple license script to scan transitive licenses used
+- chore: exclude generated files from coverage reports
+- chore: make codecov informational
+  ([#846](https://github.com/compasjs/compas/pull/846))
+- chore: use codecov.io for coverage
+  ([#830](https://github.com/compasjs/compas/pull/830))
+- feat(cli): check if multiple versions of the stdlib are installed
+  ([#839](https://github.com/compasjs/compas/pull/839))
+- feat(code-gen): support escaped characters in disallowCharacters
+  ([#854](https://github.com/compasjs/compas/pull/854))
+- fix(cli): improve proxy error messages
+  ([#849](https://github.com/compasjs/compas/pull/849))
+- fix(server): simplify sendFile range header parsing
+  ([#845](https://github.com/compasjs/compas/pull/845))
+
 ### [v0.0.131](https://github.com/compasjs/compas/releases/tag/v0.0.131)
 
 - build(deps): bump @babel/core from 7.13.15 to 7.13.16
