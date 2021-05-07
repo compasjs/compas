@@ -1,12 +1,33 @@
 ---
-type: page
-title: Changelog
-description: Compas changelog
-tags: []
+type: page title: Changelog description: Compas changelog tags: []
 order: 4
 ---
 
 # CHANGELOG
+
+### [v0.0.133](https://github.com/compasjs/compas/releases/tag/v0.0.133)
+
+- bench(stdlib): add event benchmarks
+  ([#856](https://github.com/compasjs/compas/pull/856))
+- build(deps): bump dotenv from 8.4.0 to 9.0.0
+  ([#857](https://github.com/compasjs/compas/pull/857))
+- build(deps): bump eslint-plugin-jsdoc from 33.0.0 to 33.1.0
+  ([#858](https://github.com/compasjs/compas/pull/858))
+- build(deps): bump handlebars from 4.7.6 to 4.7.7
+  ([#860](https://github.com/compasjs/compas/pull/860))
+- chore: move @compas/insight to @compas/stdlib and @compas/server
+  ([#855](https://github.com/compasjs/compas/pull/855))
+- fix(server): handle body parser errors correctly
+  ([#859](https://github.com/compasjs/compas/pull/859))
+
+Breaking change: @compas/insight is removed. The majority of things should be
+fixed by running the following command:
+`find ./src -type f -name "*.js" -exec sed -i 's/@compas\/insight/@compas\/stdlib/g' {} \ && yarn compas lint;`.
+Change `./src` from the previous command if you have multiple source directories
+(don't use `./` as it will include `node_modules`). Only `postgresTableSizes` is
+moved to @compas/store, and should be manually checked. Also removed
+`logger.isProduction()` function as it equals `isProduction()` from
+@compas/stdlib.
 
 ### [v0.0.132](https://github.com/compasjs/compas/releases/tag/v0.0.132)
 
