@@ -1,5 +1,8 @@
 ---
-type: page title: Changelog description: Compas changelog tags: []
+type: page
+title: Changelog
+description: Compas changelog
+tags: []
 order: 4
 ---
 
@@ -22,7 +25,7 @@ order: 4
 
 Breaking change: @compas/insight is removed. The majority of things should be
 fixed by running the following command:
-`find ./src -type f -name "*.js" -exec sed -i 's/@compas\/insight/@compas\/stdlib/g' {} \ && yarn compas lint;`.
+`find ./src -type f -name "*.js" -exec sed -i 's/@compas\/insight/@compas\/stdlib/g' {} \; && yarn compas lint`.
 Change `./src` from the previous command if you have multiple source directories
 (don't use `./` as it will include `node_modules`). Only `postgresTableSizes` is
 moved to @compas/store, and should be manually checked. Also removed
