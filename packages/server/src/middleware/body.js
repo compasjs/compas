@@ -112,7 +112,9 @@ function koaBody(opts = {}) {
 
     ctx.request.body = bodyResult;
 
-    return next();
+    if (typeof next === "function") {
+      return next();
+    }
   };
 }
 
@@ -160,7 +162,9 @@ function koaFormidable(opts = {}) {
       });
       form.parse(ctx.req);
     }).then(() => {
-      return next();
+      if (typeof next === "function") {
+        return next();
+      }
     });
   };
 }
