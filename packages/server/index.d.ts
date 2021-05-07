@@ -1246,8 +1246,11 @@ export interface GetAppOptions {
 export function getApp(opts?: GetAppOptions): Application;
 
 export interface BodyParserPair {
-  bodyParser: Middleware;
-  multipartBodyParser: Middleware;
+  bodyParser: (context: Context, next?: Next | undefined) => Promise<void>;
+  multipartBodyParser: (
+    context: Context,
+    next?: Next | undefined,
+  ) => Promise<void>;
 }
 
 /**

@@ -187,6 +187,29 @@ test("code-gen/e2e-server", async (t) => {
     }
   });
 
+  t.test("server - invalid json payload", async (t) => {
+    try {
+      await axiosInstance.request({
+        url: "/validate",
+        method: "POST",
+        data: `{ 
+        "foo": "bar",
+        "bar": {
+           "baz": true,
+           }
+         }`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (e) {
+      t.ok(e.isAxiosError);
+      t.log.info(e.response);
+      t.equal(e.response.status, 400);
+      t.equal(e.response.data.key, "error.server.unsupportedBodyFormat");
+    }
+  });
+
   t.test("Cleanup server", async () => {
     await closeTestApp(app);
   });
