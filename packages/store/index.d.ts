@@ -555,9 +555,10 @@ export function isQueryPart(value: any): value is QueryPart;
  * When interpolateParameters is true, we do a best effort in replacing the parameterized
  * query with the real params. If the result doesn't look right, please turn it off.
  */
-export function stringifyQueryPart(
-  queryPart: QueryPart,
-): { sql: string; params: any[] };
+export function stringifyQueryPart(queryPart: QueryPart): {
+  sql: string;
+  params: any[];
+};
 
 /**
  * Stringify a queryPart.

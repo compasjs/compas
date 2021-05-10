@@ -466,7 +466,7 @@ interface ContextDelegatedResponse {
 
 export class Application<
   StateT = DefaultState,
-  CustomT = DefaultContext
+  CustomT = DefaultContext,
 > extends EventEmitter {
   proxy: boolean;
   proxyIpHeader: string;
@@ -749,12 +749,10 @@ interface ExtendableContext extends BaseContext {
   respond?: boolean;
 }
 
-export type Context<
-  StateT = DefaultState,
-  CustomT = DefaultContext
-> = ExtendableContext & {
-  state: StateT;
-} & CustomT;
+export type Context<StateT = DefaultState, CustomT = DefaultContext> =
+  ExtendableContext & {
+    state: StateT;
+  } & CustomT;
 
 export type Next = () => void | Promise<void>;
 
@@ -848,7 +846,7 @@ export function compose<
   T7,
   U7,
   T8,
-  U8
+  U8,
 >(
   middleware: [
     Middleware<T1, U1>,

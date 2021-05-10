@@ -312,13 +312,8 @@ function internalQueryBuilderForType(
   let secondInternalBuilder = ``;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
-    const {
-      relation,
-      otherSide,
-      referencedKey,
-      ownKey,
-      joinKey,
-    } = type.queryBuilder.relations[relationKey];
+    const { relation, otherSide, referencedKey, ownKey, joinKey } =
+      type.queryBuilder.relations[relationKey];
 
     // Determine shortName of other side of the relation
     const otherShortName =

@@ -104,7 +104,8 @@ function stripChangelogOfUnreleased(changelog) {
 function combineCommits(commits) {
   // build(deps): bump @types/node from 14.6.2 to 14.6.3
   // build(deps-dev): bump react-query from 2.12.1 to 2.13.0 (#234)
-  const depRegex = /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)(?:\s\(#(\d+)\))?$/g;
+  const depRegex =
+    /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)(?:\s\(#(\d+)\))?$/g;
 
   const combinable = {};
   const result = [];
