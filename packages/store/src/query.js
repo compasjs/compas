@@ -161,14 +161,16 @@ export async function explainAnalyzeQuery(sql, queryItem, { jsonResult } = {}) {
   try {
     await sql.begin(async (sql) => {
       if (jsonResult) {
-        const intermediate = await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT JSON) ${queryItem}`.exec(
-          sql,
-        );
+        const intermediate =
+          await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT JSON) ${queryItem}`.exec(
+            sql,
+          );
         result = intermediate[0];
       } else {
-        const intermediate = await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT TEXT) ${queryItem}`.exec(
-          sql,
-        );
+        const intermediate =
+          await query`EXPLAIN (ANALYZE, VERBOSE, BUFFERS, FORMAT TEXT) ${queryItem}`.exec(
+            sql,
+          );
 
         result = intermediate.map((it) => it["QUERY PLAN"]).join("\n");
       }

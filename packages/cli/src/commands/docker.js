@@ -37,12 +37,8 @@ export async function dockerCommand(logger, command) {
     return { exitCode: 1 };
   }
 
-  const {
-    knownContainers,
-    exitCode,
-    stdout,
-    stderr,
-  } = await getKnownContainers();
+  const { knownContainers, exitCode, stdout, stderr } =
+    await getKnownContainers();
   if (exitCode !== 0) {
     logger.error(`Could not list containers.`);
     logger.error({ exitCode, stderr, stdout });

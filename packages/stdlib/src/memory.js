@@ -38,13 +38,8 @@ export function bytesToHumanReadable(bytes) {
  * @returns {void}
  */
 export function printProcessMemoryUsage(logger) {
-  const {
-    external,
-    heapTotal,
-    heapUsed,
-    rss,
-    arrayBuffers,
-  } = process.memoryUsage();
+  const { external, heapTotal, heapUsed, rss, arrayBuffers } =
+    process.memoryUsage();
   if (isProduction()) {
     logger.info({
       rss,

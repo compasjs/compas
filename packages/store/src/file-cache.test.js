@@ -102,14 +102,18 @@ test("store/file-cache", async (t) => {
 
   t.test("get a small file", async (t) => {
     const buffer = await streamToBuffer(
-      (await cache.getFileStream(files.small)).stream,
+      (
+        await cache.getFileStream(files.small)
+      ).stream,
     );
     t.equal(buffer.length, 2);
   });
 
   t.test("get a small file again", async (t) => {
     const buffer = await streamToBuffer(
-      (await cache.getFileStream(files.small)).stream,
+      (
+        await cache.getFileStream(files.small)
+      ).stream,
     );
     t.equal(buffer.length, 2);
   });
@@ -126,7 +130,9 @@ test("store/file-cache", async (t) => {
     const path = `${FileCache.fileCachePath}/${files.large.id}`;
 
     const buffer = await streamToBuffer(
-      (await cache.getFileStream(files.large)).stream,
+      (
+        await cache.getFileStream(files.large)
+      ).stream,
     );
     t.equal(buffer.length, 10);
     t.ok(existsSync(path));
@@ -148,7 +154,9 @@ test("store/file-cache", async (t) => {
     const path = `${FileCache.fileCachePath}/${files.large.id}`;
 
     const buffer = await streamToBuffer(
-      (await cache.getFileStream(files.large)).stream,
+      (
+        await cache.getFileStream(files.large)
+      ).stream,
     );
     t.equal(buffer.length, 10);
     t.ok(existsSync(path));
