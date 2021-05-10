@@ -19,7 +19,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "33.1.1",
-    "prettier": "2.2.1"
+    "prettier": "2.3.0"
   },
   "maintainers": [
     {
