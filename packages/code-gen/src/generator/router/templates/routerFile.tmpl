@@ -132,10 +132,12 @@ const handlers = {
 ((newline))
 
 export function router(ctx, next) {
-  let triePath = ctx.method + ctx.path;
-  if (triePath.endsWith("/")) {
-    triePath = triePath.substring(0, triePath.length - 1);
+  let triePath = ctx.path.substring(1);
+  // Also handle `/` requests
+  if (!triePath.endsWith("/") && triePath.length !== 0) {
+   triePath += "/";
   }
+  triePath += ctx.method;
 
   const params = Object.create(null);
   let route = undefined;
