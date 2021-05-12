@@ -29,6 +29,8 @@ mainFn(import.meta, async () => {
 
   const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
     ...prettierCommand,
+    "--ignore-unknown",
+    "--no-error-on-unmatched-pattern",
     ".",
   ]);
 
