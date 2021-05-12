@@ -8,6 +8,23 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.134](https://github.com/compasjs/compas/releases/tag/v0.0.134)
+
+- build(deps): bump dotenv from 9.0.0 to 9.0.2
+  ([#865](https://github.com/compasjs/compas/pull/865),
+  [#867](https://github.com/compasjs/compas/pull/867))
+- build(deps): bump eslint from 7.25.0 to 7.26.0
+  ([#862](https://github.com/compasjs/compas/pull/862))
+- build(deps): bump eslint-plugin-jsdoc from 33.1.0 to 34.0.2
+  ([#864](https://github.com/compasjs/compas/pull/864),
+  [#868](https://github.com/compasjs/compas/pull/868),
+  [#870](https://github.com/compasjs/compas/pull/870))
+- build(deps): bump prettier from 2.2.1 to 2.3.0
+  ([#863](https://github.com/compasjs/compas/pull/863))
+- chore: fix changelog formatting
+- feat(cli): support running prettier when no files are found
+  ([#872](https://github.com/compasjs/compas/pull/872))
+
 ### [v0.0.133](https://github.com/compasjs/compas/releases/tag/v0.0.133)
 
 - bench(stdlib): add event benchmarks
