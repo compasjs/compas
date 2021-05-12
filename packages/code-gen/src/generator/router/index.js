@@ -31,12 +31,7 @@ export function generateRouterFiles(context) {
     }
 
     const contents = executeTemplate("routerGroupFile", {
-      routeTrie,
-      routeTags,
-      extension: context.extension,
-      importExtension: context.extension,
       groupStructure,
-      options: context.options,
       groupName: group,
     });
 

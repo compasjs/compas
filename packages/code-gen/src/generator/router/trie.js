@@ -10,9 +10,12 @@ export const buildTrie = (data) => {
   for (const group of Object.values(data)) {
     for (const item of Object.values(group)) {
       if (item.type === "route") {
+        const fullPath = item.path.endsWith("/")
+          ? `${item.path}${item.method}`
+          : `${item.path}/${item.method}`;
         routeTrieInput.push({
           uniqueName: item.uniqueName,
-          fullPath: `${item.method}/${item.path}`,
+          fullPath,
         });
       }
     }
@@ -26,7 +29,6 @@ export const buildTrie = (data) => {
  */
 function buildRouteTrie(input) {
   const trie = createNode("");
-  addHttpMethods(trie);
 
   for (const r of input) {
     addRoute(
@@ -36,15 +38,7 @@ function buildRouteTrie(input) {
     );
   }
 
-  // Don't collapse top level
-  for (const child of trie.children) {
-    cleanTrieAndCollapse(child);
-  }
-
-  // Remove unneeded 'HTTP-method' children
-  trie.children = trie.children.filter(
-    (it) => it.children.length > 0 || it.uniqueName !== undefined,
-  );
+  cleanTrieAndCollapse(trie);
 
   sortTrie(trie);
 
@@ -104,21 +98,6 @@ function addChildNodes(parent, ...children) {
     child.parent = parent;
     parent.children.push(child);
   }
-}
-
-/**
- * @param trie
- */
-function addHttpMethods(trie) {
-  addChildNodes(
-    trie,
-    createNode("GET"),
-    createNode("POST"),
-    createNode("PUT"),
-    createNode("PATCH"),
-    createNode("DELETE"),
-    createNode("HEAD"),
-  );
 }
 
 /**
