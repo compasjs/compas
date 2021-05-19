@@ -637,7 +637,9 @@ export function internalQueryFile(builder = {}, wherePartial) {
       builder.where.idIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.idIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.idIn,
@@ -671,7 +673,9 @@ ${offsetLimitQb}
       builder.where.idIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.idIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.idIn,

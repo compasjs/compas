@@ -441,8 +441,8 @@ if (!isNil(builder.${key}.limit)) {
                builder.where.${ownKey}In.length > 0) {
                builder.where.${ownKey}In = query([
                                                     "(SELECT value::${sqlCastType} FROM(values (",
-                                                    ...builder.where.${ownKey}In.map(
-                                                       () => "").join("), ("),
+                                                    ...Array.from({ length: builder.where.${ownKey}In.length - 1 }).map(
+                                                       () => "), ("),
                                                     ")) as ids(value)) INTERSECT "
                                                  ], ...builder.where.${ownKey}In)
             } else {

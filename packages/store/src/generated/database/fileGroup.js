@@ -755,7 +755,9 @@ export function internalQueryFileGroup2(builder = {}, wherePartial) {
       builder.where.fileIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.fileIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.fileIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.fileIn,
@@ -789,7 +791,9 @@ ${offsetLimitQb}
       builder.where.parentIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.parentIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.parentIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.parentIn,
@@ -823,7 +827,9 @@ ${offsetLimitQb}
       builder.where.idIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.idIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.idIn,
@@ -982,7 +988,9 @@ export function internalQueryFileGroup(builder = {}, wherePartial) {
       builder.where.fileIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.fileIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.fileIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.fileIn,
@@ -1016,7 +1024,9 @@ ${offsetLimitQb}
       builder.where.parentIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.parentIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.parentIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.parentIn,
@@ -1050,7 +1060,9 @@ ${offsetLimitQb}
       builder.where.idIn = query(
         [
           "(SELECT value::uuid FROM(values (",
-          ...builder.where.idIn.map(() => "").join("), ("),
+          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
+            () => "), (",
+          ),
           ")) as ids(value)) INTERSECT ",
         ],
         ...builder.where.idIn,
