@@ -1,6 +1,8 @@
-import { readFileSync } from "fs";
+import { execSync } from "child_process";
+import { existsSync, readFileSync } from "fs";
 import {
   dirnameForModule,
+  exec,
   isNil,
   pathJoin,
   processDirectoryRecursiveSync,
@@ -10,9 +12,9 @@ import {
  * @param {Logger} logger
  * @param {UtilCommand} command
  * @param {ScriptCollection} scriptCollection
- * @returns {void}
+ * @returns {Promise<void>}
  */
-export function helpCommand(logger, command, scriptCollection) {
+export async function helpCommand(logger, command, scriptCollection) {
   const { name, version } = JSON.parse(
     readFileSync(
       pathJoin(dirnameForModule(import.meta), "../../package.json"),
@@ -20,14 +22,11 @@ export function helpCommand(logger, command, scriptCollection) {
     ),
   );
 
-  const foundCompasVersions = findOtherCompasStdlibVersions(version);
-
   let log = `${name} -- ${version}
-${formatOtherVersions(foundCompasVersions)}
 Usage:
 
 - init              : compas init [projectName]
-- help              : compas help
+- help              : compas help [--check]
 - docker            : compas docker [up,down,clean,reset]
 - proxy             : compas proxy [--verbose]
 - run (explicit)    : compas run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
@@ -48,6 +47,21 @@ with type CliWatchOptions from the script.
 
   if (command.error) {
     log += `\n\nError: ${command.error}`;
+  }
+
+  if (command.arguments[0] === "--check") {
+    const foundCompasVersions = findOtherCompasStdlibVersions(version);
+    const envLocalIgnored = await isEnvLocalIgnored();
+
+    if (foundCompasVersions.length > 0 || !envLocalIgnored) {
+      log += `\n\nNotices:\n`;
+    }
+
+    log += formatOtherVersions(foundCompasVersions);
+
+    if (!envLocalIgnored) {
+      log += `\nFile '.env.local' is not ignored. Please add it to your '.gitignore'.`;
+    }
   }
 
   logger.info(log);
@@ -86,6 +100,22 @@ function formatOtherVersions(versions) {
   }
 
   return result;
+}
+
+/**
+ * If .env.local exists and a git repo exists, expect .env.local to be git ignored
+ *
+ * @returns {Promise<boolean>}
+ */
+async function isEnvLocalIgnored() {
+  if (!existsSync("./.env.local")) {
+    return true;
+  }
+
+  const { exitCode } = await exec("git check-ignore -q .env.local");
+
+  // 128 if no git repo exists in directory
+  return exitCode === 0 || exitCode === 128;
 }
 
 /**
