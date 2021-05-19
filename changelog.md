@@ -8,6 +8,33 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.135](https://github.com/compasjs/compas/releases/tag/v0.0.135)
+
+- build(deps): bump @babel/core from 7.14.0 to 7.14.3
+  ([#875](https://github.com/compasjs/compas/pull/875),
+  [#882](https://github.com/compasjs/compas/pull/882))
+- build(deps): bump @babel/eslint-parser from 7.13.14 to 7.14.3
+  ([#876](https://github.com/compasjs/compas/pull/876),
+  [#884](https://github.com/compasjs/compas/pull/884))
+- build(deps): bump @types/node from 15.0.2 to 15.3.0
+  ([#874](https://github.com/compasjs/compas/pull/874),
+  [#878](https://github.com/compasjs/compas/pull/878))
+- build(deps): bump eslint-plugin-import from 2.22.1 to 2.23.2
+  ([#880](https://github.com/compasjs/compas/pull/880))
+- build(deps): bump eslint-plugin-jsdoc from 34.0.2 to 34.8.0
+  ([#877](https://github.com/compasjs/compas/pull/877),
+  [#879](https://github.com/compasjs/compas/pull/879),
+  [#883](https://github.com/compasjs/compas/pull/883),
+  [#888](https://github.com/compasjs/compas/pull/888))
+- feat(cli): add --check, check if .env.local is ignored
+  ([#891](https://github.com/compasjs/compas/pull/891))
+- feat(code-gen): improve generated router performance
+  ([#873](https://github.com/compasjs/compas/pull/873))
+- feat(stdlib): load .env.local if exists
+  ([#890](https://github.com/compasjs/compas/pull/890))
+- fix(code-gen): transformation for idIn and via combination
+  ([#889](https://github.com/compasjs/compas/pull/889))
+
 ### [v0.0.134](https://github.com/compasjs/compas/releases/tag/v0.0.134)
 
 - build(deps): bump dotenv from 9.0.0 to 9.0.2
