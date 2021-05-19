@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { createReadStream } from "fs";
 import { mainTestFn, test } from "@compas/cli";
 import {
@@ -204,7 +205,7 @@ test("code-gen/e2e-server", async (t) => {
       });
     } catch (e) {
       t.ok(e.isAxiosError);
-      t.log.info(e.response);
+
       t.equal(e.response.status, 400);
       t.equal(e.response.data.key, "error.server.unsupportedBodyFormat");
     }

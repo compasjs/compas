@@ -43,8 +43,6 @@ test("store/migrations", (t) => {
     t.ok(list[2].repeatable === false);
     t.ok(list[2].number === 999);
 
-    t.log.info(list);
-
     await runMigrations(mc);
     const testResult = await sql`
       SELECT *

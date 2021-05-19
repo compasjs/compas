@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
 import { AppError, isPlainObject, uuid } from "@compas/stdlib";
 import Axios from "axios";
