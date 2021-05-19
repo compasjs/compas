@@ -8,6 +8,14 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.137](https://github.com/compasjs/compas/releases/tag/v0.0.137)
+
+- build(deps): bump eslint-plugin-jsdoc from 34.8.1 to 34.8.2
+  ([#894](https://github.com/compasjs/compas/pull/894))
+- chore(store): add bench for variations of generated query builder
+- feat(store): allow specifying app_name in namespaces.txt
+  ([#895](https://github.com/compasjs/compas/pull/895))
+
 ### [v0.0.136](https://github.com/compasjs/compas/releases/tag/v0.0.136)
 
 - build(deps): bump eslint-plugin-jsdoc from 34.8.0 to 34.8.1
