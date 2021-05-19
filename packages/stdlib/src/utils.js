@@ -9,8 +9,6 @@ import { refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
-let _mainFnIsRunning = false;
-
 /**
  * Get the number of seconds since Unix epoch (1-1-1970).
  *
@@ -69,16 +67,10 @@ export function gc() {
  * @returns {void}
  */
 export function mainFn(meta, cb) {
-  if (_mainFnIsRunning) {
-    return;
-  }
-
   const { isMainFn, name } = isMainFnAndReturnName(meta);
   if (!isMainFn) {
     return;
   }
-
-  _mainFnIsRunning = true;
 
   // Load .env.local first, since existing values in `process.env` are not overwritten.
   dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
