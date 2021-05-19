@@ -419,6 +419,23 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.id, user.id);
   });
 
+  t.test("traverse with 'via' and multiple idIn", async (t) => {
+    const [dbUser] = await userEntityImport
+      .queryUser({
+        where: {
+          idIn: [post.writer, uuid()],
+        },
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
+        },
+      })
+      .exec(sql);
+
+    t.equal(dbUser.id, user.id);
+  });
+
   t.test("traverse via queryCategory", async (t) => {
     const builder = {
       viaPosts: {
