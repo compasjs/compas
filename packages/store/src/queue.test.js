@@ -230,12 +230,6 @@ test("store/queue", (t) => {
       name: "test.object.handler.missingKey",
     });
     t.equal(job3.isComplete, true);
-
-    t.log.info({
-      job3,
-      job2,
-      job,
-    });
   });
 
   t.test("addEventToQueue", async (t) => {

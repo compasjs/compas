@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, isPlainObject } from "@compas/stdlib";
 

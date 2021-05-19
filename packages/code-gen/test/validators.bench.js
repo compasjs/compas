@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { bench, mainBenchFn } from "@compas/cli";
 import FastestValidator from "fastest-validator";
 import * as yup from "yup";

@@ -83,7 +83,7 @@ test("server/middleware/body", async (t) => {
       });
     } catch (e) {
       t.ok(e.isAxiosError);
-      t.log.info(e.response);
+
       t.equal(e.response.status, 400);
       t.equal(e.response.data.key, "error.server.unsupportedBodyFormat");
     }
