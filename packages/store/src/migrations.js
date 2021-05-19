@@ -29,21 +29,18 @@ export async function newMigrateContext(
     // Automatically add this package to the migrations,
     // and make sure it is at the front
     const storeMigrationIndex = migrations.namespaces.indexOf("@compas/store");
-    if (storeMigrationIndex !== 0) {
-      if (storeMigrationIndex !== -1) {
-        migrations.namespaces.splice(storeMigrationIndex, 1);
-        migrations.namespaces.unshift("@compas/store");
-      } else {
-        migrations.namespaces.unshift("@compas/store");
+    if (storeMigrationIndex === -1) {
+      const { migrationFiles, namespaces } = await readMigrationsDir(
+        `${dirnameForModule(import.meta)}/../migrations`,
+        "@compas/store",
+        [],
+      );
 
-        const { migrationFiles } = await readMigrationsDir(
-          `${dirnameForModule(import.meta)}/../migrations`,
-          "@compas/store",
-          migrations.namespaces,
-        );
-
-        migrations.migrationFiles.push(...migrationFiles);
-      }
+      migrations.migrationFiles.push(...migrationFiles);
+      migrations.namespaces = [].concat(namespaces, migrations.namespaces);
+    } else if (storeMigrationIndex !== 0) {
+      migrations.namespaces.splice(storeMigrationIndex, 1);
+      migrations.namespaces.unshift("@compas/store");
     }
 
     const mc = {
@@ -289,99 +286,24 @@ async function acquireLock(sql) {
   }
 }
 
-/**
- *
- * @param directory
- * @param {string} namespace
- * @param {string[]} namespaces
- * @returns {Promise<{migrationFiles: [], namespaces: [*]}>}
- */
-async function readMigrationsDir(
+async function readMigrationFilesForNamespace(
   directory,
-  namespace = environment.APP_NAME,
-  namespaces = [environment.APP_NAME],
+  migrationFiles,
+  namespace,
 ) {
-  if (!existsSync(directory)) {
-    return {
-      namespaces: [],
-      migrationFiles: [],
-    };
-  }
-
   const files = await readdir(directory);
-  const result = [];
 
   for (const f of files) {
     const fullPath = pathJoin(directory, f);
 
-    if (f === "namespaces.txt") {
-      const rawNamespaces = await readFile(fullPath, "utf-8");
-      const subNamespaces = rawNamespaces
-        .split("\n")
-        .map((it) => it.trim())
-        .filter((it) => it.length > 0);
-
-      for (const sub of subNamespaces) {
-        if (namespaces.indexOf(sub) !== -1) {
-          continue;
-        }
-
-        namespaces.unshift(sub);
-
-        // Either same level in node_modules
-        const directPath = pathJoin(process.cwd(), "node_modules", sub);
-        // Or a level deeper
-        const indirectPath = pathJoin(directory, "../node_modules", sub);
-
-        const subPath = !existsSync(directPath)
-          ? existsSync(indirectPath)
-            ? indirectPath
-            : new Error(
-                `Could not determine import path of ${sub}, while searching for migration files.`,
-              )
-          : directPath;
-
-        // Quick hack
-        if (typeof subPath !== "string") {
-          throw subPath;
-        }
-
-        // Use the package.json to find the package entrypoint
-        // Only supporting simple { exports: "file.js" }, { exports: { default:
-        // "file.js" } or { main: "file.js" }
-        const subPackageJson = JSON.parse(
-          await readFile(pathJoin(subPath, "package.json"), "utf8"),
-        );
-
-        const exportedItems = await import(
-          pathToFileURL(
-            pathJoin(
-              subPath,
-              subPackageJson?.exports?.default ??
-                (typeof subPackageJson?.exports === "string"
-                  ? subPackageJson?.exports
-                  : undefined) ??
-                subPackageJson?.main ??
-                "index.js",
-            ),
-          )
-        );
-        if (exportedItems && exportedItems.migrations) {
-          const subResult = await readMigrationsDir(
-            exportedItems.migrations,
-            sub,
-            namespaces,
-          );
-          result.push(...subResult.migrationFiles);
-        }
-      }
+    if (!f.endsWith(".sql")) {
       continue;
     }
 
     const { number, repeatable, name } = parseFileName(f);
     const source = await readFile(fullPath, "utf-8");
     const hash = createHash("sha1").update(source, "utf-8").digest("hex");
-    result.push({
+    migrationFiles.push({
       namespace,
       number,
       repeatable,
@@ -392,9 +314,113 @@ async function readMigrationsDir(
       hash,
     });
   }
+}
+
+/**
+ *
+ * @param directory
+ * @param {string} namespace
+ * @param {string[]} namespaces
+ * @returns {Promise<{migrationFiles: [], namespaces: [*]}>}
+ */
+async function readMigrationsDir(
+  directory,
+  namespace = environment.APP_NAME,
+  namespaces = [],
+) {
+  if (!existsSync(directory)) {
+    return {
+      namespaces: [],
+      migrationFiles: [],
+    };
+  }
+
+  const migrationFiles = [];
+  const namespacePath = pathJoin(directory, "namespaces.txt");
+
+  if (existsSync(namespacePath)) {
+    const rawNamespaces = await readFile(namespacePath, "utf-8");
+    const subNamespaces = rawNamespaces
+      .split("\n")
+      .map((it) => it.trim())
+      .filter((it) => it.length > 0);
+
+    for (const ns of subNamespaces) {
+      // Stop recurse if we already handled it, or if the current namespace is
+      // fetched again
+      if (namespaces.includes(ns)) {
+        continue;
+      }
+
+      if (ns === namespace) {
+        namespaces.push(ns);
+        await readMigrationFilesForNamespace(directory, migrationFiles, ns);
+        continue;
+      }
+
+      // Either same level in node_modules
+      const directPath = pathJoin(process.cwd(), "node_modules", ns);
+      // Or a level deeper
+      const indirectPath = pathJoin(directory, "../node_modules", ns);
+
+      const subPath = !existsSync(directPath)
+        ? existsSync(indirectPath)
+          ? indirectPath
+          : new Error(
+              `Could not determine import path of '${ns}', while searching for migration files.`,
+            )
+        : directPath;
+
+      // Quick hack
+      if (typeof subPath !== "string") {
+        throw subPath;
+      }
+
+      // Use the package.json to find the package entrypoint
+      // Only supporting simple { exports: "file.js" }, { exports: { default:
+      // "file.js" } or { main: "file.js" }
+      const subPackageJson = JSON.parse(
+        await readFile(pathJoin(subPath, "package.json"), "utf8"),
+      );
+
+      const exportedItems = await import(
+        pathToFileURL(
+          pathJoin(
+            subPath,
+            subPackageJson?.exports?.default ??
+              (typeof subPackageJson?.exports === "string"
+                ? subPackageJson?.exports
+                : undefined) ??
+              subPackageJson?.main ??
+              "index.js",
+          ),
+        )
+      );
+
+      if (exportedItems && exportedItems.migrations) {
+        const subResult = await readMigrationsDir(
+          exportedItems.migrations,
+          ns,
+          namespaces,
+        );
+        migrationFiles.push(...subResult.migrationFiles);
+      }
+    }
+  }
+
+  // We might have loaded the migration files already
+  if (namespaces.includes(namespace)) {
+    return {
+      migrationFiles,
+      namespaces,
+    };
+  }
+
+  namespaces.push(namespace);
+  await readMigrationFilesForNamespace(directory, migrationFiles, namespace);
 
   return {
-    migrationFiles: result,
+    migrationFiles,
     namespaces,
   };
 }
