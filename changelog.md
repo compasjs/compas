@@ -8,6 +8,13 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.136](https://github.com/compasjs/compas/releases/tag/v0.0.136)
+
+- build(deps): bump eslint-plugin-jsdoc from 34.8.0 to 34.8.1
+  ([#893](https://github.com/compasjs/compas/pull/893))
+- fix(stdlib): revert mainFn only running once check
+  ([#892](https://github.com/compasjs/compas/pull/892))
+
 ### [v0.0.135](https://github.com/compasjs/compas/releases/tag/v0.0.135)
 
 - build(deps): bump @babel/core from 7.14.0 to 7.14.3
