@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-
 import assert from "assert";
 import { bench, mainBenchFn } from "@compas/cli";
 import { createBodyParsers } from "@compas/server";

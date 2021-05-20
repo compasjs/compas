@@ -1,4 +1,4 @@
-import { queryFileGroup } from "../../../generated/testing/sql/database/fileGroup.js";
+/* eslint-disable import/no-unresolved */
 import { bench, mainBenchFn } from "../../cli/index.js";
 import { newPostgresConnection } from "../index.js";
 
@@ -74,6 +74,9 @@ async function generatedNestedFileGroups(sql) {
 }
 
 bench("queryFileGroup - exec", async (b) => {
+  const { queryFileGroup } = await import(
+    "../../../generated/testing/sql/database/fileGroup.js"
+  );
   if (!_sql) {
     _sql = await newPostgresConnection({});
   }
@@ -94,6 +97,9 @@ bench("queryFileGroup - exec", async (b) => {
 });
 
 bench("queryFileGroup - execRaw", async (b) => {
+  const { queryFileGroup } = await import(
+    "../../../generated/testing/sql/database/fileGroup.js"
+  );
   if (!_sql) {
     _sql = await newPostgresConnection({});
   }
@@ -114,6 +120,9 @@ bench("queryFileGroup - execRaw", async (b) => {
 });
 
 bench("queryFileGroup - exec - aggregate children", async (b) => {
+  const { queryFileGroup } = await import(
+    "../../../generated/testing/sql/database/fileGroup.js"
+  );
   if (!_sql) {
     _sql = await newPostgresConnection({});
   }
@@ -136,6 +145,9 @@ bench("queryFileGroup - exec - aggregate children", async (b) => {
 });
 
 bench("queryFileGroup - execRaw - aggregate children", async (b) => {
+  const { queryFileGroup } = await import(
+    "../../../generated/testing/sql/database/fileGroup.js"
+  );
   if (!_sql) {
     _sql = await newPostgresConnection({});
   }
@@ -158,6 +170,9 @@ bench("queryFileGroup - execRaw - aggregate children", async (b) => {
 });
 
 bench("queryFileGroup - exec - aggregate children, with parent", async (b) => {
+  const { queryFileGroup } = await import(
+    "../../../generated/testing/sql/database/fileGroup.js"
+  );
   if (!_sql) {
     _sql = await newPostgresConnection({});
   }
@@ -184,6 +199,9 @@ bench("queryFileGroup - exec - aggregate children, with parent", async (b) => {
 bench(
   "queryFileGroup - execRaw - aggregate children, with parent",
   async (b) => {
+    const { queryFileGroup } = await import(
+      "../../../generated/testing/sql/database/fileGroup.js"
+    );
     if (!_sql) {
       _sql = await newPostgresConnection({});
     }
