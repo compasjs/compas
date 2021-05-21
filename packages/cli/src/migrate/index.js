@@ -28,7 +28,7 @@ export async function dockerMigrateCommand(logger, command) {
     "@compas/store"
   );
 
-  const sql = await newPostgresConnection({ max: 2 });
+  const sql = await newPostgresConnection({ max: 1, createIfNotExists: true });
   const mc = await newMigrateContext(sql);
 
   // Always print current state;
