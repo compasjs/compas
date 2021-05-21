@@ -1,5 +1,4 @@
 import { mainTestFn, test } from "@compas/cli";
-import { dirnameForModule, environment } from "@compas/stdlib";
 import {
   getMigrationsToBeApplied,
   newMigrateContext,
@@ -28,8 +27,7 @@ test("store/migrations", (t) => {
   t.test("run full migration", async (t) => {
     const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
-    t.deepEqual(mc.namespaces, ["@compas/store", environment.APP_NAME]);
-    t.equal(mc.files.length, 12);
+    t.equal(mc.files.length, 3);
 
     const { migrationQueue: list } = getMigrationsToBeApplied(mc);
     t.equal(list.length, 3);
@@ -52,10 +50,7 @@ test("store/migrations", (t) => {
   });
 
   t.test("second run has no migrations to be applied", async (t) => {
-    const mc = await newMigrateContext(
-      sql,
-      `${dirnameForModule(import.meta)}/../__fixtures__`,
-    );
+    const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
     const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
     t.equal(migrationQueue.length, 0);

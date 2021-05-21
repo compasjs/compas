@@ -1,2 +1,0 @@
-ALTER TABLE "job"
-  ADD COLUMN "retryCount" int NOT NULL DEFAULT 0;

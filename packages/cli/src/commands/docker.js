@@ -1,6 +1,7 @@
 import { environment, exec, spawn } from "@compas/stdlib";
+import { dockerMigrateCommand } from "../migrate/index.js";
 
-const SUB_COMMANDS = ["up", "down", "clean", "reset"];
+const SUB_COMMANDS = ["up", "down", "clean", "reset", "migrate"];
 
 const containers = {
   "compas-postgres-12": {
@@ -28,6 +29,10 @@ export async function dockerCommand(logger, command) {
       }'. Please use one of ${SUB_COMMANDS.join(", ")}`,
     );
     return { exitCode: 1 };
+  }
+
+  if (subCommand === "migrate") {
+    return await dockerMigrateCommand(logger, command);
   }
 
   if (!(await isDockerAvailable())) {

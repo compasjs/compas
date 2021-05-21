@@ -9,5 +9,5 @@ CREATE OR REPLACE VIEW "fileGroupView" AS
                           FROM
                             "fileGroup" nfg
                           WHERE
-                            nfg."parent" = fg."id" ) "calc"
+                              nfg."parent" = fg."id" ) "calc"
                 ON TRUE;

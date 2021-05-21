@@ -1,13 +1,18 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
-import { pathToFileURL } from "url";
-import {
-  AppError,
-  dirnameForModule,
-  environment,
-  pathJoin,
-} from "@compas/stdlib";
+import { AppError, environment, pathJoin } from "@compas/stdlib";
+
+/**
+ * @typedef {object} MigrationFile
+ * @property {number} number
+ * @property {boolean} repeatable
+ * @property {string} name
+ * @property {string} fullPath
+ * @property {boolean} isMigrated
+ * @property {string} source
+ * @property {string} hash
+ */
 
 /**
  * Create a new  migration context, resolves all migrations and collects the current
@@ -26,26 +31,10 @@ export async function newMigrateContext(
   try {
     const migrations = await readMigrationsDir(migrationDirectory);
 
-    // Automatically add this package to the migrations,
-    // and make sure it is at the front
-    const storeMigrationIndex = migrations.namespaces.indexOf("@compas/store");
-    if (storeMigrationIndex === -1) {
-      const { migrationFiles, namespaces } = await readMigrationsDir(
-        `${dirnameForModule(import.meta)}/../migrations`,
-        "@compas/store",
-        [],
-      );
-
-      migrations.migrationFiles.push(...migrationFiles);
-      migrations.namespaces = [].concat(namespaces, migrations.namespaces);
-    } else if (storeMigrationIndex !== 0) {
-      migrations.namespaces.splice(storeMigrationIndex, 1);
-      migrations.namespaces.unshift("@compas/store");
-    }
-
     const mc = {
-      files: sortMigrations(migrations.namespaces, migrations.migrationFiles),
-      namespaces: migrations.namespaces,
+      files: migrations.sort((a, b) => {
+        return a.number - b.number;
+      }),
       sql,
       storedHashes: {},
     };
@@ -60,6 +49,11 @@ export async function newMigrateContext(
       }),
     ]);
     await syncWithSchemaState(mc);
+
+    mc.rebuild = () => rebuildMigrations(mc);
+    mc.info = () => getMigrationsToBeApplied(mc);
+    mc.do = () => runMigrations(mc);
+
     return mc;
   } catch (error) {
     // Help user by dropping the sql connection so the application will exit
@@ -88,13 +82,19 @@ export async function newMigrateContext(
  *
  * @param {MigrateContext} mc
  * @returns {{
- *   migrationQueue: ({ namespace: string, name: string, number: number, repeatable:
- *   boolean}[]), hashChanges: { name: string, number: number, namespace: string }[]
+ *   migrationQueue: {
+ *     name: string,
+ *     number: number,
+ *     repeatable: boolean
+ *   }[],
+ *   hashChanges: {
+ *     name: string,
+ *     number: number,
+ *   }[]
  * }}
  */
 export function getMigrationsToBeApplied(mc) {
   const migrationQueue = filterMigrationsToBeApplied(mc).map((it) => ({
-    namespace: it.namespace,
     name: it.name,
     number: it.number,
     repeatable: it.repeatable,
@@ -102,12 +102,8 @@ export function getMigrationsToBeApplied(mc) {
 
   const hashChanges = [];
   for (const it of mc.files) {
-    if (
-      it.isMigrated &&
-      mc.storedHashes[`${it.namespace}-${it.number}`] !== it.hash
-    ) {
+    if (it.isMigrated && mc.storedHashes[it.number] !== it.hash) {
       hashChanges.push({
-        namespace: it.namespace,
         name: it.name,
         number: it.number,
       });
@@ -148,7 +144,6 @@ export async function runMigrations(mc) {
         500,
         {
           message: "Could not run migration",
-          namespace: current?.namespace,
           number: current?.number,
           name: current?.name,
           postgres: {
@@ -168,6 +163,39 @@ export async function runMigrations(mc) {
 }
 
 /**
+ * Rebuild migration table state based on the known migration files
+ *
+ * @since 0.1.0
+ *
+ * @param {MigrateContext} mc
+ * @returns {Promise<undefined>}
+ */
+export async function rebuildMigrations(mc) {
+  try {
+    await mc.sql.begin(async (sql) => {
+      await sql`DELETE FROM "migration" WHERE 1 = 1`;
+
+      for (const file of mc.files) {
+        await runInsert(sql, file);
+      }
+    });
+  } catch (e) {
+    if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
+      throw new AppError(
+        "migrate.rebuild.error",
+        500,
+        {
+          message: "No migrations applied yet, can't rebuild migration table.",
+        },
+        e,
+      );
+    } else {
+      throw e;
+    }
+  }
+}
+
+/**
  * @param {MigrateContext} mc
  * @returns {MigrateFile[]}
  */
@@ -176,10 +204,7 @@ function filterMigrationsToBeApplied(mc) {
   for (const f of mc.files) {
     if (!f.isMigrated) {
       result.push(f);
-    } else if (
-      mc.storedHashes[`${f.namespace}-${f.number}`] !== f.hash &&
-      f.repeatable
-    ) {
+    } else if (mc.storedHashes[f.number] !== f.hash && f.repeatable) {
       result.push(f);
     }
   }
@@ -212,15 +237,9 @@ async function runMigration(sql, migration) {
  * @param {MigrateFile} migration
  */
 function runInsert(sql, migration) {
-  return sql`
-     INSERT INTO migration ${sql(
-       migration,
-       "namespace",
-       "name",
-       "number",
-       "hash",
-     )}
-   `;
+  return sql`INSERT INTO "migration" (namespace, number, name, hash) VALUES (${
+    environment.APP_NAME ?? "compas"
+  }, ${migration.number}, ${migration.name}, ${migration.hash});`;
 }
 
 /**
@@ -231,11 +250,9 @@ async function syncWithSchemaState(mc) {
   let rows = [];
   try {
     rows = await mc.sql`
-        SELECT DISTINCT ON (namespace, number) namespace,
-                                               number,
-                                               hash
+        SELECT DISTINCT ON (number) number, hash
         FROM migration
-        ORDER BY namespace, number, "createdAt" DESC
+        ORDER BY number, "createdAt" DESC
       `;
   } catch (e) {
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
@@ -251,28 +268,22 @@ async function syncWithSchemaState(mc) {
     return;
   }
 
-  const migrationData = {};
+  const numbers = [];
   for (const row of rows) {
-    if (!migrationData[row.namespace]) {
-      migrationData[row.namespace] = [];
-    }
-    migrationData[row.namespace].push(row.number);
+    numbers.push(Number(row.number));
 
-    mc.storedHashes[`${row.namespace}-${row.number}`] = row.hash;
+    mc.storedHashes[Number(row.number)] = row.hash;
   }
 
   for (const mF of mc.files) {
-    if (
-      migrationData[mF.namespace] &&
-      migrationData[mF.namespace].indexOf(mF.number) !== -1
-    ) {
+    if (numbers.includes(mF.number)) {
       mF.isMigrated = true;
     }
   }
 }
 
 /**
- * @param sql
+ * @param {Postgres} sql
  */
 async function acquireLock(sql) {
   // Should be automatically released by Postgres once this connection ends.
@@ -286,11 +297,18 @@ async function acquireLock(sql) {
   }
 }
 
-async function readMigrationFilesForNamespace(
-  directory,
-  migrationFiles,
-  namespace,
-) {
+/**
+ *
+ * @param directory
+ * @returns {Promise<MigrationFile[]>}
+ */
+async function readMigrationsDir(directory) {
+  if (!existsSync(directory)) {
+    return [];
+  }
+
+  const migrationFiles = [];
+
   const files = await readdir(directory);
 
   for (const f of files) {
@@ -304,7 +322,6 @@ async function readMigrationFilesForNamespace(
     const source = await readFile(fullPath, "utf-8");
     const hash = createHash("sha1").update(source, "utf-8").digest("hex");
     migrationFiles.push({
-      namespace,
       number,
       repeatable,
       name,
@@ -314,132 +331,8 @@ async function readMigrationFilesForNamespace(
       hash,
     });
   }
-}
 
-/**
- *
- * @param directory
- * @param {string} namespace
- * @param {string[]} namespaces
- * @returns {Promise<{migrationFiles: [], namespaces: [*]}>}
- */
-async function readMigrationsDir(
-  directory,
-  namespace = environment.APP_NAME,
-  namespaces = [],
-) {
-  if (!existsSync(directory)) {
-    return {
-      namespaces: [],
-      migrationFiles: [],
-    };
-  }
-
-  const migrationFiles = [];
-  const namespacePath = pathJoin(directory, "namespaces.txt");
-
-  if (existsSync(namespacePath)) {
-    const rawNamespaces = await readFile(namespacePath, "utf-8");
-    const subNamespaces = rawNamespaces
-      .split("\n")
-      .map((it) => it.trim())
-      .filter((it) => it.length > 0);
-
-    for (const ns of subNamespaces) {
-      // Stop recurse if we already handled it, or if the current namespace is
-      // fetched again
-      if (namespaces.includes(ns)) {
-        continue;
-      }
-
-      if (ns === namespace) {
-        namespaces.push(ns);
-        await readMigrationFilesForNamespace(directory, migrationFiles, ns);
-        continue;
-      }
-
-      // Either same level in node_modules
-      const directPath = pathJoin(process.cwd(), "node_modules", ns);
-      // Or a level deeper
-      const indirectPath = pathJoin(directory, "../node_modules", ns);
-
-      const subPath = !existsSync(directPath)
-        ? existsSync(indirectPath)
-          ? indirectPath
-          : new Error(
-              `Could not determine import path of '${ns}', while searching for migration files.`,
-            )
-        : directPath;
-
-      // Quick hack
-      if (typeof subPath !== "string") {
-        throw subPath;
-      }
-
-      // Use the package.json to find the package entrypoint
-      // Only supporting simple { exports: "file.js" }, { exports: { default:
-      // "file.js" } or { main: "file.js" }
-      const subPackageJson = JSON.parse(
-        await readFile(pathJoin(subPath, "package.json"), "utf8"),
-      );
-
-      const exportedItems = await import(
-        pathToFileURL(
-          pathJoin(
-            subPath,
-            subPackageJson?.exports?.default ??
-              (typeof subPackageJson?.exports === "string"
-                ? subPackageJson?.exports
-                : undefined) ??
-              subPackageJson?.main ??
-              "index.js",
-          ),
-        )
-      );
-
-      if (exportedItems && exportedItems.migrations) {
-        const subResult = await readMigrationsDir(
-          exportedItems.migrations,
-          ns,
-          namespaces,
-        );
-        migrationFiles.push(...subResult.migrationFiles);
-      }
-    }
-  }
-
-  // We might have loaded the migration files already
-  if (namespaces.includes(namespace)) {
-    return {
-      migrationFiles,
-      namespaces,
-    };
-  }
-
-  namespaces.push(namespace);
-  await readMigrationFilesForNamespace(directory, migrationFiles, namespace);
-
-  return {
-    migrationFiles,
-    namespaces,
-  };
-}
-
-/**
- * @param namespaces
- * @param files
- */
-function sortMigrations(namespaces, files) {
-  return files.sort((a, b) => {
-    const namespaceResult =
-      namespaces.indexOf(a.namespace) - namespaces.indexOf(b.namespace);
-
-    if (namespaceResult !== 0) {
-      return namespaceResult;
-    }
-
-    return a.number < b.number;
-  });
+  return migrationFiles;
 }
 
 /**
@@ -455,7 +348,6 @@ function parseFileName(fileName) {
     );
   }
 
-  filePattern.lastIndex = 0;
   if (!filePattern.test(fileName)) {
     throw new Error(
       `migration: only supports the following file pattern: '000-my-name.sql' or '001-r-name.sql' for repeatable migrations`,
