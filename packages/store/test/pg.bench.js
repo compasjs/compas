@@ -2,9 +2,14 @@
 import { bench, mainBenchFn } from "../../cli/index.js";
 import { newPostgresConnection } from "../index.js";
 
-mainBenchFn(import.meta);
+const postgresConnectionOptions = {
+  createIfNotExists: true,
+  max: 10,
+};
 
 let _sql = undefined;
+
+mainBenchFn(import.meta);
 
 async function generatedNestedFileGroups(sql) {
   await sql`TRUNCATE TABLE "fileGroup" CASCADE `;
@@ -78,7 +83,7 @@ bench("queryFileGroup - exec", async (b) => {
     "../../../generated/testing/sql/database/fileGroup.js"
   );
   if (!_sql) {
-    _sql = await newPostgresConnection({});
+    _sql = await newPostgresConnection(postgresConnectionOptions);
   }
   const sql = _sql;
   await generatedNestedFileGroups(sql);
@@ -101,7 +106,7 @@ bench("queryFileGroup - execRaw", async (b) => {
     "../../../generated/testing/sql/database/fileGroup.js"
   );
   if (!_sql) {
-    _sql = await newPostgresConnection({});
+    _sql = await newPostgresConnection(postgresConnectionOptions);
   }
   const sql = _sql;
   await generatedNestedFileGroups(sql);
@@ -124,7 +129,7 @@ bench("queryFileGroup - exec - aggregate children", async (b) => {
     "../../../generated/testing/sql/database/fileGroup.js"
   );
   if (!_sql) {
-    _sql = await newPostgresConnection({});
+    _sql = await newPostgresConnection(postgresConnectionOptions);
   }
   const sql = _sql;
   await generatedNestedFileGroups(sql);
@@ -149,7 +154,7 @@ bench("queryFileGroup - execRaw - aggregate children", async (b) => {
     "../../../generated/testing/sql/database/fileGroup.js"
   );
   if (!_sql) {
-    _sql = await newPostgresConnection({});
+    _sql = await newPostgresConnection(postgresConnectionOptions);
   }
   const sql = _sql;
   await generatedNestedFileGroups(sql);
@@ -174,7 +179,7 @@ bench("queryFileGroup - exec - aggregate children, with parent", async (b) => {
     "../../../generated/testing/sql/database/fileGroup.js"
   );
   if (!_sql) {
-    _sql = await newPostgresConnection({});
+    _sql = await newPostgresConnection(postgresConnectionOptions);
   }
   const sql = _sql;
   await generatedNestedFileGroups(sql);
@@ -203,7 +208,7 @@ bench(
       "../../../generated/testing/sql/database/fileGroup.js"
     );
     if (!_sql) {
-      _sql = await newPostgresConnection({});
+      _sql = await newPostgresConnection(postgresConnectionOptions);
     }
     const sql = _sql;
     await generatedNestedFileGroups(sql);
