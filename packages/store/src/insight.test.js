@@ -33,7 +33,7 @@ test("store/insight", (t) => {
     // Comes from @compas/stdlib, but doesn't matter when published since this is a test file
     t.ok(isPlainObject(result));
     t.ok(result["migration"].diskSize > 16384, "migration disk size");
-    t.ok(result["migration"].rowCount > 5, "migration row count");
+    t.ok(result["migration"].rowCount > 2, "migration row count");
   });
 
   t.test("destroy test db", async (t) => {

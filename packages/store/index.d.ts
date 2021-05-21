@@ -117,7 +117,6 @@ export function cleanupTestPostgresDatabase(sql: Postgres): Promise<void>;
  * Internal representation of a migration file
  */
 export interface MigrateFile {
-  namespace: string;
   number: number;
   repeatable: boolean;
   name: string;
@@ -132,7 +131,6 @@ export interface MigrateFile {
  */
 export interface MigrateContext {
   files: MigrateFile[];
-  namespaces: string[];
   storedHashes: Record<string, string>;
   sql: Postgres;
 }

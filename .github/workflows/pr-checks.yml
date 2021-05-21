@@ -81,7 +81,7 @@ jobs:
           yarn install
           yarn compas docker up
           yarn compas gen
-          yarn compas migrate
+          yarn compas docker migrate
           yarn compas test
 
   bench:
@@ -119,7 +119,9 @@ jobs:
       - name: Run benchmarks
         run: |
           yarn install
+          yarn compas docker up
           yarn compas gen
+          yarn compas docker migrate
           yarn compas bench
           echo -e "BENCH_RESULT<<EOF\n$(cat ./benchmark_output.txt)\nEOF" | tee -a $GITHUB_ENV
 
@@ -176,7 +178,7 @@ jobs:
           yarn install
           yarn compas docker up
           yarn compas gen
-          yarn compas migrate
+          yarn compas docker migrate
           yarn compas coverage
           yarn compas docker reset
 
