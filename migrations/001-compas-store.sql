@@ -67,7 +67,7 @@ CREATE TABLE "fileGroup"
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now(),
   "deletedAt" timestamptz      NULL,
-  -- Bother file and parent fields are optional, since we expect either one of them to exists
+  -- Both file and parent fields are optional, since we expect either one of them to exists
   -- However we still want to cascade hard deletes
   CONSTRAINT "fileGroupFileFk" FOREIGN KEY ("file") REFERENCES "file" ("id") ON DELETE CASCADE,
   CONSTRAINT "fileGroupParentFk" FOREIGN KEY ("parent") REFERENCES "fileGroup" ("id") ON DELETE CASCADE
