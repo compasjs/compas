@@ -76,6 +76,8 @@ async function generatedNestedFileGroups(sql) {
             '{}'
      FROM shuffled s;
    `;
+
+  await sql`ANALYZE`;
 }
 
 bench("queryFileGroup - exec", async (b) => {
