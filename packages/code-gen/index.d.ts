@@ -553,7 +553,12 @@ export class DateType extends TypeBuilder {
   inThePast(): this;
 }
 
-export class FileType extends TypeBuilder {}
+export class FileType extends TypeBuilder {
+  /**
+   * Only accept the specified mime types.
+   */
+  mimeTypes(...mimeTypes): this;
+}
 
 export class GenericType extends TypeBuilder {
   keys(key: TypeBuilderLike): this;

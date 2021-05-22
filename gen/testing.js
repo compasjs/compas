@@ -182,6 +182,12 @@ export function applyTestingServerStructure(app) {
       success: true,
     }),
 
+    R.post("/file/mime", "setMimeCheckedFile")
+      .files({ myFile: T.file().mimeTypes("application/json") })
+      .response({
+        success: true,
+      }),
+
     R.post("/validate", "validatorShim")
       .body({
         anyOf: T.anyOf().values(T.bool(), T.string()),
