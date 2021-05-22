@@ -53,14 +53,17 @@ with type CliWatchOptions from the script.
     const foundCompasVersions = findOtherCompasStdlibVersions(version);
     const envLocalIgnored = await isEnvLocalIgnored();
 
-    if (foundCompasVersions.length > 0 || !envLocalIgnored) {
+    if (foundCompasVersions.length === 0 && envLocalIgnored) {
+      log += `\n\nNotices: everything is setup correctly.`;
+    } else {
       log += `\n\nNotices:\n`;
-    }
 
-    log += formatOtherVersions(foundCompasVersions);
-
-    if (!envLocalIgnored) {
-      log += `\nFile '.env.local' is not ignored. Please add it to your '.gitignore'.`;
+      if (foundCompasVersions.length > 0) {
+        log += formatOtherVersions(foundCompasVersions);
+      }
+      if (!envLocalIgnored) {
+        log += `\n- File '.env.local' is not ignored. Please add it to your '.gitignore'.`;
+      }
     }
   }
 
@@ -94,9 +97,9 @@ function formatOtherVersions(versions) {
     return "";
   }
 
-  let result = `\nMultiple @compas versions found, to ensure a stable experience use the version that is commonly accepted by all your dependencies.\n`;
+  let result = `\n- Multiple @compas versions found, to ensure a stable experience use the version that is commonly accepted by all your dependencies.\n`;
   for (const { path, version } of versions) {
-    result += `@compas/stdlib@${version} - ${path}\n`;
+    result += `  - @compas/stdlib@${version} - ${path}\n`;
   }
 
   return result;
