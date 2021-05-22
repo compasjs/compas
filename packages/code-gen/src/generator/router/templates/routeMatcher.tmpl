@@ -38,7 +38,7 @@ function routeMatcher{{= context.counter++ }}(path, params, currentIdx) {
 
     const subPath = path.substring(currentIdx, subIdx);
     {{ if (matcher.uniqueName !== undefined && (matcher.children === undefined || matcher.children.length === 0)) { }}
-    params.{{= matcher.paramName }} = decodeURIComponent(subPath);
+    params.{{= matcher.paramName }} = decodePathParam(subPath);
     return handlers.{{= matcher.uniqueName }};
     {{ } else { }}
         const nextIdx = subIdx + 1;
@@ -46,7 +46,7 @@ function routeMatcher{{= context.counter++ }}(path, params, currentIdx) {
 
         {{ if (matcher.uniqueName !== undefined) { }}
         if (path.length === nextIdx - 1) {
-            params.{{= matcher.paramName }} = decodeURIComponent(subPath);
+            params.{{= matcher.paramName }} = decodePathParam(subPath);
             return handlers.{{= matcher.uniqueName }};
         }
         {{ } }}
@@ -57,13 +57,13 @@ function routeMatcher{{= context.counter++ }}(path, params, currentIdx) {
         {{ context.functions += src; }}
 
         if (handler !== undefined) {
-            params.{{= matcher.paramName }} = decodeURIComponent(subPath);
+            params.{{= matcher.paramName }} = decodePathParam(subPath);
             return handler;
         }
         {{ } }}
 
         {{ if (matcher.uniqueName !== undefined) { }}
-        params.{{= matcher.paramName }} = decodeURIComponent(subPath);
+        params.{{= matcher.paramName }} = decodePathParam(subPath);
         return handlers.{{= matcher.uniqueName }};
         {{ } else { }}
         return undefined;
