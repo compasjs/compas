@@ -737,21 +737,20 @@ ${offsetLimitQb}
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
-SELECT array_remove(array_agg(to_jsonb(fgv.*) || jsonb_build_object(${query([
+SELECT ARRAY (SELECT to_jsonb(fgv.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupViewOrderBy(
-      builder.children.orderBy,
-      builder.children.orderBySpec,
-      "fgv.",
-    )}), NULL) as "result"
+    ])})
 ${internalQueryFileGroupView(
   builder.children,
   query`AND fgv."parent" = fgv2."id"`,
 )}
-GROUP BY fgv2."id"
-ORDER BY fgv2."id"
+ORDER BY ${fileGroupViewOrderBy(
+      builder.children.orderBy,
+      builder.children.orderBySpec,
+      "fgv.",
+    )}
 ${offsetLimitQb}
-) as "fgv_fgv_1" ON TRUE`);
+) as result) as "fgv_fgv_1" ON TRUE`);
   }
   return query`
 FROM "fileGroupView" fgv2
@@ -976,21 +975,20 @@ ${offsetLimitQb}
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
-SELECT array_remove(array_agg(to_jsonb(fgv2.*) || jsonb_build_object(${query([
+SELECT ARRAY (SELECT to_jsonb(fgv2.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupViewOrderBy(
-      builder.children.orderBy,
-      builder.children.orderBySpec,
-      "fgv2.",
-    )}), NULL) as "result"
+    ])})
 ${internalQueryFileGroupView2(
   builder.children,
   query`AND fgv2."parent" = fgv."id"`,
 )}
-GROUP BY fgv."id"
-ORDER BY fgv."id"
+ORDER BY ${fileGroupViewOrderBy(
+      builder.children.orderBy,
+      builder.children.orderBySpec,
+      "fgv2.",
+    )}
 ${offsetLimitQb}
-) as "fgv_fgv_1" ON TRUE`);
+) as result) as "fgv_fgv_1" ON TRUE`);
   }
   return query`
 FROM "fileGroupView" fgv

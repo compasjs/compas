@@ -308,7 +308,6 @@ function internalQueryBuilderForType(
 ) {
   const nestedJoinPartials = [];
   const traverseJoinPartials = [];
-  const { key: typePrimaryKey } = getPrimaryKeyWithType(type);
   let secondInternalBuilder = ``;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
@@ -367,17 +366,16 @@ if (!isNil(builder.${key}.limit)) {
 `;
     };
 
-    let groupBy = ``;
-    let orderBy = ``;
+    const orderBy = `ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}`;
+
     let select = ``;
+    let selectSuffix = ``;
 
     if (relation.subType === "oneToMany") {
-      select = `array_remove(array_agg(${selectValue} ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}), NULL) as "result"`;
-      groupBy = `GROUP BY ${shortName}."${typePrimaryKey}"`;
-      orderBy = `ORDER BY ${shortName}."${typePrimaryKey}"`;
+      select = `ARRAY (SELECT ${selectValue}`;
+      selectSuffix = `) as result`;
     } else {
       select = `${selectValue} as "result"`;
-      orderBy = `ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}`;
     }
 
     // Base with join keys
@@ -415,10 +413,9 @@ if (!isNil(builder.${key}.limit)) {
                builder.${relationKey},
                query\`AND ${otherShortName}."${referencedKey}" = ${shortName}."${ownKey}"\`
             )}
-        ${groupBy}
         ${orderBy}
       $\{offsetLimitQb} 
-        ) as "${joinKey}" ON TRUE\`);
+        ${selectSuffix}) as "${joinKey}" ON TRUE\`);
          }
       `;
 

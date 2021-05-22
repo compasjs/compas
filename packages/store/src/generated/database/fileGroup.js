@@ -948,18 +948,17 @@ ${offsetLimitQb}
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
-SELECT array_remove(array_agg(to_jsonb(fg.*) || jsonb_build_object(${query([
+SELECT ARRAY (SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupOrderBy(
+    ])})
+${internalQueryFileGroup(builder.children, query`AND fg."parent" = fg2."id"`)}
+ORDER BY ${fileGroupOrderBy(
       builder.children.orderBy,
       builder.children.orderBySpec,
       "fg.",
-    )}), NULL) as "result"
-${internalQueryFileGroup(builder.children, query`AND fg."parent" = fg2."id"`)}
-GROUP BY fg2."id"
-ORDER BY fg2."id"
+    )}
 ${offsetLimitQb}
-) as "fg_fg_1" ON TRUE`);
+) as result) as "fg_fg_1" ON TRUE`);
   }
   return query`
 FROM "fileGroup" fg2
@@ -1181,18 +1180,17 @@ ${offsetLimitQb}
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
-SELECT array_remove(array_agg(to_jsonb(fg2.*) || jsonb_build_object(${query([
+SELECT ARRAY (SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
-    ])}) ORDER BY ${fileGroupOrderBy(
+    ])})
+${internalQueryFileGroup2(builder.children, query`AND fg2."parent" = fg."id"`)}
+ORDER BY ${fileGroupOrderBy(
       builder.children.orderBy,
       builder.children.orderBySpec,
       "fg2.",
-    )}), NULL) as "result"
-${internalQueryFileGroup2(builder.children, query`AND fg2."parent" = fg."id"`)}
-GROUP BY fg."id"
-ORDER BY fg."id"
+    )}
 ${offsetLimitQb}
-) as "fg_fg_1" ON TRUE`);
+) as result) as "fg_fg_1" ON TRUE`);
   }
   return query`
 FROM "fileGroup" fg
