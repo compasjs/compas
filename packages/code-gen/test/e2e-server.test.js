@@ -183,6 +183,40 @@ test("code-gen/e2e-server", async (t) => {
     t.ok(success);
   });
 
+  t.test(
+    "server - serverside validator of file with mime types is ok",
+    async (t) => {
+      const { success } =
+        await serverApiClientImport.apiServerSetMimeCheckedFile(axiosInstance, {
+          myFile: {
+            name: "foo.json",
+            data: createReadStream("./__fixtures__/code-gen/openapi.json"),
+          },
+        });
+
+      t.ok(success);
+    },
+  );
+
+  t.test(
+    "server - serverside validator of file wit mime types is ok",
+    async (t) => {
+      try {
+        await serverApiClientImport.apiServerSetMimeCheckedFile(axiosInstance, {
+          myFile: {
+            name: "foo.sql",
+            data: createReadStream("./migrations/001-compas-store.sql"),
+          },
+        });
+        t.fail("Should throw");
+      } catch (e) {
+        t.equal(e.status, 400);
+        t.equal(e.key, "validator.file.mimeType");
+        t.ok(Array.isArray(e.info.mimeTypes));
+      }
+    },
+  );
+
   t.test("server - router - tags are available", (t) => {
     t.deepEqual(serverControllerImport.serverTags.getId, ["tag"]);
     t.deepEqual(serverControllerImport.serverTags.create, []);
@@ -285,6 +319,14 @@ async function buildTestApp() {
   };
 
   controllerImport.serverHandlers.setFile = (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
+
+    return next();
+  };
+
+  controllerImport.serverHandlers.setMimeCheckedFile = (ctx, next) => {
     ctx.body = {
       success: true,
     };

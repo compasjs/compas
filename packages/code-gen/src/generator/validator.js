@@ -378,7 +378,7 @@ function anonymousValidatorForType(context, imports, type) {
     case "date":
       return anonymousValidatorDate(context, imports, type);
     case "file":
-      return anonymousValidatorFile(context);
+      return anonymousValidatorFile(context, imports, type);
     case "generic":
       return anonymousValidatorGeneric(context, imports, type);
     case "number":
@@ -691,9 +691,11 @@ function anonymousValidatorDate(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenFileType} type
  * @returns {string}
  */
-function anonymousValidatorFile(context) {
+function anonymousValidatorFile(context, imports, type) {
   if (context.context.options.isBrowser) {
     return js`
          // Blob result from api client
@@ -720,7 +722,22 @@ function anonymousValidatorFile(context) {
          return value;
       }
       // Object as parsed by the file body parsers
-      if (typeof value?.path === "string" && typeof value?.size === "number") {
+      if (typeof value?.path === "string" && typeof value?.type === "string" && typeof value?.size === "number") {
+         ${() => {
+           if (!isNil(type.validator?.mimeTypes)) {
+             return js`
+               if (${type.validator.mimeTypes
+                 .map((it) => `value.type !== "${it}"`)
+                 .join(" && ")}) {
+                  const mimeTypes = [" ${type.validator.mimeTypes.join(
+                    `", "`,
+                  )} "];
+                  ${buildError("mimeType", "{ propertyPath, mimeTypes }")}
+               }
+            `;
+           }
+         }}
+         
          return value;
       }
 

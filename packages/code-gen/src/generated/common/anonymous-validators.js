@@ -1097,7 +1097,108 @@ export function anonymousValidator2019605291(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "file", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {}, "internalSettings": {}, }|undefined}
+ * @returns {string|undefined}
+ */
+export function anonymousValidator186795873(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    errors.push({
+      key: `validator.${parentType}.undefined`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (typeof value !== "string") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (value.length < 1) {
+    const min = 1;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|(string)[]|undefined}
+ */
+export function anonymousValidator890105892(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "array",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  if (!Array.isArray(value)) {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Array.from({ length: value.length });
+  for (let i = 0; i < value.length; ++i) {
+    result[i] = anonymousValidator186795873(
+      value[i],
+      `${propertyPath}[${i}]`,
+      errors,
+    );
+  }
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"mimeTypes"?: undefined|(string)[], }|undefined}
+ */
+export function anonymousValidator889761232(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    return {};
+  }
+  if (typeof value !== "object") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  const result = Object.create(null);
+  result["mimeTypes"] = anonymousValidator890105892(
+    value["mimeTypes"],
+    `${propertyPath}.mimeTypes`,
+    errors,
+  );
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"type": "file", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"mimeTypes"?: undefined|(string)[], }, "internalSettings": {}, }|undefined}
  */
 export function anonymousValidator508679687(
   value,
@@ -1164,7 +1265,7 @@ export function anonymousValidator508679687(
     `${propertyPath}.sql`,
     errors,
   );
-  result["validator"] = anonymousValidator1963780689(
+  result["validator"] = anonymousValidator889761232(
     value["validator"],
     `${propertyPath}.validator`,
     errors,
@@ -1511,43 +1612,6 @@ export function anonymousValidator438930840(
     errors,
   );
   return result;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
- * @returns {string|undefined}
- */
-export function anonymousValidator186795873(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "string",
-) {
-  if (isNil(value)) {
-    errors.push({
-      key: `validator.${parentType}.undefined`,
-      info: { propertyPath },
-    });
-    return undefined;
-  }
-  if (typeof value !== "string") {
-    errors.push({
-      key: `validator.${parentType}.type`,
-      info: { propertyPath },
-    });
-    return undefined;
-  }
-  if (value.length < 1) {
-    const min = 1;
-    errors.push({
-      key: `validator.${parentType}.min`,
-      info: { propertyPath, min },
-    });
-    return undefined;
-  }
-  return value;
 }
 /**
  * @param {*} value
@@ -2646,39 +2710,6 @@ export function anonymousValidator981840544(
     `${propertyPath}.disallowedCharacters`,
     errors,
   );
-  return result;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
- * @returns {undefined|(string)[]|undefined}
- */
-export function anonymousValidator890105892(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "array",
-) {
-  if (isNil(value)) {
-    return value;
-  }
-  if (!Array.isArray(value)) {
-    errors.push({
-      key: `validator.${parentType}.type`,
-      info: { propertyPath },
-    });
-    return undefined;
-  }
-  const result = Array.from({ length: value.length });
-  for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator186795873(
-      value[i],
-      `${propertyPath}[${i}]`,
-      errors,
-    );
-  }
   return result;
 }
 /**

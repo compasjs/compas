@@ -218,6 +218,12 @@ function getTypes(T) {
   const fileType = T.object("fileType").keys({
     type: "file",
     ...typeBase,
+    validator: T.object()
+      .keys({
+        mimeTypes: T.array().values(T.string()).optional(),
+      })
+      .default("{}")
+      .loose(),
   });
 
   const genericType = T.object("genericType").keys({
