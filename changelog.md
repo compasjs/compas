@@ -8,6 +8,32 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.138](https://github.com/compasjs/compas/releases/tag/v0.0.138)
+
+- build(deps): bump @types/node from 15.3.0 to 15.6.0
+  ([#896](https://github.com/compasjs/compas/pull/896),
+  [#904](https://github.com/compasjs/compas/pull/904))
+- build(deps): bump dotenv from 9.0.2 to 10.0.0
+  ([#906](https://github.com/compasjs/compas/pull/906))
+- build(deps): bump eslint from 7.26.0 to 7.27.0
+  ([#905](https://github.com/compasjs/compas/pull/905))
+- build(deps): bump eslint-plugin-import from 2.23.2 to 2.23.3
+  ([#907](https://github.com/compasjs/compas/pull/907))
+- chore(store): add analyze before pg bench run
+- chore(store): fix linting issue
+- feat(cli): add migrate command with rebuild support
+  ([#898](https://github.com/compasjs/compas/pull/898))
+- feat(cli): also print when everything is ok for `help --check`
+- feat(code-gen): add mime validator support to T.file()
+  ([#903](https://github.com/compasjs/compas/pull/903))
+- feat(code-gen): send 400 on param decode errors
+  ([#902](https://github.com/compasjs/compas/pull/902))
+- perf(code-gen): improve generated query builder performance
+  ([#899](https://github.com/compasjs/compas/pull/899))
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.138.html).
+
 ### [v0.0.137](https://github.com/compasjs/compas/releases/tag/v0.0.137)
 
 - build(deps): bump eslint-plugin-jsdoc from 34.8.1 to 34.8.2
