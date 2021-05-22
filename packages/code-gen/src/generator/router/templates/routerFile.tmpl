@@ -27,6 +27,13 @@ export function setBodyParsers(parsers) {
 
 const filterCompose = (...args) => compose(args.filter(it => it !== undefined));
 ((newline))
+const decodePathParam = (arg) => {
+  try {
+   return decodeURIComponent(arg);
+  } catch (e) {
+    throw AppError.validationError("router.param.invalidEncoding", { param: arg });
+  }
+}
 
 
 /**

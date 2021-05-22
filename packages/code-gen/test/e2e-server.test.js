@@ -82,6 +82,17 @@ test("code-gen/e2e-server", async (t) => {
     t.deepEqual(result, { foo: false });
   });
 
+  t.test("server - GET /:id param decoding", async (t) => {
+    try {
+      await axiosInstance.get("/%f");
+      t.fail("Should throw invalid encoding");
+    } catch (e) {
+      t.ok(e.isAxiosError);
+      t.equal(e.response.status, 400);
+      t.equal(e.response.data.key, "router.param.invalidEncoding");
+    }
+  });
+
   t.test("server - GET /:id validation", async (t) => {
     try {
       await serverApiClientImport.apiServerGetId(axiosInstance, {});
