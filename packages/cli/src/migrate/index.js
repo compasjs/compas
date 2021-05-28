@@ -1,4 +1,7 @@
-import { isNil } from "@compas/stdlib";
+import { existsSync } from "fs";
+import path from "path";
+import { pathToFileURL } from "url";
+import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
@@ -12,14 +15,22 @@ export async function dockerMigrateCommand(logger, command) {
   }
 
   // First arg was `migrate`
-  const arg = command.arguments[1];
-  const shouldRebuild = arg === "rebuild";
-  const shouldPrintInfo = arg === "info";
-  const shouldKeepAlive = arg === "--keep-alive";
+  const shouldRebuild = command.arguments.includes("rebuild");
+  const shouldPrintInfo = command.arguments.includes("info");
+  const shouldKeepAlive = command.arguments.includes("--keep-alive");
+  const shouldLoadConnectionSettings = command.arguments.includes(
+    "--connection-settings",
+  );
 
-  if (!isNil(arg) && !shouldRebuild && !shouldPrintInfo && !shouldKeepAlive) {
+  if (
+    !isNil(command.arguments[1]) &&
+    !shouldRebuild &&
+    !shouldPrintInfo &&
+    !shouldKeepAlive &&
+    !shouldLoadConnectionSettings
+  ) {
     logger.error(
-      `Unknown argument '${arg}'. Expected one of 'rebuild', 'check' or '--keep-alive'.`,
+      `Unknown argument '${command.arguments[1]}'. Expected one of 'rebuild', 'check', '--connection-settings' or '--keep-alive'.`,
     );
     return { exitCode: 1 };
   }
@@ -28,7 +39,42 @@ export async function dockerMigrateCommand(logger, command) {
     "@compas/store"
   );
 
-  const sql = await newPostgresConnection({ max: 1, createIfNotExists: true });
+  let sqlOptions = {
+    max: 1,
+    createIfNotExists: true,
+  };
+
+  if (shouldLoadConnectionSettings) {
+    const filePath =
+      command.arguments[command.arguments.indexOf("--connection-settings") + 1];
+
+    const errorMessage = `Could not load the file as specified by '--connection-settings ./path/to/file.js'.`;
+
+    if (isNil(filePath)) {
+      logger.error(errorMessage);
+      return {
+        exitCode: 1,
+      };
+    }
+
+    const fullPath = path.resolve(filePath);
+
+    if (!existsSync(fullPath)) {
+      logger.error(errorMessage);
+      return {
+        exitCode: 1,
+      };
+    }
+
+    const { postgresConnectionSettings } = await import(
+      pathToFileURL(fullPath)
+    );
+    if (isPlainObject(postgresConnectionSettings)) {
+      sqlOptions = postgresConnectionSettings;
+    }
+  }
+
+  const sql = await newPostgresConnection(sqlOptions);
   const mc = await newMigrateContext(sql);
 
   // Always print current state;
