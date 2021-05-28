@@ -27,7 +27,7 @@ Usage:
 - init              : compas init [projectName]
 - help              : compas help [--check]
 - docker            : compas docker [up,down,clean,reset]
-- docker            : compas docker migrate [rebuild,info] [--keep-alive]
+- docker            : compas docker migrate [rebuild,info] [--keep-alive] [--connection-settings ./sql/connection/settings.js]
 - proxy             : compas proxy [--verbose]
 - run (explicit)    : compas run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : compas [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
@@ -43,6 +43,8 @@ ${formatScripts(scriptCollection)}
 
 Custom scripts may control watch behaviour by exporting a constant called 'cliWatchOptions'
 with type CliWatchOptions from the script.
+
+The SQL settings exported for the '--connection-settings' should be a constant called 'postgresConnectionSettings' and be accepted by 'newPostgresConnection'.
 `;
 
   if (command.error) {
