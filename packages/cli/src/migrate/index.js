@@ -1,7 +1,7 @@
 import { existsSync } from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
-import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
+import { isNil, isPlainObject } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
