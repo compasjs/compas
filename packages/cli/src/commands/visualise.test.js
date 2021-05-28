@@ -7,6 +7,7 @@ mainTestFn(import.meta);
 test("cli/commands/visualise", (t) => {
   if (environment.CI === "true") {
     t.log.info("CI detected, skipping visualise tests");
+    t.pass();
     return;
   }
 
