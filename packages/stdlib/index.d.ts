@@ -413,7 +413,7 @@ export function printProcessMemoryUsage(logger: Logger): void;
  */
 export type InsightEventCall =
   | {
-      type: "start" | "stop";
+      type: "start" | "stop" | "aborted";
       name: string;
 
       /**
@@ -434,7 +434,7 @@ export interface InsightEvent {
   /**
    * If event is first event dispatched in chain
    */
-  root: boolean;
+  parent?: InsightEvent;
 
   name?: string;
 
@@ -457,11 +457,11 @@ export function newEventFromEvent(event: InsightEvent): InsightEvent;
 export function eventStart(event: InsightEvent, name: string): void;
 
 /**
- * Rename event, can only be done if `eventStop` is not called yet.
+ * Rename event, includes callStack items.
  */
 export function eventRename(event: InsightEvent, name: string): void;
 
 /**
- * Track event stop, and log callStack if event#root === true
+ * Track event stop, and log callStack if event is the root event
  */
 export function eventStop(event: InsightEvent): void;
