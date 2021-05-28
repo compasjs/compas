@@ -54,10 +54,11 @@ test("store/postgres", (t) => {
     t.equal(process.env.POSTGRES_DATABASE, "compas", "process.env");
   });
 
-  t.test("teardown", () => {
+  t.test("teardown", (t) => {
     process.env.POSTGRES_URI = oldPostgresUri;
     process.env.POSTGRES_DATABASE = oldPostgresDatabase;
     process.env.APP_NAME = oldAppName;
     refreshEnvironmentCache();
+    t.pass();
   });
 });

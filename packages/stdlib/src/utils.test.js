@@ -11,6 +11,7 @@ test("stdlib/utils", (t) => {
   t.test("gc", (t) => {
     try {
       gc();
+      t.pass();
     } catch (e) {
       t.fail("Should not throw");
       t.log.error(e);

@@ -119,6 +119,7 @@ test("Koa Compose", (t) => {
   t.test("should work with 0 middleware", async (t) => {
     try {
       await compose([])({});
+      t.pass();
     } catch (e) {
       t.fail("should not throw on empty array");
     }

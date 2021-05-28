@@ -37,7 +37,7 @@ test("store/file-group", async (t) => {
 
   const files = [];
 
-  t.test("insert files", async () => {
+  t.test("insert files", async (t) => {
     files.push(
       ...(await Promise.all([
         createOrUpdateFile(sql, minio, bucketName, { name }, filePath),
@@ -45,11 +45,13 @@ test("store/file-group", async (t) => {
         createOrUpdateFile(sql, minio, bucketName, { name }, filePath),
       ])),
     );
+
+    t.pass();
   });
 
   const groups = {};
 
-  t.test("create groups and insert files", async () => {
+  t.test("create groups and insert files", async (t) => {
     const [top1] = await queries.fileGroupInsert(sql, {
       name: "Test1",
     });
@@ -79,6 +81,8 @@ test("store/file-group", async (t) => {
     groups.top1 = top1.id;
     groups.top2 = top2.id;
     groups.sub1 = sub1.id;
+
+    t.pass();
   });
 
   t.test("set order of files of top2 group", async (t) => {
@@ -99,8 +103,9 @@ test("store/file-group", async (t) => {
     }
   });
 
-  t.test("set order of top level groups", async () => {
+  t.test("set order of top level groups", async (t) => {
     await updateFileGroupOrder(sql, [groups.top1, groups.top2]);
+    t.pass();
   });
 
   t.test("getNestedFiles without files, but preserve order", async (t) => {

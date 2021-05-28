@@ -43,7 +43,8 @@ test("cli/docker/migrate", async (t) => {
     }
   });
 
-  t.test("teardown", async () => {
+  t.test("teardown", async (t) => {
     await rm("./packages/cli/tmp", { recursive: true, force: true });
+    t.pass();
   });
 });

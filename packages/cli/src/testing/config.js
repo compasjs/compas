@@ -1,7 +1,12 @@
 import { existsSync } from "fs";
 import { pathToFileURL } from "url";
-import { pathJoin } from "@compas/stdlib";
-import { setGlobalSetup, setGlobalTeardown, setTestTimeout } from "./state.js";
+import { isNil, pathJoin } from "@compas/stdlib";
+import {
+  setEnforceSingleAssertion,
+  setGlobalSetup,
+  setGlobalTeardown,
+  setTestTimeout,
+} from "./state.js";
 
 const configPath = pathJoin(process.cwd(), "test/config.js");
 
@@ -28,6 +33,10 @@ export async function loadTestConfig() {
       );
     }
     setTestTimeout(config.timeout);
+  }
+
+  if (!isNil(config?.enforceSingleAssertion)) {
+    setEnforceSingleAssertion(config.enforceSingleAssertion);
   }
 
   setGlobalSetup(config?.setup);

@@ -89,7 +89,8 @@ test("server/middleware/body", async (t) => {
     }
   });
 
-  t.test("teardown", async () => {
+  t.test("teardown", async (t) => {
     await closeTestApp(app);
+    t.pass();
   });
 });

@@ -55,49 +55,49 @@ test("store/file-cache", async (t) => {
     t.equal(result[0].sum, 3);
   });
 
-  t.test("create FileCache", () => {
+  t.test("create FileCache", (t) => {
     cache = new FileCache(sql, minio, bucketName, {
       cacheControlHeader: "test",
       inMemoryThreshold: 5,
     });
+    t.pass();
   });
 
   // noinspection DuplicatedCode
-  t.test("write fixtures to disk", () => {
+  t.test("write fixtures to disk", (t) => {
     mkdirSync(basePath, { recursive: true });
     writeFileSync(pathJoin(basePath, "small"), files.small);
     writeFileSync(pathJoin(basePath, "medium"), files.medium);
     writeFileSync(pathJoin(basePath, "large"), files.large);
+    t.pass();
   });
 
   t.test("populate file table", async (t) => {
-    try {
-      files.small = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "small" },
-        pathJoin(basePath, "small"),
-      );
+    files.small = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "small" },
+      pathJoin(basePath, "small"),
+    );
 
-      files.medium = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "medium" },
-        pathJoin(basePath, "medium"),
-      );
+    files.medium = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "medium" },
+      pathJoin(basePath, "medium"),
+    );
 
-      files.large = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "large" },
-        pathJoin(basePath, "large"),
-      );
-    } catch (e) {
-      t.fail(e);
-    }
+    files.large = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "large" },
+      pathJoin(basePath, "large"),
+    );
+
+    t.pass();
   });
 
   t.test("get a small file", async (t) => {
@@ -142,8 +142,9 @@ test("store/file-cache", async (t) => {
     );
   });
 
-  t.test("clear file removes from cache", () => {
+  t.test("clear file removes from cache", (t) => {
     cache.clear(files.large.id);
+    t.pass();
   });
 
   t.test("create file again after clear", async (t) => {
@@ -194,11 +195,12 @@ test("store/file-cache check memory usage", async (t) => {
   const logMemory = (t) => {
     t.test("print memory usage", (t) => {
       printProcessMemoryUsage(t.log);
+      t.pass();
     });
   };
 
   const runFileStreamRounds = (t) => {
-    t.test("run a decent number of rounds", async () => {
+    t.test("run a decent number of rounds", async (t) => {
       console.time("file-cache");
       for (let i = 0; i < 1000; ++i) {
         const pArr = [];
@@ -214,6 +216,7 @@ test("store/file-cache check memory usage", async (t) => {
         }
       }
       console.timeEnd("file-cache");
+      t.pass();
     });
   };
 
@@ -231,51 +234,51 @@ test("store/file-cache check memory usage", async (t) => {
 
   logMemory(t);
 
-  t.test("create FileCache", () => {
+  t.test("create FileCache", (t) => {
     cache = new FileCache(sql, minio, bucketName, {
       cacheControlHeader: "test",
       inMemoryThreshold: 3500,
     });
+    t.pass();
   });
 
   logMemory(t);
 
   // noinspection DuplicatedCode
-  t.test("write fixtures to disk", () => {
+  t.test("write fixtures to disk", (t) => {
     mkdirSync(basePath, { recursive: true });
     writeFileSync(pathJoin(basePath, "small"), files.small);
     writeFileSync(pathJoin(basePath, "medium"), files.medium);
     writeFileSync(pathJoin(basePath, "large"), files.large);
+    t.pass();
   });
 
   t.test("populate file table", async (t) => {
-    try {
-      files.small = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "small" },
-        pathJoin(basePath, "small"),
-      );
+    files.small = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "small" },
+      pathJoin(basePath, "small"),
+    );
 
-      files.medium = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "medium" },
-        pathJoin(basePath, "medium"),
-      );
+    files.medium = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "medium" },
+      pathJoin(basePath, "medium"),
+    );
 
-      files.large = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name: "large" },
-        pathJoin(basePath, "large"),
-      );
-    } catch (e) {
-      t.fail(e);
-    }
+    files.large = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name: "large" },
+      pathJoin(basePath, "large"),
+    );
+
+    t.pass();
   });
 
   logMemory(t);
@@ -283,22 +286,23 @@ test("store/file-cache check memory usage", async (t) => {
   logMemory(t);
   runFileStreamRounds(t);
 
-  t.test("run gc", async () => {
+  t.test("run gc", async (t) => {
     gc();
     await new Promise((r) => {
       setTimeout(r, 10);
     });
+    t.pass();
   });
 
   logMemory(t);
 
   t.test("remove minio bucket", async (t) => {
     await removeBucketAndObjectsInBucket(minio, bucketName);
-    t.ok(true, "removed minio bucket");
+    t.pass();
   });
 
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
-    t.ok(true, "closed postgres connection");
+    t.pass();
   });
 });

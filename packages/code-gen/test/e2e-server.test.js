@@ -256,8 +256,9 @@ test("code-gen/e2e-server", async (t) => {
     }
   });
 
-  t.test("Cleanup server", async () => {
+  t.test("teardown", async (t) => {
     await closeTestApp(app);
+    t.pass();
   });
 });
 
