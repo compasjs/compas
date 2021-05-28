@@ -156,8 +156,9 @@ test("store/files", async (t) => {
     t.equal(result.length, 2);
   });
 
-  t.test("deleteFile", async () => {
+  t.test("deleteFile", async (t) => {
     await queries.fileDeletePermanent(sql, { id: storedFiles[0].id });
+    t.pass();
   });
 
   t.test("sync deleted files", async (t) => {

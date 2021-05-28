@@ -423,8 +423,9 @@ test("store/queue - recurring jobs ", (t) => {
     },
   );
 
-  t.test("cleanup jobs", async () => {
+  t.test("cleanup jobs", async (t) => {
     await queries.jobDelete(sql);
+    t.pass();
   });
 
   t.test(

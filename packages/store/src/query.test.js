@@ -122,8 +122,9 @@ test("store/query", (t) => {
 test("store/analyze-query", (t) => {
   let sql;
 
-  t.test("setup", async () => {
+  t.test("setup", async (t) => {
     sql = await createTestPostgresDatabase();
+    t.pass();
   });
 
   t.test("analyze select query - string plan", async (t) => {
@@ -138,8 +139,9 @@ test("store/analyze-query", (t) => {
     t.ok(isPlainObject(result));
   });
 
-  t.test("create test table", async () => {
+  t.test("create test table", async (t) => {
     await sql`CREATE TABLE "temp" (value int not null);`;
+    t.pass();
   });
 
   t.test("analyze insert does not insert", async (t) => {
@@ -164,7 +166,8 @@ test("store/analyze-query", (t) => {
     }
   });
 
-  t.test("teardown", async () => {
+  t.test("teardown", async (t) => {
     await cleanupTestPostgresDatabase(sql);
+    t.pass();
   });
 });

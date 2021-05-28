@@ -190,7 +190,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.deletedAt, undefined);
   });
 
-  t.test("query filter by 'in' statements", async () => {
+  t.test("query filter by 'in' statements", async (t) => {
     await queriesImport.queries.userSelect(sql, {
       createdAtIn: [new Date()],
       emailIn: ["Test@test.com"],
@@ -203,6 +203,7 @@ test("code-gen/e2e/sql", async (t) => {
       createdAtIn: [],
       emailIn: ["Test@test.com"],
     });
+    t.pass();
   });
 
   t.test("query filter empty 'notIn' statement", async (t) => {
@@ -233,10 +234,11 @@ test("code-gen/e2e/sql", async (t) => {
     },
   );
 
-  t.test("query filter by 'in' sub query", async () => {
+  t.test("query filter by 'in' sub query", async (t) => {
     await queriesImport.queries.userSelect(sql, {
       emailIn: query`SELECT 'test@test.com' as foo`,
     });
+    t.pass();
   });
 
   t.test("query filter by 'ILIKE'", async (t) => {
@@ -273,7 +275,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(categories.length, 0);
   });
 
-  t.test("query same 'shortName' originally", async () => {
+  t.test("query same 'shortName' originally", async (t) => {
     await userEntityImport
       .queryUser({
         posts: {
@@ -289,6 +291,7 @@ test("code-gen/e2e/sql", async (t) => {
         },
       })
       .exec(sql);
+    t.pass();
   });
 
   t.test("user QueryBuilder", async (t) => {
@@ -352,7 +355,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(categories[0].posts[0].post.author.id, user.id);
   });
 
-  t.test("query builder calls", async () => {
+  t.test("query builder calls", async (t) => {
     await postEntityImport
       .queryPost({
         postages: {
@@ -386,6 +389,8 @@ test("code-gen/e2e/sql", async (t) => {
         },
       })
       .exec(sql);
+
+    t.pass();
   });
 
   t.test("traverse via queryUser", async (t) => {

@@ -16,6 +16,11 @@ export let areTestsRunning = false;
 export let timeout = 2500;
 
 /**
+ * @type {boolean}
+ */
+export let enforceSingleAssertion = false;
+
+/**
  * @type {function(): (void|Promise<void>)}
  */
 export let globalSetup = noop;
@@ -59,6 +64,15 @@ export function setTestLogger(logger) {
  */
 export function setTestTimeout(value) {
   timeout = value;
+}
+
+/**
+ * Set enforcement of an passing assertion in test callbacks
+ *
+ * @param {boolean} enforce
+ */
+export function setEnforceSingleAssertion(enforce) {
+  enforceSingleAssertion = enforce;
 }
 
 /**

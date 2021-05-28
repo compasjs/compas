@@ -47,15 +47,17 @@ test("cli/utils", (t) => {
     (t) => {
       try {
         watchOptionsWithDefaults({ extensions: false });
-        t.fail("Should throw");
         // eslint-disable-next-line no-empty
-      } catch {}
+      } catch {
+        t.pass();
+      }
 
       try {
         watchOptionsWithDefaults({ ignoredPatterns: false });
-        t.fail("Should throw");
         // eslint-disable-next-line no-empty
-      } catch {}
+      } catch {
+        t.pass();
+      }
     },
   );
 

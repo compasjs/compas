@@ -18,7 +18,7 @@ test("server/session", (t) => {
   let sql;
   let cookieVal;
 
-  t.test("setup", async () => {
+  t.test("setup", async (t) => {
     sql = await createTestPostgresDatabase();
     app.use(
       session(app, {
@@ -40,6 +40,7 @@ test("server/session", (t) => {
     });
 
     await createTestAppAndClient(app, client);
+    t.pass();
   });
 
   t.test("set cookie", async (t) => {
@@ -64,9 +65,10 @@ test("server/session", (t) => {
     });
   });
 
-  t.test("teardown", async () => {
+  t.test("teardown", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     await closeTestApp(app);
+    t.pass();
   });
 });
 
@@ -77,7 +79,7 @@ test("server/session synced cookie", (t) => {
   let sql;
   let cookieVal;
 
-  t.test("setup", async () => {
+  t.test("setup", async (t) => {
     sql = await createTestPostgresDatabase();
     app.use(
       session(app, {
@@ -104,6 +106,7 @@ test("server/session synced cookie", (t) => {
     });
 
     await createTestAppAndClient(app, client);
+    t.pass();
   });
 
   t.test("set cookie", async (t) => {
@@ -137,8 +140,9 @@ test("server/session synced cookie", (t) => {
     t.ok(cookieVal[0].indexOf("1970") !== -1, "reset date to unix epoch");
   });
 
-  t.test("teardown", async () => {
+  t.test("teardown", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     await closeTestApp(app);
+    t.pass();
   });
 });

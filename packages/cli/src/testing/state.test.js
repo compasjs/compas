@@ -23,6 +23,7 @@ test("cli/test/state", (t) => {
     t.timeout = 1000;
     t.test("timeout is correct", (t) => {
       t.equal(timeout, 1000);
+      t.pass();
     });
   });
 
