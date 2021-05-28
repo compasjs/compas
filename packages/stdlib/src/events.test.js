@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
-import { newLogger } from "../index.js";
+import { isNil, newLogger } from "../index.js";
 import {
   eventRename,
   eventStart,
@@ -10,12 +10,12 @@ import {
 
 mainTestFn(import.meta);
 
-test("insight/events", (t) => {
+test("stdlib/events", (t) => {
   const log = newLogger();
 
   t.test("create root event", (t) => {
     const event = newEvent(log);
-    t.equal(event.root, true);
+    t.ok(isNil(event.root));
     t.equal(event.callStack.length, 0);
   });
 
@@ -23,7 +23,7 @@ test("insight/events", (t) => {
     const event = newEvent(log);
     const child = newEventFromEvent(event);
 
-    t.equal(child.root, false);
+    t.ok(child.root);
     t.equal(child.callStack.length, 0);
     t.equal(event.callStack.length, 1);
     t.equal(event.callStack[0], child.callStack);

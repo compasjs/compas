@@ -1,4 +1,5 @@
 import { inspect } from "util";
+import { isNil } from "./lodash.js";
 
 /**
  * Nested timing and call information
@@ -10,22 +11,49 @@ import { inspect } from "util";
  * Basic timing and call information
  *
  * @typedef {object} InsightEventCallObject
- * @property {"start"|"stop"} type
+ * @property {"start"|"stop"|"aborted"} type
  * @property {string} name
  * @property {number} time Time in milliseconds since some epoch. This can either be the
  *    unix epoch or process start
  */
 
 /**
- * Encapsulate information needed to store events
+ * @class
+ * @constructor
  *
- * @typedef {object} InsightEvent
- * @property {Logger} log
- * @property {AbortSignal|undefined} signal
- * @property {boolean} root Check if the event is the root event in the chain
- * @property {string|undefined} [name]
- * @property {InsightEventCall[]} callStack
+ * @param {Logger} logger
+ * @param {AbortSignal|undefined} [signal]
+ * @returns {InsightEvent}
  */
+function InsightEvent(logger, signal) {
+  if (!(this instanceof InsightEvent)) {
+    return new InsightEvent(logger, signal);
+  }
+
+  /**  @type {Logger} */
+  this.log = logger;
+  /**  @type {AbortSignal|undefined} */
+  this.signal = signal;
+  /**  @type {InsightEvent|undefined} */
+  this.parent = undefined;
+  /**  @type {string|undefined} */
+  this.name = undefined;
+  /**  @type {InsightEventCall[]} */
+  this.callStack = [];
+
+  this[inspect.custom] = print.bind(this);
+  this.toJSON = print.bind(this);
+
+  function print() {
+    this.log.info({
+      type: "event_callstack",
+      aborted: !!this.signal?.aborted,
+      callStack: this.callStack,
+    });
+  }
+
+  return this;
+}
 
 /**
  * Create a new event from a logger
@@ -37,13 +65,7 @@ import { inspect } from "util";
  * @returns {InsightEvent}
  */
 export function newEvent(logger, signal) {
-  return {
-    log: logger,
-    signal,
-    root: true,
-    name: undefined,
-    callStack: [],
-  };
+  return new InsightEvent(logger, signal);
 }
 
 /**
@@ -55,20 +77,23 @@ export function newEvent(logger, signal) {
  * @returns {InsightEvent}
  */
 export function newEventFromEvent(event) {
-  const callStack = [];
-  event.callStack.push(callStack);
-
   if (event.signal?.aborted) {
+    event.callStack.push({
+      type: "aborted",
+      name: event.name,
+      time: Date.now(),
+    });
     throw new TimeoutError(event);
   }
 
-  return {
-    log: event.log,
-    signal: event.signal,
-    root: false,
-    name: undefined,
-    callStack,
-  };
+  const callStack = [];
+  event.callStack.push(callStack);
+
+  const newEvent = new InsightEvent(event.log, event.signal);
+  newEvent.callStack = callStack;
+  newEvent.root = event;
+
+  return newEvent;
 }
 
 /**
@@ -84,6 +109,11 @@ export function eventStart(event, name) {
   event.name = name;
 
   if (event.signal?.aborted) {
+    event.callStack.push({
+      type: "aborted",
+      name: event.name,
+      time: Date.now(),
+    });
     throw new TimeoutError(event);
   }
 
@@ -95,7 +125,7 @@ export function eventStart(event, name) {
 }
 
 /**
- * Rename an event, can only be done if `eventStop` is not called yet.
+ * Rename an event, and all callStack items
  *
  * @since 0.1.0
  *
@@ -105,9 +135,19 @@ export function eventStart(event, name) {
  */
 export function eventRename(event, name) {
   event.name = name;
-  event.callStack[0].name = name;
+
+  for (const item of event.callStack) {
+    if (typeof item.name === "string") {
+      item.name = name;
+    }
+  }
 
   if (event.signal?.aborted) {
+    event.callStack.push({
+      type: "aborted",
+      name: event.name,
+      time: Date.now(),
+    });
     throw new TimeoutError(event);
   }
 }
@@ -127,7 +167,7 @@ export function eventStop(event) {
     time: Date.now(),
   });
 
-  if (event.root) {
+  if (isNil(event.root)) {
     event.log.info({
       type: "event_callstack",
       callStack: event.callStack,
@@ -149,11 +189,14 @@ export class TimeoutError extends Error {
   constructor(event) {
     super();
 
+    const getEventRoot = (event) =>
+      isNil(event.parent) ? event : getEventRoot(event.parent);
+
     this.key = "error.server.internal";
     this.status = 500;
     this.info = {
       message: "Operation aborted",
-      event,
+      rootEvent: getEventRoot(event),
     };
 
     Object.setPrototypeOf(this, TimeoutError.prototype);
