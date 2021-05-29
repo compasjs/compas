@@ -8,6 +8,25 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.139](https://github.com/compasjs/compas/releases/tag/v0.0.139)
+
+- build(deps): bump @babel/eslint-parser from 7.14.3 to 7.14.4
+  ([#915](https://github.com/compasjs/compas/pull/915))
+- build(deps): bump @types/node from 15.6.0 to 15.6.1
+  ([#909](https://github.com/compasjs/compas/pull/909))
+- build(deps): bump browserslist from 4.16.3 to 4.16.6
+  ([#910](https://github.com/compasjs/compas/pull/910))
+- build(deps): bump eslint-plugin-jsdoc from 34.8.2 to 35.0.0
+  ([#908](https://github.com/compasjs/compas/pull/908))
+- chore(code-gen): add test for query-builder nested limit
+  ([#918](https://github.com/compasjs/compas/pull/918))
+- feat(cli): add option to enforce at least one test assertion
+  ([#917](https://github.com/compasjs/compas/pull/917))
+- feat(cli): support loading connection settings from a relative js file
+  ([#914](https://github.com/compasjs/compas/pull/914))
+- feat(stdlib): add event root tracking for TimeoutErrors
+  ([#916](https://github.com/compasjs/compas/pull/916))
+
 ### [v0.0.138](https://github.com/compasjs/compas/releases/tag/v0.0.138)
 
 - build(deps): bump @types/node from 15.3.0 to 15.6.0
