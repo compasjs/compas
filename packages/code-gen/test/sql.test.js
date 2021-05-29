@@ -321,6 +321,25 @@ test("code-gen/e2e/sql", async (t) => {
     }
   });
 
+  t.test("user QueryBuilder - nested limit", async (t) => {
+    const [dbUser] = await userEntityImport
+      .queryUser({
+        where: {
+          id: user.id,
+        },
+        posts: {
+          writer: {
+            posts: {},
+          },
+          limit: 1,
+        },
+      })
+      .exec(sql);
+
+    t.ok(Array.isArray(dbUser.posts));
+    t.equal(dbUser.posts.length, 1);
+  });
+
   t.test("category queryBuilder", async (t) => {
     // For each category:
     // - Get a single post,
