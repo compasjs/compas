@@ -11,7 +11,7 @@
   {{ if (item.idempotent) { }}* Note that a custom options.enabled may be beneficial for your use case{{ } }}
  * Docs: {{= item.docString.replace(/\n/g, "\n  * ") }}
  */
-export function {{= funcName }}(
+export function {{= funcName }}<TData = {{= responseType }}>(
 {{ if (item.params) { }}
 params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
@@ -21,8 +21,8 @@ query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { use
 {{ if (item.body) { }}
 body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
-options: UseQueryOptions<{{= responseType }}, AppErrorResponse> = {},
-): UseQueryResult<{{= responseType }}, AppErrorResponse> {
+options: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> = {},
+) {
   const axiosInstance = useApi();
 
   options.enabled = (
