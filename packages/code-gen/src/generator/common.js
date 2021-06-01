@@ -162,6 +162,6 @@ export type AppErrorResponse = AxiosError<{
   };
 }>;
 
-export type UseQueryOptions<Response, Error> = ReactUseQueryOptions<Response, Error> & { cancelToken?: CancelTokenSource };
+export type UseQueryOptions<Response, Error, TData = Response> = ReactUseQueryOptions<Response, Error, TData> & { cancelToken?: CancelTokenSource };
 `;
 }
