@@ -17,7 +17,11 @@ export async function dockerMigrateCommand(logger, command) {
   // First arg was `migrate`
   const shouldRebuild = command.arguments.includes("rebuild");
   const shouldPrintInfo = command.arguments.includes("info");
-  const shouldKeepAlive = command.arguments.includes("--keep-alive");
+  const shouldKeepAlive =
+    command.arguments.includes("--keep-alive") ||
+    command.arguments.includes("--keep-alive-without-lock");
+  const shouldKeepLock =
+    shouldKeepAlive && !command.arguments.includes("--keep-alive-without-lock");
   const shouldLoadConnectionSettings = command.arguments.includes(
     "--connection-settings",
   );
@@ -30,7 +34,7 @@ export async function dockerMigrateCommand(logger, command) {
     !shouldLoadConnectionSettings
   ) {
     logger.error(
-      `Unknown argument '${command.arguments[1]}'. Expected one of 'rebuild', 'check', '--connection-settings' or '--keep-alive'.`,
+      `Unknown argument '${command.arguments[1]}'. Expected one of 'rebuild', 'check', '--connection-settings', '--keep-alive' or '--keep-alive-without-lock'.`,
     );
     return { exitCode: 1 };
   }
@@ -74,7 +78,7 @@ export async function dockerMigrateCommand(logger, command) {
     }
   }
 
-  const sql = await newPostgresConnection(sqlOptions);
+  let sql = await newPostgresConnection(sqlOptions);
   const mc = await newMigrateContext(sql);
 
   // Always print current state;
@@ -111,9 +115,20 @@ export async function dockerMigrateCommand(logger, command) {
     return { exitCode: 0 };
   }
 
+  if (!shouldKeepLock) {
+    // Drop the existing connection to release the advisory lock
+    await sql.end();
+
+    sql = await newPostgresConnection(sqlOptions);
+
+    // Execute a query to keep the event loop alive.
+    await sql`SELECT 1 + 1 as "sum"`;
+  }
+
   // Leak postgres connection, with a single connection, to keep the event loop spinning
   logger.info({
     message: "Migrate service keep-alive...",
+    withLock: shouldKeepLock,
   });
 }
 
