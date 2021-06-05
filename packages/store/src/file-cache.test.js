@@ -148,7 +148,7 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("create file again after clear", async (t) => {
-    const now = new Date().getTime() - 5;
+    const now = new Date().getTime() - 10;
     await new Promise((r) => {
       setTimeout(r, 5);
     });
