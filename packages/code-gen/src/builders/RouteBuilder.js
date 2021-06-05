@@ -165,6 +165,12 @@ export class RouteBuilder extends TypeBuilder {
             `Route ${result.group}->${result.name} is missing a type definition for '${param}' parameter.`,
           );
         }
+
+        if (paramsResult.keys[param].isOptional) {
+          throw new Error(
+            `Route ${result.group}->${result.name} is using an optional value for the '${param}' parameter. This is not supported.`,
+          );
+        }
       }
 
       for (const key of Object.keys(paramsResult.keys ?? {})) {
