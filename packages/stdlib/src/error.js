@@ -92,7 +92,6 @@ export class AppError extends Error {
    * Format any error skipping the stack automatically for nested errors
    *
    * @param {AppError|Error} e
-   * @param {boolean} [skipStack=false]
    * @returns {object}
    */
   static format(e) {
