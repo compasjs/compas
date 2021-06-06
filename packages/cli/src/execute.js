@@ -1,4 +1,5 @@
 import { benchCommand } from "./commands/bench.js";
+import { codeModCommand } from "./commands/code-mod.js";
 import {
   coverageCommand,
   dockerCommand,
@@ -16,6 +17,7 @@ const utilCommands = {
   init: initCommand,
   docker: dockerCommand,
   proxy: proxyCommand,
+  "code-mod": codeModCommand,
   visualise: visualiseCommand,
 };
 

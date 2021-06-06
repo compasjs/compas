@@ -5,7 +5,14 @@ import { existsSync } from "fs";
  *
  * @type {string[]}
  */
-const utilCommands = ["init", "help", "docker", "proxy", "visualise"];
+const utilCommands = [
+  "init",
+  "help",
+  "docker",
+  "proxy",
+  "code-mod",
+  "visualise",
+];
 
 /**
  * Object of commands that accept special input like node arguments, script name or

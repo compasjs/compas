@@ -19,7 +19,6 @@ import { isNil } from "./lodash.js";
 
 /**
  * @class
- * @constructor
  *
  * @param {Logger} logger
  * @param {AbortSignal|undefined} [signal]

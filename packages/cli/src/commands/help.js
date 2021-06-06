@@ -21,11 +21,19 @@ export async function helpCommand(logger, command, scriptCollection) {
     ),
   );
 
+  if (command.arguments.includes("--version")) {
+    // Needs no-console so the output can be used in other commands
+    // eslint-disable-next-line no-console
+    console.log(`v${version}`);
+
+    return;
+  }
+
   let log = `${name} -- ${version}
 Usage:
 
 - init              : compas init [projectName]
-- help              : compas help [--check]
+- help              : compas help [--check] [--version]
 - docker            : compas docker [up,down,clean,reset]
 - docker            : compas docker migrate [rebuild,info] [--keep-alive|--keep-alive-without-lock] [--connection-settings ./sql/connection/settings.js]
 - proxy             : compas proxy [--verbose]
@@ -35,6 +43,7 @@ Usage:
 - bench             : compas bench [--watch] [--verbose] [--node-arg]
 - coverage          : compas coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
 - lint              : compas lint [--watch] [--verbose] [--any-node-arg]
+- code-mod          : compas code-mod [--verbose] [list,exec] [code-mod-name]
 - visualise         : compas visualise [sql,router] {path/to/generated/index.js} [--format png|svg|webp|pdf] [--output ./path/to/output.ext]
 
 
