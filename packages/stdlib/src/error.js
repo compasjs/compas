@@ -95,15 +95,10 @@ export class AppError extends Error {
    * @param {boolean} [skipStack=false]
    * @returns {object}
    */
-  static format(e, skipStack = false) {
-    let stack;
-    if (skipStack) {
-      stack = [];
-    } else {
-      stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
-      // Remove first element as this is the Error name
-      stack.shift();
-    }
+  static format(e) {
+    const stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
+    // Remove first element as this is the Error name
+    stack.shift();
 
     if (isNil(e)) {
       return e;
@@ -114,7 +109,7 @@ export class AppError extends Error {
         info: e.info,
         stack,
         originalError: e.originalError
-          ? AppError.format(e.originalError, true)
+          ? AppError.format(e.originalError)
           : undefined,
       };
     } else if (e.name === "PostgresError") {
