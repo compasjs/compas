@@ -8,6 +8,36 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.140](https://github.com/compasjs/compas/releases/tag/v0.0.140)
+
+- build(deps): bump @types/node from 15.6.1 to 15.12.0
+  ([#929](https://github.com/compasjs/compas/pull/929),
+  [#933](https://github.com/compasjs/compas/pull/933))
+- build(deps): bump eslint-plugin-import from 2.23.3 to 2.23.4
+  ([#919](https://github.com/compasjs/compas/pull/919))
+- build(deps): bump eslint-plugin-jsdoc from 35.0.0 to 35.1.2
+  ([#920](https://github.com/compasjs/compas/pull/920),
+  [#921](https://github.com/compasjs/compas/pull/921))
+- build(deps): bump mime-types from 2.1.30 to 2.1.31
+  ([#927](https://github.com/compasjs/compas/pull/927))
+- chore(store): remove unused mime-types dependency
+  ([#936](https://github.com/compasjs/compas/pull/936))
+- feat(cli): add code-mod command, prepare v0.0.140 code-mod
+  ([#940](https://github.com/compasjs/compas/pull/940))
+- feat(cli): add migrate --keep-alive-without-lock
+  ([#937](https://github.com/compasjs/compas/pull/937))
+- feat(code-gen): accept an object as argument in generated 'useQuery' hooks
+  ([#941](https://github.com/compasjs/compas/pull/941))
+- feat(code-gen): throw nice error on optional route parameters
+  ([#938](https://github.com/compasjs/compas/pull/938))
+- feat(stdlib): always format stack when formatting errors
+  ([#939](https://github.com/compasjs/compas/pull/939))
+- fix(code-gen): Add additional query generics to support better data inferring
+  ([#922](https://github.com/compasjs/compas/pull/922))
+
+Breaking change in the generated react-query hooks, please run the code-mod via
+`yarn compas code-mod exec v0.0.140 --verbose` before generating.
+
 ### [v0.0.139](https://github.com/compasjs/compas/releases/tag/v0.0.139)
 
 - build(deps): bump @babel/eslint-parser from 7.14.3 to 7.14.4
