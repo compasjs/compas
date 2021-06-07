@@ -1,5 +1,5 @@
 import { cpus } from "os";
-import { executeCodeModVZeroDotZeroDotHundredForty } from "./mods/v0.0.140.js";
+import { executeCodeModVZeroDotZeroDotHundredFortyOne } from "./mods/v0.0.141.js";
 
 export const PARALLEL_COUNT = Math.max(cpus().length - 1, 1);
 
@@ -10,9 +10,9 @@ export const PARALLEL_COUNT = Math.max(cpus().length - 1, 1);
  * }>}
  */
 export const codeModMap = {
-  "v0.0.140": {
+  "v0.0.141": {
     description:
       "Convert arguments in call sites of generated react-query hooks, to pass in a single argument object.",
-    exec: executeCodeModVZeroDotZeroDotHundredForty,
+    exec: executeCodeModVZeroDotZeroDotHundredFortyOne,
   },
 };
