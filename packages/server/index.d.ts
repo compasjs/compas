@@ -749,10 +749,12 @@ interface ExtendableContext extends BaseContext {
   respond?: boolean;
 }
 
-export type Context<StateT = DefaultState, CustomT = DefaultContext> =
-  ExtendableContext & {
-    state: StateT;
-  } & CustomT;
+export type Context<
+  StateT = DefaultState,
+  CustomT = DefaultContext,
+> = ExtendableContext & {
+  state: StateT;
+} & CustomT;
 
 export type Next = () => void | Promise<void>;
 
