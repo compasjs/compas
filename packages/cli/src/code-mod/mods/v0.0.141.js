@@ -19,7 +19,7 @@ import { PARALLEL_COUNT } from "../constants.js";
  * @param {boolean} verbose
  * @returns {Promise<void>}
  */
-export async function executeCodeModVZeroDotZeroDotHundredForty(
+export async function executeCodeModVZeroDotZeroDotHundredFortyOne(
   event,
   verbose,
 ) {
@@ -87,7 +87,7 @@ export async function executeCodeModVZeroDotZeroDotHundredForty(
  * @returns {Promise<string[]>}
  */
 async function listGeneratedReactQueryFiles(event) {
-  eventStart(event, "v00140.listGeneratedReactQueryFiles");
+  eventStart(event, "v00141.listGeneratedReactQueryFiles");
 
   const possibleFileList = [];
 
@@ -126,7 +126,7 @@ async function listGeneratedReactQueryFiles(event) {
  * @returns {Promise<Object<string, { parameters: string [] }>>}
  */
 async function collectGeneratedReactQueryHooks(event, fileList) {
-  eventStart(event, "v00140.collectGeneratedReactQueryHooks");
+  eventStart(event, "v00141.collectGeneratedReactQueryHooks");
 
   const result = {};
 
@@ -152,15 +152,21 @@ async function collectGeneratedReactQueryHooks(event, fileList) {
           }
 
           result[node.id.name] = {
-            parameters: node.params.map((it) => {
-              if (it.type === "Identifier") {
-                return it.name;
-              } else if (it.type === "AssignmentPattern") {
-                // options = {}, ie a default value
-                return it.left.name;
-              }
-            }),
+            parameters: node.params
+              .map((it) => {
+                if (it.type === "Identifier") {
+                  return it.name;
+                } else if (it.type === "AssignmentPattern") {
+                  // options = {}, ie a default value
+                  return it.left.name;
+                }
+              })
+              .filter((it) => !isNil(it)),
           };
+
+          if (result[node.id.name].parameters.length === 0) {
+            delete result[node.id.name];
+          }
         }
       }),
     );
@@ -179,7 +185,7 @@ async function collectGeneratedReactQueryHooks(event, fileList) {
  * @returns {Promise<string[]>}
  */
 async function listAllTypeScriptFiles(event, generatedFiles) {
-  eventStart(event, "v00140.listAllTypeScriptFiles");
+  eventStart(event, "v00141.listAllTypeScriptFiles");
 
   const result = [];
 
@@ -213,7 +219,7 @@ async function listAllTypeScriptFiles(event, generatedFiles) {
  * @returns {Promise<{ callCount: number, fileCount: number }>}
  */
 async function modTheFiles(event, knownHooks, fileList) {
-  eventStart(event, "v00140.modTheFiles");
+  eventStart(event, "v00141.modTheFiles");
 
   const builders = recast.types.builders;
 
