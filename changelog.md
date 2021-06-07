@@ -8,6 +8,19 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.141](https://github.com/compasjs/compas/releases/tag/v0.0.141)
+
+- build(deps): bump @types/node from 15.12.0 to 15.12.1
+  ([#942](https://github.com/compasjs/compas/pull/942))
+- build(deps): bump eslint from 7.27.0 to 7.28.0
+  ([#946](https://github.com/compasjs/compas/pull/946))
+- build(deps): bump eslint-plugin-jsdoc from 35.1.2 to 35.1.3
+  ([#943](https://github.com/compasjs/compas/pull/943))
+- build(deps): bump prettier from 2.3.0 to 2.3.1
+  ([#944](https://github.com/compasjs/compas/pull/944))
+- fix(cli): fix code-mod v00140 and rename to v0.0.141
+  ([#947](https://github.com/compasjs/compas/pull/947))
+
 ### [v0.0.140](https://github.com/compasjs/compas/releases/tag/v0.0.140)
 
 - build(deps): bump @types/node from 15.6.1 to 15.12.0
