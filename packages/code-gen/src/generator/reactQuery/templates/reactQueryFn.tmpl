@@ -32,7 +32,7 @@ query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { use
 {{ if (item.body) { }}
 body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
 {{ } }}
-options: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData>,
+options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefined,
 }) {
   const axiosInstance = useApi();
   options = options ?? {};
