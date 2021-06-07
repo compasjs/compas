@@ -19,7 +19,7 @@ import { PARALLEL_COUNT } from "../constants.js";
  * @param {boolean} verbose
  * @returns {Promise<void>}
  */
-export async function executeCodeModVZeroDotZeroDotHundredFortyOne(
+export async function executeCodeModVZeroDotZeroDotHundredFortyTwo(
   event,
   verbose,
 ) {
@@ -87,7 +87,7 @@ export async function executeCodeModVZeroDotZeroDotHundredFortyOne(
  * @returns {Promise<string[]>}
  */
 async function listGeneratedReactQueryFiles(event) {
-  eventStart(event, "v00141.listGeneratedReactQueryFiles");
+  eventStart(event, "v00142.listGeneratedReactQueryFiles");
 
   const possibleFileList = [];
 
@@ -126,7 +126,7 @@ async function listGeneratedReactQueryFiles(event) {
  * @returns {Promise<Object<string, { parameters: string [] }>>}
  */
 async function collectGeneratedReactQueryHooks(event, fileList) {
-  eventStart(event, "v00141.collectGeneratedReactQueryHooks");
+  eventStart(event, "v00142.collectGeneratedReactQueryHooks");
 
   const result = {};
 
@@ -185,7 +185,7 @@ async function collectGeneratedReactQueryHooks(event, fileList) {
  * @returns {Promise<string[]>}
  */
 async function listAllTypeScriptFiles(event, generatedFiles) {
-  eventStart(event, "v00141.listAllTypeScriptFiles");
+  eventStart(event, "v00142.listAllTypeScriptFiles");
 
   const result = [];
 
@@ -219,7 +219,7 @@ async function listAllTypeScriptFiles(event, generatedFiles) {
  * @returns {Promise<{ callCount: number, fileCount: number }>}
  */
 async function modTheFiles(event, knownHooks, fileList) {
-  eventStart(event, "v00141.modTheFiles");
+  eventStart(event, "v00142.modTheFiles");
 
   const builders = recast.types.builders;
 
