@@ -1,5 +1,4 @@
 import { readFile, writeFile } from "fs/promises";
-import * as babel from "@babel/parser";
 import {
   AppError,
   eventStart,
@@ -294,6 +293,16 @@ async function modTheFiles(event, knownHooks, fileList) {
  * @returns {Promise<File|any>}
  */
 async function parseFile(file, contents) {
+  let babel;
+
+  try {
+    babel = await import("@babel/parser");
+  } catch (e) {
+    throw new AppError("cli.codeMod.failedToLoadBabel", 500, {
+      message: "Please install @compas/lint-config, or @babel/parser directly.",
+    });
+  }
+
   const babelOpts = await import("recast/parsers/_babel_options.js");
   const opts = babelOpts.default.default();
 
