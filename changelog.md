@@ -8,6 +8,12 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.143](https://github.com/compasjs/compas/releases/tag/v0.0.143)
+
+- build(deps): bump @types/node from 15.12.1 to 15.12.2
+  ([#949](https://github.com/compasjs/compas/pull/949))
+- fix(cli): import @babel/parser dynamically
+
 ### [v0.0.142](https://github.com/compasjs/compas/releases/tag/v0.0.142)
 
 - chore(cli): rename code-mod v0.0.141 to v0.0.142
