@@ -1,4 +1,5 @@
-import { existsSync } from "fs";
+import { existsSync, statSync } from "fs";
+import { rm } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { environment, spawn } from "@compas/stdlib";
 
@@ -12,6 +13,8 @@ test("cli/commands/visualise", (t) => {
   }
 
   t.test("visualise default", async (t) => {
+    await rm(`/tmp/compas_sql.svg`, { force: true });
+
     const { exitCode } = await spawn(`yarn`, [
       "compas",
       "visualise",
@@ -23,18 +26,40 @@ test("cli/commands/visualise", (t) => {
   });
 
   t.test("visualise with arguments", async (t) => {
+    await rm(`/tmp/visualise.svg`, { force: true });
+
     const { exitCode } = await spawn(`yarn`, [
       "compas",
       "visualise",
       "sql",
       "./packages/store/src/generated/common/structure.js",
       "--format",
-      "png",
+      "svg",
       "--output",
-      "/tmp/visualise.png",
+      "/tmp/visualise.svg",
     ]);
 
     t.equal(exitCode, 0);
-    t.ok(existsSync("/tmp/visualise.png"));
+    t.ok(existsSync("/tmp/visualise.svg"));
+  });
+
+  t.test("hash check", async (t) => {
+    const stats = statSync("/tmp/visualise.svg");
+
+    const { exitCode } = await spawn(`yarn`, [
+      "compas",
+      "visualise",
+      "sql",
+      "./packages/store/src/generated/common/structure.js",
+      "--format",
+      "svg",
+      "--output",
+      "/tmp/visualise.svg",
+    ]);
+
+    t.equal(exitCode, 0);
+    const newStats = statSync("/tmp/visualise.svg");
+
+    t.deepEqual(stats.mtime, newStats.mtime);
   });
 });
