@@ -1,6 +1,6 @@
 {
   "name": "@compas/cli",
-  "version": "0.0.143",
+  "version": "0.0.144",
   "description": "CLI containing utilities and simple script runner",
   "main": "./index.js",
   "exports": "./index.js",
@@ -26,7 +26,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.0.143",
+    "@compas/stdlib": "0.0.144",
     "c8": "7.7.2",
     "chokidar": "3.5.1",
     "http-proxy": "1.18.1",
