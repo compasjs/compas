@@ -85,9 +85,11 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
   if (
     enforceSingleAssertion &&
     testState.children.length === 0 &&
-    testState.assertions.length === 0
+    testState.assertions.length === 0 &&
+    isNil(testState.caughtException)
   ) {
-    // Only enforce an assertion when no child tests are registered
+    // Only enforce an assertion when no child tests are registered, and when the
+    // current test didn't exit with a 'caughtException'.
     testState.caughtException = new Error(
       `Test did not execute any assertions. This is enforced via the 'enforceSingleAssertion' value in 'test/config.js'.`,
     );
