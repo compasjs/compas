@@ -8,6 +8,21 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.144](https://github.com/compasjs/compas/releases/tag/v0.0.144)
+
+- build(deps): bump @babel/core from 7.14.3 to 7.14.5
+  ([#955](https://github.com/compasjs/compas/pull/955))
+- build(deps): bump @babel/eslint-parser from 7.14.4 to 7.14.5
+  ([#956](https://github.com/compasjs/compas/pull/956))
+- build(deps): bump hosted-git-info from 2.8.8 to 2.8.9
+  ([#953](https://github.com/compasjs/compas/pull/953))
+- feat(cli): add hash to visualise output to prevent unnecessary diffs
+  ([#952](https://github.com/compasjs/compas/pull/952))
+- feat(code-gen): add 'routerClearMemoizedHandlers' to router output
+  ([#960](https://github.com/compasjs/compas/pull/960))
+- fix(cli): prevent 'caughtException' overwriting by 'enforceSingleAssertion'
+  ([#961](https://github.com/compasjs/compas/pull/961))
+
 ### [v0.0.143](https://github.com/compasjs/compas/releases/tag/v0.0.143)
 
 - build(deps): bump @types/node from 15.12.1 to 15.12.2
