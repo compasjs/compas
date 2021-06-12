@@ -256,6 +256,33 @@ test("code-gen/e2e-server", async (t) => {
     }
   });
 
+  t.test("routerClearMemoizedHandlers", async (t) => {
+    const controllerImport = await import(
+      "../../../generated/testing/server/server/controller.js"
+    );
+
+    const commonImport = await import(
+      "../../../generated/testing/server/common/router.js"
+    );
+
+    controllerImport.serverHandlers.getId = () => {
+      throw AppError.serverError({
+        error: "foo.bar",
+      });
+    };
+
+    commonImport.routerClearMemoizedHandlers();
+
+    try {
+      await serverApiClientImport.apiServerGetId(axiosInstance, { id: 5 });
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, "error.server.internal");
+      t.equal(e.status, 500);
+      t.equal(e.info.error, "foo.bar");
+    }
+  });
+
   t.test("teardown", async (t) => {
     await closeTestApp(app);
     t.pass();
