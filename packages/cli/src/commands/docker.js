@@ -5,12 +5,15 @@ const SUB_COMMANDS = ["up", "down", "clean", "reset", "migrate"];
 
 const containers = {
   "compas-postgres-12": {
+    pullCommand: ["docker", ["pull", "postgres:12"]],
     createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-12:/var/lib/postgresql/data/pgdata -p 5432:5432 --name compas-postgres-12 postgres:12`,
   },
   "compas-postgres-13": {
+    pullCommand: ["docker", ["pull", "postgres:13"]],
     createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-13:/var/lib/postgresql/data/pgdata -p 5432:5432 --name compas-postgres-13 postgres:13`,
   },
   "compas-minio": {
+    pullCommand: ["docker", ["pull", "minio/minio"]],
     createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000 --name compas-minio minio/minio server /data`,
   },
 };
@@ -98,9 +101,19 @@ async function startContainers(logger, containerInfo) {
   for (const name of containerInfo.enabledContainers) {
     logger.info(`Creating ${name} container`);
     if (containerInfo.knownContainers.indexOf(name) === -1) {
-      const { exitCode } = await exec(containers[name].createCommand);
-      if (exitCode !== 0) {
-        return exitCode;
+      logger.info(`Pulling ${name}`);
+      const { exitCode: pullExitCode } = await spawn(
+        ...containers[name].pullCommand,
+      );
+      if (pullExitCode !== 0) {
+        return pullExitCode;
+      }
+
+      const { exitCode: createExitCode } = await exec(
+        containers[name].createCommand,
+      );
+      if (createExitCode !== 0) {
+        return createExitCode;
       }
     }
   }
