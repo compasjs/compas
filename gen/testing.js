@@ -135,6 +135,14 @@ export function applyTestingServerStructure(app) {
   const T = new TypeCreator("server");
   const R = T.router("/");
 
+  // Reference (validate TS output)
+  app.add(
+    T.string("options").oneOf("A", "B", "C"),
+    T.generic("answers")
+      .keys(T.reference("server", "options"))
+      .values(T.string()),
+  );
+
   app.add(
     R.get("/:id", "getId")
       .params({
