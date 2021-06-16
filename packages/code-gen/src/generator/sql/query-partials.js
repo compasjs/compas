@@ -37,6 +37,16 @@ export function generateQueryPartials(context, imports, type, src) {
     `../${type.group}/validators${context.importExtension}`,
   );
 
+  for (const relation of type.relations) {
+    if (relation.reference.reference.name !== type.name) {
+      // Add 'where' imports
+      imports.destructureImport(
+        `${relation.reference.reference.name}Where`,
+        `./${relation.reference.reference.name}${context.importExtension}`,
+      );
+    }
+  }
+
   src.push(getWherePartial(context, type));
   src.push(getOrderByPartial(context, type));
 

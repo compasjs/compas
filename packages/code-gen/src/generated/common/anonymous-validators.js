@@ -2000,9 +2000,9 @@ export function anonymousValidator1064092154(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", }|undefined}
+ * @returns {{"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", }|undefined}
  */
-export function anonymousValidator1861729288(
+export function anonymousValidator726016308(
   value,
   propertyPath,
   errors = [],
@@ -2033,6 +2033,11 @@ export function anonymousValidator1861729288(
     `${propertyPath}.name`,
     errors,
   );
+  result["isRelation"] = anonymousValidator1174857441(
+    value["isRelation"],
+    `${propertyPath}.isRelation`,
+    errors,
+  );
   if (
     value["variant"] !== "equal" &&
     value["variant"] !== "notEqual" &&
@@ -2045,7 +2050,9 @@ export function anonymousValidator1861729288(
     value["variant"] !== "includeNotNull" &&
     value["variant"] !== "like" &&
     value["variant"] !== "iLike" &&
-    value["variant"] !== "notLike"
+    value["variant"] !== "notLike" &&
+    value["variant"] !== "exists" &&
+    value["variant"] !== "notExists"
   ) {
     const parentType = "string";
     const oneOf = [
@@ -2061,6 +2068,8 @@ export function anonymousValidator1861729288(
       "like",
       "iLike",
       "notLike",
+      "exists",
+      "notExists",
     ];
     errors.push({
       key: `validator.${parentType}.oneOf`,
@@ -2075,9 +2084,9 @@ export function anonymousValidator1861729288(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[]|undefined}
+ * @returns {({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[]|undefined}
  */
-export function anonymousValidator237528902(
+export function anonymousValidator718135986(
   value,
   propertyPath,
   errors = [],
@@ -2099,7 +2108,7 @@ export function anonymousValidator237528902(
   }
   const result = Array.from({ length: value.length });
   for (let i = 0; i < value.length; ++i) {
-    result[i] = anonymousValidator1861729288(
+    result[i] = anonymousValidator726016308(
       value[i],
       `${propertyPath}[${i}]`,
       errors,
@@ -2112,9 +2121,9 @@ export function anonymousValidator237528902(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }|undefined}
+ * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }|undefined}
  */
-export function anonymousValidator1209434737(
+export function anonymousValidator70458499(
   value,
   propertyPath,
   errors = [],
@@ -2136,7 +2145,7 @@ export function anonymousValidator1209434737(
     `${propertyPath}.type`,
     errors,
   );
-  result["fields"] = anonymousValidator237528902(
+  result["fields"] = anonymousValidator718135986(
     value["fields"],
     `${propertyPath}.fields`,
     errors,
@@ -2392,7 +2401,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2494,7 +2503,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.relations`,
     errors,
   );
-  result["where"] = anonymousValidator1209434737(
+  result["where"] = anonymousValidator70458499(
     value["where"],
     `${propertyPath}.where`,
     errors,

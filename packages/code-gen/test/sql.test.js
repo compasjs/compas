@@ -5,7 +5,9 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   query,
+  stringifyQueryPart,
 } from "@compas/store";
+import { queryCategory } from "../../../generated/testing/sql/database/category.js";
 
 mainTestFn(import.meta);
 
@@ -134,6 +136,28 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(postCount, 2);
 
     post = dbPost1;
+  });
+
+  t.test("where exists", async (t) => {
+    const categories = await queryCategory({
+      where: {
+        postsExists: {},
+      },
+    }).exec(sql);
+
+    t.equal(categories.length, 1);
+    t.equal(categories[0].id, category.id);
+  });
+
+  t.test("where not exists", async (t) => {
+    const categories = await queryCategory({
+      where: {
+        postsNotExists: {},
+      },
+    }).exec(sql);
+
+    t.equal(categories.length, 1);
+    t.notEqual(categories[0].id, category.id);
   });
 
   t.test("add category meta", async (t) => {

@@ -9,7 +9,12 @@ import {
   validateStoreFileGroupViewQueryBuilder,
   validateStoreFileGroupViewWhere,
 } from "../store/validators.js";
-import { fileOrderBy, internalQueryFile, transformFile } from "./file.js";
+import {
+  fileOrderBy,
+  fileWhere,
+  internalQueryFile,
+  transformFile,
+} from "./file.js";
 /**
  * Get all fields for fileGroupView
  *
@@ -432,6 +437,30 @@ export function fileGroupViewWhere(
       ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
     );
     values.push(undefined);
+  }
+  if (where.childrenExists) {
+    strings.push(
+      ` AND EXISTS (SELECT FROM "fileGroupView" fgv2 WHERE `,
+      `AND fgv2."parent" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupViewWhere(where.childrenExists, "fgv2.", {
+        skipValidator: true,
+      }),
+      undefined,
+    );
+  }
+  if (where.childrenNotExists) {
+    strings.push(
+      ` AND NOT EXISTS (SELECT FROM "fileGroupView" fgv2 WHERE `,
+      `AND fgv2."parent" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupViewWhere(where.childrenNotExists, "fgv2.", {
+        skipValidator: true,
+      }),
+      undefined,
+    );
   }
   strings.push("");
   return query(strings, ...values);

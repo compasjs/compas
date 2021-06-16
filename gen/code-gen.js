@@ -280,6 +280,7 @@ function getTypes(T) {
             .keys({
               key: T.string(),
               name: T.string(),
+              isRelation: T.bool().optional().default(false),
               variant: T.string().oneOf(
                 "equal",
                 "notEqual",
@@ -293,6 +294,8 @@ function getTypes(T) {
                 "like",
                 "iLike",
                 "notLike",
+                "exists",
+                "notExists",
               ),
             })
             .loose(),
