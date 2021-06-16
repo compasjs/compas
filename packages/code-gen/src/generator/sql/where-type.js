@@ -9,7 +9,11 @@ import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
-import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";
+import {
+  getPrimaryKeyWithType,
+  getQueryEnabledObjects,
+  getSortedKeysForType,
+} from "./utils.js";
 
 const whereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
@@ -122,6 +126,8 @@ export function createWhereTypes(context) {
         }
 
         if (fieldType.sql?.primary && fieldType.type === "number") {
+          // Get's a JS string to support 'bigserial', but just safely convert it to a
+          // number.
           whereType.keys[name].validator.convert = true;
         }
       }
@@ -130,11 +136,61 @@ export function createWhereTypes(context) {
     addToData(context.structure, whereType);
 
     type.where = {
-      type: getTypeNameForType(context, whereType, "", {
-        useDefaults: false,
-      }),
+      type: whereType,
       fields: fieldsArray,
     };
+  }
+
+  // Add where, based on relations
+  for (const type of getQueryEnabledObjects(context)) {
+    for (const relation of type.relations) {
+      if (
+        relation.subType === "oneToMany" ||
+        relation.subType === "oneToOneReverse"
+      ) {
+        const otherSide = relation.reference.reference;
+
+        // Support other side of the relation exists, which is the same as
+        // `owningSideOfTheRelation`.isNotNull.
+        type.where.type.keys[`${relation.ownKey}Exists`] = {
+          ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
+            .optional()
+            .build(),
+          reference:
+            context.structure[otherSide.group][`${otherSide.name}Where`],
+        };
+
+        type.where.type.keys[`${relation.ownKey}NotExists`] = {
+          ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
+            .optional()
+            .build(),
+          reference:
+            context.structure[otherSide.group][`${otherSide.name}Where`],
+        };
+
+        type.where.fields.push(
+          {
+            key: relation.ownKey,
+            name: `${relation.ownKey}Exists`,
+            variant: "exists",
+            isRelation: true,
+          },
+          {
+            key: relation.ownKey,
+            name: `${relation.ownKey}NotExists`,
+            variant: "notExists",
+            isRelation: true,
+          },
+        );
+      }
+    }
+  }
+
+  // Add types to the system
+  for (const type of getQueryEnabledObjects(context)) {
+    type.where.type = getTypeNameForType(context, type.where.type, "", {
+      useDefaults: false,
+    });
   }
 }
 
@@ -167,45 +223,63 @@ export function getWherePartial(context, type) {
   `);
 
   for (const field of type.where.fields) {
-    const realField = type.keys[field.key].reference ?? type.keys[field.key];
-    // Type to cast arrays to, use for in & notIn
-    const fieldType =
-      realField.type === "number" && !realField.floatingPoint
-        ? "int"
-        : realField.type === "number" && realField.floatingPoint
-        ? "float"
-        : realField.type === "string"
-        ? "varchar"
-        : realField.type === "date"
-        ? "timestamptz"
-        : "uuid";
-
     let str = "";
-    if (field.variant === "includeNotNull") {
+
+    if (field.isRelation) {
+      const relation = type.relations.find((it) => it.ownKey === field.key);
+      const primaryKey = getPrimaryKeyWithType(type);
+
+      const exists = field.variant !== "exists" ? "NOT EXISTS" : "EXISTS";
+      const shortName =
+        relation.reference.reference.name === type.name
+          ? `${relation.reference.reference.shortName}2`
+          : `${relation.reference.reference.shortName}`;
+
       str += `
+        if (where.${field.name}) {
+          strings.push(\` AND ${exists} (SELECT FROM "${relation.reference.reference.name}" ${shortName} WHERE \`, \` AND ${shortName}."${relation.referencedKey}" = $\{tableName}"${primaryKey.key}")\`);
+          values.push(${relation.reference.reference.name}Where(where.${field.name}, "${shortName}.", { skipValidator: true }), undefined);
+        }
+      `;
+    } else {
+      const realField = type.keys[field.key].reference ?? type.keys[field.key];
+      // Type to cast arrays to, use for in & notIn
+      const fieldType =
+        realField.type === "number" && !realField.floatingPoint
+          ? "int"
+          : realField.type === "number" && realField.floatingPoint
+          ? "float"
+          : realField.type === "string"
+          ? "varchar"
+          : realField.type === "date"
+          ? "timestamptz"
+          : "uuid";
+
+      if (field.variant === "includeNotNull") {
+        str += `
         if ((where.${field.name} ?? false) === false) {
           strings.push(\` AND ($\{tableName}"${field.key}" IS NULL OR $\{tableName}"${field.key}" > now()) \`);
           values.push(undefined);
         }
       `;
-    } else {
-      str += `if (where.${field.name} !== undefined) {\n`;
+      } else {
+        str += `if (where.${field.name} !== undefined) {\n`;
 
-      switch (field.variant) {
-        case "equal":
-          str += `
+        switch (field.variant) {
+          case "equal":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" = \`);
             values.push(where.${field.name});
           `;
-          break;
-        case "notEqual":
-          str += `
+            break;
+          case "notEqual":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" != \`);
             values.push(where.${field.name});
           `;
-          break;
-        case "in":
-          str += `
+            break;
+          case "in":
+            str += `
             if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" = ANY(\`, ")");
               values.push(where.${field.name}, undefined);
@@ -224,9 +298,9 @@ export function getWherePartial(context, type) {
               values.push(undefined);
             }
           `;
-          break;
-        case "notIn":
-          str += `
+            break;
+          case "notIn":
+            str += `
             if (isQueryPart(where.${field.name})) {
               strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
               values.push(where.${field.name}, undefined);
@@ -245,83 +319,87 @@ export function getWherePartial(context, type) {
               values.push(undefined);
             }
           `;
-          break;
-        case "greaterThan":
-          str += `
+            break;
+          case "greaterThan":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" > \`);
             values.push(where.${field.name});
           `;
-          break;
-        case "lowerThan":
-          str += `
+            break;
+          case "lowerThan":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" < \`);
             values.push(where.${field.name});
           `;
-          break;
-        case "isNull":
-          str += `
+            break;
+          case "isNull":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" IS NULL \`);
             values.push(undefined);
           `;
-          break;
-        case "isNotNull":
-          str += `
+            break;
+          case "isNotNull":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" IS NOT NULL \`);
             values.push(undefined);
           `;
-          break;
-        case "like":
-          str += `
+            break;
+          case "like":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" LIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
-          break;
-        case "iLike":
-          str += `
+            break;
+          case "iLike":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" ILIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
-          break;
-        case "notLike":
-          str += `
+            break;
+          case "notLike":
+            str += `
             strings.push(\` AND $\{tableName}"${field.key}" NOT LIKE \`);
             values.push(\`%$\{where.${field.name}}%\`);
           `;
-          break;
+            break;
+        }
+        str += "}";
       }
-      str += "}";
     }
 
     partials.push(str);
   }
 
   return js`
-    /**
-     * Build 'WHERE ' part for ${type.name}
-     *
-     * @param {${type.where.type}} [where={}]
-     * @param {string} [tableName="${type.shortName}."]
-     * @param {{ skipValidator?: boolean|undefined }} [options={}]
-     * @returns {QueryPart}
-     */
-    export function ${type.name}Where(where = {}, tableName = "${type.shortName}.", options = {}) {
-      if (tableName.length > 0 && !tableName.endsWith(".")) {
-        tableName = \`$\{tableName}.\`;
+      /**
+       * Build 'WHERE ' part for ${type.name}
+       *
+       * @param {${type.where.type}} [where={}]
+       * @param {string} [tableName="${type.shortName}."]
+       * @param {{ skipValidator?: boolean|undefined }} [options={}]
+       * @returns {QueryPart}
+       */
+      export function ${type.name}Where(where = {},
+                                        tableName = "${type.shortName}.",
+                                        options = {}
+      ) {
+         if (tableName.length > 0 && !tableName.endsWith(".")) {
+            tableName = \`$\{tableName}.\`;
+         }
+
+         if (!options.skipValidator) {
+            where = validate${type.uniqueName}Where(where, "$.${type.name}Where");
+         }
+
+         const strings = [ "1 = 1" ];
+         const values = [ undefined ];
+
+         ${partials}
+         strings.push("");
+
+         return query(strings, ...values);
       }
-
-      if (!options.skipValidator) {
-        where = validate${type.uniqueName}Where(where, "$.${type.name}Where");
-      }
-
-      const strings = [ "1 = 1" ];
-      const values = [ undefined ];
-
-      ${partials}
-      strings.push("");
-
-      return query(strings, ...values);
-    }
-  `;
+   `;
 }
 
 /**

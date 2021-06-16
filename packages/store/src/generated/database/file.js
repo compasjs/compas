@@ -12,11 +12,13 @@ import {
 import {
   fileGroupOrderBy,
   fileGroupQueries,
+  fileGroupWhere,
   internalQueryFileGroup,
   transformFileGroup,
 } from "./fileGroup.js";
 import {
   fileGroupViewOrderBy,
+  fileGroupViewWhere,
   internalQueryFileGroupView,
   transformFileGroupView,
 } from "./fileGroupView.js";
@@ -380,6 +382,50 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
     );
     values.push(undefined);
+  }
+  if (where.groupExists) {
+    strings.push(
+      ` AND EXISTS (SELECT FROM "fileGroup" fg WHERE `,
+      `AND fg."file" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupWhere(where.groupExists, "fg.", { skipValidator: true }),
+      undefined,
+    );
+  }
+  if (where.groupNotExists) {
+    strings.push(
+      ` AND NOT EXISTS (SELECT FROM "fileGroup" fg WHERE `,
+      `AND fg."file" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupWhere(where.groupNotExists, "fg.", { skipValidator: true }),
+      undefined,
+    );
+  }
+  if (where.groupViewExists) {
+    strings.push(
+      ` AND EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
+      `AND fgv."file" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupViewWhere(where.groupViewExists, "fgv.", {
+        skipValidator: true,
+      }),
+      undefined,
+    );
+  }
+  if (where.groupViewNotExists) {
+    strings.push(
+      ` AND NOT EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
+      `AND fgv."file" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupViewWhere(where.groupViewNotExists, "fgv.", {
+        skipValidator: true,
+      }),
+      undefined,
+    );
   }
   strings.push("");
   return query(strings, ...values);

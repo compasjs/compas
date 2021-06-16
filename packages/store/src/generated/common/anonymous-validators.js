@@ -106,6 +106,10 @@ const objectKeys2074494218 = new Set([
   "deletedAtGreaterThan",
   "deletedAtLowerThan",
   "deletedAtIncludeNotNull",
+  "groupExists",
+  "groupNotExists",
+  "groupViewExists",
+  "groupViewNotExists",
 ]);
 const objectKeys153017499 = new Set([
   "$raw",
@@ -163,6 +167,8 @@ const objectKeys153017499 = new Set([
   "deletedAtGreaterThan",
   "deletedAtLowerThan",
   "deletedAtIncludeNotNull",
+  "childrenExists",
+  "childrenNotExists",
 ]);
 const objectKeys1823959232 = new Set([
   "$raw",
@@ -213,6 +219,8 @@ const objectKeys1823959232 = new Set([
   "deletedAtGreaterThan",
   "deletedAtLowerThan",
   "deletedAtIncludeNotNull",
+  "childrenExists",
+  "childrenNotExists",
 ]);
 const objectKeys1257773835 = new Set([
   "$raw",
@@ -1881,258 +1889,6 @@ export function anonymousValidator978954249(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart, "bucketNameNotIn"?: undefined|(string)[]|QueryPart, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
- */
-export function anonymousValidator2074494218(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "object",
-) {
-  if (isNil(value)) {
-    throw AppError.validationError(`validator.${parentType}.undefined`, {
-      propertyPath,
-    });
-  }
-  if (typeof value !== "object") {
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath,
-    });
-  }
-  const result = Object.create(null);
-  for (const key of Object.keys(value)) {
-    if (!objectKeys2074494218.has(key)) {
-      throw AppError.validationError(`validator.${parentType}.strict`, {
-        propertyPath,
-        extraKey: key,
-      });
-    }
-  }
-  if (!isNil(value["$raw"]) && !isQueryPart(value["$raw"])) {
-    const parentType = "any";
-    throw AppError.validationError(`validator.${parentType}.custom`, {
-      propertyPath: `${propertyPath}.$raw`,
-    });
-  }
-  result["$raw"] = value["$raw"] ?? undefined;
-  result["$or"] = anonymousValidator1804070323(
-    value["$or"],
-    `${propertyPath}.$or`,
-    errors,
-  );
-  result["id"] = anonymousValidator1802076175(
-    value["id"],
-    `${propertyPath}.id`,
-    errors,
-  );
-  result["idNotEqual"] = anonymousValidator1802076175(
-    value["idNotEqual"],
-    `${propertyPath}.idNotEqual`,
-    errors,
-  );
-  result["idIn"] = anonymousValidator1024905514(
-    value["idIn"],
-    `${propertyPath}.idIn`,
-    errors,
-  );
-  result["idNotIn"] = anonymousValidator1024905514(
-    value["idNotIn"],
-    `${propertyPath}.idNotIn`,
-    errors,
-  );
-  result["idLike"] = anonymousValidator1802076175(
-    value["idLike"],
-    `${propertyPath}.idLike`,
-    errors,
-  );
-  result["idNotLike"] = anonymousValidator1802076175(
-    value["idNotLike"],
-    `${propertyPath}.idNotLike`,
-    errors,
-  );
-  result["bucketName"] = anonymousValidator1443576836(
-    value["bucketName"],
-    `${propertyPath}.bucketName`,
-    errors,
-  );
-  result["bucketNameNotEqual"] = anonymousValidator1443576836(
-    value["bucketNameNotEqual"],
-    `${propertyPath}.bucketNameNotEqual`,
-    errors,
-  );
-  result["bucketNameIn"] = anonymousValidator972289697(
-    value["bucketNameIn"],
-    `${propertyPath}.bucketNameIn`,
-    errors,
-  );
-  result["bucketNameNotIn"] = anonymousValidator972289697(
-    value["bucketNameNotIn"],
-    `${propertyPath}.bucketNameNotIn`,
-    errors,
-  );
-  result["bucketNameLike"] = anonymousValidator1443576836(
-    value["bucketNameLike"],
-    `${propertyPath}.bucketNameLike`,
-    errors,
-  );
-  result["bucketNameILike"] = anonymousValidator1443576836(
-    value["bucketNameILike"],
-    `${propertyPath}.bucketNameILike`,
-    errors,
-  );
-  result["bucketNameNotLike"] = anonymousValidator1443576836(
-    value["bucketNameNotLike"],
-    `${propertyPath}.bucketNameNotLike`,
-    errors,
-  );
-  result["createdAt"] = anonymousValidator1988053796(
-    value["createdAt"],
-    `${propertyPath}.createdAt`,
-    errors,
-  );
-  result["createdAtNotEqual"] = anonymousValidator1988053796(
-    value["createdAtNotEqual"],
-    `${propertyPath}.createdAtNotEqual`,
-    errors,
-  );
-  result["createdAtIn"] = anonymousValidator978954249(
-    value["createdAtIn"],
-    `${propertyPath}.createdAtIn`,
-    errors,
-  );
-  result["createdAtNotIn"] = anonymousValidator978954249(
-    value["createdAtNotIn"],
-    `${propertyPath}.createdAtNotIn`,
-    errors,
-  );
-  result["createdAtGreaterThan"] = anonymousValidator1988053796(
-    value["createdAtGreaterThan"],
-    `${propertyPath}.createdAtGreaterThan`,
-    errors,
-  );
-  result["createdAtLowerThan"] = anonymousValidator1988053796(
-    value["createdAtLowerThan"],
-    `${propertyPath}.createdAtLowerThan`,
-    errors,
-  );
-  if (
-    !isNil(value["createdAtIsNull"]) &&
-    typeof value["createdAtIsNull"] !== "boolean"
-  ) {
-    const parentType = "boolean";
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath: `${propertyPath}.createdAtIsNull`,
-    });
-  }
-  result["createdAtIsNull"] = value["createdAtIsNull"] ?? undefined;
-  if (
-    !isNil(value["createdAtIsNotNull"]) &&
-    typeof value["createdAtIsNotNull"] !== "boolean"
-  ) {
-    const parentType = "boolean";
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath: `${propertyPath}.createdAtIsNotNull`,
-    });
-  }
-  result["createdAtIsNotNull"] = value["createdAtIsNotNull"] ?? undefined;
-  result["updatedAt"] = anonymousValidator1988053796(
-    value["updatedAt"],
-    `${propertyPath}.updatedAt`,
-    errors,
-  );
-  result["updatedAtNotEqual"] = anonymousValidator1988053796(
-    value["updatedAtNotEqual"],
-    `${propertyPath}.updatedAtNotEqual`,
-    errors,
-  );
-  result["updatedAtIn"] = anonymousValidator978954249(
-    value["updatedAtIn"],
-    `${propertyPath}.updatedAtIn`,
-    errors,
-  );
-  result["updatedAtNotIn"] = anonymousValidator978954249(
-    value["updatedAtNotIn"],
-    `${propertyPath}.updatedAtNotIn`,
-    errors,
-  );
-  result["updatedAtGreaterThan"] = anonymousValidator1988053796(
-    value["updatedAtGreaterThan"],
-    `${propertyPath}.updatedAtGreaterThan`,
-    errors,
-  );
-  result["updatedAtLowerThan"] = anonymousValidator1988053796(
-    value["updatedAtLowerThan"],
-    `${propertyPath}.updatedAtLowerThan`,
-    errors,
-  );
-  if (
-    !isNil(value["updatedAtIsNull"]) &&
-    typeof value["updatedAtIsNull"] !== "boolean"
-  ) {
-    const parentType = "boolean";
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath: `${propertyPath}.updatedAtIsNull`,
-    });
-  }
-  result["updatedAtIsNull"] = value["updatedAtIsNull"] ?? undefined;
-  if (
-    !isNil(value["updatedAtIsNotNull"]) &&
-    typeof value["updatedAtIsNotNull"] !== "boolean"
-  ) {
-    const parentType = "boolean";
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath: `${propertyPath}.updatedAtIsNotNull`,
-    });
-  }
-  result["updatedAtIsNotNull"] = value["updatedAtIsNotNull"] ?? undefined;
-  result["deletedAt"] = anonymousValidator1988053796(
-    value["deletedAt"],
-    `${propertyPath}.deletedAt`,
-    errors,
-  );
-  result["deletedAtNotEqual"] = anonymousValidator1988053796(
-    value["deletedAtNotEqual"],
-    `${propertyPath}.deletedAtNotEqual`,
-    errors,
-  );
-  result["deletedAtIn"] = anonymousValidator978954249(
-    value["deletedAtIn"],
-    `${propertyPath}.deletedAtIn`,
-    errors,
-  );
-  result["deletedAtNotIn"] = anonymousValidator978954249(
-    value["deletedAtNotIn"],
-    `${propertyPath}.deletedAtNotIn`,
-    errors,
-  );
-  result["deletedAtGreaterThan"] = anonymousValidator1988053796(
-    value["deletedAtGreaterThan"],
-    `${propertyPath}.deletedAtGreaterThan`,
-    errors,
-  );
-  result["deletedAtLowerThan"] = anonymousValidator1988053796(
-    value["deletedAtLowerThan"],
-    `${propertyPath}.deletedAtLowerThan`,
-    errors,
-  );
-  if (
-    !isNil(value["deletedAtIncludeNotNull"]) &&
-    typeof value["deletedAtIncludeNotNull"] !== "boolean"
-  ) {
-    const parentType = "boolean";
-    throw AppError.validationError(`validator.${parentType}.type`, {
-      propertyPath: `${propertyPath}.deletedAtIncludeNotNull`,
-    });
-  }
-  result["deletedAtIncludeNotNull"] =
-    value["deletedAtIncludeNotNull"] ?? undefined;
-  return result;
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
  * @returns {undefined|(StoreFileGroupWhere)[]|undefined}
  */
 export function anonymousValidator58972158(
@@ -2235,7 +1991,7 @@ export function anonymousValidator2102014144(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart, "orderNotIn"?: undefined|(number)[]|QueryPart, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart, "orderNotIn"?: undefined|(number)[]|QueryPart, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "childrenExists"?: undefined|StoreFileGroupWhere, "childrenNotExists"?: undefined|StoreFileGroupWhere, }|undefined}
  */
 export function anonymousValidator153017499(
   value,
@@ -2592,7 +2348,35 @@ export function anonymousValidator153017499(
   }
   result["deletedAtIncludeNotNull"] =
     value["deletedAtIncludeNotNull"] ?? undefined;
+  result["childrenExists"] = anonymousValidator481156646(
+    value["childrenExists"],
+    `${propertyPath}.childrenExists`,
+    errors,
+  );
+  result["childrenNotExists"] = anonymousValidator481156646(
+    value["childrenNotExists"],
+    `${propertyPath}.childrenNotExists`,
+    errors,
+  );
   return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|StoreFileGroupWhere|undefined}
+ */
+export function anonymousValidator481156646(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  return anonymousValidator153017499(value, propertyPath, errors);
 }
 /**
  * @param {*} value
@@ -2630,7 +2414,7 @@ export function anonymousValidator1842665181(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupViewWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "isDirectory"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, }|undefined}
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileGroupViewWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "isDirectory"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart, "fileNotIn"?: undefined|(string)[]|QueryPart, "fileLike"?: undefined|string, "fileNotLike"?: undefined|string, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart, "parentNotIn"?: undefined|(string)[]|QueryPart, "parentLike"?: undefined|string, "parentNotLike"?: undefined|string, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "childrenExists"?: undefined|StoreFileGroupViewWhere, "childrenNotExists"?: undefined|StoreFileGroupViewWhere, }|undefined}
  */
 export function anonymousValidator1823959232(
   value,
@@ -2947,6 +2731,306 @@ export function anonymousValidator1823959232(
   }
   result["deletedAtIncludeNotNull"] =
     value["deletedAtIncludeNotNull"] ?? undefined;
+  result["childrenExists"] = anonymousValidator1561713483(
+    value["childrenExists"],
+    `${propertyPath}.childrenExists`,
+    errors,
+  );
+  result["childrenNotExists"] = anonymousValidator1561713483(
+    value["childrenNotExists"],
+    `${propertyPath}.childrenNotExists`,
+    errors,
+  );
+  return result;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|StoreFileGroupViewWhere|undefined}
+ */
+export function anonymousValidator1561713483(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "reference",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  return anonymousValidator1823959232(value, propertyPath, errors);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"$raw"?: undefined|QueryPart, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart, "idNotIn"?: undefined|(string)[]|QueryPart, "idLike"?: undefined|string, "idNotLike"?: undefined|string, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart, "bucketNameNotIn"?: undefined|(string)[]|QueryPart, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart, "createdAtNotIn"?: undefined|(Date)[]|QueryPart, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "groupExists"?: undefined|StoreFileGroupWhere, "groupNotExists"?: undefined|StoreFileGroupWhere, "groupViewExists"?: undefined|StoreFileGroupViewWhere, "groupViewNotExists"?: undefined|StoreFileGroupViewWhere, }|undefined}
+ */
+export function anonymousValidator2074494218(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    throw AppError.validationError(`validator.${parentType}.undefined`, {
+      propertyPath,
+    });
+  }
+  if (typeof value !== "object") {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys2074494218.has(key)) {
+      throw AppError.validationError(`validator.${parentType}.strict`, {
+        propertyPath,
+        extraKey: key,
+      });
+    }
+  }
+  if (!isNil(value["$raw"]) && !isQueryPart(value["$raw"])) {
+    const parentType = "any";
+    throw AppError.validationError(`validator.${parentType}.custom`, {
+      propertyPath: `${propertyPath}.$raw`,
+    });
+  }
+  result["$raw"] = value["$raw"] ?? undefined;
+  result["$or"] = anonymousValidator1804070323(
+    value["$or"],
+    `${propertyPath}.$or`,
+    errors,
+  );
+  result["id"] = anonymousValidator1802076175(
+    value["id"],
+    `${propertyPath}.id`,
+    errors,
+  );
+  result["idNotEqual"] = anonymousValidator1802076175(
+    value["idNotEqual"],
+    `${propertyPath}.idNotEqual`,
+    errors,
+  );
+  result["idIn"] = anonymousValidator1024905514(
+    value["idIn"],
+    `${propertyPath}.idIn`,
+    errors,
+  );
+  result["idNotIn"] = anonymousValidator1024905514(
+    value["idNotIn"],
+    `${propertyPath}.idNotIn`,
+    errors,
+  );
+  result["idLike"] = anonymousValidator1802076175(
+    value["idLike"],
+    `${propertyPath}.idLike`,
+    errors,
+  );
+  result["idNotLike"] = anonymousValidator1802076175(
+    value["idNotLike"],
+    `${propertyPath}.idNotLike`,
+    errors,
+  );
+  result["bucketName"] = anonymousValidator1443576836(
+    value["bucketName"],
+    `${propertyPath}.bucketName`,
+    errors,
+  );
+  result["bucketNameNotEqual"] = anonymousValidator1443576836(
+    value["bucketNameNotEqual"],
+    `${propertyPath}.bucketNameNotEqual`,
+    errors,
+  );
+  result["bucketNameIn"] = anonymousValidator972289697(
+    value["bucketNameIn"],
+    `${propertyPath}.bucketNameIn`,
+    errors,
+  );
+  result["bucketNameNotIn"] = anonymousValidator972289697(
+    value["bucketNameNotIn"],
+    `${propertyPath}.bucketNameNotIn`,
+    errors,
+  );
+  result["bucketNameLike"] = anonymousValidator1443576836(
+    value["bucketNameLike"],
+    `${propertyPath}.bucketNameLike`,
+    errors,
+  );
+  result["bucketNameILike"] = anonymousValidator1443576836(
+    value["bucketNameILike"],
+    `${propertyPath}.bucketNameILike`,
+    errors,
+  );
+  result["bucketNameNotLike"] = anonymousValidator1443576836(
+    value["bucketNameNotLike"],
+    `${propertyPath}.bucketNameNotLike`,
+    errors,
+  );
+  result["createdAt"] = anonymousValidator1988053796(
+    value["createdAt"],
+    `${propertyPath}.createdAt`,
+    errors,
+  );
+  result["createdAtNotEqual"] = anonymousValidator1988053796(
+    value["createdAtNotEqual"],
+    `${propertyPath}.createdAtNotEqual`,
+    errors,
+  );
+  result["createdAtIn"] = anonymousValidator978954249(
+    value["createdAtIn"],
+    `${propertyPath}.createdAtIn`,
+    errors,
+  );
+  result["createdAtNotIn"] = anonymousValidator978954249(
+    value["createdAtNotIn"],
+    `${propertyPath}.createdAtNotIn`,
+    errors,
+  );
+  result["createdAtGreaterThan"] = anonymousValidator1988053796(
+    value["createdAtGreaterThan"],
+    `${propertyPath}.createdAtGreaterThan`,
+    errors,
+  );
+  result["createdAtLowerThan"] = anonymousValidator1988053796(
+    value["createdAtLowerThan"],
+    `${propertyPath}.createdAtLowerThan`,
+    errors,
+  );
+  if (
+    !isNil(value["createdAtIsNull"]) &&
+    typeof value["createdAtIsNull"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath: `${propertyPath}.createdAtIsNull`,
+    });
+  }
+  result["createdAtIsNull"] = value["createdAtIsNull"] ?? undefined;
+  if (
+    !isNil(value["createdAtIsNotNull"]) &&
+    typeof value["createdAtIsNotNull"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath: `${propertyPath}.createdAtIsNotNull`,
+    });
+  }
+  result["createdAtIsNotNull"] = value["createdAtIsNotNull"] ?? undefined;
+  result["updatedAt"] = anonymousValidator1988053796(
+    value["updatedAt"],
+    `${propertyPath}.updatedAt`,
+    errors,
+  );
+  result["updatedAtNotEqual"] = anonymousValidator1988053796(
+    value["updatedAtNotEqual"],
+    `${propertyPath}.updatedAtNotEqual`,
+    errors,
+  );
+  result["updatedAtIn"] = anonymousValidator978954249(
+    value["updatedAtIn"],
+    `${propertyPath}.updatedAtIn`,
+    errors,
+  );
+  result["updatedAtNotIn"] = anonymousValidator978954249(
+    value["updatedAtNotIn"],
+    `${propertyPath}.updatedAtNotIn`,
+    errors,
+  );
+  result["updatedAtGreaterThan"] = anonymousValidator1988053796(
+    value["updatedAtGreaterThan"],
+    `${propertyPath}.updatedAtGreaterThan`,
+    errors,
+  );
+  result["updatedAtLowerThan"] = anonymousValidator1988053796(
+    value["updatedAtLowerThan"],
+    `${propertyPath}.updatedAtLowerThan`,
+    errors,
+  );
+  if (
+    !isNil(value["updatedAtIsNull"]) &&
+    typeof value["updatedAtIsNull"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath: `${propertyPath}.updatedAtIsNull`,
+    });
+  }
+  result["updatedAtIsNull"] = value["updatedAtIsNull"] ?? undefined;
+  if (
+    !isNil(value["updatedAtIsNotNull"]) &&
+    typeof value["updatedAtIsNotNull"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath: `${propertyPath}.updatedAtIsNotNull`,
+    });
+  }
+  result["updatedAtIsNotNull"] = value["updatedAtIsNotNull"] ?? undefined;
+  result["deletedAt"] = anonymousValidator1988053796(
+    value["deletedAt"],
+    `${propertyPath}.deletedAt`,
+    errors,
+  );
+  result["deletedAtNotEqual"] = anonymousValidator1988053796(
+    value["deletedAtNotEqual"],
+    `${propertyPath}.deletedAtNotEqual`,
+    errors,
+  );
+  result["deletedAtIn"] = anonymousValidator978954249(
+    value["deletedAtIn"],
+    `${propertyPath}.deletedAtIn`,
+    errors,
+  );
+  result["deletedAtNotIn"] = anonymousValidator978954249(
+    value["deletedAtNotIn"],
+    `${propertyPath}.deletedAtNotIn`,
+    errors,
+  );
+  result["deletedAtGreaterThan"] = anonymousValidator1988053796(
+    value["deletedAtGreaterThan"],
+    `${propertyPath}.deletedAtGreaterThan`,
+    errors,
+  );
+  result["deletedAtLowerThan"] = anonymousValidator1988053796(
+    value["deletedAtLowerThan"],
+    `${propertyPath}.deletedAtLowerThan`,
+    errors,
+  );
+  if (
+    !isNil(value["deletedAtIncludeNotNull"]) &&
+    typeof value["deletedAtIncludeNotNull"] !== "boolean"
+  ) {
+    const parentType = "boolean";
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath: `${propertyPath}.deletedAtIncludeNotNull`,
+    });
+  }
+  result["deletedAtIncludeNotNull"] =
+    value["deletedAtIncludeNotNull"] ?? undefined;
+  result["groupExists"] = anonymousValidator481156646(
+    value["groupExists"],
+    `${propertyPath}.groupExists`,
+    errors,
+  );
+  result["groupNotExists"] = anonymousValidator481156646(
+    value["groupNotExists"],
+    `${propertyPath}.groupNotExists`,
+    errors,
+  );
+  result["groupViewExists"] = anonymousValidator1561713483(
+    value["groupViewExists"],
+    `${propertyPath}.groupViewExists`,
+    errors,
+  );
+  result["groupViewNotExists"] = anonymousValidator1561713483(
+    value["groupViewNotExists"],
+    `${propertyPath}.groupViewNotExists`,
+    errors,
+  );
   return result;
 }
 /**
@@ -4504,24 +4588,6 @@ export function anonymousValidator1745737810(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|StoreFileGroupWhere|undefined}
- */
-export function anonymousValidator481156646(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "reference",
-) {
-  if (isNil(value)) {
-    return value;
-  }
-  return anonymousValidator153017499(value, propertyPath, errors);
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
  * @returns {undefined|StoreFileGroupOrderBy|undefined}
  */
 export function anonymousValidator1055135624(
@@ -4652,24 +4718,6 @@ export function anonymousValidator514437691(
     return value;
   }
   return anonymousValidator1274599578(value, propertyPath, errors);
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @param {{ key: string, info: any }[]} errors
- * @param {string} parentType
- * @returns {undefined|StoreFileGroupViewWhere|undefined}
- */
-export function anonymousValidator1561713483(
-  value,
-  propertyPath,
-  errors = [],
-  parentType = "reference",
-) {
-  if (isNil(value)) {
-    return value;
-  }
-  return anonymousValidator1823959232(value, propertyPath, errors);
 }
 /**
  * @param {*} value

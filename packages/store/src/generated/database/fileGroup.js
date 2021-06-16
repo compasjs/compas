@@ -9,7 +9,12 @@ import {
   validateStoreFileGroupQueryBuilder,
   validateStoreFileGroupWhere,
 } from "../store/validators.js";
-import { fileOrderBy, internalQueryFile, transformFile } from "./file.js";
+import {
+  fileOrderBy,
+  fileWhere,
+  internalQueryFile,
+  transformFile,
+} from "./file.js";
 
 const fileGroupFieldSet = new Set([
   "name",
@@ -498,6 +503,26 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
       ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
     );
     values.push(undefined);
+  }
+  if (where.childrenExists) {
+    strings.push(
+      ` AND EXISTS (SELECT FROM "fileGroup" fg2 WHERE `,
+      `AND fg2."parent" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupWhere(where.childrenExists, "fg2.", { skipValidator: true }),
+      undefined,
+    );
+  }
+  if (where.childrenNotExists) {
+    strings.push(
+      ` AND NOT EXISTS (SELECT FROM "fileGroup" fg2 WHERE `,
+      `AND fg2."parent" = ${tableName}"id")`,
+    );
+    values.push(
+      fileGroupWhere(where.childrenNotExists, "fg2.", { skipValidator: true }),
+      undefined,
+    );
   }
   strings.push("");
   return query(strings, ...values);
