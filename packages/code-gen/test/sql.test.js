@@ -5,7 +5,6 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   query,
-  stringifyQueryPart,
 } from "@compas/store";
 import { queryCategory } from "../../../generated/testing/sql/database/category.js";
 
