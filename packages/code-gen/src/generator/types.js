@@ -263,6 +263,9 @@ export function generateTypeDefinition(
         if (Array.isArray(type.keys.oneOf)) {
           result += `{ [ key in `;
           result += generateTypeDefinition(context, type.keys, recurseSettings);
+        } else if (Array.isArray(type.keys.reference?.oneOf)) {
+          result += `{ [ K in `;
+          result += generateTypeDefinition(context, type.keys, recurseSettings);
         } else {
           result += `{ [ key: `;
           result += generateTypeDefinition(context, type.keys, recurseSettings);
