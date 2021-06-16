@@ -386,7 +386,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
   if (where.groupExists) {
     strings.push(
       ` AND EXISTS (SELECT FROM "fileGroup" fg WHERE `,
-      `AND fg."file" = ${tableName}"id")`,
+      ` AND fg."file" = ${tableName}"id")`,
     );
     values.push(
       fileGroupWhere(where.groupExists, "fg.", { skipValidator: true }),
@@ -396,7 +396,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
   if (where.groupNotExists) {
     strings.push(
       ` AND NOT EXISTS (SELECT FROM "fileGroup" fg WHERE `,
-      `AND fg."file" = ${tableName}"id")`,
+      ` AND fg."file" = ${tableName}"id")`,
     );
     values.push(
       fileGroupWhere(where.groupNotExists, "fg.", { skipValidator: true }),
@@ -406,7 +406,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
   if (where.groupViewExists) {
     strings.push(
       ` AND EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
-      `AND fgv."file" = ${tableName}"id")`,
+      ` AND fgv."file" = ${tableName}"id")`,
     );
     values.push(
       fileGroupViewWhere(where.groupViewExists, "fgv.", {
@@ -418,7 +418,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
   if (where.groupViewNotExists) {
     strings.push(
       ` AND NOT EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
-      `AND fgv."file" = ${tableName}"id")`,
+      ` AND fgv."file" = ${tableName}"id")`,
     );
     values.push(
       fileGroupViewWhere(where.groupViewNotExists, "fgv.", {

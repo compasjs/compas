@@ -441,7 +441,7 @@ export function fileGroupViewWhere(
   if (where.childrenExists) {
     strings.push(
       ` AND EXISTS (SELECT FROM "fileGroupView" fgv2 WHERE `,
-      `AND fgv2."parent" = ${tableName}"id")`,
+      ` AND fgv2."parent" = ${tableName}"id")`,
     );
     values.push(
       fileGroupViewWhere(where.childrenExists, "fgv2.", {
@@ -453,7 +453,7 @@ export function fileGroupViewWhere(
   if (where.childrenNotExists) {
     strings.push(
       ` AND NOT EXISTS (SELECT FROM "fileGroupView" fgv2 WHERE `,
-      `AND fgv2."parent" = ${tableName}"id")`,
+      ` AND fgv2."parent" = ${tableName}"id")`,
     );
     values.push(
       fileGroupViewWhere(where.childrenNotExists, "fgv2.", {

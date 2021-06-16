@@ -507,7 +507,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
   if (where.childrenExists) {
     strings.push(
       ` AND EXISTS (SELECT FROM "fileGroup" fg2 WHERE `,
-      `AND fg2."parent" = ${tableName}"id")`,
+      ` AND fg2."parent" = ${tableName}"id")`,
     );
     values.push(
       fileGroupWhere(where.childrenExists, "fg2.", { skipValidator: true }),
@@ -517,7 +517,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
   if (where.childrenNotExists) {
     strings.push(
       ` AND NOT EXISTS (SELECT FROM "fileGroup" fg2 WHERE `,
-      `AND fg2."parent" = ${tableName}"id")`,
+      ` AND fg2."parent" = ${tableName}"id")`,
     );
     values.push(
       fileGroupWhere(where.childrenNotExists, "fg2.", { skipValidator: true }),
