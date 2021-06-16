@@ -8,6 +8,29 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.145](https://github.com/compasjs/compas/releases/tag/v0.0.145)
+
+- build(deps): bump @babel/core from 7.14.5 to 7.14.6
+  ([#969](https://github.com/compasjs/compas/pull/969))
+- build(deps): bump c8 from 7.7.2 to 7.7.3
+  ([#963](https://github.com/compasjs/compas/pull/963))
+- build(deps): bump chokidar from 3.5.1 to 3.5.2
+  ([#970](https://github.com/compasjs/compas/pull/970))
+- build(deps): bump eslint-plugin-jsdoc from 35.1.3 to 35.3.0
+  ([#964](https://github.com/compasjs/compas/pull/964),
+  [#971](https://github.com/compasjs/compas/pull/971))
+- feat(cli): spawn 'docker pull' when container needs to be created
+  ([#967](https://github.com/compasjs/compas/pull/967))
+- feat(code-gen): add sql support for `where.relationExists`
+  ([#973](https://github.com/compasjs/compas/pull/973))
+- fix(code-gen): resolve typescript union on compas reference object
+  ([#974](https://github.com/compasjs/compas/pull/974))
+- fix(store): require ssl by default for the postgres connection in production
+  ([#972](https://github.com/compasjs/compas/pull/972))
+
+Breaking change: by default ssl is required for Postgres connections created in
+production.
+
 ### [v0.0.144](https://github.com/compasjs/compas/releases/tag/v0.0.144)
 
 - build(deps): bump @babel/core from 7.14.3 to 7.14.5
