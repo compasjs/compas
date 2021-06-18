@@ -18,11 +18,16 @@ export function addFieldsOfRelations(context) {
         type.keys["id"] = new UuidType().primary().build();
       }
     }
+  }
 
+  // We can only add relation keys if all types have an id.
+  // So we loop again over all query enabled objects
+  for (const type of getQueryEnabledObjects(context)) {
     for (const relation of type.relations) {
       addFieldsForRelation(context, type, relation);
     }
 
+    // Add date fields if necessary
     if (type.queryOptions.withDates || type.queryOptions.withSoftDeletes) {
       type.keys["createdAt"] = getSystemDate();
       type.keys["updatedAt"] = getSystemDate();
@@ -46,7 +51,7 @@ export function addFieldsForRelation(context, type, relation) {
     return;
   }
 
-  const { field } = getPrimaryKeyWithType(type);
+  const { field } = getPrimaryKeyWithType(relation.reference.reference);
   type.keys[relation.ownKey] = {
     ...field,
     sql: {

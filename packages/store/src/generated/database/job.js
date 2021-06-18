@@ -680,10 +680,10 @@ export function transformJob(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
+    value.handlerTimeout = value.handlerTimeout ?? undefined;
     if (typeof value.scheduledAt === "string") {
       value.scheduledAt = new Date(value.scheduledAt);
     }
-    value.handlerTimeout = value.handlerTimeout ?? undefined;
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }

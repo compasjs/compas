@@ -6,7 +6,11 @@ import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
 import { getTypeNameForType } from "../types.js";
 import { typeTable } from "./structure.js";
-import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
+import {
+  getPrimaryKeyWithType,
+  getQueryEnabledObjects,
+  getSortedKeysForType,
+} from "./utils.js";
 
 /**
  * Generate query builders that include relations in to the query result via left joins
@@ -504,7 +508,7 @@ if (!isNil(builder.${key}.limit)) {
  */
 function transformerForType(context, imports, type) {
   const partials = [];
-  for (const key of Object.keys(type.keys)) {
+  for (const key of getSortedKeysForType(type)) {
     const keyType = type.keys[key];
 
     if (keyType.isOptional && isNil(keyType.defaultValue)) {
