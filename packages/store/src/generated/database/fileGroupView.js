@@ -1109,9 +1109,9 @@ export function transformFileGroupView(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
-    value.name = value.name ?? undefined;
     value.file = value.file ?? undefined;
     value.parent = value.parent ?? undefined;
+    value.name = value.name ?? undefined;
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
