@@ -419,7 +419,8 @@ export async function addEventToQueue(sql, eventName, data) {
     name: eventName,
     priority: 2,
   });
-  return result?.id;
+
+  return Number(result?.id);
 }
 
 /**
@@ -446,7 +447,8 @@ export async function addJobToQueue(sql, job) {
     // Always overwrite the timeout
     handlerTimeout: null,
   });
-  return result?.id;
+
+  return Number(result?.id);
 }
 
 /**
@@ -486,7 +488,8 @@ export async function addJobWithCustomTimeoutToQueue(sql, job, timeout) {
     name: job.name ?? environment.APP_NAME,
     handlerTimeout: timeout,
   });
-  return result?.id;
+
+  return Number(result?.id);
 }
 
 /**
