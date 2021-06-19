@@ -51,6 +51,34 @@ test("stdlib/events", (t) => {
     t.equal(event.callStack[0].type, "stop");
   });
 
+  t.test("event stop adds duration", (t) => {
+    const event = newEvent(t.log);
+    eventStart(event, "foo");
+    eventStop(event);
+    t.ok(!isNil(event.callStack[0].duration));
+  });
+
+  t.test("event abort adds duration", (t) => {
+    const abortController = new AbortController();
+
+    const event = newEvent(t.log, abortController.signal);
+    eventStart(event, "foo");
+
+    abortController.abort();
+
+    try {
+      newEventFromEvent(event);
+    } catch (e) {
+      t.equal(e.key, "error.server.internal");
+      t.equal(e.status, 500);
+      // reference equality of `getRootEvent`
+      t.equal(e.info.rootEvent, event);
+      t.equal(e.info.rootEvent.callStack.length, 2);
+      t.equal(e.info.rootEvent.callStack[1].type, "aborted");
+      t.ok(!isNil(event.callStack[0].duration));
+    }
+  });
+
   t.test("rename an event", (t) => {
     const event = newEvent(t.log);
     eventStart(event, "foo");

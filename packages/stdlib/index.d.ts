@@ -410,8 +410,23 @@ export function printProcessMemoryUsage(logger: Logger): void;
  */
 export type InsightEventCall =
   | {
-      type: "start" | "stop" | "aborted";
+      type: "stop" | "aborted";
       name: string;
+
+      /**
+       * Time in milliseconds since some kind of epoch, this may be unix epoch or process start
+       */
+      time: number;
+    }
+  | {
+      type: "start";
+      name: string;
+
+      /**
+       * Duration in milliseconds between (end|aborted) and start time. This is filled when an
+       * event is aborted or stopped via `eventStop`.
+       */
+      duration?: number;
 
       /**
        * Time in milliseconds since some kind of epoch, this may be unix epoch or process start

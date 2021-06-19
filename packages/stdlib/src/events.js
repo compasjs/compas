@@ -13,6 +13,8 @@ import { isNil } from "./lodash.js";
  * @typedef {object} InsightEventCallObject
  * @property {"start"|"stop"|"aborted"} type
  * @property {string} name
+ * @property {number|undefined} [duration] Duration in milliseconds between (end|aborted)
+ *    and start time. This is filled when an event is aborted or stopped via `eventStop`.
  * @property {number} time Time in milliseconds since some epoch. This can either be the
  *    unix epoch or process start
  */
@@ -40,8 +42,23 @@ function InsightEvent(logger, signal) {
   /**  @type {InsightEventCall[]} */
   this.callStack = [];
 
+  this.calculateDuration = calculateDuration.bind(this);
   this[inspect.custom] = print.bind(this);
   this.toJSON = print.bind(this);
+
+  function calculateDuration() {
+    if (this.callStack[0]?.type !== "start") {
+      return;
+    }
+
+    const lastIdx = this.callStack.length - 1;
+    const lastType = this.callStack[lastIdx]?.type;
+
+    if (lastType === "stop" || lastType === "aborted") {
+      this.callStack[0].duration =
+        this.callStack[lastIdx].time - this.callStack[0].time;
+    }
+  }
 
   function print() {
     this.log.info({
@@ -82,6 +99,7 @@ export function newEventFromEvent(event) {
       name: event.name,
       time: Date.now(),
     });
+    event.calculateDuration();
     throw new TimeoutError(event);
   }
 
@@ -147,6 +165,7 @@ export function eventRename(event, name) {
       name: event.name,
       time: Date.now(),
     });
+    event.calculateDuration();
     throw new TimeoutError(event);
   }
 }
@@ -165,6 +184,7 @@ export function eventStop(event) {
     name: event.name,
     time: Date.now(),
   });
+  event.calculateDuration();
 
   if (isNil(event.root)) {
     event.log.info({
