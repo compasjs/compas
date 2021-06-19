@@ -8,6 +8,29 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.146](https://github.com/compasjs/compas/releases/tag/v0.0.146)
+
+- build(deps): bump @types/node from 15.12.2 to 15.12.4
+  ([#987](https://github.com/compasjs/compas/pull/987))
+- build(deps): bump eslint from 7.28.0 to 7.29.0
+  ([#986](https://github.com/compasjs/compas/pull/986))
+- build(deps): bump eslint-plugin-jsdoc from 35.3.0 to 35.3.2
+  ([#985](https://github.com/compasjs/compas/pull/985))
+- feat(cli): add code-mod for v0.0.146
+  ([#983](https://github.com/compasjs/compas/pull/983))
+- feat(code-gen): remove entitySelect generation
+  ([#984](https://github.com/compasjs/compas/pull/984))
+- feat(stdlib): calculate event duration on abort or eventStop
+  ([#982](https://github.com/compasjs/compas/pull/982))
+- fix(code-gen): resolve primary key for correct type when adding fields for
+  relations ([#980](https://github.com/compasjs/compas/pull/980))
+- fix(store): fix return values of `addJobToQueue` and equivalents
+  ([#981](https://github.com/compasjs/compas/pull/981))
+
+Breaking change where the generated select sql queries where removed. Use
+`yarn compas code-mod exec v0.0.146 --verbose`, before generating, to convert
+these to use the query builder.
+
 ### [v0.0.145](https://github.com/compasjs/compas/releases/tag/v0.0.145)
 
 - build(deps): bump @babel/core from 7.14.5 to 7.14.6
