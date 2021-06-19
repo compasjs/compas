@@ -1,6 +1,7 @@
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
-import { eventStart, eventStop, AppError, isNil } from "@compas/stdlib";
+import { AppError, eventStart, eventStop, isNil } from "@compas/stdlib";
 import { queries } from "./generated.js";
+import { queryJob } from "./generated/database/job.js";
 import {
   addEventToQueue,
   addJobToQueue,
@@ -136,7 +137,9 @@ test("store/queue", (t) => {
     qw.handleJob(0);
     await promiseSleep(20);
 
-    const [job] = await queries.jobSelect(sql, { name: "retryTestJob" });
+    const [job] = await queryJob({
+      where: { name: "retryTestJob" },
+    }).exec(sql);
 
     t.equal(job.isComplete, false);
     t.equal(job.retryCount, 1);
@@ -149,7 +152,9 @@ test("store/queue", (t) => {
     qw.handleJob(0);
     await promiseSleep(20);
 
-    const [job] = await queries.jobSelect(sql, { name: "retryTestJob" });
+    const [job] = await queryJob({
+      where: { name: "retryTestJob" },
+    }).exec(sql);
 
     t.equal(job.isComplete, true);
     t.equal(job.retryCount, 2);
@@ -170,7 +175,9 @@ test("store/queue", (t) => {
     qw.handleJob(0);
     await promiseSleep(20);
 
-    const [job] = await queries.jobSelect(sql, { name: "timeoutTest" });
+    const [job] = await queryJob({
+      where: { name: "timeoutTest" },
+    }).exec(sql);
 
     t.equal(job.isComplete, false);
     t.equal(job.retryCount, 1);
@@ -182,9 +189,11 @@ test("store/queue", (t) => {
     qw.handleJob(0);
     await promiseSleep(20);
 
-    const [dbJob] = await queries.jobSelect(sql, {
-      name: "timeoutTest",
-    });
+    const [dbJob] = await queryJob({
+      where: {
+        name: "timeoutTest",
+      },
+    }).exec(sql);
 
     t.equal(dbJob.isComplete, true);
     t.equal(dbJob.retryCount, 1);
@@ -218,17 +227,23 @@ test("store/queue", (t) => {
     qw.handleJob(0);
     await promiseSleep(5);
 
-    const [job] = await queries.jobSelect(sql, { name: "test.object.handler" });
+    const [job] = await queryJob({
+      where: { name: "test.object.handler" },
+    }).exec(sql);
     t.equal(job.isComplete, true);
 
-    const [job2] = await queries.jobSelect(sql, {
-      name: "test.object.handler2",
-    });
+    const [job2] = await queryJob({
+      where: {
+        name: "test.object.handler2",
+      },
+    }).exec(sql);
     t.equal(job2.isComplete, true);
 
-    const [job3] = await queries.jobSelect(sql, {
-      name: "test.object.handler.missingKey",
-    });
+    const [job3] = await queryJob({
+      where: {
+        name: "test.object.handler.missingKey",
+      },
+    }).exec(sql);
     t.equal(job3.isComplete, true);
   });
 

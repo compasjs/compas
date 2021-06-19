@@ -2,6 +2,7 @@ import { createReadStream } from "fs";
 import { uuid } from "@compas/stdlib";
 import mime from "mime-types";
 import { queries } from "./generated.js";
+import { queryFile } from "./generated/database/file.js";
 import { listObjects } from "./minio.js";
 
 const fileQueries = {
@@ -131,9 +132,11 @@ export async function copyFile(
 
   await minio.copyObject(targetBucket, intermediate.id, `${bucketName}/${id}`);
 
-  const [result] = await queries.fileSelect(sql, {
-    id: intermediate.id,
-  });
+  const [result] = await queryFile({
+    where: {
+      id: intermediate.id,
+    },
+  }).exec(sql);
 
   return result;
 }
@@ -152,10 +155,12 @@ export async function copyFile(
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   const minioObjectsPromise = listObjects(minio, bucketName);
-  const knownIds = await queries.fileSelect(sql, {
-    bucketName: bucketName,
-    deletedAtIncludeNotNull: true,
-  });
+  const knownIds = await queryFile({
+    where: {
+      bucketName: bucketName,
+      deletedAtIncludeNotNull: true,
+    },
+  }).exec(sql);
 
   const ids = knownIds.map((it) => it.id);
 
