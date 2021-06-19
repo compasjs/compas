@@ -1,6 +1,7 @@
 import { mainTestFn, test } from "@compas/cli";
 import { uuid } from "@compas/stdlib";
 import { queries } from "./generated.js";
+import { querySession } from "./generated/database/session.js";
 import { newSessionStore } from "./sessions.js";
 import {
   cleanupTestPostgresDatabase,
@@ -53,7 +54,7 @@ test("store/sessions", (t) => {
   });
 
   t.test("store.clean removes expired sessions", async (t) => {
-    const sessions = await queries.sessionSelect(sql);
+    const sessions = await querySession().exec(sql);
     t.equal(sessions.length, 1);
 
     const store = newSessionStore(sql);

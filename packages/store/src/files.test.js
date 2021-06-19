@@ -8,6 +8,7 @@ import {
   syncDeletedFiles,
 } from "./files.js";
 import { queries } from "./generated.js";
+import { queryFile } from "./generated/database/file.js";
 import {
   ensureBucket,
   newMinioClient,
@@ -87,7 +88,7 @@ test("store/files", async (t) => {
   let storedFiles = [];
 
   t.test("list available files", async (t) => {
-    storedFiles = await queries.fileSelect(sql);
+    storedFiles = await queryFile().exec(sql);
     t.equal(storedFiles.length, 2);
     t.equal(storedFiles[0].contentLength, storedFiles[1].contentLength);
   });

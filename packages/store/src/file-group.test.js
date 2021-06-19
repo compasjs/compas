@@ -86,15 +86,19 @@ test("store/file-group", async (t) => {
   });
 
   t.test("set order of files of top2 group", async (t) => {
-    const files = await queries.fileGroupSelect(sql, {
-      parent: groups.top2,
-    });
+    const files = await queryFileGroup({
+      where: {
+        parent: groups.top2,
+      },
+    }).exec(sql);
     const ordered = [files[1].id, files[2].id, files[0].id];
     await updateFileGroupOrder(sql, ordered);
 
-    const refetched = await queries.fileGroupSelect(sql, {
-      parent: groups.top2,
-    });
+    const refetched = await queryFileGroup({
+      where: {
+        parent: groups.top2,
+      },
+    }).exec(sql);
 
     let i = 0;
     for (const id of ordered) {
@@ -167,25 +171,31 @@ test("store/file-group", async (t) => {
   });
 
   t.test("delete file should also delete fileGroup reference", async (t) => {
-    const files = await queries.fileGroupSelect(sql, {
-      parent: groups.top2,
-    });
+    const files = await queryFileGroup({
+      where: {
+        parent: groups.top2,
+      },
+    }).exec(sql);
 
     t.equal(files.length, 3);
 
     await queries.fileDelete(sql, { id: files[0].file });
 
-    const refetchedFiles = await queries.fileGroupSelect(sql, {
-      parent: groups.top2,
-    });
+    const refetchedFiles = await queryFileGroup({
+      where: {
+        parent: groups.top2,
+      },
+    }).exec(sql);
 
     t.equal(refetchedFiles.length, 2);
   });
 
   t.test("delete file group but preserve children", async (t) => {
-    const files = await queries.fileGroupSelect(sql, {
-      parent: groups.top1,
-    });
+    const files = await queryFileGroup({
+      where: {
+        parent: groups.top1,
+      },
+    }).exec(sql);
 
     t.equal(files.length, 1);
 

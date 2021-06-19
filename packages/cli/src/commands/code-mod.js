@@ -28,7 +28,7 @@ export async function codeModCommand(logger, command) {
   if (subCommand === "list") {
     let str = `Available code-mods:\n`;
     for (const [key, value] of Object.entries(codeModMap)) {
-      str += `- ${key}: ${value.description}`;
+      str += `- ${key}: ${value.description}\n`;
     }
     logger.info(str);
 

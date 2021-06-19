@@ -1,12 +1,12 @@
 import {
-  eventStart,
-  eventStop,
-  newEvent,
-  newLogger,
   AppError,
   environment,
+  eventStart,
+  eventStop,
   isNil,
   isPlainObject,
+  newEvent,
+  newLogger,
   uuid,
 } from "@compas/stdlib";
 import { queries } from "./generated.js";
@@ -17,73 +17,73 @@ const COMPAS_RECURRING_JOB = "compas.job.recurring";
 const queueQueries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
-    UPDATE "job"
-    SET
-      "isComplete" = TRUE,
-      "updatedAt" = now()
-    WHERE
-        id = (
-        SELECT "id"
-        FROM "job"
-        WHERE
-            NOT "isComplete"
-        AND "scheduledAt" < now()
-        ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-        LIMIT 1
-      )
-    RETURNING id
-  `,
+     UPDATE "job"
+     SET
+       "isComplete" = TRUE,
+       "updatedAt" = now()
+     WHERE
+         id = (
+         SELECT "id"
+         FROM "job"
+         WHERE
+             NOT "isComplete"
+         AND "scheduledAt" < now()
+         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
+         LIMIT 1
+       )
+     RETURNING id
+   `,
 
   // Should only run in a transaction
   getJobByName: (name, sql) => sql`
-    UPDATE "job"
-    SET
-      "isComplete" = TRUE,
-      "updatedAt" = now()
-    WHERE
-        id = (
-        SELECT "id"
-        FROM "job"
-        WHERE
-            NOT "isComplete"
-        AND "scheduledAt" < now()
-        AND "name" = ${name}
-        ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-        LIMIT 1
-      )
-    RETURNING "id"
-  `,
+     UPDATE "job"
+     SET
+       "isComplete" = TRUE,
+       "updatedAt" = now()
+     WHERE
+         id = (
+         SELECT "id"
+         FROM "job"
+         WHERE
+             NOT "isComplete"
+         AND "scheduledAt" < now()
+         AND "name" = ${name}
+         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
+         LIMIT 1
+       )
+     RETURNING "id"
+   `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSize: (sql) => sql`
-    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "job"
-    WHERE
-      NOT "isComplete"
-  `,
+     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
+            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+     FROM "job"
+     WHERE
+       NOT "isComplete"
+   `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSizeForName: (sql, name) => sql`
-    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-    FROM "job"
-    WHERE
-        NOT "isComplete"
-    AND "name" = ${name}
-  `,
+     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
+            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+     FROM "job"
+     WHERE
+         NOT "isComplete"
+     AND "name" = ${name}
+   `,
 
   // Returns time in milliseconds
   getAverageJobTime: (sql, name, dateStart, dateEnd) => sql`
-    SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-               (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "job"
-    WHERE
-        "isComplete" IS TRUE
-    AND (coalesce(${name ?? null}) IS NULL OR "name" = ${name ?? null})
-    AND "updatedAt" > ${dateStart}
-    AND "updatedAt" <= ${dateEnd};
-  `,
+     SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+                (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+     FROM "job"
+     WHERE
+         "isComplete" IS TRUE
+     AND (coalesce(${name ?? null}) IS NULL OR "name" = ${name ?? null})
+     AND "updatedAt" > ${dateStart}
+     AND "updatedAt" <= ${dateEnd};
+   `,
 
   /**
    * @param {Postgres} sql
@@ -91,14 +91,14 @@ const queueQueries = {
    * @returns Promise<{ id: number }[]>
    */
   getRecurringJobForName: (sql, name) => sql`
-    SELECT id
-    FROM "job"
-    WHERE
-        name = ${COMPAS_RECURRING_JOB}
-    AND "isComplete" IS FALSE
-    AND data ->> 'name' = ${name}
-    ORDER BY "scheduledAt"
-  `,
+     SELECT id
+     FROM "job"
+     WHERE
+         name = ${COMPAS_RECURRING_JOB}
+     AND "isComplete" IS FALSE
+     AND data ->> 'name' = ${name}
+     ORDER BY "scheduledAt"
+   `,
 
   /**
    * @param {Postgres} sql
@@ -107,15 +107,15 @@ const queueQueries = {
    * @param {StoreJobInterval} interval
    */
   updateRecurringJob: (sql, id, priority, interval) => sql`
-    UPDATE "job"
-    SET
-      "priority" = ${priority},
-      "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
+     UPDATE "job"
+     SET
+       "priority" = ${priority},
+       "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
     interval,
   )})
-    WHERE
-      id = ${id}
-  `,
+     WHERE
+       id = ${id}
+   `,
 };
 
 /**
@@ -304,9 +304,11 @@ export class JobQueueWorker {
         return;
       }
 
-      const [jobData] = await queries.jobSelect(sql, {
-        id: job.id,
-      });
+      const [jobData] = await queryJob({
+        where: {
+          id: job.id,
+        },
+      }).exec(sql);
 
       const abortController = new AbortController();
       const event = newEvent(

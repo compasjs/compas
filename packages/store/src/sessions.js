@@ -1,5 +1,6 @@
 import { queries } from "./generated.js";
 import {
+  querySession,
   sessionFields,
   sessionInsertValues,
   sessionUpdateSet,
@@ -32,7 +33,8 @@ const sessionQueries = {
 };
 
 /**
- * Create a new session store, to be used in combination with the `session` as provided in `@compas/server`.
+ * Create a new session store, to be used in combination with the `session` as provided
+ * in `@compas/server`.
  *
  * @since 0.1.0
  *
@@ -42,10 +44,12 @@ const sessionQueries = {
 export function newSessionStore(sql) {
   return {
     get: async (sid) => {
-      const [data] = await queries.sessionSelect(sql, {
-        id: sid,
-        expiresGreaterThan: new Date(),
-      });
+      const [data] = await querySession({
+        where: {
+          id: sid,
+          expiresGreaterThan: new Date(),
+        },
+      }).exec(sql);
       if (!data) {
         return false;
       }
