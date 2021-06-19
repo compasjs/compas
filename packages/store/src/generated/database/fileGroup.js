@@ -665,14 +665,6 @@ function checkFieldsInSet(entity, subType, set, value) {
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where]
- * @returns {Promise<StoreFileGroup[]>}
- */
-async function fileGroupSelect(sql, where) {
-  return await queryFileGroup({ where }).exec(sql);
-}
-/**
- * @param {Postgres} sql
- * @param {StoreFileGroupWhere} [where]
  * @returns {Promise<number>}
  */
 async function fileGroupCount(sql, where) {
@@ -754,7 +746,6 @@ RETURNING "id"
   await Promise.all([fileGroupQueries.fileGroupDelete(sql, { parentIn: ids })]);
 }
 export const fileGroupQueries = {
-  fileGroupSelect,
   fileGroupCount,
   fileGroupDelete,
   fileGroupInsert,

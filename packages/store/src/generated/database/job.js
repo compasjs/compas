@@ -530,14 +530,6 @@ function checkFieldsInSet(entity, subType, set, value) {
 /**
  * @param {Postgres} sql
  * @param {StoreJobWhere} [where]
- * @returns {Promise<StoreJob[]>}
- */
-async function jobSelect(sql, where) {
-  return await queryJob({ where }).exec(sql);
-}
-/**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where]
  * @returns {Promise<number>}
  */
 async function jobCount(sql, where) {
@@ -596,13 +588,7 @@ RETURNING ${jobFields()}
   transformJob(result);
   return result;
 }
-export const jobQueries = {
-  jobSelect,
-  jobCount,
-  jobDelete,
-  jobInsert,
-  jobUpdate,
-};
+export const jobQueries = { jobCount, jobDelete, jobInsert, jobUpdate };
 /**
  * @param {StoreJobQueryBuilder|StoreJobQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

@@ -14,9 +14,8 @@ import { getPrimaryKeyWithType } from "./utils.js";
 export function generateBaseQueries(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
 
-  const names = [`${type.name}Select`, `${type.name}Count`];
+  const names = [`${type.name}Count`];
 
-  src.push(selectQuery(context, imports, type));
   src.push(countQuery(context, imports, type));
 
   if (!type.queryOptions.isView) {
@@ -36,24 +35,6 @@ export function generateBaseQueries(context, imports, type, src) {
   }
 
   src.push(`export const ${type.name}Queries = { ${names.join(", ")} };`);
-}
-
-/**
- * @param {CodeGenContext} context
- * @param {ImportCreator} imports
- * @param {CodeGenObjectType} type
- */
-function selectQuery(context, imports, type) {
-  return js`
-    /**
-     * @param {Postgres} sql
-     * @param {${type.uniqueName}Where} [where]
-     * @returns {Promise<${type.uniqueName}[]>}
-     */
-    async function ${type.name}Select(sql, where) {
-      return await query${upperCaseFirst(type.name)}({ where }).exec(sql);
-    }
-  `;
 }
 
 /**

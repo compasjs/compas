@@ -220,12 +220,6 @@ async function modTheFiles(event, knownQueryBuilderCalls, fileList) {
   let modifiedFileCount = 0;
 
   while (fileList.length) {
-    event.log.info({
-      fileList: fileList.length,
-      replaceCount,
-      modifiedFileCount,
-    });
-
     const partial = fileList.splice(0, PARALLEL_COUNT);
 
     await Promise.all(
@@ -390,9 +384,6 @@ async function modTheFiles(event, knownQueryBuilderCalls, fileList) {
         });
 
         if (didReplace) {
-          event.log.info({
-            message: `Replaced in ${file}`,
-          });
           modifiedFileCount++;
           filesToWrite[file] = recast.print(ast).code;
         }
