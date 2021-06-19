@@ -425,14 +425,6 @@ function checkFieldsInSet(entity, subType, set, value) {
 /**
  * @param {Postgres} sql
  * @param {StoreSessionWhere} [where]
- * @returns {Promise<StoreSession[]>}
- */
-async function sessionSelect(sql, where) {
-  return await querySession({ where }).exec(sql);
-}
-/**
- * @param {Postgres} sql
- * @param {StoreSessionWhere} [where]
  * @returns {Promise<number>}
  */
 async function sessionCount(sql, where) {
@@ -494,7 +486,6 @@ RETURNING ${sessionFields()}
   return result;
 }
 export const sessionQueries = {
-  sessionSelect,
   sessionCount,
   sessionDelete,
   sessionInsert,
