@@ -8,6 +8,11 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.147](https://github.com/compasjs/compas/releases/tag/v0.0.147)
+
+- fix(cli): let newTestEvent use 'newEvent' from stdlib
+  ([#988](https://github.com/compasjs/compas/pull/988))
+
 ### [v0.0.146](https://github.com/compasjs/compas/releases/tag/v0.0.146)
 
 - build(deps): bump @types/node from 15.12.2 to 15.12.4
