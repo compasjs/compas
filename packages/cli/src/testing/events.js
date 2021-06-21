@@ -1,3 +1,5 @@
+import { newEvent } from "@compas/stdlib";
+
 /**
  * Create a new test event
  *
@@ -17,11 +19,5 @@ export function newTestEvent(t, options = {}) {
     logger = { ...logger, info: () => {} };
   }
 
-  return {
-    log: logger,
-    signal: t.signal,
-    root: true,
-    name: undefined,
-    callStack: [],
-  };
+  return newEvent(logger, t.signal);
 }
