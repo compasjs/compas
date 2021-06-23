@@ -68,9 +68,13 @@ export async function cleanupPostgresDatabaseTemplate() {
  * @since 0.1.0
  *
  * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all queries.
+ * @param {object} [connectionOptions]
  * @returns {Promise<Postgres>}
  */
-export async function createTestPostgresDatabase(verboseSql = false) {
+export async function createTestPostgresDatabase(
+  verboseSql = false,
+  connectionOptions,
+) {
   postgresEnvCheck();
   const name = environment.POSTGRES_DATABASE + uuid().substring(0, 7);
 
@@ -81,6 +85,8 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     const creationSql = await createDatabaseIfNotExists(
       undefined,
       environment.POSTGRES_DATABASE,
+      undefined,
+      connectionOptions,
     );
 
     // Clean all connections
@@ -99,9 +105,11 @@ export async function createTestPostgresDatabase(verboseSql = false) {
       creationSql,
       testDatabase,
       environment.POSTGRES_DATABASE,
+      connectionOptions,
     );
 
     const sql = await newPostgresConnection({
+      ...connectionOptions,
       database: testDatabase,
     });
 
@@ -129,9 +137,11 @@ export async function createTestPostgresDatabase(verboseSql = false) {
     undefined,
     name,
     testDatabase,
+    connectionOptions,
   );
 
   const sql = await newPostgresConnection({
+    ...connectionOptions,
     database: name,
     debug: verboseSql ? newLogger({ ctx: { type: "sql" } }).error : undefined,
   });

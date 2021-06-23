@@ -56,6 +56,8 @@ export async function newPostgresConnection(opts) {
     const oldConnection = await createDatabaseIfNotExists(
       undefined,
       environment.POSTGRES_DATABASE,
+      undefined,
+      opts,
     );
     setImmediate(() => oldConnection.end());
   }
@@ -79,11 +81,17 @@ export async function newPostgresConnection(opts) {
  * @param sql
  * @param databaseName
  * @param template
+ * @param connectionOptions
  * @returns {Promise<Postgres>}
  */
-export async function createDatabaseIfNotExists(sql, databaseName, template) {
+export async function createDatabaseIfNotExists(
+  sql,
+  databaseName,
+  template,
+  connectionOptions,
+) {
   if (!sql) {
-    sql = postgres(environment.POSTGRES_URI);
+    sql = postgres(environment.POSTGRES_URI, connectionOptions);
   }
   const [db] = await sql`
     SELECT

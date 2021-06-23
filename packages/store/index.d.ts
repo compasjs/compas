@@ -106,6 +106,7 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  */
 export function createTestPostgresDatabase(
   verboseSql?: boolean,
+  connectionOptions?: postgresVendor.Options<{}>,
 ): Promise<Postgres>;
 
 /**
