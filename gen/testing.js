@@ -203,6 +203,10 @@ export function applyTestingServerStructure(app) {
       .response({
         success: true,
       }),
+
+    R.get("/empty-response", "emptyResponse").query({
+      foo: T.string().optional(),
+    }),
   );
 }
 
