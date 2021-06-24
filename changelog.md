@@ -8,6 +8,19 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.148](https://github.com/compasjs/compas/releases/tag/v0.0.148)
+
+- build(deps): bump @babel/eslint-parser from 7.14.5 to 7.14.7
+  ([#989](https://github.com/compasjs/compas/pull/989))
+- build(deps): bump eslint-plugin-jsdoc from 35.3.2 to 35.4.0
+  ([#990](https://github.com/compasjs/compas/pull/990))
+- feat(cli): support `--parallel-count n` in the test runner
+  ([#996](https://github.com/compasjs/compas/pull/996))
+- feat(store): createTestPostgresDatabase accepts sql connection options
+  ([#995](https://github.com/compasjs/compas/pull/995))
+- fix(code-gen): react-query should work for routes without a response
+  ([#994](https://github.com/compasjs/compas/pull/994))
+
 ### [v0.0.147](https://github.com/compasjs/compas/releases/tag/v0.0.147)
 
 - fix(cli): let newTestEvent use 'newEvent' from stdlib
