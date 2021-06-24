@@ -39,7 +39,7 @@ Usage:
 - proxy             : compas proxy [--verbose]
 - run (explicit)    : compas run [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - run (implicit)    : compas [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
-- test              : compas test [--watch] [--verbose] [--node-arg]
+- test              : compas test [--watch] [--verbose] [--node-arg] [--serial] [--parallel-count 2]
 - bench             : compas bench [--watch] [--verbose] [--node-arg]
 - coverage          : compas coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
 - lint              : compas lint [--watch] [--verbose] [--any-node-arg]

@@ -5,6 +5,7 @@ import { isMainThread, Worker } from "worker_threads";
 import {
   dirnameForModule,
   filenameForModule,
+  isNil,
   mainFn,
   pathJoin,
   processDirectoryRecursiveSync,
@@ -31,6 +32,7 @@ async function main(logger) {
   }
 
   if (process.argv.indexOf("--serial") !== -1) {
+    logger.info({ message: "Running tests in serial." });
     // Allow same process execution for coverage collecting and easier debugging
     const files = listTestFiles();
     for (const file of files) {
@@ -39,6 +41,39 @@ async function main(logger) {
     mainTestFn(import.meta);
     return;
   }
+
+  setTestLogger(logger);
+  setAreTestRunning(true);
+
+  // Remove 1 for the main thread
+  let workerCount = cpus().length - 1;
+
+  if (process.argv.indexOf("--parallel-count") !== -1) {
+    // Support customizing parallel count
+    const parallelCountArg =
+      process.argv[process.argv.indexOf("--parallel-count") + 1];
+
+    const parallelCount = Number(parallelCountArg);
+
+    if (
+      isNil(parallelCountArg) ||
+      parallelCountArg.length === 0 ||
+      isNaN(parallelCount) ||
+      !isFinite(parallelCount) ||
+      !Number.isInteger(parallelCount)
+    ) {
+      logger.error(
+        "--parallel-count expects a number, eg '--parallel-count 5'.",
+      );
+      process.exit(1);
+    }
+
+    workerCount = parallelCount;
+  }
+
+  logger.info({
+    message: `Running tests in parallel with ${workerCount} runners.`,
+  });
 
   let randomizeRounds = Number(
     (
@@ -69,7 +104,7 @@ async function main(logger) {
       }
     }
 
-    const workers = initializeWorkers();
+    const workers = initializeWorkers(workerCount);
     const testResult = await runTests(workers, files);
 
     // Early exit on test failure
@@ -198,12 +233,13 @@ function listTestFiles() {
 /**
  * Create workers and wait till they are initialized.
  *
+ * @param {number} workerCount
  * @returns {Worker[]}
  */
-function initializeWorkers() {
+function initializeWorkers(workerCount) {
   const workers = [];
 
-  for (let i = 0; i < cpus().length - 1; ++i) {
+  for (let i = 0; i < workerCount; ++i) {
     const w = new Worker(workerFile, {});
     workers.push(w);
   }
