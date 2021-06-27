@@ -3,14 +3,12 @@
 
 import { fileQueries } from "./file.js";
 import { fileGroupQueries } from "./fileGroup.js";
-import { fileGroupViewQueries } from "./fileGroupView.js";
 import { jobQueries } from "./job.js";
 import { sessionQueries } from "./session.js";
 
 export const queries = {
   ...fileQueries,
   ...fileGroupQueries,
-  ...fileGroupViewQueries,
   ...jobQueries,
   ...sessionQueries,
 };

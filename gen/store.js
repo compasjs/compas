@@ -59,33 +59,6 @@ export function applyStoreStructure(app) {
   );
 
   app.add(
-    T.object("fileGroupView")
-      .keys({
-        name: T.string().optional(),
-        order: T.number(),
-        meta: T.object("fileGroupMeta")
-          .keys({})
-          .default("{}")
-          .docs("User definable, optional object to store whatever you want"),
-        isDirectory: T.bool().searchable(),
-      })
-      .enableQueries({ withSoftDeletes: true, isView: true })
-      .relations(
-        T.oneToOne(
-          "file",
-          T.reference("store", "file"),
-          "groupView",
-        ).optional(),
-        T.manyToOne(
-          "parent",
-          T.reference("store", "fileGroupView"),
-          "children",
-        ).optional(),
-        T.oneToMany("children", T.reference("store", "fileGroupView")),
-      ),
-  );
-
-  app.add(
     T.object("session")
       .keys({
         expires: T.date().searchable(),
