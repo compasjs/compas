@@ -8,6 +8,32 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.149](https://github.com/compasjs/compas/releases/tag/v0.0.149)
+
+##### Changes
+
+- build(deps): bump @types/node from 15.12.4 to 15.12.5
+  ([#998](https://github.com/compasjs/compas/pull/998))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump prettier from 2.3.1 to 2.3.2
+  ([#999](https://github.com/compasjs/compas/pull/999))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- chore(changelog): improve changelog with breaking change handling
+  ([#1000](https://github.com/compasjs/compas/pull/1000))
+- feat(store): remove file group view
+  ([#1001](https://github.com/compasjs/compas/pull/1001))
+  - Closes [#901](https://github.com/compasjs/compas/pull/901)
+
+##### Breaking changes
+
+- **store**: remove file group view
+  - Removed usages and code generation of `fileGroupView`. Replace with
+    `queryFileGroup` calls.
+  - Add the following migration:
+  ```sql
+  DROP VIEW IF EXISTS "fileGroupView" CASCADE;
+  ```
+
 ### [v0.0.148](https://github.com/compasjs/compas/releases/tag/v0.0.148)
 
 - build(deps): bump @babel/eslint-parser from 7.14.5 to 7.14.7
