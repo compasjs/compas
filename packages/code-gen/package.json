@@ -1,6 +1,6 @@
 {
   "name": "@compas/code-gen",
-  "version": "0.0.148",
+  "version": "0.0.149",
   "description": "Generate various boring parts of your server",
   "main": "./index.js",
   "exports": "./index.js",
@@ -15,8 +15,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/cli": "0.0.148",
-    "@compas/stdlib": "0.0.148"
+    "@compas/cli": "0.0.149",
+    "@compas/stdlib": "0.0.149"
   },
   "maintainers": [
     {
