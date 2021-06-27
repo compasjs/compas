@@ -31,14 +31,16 @@ async function main() {
 }
 
 /**
- * Quick hacky way to get the changelog of this release
+ * Quick hacky way to get the changelog of this release.
+ * Since our MD files are capped at x characters, we need to reconstruct these to long
+ * strings, cause the GitHub release renderer treats newlines as end of paragraph.
  *
  * @param {string} fullChangelog
  * @returns {string}
  */
 function parseChangelog(fullChangelog) {
-  const firstIndex = fullChangelog.indexOf("###");
-  const secondIndex = fullChangelog.indexOf("###", firstIndex + 1);
+  const firstIndex = fullChangelog.indexOf("### [");
+  const secondIndex = fullChangelog.indexOf("### [", firstIndex + 1);
 
   const parts = fullChangelog
     .substring(firstIndex, secondIndex)
@@ -47,17 +49,23 @@ function parseChangelog(fullChangelog) {
 
   const result = [];
   let hasEmptyLine = false;
+  let isInCodeBlock = false;
 
   for (let i = 1; i < parts.length; ++i) {
     const thisPart = parts[i].trim();
 
     // Start a new line on an empty line or a new bullet point
-    if (thisPart.startsWith("-") || hasEmptyLine) {
-      result.push(thisPart);
+    // Code blocks also should just use the original contents
+    if (thisPart.startsWith("-") || hasEmptyLine || isInCodeBlock) {
+      result.push(parts[i]);
       hasEmptyLine = false;
     } else if (thisPart.length === 0) {
       hasEmptyLine = true;
       result.push("");
+    } else if (thisPart.startsWith("```")) {
+      result.push(parts[i]);
+
+      isInCodeBlock = !isInCodeBlock;
     } else {
       // Concatenate the different sentence parts together
       result[result.length - 1] += ` ${thisPart}`;
@@ -68,7 +76,7 @@ function parseChangelog(fullChangelog) {
 }
 
 /**
- * Replace full contributor Github profile links with just the username as Github will
+ * Replace full contributor GitHub profile links with just the username as Github will
  * automatically link them correctly.
  *
  * @param {string} changelog
