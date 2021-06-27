@@ -4,6 +4,17 @@ import { exec, isNil, mainFn, pathJoin } from "@compas/stdlib";
 mainFn(import.meta, main);
 
 /**
+ * @typedef {object} ChangelogCommit
+ * @property {string} title  Full commit title
+ * @property {string|undefined} subject Subject of the commit, like in conventional
+ *    commits
+ * @property {string|undefined} message Message in the title, not including subject
+ * @property {string} body Full commit body
+ * @property {string|undefined} breakingChange Commit body breaking change or major bumps
+ * @property {string[]} notes Changelog notes
+ */
+
+/**
  * @param {Logger} logger
  */
 async function main(logger) {
@@ -19,7 +30,9 @@ async function main(logger) {
     logger,
     currentVersion,
   );
+
   const commits = combineCommits(commitsSinceLastVersion);
+  decorateCommits(commits);
 
   const changelogPath = pathJoin(process.cwd(), "changelog.md");
   const changelog = await readFile(changelogPath, "utf8");
@@ -40,11 +53,11 @@ async function main(logger) {
  *
  * @param {Logger} logger
  * @param {string} version
- * @returns {Promise<string[]>}
+ * @returns {Promise<ChangelogCommit[]>}
  */
 async function getListOfCommitsSinceTag(logger, version) {
   const { exitCode, stdout, stderr } = await exec(
-    `git log v${version}..HEAD --no-decorate --pretty="format:%s"`,
+    `git log v${version}..HEAD --no-decorate --pretty="format:%s%n%b%n commit-body-end %n"`,
   );
 
   if (exitCode !== 0) {
@@ -54,10 +67,19 @@ async function getListOfCommitsSinceTag(logger, version) {
   }
 
   return stdout
-    .split("\n")
+    .split("commit-body-end")
     .map((it) => it.trim())
-    .filter((it) => it.length !== 0)
-    .sort();
+    .map((it) => {
+      const [title, ...body] = it.split("\n");
+
+      return {
+        title,
+        body: body.join("\n").trim(),
+        notes: [],
+      };
+    })
+    .filter((it) => it.title?.length > 0)
+    .sort((a, b) => a.title.localeCompare(b.title));
 }
 
 /**
@@ -98,8 +120,8 @@ function stripChangelogOfUnreleased(changelog) {
  * Tries to combine the dependency bump commits
  * Resorts before returning the new array
  *
- * @param {string[]} commits
- * @returns {string[]}
+ * @param {ChangelogCommit[]} commits
+ * @returns {ChangelogCommit[]}
  */
 function combineCommits(commits) {
   // build(deps): bump @types/node from 14.6.2 to 14.6.3
@@ -111,7 +133,7 @@ function combineCommits(commits) {
   const result = [];
 
   for (let i = 0; i < commits.length; ++i) {
-    const execResult = depRegex.exec(commits[i]);
+    const execResult = depRegex.exec(commits[i].title);
     depRegex.lastIndex = -1;
     if (isNil(execResult)) {
       result.push(commits[i]);
@@ -125,6 +147,7 @@ function combineCommits(commits) {
         prs: [],
         fromVersion,
         toVersion,
+        body: commits[i].body,
       };
     }
 
@@ -142,7 +165,7 @@ function combineCommits(commits) {
   }
 
   for (const pkg of Object.keys(combinable)) {
-    const { buildType, prs, fromVersion, toVersion } = combinable[pkg];
+    const { buildType, prs, fromVersion, toVersion, body } = combinable[pkg];
 
     if (buildType === "deps-dev") {
       // We don't need development dependency updates in the changelog
@@ -153,35 +176,155 @@ function combineCommits(commits) {
     const finalPrs =
       prs.length > 0 ? ` (${prs.map((it) => `#${it}`).join(", ")})` : "";
 
-    result.push(
-      `build(${buildType}): bump ${pkg} from ${fromVersion} to ${toVersion}${finalPrs}`,
-    );
+    result.push({
+      title: `build(${buildType}): bump ${pkg} from ${fromVersion} to ${toVersion}${finalPrs}`,
+      body,
+      notes: [],
+    });
   }
 
-  return result.sort();
+  return result.sort((a, b) => a.title.localeCompare(b.title));
 }
 
 /**
+ * Fill other 'ChangelogCommit' properties
+ *
+ * @param {ChangelogCommit[]} commits
+ */
+function decorateCommits(commits) {
+  for (const commit of commits) {
+    // feat(xxxx):
+    // chore:
+    const subjectMatch = commit.title.match(/^\w+(\((\w+)\))?: ([^#(]+)/i);
+
+    if (subjectMatch?.[2]?.length > 0) {
+      commit.subject = subjectMatch[2];
+    }
+
+    if (subjectMatch?.[3]?.length > 0) {
+      commit.message = subjectMatch[3].trim();
+    }
+
+    if (commit.body.includes("BREAKING CHANGE:")) {
+      let [, breakingChange] = commit.body.split("BREAKING CHANGE:");
+      breakingChange = breakingChange.trim();
+
+      if (breakingChange.length > 0) {
+        commit.breakingChange = breakingChange;
+      }
+    }
+
+    // build(deps): bump @types/node from 14.6.2 to 14.6.3
+    // build(deps-dev): bump react-query from 2.12.1 to 2.13.0 (#234)
+    const depsCommitMatch = commit.title.match(
+      /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)/i,
+    );
+
+    // depsCommitMatch[3] is the first mentioned version
+    if (!isNil(depsCommitMatch) && !isNil(depsCommitMatch[3])) {
+      const [, , , fromVersion, toVersion] = depsCommitMatch;
+
+      if (semverIsMajor(fromVersion, toVersion)) {
+        commit.breakingChange = `- Major version bump`;
+      }
+    }
+
+    // Handling of the various ways of notes
+
+    // We can have multiple 'Closes' or 'closes' in a commit
+    if (
+      commit.body.includes("References") ||
+      commit.body.includes("references")
+    ) {
+      const refMatches = commit.body.matchAll(/References #(\d+)/gi);
+
+      if (refMatches) {
+        for (const match of refMatches) {
+          commit.notes.push(`- References #${match[1]}`);
+        }
+      }
+    }
+
+    // We can have multiple 'Closes' or 'closes' in a commit
+    if (commit.body.includes("Closes") || commit.body.includes("closes")) {
+      const closeMatches = commit.body.matchAll(/Closes #(\d+)/gi);
+
+      if (closeMatches) {
+        for (const match of closeMatches) {
+          commit.notes.push(`- Closes #${match[1]}`);
+        }
+      }
+    }
+
+    // Add link to release notes of dependencies
+    if (commit.body.includes("- [Release notes]")) {
+      const bodyParts = commit.body.split("\n");
+      for (const part of bodyParts) {
+        if (part.trim().startsWith("- [Release notes]")) {
+          commit.notes.push(part.trim());
+        }
+      }
+    }
+
+    // Replace issue and pull references with a github url
+    // We can always use 'pull', github will automatically redirect to issue if necessary
+    const replacer = (obj, key) => {
+      if (obj[key]) {
+        obj[key] = obj[key].replace(
+          /#(\d+)/g,
+          `[#$1](https://github.com/compasjs/compas/pull/$1)`,
+        );
+      }
+    };
+
+    replacer(commit, "title");
+    replacer(commit, "body");
+    replacer(commit, "message");
+    replacer(commit, "breakingChange");
+
+    for (let i = 0; i < commit.notes.length; ++i) {
+      replacer(commit.notes, i);
+    }
+  }
+}
+
+/**
+ * Create the changelog based on the provided comits
  *
  * @param {Logger} logger
- * @param {string[]} commits
+ * @param {ChangelogCommit[]} commits
  * @returns {string}
  */
 function makeChangelog(logger, commits) {
   const result = [
     `### [vx.x.x](https://github.com/compasjs/compas/releases/tag/vx.x.x)`,
     ``,
+    `##### Changes`,
+    ``,
   ];
 
+  const breakingChanges = [];
+
   for (const commit of commits) {
-    // Replaces PR numbers with url's so they are also correctly linked from outside
-    // Github
-    result.push(
-      `- ${commit.replace(
-        /#(\d+)/g,
-        `[#$1](https://github.com/compasjs/compas/pull/$1)`,
-      )}`,
-    );
+    result.push(`- ${commit.title}`);
+
+    for (const note of commit.notes) {
+      result.push(`  ${note}`);
+    }
+
+    if (commit.breakingChange) {
+      breakingChanges.push(
+        `- **${commit.subject ?? "all"}**: ${commit.message}`,
+      );
+      for (const line of commit.breakingChange.split("\n")) {
+        breakingChanges.push(`  ${line}`);
+      }
+    }
+  }
+
+  if (breakingChanges.length > 0) {
+    result.push(``, `##### Breaking changes`, ``);
+    result.push(...breakingChanges);
   }
 
   result.push(
@@ -195,8 +338,8 @@ function makeChangelog(logger, commits) {
 /**
  * Basic semver check, does not work for all cases
  *
- * @param first
- * @param second
+ * @param {string} first
+ * @param {string} second
  */
 function semverCheckHigher(first, second) {
   const [firstMajor, firstMinor, firstPatch] = first
@@ -219,4 +362,33 @@ function semverCheckHigher(first, second) {
     firstMinor >= secondMinor &&
     firstMajor >= secondMajor
   );
+}
+
+/**
+ * Basic check if from first to second is a major version change.
+ * 0.1.0 -> 0.1.1 = false
+ * 0.1.0 -> 0.2.0 = true
+ * 1.0.1 -> 1.1.0 = false
+ * 1.0.1 -> 2.0.0 = true
+ *
+ * @param {string} first
+ * @param {string} second
+ */
+function semverIsMajor(first, second) {
+  const [firstMajor, firstMinor, firstPatch] = first
+    .split(".")
+    .map((it) => Number(it));
+  const [secondMajor, secondMinor, secondPatch] = second
+    .split(".")
+    .map((it) => Number(it));
+
+  if (secondMajor > firstMajor) {
+    return true;
+  }
+
+  if (secondMajor === 0 && secondMinor > firstMinor) {
+    return true;
+  }
+
+  return secondMajor === 0 && secondMinor === 0 && secondPatch > firstPatch;
 }
