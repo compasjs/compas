@@ -16,12 +16,6 @@ import {
   internalQueryFileGroup,
   transformFileGroup,
 } from "./fileGroup.js";
-import {
-  fileGroupViewOrderBy,
-  fileGroupViewWhere,
-  internalQueryFileGroupView,
-  transformFileGroupView,
-} from "./fileGroupView.js";
 
 const fileFieldSet = new Set([
   "bucketName",
@@ -403,30 +397,6 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
       undefined,
     );
   }
-  if (where.groupViewExists) {
-    strings.push(
-      ` AND EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
-      ` AND fgv."file" = ${tableName}"id")`,
-    );
-    values.push(
-      fileGroupViewWhere(where.groupViewExists, "fgv.", {
-        skipValidator: true,
-      }),
-      undefined,
-    );
-  }
-  if (where.groupViewNotExists) {
-    strings.push(
-      ` AND NOT EXISTS (SELECT FROM "fileGroupView" fgv WHERE `,
-      ` AND fgv."file" = ${tableName}"id")`,
-    );
-    values.push(
-      fileGroupViewWhere(where.groupViewNotExists, "fgv.", {
-        skipValidator: true,
-      }),
-      undefined,
-    );
-  }
   strings.push("");
   return query(strings, ...values);
 }
@@ -698,42 +668,6 @@ ${internalQueryFileGroup(builder.viaGroup)}
 ${offsetLimitQb}
 `);
   }
-  if (builder.viaGroupView) {
-    builder.where = builder.where ?? {};
-    // Prepare idIn
-    if (isQueryPart(builder.where.idIn)) {
-      builder.where.idIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.idIn) &&
-      builder.where.idIn.length > 0
-    ) {
-      builder.where.idIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.idIn,
-      );
-    } else {
-      builder.where.idIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaGroupView.offset)
-      ? query`OFFSET ${builder.viaGroupView.offset}`
-      : query``;
-    if (!isNil(builder.viaGroupView.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaGroupView.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.idIn.append(query`
-SELECT DISTINCT fgv."file"
-${internalQueryFileGroupView(builder.viaGroupView)}
-${offsetLimitQb}
-`);
-  }
   if (builder.group) {
     const joinedKeys = [];
     const offsetLimitQb = !isNil(builder.group.offset)
@@ -773,47 +707,6 @@ ORDER BY ${fileGroupOrderBy(
 ${offsetLimitQb}
 ) as "f_fg_0" ON TRUE`);
   }
-  if (builder.groupView) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.groupView.offset)
-      ? query`OFFSET ${builder.groupView.offset}`
-      : query``;
-    if (!isNil(builder.groupView.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.groupView.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.groupView.file) {
-      joinedKeys.push(
-        `'${builder.groupView.file?.as ?? "file"}'`,
-        `"fgv_f_0"."result"`,
-      );
-    }
-    if (builder.groupView.parent) {
-      joinedKeys.push(
-        `'${builder.groupView.parent?.as ?? "parent"}'`,
-        `"fgv_fgv_0"."result"`,
-      );
-    }
-    if (builder.groupView.children) {
-      joinedKeys.push(
-        `'${builder.groupView.children?.as ?? "children"}'`,
-        `coalesce("fgv_fgv_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(fgv.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFileGroupView(builder.groupView, query`AND fgv."file" = f."id"`)}
-ORDER BY ${fileGroupViewOrderBy(
-      builder.groupView.orderBy,
-      builder.groupView.orderBySpec,
-      "fgv.",
-    )}
-${offsetLimitQb}
-) as "f_fgv_0" ON TRUE`);
-  }
   return query`
 FROM "file" f
 ${joinQb}
@@ -823,7 +716,6 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
 /**
  * @typedef {StoreFile} QueryResultStoreFile
  * @property {QueryResultStoreFileGroup|string|number} [group]
- * @property {QueryResultStoreFileGroupView|string|number} [groupView]
  */
 /**
  * Query Builder for file
@@ -841,12 +733,6 @@ export function queryFile(builder = {}) {
   validateStoreFileQueryBuilder(builder, "$.fileBuilder");
   if (builder.group) {
     joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"f_fg_0"."result"`);
-  }
-  if (builder.groupView) {
-    joinedKeys.push(
-      `'${builder.groupView?.as ?? "groupView"}'`,
-      `"f_fgv_0"."result"`,
-    );
   }
   const qb = query`
 SELECT to_jsonb(f.*) || jsonb_build_object(${query([
@@ -911,13 +797,6 @@ export function transformFile(values, builder = {}) {
       const arr = [value[builder.group?.as ?? "group"]];
       transformFileGroup(arr, builder.group);
       value[builder.group?.as ?? "group"] = arr[0];
-    }
-    value[builder.groupView?.as ?? "groupView"] =
-      value[builder.groupView?.as ?? "groupView"] ?? undefined;
-    if (isPlainObject(value[builder.groupView?.as ?? "groupView"])) {
-      const arr = [value[builder.groupView?.as ?? "groupView"]];
-      transformFileGroupView(arr, builder.groupView);
-      value[builder.groupView?.as ?? "groupView"] = arr[0];
     }
   }
 }

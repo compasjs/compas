@@ -881,12 +881,6 @@ ${offsetLimitQb}
         `"f_fg_0"."result"`,
       );
     }
-    if (builder.file.groupView) {
-      joinedKeys.push(
-        `'${builder.file.groupView?.as ?? "groupView"}'`,
-        `"f_fgv_0"."result"`,
-      );
-    }
     joinQb.append(query`LEFT JOIN LATERAL (
 SELECT to_jsonb(f.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
@@ -1111,12 +1105,6 @@ ${offsetLimitQb}
       joinedKeys.push(
         `'${builder.file.group?.as ?? "group"}'`,
         `"f_fg_0"."result"`,
-      );
-    }
-    if (builder.file.groupView) {
-      joinedKeys.push(
-        `'${builder.file.groupView?.as ?? "groupView"}'`,
-        `"f_fgv_0"."result"`,
       );
     }
     joinQb.append(query`LEFT JOIN LATERAL (
