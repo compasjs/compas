@@ -17,6 +17,20 @@ export async function sendFile(ctx, file, getStreamFn) {
   ctx.set("Last-Modified", file.updatedAt || file.lastModified);
   ctx.type = file.contentType;
 
+  if (ctx.headers["if-modified-since"]?.length > 0) {
+    const dateValue = new Date(ctx.headers["if-modified-since"]);
+    const currentDate = new Date(file.updatedAt ?? file.lastModified);
+
+    // Weak validation ignores the milli-seconds part, hence 'weak'.
+    currentDate.setMilliseconds(0);
+
+    if (dateValue.getTime() === currentDate.getTime()) {
+      // File is not modified
+      ctx.status = 304;
+      return;
+    }
+  }
+
   if (ctx.headers.range) {
     try {
       const rangeHeader = ctx.headers.range;
