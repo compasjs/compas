@@ -22,7 +22,8 @@ export class FileCache {
     this.bucketName = bucketName;
 
     this.inMemoryThreshold = options?.inMemoryThreshold ?? 8 * 1024;
-    this.cacheControlHeader = options?.cacheControlHeader ?? "max-age=1200";
+    this.cacheControlHeader =
+      options?.cacheControlHeader ?? "max-age=120, must-revalidate";
 
     this.memoryCache = new Map();
     this.fileCache = new Set();
