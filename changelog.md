@@ -8,6 +8,27 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.150](https://github.com/compasjs/compas/releases/tag/v0.0.150)
+
+##### Changes
+
+- build(deps): bump eslint-plugin-jsdoc from 35.4.0 to 35.4.1
+  ([#1006](https://github.com/compasjs/compas/pull/1006))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(create-release): fix changelog parsing
+- feat(server): sendFile support If-Modified-Since
+  ([#1003](https://github.com/compasjs/compas/pull/1003))
+  - Closes [#1002](https://github.com/compasjs/compas/pull/1002)
+- feat(store): add must-revalidate to default cacheControlHeader in FileCache
+  ([#1004](https://github.com/compasjs/compas/pull/1004))
+
+##### Breaking changes
+
+- **store**: add must-revalidate to default cacheControlHeader in FileCache
+  - The default cache-control value has changed from `max-age=1200` to
+    `max-age=120, must-revalidate`. Provide your own as the last argument of
+    `new FileCache()` if necessary.
+
 ### [v0.0.149](https://github.com/compasjs/compas/releases/tag/v0.0.149)
 
 ##### Changes
