@@ -38,6 +38,6 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=15"
+    "node": ">=16"
   }
 }

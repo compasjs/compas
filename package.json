@@ -10,7 +10,7 @@
     "release": "lerna publish --exact"
   },
   "engines": {
-    "node": ">=15"
+    "node": ">=16"
   },
   "devDependencies": {
     "@types/node": "15.14.0",

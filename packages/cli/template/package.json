@@ -21,6 +21,6 @@
   },
   "prettier": "@compas/lint-config/prettierrc",
   "engines": {
-    "node": ">=15"
+    "node": ">=16"
   }
 }
