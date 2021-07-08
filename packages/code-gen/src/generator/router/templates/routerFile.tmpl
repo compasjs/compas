@@ -96,7 +96,7 @@ const handlers = {
 
       {{= item.uniqueName }}: {{ if (item.body || item.query || item.files) { }} async {{ } }} (params, ctx, next) => {
         if (ctx.event) {
-          eventRename(ctx.event, `{{= item.group }}.{{= item.name }}`);
+          eventRename(ctx.event, `router.{{= item.group }}.{{= item.name }}`);
         }
 
         ctx.request.params = params;
