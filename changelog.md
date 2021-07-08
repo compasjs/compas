@@ -8,6 +8,40 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.151](https://github.com/compasjs/compas/releases/tag/v0.0.151)
+
+##### Changes
+
+- build(deps): bump @types/minio from 7.0.7 to 7.0.8
+  ([#1012](https://github.com/compasjs/compas/pull/1012))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 15.12.5 to 16.0.1
+  ([#1008](https://github.com/compasjs/compas/pull/1008),
+  [#1010](https://github.com/compasjs/compas/pull/1010),
+  [#1014](https://github.com/compasjs/compas/pull/1014))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 7.29.0 to 7.30.0
+  ([#1011](https://github.com/compasjs/compas/pull/1011))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump postgres from 2.0.0-beta.5 to 2.0.0-beta.6
+  ([#1015](https://github.com/compasjs/compas/pull/1015))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- chore: only support Node.js v16 and higher
+- chore(ci): disable auto-merge of dependabot PR's
+- chore(ci): use setup-node@v2 with built-in cache support
+- feat(code-gen): rename `ctx.event` in matched handlers with a `router.` prefix
+  ([#1017](https://github.com/compasjs/compas/pull/1017))
+- fix(stdlib): replace TimeoutError with AppError, fix formatting of info object
+  ([#1016](https://github.com/compasjs/compas/pull/1016))
+
+##### Breaking changes
+
+- **deps**: bump @types/node from 15.12.5 to 16.0.1
+  - Major version bump
+- **all**: only support Node.js v16 and higher
+  - Bump your local project to use Node.js v16, which should go in to LTS in a
+    few months
+
 ### [v0.0.150](https://github.com/compasjs/compas/releases/tag/v0.0.150)
 
 ##### Changes
