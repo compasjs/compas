@@ -1,4 +1,5 @@
 import { inspect } from "util";
+import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
 /**
@@ -31,6 +32,8 @@ function InsightEvent(logger, signal) {
     return new InsightEvent(logger, signal);
   }
 
+  const _this = this;
+
   /**  @type {Logger} */
   this.log = logger;
   /**  @type {AbortSignal|undefined} */
@@ -47,25 +50,25 @@ function InsightEvent(logger, signal) {
   this.toJSON = print.bind(this);
 
   function calculateDuration() {
-    if (this.callStack[0]?.type !== "start") {
+    if (_this.callStack[0]?.type !== "start") {
       return;
     }
 
-    const lastIdx = this.callStack.length - 1;
-    const lastType = this.callStack[lastIdx]?.type;
+    const lastIdx = _this.callStack.length - 1;
+    const lastType = _this.callStack[lastIdx]?.type;
 
     if (lastType === "stop" || lastType === "aborted") {
-      this.callStack[0].duration =
-        this.callStack[lastIdx].time - this.callStack[0].time;
+      _this.callStack[0].duration =
+        _this.callStack[lastIdx].time - _this.callStack[0].time;
     }
   }
 
   function print() {
-    this.log.info({
+    return {
       type: "event_callstack",
-      aborted: !!this.signal?.aborted,
-      callStack: this.callStack,
-    });
+      aborted: !!_this.signal?.aborted,
+      callStack: _this.callStack,
+    };
   }
 
   return this;
@@ -100,7 +103,10 @@ export function newEventFromEvent(event) {
       time: Date.now(),
     });
     event.calculateDuration();
-    throw new TimeoutError(event);
+    throw AppError.serverError({
+      message: "Operation aborted",
+      event: getEventRoot(event).toJSON(),
+    });
   }
 
   const callStack = [];
@@ -131,7 +137,10 @@ export function eventStart(event, name) {
       name: event.name,
       time: Date.now(),
     });
-    throw new TimeoutError(event);
+    throw AppError.serverError({
+      message: "Operation aborted",
+      event: getEventRoot(event).toJSON(),
+    });
   }
 
   event.callStack.push({
@@ -166,7 +175,10 @@ export function eventRename(event, name) {
       time: Date.now(),
     });
     event.calculateDuration();
-    throw new TimeoutError(event);
+    throw AppError.serverError({
+      message: "Operation aborted",
+      event: getEventRoot(event).toJSON(),
+    });
   }
 }
 
@@ -187,62 +199,15 @@ export function eventStop(event) {
   event.calculateDuration();
 
   if (isNil(event.root)) {
-    event.log.info({
-      type: "event_callstack",
-      callStack: event.callStack,
-    });
+    event.log.info(event);
   }
 }
 
 /**
- * Timeout error, shaped like an @compas/stdlib AppError
- *
- * @since 0.1.0
- * @class
+ * Get the root event from the provided event
+ * @param {InsightEvent} event
+ * @returns {InsightEvent}
  */
-export class TimeoutError extends Error {
-  /**
-   *
-   * @param {InsightEvent} event
-   */
-  constructor(event) {
-    super();
-
-    const getEventRoot = (event) =>
-      isNil(event.parent) ? event : getEventRoot(event.parent);
-
-    this.key = "error.server.internal";
-    this.status = 500;
-    this.info = {
-      message: "Operation aborted",
-      rootEvent: getEventRoot(event),
-    };
-
-    Object.setPrototypeOf(this, TimeoutError.prototype);
-  }
-
-  /**
-   * Format as object when the TimeoutError is passed to console.log / console.error.
-   * This works because it uses `util.inspect` under the hood.
-   * Util#inspect checks if the Symbol `util.inspect.custom` is available.
-   */
-  [inspect.custom]() {
-    return {
-      key: this.key,
-      status: this.status,
-      info: this.info,
-    };
-  }
-
-  /**
-   * Format as object when the TimeoutError is passed to JSON.stringify().
-   * This is used in the compas insight logger in production mode.
-   */
-  toJSON() {
-    return {
-      key: this.key,
-      status: this.status,
-      info: this.info,
-    };
-  }
+function getEventRoot(event) {
+  return isNil(event.parent) ? event : getEventRoot(event.parent);
 }

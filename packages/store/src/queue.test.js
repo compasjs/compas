@@ -1,5 +1,5 @@
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
-import { AppError, eventStart, eventStop, isNil } from "@compas/stdlib";
+import { AppError, eventStop, isNil } from "@compas/stdlib";
 import { queries } from "./generated.js";
 import { queryJob } from "./generated/database/job.js";
 import {
@@ -127,7 +127,6 @@ test("store/queue", (t) => {
     await addJobToQueue(sql, { name: "retryTestJob" });
 
     qw.jobHandler = (event, sql, job) => {
-      eventStart(event, "test.handler");
       if (job.name === "retryTestJob") {
         throw AppError.serverError("oops");
       }
@@ -167,7 +166,6 @@ test("store/queue", (t) => {
     qw.handlerTimeout = 2;
     qw.maxRetryCount = 10;
     qw.jobHandler = async (event) => {
-      eventStart(event, "test.handler");
       await promiseSleep(10);
       eventStop(event);
     };
