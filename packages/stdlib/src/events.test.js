@@ -72,9 +72,10 @@ test("stdlib/events", (t) => {
       t.equal(e.key, "error.server.internal");
       t.equal(e.status, 500);
       // reference equality of `getRootEvent`
-      t.equal(e.info.rootEvent, event);
-      t.equal(e.info.rootEvent.callStack.length, 2);
-      t.equal(e.info.rootEvent.callStack[1].type, "aborted");
+      t.equal(e.info.event.type, "event_callstack");
+      t.equal(e.info.event.aborted, true);
+      t.equal(e.info.event.callStack.length, 2);
+      t.equal(e.info.event.callStack[1].type, "aborted");
       t.ok(!isNil(event.callStack[0].duration));
     }
   });
