@@ -41,7 +41,7 @@ Usage:
 - run (implicit)    : compas [--watch] [--verbose] [--any-node-arg] {scriptName|path/to/file.js} [--script-arg]
 - test              : compas test [--watch] [--verbose] [--node-arg] [--serial] [--parallel-count 2]
 - bench             : compas bench [--watch] [--verbose] [--node-arg]
-- coverage          : compas coverage [--watch] [--verbose] [--any-node-arg] [-- --c8-arg]
+- coverage          : compas coverage [--watch] [--verbose] [--any-node-arg] [--c8-arg] [--serial] [--parallel-count 2]
 - lint              : compas lint [--watch] [--verbose] [--any-node-arg]
 - code-mod          : compas code-mod [--verbose] [list,exec] [code-mod-name]
 - visualise         : compas visualise [sql,router] {path/to/generated/index.js} [--format png|svg|webp|pdf] [--output ./path/to/output.ext]
