@@ -49,7 +49,7 @@ async function main(logger) {
   setAreTestRunning(true);
 
   // Remove 1 for the main thread
-  let workerCount = cpus().length - 1;
+  let workerCount = Math.min(4, cpus().length - 1);
 
   if (process.argv.indexOf("--parallel-count") !== -1) {
     // Support customizing parallel count
