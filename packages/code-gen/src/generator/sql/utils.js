@@ -253,18 +253,21 @@ function staticCheckRelation(context, type, relation) {
     }
   }
 
+  checkReservedRelationNames(context, type, relation);
+
   if (relation.subType === "oneToOne") {
-    createOneToOneReverseRelation(type, relation);
+    createOneToOneReverseRelation(context, type, relation);
   }
 }
 
 /**
  * Create the reverse side of a one to one relation
  *
+ * @param {CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
-function createOneToOneReverseRelation(type, relation) {
+function createOneToOneReverseRelation(context, type, relation) {
   const inverseSide = relation.reference.reference;
   inverseSide.relations.push({
     type: "relation",
@@ -277,4 +280,36 @@ function createOneToOneReverseRelation(type, relation) {
       reference: type,
     },
   });
+
+  checkReservedRelationNames(
+    context,
+    inverseSide,
+    inverseSide.relations[inverseSide.relations.length - 1],
+  );
+}
+
+/**
+ * Check if relation keys use a reserved keyword.
+ * Reserved keywords mainly keys used in the query builder
+ *
+ * @param {CodeGenContext} context
+ * @param {CodeGenObjectType} type
+ * @param {CodeGenRelationType} relation
+ */
+function checkReservedRelationNames(context, type, relation) {
+  const reservedRelationNames = [
+    "select",
+    "where",
+    "orderBy",
+    "orderBySpec",
+    "limit",
+  ];
+
+  if (reservedRelationNames.includes(relation.ownKey)) {
+    context.errors.push({
+      key: "sqlReservedRelationKey",
+      type: type.name,
+      ownKey: relation.ownKey,
+    });
+  }
 }
