@@ -26,6 +26,9 @@ const workerFile = new URL(
 mainFn(import.meta, main);
 
 async function main(logger) {
+  // Note that the arguments are also used for coverage. So if an argument is added or
+  // changed. The filter in commands/coverage.js needs to change as well.
+
   if (!isMainThread) {
     logger.error("Test runner can only run as main thread");
     process.exit(1);

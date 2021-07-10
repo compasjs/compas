@@ -13,18 +13,27 @@ const c8Path = pathJoin(
  * @returns {Promise<void>}
  */
 export function coverageCommand(logger, command) {
+  const c8Args = [];
+  const testArgs = [];
+
+  let wasParallelCount = false;
+  for (const arg of command.execArguments) {
+    // Hardcode on known test arguments
+    if (arg === "--serial" || arg === "--parallel-count" || wasParallelCount) {
+      testArgs.push(arg);
+      wasParallelCount = arg === "--parallel-count";
+    } else {
+      wasParallelCount = false;
+      c8Args.push(arg);
+    }
+  }
+
   return executeCommand(
     logger,
     command.verbose,
     command.watch,
     c8Path,
-    [
-      ...command.execArguments,
-      "node",
-      ...command.nodeArguments,
-      testFile,
-      "--serial",
-    ],
+    [...c8Args, "node", ...command.nodeArguments, testFile, ...testArgs],
     {},
   );
 }
