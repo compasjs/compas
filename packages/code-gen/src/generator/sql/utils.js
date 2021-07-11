@@ -298,11 +298,13 @@ function createOneToOneReverseRelation(context, type, relation) {
  */
 function checkReservedRelationNames(context, type, relation) {
   const reservedRelationNames = [
-    "select",
-    "where",
+    "as",
+    "limit",
+    "offset",
     "orderBy",
     "orderBySpec",
-    "limit",
+    "select",
+    "where",
   ];
 
   if (reservedRelationNames.includes(relation.ownKey)) {
