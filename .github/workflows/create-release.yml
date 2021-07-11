@@ -56,7 +56,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-K
+
       - name: Create release
         run: |
           cd ./compas-docs
