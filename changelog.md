@@ -8,6 +8,38 @@ order: 4
 
 # CHANGELOG
 
+### [v0.0.152](https://github.com/compasjs/compas/releases/tag/v0.0.152)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.0.1 to 16.3.1
+  ([#1018](https://github.com/compasjs/compas/pull/1018),
+  [#1026](https://github.com/compasjs/compas/pull/1026))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-jsdoc from 35.4.1 to 35.4.3
+  ([#1019](https://github.com/compasjs/compas/pull/1019),
+  [#1025](https://github.com/compasjs/compas/pull/1025))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(ci): disable setup-node auto cache for sync-docs
+- chore(codecov): make patch informational as well
+- feat(cli): change default worker count of test to 4 instead of number of cpus
+  - Closes [#1023](https://github.com/compasjs/compas/pull/1023)
+- feat(cli): run tests in parallel by default while collecting coverage
+  ([#1024](https://github.com/compasjs/compas/pull/1024))
+  - Closes [#1022](https://github.com/compasjs/compas/pull/1022)
+- feat(code-gen): error when relation key is a reserved query builder key
+  ([#1020](https://github.com/compasjs/compas/pull/1020))
+- feat(code-gen): add 'as' and 'limit' as reserved query builder keys
+
+##### Breaking changes
+
+- **cli**: run tests in parallel by default while collecting coverage
+  - `compas coverage` by defaults executes tests with the default settings
+    (parallel)
+  - `compas coverage` now also accepts all arguments of `compas test` like
+    `--serial` and `--parallel-count`. To get the old behaviour run
+    `compas coverage --serial`
+
 ### [v0.0.151](https://github.com/compasjs/compas/releases/tag/v0.0.151)
 
 ##### Changes
