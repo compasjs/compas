@@ -51,14 +51,21 @@ export function addFieldsForRelation(context, type, relation) {
     return;
   }
 
-  const { field } = getPrimaryKeyWithType(relation.reference.reference);
-  type.keys[relation.ownKey] = {
-    ...field,
-    sql: {
-      searchable: true,
-    },
-    isOptional: relation.isOptional,
-  };
+  try {
+    const { field } = getPrimaryKeyWithType(relation.reference.reference);
+    type.keys[relation.ownKey] = {
+      ...field,
+      sql: {
+        searchable: true,
+      },
+      isOptional: relation.isOptional,
+    };
+  } catch {
+    context.errors.push({
+      key: "sqlMissingPrimaryKey",
+      typeName: relation.reference.reference.name,
+    });
+  }
 }
 
 /**
