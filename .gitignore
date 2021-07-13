@@ -34,3 +34,5 @@ coverage
 /benchmark_output.txt
 
 **/generated/common/structure.sql
+
+__fixtures__/tmp

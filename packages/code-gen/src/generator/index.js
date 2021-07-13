@@ -74,73 +74,78 @@ export function generate(logger, options, structure) {
 
   exitOnErrorsOrReturn(context);
 
-  // Linkup all references, so we don't necessarily have to worry about them in all other
-  // places.
-  linkupReferencesInStructure(context);
-  addFieldsOfRelations(context);
-
-  exitOnErrorsOrReturn(context);
-
-  const copy = {};
-  copyAndSort(context.structure, copy);
-  context.structure = copy;
-
-  templateContext.globals.getTypeNameForType = getTypeNameForType.bind(
-    undefined,
-    context,
-  );
-  templateContext.globals.typeSuffix = getTypeSuffixForUseCase(context.options);
-
-  setupMemoizedTypes(context);
-  exitOnErrorsOrReturn(context);
-
-  checkReservedGroupNames(context);
-  exitOnErrorsOrReturn(context);
-
-  // Do initial sql checks and load in the types
-  // This way the validators are generated
-  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
-    doSqlChecks(context);
-    exitOnErrorsOrReturn(context);
-
-    addShortNamesToQueryEnabledObjects(context);
-    exitOnErrorsOrReturn(context);
-
-    generateSqlStructure(context);
-
-    createWhereTypes(context);
-    createOrderByTypes(context);
-    createPartialTypes(context);
-    createQueryBuilderTypes(context);
+  // Don't execute any logic, we can just write the structure out only
+  if (context.options.enabledGenerators.length > 0) {
+    // Linkup all references, so we don't necessarily have to worry about them in all other
+    // places.
+    linkupReferencesInStructure(context);
+    addFieldsOfRelations(context);
 
     exitOnErrorsOrReturn(context);
-  }
 
-  generateCommonFiles(context);
+    const copy = {};
+    copyAndSort(context.structure, copy);
+    context.structure = copy;
 
-  if (context.options.enabledGenerators.indexOf("validator") !== -1) {
-    generateValidatorFile(context);
-    exitOnErrorsOrReturn(context);
-  }
-  if (context.options.enabledGenerators.indexOf("router") !== -1) {
-    generateRouterFiles(context);
-    exitOnErrorsOrReturn(context);
-  }
-  if (context.options.enabledGenerators.indexOf("apiClient") !== -1) {
-    generateApiClientFiles(context);
-    exitOnErrorsOrReturn(context);
-  }
-  if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
-    generateReactQueryFiles(context);
-    exitOnErrorsOrReturn(context);
-  }
-  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
-    generateModelFiles(context);
-    exitOnErrorsOrReturn(context);
-  }
+    templateContext.globals.getTypeNameForType = getTypeNameForType.bind(
+      undefined,
+      context,
+    );
+    templateContext.globals.typeSuffix = getTypeSuffixForUseCase(
+      context.options,
+    );
 
-  if (context.options.enabledGenerators.indexOf("type") !== -1) {
-    generateTypeFile(context);
+    setupMemoizedTypes(context);
+    exitOnErrorsOrReturn(context);
+
+    checkReservedGroupNames(context);
+    exitOnErrorsOrReturn(context);
+
+    // Do initial sql checks and load in the types
+    // This way the validators are generated
+    if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+      doSqlChecks(context);
+      exitOnErrorsOrReturn(context);
+
+      addShortNamesToQueryEnabledObjects(context);
+      exitOnErrorsOrReturn(context);
+
+      generateSqlStructure(context);
+
+      createWhereTypes(context);
+      createOrderByTypes(context);
+      createPartialTypes(context);
+      createQueryBuilderTypes(context);
+
+      exitOnErrorsOrReturn(context);
+    }
+
+    generateCommonFiles(context);
+
+    if (context.options.enabledGenerators.indexOf("validator") !== -1) {
+      generateValidatorFile(context);
+      exitOnErrorsOrReturn(context);
+    }
+    if (context.options.enabledGenerators.indexOf("router") !== -1) {
+      generateRouterFiles(context);
+      exitOnErrorsOrReturn(context);
+    }
+    if (context.options.enabledGenerators.indexOf("apiClient") !== -1) {
+      generateApiClientFiles(context);
+      exitOnErrorsOrReturn(context);
+    }
+    if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
+      generateReactQueryFiles(context);
+      exitOnErrorsOrReturn(context);
+    }
+    if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+      generateModelFiles(context);
+      exitOnErrorsOrReturn(context);
+    }
+
+    if (context.options.enabledGenerators.indexOf("type") !== -1) {
+      generateTypeFile(context);
+    }
   }
   // Add provided file headers to all files
   annotateFilesWithHeader(context);

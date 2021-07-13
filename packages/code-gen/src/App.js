@@ -1,8 +1,8 @@
 import {
-  newLogger,
-  printProcessMemoryUsage,
   isNil,
   merge,
+  newLogger,
+  printProcessMemoryUsage,
 } from "@compas/stdlib";
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
@@ -240,10 +240,7 @@ export class App {
       options.enabledGenerators.indexOf("router") !== -1
     ) {
       Object.assign(opts, defaultGenerateOptionsNodeServer);
-    } else if (
-      options.isNode ||
-      options.enabledGenerators.indexOf("reactQuery") === -1
-    ) {
+    } else if (options.isNode) {
       Object.assign(opts, defaultGenerateOptionsNode);
     }
 
@@ -256,7 +253,7 @@ export class App {
     opts.enabledGenerators =
       options.enabledGenerators.length > 0
         ? options.enabledGenerators
-        : opts.enabledGenerators;
+        : opts.enabledGenerators ?? [];
 
     // Quick hack so we can test if we have generated
     // before running the tests.
