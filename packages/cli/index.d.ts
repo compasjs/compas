@@ -14,10 +14,7 @@ export function mainTestFn(meta: ImportMeta): void;
  * Create a test event.
  * event.log.info is a noop by default, but can be enabled via the passed in options.
  */
-export function newTestEvent(
-  t: TestRunner,
-  options?: { enabledLogs?: boolean },
-): InsightEvent;
+export function newTestEvent(t: TestRunner): InsightEvent;
 
 /**
  * Available assertions and the option of doing nested tests
