@@ -224,7 +224,7 @@ function queryBuilderForType(context, imports, type) {
        *  exec: function(sql: Postgres): Promise<QueryResult${
          type.uniqueName
        }[]>,
-       *  execRaw: function(sql: Postgres): Promise<*[]>
+       *  execRaw: function(sql: Postgres): Promise<*[]>,
        *  queryPart: QueryPart,
        * }}
        */

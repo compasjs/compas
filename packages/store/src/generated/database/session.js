@@ -516,7 +516,7 @@ WHERE ${sessionWhere(builder.where, "s.", {
  * @param {StoreSessionQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreSession[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>
+ *  execRaw: function(sql: Postgres): Promise<*[]>,
  *  queryPart: QueryPart,
  * }}
  */

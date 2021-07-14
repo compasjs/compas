@@ -612,7 +612,7 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreJob[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>
+ *  execRaw: function(sql: Postgres): Promise<*[]>,
  *  queryPart: QueryPart,
  * }}
  */

@@ -724,7 +724,7 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreFile[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>
+ *  execRaw: function(sql: Postgres): Promise<*[]>,
  *  queryPart: QueryPart,
  * }}
  */

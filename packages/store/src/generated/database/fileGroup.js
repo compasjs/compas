@@ -1217,7 +1217,7 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
  *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroup[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>
+ *  execRaw: function(sql: Postgres): Promise<*[]>,
  *  queryPart: QueryPart,
  * }}
  */
