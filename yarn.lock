@@ -2673,10 +2673,10 @@ fast-xml-parser@^3.17.5:
   resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-3.17.5.tgz#760bc7755681d2e1d70329c9ac6a1a7cb38b135e"
   integrity sha512-lEvThd1Xq+CCylf1n+05bUZCDZjTufaaaqpxM3JZ+4iDqtlG+d/oKgtMmg9GEMOuzBgUoalIzFOaClht9YiGJQ==
 
-fastest-validator@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.11.0.tgz#7716f4c47b8c78205ca7dbdacca223c39227261e"
-  integrity sha512-iF4Gj2Viz2T8D3aLcRt5doTDwCJYBe9LgNv36j2lpoGoKvOroGKxG2oOGWcHoxGREsMVlNDrbUQOU9fDMmO7jw==
+fastest-validator@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.11.1.tgz#c0e158046294981834fcb309a6ef4aa70f521297"
+  integrity sha512-y0pXBCgGfY3mqbBL9sn2LtAxfJICyOr5cuOnCjyiKg4VoXVmDaLBDwnnj4QC1pSY5B4upln5k8RyLszlLXzXlw==
 
 fastq@^1.6.0:
   version "1.11.0"
