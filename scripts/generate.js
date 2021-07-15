@@ -1,6 +1,7 @@
 import { App } from "@compas/code-gen";
 import { mainFn, pathJoin, spawn } from "@compas/stdlib";
 import { storeStructure } from "@compas/store";
+import { extendWithRepo } from "../gen/repo.js";
 import {
   applyBenchStructure,
   applyTestingServerStructure,
@@ -49,19 +50,32 @@ export const generateSettings = {
 mainFn(import.meta, main);
 
 async function main() {
-  const app = new App({
+  const internalApp = new App({
     verbose: true,
   });
 
-  applyAllLocalGenerate(app);
+  extendWithRepo(internalApp);
 
-  await app.generate(generateSettings.validators);
-  await app.generate(generateSettings.bench);
-  await app.generate(generateSettings.server);
-  await app.generate(generateSettings.client);
-  await app.generate(generateSettings.sql);
+  await internalApp.generate({
+    outputDirectory: "./src/generated",
+    enabledGenerators: ["type", "validator"],
+    isNode: true,
+    throwingValidators: false,
+  });
 
-  app.logger.info("Transpiling typescript...");
+  const testAndBenchApp = new App({
+    verbose: true,
+  });
+
+  applyAllLocalGenerate(testAndBenchApp);
+
+  await testAndBenchApp.generate(generateSettings.validators);
+  await testAndBenchApp.generate(generateSettings.bench);
+  await testAndBenchApp.generate(generateSettings.server);
+  await testAndBenchApp.generate(generateSettings.client);
+  await testAndBenchApp.generate(generateSettings.sql);
+
+  testAndBenchApp.logger.info("Transpiling typescript...");
 
   await spawn(
     "yarn",

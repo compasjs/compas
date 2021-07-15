@@ -9,14 +9,10 @@ export let environment = {};
  * after loading your `.env` file.
  *
  * Accessing an environment variable via `process.env.XXXX` is relatively slow compared
- * to direct property access. The following benchmark result of a plain object property
- * access and accessing process.env.NODE_ENV:
+ * to direct property access. As can be seen in the following benchmark:
  *
  * ```txt
  * property access       500000000  iterations     0  ns/op
- * ```
- *
- * ```txt
  * process.env access      5000000  iterations   246  ns/op
  * ```
  *

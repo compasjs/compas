@@ -50,7 +50,7 @@ export const merge = lodashMerge;
  * @param {object} data The object to serialize
  * @param {*} [result]
  * @param {string} [path]
- * @returns {object.<string, *>}
+ * @returns {Object<string, any>}
  */
 export function flatten(data, result = {}, path = "") {
   for (const key of Object.keys(data)) {
