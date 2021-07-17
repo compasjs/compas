@@ -34,11 +34,11 @@ test("store/sessions", (t) => {
     const id = uuid();
     const data = { foo: "bar" };
 
-    await store.set(id, data, 45);
+    await store.set(id, data, 250);
     t.deepEqual(await store.get(id), data);
 
     // Make sure upsert query works
-    await store.set(id, data, 45);
+    await store.set(id, data, 250);
     t.deepEqual(await store.get(id), data);
   });
 
@@ -47,7 +47,7 @@ test("store/sessions", (t) => {
     const id = uuid();
 
     const data = { foo: "bar" };
-    await store.set(id, data, 25);
+    await store.set(id, data, 250);
     t.deepEqual(await store.get(id), data);
     await store.destroy(id);
     t.equal(await store.get(id), false);
