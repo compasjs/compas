@@ -24,6 +24,15 @@ const promiseSleep = (ms) =>
     setTimeout(() => r(), ms);
   });
 
+const defaultSleep = 60;
+
+const waitForWorkerPromise = async (qw, workerIndex) => {
+  if (qw.workers[workerIndex]) {
+    await promiseSleep(defaultSleep);
+    return waitForWorkerPromise(qw, workerIndex);
+  }
+};
+
 test("store/queue", (t) => {
   let sql = undefined;
 
@@ -61,6 +70,16 @@ test("store/queue", (t) => {
     });
   });
 
+  t.test("quick start / stop sequence", (t) => {
+    // Make sure that we don't start a transaction
+    qw.workers = [];
+    qw.start();
+    qw.stop();
+    qw.workers = [undefined];
+
+    t.ok(!qw.isStarted);
+  });
+
   t.test("add normal job returns id", async (t) => {
     const id = await addJobToQueue(sql, { name: "job1" });
     t.ok(!isNil(id));
@@ -75,7 +94,7 @@ test("store/queue", (t) => {
 
   t.test("add scheduled job returns id", async (t) => {
     const d = new Date();
-    d.setSeconds(d.getSeconds() + 1);
+    d.setHours(d.getHours() + 5);
 
     const id = await addJobToQueue(sql, { name: "job1", scheduledAt: d });
     t.ok(!isNil(id));
@@ -96,12 +115,10 @@ test("store/queue", (t) => {
     t.equal(await qw.averageTimeToCompletion(start, end), 0);
   });
 
-  t.test("quick start / stop sequence", async (t) => {
-    qw.start();
-    await promiseSleep(15);
-    qw.stop();
-    await promiseSleep(15);
-    t.ok(!qw.isStarted);
+  t.test("handle a single job", async (t) => {
+    qw.handleJob(0);
+    await waitForWorkerPromise(qw, 0);
+    t.pass();
   });
 
   t.test("single scheduled job pending", async (t) => {
@@ -121,9 +138,7 @@ test("store/queue", (t) => {
   });
 
   t.test("on failure retryCount should be up", async (t) => {
-    await queries.jobDelete(sql, {
-      $or: [{ isComplete: true }, { isComplete: false }],
-    });
+    await queries.jobDelete(sql, {});
     await addJobToQueue(sql, { name: "retryTestJob" });
 
     qw.jobHandler = (event, sql, job) => {
@@ -134,14 +149,14 @@ test("store/queue", (t) => {
 
     // Start a job manually
     qw.handleJob(0);
-    await promiseSleep(20);
+    await waitForWorkerPromise(qw, 0);
 
     const [job] = await queryJob({
       where: { name: "retryTestJob" },
     }).exec(sql);
 
-    t.equal(job.isComplete, false);
-    t.equal(job.retryCount, 1);
+    t.equal(job.isComplete, false, JSON.stringify(job, null, 2));
+    t.equal(job.retryCount, 1, JSON.stringify(job, null, 2));
   });
 
   t.test("on max retries, job should be completed", async (t) => {
@@ -149,7 +164,7 @@ test("store/queue", (t) => {
     qw.maxRetryCount = 1;
     // Start a job manually
     qw.handleJob(0);
-    await promiseSleep(20);
+    await waitForWorkerPromise(qw, 0);
 
     const [job] = await queryJob({
       where: { name: "retryTestJob" },
@@ -171,7 +186,7 @@ test("store/queue", (t) => {
     };
 
     qw.handleJob(0);
-    await promiseSleep(20);
+    await waitForWorkerPromise(qw, 0);
 
     const [job] = await queryJob({
       where: { name: "timeoutTest" },
@@ -182,10 +197,10 @@ test("store/queue", (t) => {
 
     // Immediate resolve handler, and 10ms handler timeout
     qw.jobHandler = () => {};
-    qw.handlerTimeout = 10;
+    qw.handlerTimeout = 15;
 
     qw.handleJob(0);
-    await promiseSleep(20);
+    await waitForWorkerPromise(qw, 0);
 
     const [dbJob] = await queryJob({
       where: {
@@ -214,16 +229,16 @@ test("store/queue", (t) => {
     };
 
     await addJobToQueue(sql, { name: "test.object.handler" });
-    qw.handleJob(0);
-    await promiseSleep(10);
-
     await addJobToQueue(sql, { name: "test.object.handler2" });
-    qw.handleJob(0);
-    await promiseSleep(15);
-
     await addJobToQueue(sql, { name: "test.object.handler.missingKey" });
+
     qw.handleJob(0);
-    await promiseSleep(5);
+    qw.handleJob(1);
+    qw.handleJob(2);
+
+    await waitForWorkerPromise(qw, 1);
+    await waitForWorkerPromise(qw, 2);
+    await waitForWorkerPromise(qw, 3);
 
     const [job] = await queryJob({
       where: { name: "test.object.handler" },
@@ -242,6 +257,7 @@ test("store/queue", (t) => {
         name: "test.object.handler.missingKey",
       },
     }).exec(sql);
+
     t.equal(job3.isComplete, true);
   });
 
@@ -350,8 +366,7 @@ test("store/queue - recurring jobs ", (t) => {
     const jobs = await sql`
       SELECT *
       FROM job
-      WHERE
-        name = 'compas.job.recurring'
+      WHERE name = 'compas.job.recurring'
     `;
     t.equal(jobs.length, 1);
     t.equal(jobs[0].data.name, "test");
@@ -367,8 +382,7 @@ test("store/queue - recurring jobs ", (t) => {
       const jobs = await sql`
       SELECT *
       FROM job
-      WHERE
-        name = 'compas.job.recurring'
+      WHERE name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 1);
     },
@@ -384,8 +398,7 @@ test("store/queue - recurring jobs ", (t) => {
       const jobs = await sql`
       SELECT *
       FROM job
-      WHERE
-        name = 'compas.job.recurring'
+      WHERE name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 2);
     },
@@ -402,8 +415,7 @@ test("store/queue - recurring jobs ", (t) => {
       const jobs = await sql`
              SELECT *
              FROM job
-             WHERE
-               name = 'compas.job.recurring'
+             WHERE name = 'compas.job.recurring'
            `;
       const secondTest = jobs.find((it) => it.data.name === "secondTest");
 
@@ -417,10 +429,8 @@ test("store/queue - recurring jobs ", (t) => {
     async (t) => {
       await sql`
       UPDATE job
-      SET
-        "isComplete" = TRUE
-      WHERE
-        data ->> 'name' = 'test'
+      SET "isComplete" = TRUE
+      WHERE data ->> 'name' = 'test'
     `;
       await addRecurringJobToQueue(sql, {
         name: "test",
@@ -429,8 +439,7 @@ test("store/queue - recurring jobs ", (t) => {
       const jobs = await sql`
       SELECT *
       FROM job
-      WHERE
-        name = 'compas.job.recurring'
+      WHERE name = 'compas.job.recurring'
     `;
       t.equal(jobs.length, 3);
     },
@@ -459,14 +468,12 @@ test("store/queue - recurring jobs ", (t) => {
       const [testJob] = await sql`
              SELECT *
              FROM job
-             WHERE
-               name = 'test'
+             WHERE name = 'test'
            `;
       const [recurringJob] = await sql`
              SELECT *
              FROM job
-             WHERE
-               name = 'compas.job.recurring'
+             WHERE name = 'compas.job.recurring'
            `;
       const count = await queries.jobCount(sql);
 
@@ -513,9 +520,8 @@ test("store/queue - recurring jobs ", (t) => {
       const [job] = await sql`
       SELECT *
       FROM "job"
-      WHERE
-        name = 'compas.job.recurring'
-      AND data ->> 'name' = 'recreate_future_test'
+      WHERE name = 'compas.job.recurring'
+        AND data ->> 'name' = 'recreate_future_test'
     `;
 
       t.ok(job.scheduledAt > scheduledAt);

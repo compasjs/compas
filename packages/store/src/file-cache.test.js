@@ -2,7 +2,7 @@ import { existsSync, lstatSync, mkdirSync, writeFileSync } from "fs";
 import { pipeline as pipelineCallback } from "stream";
 import { promisify } from "util";
 import { mainTestFn, test } from "@compas/cli";
-import { printProcessMemoryUsage, gc, pathJoin, uuid } from "@compas/stdlib";
+import { gc, pathJoin, printProcessMemoryUsage, uuid } from "@compas/stdlib";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile } from "./files.js";
 import {
@@ -50,8 +50,8 @@ test("store/file-cache", async (t) => {
     t.ok(!!sql);
 
     const result = await sql`
-      SELECT 1 + 2 AS sum
-    `;
+          SELECT 1 + 2 AS sum
+      `;
     t.equal(result[0].sum, 3);
   });
 
@@ -127,19 +127,12 @@ test("store/file-cache", async (t) => {
   });
 
   t.test("find file on disk", async (t) => {
-    const path = `${FileCache.fileCachePath}/${files.large.id}`;
-
     const buffer = await streamToBuffer(
       (
         await cache.getFileStream(files.large)
       ).stream,
     );
     t.equal(buffer.length, 10);
-    t.ok(existsSync(path));
-    t.ok(
-      lstatSync(path).mtimeMs < new Date().getTime(),
-      "file created before current time",
-    );
   });
 
   t.test("clear file removes from cache", (t) => {
@@ -227,8 +220,8 @@ test("store/file-cache check memory usage", async (t) => {
     t.ok(!!sql);
 
     const result = await sql`
-      SELECT 1 + 2 AS sum
-    `;
+          SELECT 1 + 2 AS sum
+      `;
     t.equal(result[0].sum, 3);
   });
 
