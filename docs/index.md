@@ -181,11 +181,10 @@ copying and pasting things around, this project was born.
 
 ## Docs and development
 
-See [the website](https://compasjs.com) for the
-[changelog](https://compasjs.com/changelog.html), all available APIs and various
-guides.
+See [the website](https://compasjs.com) for the [changelog](/changelog.html),
+all available APIs and various guides.
 
-For contributing see [contributing](https://compasjs.com/contributing.html).
+For contributing see [contributing](/contributing.html).
 
 ## New features
 

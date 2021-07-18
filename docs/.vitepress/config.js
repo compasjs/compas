@@ -157,45 +157,15 @@ function getApiSidebar() {
 
 function getReleaseNotesSidebar() {
   return [
-    {
-      text: "Release v0.0.79",
-      link: "/releases/0.0.79.html",
-    },
-    {
-      text: "Release v0.0.81",
-      link: "/releases/0.0.81.html",
-    },
-    {
-      text: "Release v0.0.83",
-      link: "/releases/0.0.83.html",
-    },
-    {
-      text: "Release v0.0.84",
-      link: "/releases/0.0.84.html",
-    },
-    {
-      text: "Release v0.0.89",
-      link: "/releases/0.0.89.html",
-    },
-    {
-      text: "Release v0.0.103",
-      link: "/releases/0.0.103.html",
-    },
-    {
-      text: "Release v0.0.115",
-      link: "/releases/0.0.115.html",
-    },
-    {
-      text: "Release v0.0.119",
-      link: "/releases/0.0.119.html",
-    },
-    {
-      text: "Release v0.0.124",
-      link: "/releases/0.0.124.html",
-    },
-    {
-      text: "Release v0.0.138",
-      link: "/releases/0.0.138.html",
-    },
+    { text: "Release v0.0.138", link: "/releases/0.0.138.html" },
+    { text: "Release v0.0.124", link: "/releases/0.0.124.html" },
+    { text: "Release v0.0.119", link: "/releases/0.0.119.html" },
+    { text: "Release v0.0.115", link: "/releases/0.0.115.html" },
+    { text: "Release v0.0.103", link: "/releases/0.0.103.html" },
+    { text: "Release v0.0.89", link: "/releases/0.0.89.html" },
+    { text: "Release v0.0.84", link: "/releases/0.0.84.html" },
+    { text: "Release v0.0.83", link: "/releases/0.0.83.html" },
+    { text: "Release v0.0.81", link: "/releases/0.0.81.html" },
+    { text: "Release v0.0.79", link: "/releases/0.0.79.html" },
   ];
 }
