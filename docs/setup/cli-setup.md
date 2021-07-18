@@ -40,7 +40,7 @@ module.exports = {
 
 **/.prettierignore**
 
-```ignorelang
+```text
 coverage/**
 ```
 
