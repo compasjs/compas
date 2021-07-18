@@ -83,7 +83,16 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "yarn"
 
-  #        TODO run site deploy
+      - name: Build and deploy
+        run: |
+          yarn
+          yarn compas docs:build
+          cd ./docs/.vitepress/dist
+          echo 'compasjs.com' > CNAME
+          git init
+          git add -A
+          git commit -m "chore: deploy pages for ${{ github.sha }}"
+          git push -f https://dirkdev98:${{ secrets.COMPAS_GITHUB_TOKEN }}@github.com:compasjs/compas.git master:gh-pages
 
   analyze:
     name: Analyze
