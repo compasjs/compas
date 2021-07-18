@@ -26,7 +26,7 @@
     "react": "17.0.2",
     "react-query": "3.19.0",
     "typescript": "4.3.5",
-    "vitepress": "0.15.6",
+    "vitepress": "git+https://github.com/dirkdev98/vitepress.git#master",
     "yup": "0.32.9"
   },
   "maintainers": [
