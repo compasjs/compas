@@ -1,22 +1,24 @@
-# Compas
-
-Unified backend tooling
-
 ---
-
-## Features
-
-- Script and test runner with built-in watcher
-- Flexible code generators supporting routers, validators, api clients and
-  Postgres queries
-- Structured logger
-- Common utilities like session handling, job queue, file storage and loading
-  '.env' files
-
-## Requirements
-
-- Node.js >= 15
-- Yarn 1.x.x
+home: true
+heroText: Compas
+tagline: Unified backend tooling
+actionText: Get started
+actionLink: "/setup/"
+altActionText: Changelog
+altActionLink: "/changelog.html"
+footer: "MIT Licensed | Copyright © 2019-present Dirk de Visser"
+features:
+  - title: Flexible code generators
+    details:
+      "Code generate routers, validators, api clients and Postgres queries."
+  - title: ES Modules first
+    details:
+      "Contains test, bench and script runner supporting only ES modules."
+  - title: Common utilities
+    details:
+      "Comes with session handling, job queue, file storage, script runner and
+      more."
+---
 
 ## I'm a...
 
@@ -178,13 +180,6 @@ consume api's.
 My work involved doing many small projects. I had a hard time backporting
 incremental fixes to existing projects. To facilitate my needs more and to stop
 copying and pasting things around, this project was born.
-
-## Docs and development
-
-See [the website](https://compasjs.com) for the [changelog](/changelog.html),
-all available APIs and various guides.
-
-For contributing see [contributing](/contributing.html).
 
 ## New features
 
