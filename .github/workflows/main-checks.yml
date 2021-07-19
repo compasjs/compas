@@ -89,10 +89,13 @@ jobs:
           yarn compas docs:build
           cd ./docs/.vitepress/dist
           echo 'compasjs.com' > CNAME
+          git config --global init.defaultBranch main
+          git config --global user.email "github@dirkdevisser.nl"
+          git config --global user.name "Dirk de Visser[bot]"
           git init
           git add -A
           git commit -m "chore: deploy pages for ${{ github.sha }}"
-          git push -f https://dirkdev98:${{ secrets.COMPAS_GITHUB_TOKEN }}@github.com:compasjs/compas.git master:gh-pages
+          git push -f https://dirkdev98:${{ secrets.COMPAS_GITHUB_TOKEN }}@github.com:compasjs/compas.git main:gh-pages
 
   analyze:
     name: Analyze
