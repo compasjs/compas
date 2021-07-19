@@ -1,22 +1,64 @@
-import { spawnSync } from "child_process";
-import { readdirSync, readFileSync, writeFileSync } from "fs";
-import { dirnameForModule, mainFn, pathJoin } from "@compas/stdlib";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
+import { syncJSDocToDocs } from "../src/doc-parser/index.js";
+import { syncJSDocBasedToc } from "../src/doc-parser/toc.js";
 
 mainFn(import.meta, main);
 
 /** @type {CliWatchOptions} */
 export const cliWatchOptions = {
-  ignoredPatterns: [/\w+[/\\]README.md$/gi],
-  extensions: ["md"],
+  disable: true,
 };
 
-function main(logger) {
-  // Script to copy the root README.md to all packages
-
+/**
+ * Copy various things around README's and docs
+ *
+ * @param {Logger} logger
+ */
+async function main(logger) {
   if (pathJoin(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
     throw new Error("Wrong directory. Run in root.");
   }
 
+  syncReadmes(logger);
+  syncDocs(logger);
+  await syncJSDocToDocs(logger);
+  await syncJSDocBasedToc();
+
+  logger.info("Running linter");
+  await spawn("yarn", ["compas", "lint"]);
+  logger.info("Done");
+}
+
+/**
+ * Sync repo files to docs root
+ *
+ * @param {Logger} logger
+ */
+function syncDocs(logger) {
+  const rootDir = process.cwd();
+  const docsDir = pathJoin(rootDir, "docs");
+
+  const files = ["changelog.md", "contributing.md"];
+
+  for (const file of files) {
+    const path = pathJoin(rootDir, file);
+
+    if (!existsSync(path)) {
+      logger.error(`Could not find '${file}' at '${path}'.`);
+      process.exit(1);
+    }
+
+    writeFileSync(pathJoin(docsDir, file), readFileSync(path));
+  }
+}
+
+/**
+ * Sync root and package readme's
+ *
+ * @param {Logger} logger
+ */
+function syncReadmes(logger) {
   const packagesDir = pathJoin(process.cwd(), "packages");
   const packages = readdirSync(packagesDir);
   const readmeSource = getReadmeSource();
@@ -32,10 +74,6 @@ function main(logger) {
       "utf-8",
     );
   }
-
-  logger.info("Running linter");
-  spawnSync("yarn", ["compas", "lint"], { stdio: "inherit" });
-  logger.info("Done");
 }
 
 /**
