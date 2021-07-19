@@ -6920,9 +6920,10 @@ vite@^2.3.7:
   optionalDependencies:
     fsevents "~2.3.2"
 
-"vitepress@git+https://github.com/dirkdev98/vitepress.git#master":
+"vitepress@npm:@dirkdev98/vitepress@0.15.6":
   version "0.15.6"
-  resolved "git+https://github.com/dirkdev98/vitepress.git#4ae52507d0fb855cea639f0414964c3e74151e0d"
+  resolved "https://registry.yarnpkg.com/@dirkdev98/vitepress/-/vitepress-0.15.6.tgz#2bf3b0c2f414d475c02e9729f850738a19706574"
+  integrity sha512-+qaZbCxsZo57EiBMkG8UV/h9S3o4oJzX5GadV2XJAAUIqTMxiyAqPta6kgxCP7oja98cXKcMKk8AZ/grDBSxcw==
   dependencies:
     "@docsearch/css" "^1.0.0-alpha.28"
     "@docsearch/js" "^1.0.0-alpha.28"
