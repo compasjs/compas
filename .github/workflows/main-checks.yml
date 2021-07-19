@@ -95,7 +95,7 @@ jobs:
           git init
           git add -A
           git commit -m "chore: deploy pages for ${{ github.sha }}"
-          git push -f https://dirkdev98:${{ secrets.COMPAS_GITHUB_TOKEN }}@github.com:compasjs/compas.git main:gh-pages
+          git push -f https://dirkdev98:${{ secrets.COMPAS_GITHUB_TOKEN }}@github.com/compasjs/compas.git main:gh-pages
 
   analyze:
     name: Analyze
