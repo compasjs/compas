@@ -86,6 +86,7 @@ jobs:
       - name: Build and deploy
         run: |
           yarn
+          echo 'VITE_USER_NODE_ENV=production' > ./docs/.env
           yarn compas docs:build
           cd ./docs/.vitepress/dist
           echo 'compasjs.com' > CNAME

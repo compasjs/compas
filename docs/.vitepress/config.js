@@ -47,6 +47,10 @@ module.exports = {
       includeLevel: [1, 2, 3],
     },
   },
+
+  vite: {
+    envDir: process.cwd() + "/docs",
+  },
 };
 
 function getHomeSidebar() {

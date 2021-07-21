@@ -2,10 +2,9 @@
 .idea
 .vscode
 
+# Build and deps
 dist
 node_modules
-lib
-tsconfig.tsbuildinfo
 
 # NPM / Yarn
 *-debug.log
@@ -28,11 +27,14 @@ coverage
 # Real code-gen output
 !packages/store/generated/
 
-# Generated docs folder output
-/docs/generated/*
-!/docs/generated/README.md
+# Benchmark output on CI
 /benchmark_output.txt
 
+# .env file for docs build
+/docs/.env
+
+# Ignore sql structure, which is never formatted.
 **/generated/common/structure.sql
 
+# Ignore all tmp files created based on fixtures
 __fixtures__/tmp
