@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.0.153](https://github.com/compasjs/compas/releases/tag/v0.0.153)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.14.6 to 7.14.8
+  ([#1044](https://github.com/compasjs/compas/pull/1044))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 16.3.1 to 16.4.0
+  ([#1033](https://github.com/compasjs/compas/pull/1033),
+  [#1041](https://github.com/compasjs/compas/pull/1041),
+  [#1043](https://github.com/compasjs/compas/pull/1043))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 7.30.0 to 7.31.0
+  ([#1039](https://github.com/compasjs/compas/pull/1039))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 35.4.3 to 35.5.0
+  ([#1038](https://github.com/compasjs/compas/pull/1038),
+  [#1045](https://github.com/compasjs/compas/pull/1045))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- feat(cli): remove `newTestEvent` options
+  ([#1031](https://github.com/compasjs/compas/pull/1031))
+  - Closes [#1030](https://github.com/compasjs/compas/pull/1030)
+- feat(docs): integrate docs from compasjs/docs and move to Vitepress
+  ([#1036](https://github.com/compasjs/compas/pull/1036))
+  - Closes [#1029](https://github.com/compasjs/compas/pull/1029)
+- fix(code-gen): fix jsdoc return type for query builders
+  ([#1034](https://github.com/compasjs/compas/pull/1034))
+- fix(code-gen): handle convert when generating types.
+  ([#1048](https://github.com/compasjs/compas/pull/1048))
+  - Closes [#1047](https://github.com/compasjs/compas/pull/1047)
+- fix(store): add Buffer to types of source for createOrUpdateFile
+  ([#1049](https://github.com/compasjs/compas/pull/1049))
+  - Closes [#1046](https://github.com/compasjs/compas/pull/1046)
+- test(code-gen): add e2e tests for handled errors
+  ([#1032](https://github.com/compasjs/compas/pull/1032))
+  - Closes [#1021](https://github.com/compasjs/compas/pull/1021)
+- test(store): fix flaky tests by increasing timeouts
+  ([#1037](https://github.com/compasjs/compas/pull/1037))
+
+##### Breaking changes
+
+- **cli**: remove `newTestEvent` options
+  - Removed the `options` argument on `newTestEvent`. This was more confusing
+    than a few extra logs in the test output.
+
 ### [v0.0.152](https://github.com/compasjs/compas/releases/tag/v0.0.152)
 
 ##### Changes

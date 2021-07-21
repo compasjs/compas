@@ -89,7 +89,7 @@ async function getListOfCommitsSinceTag(logger, version) {
  * @returns {{ header: string, source: string }}
  */
 function getChangelogHeaderAndSource(changelog) {
-  const string = "# CHANGELOG";
+  const string = "# Changelog";
   const splitIndex = changelog.indexOf(string) + string.length + 1;
 
   return {
