@@ -31,7 +31,7 @@ const fileQueries = {
  * @param {minio.Client} minio
  * @param {string} bucketName
  * @param {StoreFileInsertPartial} props
- * @param {ReadStream|string} streamOrPath
+ * @param {ReadStream|string|Buffer} source
  * @returns {Promise<StoreFile>}
  */
 export async function createOrUpdateFile(
@@ -39,7 +39,7 @@ export async function createOrUpdateFile(
   minio,
   bucketName,
   props,
-  streamOrPath,
+  source,
 ) {
   if (!props.name) {
     throw new Error("name is required on file props");
@@ -58,11 +58,11 @@ export async function createOrUpdateFile(
     props.id = intermediate.id;
   }
 
-  if (typeof streamOrPath === "string") {
-    streamOrPath = createReadStream(streamOrPath);
+  if (typeof source === "string") {
+    source = createReadStream(source);
   }
 
-  await minio.putObject(bucketName, props.id, streamOrPath, {
+  await minio.putObject(bucketName, props.id, source, {
     "content-type": props.contentType,
   });
   const stat = await minio.statObject(bucketName, props.id);

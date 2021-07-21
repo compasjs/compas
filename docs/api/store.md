@@ -345,7 +345,7 @@ _[source](https://github.com/compasjs/compas/blob/main/packages/store/src/minio.
 
 _Available since 0.1.0_
 
-_function createOrUpdateFile(sql, minio, bucketName, props, streamOrPath):
+_function createOrUpdateFile(sql, minio, bucketName, props, source):
 Promise\<StoreFile>_
 
 Create or update a file. The file store is backed by a Postgres table and S3
@@ -357,7 +357,7 @@ object.
 - minio `minio.Client`
 - bucketName `string`
 - props `StoreFileInsertPartial`
-- streamOrPath `ReadStream|string`
+- source `ReadStream|string|Buffer`
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L37)_
 

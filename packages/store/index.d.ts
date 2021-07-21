@@ -183,7 +183,7 @@ export function createOrUpdateFile(
     createdAt?: string;
     updatedAt?: string;
   },
-  streamOrPath: string | NodeJS.ReadStream,
+  source: string | NodeJS.ReadStream | Buffer,
 ): Promise<StoreFile>;
 
 /**
@@ -270,14 +270,6 @@ export interface FileCacheOptions {
  */
 export class FileCache {
   static fileCachePath: string;
-
-  constructor(
-    sql: Postgres,
-    minio: minioVendor.Client,
-    bucketName: string,
-    options?: FileCacheOptions,
-  );
-
   /**
    * Get a file(part) from the cache.
    * If the file(part) does not exist, it will try to fetch it from the FileStore
@@ -289,6 +281,13 @@ export class FileCache {
     start?: number,
     end?: number,
   ) => Promise<{ stream: NodeJS.ReadStream; cacheControl: string }>;
+
+  constructor(
+    sql: Postgres,
+    minio: minioVendor.Client,
+    bucketName: string,
+    options?: FileCacheOptions,
+  );
 
   /**
    * Remove a file from cache, but not from local disk
