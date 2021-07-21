@@ -25,6 +25,7 @@ export function setupMemoizedTypes(context) {
     defaultSettings: {
       isJSON: false,
       useTypescript: context.options.useTypescript,
+      useConvert: false,
       useDefaults: true,
       nestedIsJSON: false,
       isNode: context.options.isNode,
@@ -137,6 +138,7 @@ export function generateTypeDefinition(
   {
     isJSON,
     nestedIsJSON,
+    useConvert,
     useDefaults,
     useTypescript,
     isNode,
@@ -149,6 +151,7 @@ export function generateTypeDefinition(
     isRoot: false,
     isJSON: isJSON || nestedIsJSON || false,
     nestedIsJSON,
+    useConvert,
     useDefaults,
     useTypescript,
     isNode,
@@ -221,23 +224,30 @@ export function generateTypeDefinition(
       result += "(";
       result += generateTypeDefinition(context, type.values, recurseSettings);
       result += ")[]";
+
+      if (type.validator.convert && useConvert) {
+        result += "|(";
+        result += generateTypeDefinition(context, type.values, recurseSettings);
+        result += ")";
+      }
       break;
     case "boolean":
-      if (type.oneOf && useTypescript) {
+      if (useTypescript && !isNil(type.oneOf)) {
         result += type.oneOf;
+
+        if (type.validator.convert && useConvert) {
+          result += `|"${type.oneOf}"`;
+        }
       } else {
-        result += "boolean";
-      }
-      if (useTypescript && type.validator.convert) {
-        if (type.oneOf) {
-          result += `"${type.oneOf}"`;
-        } else {
+        result += `boolean`;
+
+        if (type.validator.convert && useConvert) {
           result += `|"true"|"false"`;
         }
       }
       break;
     case "date":
-      if (isJSON || isBrowser) {
+      if (isBrowser || isJSON) {
         result += "string";
       } else {
         result += "Date";
@@ -282,11 +292,20 @@ export function generateTypeDefinition(
       }
       break;
     case "number":
-      if (type.oneOf) {
+      if (useTypescript && type.oneOf) {
         result += type.oneOf.join("|");
+
+        if (useConvert && type.validator.convert) {
+          result += `|"${type.oneOf.join(`"|"`)}"`;
+        }
       } else {
-        result += "number";
+        result += `number`;
+
+        if (useConvert && type.validator.convert) {
+          result += `|string`;
+        }
       }
+
       break;
     case "object":
       result += "{";
