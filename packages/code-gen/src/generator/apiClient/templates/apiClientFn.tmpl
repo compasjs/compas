@@ -8,13 +8,13 @@
 {{ if (!options.useTypescript) { }}
     * @param {AxiosInstance} instance
     {{ if (item.params) { }}
-     * @param { {{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }} } params
+     * @param { {{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }} } params
     {{ } }}
     {{ if (item.query) { }}
-     * @param { {{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }} } query
+     * @param { {{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }} } query
     {{ } }}
     {{ if (item.body) { }}
-     * @param { {{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }} } body
+     * @param { {{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }} } body
     {{ } }}
     {{ if (item.files) { }}
      * @param { {{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }} } files
@@ -31,13 +31,13 @@ export async function api{{= item.uniqueName }}(
 {{ if (options.useTypescript) { }}
     instance: AxiosInstance,
     {{ if (item.params) { }}
-    params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, }) }},
+    params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
     {{ } }}
     {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, }) }},
+    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
     {{ } }}
     {{ if (item.body) { }}
-    body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, }) }},
+    body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
     {{ } }}
     {{ if (item.files) { }}
     files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }},

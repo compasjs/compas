@@ -24,13 +24,13 @@ body,
 options,
 }: {
 {{ if (item.params) { }}
-params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 {{ if (item.query) { }}
-query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 {{ if (item.body) { }}
-body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefined,
 }) {
@@ -104,13 +104,13 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
  */
 {{= funcName }}.queryKey = (
 {{ if (item.params) { }}
-params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 {{ if (item.query) { }}
-query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 {{ if (item.body) { }}
-body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }},
+body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 ): QueryKey => [
   {{= funcName }}.baseKey(),
@@ -129,13 +129,13 @@ body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDe
 
 interface {{= upperCaseFirst(funcName) }}Props {
    {{ if (item.params) { }}
-   params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false }) }};
+   params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
    {{ } }}
    {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false }) }};
+    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
    {{ } }}
    {{ if (item.body) { }}
-   body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false }) }};
+   body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
    {{ } }}
    {{ if (item.files) { }}
    files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input" }) }};
