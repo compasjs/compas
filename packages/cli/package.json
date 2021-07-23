@@ -30,7 +30,7 @@
     "c8": "7.7.3",
     "chokidar": "3.5.2",
     "http-proxy": "1.18.1",
-    "recast": "0.20.4",
+    "recast": "0.20.5",
     "tree-kill": "1.2.2"
   },
   "maintainers": [
