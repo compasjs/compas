@@ -1,13 +1,17 @@
 import { AppError, isNil, isStaging } from "@compas/stdlib";
 
 /**
- * @type CustomErrorHandler
+ * @typedef {import("../app").ErrorHandlerOptions} ErrorHandlerOptions
+ */
+
+/**
+ * @type {NonNullable<ErrorHandlerOptions["onError"]>}
  * Default onError handler that doesn't handle anything
  */
 const defaultOnError = () => false;
 
 /**
- * @type AppErrorHandler
+ * @type {NonNullable<ErrorHandlerOptions["onAppError"]>}
  * Default onAppError handler that builds a simple object with key, message and info.
  */
 const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
@@ -16,12 +20,13 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
  * Handle any upstream errors
  *
  * @param {ErrorHandlerOptions} opts
- * @returns {function(...[*]=)}
+ * @returns {Middleware}
  */
-export function errorHandler({ onAppError, onError, leakError }) {
-  onAppError = onAppError || defaultOnAppError;
-  onError = onError || defaultOnError;
-  leakError = leakError === true || (leakError === undefined && isStaging());
+export function errorHandler(opts) {
+  const onAppError = opts.onAppError ?? defaultOnAppError;
+  const onError = opts.onError ?? defaultOnError;
+  const leakError =
+    opts.leakError === true || (opts.leakError === undefined && isStaging());
 
   return async (ctx, next) => {
     try {

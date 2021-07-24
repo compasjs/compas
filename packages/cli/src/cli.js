@@ -12,7 +12,7 @@ mainFn(import.meta, async (logger) => {
   const command = parseArgs(acceptedArgs, Object.keys(scripts), args);
 
   const result = await execute(logger, command, scripts);
-  if (result && result.exitCode !== undefined) {
+  if (result?.exitCode !== undefined) {
     process.exit(result.exitCode);
   }
 });

@@ -37,8 +37,10 @@ async function main(logger) {
   };
 
   const messageDispatcher = createMessageDispatcher(logger, teardown);
+  // @ts-ignore
   parentPort.on("message", messageDispatcher);
   // Start requesting files as soon as possible
+  // @ts-ignore
   parentPort.postMessage({ type: "request_file" });
 }
 
@@ -49,8 +51,8 @@ async function main(logger) {
  * results, it can safely exit.
  *
  * @param {Logger} logger
- * @param {function(): void} callback
- * @returns {function(message: *): void}
+ * @param {() => void} callback
+ * @returns {(message: any) => void}
  */
 function createMessageDispatcher(logger, callback) {
   return function (message) {
@@ -58,6 +60,7 @@ function createMessageDispatcher(logger, callback) {
       markTestFailuresRecursively(state);
 
       // Provide a summary of the results
+      // @ts-ignore
       parentPort.postMessage({
         type: "provide_result",
         threadId,
@@ -69,6 +72,7 @@ function createMessageDispatcher(logger, callback) {
       callback();
     } else if (message.type === "provide_file") {
       const idx = state.children.length;
+      // @ts-ignore
       import(pathToFileURL(message.file)).then(async () => {
         if (state.children[idx]) {
           // Handle multiple added suites for a single import
@@ -76,6 +80,7 @@ function createMessageDispatcher(logger, callback) {
             await runTestsRecursively(state.children[i], message.isDebugging);
           }
         }
+        // @ts-ignore
         parentPort.postMessage({ type: "request_file" });
       });
     }

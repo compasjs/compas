@@ -5,8 +5,8 @@ import lodashMerge from "lodash.merge";
  *
  * @since 0.1.0
  *
- * @param {*} [item]
- * @returns {boolean}
+ * @param {any|null|undefined} [item]
+ * @returns {item is null | undefined}
  */
 export function isNil(item) {
   return item === null || item === undefined;
@@ -35,6 +35,7 @@ export function isPlainObject(item) {
  * @function
  * @since 0.1.0
  *
+ * @type {(target: any, ...sources: any[]) => object}
  * @param {object} target The destination object.
  * @param {...object} [sources] The source objects.
  * @returns {object} Returns `object`.
@@ -50,7 +51,7 @@ export const merge = lodashMerge;
  * @param {object} data The object to serialize
  * @param {*} [result]
  * @param {string} [path]
- * @returns {Object<string, any>}
+ * @returns {Record<string, any>}
  */
 export function flatten(data, result = {}, path = "") {
   for (const key of Object.keys(data)) {
@@ -75,7 +76,7 @@ export function flatten(data, result = {}, path = "") {
  *
  * @since 0.1.0
  *
- * @param {object} data
+ * @param {Record<string, any>} data
  * @returns {object}
  */
 export function unFlatten(data) {

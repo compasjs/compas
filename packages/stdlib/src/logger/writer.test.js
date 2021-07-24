@@ -7,7 +7,7 @@ test("insight/writer", (t) => {
   t.test("writePretty", (t) => {
     const now = new Date();
     let result = [];
-    const mock = {
+    const mock = /** @type {WritableStream} */ {
       write: (arg) => {
         result.push(arg);
       },

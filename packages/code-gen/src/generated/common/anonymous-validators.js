@@ -236,6 +236,7 @@ export function anonymousValidator219305298(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator657675998(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -243,6 +244,7 @@ export function anonymousValidator219305298(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   if (isNil(value) || typeof value !== "boolean") {
     const parentType = "boolean";
@@ -257,6 +259,7 @@ export function anonymousValidator219305298(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator293751998(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -264,6 +267,7 @@ export function anonymousValidator219305298(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
@@ -1619,7 +1623,7 @@ export function anonymousValidator438930840(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {Object<string, CodeGenType>|undefined}
+ * @returns {{ [ key: string]:CodeGenType}|undefined}
  */
 export function anonymousValidator1529527338(
   value,
@@ -1821,6 +1825,7 @@ export function anonymousValidator2139331922(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator682551261(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -1828,6 +1833,7 @@ export function anonymousValidator2139331922(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator815277285(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -1835,6 +1841,7 @@ export function anonymousValidator2139331922(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
@@ -2163,9 +2170,9 @@ export function anonymousValidator718135986(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }|undefined}
+ * @returns {undefined|{"type": string, "rawType": CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }|undefined}
  */
-export function anonymousValidator70458499(
+export function anonymousValidator1907823387(
   value,
   propertyPath,
   errors = [],
@@ -2185,6 +2192,11 @@ export function anonymousValidator70458499(
   result["type"] = anonymousValidator186795873(
     value["type"],
     `${propertyPath}.type`,
+    errors,
+  );
+  result["rawType"] = anonymousValidator17105276(
+    value["rawType"],
+    `${propertyPath}.rawType`,
     errors,
   );
   result["fields"] = anonymousValidator718135986(
@@ -2443,7 +2455,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": { [ key: string]:CodeGenType}, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "rawType": CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2545,7 +2557,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.relations`,
     errors,
   );
-  result["where"] = anonymousValidator70458499(
+  result["where"] = anonymousValidator1907823387(
     value["where"],
     `${propertyPath}.where`,
     errors,
@@ -3193,6 +3205,7 @@ export function anonymousValidator682551261(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator1519740867(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3200,6 +3213,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator20588538(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3207,6 +3221,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1312175728(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3214,6 +3229,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator17476225(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3221,6 +3237,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator2019605291(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3228,6 +3245,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator508679687(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3235,6 +3253,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1377926226(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3242,6 +3261,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1441913722(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3249,6 +3269,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator17105276(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3256,6 +3277,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator127554530(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3263,6 +3285,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator243901689(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3270,6 +3293,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1672152398(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3277,6 +3301,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1836970168(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3284,6 +3309,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1390215584(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -3291,6 +3317,7 @@ export function anonymousValidator682551261(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
@@ -3625,7 +3652,7 @@ export function anonymousValidator2069957416(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {Object<string, Object<string, CodeGenType>>|undefined}
+ * @returns {{ [ key: string]:{ [ key: string]:CodeGenType}}|undefined}
  */
 export function anonymousValidator1413365072(
   value,
@@ -4284,6 +4311,7 @@ export function anonymousValidator1835746810(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator1045315509(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4291,6 +4319,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator564383959(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4298,6 +4327,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator210116167(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4305,6 +4335,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1331366345(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4312,6 +4343,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator2008271825(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4319,6 +4351,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator347072999(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4326,6 +4359,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator914281176(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4333,6 +4367,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator40811832(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4340,6 +4375,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator451802958(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -4347,6 +4383,7 @@ export function anonymousValidator1835746810(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,

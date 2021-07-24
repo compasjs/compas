@@ -168,6 +168,7 @@ export async function packageListFiles(event) {
 export async function packageParseFiles(event, collectedFiles) {
   eventStart(event, "package.parseFiles");
 
+  /** @type {DocParserParsedFileCollection} */
   const result = {};
 
   const fileHandler = (pkg) => async (file) => {

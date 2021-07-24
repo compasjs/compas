@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "noEmit": true,
+    "module": "esnext",
+    "checkJs": true,
+    "maxNodeModuleJsDepth": 0,
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": false
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "exclude": ["generated/testing/bench/**/*", "**/*.test.js", "**/*.bench.js"]
+}

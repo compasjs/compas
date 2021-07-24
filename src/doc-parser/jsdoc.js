@@ -2,8 +2,8 @@ import { AppError, eventStart, eventStop, isNil } from "@compas/stdlib";
 import { packages } from "./packages.js";
 
 /**
- * @typedef {Object<DocParserPackage, { blocks: DocParserBlock[], }>}
- *    DocParserBlocksByPackage
+ * @typedef {Object<DocParserPackage,
+ *  { blocks: DocParserBlock[], }>} DocParserBlocksByPackage
  */
 
 /**
@@ -76,6 +76,7 @@ export function parseDocBlock(comment) {
     };
   }
 
+  /** @type {DocParserBlock} */
   let block;
 
   if (rawTags.find((it) => it.tag === "callback")) {
@@ -83,6 +84,7 @@ export function parseDocBlock(comment) {
     block = {
       type: "unknown",
       raw: comment.value,
+      range: undefined,
     };
   } else if (rawTags.find((it) => it.tag === "returns" || it.tag === "param")) {
     block = extractFunctionDeclaration(description, rawTags);
@@ -90,6 +92,7 @@ export function parseDocBlock(comment) {
     block = {
       type: "unknown",
       raw: comment.value,
+      range: undefined,
     };
   }
 
@@ -167,6 +170,7 @@ function extractTags(value, index) {
         "see",
         "class",
         "constructor",
+        "type",
       ].indexOf(matchResult[1]) === -1
     ) {
       result.push({
@@ -205,6 +209,7 @@ function extractFunctionDeclaration(description, rawTags) {
         value: "void",
       },
     },
+    range: undefined,
   };
 
   for (const tag of rawTags) {
@@ -308,11 +313,11 @@ function filterDocBlocks(block) {
  *
  * @param {string} value
  * @returns {{
- *   name?: string,
- *   typeLiteral?: string,
- *   description?: string,
+ *   name: string,
+ *   typeLiteral: string,
+ *   description: string,
  *   defaultValue?: string,
- *   isOptional?: boolean,
+ *   isOptional: boolean,
  * }}
  */
 function extractTypeTagValue(value) {
@@ -320,7 +325,10 @@ function extractTypeTagValue(value) {
 
   const result = re.exec(value);
   if (!result) {
-    return {};
+    throw AppError.serverError({
+      message: "Invalid type tag",
+      value,
+    });
   }
 
   const defaultValue = (result[5] ?? "]")

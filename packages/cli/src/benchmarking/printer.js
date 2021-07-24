@@ -56,7 +56,7 @@ export function printBenchResults() {
 
 /**
  * @param {string[]} result
- * @param {BenchState[]} state
+ * @param {import("./state").BenchState[]} state
  */
 function printSuccessResults(result, state) {
   if (state.length === 0) {
@@ -74,29 +74,35 @@ function printSuccessResults(result, state) {
     // We also line out on the '.'
     // This results in easier to interpret results
     const operationTimeSplit = bench.operationTimeNs.split(".");
+    // @ts-ignore
     bench.operationTimeBeforeDot = operationTimeSplit[0];
 
+    // @ts-ignore
     if (bench.operationTimeBeforeDot.length > longestOperationTimeBeforeDot) {
+      // @ts-ignore
       longestOperationTimeBeforeDot = bench.operationTimeBeforeDot.length;
     }
   }
 
   for (const bench of state) {
+    // @ts-ignore
+    const formatted = bench.operationTimeBeforeDot.padStart(
+      longestOperationTimeBeforeDot,
+      " ",
+    );
+
     result.push(
       `${bench.name.padEnd(longestName, " ")}   ${String(bench.N).padStart(
         10,
         " ",
-      )}  iterations   ${bench.operationTimeBeforeDot.padStart(
-        longestOperationTimeBeforeDot,
-        " ",
-      )}  ns/op`,
+      )}  iterations   ${formatted}  ns/op`,
     );
   }
 }
 
 /**
  * @param {string[]} result
- * @param {BenchState[]} state
+ * @param {import("./state").BenchState[]} state
  */
 function printErrorResults(result, state) {
   if (state.length === 0) {

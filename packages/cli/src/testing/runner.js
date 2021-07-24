@@ -10,6 +10,18 @@ import {
 } from "./state.js";
 
 /**
+ * @typedef {import("./state").TestState} TestState
+ */
+
+/**
+ * @typedef {import("./state").TestCallback} TestCallback
+ */
+
+/**
+ * @typedef {import("../../types/advanced-types.js").TestRunner} TestRunner
+ */
+
+/**
  * @param {TestState} testState
  * @param {boolean} [isDebugging] If debugging, we should ignore the timeout
  * @returns {Promise<void>}
@@ -107,12 +119,8 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
  * Register top-level tests. The main entry point of the test runner
  *
  * @since 0.1.0
- * @function
  *
- * @param {string} name The test name
- * @param {TestCallback} callback The function that is executed by the test runner. This
- *    can do async setup, register child tests and run assertions
- * @returns {void}
+ * @type {(name: string, callback: TestCallback) => void}
  */
 export const test = subTest.bind(undefined, state);
 
@@ -259,6 +267,7 @@ function deepEqual(state, actual, expected, message) {
     };
 
     if (e.generatedMessage) {
+      // @ts-ignore
       meta.message = e.message;
     }
   }

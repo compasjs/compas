@@ -4,7 +4,7 @@ import proxy from "http-proxy";
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
+ * @param {import("../parse").UtilCommand} command
  * @returns {void}
  */
 export function proxyCommand(logger, command) {
@@ -20,6 +20,7 @@ export function proxyCommand(logger, command) {
     process.exit(1);
   }
 
+  // @ts-ignore
   const port = parseInt(apiUrlUsed.split(":").pop());
 
   if (isNaN(port)) {
@@ -87,6 +88,7 @@ export function proxyCommand(logger, command) {
       res.setHeader("Access-Control-Allow-Methods", allowMethods);
       res.setHeader(
         "Access-Control-Allow-Headers",
+        // @ts-ignore
         req.headers["access-control-request-headers"],
       );
       res.writeHead(204);

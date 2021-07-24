@@ -3,6 +3,10 @@ import { AppError, isNil } from "@compas/stdlib";
 import { state, testLogger } from "./state.js";
 
 /**
+ * @typedef {import("./state").TestState} TestState
+ */
+
+/**
  * Prints test results and returns the exit code
  *
  * @returns {number}
@@ -153,13 +157,16 @@ export function printFailedResults(state, result, indentCount) {
 
       const subIndent = `${indent}  `;
 
+      // @ts-ignore
       if (assertion.meta.message) {
         // Assertion may already have a message, for example in case of a deepEqual
+        // @ts-ignore
         const parts = assertion.meta.message.split("\n");
         for (const part of parts) {
           result.push(`${subIndent}${part}`);
         }
       } else {
+        // @ts-ignore
         const { expected, actual } = assertion.meta;
         // We print the `typeof` as well, so it's more clear that "5" !== 5
         result.push(`${subIndent}Expected: (${typeof expected}) ${expected}`);

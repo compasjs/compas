@@ -32,7 +32,7 @@ import {
   anonymousValidator753972035,
 } from "../common/anonymous-validators.js";
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFile}
  */
@@ -40,7 +40,7 @@ export function validateStoreFile(value, propertyPath = "$") {
   return anonymousValidator599447075(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroup}
  */
@@ -50,7 +50,7 @@ export function validateStoreFileGroup(value, propertyPath = "$") {
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupMeta}
  */
@@ -60,7 +60,7 @@ export function validateStoreFileGroupMeta(value, propertyPath = "$") {
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileMeta}
  */
@@ -68,7 +68,7 @@ export function validateStoreFileMeta(value, propertyPath = "$") {
   return anonymousValidator2144828802(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreImageTransformOptions}
  */
@@ -76,7 +76,7 @@ export function validateStoreImageTransformOptions(value, propertyPath = "$") {
   return anonymousValidator376443596(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJob}
  */
@@ -84,7 +84,7 @@ export function validateStoreJob(value, propertyPath = "$") {
   return anonymousValidator1781782332(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobInterval}
  */
@@ -92,7 +92,7 @@ export function validateStoreJobInterval(value, propertyPath = "$") {
   return anonymousValidator430889951(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSession}
  */
@@ -100,7 +100,7 @@ export function validateStoreSession(value, propertyPath = "$") {
   return anonymousValidator1108679019(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileWhere}
  */
@@ -108,7 +108,7 @@ export function validateStoreFileWhere(value, propertyPath = "$") {
   return anonymousValidator2074494218(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupWhere}
  */
@@ -116,7 +116,7 @@ export function validateStoreFileGroupWhere(value, propertyPath = "$") {
   return anonymousValidator153017499(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobWhere}
  */
@@ -124,7 +124,7 @@ export function validateStoreJobWhere(value, propertyPath = "$") {
   return anonymousValidator1257773835(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSessionWhere}
  */
@@ -132,7 +132,7 @@ export function validateStoreSessionWhere(value, propertyPath = "$") {
   return anonymousValidator500057262(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileOrderBy}
  */
@@ -140,7 +140,7 @@ export function validateStoreFileOrderBy(value, propertyPath = "$") {
   return anonymousValidator1795948632(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileOrderBySpec}
  */
@@ -148,7 +148,7 @@ export function validateStoreFileOrderBySpec(value, propertyPath = "$") {
   return anonymousValidator163358845(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupOrderBy}
  */
@@ -156,7 +156,7 @@ export function validateStoreFileGroupOrderBy(value, propertyPath = "$") {
   return anonymousValidator753972035(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupOrderBySpec}
  */
@@ -164,7 +164,7 @@ export function validateStoreFileGroupOrderBySpec(value, propertyPath = "$") {
   return anonymousValidator322356638(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobOrderBy}
  */
@@ -172,7 +172,7 @@ export function validateStoreJobOrderBy(value, propertyPath = "$") {
   return anonymousValidator685221527(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobOrderBySpec}
  */
@@ -180,7 +180,7 @@ export function validateStoreJobOrderBySpec(value, propertyPath = "$") {
   return anonymousValidator280827708(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSessionOrderBy}
  */
@@ -188,7 +188,7 @@ export function validateStoreSessionOrderBy(value, propertyPath = "$") {
   return anonymousValidator2038758416(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSessionOrderBySpec}
  */
@@ -196,7 +196,7 @@ export function validateStoreSessionOrderBySpec(value, propertyPath = "$") {
   return anonymousValidator144635851(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileQueryBuilder}
  */
@@ -204,7 +204,7 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
   return anonymousValidator310044624(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileQueryTraverser}
  */
@@ -212,7 +212,7 @@ export function validateStoreFileQueryTraverser(value, propertyPath = "$") {
   return anonymousValidator1069465749(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupQueryBuilder}
  */
@@ -220,7 +220,7 @@ export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
   return anonymousValidator1862233461(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreFileGroupQueryTraverser}
  */
@@ -231,7 +231,7 @@ export function validateStoreFileGroupQueryTraverser(
   return anonymousValidator1274599578(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobQueryBuilder}
  */
@@ -239,7 +239,7 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
   return anonymousValidator343387919(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreJobQueryTraverser}
  */
@@ -247,7 +247,7 @@ export function validateStoreJobQueryTraverser(value, propertyPath = "$") {
   return anonymousValidator1952914356(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSessionQueryBuilder}
  */
@@ -255,7 +255,7 @@ export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
   return anonymousValidator647856360(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {StoreSessionQueryTraverser}
  */

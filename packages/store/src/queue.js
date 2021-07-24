@@ -14,6 +14,53 @@ import { queryJob } from "./generated/database/job.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
 
+/**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
+ * @typedef {object} JobInput
+ * @property {number|undefined} [priority] Defaults to 0
+ * @property {Record<string, any>|undefined} [data] Defaults to an empty object
+ * @property {Date|undefined} [scheduledAt] By default executes as soon as possible
+ * @property {string} name
+ */
+
+/**
+ * @typedef {(
+ *   event: InsightEvent,
+ *   sql: Postgres,
+ *   data: StoreJob,
+ * ) => (void | Promise<void>)} JobQueueHandlerFunction
+ */
+
+/**
+ * @typedef {object} JobQueueWorkerOptions
+ * @property {JobQueueHandlerFunction|Record<
+ *   string,
+ *   JobQueueHandlerFunction | {
+ *      handler: JobQueueHandlerFunction,
+ *      timeout: number
+ *   }
+ * >} handler
+ *   Set a global handler, a handler based on job name, or also specify a different
+ *    timeout for the specific job handler. If no timeout for a specific handler is
+ *    provided, the handlerTimeout value is used. The timeout should be in milliseconds.
+ * @property {number|undefined} [pollInterval] Determine the poll interval in
+ *    milliseconds if the queue was empty. Defaults to 1500 ms.
+ * @property {number|undefined} [parallelCount] Set the amount of parallel jobs to
+ *    process. Defaults to 1. Make sure it is not higher than the amount of Postgres
+ *    connections in the pool
+ * @property {number|undefined} [maxRetryCount] The worker will automatically catch any
+ *    errors thrown by the handler, and retry the job at a later stage. This property
+ *    defines the max amount of retries before forcing the job to be completed. Defaults
+ *    to 5 retries.
+ * @property {number|undefined} [handlerTimeout] Maximum time the handler could take to
+ *    fulfill a job in milliseconds Defaults to 30 seconds.
+ */
+
+/**
+ */
 const queueQueries = {
   // Should only run in a transaction
   getAnyJob: (sql) => sql`
@@ -198,6 +245,7 @@ export class JobQueueWorker {
     // Setup the worker array, each value is either undefined or a running Promise
     this.workers = Array(options?.parallelCount ?? 1).fill(undefined);
 
+    /** @type {any} */
     this.timeout = undefined;
     this.isStarted = false;
 
@@ -331,6 +379,7 @@ export class JobQueueWorker {
       eventStart(event, `job.handler.${jobData.name}`);
 
       try {
+        /** @type {any} */
         let handlerFn = this.jobHandler;
         let handlerTimeout = jobData.handlerTimeout ?? this.handlerTimeout;
 
@@ -364,7 +413,11 @@ export class JobQueueWorker {
           new Promise((_, reject) => {
             setTimeout(() => {
               abortController.abort();
-              reject(AppError.serverError("queue.handlerTimeout"));
+              reject(
+                AppError.serverError({
+                  message: "queue.handlerTimeout",
+                }),
+              );
             }, handlerTimeout);
           }),
           handlerFn(event, sql, jobData),
@@ -412,7 +465,7 @@ export class JobQueueWorker {
  *
  * @param {Postgres} sql
  * @param {string} eventName
- * @param {object} data
+ * @param {Record<string, any>} data
  * @returns {Promise<number>}
  */
 export async function addEventToQueue(sql, eventName, data) {
@@ -675,6 +728,7 @@ export async function getUncompletedJobsByName(sql) {
     },
   }).exec(sql);
 
+  /** @type {Record<string, QueryResultStoreJob[]>} */
   const result = {};
 
   for (const job of jobs) {

@@ -1,24 +1,39 @@
 import { isNil } from "@compas/stdlib";
 
 /**
+ * @typedef {(
+ *   file: StoreFile,
+ *   start?: number | undefined,
+ *   end?: number | undefined
+ *   ) => Promise<{
+ *     stream: NodeJS.ReadableStream,
+ *     cacheControl: string,
+ *   }>} GetStreamFn
+ */
+
+/**
  * Send a `StoreFile` instance from @compas/store as a `ctx` response.
  * Handles byte range requests as well. May need some improvements to set some better
  * cache headers.
  *
  * @since 0.1.0
  *
- * @param {Context} ctx
- * @param {SendFileItem} file
+ * @param {import("koa").Context} ctx
+ * @param {StoreFile} file
  * @param {GetStreamFn} getStreamFn
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function sendFile(ctx, file, getStreamFn) {
   ctx.set("Accept-Ranges", "bytes");
+  // @ts-ignore
   ctx.set("Last-Modified", file.updatedAt || file.lastModified);
   ctx.type = file.contentType;
 
+  // @ts-ignore
   if (ctx.headers["if-modified-since"]?.length > 0) {
+    // @ts-ignore
     const dateValue = new Date(ctx.headers["if-modified-since"]);
+    // @ts-ignore
     const currentDate = new Date(file.updatedAt ?? file.lastModified);
 
     // Weak validation ignores the milli-seconds part, hence 'weak'.
@@ -36,7 +51,9 @@ export async function sendFile(ctx, file, getStreamFn) {
       const rangeHeader = ctx.headers.range;
       const range = /=(\d*)-(\d*)$/.exec(rangeHeader);
 
+      // @ts-ignore
       let start = range[1] ? parseInt(range[1]) : undefined;
+      // @ts-ignore
       let end = range[2] ? parseInt(range[2]) : file.contentLength;
 
       if (end > file.contentLength) {

@@ -9,6 +9,12 @@ import {
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
+ * @typedef {import("@compas/stdlib")
+ *   .ProcessDirectoryOptions
+ * } ProcessDirectoryOptions
+ */
+
+/**
  * @type {{context: Object<string, Function>, globals: Object<string, Function>}}
  */
 export const templateContext = {
@@ -25,8 +31,7 @@ export const templateContext = {
 /**
  * @param {string} name
  * @param {string} str
- * @param {object} [opts={}]
- * @param {boolean} [opts.debug]
+ * @param {{ debug?: boolean }} [opts={}]
  */
 export function compileTemplate(name, str, opts = {}) {
   if (isNil(name) || isNil(str)) {
@@ -79,8 +84,11 @@ export function compileTemplate(name, str, opts = {}) {
     );
   } catch (e) {
     const err = new Error(`Error while compiling ${name} template`);
+    // @ts-ignore
     err.originalErr = e;
+    // @ts-ignore
     err.templateName = name;
+    // @ts-ignore
     err.compiled = compiled;
     throw err;
   }

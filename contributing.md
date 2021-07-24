@@ -37,7 +37,7 @@ yarn compas syncMetadata
 **Code generation, @compas/store structure changes**:
 
 ```
-yarn compas gen
+yarn compas generate
 ```
 
 ### Improving test coverage
@@ -51,8 +51,8 @@ If it is your first time doing this, start by checking out files in the
 be pretty straight forward to find a related function that is tested, and doing
 the same for the yet untested function. For new cases related to code
 generation, add the missing case in `gen/testing.js` and regenerate with
-`yarn compas gen && yarn compas lint`. Then run `yarn compas coverage` again to
-see that the new case is not yet covered by tests.
+`yarn compas generate && yarn compas lint`. Then run `yarn compas coverage`
+again to see that the new case is not yet covered by tests.
 
 ### Debugging tests
 

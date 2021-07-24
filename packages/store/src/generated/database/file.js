@@ -32,7 +32,7 @@ const fileFieldSet = new Set([
  * Get all fields for file
  *
  * @param {string} [tableName="f."]
- * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @param {{ excludePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function fileFields(tableName = "f.", options = {}) {
@@ -64,6 +64,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     where = validateStoreFileWhere(where, "$.fileWhere");
   }
   const strings = ["1 = 1"];
+  /** @type {QueryPartArg[]} */
   const values = [undefined];
   if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
     strings.push(" AND ");
@@ -447,7 +448,7 @@ export function fileOrderBy(
  * Build 'VALUES ' part for file
  *
  * @param {StoreFileInsertPartial|StoreFileInsertPartial[]} insert
- * @param {{ includePrimaryKey: boolean }} [options={}]
+ * @param {{ includePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function fileInsertValues(insert, options = {}) {
@@ -563,11 +564,11 @@ WHERE ${fileWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }} [options={}]
+ * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<StoreFile[]>}
  */
 async function fileInsert(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
@@ -590,7 +591,7 @@ RETURNING ${fileFields("")}
  * @returns {Promise<StoreFile[]>}
  */
 async function fileUpsertOnId(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   const fieldString = [...fileFieldSet]
@@ -628,7 +629,7 @@ RETURNING ${fileFields()}
 /**
  * @param {Postgres} sql
  * @param {StoreFileWhere} [where={}]
- * @param {{ skipCascade: boolean }} [options={}]
+ * @param {{ skipCascade?: boolean }} [options={}]
  * @returns {Promise<void>}
  */
 async function fileDelete(sql, where = {}, options = {}) {
@@ -653,11 +654,11 @@ export const fileQueries = {
   fileDeletePermanent,
 };
 /**
- * @param {StoreFileQueryBuilder|StoreFileQueryTraverser} [builder={}]
- * @param {QueryPart} wherePartial
+ * @param {StoreFileQueryBuilder & StoreFileQueryTraverser} builder
+ * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQueryFile(builder = {}, wherePartial) {
+export function internalQueryFile(builder, wherePartial) {
   const joinQb = query``;
   if (builder.viaGroup) {
     builder.where = builder.where ?? {};
@@ -691,7 +692,7 @@ export function internalQueryFile(builder = {}, wherePartial) {
     }
     builder.where.idIn.append(query`
 SELECT DISTINCT fg."file"
-${internalQueryFileGroup(builder.viaGroup)}
+${internalQueryFileGroup(builder.viaGroup ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -725,7 +726,7 @@ ${offsetLimitQb}
 SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
-${internalQueryFileGroup(builder.group, query`AND fg."file" = f."id"`)}
+${internalQueryFileGroup(builder.group ?? {}, query`AND fg."file" = f."id"`)}
 ORDER BY ${fileGroupOrderBy(
       builder.group.orderBy,
       builder.group.orderBySpec,
@@ -741,18 +742,15 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
- * @typedef {StoreFile} QueryResultStoreFile
- * @property {QueryResultStoreFileGroup|string|number} [group]
- */
-/**
  * Query Builder for file
  * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<QueryResultStoreFile[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>,
- *  queryPart: QueryPart,
+ *  then: () => void,
+ *  exec: (sql: Postgres) => Promise<QueryResultStoreFile[]>,
+ *  execRaw: (sql: Postgres) => Promise<any[]>,
+ *  queryPart: QueryPart<any>,
  * }}
  */
 export function queryFile(builder = {}) {
@@ -765,7 +763,7 @@ export function queryFile(builder = {}) {
 SELECT to_jsonb(f.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
-${internalQueryFile(builder)}
+${internalQueryFile(builder ?? {})}
 ORDER BY ${fileOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
@@ -798,7 +796,7 @@ ORDER BY ${fileOrderBy(builder.orderBy, builder.orderBySpec)}
  * Transform results from the query builder that adhere to the known structure
  * of 'file' and its relations.
  *
- * @param {*[]} values
+ * @param {any[]} values
  * @param {StoreFileQueryBuilder} [builder={}]
  */
 export function transformFile(values, builder = {}) {

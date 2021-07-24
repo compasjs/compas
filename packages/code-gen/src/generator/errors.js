@@ -63,13 +63,18 @@ export function exitOnErrorsOrReturn(context) {
         break;
 
       default:
-        str += `[${error.key}]: ${JSON.stringify(error, null, 2)}`;
+        str += `[${error["key"] ?? "unknown"}]: ${JSON.stringify(
+          error,
+          null,
+          2,
+        )}`;
         break;
     }
 
     formatArray.push(str);
   }
 
+  // @ts-ignore
   context.logger.error(formatArray.join("\n"));
   process.exit(1);
 }

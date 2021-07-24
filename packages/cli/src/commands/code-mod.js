@@ -5,8 +5,8 @@ const SUB_COMMANDS = ["list", "exec"];
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
- * @returns {Promise<{ exitCode: number }>}
+ * @param {import("../parse").UtilCommand} command
+ * @returns {Promise<{ exitCode: number }|void>}
  */
 export async function codeModCommand(logger, command) {
   const verboseIdx = command.arguments.indexOf("--verbose");

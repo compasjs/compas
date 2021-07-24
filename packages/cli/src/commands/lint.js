@@ -8,8 +8,8 @@ const lintFile = pathJoin(
 
 /**
  * @param {Logger} logger
- * @param {ExecCommand} command
- * @returns {Promise<void>}
+ * @param {import("../parse").ExecCommand} command
+ * @returns {void | Promise<void | { exitCode: number; }>}
  */
 export function lintCommand(logger, command) {
   return executeCommand(

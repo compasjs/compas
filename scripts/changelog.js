@@ -6,11 +6,12 @@ mainFn(import.meta, main);
 /**
  * @typedef {object} ChangelogCommit
  * @property {string} title  Full commit title
- * @property {string|undefined} subject Subject of the commit, like in conventional
+ * @property {string|undefined} [subject] Subject of the commit, like in conventional
  *    commits
- * @property {string|undefined} message Message in the title, not including subject
+ * @property {string|undefined} [message] Message in the title, not including subject
  * @property {string} body Full commit body
- * @property {string|undefined} breakingChange Commit body breaking change or major bumps
+ * @property {string|undefined} [breakingChange] Commit body breaking change or major
+ *    bumps
  * @property {string[]} notes Changelog notes
  */
 

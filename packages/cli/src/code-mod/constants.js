@@ -7,7 +7,7 @@ export const PARALLEL_COUNT = Math.max(cpus().length - 1, 1);
 /**
  * @type {Object<string, {
  *    description: string,
- *    exec: function(event: InsightEvent, verbose: boolean): Promise<void>
+ *    exec: (event: InsightEvent, verbose: boolean) => Promise<void>
  * }>}
  */
 export const codeModMap = {

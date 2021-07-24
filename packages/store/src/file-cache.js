@@ -7,14 +7,25 @@ import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);
 
+/**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
+ * @typedef {import("../types/advanced-types").MinioClient} MinioClient
+ */
+
 export class FileCache {
   static fileCachePath = `/tmp/compas-cache/${uuid()}/`;
 
   /**
    * @param {Postgres} sql
-   * @param {minio.Client} minio
+   * @param {MinioClient} minio
    * @param {string} bucketName
-   * @param {FileCacheOptions} [options]
+   * @param {{
+   *   cacheControlHeader?: string,
+   *   inMemoryThreshold?: number,
+   * }} [options]
    */
   constructor(sql, minio, bucketName, options) {
     this.sql = sql;
@@ -31,7 +42,7 @@ export class FileCache {
     /**
      * Pre-bind call to this#getFileStream
      *
-     * @type {typeof FileCache#getFileStream}
+     * @type {FileCache["getFileStream"]}
      */
     this.getStreamFn = this.getFileStream.bind(this);
 
@@ -41,10 +52,11 @@ export class FileCache {
   }
 
   /**
+   * @private
    * @param {StoreFile} file
    * @param {number} [start]
    * @param {number} [end]
-   * @returns {Promise<{ stream: ReadableStream, cacheControl: string }>}
+   * @returns {Promise<{ stream: NodeJS.ReadableStream, cacheControl: string }>}
    */
   getFileStream(file, start, end) {
     if (isNil(start) || start < 0) {
@@ -56,6 +68,7 @@ export class FileCache {
     const cacheKey = file.id;
 
     if (this.memoryCache.has(cacheKey)) {
+      // @ts-ignore
       return this.loadFromMemoryCache(cacheKey, start, end);
     } else if (this.fileCache.has(cacheKey)) {
       return this.loadFromDiskCache(cacheKey, file.id, start, end);
@@ -93,6 +106,8 @@ export class FileCache {
   /**
    * Load file from disk, if not exists, will pull it in.
    *
+   * @private
+   *
    * @param key
    * @param id
    * @param start
@@ -121,14 +136,16 @@ export class FileCache {
    * Load file from memory.
    * Transforms the buffer to a stream for consistency
    *
+   * @private
+   *
    * @param {string} key
    * @param {string} id
    * @param {number} start
    * @param {number} end
-   * @returns {{
+   * @returns {Promise<{
    *    stream: NodeJS.ReadableStream,
    *    cacheControl: string,
-   * }}
+   * }>}
    */
   async cacheFileInMemory(key, id, start, end) {
     const stream = await getFileStream(this.minio, this.bucketName, id);
@@ -144,6 +161,8 @@ export class FileCache {
 
   /**
    * Save file on disk and return a new Readable
+   *
+   * @private
    *
    * @param key
    * @param id

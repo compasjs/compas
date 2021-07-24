@@ -2,23 +2,31 @@ import { environment, isProduction, merge } from "@compas/stdlib";
 import minio from "minio";
 
 /**
+ * @typedef {import("../types/advanced-types").MinioClient} MinioClient
+ */
+
+/**
  * Create a minio client with the default environment variables as defaults.
  * Minio is an S3 compatible client, so can be used against any S3 compatible interface.
  *
  * @since 0.1.0
  *
- * @param {object} opts
- * @returns {minio.Client}
+ * @param {minio.ClientOptions} opts
+ * @returns {MinioClient}
  */
 export function newMinioClient(opts) {
-  const config = {
-    endPoint: environment.MINIO_URI,
-    port: environment.MINIO_PORT ? Number(environment.MINIO_PORT) : undefined,
-    accessKey: environment.MINIO_ACCESS_KEY,
-    secretKey: environment.MINIO_SECRET_KEY,
-    useSSL: isProduction(),
-  };
-  return new minio.Client(merge(config, opts));
+  const config = /** @type {minio.ClientOptions} */ merge(
+    {
+      endPoint: environment.MINIO_URI,
+      port: environment.MINIO_PORT ? Number(environment.MINIO_PORT) : undefined,
+      accessKey: environment.MINIO_ACCESS_KEY,
+      secretKey: environment.MINIO_SECRET_KEY,
+      useSSL: isProduction(),
+    },
+    opts,
+  );
+
+  return new minio.Client(config);
 }
 
 /**
@@ -26,10 +34,10 @@ export function newMinioClient(opts) {
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
  * @param {string} region
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function ensureBucket(minio, bucketName, region) {
   const exists = await minio.bucketExists(bucketName);
@@ -43,7 +51,7 @@ export async function ensureBucket(minio, bucketName, region) {
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
  * @param {string} [filter]
  * @returns {Promise<{name: string, prefix: string, size: number, etag: string,
@@ -67,9 +75,9 @@ export async function listObjects(minio, bucketName, filter = "") {
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function removeBucket(minio, bucketName) {
   await minio.removeBucket(bucketName);
@@ -80,9 +88,9 @@ export async function removeBucket(minio, bucketName) {
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function removeBucketAndObjectsInBucket(minio, bucketName) {
   const remainingObjects = await listObjects(minio, bucketName);
@@ -99,11 +107,11 @@ export async function removeBucketAndObjectsInBucket(minio, bucketName) {
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} sourceBucket
  * @param {string} destinationBucket
  * @param {string} region
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function copyAllObjects(
   minio,
@@ -120,6 +128,7 @@ export async function copyAllObjects(
     const pArr = [];
     for (const object of subset) {
       pArr.push(
+        // @ts-ignore
         minio.copyObject(
           destinationBucket,
           object.name,

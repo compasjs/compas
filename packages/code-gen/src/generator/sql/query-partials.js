@@ -1,8 +1,14 @@
+// @ts-nocheck
+
 import { js } from "../tag/index.js";
 import { getOrderByPartial } from "./order-by-type.js";
 import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
 import { getPrimaryKeyWithType, getSortedKeysForType } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
+
+/**
+ * @typedef {import("../utils").ImportCreator} ImportCreator
+ */
 
 /**
  * Generate all useful query partials
@@ -18,7 +24,7 @@ export function generateQueryPartials(context, imports, type, src) {
   imports.destructureImport("query", "@compas/store");
   imports.destructureImport("isQueryPart", "@compas/store");
 
-  if (!type.queryOptions.isView) {
+  if (!type.queryOptions?.isView) {
     src.push(getFieldSet(context, type));
   }
 
@@ -50,7 +56,7 @@ export function generateQueryPartials(context, imports, type, src) {
   src.push(getWherePartial(context, type));
   src.push(getOrderByPartial(context, type));
 
-  if (!type.queryOptions.isView) {
+  if (!type.queryOptions?.isView) {
     src.push(getInsertPartial(context, type));
     src.push(getUpdatePartial(context, type));
   }
@@ -114,7 +120,7 @@ export function getFieldsPartial(context, type) {
      * Get all fields for ${type.name}
      * 
      * @param {string} [tableName="${type.shortName}."]
-     * @param {{ excludePrimaryKey: boolean }} [options={}]
+     * @param {{ excludePrimaryKey?: boolean }} [options={}]
      * @returns {QueryPart}
      */
     export function ${type.name}Fields(tableName = "${

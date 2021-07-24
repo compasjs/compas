@@ -1,78 +1,50 @@
-import {
-  existsSync,
-  lstatSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  writeFileSync,
-} from "fs";
-import { dirnameForModule, pathJoin, spawn } from "@compas/stdlib";
+import { writeFile } from "fs/promises";
+import { pathJoin } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
- * @returns {Promise<void>}
+ * @param {import("../parse").UtilCommand} command
+ * @returns {Promise<{ exitCode: number }>}
  */
 export async function initCommand(logger, command) {
-  const { version } = JSON.parse(
-    readFileSync(
-      pathJoin(dirnameForModule(import.meta), "../../package.json"),
-      "utf-8",
-    ),
-  );
+  const outDir = process.cwd();
+  const subCommand = command.arguments[0];
 
-  let outDir = process.cwd();
-  if (command.arguments.length === 1) {
-    outDir = pathJoin(outDir, command.arguments[0]);
+  if (subCommand === "--jsconfig") {
+    await writeJsconfig(logger, outDir);
+
+    return { exitCode: 0 };
   }
 
-  const projectName = outDir.substring(outDir.lastIndexOf("/") + 1);
-
-  copyDirRecursive(
-    pathJoin(dirnameForModule(import.meta), "../../template"),
-    outDir,
-    (input) =>
-      input.replace(/{{name}}/g, projectName).replace(/{{version}}/g, version),
-  );
-
-  await spawn(`yarn`, []);
-  await spawn(`yarn`, [`compas`, `generate`]);
-  await spawn(`yarn`, [`compas`, `lint`]);
-
-  logger.info(`
-We already completed your first code generation.
-
-- Try the api with 'yarn compas api' and try 'http://localhost:3000/app' in your browser
-- Discover the utilities of Compas with 'yarn compas help'
-
-Have fun ;)
-`);
+  logger.error("Unknown subcommand.");
+  return { exitCode: 1 };
 }
 
-/**
- * @param source
- * @param target
- * @param contentHandler
- */
-function copyDirRecursive(source, target, contentHandler) {
-  const stat = lstatSync(source);
-  if (stat.isDirectory()) {
-    if (!existsSync(target)) {
-      mkdirSync(target, { recursive: true });
-    }
-
-    const files = readdirSync(source);
-    for (const file of files) {
-      copyDirRecursive(
-        pathJoin(source, file),
-        pathJoin(target, file),
-        contentHandler,
-      );
-    }
-  } else if (stat.isFile()) {
-    const src = readFileSync(source, "utf-8");
-    writeFileSync(target, contentHandler(src), {
-      encoding: "utf-8",
-    });
-  }
+async function writeJsconfig(logger, outDir) {
+  logger.info("Set jsconfig.json");
+  await writeFile(
+    pathJoin(outDir, "jsconfig.json"),
+    JSON.stringify(
+      {
+        compilerOptions: {
+          target: "esnext",
+          lib: ["esnext"],
+          noEmit: true,
+          module: "esnext",
+          checkJs: true,
+          maxNodeModuleJsDepth: 0,
+          baseUrl: "./",
+          moduleResolution: "node",
+          strict: true,
+        },
+        typeAcquisition: {
+          enable: true,
+        },
+        include: ["**/*.js"],
+        exclude: ["**/*.test.js"],
+      },
+      null,
+      2,
+    ),
+  );
 }

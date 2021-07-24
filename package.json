@@ -3,7 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "gen": "compas internal_generate && compas generate",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"

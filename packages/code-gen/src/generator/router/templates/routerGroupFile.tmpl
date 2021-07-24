@@ -1,29 +1,4 @@
 import { AppError } from "@compas/stdlib";
-{{ for (const itemName of Object.keys(groupStructure)) { }}
-  {{ const item = groupStructure[itemName]; }}
-
-  {{ if (item.type !== "route") { }}
-    {{ continue; }}
-  {{ } }}
-
-  /**
-   * @typedef {CContext<{}, {
-   {{ if (item.response) { }}*   body: {{= item.response.reference.uniqueName }}, {{ } }}
-   * }>} {{= item.uniqueName }}Ctx
-   {{ if (item.query) { }}* @property { {{= item.query.reference.uniqueName }} } validatedQuery {{ } }}
-   {{ if (item.params) { }}* @property { {{= item.params.reference.uniqueName }} } validatedParams {{ } }}
-   {{ if (item.body) { }}* @property { {{= item.body.reference.uniqueName }} } validatedBody {{ } }}
-   {{ if (item.files) { }}* @property { {{= getTypeNameForType(item.files.reference, "Validated", { fileTypeIO: "outputRouter", }) }} } validatedFiles {{ } }}
-   */
-((newline))
-  /**
-   * @callback {{= item.uniqueName }}Fn
-   * @param { {{= item.uniqueName }}Ctx} ctx
-   * @param {CNext} next
-   * @returns {void|Promise<void>}
-   */
-((newline))
-{{ } }}
 
 /**
  * @type { {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { DateType } from "../../builders/DateType.js";
 import { buildOrInfer } from "../../builders/utils.js";
 import { UuidType } from "../../builders/UuidType.js";
@@ -10,7 +12,7 @@ import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
  */
 export function addFieldsOfRelations(context) {
   for (const type of getQueryEnabledObjects(context)) {
-    if (type.queryOptions.withPrimaryKey) {
+    if (type.queryOptions?.withPrimaryKey) {
       try {
         getPrimaryKeyWithType(type);
       } catch {
@@ -28,11 +30,11 @@ export function addFieldsOfRelations(context) {
     }
 
     // Add date fields if necessary
-    if (type.queryOptions.withDates || type.queryOptions.withSoftDeletes) {
+    if (type.queryOptions?.withDates || type.queryOptions?.withSoftDeletes) {
       type.keys["createdAt"] = getSystemDate();
       type.keys["updatedAt"] = getSystemDate();
     }
-    if (type.queryOptions.withSoftDeletes) {
+    if (type.queryOptions?.withSoftDeletes) {
       type.keys["deletedAt"] = {
         ...getSystemDate(),
         defaultValue: undefined,
@@ -52,10 +54,13 @@ export function addFieldsForRelation(context, type, relation) {
   }
 
   try {
-    const { field } = getPrimaryKeyWithType(relation.reference.reference);
+    const { field } = getPrimaryKeyWithType(
+      /** @type {CodeGenObjectType} */ relation.reference.reference,
+    );
     type.keys[relation.ownKey] = {
       ...field,
       sql: {
+        primary: false,
         searchable: true,
       },
       isOptional: relation.isOptional,
@@ -63,6 +68,7 @@ export function addFieldsForRelation(context, type, relation) {
   } catch {
     context.errors.push({
       key: "sqlMissingPrimaryKey",
+      // @ts-ignore
       typeName: relation.reference.reference.name,
     });
   }

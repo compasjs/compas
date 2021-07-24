@@ -4,22 +4,6 @@ editLink: false
 
 # @compas\/cli
 
-## test
-
-_Available since 0.1.0_
-
-_function test(name, callback): void_
-
-Register top-level tests. The main entry point of the test runner
-
-**Parameters**:
-
-- name `string`: The test name
-- callback `TestCallback`: The function that is executed by the test runner.
-  This can do async setup, register child tests and run assertions
-
-_[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/testing/runner.js#L117)_
-
 ## mainTestFn
 
 _Available since 0.1.0_
@@ -41,13 +25,15 @@ _[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/testing/
 
 _Available since 0.1.0_
 
-_function newTestEvent(t): InsightEvent_
+_function newTestEvent({import("./state").TestRunner} t):
+{import("@compas/stdlib").InsightEvent}_
 
 Create a new test event
 
 **Parameters**:
 
-- t `TestRunner`
+- {import("./state").TestRunner} t `{import("./state").TestRunner} t`:
+  {import("./state").TestRunner} t
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/testing/events.js#L11)_
 
@@ -65,7 +51,7 @@ benchmarks are registered and then start execution.
 - name `string`
 - callback `BenchCallback`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/benchmarking/runner.js#L44)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/benchmarking/runner.js#L48)_
 
 ## mainBenchFn
 

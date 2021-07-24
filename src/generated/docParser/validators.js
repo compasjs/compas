@@ -13,7 +13,7 @@ import {
   anonymousValidator835333298,
 } from "../common/anonymous-validators.js";
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserBlock | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -29,7 +29,7 @@ export function validateDocParserBlock(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserFunctionDeclarationBlock | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -48,7 +48,7 @@ export function validateDocParserFunctionDeclarationBlock(
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserFunctionType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -64,7 +64,7 @@ export function validateDocParserFunctionType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserJSComment | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -80,7 +80,7 @@ export function validateDocParserJSComment(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserLiteralType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -96,7 +96,7 @@ export function validateDocParserLiteralType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserPackage | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -112,7 +112,7 @@ export function validateDocParserPackage(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserRange | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -128,7 +128,7 @@ export function validateDocParserRange(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -144,7 +144,7 @@ export function validateDocParserType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: DocParserUnknownBlock | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */

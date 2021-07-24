@@ -2,11 +2,11 @@ import { isNil } from "@compas/stdlib";
 
 /**
  * @typedef {{
- *   print: (function(): string),
- *   destructureImport: (function(value: string, pkg: string): undefined),
- *   starImport: (function(alias: string, pkg: string): undefined),
- *   commonjsImport: (function(alias: string, pkg: string): undefined),
- *   rawImport: (function(value: string): undefined),
+ *   print: (() => string),
+ *   destructureImport: ((value: string, pkg: string) => void),
+ *   starImport: ((alias: string, pkg: string) => void),
+ *   commonjsImport: ((alias: string, pkg: string) => void),
+ *   rawImport: ((value: string) => void),
  * }} ImportCreator
  */
 

@@ -1,5 +1,7 @@
 /**
  * Cached process.env
+ *
+ * @type {Record<string, string>}
  */
 export let environment = {};
 

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { AnyOfType } from "../../builders/AnyOfType.js";
 import { AnyType } from "../../builders/AnyType.js";
@@ -48,7 +50,7 @@ export function createWhereTypes(context) {
 
     whereType.keys["$raw"] = {
       ...new AnyType().optional().build(),
-      rawValue: "QueryPart",
+      rawValue: "QueryPart<any>",
       rawValueImport: {
         javaScript: undefined,
         typeScript: `import { QueryPart } from "@compas/store";`,
@@ -103,7 +105,7 @@ export function createWhereTypes(context) {
               },
               {
                 ...new AnyType().optional().build(),
-                rawValue: "QueryPart",
+                rawValue: "QueryPart<any>",
                 rawValueImport: {
                   javaScript: undefined,
                   typeScript: `import { QueryPart } from "@compas/store";`,
@@ -136,7 +138,8 @@ export function createWhereTypes(context) {
     addToData(context.structure, whereType);
 
     type.where = {
-      type: whereType,
+      type: "",
+      rawType: whereType,
       fields: fieldsArray,
     };
   }
@@ -152,7 +155,7 @@ export function createWhereTypes(context) {
 
         // Support other side of the relation exists, which is the same as
         // `owningSideOfTheRelation`.isNotNull.
-        type.where.type.keys[`${relation.ownKey}Exists`] = {
+        type.where.rawType.keys[`${relation.ownKey}Exists`] = {
           ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
             .optional()
             .build(),
@@ -160,7 +163,7 @@ export function createWhereTypes(context) {
             context.structure[otherSide.group][`${otherSide.name}Where`],
         };
 
-        type.where.type.keys[`${relation.ownKey}NotExists`] = {
+        type.where.rawType.keys[`${relation.ownKey}NotExists`] = {
           ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
             .optional()
             .build(),
@@ -188,7 +191,7 @@ export function createWhereTypes(context) {
 
   // Add types to the system
   for (const type of getQueryEnabledObjects(context)) {
-    type.where.type = getTypeNameForType(context, type.where.type, "", {
+    type.where.type = getTypeNameForType(context, type.where.rawType, "", {
       useDefaults: false,
     });
   }
@@ -392,6 +395,7 @@ export function getWherePartial(context, type) {
          }
 
          const strings = [ "1 = 1" ];
+         /** @type {QueryPartArg[]} */
          const values = [ undefined ];
 
          ${partials}
@@ -406,13 +410,14 @@ export function getWherePartial(context, type) {
  * Returns an object with only the searchable fields
  *
  * @param {CodeGenObjectType} type
- * @returns {Object<string, CodeGenType>}
+ * @returns {Record<string, CodeGenType>}
  */
 export function getSearchableFields(type) {
-  return getSortedKeysForType(type)
+  return /** @type {Record<string, CodeGenType>} */ getSortedKeysForType(type)
     .map((it) => [it, type.keys[it]])
     .filter((it) => it[1].sql?.searchable || it[1].reference?.sql?.searchable)
     .reduce((acc, [key, value]) => {
+      // @ts-ignore
       acc[key] = value.reference ?? value;
       return acc;
     }, {});

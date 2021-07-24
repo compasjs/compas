@@ -281,6 +281,7 @@ function getTypes(T) {
     where: T.object()
       .keys({
         type: T.string(),
+        rawType: T.reference("codeGen", "objectType"),
         fields: T.array().values(
           T.object()
             .keys({

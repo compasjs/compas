@@ -2,7 +2,11 @@ import { isNil } from "@compas/stdlib";
 import { benchLogger, state } from "./state.js";
 
 /**
- * @param {BenchState[]} state
+ * @typedef {import("./state").BenchCallback} BenchCallback
+ */
+
+/**
+ * @param {import("./state").BenchState[]} state
  * @returns {Promise<void>}
  */
 export async function runBenchmarks(state) {
@@ -42,6 +46,7 @@ export async function runBenchmarks(state) {
  * @returns {void}
  */
 export function bench(name, callback) {
+  // @ts-ignore
   state.push({ name, callback });
 }
 
@@ -70,7 +75,7 @@ class InternalRunner {
 
   constructor(state) {
     /**
-     * @type {BenchState}
+     * @type {import("./state").BenchState}
      */
     this.state = state;
   }
@@ -116,7 +121,7 @@ class InternalRunner {
 /**
  *
  * @param {InternalRunner} runner
- * @returns {BenchRunner}
+ * @returns {import("./state").BenchRunner}
  */
 function createBenchRunner(runner) {
   return {

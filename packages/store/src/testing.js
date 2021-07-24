@@ -6,9 +6,13 @@ import {
 } from "./postgres.js";
 
 /**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
  * If set, new databases are derived from this database
  *
- * @type {Postgres & { connectionOptions?: postgres.Options}}
+ * @type {Postgres|undefined}
  */
 let testDatabase = undefined;
 
@@ -58,7 +62,7 @@ export async function cleanupPostgresDatabaseTemplate() {
  *
  * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all
  *   queries.
- * @param {postgres.Options} [rawOpts]
+ * @param {Postgres["connectionOptions"]} [rawOpts]
  * @returns {Promise<Postgres>}
  */
 export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
@@ -70,7 +74,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
     const creationSql = await createDatabaseIfNotExists(
       undefined,
       name,
-      testDatabase.options.database,
+      testDatabase?.options?.database,
       connectionOptions,
     );
 
@@ -151,7 +155,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
  * @since 0.1.0
  *
  * @param {Postgres} sql
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function cleanupTestPostgresDatabase(sql) {
   await sql.end();

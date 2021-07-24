@@ -2,10 +2,7 @@ import { queries } from "./generated.js";
 import { query } from "./query.js";
 
 /**
- * @typedef {StoreFileGroupView & {
- *   file?: StoreFile|undefined,
- *   children?: NestedFileGroupWithFiles[]
- * }} NestedFileGroupWithFiles
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
  */
 
 const fileGroupQueries = {
@@ -57,7 +54,7 @@ export async function hoistChildrenToParent(sql, fileGroup) {
  *
  * @param {Postgres} sql
  * @param {string[]} ids
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function updateFileGroupOrder(sql, ids) {
   await fileGroupQueries.updateOrderByIds(sql, ids);

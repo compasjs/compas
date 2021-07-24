@@ -5,13 +5,36 @@ import { createOrUpdateFile } from "./files.js";
 import { queryFile } from "./generated/database/file.js";
 
 /**
+ * @typedef {(
+ *   file: StoreFile,
+ *   start?: number | undefined,
+ *   end?: number | undefined
+ *   ) => Promise<{
+ *     stream: NodeJS.ReadableStream,
+ *     cacheControl: string,
+ *   }>} GetStreamFn
+ */
+
+/**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
+ * @typedef {import("../types/advanced-types").MinioClient} MinioClient
+ */
+
+/**
+ * @typedef {import("koa").Context} Context
+ */
+
+/**
  * Wraps 'server'.sendFile, to include an image transformer compatible with Next.js image
  * loader. Only works if the input file is an image.
  *
  * @param {typeof import("@compas/server").sendFile} sendFile
  * @param {Context} ctx
  * @param {Postgres} sql
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {StoreFile} file
  * @param {GetStreamFn} getStreamFn
  * @returns {Promise<void>}
@@ -74,7 +97,7 @@ export async function sendTransformedImage(
 
       const { width: currentWidth } = await sharpInstance.metadata();
 
-      if (isNil(currentWidth) && currentWidth > w) {
+      if (!isNil(currentWidth) && currentWidth > w) {
         // Only resize if width is greater than the needed with, so we don't accidentally
         // upscale
         sharpInstance.resize(w);
@@ -130,6 +153,7 @@ export async function sendTransformedImage(
   if (loadedFile === file.id) {
     return sendFile(ctx, file, getStreamFn);
   } else if (loadedFile === createdFile?.id) {
+    // @ts-ignore
     return sendFile(ctx, createdFile, getStreamFn);
   }
   const [alreadyTransformedFile] = await queryFile({

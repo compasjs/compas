@@ -1,7 +1,7 @@
 /* eslint-disable import/no-commonjs */
 
 /**
- * @type {object} Eslint settings
+ * @type {Record<string, any>} Eslint settings
  */
 const settings = {
   root: true,
@@ -63,7 +63,7 @@ const settings = {
   },
 };
 /**
- * @type {object} Eslint settings
+ * @type {Record<string, any>} Eslint settings
  */
 const jsdocSettings = {
   plugins: ["jsdoc"],
@@ -99,7 +99,7 @@ const jsdocSettings = {
 };
 
 /**
- * @type {object} Eslint settings
+ * @type {Record<string, any>} Eslint settings
  */
 module.exports =
   process.env.CI === "true" || process.env.LINT_JSDOC === "true"

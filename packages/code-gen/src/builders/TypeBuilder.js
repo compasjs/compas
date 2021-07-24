@@ -2,6 +2,9 @@ import { isNil, merge } from "@compas/stdlib";
 import { lowerCaseFirst } from "../utils.js";
 
 export class TypeBuilder {
+  /**
+   * @type {any}
+   */
   static baseData = {
     type: undefined,
     group: undefined,
@@ -12,14 +15,10 @@ export class TypeBuilder {
     validator: {},
   };
 
-  static getBaseData() {
-    return merge({}, this.baseData);
-  }
-
   /**
    * @param {string} type
-   * @param {string} [group]
-   * @param {string} [name]
+   * @param {string|undefined} [group]
+   * @param {string|undefined} [name]
    */
   constructor(type, group, name) {
     this.data = {
@@ -28,6 +27,10 @@ export class TypeBuilder {
       group,
       name,
     };
+  }
+
+  static getBaseData() {
+    return merge({}, this.baseData);
   }
 
   /**
@@ -94,7 +97,7 @@ export class TypeBuilder {
   }
 
   /**
-   * @returns {object}
+   * @returns {Record<string, any>}
    */
   build() {
     if (isNil(this.data.name)) {

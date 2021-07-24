@@ -3,6 +3,10 @@ import coBody from "co-body";
 import formidable from "formidable";
 
 /**
+ * @typedef {import("koa").Middleware} Middleware
+ */
+
+/**
  * @typedef {object} KoaBodyOptions
  * @property {boolean|undefined} [urlencoded]
  * @property {boolean|undefined} [json]
@@ -13,7 +17,12 @@ import formidable from "formidable";
  * @property {string|undefined} [textLimit]
  * @property {string|undefined} [formLimit]
  * @property {string[]|undefined} [parsedMethods]
- *
+ */
+
+/**
+ * @typedef {object} BodyParserPair
+ * @property {Middleware} bodyParser
+ * @property {Middleware} multipartBodyParser
  */
 
 const jsonTypes = [
@@ -30,7 +39,7 @@ const jsonTypes = [
  * @since 0.1.0
  *
  * @param {KoaBodyOptions} [bodyOpts={}] Options that will be passed to koa-body
- * @param {IFormidableBodyOptions} [multipartBodyOpts={}] Options that will be passed to
+ * @param {formidable.Options} [multipartBodyOpts={}] Options that will be passed to
  *   formidable
  * @returns {BodyParserPair}
  */
@@ -47,7 +56,7 @@ export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
  * https://github.com/dlau/koa-body/blob/a6ca8c78015e326154269d272410a11bf40e1a07/LICENSE
  *
  *
- * @param {KoaBodyOptions} [opts={}] Options that will be passed to koa-body
+ * @param {KoaBodyOptions} opts Options that will be passed to koa-body
  */
 function koaBody(opts = {}) {
   opts.urlencoded = opts.urlencoded ?? true;
@@ -66,6 +75,7 @@ function koaBody(opts = {}) {
   return async function (ctx, next) {
     let bodyResult;
     // only parse the body on specifically chosen methods
+    // @ts-ignore
     if (opts.parsedMethods.includes(ctx.method.toUpperCase())) {
       try {
         if (opts.json && ctx.is(jsonTypes)) {
@@ -95,9 +105,7 @@ function koaBody(opts = {}) {
           throw AppError.validationError("error.server.unsupportedBodyFormat", {
             name: parsingError.name,
             message: parsingError.message,
-            fileName: parsingError.fileName,
-            lineNumber: parsingError.lineNumber,
-            columnNumber: parsingError.columnNumber,
+            // @ts-ignore
             rawBody: parsingError.body,
           });
         } else {
@@ -126,7 +134,7 @@ function koaBody(opts = {}) {
  * Source;
  * https://github.com/node-formidable/formidable/blob/master/src/Formidable.js#L103
  *
- * @param {IFormidableBodyOptions} opts
+ * @param {formidable.Options} opts
  * @returns {Middleware}
  */
 function koaFormidable(opts = {}) {
@@ -157,9 +165,12 @@ function koaFormidable(opts = {}) {
         reject(AppError.serverError({ files }, err));
       });
       form.on("end", () => {
+        // @ts-ignore
         ctx.request.files = files;
+        // @ts-ignore
         resolve();
       });
+      // @ts-ignore
       form.parse(ctx.req);
     }).then(() => {
       if (typeof next === "function") {

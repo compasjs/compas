@@ -1,4 +1,10 @@
+// @ts-nocheck
+
 import { randomUUID } from "crypto";
+
+/**
+ * @typedef {import("../types/advanced-types").UuidFunc} UuidFunc
+ */
 
 /**
  * This function also has an `uuid.isValid` function, which returns a boolean depending
@@ -7,13 +13,12 @@ import { randomUUID } from "crypto";
  * @since 0.1.0
  * @summary Returns a new uuid v4
  *
- * @function
- * @returns {string}
+ * @type {UuidFunc}
  */
 export const uuid = randomUUID;
 
 /**
- * @param {*} value
+ * @param {any} value
  * @returns {boolean}
  */
 uuid.isValid = (value) => {

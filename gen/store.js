@@ -30,7 +30,10 @@ export function applyStoreStructure(app) {
         contentType: T.string(),
         name: T.string(),
         meta: T.object("fileMeta")
-          .keys({})
+          .keys({
+            transforms: T.any().optional(),
+            transformedFromOriginal: T.string().optional(),
+          })
           .default("{}")
           .docs("User definable, optional object to store whatever you want"),
       })

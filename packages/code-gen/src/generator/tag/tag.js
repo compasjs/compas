@@ -10,8 +10,8 @@ const MAX_COLLECT_LOOP = 13;
  */
 
 /**
- * @param {string} strings
- * @param {...(string|StateFn)} args
+ * @param {TemplateStringsArray | string[]} strings
+ * @param {...((StateFn|string|any) | (StateFn|string|any)[])} args
  * @returns {string}
  */
 export function js(strings, ...args) {

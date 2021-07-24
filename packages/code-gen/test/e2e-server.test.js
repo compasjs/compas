@@ -56,6 +56,7 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("client - GET /:id validation", async (t) => {
     try {
+      // @ts-expect-error
       await clientApiClientImport.apiServerGetId(axiosInstance, {});
       t.fail("Expected validator error for missing id");
     } catch (e) {
@@ -95,6 +96,7 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("server - GET /:id validation", async (t) => {
     try {
+      // @ts-expect-error
       await serverApiClientImport.apiServerGetId(axiosInstance, {});
       t.fail("Expected validator error for missing id");
     } catch (e) {

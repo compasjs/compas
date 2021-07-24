@@ -6,7 +6,7 @@ import {
   anonymousValidator572766398,
 } from "../common/anonymous-validators.js";
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {CompasSqlOrderBy}
  */
@@ -14,7 +14,7 @@ export function validateCompasSqlOrderBy(value, propertyPath = "$") {
   return anonymousValidator446238440(value, propertyPath, []);
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {CompasSqlOrderByOptionalField}
  */

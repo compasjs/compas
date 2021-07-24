@@ -9,6 +9,16 @@ import { query } from "./query.js";
 
 const THIRTY_MINUTES = 30 * 60 * 1000;
 
+/**
+ * @typedef {object} SessionStore
+ * @property {(id: string) => Promise<object|boolean>} get
+ * @property {(id: string, session: object, age: number|"session") => Promise<void>} set
+ * @property {(id: string) => Promise<void>} destroy
+ * @property {() => Promise<void>} clean
+ */
+
+/**
+ */
 const sessionQueries = {
   /**
    * Upsert a query by id.
@@ -16,7 +26,7 @@ const sessionQueries = {
    *
    * @param {Postgres} sql
    * @param {StoreSessionInsertPartial & { id?: string }} value
-   * @returns {postgres.PendingQuery<any>}
+   * @returns {import("postgres").PendingQuery<any>}
    */
   upsertById: (sql, value) =>
     query`
@@ -38,7 +48,7 @@ const sessionQueries = {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @returns {SessionStore}
  */
 export function newSessionStore(sql) {

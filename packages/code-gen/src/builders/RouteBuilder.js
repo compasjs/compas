@@ -20,7 +20,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {string} values
+   * @param {...string} values
    * @returns {RouteBuilder}
    */
   tags(...values) {
@@ -48,7 +48,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   query(builder) {
@@ -58,7 +58,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   params(builder) {
@@ -68,7 +68,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   body(builder) {
@@ -82,7 +82,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   files(builder) {
@@ -96,7 +96,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   response(builder) {
@@ -217,7 +217,9 @@ export class RouteCreator {
       this.data.path = this.data.path.slice(1);
     }
 
+    /** @type {string[]} */
     this.defaultTags = [];
+
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
     this.bodyBuilder = undefined;
@@ -226,7 +228,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {string} values
+   * @param {...string} values
    * @returns {RouteCreator}
    */
   tags(...values) {
@@ -236,7 +238,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   query(builder) {
@@ -246,7 +248,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   params(builder) {
@@ -256,7 +258,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   body(builder) {
@@ -266,7 +268,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   files(builder) {
@@ -276,7 +278,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   response(builder) {
@@ -380,6 +382,8 @@ export class RouteCreator {
 
   /**
    * Create a new RouteBuilder and add the defaults if exists.
+   *
+   * @private
    *
    * @param {string} method
    * @param {string} group

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
 import { upperCaseFirst } from "./utils.js";

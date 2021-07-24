@@ -24,6 +24,7 @@ export async function loadTestConfig() {
     return;
   }
 
+  // @ts-ignore
   const config = await import(pathToFileURL(configPath));
 
   if (config.timeout) {

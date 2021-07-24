@@ -5,8 +5,8 @@ import { isNil, isPlainObject } from "@compas/stdlib";
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
- * @returns {Promise<{ exitCode?: number }>}
+ * @param {import("../parse").UtilCommand} command
+ * @returns {Promise<{ exitCode?: number }|void>}
  */
 export async function dockerMigrateCommand(logger, command) {
   const { exitCode } = await checkStoreImport(logger);
@@ -39,6 +39,7 @@ export async function dockerMigrateCommand(logger, command) {
     return { exitCode: 1 };
   }
 
+  // @ts-ignore
   const { newPostgresConnection, newMigrateContext } = await import(
     "@compas/store"
   );
@@ -70,7 +71,9 @@ export async function dockerMigrateCommand(logger, command) {
       };
     }
 
+    // @ts-ignore
     const { postgresConnectionSettings } = await import(
+      // @ts-ignore
       pathToFileURL(fullPath)
     );
     if (isPlainObject(postgresConnectionSettings)) {
