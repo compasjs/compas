@@ -1385,10 +1385,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/minio@7.0.8":
-  version "7.0.8"
-  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.8.tgz#6c5152d34232f4498c741cd26c4c5f786bf4055f"
-  integrity sha512-3l9JTgbgZQMQFSRIzK8vDvPhM8MOkyqzftD0+5ltd8sMvodz9WswmzxpzNhI6vZJ19iqZfgzDMyZ4e/lNexOvA==
+"@types/minio@7.0.9":
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.9.tgz#23591f7cdd8aba27fc1a1da2d63767d9fcef4d58"
+  integrity sha512-aMalbSDDB+TV9m3fVMD4E2vJR3XVAtOcf9t5Iq+PHnc5D0ti3LMXjaxGKXmllicliaBrh0gzURLrs44n/Jl43g==
   dependencies:
     "@types/node" "*"
 
