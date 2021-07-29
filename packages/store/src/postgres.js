@@ -52,28 +52,30 @@ export function postgresEnvCheck() {
 export async function newPostgresConnection(opts) {
   postgresEnvCheck();
 
+  const connectionOpts = merge(
+    {
+      connection: {
+        application_name: environment.APP_NAME,
+      },
+      no_prepare: true,
+      ssl: isProduction() ? "require" : "prefer",
+    },
+    opts,
+  );
+
   if (opts && opts.createIfNotExists) {
     const oldConnection = await createDatabaseIfNotExists(
       undefined,
       environment.POSTGRES_DATABASE,
       undefined,
-      opts,
+      connectionOpts,
     );
     setImmediate(() => oldConnection.end());
   }
 
   return postgres(
     environment.POSTGRES_URI + environment.POSTGRES_DATABASE,
-    merge(
-      {
-        connection: {
-          application_name: environment.APP_NAME,
-        },
-        no_prepare: true,
-        ssl: isProduction() ? "require" : "prefer",
-      },
-      opts,
-    ),
+    connectionOpts,
   );
 }
 
