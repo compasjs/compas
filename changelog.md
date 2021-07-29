@@ -4,6 +4,47 @@ editLink: false
 
 # Changelog
 
+### [v0.0.154](https://github.com/compasjs/compas/releases/tag/v0.0.154)
+
+##### Changes
+
+- build(deps): bump @types/minio from 7.0.8 to 7.0.9
+  ([#1057](https://github.com/compasjs/compas/pull/1057))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 16.4.0 to 16.4.6
+  ([#1050](https://github.com/compasjs/compas/pull/1050),
+  [#1059](https://github.com/compasjs/compas/pull/1059),
+  [#1061](https://github.com/compasjs/compas/pull/1061),
+  [#1065](https://github.com/compasjs/compas/pull/1065),
+  [#1069](https://github.com/compasjs/compas/pull/1069))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump c8 from 7.7.3 to 7.8.0
+  ([#1067](https://github.com/compasjs/compas/pull/1067))
+- build(deps): bump eslint-plugin-jsdoc from 35.5.0 to 36.0.6
+  ([#1052](https://github.com/compasjs/compas/pull/1052),
+  [#1058](https://github.com/compasjs/compas/pull/1058),
+  [#1063](https://github.com/compasjs/compas/pull/1063),
+  [#1064](https://github.com/compasjs/compas/pull/1064),
+  [#1068](https://github.com/compasjs/compas/pull/1068))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump recast from 0.20.4 to 0.20.5
+  ([#1051](https://github.com/compasjs/compas/pull/1051))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- chore: drop lerna, create custom release script
+  ([#1072](https://github.com/compasjs/compas/pull/1072))
+  - Closes [#1053](https://github.com/compasjs/compas/pull/1053)
+- fix(code-gen): throw on unknown type in validators
+  ([#1071](https://github.com/compasjs/compas/pull/1071))
+  - Closes [#1062](https://github.com/compasjs/compas/pull/1062)
+- fix(store): use connection defaults when creating postgres database
+  ([#1070](https://github.com/compasjs/compas/pull/1070))
+  - Closes [#1066](https://github.com/compasjs/compas/pull/1066)
+
+##### Breaking changes
+
+- **deps**: bump eslint-plugin-jsdoc from 35.5.0 to 36.0.6
+  - Major version bump
+
 ### [v0.0.153](https://github.com/compasjs/compas/releases/tag/v0.0.153)
 
 ##### Changes
