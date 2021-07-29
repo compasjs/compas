@@ -391,6 +391,11 @@ function anonymousValidatorForType(context, imports, type) {
       return anonymousValidatorString(context, imports, type);
     case "uuid":
       return anonymousValidatorUuid(context, imports);
+    default:
+      return buildError(
+        "invalidValidator",
+        `{ propertyPath, type: "${type.type}", uniqueName: "${type.uniqueName}" }`,
+      );
   }
 }
 
