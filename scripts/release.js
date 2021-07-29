@@ -1,26 +1,41 @@
 import { readFile, writeFile } from "fs/promises";
-import { AppError, exec, mainFn, pathJoin, spawn } from "@compas/stdlib";
+import {
+  AppError,
+  environment,
+  exec,
+  mainFn,
+  pathJoin,
+  spawn,
+} from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
 async function main() {
   const packages = ["lint-config", "stdlib", "cli", "server", "store"];
   const version = process.argv[2];
+  const otp = process.argv[3];
 
   checkVersionFormat(version);
+  checkOtpFormat(otp);
   await checkCleanWorkingDirectory();
 
   for (const pkg of packages) {
     await bumpPackageJson(pkg, version.substring(1));
   }
 
-  await spawn("git", ["commit", "-m", `"${version}"`]);
-  await spawn("git", ["tag", "-a", version, "-m", `"${version}"`]);
+  await spawn("git", ["commit", "-m", `${version}`]);
+  await spawn("git", ["tag", "-a", version, "-m", `${version}`]);
   await spawn("git", ["push"]);
   await spawn("git", ["push", "origin", version]);
+
   for (const pkg of packages) {
-    await spawn("npm", ["publish", "--access=public"], {
+    await spawn("npm", ["publish", "--access", "public"], {
       cwd: pathJoin(process.cwd(), "packages/", pkg),
+      env: {
+        ...environment,
+        npm_config_registry: undefined,
+        npm_config_otp: otp,
+      },
     });
   }
 }
@@ -54,12 +69,25 @@ async function checkCleanWorkingDirectory() {
 
 /**
  * @param {string} version
- * @returns {boolean}
+ * @returns {void}
  */
 function checkVersionFormat(version) {
-  if (!/v\d+\.\d+\.\d+/gi.test(version)) {
+  if (!/^v\d+\.\d+\.\d+$/gi.test(version)) {
     throw AppError.serverError({
       message: "Invalid version format",
+      version,
+    });
+  }
+}
+
+/**
+ * @param {string} version
+ * @returns {void}
+ */
+function checkOtpFormat(version) {
+  if (!/^\d{3,}$/gi.test(version)) {
+    throw AppError.serverError({
+      message: "Invalid otp format",
       version,
     });
   }
