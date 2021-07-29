@@ -4,10 +4,6 @@
   "type": "module",
   "scripts": {
     "gen": "compas internal_generate && compas generate",
-    "link": "lerna exec -- yarn link",
-    "unlink": "lerna exec -- yarn unlink",
-    "bump": "lerna changed && lerna version",
-    "release": "lerna publish --exact",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
@@ -21,7 +17,6 @@
     "axios": "0.21.1",
     "fastest-validator": "1.11.1",
     "form-data": "4.0.0",
-    "lerna": "4.0.0",
     "meriyah": "4.2.0",
     "react": "17.0.2",
     "react-query": "3.19.1",
