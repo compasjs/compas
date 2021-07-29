@@ -25,8 +25,8 @@ test("cli/utils", (t) => {
   t.test("collectScripts contains package.json scripts", (t) => {
     const result = collectScripts();
 
-    t.ok(!isNil(result["release"]));
-    t.equal(result["release"].type, "package");
+    t.ok(!isNil(result["docs:dev"]));
+    t.equal(result["docs:dev"].type, "package");
   });
 
   t.test("watchOptionsWithDefaults should have defaults", (t) => {
