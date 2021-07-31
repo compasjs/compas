@@ -205,6 +205,7 @@ export function eventStop(event) {
 
 /**
  * Get the root event from the provided event
+ *
  * @param {InsightEvent} event
  * @returns {InsightEvent}
  */
