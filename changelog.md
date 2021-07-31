@@ -4,6 +4,20 @@ editLink: false
 
 # Changelog
 
+### [v0.0.155](https://github.com/compasjs/compas/releases/tag/v0.0.155)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.4.6 to 16.4.8
+  ([#1074](https://github.com/compasjs/compas/pull/1074))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 7.31.0 to 7.32.0
+  ([#1075](https://github.com/compasjs/compas/pull/1075))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- chore(release): fix release script
+- chore: lint JSDoc blocks
+- chore(release): fix release of code-gen and linting
+
 ### [v0.0.154](https://github.com/compasjs/compas/releases/tag/v0.0.154)
 
 ##### Changes
