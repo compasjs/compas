@@ -11,7 +11,14 @@ import {
 mainFn(import.meta, main);
 
 async function main() {
-  const packages = ["lint-config", "stdlib", "cli", "server", "store"];
+  const packages = [
+    "lint-config",
+    "stdlib",
+    "cli",
+    "code-gen",
+    "server",
+    "store",
+  ];
   const version = process.argv[2];
   const otp = process.argv[3];
 
@@ -51,7 +58,7 @@ async function bumpPackageJson(pkg, version) {
     }
   }
 
-  await writeFile(path, JSON.stringify(contents, null, 2));
+  await writeFile(path, `${JSON.stringify(contents, null, 2)}\n`);
   await spawn("git", ["add", path]);
 }
 
