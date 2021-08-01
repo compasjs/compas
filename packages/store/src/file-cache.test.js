@@ -1,8 +1,12 @@
 import { existsSync, lstatSync, mkdirSync, writeFileSync } from "fs";
-import { pipeline as pipelineCallback } from "stream";
-import { promisify } from "util";
 import { mainTestFn, test } from "@compas/cli";
-import { gc, pathJoin, printProcessMemoryUsage, uuid } from "@compas/stdlib";
+import {
+  gc,
+  pathJoin,
+  printProcessMemoryUsage,
+  streamToBuffer,
+  uuid,
+} from "@compas/stdlib";
 import { FileCache } from "./file-cache.js";
 import { createOrUpdateFile } from "./files.js";
 import {
@@ -16,20 +20,6 @@ import {
 } from "./testing.js";
 
 mainTestFn(import.meta);
-
-const pipeline = promisify(pipelineCallback);
-
-const streamToBuffer = async (str) => {
-  const parts = [];
-  await pipeline(str, async function* (stream) {
-    for await (const chunk of stream) {
-      parts.push(chunk);
-      yield chunk;
-    }
-  });
-
-  return Buffer.concat(parts);
-};
 
 test("store/file-cache", async (t) => {
   const basePath = pathJoin("/tmp", uuid());

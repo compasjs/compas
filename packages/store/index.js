@@ -1,3 +1,8 @@
+export { structure as storeStructure } from "./src/generated/common/structure.js";
+export { queries as storeQueries } from "./src/generated/database/index.js";
+
+export { setStoreQueries } from "./src/generated.js";
+
 export {
   newMinioClient,
   minio,
@@ -48,15 +53,13 @@ export {
 
 export { newSessionStore } from "./src/sessions.js";
 
-export { structure as storeStructure } from "./src/generated/common/structure.js";
-export { queries as storeQueries } from "./src/generated/database/index.js";
-
 export {
   query,
   isQueryPart,
   stringifyQueryPart,
   explainAnalyzeQuery,
 } from "./src/query.js";
-export { setStoreQueries } from "./src/generated.js";
 
 export { postgresTableSizes } from "./src/insight.js";
+
+export { sendTransformedImage } from "./src/send-transformed-image.js";

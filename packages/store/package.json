@@ -16,8 +16,10 @@
   "dependencies": {
     "@compas/stdlib": "0.0.155",
     "@types/minio": "7.0.9",
+    "is-animated": "2.0.1",
     "minio": "7.0.18",
-    "postgres": "2.0.0-beta.6"
+    "postgres": "2.0.0-beta.6",
+    "sharp": "0.28.3"
   },
   "maintainers": [
     {

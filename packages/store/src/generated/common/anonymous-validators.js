@@ -28,6 +28,7 @@ const objectKeys2060025506 = new Set([
   "deletedAt",
 ]);
 const objectKeys420878393 = new Set([""]);
+const objectKeys376443596 = new Set(["q", "w"]);
 const objectKeys1781782332 = new Set([
   "id",
   "isComplete",
@@ -918,6 +919,51 @@ export function anonymousValidator2060025506(
  * @param {string} parentType
  * @returns {number|undefined}
  */
+export function anonymousValidator66994068(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "number",
+) {
+  if (isNil(value)) {
+    return 75;
+  }
+  if (typeof value !== "number") {
+    value = Number(value);
+  }
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  if (!Number.isInteger(value)) {
+    throw AppError.validationError(`validator.${parentType}.integer`, {
+      propertyPath,
+    });
+  }
+  if (value < 0) {
+    const min = 0;
+    throw AppError.validationError(`validator.${parentType}.min`, {
+      propertyPath,
+      min,
+    });
+  }
+  if (value > 100) {
+    const max = 100;
+    throw AppError.validationError(`validator.${parentType}.max`, {
+      propertyPath,
+      max,
+    });
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {number|undefined}
+ */
 export function anonymousValidator1483765921(
   value,
   propertyPath,
@@ -957,6 +1003,50 @@ export function anonymousValidator1483765921(
     });
   }
   return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {{"q": number, "w": number, }|undefined}
+ */
+export function anonymousValidator376443596(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "object",
+) {
+  if (isNil(value)) {
+    throw AppError.validationError(`validator.${parentType}.undefined`, {
+      propertyPath,
+    });
+  }
+  if (typeof value !== "object") {
+    throw AppError.validationError(`validator.${parentType}.type`, {
+      propertyPath,
+    });
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) {
+    if (!objectKeys376443596.has(key)) {
+      throw AppError.validationError(`validator.${parentType}.strict`, {
+        propertyPath,
+        extraKey: key,
+      });
+    }
+  }
+  result["q"] = anonymousValidator66994068(
+    value["q"],
+    `${propertyPath}.q`,
+    errors,
+  );
+  result["w"] = anonymousValidator1483765921(
+    value["w"],
+    `${propertyPath}.w`,
+    errors,
+  );
+  return result;
 }
 /**
  * @param {*} value

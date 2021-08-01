@@ -4,6 +4,7 @@ import mime from "mime-types";
 import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
 import { listObjects } from "./minio.js";
+import { query } from "./query.js";
 
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
@@ -154,6 +155,11 @@ export async function copyFile(
  * @returns {Promise<undefined>}
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
+  // Delete transformed copies of deleted files
+  await queries.fileDelete(sql, {
+    $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (meta->>'transformedFromOriginal')::uuid)`,
+  });
+
   const minioObjectsPromise = listObjects(minio, bucketName);
   const knownIds = await queryFile({
     where: {

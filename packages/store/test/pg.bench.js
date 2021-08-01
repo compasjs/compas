@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import { bench, mainBenchFn } from "../../cli/index.js";
-import { newPostgresConnection } from "../index.js";
+import { bench, mainBenchFn } from "@compas/cli";
+import { newPostgresConnection } from "../src/postgres.js";
 
 const postgresConnectionOptions = {
   createIfNotExists: true,
