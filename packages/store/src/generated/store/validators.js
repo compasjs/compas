@@ -22,6 +22,7 @@ import {
   anonymousValidator310044624,
   anonymousValidator322356638,
   anonymousValidator343387919,
+  anonymousValidator376443596,
   anonymousValidator420878393,
   anonymousValidator430889951,
   anonymousValidator500057262,
@@ -65,6 +66,14 @@ export function validateStoreFileGroupMeta(value, propertyPath = "$") {
  */
 export function validateStoreFileMeta(value, propertyPath = "$") {
   return anonymousValidator2144828802(value, propertyPath, []);
+}
+/**
+ * @param {undefined|*} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {StoreImageTransformOptions}
+ */
+export function validateStoreImageTransformOptions(value, propertyPath = "$") {
+  return anonymousValidator376443596(value, propertyPath, []);
 }
 /**
  * @param {undefined|*} value

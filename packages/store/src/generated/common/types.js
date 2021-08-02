@@ -38,6 +38,9 @@ export const __generated__ = true;
  * @typedef {StoreFileMeta} StoreFileGroupMeta
  */
 /**
+ * @typedef {{"q": number, "w": number, }} StoreImageTransformOptions
+ */
+/**
  * @typedef {{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": *, "retryCount": number, "handlerTimeout"?: undefined|number, "createdAt": Date, "updatedAt": Date, }} StoreJob
  */
 /**

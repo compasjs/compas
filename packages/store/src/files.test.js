@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@compas/cli";
-import { uuid } from "@compas/stdlib";
+import { isNil, uuid } from "@compas/stdlib";
 import {
   copyFile,
   createOrUpdateFile,
@@ -14,6 +14,7 @@ import {
   newMinioClient,
   removeBucketAndObjectsInBucket,
 } from "./minio.js";
+import { query } from "./query.js";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
@@ -162,11 +163,38 @@ test("store/files", async (t) => {
     t.pass();
   });
 
+  t.test(
+    "seed transformedFromOriginal file for 'sendTransformedImage'",
+    async (t) => {
+      await queries.fileInsert(sql, {
+        name: "transformedFromOriginal",
+        bucketName,
+        meta: {
+          transformedFromOriginal: storedFiles[0].id,
+        },
+        contentType: "text/plain",
+        contentLength: 1,
+      });
+
+      t.pass();
+    },
+  );
+
   t.test("sync deleted files", async (t) => {
     let length = await syncDeletedFiles(sql, minio, bucketName);
     t.ok(length > 0);
     length = await syncDeletedFiles(sql, minio, bucketName);
     t.equal(length, 0);
+  });
+
+  t.test("unused 'transformFromOriginal' is removed", async (t) => {
+    const [file] = await queryFile({
+      where: {
+        $raw: query`name = ${"transformedFromOriginal"}`,
+      },
+    }).exec(sql);
+
+    t.ok(isNil(file));
   });
 
   t.test("destroy test db", async (t) => {
