@@ -471,6 +471,32 @@ RETURNING ${sessionFields("")}
 }
 /**
  * @param {Postgres} sql
+ * @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
+ * @param {{}} [options={}]
+ * @returns {Promise<StoreSession[]>}
+ */
+async function sessionUpsertOnId(sql, insert, options = {}) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
+  const fieldString = [...sessionFieldSet]
+    .filter((it) => it !== "id" && it !== "createdAt")
+    .map(
+      (column) =>
+        `"${column}" = COALESCE(EXCLUDED."${column}", "session"."${column}")`,
+    )
+    .join(",");
+  const result = await query`
+INSERT INTO "session" (${sessionFields("", { excludePrimaryKey: false })})
+VALUES ${sessionInsertValues(insert, { includePrimaryKey: true })}
+ON CONFLICT ("id") DO UPDATE SET ${query([fieldString])}
+RETURNING ${sessionFields("")}
+`.exec(sql);
+  transformSession(result);
+  return result;
+}
+/**
+ * @param {Postgres} sql
  * @param {StoreSessionUpdatePartial} update
  * @param {StoreSessionWhere} [where={}]
  * @returns {Promise<StoreSession[]>}
@@ -489,6 +515,7 @@ export const sessionQueries = {
   sessionCount,
   sessionDelete,
   sessionInsert,
+  sessionUpsertOnId,
   sessionUpdate,
 };
 /**

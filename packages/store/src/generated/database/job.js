@@ -574,6 +574,32 @@ RETURNING ${jobFields("")}
 }
 /**
  * @param {Postgres} sql
+ * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
+ * @param {{}} [options={}]
+ * @returns {Promise<StoreJob[]>}
+ */
+async function jobUpsertOnId(sql, insert, options = {}) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
+  const fieldString = [...jobFieldSet]
+    .filter((it) => it !== "id" && it !== "createdAt")
+    .map(
+      (column) =>
+        `"${column}" = COALESCE(EXCLUDED."${column}", "job"."${column}")`,
+    )
+    .join(",");
+  const result = await query`
+INSERT INTO "job" (${jobFields("", { excludePrimaryKey: false })})
+VALUES ${jobInsertValues(insert, { includePrimaryKey: true })}
+ON CONFLICT ("id") DO UPDATE SET ${query([fieldString])}
+RETURNING ${jobFields("")}
+`.exec(sql);
+  transformJob(result);
+  return result;
+}
+/**
+ * @param {Postgres} sql
  * @param {StoreJobUpdatePartial} update
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
@@ -588,7 +614,13 @@ RETURNING ${jobFields()}
   transformJob(result);
   return result;
 }
-export const jobQueries = { jobCount, jobDelete, jobInsert, jobUpdate };
+export const jobQueries = {
+  jobCount,
+  jobDelete,
+  jobInsert,
+  jobUpsertOnId,
+  jobUpdate,
+};
 /**
  * @param {StoreJobQueryBuilder|StoreJobQueryTraverser} [builder={}]
  * @param {QueryPart} wherePartial

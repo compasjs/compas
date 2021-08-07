@@ -1,4 +1,4 @@
-import { newLogger, environment, isNil, uuid } from "@compas/stdlib";
+import { environment, isNil, newLogger, uuid } from "@compas/stdlib";
 import {
   createDatabaseIfNotExists,
   newPostgresConnection,
@@ -67,7 +67,8 @@ export async function cleanupPostgresDatabaseTemplate() {
  *
  * @since 0.1.0
  *
- * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all queries.
+ * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all
+ *   queries.
  * @param {object} [connectionOptions]
  * @returns {Promise<Postgres>}
  */

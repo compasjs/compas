@@ -199,6 +199,33 @@ test("code-gen/e2e/sql", (t) => {
     t.equal(dbUser.deletedAt, undefined);
   });
 
+  t.test("upsert user nick name", async (t) => {
+    const id = uuid();
+    const [insert] = await queries.userUpsertOnId(sql, {
+      id,
+      email: "test",
+      authKey: uuid(),
+      nickName: "foo",
+    });
+
+    t.equal(insert.id, id);
+
+    const [upsert] = await queries.userUpsertOnId(sql, {
+      id,
+      email: "test2",
+      authKey: uuid(),
+      nickName: "foo",
+    });
+
+    t.equal(upsert.id, insert.id);
+    t.deepEqual(upsert.createdAt, insert.createdAt);
+    t.equal(upsert.email, "test2");
+
+    await queries.userDeletePermanent(sql, {
+      id,
+    });
+  });
+
   t.test("query filter by 'in' statements", async (t) => {
     await queryUser({
       where: {

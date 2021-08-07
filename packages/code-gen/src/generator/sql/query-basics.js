@@ -18,14 +18,21 @@ export function generateBaseQueries(context, imports, type, src) {
 
   src.push(countQuery(context, imports, type));
 
+  const primaryKey = getPrimaryKeyWithType(type);
+  const upsertByPrimaryKey = `${type.name}UpsertOn${upperCaseFirst(
+    primaryKey.key,
+  )}`;
+
   if (!type.queryOptions.isView) {
     names.push(
       `${type.name}Delete`,
       `${type.name}Insert`,
+      upsertByPrimaryKey,
       `${type.name}Update`,
     );
     src.push(deleteQuery(context, imports, type));
     src.push(insertQuery(context, imports, type));
+    src.push(upsertQueryByPrimaryKey(context, imports, type));
     src.push(updateQuery(context, imports, type));
 
     if (type.queryOptions.withSoftDeletes) {
@@ -188,6 +195,50 @@ function insertQuery(context, imports, type) {
         "", { excludePrimaryKey: !options.withPrimaryKey })})
         VALUES $\{${type.name}InsertValues(
         insert, { includePrimaryKey: options.withPrimaryKey })}
+        RETURNING $\{${type.name}Fields("")}
+      \`.exec(sql);
+
+      transform${upperCaseFirst(type.name)}(result);
+
+      return result;
+    }
+  `;
+}
+
+/**
+ * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
+ * @param {CodeGenObjectType} type
+ */
+function upsertQueryByPrimaryKey(context, imports, type) {
+  const primaryKey = getPrimaryKeyWithType(type);
+  const name = `${type.name}UpsertOn${upperCaseFirst(primaryKey.key)}`;
+
+  return js`
+    /**
+     * @param {Postgres} sql
+     * @param {${type.partial.insertType}|(${type.partial.insertType}[])} insert
+     * @param {{}} [options={}]
+     * @returns {Promise<${type.uniqueName}[]>}
+     */
+    async function ${name}(sql, insert, options = {}) {
+      if (insert === undefined || insert.length === 0) {
+        return [];
+      }
+      
+      const fieldString = [...${type.name}FieldSet]
+        .filter(it => it !== "${primaryKey.key}" && it !== "createdAt")
+        .map((column) => \`"$\{column}" = COALESCE(EXCLUDED."$\{column}", "${
+          type.name
+        }"."$\{column}")\`)
+        .join(",");
+
+      const result = await query\`
+        INSERT INTO "${type.name}" ($\{${type.name}Fields(
+        "", { excludePrimaryKey: false })})
+        VALUES $\{${type.name}InsertValues(
+        insert, { includePrimaryKey: true })}
+        ON CONFLICT ("${primaryKey.key}") DO UPDATE SET $\{query([fieldString])}
         RETURNING $\{${type.name}Fields("")}
       \`.exec(sql);
 
