@@ -585,6 +585,32 @@ RETURNING ${fileFields("")}
 }
 /**
  * @param {Postgres} sql
+ * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
+ * @param {{}} [options={}]
+ * @returns {Promise<StoreFile[]>}
+ */
+async function fileUpsertOnId(sql, insert, options = {}) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
+  const fieldString = [...fileFieldSet]
+    .filter((it) => it !== "id" && it !== "createdAt")
+    .map(
+      (column) =>
+        `"${column}" = COALESCE(EXCLUDED."${column}", "file"."${column}")`,
+    )
+    .join(",");
+  const result = await query`
+INSERT INTO "file" (${fileFields("", { excludePrimaryKey: false })})
+VALUES ${fileInsertValues(insert, { includePrimaryKey: true })}
+ON CONFLICT ("id") DO UPDATE SET ${query([fieldString])}
+RETURNING ${fileFields("")}
+`.exec(sql);
+  transformFile(result);
+  return result;
+}
+/**
+ * @param {Postgres} sql
  * @param {StoreFileUpdatePartial} update
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<StoreFile[]>}
@@ -622,6 +648,7 @@ export const fileQueries = {
   fileCount,
   fileDelete,
   fileInsert,
+  fileUpsertOnId,
   fileUpdate,
   fileDeletePermanent,
 };

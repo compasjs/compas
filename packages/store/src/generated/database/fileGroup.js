@@ -712,6 +712,32 @@ RETURNING ${fileGroupFields("")}
 }
 /**
  * @param {Postgres} sql
+ * @param {StoreFileGroupInsertPartial|(StoreFileGroupInsertPartial[])} insert
+ * @param {{}} [options={}]
+ * @returns {Promise<StoreFileGroup[]>}
+ */
+async function fileGroupUpsertOnId(sql, insert, options = {}) {
+  if (insert === undefined || insert.length === 0) {
+    return [];
+  }
+  const fieldString = [...fileGroupFieldSet]
+    .filter((it) => it !== "id" && it !== "createdAt")
+    .map(
+      (column) =>
+        `"${column}" = COALESCE(EXCLUDED."${column}", "fileGroup"."${column}")`,
+    )
+    .join(",");
+  const result = await query`
+INSERT INTO "fileGroup" (${fileGroupFields("", { excludePrimaryKey: false })})
+VALUES ${fileGroupInsertValues(insert, { includePrimaryKey: true })}
+ON CONFLICT ("id") DO UPDATE SET ${query([fieldString])}
+RETURNING ${fileGroupFields("")}
+`.exec(sql);
+  transformFileGroup(result);
+  return result;
+}
+/**
+ * @param {Postgres} sql
  * @param {StoreFileGroupUpdatePartial} update
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<StoreFileGroup[]>}
@@ -749,6 +775,7 @@ export const fileGroupQueries = {
   fileGroupCount,
   fileGroupDelete,
   fileGroupInsert,
+  fileGroupUpsertOnId,
   fileGroupUpdate,
   fileGroupDeletePermanent,
 };
