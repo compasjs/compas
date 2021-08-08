@@ -4,6 +4,29 @@ editLink: false
 
 # Changelog
 
+### [v0.0.156](https://github.com/compasjs/compas/releases/tag/v0.0.156)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.14.8 to 7.15.0
+  ([#1083](https://github.com/compasjs/compas/pull/1083))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.14.7 to 7.15.0
+  ([#1077](https://github.com/compasjs/compas/pull/1077),
+  [#1082](https://github.com/compasjs/compas/pull/1082))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 16.4.8 to 16.4.13
+  ([#1081](https://github.com/compasjs/compas/pull/1081),
+  [#1084](https://github.com/compasjs/compas/pull/1084),
+  [#1076](https://github.com/compasjs/compas/pull/1076),
+  [#1079](https://github.com/compasjs/compas/pull/1079))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- feat(code-gen): add sql upsert on primary key support
+  ([#1087](https://github.com/compasjs/compas/pull/1087))
+  - Closes [#1080](https://github.com/compasjs/compas/pull/1080)
+- feat(store): add sendTransformedImage compatible with Next.js image loaders
+  ([#1078](https://github.com/compasjs/compas/pull/1078))
+
 ### [v0.0.155](https://github.com/compasjs/compas/releases/tag/v0.0.155)
 
 ##### Changes

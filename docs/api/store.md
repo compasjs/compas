@@ -359,7 +359,7 @@ object.
 - props `StoreFileInsertPartial`
 - source `ReadStream|string|Buffer`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L37)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L38)_
 
 ## copyFile
 
@@ -379,7 +379,7 @@ id, into the provided bucket.
 - id `string`
 - targetBucket `string=bucketName`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L118)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L119)_
 
 ## getFileStream
 
@@ -398,7 +398,7 @@ the 'id'. A 'start' and 'end' value can optionally be specified.
 - id `string`
 - seek `{ start?: number|undefined, end?: number|undefined }={}`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L90)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L91)_
 
 ## syncDeletedFiles
 
@@ -416,7 +416,7 @@ the S3 bucket.
 - minio `minio.Client`
 - bucketName `string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L156)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L157)_
 
 ## updateFileGroupOrder
 
@@ -453,7 +453,7 @@ a connection to the new database.
   queries.
 - connectionOptions `object?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L74)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L75)_
 
 ## cleanupTestPostgresDatabase
 
@@ -467,4 +467,4 @@ Remove a created test database
 
 - sql `Postgres`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L163)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L164)_
