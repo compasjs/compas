@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
+import { pathToFileURL } from "url";
 import { AppError, environment, pathJoin } from "@compas/stdlib";
 
 /**
@@ -219,15 +220,40 @@ function filterMigrationsToBeApplied(mc) {
  */
 async function runMigration(sql, migration) {
   const useTransaction =
-    migration.source.indexOf("-- disable auto transaction") === -1;
+    !migration.source.includes("-- disable auto transaction") &&
+    !migration.source.includes("// disable auto transaction");
+
+  let run = () => {
+    throw AppError.serverError({
+      message: "Unknown migration file",
+      fullPath: migration.fullPath,
+    });
+  };
+
+  if (migration.fullPath.endsWith(".sql")) {
+    run = (sql) => sql.unsafe(migration.source);
+  } else if (migration.fullPath.endsWith(".js")) {
+    run = async (sql) => {
+      const { migrate } = await import(pathToFileURL(migration.fullPath));
+
+      if (typeof migrate !== "function") {
+        throw AppError.serverError({
+          message:
+            "JavaScript migration files should contain the following signature: 'export async function migrate(sql)",
+        });
+      }
+
+      return await migrate(sql);
+    };
+  }
 
   if (useTransaction) {
     await sql.begin(async (sql) => [
-      await sql.unsafe(migration.source),
+      await run(sql),
       await runInsert(sql, migration),
     ]);
   } else {
-    await sql.unsafe(migration.source);
+    await run(sql);
     await runInsert(sql, migration);
   }
 }
@@ -314,7 +340,7 @@ async function readMigrationsDir(directory) {
   for (const f of files) {
     const fullPath = pathJoin(directory, f);
 
-    if (!f.endsWith(".sql")) {
+    if (!f.endsWith(".sql") && !f.endsWith(".js")) {
       continue;
     }
 
@@ -339,18 +365,12 @@ async function readMigrationsDir(directory) {
  * @param fileName
  */
 function parseFileName(fileName) {
-  const filePattern = /(\d+)(-r)?-([a-zA-Z-]+).sql/g;
+  const filePattern = /(\d+)(-r)?-([a-zA-Z-]+).(js|sql)/g;
   filePattern.lastIndex = 0;
-
-  if (!fileName.endsWith(".sql")) {
-    throw new Error(
-      `migration: Only supports migrating sql files: ${fileName}`,
-    );
-  }
 
   if (!filePattern.test(fileName)) {
     throw new Error(
-      `migration: only supports the following file pattern: '000-my-name.sql' or '001-r-name.sql' for repeatable migrations`,
+      `migration: only supports the following file pattern: '000-my-name.{sql,js}' or '001-r-name.sql' for repeatable migrations`,
     );
   }
 

@@ -27,19 +27,19 @@ test("store/migrations", (t) => {
   t.test("run full migration", async (t) => {
     const mc = await newMigrateContext(sql, `./__fixtures__/store`);
 
-    t.equal(mc.files.length, 3);
+    t.equal(mc.files.length, 4);
 
     const { migrationQueue: list } = getMigrationsToBeApplied(mc);
-    t.equal(list.length, 3);
+    t.equal(list.length, 4);
 
-    t.ok(list[0].repeatable === false);
-    t.ok(list[0].number === 997);
+    t.ok(list[1].repeatable === false);
+    t.ok(list[1].number === 997);
 
-    t.ok(list[1].repeatable === true);
-    t.ok(list[1].number === 998);
+    t.ok(list[2].repeatable === true);
+    t.ok(list[2].number === 998);
 
-    t.ok(list[2].repeatable === false);
-    t.ok(list[2].number === 999);
+    t.ok(list[3].repeatable === false);
+    t.ok(list[3].number === 999);
 
     await runMigrations(mc);
     const testResult = await sql`
