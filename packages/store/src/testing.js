@@ -146,7 +146,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
 
 /**
  * Try to remove a test database. Can only happen if the connection is created by
- * 'createTestPostgresDatabase'.s
+ * 'createTestPostgresDatabase'.
  *
  * @since 0.1.0
  *
