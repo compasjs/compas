@@ -1,42 +1,35 @@
-import { environment, isProduction, merge } from "@compas/stdlib";
+import { environment, isNil, isProduction, merge } from "@compas/stdlib";
 import postgres from "postgres";
 
 /**
- * Check environment variables for creating a Postgres connection
+ * @param {postgres.Options} opts
+ * @returns {postgres.Options}
  */
-export function postgresEnvCheck() {
-  if (
-    !environment.POSTGRES_URI &&
-    !(
-      environment.POSTGRES_USER &&
-      environment.POSTGRES_HOST &&
-      environment.POSTGRES_PASSWORD
-    )
-  ) {
+export function buildAndCheckOpts(opts) {
+  const finalOpts = /** @type {postgres.Options} */ merge(
+    {
+      connection: {
+        application_name: environment.APP_NAME,
+      },
+      no_prepare: true,
+      ssl: isProduction() ? "require" : "prefer",
+      database: environment.POSTGRES_DATABASE ?? environment.APP_NAME,
+      user: environment.POSTGRES_USER,
+      password: environment.POSTGRES_PASSWORD,
+      host: environment.POSTGRES_HOST,
+      port: environment.POSTGRES_PORT,
+      max: 15,
+    },
+    opts,
+  );
+
+  if (isNil(finalOpts.host) && isNil(environment.POSTGRES_URI)) {
     throw new Error(
-      "Provide the 'POSTGRES_URI' or ('POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_HOST') environment variables.",
+      `One of 'host' option, 'POSTGRES_HOST' environment variable or the 'POSTGRES_URI' environment variable is required.`,
     );
   }
 
-  if (!environment.POSTGRES_URI) {
-    environment.POSTGRES_URI = `postgres://${environment.POSTGRES_USER}:${environment.POSTGRES_PASSWORD}@${environment.POSTGRES_HOST}/`;
-    // Set the env, in case someone calls the refreshEnv function in stdlib
-    process.env.POSTGRES_URI = environment.POSTGRES_URI;
-  } else if (!environment.POSTGRES_URI.endsWith("/")) {
-    environment.POSTGRES_URI += "/";
-  }
-
-  if (!environment.APP_NAME && !environment.POSTGRES_DATABASE) {
-    throw new Error(
-      `Provide the 'APP_NAME' or 'POSTGRES_DATABASE' environment variable.`,
-    );
-  }
-
-  if (!environment.POSTGRES_DATABASE) {
-    environment.POSTGRES_DATABASE = environment.APP_NAME;
-    // Set the env, in case someone calls the refreshEnv function in stdlib
-    process.env.POSTGRES_DATABASE = environment.POSTGRES_DATABASE;
-  }
+  return finalOpts;
 }
 
 /**
@@ -45,38 +38,23 @@ export function postgresEnvCheck() {
  *
  * @since 0.1.0
  *
- * @param {object} [opts]
- * @param {boolean} [opts.createIfNotExists]
+ * @param {postgres.Options & { createIfNotExists?: boolean}} [opts]
  * @returns {Promise<Postgres>}
  */
 export async function newPostgresConnection(opts) {
-  postgresEnvCheck();
+  const connectionOpts = buildAndCheckOpts(opts);
 
-  const connectionOpts = merge(
-    {
-      connection: {
-        application_name: environment.APP_NAME,
-      },
-      no_prepare: true,
-      ssl: isProduction() ? "require" : "prefer",
-    },
-    opts,
-  );
-
-  if (opts && opts.createIfNotExists) {
+  if (opts?.createIfNotExists) {
     const oldConnection = await createDatabaseIfNotExists(
       undefined,
-      environment.POSTGRES_DATABASE,
+      connectionOpts.database,
       undefined,
       connectionOpts,
     );
     setImmediate(() => oldConnection.end());
   }
 
-  return postgres(
-    environment.POSTGRES_URI + environment.POSTGRES_DATABASE,
-    connectionOpts,
-  );
+  return postgres(environment.POSTGRES_URI ?? connectionOpts, connectionOpts);
 }
 
 /**
@@ -92,8 +70,19 @@ export async function createDatabaseIfNotExists(
   template,
   connectionOptions,
 ) {
+  if (isNil(databaseName)) {
+    throw new Error(
+      "The 'database' option, 'POSTGRES_DATABASE' environment variable or 'APP_NAME' environment variable is required.",
+    );
+  }
+
+  // Don't connect to a database
+  const opts = {
+    ...connectionOptions,
+    database: undefined,
+  };
   if (!sql) {
-    sql = postgres(environment.POSTGRES_URI, connectionOptions);
+    sql = postgres(environment.POSTGRES_URI ?? opts, opts);
   }
   const [db] = await sql`
     SELECT
@@ -104,7 +93,7 @@ export async function createDatabaseIfNotExists(
       datname = ${databaseName}
   `;
 
-  if (!db || !db.datname) {
+  if (!db?.datname) {
     if (template) {
       await sql`
         CREATE DATABASE ${sql(databaseName)} WITH TEMPLATE ${sql(

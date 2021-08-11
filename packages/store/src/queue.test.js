@@ -339,7 +339,6 @@ test("store/queue", (t) => {
   });
 
   t.test("destroy test db", async (t) => {
-    qw.stop();
     await cleanupTestPostgresDatabase(sql);
     t.ok(true, "closed postgres connection");
   });

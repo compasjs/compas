@@ -1,15 +1,14 @@
-import { environment, isNil, newLogger, uuid } from "@compas/stdlib";
+import { isNil, isPlainObject, newLogger, uuid } from "@compas/stdlib";
 import {
+  buildAndCheckOpts,
   createDatabaseIfNotExists,
   newPostgresConnection,
-  postgres,
-  postgresEnvCheck,
 } from "./postgres.js";
 
 /**
  * If set, new databases are derived from this database
  *
- * @type {undefined}
+ * @type {Postgres & { connectionOptions?: postgres.Options}}
  */
 let testDatabase = undefined;
 
@@ -20,22 +19,17 @@ let testDatabase = undefined;
  *
  * @since 0.1.0
  *
- * @param {Postgres|string} databaseNameOrConnection
- * @returns {Promise<undefined>}
+ * @param {Postgres} connection
+ * @returns {void}
  */
-export async function setPostgresDatabaseTemplate(databaseNameOrConnection) {
-  if (!isNil(testDatabase)) {
-    await cleanupPostgresDatabaseTemplate();
-  }
-
-  if (typeof databaseNameOrConnection === "string") {
-    testDatabase = databaseNameOrConnection;
-  } else if (typeof databaseNameOrConnection?.options?.database === "string") {
-    testDatabase = databaseNameOrConnection.options.database;
+export function setPostgresDatabaseTemplate(connection) {
+  if (
+    isPlainObject(connection.connectionOptions) &&
+    typeof connection.options.database === "string"
+  ) {
+    testDatabase = connection;
   } else {
-    throw new Error(
-      `Expected string or sql connection. Found ${typeof databaseNameOrConnection}`,
-    );
+    throw new Error(`Expected sql connection. Found ${typeof connection}`);
   }
 }
 
@@ -50,12 +44,7 @@ export async function cleanupPostgresDatabaseTemplate() {
   if (!isNil(testDatabase)) {
     // We mock a connection here, since cleanTestPostgresDatabase doesn't use the
     // connection any way
-    await cleanupTestPostgresDatabase({
-      options: {
-        database: testDatabase,
-      },
-      end: () => Promise.resolve(),
-    });
+    await cleanupTestPostgresDatabase(testDatabase);
   }
 }
 
@@ -69,92 +58,95 @@ export async function cleanupPostgresDatabaseTemplate() {
  *
  * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all
  *   queries.
- * @param {object} [connectionOptions]
+ * @param {postgres.Options} [rawOpts]
  * @returns {Promise<Postgres>}
  */
-export async function createTestPostgresDatabase(
-  verboseSql = false,
-  connectionOptions,
-) {
-  postgresEnvCheck();
-  const name = environment.POSTGRES_DATABASE + uuid().substring(0, 7);
+export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
+  const connectionOptions = buildAndCheckOpts(rawOpts);
+  const name = connectionOptions.database + uuid().substring(0, 7);
 
-  // Setup a template to work from
-  if (isNil(testDatabase)) {
-    testDatabase = environment.POSTGRES_DATABASE + uuid().substring(0, 7);
-
+  if (!isNil(testDatabase?.options?.database)) {
+    // Real database creation
     const creationSql = await createDatabaseIfNotExists(
       undefined,
-      environment.POSTGRES_DATABASE,
-      undefined,
-      connectionOptions,
-    );
-
-    // Clean all connections
-    // They prevent from using this as a template
-    await creationSql`
-        SELECT pg_terminate_backend(pg_stat_activity.pid)
-        FROM pg_stat_activity
-        WHERE
-            pg_stat_activity.datname = ${environment.POSTGRES_DATABASE}
-        AND pid <> pg_backend_pid()
-      `;
-
-    // Use the current 'app' database as a base.
-    // We expect the user to have done all necessary migrations
-    await createDatabaseIfNotExists(
-      creationSql,
-      testDatabase,
-      environment.POSTGRES_DATABASE,
+      name,
+      testDatabase.options.database,
       connectionOptions,
     );
 
     const sql = await newPostgresConnection({
       ...connectionOptions,
-      database: testDatabase,
+      database: name,
+      debug: verboseSql ? newLogger({ ctx: { type: "sql" } }).error : undefined,
     });
 
-    // Cleanup all tables, except migrations
-    const tables = await sql`
-        SELECT table_name
-        FROM information_schema.tables
-        WHERE
-            table_schema = 'public'
-        AND table_name != 'migration'
-        AND table_type = 'BASE TABLE'
-      `;
-    if (tables.length > 0) {
-      await sql.unsafe(`
-        TRUNCATE ${tables.map((it) => `"${it.table_name}"`).join(", ")} CASCADE
-          `);
-    }
+    // Initialize new connection and kill old connection
+    await Promise.all([creationSql.end(), sql`SELECT 1 + 1 AS sum`]);
 
-    // Cleanup all connections
-    await Promise.all([creationSql.end(), sql.end()]);
+    // Save options so we can cleanup the created database.
+    sql.connectionOptions = connectionOptions;
+
+    return sql;
   }
 
-  // Real database creation
   const creationSql = await createDatabaseIfNotExists(
     undefined,
+    connectionOptions.database,
+    undefined,
+    connectionOptions,
+  );
+
+  // Clean all connections
+  // They prevent from using this as a template
+  await creationSql`
+    SELECT pg_terminate_backend(pg_stat_activity.pid)
+    FROM pg_stat_activity
+    WHERE
+        pg_stat_activity.datname = ${connectionOptions.database}
+    AND pid <> pg_backend_pid()
+  `;
+
+  // Use the current 'app' database as a base.
+  // We expect the user to have done all necessary migrations
+  await createDatabaseIfNotExists(
+    creationSql,
     name,
-    testDatabase,
+    connectionOptions.database,
     connectionOptions,
   );
 
   const sql = await newPostgresConnection({
     ...connectionOptions,
     database: name,
-    debug: verboseSql ? newLogger({ ctx: { type: "sql" } }).error : undefined,
   });
 
-  // Initialize new connection and kill old connection
-  await Promise.all([creationSql.end(), sql`SELECT 1 + 1 AS sum`]);
+  // Save options so we can cleanup the created database.
+  sql.connectionOptions = connectionOptions;
+
+  // Cleanup all tables, except migrations
+  const tables = await sql`
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE
+        table_schema = 'public'
+    AND table_name != 'migration'
+    AND table_type = 'BASE TABLE'
+  `;
+
+  if (tables.length > 0) {
+    await sql.unsafe(`
+        TRUNCATE ${tables.map((it) => `"${it.table_name}"`).join(", ")} CASCADE
+          `);
+  }
+
+  await creationSql.end();
 
   return sql;
 }
 
 /**
- * Remove a created test database
+ * Try to remove a test database. Can only happen if the connection is created by
+ * 'createTestPostgresDatabase'.
  *
  * @since 0.1.0
  *
@@ -162,11 +154,11 @@ export async function createTestPostgresDatabase(
  * @returns {Promise<undefined>}
  */
 export async function cleanupTestPostgresDatabase(sql) {
-  const dbName = sql.options.database;
   await sql.end();
 
-  const deletionSql = postgres(environment.POSTGRES_URI);
-  // language=PostgreSQL
-  await deletionSql`DROP DATABASE ${deletionSql(dbName)}`;
-  await deletionSql.end();
+  if (sql?.connectionOptions) {
+    const deletionSql = await newPostgresConnection(sql.connectionOptions);
+    await deletionSql.unsafe(`DROP DATABASE ${sql.options.database}`);
+    await deletionSql.end();
+  }
 }
