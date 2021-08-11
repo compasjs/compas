@@ -83,6 +83,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
     // Initialize new connection and kill old connection
     await Promise.all([creationSql.end(), sql`SELECT 1 + 1 AS sum`]);
 
+    // Save options so we can cleanup the created database.
     sql.connectionOptions = connectionOptions;
 
     return sql;
@@ -122,6 +123,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
     database: name,
   });
 
+  // Save options so we can cleanup the created database.
   sql.connectionOptions = connectionOptions;
 
   // Cleanup all tables, except migrations
