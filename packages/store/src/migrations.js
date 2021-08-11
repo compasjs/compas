@@ -239,7 +239,7 @@ async function runMigration(sql, migration) {
       if (typeof migrate !== "function") {
         throw AppError.serverError({
           message:
-            "JavaScript migration files should contain the following signature: 'export async function migrate(sql)",
+            "JavaScript migration files should contain the following signature: 'export async function migrate(sql)'.",
         });
       }
 
