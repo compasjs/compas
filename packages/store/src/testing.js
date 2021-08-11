@@ -93,10 +93,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
     undefined,
     connectionOptions.database,
     undefined,
-    {
-      ...connectionOptions,
-      database: undefined,
-    },
+    connectionOptions,
   );
 
   // Clean all connections
@@ -115,7 +112,7 @@ export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
     creationSql,
     name,
     connectionOptions.database,
-    { ...connectionOptions, database: undefined },
+    connectionOptions,
   );
 
   const sql = await newPostgresConnection({

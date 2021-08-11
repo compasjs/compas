@@ -76,11 +76,13 @@ export async function createDatabaseIfNotExists(
     );
   }
 
+  // Don't connect to a database
+  const opts = {
+    ...connectionOptions,
+    database: undefined,
+  };
   if (!sql) {
-    sql = postgres(
-      environment.POSTGRES_URI ?? connectionOptions,
-      connectionOptions,
-    );
+    sql = postgres(environment.POSTGRES_URI ?? opts, opts);
   }
   const [db] = await sql`
     SELECT
