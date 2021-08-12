@@ -228,7 +228,7 @@ export function applyTestingSqlStructure(app) {
         email: T.string().searchable(),
         authKey: T.string(),
       })
-      .enableQueries({ withSoftDeletes: true })
+      .enableQueries({ withSoftDeletes: true, schema: "public" })
       .relations(T.oneToMany("posts", T.reference("sql", "post"))),
 
     T.object("category")

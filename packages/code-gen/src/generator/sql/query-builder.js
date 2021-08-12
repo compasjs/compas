@@ -489,7 +489,7 @@ if (!isNil(builder.${key}.limit)) {
          ${nestedJoinPartials}
 
          return query\`
-        FROM "${type.name}" ${shortName}
+        FROM ${type.queryOptions.schema}"${type.name}" ${shortName}
         $\{joinQb}
         WHERE $\{${type.name}Where(
             builder.where, "${shortName}.", { skipValidator: true })} $\{wherePartial}

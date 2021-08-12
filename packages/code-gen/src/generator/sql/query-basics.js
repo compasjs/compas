@@ -60,7 +60,7 @@ function countQuery(context, imports, type) {
     async function ${type.name}Count(sql, where) {
       const [ result ] = await query\`
         SELECT COUNT(${type.shortName}."${primaryKey}") as "countResult"
-        FROM "${type.name}" ${type.shortName}
+        FROM ${type.queryOptions.schema}"${type.name}" ${type.shortName}
         WHERE $\{${type.name}Where(where)}
         \`.exec(sql);
 
@@ -92,7 +92,7 @@ function deleteQuery(context, imports, type) {
           : ""
       }
       return await query\`
-        DELETE FROM "${type.name}" ${type.shortName}
+        DELETE FROM ${type.queryOptions.schema}"${type.name}" ${type.shortName}
         WHERE $\{${type.name}Where(where)}
         \`.exec(sql);
     }
@@ -132,7 +132,7 @@ function softDeleteQuery(context, imports, type) {
     async function ${type.name}Delete(sql, where = {}, options = {}) {
       ${affectedRelations.length > 0 ? "const result =" : ""}
       await query\`
-        UPDATE "${type.name}" ${type.shortName}
+        UPDATE ${type.queryOptions.schema}"${type.name}" ${type.shortName}
         SET "deletedAt" = now()
         WHERE $\{${type.name}Where(where)}
         RETURNING "${primaryKey}"
@@ -191,7 +191,9 @@ function insertQuery(context, imports, type) {
       options.withPrimaryKey = options.withPrimaryKey ?? false;
 
       const result = await query\`
-        INSERT INTO "${type.name}" ($\{${type.name}Fields(
+        INSERT INTO ${type.queryOptions.schema}"${type.name}" ($\{${
+    type.name
+  }Fields(
         "", { excludePrimaryKey: !options.withPrimaryKey })})
         VALUES $\{${type.name}InsertValues(
         insert, { includePrimaryKey: options.withPrimaryKey })}
@@ -234,7 +236,9 @@ function upsertQueryByPrimaryKey(context, imports, type) {
         .join(",");
 
       const result = await query\`
-        INSERT INTO "${type.name}" ($\{${type.name}Fields(
+        INSERT INTO ${type.queryOptions.schema}"${type.name}" ($\{${
+    type.name
+  }Fields(
         "", { excludePrimaryKey: false })})
         VALUES $\{${type.name}InsertValues(
         insert, { includePrimaryKey: true })}
@@ -264,7 +268,7 @@ function updateQuery(context, imports, type) {
      */
     async function ${type.name}Update(sql, update, where = {}) {
       const result = await query\`
-        UPDATE "${type.name}" ${type.shortName}
+        UPDATE ${type.queryOptions.schema}"${type.name}" ${type.shortName}
         SET $\{${type.name}UpdateSet(update)}
         WHERE $\{${type.name}Where(where)}
         RETURNING $\{${type.name}Fields()}

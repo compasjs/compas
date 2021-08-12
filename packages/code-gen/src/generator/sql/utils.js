@@ -27,6 +27,14 @@ export function addShortNamesToQueryEnabledObjects(context) {
     } else {
       knownShortNames[type.shortName] = type.name;
     }
+
+    // Also format schema if specified
+    type.queryOptions.schema = type.queryOptions.schema ?? "";
+    if (type.queryOptions.schema.length > 0) {
+      if (!type.queryOptions.schema.startsWith(`"`)) {
+        type.queryOptions.schema = `"${type.queryOptions.schema}".`;
+      }
+    }
   }
 }
 
