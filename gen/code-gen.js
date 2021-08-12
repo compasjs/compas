@@ -271,6 +271,7 @@ function getTypes(T) {
         withDates: T.bool().default(false),
         withPrimaryKey: T.bool().default(true),
         isView: T.bool().default(false),
+        schema: T.string().default(""),
       })
       .optional()
       .loose(),

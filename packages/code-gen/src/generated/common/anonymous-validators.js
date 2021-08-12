@@ -1663,9 +1663,45 @@ export function anonymousValidator1529527338(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }|undefined}
+ * @returns {string|undefined}
  */
-export function anonymousValidator1591987555(
+export function anonymousValidator1180542458(
+  value,
+  propertyPath,
+  errors = [],
+  parentType = "string",
+) {
+  if (isNil(value)) {
+    return value;
+  }
+  if (typeof value !== "string") {
+    errors.push({
+      key: `validator.${parentType}.type`,
+      info: { propertyPath },
+    });
+    return undefined;
+  }
+  if (value.length === 0) {
+    return undefined;
+  }
+  if (value.length < 1) {
+    const min = 1;
+    errors.push({
+      key: `validator.${parentType}.min`,
+      info: { propertyPath, min },
+    });
+    return undefined;
+  }
+  return value;
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @param {{ key: string, info: any }[]} errors
+ * @param {string} parentType
+ * @returns {undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }|undefined}
+ */
+export function anonymousValidator1899936374(
   value,
   propertyPath,
   errors = [],
@@ -1700,6 +1736,11 @@ export function anonymousValidator1591987555(
   result["isView"] = anonymousValidator1174857441(
     value["isView"],
     `${propertyPath}.isView`,
+    errors,
+  );
+  result["schema"] = anonymousValidator1180542458(
+    value["schema"],
+    `${propertyPath}.schema`,
     errors,
   );
   return result;
@@ -2402,7 +2443,7 @@ export function anonymousValidator2068553851(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
+ * @returns {{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": Object<string, CodeGenType>, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "isJsonb": boolean, })[], }, }|undefined}
  */
 export function anonymousValidator17105276(
   value,
@@ -2494,7 +2535,7 @@ export function anonymousValidator17105276(
     `${propertyPath}.enableQueries`,
     errors,
   );
-  result["queryOptions"] = anonymousValidator1591987555(
+  result["queryOptions"] = anonymousValidator1899936374(
     value["queryOptions"],
     `${propertyPath}.queryOptions`,
     errors,

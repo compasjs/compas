@@ -71,11 +71,13 @@ export class ObjectType extends TypeBuilder {
   }
 
   /**
-   * @param {object} [options={}]
-   * @param {boolean} [options.withSoftDeletes]
-   * @param {boolean} [options.withDates]
-   * @param {boolean} [options.withPrimaryKey=true]
-   * @param {boolean} [options.isView]
+   * @param {{
+   *   withSoftDeletes?: boolean,
+   *   withDates?: boolean,
+   *   withPrimaryKey?: boolean,
+   *   isView?: boolean,
+   *   schema?: string
+   * }} [options = {}]
    * @returns {ObjectType}
    */
   enableQueries(options = {}) {
