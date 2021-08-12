@@ -4,6 +4,55 @@ editLink: false
 
 # Changelog
 
+### [v0.0.157](https://github.com/compasjs/compas/releases/tag/v0.0.157)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.4.13 to 16.6.0
+  ([#1101](https://github.com/compasjs/compas/pull/1101))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-import from 2.23.4 to 2.24.0
+  ([#1088](https://github.com/compasjs/compas/pull/1088))
+- build(deps): bump eslint-plugin-jsdoc from 36.0.6 to 36.0.7
+  ([#1102](https://github.com/compasjs/compas/pull/1102))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- feat(code-gen): support 'schema' in 'queryOptions'
+  ([#1103](https://github.com/compasjs/compas/pull/1103))
+  - Closes [#1090](https://github.com/compasjs/compas/pull/1090)
+- feat(store): add support for JS migration files
+  ([#1097](https://github.com/compasjs/compas/pull/1097))
+  - Closes [#1092](https://github.com/compasjs/compas/pull/1092)
+- feat(store): better PG connection handling
+  ([#1096](https://github.com/compasjs/compas/pull/1096))
+  - Closes [#1089](https://github.com/compasjs/compas/pull/1089)
+
+##### Breaking changes
+
+- **store**: better PG connection handling
+
+  - `setPostgresDatabaseTemplate` requires a connection created by
+    `createTestPostgresDatabase`
+
+  ```js
+  // test/config.js
+  export async function setup() {
+    const sql = await createTestPostgresDatabase();
+    await setPostgresDatabaseTemplate(sql);
+    await sql.end({ timeout: 0 });
+  }
+
+  export async function teardown() {
+    await cleanupPostgresDatabaseTemplate();
+  }
+  ```
+
+  - `cleanupTestPostgresDatabase` is not guaranteed to delete the provided
+    database.
+  - Changed logic around checking options passed to `newPostgresConnection`.
+    This shouldn't affect any existing usage, but is more flexible when
+    connecting to many databases.
+  - Default connection pool is 15 instead of unspecified.
+
 ### [v0.0.156](https://github.com/compasjs/compas/releases/tag/v0.0.156)
 
 ##### Changes

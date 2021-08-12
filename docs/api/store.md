@@ -8,18 +8,19 @@ editLink: false
 
 _Available since 0.1.0_
 
-_function newPostgresConnection(opts?, opts.createIfNotExists?):
-Promise\<Postgres>_
+_function newPostgresConnection({postgres.Options & { createIfNotExists?:
+boolean}} [opts]): Promise\<Postgres>_
 
 Create a new postgres connection, using the default environment variables. A
 database may be created using the provided credentials.
 
 **Parameters**:
 
-- opts `object?`
-- opts.createIfNotExists `boolean?`
+- {postgres.Options & { createIfNotExists?: boolean}} [opts]
+  `{postgres.Options & { createIfNotExists?: boolean}} [opts]`:
+  {postgres.Options & { createIfNotExists?: boolean}} [opts]
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/postgres.js#L52)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/postgres.js#L44)_
 
 ## setStoreQueries
 
@@ -125,7 +126,7 @@ migration state.
 - sql `Postgres`
 - migrationDirectory `string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L27)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L28)_
 
 ## getMigrationsToBeApplied
 
@@ -142,7 +143,7 @@ Get the migrations to be applied from the provided migration context. Note that
 
 - mc `MigrateContext`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L96)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L97)_
 
 ## runMigrations
 
@@ -156,7 +157,7 @@ Run the migrations currently pending in the migration context.
 
 - mc `MigrateContext`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L127)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/migrations.js#L128)_
 
 ## addEventToQueue
 
@@ -439,8 +440,7 @@ _[source](https://github.com/compasjs/compas/blob/main/packages/store/src/file-g
 
 _Available since 0.1.0_
 
-_function createTestPostgresDatabase(verboseSql?, connectionOptions?):
-Promise\<Postgres>_
+_function createTestPostgresDatabase(verboseSql?, rawOpts?): Promise\<Postgres>_
 
 Create a new test database, using the default database as it's template. The
 copied database will be fully truncated, except for the 'migrations' table. To
@@ -451,9 +451,9 @@ a connection to the new database.
 
 - verboseSql `boolean=false`: If true, creates a new logger and prints all
   queries.
-- connectionOptions `object?`
+- rawOpts `postgres.Options?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L75)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L64)_
 
 ## cleanupTestPostgresDatabase
 
@@ -461,10 +461,11 @@ _Available since 0.1.0_
 
 _function cleanupTestPostgresDatabase(sql): Promise\<undefined>_
 
-Remove a created test database
+Try to remove a test database. Can only happen if the connection is created by
+'createTestPostgresDatabase'.
 
 **Parameters**:
 
 - sql `Postgres`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L164)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L156)_
