@@ -21,7 +21,7 @@
     "react": "17.0.2",
     "react-query": "3.19.6",
     "typescript": "4.3.5",
-    "vitepress": "npm:@dirkdev98/vitepress@0.15.6",
+    "vitepress": "0.16.1",
     "yup": "0.32.9"
   },
   "maintainers": [
