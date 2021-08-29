@@ -73,7 +73,11 @@ export function importCreator() {
         result.push(`import * as ${value} from "${key}";`);
       }
 
-      for (const key of Object.keys(state.destructureImport)) {
+      // Sort based on imported file name
+      // At some point a hard to reproduce / unverifiable bug in eslint-plugin import
+      // popups up, which results in a non auto-fixable import sort. By sorting this pre
+      // writing, we prevent the issue all together.
+      for (const key of Object.keys(state.destructureImport).sort()) {
         const joinString =
           state.destructureImport[key].size > 3 ? ",\n  " : ", ";
         result.push(
