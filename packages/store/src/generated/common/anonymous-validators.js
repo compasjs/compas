@@ -1623,7 +1623,7 @@ export function anonymousValidator1024905514(
   const subErrors = [];
   try {
     return anonymousValidator1899069927(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1635,7 +1635,7 @@ export function anonymousValidator1024905514(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1694,7 +1694,7 @@ export function anonymousValidator972289697(
   const subErrors = [];
   try {
     return anonymousValidator890105892(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1706,7 +1706,7 @@ export function anonymousValidator972289697(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1765,7 +1765,7 @@ export function anonymousValidator978954249(
   const subErrors = [];
   try {
     return anonymousValidator1891060044(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1777,7 +1777,7 @@ export function anonymousValidator978954249(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1867,7 +1867,7 @@ export function anonymousValidator2102014144(
   const subErrors = [];
   try {
     return anonymousValidator1370653763(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -1879,7 +1879,7 @@ export function anonymousValidator2102014144(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -2668,7 +2668,7 @@ export function anonymousValidator1971955962(
   const subErrors = [];
   try {
     return anonymousValidator1033385158(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -2680,7 +2680,7 @@ export function anonymousValidator1971955962(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -3284,13 +3284,13 @@ export function anonymousValidator1795948632(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
   try {
     return anonymousValidator757309139(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -3495,13 +3495,13 @@ export function anonymousValidator753972035(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
   try {
     return anonymousValidator938090836(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -3657,13 +3657,13 @@ export function anonymousValidator685221527(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
   try {
     return anonymousValidator1693224812(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
@@ -3805,13 +3805,13 @@ export function anonymousValidator2038758416(
       });
     }
     return value ?? undefined;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }
   try {
     return anonymousValidator196705720(value, propertyPath, subErrors);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     delete e.stack;
     subErrors.push(e);
   }

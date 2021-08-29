@@ -205,7 +205,7 @@ async function getStructure(logger, codeGen, subCommand, structureFile) {
       structure: context.structure,
       trie,
     };
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     if (AppError.instanceOf(e)) {
       logger.error(AppError.format(e));
     } else if (e.message) {

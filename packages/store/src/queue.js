@@ -422,7 +422,7 @@ export class JobQueueWorker {
           }),
           handlerFn(event, sql, jobData),
         ]);
-      } catch (err) {
+      } catch (/** @type {any} */ err) {
         event.log.error({
           type: "job_error",
           scheduledAt: jobData.scheduledAt,
@@ -500,6 +500,7 @@ export async function addJobToQueue(sql, job) {
     name: job.name ?? environment.APP_NAME,
 
     // Always overwrite the timeout
+    // @ts-ignore
     handlerTimeout: null,
   });
 

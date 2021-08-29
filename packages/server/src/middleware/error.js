@@ -31,7 +31,7 @@ export function errorHandler(opts) {
   return async (ctx, next) => {
     try {
       await next();
-    } catch (error) {
+    } catch (/** @type {any} */ error) {
       if (onError(ctx, error)) {
         return;
       }

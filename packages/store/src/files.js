@@ -78,6 +78,7 @@ export async function createOrUpdateFile(
   // Do a manual insert first to get an id
   if (!props.id) {
     props.contentLength = 0;
+    // @ts-ignore
     const [intermediate] = await queries.fileInsert(sql, props);
     props.id = intermediate.id;
   }
