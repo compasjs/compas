@@ -78,36 +78,39 @@ export let enforceSingleAssertion: boolean;
 /**
  * @type {function(): (void|Promise<void>)}
  */
-export let globalSetup: () => (void | Promise<void>);
+export let globalSetup: () => void | Promise<void>;
 /**
  * @type {function(): (void|Promise<void>)}
  */
-export let globalTeardown: () => (void | Promise<void>);
+export let globalTeardown: () => void | Promise<void>;
 /**
  * @type {TestState}
  */
 export const state: TestState;
 export type TestRunner = import("../../types/advanced-types.js").TestRunner;
 export type TestAssertion = {
-    type: string;
-    passed: boolean;
-    meta: {
+  type: string;
+  passed: boolean;
+  meta:
+    | {
         actual: boolean;
-    } | {
+      }
+    | {
         actual?: any;
         expected?: any;
         message?: string;
-    } | undefined;
-    message?: string | undefined;
+      }
+    | undefined;
+  message?: string | undefined;
 };
-export type TestCallback = (t: TestRunner) => (void | any | Promise<any>);
+export type TestCallback = (t: TestRunner) => void | any | Promise<any>;
 export type TestState = {
-    parent?: TestState | undefined;
-    hasFailure?: boolean | undefined;
-    name: string;
-    callback?: TestCallback | undefined;
-    assertions: TestAssertion[];
-    children: TestState[];
-    caughtException?: Error | undefined;
+  parent?: TestState | undefined;
+  hasFailure?: boolean | undefined;
+  name: string;
+  callback?: TestCallback | undefined;
+  assertions: TestAssertion[];
+  children: TestState[];
+  caughtException?: Error | undefined;
 };
 //# sourceMappingURL=state.d.ts.map

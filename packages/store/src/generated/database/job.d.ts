@@ -5,9 +5,14 @@
  * @param {{ excludePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
-export function jobFields(tableName?: string | undefined, options?: {
-    excludePrimaryKey?: boolean | undefined;
-} | undefined): QueryPart;
+export function jobFields(
+  tableName?: string | undefined,
+  options?:
+    | {
+        excludePrimaryKey?: boolean | undefined;
+      }
+    | undefined,
+): QueryPart;
 /**
  * Build 'WHERE ' part for job
  *
@@ -16,9 +21,15 @@ export function jobFields(tableName?: string | undefined, options?: {
  * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
-export function jobWhere(where?: StoreJobWhere | undefined, tableName?: string | undefined, options?: {
-    skipValidator?: boolean | undefined;
-} | undefined): QueryPart;
+export function jobWhere(
+  where?: StoreJobWhere | undefined,
+  tableName?: string | undefined,
+  options?:
+    | {
+        skipValidator?: boolean | undefined;
+      }
+    | undefined,
+): QueryPart;
 /**
  * Build 'ORDER BY ' part for job
  *
@@ -28,9 +39,16 @@ export function jobWhere(where?: StoreJobWhere | undefined, tableName?: string |
  * @param {{ skipValidator?: boolean|undefined }} [options={}]
  * @returns {QueryPart}
  */
-export function jobOrderBy(orderBy?: StoreJobOrderBy | undefined, orderBySpec?: StoreJobOrderBySpec | undefined, tableName?: string | undefined, options?: {
-    skipValidator?: boolean | undefined;
-} | undefined): QueryPart;
+export function jobOrderBy(
+  orderBy?: StoreJobOrderBy | undefined,
+  orderBySpec?: StoreJobOrderBySpec | undefined,
+  tableName?: string | undefined,
+  options?:
+    | {
+        skipValidator?: boolean | undefined;
+      }
+    | undefined,
+): QueryPart;
 /**
  * Build 'VALUES ' part for job
  *
@@ -38,9 +56,14 @@ export function jobOrderBy(orderBy?: StoreJobOrderBy | undefined, orderBySpec?: 
  * @param {{ includePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
-export function jobInsertValues(insert: StoreJobInsertPartial | StoreJobInsertPartial[], options?: {
-    includePrimaryKey?: boolean | undefined;
-} | undefined): QueryPart;
+export function jobInsertValues(
+  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
+  options?:
+    | {
+        includePrimaryKey?: boolean | undefined;
+      }
+    | undefined,
+): QueryPart;
 /**
  * Build 'SET ' part for job
  *
@@ -53,7 +76,10 @@ export function jobUpdateSet(update: StoreJobUpdatePartial): QueryPart;
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQueryJob(builder: StoreJobQueryBuilder & StoreJobQueryTraverser, wherePartial?: QueryPart | undefined): QueryPart;
+export function internalQueryJob(
+  builder: StoreJobQueryBuilder & StoreJobQueryTraverser,
+  wherePartial?: QueryPart | undefined,
+): QueryPart;
 /**
  * Query Builder for job
  * Note that nested limit and offset don't work yet.
@@ -67,10 +93,10 @@ export function internalQueryJob(builder: StoreJobQueryBuilder & StoreJobQueryTr
  * }}
  */
 export function queryJob(builder?: StoreJobQueryBuilder | undefined): {
-    then: () => void;
-    exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>;
-    execRaw: (sql: Postgres) => Promise<any[]>;
-    queryPart: QueryPart<any>;
+  then: () => void;
+  exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>;
+  execRaw: (sql: Postgres) => Promise<any[]>;
+  queryPart: QueryPart<any>;
 };
 /**
  * NOTE: At the moment only intended for internal use by the generated queries!
@@ -81,48 +107,71 @@ export function queryJob(builder?: StoreJobQueryBuilder | undefined): {
  * @param {any[]} values
  * @param {StoreJobQueryBuilder} [builder={}]
  */
-export function transformJob(values: any[], builder?: StoreJobQueryBuilder | undefined): void;
+export function transformJob(
+  values: any[],
+  builder?: StoreJobQueryBuilder | undefined,
+): void;
 export namespace jobQueries {
-    export { jobCount };
-    export { jobDelete };
-    export { jobInsert };
-    export { jobUpsertOnId };
-    export { jobUpdate };
+  export { jobCount };
+  export { jobDelete };
+  export { jobInsert };
+  export { jobUpsertOnId };
+  export { jobUpdate };
 }
 /**
  * @param {Postgres} sql
  * @param {StoreJobWhere} [where]
  * @returns {Promise<number>}
  */
-declare function jobCount(sql: Postgres, where?: StoreJobWhere | undefined): Promise<number>;
+declare function jobCount(
+  sql: Postgres,
+  where?: StoreJobWhere | undefined,
+): Promise<number>;
 /**
  * @param {Postgres} sql
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<void>}
  */
-declare function jobDelete(sql: Postgres, where?: StoreJobWhere | undefined): Promise<void>;
+declare function jobDelete(
+  sql: Postgres,
+  where?: StoreJobWhere | undefined,
+): Promise<void>;
 /**
  * @param {Postgres} sql
  * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<StoreJob[]>}
  */
-declare function jobInsert(sql: Postgres, insert: StoreJobInsertPartial | (StoreJobInsertPartial[]), options?: {
-    withPrimaryKey?: boolean | undefined;
-} | undefined): Promise<StoreJob[]>;
+declare function jobInsert(
+  sql: Postgres,
+  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
+  options?:
+    | {
+        withPrimaryKey?: boolean | undefined;
+      }
+    | undefined,
+): Promise<StoreJob[]>;
 /**
  * @param {Postgres} sql
  * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
  * @param {{}} [options={}]
  * @returns {Promise<StoreJob[]>}
  */
-declare function jobUpsertOnId(sql: Postgres, insert: StoreJobInsertPartial | (StoreJobInsertPartial[]), options?: {} | undefined): Promise<StoreJob[]>;
+declare function jobUpsertOnId(
+  sql: Postgres,
+  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
+  options?: {} | undefined,
+): Promise<StoreJob[]>;
 /**
  * @param {Postgres} sql
  * @param {StoreJobUpdatePartial} update
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
  */
-declare function jobUpdate(sql: Postgres, update: StoreJobUpdatePartial, where?: StoreJobWhere | undefined): Promise<StoreJob[]>;
+declare function jobUpdate(
+  sql: Postgres,
+  update: StoreJobUpdatePartial,
+  where?: StoreJobWhere | undefined,
+): Promise<StoreJob[]>;
 export {};
 //# sourceMappingURL=job.d.ts.map

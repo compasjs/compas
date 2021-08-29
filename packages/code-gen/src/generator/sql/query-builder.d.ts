@@ -9,7 +9,12 @@
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  */
-export function generateQueryBuilder(context: CodeGenContext, imports: ImportCreator, type: CodeGenObjectType, src: string[]): void;
+export function generateQueryBuilder(
+  context: CodeGenContext,
+  imports: ImportCreator,
+  type: CodeGenObjectType,
+  src: string[],
+): void;
 /**
  * Generate the necessary query builder types
  *

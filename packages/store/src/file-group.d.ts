@@ -7,7 +7,10 @@
  * @param {StoreFileGroup} fileGroup
  * @returns {Promise<StoreFileGroup[]>}
  */
-export function hoistChildrenToParent(sql: Postgres, fileGroup: StoreFileGroup): Promise<StoreFileGroup[]>;
+export function hoistChildrenToParent(
+  sql: Postgres,
+  fileGroup: StoreFileGroup,
+): Promise<StoreFileGroup[]>;
 /**
  * Update the order of the provided id's in relation to each other.
  * This function does not check if all files are in the same group, please use
@@ -19,6 +22,9 @@ export function hoistChildrenToParent(sql: Postgres, fileGroup: StoreFileGroup):
  * @param {string[]} ids
  * @returns {Promise<void>}
  */
-export function updateFileGroupOrder(sql: Postgres, ids: string[]): Promise<void>;
+export function updateFileGroupOrder(
+  sql: Postgres,
+  ids: string[],
+): Promise<void>;
 export type Postgres = import("../types/advanced-types").Postgres;
 //# sourceMappingURL=file-group.d.ts.map

@@ -59,81 +59,87 @@
  *
  * @param {GetAppOptions} [opts={}]
  */
-export function getApp(opts?: GetAppOptions | undefined): Koa<Koa.DefaultState, Koa.DefaultContext>;
+export function getApp(
+  opts?: GetAppOptions | undefined,
+): Koa<Koa.DefaultState, Koa.DefaultContext>;
 export type KoaApplication = ReturnType<typeof getApp>;
 export type GetAppOptions = {
-    /**
-     * Trust proxy headers
-     */
-    proxy?: boolean | undefined;
-    /**
-     * Don't handle cors headers
-     */
-    disableHeaders?: boolean | undefined;
-    /**
-     * Disable GET /_health
-     */
-    disableHealthRoute?: boolean | undefined;
-    /**
-     * Flexible error handling
-     * options
-     */
-    errorOptions?: ErrorHandlerOptions | undefined;
-    /**
-     * Argument for defaultHeader middleware
-     */
-    headers?: HeaderOptions | undefined;
-    logOptions?: {
+  /**
+   * Trust proxy headers
+   */
+  proxy?: boolean | undefined;
+  /**
+   * Don't handle cors headers
+   */
+  disableHeaders?: boolean | undefined;
+  /**
+   * Disable GET /_health
+   */
+  disableHealthRoute?: boolean | undefined;
+  /**
+   * Flexible error handling
+   * options
+   */
+  errorOptions?: ErrorHandlerOptions | undefined;
+  /**
+   * Argument for defaultHeader middleware
+   */
+  headers?: HeaderOptions | undefined;
+  logOptions?:
+    | {
         disableRootEvent?: boolean | undefined;
-    } | undefined;
+      }
+    | undefined;
 };
 export type ErrorHandlerOptions = {
-    /**
-     * Called to set the initial body
-     * when the error is an AppError
-     */
-    onAppError?: ((ctx: Koa.Context, key: string, info: any) => Record<string, any>) | undefined;
-    /**
-     * Called
-     * before any logic, to let the user handle errors. If 'true' is returned, no other
-     * logic is applied.
-     */
-    onError?: ((ctx: Koa.Context, err: Error) => boolean) | undefined;
-    /**
-     * Adds the stacktrace and originalError to the
-     * response. Useful on development and staging environments.
-     */
-    leakError?: boolean | undefined;
+  /**
+   * Called to set the initial body
+   * when the error is an AppError
+   */
+  onAppError?:
+    | ((ctx: Koa.Context, key: string, info: any) => Record<string, any>)
+    | undefined;
+  /**
+   * Called
+   * before any logic, to let the user handle errors. If 'true' is returned, no other
+   * logic is applied.
+   */
+  onError?: ((ctx: Koa.Context, err: Error) => boolean) | undefined;
+  /**
+   * Adds the stacktrace and originalError to the
+   * response. Useful on development and staging environments.
+   */
+  leakError?: boolean | undefined;
 };
 export type HeaderOptions = {
-    cors?: CorsOptions | undefined;
+  cors?: CorsOptions | undefined;
 };
 export type CorsOptions = {
-    /**
-     * 'Access-Control-Allow-Origin', defaults to the 'Origin' header.
-     */
-    origin?: string | ((ctx: Koa.Context) => (string | undefined)) | undefined;
-    /**
-     * 'Access-Control-Expose-Headers'
-     */
-    exposeHeaders?: string | string[] | undefined;
-    /**
-     * 'Access-Control-Max-Age' in seconds
-     */
-    maxAge?: string | number | undefined;
-    /**
-     * 'Access-Control-Allow-Credentials'
-     */
-    credentials?: boolean | undefined;
-    /**
-     * 'Access-Control-Allow-Methods',
-     * defaults to ["DELETE", "GET", "PUT", "POST", "PATCH", "HEAD", "OPTIONS"]
-     */
-    allowMethods?: string | string[] | undefined;
-    /**
-     * 'Access-Control-Allow-Headers'
-     */
-    allowHeaders?: string | string[] | undefined;
+  /**
+   * 'Access-Control-Allow-Origin', defaults to the 'Origin' header.
+   */
+  origin?: string | ((ctx: Koa.Context) => string | undefined) | undefined;
+  /**
+   * 'Access-Control-Expose-Headers'
+   */
+  exposeHeaders?: string | string[] | undefined;
+  /**
+   * 'Access-Control-Max-Age' in seconds
+   */
+  maxAge?: string | number | undefined;
+  /**
+   * 'Access-Control-Allow-Credentials'
+   */
+  credentials?: boolean | undefined;
+  /**
+   * 'Access-Control-Allow-Methods',
+   * defaults to ["DELETE", "GET", "PUT", "POST", "PATCH", "HEAD", "OPTIONS"]
+   */
+  allowMethods?: string | string[] | undefined;
+  /**
+   * 'Access-Control-Allow-Headers'
+   */
+  allowHeaders?: string | string[] | undefined;
 };
 import Koa from "koa";
 //# sourceMappingURL=app.d.ts.map

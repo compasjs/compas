@@ -29,10 +29,21 @@
  * @param {GetStreamFn} getStreamFn
  * @returns {Promise<void>}
  */
-export function sendTransformedImage(sendFile: typeof import("@compas/server").sendFile, ctx: Context, sql: Postgres, minio: MinioClient, file: StoreFile, getStreamFn: GetStreamFn): Promise<void>;
-export type GetStreamFn = (file: StoreFile, start?: number | undefined, end?: number | undefined) => Promise<{
-    stream: NodeJS.ReadableStream;
-    cacheControl: string;
+export function sendTransformedImage(
+  sendFile: typeof import("@compas/server").sendFile,
+  ctx: Context,
+  sql: Postgres,
+  minio: MinioClient,
+  file: StoreFile,
+  getStreamFn: GetStreamFn,
+): Promise<void>;
+export type GetStreamFn = (
+  file: StoreFile,
+  start?: number | undefined,
+  end?: number | undefined,
+) => Promise<{
+  stream: NodeJS.ReadableStream;
+  cacheControl: string;
 }>;
 export type Postgres = import("../types/advanced-types").Postgres;
 export type MinioClient = import("../types/advanced-types").MinioClient;

@@ -4,6 +4,6 @@
  * @param {{ disableRootEvent?: boolean }} options
  */
 export function logMiddleware(options: {
-    disableRootEvent?: boolean;
+  disableRootEvent?: boolean;
 }): (ctx: any, next: any) => Promise<void>;
 //# sourceMappingURL=log.d.ts.map

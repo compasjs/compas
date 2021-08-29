@@ -9,5 +9,9 @@ export function addFieldsOfRelations(context: CodeGenContext): void;
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
-export function addFieldsForRelation(context: CodeGenContext, type: CodeGenObjectType, relation: CodeGenRelationType): void;
+export function addFieldsForRelation(
+  context: CodeGenContext,
+  type: CodeGenObjectType,
+  relation: CodeGenRelationType,
+): void;
 //# sourceMappingURL=add-fields.d.ts.map

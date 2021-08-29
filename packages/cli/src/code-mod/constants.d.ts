@@ -6,9 +6,9 @@ export const PARALLEL_COUNT: number;
  * }>}
  */
 export const codeModMap: {
-    [x: string]: {
-        description: string;
-        exec: (event: InsightEvent, verbose: boolean) => Promise<void>;
-    };
+  [x: string]: {
+    description: string;
+    exec: (event: InsightEvent, verbose: boolean) => Promise<void>;
+  };
 };
 //# sourceMappingURL=constants.d.ts.map

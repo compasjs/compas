@@ -12,9 +12,14 @@
  * @param {Postgres} sql
  * @returns {Promise<Record<string, { diskSize: number, rowCount: number }>>}
  */
-export function postgresTableSizes(sql: Postgres): Promise<Record<string, {
-    diskSize: number;
-    rowCount: number;
-}>>;
+export function postgresTableSizes(sql: Postgres): Promise<
+  Record<
+    string,
+    {
+      diskSize: number;
+      rowCount: number;
+    }
+  >
+>;
 export type Postgres = import("../types/advanced-types").Postgres;
 //# sourceMappingURL=insight.d.ts.map

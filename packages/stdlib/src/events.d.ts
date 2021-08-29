@@ -7,7 +7,10 @@
  * @param {AbortSignal|undefined} [signal]
  * @returns {InsightEvent}
  */
-export function newEvent(logger: Logger, signal?: AbortSignal | undefined): InsightEvent;
+export function newEvent(
+  logger: Logger,
+  signal?: AbortSignal | undefined,
+): InsightEvent;
 /**
  * Create a 'child' event, reuses the logger, adds callstack to the passed event
  *
@@ -47,6 +50,7 @@ export function eventRename(event: InsightEvent, name: string): void;
  */
 export function eventStop(event: InsightEvent): void;
 export type Logger = import("../types/advanced-types.js").Logger;
-export type InsightEventCall = import("../types/advanced-types").InsightEventCall;
+export type InsightEventCall =
+  import("../types/advanced-types").InsightEventCall;
 export type InsightEvent = import("../types/advanced-types").InsightEvent;
 //# sourceMappingURL=events.d.ts.map

@@ -30,7 +30,10 @@
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
-export function newMigrateContext(sql: Postgres, migrationDirectory?: string): Promise<MigrateContext>;
+export function newMigrateContext(
+  sql: Postgres,
+  migrationDirectory?: string,
+): Promise<MigrateContext>;
 /**
  * Get the migrations to be applied from the provided migration context.
  * Note that 'repeatable' migrations are always in both the `migrationQueue` and
@@ -52,15 +55,15 @@ export function newMigrateContext(sql: Postgres, migrationDirectory?: string): P
  * }}
  */
 export function getMigrationsToBeApplied(mc: MigrateContext): {
-    migrationQueue: {
-        name: string;
-        number: number;
-        repeatable: boolean;
-    }[];
-    hashChanges: {
-        name: string;
-        number: number;
-    }[];
+  migrationQueue: {
+    name: string;
+    number: number;
+    repeatable: boolean;
+  }[];
+  hashChanges: {
+    name: string;
+    number: number;
+  }[];
 };
 /**
  * Run the migrations currently pending in the migration context.
@@ -82,20 +85,20 @@ export function runMigrations(mc: MigrateContext): Promise<void>;
 export function rebuildMigrations(mc: MigrateContext): Promise<void>;
 export type Postgres = import("../types/advanced-types").Postgres;
 export type MigrationFile = {
-    number: number;
-    repeatable: boolean;
-    name: string;
-    fullPath: string;
-    isMigrated: boolean;
-    source: string;
-    hash: string;
+  number: number;
+  repeatable: boolean;
+  name: string;
+  fullPath: string;
+  isMigrated: boolean;
+  source: string;
+  hash: string;
 };
 export type MigrateContext = {
-    files: MigrationFile[];
-    sql: Postgres;
-    rebuild?: any | undefined;
-    info?: any | undefined;
-    do?: any | undefined;
-    storedHashes: Record<number, string>;
+  files: MigrationFile[];
+  sql: Postgres;
+  rebuild?: any | undefined;
+  info?: any | undefined;
+  do?: any | undefined;
+  storedHashes: Record<number, string>;
 };
 //# sourceMappingURL=migrations.d.ts.map

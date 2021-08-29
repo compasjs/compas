@@ -17,14 +17,16 @@ export function printTestResults(): number;
  * }[]} testResults
  * @returns {number}
  */
-export function printTestResultsFromWorkers(testResults: {
+export function printTestResultsFromWorkers(
+  testResults: {
     isFailed: boolean;
     assertions: {
-        passed: number;
-        failed: number;
+      passed: number;
+      failed: number;
     };
     failedResult: string[];
-}[]): number;
+  }[],
+): number;
 /**
  * Prints information over test failures
  *
@@ -32,7 +34,11 @@ export function printTestResultsFromWorkers(testResults: {
  * @param {string[]} result
  * @param {number} indentCount
  */
-export function printFailedResults(state: TestState, result: string[], indentCount: number): void;
+export function printFailedResults(
+  state: TestState,
+  result: string[],
+  indentCount: number,
+): void;
 /**
  * Recursively marks hasFailure if test has a caughtException or if an assertion did not
  * pass
@@ -47,8 +53,8 @@ export function markTestFailuresRecursively(state: TestState): void;
  * @returns {{ passed: number, failed: number }}
  */
 export function sumAssertions(state: TestState): {
-    passed: number;
-    failed: number;
+  passed: number;
+  failed: number;
 };
 export type TestState = import("./state").TestState;
 //# sourceMappingURL=printer.d.ts.map

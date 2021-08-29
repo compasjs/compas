@@ -6,5 +6,7 @@
  * @param {import("./state").TestRunner} t
  * @returns {import("@compas/stdlib").InsightEvent}
  */
-export function newTestEvent(t: import("./state").TestRunner): import("@compas/stdlib").InsightEvent;
+export function newTestEvent(
+  t: import("./state").TestRunner,
+): import("@compas/stdlib").InsightEvent;
 //# sourceMappingURL=events.d.ts.map

@@ -27,7 +27,11 @@ export function isPlainObject(item?: any): boolean;
  * @param {string} [path]
  * @returns {Record<string, any>}
  */
-export function flatten(data: object, result?: any, path?: string | undefined): Record<string, any>;
+export function flatten(
+  data: object,
+  result?: any,
+  path?: string | undefined,
+): Record<string, any>;
 /**
  * The opposite of 'flatten'.
  *

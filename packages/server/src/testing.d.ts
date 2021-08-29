@@ -8,7 +8,10 @@
  * @param {import("axios").AxiosInstance} axios
  * @returns {Promise<void>}
  */
-export function createTestAppAndClient(app: import("./app").KoaApplication, axios: import("axios").AxiosInstance): Promise<void>;
+export function createTestAppAndClient(
+  app: import("./app").KoaApplication,
+  axios: import("axios").AxiosInstance,
+): Promise<void>;
 /**
  * Close the test app as created by `createTestAppAndClient`.
  *
@@ -17,5 +20,7 @@ export function createTestAppAndClient(app: import("./app").KoaApplication, axio
  * @param {import("./app").KoaApplication} app
  * @returns {Promise<void>}
  */
-export function closeTestApp(app: import("./app").KoaApplication): Promise<void>;
+export function closeTestApp(
+  app: import("./app").KoaApplication,
+): Promise<void>;
 //# sourceMappingURL=testing.d.ts.map

@@ -8,6 +8,11 @@
  * @param {...((StateFn|string|any) | (StateFn|string|any)[])} args
  * @returns {string}
  */
-export function js(strings: TemplateStringsArray | string[], ...args: ((StateFn | string | any) | (StateFn | string | any)[])[]): string;
-export type StateFn = (state: CodeGenTemplateState) => boolean | number | string | undefined | StateFn | Function;
+export function js(
+  strings: TemplateStringsArray | string[],
+  ...args: ((StateFn | string | any) | (StateFn | string | any)[])[]
+): string;
+export type StateFn = (
+  state: CodeGenTemplateState,
+) => boolean | number | string | undefined | StateFn | Function;
 //# sourceMappingURL=tag.d.ts.map

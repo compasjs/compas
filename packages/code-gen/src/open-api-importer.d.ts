@@ -11,5 +11,8 @@
  * @param {string} defaultGroup
  * @param {Record<string, any>} data
  */
-export function convertOpenAPISpec(defaultGroup: string, data: Record<string, any>): any;
+export function convertOpenAPISpec(
+  defaultGroup: string,
+  data: Record<string, any>,
+): any;
 //# sourceMappingURL=open-api-importer.d.ts.map

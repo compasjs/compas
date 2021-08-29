@@ -21,7 +21,11 @@ export function newMinioClient(opts: minio.ClientOptions): MinioClient;
  * @param {string} region
  * @returns {Promise<void>}
  */
-export function ensureBucket(minio: MinioClient, bucketName: string, region: string): Promise<void>;
+export function ensureBucket(
+  minio: MinioClient,
+  bucketName: string,
+  region: string,
+): Promise<void>;
 /**
  * List all objects in a bucket.
  *
@@ -33,13 +37,19 @@ export function ensureBucket(minio: MinioClient, bucketName: string, region: str
  * @returns {Promise<{name: string, prefix: string, size: number, etag: string,
  *   lastModified: Date}[]>}
  */
-export function listObjects(minio: MinioClient, bucketName: string, filter?: string | undefined): Promise<{
+export function listObjects(
+  minio: MinioClient,
+  bucketName: string,
+  filter?: string | undefined,
+): Promise<
+  {
     name: string;
     prefix: string;
     size: number;
     etag: string;
     lastModified: Date;
-}[]>;
+  }[]
+>;
 /**
  * Remove the provided bucket name. Note that this will fail if a bucket has objects.
  *
@@ -49,7 +59,10 @@ export function listObjects(minio: MinioClient, bucketName: string, filter?: str
  * @param {string} bucketName
  * @returns {Promise<void>}
  */
-export function removeBucket(minio: MinioClient, bucketName: string): Promise<void>;
+export function removeBucket(
+  minio: MinioClient,
+  bucketName: string,
+): Promise<void>;
 /**
  * Force removal of a bucket by listing and removing it's objects.
  *
@@ -59,7 +72,10 @@ export function removeBucket(minio: MinioClient, bucketName: string): Promise<vo
  * @param {string} bucketName
  * @returns {Promise<void>}
  */
-export function removeBucketAndObjectsInBucket(minio: MinioClient, bucketName: string): Promise<void>;
+export function removeBucketAndObjectsInBucket(
+  minio: MinioClient,
+  bucketName: string,
+): Promise<void>;
 /**
  * Copy all objects from a bucket to the other bucket.
  * Batches the files in groups of 10 while copying.
@@ -72,7 +88,12 @@ export function removeBucketAndObjectsInBucket(minio: MinioClient, bucketName: s
  * @param {string} region
  * @returns {Promise<void>}
  */
-export function copyAllObjects(minio: MinioClient, sourceBucket: string, destinationBucket: string, region: string): Promise<void>;
+export function copyAllObjects(
+  minio: MinioClient,
+  sourceBucket: string,
+  destinationBucket: string,
+  region: string,
+): Promise<void>;
 export { minio };
 export type MinioClient = import("../types/advanced-types").MinioClient;
 import minio from "minio";

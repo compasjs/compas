@@ -44,22 +44,22 @@ export const state: BenchState[];
  * The argument passed to benchmark functions
  */
 export type BenchRunner = {
-    /**
-     * Amount of iterations this call should do
-     */
-    N: number;
-    /**
-     * Reset the start time. Should be used if some setup is
-     * necessary, but shouldn't be counted to wards the time spent.
-     */
-    resetTime: () => void;
+  /**
+   * Amount of iterations this call should do
+   */
+  N: number;
+  /**
+   * Reset the start time. Should be used if some setup is
+   * necessary, but shouldn't be counted to wards the time spent.
+   */
+  resetTime: () => void;
 };
 export type BenchCallback = (b: BenchRunner) => void | Promise<void>;
 export type BenchState = {
-    name: string;
-    N: number;
-    operationTimeNs: string;
-    callback: BenchCallback;
-    caughtException?: Error | undefined;
+  name: string;
+  N: number;
+  operationTimeNs: string;
+  callback: BenchCallback;
+  caughtException?: Error | undefined;
 };
 //# sourceMappingURL=state.d.ts.map

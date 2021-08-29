@@ -21,10 +21,10 @@ export function cleanTemplateOutput(str: string): string;
  */
 export function importCreator(): ImportCreator;
 export type ImportCreator = {
-    print: (() => string);
-    destructureImport: (value: string, pkg: string) => void;
-    starImport: (alias: string, pkg: string) => void;
-    commonjsImport: (alias: string, pkg: string) => void;
-    rawImport: (value: string) => void;
+  print: () => string;
+  destructureImport: (value: string, pkg: string) => void;
+  starImport: (alias: string, pkg: string) => void;
+  commonjsImport: (alias: string, pkg: string) => void;
+  rawImport: (value: string) => void;
 };
 //# sourceMappingURL=utils.d.ts.map

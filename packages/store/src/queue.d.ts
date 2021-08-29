@@ -14,7 +14,11 @@
  * @param {Record<string, any>} data
  * @returns {Promise<number>}
  */
-export function addEventToQueue(sql: Postgres, eventName: string, data: Record<string, any>): Promise<number>;
+export function addEventToQueue(
+  sql: Postgres,
+  eventName: string,
+  data: Record<string, any>,
+): Promise<number>;
 /**
  * Add a new job to the queue.
  * Use this for normal jobs or to customize the job priority.
@@ -44,7 +48,11 @@ export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
  * @param {number} timeout
  * @returns {Promise<number>}
  */
-export function addJobWithCustomTimeoutToQueue(sql: Postgres, job: JobInput, timeout: number): Promise<number>;
+export function addJobWithCustomTimeoutToQueue(
+  sql: Postgres,
+  job: JobInput,
+  timeout: number,
+): Promise<number>;
 /**
  * Add a recurring job, if no existing job with the same name is scheduled.
  * Does not throw when a job is already pending with the same name.
@@ -58,11 +66,18 @@ export function addJobWithCustomTimeoutToQueue(sql: Postgres, job: JobInput, tim
  * @param {{ name: string, priority?: number|undefined, interval: StoreJobInterval }} job
  * @returns {Promise<void>}
  */
-export function addRecurringJobToQueue(sql: Postgres, { name, priority, interval }: {
+export function addRecurringJobToQueue(
+  sql: Postgres,
+  {
+    name,
+    priority,
+    interval,
+  }: {
     name: string;
     priority?: number | undefined;
     interval: StoreJobInterval;
-}): Promise<void>;
+  },
+): Promise<void>;
 /**
  * Handles recurring jobs, by scheduling the 'child' and the current job again.
  * If the next scheduled item is not in the future, the interval is added to the current
@@ -72,7 +87,11 @@ export function addRecurringJobToQueue(sql: Postgres, { name, priority, interval
  * @param {Postgres} sql
  * @param {StoreJob} job
  */
-export function handleCompasRecurring(event: InsightEvent, sql: Postgres, job: StoreJob): Promise<void>;
+export function handleCompasRecurring(
+  event: InsightEvent,
+  sql: Postgres,
+  job: StoreJob,
+): Promise<void>;
 /**
  * Adds the interval to the provided scheduledAt date
  *
@@ -80,7 +99,10 @@ export function handleCompasRecurring(event: InsightEvent, sql: Postgres, job: S
  * @param {StoreJobInterval} interval
  * @returns {Date}
  */
-export function getNextScheduledAt(scheduledAt: Date, interval: StoreJobInterval): Date;
+export function getNextScheduledAt(
+  scheduledAt: Date,
+  interval: StoreJobInterval,
+): Date;
 /**
  * Get all uncompleted jobs from the queue.
  * Useful for testing if jobs are created.
@@ -89,7 +111,7 @@ export function getNextScheduledAt(scheduledAt: Date, interval: StoreJobInterval
  * @returns {Promise<Object<string, QueryResultStoreJob[]>>}
  */
 export function getUncompletedJobsByName(sql: Postgres): Promise<{
-    [x: string]: QueryResultStoreJob[];
+  [x: string]: QueryResultStoreJob[];
 }>;
 /**
  * The queue system is based on 'static' units of work to be done in the background.
@@ -140,101 +162,125 @@ export function getUncompletedJobsByName(sql: Postgres): Promise<{
  * @see addJobWithCustomTimeoutToQueue
  */
 export class JobQueueWorker {
-    /**
-     * @param {Postgres} sql
-     * @param {string|JobQueueWorkerOptions} nameOrOptions
-     * @param {JobQueueWorkerOptions} [options]
-     */
-    constructor(sql: Postgres, nameOrOptions: string | JobQueueWorkerOptions, options?: JobQueueWorkerOptions | undefined);
-    sql: import("../types/advanced-types").Postgres;
-    newJobQuery: (sql: any) => any;
-    name: string | undefined;
-    pollInterval: number;
-    maxRetryCount: number;
-    handlerTimeout: number;
-    workers: any[];
-    /** @type {any} */
-    timeout: any;
-    isStarted: boolean;
-    jobHandler: JobQueueHandlerFunction | Record<string, JobQueueHandlerFunction | {
-        handler: JobQueueHandlerFunction;
-        timeout: number;
-    }> | undefined;
-    logger: import("@compas/stdlib/types/advanced-types").Logger;
-    start(): void;
-    stop(): void;
-    /**
-     * @returns {Promise<{pendingCount: number, scheduledCount: number}|undefined>}
-     */
-    pendingQueueSize(): Promise<{
+  /**
+   * @param {Postgres} sql
+   * @param {string|JobQueueWorkerOptions} nameOrOptions
+   * @param {JobQueueWorkerOptions} [options]
+   */
+  constructor(
+    sql: Postgres,
+    nameOrOptions: string | JobQueueWorkerOptions,
+    options?: JobQueueWorkerOptions | undefined,
+  );
+  sql: import("../types/advanced-types").Postgres;
+  newJobQuery: (sql: any) => any;
+  name: string | undefined;
+  pollInterval: number;
+  maxRetryCount: number;
+  handlerTimeout: number;
+  workers: any[];
+  /** @type {any} */
+  timeout: any;
+  isStarted: boolean;
+  jobHandler:
+    | JobQueueHandlerFunction
+    | Record<
+        string,
+        | JobQueueHandlerFunction
+        | {
+            handler: JobQueueHandlerFunction;
+            timeout: number;
+          }
+      >
+    | undefined;
+  logger: import("@compas/stdlib/types/advanced-types").Logger;
+  start(): void;
+  stop(): void;
+  /**
+   * @returns {Promise<{pendingCount: number, scheduledCount: number}|undefined>}
+   */
+  pendingQueueSize(): Promise<
+    | {
         pendingCount: number;
         scheduledCount: number;
-    } | undefined>;
-    /**
-     * @param {Date} startDate
-     * @param {Date} endDate
-     * @returns {Promise<number>}
-     */
-    averageTimeToCompletion(startDate: Date, endDate: Date): Promise<number>;
-    /**
-     * @private
-     */
-    private run;
-    /**
-     * @private
-     * @param {number} idx
-     */
-    private handleJob;
+      }
+    | undefined
+  >;
+  /**
+   * @param {Date} startDate
+   * @param {Date} endDate
+   * @returns {Promise<number>}
+   */
+  averageTimeToCompletion(startDate: Date, endDate: Date): Promise<number>;
+  /**
+   * @private
+   */
+  private run;
+  /**
+   * @private
+   * @param {number} idx
+   */
+  private handleJob;
 }
 export type Postgres = import("../types/advanced-types").Postgres;
 export type JobInput = {
-    /**
-     * Defaults to 0
-     */
-    priority?: number | undefined;
-    /**
-     * Defaults to an empty object
-     */
-    data?: Record<string, any> | undefined;
-    /**
-     * By default executes as soon as possible
-     */
-    scheduledAt?: Date | undefined;
-    name: string;
+  /**
+   * Defaults to 0
+   */
+  priority?: number | undefined;
+  /**
+   * Defaults to an empty object
+   */
+  data?: Record<string, any> | undefined;
+  /**
+   * By default executes as soon as possible
+   */
+  scheduledAt?: Date | undefined;
+  name: string;
 };
-export type JobQueueHandlerFunction = (event: InsightEvent, sql: Postgres, data: StoreJob) => (void | Promise<void>);
+export type JobQueueHandlerFunction = (
+  event: InsightEvent,
+  sql: Postgres,
+  data: StoreJob,
+) => void | Promise<void>;
 export type JobQueueWorkerOptions = {
-    /**
-     *   Set a global handler, a handler based on job name, or also specify a different
-     *    timeout for the specific job handler. If no timeout for a specific handler is
-     *    provided, the handlerTimeout value is used. The timeout should be in milliseconds.
-     */
-    handler: JobQueueHandlerFunction | Record<string, JobQueueHandlerFunction | {
-        handler: JobQueueHandlerFunction;
-        timeout: number;
-    }>;
-    /**
-     * Determine the poll interval in
-     * milliseconds if the queue was empty. Defaults to 1500 ms.
-     */
-    pollInterval?: number | undefined;
-    /**
-     * Set the amount of parallel jobs to
-     * process. Defaults to 1. Make sure it is not higher than the amount of Postgres
-     * connections in the pool
-     */
-    parallelCount?: number | undefined;
-    /**
-     * The worker will automatically catch any
-     * errors thrown by the handler, and retry the job at a later stage. This property
-     * defines the max amount of retries before forcing the job to be completed. Defaults
-     * to 5 retries.
-     */
-    maxRetryCount?: number | undefined;
-    /**
-     * Maximum time the handler could take to
-     * fulfill a job in milliseconds Defaults to 30 seconds.
-     */
-    handlerTimeout?: number | undefined;
+  /**
+   *   Set a global handler, a handler based on job name, or also specify a different
+   *    timeout for the specific job handler. If no timeout for a specific handler is
+   *    provided, the handlerTimeout value is used. The timeout should be in milliseconds.
+   */
+  handler:
+    | JobQueueHandlerFunction
+    | Record<
+        string,
+        | JobQueueHandlerFunction
+        | {
+            handler: JobQueueHandlerFunction;
+            timeout: number;
+          }
+      >;
+  /**
+   * Determine the poll interval in
+   * milliseconds if the queue was empty. Defaults to 1500 ms.
+   */
+  pollInterval?: number | undefined;
+  /**
+   * Set the amount of parallel jobs to
+   * process. Defaults to 1. Make sure it is not higher than the amount of Postgres
+   * connections in the pool
+   */
+  parallelCount?: number | undefined;
+  /**
+   * The worker will automatically catch any
+   * errors thrown by the handler, and retry the job at a later stage. This property
+   * defines the max amount of retries before forcing the job to be completed. Defaults
+   * to 5 retries.
+   */
+  maxRetryCount?: number | undefined;
+  /**
+   * Maximum time the handler could take to
+   * fulfill a job in milliseconds Defaults to 30 seconds.
+   */
+  handlerTimeout?: number | undefined;
 };
 //# sourceMappingURL=queue.d.ts.map

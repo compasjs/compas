@@ -20,9 +20,17 @@
  * @param {GetStreamFn} getStreamFn
  * @returns {Promise<void>}
  */
-export function sendFile(ctx: import("koa").Context, file: StoreFile, getStreamFn: GetStreamFn): Promise<void>;
-export type GetStreamFn = (file: StoreFile, start?: number | undefined, end?: number | undefined) => Promise<{
-    stream: NodeJS.ReadableStream;
-    cacheControl: string;
+export function sendFile(
+  ctx: import("koa").Context,
+  file: StoreFile,
+  getStreamFn: GetStreamFn,
+): Promise<void>;
+export type GetStreamFn = (
+  file: StoreFile,
+  start?: number | undefined,
+  end?: number | undefined,
+) => Promise<{
+  stream: NodeJS.ReadableStream;
+  cacheControl: string;
 }>;
 //# sourceMappingURL=sendFile.d.ts.map

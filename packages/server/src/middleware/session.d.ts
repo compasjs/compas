@@ -13,7 +13,10 @@
  * @param {Partial<koaSession.opts>} opts KoaSession options
  * @returns {Middleware}
  */
-export function session(app: import("../app").KoaApplication, opts: Partial<koaSession.opts>): Middleware;
+export function session(
+  app: import("../app").KoaApplication,
+  opts: Partial<koaSession.opts>,
+): Middleware;
 export type Middleware = import("koa").Middleware;
 import koaSession from "koa-session";
 //# sourceMappingURL=session.d.ts.map

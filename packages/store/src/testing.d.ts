@@ -30,7 +30,10 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  * @param {Postgres["connectionOptions"]} [rawOpts]
  * @returns {Promise<Postgres>}
  */
-export function createTestPostgresDatabase(verboseSql?: boolean | undefined, rawOpts?: Postgres["connectionOptions"]): Promise<Postgres>;
+export function createTestPostgresDatabase(
+  verboseSql?: boolean | undefined,
+  rawOpts?: Postgres["connectionOptions"],
+): Promise<Postgres>;
 /**
  * Try to remove a test database. Can only happen if the connection is created by
  * 'createTestPostgresDatabase'.

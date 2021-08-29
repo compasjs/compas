@@ -24,21 +24,26 @@
  * @param {string[]} args
  * @returns {ParsedArgs}
  */
-export function parseArgs(knownNodeArgs: string[], knownScripts: string[], args: string[], ...args: any[]): ParsedArgs;
+export function parseArgs(
+  knownNodeArgs: string[],
+  knownScripts: string[],
+  args: string[],
+  ...args: any[]
+): ParsedArgs;
 export type UtilCommand = {
-    type: "util";
-    name: string;
-    arguments: string[];
-    error?: string | undefined;
+  type: "util";
+  name: string;
+  arguments: string[];
+  error?: string | undefined;
 };
 export type ExecCommand = {
-    type: "exec";
-    name: string;
-    script: string | undefined;
-    watch: boolean;
-    verbose: boolean;
-    nodeArguments: string[];
-    execArguments: string[];
+  type: "exec";
+  name: string;
+  script: string | undefined;
+  watch: boolean;
+  verbose: boolean;
+  nodeArguments: string[];
+  execArguments: string[];
 };
 export type ParsedArgs = UtilCommand | ExecCommand;
 //# sourceMappingURL=parse.d.ts.map

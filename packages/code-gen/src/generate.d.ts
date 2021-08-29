@@ -3,7 +3,11 @@
  * @param {CodeGenStructure} structure
  * @param {string[]} groups
  */
-export function addGroupsToGeneratorInput(input: CodeGenStructure, structure: CodeGenStructure, groups: string[]): void;
+export function addGroupsToGeneratorInput(
+  input: CodeGenStructure,
+  structure: CodeGenStructure,
+  groups: string[],
+): void;
 /**
  * Using some more memory, but ensures a mostly consistent output.
  * JS Object iterators mostly follow insert order.
@@ -12,14 +16,20 @@ export function addGroupsToGeneratorInput(input: CodeGenStructure, structure: Co
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} copy
  */
-export function copyAndSort(input: CodeGenStructure, copy: CodeGenStructure): void;
+export function copyAndSort(
+  input: CodeGenStructure,
+  copy: CodeGenStructure,
+): void;
 /**
  * Add item to correct group and add uniqueName
  *
  * @param {CodeGenStructure} dataStructure
  * @param {CodeGenType} item
  */
-export function addToData(dataStructure: CodeGenStructure, item: CodeGenType): void;
+export function addToData(
+  dataStructure: CodeGenStructure,
+  item: CodeGenType,
+): void;
 /**
  * Find nested references and add to generatorInput in the correct group
  *
@@ -27,7 +37,11 @@ export function addToData(dataStructure: CodeGenStructure, item: CodeGenType): v
  * @param generatorInput
  * @param value
  */
-export function includeReferenceTypes(rootData: any, generatorInput: any, value: any): any;
+export function includeReferenceTypes(
+  rootData: any,
+  generatorInput: any,
+  value: any,
+): any;
 /**
  * @param root
  * @param structure

@@ -12,7 +12,10 @@
  * @param {boolean} [isDebugging] If debugging, we should ignore the timeout
  * @returns {Promise<void>}
  */
-export function runTestsRecursively(testState: TestState, isDebugging?: boolean | undefined): Promise<void>;
+export function runTestsRecursively(
+  testState: TestState,
+  isDebugging?: boolean | undefined,
+): Promise<void>;
 /**
  * Register top-level tests. The main entry point of the test runner
  *

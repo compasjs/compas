@@ -10,12 +10,18 @@ export function createPartialTypes(context: CodeGenContext): void;
  * @param {CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
-export function getInsertPartial(context: CodeGenContext, type: CodeGenObjectType): string;
+export function getInsertPartial(
+  context: CodeGenContext,
+  type: CodeGenObjectType,
+): string;
 /**
  * Adds builder to reuse updates
  *
  * @param {CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
-export function getUpdatePartial(context: CodeGenContext, type: CodeGenObjectType): string;
+export function getUpdatePartial(
+  context: CodeGenContext,
+  type: CodeGenObjectType,
+): string;
 //# sourceMappingURL=partial-type.d.ts.map
