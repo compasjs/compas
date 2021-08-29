@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.0.157",
-    "@types/minio": "7.0.9",
+    "@types/minio": "7.0.10",
     "is-animated": "2.0.1",
     "minio": "7.0.19",
     "postgres": "2.0.0-beta.7",
