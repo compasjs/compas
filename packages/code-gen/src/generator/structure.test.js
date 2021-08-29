@@ -18,7 +18,7 @@ test("code-gen/generator/structure", (t) => {
 
     generateStructureFile(context);
 
-    t.equal(context.outputFiles.length, 0);
+    t.equal(context.outputFiles.length, 1, "always dump structure options");
   });
 
   t.test("generateStructureFile - dumpStructure: true", (t) => {
@@ -74,7 +74,7 @@ test("code-gen/generator/structure", (t) => {
     t.equal(context.outputFiles.length, 1);
     t.equal(
       context.outputFiles[0].contents,
-      `export const structure = Object.assign({}, );\nexport const structureString = JSON.stringify(structure);`,
+      `export const compasGenerateSettings = {"dumpStructure":true};export const structure = Object.assign({}, );\nexport const structureString = JSON.stringify(structure);`,
     );
   });
 });

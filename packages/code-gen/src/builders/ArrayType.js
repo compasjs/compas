@@ -1,6 +1,10 @@
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
+/**
+ * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
+ */
+
 export class ArrayType extends TypeBuilder {
   static baseData = {
     validator: {

@@ -31,9 +31,9 @@ const execCommands = {
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand|ExecCommand} command
- * @param {ScriptCollection} scriptCollection
- * @returns {Promise<void>}
+ * @param {import("./parse").UtilCommand|import("./parse").ExecCommand} command
+ * @param {import("./utils").ScriptCollection} scriptCollection
+ * @returns {Promise<{ exitCode: number }|void>|void}
  */
 export function execute(logger, command, scriptCollection) {
   if (command.type === "util") {

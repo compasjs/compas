@@ -8,8 +8,8 @@ export const testFile = pathJoin(
 
 /**
  * @param {Logger} logger
- * @param {ExecCommand} command
- * @returns {Promise<void>}
+ * @param {import("../parse").ExecCommand} command
+ * @returns {void | Promise<void | { exitCode: number; }>}
  */
 export function testCommand(logger, command) {
   return executeCommand(

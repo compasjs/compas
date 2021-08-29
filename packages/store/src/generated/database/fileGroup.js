@@ -31,7 +31,7 @@ const fileGroupFieldSet = new Set([
  * Get all fields for fileGroup
  *
  * @param {string} [tableName="fg."]
- * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @param {{ excludePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function fileGroupFields(tableName = "fg.", options = {}) {
@@ -63,6 +63,7 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     where = validateStoreFileGroupWhere(where, "$.fileGroupWhere");
   }
   const strings = ["1 = 1"];
+  /** @type {QueryPartArg[]} */
   const values = [undefined];
   if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
     strings.push(" AND ");
@@ -574,7 +575,7 @@ export function fileGroupOrderBy(
  * Build 'VALUES ' part for fileGroup
  *
  * @param {StoreFileGroupInsertPartial|StoreFileGroupInsertPartial[]} insert
- * @param {{ includePrimaryKey: boolean }} [options={}]
+ * @param {{ includePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function fileGroupInsertValues(insert, options = {}) {
@@ -690,11 +691,11 @@ WHERE ${fileGroupWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupInsertPartial|(StoreFileGroupInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }} [options={}]
+ * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
 async function fileGroupInsert(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
@@ -717,7 +718,7 @@ RETURNING ${fileGroupFields("")}
  * @returns {Promise<StoreFileGroup[]>}
  */
 async function fileGroupUpsertOnId(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   const fieldString = [...fileGroupFieldSet]
@@ -755,7 +756,7 @@ RETURNING ${fileGroupFields()}
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where={}]
- * @param {{ skipCascade: boolean }} [options={}]
+ * @param {{ skipCascade?: boolean }} [options={}]
  * @returns {Promise<void>}
  */
 async function fileGroupDelete(sql, where = {}, options = {}) {
@@ -780,11 +781,11 @@ export const fileGroupQueries = {
   fileGroupDeletePermanent,
 };
 /**
- * @param {StoreFileGroupQueryBuilder|StoreFileGroupQueryTraverser} [builder={}]
- * @param {QueryPart} wherePartial
+ * @param {StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser} builder
+ * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQueryFileGroup2(builder = {}, wherePartial) {
+export function internalQueryFileGroup2(builder, wherePartial) {
   const joinQb = query``;
   if (builder.viaFile) {
     builder.where = builder.where ?? {};
@@ -818,7 +819,7 @@ export function internalQueryFileGroup2(builder = {}, wherePartial) {
     }
     builder.where.fileIn.append(query`
 SELECT DISTINCT f."id"
-${internalQueryFile(builder.viaFile)}
+${internalQueryFile(builder.viaFile ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -854,7 +855,7 @@ ${offsetLimitQb}
     }
     builder.where.parentIn.append(query`
 SELECT DISTINCT fg."id"
-${internalQueryFileGroup(builder.viaParent)}
+${internalQueryFileGroup(builder.viaParent ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -890,7 +891,7 @@ ${offsetLimitQb}
     }
     builder.where.idIn.append(query`
 SELECT DISTINCT fg."parent"
-${internalQueryFileGroup(builder.viaChildren)}
+${internalQueryFileGroup(builder.viaChildren ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -912,7 +913,7 @@ ${offsetLimitQb}
 SELECT to_jsonb(f.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
-${internalQueryFile(builder.file, query`AND f."id" = fg2."file"`)}
+${internalQueryFile(builder.file ?? {}, query`AND f."id" = fg2."file"`)}
 ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
 ${offsetLimitQb}
 ) as "fg_f_0" ON TRUE`);
@@ -947,7 +948,10 @@ ${offsetLimitQb}
 SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
-${internalQueryFileGroup(builder.parent, query`AND fg."id" = fg2."parent"`)}
+${internalQueryFileGroup(
+  builder.parent ?? {},
+  query`AND fg."id" = fg2."parent"`,
+)}
 ORDER BY ${fileGroupOrderBy(
       builder.parent.orderBy,
       builder.parent.orderBySpec,
@@ -988,7 +992,10 @@ ${offsetLimitQb}
 SELECT ARRAY (SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])})
-${internalQueryFileGroup(builder.children, query`AND fg."parent" = fg2."id"`)}
+${internalQueryFileGroup(
+  builder.children ?? {},
+  query`AND fg."parent" = fg2."id"`,
+)}
 ORDER BY ${fileGroupOrderBy(
       builder.children.orderBy,
       builder.children.orderBySpec,
@@ -1006,11 +1013,11 @@ WHERE ${fileGroupWhere(builder.where, "fg2.", {
 `;
 }
 /**
- * @param {StoreFileGroupQueryBuilder|StoreFileGroupQueryTraverser} [builder={}]
- * @param {QueryPart} wherePartial
+ * @param {StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser} builder
+ * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQueryFileGroup(builder = {}, wherePartial) {
+export function internalQueryFileGroup(builder, wherePartial) {
   const joinQb = query``;
   if (builder.viaFile) {
     builder.where = builder.where ?? {};
@@ -1044,7 +1051,7 @@ export function internalQueryFileGroup(builder = {}, wherePartial) {
     }
     builder.where.fileIn.append(query`
 SELECT DISTINCT f."id"
-${internalQueryFile(builder.viaFile)}
+${internalQueryFile(builder.viaFile ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -1080,7 +1087,7 @@ ${offsetLimitQb}
     }
     builder.where.parentIn.append(query`
 SELECT DISTINCT fg2."id"
-${internalQueryFileGroup2(builder.viaParent)}
+${internalQueryFileGroup2(builder.viaParent ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -1116,7 +1123,7 @@ ${offsetLimitQb}
     }
     builder.where.idIn.append(query`
 SELECT DISTINCT fg2."parent"
-${internalQueryFileGroup2(builder.viaChildren)}
+${internalQueryFileGroup2(builder.viaChildren ?? {})}
 ${offsetLimitQb}
 `);
   }
@@ -1138,7 +1145,7 @@ ${offsetLimitQb}
 SELECT to_jsonb(f.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
-${internalQueryFile(builder.file, query`AND f."id" = fg."file"`)}
+${internalQueryFile(builder.file ?? {}, query`AND f."id" = fg."file"`)}
 ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
 ${offsetLimitQb}
 ) as "fg_f_0" ON TRUE`);
@@ -1173,7 +1180,10 @@ ${offsetLimitQb}
 SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])}) as "result"
-${internalQueryFileGroup2(builder.parent, query`AND fg2."id" = fg."parent"`)}
+${internalQueryFileGroup2(
+  builder.parent ?? {},
+  query`AND fg2."id" = fg."parent"`,
+)}
 ORDER BY ${fileGroupOrderBy(
       builder.parent.orderBy,
       builder.parent.orderBySpec,
@@ -1214,7 +1224,10 @@ ${offsetLimitQb}
 SELECT ARRAY (SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
       joinedKeys.join(","),
     ])})
-${internalQueryFileGroup2(builder.children, query`AND fg2."parent" = fg."id"`)}
+${internalQueryFileGroup2(
+  builder.children ?? {},
+  query`AND fg2."parent" = fg."id"`,
+)}
 ORDER BY ${fileGroupOrderBy(
       builder.children.orderBy,
       builder.children.orderBySpec,
@@ -1232,20 +1245,15 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
 `;
 }
 /**
- * @typedef {StoreFileGroup} QueryResultStoreFileGroup
- * @property {QueryResultStoreFile|string|number} [file]
- * @property {QueryResultStoreFileGroup|string|number} [parent]
- * @property {QueryResultStoreFileGroup[]} [children]
- */
-/**
  * Query Builder for fileGroup
  * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<QueryResultStoreFileGroup[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>,
- *  queryPart: QueryPart,
+ *  then: () => void,
+ *  exec: (sql: Postgres) => Promise<QueryResultStoreFileGroup[]>,
+ *  execRaw: (sql: Postgres) => Promise<any[]>,
+ *  queryPart: QueryPart<any>,
  * }}
  */
 export function queryFileGroup(builder = {}) {
@@ -1270,7 +1278,7 @@ export function queryFileGroup(builder = {}) {
 SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
-${internalQueryFileGroup(builder)}
+${internalQueryFileGroup(builder ?? {})}
 ORDER BY ${fileGroupOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
@@ -1303,7 +1311,7 @@ ORDER BY ${fileGroupOrderBy(builder.orderBy, builder.orderBySpec)}
  * Transform results from the query builder that adhere to the known structure
  * of 'fileGroup' and its relations.
  *
- * @param {*[]} values
+ * @param {any[]} values
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  */
 export function transformFileGroup(values, builder = {}) {

@@ -26,7 +26,7 @@ const jobFieldSet = new Set([
  * Get all fields for job
  *
  * @param {string} [tableName="j."]
- * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @param {{ excludePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function jobFields(tableName = "j.", options = {}) {
@@ -58,6 +58,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     where = validateStoreJobWhere(where, "$.jobWhere");
   }
   const strings = ["1 = 1"];
+  /** @type {QueryPartArg[]} */
   const values = [undefined];
   if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
     strings.push(" AND ");
@@ -435,7 +436,7 @@ export function jobOrderBy(
  * Build 'VALUES ' part for job
  *
  * @param {StoreJobInsertPartial|StoreJobInsertPartial[]} insert
- * @param {{ includePrimaryKey: boolean }} [options={}]
+ * @param {{ includePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function jobInsertValues(insert, options = {}) {
@@ -554,11 +555,11 @@ WHERE ${jobWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }} [options={}]
+ * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<StoreJob[]>}
  */
 async function jobInsert(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
@@ -579,7 +580,7 @@ RETURNING ${jobFields("")}
  * @returns {Promise<StoreJob[]>}
  */
 async function jobUpsertOnId(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   const fieldString = [...jobFieldSet]
@@ -622,11 +623,11 @@ export const jobQueries = {
   jobUpdate,
 };
 /**
- * @param {StoreJobQueryBuilder|StoreJobQueryTraverser} [builder={}]
- * @param {QueryPart} wherePartial
+ * @param {StoreJobQueryBuilder & StoreJobQueryTraverser} builder
+ * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQueryJob(builder = {}, wherePartial) {
+export function internalQueryJob(builder, wherePartial) {
   const joinQb = query``;
   return query`
 FROM "job" j
@@ -635,17 +636,15 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
 `;
 }
 /**
- * @typedef {StoreJob} QueryResultStoreJob
- */
-/**
  * Query Builder for job
  * Note that nested limit and offset don't work yet.
  *
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<QueryResultStoreJob[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>,
- *  queryPart: QueryPart,
+ *  then: () => void,
+ *  exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>,
+ *  execRaw: (sql: Postgres) => Promise<any[]>,
+ *  queryPart: QueryPart<any>,
  * }}
  */
 export function queryJob(builder = {}) {
@@ -655,7 +654,7 @@ export function queryJob(builder = {}) {
 SELECT to_jsonb(j.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
-${internalQueryJob(builder)}
+${internalQueryJob(builder ?? {})}
 ORDER BY ${jobOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
@@ -688,7 +687,7 @@ ORDER BY ${jobOrderBy(builder.orderBy, builder.orderBySpec)}
  * Transform results from the query builder that adhere to the known structure
  * of 'job' and its relations.
  *
- * @param {*[]} values
+ * @param {any[]} values
  * @param {StoreJobQueryBuilder} [builder={}]
  */
 export function transformJob(values, builder = {}) {

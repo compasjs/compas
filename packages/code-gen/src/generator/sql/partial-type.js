@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { upperCaseFirst } from "../../utils.js";
@@ -16,7 +18,7 @@ import {
  */
 export function createPartialTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
-    if (type.queryOptions.isView) {
+    if (type.queryOptions?.isView) {
       continue;
     }
 
@@ -111,7 +113,7 @@ export function getInsertPartial(context, type) {
      * Build 'VALUES ' part for ${type.name}
      * 
      * @param {${type.partial.insertType}|${type.partial.insertType}[]} insert
-     * @param {{ includePrimaryKey: boolean }} [options={}]
+     * @param {{ includePrimaryKey?: boolean }} [options={}]
      * @returns {QueryPart}
      */
     export function ${type.name}InsertValues(insert, options = {}) {
@@ -160,7 +162,7 @@ export function getUpdatePartial(context, type) {
   const partials = [];
 
   for (const field of type.partial.fields) {
-    if (type.queryOptions.withDates || type.queryOptions.withSoftDeletes) {
+    if (type.queryOptions?.withDates || type.queryOptions?.withSoftDeletes) {
       if (field.key === "updatedAt") {
         partials.push(`
           strings.push(\`, "${field.key}" = \`);

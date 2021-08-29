@@ -1,13 +1,11 @@
-import { App } from "@compas/code-gen";
-import { mainFn, pathJoin, spawn } from "@compas/stdlib";
-import { storeStructure } from "@compas/store";
-import { extendWithRepo } from "../gen/repo.js";
+import { mainFn, spawn } from "@compas/stdlib";
 import {
-  applyBenchStructure,
-  applyTestingServerStructure,
-  applyTestingSqlStructure,
-  applyTestingValidatorsStructure,
-} from "../gen/testing.js";
+  generateCodeGen,
+  generateRepo,
+  generateStore,
+  generateTestAndBench,
+  generateTypes,
+} from "../src/generate.js";
 
 /** @type {CliWatchOptions} */
 export const cliWatchOptions = {
@@ -15,96 +13,18 @@ export const cliWatchOptions = {
   extensions: ["tmpl", "js", "json"],
 };
 
-export const generateSettings = {
-  validators: {
-    outputDirectory: "./generated/testing/validators",
-    enabledGroups: ["validator"],
-    isNode: true,
-  },
-  bench: {
-    outputDirectory: "./generated/testing/bench",
-    enabledGroups: ["bench", "githubApi"],
-    isNodeServer: true,
-    enabledGenerators: ["validator", "type", "router"],
-  },
-  server: {
-    outputDirectory: "./generated/testing/server",
-    enabledGenerators: ["type", "apiClient", "router", "validator"],
-    enabledGroups: ["server", "type"],
-    isNodeServer: true,
-  },
-  client: {
-    outputDirectory: "./generated/testing/client",
-    enabledGroups: ["server"],
-    enabledGenerators: ["apiClient", "type", "validator" /*, "reactQuery"*/],
-    isBrowser: true,
-  },
-  sql: {
-    outputDirectory: "./generated/testing/sql",
-    enabledGroups: ["sql"],
-    enabledGenerators: ["type", "sql", "validator"],
-    isNodeServer: true,
-  },
-};
-
 mainFn(import.meta, main);
 
-async function main() {
-  const internalApp = new App({
-    verbose: true,
+async function main(logger) {
+  await generateCodeGen();
+  await generateStore();
+  await generateRepo();
+  await generateTestAndBench();
+  await generateTypes();
+
+  logger.info("Transpiling typescript...");
+
+  await spawn("yarn", ["tsc", "-p", "./tsconfig.client-gen.json"], {
+    shell: true,
   });
-
-  extendWithRepo(internalApp);
-
-  await internalApp.generate({
-    outputDirectory: "./src/generated",
-    enabledGenerators: ["type", "validator"],
-    isNode: true,
-    throwingValidators: false,
-  });
-
-  const testAndBenchApp = new App({
-    verbose: true,
-  });
-
-  applyAllLocalGenerate(testAndBenchApp);
-
-  await testAndBenchApp.generate(generateSettings.validators);
-  await testAndBenchApp.generate(generateSettings.bench);
-  await testAndBenchApp.generate(generateSettings.server);
-  await testAndBenchApp.generate(generateSettings.client);
-  await testAndBenchApp.generate(generateSettings.sql);
-
-  testAndBenchApp.logger.info("Transpiling typescript...");
-
-  await spawn(
-    "yarn",
-    [
-      "tsc",
-      `${pathJoin(process.cwd(), "./generated/testing/client")}/**/*.ts`,
-      "--strict",
-      "--allowJs",
-      "--target",
-      "ESNext",
-      "--noErrorTruncation",
-      "--moduleResolution",
-      "node",
-      "--esModuleInterop",
-      "--downlevelIteration",
-      "--jsx",
-      "preserve",
-    ],
-    {
-      shell: true,
-    },
-  );
-}
-
-export function applyAllLocalGenerate(app) {
-  app.extend(storeStructure);
-
-  applyBenchStructure(app);
-  applyTestingValidatorsStructure(app);
-  applyTestingServerStructure(app);
-  applyTestingSqlStructure(app);
 }

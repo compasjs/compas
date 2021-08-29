@@ -9,8 +9,8 @@ const c8Path = pathJoin(
 
 /**
  * @param {Logger} logger
- * @param {ExecCommand} command
- * @returns {Promise<void>}
+ * @param {import("../parse").ExecCommand} command
+ * @returns {Promise<{ exitCode: number }|void>|void}
  */
 export function coverageCommand(logger, command) {
   const c8Args = [];

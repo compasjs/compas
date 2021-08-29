@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { TypeCreator } from "../../builders/TypeCreator.js";
@@ -11,6 +13,10 @@ import {
   getQueryEnabledObjects,
   getSortedKeysForType,
 } from "./utils.js";
+
+/**
+ * @typedef {import("../utils").ImportCreator} ImportCreator
+ */
 
 /**
  * Generate query builders that include relations in to the query result via left joins
@@ -194,26 +200,32 @@ function queryBuilderForType(context, imports, type) {
     `../${type.group}/validators${context.importExtension}`,
   );
 
+  getTypeNameForType(context, {
+    type: "any",
+    uniqueName: `QueryResult${type.uniqueName}`,
+    rawValue: `${type.uniqueName} & {
+       ${Object.entries(type.queryBuilder.relations)
+         .map(
+           ([
+             key,
+             {
+               otherSide,
+               relation: { subType },
+             },
+           ]) => {
+             if (subType === "oneToMany") {
+               return `${key}?: QueryResult${otherSide.uniqueName}[]`;
+             }
+             return `${key}?: QueryResult${otherSide.uniqueName}|string|number`;
+           },
+         )
+         .join(",\n")}
+     }`,
+    rawValueImport: {},
+  });
+
   return js`
       ${internalQueryBuilderForType(context, imports, type)}
-
-      /**
-       * @typedef {${type.uniqueName}} QueryResult${type.uniqueName}
-       ${Object.entries(type.queryBuilder.relations).map(
-         ([
-           key,
-           {
-             otherSide,
-             relation: { subType },
-           },
-         ]) => {
-           if (subType === "oneToMany") {
-             return `* @property {QueryResult${otherSide.uniqueName}[]} [${key}]`;
-           }
-           return `* @property {QueryResult${otherSide.uniqueName}|string|number} [${key}]`;
-         },
-       )}
-       */
 
       /**
        * Query Builder for ${type.name}
@@ -221,11 +233,10 @@ function queryBuilderForType(context, imports, type) {
        *
        * @param {${type.queryBuilder.type}} [builder={}]
        * @returns {{
-       *  exec: function(sql: Postgres): Promise<QueryResult${
-         type.uniqueName
-       }[]>,
-       *  execRaw: function(sql: Postgres): Promise<*[]>,
-       *  queryPart: QueryPart,
+       *  then: () => void,
+       *  exec: (sql: Postgres) => Promise<QueryResult${type.uniqueName}[]>,
+       *  execRaw: (sql: Postgres) => Promise<any[]>,
+       *  queryPart: QueryPart<any>,
        * }}
        */
       export function query${upperCaseFirst(type.name)}(builder = {}) {
@@ -258,7 +269,7 @@ function queryBuilderForType(context, imports, type) {
          const qb = query\`
         SELECT to_jsonb(${type.shortName}.*) || jsonb_build_object($\{query(
             [ joinedKeys.join(",") ])}) as "result"
-         $\{internalQuery${upperCaseFirst(type.name)}(builder)}
+         $\{internalQuery${upperCaseFirst(type.name)}(builder ?? {})}
          ORDER BY $\{${type.name}OrderBy(builder.orderBy, builder.orderBySpec)}
         \`;
 
@@ -414,7 +425,7 @@ if (!isNil(builder.${key}.limit)) {
             upperCaseFirst(otherSide.name) +
             (otherSide === type && otherShortName !== type.shortName ? "2" : "")
           }(
-               builder.${relationKey},
+               builder.${relationKey} ?? {},
                query\`AND ${otherShortName}."${referencedKey}" = ${shortName}."${ownKey}"\`
             )}
         ${orderBy}
@@ -460,7 +471,7 @@ if (!isNil(builder.${key}.limit)) {
                ? "2"
                : "")
            }(
-               builder.via${upperCaseFirst(relationKey)})}
+               builder.via${upperCaseFirst(relationKey)} ?? {})}
            $\{offsetLimitQb} 
         \`);
          }
@@ -474,15 +485,15 @@ if (!isNil(builder.${key}.limit)) {
       ${secondInternalBuilder}
 
       /**
-       * @param {${type.queryBuilder.type}|${
+       * @param {${type.queryBuilder.type} & ${
     type.queryBuilder.traverseType
-  }} [builder={}]
-       * @param {QueryPart} wherePartial
+  }} builder
+       * @param {QueryPart|undefined} [wherePartial]
        * @returns {QueryPart}
        */
       export function internalQuery${
         upperCaseFirst(type.name) + (shortName !== type.shortName ? "2" : "")
-      }(builder = {}, wherePartial) {
+      }(builder, wherePartial) {
          let joinQb = query\`\`;
 
          ${traverseJoinPartials}
@@ -555,7 +566,7 @@ function transformerForType(context, imports, type) {
        * Transform results from the query builder that adhere to the known structure
        * of '${type.name}' and its relations.
        *
-       * @param {*[]} values
+       * @param {any[]} values
        * @param {${type.uniqueName}QueryBuilder} [builder={}]
        */
       export function transform${upperCaseFirst(

@@ -18,7 +18,7 @@ const utilCommands = [
  * Object of commands that accept special input like node arguments, script name or
  * tooling args
  *
- * @type {object<string, { useScriptOrFile: boolean, }>}
+ * @type {Record<string, { useScriptOrFile: boolean, }>}
  */
 const execCommands = {
   run: {
@@ -57,7 +57,7 @@ const pathRegex = /^([^/]*\/)+(.*)$/;
  * @typedef ExecCommand
  * @property {"exec"} type
  * @property {string} name
- * @property {string} script
+ * @property {string|undefined} script
  * @property {boolean} watch
  * @property {boolean} verbose
  * @property {string[]} nodeArguments
@@ -128,6 +128,7 @@ export function parseArgs(knownNodeArgs, knownScripts, args) {
   }
 
   if (foundScriptIdx === -1 && command.useScriptOrFile) {
+    // @ts-ignore
     return buildHelpError(
       args,
       "Could not find script or valid path in the arguments",

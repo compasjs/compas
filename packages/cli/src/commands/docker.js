@@ -20,8 +20,8 @@ const containers = {
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
- * @returns {Promise<{ exitCode?: number }>}
+ * @param {import("../parse").UtilCommand} command
+ * @returns {Promise<{ exitCode?: number }|void>}
  */
 export async function dockerCommand(logger, command) {
   const subCommand = command.arguments[0];
@@ -103,6 +103,7 @@ async function startContainers(logger, containerInfo) {
     if (containerInfo.knownContainers.indexOf(name) === -1) {
       logger.info(`Pulling ${name}`);
       const { exitCode: pullExitCode } = await spawn(
+        // @ts-ignore
         ...containers[name].pullCommand,
       );
       if (pullExitCode !== 0) {
@@ -133,7 +134,6 @@ async function startContainers(logger, containerInfo) {
   await Promise.race([
     exec(
       `until docker exec compas-postgres-${getPostgresVersion()} pg_isready ; do sleep 1 ; done`,
-      { shell: true },
     ),
     new Promise((resolve, reject) => {
       setTimeout(reject, 30000);

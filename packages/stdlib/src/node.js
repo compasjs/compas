@@ -7,6 +7,16 @@ import { promisify } from "util";
 const internalExec = promisify(cpExec);
 
 /**
+ * @typedef {import("child_process").ExecOptions} ExecOptions
+ */
+
+/**
+ * @typedef {import("../types/advanced-types")
+ *   .ProcessDirectoryOptions
+ * } ProcessDirectoryOptions
+ */
+
+/**
  * Join all arguments together and normalize the resulting path. Arguments must be
  * strings. Using Node.js built-in path.posix.join().
  * Which forces use of Posix path separators, '/'.
@@ -56,7 +66,7 @@ export async function exec(command, opts = {}) {
  *
  * @param {string} command
  * @param {string[]} args
- * @param {object} [opts={}]
+ * @param {import("child_process").SpawnOptions} [opts={}]
  * @returns {Promise<{exitCode: number}>}
  */
 export function spawn(command, args, opts = {}) {
@@ -79,6 +89,7 @@ export function spawn(command, args, opts = {}) {
  * @returns {Promise<Buffer>}
  */
 export async function streamToBuffer(stream) {
+  // @ts-ignore
   if (!stream || typeof stream._read !== "function") {
     return Buffer.from([]);
   }
@@ -104,7 +115,7 @@ export async function streamToBuffer(stream) {
  * @since 0.1.0
  *
  * @param {string} dir
- * @param {Function} cb
+ * @param {(file: string) => (void|Promise<void>)} cb
  * @param {ProcessDirectoryOptions} [opts]
  */
 export async function processDirectoryRecursive(
@@ -128,7 +139,7 @@ export async function processDirectoryRecursive(
     if (stat.isDirectory()) {
       await processDirectoryRecursive(newPath, cb, opts);
     } else if (stat.isFile()) {
-      await Promise.resolve(cb(newPath));
+      await cb(newPath);
     }
   }
 }
@@ -139,10 +150,8 @@ export async function processDirectoryRecursive(
  * @since 0.1.0
  *
  * @param {string} dir
- * @param {Function} cb
- * @param {object} [opts={}]
- * @param {boolean} [opts.skipNodeModules=true]
- * @param {boolean} [opts.skipDotFiles=true]
+ * @param {(file: string) => (void)} cb
+ * @param {ProcessDirectoryOptions} [opts]
  */
 export function processDirectoryRecursiveSync(
   dir,

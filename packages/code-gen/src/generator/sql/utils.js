@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 
 /**
@@ -30,7 +32,7 @@ export function addShortNamesToQueryEnabledObjects(context) {
 
     // Also format schema if specified
     type.queryOptions.schema = type.queryOptions.schema ?? "";
-    if (type.queryOptions.schema.length > 0) {
+    if (type.queryOptions?.schema?.length > 0) {
       if (!type.queryOptions.schema.startsWith(`"`)) {
         type.queryOptions.schema = `"${type.queryOptions.schema}".`;
       }
@@ -116,7 +118,7 @@ export function getSortedKeysForType(type) {
     date: 4,
   };
 
-  const result = Object.keys(type.keys)
+  const result = /** @type {string[]} */ Object.keys(type.keys)
     .filter(
       (it) => it !== "createdAt" && it !== "updatedAt" && it !== "deletedAt",
     )

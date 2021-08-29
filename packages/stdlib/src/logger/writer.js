@@ -64,9 +64,9 @@ export function writeGithubActions(stream, level, timestamp, context, message) {
 }
 
 /**
- * @param {string} level
+ * @param {string|undefined} level
  * @param {Date} timestamp
- * @param {string} context
+ * @param {string|any} context
  * @param {*} message
  * @returns {string}
  */
@@ -93,6 +93,8 @@ export function formatPretty(level, timestamp, context, message) {
 
     return `${prefix + formatMessagePretty(message)}`;
   }
+
+  return prefix;
 }
 
 /**

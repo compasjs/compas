@@ -39,6 +39,7 @@ async function main(logger) {
     // Allow same process execution for coverage collecting and easier debugging
     const files = listTestFiles();
     for (const file of files) {
+      // @ts-ignore
       await import(pathToFileURL(file));
     }
     mainTestFn(import.meta);
@@ -126,6 +127,7 @@ async function main(logger) {
     );
   }
 
+  // @ts-ignore
   const exitCode = printTestResultsFromWorkers(results);
   process.exit(exitCode);
 }
@@ -243,6 +245,7 @@ function initializeWorkers(workerCount) {
   const workers = [];
 
   for (let i = 0; i < workerCount; ++i) {
+    // @ts-ignore
     const w = new Worker(workerFile, {});
     workers.push(w);
   }

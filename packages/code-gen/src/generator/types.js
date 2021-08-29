@@ -1,7 +1,19 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 
+/**
+ * @typedef {import("../../../../types/generated/common/types").CodeGenContext & {
+ *   types: any,
+ * }} CodeGenContext
+ */
+
+/**
+ * @param options
+ * @returns {{apiInput: string, apiResponse: string}}
+ */
 export function getTypeSuffixForUseCase(options) {
   if (options.isBrowser) {
     return {
@@ -33,10 +45,16 @@ export function setupMemoizedTypes(context) {
       suffix: "",
       fileTypeIO: "outputClient",
     },
-    rawImports: new Set(),
-    typeMap: new Map(),
-    calculatingTypes: new Set(),
+    ...context.options.typeCache,
   };
+
+  if (!context.types.typeMap) {
+    Object.assign(context.types, {
+      rawImports: new Set(),
+      typeMap: new Map(),
+      calculatingTypes: new Set(),
+    });
+  }
 
   if (!context.options.isBrowser) {
     for (const group of Object.values(context.structure)) {
@@ -114,16 +132,25 @@ export function getTypeNameForType(context, type, suffix, settings) {
 export function generateTypeFile(context) {
   const typeFile = js`
       ${[...context.types.rawImports]}
-      // An export soo all things work correctly with linters, ts, ...
-      export const __generated__ = true;
+      ${
+        context.options.useTypescript
+          ? "// An export soo all things work correctly with linters, ts, ...\n  export const __generated__ = true;"
+          : ""
+      }
+      
+      ${context.options.useTypescript ? "" : "declare global {"}
 
-      ${getStaticImportedTypesForPackages(context)}
       ${getMemoizedNamedTypes(context)}
+      
+      ${context.options.useTypescript ? "" : "}"}
+
    `;
 
   context.outputFiles.push({
     contents: typeFile,
-    relativePath: `./common/types${context.extension}`,
+    relativePath: `./common/types${
+      context.options.useTypescript ? ".ts" : ".d.ts"
+    }`,
   });
 }
 
@@ -177,17 +204,13 @@ export function generateTypeDefinition(
     case "any":
       if (!isNil(type.rawValue)) {
         result += type.rawValue;
-        if (useTypescript && type.rawValueImport.typeScript) {
-          context.types.rawImports.add(type.rawValueImport.typeScript);
-        } else if (!useTypescript && type.rawValueImport.javaScript) {
-          context.types.rawImports.add(type.rawValueImport.javaScript);
+        if (type.rawValueImport.typeScript || type.rawValueImport.javaScript) {
+          context.types.rawImports.add(
+            type.rawValueImport.typeScript || type.rawValueImport.javaScript,
+          );
         }
       } else {
-        if (useTypescript) {
-          result += "any";
-        } else {
-          result += "*";
-        }
+        result += "any";
       }
       break;
     case "anyOf": {
@@ -232,7 +255,7 @@ export function generateTypeDefinition(
       }
       break;
     case "boolean":
-      if (useTypescript && !isNil(type.oneOf)) {
+      if (!isNil(type.oneOf)) {
         result += type.oneOf;
 
         if (type.validator.convert && useConvert) {
@@ -269,30 +292,22 @@ export function generateTypeDefinition(
       }
       break;
     case "generic":
-      if (useTypescript) {
-        if (Array.isArray(type.keys.oneOf)) {
-          result += `{ [ key in `;
-          result += generateTypeDefinition(context, type.keys, recurseSettings);
-        } else if (Array.isArray(type.keys.reference?.oneOf)) {
-          result += `{ [ K in `;
-          result += generateTypeDefinition(context, type.keys, recurseSettings);
-        } else {
-          result += `{ [ key: `;
-          result += generateTypeDefinition(context, type.keys, recurseSettings);
-        }
-        result += "]:";
-        result += generateTypeDefinition(context, type.values, recurseSettings);
-        result += "}";
+      if (Array.isArray(type.keys.oneOf)) {
+        result += `{ [ key in `;
+        result += generateTypeDefinition(context, type.keys, recurseSettings);
+      } else if (Array.isArray(type.keys.reference?.oneOf)) {
+        result += `{ [ K in `;
+        result += generateTypeDefinition(context, type.keys, recurseSettings);
       } else {
-        result += `Object<${generateTypeDefinition(
-          context,
-          type.keys,
-          recurseSettings,
-        )}, ${generateTypeDefinition(context, type.values, recurseSettings)}>`;
+        result += `{ [ key: `;
+        result += generateTypeDefinition(context, type.keys, recurseSettings);
       }
+      result += "]:";
+      result += generateTypeDefinition(context, type.values, recurseSettings);
+      result += "}";
       break;
     case "number":
-      if (useTypescript && type.oneOf) {
+      if (type.oneOf) {
         result += type.oneOf.join("|");
 
         if (useConvert && type.validator.convert) {
@@ -373,64 +388,17 @@ function getMemoizedNamedTypes(context) {
   for (const [name, type] of context.types.typeMap.entries()) {
     let intermediate = "";
 
-    if (useTypescript) {
-      if (uniqueNameDocsMap[name]) {
-        intermediate += `// ${uniqueNameDocsMap[name]}\n`;
-      }
-      intermediate += `export type ${name} = `;
-      intermediate += type;
-      intermediate += `;`;
-    } else {
-      intermediate += `/**\n`;
-
-      if (uniqueNameDocsMap[name]) {
-        intermediate += ` * ${uniqueNameDocsMap[name]}\n *\n`;
-      }
-
-      intermediate += ` * @typedef {`;
-      intermediate += type;
-      intermediate += `} ${name}\n */`;
+    if (uniqueNameDocsMap[name]) {
+      intermediate += `// ${uniqueNameDocsMap[name].replaceAll(
+        "\n",
+        "\n // ",
+      )}\n`;
     }
+    intermediate += `${useTypescript ? "export " : ""}type ${name} = `;
+    intermediate += type;
+    intermediate += `;`;
 
     result.push(intermediate);
-  }
-
-  return result;
-}
-
-/**
- * Import types from packages that are used.
- * Link of things like QueryParts
- *
- * @param {CodeGenContext} context
- * @returns {string[]}
- */
-function getStaticImportedTypesForPackages(context) {
-  if (context.options.useTypescript) {
-    return [];
-  }
-
-  const result = [
-    '/**\n * @typedef {import("@compas/code-gen").App} App\n */',
-    '/**\n * @typedef {import("@compas/code-gen").TypeCreator} TypeCreator\n */',
-    '/**\n * @typedef {import("@compas/code-gen").RouteCreator} RouteCreator\n */',
-  ];
-
-  if (context.options.enabledGenerators.indexOf("sql") !== -1) {
-    result.push(
-      '/**\n * @typedef {import("@compas/store").Postgres} Postgres\n */',
-      '/**\n * @typedef import("@compas/store").QueryPart} QueryPart\n */',
-      '/**\n * @typedef import("@compas/store").Minio} Minio\n */',
-    );
-  }
-  if (context.options.enabledGenerators.indexOf("router") !== -1) {
-    result.push(
-      '/**\n * @typedef {import("@compas/stdlib").Logger} Logger\n */',
-      '/**\n * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent\n */',
-      '/**\n * @typedef {import("@compas/server").Context} Context\n */',
-      '/**\n * @typedef {import("@compas/server").Next} Next\n */',
-      '/**\n * @typedef {import("@compas/server").Middleware} Middleware\n */',
-    );
   }
 
   return result;

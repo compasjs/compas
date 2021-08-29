@@ -1,4 +1,8 @@
 /**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
  * Get the disk size (in bytes) and estimated row count for all tables and views.
  * To improve accuracy, run sql`ANALYZE` before this query, however make sure to read the
  * Postgres documentation for implications.
@@ -7,7 +11,7 @@
  * @summary Get the estimated disk size and row count for all tables
  *
  * @param {Postgres} sql
- * @returns {Promise<Object<string, { diskSize: number, rowCount: number }>>}
+ * @returns {Promise<Record<string, { diskSize: number, rowCount: number }>>}
  */
 export async function postgresTableSizes(sql) {
   const queryResult = await sql`
@@ -22,6 +26,7 @@ export async function postgresTableSizes(sql) {
      AND nspname !~ '^pg_toast'
    `;
 
+  /** @type {Record<string, { diskSize: number, rowCount: number }>} */
   const result = {};
 
   for (const item of queryResult) {

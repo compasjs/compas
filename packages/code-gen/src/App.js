@@ -1,11 +1,14 @@
+import { existsSync } from "fs";
 import {
   isNil,
   merge,
   newLogger,
+  pathJoin,
   printProcessMemoryUsage,
 } from "@compas/stdlib";
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
+import { generateTypes } from "./generate-types.js";
 import {
   addGroupsToGeneratorInput,
   addToData,
@@ -22,7 +25,32 @@ import { loadFromOpenAPISpec } from "./loaders.js";
 import { lowerCaseFirst } from "./utils.js";
 
 /**
- * @type {GenerateOpts}
+ * @typedef {object} GenerateOpts
+ * @property {string[]|undefined} [enabledGroups] Enabling specific groups so different
+ *    generator combinations can be used. The machinery will automatically find
+ *    referenced types and include those If this is undefined, all groups will be
+ *    enabled.
+ * @property {boolean|undefined} [isBrowser]
+ * @property {boolean|undefined} [isNode]
+ * @property {boolean|undefined} [isNodeServer]
+ * @property {string[]|undefined} [enabledGenerators] Enabling specific generators.
+ * @property {boolean|undefined} [useTypescript] Enable Typescript for the generators
+ *    that support it
+ * @property {boolean|undefined} [throwingValidators] Generate throwing validators, this
+ *    is expected by the router and sql generator.
+ * @property {boolean|undefined} [dumpStructure] Dump a structure.js file with the used
+ *    structure in it.
+ * @property {boolean|undefined} [dumpApiStructure] An api only variant of
+ *    'dumpStructure'. Includes all referenced types by defined 'route' types.
+ * @property {boolean|undefined} [dumpPostgres] Dump a structure.sql based on all
+ *    'enableQueries' object types.
+ * @property {string|undefined} [fileHeader] Custom file header.
+ * @property {string} outputDirectory Directory to write files to. Note that this is
+ *    recursively cleaned before writing the new files.
+ */
+
+/**
+ * @type {Partial<GenerateOpts>}
  */
 const defaultGenerateOptionsBrowser = {
   isBrowser: true,
@@ -37,7 +65,7 @@ const defaultGenerateOptionsBrowser = {
 };
 
 /**
- * @type {GenerateOpts}
+ * @type {Partial<GenerateOpts>}
  */
 const defaultGenerateOptionsNodeServer = {
   isBrowser: false,
@@ -52,7 +80,7 @@ const defaultGenerateOptionsNodeServer = {
 };
 
 /**
- * @type {GenerateOpts}
+ * @type {Partial<GenerateOpts>}
  */
 const defaultGenerateOptionsNode = {
   isBrowser: false,
@@ -78,7 +106,7 @@ export class App {
   /**
    * Create a new App.
    *
-   * @param {AppOpts} [options={}]
+   * @param {{ verbose?: boolean }} [options={}]
    */
   constructor({ verbose } = {}) {
     /**
@@ -127,7 +155,7 @@ export class App {
    * `app.extend`.
    *
    * @param {ReferenceType} reference
-   * @param {...RelationType} relations
+   * @param {...import("./builders/RelationType").RelationType} relations
    */
   addRelations(reference, ...relations) {
     if (!(reference instanceof ReferenceType)) {
@@ -156,6 +184,7 @@ export class App {
     }
 
     for (const relation of relations) {
+      // @ts-ignore
       resolved.relations.push(relation.build());
     }
 
@@ -163,7 +192,7 @@ export class App {
   }
 
   /**
-   * @param {object} obj
+   * @param {Record<string, any>} obj
    * @returns {this}
    */
   addRaw(obj) {
@@ -196,11 +225,36 @@ export class App {
    * Extend from the OpenAPI spec
    *
    * @param {string} defaultGroup
-   * @param {object} data
+   * @param {Record<string, any>} data
    * @returns {this}
    */
   extendWithOpenApi(defaultGroup, data) {
     return this.extendInternal(loadFromOpenAPISpec(defaultGroup, data), true);
+  }
+
+  /**
+   * @param {import("./generate-types").GenerateTypeOpts} options
+   * @returns {Promise<void>}
+   */
+  async generateTypes(options) {
+    if (isNil(options?.outputDirectory)) {
+      throw new Error("Need options.outputDirectory to write files to.");
+    }
+
+    for (const path of options.inputPaths) {
+      const inputStructure = pathJoin(path, "common/structure.js");
+      if (!existsSync(inputStructure)) {
+        throw new Error(
+          `Invalid inputPath '${path}'. '${inputStructure}' does not exists. Is it correctly generated?`,
+        );
+      }
+    }
+
+    options.verbose = options.verbose ?? this.verbose;
+    options.fileHeader =
+      this.fileHeader + formatEslint() + (options.fileHeader ?? "");
+
+    await generateTypes(this.logger, options);
   }
 
   /**
@@ -257,6 +311,7 @@ export class App {
 
     // Quick hack so we can test if we have generated
     // before running the tests.
+    // @ts-ignore
     if (options.returnFiles) {
       opts.returnFiles = true;
     }
@@ -291,6 +346,7 @@ export class App {
 
     // Ensure that we don't mutate the current working data of the user
     const dataCopy = JSON.parse(JSON.stringify(this.data));
+    /** @type {CodeGenStructure} */
     const generatorInput = {};
 
     addGroupsToGeneratorInput(generatorInput, dataCopy, opts.enabledGroups);
@@ -312,7 +368,7 @@ export class App {
   /**
    * Internally used extend
    *
-   * @param {object} rawStructure
+   * @param {Record<string, any>} rawStructure
    * @param {boolean} allowInternalProperties
    * @returns {this}
    */

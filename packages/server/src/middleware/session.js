@@ -3,6 +3,10 @@ import KeyGrip from "keygrip";
 import koaSession from "koa-session";
 
 /**
+ * @typedef {import("koa").Middleware} Middleware
+ */
+
+/**
  * Session middleware. Requires process.env.APP_KEYS to be set. To generate a key use
  * something like:
  * `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
@@ -10,8 +14,8 @@ import koaSession from "koa-session";
  *
  * @since 0.1.0
  *
- * @param {Application} app
- * @param {SessionOptions} opts KoaSession options
+ * @param {import("../app").KoaApplication} app
+ * @param {Partial<koaSession.opts>} opts KoaSession options
  * @returns {Middleware}
  */
 export function session(app, opts) {
@@ -63,7 +67,10 @@ function getKeys() {
  * This allows us to set extra cookies that are JS readable but don't contain any
  * sensitive information.
  *
- * @param {{ store: SessionStore, key: string, } & SessionOptions} opts
+ * @param {{
+ *   store: SessionStore,
+ *   key: string,
+ * } & Partial<koaSession.opts>} opts
  */
 function wrapStoreCalls({ store, key, ...cookieOpts }) {
   cookieOpts.httpOnly = false;
@@ -78,23 +85,27 @@ function wrapStoreCalls({ store, key, ...cookieOpts }) {
 
   store.set = (...args) => {
     if (!args[3]?.ctx) {
+      // @ts-ignore
       return originalSet(...args);
     }
 
     const ctx = args[3].ctx;
     ctx.cookies.set(key, value, cookieOpts);
 
+    // @ts-ignore
     return originalSet(...args);
   };
 
   store.destroy = (...args) => {
     if (!args[1]?.ctx) {
+      // @ts-ignore
       return originalDestroy(...args);
     }
 
     const ctx = args[1].ctx;
     ctx.cookies.set(key, "", destroyOpts);
 
+    // @ts-ignore
     return originalDestroy(...args);
   };
 }

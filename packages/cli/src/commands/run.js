@@ -4,11 +4,12 @@ import { executeCommand, watchOptionsWithDefaults } from "../utils.js";
 
 /**
  * @param {Logger} logger
- * @param {ExecCommand} command
- * @param {ScriptCollection} scriptCollection
- * @returns {Promise<void>}
+ * @param {import("../parse").ExecCommand} command
+ * @param {import("../utils").ScriptCollection} scriptCollection
+ * @returns {Promise<void | { exitCode: number; }>}
  */
 export async function runCommand(logger, command, scriptCollection) {
+  // @ts-ignore
   const script = scriptCollection[command.script];
 
   let cmd;
@@ -24,6 +25,7 @@ export async function runCommand(logger, command, scriptCollection) {
       logger.error("Ignoring node arguments in a package.json script");
     }
   } else {
+    // @ts-ignore
     const src = script ? script.path : pathJoin(process.cwd(), command.script);
 
     cmd = "node";
@@ -34,6 +36,7 @@ export async function runCommand(logger, command, scriptCollection) {
     if (command.watch) {
       // Try to import script, to see if it wants to control watch behaviour
       // See CliWatchOptions
+      // @ts-ignore
       const f = await import(pathToFileURL(src));
 
       watchOptions = watchOptionsWithDefaults(f?.cliWatchOptions);

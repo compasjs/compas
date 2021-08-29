@@ -160,7 +160,7 @@ export function anonymousValidator1443576836(
  * @param {string} propertyPath
  * @param {{ key: string, info: any }[]} errors
  * @param {string} parentType
- * @returns {{"start": number, "end": number, "pkg": DocParserPackage, "file": string, "line"?: undefined|string, }|undefined}
+ * @returns {undefined|{"start": number, "end": number, "pkg": DocParserPackage, "file": string, "line"?: undefined|string, }|undefined}
  */
 export function anonymousValidator781728730(
   value,
@@ -169,11 +169,7 @@ export function anonymousValidator781728730(
   parentType = "object",
 ) {
   if (isNil(value)) {
-    errors.push({
-      key: `validator.${parentType}.undefined`,
-      info: { propertyPath },
-    });
-    return undefined;
+    return value;
   }
   if (typeof value !== "object") {
     errors.push({
@@ -385,6 +381,7 @@ export function anonymousValidator2103344335(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator835333298(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -392,6 +389,7 @@ export function anonymousValidator2103344335(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1865996329(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -399,6 +397,7 @@ export function anonymousValidator2103344335(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,
@@ -663,6 +662,7 @@ export function anonymousValidator796176522(
   }
   const subErrors = [];
   let errorCount = 0;
+  /** @type {any} */
   let result = undefined;
   result = anonymousValidator730878810(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -670,6 +670,7 @@ export function anonymousValidator796176522(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   result = anonymousValidator1282872738(value, propertyPath, subErrors);
   if (subErrors.length === errorCount) {
@@ -677,6 +678,7 @@ export function anonymousValidator796176522(
   }
   subErrors.splice(errorCount + 1, subErrors.length - errorCount);
   errorCount = subErrors.length;
+  // @ts-ignore
   delete subErrors[errorCount - 1].stack;
   errors.push({
     key: `validator.${parentType}.type`,

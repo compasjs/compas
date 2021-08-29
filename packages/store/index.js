@@ -1,3 +1,28 @@
+/**
+ * @typedef {import("./types/advanced-types.js").Postgres} Postgres
+ */
+
+/**
+ * @typedef {import("./types/advanced-types.js").MinioClient} MinioClient
+ */
+
+/**
+ * @template T
+ * @typedef {import("./types/advanced-types.js").QueryPart<T>} QueryPart
+ */
+
+/**
+ * @typedef {import("./types/advanced-types.js").QueryPartArg} QueryPartArg
+ */
+
+/**
+ * @typedef {import("./src/send-transformed-image").GetStreamFn} GetStreamFn
+ */
+
+/**
+ * @typedef {import("./src/sessions.js").SessionStore} SessionStore
+ */
+
 export { structure as storeStructure } from "./src/generated/common/structure.js";
 export { queries as storeQueries } from "./src/generated/database/index.js";
 

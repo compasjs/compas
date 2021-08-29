@@ -73,6 +73,7 @@ function formatEntityTable(codeGen, entity) {
         : 92
       : 70;
   const formatType = (key) => {
+    // @ts-ignore
     const type = entity.keys[key].reference ?? entity.keys[key];
     const nullable = type.isOptional && isNil(type.defaultValue);
 

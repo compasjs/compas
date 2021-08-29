@@ -2,8 +2,12 @@ import { environment, isNil, isProduction, merge } from "@compas/stdlib";
 import postgres from "postgres";
 
 /**
- * @param {postgres.Options} opts
- * @returns {postgres.Options}
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
+ * @param {Postgres["connectionOptions"]} opts
+ * @returns {Postgres["connectionOptions"]}
  */
 export function buildAndCheckOpts(opts) {
   const finalOpts = /** @type {postgres.Options} */ merge(
@@ -38,7 +42,7 @@ export function buildAndCheckOpts(opts) {
  *
  * @since 0.1.0
  *
- * @param {postgres.Options & { createIfNotExists?: boolean}} [opts]
+ * @param {Postgres["connectionOptions"]} [opts]
  * @returns {Promise<Postgres>}
  */
 export async function newPostgresConnection(opts) {

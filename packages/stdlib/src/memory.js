@@ -1,5 +1,9 @@
 import { isProduction } from "./env.js";
 
+/**
+ * @typedef {import("../types/advanced-types.js").Logger} Logger
+ */
+
 const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 
 /**

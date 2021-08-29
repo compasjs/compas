@@ -4,20 +4,24 @@
  *
  * @since 0.1.0
  *
- * @param {Application} app
- * @param {AxiosInstance} axios
- * @returns {Promise<undefined>}
+ * @param {import("./app").KoaApplication} app
+ * @param {import("axios").AxiosInstance} axios
+ * @returns {Promise<void>}
  */
 export async function createTestAppAndClient(app, axios) {
   await new Promise((resolve, reject) => {
     let isListening = false;
+    // @ts-ignore
     app._server = app.listen();
 
+    // @ts-ignore
     app._server.on("listening", () => {
       isListening = true;
+      // @ts-ignore
       resolve();
     });
 
+    // @ts-ignore
     app._server.on("error", (err) => {
       if (!isListening) {
         reject(err);
@@ -25,6 +29,7 @@ export async function createTestAppAndClient(app, axios) {
     });
   });
 
+  // @ts-ignore
   const { port } = app._server.address();
   axios.defaults.baseURL = `http://127.0.0.1:${port}/`;
 }
@@ -34,12 +39,14 @@ export async function createTestAppAndClient(app, axios) {
  *
  * @since 0.1.0
  *
- * @param {Application} app
- * @returns {Promise<undefined>}
+ * @param {import("./app").KoaApplication} app
+ * @returns {Promise<void>}
  */
 export function closeTestApp(app) {
   return new Promise((resolve, reject) => {
+    // @ts-ignore
     if (app._server && app._server.listening) {
+      // @ts-ignore
       app._server.close((err) => {
         if (err) {
           reject(err);

@@ -39,7 +39,6 @@ export class ReferenceType extends TypeBuilder {
   /**
    * @param {string|TypeBuilder} group
    * @param {string} [name]
-   * @returns {ReferenceType}
    */
   constructor(group, name) {
     super("reference", undefined, undefined);

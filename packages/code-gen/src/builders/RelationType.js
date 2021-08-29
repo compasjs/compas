@@ -23,7 +23,7 @@ export class RelationType {
   }
 
   /**
-   * @returns {object}
+   * @returns {Record<string, any>}
    */
   build() {
     const result = merge({}, this.data);

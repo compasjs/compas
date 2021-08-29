@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
@@ -155,6 +157,8 @@ export function generate(logger, options, structure) {
   if (options.returnFiles) {
     // Used for making sure we can check if we are all set
     return context.outputFiles;
+  } else if (options.returnContext) {
+    return context;
   }
 
   logger.info(`Cleaning output directory and writing files.`);

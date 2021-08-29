@@ -9,23 +9,7 @@ const writersLookup = {
 };
 
 /**
- * Logger options, with proper defaults.
- *
- *
- * @typedef {object} LoggerOptions
- * @template T
- *
- * @property {boolean|undefined} [disableInfoLogger] Replaces log.info with a 'noop'.
- *    Defaults to 'false'.
- * @property {boolean|undefined} [disableErrorLogger] Replaces log.error with a 'noop'.
- *    Defaults to 'false'.
- * @property {"pretty"|"ndjson"|"github-actions"|undefined} [printer] Set the printer to
- *    be used. Defaults to "pretty" when 'NODE_ENV===development', "github-actions" when
- *    'GITHUB_ACTIONS===true' and "ndjson" by default.
- * @property {NodeJS.WriteStream|undefined} [stream] Stream to write to, defaults to
- *    'process.stdout'.
- * @property {T|undefined} ctx Context to log with each line. Defaults to an empty
- *    object.
+ * @typedef {import("../../types/advanced-types").LoggerOptions} LoggerOptions
  */
 
 /**
@@ -34,7 +18,7 @@ const writersLookup = {
  * @since 0.1.0
  *
  * @param {LoggerOptions|undefined} [options]
- * @returns {Logger}
+ * @returns {import("../../types/advanced-types.js").Logger}
  */
 export function newLogger(options) {
   const app = environment.APP_NAME;
@@ -76,8 +60,8 @@ export function newLogger(options) {
  * @param {Function} fn
  * @param {NodeJS.WriteStream} stream
  * @param {string} level
- * @param {object} context
- * @returns {Function}
+ * @param {Record<string, any>} context
+ * @returns {(arg: any) => void}
  */
 function wrapWriter(fn, stream, level, context) {
   return (message) => {

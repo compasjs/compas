@@ -1,8 +1,42 @@
 import { noop } from "@compas/stdlib";
 
 /**
+ * @typedef {import("../../types/advanced-types.js").TestRunner} TestRunner
+ */
+
+/**
+ * @typedef {object} TestAssertion
+ * @property {string} type
+ * @property {boolean} passed
+ * @property {{
+ *   actual: boolean
+ * }|{
+ *   actual?: any,
+ *   expected?: any,
+ *   message?: string
+ * }|undefined} meta
+ * @property {string|undefined} [message]
+ */
+
+/**
+ * @typedef {(t: TestRunner) => (void|any|Promise<any>)} TestCallback
+ */
+
+/**
+ * @typedef {object} TestState
+ * @property {TestState|undefined} [parent]
+ * @property {boolean|undefined} [hasFailure]
+ * @property {string} name
+ * @property {TestCallback|undefined} [callback]
+ * @property {TestAssertion[]} assertions
+ * @property {TestState[]} children
+ * @property {Error|undefined} [caughtException]
+ */
+
+/**
  * @type {Logger}
  */
+// @ts-ignore
 export let testLogger = undefined;
 
 /**

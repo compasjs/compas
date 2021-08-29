@@ -3,6 +3,10 @@ import { RelationType } from "./RelationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
+/**
+ * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
+ */
+
 export class ObjectType extends TypeBuilder {
   static baseData = {
     validator: {
@@ -41,7 +45,7 @@ export class ObjectType extends TypeBuilder {
   }
 
   /**
-   * @param {object<string, TypeBuilderLike>} obj
+   * @param {Record<string, TypeBuilderLike>} obj
    * @returns {ObjectType}
    */
   keys(obj) {

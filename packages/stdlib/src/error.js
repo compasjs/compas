@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { inspect } from "util";
 import { isNil } from "./lodash.js";
 
@@ -12,7 +14,7 @@ export class AppError extends Error {
   /**
    * @param {string} key
    * @param {number} status
-   * @param {object} [info={}]
+   * @param {Record<string, any>} [info={}]
    * @param {Error} [originalError]
    */
   constructor(key, status, info, originalError) {
@@ -40,7 +42,7 @@ export class AppError extends Error {
 
   /**
    * @param {*} value
-   * @returns {boolean}
+   * @returns {value is AppError}
    */
   static instanceOf(value) {
     return (
@@ -52,7 +54,7 @@ export class AppError extends Error {
   }
 
   /**
-   * @param {object} [info={}]
+   * @param {Record<string, any>} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
    */
@@ -61,7 +63,7 @@ export class AppError extends Error {
   }
 
   /**
-   * @param {object} [info={}]
+   * @param {Record<string, any>} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
    */
@@ -70,7 +72,7 @@ export class AppError extends Error {
   }
 
   /**
-   * @param {object} [info={}]
+   * @param {Record<string, any>} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
    */
@@ -80,7 +82,7 @@ export class AppError extends Error {
 
   /**
    * @param {string} key
-   * @param {object} [info={}]
+   * @param {Record<string, any>} [info={}]
    * @param {Error} [error]
    * @returns {AppError}
    */
@@ -91,10 +93,16 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
-   * @param {AppError|Error} e
-   * @returns {object}
+   * @param {AppError|Error|undefined|null|{}} [e]
+   * @returns {Record<string, any>}
    */
   static format(e) {
+    if (!e) {
+      return {
+        warning: "Missing error",
+      };
+    }
+
     const stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
     // Remove first element as this is the Error name
     stack.shift();

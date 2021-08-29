@@ -9,8 +9,8 @@ import {
 
 /**
  * @param {Logger} logger
- * @param {UtilCommand} command
- * @param {ScriptCollection} scriptCollection
+ * @param {import("../parse").UtilCommand} command
+ * @param {import("../utils").ScriptCollection} scriptCollection
  * @returns {Promise<void>}
  */
 export async function helpCommand(logger, command, scriptCollection) {
@@ -32,7 +32,7 @@ export async function helpCommand(logger, command, scriptCollection) {
   let log = `${name} -- ${version}
 Usage:
 
-- init              : compas init [projectName]
+- init              : compas init [--jsconfig,]
 - help              : compas help [--check] [--version]
 - docker            : compas docker [up,down,clean,reset]
 - docker            : compas docker migrate [rebuild,info] [--keep-alive|--keep-alive-without-lock] [--connection-settings ./sql/connection/settings.js]
@@ -56,7 +56,9 @@ with type CliWatchOptions from the script.
 The SQL settings exported for the '--connection-settings' should be a constant called 'postgresConnectionSettings' and be accepted by 'newPostgresConnection'.
 `;
 
+  let exitCode = 0;
   if (command.error) {
+    exitCode = 1;
     log += `\n\nError: ${command.error}`;
   }
 
@@ -70,19 +72,25 @@ The SQL settings exported for the '--connection-settings' should be a constant c
       log += `\n\nNotices:\n`;
 
       if (foundCompasVersions.length > 0) {
+        exitCode = 1;
         log += formatOtherVersions(foundCompasVersions);
       }
       if (!envLocalIgnored) {
+        exitCode = 1;
         log += `\n- File '.env.local' is not ignored. Please add it to your '.gitignore'.`;
       }
     }
   }
 
   logger.info(log);
+
+  if (command.error) {
+    process.exit(exitCode);
+  }
 }
 
 /**
- * @param {ScriptCollection} coll
+ * @param {import("../utils").ScriptCollection} coll
  */
 function formatScripts(coll) {
   const user = [];

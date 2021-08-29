@@ -23,7 +23,7 @@ const codeGenImportPath = pathJoin(
  * Execute the visualise command
  *
  * @param {Logger} logger
- * @param {UtilCommand} command
+ * @param {import("../parse").UtilCommand} command
  * @returns {Promise<{ exitCode?: number }>}
  */
 export async function visualiseCommand(logger, command) {
@@ -77,13 +77,10 @@ export async function visualiseCommand(logger, command) {
 
   // Get the structure
 
-  const { structure, trie } = await getStructure(
-    logger,
-    codeGen,
-    subCommand,
-    resolvedStructureFile,
-  );
-
+  const { structure, trie } =
+    // @ts-ignore
+    (await getStructure(logger, codeGen, subCommand, resolvedStructureFile)) ??
+    {};
   if (!structure) {
     logger.error(
       `The structure file could not be loaded. Please ensure that 'dumpStructure' options is enabled while generating.`,
@@ -111,9 +108,12 @@ export async function visualiseCommand(logger, command) {
   }
 
   const searchString = `"label"`;
+
+  // @ts-ignore
   const hash = createHash("sha256").update(graph).digest("hex").substr(0, 8);
 
   // Add hash to output, this way we prevent large svg diffs caused by different Graphviz versions
+  // @ts-ignore
   const [start, ...end] = graph.split(searchString);
   graph = `${start}"${label}${hash}"${end.join(searchString)}`;
 
@@ -175,6 +175,7 @@ export async function visualiseCommand(logger, command) {
  * @returns {Promise<{trie, structure: CodeGenStructure}|undefined>}
  */
 async function getStructure(logger, codeGen, subCommand, structureFile) {
+  // @ts-ignore
   const { structure } = await import(pathToFileURL(structureFile));
 
   let trie;
@@ -223,6 +224,7 @@ async function getCodeGenExports() {
   }
 
   try {
+    // @ts-ignore
     return await import(pathToFileURL(codeGenImportPath));
   } catch {
     return undefined;
@@ -241,6 +243,7 @@ async function structureFileExists(structureFile) {
   }
 
   try {
+    // @ts-ignore
     await import(pathToFileURL(structureFile));
     return true;
   } catch {
@@ -256,6 +259,7 @@ async function structureFileExists(structureFile) {
  * @returns {Promise<boolean>}
  */
 async function structureFileExportsStructure(structureFile, codeGen) {
+  // @ts-ignore
   const imported = await import(pathToFileURL(structureFile));
   if (isNil(imported?.structure)) {
     return false;
@@ -271,7 +275,7 @@ async function structureFileExportsStructure(structureFile, codeGen) {
  * @param {Logger} logger
  * @param {string} subCommand
  * @param {string[]} args
- * @returns {{ format: string, outputL: string }}
+ * @returns {{ format: string, output: string }}
  */
 function parseFormatAndOutputArguments(logger, subCommand, args) {
   const supportedFormats = ["png", "svg", "pdf", "webp"];
@@ -294,6 +298,7 @@ function parseFormatAndOutputArguments(logger, subCommand, args) {
     }
   }
 
+  // @ts-ignore
   result.output = `/tmp/${environment.APP_NAME.toLowerCase()}_${subCommand}.${
     result.format
   }`;
@@ -306,9 +311,11 @@ function parseFormatAndOutputArguments(logger, subCommand, args) {
         `No value given to '--output' option. Defaulting to '${result.output}'`,
       );
     } else {
+      // @ts-ignore
       result.output = outputValue;
     }
   }
 
+  // @ts-ignore
   return result;
 }

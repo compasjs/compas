@@ -16,13 +16,15 @@ export function extendWithDocParser(app) {
 
   const packageType = T.string("package").oneOf(...packages);
 
-  const rangeType = T.object("range").keys({
-    start: T.number(),
-    end: T.number(),
-    pkg: packageType,
-    file: T.string(),
-    line: T.string().optional(),
-  });
+  const rangeType = T.object("range")
+    .keys({
+      start: T.number(),
+      end: T.number(),
+      pkg: packageType,
+      file: T.string(),
+      line: T.string().optional(),
+    })
+    .optional();
 
   app.add(
     T.object("JSComment").keys({

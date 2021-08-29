@@ -8,7 +8,7 @@ editLink: false
 
 _Available since 0.1.0_
 
-_function mainFn(meta, cb): void_
+_function mainFn(meta, {(logger: Logger) => void|Promise\<void>} cb): void_
 
 Process entrypoint executor
 
@@ -19,15 +19,17 @@ uncaught exceptions, and calls the provided callback
 **Parameters**:
 
 - meta `ImportMeta`
-- cb `MainFnCallback`
+- {(logger: Logger) => void|Promise\<void>} cb
+  `{(logger: Logger) => void|Promise\<void>} cb`: {(logger: Logger) =>
+  void|Promise\<void>} cb
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L69)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L71)_
 
 ## newLogger
 
 _Available since 0.1.0_
 
-_function newLogger(options?): Logger_
+_function newLogger(options?): {import("../../types/advanced-types.js").Logger}_
 
 Create a new logger instance
 
@@ -35,7 +37,7 @@ Create a new logger instance
 
 - options `LoggerOptions|undefined?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/logger/logger.js#L39)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/logger/logger.js#L23)_
 
 ## newEvent
 
@@ -50,7 +52,7 @@ Create a new event from a logger
 - logger `Logger`: Logger should have a context, like the default `ctx.log`
 - signal `AbortSignal|undefined?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L86)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L83)_
 
 ## newEventFromEvent
 
@@ -64,7 +66,7 @@ Create a 'child' event, reuses the logger, adds callstack to the passed event
 
 - event `InsightEvent`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L98)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L95)_
 
 ## eventStart
 
@@ -93,7 +95,7 @@ Track event end times and log if necessary
 
 - event `InsightEvent`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L193)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/events.js#L198)_
 
 ## isProduction
 
@@ -104,7 +106,7 @@ _function isProduction(): boolean_
 Returns true when the `NODE_ENV` variable is not set, or when it does not equal
 to `development`. This allows for a 'safe by default' experience.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L38)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L40)_
 
 ## isStaging
 
@@ -115,7 +117,7 @@ _function isStaging(): boolean_
 Returns true when `NODE_ENV` is explicitly set to 'development' or when the
 environment variable `IS_STAGING` is explicitly set to 'true'.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L50)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L52)_
 
 ## refreshEnvironmentCache
 
@@ -139,7 +141,7 @@ process.env access      5000000  iterations   246  ns/op
 See this thread: https://github.com/nodejs/node/issues/3104 for more
 information.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L26)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L28)_
 
 ## filenameForModule
 
@@ -153,7 +155,7 @@ ES module compatibility counterpart of the CommonJS \_\_filename
 
 - meta `ImportMeta`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L130)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L132)_
 
 ## dirnameForModule
 
@@ -167,19 +169,19 @@ ES module compatibility counterpart of the CommonJS \_\_dirname
 
 - meta `ImportMeta`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L142)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L144)_
 
 ## isNil
 
 _Available since 0.1.0_
 
-_function isNil(item?): boolean_
+_function isNil(item?): item is null | undefined_
 
 Check if a value is `null` or `undefined`
 
 **Parameters**:
 
-- item `*?`
+- item `any|null|undefined?`
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L11)_
 
@@ -197,29 +199,6 @@ Check if a value is a plain JavaScript object.
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L23)_
 
-## uuid
-
-_Available since 0.1.0_
-
-_function uuid(): string_
-
-Returns a new uuid v4
-
-This function also has an `uuid.isValid` function, which returns a boolean
-depending on if the passed in string is a valid uuid.
-
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/datatypes.js#L13)_
-
-## noop
-
-_Available since 0.1.0_
-
-_function noop(): void_
-
-A function that returns 'undefined'.
-
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L30)_
-
 ## merge
 
 _Available since 0.1.0_
@@ -233,7 +212,7 @@ Deep merge source objects on to 'target'. Mutates 'target' in place.
 - target `object`: The destination object.
 - sources `...object?`: The source objects.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L42)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L43)_
 
 ## streamToBuffer
 
@@ -247,7 +226,7 @@ Read a readable stream completely, and return as Buffer
 
 - stream `NodeJS.ReadableStream`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L81)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L91)_
 
 ## pathJoin
 
@@ -263,7 +242,7 @@ path separators, '/'.
 
 - paths `...string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L17)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L27)_
 
 ## exec
 
@@ -280,13 +259,14 @@ exited. The resulting object contains the 'exitCode' of the sub process.
 - command `string`
 - opts `ExecOptions={}`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L31)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L41)_
 
 ## spawn
 
 _Available since 0.1.0_
 
-_function spawn(command, {string[]} args, opts?): Promise\<{exitCode: number}>_
+_function spawn(command, {string[]} args, {import("child_process").SpawnOptions}
+[opts={}]): Promise\<{exitCode: number}>_
 
 Wrap around Node.js child_process#spawn. Resolving when the sub process has
 exited. The resulting object contains the 'exitCode' of the sub process. By
@@ -296,9 +276,11 @@ default 'stdio' is inherited from the current process.
 
 - command `string`
 - {string[]} args `{string[]} args`: {string[]} args
-- opts `object={}`
+- {import("child_process").SpawnOptions} [opts={}]
+  `{import("child_process").SpawnOptions} [opts={}]`:
+  {import("child_process").SpawnOptions} [opts={}]
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L62)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L72)_
 
 ## calculateCookieUrlFromAppUrl
 
@@ -313,7 +295,7 @@ xxx.xx.com. If the APP_URL host only contains xxx.com the CORS_URL value will be
 equivalent. Refreshing the environment cache via `refreshEnvironmentCache` is
 not necessary.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L97)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L99)_
 
 ## calculateCorsUrlFromAppUrl
 
@@ -328,48 +310,50 @@ http(s)://xxx.xx.com. If the APP_URL host only contains xxx.com the CORS_URL
 value will be equivalent. Refreshing the environment cache via
 `refreshEnvironmentCache` is not necessary.
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L68)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/env.js#L70)_
 
 ## processDirectoryRecursive
 
 _Available since 0.1.0_
 
-_function processDirectoryRecursive(dir, cb, opts?): void_
+_function processDirectoryRecursive(dir, {(file: string) =>
+(void|Promise\<void>)} cb, opts?): void_
 
 Recursively act on all files in a directory, awaiting on callback calls.
 
 **Parameters**:
 
 - dir `string`
-- cb `Function`
+- {(file: string) => (void|Promise\<void>)} cb
+  `{(file: string) => (void|Promise\<void>)} cb`: {(file: string) =>
+  (void|Promise\<void>)} cb
 - opts `ProcessDirectoryOptions?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L110)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L121)_
 
 ## processDirectoryRecursiveSync
 
 _Available since 0.1.0_
 
-_function processDirectoryRecursiveSync(dir, cb, opts?, opts.skipNodeModules?,
-opts.skipDotFiles?): void_
+_function processDirectoryRecursiveSync(dir, {(file: string) => (void)} cb,
+opts?): void_
 
 Sync version of processDirectoryRecursive
 
 **Parameters**:
 
 - dir `string`
-- cb `Function`
-- opts `object={}`
-- opts.skipNodeModules `boolean=true`
-- opts.skipDotFiles `boolean=true`
+- {(file: string) => (void)} cb `{(file: string) => (void)} cb`: {(file: string)
+  => (void)} cb
+- opts `ProcessDirectoryOptions?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L147)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/node.js#L156)_
 
 ## flatten
 
 _Available since 0.1.0_
 
-_function flatten(data, result?, path?): Object\<string, any>_
+_function flatten(data, result?, path?): Record\<string, any>_
 
 Flatten nested objects in to a new object where the keys represent the original
 access path. Only goes through plain JavaScript objects and ignores arrays.
@@ -380,7 +364,7 @@ access path. Only goes through plain JavaScript objects and ignores arrays.
 - result `*?`
 - path `string?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L55)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L56)_
 
 ## unFlatten
 
@@ -392,9 +376,9 @@ The opposite of 'flatten'.
 
 **Parameters**:
 
-- data `object`
+- data `Record\<string, any>`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L81)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/lodash.js#L82)_
 
 ## getSecondsSinceEpoch
 
@@ -404,7 +388,7 @@ _function getSecondsSinceEpoch(): number_
 
 Get the number of seconds since Unix epoch (1-1-1970).
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L19)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/utils.js#L23)_
 
 ## bytesToHumanReadable
 
@@ -418,7 +402,7 @@ Convert bytes to a human readable value
 
 - bytes `number?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/memory.js#L13)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/memory.js#L17)_
 
 ## printProcessMemoryUsage
 
@@ -432,4 +416,4 @@ Print memory usage of this Node.js process
 
 - logger `Logger`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/memory.js#L40)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/memory.js#L44)_

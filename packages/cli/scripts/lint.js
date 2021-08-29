@@ -1,4 +1,4 @@
-import { mainFn, spawn, environment } from "@compas/stdlib";
+import { environment, mainFn, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, async () => {
   const [arg] = process.argv.slice(2);
@@ -7,7 +7,7 @@ mainFn(import.meta, async () => {
     ? {
         env: {
           ...environment,
-          LINT_JSDOC: true,
+          LINT_JSDOC: "true",
         },
       }
     : {};

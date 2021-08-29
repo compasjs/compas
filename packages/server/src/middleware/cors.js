@@ -37,13 +37,14 @@ const defaultOptions = {
 /**
  * CORS middleware for koa2
  *
- * @param {CorsOptions} [options]
+ * @param {import("../app").CorsOptions} [options]
  * @returns {Function}
  */
 export function cors(options = {}) {
   const opts = Object.assign({}, defaultOptions, options);
 
   if (Array.isArray(opts.exposeHeaders)) {
+    // @ts-ignore
     opts.exposeHeaders = opts.exposeHeaders.join(",");
   }
 
@@ -52,6 +53,7 @@ export function cors(options = {}) {
   }
 
   if (Array.isArray(opts.allowMethods)) {
+    // @ts-ignore
     opts.allowMethods = opts.allowMethods.join(",");
   }
 

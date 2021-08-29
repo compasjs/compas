@@ -36,7 +36,7 @@ export class AnyOfType extends TypeBuilder {
   }
 
   /**
-   * @param {...TypeBuilderLike} [items]
+   * @param {...TypeBuilderLike} items
    * @returns {AnyOfType}
    */
   values(...items) {

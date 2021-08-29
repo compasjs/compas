@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { readFile, writeFile } from "fs/promises";
 import {
   AppError,

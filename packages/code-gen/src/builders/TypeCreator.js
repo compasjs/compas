@@ -18,6 +18,9 @@ import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
 
 export class TypeCreator {
+  /**
+   * @param {string} group
+   */
   constructor(group) {
     this.group = group || "app";
 
@@ -127,7 +130,7 @@ export class TypeCreator {
   }
 
   /**
-   * @param {string|TypeBuilder} [groupOrOther]
+   * @param {string|TypeBuilder} groupOrOther
    * @param {string} [name]
    * @returns {ReferenceType}
    */

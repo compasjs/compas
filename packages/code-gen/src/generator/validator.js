@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "../builders/index.js";
 import { stringifyType } from "../stringify.js";
@@ -6,7 +8,11 @@ import { generateTypeDefinition, getTypeNameForType } from "./types.js";
 import { importCreator } from "./utils.js";
 
 /**
- * @typedef ValidatorContext
+ * @typedef {import("./utils").ImportCreator} ImportCreator
+ */
+
+/**
+ * @typedef {object} ValidatorContext
  * @property {CodeGenContext} context
  * @property {boolean} collectErrors
  * @property {Map<string, number>} anonymousFunctionMapping
@@ -17,8 +23,12 @@ import { importCreator } from "./utils.js";
 /**
  * Calls generated buildError function to construct an error
  *
- * @typedef {function(key: string, info: string, errors: string=, errorsReturn:
- *   boolean=): string} GeneratorBuildError
+ * @typedef {(
+ *   key: string,
+ *   info: string,
+ *   errors?: string,
+ *   errorsReturn?: boolean
+ * ) => string} GeneratorBuildError
  */
 
 /**
@@ -262,7 +272,7 @@ function generateAnonymousValidatorCall(
     prefix,
   );
 
-  if (inlineCall !== undefined) {
+  if (!isNil(inlineCall)) {
     return inlineCall;
   }
 
@@ -277,7 +287,7 @@ function generateAnonymousValidatorCall(
  * Get hash for any object, for max 18 properties deep.
  * Used to have stable output of unchanged validators
  *
- * @param {object} type
+ * @param {string|Record<string, any>} type
  * @returns {number}
  */
 function getHashForType(type) {
@@ -321,7 +331,7 @@ function createOrUseAnonymousFunction(context, imports, type) {
        * @param {string} parentType
        * @returns {${generateTypeDefinition(context.context, type, {
          useDefaults: true,
-       })}|undefined}
+       })}${context.collectErrors ? "|undefined" : ""}}
        */
       export function anonymousValidator${hash}(value${withTypescript(
     context,
@@ -442,6 +452,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
         context.collectErrors
           ? `
     let errorCount = 0;
+    /** @type {any} */
     let result = undefined;
     `
           : ""
@@ -466,6 +477,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                }
                subErrors.splice(errorCount + 1, subErrors.length - errorCount);
                errorCount = subErrors.length;
+               // @ts-ignore
                delete subErrors[errorCount - 1].stack;
             `;
         }
@@ -1099,7 +1111,7 @@ function anonymousValidatorUuid(context, imports) {
  * @param {string} propertyPath
  * @param {string} errors
  * @param {string} prefix
- * @returns {string}
+ * @returns {string|undefined}
  */
 function createInlineValidator(
   context,

@@ -8,10 +8,11 @@ import { js } from "./tag/index.js";
  * @param {CodeGenContext} context
  */
 export function generateStructureFile(context) {
-  if (!context.options.dumpStructure && !context.options.dumpApiStructure) {
-    return;
-  }
   let structureSource = "";
+
+  structureSource = `export const compasGenerateSettings = ${JSON.stringify(
+    context.options,
+  )};`;
 
   if (context.options.dumpStructure) {
     for (const group of Object.keys(context.structure)) {
@@ -37,6 +38,7 @@ export function generateStructureFile(context) {
   }
 
   if (context.options.dumpApiStructure) {
+    /** @type {CodeGenStructure} */
     const apiStructure = {};
     // Create a new structure object with all routes
     for (const groupValues of Object.values(context.structure)) {

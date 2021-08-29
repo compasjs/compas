@@ -1,8 +1,7 @@
 import { cors } from "./cors.js";
 
 /**
- * @param {object} [opts]
- * @param {CorsOptions} opts.cors Cors configuration see koa2-cors
+ * @param {import("../app").HeaderOptions} [opts]
  */
 export function defaultHeaders(opts = {}) {
   // Excerpt from default helmet headers

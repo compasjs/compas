@@ -2,7 +2,7 @@ import { isNil, isPlainObject } from "@compas/stdlib";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 /**
- * @param {AxiosInstance} Axios
+ * @param {import("axios").AxiosInstance} Axios
  * @param {string} url
  * @returns {Promise<any>}
  */
@@ -20,8 +20,8 @@ export async function loadFromRemote(Axios, url) {
 
 /**
  * @param {string} defaultGroup
- * @param {object} data
- * @returns {object}
+ * @param {Record<string, any>} data
+ * @returns {Record<string, any>}
  */
 export function loadFromOpenAPISpec(defaultGroup, data) {
   if (!isPlainObject(data)) {

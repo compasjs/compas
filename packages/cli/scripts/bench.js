@@ -19,6 +19,7 @@ const contentHandler = async (file) => {
   }
 
   try {
+    // @ts-ignore
     await import(pathToFileURL(file));
   } catch (e) {
     throw AppError.serverError(

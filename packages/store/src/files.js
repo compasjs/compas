@@ -6,6 +6,14 @@ import { queryFile } from "./generated/database/file.js";
 import { listObjects } from "./minio.js";
 import { query } from "./query.js";
 
+/**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
+ * @typedef {import("../types/advanced-types").MinioClient} MinioClient
+ */
+
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
      INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
@@ -29,10 +37,25 @@ const fileQueries = {
  * @since 0.1.0
  *
  * @param {Postgres} sql
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
- * @param {StoreFileInsertPartial} props
- * @param {ReadStream|string|Buffer} source
+ * @param {{ id?: undefined | string;
+ *  contentLength?: number;
+ *  bucketName?: string;
+ *  contentType: string;
+ *  name: string;
+ *  meta?:
+ *    | undefined
+ *    | {
+ *        transforms?: undefined | any;
+ *        transformedFromOriginal?: undefined | string;
+ *      }
+ *    | object;
+ *  createdAt?: undefined | Date;
+ *  updatedAt?: undefined | Date;
+ *  deletedAt?: undefined | Date;
+ * }} props
+ * @param {NodeJS.ReadableStream|string|Buffer} source
  * @returns {Promise<StoreFile>}
  */
 export async function createOrUpdateFile(
@@ -63,9 +86,11 @@ export async function createOrUpdateFile(
     source = createReadStream(source);
   }
 
+  // @ts-ignore
   await minio.putObject(bucketName, props.id, source, {
     "content-type": props.contentType,
   });
+  // @ts-ignore
   const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
@@ -82,7 +107,7 @@ export async function createOrUpdateFile(
  *
  * @since 0.1.0
  *
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {{ start?: number|undefined, end?: number|undefined }} [seek={}]
@@ -110,7 +135,7 @@ export async function getFileStream(
  * @since 0.1.0
  *
  * @param {Postgres} sql
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {string} [targetBucket=bucketName]
@@ -131,6 +156,7 @@ export async function copyFile(
     bucketName,
   );
 
+  // @ts-ignore
   await minio.copyObject(targetBucket, intermediate.id, `${bucketName}/${id}`);
 
   const [result] = await queryFile({
@@ -150,9 +176,9 @@ export async function copyFile(
  * @since 0.1.0
  *
  * @param {Postgres} sql
- * @param {minio.Client} minio
+ * @param {MinioClient} minio
  * @param {string} bucketName
- * @returns {Promise<undefined>}
+ * @returns {Promise<number>}
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   // Delete transformed copies of deleted files

@@ -1,3 +1,15 @@
+/**
+ * @typedef {import("./types/advanced-types").Logger} Logger
+ */
+
+/**
+ * @typedef {import("./src/events").InsightEvent} InsightEvent
+ */
+
+/**
+ * @typedef {import("./src/node").ProcessDirectoryOptions} ProcessDirectoryOptions
+ */
+
 export { uuid } from "./src/datatypes.js";
 
 export { AppError } from "./src/error.js";

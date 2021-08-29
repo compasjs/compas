@@ -5,6 +5,10 @@ import { pathToFileURL } from "url";
 import { AppError, environment, pathJoin } from "@compas/stdlib";
 
 /**
+ * @typedef {import("../types/advanced-types").Postgres} Postgres
+ */
+
+/**
  * @typedef {object} MigrationFile
  * @property {number} number
  * @property {boolean} repeatable
@@ -13,6 +17,16 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
  * @property {boolean} isMigrated
  * @property {string} source
  * @property {string} hash
+ */
+
+/**
+ * @typedef {object} MigrateContext
+ * @property {MigrationFile[]} files
+ * @property {Postgres} sql
+ * @property {any|undefined} [rebuild]
+ * @property {any|undefined} [info]
+ * @property {any|undefined} [do]
+ * @property {Record<number, string>} storedHashes
  */
 
 /**
@@ -123,7 +137,7 @@ export function getMigrationsToBeApplied(mc) {
  * @since 0.1.0
  *
  * @param {MigrateContext} mc
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function runMigrations(mc) {
   let current;
@@ -169,7 +183,7 @@ export async function runMigrations(mc) {
  * @since 0.1.0
  *
  * @param {MigrateContext} mc
- * @returns {Promise<undefined>}
+ * @returns {Promise<void>}
  */
 export async function rebuildMigrations(mc) {
   try {
@@ -198,7 +212,7 @@ export async function rebuildMigrations(mc) {
 
 /**
  * @param {MigrateContext} mc
- * @returns {MigrateFile[]}
+ * @returns {MigrationFile[]}
  */
 function filterMigrationsToBeApplied(mc) {
   const result = [];
@@ -215,7 +229,7 @@ function filterMigrationsToBeApplied(mc) {
 
 /**
  * @param {Postgres} sql
- * @param {MigrateFile} migration
+ * @param {MigrationFile} migration
  * @returns {Promise<void>}
  */
 async function runMigration(sql, migration) {
@@ -223,6 +237,7 @@ async function runMigration(sql, migration) {
     !migration.source.includes("-- disable auto transaction") &&
     !migration.source.includes("// disable auto transaction");
 
+  /** @type {(sql: Postgres) => (Promise<void|any>|void)} */
   let run = () => {
     throw AppError.serverError({
       message: "Unknown migration file",
@@ -234,6 +249,7 @@ async function runMigration(sql, migration) {
     run = (sql) => sql.unsafe(migration.source);
   } else if (migration.fullPath.endsWith(".js")) {
     run = async (sql) => {
+      // @ts-ignore
       const { migrate } = await import(pathToFileURL(migration.fullPath));
 
       if (typeof migrate !== "function") {
@@ -260,7 +276,7 @@ async function runMigration(sql, migration) {
 
 /**
  * @param {Postgres} sql
- * @param {MigrateFile} migration
+ * @param {MigrationFile} migration
  */
 function runInsert(sql, migration) {
   return sql`INSERT INTO "migration" (namespace, number, name, hash) VALUES (${
@@ -375,6 +391,7 @@ function parseFileName(fileName) {
   }
 
   filePattern.lastIndex = 0;
+  // @ts-ignore
   const [, number, repeatable, name] = filePattern.exec(fileName);
 
   return {

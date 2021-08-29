@@ -1,6 +1,12 @@
+// @ts-nocheck
+
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getPrimaryKeyWithType } from "./utils.js";
+
+/**
+ * @typedef {import("../utils").ImportCreator} ImportCreator
+ */
 
 /**
  * Generate the basic CRUD queries
@@ -126,7 +132,7 @@ function softDeleteQuery(context, imports, type) {
     /**
      * @param {Postgres} sql
      * @param {${type.uniqueName}Where} [where={}]
-     * @param {{ skipCascade: boolean }} [options={}]
+     * @param {{ skipCascade?: boolean }} [options={}]
      * @returns {Promise<void>}
      */
     async function ${type.name}Delete(sql, where = {}, options = {}) {
@@ -181,11 +187,11 @@ function insertQuery(context, imports, type) {
     /**
      * @param {Postgres} sql
      * @param {${type.partial.insertType}|(${type.partial.insertType}[])} insert
-     * @param {{ withPrimaryKey: boolean }} [options={}]
+     * @param {{ withPrimaryKey?: boolean }} [options={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
     async function ${type.name}Insert(sql, insert, options = {}) {
-      if (insert === undefined || insert.length === 0) {
+      if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
         return [];
       }
       options.withPrimaryKey = options.withPrimaryKey ?? false;
@@ -224,7 +230,7 @@ function upsertQueryByPrimaryKey(context, imports, type) {
      * @returns {Promise<${type.uniqueName}[]>}
      */
     async function ${name}(sql, insert, options = {}) {
-      if (insert === undefined || insert.length === 0) {
+      if (insert === undefined || (Array.isArray(insert) &&  insert.length === 0)) {
         return [];
       }
       

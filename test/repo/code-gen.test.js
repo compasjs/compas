@@ -4,8 +4,8 @@ import { App } from "@compas/code-gen";
 import { isNil, processDirectoryRecursiveSync } from "@compas/stdlib";
 import {
   applyAllLocalGenerate,
-  generateSettings,
-} from "../../scripts/generate.js";
+  generateTestAndBenchSettings,
+} from "../../src/generate.js";
 
 mainTestFn(import.meta);
 
@@ -28,7 +28,7 @@ test("repo/code-gen", async (t) => {
     Object.keys(existingFileMap).length !== Object.keys(generatedFileMap).length
   ) {
     t.fail(
-      "A new generate call contains more/less files than the existing directory. Call 'yarn compas gen' to fix this.",
+      "A new generate call contains more/less files than the existing directory. Call 'yarn compas generate' to fix this.",
     );
     return;
   }
@@ -37,7 +37,7 @@ test("repo/code-gen", async (t) => {
   for (const key of Object.keys(existingFileMap)) {
     if (generatedFileMap[key] !== existingFileMap[key]) {
       t.fail(
-        `File ./generated/testing${key} is outdated. Call 'yarn compas gen' to fix this.`,
+        `File ./generated/testing${key} is outdated. Call 'yarn compas generate' to fix this.`,
       );
     } else {
       t.pass(`Generated file ${key} is up to date.`);
@@ -69,7 +69,7 @@ async function getGeneratedFileMap(fileFilter) {
   applyAllLocalGenerate(app);
   const fileMap = {};
 
-  for (const settings of Object.values(generateSettings)) {
+  for (const settings of Object.values(generateTestAndBenchSettings)) {
     // Do the generate call
     const files = await app.generate({
       ...settings,

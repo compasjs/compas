@@ -25,7 +25,7 @@ import {
   anonymousValidator980814292,
 } from "../common/anonymous-validators.js";
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenAnyOfType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -41,7 +41,7 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenAnyType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -57,7 +57,7 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenArrayType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -73,7 +73,7 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenBooleanType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -89,7 +89,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenContext | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -105,7 +105,7 @@ export function validateCodeGenContext(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenDateType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -121,7 +121,7 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenFile | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -137,7 +137,7 @@ export function validateCodeGenFile(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenFileType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -153,7 +153,7 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenGenerateOpts | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -169,7 +169,7 @@ export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenGenericType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -185,7 +185,7 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenNumberType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -201,7 +201,7 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenObjectType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -217,7 +217,7 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenReferenceType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -233,7 +233,7 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenRelationType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -249,7 +249,7 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenRouteType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -265,7 +265,7 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenStringType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -281,7 +281,7 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenStructure | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -297,7 +297,7 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenTemplateState | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -313,7 +313,7 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -329,7 +329,7 @@ export function validateCodeGenType(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenTypeSettings | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */
@@ -345,7 +345,7 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   };
 }
 /**
- * @param {undefined|*} value
+ * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
  * @returns {{ data: CodeGenUuidType | undefined, errors: ({ key: string, info: any }[])|undefined}}
  */

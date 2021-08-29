@@ -3,33 +3,26 @@ import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
 /**
- * Nested timing and call information
- *
- * @typedef {InsightEventCallObject|(InsightEventCall[])} InsightEventCall
+ * @typedef {import("../types/advanced-types.js").Logger} Logger
  */
 
 /**
- * Basic timing and call information
- *
- * @typedef {object} InsightEventCallObject
- * @property {"start"|"stop"|"aborted"} type
- * @property {string} name
- * @property {number|undefined} [duration] Duration in milliseconds between (end|aborted)
- *    and start time. This is filled when an event is aborted or stopped via `eventStop`.
- * @property {number} time Time in milliseconds since some epoch. This can either be the
- *    unix epoch or process start
+ * @typedef {import("../types/advanced-types").InsightEventCall} InsightEventCall
  */
 
 /**
- * @class
+ * @typedef {import("../types/advanced-types").InsightEvent} InsightEvent
+ */
+
+/**
  *
  * @param {Logger} logger
  * @param {AbortSignal|undefined} [signal]
- * @returns {InsightEvent}
+ * @returns {InsightEventConstructor}
  */
-function InsightEvent(logger, signal) {
-  if (!(this instanceof InsightEvent)) {
-    return new InsightEvent(logger, signal);
+function InsightEventConstructor(logger, signal) {
+  if (!(this instanceof InsightEventConstructor)) {
+    return new InsightEventConstructor(logger, signal);
   }
 
   const _this = this;
@@ -38,7 +31,7 @@ function InsightEvent(logger, signal) {
   this.log = logger;
   /**  @type {AbortSignal|undefined} */
   this.signal = signal;
-  /**  @type {InsightEvent|undefined} */
+  /**  @type {InsightEventConstructor|undefined} */
   this.parent = undefined;
   /**  @type {string|undefined} */
   this.name = undefined;
@@ -50,15 +43,19 @@ function InsightEvent(logger, signal) {
   this.toJSON = print.bind(this);
 
   function calculateDuration() {
+    // @ts-ignore
     if (_this.callStack[0]?.type !== "start") {
       return;
     }
 
     const lastIdx = _this.callStack.length - 1;
+    // @ts-ignore
     const lastType = _this.callStack[lastIdx]?.type;
 
     if (lastType === "stop" || lastType === "aborted") {
+      // @ts-ignore
       _this.callStack[0].duration =
+        // @ts-ignore
         _this.callStack[lastIdx].time - _this.callStack[0].time;
     }
   }
@@ -84,7 +81,7 @@ function InsightEvent(logger, signal) {
  * @returns {InsightEvent}
  */
 export function newEvent(logger, signal) {
-  return new InsightEvent(logger, signal);
+  return new InsightEventConstructor(logger, signal);
 }
 
 /**
@@ -102,9 +99,11 @@ export function newEventFromEvent(event) {
       name: event.name,
       time: Date.now(),
     });
+    // @ts-ignore
     event.calculateDuration();
     throw AppError.serverError({
       message: "Operation aborted",
+      // @ts-ignore
       event: getEventRoot(event).toJSON(),
     });
   }
@@ -112,8 +111,9 @@ export function newEventFromEvent(event) {
   const callStack = [];
   event.callStack.push(callStack);
 
-  const newEvent = new InsightEvent(event.log, event.signal);
+  const newEvent = new InsightEventConstructor(event.log, event.signal);
   newEvent.callStack = callStack;
+  // @ts-ignore
   newEvent.root = event;
 
   return newEvent;
@@ -139,6 +139,7 @@ export function eventStart(event, name) {
     });
     throw AppError.serverError({
       message: "Operation aborted",
+      // @ts-ignore
       event: getEventRoot(event).toJSON(),
     });
   }
@@ -163,7 +164,9 @@ export function eventRename(event, name) {
   event.name = name;
 
   for (const item of event.callStack) {
+    // @ts-ignore
     if (typeof item.name === "string") {
+      // @ts-ignore
       item.name = name;
     }
   }
@@ -174,9 +177,11 @@ export function eventRename(event, name) {
       name: event.name,
       time: Date.now(),
     });
+    // @ts-ignore
     event.calculateDuration();
     throw AppError.serverError({
       message: "Operation aborted",
+      // @ts-ignore
       event: getEventRoot(event).toJSON(),
     });
   }
@@ -196,8 +201,11 @@ export function eventStop(event) {
     name: event.name,
     time: Date.now(),
   });
+
+  // @ts-ignore
   event.calculateDuration();
 
+  // @ts-ignore
   if (isNil(event.root)) {
     event.log.info(event);
   }

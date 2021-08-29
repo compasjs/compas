@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import { getQueryEnabledObjects, getSortedKeysForType } from "./utils.js";

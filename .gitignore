@@ -38,3 +38,9 @@ coverage
 
 # Ignore all tmp files created based on fixtures
 __fixtures__/tmp
+
+# Types
+**.d.ts
+**.d.ts.map
+!types/**/*.d.ts
+!**/advanced-types.d.ts

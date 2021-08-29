@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * Consistent stringify type. Oh boi, if you ever use util.inspect on a big type...
  * Only works with validator and type generators, ignores routes, relations and sql

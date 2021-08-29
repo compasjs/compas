@@ -1,4 +1,6 @@
-import { newLogger, isNil } from "@compas/stdlib";
+// @ts-nocheck
+
+import { isNil, newLogger } from "@compas/stdlib";
 import {
   AnyOfType,
   AnyType,
@@ -27,7 +29,7 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
  * included in the generation.
  *
  * @param {string} defaultGroup
- * @param {object} data
+ * @param {Record<string, any>} data
  */
 export function convertOpenAPISpec(defaultGroup, data) {
   if (!data?.openapi?.startsWith("3.")) {
@@ -39,6 +41,14 @@ export function convertOpenAPISpec(defaultGroup, data) {
   };
 
   /**
+   * @type {{
+   *   logger: Logger,
+   *   result: CompasStructure,
+   *   defaultGroup: string,
+   *   data: any,
+   *   crossReferences: any[],
+   *   openAPIReferences: any[],
+   * }}
    * crossReferences are used to link routes to the default group
    *
    * openAPIReferences to resolve $ref's in the document

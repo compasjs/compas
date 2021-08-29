@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { merge } from "@compas/stdlib";
 import { AnyOfType } from "../../builders/AnyOfType.js";
 import { AnyType } from "../../builders/AnyType.js";
@@ -69,7 +71,7 @@ export function createOrderByTypes(context) {
     orderByType.values.push(
       {
         ...new AnyType().build(),
-        rawValue: "QueryPart",
+        rawValue: "QueryPart<any>",
         rawValueImport: {
           javaScript: undefined,
           typeScript: `import { QueryPart } from "@compas/store";`,

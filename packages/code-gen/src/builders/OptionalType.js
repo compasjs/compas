@@ -2,6 +2,10 @@ import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
+/**
+ * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
+ */
+
 export class OptionalType extends TypeBuilder {
   static baseData = {};
 

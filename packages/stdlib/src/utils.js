@@ -10,6 +10,10 @@ import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 
 /**
+ * @typedef {import("../types/advanced-types.js").Logger} Logger
+ */
+
+/**
  * Get the number of seconds since Unix epoch (1-1-1970).
  *
  * @since 0.1.0
@@ -24,12 +28,9 @@ export function getSecondsSinceEpoch() {
  * A function that returns 'undefined'.
  *
  * @since 0.1.0
- *
- * @returns {void}
+ * @type {import("../types/advanced-types").NoopFn}
  */
-export function noop() {
-  return undefined;
-}
+export function noop() {}
 
 /**
  * Internal gc function reference.
@@ -51,6 +52,7 @@ export function gc() {
     internalGc = runInNewContext("gc");
   }
 
+  // @ts-ignore
   internalGc();
 }
 
@@ -63,7 +65,7 @@ export function gc() {
  * @summary Process entrypoint executor
  *
  * @param {ImportMeta} meta
- * @param {MainFnCallback} cb
+ * @param {(logger: Logger) => void|Promise<void>} cb
  * @returns {void}
  */
 export function mainFn(meta, cb) {

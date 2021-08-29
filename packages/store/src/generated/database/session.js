@@ -21,7 +21,7 @@ const sessionFieldSet = new Set([
  * Get all fields for session
  *
  * @param {string} [tableName="s."]
- * @param {{ excludePrimaryKey: boolean }} [options={}]
+ * @param {{ excludePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function sessionFields(tableName = "s.", options = {}) {
@@ -53,6 +53,7 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     where = validateStoreSessionWhere(where, "$.sessionWhere");
   }
   const strings = ["1 = 1"];
+  /** @type {QueryPartArg[]} */
   const values = [undefined];
   if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
     strings.push(" AND ");
@@ -352,7 +353,7 @@ export function sessionOrderBy(
  * Build 'VALUES ' part for session
  *
  * @param {StoreSessionInsertPartial|StoreSessionInsertPartial[]} insert
- * @param {{ includePrimaryKey: boolean }} [options={}]
+ * @param {{ includePrimaryKey?: boolean }} [options={}]
  * @returns {QueryPart}
  */
 export function sessionInsertValues(insert, options = {}) {
@@ -449,11 +450,11 @@ WHERE ${sessionWhere(where)}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionInsertPartial|(StoreSessionInsertPartial[])} insert
- * @param {{ withPrimaryKey: boolean }} [options={}]
+ * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<StoreSession[]>}
  */
 async function sessionInsert(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   options.withPrimaryKey = options.withPrimaryKey ?? false;
@@ -476,7 +477,7 @@ RETURNING ${sessionFields("")}
  * @returns {Promise<StoreSession[]>}
  */
 async function sessionUpsertOnId(sql, insert, options = {}) {
-  if (insert === undefined || insert.length === 0) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
     return [];
   }
   const fieldString = [...sessionFieldSet]
@@ -519,11 +520,11 @@ export const sessionQueries = {
   sessionUpdate,
 };
 /**
- * @param {StoreSessionQueryBuilder|StoreSessionQueryTraverser} [builder={}]
- * @param {QueryPart} wherePartial
+ * @param {StoreSessionQueryBuilder & StoreSessionQueryTraverser} builder
+ * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
-export function internalQuerySession(builder = {}, wherePartial) {
+export function internalQuerySession(builder, wherePartial) {
   const joinQb = query``;
   return query`
 FROM "session" s
@@ -534,17 +535,15 @@ WHERE ${sessionWhere(builder.where, "s.", {
 `;
 }
 /**
- * @typedef {StoreSession} QueryResultStoreSession
- */
-/**
  * Query Builder for session
  * Note that nested limit and offset don't work yet.
  *
  * @param {StoreSessionQueryBuilder} [builder={}]
  * @returns {{
- *  exec: function(sql: Postgres): Promise<QueryResultStoreSession[]>,
- *  execRaw: function(sql: Postgres): Promise<*[]>,
- *  queryPart: QueryPart,
+ *  then: () => void,
+ *  exec: (sql: Postgres) => Promise<QueryResultStoreSession[]>,
+ *  execRaw: (sql: Postgres) => Promise<any[]>,
+ *  queryPart: QueryPart<any>,
  * }}
  */
 export function querySession(builder = {}) {
@@ -554,7 +553,7 @@ export function querySession(builder = {}) {
 SELECT to_jsonb(s.*) || jsonb_build_object(${query([
     joinedKeys.join(","),
   ])}) as "result"
-${internalQuerySession(builder)}
+${internalQuerySession(builder ?? {})}
 ORDER BY ${sessionOrderBy(builder.orderBy, builder.orderBySpec)}
 `;
   if (!isNil(builder.offset)) {
@@ -587,7 +586,7 @@ ORDER BY ${sessionOrderBy(builder.orderBy, builder.orderBySpec)}
  * Transform results from the query builder that adhere to the known structure
  * of 'session' and its relations.
  *
- * @param {*[]} values
+ * @param {any[]} values
  * @param {StoreSessionQueryBuilder} [builder={}]
  */
 export function transformSession(values, builder = {}) {

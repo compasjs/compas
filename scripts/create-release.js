@@ -1,11 +1,11 @@
 import { readFile } from "fs/promises";
-import { mainFn } from "@compas/stdlib";
+import { environment, mainFn } from "@compas/stdlib";
 import axios from "axios";
 
 mainFn(import.meta, main);
 
 async function main() {
-  const rawRef = process.env.GITHUB_REF;
+  const rawRef = environment.GITHUB_REF ?? "";
   const [githubToken] = process.argv.slice(2);
 
   const tag = rawRef.replace(/^refs\/tags\//, "");
