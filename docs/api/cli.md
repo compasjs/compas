@@ -4,6 +4,8 @@ editLink: false
 
 # @compas\/cli
 
+::: v-pre
+
 ## mainTestFn
 
 _Available since 0.1.0_
@@ -69,3 +71,5 @@ function will be a no op.
 - meta `ImportMeta`
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/cli/src/benchmarking/utils.js#L22)_
+
+:::

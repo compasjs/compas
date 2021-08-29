@@ -4,6 +4,8 @@ editLink: false
 
 # @compas\/store
 
+::: v-pre
+
 ## newPostgresConnection
 
 _Available since 0.1.0_
@@ -40,7 +42,7 @@ deletes to any of the exposed types. It is mandatory to be called if 'files',
   `{typeof import("./generated/database/index.js").queries} q`: {typeof
   import("./generated/database/index.js").queries} q
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/generated.js#L15)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/generated.js#L19)_
 
 ## query
 
@@ -222,7 +224,7 @@ than other jobs.
 - job
   `{ name: string, priority?: number|undefined, interval: StoreJobInterval }`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L563)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L564)_
 
 ## addJobWithCustomTimeoutToQueue
 
@@ -241,7 +243,7 @@ handler may run, before the 'InsightEvent' is aborted.
 - job `JobInput`
 - timeout `number`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L525)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L526)_
 
 ## getUncompletedJobsByName
 
@@ -256,7 +258,7 @@ Get all uncompleted jobs from the queue. Useful for testing if jobs are created.
 
 - sql `Postgres`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L724)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L725)_
 
 ## newSessionStore
 
@@ -398,7 +400,7 @@ id, into the provided bucket.
 - id `string`
 - targetBucket `string=bucketName`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L144)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L145)_
 
 ## getFileStream
 
@@ -417,7 +419,7 @@ the 'id'. A 'start' and 'end' value can optionally be specified.
 - id `string`
 - seek `{ start?: number|undefined, end?: number|undefined }={}`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L116)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L117)_
 
 ## syncDeletedFiles
 
@@ -435,7 +437,7 @@ the S3 bucket.
 - minio `MinioClient`
 - bucketName `string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L183)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L184)_
 
 ## updateFileGroupOrder
 
@@ -490,3 +492,5 @@ Try to remove a test database. Can only happen if the connection is created by
 - sql `Postgres`
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/store/src/testing.js#L160)_
+
+:::

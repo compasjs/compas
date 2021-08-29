@@ -4,6 +4,8 @@ editLink: false
 
 # @compas\/server
 
+::: v-pre
+
 ## getApp
 
 _Available since 0.1.0_
@@ -133,3 +135,5 @@ Close the test app as created by `createTestAppAndClient`.
   {import("./app").KoaApplication} app
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/server/src/testing.js#L45)_
+
+:::

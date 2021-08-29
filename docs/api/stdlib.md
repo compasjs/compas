@@ -4,6 +4,8 @@ editLink: false
 
 # @compas\/stdlib
 
+::: v-pre
+
 ## mainFn
 
 _Available since 0.1.0_
@@ -417,3 +419,5 @@ Print memory usage of this Node.js process
 - logger `Logger`
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/memory.js#L44)_
+
+:::

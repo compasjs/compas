@@ -20,6 +20,8 @@ editLink: false
 
 # @compas\\/${pkg}
 
+::: v-pre
+
 `;
 
     for (const symbol of symbols[pkg]) {
@@ -35,6 +37,7 @@ editLink: false
       }
     }
 
+    pkgResult += "\n:::\n";
     pkgResult = pkgResult.replace(/(<)/g, "\\$1");
 
     result.set(pkg, pkgResult);
