@@ -124,7 +124,7 @@ export class FileCache {
         stream: str,
         cacheControl: this.cacheControlHeader,
       };
-    } catch (e) {
+    } catch (/** @type {any} */ e) {
       if (e?.code === "ENOENT") {
         return this.cacheFileOnDisk(key, id, start, end);
       }

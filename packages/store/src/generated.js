@@ -1,3 +1,7 @@
+/**
+ * @type {typeof import("./generated/database/index.js").queries}
+ */
+// @ts-ignore
 export let queries = undefined;
 
 /**

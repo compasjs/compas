@@ -99,7 +99,7 @@ function koaBody(opts = {}) {
             returnRawBody: false,
           });
         }
-      } catch (parsingError) {
+      } catch (/** @type {any} */ parsingError) {
         if (parsingError instanceof SyntaxError) {
           delete parsingError.stack;
           throw AppError.validationError("error.server.unsupportedBodyFormat", {

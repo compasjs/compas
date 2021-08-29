@@ -71,7 +71,7 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
           ]);
         }
       }
-    } catch (e) {
+    } catch (/** @type {any} */ e) {
       if (e instanceof AssertionError) {
         // Convert to an assertion
         testState.assertions.push({
@@ -259,7 +259,7 @@ function deepEqual(state, actual, expected, message) {
 
   try {
     deepStrictEqual(actual, expected);
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     passed = false;
     meta = {
       actual,

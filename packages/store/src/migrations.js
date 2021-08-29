@@ -70,7 +70,7 @@ export async function newMigrateContext(
     mc.do = () => runMigrations(mc);
 
     return mc;
-  } catch (error) {
+  } catch (/** @type {any} */ error) {
     // Help user by dropping the sql connection so the application will exit
     await sql?.end();
     if (AppError.instanceOf(error)) {
@@ -148,7 +148,7 @@ export async function runMigrations(mc) {
       current = migration;
       await runMigration(mc.sql, migration);
     }
-  } catch (error) {
+  } catch (/** @type {any} */ error) {
     // Help user by dropping the sql connection so the application will exit
     await mc?.sql?.end();
     if (AppError.instanceOf(error)) {
@@ -194,7 +194,7 @@ export async function rebuildMigrations(mc) {
         await runInsert(sql, file);
       }
     });
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
       throw new AppError(
         "migrate.rebuild.error",
@@ -296,7 +296,7 @@ async function syncWithSchemaState(mc) {
         FROM migration
         ORDER BY number, "createdAt" DESC
       `;
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
       throw new AppError(
         "store.migrateSync.error",

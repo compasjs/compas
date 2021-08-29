@@ -48,7 +48,7 @@ export async function exec(command, opts = {}) {
       stderr,
       exitCode: promise.child.exitCode ?? 0,
     };
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     return {
       stdout: e.stdout ?? "",
       stderr: e.stderr ?? "",

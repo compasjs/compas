@@ -28,7 +28,7 @@ export async function runBenchmarks(state) {
     try {
       const b = new InternalRunner(state[i]);
       await b.exec();
-    } catch (e) {
+    } catch (/** @type {any} */ e) {
       state[i].caughtException = e;
     }
     i++;

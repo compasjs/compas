@@ -135,7 +135,7 @@ export function executeTemplate(name, data) {
 
   try {
     return templateContext.context[name](getExecutionContext(), data).trim();
-  } catch (e) {
+  } catch (/** @type {any} */ e) {
     throw new AppError(
       "codeGen.executeTemplate.error",
       500,

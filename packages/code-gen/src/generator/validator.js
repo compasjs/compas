@@ -492,7 +492,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
                  "subErrors",
                  "return ",
                )}
-            } catch (e) {
+            } catch (/** @type {any} */ e) {
                delete e.stack;
                subErrors.push(e);
             }
