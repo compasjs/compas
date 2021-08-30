@@ -14,9 +14,9 @@ module.exports = {
 
     nav: [
       {
-        text: "Guide",
+        text: "Docs",
         link: "/",
-        activeMatch: "^/$|^/setup/|^/features/",
+        activeMatch: "^/$|/getting-started|^/features/|^/migrations/",
       },
       {
         text: "API reference",
@@ -56,82 +56,29 @@ module.exports = {
 function getHomeSidebar() {
   return [
     {
-      text: "Project setup",
-      link: "/setup/index.html",
+      text: "Getting started",
+      link: "/getting-started.html",
+    },
+    {
+      text: "Features",
       children: [
         {
-          text: "Project setup",
-          link: "/setup/project-setup.html",
+          text: "Script runner",
+          link: "/features/script-runner.html",
         },
         {
-          text: "CLI and linting",
-          link: "/setup/cli-setup.html",
-        },
-        {
-          text: "Writing tests",
-          link: "/setup/test-runner.html",
-        },
-        {
-          text: "Services setup",
-          link: "/setup/services-setup.html",
-        },
-        {
-          text: "Server setup",
-          link: "/setup/server-setup.html",
-        },
-        {
-          text: "Postgres setup",
-          link: "/setup/postgres-setup.html",
-        },
-        {
-          text: "Code gen setup",
-          link: "/setup/code-gen-setup.html",
-        },
-        {
-          text: "Client side setup",
-          link: "/setup/client-side-setup.html",
+          text: "Linting and formatting",
+          link: "/features/lint-setup.html",
         },
       ],
     },
     {
-      text: "Features",
-      link: "/features/index.html",
+      text: "Migrations",
+      link: "/migrations/index.html",
       children: [
         {
-          text: "Logger",
-          link: "/features/logger.html",
-        },
-        {
-          text: "Test runner",
-          link: "/features/test-runner.html",
-        },
-        {
-          text: "Code generation",
-          link: "/features/code-gen.html",
-        },
-        {
-          text: "Code generation with relations",
-          link: "/features/code-gen-relations.html",
-        },
-        {
-          text: "Sessions",
-          link: "/features/sessions.html",
-        },
-        {
-          text: "File uploads",
-          link: "/features/file-uploads.html",
-        },
-        {
-          text: "Background jobs",
-          link: "/features/background-jobs.html",
-        },
-        {
-          text: "Migrations",
-          link: "/features/migrations.html",
-        },
-        {
-          text: "Environment",
-          link: "/features/environment.html",
+          text: "@compas/store",
+          link: "/migrations/store.html",
         },
       ],
     },
@@ -161,6 +108,7 @@ function getApiSidebar() {
 
 function getReleaseNotesSidebar() {
   return [
+    { text: "Release v0.0.158", link: "/releases/0.0.158.html" },
     { text: "Release v0.0.138", link: "/releases/0.0.138.html" },
     { text: "Release v0.0.124", link: "/releases/0.0.124.html" },
     { text: "Release v0.0.119", link: "/releases/0.0.119.html" },

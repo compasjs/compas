@@ -3,7 +3,7 @@ home: true
 heroText: Compas
 tagline: Unified backend tooling
 actionText: Get started
-actionLink: "/setup/"
+actionLink: "/getting-started.html"
 altActionText: Changelog
 altActionLink: "/changelog.html"
 footer: "MIT Licensed | Copyright © 2019-present Dirk de Visser"
