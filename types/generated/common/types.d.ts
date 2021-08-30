@@ -231,6 +231,7 @@ declare global {
   type SqlCategoryMeta = {
     postCount: number;
     isHighlighted?: undefined | boolean;
+    isNew: boolean;
     id: string;
     category: string;
   };
@@ -849,11 +850,13 @@ declare global {
   };
   type SqlCategoryMetaInsertPartial = {
     id?: undefined | string;
+    isNew?: undefined | null | boolean;
     postCount: number;
     category: string;
     isHighlighted?: undefined | null | boolean;
   };
   type SqlCategoryMetaUpdatePartial = {
+    isNew?: undefined | boolean;
     postCount?: undefined | number;
     category?: undefined | string;
     isHighlighted?: undefined | null | boolean;
@@ -1321,7 +1324,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {};
     internalSettings: {};
     values: CodeGenType[];
@@ -1349,7 +1354,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: { allowNull: boolean };
     internalSettings: {};
     rawValue?: undefined | string;
@@ -1371,7 +1378,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {
       convert: boolean;
       min?: undefined | number;
@@ -1388,7 +1397,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: { convert: boolean; allowNull: boolean };
     internalSettings: {};
     oneOf?: undefined | boolean;
@@ -1401,7 +1412,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {
       allowNull: boolean;
       min?: undefined | Date;
@@ -1419,7 +1432,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: { mimeTypes?: undefined | string[] };
     internalSettings: {};
   };
@@ -1431,7 +1446,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {};
     internalSettings: {};
     keys: CodeGenType;
@@ -1445,7 +1462,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {
       convert: boolean;
       floatingPoint: boolean;
@@ -1464,7 +1483,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: { allowNull: boolean; strict: boolean };
     internalSettings: {};
     shortName?: undefined | string;
@@ -1521,6 +1542,7 @@ declare global {
           fields: {
             key: string;
             defaultValue?: undefined | string;
+            hasSqlDefault: boolean;
             isJsonb: boolean;
           }[];
         };
@@ -1541,7 +1563,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {};
     internalSettings: {};
     reference:
@@ -1560,7 +1584,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {
       convert: boolean;
       trim: boolean;
@@ -1583,7 +1609,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: { allowNull: boolean };
     internalSettings: {};
   };
@@ -1595,7 +1623,9 @@ declare global {
     uniqueName?: undefined | string;
     group?: undefined | string;
     name?: undefined | string;
-    sql?: undefined | { primary: boolean; searchable: boolean };
+    sql?:
+      | undefined
+      | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
     validator: {};
     internalSettings: { requestBodyType?: undefined | "json" | "form-data" };
     method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";

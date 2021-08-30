@@ -532,6 +532,7 @@ test("code-gen/e2e/sql", (t) => {
     const [dbCategory] = await queryCategory(builder).exec(sql);
 
     t.equal(dbCategory.id, category.id);
+    t.equal(dbCategory.meta.isNew, false);
   });
 
   t.test("category orderBy name", async (t) => {

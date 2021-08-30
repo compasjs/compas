@@ -42,6 +42,10 @@ export class TypeBuilder {
    */
   primary(): this;
   /**
+   * @returns {this}
+   */
+  sqlDefault(): this;
+  /**
    * @returns {Record<string, any>}
    */
   build(): Record<string, any>;

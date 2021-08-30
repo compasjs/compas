@@ -443,23 +443,46 @@ export function jobInsertValues(insert, options = {}) {
   if (!Array.isArray(insert)) {
     insert = [insert];
   }
-  const q = query``;
+  const str = [];
+  const args = [];
   for (let i = 0; i < insert.length; ++i) {
     const it = insert[i];
     checkFieldsInSet("job", "insert", jobFieldSet, it);
-    q.append(query`(
-${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.isComplete ?? false}, ${it.handlerTimeout ?? null}, ${it.priority ?? 0}, ${
-      it.retryCount ?? 0
-    }, ${it.name ?? null}, ${it.scheduledAt ?? new Date()}, ${JSON.stringify(
-      it.data ?? {},
-    )}, ${it.createdAt ?? new Date()}, ${it.updatedAt ?? new Date()}
-)`);
+    str.push("(");
+    if (options?.includePrimaryKey) {
+      args.push(it.id);
+      str.push(", ");
+    }
+    args.push(it.isComplete ?? false);
+    str.push(", ");
+    args.push(it.handlerTimeout ?? null);
+    str.push(", ");
+    args.push(it.priority ?? 0);
+    str.push(", ");
+    args.push(it.retryCount ?? 0);
+    str.push(", ");
+    args.push(it.name ?? null);
+    str.push(", ");
+    args.push(it.scheduledAt ?? new Date());
+    str.push(", ");
+    args.push(JSON.stringify(it.data ?? {}));
+    str.push(", ");
+    args.push(it.createdAt ?? new Date());
+    str.push(", ");
+    args.push(it.updatedAt ?? new Date());
+    str.push(", ");
+    // Fixup last comma & add undefined arg so strings are concatted correctly
+    const lastStrIdx = str.length - 1;
+    str[lastStrIdx] = str[lastStrIdx].substring(0, str[lastStrIdx].length - 2);
+    args.push(undefined);
+    str.push(")");
+    args.push(undefined);
     if (i !== insert.length - 1) {
-      q.append(query`, `);
+      args.push(undefined);
+      str.push(",");
     }
   }
-  return q;
+  return query(str, ...args);
 }
 /**
  * Build 'SET ' part for job

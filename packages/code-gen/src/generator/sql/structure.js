@@ -87,7 +87,9 @@ function getFields(object) {
     }
 
     let defaultValue = "";
-    if (type.defaultValue || type.sql?.primary) {
+    if (type.sql?.hasDefaultValue) {
+      defaultValue = "DEFAULT 1";
+    } else if (type.defaultValue || type.sql?.primary) {
       switch (type.type) {
         case "uuid":
           if (type.sql?.primary) {
@@ -102,7 +104,9 @@ function getFields(object) {
     }
 
     return `"${key}" ${sqlType} ${
-      type.isOptional && isNil(type.defaultValue) ? "" : "NOT "
+      type.isOptional && isNil(type.defaultValue) && !type.sql?.hasDefaultValue
+        ? ""
+        : "NOT "
     }NULL ${defaultValue}`;
   });
 }

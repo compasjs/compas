@@ -97,6 +97,16 @@ export class TypeBuilder {
   }
 
   /**
+   * @returns {this}
+   */
+  sqlDefault() {
+    this.data.sql = this.data.sql || {};
+    this.data.sql.hasDefaultValue = true;
+
+    return this;
+  }
+
+  /**
    * @returns {Record<string, any>}
    */
   build() {
