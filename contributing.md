@@ -23,8 +23,8 @@ yarn compas test (--watch)
 # Run coverage test
 yarn compas coverage --check-coverage
 yarn compas coverage report --reporter lcov
-# Link your local compas checkout to another project
-yarn compas link && yarn compas linkExternally ../other-project/
+# Update type definition files
+yarn compas types
 ```
 
 **Documentation**:
@@ -37,7 +37,7 @@ yarn compas syncMetadata
 **Code generation, @compas/store structure changes**:
 
 ```
-yarn compas generate
+yarn compas generate && yarn compas types && yarn compas lint
 ```
 
 ### Improving test coverage
@@ -51,8 +51,9 @@ If it is your first time doing this, start by checking out files in the
 be pretty straight forward to find a related function that is tested, and doing
 the same for the yet untested function. For new cases related to code
 generation, add the missing case in `gen/testing.js` and regenerate with
-`yarn compas generate && yarn compas lint`. Then run `yarn compas coverage`
-again to see that the new case is not yet covered by tests.
+`yarn compas generate && yarn compas types && yarn compas lint`. Then run
+`yarn compas coverage` again to see that the new case is not yet covered by
+tests.
 
 ### Debugging tests
 
@@ -68,6 +69,7 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
   - Run `yarn compas changelog`
   - Replace `x.x.x` with the new version (3 times) in `./changelog.md`
   - Write about the changes and how to use it them, in `docs/releases/x.x.x.md`
+- Check if types are still generating with `yarn compas types`
 - Sync metadata: `yarn compas syncMetadata`, this will sync the changelog to the
   docs folder and regenerate the api reference.
 - Commit with `chore: prepare release for vX.X.X` and push to main

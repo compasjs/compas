@@ -851,7 +851,7 @@ declare global {
     id?: undefined | string;
     postCount: number;
     category: string;
-    isHighlighted?: undefined | boolean;
+    isHighlighted?: undefined | null | boolean;
   };
   type SqlCategoryMetaUpdatePartial = {
     postCount?: undefined | number;
@@ -870,7 +870,7 @@ declare global {
     title: string;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
+    deletedAt?: undefined | null | Date;
   };
   type SqlPostUpdatePartial = {
     writer?: undefined | string;
@@ -900,7 +900,7 @@ declare global {
     post: string;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
+    deletedAt?: undefined | null | Date;
   };
   type SqlPostageUpdatePartial = {
     value?: undefined | number;
@@ -915,10 +915,10 @@ declare global {
     authKey: string;
     email: string;
     nickName: string;
-    isCool?: undefined | "true" | "false";
+    isCool?: undefined | null | "true" | "false";
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
+    deletedAt?: undefined | null | Date;
   };
   type SqlUserUpdatePartial = {
     authKey?: undefined | string;
@@ -943,7 +943,7 @@ declare global {
         };
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
+    deletedAt?: undefined | null | Date;
   };
   type StoreFileUpdatePartial = {
     contentLength?: undefined | number;
@@ -963,13 +963,13 @@ declare global {
   type StoreFileGroupInsertPartial = {
     id?: undefined | string;
     order?: undefined | number;
-    file?: undefined | string;
-    parent?: undefined | string;
-    name?: undefined | string;
+    file?: undefined | null | string;
+    parent?: undefined | null | string;
+    name?: undefined | null | string;
     meta?: undefined | {};
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
+    deletedAt?: undefined | null | Date;
   };
   type StoreFileGroupUpdatePartial = {
     order?: undefined | number;
@@ -984,7 +984,7 @@ declare global {
   type StoreJobInsertPartial = {
     id?: undefined | number;
     isComplete?: undefined | boolean;
-    handlerTimeout?: undefined | number;
+    handlerTimeout?: undefined | null | number;
     priority?: undefined | number;
     retryCount?: undefined | number;
     name: string;
