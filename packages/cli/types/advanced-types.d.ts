@@ -71,5 +71,8 @@ export interface TestRunner {
    * Create a nested test runner
    * Note that these are executed after the parent is done executing.
    */
-  test(name: string, callback: TestCallback): void;
+  test(
+    name: string,
+    callback: import("../src/testing/state").TestCallback,
+  ): void;
 }

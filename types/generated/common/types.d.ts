@@ -234,6 +234,7 @@ declare global {
     id: string;
     category: string;
   };
+  type SqlCoolString = undefined | "true" | "false";
   type SqlJobStatusAggregate = { id: string; job: number };
   type SqlPost = {
     title: string;
@@ -264,6 +265,7 @@ declare global {
     nickName: string;
     email: string;
     authKey: string;
+    isCool: SqlCoolString;
     id: string;
     createdAt: Date;
     updatedAt: Date;
@@ -531,6 +533,15 @@ declare global {
     emailLike?: undefined | string;
     emailILike?: undefined | string;
     emailNotLike?: undefined | string;
+    isCool?: undefined | "true" | "false";
+    isCoolNotEqual?: undefined | "true" | "false";
+    isCoolIn?: undefined | ("true" | "false")[] | QueryPart<any>;
+    isCoolNotIn?: undefined | ("true" | "false")[] | QueryPart<any>;
+    isCoolLike?: undefined | "true" | "false";
+    isCoolILike?: undefined | "true" | "false";
+    isCoolNotLike?: undefined | "true" | "false";
+    isCoolIsNull?: undefined | boolean;
+    isCoolIsNotNull?: undefined | boolean;
     createdAt?: undefined | Date;
     createdAtNotEqual?: undefined | Date;
     createdAtIn?: undefined | Date[] | QueryPart<any>;
@@ -768,10 +779,11 @@ declare global {
   };
   type SqlUserOrderBy =
     | QueryPart<any>
-    | ("id" | "email" | "createdAt" | "updatedAt" | "deletedAt")[];
+    | ("id" | "email" | "isCool" | "createdAt" | "updatedAt" | "deletedAt")[];
   type SqlUserOrderBySpec = {
     id?: undefined | CompasSqlOrderBy;
     email?: undefined | CompasSqlOrderBy;
+    isCool?: undefined | CompasSqlOrderByOptionalField;
     createdAt?: undefined | CompasSqlOrderBy;
     updatedAt?: undefined | CompasSqlOrderBy;
     deletedAt?: undefined | CompasSqlOrderByOptionalField;
@@ -903,6 +915,7 @@ declare global {
     authKey: string;
     email: string;
     nickName: string;
+    isCool?: undefined | "true" | "false";
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
     deletedAt?: undefined | Date;
@@ -911,6 +924,7 @@ declare global {
     authKey?: undefined | string;
     email?: undefined | string;
     nickName?: undefined | string;
+    isCool?: undefined | null | "true" | "false";
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
     deletedAt?: undefined | null | Date;

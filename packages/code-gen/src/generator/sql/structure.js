@@ -155,7 +155,7 @@ function getIndexes(type) {
   for (const key of Object.keys(fields)) {
     const field = fields[key];
 
-    if (field.sql.primary || ["createdAt", "updatedAt"].indexOf(key) !== -1) {
+    if (field.sql?.primary || ["createdAt", "updatedAt"].indexOf(key) !== -1) {
       // skip primary field and default date fields
       continue;
     }

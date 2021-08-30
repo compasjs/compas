@@ -4,12 +4,14 @@ CREATE TABLE "user"
   "authKey"   varchar          NOT NULL,
   "email"     varchar          NOT NULL,
   "nickName"  varchar          NOT NULL,
+  "isCool"    varchar          NULL,
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now(),
   "deletedAt" timestamptz      NULL
 );
 
 CREATE INDEX "userEmailIdx" ON "user" ("email");
+CREATE INDEX "userIsCoolIdx" ON "user" ("isCool");
 CREATE INDEX "userDeletedAtIdx" ON "user" ("deletedAt");
 
 
@@ -22,9 +24,7 @@ CREATE TABLE "post"
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now(),
   "deletedAt" timestamptz      NULL,
-  constraint "postWriterFk" foreign key ("writer")
-    references "user" ("id")
-    ON DELETE CASCADE
+  CONSTRAINT "postWriterFk" FOREIGN KEY ("writer") REFERENCES "user" ("id") ON DELETE CASCADE
 );
 
 CREATE INDEX "postWriterIdx" ON "post" ("writer");

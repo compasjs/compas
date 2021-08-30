@@ -333,6 +333,17 @@ test("code-gen/e2e/sql", (t) => {
         writer: {},
       },
     }).exec(sql);
+
+    t.pass();
+  });
+
+  t.test("user via referenced searchable", async (t) => {
+    await queryUser({
+      where: {
+        isCool: "false",
+      },
+    }).exec(sql);
+
     t.pass();
   });
 
