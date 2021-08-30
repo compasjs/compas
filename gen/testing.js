@@ -223,6 +223,7 @@ export function applyTestingSqlStructure(app) {
 
   app.add(
     T.string("coolString").oneOf("true", "false").optional(),
+
     T.object("user")
       .keys({
         nickName: T.string(),
@@ -285,6 +286,7 @@ export function applyTestingSqlStructure(app) {
       .keys({
         postCount: T.number(),
         isHighlighted: T.bool().optional().searchable(),
+        isNew: T.bool().sqlDefault(),
       })
       .enableQueries()
       .relations(

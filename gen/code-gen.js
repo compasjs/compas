@@ -135,6 +135,7 @@ function getTypes(T) {
       .keys({
         primary: T.bool().default(false),
         searchable: T.bool().default(false),
+        hasDefaultValue: T.bool().default(false),
       })
       .optional()
       .loose(),
@@ -334,6 +335,7 @@ function getTypes(T) {
             .keys({
               key: T.string(),
               defaultValue: T.string().optional(),
+              hasSqlDefault: T.bool().default(false),
               isJsonb: T.bool().default(false),
             })
             .loose(),

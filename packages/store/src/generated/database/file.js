@@ -455,23 +455,44 @@ export function fileInsertValues(insert, options = {}) {
   if (!Array.isArray(insert)) {
     insert = [insert];
   }
-  const q = query``;
+  const str = [];
+  const args = [];
   for (let i = 0; i < insert.length; ++i) {
     const it = insert[i];
     checkFieldsInSet("file", "insert", fileFieldSet, it);
-    q.append(query`(
-${options?.includePrimaryKey ? query`${it.id}, ` : undefined}
-${it.contentLength ?? null}, ${it.bucketName ?? null}, ${
-      it.contentType ?? null
-    }, ${it.name ?? null}, ${JSON.stringify(it.meta ?? {})}, ${
-      it.createdAt ?? new Date()
-    }, ${it.updatedAt ?? new Date()}, ${it.deletedAt ?? null}
-)`);
+    str.push("(");
+    if (options?.includePrimaryKey) {
+      args.push(it.id);
+      str.push(", ");
+    }
+    args.push(it.contentLength ?? null);
+    str.push(", ");
+    args.push(it.bucketName ?? null);
+    str.push(", ");
+    args.push(it.contentType ?? null);
+    str.push(", ");
+    args.push(it.name ?? null);
+    str.push(", ");
+    args.push(JSON.stringify(it.meta ?? {}));
+    str.push(", ");
+    args.push(it.createdAt ?? new Date());
+    str.push(", ");
+    args.push(it.updatedAt ?? new Date());
+    str.push(", ");
+    args.push(it.deletedAt ?? null);
+    str.push(", ");
+    // Fixup last comma & add undefined arg so strings are concatted correctly
+    const lastStrIdx = str.length - 1;
+    str[lastStrIdx] = str[lastStrIdx].substring(0, str[lastStrIdx].length - 2);
+    args.push(undefined);
+    str.push(")");
+    args.push(undefined);
     if (i !== insert.length - 1) {
-      q.append(query`, `);
+      args.push(undefined);
+      str.push(",");
     }
   }
-  return q;
+  return query(str, ...args);
 }
 /**
  * Build 'SET ' part for file

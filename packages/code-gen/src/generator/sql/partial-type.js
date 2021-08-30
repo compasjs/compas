@@ -47,14 +47,18 @@ export function createPartialTypes(context) {
       }
 
       if (fieldType?.sql?.primary) {
-        // Primary keys have some special handling in insertValues, but are completely skipped in updateSet.
-        // However, it is handled inline and thus not put in to the fieldsArray
+        // Primary keys have some special handling in insertValues, but are completely
+        // skipped in updateSet. However, it is handled inline and thus not put in to the
+        // fieldsArray
         insertPartial.keys[key] = {
           ...fieldType,
           isOptional: true,
         };
         continue;
       }
+
+      const hasSqlDefault =
+        fieldType.sql?.hasDefaultValue ?? type.keys[key].sql?.hasDefaultValue;
 
       // Default value is the edge case here.
       // We also support setting a default value for the reference, so fields can be
@@ -66,10 +70,12 @@ export function createPartialTypes(context) {
             fieldType.type,
           ) === -1,
         defaultValue: fieldType.defaultValue ?? type.keys[key].defaultValue,
+        hasSqlDefault,
       });
 
       insertPartial.keys[key] = {
         ...fieldType,
+        isOptional: hasSqlDefault || fieldType.isOptional,
       };
 
       updatePartial.keys[key] = {
@@ -81,8 +87,12 @@ export function createPartialTypes(context) {
         },
       };
 
-      // Create correct types by setting allowNull, since the value will be used in the update statement
-      if (fieldType.isOptional && isNil(fieldType.defaultValue)) {
+      // Create correct types by setting allowNull, since the value will be used in the
+      // update statement
+      if (
+        fieldType.sql?.hasDefaultValue ||
+        (fieldType.isOptional && isNil(fieldType.defaultValue))
+      ) {
         insertPartial.keys[key].validator = Object.assign(
           {},
           updatePartial.keys[key].validator,
@@ -125,33 +135,60 @@ export function getInsertPartial(context, type) {
         insert = [ insert ];
       }
 
-      const q = query\`\`;
+      const str = [];
+      const args = [];
 
       for (let i = 0; i < insert.length; ++i) {
         const it = insert[i];
         checkFieldsInSet("${type.name}", "insert", ${type.name}FieldSet, it);
 
-        q.append(query\`(
-          $\{options?.includePrimaryKey ? query\`$\{it.${primaryKey}}, \` : undefined}
-          $\{${type.partial.fields
-            .map((it) => {
-              if (it.isJsonb) {
-                return `JSON.stringify(it.${it.key} ?? ${
-                  it.defaultValue ?? "null"
-                })`;
-              }
-              return `it.${it.key} ?? ${it.defaultValue ?? "null"}`;
-            })
-            .join("}, ${")}}
-        )\`);
+        str.push("(");
+        if (options?.includePrimaryKey) {
+          args.push(it.${primaryKey});
+          str.push(", ");
+        }
+        
+        ${type.partial.fields
+          .map((it) => {
+            if (it.hasSqlDefault) {
+              return `if (isNil(it.${it.key})) {
+              args.push(undefined);
+              str.push("DEFAULT, ");
+            } else {
+              args.push(it.${it.key} ?? ${it.defaultValue ?? "null"});
+              str.push(", ");
+            }`;
+            } else if (it.isJsonb) {
+              return `
+                args.push(JSON.stringify(it.${it.key} ?? ${
+                it.defaultValue ?? "null"
+              }));
+                str.push(", ");
+              `;
+            }
+            return `
+                args.push(it.${it.key} ?? ${it.defaultValue ?? "null"});
+                str.push(", ");
+              `;
+          })
+          .join("\n")}
+
+          // Fixup last comma & add undefined arg so strings are concatted correctly  
+          const lastStrIdx = str.length -1;
+          str[lastStrIdx] = str[lastStrIdx].substring(0, str[lastStrIdx].length - 2);
+          args.push(undefined);
+
+
+          str.push(")");
+          args.push(undefined);
 
         if (i !== insert.length - 1) {
-          q.append(query\`, \`);
+           args.push(undefined);
+           str.push(",");
         }
       }
 
-
-      return q;
+      return query(str, ...args);
     }
   `;
 }
