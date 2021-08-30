@@ -222,11 +222,13 @@ export function applyTestingSqlStructure(app) {
   const T = new TypeCreator("sql");
 
   app.add(
+    T.string("coolString").oneOf("true", "false").optional(),
     T.object("user")
       .keys({
         nickName: T.string(),
         email: T.string().searchable(),
         authKey: T.string(),
+        isCool: T.reference("sql", "coolString").searchable(),
       })
       .enableQueries({ withSoftDeletes: true, schema: "public" })
       .relations(T.oneToMany("posts", T.reference("sql", "post"))),
