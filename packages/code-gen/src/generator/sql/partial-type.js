@@ -75,11 +75,15 @@ export function createPartialTypes(context) {
       updatePartial.keys[key] = {
         ...fieldType,
         isOptional: true,
+        validator: {
+          ...(fieldType?.validator ?? {}),
+          allowNull: fieldType.isOptional && isNil(fieldType.defaultValue),
+        },
       };
 
       // Create correct types by setting allowNull, since the value will be used in the update statement
       if (fieldType.isOptional && isNil(fieldType.defaultValue)) {
-        updatePartial.keys[key].validator = Object.assign(
+        insertPartial.keys[key].validator = Object.assign(
           {},
           updatePartial.keys[key].validator,
           { allowNull: true },
