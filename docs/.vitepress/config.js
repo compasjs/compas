@@ -70,6 +70,14 @@ function getHomeSidebar() {
           text: "Linting and formatting",
           link: "/features/lint-setup.html",
         },
+        {
+          text: "Typescript setup",
+          link: "/features/typescript-setup.html",
+        },
+        {
+          text: "Logger & events",
+          link: "/features/logger-and-events.html",
+        },
       ],
     },
     {
