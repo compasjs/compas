@@ -67,7 +67,7 @@ things:
 - Only runs if the file that you call `mainFn` in, is the 'main' file
 - Reads the `.env` file if exists
 - Calls the provided callback, and handles uncaught exceptions.
-- Create a logger from [@compas/stdlib](./#todo)
+- Create a logger from [@compas/stdlib](/index.html#todo)
 
 Let's create two files. Both exporting a constant and calling `mainFn`:
 
