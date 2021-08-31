@@ -132,7 +132,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
 
-  sync-website:
+  build-docs:
     timeout-minutes: 15
     strategy:
       matrix:

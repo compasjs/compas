@@ -44,8 +44,8 @@ import { mainTestFn } from "@compas/cli";
 mainTestFn(import.meta);
 ```
 
-It works based on `mainFn` as explained in
-[Project setup](/setup/project-setup.md).
+It works based on `mainFn` as explained in the
+[script runner page](/features/script-runner.html#mainfn).
 
 ### Setup and teardown per test file
 
@@ -163,7 +163,7 @@ Provided by `@compas/cli`
 
 This marks a file as a test file and starts the test runner when a file is
 executed directly as Node.js script. It is based on `mainFn` as explained in the
-[project setup](/setup/project-setup.html) document.
+[script runner page](/features/script-runner.html#mainfn).
 
 There is only a single way to call this function, always:
 
@@ -190,7 +190,7 @@ Parameters:
 ##### t.log
 
 A logger instance provided by `@compas/stdlib`. See
-[logger](/features/logger.html) for more details.
+[logger](/features/logger-and-events.html#logger) for more details.
 
 ##### t.timeout
 
@@ -332,9 +332,8 @@ single assertion or creates at least a single subtest.
 A function that is called before any test file is imported. Executed both for
 single file tests and when running all tests via `yarn compas test`. When
 workers are used as explained in the [cli section](#cli), all workers will run
-this setup function. It can be used to set services as described in
-[services-setup](/setup/services-setup.html). If the function returns a promise,
-the runner will wait till the promise is resolved before loading any test file.
+this setup function. If the function returns a promise, the runner will wait
+till the promise is resolved before loading any test file.
 
 Note that when a single test file is executed, the test file and it's imports
 are already resolved before this setup function will be called.
