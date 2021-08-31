@@ -78,6 +78,26 @@ function getHomeSidebar() {
           text: "Logger & events",
           link: "/features/logger-and-events.html",
         },
+        {
+          text: "Testing and benchmarking",
+          link: "/features/test-and-bench-runner.html",
+        },
+        {
+          text: "Postgres and Minio",
+          link: "/features/postgres-and-minio.html",
+        },
+        {
+          text: "Postgres migrations",
+          link: "/features/migrations.html",
+        },
+        {
+          text: "Background jobs",
+          link: "/features/background-jobs.html",
+        },
+        {
+          text: "Session handling",
+          link: "/features/session-handling.html",
+        },
       ],
     },
     {
