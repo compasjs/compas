@@ -1594,10 +1594,10 @@ es6-error@^4.1.1:
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
-esbuild@^0.12.8:
-  version "0.12.16"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.16.tgz#c397144ce13b445a6ead9c1f747da11f79ec5e67"
-  integrity sha512-XqI9cXP2bmQ6MREIqrYBb13KfYFSERsV1+e5jSVWps8dNlLZK+hln7d0mznzDIpfISsg/AgQW0DW3kSInXWhrg==
+esbuild@^0.12.17:
+  version "0.12.24"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.12.24.tgz#21966fad25a80f368ed308101e88102bce0dc68f"
+  integrity sha512-C0ibY+HsXzYB6L/pLWEiWjMpghKsIc58Q5yumARwBQsHl9DXPakW+5NI/Y9w4YXiz0PEP6XTGTT/OV4Nnsmb4A==
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -2725,10 +2725,10 @@ make-dir@^3.0.0:
   dependencies:
     semver "^6.0.0"
 
-markdown-it-anchor@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-7.1.0.tgz#30fb21497bf59e83ff4d1ddc052d821962e2489e"
-  integrity sha512-loQggrwsIkkP7TOrESvmYkV2ikbQNNKhHcWyqC7/C2CmfHl1tkUizJJU8C5aGgg7J6oXVQJx17gk7i47tNn/lQ==
+markdown-it-anchor@^8.1.2:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-8.3.0.tgz#9e1a71766f778c382e5b6d3808d8c4d3a3b4ae30"
+  integrity sha512-YXMxKqZDH/MM/sFBZe+JQ/XFa7i8mIWZYkcY7jCGmpNNqcj2iS9Wyxy5devkUoL14NJOUt5IleD99D8StAwkXg==
 
 markdown-it-container@^3.0.0:
   version "3.0.0"
@@ -4078,22 +4078,22 @@ vary@^1.1.2, vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vite@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.4.4.tgz#8c402a07ad45f168f6eb5428bead38f3e4363e47"
-  integrity sha512-m1wK6pFJKmaYA6AeZIUXyiAgUAAJzVXhIMYCdZUpCaFMGps0v0IlNJtbmPvkUhVEyautalajmnW5X6NboUPsnw==
+vite@^2.5.0:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.5.2.tgz#3963a4ec1e6ecae49359eddfdd67f6cb1e6e07a1"
+  integrity sha512-JK5uhiVyMqHiAJbgBa8rCvpP8bEhAE9dKDv1gCmP+EUP2FSPmEeW3WXlCXauPB3MDa8behPW+ntyNXqnGaxslg==
   dependencies:
-    esbuild "^0.12.8"
+    esbuild "^0.12.17"
     postcss "^8.3.6"
     resolve "^1.20.0"
     rollup "^2.38.5"
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitepress@0.16.1:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/vitepress/-/vitepress-0.16.1.tgz#70ba4326a4bdc7152f264868c0775615c0bc16d5"
-  integrity sha512-jsgNY+b4mngVHQ1mZZ7ZGJliup/nM0jwdKTGoptwVzSQfkx5i3lF14jRRMb6ulC+9X5xbQ7N/zNcWqVWMFd/cQ==
+vitepress@0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/vitepress/-/vitepress-0.17.0.tgz#14c54d5c9f0542dbe47ffe8f908d231c81796536"
+  integrity sha512-Fe2IVz79l2PhHWYP7aj8cYuVZttGsFLlekHZu78a8ewDTij8Laq6EfOCx7Eadeh4P/BYaYDv7UGXN0vTin811w==
   dependencies:
     "@docsearch/css" "^1.0.0-alpha.28"
     "@docsearch/js" "^1.0.0-alpha.28"
@@ -4111,7 +4111,7 @@ vitepress@0.16.1:
     gray-matter "^4.0.3"
     lru-cache "^6.0.0"
     markdown-it "^12.0.6"
-    markdown-it-anchor "^7.1.0"
+    markdown-it-anchor "^8.1.2"
     markdown-it-container "^3.0.0"
     markdown-it-emoji "^2.0.0"
     markdown-it-table-of-contents "^0.5.2"
@@ -4120,7 +4120,7 @@ vitepress@0.16.1:
     polka "^0.5.2"
     prismjs "^1.23.0"
     sirv "^1.0.12"
-    vite "^2.4.4"
+    vite "^2.5.0"
     vue "^3.2.1"
 
 vue@^3.2.1:
