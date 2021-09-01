@@ -83,6 +83,10 @@ function getHomeSidebar() {
           link: "/features/test-and-bench-runner.html",
         },
         {
+          text: "HTTP server",
+          link: "/features/http-server.html",
+        },
+        {
           text: "Postgres and Minio",
           link: "/features/postgres-and-minio.html",
         },
