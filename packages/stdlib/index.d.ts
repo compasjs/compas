@@ -1,6 +1,8 @@
 export { uuid } from "./src/datatypes.js";
 export { AppError } from "./src/error.js";
 export { newLogger } from "./src/logger/logger.js";
+export type Either<T, E> = import("./types/advanced-types").Either<T, E>;
+export type EitherN<T, E> = import("./types/advanced-types").EitherN<T, E>;
 export type Logger = import("./types/advanced-types").Logger;
 export type InsightEvent = import("./src/events").InsightEvent;
 export type ProcessDirectoryOptions =

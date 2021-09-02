@@ -29,6 +29,12 @@ declare global {
   type Logger = stdlib.Logger;
   type InsightEvent = stdlib.InsightEvent;
   type AppError = stdlib.AppError;
+  type Either<T, E = AppError> =
+    | { value: T; error?: never }
+    | { value?: never; error: E };
+  type EitherN<T, E = AppError> =
+    | { value: T; errors: never }
+    | { value: never; errors: E[] };
 
   type Postgres = store.Postgres;
   type QueryPart<T = any> = store.QueryPart<T>;

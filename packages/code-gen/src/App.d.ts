@@ -48,11 +48,12 @@ export class App {
    *
    * @param {ReferenceType} reference
    * @param {...import("./builders/RelationType").RelationType} relations
+   * @returns {import("@compas/stdlib").Either<App, Error>}
    */
   addRelations(
     reference: ReferenceType,
     ...relations: import("./builders/RelationType").RelationType[]
-  ): App;
+  ): import("@compas/stdlib").Either<App, Error>;
   /**
    * @param {Record<string, any>} obj
    * @returns {this}

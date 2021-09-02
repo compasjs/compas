@@ -156,12 +156,15 @@ export class App {
    *
    * @param {ReferenceType} reference
    * @param {...import("./builders/RelationType").RelationType} relations
+   * @returns {import("@compas/stdlib").Either<App, Error>}
    */
   addRelations(reference, ...relations) {
     if (!(reference instanceof ReferenceType)) {
-      throw new Error(
-        `Expected T.relation as a first argument to App.addRelations`,
-      );
+      return {
+        error: new Error(
+          `Expected T.relation as a first argument to App.addRelations`,
+        ),
+      };
     }
 
     const buildRef = reference.build();
@@ -172,15 +175,19 @@ export class App {
     const resolved = this.data[group]?.[name];
 
     if (!resolved) {
-      throw new Error(
-        `Can not resolve ${group}:${name}. Make sure to extend first via app.extend.`,
-      );
+      return {
+        error: new Error(
+          `Can not resolve ${group}:${name}. Make sure to extend first via app.extend.`,
+        ),
+      };
     }
 
     if (resolved.type !== "object") {
-      throw new Error(
-        `Can only add relations to objects. Found '${resolved.type}'.`,
-      );
+      return {
+        error: new Error(
+          `Can only add relations to objects. Found '${resolved.type}'.`,
+        ),
+      };
     }
 
     for (const relation of relations) {
@@ -188,7 +195,9 @@ export class App {
       resolved.relations.push(relation.build());
     }
 
-    return this;
+    return {
+      value: this,
+    };
   }
 
   /**

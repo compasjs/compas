@@ -1,3 +1,15 @@
+/// <reference path="./types/advanced-types.d.ts">
+
+/**
+ * @template T, E
+ * @typedef {import("./types/advanced-types").Either<T, E>} Either
+ */
+
+/**
+ * @template T,E
+ * @typedef {import("./types/advanced-types").EitherN<T,E>} EitherN
+ */
+
 /**
  * @typedef {import("./types/advanced-types").Logger} Logger
  */
