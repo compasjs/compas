@@ -1665,7 +1665,6 @@ declare global {
           ownKey: string;
         }
       | { key: "sqlEnableValidator" }
-      | { key: "sqlThrowingValidators" }
       | {
           key: "sqlDuplicateShortName";
           shortName: string;
@@ -1693,7 +1692,6 @@ declare global {
     dumpStructure: boolean;
     dumpApiStructure: boolean;
     dumpPostgres: boolean;
-    throwingValidators: boolean;
     fileHeader: string;
     outputDirectory: string;
   };

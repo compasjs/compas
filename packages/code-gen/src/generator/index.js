@@ -184,7 +184,11 @@ export function annotateFilesWithHeader(context) {
         file.contents
       }\n`;
     } else {
-      file.contents = `${context.options.fileHeader}\n${file.contents}\n`;
+      if (file.relativePath.endsWith("validators.js")) {
+        file.contents = `// @ts-nocheck\n${context.options.fileHeader}\n${file.contents}\n`;
+      } else {
+        file.contents = `${context.options.fileHeader}\n${file.contents}\n`;
+      }
     }
   }
 }

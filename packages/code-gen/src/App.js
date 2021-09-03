@@ -36,8 +36,6 @@ import { lowerCaseFirst } from "./utils.js";
  * @property {string[]|undefined} [enabledGenerators] Enabling specific generators.
  * @property {boolean|undefined} [useTypescript] Enable Typescript for the generators
  *    that support it
- * @property {boolean|undefined} [throwingValidators] Generate throwing validators, this
- *    is expected by the router and sql generator.
  * @property {boolean|undefined} [dumpStructure] Dump a structure.js file with the used
  *    structure in it.
  * @property {boolean|undefined} [dumpApiStructure] An api only variant of
@@ -56,9 +54,8 @@ const defaultGenerateOptionsBrowser = {
   isBrowser: true,
   isNodeServer: false,
   isNode: false,
-  enabledGenerators: ["type", "validator", "apiClient", "reactQuery"],
+  enabledGenerators: ["type", "apiClient", "reactQuery"],
   useTypescript: true,
-  throwingValidators: false,
   dumpStructure: false,
   dumpApiStructure: false,
   dumpPostgres: false,
@@ -73,7 +70,6 @@ const defaultGenerateOptionsNodeServer = {
   isNode: true,
   enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
   useTypescript: false,
-  throwingValidators: true,
   dumpStructure: false,
   dumpApiStructure: true,
   dumpPostgres: true,
@@ -88,7 +84,6 @@ const defaultGenerateOptionsNode = {
   isNode: true,
   enabledGenerators: ["type", "validator"],
   useTypescript: false,
-  throwingValidators: false,
   dumpStructure: false,
   dumpApiStructure: false,
   dumpPostgres: false,
@@ -207,15 +202,15 @@ export class App {
   addRaw(obj) {
     if (!isNil(validateCodeGenType)) {
       // Validators present, use the result of them.
-      const { data, errors } = validateCodeGenType(obj);
-      if (errors) {
-        this.logger.error(errors[0]);
+      const { value, error } = validateCodeGenType(obj);
+      if (error) {
+        this.logger.error(error);
         process.exit(1);
       }
 
       // Make a deep copy without null prototypes
       obj = {};
-      merge(obj, data);
+      merge(obj, value);
     }
     this.addToData(obj);
 
@@ -308,8 +303,6 @@ export class App {
     }
 
     opts.useTypescript = options.useTypescript ?? !!opts.useTypescript;
-    opts.throwingValidators =
-      options.throwingValidators ?? !!opts.throwingValidators;
     opts.dumpStructure = options.dumpStructure ?? !!opts.dumpStructure;
     opts.dumpApiStructure = options.dumpApiStructure ?? !!opts.dumpApiStructure;
     opts.dumpPostgres = options.dumpPostgres ?? !!opts.dumpPostgres;
@@ -353,6 +346,15 @@ export class App {
       opts.enabledGroups.push("compas");
     }
 
+    if (
+      opts.enabledGenerators.includes("validator") &&
+      (opts.enabledGenerators.includes("reactQuery") || opts.useTypescript)
+    ) {
+      throw new Error(
+        "The 'validator' generator can't be used in combination with the 'reactQuery' generator or with the 'useTypescript' option.",
+      );
+    }
+
     // Ensure that we don't mutate the current working data of the user
     const dataCopy = JSON.parse(JSON.stringify(this.data));
     /** @type {CodeGenStructure} */
@@ -362,9 +364,9 @@ export class App {
 
     // validators may not be present, fallback to just stringify
     if (!isNil(validateCodeGenStructure)) {
-      const { errors } = validateCodeGenStructure(generatorInput);
-      if (errors) {
-        this.logger.error(errors[0]);
+      const { error } = validateCodeGenStructure(generatorInput);
+      if (error) {
+        this.logger.error(error);
         process.exit(1);
       }
     }
@@ -384,9 +386,9 @@ export class App {
   extendInternal(rawStructure, allowInternalProperties) {
     if (!isNil(validateCodeGenType)) {
       // Validators present, use the result of them.
-      const { data: value, errors } = validateCodeGenStructure(rawStructure);
-      if (errors) {
-        this.logger.error(errors[0]);
+      const { value, error } = validateCodeGenStructure(rawStructure);
+      if (error) {
+        this.logger.error(error);
         process.exit(1);
       }
 

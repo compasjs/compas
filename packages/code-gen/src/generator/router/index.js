@@ -10,10 +10,7 @@ import { buildTrie } from "./trie.js";
  * @param {CodeGenContext} context
  */
 export function generateRouterFiles(context) {
-  if (!context.options.throwingValidators) {
-    throw new Error(`Option 'throwingValidators' not enabled. The router generator requires this.
-  Please add 'throwingValidators' to the 'App.generate({ throwingValidators: true })' call.`);
-  }
+  // TODO: Handle validators
 
   const routeTrie = buildTrie(context.structure);
   const routeTags = buildRouteTags(context.structure);

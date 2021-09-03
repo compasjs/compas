@@ -630,12 +630,11 @@ test("code-gen/e2e/sql", (t) => {
       await queryUser({
         where: { foo: "bar" },
       }).exec(sql);
-      t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
-      t.equal(e.key, `validator.object.strict`);
-
-      t.equal(e.info.extraKey, "foo");
+      t.equal(e.key, `validator.error`);
+      t.equal(e.info["$.userBuilder.where"].key, "validator.object.strict");
+      t.equal(e.info["$.userBuilder.where"].info.extraKey, "foo");
     }
   });
 

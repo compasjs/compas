@@ -70,6 +70,12 @@ export class TypeBuilder {
     this.data.isOptional = !isNil(rawString);
     if (this.data.isOptional) {
       this.data.defaultValue = rawString.toString();
+
+      if (this.data.defaultValue.length === 0) {
+        throw new Error(
+          "'.default()' is called with a value resolving to an empty string. This is not allowed. If you need an empty string as the default value please use: `''`.",
+        );
+      }
     }
 
     return this;

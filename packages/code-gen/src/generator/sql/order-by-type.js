@@ -145,55 +145,65 @@ export function getOrderByPartial(context, type) {
   }
 
   const partial = js`
-   let i = 0;
-   for (const value of orderBy) {
+    let i = 0;
+    for (const value of orderBy) {
       if (i !== 0) {
         strings.push(", ");
         values.push(undefined);
       }
       i++;
 
-     strings.push(\`$\{tableName}"$\{value}" \`, orderBySpec[value] ?? "ASC");
-     values.push(undefined, undefined);
-   }
+      strings.push(\`$\{tableName}"$\{value}" \`, orderBySpec[value] ?? "ASC");
+      values.push(undefined, undefined);
+    }
   `;
 
   return js`
-      /**
-       * Build 'ORDER BY ' part for ${type.name}
-       *
-       * @param {${type.orderBy.type}} [orderBy=${defaultArray}]
-       * @param {${type.orderBy.specType}} [orderBySpec=${defaultSpec}]
-       * @param {string} [tableName="${type.shortName}."]
-       * @param {{ skipValidator?: boolean|undefined }} [options={}]
-       * @returns {QueryPart}
-       */
-      export function ${type.name}OrderBy(
-         orderBy = ${defaultArray},
-         orderBySpec = ${defaultSpec},
-         tableName = "${type.shortName}.",
-         options = {}
-      ) {
-         if (tableName.length > 0 && !tableName.endsWith(".")) {
-            tableName = \`$\{tableName}.\`;
-         }
-
-         if (!options.skipValidator) {
-            orderBy = validate${type.orderBy.type}(orderBy, "$.${type.orderBy.type}");
-            orderBySpec = validate${type.orderBy.specType}(orderBySpec, "$.${type.orderBy.specType}");
-         }
-
-         if (isQueryPart(orderBy)) {
-            return orderBy;
-         }
-
-         const strings = [];
-         const values = [];
-
-         ${partial}
-         strings.push("");
-
-         return query(strings, ...values);
+    /**
+     * Build 'ORDER BY ' part for ${type.name}
+     *
+     * @param {${type.orderBy.type}} [orderBy=${defaultArray}]
+     * @param {${type.orderBy.specType}} [orderBySpec=${defaultSpec}]
+     * @param {string} [tableName="${type.shortName}."]
+     * @param {{ skipValidator?: boolean|undefined }} [options={}]
+     * @returns {QueryPart}
+     */
+    export function ${type.name}OrderBy(orderBy = ${defaultArray},
+                                        orderBySpec = ${defaultSpec},
+                                        tableName = "${type.shortName}.",
+                                        options = {}
+    ) {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
       }
-   `;
+
+      if (!options.skipValidator) {
+        const orderByValidated = validate${type.orderBy.type}(
+          orderBy, "$.${type.orderBy.type}");
+        if (orderByValidated.error) {
+          throw orderByValidated.error;
+        }
+        orderBy = orderByValidated.value;
+
+        const orderBySpecValidated = validate${type.orderBy.specType}(
+          orderBySpec, "$.${type.orderBy.specType}");
+        if (orderBySpecValidated.error) {
+          throw orderBySpecValidated.error;
+        }
+        orderBySpec = orderBySpecValidated.value;
+      }
+
+      if (isQueryPart(orderBy)) {
+        return orderBy;
+      }
+
+      const strings = [];
+      const values = [];
+
+      ${partial}
+      strings.push("");
+
+      return query(strings, ...values);
+    }
+  `;
 }

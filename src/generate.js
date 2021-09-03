@@ -35,7 +35,7 @@ export const generateTestAndBenchSettings = {
   client: {
     outputDirectory: "./generated/testing/client",
     enabledGroups: ["server"],
-    enabledGenerators: ["type", "apiClient", "validator" /*, "reactQuery"*/],
+    enabledGenerators: ["type", "apiClient" /*, "reactQuery"*/],
     isBrowser: true,
   },
   sql: {

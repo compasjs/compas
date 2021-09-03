@@ -10,7 +10,6 @@ export const compasGenerateSettings = {
   isNode: true,
   enabledGenerators: ["sql", "validator"],
   useTypescript: false,
-  throwingValidators: true,
   dumpStructure: true,
   dumpApiStructure: false,
   dumpPostgres: true,

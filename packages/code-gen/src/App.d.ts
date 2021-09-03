@@ -129,11 +129,6 @@ export type GenerateOpts = {
    */
   useTypescript?: boolean | undefined;
   /**
-   * Generate throwing validators, this
-   * is expected by the router and sql generator.
-   */
-  throwingValidators?: boolean | undefined;
-  /**
    * Dump a structure.js file with the used
    * structure in it.
    */

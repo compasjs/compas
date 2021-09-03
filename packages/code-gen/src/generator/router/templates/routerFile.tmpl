@@ -102,22 +102,38 @@ const handlers = {
         ctx.request.params = params;
 
         {{ if (item.params) { }}
-        ctx.validatedParams = {{= item.params.reference.group }}Validators.validate{{= item.params.reference.uniqueName }}(params);
+        const validatedParams = {{= item.params.reference.group }}Validators.validate{{= item.params.reference.uniqueName }}(params);
+        if (validatedParams.error) {
+         throw validatedParams.error;
+        }
+        ctx.validatedParams = validatedParams.value;
         {{ } }}
 
         {{ if (item.files) { }}
           await internalBodyParsers.files(ctx);
-          ctx.validatedFiles = {{= item.files.reference.group }}Validators.validate{{= item.files.reference.uniqueName }}(ctx.request.files);
+          const validatedFiles = {{= item.files.reference.group }}Validators.validate{{= item.files.reference.uniqueName }}(ctx.request.files);
+          if (validatedFiles.error) {
+           throw validatedFiles.error;
+          }
+          ctx.validatedFiles = validatedFiles.value;
         {{ } else if (item.body || item.query) { }}
           await internalBodyParsers.body(ctx);
         {{ } }}
 
         {{ if (item.query) { }}
-          ctx.validatedQuery = {{= item.query.reference.group }}Validators.validate{{= item.query.reference.uniqueName }}(ctx.request.query);
+        const validatedQuery = {{= item.query.reference.group }}Validators.validate{{= item.query.reference.uniqueName }}(ctx.request.query);
+        if (validatedQuery.error) {
+         throw validatedQuery.error;
+        }
+        ctx.validatedQuery = validatedQuery.value;
         {{ } }}
 
         {{ if (item.body) { }}
-          ctx.validatedBody = {{= item.body.reference.group }}Validators.validate{{= item.body.reference.uniqueName }}(ctx.request.body);
+        const validatedBody = {{= item.body.reference.group }}Validators.validate{{= item.body.reference.uniqueName }}(ctx.request.body);
+        if (validatedBody.error) {
+         throw validatedBody.error;
+        }
+        ctx.validatedBody = validatedBody.value;
         {{ } }}
 
 

@@ -242,9 +242,14 @@ function queryBuilderForType(context, imports, type) {
       export function query${upperCaseFirst(type.name)}(builder = {}) {
          const joinedKeys = [];
 
-         validate${type.uniqueName}QueryBuilder(builder, "$.${
-    type.name
-  }Builder");
+         const builderValidated = validate${
+           type.uniqueName
+         }QueryBuilder(builder, "$.${type.name}Builder");
+         
+         if (builderValidated.error){ 
+           throw builderValidated.error;
+         }
+         builder = builderValidated.value;
 
          ${Object.entries(type.queryBuilder.relations).map(
            ([

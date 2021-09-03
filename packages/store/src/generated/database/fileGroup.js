@@ -60,7 +60,14 @@ export function fileGroupWhere(where = {}, tableName = "fg.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileGroupWhere(where, "$.fileGroupWhere");
+    const whereValidated = validateStoreFileGroupWhere(
+      where,
+      "$.fileGroupWhere",
+    );
+    if (whereValidated.error) {
+      throw whereValidated.error;
+    }
+    where = whereValidated.value;
   }
   const strings = ["1 = 1"];
   /** @type {QueryPartArg[]} */
@@ -547,11 +554,22 @@ export function fileGroupOrderBy(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    orderBy = validateStoreFileGroupOrderBy(orderBy, "$.StoreFileGroupOrderBy");
-    orderBySpec = validateStoreFileGroupOrderBySpec(
+    const orderByValidated = validateStoreFileGroupOrderBy(
+      orderBy,
+      "$.StoreFileGroupOrderBy",
+    );
+    if (orderByValidated.error) {
+      throw orderByValidated.error;
+    }
+    orderBy = orderByValidated.value;
+    const orderBySpecValidated = validateStoreFileGroupOrderBySpec(
       orderBySpec,
       "$.StoreFileGroupOrderBySpec",
     );
+    if (orderBySpecValidated.error) {
+      throw orderBySpecValidated.error;
+    }
+    orderBySpec = orderBySpecValidated.value;
   }
   if (isQueryPart(orderBy)) {
     return orderBy;
@@ -1279,7 +1297,14 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
  */
 export function queryFileGroup(builder = {}) {
   const joinedKeys = [];
-  validateStoreFileGroupQueryBuilder(builder, "$.fileGroupBuilder");
+  const builderValidated = validateStoreFileGroupQueryBuilder(
+    builder,
+    "$.fileGroupBuilder",
+  );
+  if (builderValidated.error) {
+    throw builderValidated.error;
+  }
+  builder = builderValidated.value;
   if (builder.file) {
     joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"fg_f_0"."result"`);
   }

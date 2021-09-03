@@ -265,7 +265,10 @@ async function structureFileExportsStructure(structureFile, codeGen) {
     return false;
   }
 
-  codeGen.validateCodeGenStructure(imported.structure);
+  const { error } = codeGen.validateCodeGenStructure(imported.structure);
+  if (error) {
+    throw error;
+  }
   return true;
 }
 
