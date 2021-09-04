@@ -70,7 +70,7 @@ test("code-gen/validators", async (t) => {
           input: "Foo",
           errorLength: 1,
           errorObjectKey: "$",
-          errorKey: "validator.anyOf.type",
+          errorKey: "validator.anyOf",
         },
       ],
       validators.validateValidatorAnyOf,
