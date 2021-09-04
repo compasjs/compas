@@ -10,7 +10,7 @@ mainTestFn(import.meta);
  * @param {{
  *   errorLength?: number,
  *   errorKey?: string,
- *   errorObjectKey?: string,
+ *   errorObjectKey?: (string)|(string|number)[],
  *   expected?: *,
  *   input?: *
  * }[]} cases
@@ -24,11 +24,26 @@ const assertAll = (t, cases, fn) => {
       if (!isNil(item.errorLength)) {
         t.equal(Object.keys(error.info).length, item.errorLength);
       }
-      t.equal(
-        error.info[item.errorObjectKey]?.key,
-        item.errorKey,
-        JSON.stringify(error.toJSON(), null, 2),
-      );
+      if (Array.isArray(item.errorObjectKey)) {
+        let actual = error.info;
+        let i = 0;
+        while (i < item.errorObjectKey.length) {
+          actual = actual[item.errorObjectKey[i]];
+          i++;
+        }
+
+        t.equal(
+          actual?.key,
+          item.errorKey,
+          JSON.stringify(error.toJSON(), null, 2),
+        );
+      } else {
+        t.equal(
+          error.info[item.errorObjectKey]?.key,
+          item.errorKey,
+          JSON.stringify(error.toJSON(), null, 2),
+        );
+      }
     } else {
       if (
         isNil(item.expected) ||
@@ -69,7 +84,7 @@ test("code-gen/validators", async (t) => {
         {
           input: "Foo",
           errorLength: 1,
-          errorObjectKey: "$",
+          errorObjectKey: ["$", 0],
           errorKey: "validator.anyOf",
         },
       ],
