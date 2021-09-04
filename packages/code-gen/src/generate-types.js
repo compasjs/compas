@@ -102,7 +102,11 @@ export async function generateTypes(logger, options) {
     `;
 
     for (const generator of options.dumpCompasTypes) {
-      if (generator === "code-gen") {
+      if (generator === "cli") {
+        contents += `
+          type CliWatchOptions = cli.CliWatchOptions;
+        `;
+      } else if (generator === "code-gen") {
         contents += `
           type App = codeGen.App;
           type TypeCreator = codeGen.TypeCreator;

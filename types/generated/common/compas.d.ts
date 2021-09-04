@@ -8,6 +8,8 @@ import * as stdlib from "@compas/stdlib";
 import * as store from "@compas/store";
 
 declare global {
+  type CliWatchOptions = cli.CliWatchOptions;
+
   type App = codeGen.App;
   type TypeCreator = codeGen.TypeCreator;
   type RouteCreator = codeGen.RouteCreator;

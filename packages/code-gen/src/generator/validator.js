@@ -65,6 +65,11 @@ export function generateValidatorFile(context) {
      *   info: any,
      * }} InternalError
      */
+     
+     /**
+      * @template T
+      * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
+      */
      `,
 
     ...subContext.objectSets.values(),
@@ -116,6 +121,13 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
     );
   }
 
+  sources.push(`
+    /**
+     * @template T
+     * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
+     */
+  `);
+
   for (const name of Object.keys(mapping)) {
     sources.push(js`
       /**${
@@ -128,12 +140,12 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
          isOptional: true,
        })}} value
        * @param {string|undefined} [propertyPath]
-       * @returns {{ value: ${getTypeNameForType(
+       * @returns {Either<${getTypeNameForType(
          context.context,
          data[name],
          "",
          {},
-       )}, error?: never }|{ value?: never, error: AppError }}
+       )}>}
        */
       export function validate${
         data[name].uniqueName
@@ -263,9 +275,9 @@ function createOrUseAnonymousFunction(context, imports, type) {
     /**
      * @param {*} value
      * @param {string} propertyPath
-     * @returns {{ value?: ${generateTypeDefinition(context.context, type, {
+     * @returns {EitherN<${generateTypeDefinition(context.context, type, {
        useDefaults: true,
-     })}, errors?: InternalError[] }}
+     })}>}
      */
     export function anonymousValidator${hash}(value, propertyPath) {
       if (isNil(value)) {
@@ -393,9 +405,9 @@ function anonymousValidatorAnyOf(context, imports, type) {
   return js`
     let errors = [];
 
-    /** @type {{ value?: ${generateTypeDefinition(context.context, type, {
+    /** @type {EitherN<${generateTypeDefinition(context.context, type, {
       useDefaults: true,
-    })}, errors?: InternalError[] }} */
+    })}>} */
     let result = { errors: [] };
 
     ${type.values.map((it) => {
@@ -1023,27 +1035,29 @@ function anonymousValidatorObject(context, imports, type) {
       }
     }}
 
-    ${() => {
-      return Object.keys(type.keys).map((it) => {
-        const varKey = `val${getHashForType(it)}`;
-        return js`
-          ${generateAnonymousValidatorCall(
+    /**
+     * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+     */
+    const validatorPairs = [
+      ${() => {
+        return Object.keys(type.keys).map((it) => {
+          return `["${it}",  ${createOrUseAnonymousFunction(
             context,
             imports,
             type.keys[it],
-            `value["${it}"]`,
-            `propertyPath + ".${it}"`,
-            `const ${varKey} = `,
-          )}
-
-          if (${varKey}.errors) {
-            errors = errors.concat(${varKey}.errors.flat(2));
-          } else {
-            result["${it}"] = ${varKey}.value;
-          }
-        `;
-      });
-    }}
+          )}],`;
+        });
+      }}
+    ];
+    
+    for (const [key, validator] of validatorPairs) {
+      const validatorResult = validator(value[key], \`$\{propertyPath}.$\{key}\`);
+      if (validatorResult.errors) {
+        errors = errors.concat(validatorResult.errors.flat(2));
+      } else {
+        result[key] = validatorResult.value;
+      }
+    }
 
     if (errors.length > 0) {
       return { errors };
