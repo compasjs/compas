@@ -391,6 +391,7 @@ function anonymousValidatorAny(context, imports, type) {
  */
 function anonymousValidatorAnyOf(context, imports, type) {
   return js`
+    /** @type {InternalError[]} */
     let errors = [];
 
     /** @type {EitherN<${generateTypeDefinition(context.context, type, {
@@ -417,24 +418,14 @@ function anonymousValidatorAnyOf(context, imports, type) {
       `;
     })}
 
-    const info = {};
-    for (const err of errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [ info[err.propertyPath], err ];
-      }
-    }
-
-    /** @type {{ errors: InternalError[] }} */
+    errors.unshift({
+      propertyPath,
+      key: "validator.anyOf",
+      info: {},
+                });
+    
     return {
-      errors: [
-        {
-          propertyPath, key: "validator.anyOf", info,
-        }
-      ]
+      errors
     };
   `;
 }

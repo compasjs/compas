@@ -2019,6 +2019,7 @@ export function anonymousValidator1024905514(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
   let result = { errors: [] };
@@ -2034,25 +2035,13 @@ export function anonymousValidator1024905514(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -2104,6 +2093,7 @@ export function anonymousValidator972289697(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
   let result = { errors: [] };
@@ -2119,25 +2109,13 @@ export function anonymousValidator972289697(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -2189,6 +2167,7 @@ export function anonymousValidator978954249(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<undefined|(Date)[]|QueryPart<any>>} */
   let result = { errors: [] };
@@ -2204,25 +2183,13 @@ export function anonymousValidator978954249(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -2337,6 +2304,7 @@ export function anonymousValidator2102014144(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
   let result = { errors: [] };
@@ -2352,25 +2320,13 @@ export function anonymousValidator2102014144(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -2762,6 +2718,7 @@ export function anonymousValidator1971955962(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
   let result = { errors: [] };
@@ -2777,25 +2734,13 @@ export function anonymousValidator1971955962(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -3201,6 +3146,7 @@ export function anonymousValidator1795948632(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
@@ -3216,25 +3162,13 @@ export function anonymousValidator1795948632(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -3590,6 +3524,7 @@ export function anonymousValidator753972035(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
@@ -3605,25 +3540,13 @@ export function anonymousValidator753972035(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -3836,6 +3759,7 @@ export function anonymousValidator685221527(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
@@ -3851,25 +3775,13 @@ export function anonymousValidator685221527(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -4072,6 +3984,7 @@ export function anonymousValidator2038758416(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
@@ -4087,25 +4000,13 @@ export function anonymousValidator2038758416(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**

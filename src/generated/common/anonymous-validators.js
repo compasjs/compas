@@ -798,6 +798,7 @@ export function anonymousValidator2103344335(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<DocParserLiteralType|DocParserFunctionType>} */
   let result = { errors: [] };
@@ -813,25 +814,13 @@ export function anonymousValidator2103344335(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
@@ -1147,6 +1136,7 @@ export function anonymousValidator796176522(value, propertyPath) {
       ],
     };
   }
+  /** @type {InternalError[]} */
   const errors = [];
   /** @type {EitherN<DocParserUnknownBlock|DocParserFunctionDeclarationBlock>} */
   let result = { errors: [] };
@@ -1162,25 +1152,13 @@ export function anonymousValidator796176522(value, propertyPath) {
   } else {
     return result;
   }
-  const info = {};
-  for (const err of errors) {
-    if (isNil(info[err.propertyPath])) {
-      info[err.propertyPath] = err;
-    } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath].push(err);
-    } else {
-      info[err.propertyPath] = [info[err.propertyPath], err];
-    }
-  }
-  /** @type {{ errors: InternalError[] }} */
+  errors.unshift({
+    propertyPath,
+    key: "validator.anyOf",
+    info: {},
+  });
   return {
-    errors: [
-      {
-        propertyPath,
-        key: "validator.anyOf",
-        info,
-      },
-    ],
+    errors,
   };
 }
 /**
