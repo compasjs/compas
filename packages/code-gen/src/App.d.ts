@@ -48,11 +48,12 @@ export class App {
    *
    * @param {ReferenceType} reference
    * @param {...import("./builders/RelationType").RelationType} relations
+   * @returns {import("@compas/stdlib").Either<App, Error>}
    */
   addRelations(
     reference: ReferenceType,
     ...relations: import("./builders/RelationType").RelationType[]
-  ): App;
+  ): import("@compas/stdlib").Either<App, Error>;
   /**
    * @param {Record<string, any>} obj
    * @returns {this}
@@ -127,11 +128,6 @@ export type GenerateOpts = {
    * that support it
    */
   useTypescript?: boolean | undefined;
-  /**
-   * Generate throwing validators, this
-   * is expected by the router and sql generator.
-   */
-  throwingValidators?: boolean | undefined;
   /**
    * Dump a structure.js file with the used
    * structure in it.

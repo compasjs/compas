@@ -55,7 +55,11 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreJobWhere(where, "$.jobWhere");
+    const whereValidated = validateStoreJobWhere(where, "$.jobWhere");
+    if (whereValidated.error) {
+      throw whereValidated.error;
+    }
+    where = whereValidated.value;
   }
   const strings = ["1 = 1"];
   /** @type {QueryPartArg[]} */
@@ -408,11 +412,22 @@ export function jobOrderBy(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    orderBy = validateStoreJobOrderBy(orderBy, "$.StoreJobOrderBy");
-    orderBySpec = validateStoreJobOrderBySpec(
+    const orderByValidated = validateStoreJobOrderBy(
+      orderBy,
+      "$.StoreJobOrderBy",
+    );
+    if (orderByValidated.error) {
+      throw orderByValidated.error;
+    }
+    orderBy = orderByValidated.value;
+    const orderBySpecValidated = validateStoreJobOrderBySpec(
       orderBySpec,
       "$.StoreJobOrderBySpec",
     );
+    if (orderBySpecValidated.error) {
+      throw orderBySpecValidated.error;
+    }
+    orderBySpec = orderBySpecValidated.value;
   }
   if (isQueryPart(orderBy)) {
     return orderBy;
@@ -672,7 +687,14 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
  */
 export function queryJob(builder = {}) {
   const joinedKeys = [];
-  validateStoreJobQueryBuilder(builder, "$.jobBuilder");
+  const builderValidated = validateStoreJobQueryBuilder(
+    builder,
+    "$.jobBuilder",
+  );
+  if (builderValidated.error) {
+    throw builderValidated.error;
+  }
+  builder = builderValidated.value;
   const qb = query`
 SELECT to_jsonb(j.*) || jsonb_build_object(${query([
     joinedKeys.join(","),

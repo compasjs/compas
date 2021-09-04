@@ -50,7 +50,13 @@ test("store/send-transformed-image", async (t) => {
   );
 
   app.use(async (ctx, next) => {
-    ctx.validatedQuery = validateStoreImageTransformOptions(ctx.query);
+    const validatedQuery = validateStoreImageTransformOptions(
+      ctx.request.query,
+    );
+    if (validatedQuery.error) {
+      throw validatedQuery.error;
+    }
+    ctx.validatedQuery = validatedQuery.value;
 
     if (ctx.path.includes("/5")) {
       await sendTransformedImage(

@@ -1,257 +1,263 @@
 /**
+ * @template T
+ * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
+ */
+/**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFile}
+ * @returns {Either<StoreFile>}
  */
 export function validateStoreFile(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFile;
+): Either<StoreFile>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroup}
+ * @returns {Either<StoreFileGroup>}
  */
 export function validateStoreFileGroup(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroup;
+): Either<StoreFileGroup>;
 /**
  * User definable, optional object to store whatever you want
  *
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupMeta}
+ * @returns {Either<StoreFileGroupMeta>}
  */
 export function validateStoreFileGroupMeta(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupMeta;
+): Either<StoreFileGroupMeta>;
 /**
  * User definable, optional object to store whatever you want
  *
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileMeta}
+ * @returns {Either<StoreFileMeta>}
  */
 export function validateStoreFileMeta(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileMeta;
+): Either<StoreFileMeta>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreImageTransformOptions}
+ * @returns {Either<StoreImageTransformOptions>}
  */
 export function validateStoreImageTransformOptions(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreImageTransformOptions;
+): Either<StoreImageTransformOptions>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJob}
+ * @returns {Either<StoreJob>}
  */
 export function validateStoreJob(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJob;
+): Either<StoreJob>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobInterval}
+ * @returns {Either<StoreJobInterval>}
  */
 export function validateStoreJobInterval(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobInterval;
+): Either<StoreJobInterval>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSession}
+ * @returns {Either<StoreSession>}
  */
 export function validateStoreSession(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSession;
+): Either<StoreSession>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileWhere}
+ * @returns {Either<StoreFileWhere>}
  */
 export function validateStoreFileWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileWhere;
+): Either<StoreFileWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupWhere}
+ * @returns {Either<StoreFileGroupWhere>}
  */
 export function validateStoreFileGroupWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupWhere;
+): Either<StoreFileGroupWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobWhere}
+ * @returns {Either<StoreJobWhere>}
  */
 export function validateStoreJobWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobWhere;
+): Either<StoreJobWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSessionWhere}
+ * @returns {Either<StoreSessionWhere>}
  */
 export function validateStoreSessionWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSessionWhere;
+): Either<StoreSessionWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileOrderBy}
+ * @returns {Either<StoreFileOrderBy>}
  */
 export function validateStoreFileOrderBy(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileOrderBy;
+): Either<StoreFileOrderBy>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileOrderBySpec}
+ * @returns {Either<StoreFileOrderBySpec>}
  */
 export function validateStoreFileOrderBySpec(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileOrderBySpec;
+): Either<StoreFileOrderBySpec>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupOrderBy}
+ * @returns {Either<StoreFileGroupOrderBy>}
  */
 export function validateStoreFileGroupOrderBy(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupOrderBy;
+): Either<StoreFileGroupOrderBy>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupOrderBySpec}
+ * @returns {Either<StoreFileGroupOrderBySpec>}
  */
 export function validateStoreFileGroupOrderBySpec(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupOrderBySpec;
+): Either<StoreFileGroupOrderBySpec>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobOrderBy}
+ * @returns {Either<StoreJobOrderBy>}
  */
 export function validateStoreJobOrderBy(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobOrderBy;
+): Either<StoreJobOrderBy>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobOrderBySpec}
+ * @returns {Either<StoreJobOrderBySpec>}
  */
 export function validateStoreJobOrderBySpec(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobOrderBySpec;
+): Either<StoreJobOrderBySpec>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSessionOrderBy}
+ * @returns {Either<StoreSessionOrderBy>}
  */
 export function validateStoreSessionOrderBy(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSessionOrderBy;
+): Either<StoreSessionOrderBy>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSessionOrderBySpec}
+ * @returns {Either<StoreSessionOrderBySpec>}
  */
 export function validateStoreSessionOrderBySpec(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSessionOrderBySpec;
+): Either<StoreSessionOrderBySpec>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileQueryBuilder}
+ * @returns {Either<StoreFileQueryBuilder>}
  */
 export function validateStoreFileQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileQueryBuilder;
+): Either<StoreFileQueryBuilder>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileQueryTraverser}
+ * @returns {Either<StoreFileQueryTraverser>}
  */
 export function validateStoreFileQueryTraverser(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileQueryTraverser;
+): Either<StoreFileQueryTraverser>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupQueryBuilder}
+ * @returns {Either<StoreFileGroupQueryBuilder>}
  */
 export function validateStoreFileGroupQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupQueryBuilder;
+): Either<StoreFileGroupQueryBuilder>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreFileGroupQueryTraverser}
+ * @returns {Either<StoreFileGroupQueryTraverser>}
  */
 export function validateStoreFileGroupQueryTraverser(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreFileGroupQueryTraverser;
+): Either<StoreFileGroupQueryTraverser>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobQueryBuilder}
+ * @returns {Either<StoreJobQueryBuilder>}
  */
 export function validateStoreJobQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobQueryBuilder;
+): Either<StoreJobQueryBuilder>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreJobQueryTraverser}
+ * @returns {Either<StoreJobQueryTraverser>}
  */
 export function validateStoreJobQueryTraverser(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreJobQueryTraverser;
+): Either<StoreJobQueryTraverser>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSessionQueryBuilder}
+ * @returns {Either<StoreSessionQueryBuilder>}
  */
 export function validateStoreSessionQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSessionQueryBuilder;
+): Either<StoreSessionQueryBuilder>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {StoreSessionQueryTraverser}
+ * @returns {Either<StoreSessionQueryTraverser>}
  */
 export function validateStoreSessionQueryTraverser(
   value: undefined | any,
   propertyPath?: string | undefined,
-): StoreSessionQueryTraverser;
+): Either<StoreSessionQueryTraverser>;
+export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
+import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map

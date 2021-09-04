@@ -50,7 +50,11 @@ export function sessionWhere(where = {}, tableName = "s.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreSessionWhere(where, "$.sessionWhere");
+    const whereValidated = validateStoreSessionWhere(where, "$.sessionWhere");
+    if (whereValidated.error) {
+      throw whereValidated.error;
+    }
+    where = whereValidated.value;
   }
   const strings = ["1 = 1"];
   /** @type {QueryPartArg[]} */
@@ -325,11 +329,22 @@ export function sessionOrderBy(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    orderBy = validateStoreSessionOrderBy(orderBy, "$.StoreSessionOrderBy");
-    orderBySpec = validateStoreSessionOrderBySpec(
+    const orderByValidated = validateStoreSessionOrderBy(
+      orderBy,
+      "$.StoreSessionOrderBy",
+    );
+    if (orderByValidated.error) {
+      throw orderByValidated.error;
+    }
+    orderBy = orderByValidated.value;
+    const orderBySpecValidated = validateStoreSessionOrderBySpec(
       orderBySpec,
       "$.StoreSessionOrderBySpec",
     );
+    if (orderBySpecValidated.error) {
+      throw orderBySpecValidated.error;
+    }
+    orderBySpec = orderBySpecValidated.value;
   }
   if (isQueryPart(orderBy)) {
     return orderBy;
@@ -563,7 +578,14 @@ WHERE ${sessionWhere(builder.where, "s.", {
  */
 export function querySession(builder = {}) {
   const joinedKeys = [];
-  validateStoreSessionQueryBuilder(builder, "$.sessionBuilder");
+  const builderValidated = validateStoreSessionQueryBuilder(
+    builder,
+    "$.sessionBuilder",
+  );
+  if (builderValidated.error) {
+    throw builderValidated.error;
+  }
+  builder = builderValidated.value;
   const qb = query`
 SELECT to_jsonb(s.*) || jsonb_build_object(${query([
     joinedKeys.join(","),

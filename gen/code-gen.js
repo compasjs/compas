@@ -38,7 +38,6 @@ export function applyCodeGenStructure(app) {
       dumpStructure: T.bool(),
       dumpApiStructure: T.bool(),
       dumpPostgres: T.bool(),
-      throwingValidators: T.bool(),
       fileHeader: T.string(),
       outputDirectory: T.string(),
     }),
@@ -74,9 +73,6 @@ export function applyCodeGenStructure(app) {
           },
           {
             key: "sqlEnableValidator",
-          },
-          {
-            key: "sqlThrowingValidators",
           },
           {
             key: "sqlDuplicateShortName",
@@ -272,7 +268,7 @@ function getTypes(T) {
         withDates: T.bool().default(false),
         withPrimaryKey: T.bool().default(true),
         isView: T.bool().default(false),
-        schema: T.string().default(""),
+        schema: T.string().default(`""`),
       })
       .optional()
       .loose(),

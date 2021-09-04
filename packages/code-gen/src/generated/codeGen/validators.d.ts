@@ -1,358 +1,196 @@
 /**
+ * @template T
+ * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
+ */
+/**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenAnyOfType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenAnyOfType>}
  */
 export function validateCodeGenAnyOfType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenAnyOfType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenAnyOfType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenAnyType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenAnyType>}
  */
 export function validateCodeGenAnyType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenAnyType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenAnyType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenArrayType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenArrayType>}
  */
 export function validateCodeGenArrayType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenArrayType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenArrayType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenBooleanType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenBooleanType>}
  */
 export function validateCodeGenBooleanType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenBooleanType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenBooleanType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenContext | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenContext>}
  */
 export function validateCodeGenContext(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenContext | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenContext>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenDateType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenDateType>}
  */
 export function validateCodeGenDateType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenDateType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenDateType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenFile | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenFile>}
  */
 export function validateCodeGenFile(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenFile | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenFile>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenFileType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenFileType>}
  */
 export function validateCodeGenFileType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenFileType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenFileType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenGenerateOpts | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenGenerateOpts>}
  */
 export function validateCodeGenGenerateOpts(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenGenerateOpts | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenGenerateOpts>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenGenericType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenGenericType>}
  */
 export function validateCodeGenGenericType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenGenericType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenGenericType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenNumberType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenNumberType>}
  */
 export function validateCodeGenNumberType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenNumberType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenNumberType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenObjectType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenObjectType>}
  */
 export function validateCodeGenObjectType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenObjectType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenObjectType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenReferenceType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenReferenceType>}
  */
 export function validateCodeGenReferenceType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenReferenceType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenReferenceType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenRelationType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenRelationType>}
  */
 export function validateCodeGenRelationType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenRelationType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenRelationType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenRouteType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenRouteType>}
  */
 export function validateCodeGenRouteType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenRouteType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenRouteType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenStringType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenStringType>}
  */
 export function validateCodeGenStringType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenStringType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenStringType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenStructure | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenStructure>}
  */
 export function validateCodeGenStructure(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenStructure | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenStructure>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenTemplateState | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenTemplateState>}
  */
 export function validateCodeGenTemplateState(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenTemplateState | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenTemplateState>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenType>}
  */
 export function validateCodeGenType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenTypeSettings | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenTypeSettings>}
  */
 export function validateCodeGenTypeSettings(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenTypeSettings | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenTypeSettings>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {{ data: CodeGenUuidType | undefined, errors: ({ key: string, info: any }[])|undefined}}
+ * @returns {Either<CodeGenUuidType>}
  */
 export function validateCodeGenUuidType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): {
-  data: CodeGenUuidType | undefined;
-  errors:
-    | {
-        key: string;
-        info: any;
-      }[]
-    | undefined;
-};
+): Either<CodeGenUuidType>;
+export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
+import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map

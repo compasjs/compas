@@ -5,37 +5,57 @@ import { isNil, isPlainObject } from "@compas/stdlib";
 mainTestFn(import.meta);
 
 /**
- *
+ * @template T
  * @param {TestRunner} t
  * @param {{
  *   errorLength?: number,
  *   errorKey?: string,
+ *   errorObjectKey?: (string)|(string|number)[],
  *   expected?: *,
  *   input?: *
  * }[]} cases
- * @param {Function} fn
+ * @param {(value: any) => Either<T>} fn
  */
 const assertAll = (t, cases, fn) => {
   for (const item of cases) {
-    const { data, errors } = fn(item.input);
+    const { value, error } = fn(item.input);
 
-    if (!isNil(errors)) {
+    if (!isNil(error)) {
       if (!isNil(item.errorLength)) {
-        t.equal(errors.length, item.errorLength);
+        t.equal(Object.keys(error.info).length, item.errorLength);
       }
-      t.equal(errors[0].key, item.errorKey);
+      if (Array.isArray(item.errorObjectKey)) {
+        let actual = error.info;
+        let i = 0;
+        while (i < item.errorObjectKey.length) {
+          actual = actual[item.errorObjectKey[i]];
+          i++;
+        }
+
+        t.equal(
+          actual?.key,
+          item.errorKey,
+          JSON.stringify(error.toJSON(), null, 2),
+        );
+      } else {
+        t.equal(
+          error.info[item.errorObjectKey]?.key,
+          item.errorKey,
+          JSON.stringify(error.toJSON(), null, 2),
+        );
+      }
     } else {
       if (
         isNil(item.expected) ||
         ["number", "string", "boolean"].indexOf(typeof item.expected) !== -1
       ) {
-        t.equal(data, item.expected, fn.name);
+        t.equal(value, item.expected, fn.name);
       } else {
         if (isPlainObject(item.expected)) {
           // Quick hack, so we can test objects created by the validators
           item.expected = Object.assign(Object.create(null), item.expected);
         }
-        t.deepEqual(data, item.expected);
+        t.deepEqual(value, item.expected);
       }
     }
   }
@@ -64,7 +84,8 @@ test("code-gen/validators", async (t) => {
         {
           input: "Foo",
           errorLength: 1,
-          errorKey: "validator.anyOf.type",
+          errorObjectKey: ["$", 0],
+          errorKey: "validator.anyOf",
         },
       ],
       validators.validateValidatorAnyOf,
@@ -89,6 +110,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: true,
+          errorObjectKey: "$",
           errorKey: "validator.array.type",
         },
       ],
@@ -115,6 +137,7 @@ test("code-gen/validators", async (t) => {
       [
         {
           input: [],
+          errorObjectKey: "$",
           errorKey: "validator.array.min",
         },
         {
@@ -124,6 +147,7 @@ test("code-gen/validators", async (t) => {
         {
           // Checks min/max first before the values
           input: "1234567891011".split(""),
+          errorObjectKey: "$",
           errorKey: "validator.array.max",
         },
       ],
@@ -146,6 +170,7 @@ test("code-gen/validators", async (t) => {
         {
           input: undefined,
           errorLength: 1,
+          errorObjectKey: "$",
           errorKey: "validator.boolean.undefined",
         },
       ],
@@ -163,6 +188,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: false,
+          errorObjectKey: "$",
           errorKey: "validator.boolean.oneOf",
         },
       ],
@@ -196,6 +222,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: "foo",
+          errorObjectKey: "$",
           errorKey: "validator.boolean.type",
         },
       ],
@@ -281,11 +308,13 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: "foo",
-          errorKey: "validator.date.min",
+          errorObjectKey: "$",
+          errorKey: "validator.string.min",
         },
         {
           input: invalidFormat,
-          errorKey: "validator.date.pattern",
+          errorObjectKey: "$",
+          errorKey: "validator.string.pattern",
         },
       ],
       validators.validateValidatorDate,
@@ -355,6 +384,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: belowMin,
+          errorObjectKey: "$",
           errorKey: "validator.date.dateMin",
         },
       ],
@@ -375,6 +405,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: afterMax,
+          errorObjectKey: "$",
           errorKey: "validator.date.dateMax",
         },
       ],
@@ -397,6 +428,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: dateFuture,
+          errorObjectKey: "$",
           errorKey: "validator.date.past",
         },
       ],
@@ -419,6 +451,7 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: datePast,
+          errorObjectKey: "$",
           errorKey: "validator.date.future",
         },
       ],
@@ -435,6 +468,7 @@ test("code-gen/validators", async (t) => {
             foo: true,
             bar: false,
           },
+          errorObjectKey: "$.$key[foo]",
           errorKey: "validator.number.type",
         },
         {
@@ -485,14 +519,17 @@ test("code-gen/validators", async (t) => {
         },
         {
           input: "fo>",
+          errorObjectKey: "$",
           errorKey: "validator.string.disallowedCharacter",
         },
         {
           input: "fo\\",
+          errorObjectKey: "$",
           errorKey: "validator.string.disallowedCharacter",
         },
         {
           input: "fobarff>asdf",
+          errorObjectKey: "$",
           errorKey: "validator.string.max",
         },
         {

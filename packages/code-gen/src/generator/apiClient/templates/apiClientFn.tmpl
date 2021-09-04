@@ -114,7 +114,10 @@ options = {},
         {{ const { uniqueName } = item.response.reference ?? {}; }}
         {{ if (!isNil(uniqueName)) { }}
             {{ /* Validates response, but does not use the validated result. This implies that dates will be ISO strings, and objects don't have a 'null' prototype. */ }}
-            validators.validate{{= uniqueName }}(response.data);
+            const { error } = validators.validate{{= uniqueName }}(response.data);
+            if (error) {
+                throw error;
+            }
         {{ } }}
       {{ } }}
       return response.data;

@@ -61,7 +61,11 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    where = validateStoreFileWhere(where, "$.fileWhere");
+    const whereValidated = validateStoreFileWhere(where, "$.fileWhere");
+    if (whereValidated.error) {
+      throw whereValidated.error;
+    }
+    where = whereValidated.value;
   }
   const strings = ["1 = 1"];
   /** @type {QueryPartArg[]} */
@@ -420,11 +424,22 @@ export function fileOrderBy(
     tableName = `${tableName}.`;
   }
   if (!options.skipValidator) {
-    orderBy = validateStoreFileOrderBy(orderBy, "$.StoreFileOrderBy");
-    orderBySpec = validateStoreFileOrderBySpec(
+    const orderByValidated = validateStoreFileOrderBy(
+      orderBy,
+      "$.StoreFileOrderBy",
+    );
+    if (orderByValidated.error) {
+      throw orderByValidated.error;
+    }
+    orderBy = orderByValidated.value;
+    const orderBySpecValidated = validateStoreFileOrderBySpec(
       orderBySpec,
       "$.StoreFileOrderBySpec",
     );
+    if (orderBySpecValidated.error) {
+      throw orderBySpecValidated.error;
+    }
+    orderBySpec = orderBySpecValidated.value;
   }
   if (isQueryPart(orderBy)) {
     return orderBy;
@@ -776,7 +791,14 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
  */
 export function queryFile(builder = {}) {
   const joinedKeys = [];
-  validateStoreFileQueryBuilder(builder, "$.fileBuilder");
+  const builderValidated = validateStoreFileQueryBuilder(
+    builder,
+    "$.fileBuilder",
+  );
+  if (builderValidated.error) {
+    throw builderValidated.error;
+  }
+  builder = builderValidated.value;
   if (builder.group) {
     joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"f_fg_0"."result"`);
   }

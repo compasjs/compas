@@ -182,11 +182,7 @@ export function doSqlChecks(context) {
     });
   }
 
-  if (context.options.throwingValidators === false) {
-    context.errors.push({
-      key: "sqlThrowingValidators",
-    });
-  }
+  // TODO: Handle validators
 
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys

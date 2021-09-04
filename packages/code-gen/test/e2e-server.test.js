@@ -7,7 +7,7 @@ import {
   createTestAppAndClient,
   getApp,
 } from "@compas/server";
-import { AppError, streamToBuffer } from "@compas/stdlib";
+import { AppError, isPlainObject, streamToBuffer } from "@compas/stdlib";
 import Axios from "axios";
 
 mainTestFn(import.meta);
@@ -61,7 +61,7 @@ test("code-gen/e2e-server", async (t) => {
       t.fail("Expected validator error for missing id");
     } catch (e) {
       t.equal(e.response.status, 400);
-      t.equal(e.response.data.info.propertyPath, "$.id");
+      t.ok(isPlainObject(e.response.data.info["$.id"]));
     }
   });
 
@@ -102,7 +102,7 @@ test("code-gen/e2e-server", async (t) => {
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.status, 400);
-      t.equal(e.info.propertyPath, "$.id");
+      t.ok(isPlainObject(e.info["$.id"]));
     }
   });
 
@@ -130,7 +130,7 @@ test("code-gen/e2e-server", async (t) => {
     } catch (e) {
       t.ok(AppError.instanceOf(e));
       t.equal(e.status, 400);
-      t.equal(e.key, "response.server.invalidResponse.validator.string.type");
+      t.equal(e.key, "response.server.invalidResponse.validator.error");
     }
   });
 
@@ -201,7 +201,7 @@ test("code-gen/e2e-server", async (t) => {
   );
 
   t.test(
-    "server - serverside validator of file wit mime types is ok",
+    "server - serverside validator of file with mime types is error",
     async (t) => {
       try {
         await serverApiClientImport.apiServerSetMimeCheckedFile(axiosInstance, {
@@ -213,8 +213,9 @@ test("code-gen/e2e-server", async (t) => {
         t.fail("Should throw");
       } catch (e) {
         t.equal(e.status, 400);
-        t.equal(e.key, "validator.file.mimeType");
-        t.ok(Array.isArray(e.info.mimeTypes));
+        t.equal(e.key, "validator.error");
+        t.equal(e.info["$.myFile"].key, "validator.file.mimeType");
+        t.ok(Array.isArray(e.info["$.myFile"].info.mimeTypes));
       }
     },
   );

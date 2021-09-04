@@ -4,7 +4,8 @@
     "noEmit": false,
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "extendedDiagnostics": true
   },
   "include": ["packages/**/*", "types/**/*"],
   "exclude": [

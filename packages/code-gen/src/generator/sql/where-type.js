@@ -374,36 +374,41 @@ export function getWherePartial(context, type) {
   }
 
   return js`
-      /**
-       * Build 'WHERE ' part for ${type.name}
-       *
-       * @param {${type.where.type}} [where={}]
-       * @param {string} [tableName="${type.shortName}."]
-       * @param {{ skipValidator?: boolean|undefined }} [options={}]
-       * @returns {QueryPart}
-       */
-      export function ${type.name}Where(where = {},
-                                        tableName = "${type.shortName}.",
-                                        options = {}
-      ) {
-         if (tableName.length > 0 && !tableName.endsWith(".")) {
-            tableName = \`$\{tableName}.\`;
-         }
-
-         if (!options.skipValidator) {
-            where = validate${type.uniqueName}Where(where, "$.${type.name}Where");
-         }
-
-         const strings = [ "1 = 1" ];
-         /** @type {QueryPartArg[]} */
-         const values = [ undefined ];
-
-         ${partials}
-         strings.push("");
-
-         return query(strings, ...values);
+    /**
+     * Build 'WHERE ' part for ${type.name}
+     *
+     * @param {${type.where.type}} [where={}]
+     * @param {string} [tableName="${type.shortName}."]
+     * @param {{ skipValidator?: boolean|undefined }} [options={}]
+     * @returns {QueryPart}
+     */
+    export function ${type.name}Where(where = {},
+                                      tableName = "${type.shortName}.",
+                                      options = {}
+    ) {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
       }
-   `;
+
+      if (!options.skipValidator) {
+        const whereValidated = validate${type.uniqueName}Where(
+          where, "$.${type.name}Where");
+        if (whereValidated.error) {
+          throw whereValidated.error;
+        }
+        where = whereValidated.value;
+      }
+
+      const strings = [ "1 = 1" ];
+      /** @type {QueryPartArg[]} */
+      const values = [ undefined ];
+
+      ${partials}
+      strings.push("");
+
+      return query(strings, ...values);
+    }
+  `;
 }
 
 /**

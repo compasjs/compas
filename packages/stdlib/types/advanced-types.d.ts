@@ -1,4 +1,13 @@
 import { RandomUUIDOptions } from "crypto";
+import { AppError } from "../src/error.js";
+
+export type Either<T, E = AppError> =
+  | { value: T; error?: never }
+  | { value?: never; error: E };
+
+export type EitherN<T, E = AppError> =
+  | { value: T; errors?: never }
+  | { value?: never; errors: E[] };
 
 export interface NoopFn {
   (): void;

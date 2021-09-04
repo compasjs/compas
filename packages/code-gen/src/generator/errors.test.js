@@ -18,20 +18,6 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Validator generator not enabled"));
   });
 
-  t.test("sqlThrowingValidators", async (t) => {
-    const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
-      [T.object("foo").keys({}).enableQueries()],
-      {
-        enabledGenerators: ["sql", "validator"],
-        throwingValidators: false,
-      },
-    );
-
-    t.equal(exitCode, 1);
-    t.ok(stdout.includes("Option 'throwingValidators' not enabled"));
-  });
-
   t.test("sqlMissingPrimaryKey", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await generateAndRunForBuilders(
