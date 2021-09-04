@@ -94,7 +94,6 @@ export async function generateStore() {
     outputDirectory: `packages/store/src/generated`,
     enabledGroups: ["store"],
     enabledGenerators: ["sql", "validator"],
-    throwingValidators: true,
     isNode: true,
     dumpStructure: true,
     dumpApiStructure: false,
@@ -113,7 +112,6 @@ export async function generateRepo() {
     outputDirectory: "./src/generated",
     enabledGenerators: ["validator"],
     isNode: true,
-    throwingValidators: false,
     dumpStructure: true,
   });
 }
