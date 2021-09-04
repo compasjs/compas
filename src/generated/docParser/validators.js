@@ -30,9 +30,9 @@ export function validateDocParserBlock(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -59,9 +59,9 @@ export function validateDocParserFunctionDeclarationBlock(
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -85,9 +85,9 @@ export function validateDocParserFunctionType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -111,9 +111,9 @@ export function validateDocParserJSComment(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -137,9 +137,9 @@ export function validateDocParserLiteralType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -163,9 +163,9 @@ export function validateDocParserPackage(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -189,9 +189,9 @@ export function validateDocParserRange(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -215,9 +215,9 @@ export function validateDocParserType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -241,9 +241,9 @@ export function validateDocParserUnknownBlock(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */

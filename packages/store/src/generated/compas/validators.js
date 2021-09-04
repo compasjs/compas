@@ -23,9 +23,9 @@ export function validateCompasSqlOrderBy(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -52,9 +52,9 @@ export function validateCompasSqlOrderByOptionalField(
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */

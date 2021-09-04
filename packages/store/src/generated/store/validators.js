@@ -49,9 +49,9 @@ export function validateStoreFile(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -75,9 +75,9 @@ export function validateStoreFileGroup(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -103,9 +103,9 @@ export function validateStoreFileGroupMeta(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -131,9 +131,9 @@ export function validateStoreFileMeta(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -157,9 +157,9 @@ export function validateStoreImageTransformOptions(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -183,9 +183,9 @@ export function validateStoreJob(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -209,9 +209,9 @@ export function validateStoreJobInterval(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -235,9 +235,9 @@ export function validateStoreSession(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -261,9 +261,9 @@ export function validateStoreFileWhere(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -287,9 +287,9 @@ export function validateStoreFileGroupWhere(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -313,9 +313,9 @@ export function validateStoreJobWhere(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -339,9 +339,9 @@ export function validateStoreSessionWhere(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -365,9 +365,9 @@ export function validateStoreFileOrderBy(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -391,9 +391,9 @@ export function validateStoreFileOrderBySpec(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -417,9 +417,9 @@ export function validateStoreFileGroupOrderBy(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -443,9 +443,9 @@ export function validateStoreFileGroupOrderBySpec(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -469,9 +469,9 @@ export function validateStoreJobOrderBy(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -495,9 +495,9 @@ export function validateStoreJobOrderBySpec(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -521,9 +521,9 @@ export function validateStoreSessionOrderBy(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -547,9 +547,9 @@ export function validateStoreSessionOrderBySpec(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -573,9 +573,9 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -599,9 +599,9 @@ export function validateStoreFileQueryTraverser(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -625,9 +625,9 @@ export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -654,9 +654,9 @@ export function validateStoreFileGroupQueryTraverser(
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -680,9 +680,9 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -706,9 +706,9 @@ export function validateStoreJobQueryTraverser(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -732,9 +732,9 @@ export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -758,9 +758,9 @@ export function validateStoreSessionQueryTraverser(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */

@@ -152,8 +152,16 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
       }(value, propertyPath = "$") {
         const result = ${mapping[name]}(value, propertyPath);
         if (result.errors) {
-          ${errorsToInfoObject("result.errors")}
-          
+          const info = {};
+          for (const err of result.errors) {
+            if (isNil(info[err.propertyPath])) {
+              info[err.propertyPath] = err;
+            } else if (Array.isArray(info[err.propertyPath])) {
+              info[err.propertyPath].push(err);
+            } else {
+              info[err.propertyPath] = [ info[err.propertyPath], err ];
+            }
+          }
           /** @type {{ error: AppError }} */
           return {
             error: AppError.validationError("validator.error", info),
@@ -230,26 +238,6 @@ function getHashForType(type) {
   hash = Math.abs(hash);
 
   return hash;
-}
-
-/**
- * Convert errors array to info object
- * @param {string} errors The variable that's array holding errors.
- * @return {string}
- */
-function errorsToInfoObject(errors) {
-  return js`
-    const info = {};
-    for (const err of ${errors}) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
-      } else {
-        info[err.propertyPath] = [ info[err.propertyPath] ].concat(err);
-      }
-    }
-  `;
 }
 
 /**
@@ -422,14 +410,23 @@ function anonymousValidatorAnyOf(context, imports, type) {
         )}
 
         if (result.errors) {
-          errors = errors.concat(result.errors.flat(2));
+          errors.push(...result.errors);
         } else {
           return result;
         }
       `;
     })}
 
-    ${errorsToInfoObject("errors")}
+    const info = {};
+    for (const err of errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [ info[err.propertyPath], err ];
+      }
+    }
 
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -520,7 +517,7 @@ function anonymousValidatorArray(context, imports, type) {
       )}
 
       if (arrVar.errors) {
-        errors = errors.concat(arrVar.errors.flat(2));
+        errors.push(...arrVar.errors);
       } else {
         result[i] = arrVar.value;
       }
@@ -853,7 +850,7 @@ function anonymousValidatorGeneric(context, imports, type) {
       )}
 
       if (genericKey.errors) {
-        errors = errors.concat(genericKey.errors.flat(2));
+        errors.push(...genericKey.errors);
         continue;
       }
 
@@ -867,7 +864,7 @@ function anonymousValidatorGeneric(context, imports, type) {
       )}
 
       if (genericValue.errors) {
-        errors = errors.concat(genericValue.errors.flat(2));
+        errors.push(...genericValue.errors);
       } else {
         result[genericKey.value] = genericValue.value;
       }
@@ -1053,7 +1050,7 @@ function anonymousValidatorObject(context, imports, type) {
     for (const [key, validator] of validatorPairs) {
       const validatorResult = validator(value[key], \`$\{propertyPath}.$\{key}\`);
       if (validatorResult.errors) {
-        errors = errors.concat(validatorResult.errors.flat(2));
+        errors.push(...validatorResult.errors);
       } else {
         result[key] = validatorResult.value;
       }

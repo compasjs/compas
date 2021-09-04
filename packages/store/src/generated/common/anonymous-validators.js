@@ -516,7 +516,7 @@ export function anonymousValidator2144828802(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys2144828802.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -541,7 +541,7 @@ export function anonymousValidator2144828802(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -871,7 +871,7 @@ export function anonymousValidator599447075(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys599447075.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -903,7 +903,7 @@ export function anonymousValidator599447075(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -996,7 +996,7 @@ export function anonymousValidator420878393(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys420878393.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1018,7 +1018,7 @@ export function anonymousValidator420878393(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1090,7 +1090,7 @@ export function anonymousValidator2060025506(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys2060025506.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1122,7 +1122,7 @@ export function anonymousValidator2060025506(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1300,7 +1300,7 @@ export function anonymousValidator376443596(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys376443596.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1325,7 +1325,7 @@ export function anonymousValidator376443596(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1557,7 +1557,7 @@ export function anonymousValidator1781782332(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1781782332.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1590,7 +1590,7 @@ export function anonymousValidator1781782332(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1692,7 +1692,7 @@ export function anonymousValidator430889951(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys430889951.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1721,7 +1721,7 @@ export function anonymousValidator430889951(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1892,7 +1892,7 @@ export function anonymousValidator1108679019(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1108679019.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1920,7 +1920,7 @@ export function anonymousValidator1108679019(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1952,14 +1952,14 @@ export function anonymousValidator1804070323(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator2074494218(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -1992,14 +1992,14 @@ export function anonymousValidator1899069927(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator56355924(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2019,18 +2019,18 @@ export function anonymousValidator1024905514(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
   let result = { errors: [] };
   result = anonymousValidator1899069927(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1585770956(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -2039,9 +2039,9 @@ export function anonymousValidator1024905514(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -2077,14 +2077,14 @@ export function anonymousValidator890105892(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator186795873(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2104,18 +2104,18 @@ export function anonymousValidator972289697(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
   let result = { errors: [] };
   result = anonymousValidator890105892(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1585770956(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -2124,9 +2124,9 @@ export function anonymousValidator972289697(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -2162,14 +2162,14 @@ export function anonymousValidator1891060044(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator448481401(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2189,18 +2189,18 @@ export function anonymousValidator978954249(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<undefined|(Date)[]|QueryPart<any>>} */
   let result = { errors: [] };
   result = anonymousValidator1891060044(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1585770956(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -2209,9 +2209,9 @@ export function anonymousValidator978954249(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -2270,14 +2270,14 @@ export function anonymousValidator58972158(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator153017499(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2310,14 +2310,14 @@ export function anonymousValidator1370653763(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator293751998(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2337,18 +2337,18 @@ export function anonymousValidator2102014144(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
   let result = { errors: [] };
   result = anonymousValidator1370653763(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1585770956(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -2357,9 +2357,9 @@ export function anonymousValidator2102014144(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -2404,7 +2404,7 @@ export function anonymousValidator153017499(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys153017499.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -2484,7 +2484,7 @@ export function anonymousValidator153017499(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -2536,7 +2536,7 @@ export function anonymousValidator2074494218(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys2074494218.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -2599,7 +2599,7 @@ export function anonymousValidator2074494218(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -2631,14 +2631,14 @@ export function anonymousValidator807003800(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1257773835(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2735,14 +2735,14 @@ export function anonymousValidator1033385158(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1483765921(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2762,18 +2762,18 @@ export function anonymousValidator1971955962(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
   let result = { errors: [] };
   result = anonymousValidator1033385158(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1585770956(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -2782,9 +2782,9 @@ export function anonymousValidator1971955962(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -2829,7 +2829,7 @@ export function anonymousValidator1257773835(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1257773835.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -2894,7 +2894,7 @@ export function anonymousValidator1257773835(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -2926,14 +2926,14 @@ export function anonymousValidator688866095(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator500057262(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -2975,7 +2975,7 @@ export function anonymousValidator500057262(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys500057262.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -3028,7 +3028,7 @@ export function anonymousValidator500057262(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -3165,14 +3165,14 @@ export function anonymousValidator757309139(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator237896171(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -3201,18 +3201,18 @@ export function anonymousValidator1795948632(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
   result = anonymousValidator16847607(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator757309139(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -3221,9 +3221,9 @@ export function anonymousValidator1795948632(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -3411,7 +3411,7 @@ export function anonymousValidator163358845(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys163358845.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -3439,7 +3439,7 @@ export function anonymousValidator163358845(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -3554,14 +3554,14 @@ export function anonymousValidator938090836(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1118242002(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -3590,18 +3590,18 @@ export function anonymousValidator753972035(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
   result = anonymousValidator16847607(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator938090836(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -3610,9 +3610,9 @@ export function anonymousValidator753972035(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -3657,7 +3657,7 @@ export function anonymousValidator322356638(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys322356638.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -3687,7 +3687,7 @@ export function anonymousValidator322356638(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -3800,14 +3800,14 @@ export function anonymousValidator1693224812(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1072183914(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -3836,18 +3836,18 @@ export function anonymousValidator685221527(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
   result = anonymousValidator16847607(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1693224812(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -3856,9 +3856,9 @@ export function anonymousValidator685221527(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -3903,7 +3903,7 @@ export function anonymousValidator280827708(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys280827708.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -3932,7 +3932,7 @@ export function anonymousValidator280827708(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4036,14 +4036,14 @@ export function anonymousValidator196705720(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1263846070(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -4072,18 +4072,18 @@ export function anonymousValidator2038758416(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
   result = anonymousValidator16847607(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator196705720(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -4092,9 +4092,9 @@ export function anonymousValidator2038758416(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -4139,7 +4139,7 @@ export function anonymousValidator144635851(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys144635851.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4166,7 +4166,7 @@ export function anonymousValidator144635851(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4273,7 +4273,7 @@ export function anonymousValidator1274599578(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1274599578.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4302,7 +4302,7 @@ export function anonymousValidator1274599578(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4354,7 +4354,7 @@ export function anonymousValidator1069465749(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1069465749.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4381,7 +4381,7 @@ export function anonymousValidator1069465749(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4433,7 +4433,7 @@ export function anonymousValidator1862233461(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1862233461.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4468,7 +4468,7 @@ export function anonymousValidator1862233461(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4520,7 +4520,7 @@ export function anonymousValidator310044624(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys310044624.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4551,7 +4551,7 @@ export function anonymousValidator310044624(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4625,7 +4625,7 @@ export function anonymousValidator343387919(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys343387919.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4654,7 +4654,7 @@ export function anonymousValidator343387919(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4695,7 +4695,7 @@ export function anonymousValidator1952914356(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1952914356.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4721,7 +4721,7 @@ export function anonymousValidator1952914356(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4795,7 +4795,7 @@ export function anonymousValidator647856360(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys647856360.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4824,7 +4824,7 @@ export function anonymousValidator647856360(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -4865,7 +4865,7 @@ export function anonymousValidator1805657267(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1805657267.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -4891,7 +4891,7 @@ export function anonymousValidator1805657267(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }

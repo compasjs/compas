@@ -42,9 +42,9 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -68,9 +68,9 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -94,9 +94,9 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -120,9 +120,9 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -146,9 +146,9 @@ export function validateCodeGenContext(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -172,9 +172,9 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -198,9 +198,9 @@ export function validateCodeGenFile(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -224,9 +224,9 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -250,9 +250,9 @@ export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -276,9 +276,9 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -302,9 +302,9 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -328,9 +328,9 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -354,9 +354,9 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -380,9 +380,9 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -406,9 +406,9 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -432,9 +432,9 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -458,9 +458,9 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -484,9 +484,9 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -510,9 +510,9 @@ export function validateCodeGenType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -536,9 +536,9 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */
@@ -562,9 +562,9 @@ export function validateCodeGenUuidType(value, propertyPath = "$") {
       if (isNil(info[err.propertyPath])) {
         info[err.propertyPath] = err;
       } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath] = info[err.propertyPath].concat(err);
+        info[err.propertyPath].push(err);
       } else {
-        info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+        info[err.propertyPath] = [info[err.propertyPath], err];
       }
     }
     /** @type {{ error: AppError }} */

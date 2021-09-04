@@ -357,7 +357,7 @@ export function anonymousValidator781728730(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys781728730.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -385,7 +385,7 @@ export function anonymousValidator781728730(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -446,7 +446,7 @@ export function anonymousValidator730878810(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys730878810.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -472,7 +472,7 @@ export function anonymousValidator730878810(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -742,7 +742,7 @@ export function anonymousValidator835333298(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys835333298.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -770,7 +770,7 @@ export function anonymousValidator835333298(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -798,18 +798,18 @@ export function anonymousValidator2103344335(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<DocParserLiteralType|DocParserFunctionType>} */
   let result = { errors: [] };
   result = anonymousValidator835333298(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1865996329(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -818,9 +818,9 @@ export function anonymousValidator2103344335(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -885,7 +885,7 @@ export function anonymousValidator607756027(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys607756027.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -911,7 +911,7 @@ export function anonymousValidator607756027(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -952,14 +952,14 @@ export function anonymousValidator2044597891(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  let errors = [];
+  const errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator607756027(
       value[i],
       `${propertyPath}[${i}]`,
     );
     if (arrVar.errors) {
-      errors = errors.concat(arrVar.errors.flat(2));
+      errors.push(...arrVar.errors);
     } else {
       result[i] = arrVar.value;
     }
@@ -1001,7 +1001,7 @@ export function anonymousValidator1865996329(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1865996329.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1027,7 +1027,7 @@ export function anonymousValidator1865996329(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1088,7 +1088,7 @@ export function anonymousValidator1282872738(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1282872738.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1119,7 +1119,7 @@ export function anonymousValidator1282872738(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
@@ -1147,18 +1147,18 @@ export function anonymousValidator796176522(value, propertyPath) {
       ],
     };
   }
-  let errors = [];
+  const errors = [];
   /** @type {EitherN<DocParserUnknownBlock|DocParserFunctionDeclarationBlock>} */
   let result = { errors: [] };
   result = anonymousValidator730878810(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
   result = anonymousValidator1282872738(value, propertyPath);
   if (result.errors) {
-    errors = errors.concat(result.errors.flat(2));
+    errors.push(...result.errors);
   } else {
     return result;
   }
@@ -1167,9 +1167,9 @@ export function anonymousValidator796176522(value, propertyPath) {
     if (isNil(info[err.propertyPath])) {
       info[err.propertyPath] = err;
     } else if (Array.isArray(info[err.propertyPath])) {
-      info[err.propertyPath] = info[err.propertyPath].concat(err);
+      info[err.propertyPath].push(err);
     } else {
-      info[err.propertyPath] = [info[err.propertyPath]].concat(err);
+      info[err.propertyPath] = [info[err.propertyPath], err];
     }
   }
   /** @type {{ errors: InternalError[] }} */
@@ -1272,7 +1272,7 @@ export function anonymousValidator1831335775(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  let errors = [];
+  const errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1831335775.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -1298,7 +1298,7 @@ export function anonymousValidator1831335775(value, propertyPath) {
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
-      errors = errors.concat(validatorResult.errors.flat(2));
+      errors.push(...validatorResult.errors);
     } else {
       result[key] = validatorResult.value;
     }
