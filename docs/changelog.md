@@ -4,6 +4,96 @@ editLink: false
 
 # Changelog
 
+### [v0.0.158](https://github.com/compasjs/compas/releases/tag/v0.0.158)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.15.0 to 7.15.5
+  ([#1160](https://github.com/compasjs/compas/pull/1160),
+  [#1163](https://github.com/compasjs/compas/pull/1163))
+- build(deps): bump @babel/eslint-parser from 7.15.0 to 7.15.4
+  ([#1159](https://github.com/compasjs/compas/pull/1159))
+- build(deps): bump @types/minio from 7.0.9 to 7.0.10
+  ([#1121](https://github.com/compasjs/compas/pull/1121))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 16.6.0 to 16.7.10
+  ([#1104](https://github.com/compasjs/compas/pull/1104),
+  [#1122](https://github.com/compasjs/compas/pull/1122),
+  [#1127](https://github.com/compasjs/compas/pull/1127),
+  [#1152](https://github.com/compasjs/compas/pull/1152),
+  [#1156](https://github.com/compasjs/compas/pull/1156))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-import from 2.24.0 to 2.24.2
+  ([#1112](https://github.com/compasjs/compas/pull/1112),
+  [#1117](https://github.com/compasjs/compas/pull/1117))
+- build(deps): bump eslint-plugin-jsdoc from 36.0.7 to 36.0.8
+  ([#1118](https://github.com/compasjs/compas/pull/1118))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump minio from 7.0.18 to 7.0.19
+  ([#1114](https://github.com/compasjs/compas/pull/1114))
+- build(deps): bump postgres from 2.0.0-beta.6 to 2.0.0-beta.8
+  ([#1107](https://github.com/compasjs/compas/pull/1107),[#1123](https://github.com/compasjs/compas/pull/1123))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump sharp from 0.28.3 to 0.29.0
+  ([#1108](https://github.com/compasjs/compas/pull/1108))
+- chore: fix issues after Typescript 4.4 update
+  ([#1124](https://github.com/compasjs/compas/pull/1124))
+- chore(ci): add syncMetadata & docs build to PR's
+  ([#1154](https://github.com/compasjs/compas/pull/1154))
+- docs: revamp docs in to more feature based
+  ([#1151](https://github.com/compasjs/compas/pull/1151))
+  - References [#1131](https://github.com/compasjs/compas/pull/1131)
+  - Closes [#1141](https://github.com/compasjs/compas/pull/1141)
+  - Closes [#1142](https://github.com/compasjs/compas/pull/1142)
+  - Closes [#1143](https://github.com/compasjs/compas/pull/1143)
+  - Closes [#1149](https://github.com/compasjs/compas/pull/1149)
+  - Closes [#1150](https://github.com/compasjs/compas/pull/1150)
+- feat(all): support and recommend using the Typescript language server
+  ([#1055](https://github.com/compasjs/compas/pull/1055))
+- feat(code-gen): add support for Postgres default values
+  ([#1130](https://github.com/compasjs/compas/pull/1130))
+  - Closes [#1098](https://github.com/compasjs/compas/pull/1098)
+- feat(code-gen): always collect as much validator issues as possible
+  ([#1161](https://github.com/compasjs/compas/pull/1161))
+  - Closes [#1158](https://github.com/compasjs/compas/pull/1158)
+- feat(code-gen): sort imports in generated files before writing
+  ([#1125](https://github.com/compasjs/compas/pull/1125))
+  - Closes [#1110](https://github.com/compasjs/compas/pull/1110)
+- feat(docs): add http server document
+  ([#1157](https://github.com/compasjs/compas/pull/1157))
+  - Closes [#1134](https://github.com/compasjs/compas/pull/1134)
+- feat(docs): add TS setup & logger and events
+  ([#1153](https://github.com/compasjs/compas/pull/1153))
+  - Closes [#1132](https://github.com/compasjs/compas/pull/1132)
+  - Closes [#1133](https://github.com/compasjs/compas/pull/1133)
+- feat(docs): queue, migration, postgres, session and test docs
+  - Closes [#1135](https://github.com/compasjs/compas/pull/1135)
+  - Closes [#1136](https://github.com/compasjs/compas/pull/1136)
+  - Closes [#1144](https://github.com/compasjs/compas/pull/1144)
+  - Closes [#1147](https://github.com/compasjs/compas/pull/1147)
+  - Closes [#1148](https://github.com/compasjs/compas/pull/1148)
+- fix(code-gen): allow searchable on references
+  ([#1128](https://github.com/compasjs/compas/pull/1128))
+  - Closes [#1109](https://github.com/compasjs/compas/pull/1109)
+- fix(code-gen): nullable types on sql insert partials
+  ([#1129](https://github.com/compasjs/compas/pull/1129))
+  - References [#1098](https://github.com/compasjs/compas/pull/1098)
+
+##### Breaking changes
+
+- **deps**: bump sharp from 0.28.3 to 0.29.0
+  - Major version bump
+- **code-gen**: always collect as much validator issues as possible
+  - No TypeScript file support anymore in the 'validator' generator
+  - Removed the 'throwingValidator' option, every validator returns a
+    `{ error }|{, value }` result, where the error is an `AppError` or the value
+    key containing the validation result
+  - The `AppError` key is now always `validator.error`. Errors by path are now
+    put on `error.info["$.xxx"].key`
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.158.html).
+
 ### [v0.0.157](https://github.com/compasjs/compas/releases/tag/v0.0.157)
 
 ##### Changes
