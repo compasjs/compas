@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.159](https://github.com/compasjs/compas/releases/tag/v0.0.159)
+
+##### Changes
+
+- feat(server): support renewing sessions every x seconds
+  ([#1166](https://github.com/compasjs/compas/pull/1166))
+
 ### [v0.0.158](https://github.com/compasjs/compas/releases/tag/v0.0.158)
 
 ##### Changes

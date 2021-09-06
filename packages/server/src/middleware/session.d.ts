@@ -10,12 +10,20 @@
  * @since 0.1.0
  *
  * @param {import("../app").KoaApplication} app
- * @param {Partial<koaSession.opts>} opts KoaSession options
+ * @param {Partial<koaSession.opts & {
+ *   renew: number|boolean,
+ *   keepPublicCookie?: boolean
+ * }>} opts KoaSession options
  * @returns {Middleware}
  */
 export function session(
   app: import("../app").KoaApplication,
-  opts: Partial<koaSession.opts>,
+  opts: Partial<
+    koaSession.opts & {
+      renew: number | boolean;
+      keepPublicCookie?: boolean;
+    }
+  >,
 ): Middleware;
 export type Middleware = import("koa").Middleware;
 import koaSession from "koa-session";

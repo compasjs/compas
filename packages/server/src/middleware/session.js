@@ -69,6 +69,7 @@ export function session(app, opts) {
           typeof maxAge === "number" &&
           expire - Date.now() < maxAge - renewInSeconds * 1000
         ) {
+          // @ts-ignore
           ctx.session._requireSave = true;
         }
 

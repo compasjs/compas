@@ -72,7 +72,9 @@ _[source](https://github.com/compasjs/compas/blob/main/packages/server/src/middl
 
 _Available since 0.1.0_
 
-_function session({import("../app").KoaApplication} app, opts): Middleware_
+_function session({import("../app").KoaApplication} app,
+{Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?: boolean
+}>} opts KoaSession options): Middleware_
 
 Session middleware. Requires process.env.APP_KEYS to be set. To generate a key
 use something like:
@@ -83,9 +85,13 @@ This also accepts the session store as provided by `@compas/store`.
 
 - {import("../app").KoaApplication} app `{import("../app").KoaApplication} app`:
   {import("../app").KoaApplication} app
-- opts `Partial\<koaSession.opts>`: KoaSession options
+- {Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?:
+  boolean }>} opts KoaSession options
+  `{Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?: boolean }>} opts KoaSession options`:
+  {Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?:
+  boolean }>} opts KoaSession options
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/server/src/middleware/session.js#L21)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/server/src/middleware/session.js#L25)_
 
 ## compose
 
