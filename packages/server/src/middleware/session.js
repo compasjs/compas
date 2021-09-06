@@ -1,6 +1,7 @@
 import { environment, isNil, isProduction, merge, uuid } from "@compas/stdlib";
 import KeyGrip from "keygrip";
 import koaSession from "koa-session";
+import { compose } from "./compose.js";
 
 /**
  * @typedef {import("koa").Middleware} Middleware
@@ -15,11 +16,21 @@ import koaSession from "koa-session";
  * @since 0.1.0
  *
  * @param {import("../app").KoaApplication} app
- * @param {Partial<koaSession.opts>} opts KoaSession options
+ * @param {Partial<koaSession.opts & {
+ *   renew: number|boolean,
+ *   keepPublicCookie?: boolean
+ * }>} opts KoaSession options
  * @returns {Middleware}
  */
 export function session(app, opts) {
   app.keys = getKeys();
+
+  // Default to 30 seconds
+  const renewInSeconds = typeof opts.renew === "number" ? opts.renew : 30;
+
+  if (typeof opts.renew === "number") {
+    delete opts.renew;
+  }
 
   const options = merge(
     {},
@@ -41,6 +52,29 @@ export function session(app, opts) {
 
   if (options.keepPublicCookie && options.store) {
     wrapStoreCalls({ ...options });
+  }
+
+  if (opts.renew) {
+    return compose([
+      koaSession(options, app),
+      (ctx, next) => {
+        const expire = ctx.session?._expire;
+        const maxAge = ctx.session?.maxAge;
+
+        // The default for koa-session to renew is when we are past half of maxAge.
+        // This is can be inconvenient, so we change it to 'renewInSeconds'
+        if (
+          expire &&
+          maxAge &&
+          typeof maxAge === "number" &&
+          expire - Date.now() < maxAge - renewInSeconds * 1000
+        ) {
+          ctx.session._requireSave = true;
+        }
+
+        return next();
+      },
+    ]);
   }
 
   return koaSession(options, app);
