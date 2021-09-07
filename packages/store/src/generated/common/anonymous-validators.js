@@ -558,16 +558,7 @@ export function anonymousValidator2144828802(value, propertyPath) {
  */
 export function anonymousValidator329780902(value, propertyPath) {
   if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.reference.undefined",
-          info: {},
-        },
-      ],
-    };
+    return { value: {} };
   }
   return anonymousValidator2144828802(value, propertyPath);
 }
@@ -1035,16 +1026,7 @@ export function anonymousValidator420878393(value, propertyPath) {
  */
 export function anonymousValidator128967953(value, propertyPath) {
   if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.reference.undefined",
-          info: {},
-        },
-      ],
-    };
+    return { value: {} };
   }
   return anonymousValidator420878393(value, propertyPath);
 }

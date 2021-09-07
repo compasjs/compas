@@ -259,6 +259,16 @@ function createOrUseAnonymousFunction(context, imports, type) {
 
   context.anonymousFunctionMapping.set(string, hash);
 
+  let isOptional = type.isOptional;
+  let defaultValue = type.defaultValue;
+  let allowNull = type.validator?.allowNull;
+
+  if (type.type === "reference") {
+    isOptional = isOptional || type.reference.isOptional;
+    defaultValue = defaultValue || type.reference.defaultValue;
+    allowNull = allowNull || type.reference.validator?.allowNull;
+  }
+
   const fn = js`
     /**
      * @param {*} value
@@ -270,12 +280,10 @@ function createOrUseAnonymousFunction(context, imports, type) {
     export function anonymousValidator${hash}(value, propertyPath) {
       if (isNil(value)) {
         ${() => {
-          if (type.isOptional && !isNil(type.defaultValue)) {
-            return `return { value: ${type.defaultValue} };`;
-          } else if (type.isOptional) {
-            return `return { value: ${
-              type.validator?.allowNull ? "value" : undefined
-            } };`;
+          if (isOptional && !isNil(defaultValue)) {
+            return `return { value: ${defaultValue} };`;
+          } else if (isOptional) {
+            return `return { value: ${allowNull ? "value" : undefined} };`;
           }
 
           return `

@@ -541,6 +541,44 @@ test("code-gen/validators", async (t) => {
     );
   });
 
+  t.test("objectWithOptionalReference", (t) => {
+    assertAll(
+      t,
+      [
+        {
+          input: {},
+          expected: {
+            ref: undefined,
+          },
+        },
+        {
+          input: {
+            ref: {
+              bool: true,
+              string: "str",
+            },
+          },
+          expected: {
+            ref: Object.assign(Object.create(null), {
+              bool: true,
+              string: "str",
+            }),
+          },
+        },
+        {
+          input: {
+            ref: {
+              bool: true,
+            },
+          },
+          errorObjectKey: "$.ref.string",
+          errorKey: "validator.string.undefined",
+        },
+      ],
+      validators.validateValidatorObjectWithOptionalReference,
+    );
+  });
+
   // TODO:
   // - number, object, string
 });
