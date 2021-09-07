@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.161](https://github.com/compasjs/compas/releases/tag/v0.0.161)
+
+##### Changes
+
+- fix(code-gen): validation of optional references in object types
+  ([#1169](https://github.com/compasjs/compas/pull/1169))
+
 ### [v0.0.160](https://github.com/compasjs/compas/releases/tag/v0.0.160)
 
 ##### Changes
