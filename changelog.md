@@ -4,6 +4,14 @@ editLink: false
 
 # Changelog
 
+### [v0.0.160](https://github.com/compasjs/compas/releases/tag/v0.0.160)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.7.10 to 16.7.12
+  ([#1167](https://github.com/compasjs/compas/pull/1167))
+- fix(server): use correct condition for session renew behavior
+
 ### [v0.0.159](https://github.com/compasjs/compas/releases/tag/v0.0.159)
 
 ##### Changes
