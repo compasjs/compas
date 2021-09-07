@@ -54,7 +54,7 @@ export function session(app, opts) {
     wrapStoreCalls({ ...options });
   }
 
-  if (opts.renew) {
+  if (options.renew) {
     return compose([
       koaSession(options, app),
       (ctx, next) => {
