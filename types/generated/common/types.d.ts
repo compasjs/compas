@@ -1258,6 +1258,8 @@ declare global {
   type ValidatorNumberOneOf = 1 | 3 | 5;
   type ValidatorObject = { bool: boolean; string: string };
   type ValidatorObjectLoose = ValidatorObject;
+  type ValidatorObjectOptional = undefined | { bool: boolean; string: string };
+  type ValidatorObjectWithOptionalReference = { ref: ValidatorObjectOptional };
   type ValidatorRecursive = { recursive?: undefined | ValidatorRecursive };
   type ValidatorString = string;
   type ValidatorStringAllowNull = undefined | null | string;

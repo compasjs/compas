@@ -402,16 +402,7 @@ export function anonymousValidator781728730(value, propertyPath) {
  */
 export function anonymousValidator185218226(value, propertyPath) {
   if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.reference.undefined",
-          info: {},
-        },
-      ],
-    };
+    return { value: undefined };
   }
   return anonymousValidator781728730(value, propertyPath);
 }

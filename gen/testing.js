@@ -80,17 +80,22 @@ export function applyTestingValidatorsStructure(app) {
   );
 
   // Object
+  const object = T.object("object").keys({
+    bool: T.bool(),
+    string: T.string(),
+  });
+
   app.add(
-    T.object("object").keys({
-      bool: T.bool(),
-      string: T.string(),
-    }),
+    object,
     T.object("objectLoose")
       .keys({
         bool: T.bool(),
         string: T.string(),
       })
       .loose(),
+    T.object("objectWithOptionalReference").keys({
+      ref: T.optional().value(object),
+    }),
   );
 
   // String
