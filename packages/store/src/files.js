@@ -183,8 +183,9 @@ export async function copyFile(
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   // Delete transformed copies of deleted files
-  await queries.fileDelete(sql, {
+  await queries.fileDeletePermanent(sql, {
     $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (meta->>'transformedFromOriginal')::uuid)`,
+    deletedAtIncludeNotNull: true,
   });
 
   const minioObjectsPromise = listObjects(minio, bucketName);
