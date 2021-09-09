@@ -29,7 +29,7 @@ document, for now let's create a Koa middleware to handle the sessions:
 import { session, getApp } from "@compas/server";
 
 const app = getApp();
-const sessionMiddlewre = session(app, {
+const sessionMiddleware = session(app, {
   store: sessionStore,
 });
 ```
