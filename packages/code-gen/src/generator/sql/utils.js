@@ -320,4 +320,21 @@ function checkReservedRelationNames(context, type, relation) {
       ownKey: relation.ownKey,
     });
   }
+
+  const usedRelationNames = [];
+
+  for (const innerRelation of type.relations) {
+    if (innerRelation === relation) {
+      continue;
+    }
+    usedRelationNames.push(innerRelation.ownKey);
+  }
+
+  if (usedRelationNames.includes(relation.ownKey)) {
+    context.errors.push({
+      key: "sqlUsedRelationKey",
+      type: type.name,
+      ownKey: relation.ownKey,
+    });
+  }
 }

@@ -1586,6 +1586,28 @@ export function anonymousValidator40811832(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<"sqlUsedRelationKey">}
+ */
+export function anonymousValidator780181378(
+  value: any,
+  propertyPath: string,
+): EitherN<"sqlUsedRelationKey">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }>}
+ */
+export function anonymousValidator18279731(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  key: "sqlUsedRelationKey";
+  type: string;
+  ownKey: string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<"coreReservedGroupName">}
  */
 export function anonymousValidator1656167879(
@@ -1607,9 +1629,9 @@ export function anonymousValidator451802958(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>}
+ * @returns {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>}
  */
-export function anonymousValidator1962763405(
+export function anonymousValidator756780076(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1650,6 +1672,11 @@ export function anonymousValidator1962763405(
       ownKey: string;
     }
   | {
+      key: "sqlUsedRelationKey";
+      type: string;
+      ownKey: string;
+    }
+  | {
       key: "coreReservedGroupName";
       groupName: string;
     }
@@ -1657,9 +1684,9 @@ export function anonymousValidator1962763405(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]>}
+ * @returns {EitherN<({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]>}
  */
-export function anonymousValidator1413584527(
+export function anonymousValidator711997906(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1701,6 +1728,11 @@ export function anonymousValidator1413584527(
         ownKey: string;
       }
     | {
+        key: "sqlUsedRelationKey";
+        type: string;
+        ownKey: string;
+      }
+    | {
         key: "coreReservedGroupName";
         groupName: string;
       }
@@ -1709,7 +1741,7 @@ export function anonymousValidator1413584527(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }>}
+ * @returns {EitherN<{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }>}
  */
 export function anonymousValidator980814292(
   value: any,
@@ -1754,6 +1786,11 @@ export function anonymousValidator980814292(
       }
     | {
         key: "sqlReservedRelationKey";
+        type: string;
+        ownKey: string;
+      }
+    | {
+        key: "sqlUsedRelationKey";
         type: string;
         ownKey: string;
       }

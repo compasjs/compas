@@ -62,6 +62,7 @@ const objectKeys914281176 = new Set([
   "secondName",
 ]);
 const objectKeys40811832 = new Set(["key", "type", "ownKey"]);
+const objectKeys18279731 = new Set(["key", "type", "ownKey"]);
 const objectKeys451802958 = new Set(["key", "groupName"]);
 const objectKeys1664519436 = new Set(["phase"]);
 const objectKeys1287070944 = new Set([
@@ -5703,6 +5704,131 @@ export function anonymousValidator40811832(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<"sqlUsedRelationKey">}
+ */
+export function anonymousValidator780181378(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  if (value !== "sqlUsedRelationKey") {
+    const oneOf = ["sqlUsedRelationKey"];
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.oneOf",
+          info: { oneOf },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }>}
+ */
+export function anonymousValidator18279731(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys18279731.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["key", anonymousValidator780181378],
+    ["type", anonymousValidator186795873],
+    ["ownKey", anonymousValidator186795873],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<"coreReservedGroupName">}
  */
 export function anonymousValidator1656167879(value, propertyPath) {
@@ -5827,9 +5953,9 @@ export function anonymousValidator451802958(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>}
+ * @returns {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>}
  */
-export function anonymousValidator1962763405(value, propertyPath) {
+export function anonymousValidator756780076(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -5844,7 +5970,7 @@ export function anonymousValidator1962763405(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   const errors = [];
-  /** @type {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>} */
+  /** @type {EitherN<{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, }>} */
   let result = { errors: [] };
   result = anonymousValidator1045315509(value, propertyPath);
   if (result.errors) {
@@ -5888,6 +6014,12 @@ export function anonymousValidator1962763405(value, propertyPath) {
   } else {
     return result;
   }
+  result = anonymousValidator18279731(value, propertyPath);
+  if (result.errors) {
+    errors.push(...result.errors);
+  } else {
+    return result;
+  }
   result = anonymousValidator451802958(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
@@ -5906,9 +6038,9 @@ export function anonymousValidator1962763405(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]>}
+ * @returns {EitherN<({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[]>}
  */
-export function anonymousValidator1413584527(value, propertyPath) {
+export function anonymousValidator711997906(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -5936,7 +6068,7 @@ export function anonymousValidator1413584527(value, propertyPath) {
   const result = Array.from({ length: value.length });
   const errors = [];
   for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1962763405(
+    const arrVar = anonymousValidator756780076(
       value[i],
       `${propertyPath}[${i}]`,
     );
@@ -5955,7 +6087,7 @@ export function anonymousValidator1413584527(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }>}
+ * @returns {EitherN<{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, }|{"key": "coreReservedGroupName", "groupName": string, })[], }>}
  */
 export function anonymousValidator980814292(value, propertyPath) {
   if (isNil(value)) {
@@ -6007,7 +6139,7 @@ export function anonymousValidator980814292(value, propertyPath) {
     ["extension", anonymousValidator1146021598],
     ["importExtension", anonymousValidator186795873],
     ["outputFiles", anonymousValidator1979163207],
-    ["errors", anonymousValidator1413584527],
+    ["errors", anonymousValidator711997906],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);

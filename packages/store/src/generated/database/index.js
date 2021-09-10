@@ -7,8 +7,8 @@ import { jobQueries } from "./job.js";
 import { sessionQueries } from "./session.js";
 
 export const queries = {
-  ...fileQueries,
   ...fileGroupQueries,
+  ...fileQueries,
   ...jobQueries,
   ...sessionQueries,
 };
