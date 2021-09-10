@@ -680,6 +680,9 @@ export function fileGroupUpdateSet(update) {
     values.push(update.deletedAt ?? null);
   }
   // Remove the comma suffix
+  if (strings.length === 0) {
+    throw AppError.validationError("fileGroup.updateSet.emptyUpdateStatement");
+  }
   strings[0] = strings[0].substring(2);
   strings.push("");
   return query(strings, ...values);
