@@ -4,6 +4,44 @@ editLink: false
 
 # Changelog
 
+### [v0.0.162](https://github.com/compasjs/compas/releases/tag/v0.0.162)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.7.12 to 16.9.1
+  ([#1173](https://github.com/compasjs/compas/pull/1173),
+  [#1179](https://github.com/compasjs/compas/pull/1179),
+  [#1186](https://github.com/compasjs/compas/pull/1186))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump c8 from 7.8.0 to 7.9.0
+  ([#1187](https://github.com/compasjs/compas/pull/1187))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump eslint-plugin-jsdoc from 36.0.8 to 36.1.0
+  ([#1174](https://github.com/compasjs/compas/pull/1174))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump prettier from 2.3.2 to 2.4.0
+  ([#1184](https://github.com/compasjs/compas/pull/1184))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump sharp from 0.29.0 to 0.29.1
+  ([#1171](https://github.com/compasjs/compas/pull/1171))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- feat(code-gen): don't output params & data if not used in the api client
+  ([#1193](https://github.com/compasjs/compas/pull/1193))
+  - Closes [#1188](https://github.com/compasjs/compas/pull/1188)
+- feat(code-gen): redo options.enabled of react-query generator
+  ([#1194](https://github.com/compasjs/compas/pull/1194))
+  - Closes [#1189](https://github.com/compasjs/compas/pull/1189)
+  - Closes [#1190](https://github.com/compasjs/compas/pull/1190)
+- fix(code-gen): error when multiple relations use the same ownKey
+  ([#1192](https://github.com/compasjs/compas/pull/1192))
+  - Closes [#1177](https://github.com/compasjs/compas/pull/1177)
+- fix(code-gen): throw explicit error on empty sql update clause
+  ([#1191](https://github.com/compasjs/compas/pull/1191))
+  - Closes [#1175](https://github.com/compasjs/compas/pull/1175)
+- fix(docs): typo in session handling
+- fix(store): syncDeletedFiles permanently delete transformed
+  ([#1182](https://github.com/compasjs/compas/pull/1182))
+
 ### [v0.0.161](https://github.com/compasjs/compas/releases/tag/v0.0.161)
 
 ##### Changes
