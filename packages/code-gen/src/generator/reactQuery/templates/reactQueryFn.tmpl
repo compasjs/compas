@@ -11,18 +11,7 @@
   {{ if (item.idempotent) { }}* Note that a custom options.enabled may be beneficial for your use case{{ } }}
  * Docs: {{= item.docString.replace(/\n/g, "\n  * ") }}
  */
-export function {{= funcName }}<TData = {{= responseType }}>({
-{{ if (item.params) { }}
-params,
-{{ } }}
-{{ if (item.query) { }}
-query,
-{{ } }}
-{{ if (item.body) { }}
-body,
-{{ } }}
-options,
-}: {
+export function {{= funcName }}<TData = {{= responseType }}>({{= item.params || item.query || item.body ? "opts:" : "opts?:" }} {
 {{ if (item.params) { }}
 params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
@@ -33,57 +22,84 @@ query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { use
 body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefined,
-}) {
+}{{= item.params || item.query || item.body ? "" : "|undefined" }}) {
   const axiosInstance = useApi();
-  options = options ?? {};
+  const options = opts?.options ?? {};
 
+  {{ let hasKeysAffectingQueryEnabled = false; }}
+    {{ if (item.query) { }}
+      {{ for (const [key, value] of Object.entries(item.query?.keys ?? item.query?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+          {{ hasKeysAffectingQueryEnabled = true; break; }}
+        {{ } }}
+      {{ } }}
+    {{ } }}
+    {{ console.log({ params: item.params }); }}
+    {{ if (item.params && !hasKeysAffectingQueryEnabled) { }}
+      {{ for (const [key, value] of Object.entries(item.params?.keys  ?? item.params?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+          {{ hasKeysAffectingQueryEnabled = true; break; }}
+        {{ } }}
+      {{ } }}
+    {{ } }}
+    {{ if (item.body && !hasKeysAffectingQueryEnabled) { }}
+      {{ for (const [key, value] of Object.entries(item.body?.keys ?? item.body?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+            {{ hasKeysAffectingQueryEnabled = true; break; }}
+      {{ } }}
+      {{ } }}
+    {{ } }}
+
+{{ console.log({ hasKeysAffectingQueryEnabled, funcName } ); }}
+  {{ if (hasKeysAffectingQueryEnabled) { }}
   options.enabled = (
     options.enabled === true || (options.enabled !== false
     {{ if (item.query) { }}
-      {{ for (const key of Object.keys(item.query?.keys ?? {})) { }}
-        {{ if (!item.query.keys[key].isOptional) { }}
-          && !!query.{{= key }}
+      {{ for (const [key, value] of Object.entries(item.query?.keys ?? item.query?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+          && !!opts.query.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
     {{ if (item.params) { }}
-      {{ for (const key of Object.keys(item.params?.keys ?? {})) { }}
-        {{ if (!item.params.keys[key].isOptional) { }}
-          && !!params.{{= key }}
+      {{ for (const [key,value] of Object.entries(item.params?.keys ?? item.params?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+          && !!opts.params.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
     {{ if (item.body) { }}
-      {{ for (const key of Object.keys(item.body?.keys ?? {})) { }}
-        {{ if (!item.body.keys[key].isOptional) { }}
-          && !!body.{{= key }}
+      {{ for (const [key, value] of Object.entries(item.body?.keys ?? item.body?.reference?.keys ?? {})) { }}
+        {{ if (!value.isOptional) { }}
+          && !!opts.body.{{= key }}
         {{ } }}
       {{ } }}
     {{ } }}
   ));
+  {{ } }}
 
   return useQuery({{= funcName }}.queryKey(
     {{ if (item.params) { }}
-    params,
+    opts.params,
     {{ } }}
     {{ if (item.query) { }}
-    query,
+    opts.query,
     {{ } }}
     {{ if (item.body) { }}
-    body,
+    opts.body,
     {{ } }}
     ),
     () => {
       const promise: CancellablePromise<{{= responseType }}> = api{{= item.uniqueName }}(
         axiosInstance,
-        {{= item.params ? "params, " : ""}}
-        {{= item.query ? "query, " : "" }}
-        {{= item.body ? "body, " : "" }}
-        { cancelToken: options?.cancelToken?.token },
+        {{= item.params ? "opts.params, " : ""}}
+        {{= item.query ? "opts.query, " : "" }}
+        {{= item.body ? "opts.body, " : "" }}
+        { cancelToken: options.cancelToken?.token },
       );
 
-      if (options?.cancelToken) {
-        promise.cancel = () => options?.cancelToken?.cancel();
+      if (options.cancelToken) {
+        promise.cancel = () => options.cancelToken?.cancel();
       }
 
       return promise;
