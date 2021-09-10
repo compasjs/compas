@@ -3,6 +3,7 @@
 import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "../builders/index.js";
 import { stringifyType } from "../stringify.js";
+import { getHashForString } from "../utils.js";
 import { js } from "./tag/index.js";
 import { generateTypeDefinition, getTypeNameForType } from "./types.js";
 import { importCreator } from "./utils.js";
@@ -229,15 +230,7 @@ function generateAnonymousValidatorCall(
 function getHashForType(type) {
   const string = typeof type === "string" ? type : stringifyType(type);
 
-  let hash = 0;
-  let i = 0;
-  const len = string.length;
-  while (i < len) {
-    hash = ((hash << 5) - hash + string.charCodeAt(i++)) << 0;
-  }
-  hash = Math.abs(hash);
-
-  return hash;
+  return getHashForString(string);
 }
 
 /**

@@ -1674,6 +1674,7 @@ declare global {
           secondName: string;
         }
       | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
+      | { key: "sqlUsedRelationKey"; type: string; ownKey: string }
       | { key: "coreReservedGroupName"; groupName: string }
     )[];
   };

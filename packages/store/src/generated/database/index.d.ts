@@ -53,42 +53,6 @@ export const queries: {
     update: StoreJobUpdatePartial,
     where?: StoreJobWhere | undefined,
   ) => Promise<StoreJob[]>;
-  fileGroupCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<number>;
-  fileGroupDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-    options?:
-      | {
-          skipCascade?: boolean | undefined;
-        }
-      | undefined,
-  ) => Promise<void>;
-  fileGroupInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
-    options?:
-      | {
-          withPrimaryKey?: boolean | undefined;
-        }
-      | undefined,
-  ) => Promise<StoreFileGroup[]>;
-  fileGroupUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
-    options?: {} | undefined,
-  ) => Promise<StoreFileGroup[]>;
-  fileGroupUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    update: StoreFileGroupUpdatePartial,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<StoreFileGroup[]>;
-  fileGroupDeletePermanent: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<void>;
   fileCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileWhere | undefined,
@@ -124,6 +88,42 @@ export const queries: {
   fileDeletePermanent: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileWhere | undefined,
+  ) => Promise<void>;
+  fileGroupCount: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreFileGroupWhere | undefined,
+  ) => Promise<number>;
+  fileGroupDelete: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreFileGroupWhere | undefined,
+    options?:
+      | {
+          skipCascade?: boolean | undefined;
+        }
+      | undefined,
+  ) => Promise<void>;
+  fileGroupInsert: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
+    options?:
+      | {
+          withPrimaryKey?: boolean | undefined;
+        }
+      | undefined,
+  ) => Promise<StoreFileGroup[]>;
+  fileGroupUpsertOnId: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
+    options?: {} | undefined,
+  ) => Promise<StoreFileGroup[]>;
+  fileGroupUpdate: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    update: StoreFileGroupUpdatePartial,
+    where?: StoreFileGroupWhere | undefined,
+  ) => Promise<StoreFileGroup[]>;
+  fileGroupDeletePermanent: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreFileGroupWhere | undefined,
   ) => Promise<void>;
 };
 //# sourceMappingURL=index.d.ts.map

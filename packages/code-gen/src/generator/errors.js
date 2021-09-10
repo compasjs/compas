@@ -4,16 +4,31 @@
  *
  * @param {CodeGenContext} context
  */
+import { getHashForString } from "../utils.js";
+
 export function exitOnErrorsOrReturn(context) {
-  if (context.errors.length === 0) {
+  const errorHashes = new Set();
+  const errors = [];
+
+  for (const err of context.errors) {
+    const hash = getHashForString(JSON.stringify(err));
+    if (errorHashes.has(hash)) {
+      continue;
+    }
+
+    errorHashes.add(hash);
+    errors.push(err);
+  }
+
+  if (errors.length === 0) {
     return;
   }
 
   const formatArray = [""];
 
-  for (let i = 0; i < context.errors.length; i++) {
-    const error = context.errors[i];
-    let str = `- (${i + 1}/${context.errors.length}): `;
+  for (let i = 0; i < errors.length; i++) {
+    const error = errors[i];
+    let str = `- (${i + 1}/${errors.length}): `;
 
     switch (error.key) {
       case "sqlEnableValidator":
@@ -51,6 +66,10 @@ export function exitOnErrorsOrReturn(context) {
 
       case "sqlReservedRelationKey":
         str += `Relation name '${error.ownKey}' from type '${error.type}' is a reserved keyword. Use another relation name.`;
+        break;
+
+      case "sqlUsedRelationKey":
+        str += `Relation name '${error.ownKey}' from type '${error.type}' is already used as a relation name. Use another relation name.`;
         break;
 
       case "coreReservedGroupName":

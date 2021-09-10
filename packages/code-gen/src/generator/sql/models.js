@@ -12,7 +12,7 @@ import { getQueryEnabledObjects } from "./utils.js";
  */
 export function generateModelFiles(context) {
   const queryObjectNames = [];
-  const indexSrc = [];
+  const indexImports = importCreator();
 
   for (const type of getQueryEnabledObjects(context)) {
     const src = [];
@@ -32,12 +32,15 @@ export function generateModelFiles(context) {
       relativePath: `./database/${type.name}.js`,
     });
 
-    indexSrc.push(`import { ${type.name}Queries } from "./${type.name}.js";`);
+    indexImports.destructureImport(`${type.name}Queries`, `./${type.name}.js`);
   }
 
-  indexSrc.push(`export const queries = { ${queryObjectNames.join(", ")} };`);
   context.outputFiles.push({
-    contents: indexSrc.join("\n"),
+    contents: js`
+      ${indexImports.print()}
+
+      export const queries = { ${queryObjectNames.sort().join(", ")} };
+    `,
     relativePath: "./database/index.js",
   });
 }

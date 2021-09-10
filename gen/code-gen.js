@@ -86,6 +86,11 @@ export function applyCodeGenStructure(app) {
             ownKey: T.string(),
           },
           {
+            key: "sqlUsedRelationKey",
+            type: T.string(),
+            ownKey: T.string(),
+          },
+          {
             key: "coreReservedGroupName",
             groupName: T.string(),
           },
