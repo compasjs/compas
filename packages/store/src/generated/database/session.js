@@ -431,6 +431,9 @@ export function sessionUpdateSet(update) {
   strings.push(`, "updatedAt" = `);
   values.push(new Date());
   // Remove the comma suffix
+  if (strings.length === 0) {
+    throw AppError.validationError("session.updateSet.emptyUpdateStatement");
+  }
   strings[0] = strings[0].substring(2);
   strings.push("");
   return query(strings, ...values);

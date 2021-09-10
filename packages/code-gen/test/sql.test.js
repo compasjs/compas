@@ -199,6 +199,14 @@ test("code-gen/e2e/sql", (t) => {
     t.equal(dbUser.deletedAt, undefined);
   });
 
+  t.test("empty update of entity without default date columns", async (t) => {
+    try {
+      await queries.categoryMetaUpdate(sql, {}, {});
+    } catch (e) {
+      t.equal(e.key, "categoryMeta.updateSet.emptyUpdateStatement");
+    }
+  });
+
   t.test("upsert user nick name", async (t) => {
     const id = uuid();
     const [insert] = await queries.userUpsertOnId(sql, {
