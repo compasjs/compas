@@ -94,8 +94,12 @@ options = {},
     const response = await instance.request({
       url: `{{= url }}`,
       method: "{{= item.method.toLowerCase() }}",
-      params: {{ if (item.query) { }}query{{ } else { }}{}{{ } }},
-      data: {{ if (item.body || item.files) { }}data{{ } else { }}{}{{ } }},
+      {{ if (item.query) { }}
+      params: query,
+      {{ } }}
+      {{ if (item.body || item.files) { }}
+      data,
+      {{ } }}
       {{ if ((item.files || item.internalSettings?.requestBodyType === "form-data") && options.isNode) { }}
       headers: typeof data?.getHeaders === "function" ? data.getHeaders() : {},
       {{ } }}
