@@ -4,6 +4,16 @@ editLink: false
 
 # Changelog
 
+### [v0.0.163](https://github.com/compasjs/compas/releases/tag/v0.0.163)
+
+##### Changes
+
+- build(deps): bump @types/formidable from 1.2.3 to 1.2.4
+  ([#1195](https://github.com/compasjs/compas/pull/1195))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- fix(code-gen): correct reuse of any validators
+  ([#1199](https://github.com/compasjs/compas/pull/1199))
+
 ### [v0.0.162](https://github.com/compasjs/compas/releases/tag/v0.0.162)
 
 ##### Changes
