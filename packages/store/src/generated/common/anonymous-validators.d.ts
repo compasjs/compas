@@ -21,7 +21,7 @@ export function anonymousValidator293751998(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|any>}
  */
-export function anonymousValidator1585770956(
+export function anonymousValidator926956431(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | any>;
@@ -227,7 +227,7 @@ export function anonymousValidator326842456(
  * @param {string} propertyPath
  * @returns {EitherN<any>}
  */
-export function anonymousValidator1471603504(
+export function anonymousValidator1462196493(
   value: any,
   propertyPath: string,
 ): EitherN<any>;
@@ -330,6 +330,15 @@ export function anonymousValidator1108679019(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|QueryPart<any>>}
+ */
+export function anonymousValidator1930640707(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | QueryPart<any>>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|(StoreFileWhere)[]>}
  */
 export function anonymousValidator1804070323(
@@ -350,7 +359,7 @@ export function anonymousValidator1899069927(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
  */
-export function anonymousValidator1024905514(
+export function anonymousValidator888270707(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | string[] | QueryPart<any>>;
@@ -368,7 +377,7 @@ export function anonymousValidator890105892(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
  */
-export function anonymousValidator972289697(
+export function anonymousValidator869204168(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | string[] | QueryPart<any>>;
@@ -386,7 +395,7 @@ export function anonymousValidator1891060044(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(Date)[]|QueryPart<any>>}
  */
-export function anonymousValidator978954249(
+export function anonymousValidator764760480(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | Date[] | QueryPart<any>>;
@@ -422,7 +431,7 @@ export function anonymousValidator1370653763(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
  */
-export function anonymousValidator2102014144(
+export function anonymousValidator1243460791(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | number[] | QueryPart<any>>;
@@ -584,7 +593,7 @@ export function anonymousValidator1033385158(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
  */
-export function anonymousValidator1971955962(
+export function anonymousValidator2059610435(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | number[] | QueryPart<any>>;
@@ -694,7 +703,7 @@ export function anonymousValidator500057262(
  * @param {string} propertyPath
  * @returns {EitherN<QueryPart<any>>}
  */
-export function anonymousValidator16847607(
+export function anonymousValidator62764704(
   value: any,
   propertyPath: string,
 ): EitherN<QueryPart<any>>;
