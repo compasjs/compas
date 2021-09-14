@@ -447,7 +447,7 @@ export function anonymousValidator293751998(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|any>}
  */
-export function anonymousValidator1585770956(value, propertyPath) {
+export function anonymousValidator926956431(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -535,7 +535,7 @@ export function anonymousValidator2144828802(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["transforms", anonymousValidator1585770956],
+    ["transforms", anonymousValidator926956431],
     ["transformedFromOriginal", anonymousValidator1443576836],
   ];
   for (const [key, validator] of validatorPairs) {
@@ -1393,7 +1393,7 @@ export function anonymousValidator326842456(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<any>}
  */
-export function anonymousValidator1471603504(value, propertyPath) {
+export function anonymousValidator1462196493(value, propertyPath) {
   if (isNil(value)) {
     return { value: {} };
   }
@@ -1563,7 +1563,7 @@ export function anonymousValidator1781782332(value, propertyPath) {
     ["priority", anonymousValidator326842456],
     ["scheduledAt", anonymousValidator1389014320],
     ["name", anonymousValidator186795873],
-    ["data", anonymousValidator1471603504],
+    ["data", anonymousValidator1462196493],
     ["retryCount", anonymousValidator1103865757],
     ["handlerTimeout", anonymousValidator1065942849],
     ["createdAt", anonymousValidator1389014320],
@@ -1894,7 +1894,7 @@ export function anonymousValidator1108679019(value, propertyPath) {
    */
   const validatorPairs = [
     ["expires", anonymousValidator448481401],
-    ["data", anonymousValidator1471603504],
+    ["data", anonymousValidator1462196493],
     ["id", anonymousValidator56355924],
     ["createdAt", anonymousValidator1389014320],
     ["updatedAt", anonymousValidator1389014320],
@@ -1911,6 +1911,29 @@ export function anonymousValidator1108679019(value, propertyPath) {
     return { errors };
   }
   return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|QueryPart<any>>}
+ */
+export function anonymousValidator1930640707(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (!isQueryPart(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.any.custom",
+          info: {},
+        },
+      ],
+    };
+  }
+  return { value };
 }
 /**
  * @param {*} value
@@ -1997,7 +2020,7 @@ export function anonymousValidator1899069927(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
  */
-export function anonymousValidator1024905514(value, propertyPath) {
+export function anonymousValidator888270707(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -2011,7 +2034,7 @@ export function anonymousValidator1024905514(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator1585770956(value, propertyPath);
+  result = anonymousValidator1930640707(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -2071,7 +2094,7 @@ export function anonymousValidator890105892(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
  */
-export function anonymousValidator972289697(value, propertyPath) {
+export function anonymousValidator869204168(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -2085,7 +2108,7 @@ export function anonymousValidator972289697(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator1585770956(value, propertyPath);
+  result = anonymousValidator1930640707(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -2145,7 +2168,7 @@ export function anonymousValidator1891060044(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(Date)[]|QueryPart<any>>}
  */
-export function anonymousValidator978954249(value, propertyPath) {
+export function anonymousValidator764760480(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -2159,7 +2182,7 @@ export function anonymousValidator978954249(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator1585770956(value, propertyPath);
+  result = anonymousValidator1930640707(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -2282,7 +2305,7 @@ export function anonymousValidator1370653763(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
  */
-export function anonymousValidator2102014144(value, propertyPath) {
+export function anonymousValidator1243460791(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -2296,7 +2319,7 @@ export function anonymousValidator2102014144(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator1585770956(value, propertyPath);
+  result = anonymousValidator1930640707(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -2361,58 +2384,58 @@ export function anonymousValidator153017499(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["$raw", anonymousValidator1585770956],
+    ["$raw", anonymousValidator1930640707],
     ["$or", anonymousValidator58972158],
     ["id", anonymousValidator1802076175],
     ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator1024905514],
-    ["idNotIn", anonymousValidator1024905514],
+    ["idIn", anonymousValidator888270707],
+    ["idNotIn", anonymousValidator888270707],
     ["idLike", anonymousValidator1802076175],
     ["idNotLike", anonymousValidator1802076175],
     ["order", anonymousValidator963028965],
     ["orderNotEqual", anonymousValidator963028965],
-    ["orderIn", anonymousValidator2102014144],
-    ["orderNotIn", anonymousValidator2102014144],
+    ["orderIn", anonymousValidator1243460791],
+    ["orderNotIn", anonymousValidator1243460791],
     ["orderGreaterThan", anonymousValidator963028965],
     ["orderLowerThan", anonymousValidator963028965],
     ["orderIsNull", anonymousValidator196147222],
     ["orderIsNotNull", anonymousValidator196147222],
     ["file", anonymousValidator1802076175],
     ["fileNotEqual", anonymousValidator1802076175],
-    ["fileIn", anonymousValidator1024905514],
-    ["fileNotIn", anonymousValidator1024905514],
+    ["fileIn", anonymousValidator888270707],
+    ["fileNotIn", anonymousValidator888270707],
     ["fileLike", anonymousValidator1802076175],
     ["fileNotLike", anonymousValidator1802076175],
     ["fileIsNull", anonymousValidator196147222],
     ["fileIsNotNull", anonymousValidator196147222],
     ["parent", anonymousValidator1802076175],
     ["parentNotEqual", anonymousValidator1802076175],
-    ["parentIn", anonymousValidator1024905514],
-    ["parentNotIn", anonymousValidator1024905514],
+    ["parentIn", anonymousValidator888270707],
+    ["parentNotIn", anonymousValidator888270707],
     ["parentLike", anonymousValidator1802076175],
     ["parentNotLike", anonymousValidator1802076175],
     ["parentIsNull", anonymousValidator196147222],
     ["parentIsNotNull", anonymousValidator196147222],
     ["createdAt", anonymousValidator1988053796],
     ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator978954249],
-    ["createdAtNotIn", anonymousValidator978954249],
+    ["createdAtIn", anonymousValidator764760480],
+    ["createdAtNotIn", anonymousValidator764760480],
     ["createdAtGreaterThan", anonymousValidator1988053796],
     ["createdAtLowerThan", anonymousValidator1988053796],
     ["createdAtIsNull", anonymousValidator196147222],
     ["createdAtIsNotNull", anonymousValidator196147222],
     ["updatedAt", anonymousValidator1988053796],
     ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator978954249],
-    ["updatedAtNotIn", anonymousValidator978954249],
+    ["updatedAtIn", anonymousValidator764760480],
+    ["updatedAtNotIn", anonymousValidator764760480],
     ["updatedAtGreaterThan", anonymousValidator1988053796],
     ["updatedAtLowerThan", anonymousValidator1988053796],
     ["updatedAtIsNull", anonymousValidator196147222],
     ["updatedAtIsNotNull", anonymousValidator196147222],
     ["deletedAt", anonymousValidator1988053796],
     ["deletedAtNotEqual", anonymousValidator1988053796],
-    ["deletedAtIn", anonymousValidator978954249],
-    ["deletedAtNotIn", anonymousValidator978954249],
+    ["deletedAtIn", anonymousValidator764760480],
+    ["deletedAtNotIn", anonymousValidator764760480],
     ["deletedAtGreaterThan", anonymousValidator1988053796],
     ["deletedAtLowerThan", anonymousValidator1988053796],
     ["deletedAtIncludeNotNull", anonymousValidator196147222],
@@ -2493,41 +2516,41 @@ export function anonymousValidator2074494218(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["$raw", anonymousValidator1585770956],
+    ["$raw", anonymousValidator1930640707],
     ["$or", anonymousValidator1804070323],
     ["id", anonymousValidator1802076175],
     ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator1024905514],
-    ["idNotIn", anonymousValidator1024905514],
+    ["idIn", anonymousValidator888270707],
+    ["idNotIn", anonymousValidator888270707],
     ["idLike", anonymousValidator1802076175],
     ["idNotLike", anonymousValidator1802076175],
     ["bucketName", anonymousValidator1443576836],
     ["bucketNameNotEqual", anonymousValidator1443576836],
-    ["bucketNameIn", anonymousValidator972289697],
-    ["bucketNameNotIn", anonymousValidator972289697],
+    ["bucketNameIn", anonymousValidator869204168],
+    ["bucketNameNotIn", anonymousValidator869204168],
     ["bucketNameLike", anonymousValidator1443576836],
     ["bucketNameILike", anonymousValidator1443576836],
     ["bucketNameNotLike", anonymousValidator1443576836],
     ["createdAt", anonymousValidator1988053796],
     ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator978954249],
-    ["createdAtNotIn", anonymousValidator978954249],
+    ["createdAtIn", anonymousValidator764760480],
+    ["createdAtNotIn", anonymousValidator764760480],
     ["createdAtGreaterThan", anonymousValidator1988053796],
     ["createdAtLowerThan", anonymousValidator1988053796],
     ["createdAtIsNull", anonymousValidator196147222],
     ["createdAtIsNotNull", anonymousValidator196147222],
     ["updatedAt", anonymousValidator1988053796],
     ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator978954249],
-    ["updatedAtNotIn", anonymousValidator978954249],
+    ["updatedAtIn", anonymousValidator764760480],
+    ["updatedAtNotIn", anonymousValidator764760480],
     ["updatedAtGreaterThan", anonymousValidator1988053796],
     ["updatedAtLowerThan", anonymousValidator1988053796],
     ["updatedAtIsNull", anonymousValidator196147222],
     ["updatedAtIsNotNull", anonymousValidator196147222],
     ["deletedAt", anonymousValidator1988053796],
     ["deletedAtNotEqual", anonymousValidator1988053796],
-    ["deletedAtIn", anonymousValidator978954249],
-    ["deletedAtNotIn", anonymousValidator978954249],
+    ["deletedAtIn", anonymousValidator764760480],
+    ["deletedAtNotIn", anonymousValidator764760480],
     ["deletedAtGreaterThan", anonymousValidator1988053796],
     ["deletedAtLowerThan", anonymousValidator1988053796],
     ["deletedAtIncludeNotNull", anonymousValidator196147222],
@@ -2696,7 +2719,7 @@ export function anonymousValidator1033385158(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
  */
-export function anonymousValidator1971955962(value, propertyPath) {
+export function anonymousValidator2059610435(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -2710,7 +2733,7 @@ export function anonymousValidator1971955962(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator1585770956(value, propertyPath);
+  result = anonymousValidator1930640707(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -2775,12 +2798,12 @@ export function anonymousValidator1257773835(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["$raw", anonymousValidator1585770956],
+    ["$raw", anonymousValidator1930640707],
     ["$or", anonymousValidator807003800],
     ["id", anonymousValidator1108665246],
     ["idNotEqual", anonymousValidator1108665246],
-    ["idIn", anonymousValidator1971955962],
-    ["idNotIn", anonymousValidator1971955962],
+    ["idIn", anonymousValidator2059610435],
+    ["idNotIn", anonymousValidator2059610435],
     ["idGreaterThan", anonymousValidator1108665246],
     ["idLowerThan", anonymousValidator1108665246],
     ["isComplete", anonymousValidator196147222],
@@ -2788,31 +2811,31 @@ export function anonymousValidator1257773835(value, propertyPath) {
     ["isCompleteIsNotNull", anonymousValidator196147222],
     ["name", anonymousValidator1443576836],
     ["nameNotEqual", anonymousValidator1443576836],
-    ["nameIn", anonymousValidator972289697],
-    ["nameNotIn", anonymousValidator972289697],
+    ["nameIn", anonymousValidator869204168],
+    ["nameNotIn", anonymousValidator869204168],
     ["nameLike", anonymousValidator1443576836],
     ["nameILike", anonymousValidator1443576836],
     ["nameNotLike", anonymousValidator1443576836],
     ["scheduledAt", anonymousValidator1988053796],
     ["scheduledAtNotEqual", anonymousValidator1988053796],
-    ["scheduledAtIn", anonymousValidator978954249],
-    ["scheduledAtNotIn", anonymousValidator978954249],
+    ["scheduledAtIn", anonymousValidator764760480],
+    ["scheduledAtNotIn", anonymousValidator764760480],
     ["scheduledAtGreaterThan", anonymousValidator1988053796],
     ["scheduledAtLowerThan", anonymousValidator1988053796],
     ["scheduledAtIsNull", anonymousValidator196147222],
     ["scheduledAtIsNotNull", anonymousValidator196147222],
     ["createdAt", anonymousValidator1988053796],
     ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator978954249],
-    ["createdAtNotIn", anonymousValidator978954249],
+    ["createdAtIn", anonymousValidator764760480],
+    ["createdAtNotIn", anonymousValidator764760480],
     ["createdAtGreaterThan", anonymousValidator1988053796],
     ["createdAtLowerThan", anonymousValidator1988053796],
     ["createdAtIsNull", anonymousValidator196147222],
     ["createdAtIsNotNull", anonymousValidator196147222],
     ["updatedAt", anonymousValidator1988053796],
     ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator978954249],
-    ["updatedAtNotIn", anonymousValidator978954249],
+    ["updatedAtIn", anonymousValidator764760480],
+    ["updatedAtNotIn", anonymousValidator764760480],
     ["updatedAtGreaterThan", anonymousValidator1988053796],
     ["updatedAtLowerThan", anonymousValidator1988053796],
     ["updatedAtIsNull", anonymousValidator196147222],
@@ -2921,32 +2944,32 @@ export function anonymousValidator500057262(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["$raw", anonymousValidator1585770956],
+    ["$raw", anonymousValidator1930640707],
     ["$or", anonymousValidator688866095],
     ["id", anonymousValidator1802076175],
     ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator1024905514],
-    ["idNotIn", anonymousValidator1024905514],
+    ["idIn", anonymousValidator888270707],
+    ["idNotIn", anonymousValidator888270707],
     ["idLike", anonymousValidator1802076175],
     ["idNotLike", anonymousValidator1802076175],
     ["expires", anonymousValidator1988053796],
     ["expiresNotEqual", anonymousValidator1988053796],
-    ["expiresIn", anonymousValidator978954249],
-    ["expiresNotIn", anonymousValidator978954249],
+    ["expiresIn", anonymousValidator764760480],
+    ["expiresNotIn", anonymousValidator764760480],
     ["expiresGreaterThan", anonymousValidator1988053796],
     ["expiresLowerThan", anonymousValidator1988053796],
     ["createdAt", anonymousValidator1988053796],
     ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator978954249],
-    ["createdAtNotIn", anonymousValidator978954249],
+    ["createdAtIn", anonymousValidator764760480],
+    ["createdAtNotIn", anonymousValidator764760480],
     ["createdAtGreaterThan", anonymousValidator1988053796],
     ["createdAtLowerThan", anonymousValidator1988053796],
     ["createdAtIsNull", anonymousValidator196147222],
     ["createdAtIsNotNull", anonymousValidator196147222],
     ["updatedAt", anonymousValidator1988053796],
     ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator978954249],
-    ["updatedAtNotIn", anonymousValidator978954249],
+    ["updatedAtIn", anonymousValidator764760480],
+    ["updatedAtNotIn", anonymousValidator764760480],
     ["updatedAtGreaterThan", anonymousValidator1988053796],
     ["updatedAtLowerThan", anonymousValidator1988053796],
     ["updatedAtIsNull", anonymousValidator196147222],
@@ -2970,7 +2993,7 @@ export function anonymousValidator500057262(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<QueryPart<any>>}
  */
-export function anonymousValidator16847607(value, propertyPath) {
+export function anonymousValidator62764704(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -3132,7 +3155,7 @@ export function anonymousValidator1795948632(value, propertyPath) {
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
-  result = anonymousValidator16847607(value, propertyPath);
+  result = anonymousValidator62764704(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -3510,7 +3533,7 @@ export function anonymousValidator753972035(value, propertyPath) {
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
   let result = { errors: [] };
-  result = anonymousValidator16847607(value, propertyPath);
+  result = anonymousValidator62764704(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -3745,7 +3768,7 @@ export function anonymousValidator685221527(value, propertyPath) {
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
-  result = anonymousValidator16847607(value, propertyPath);
+  result = anonymousValidator62764704(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -3970,7 +3993,7 @@ export function anonymousValidator2038758416(value, propertyPath) {
   const errors = [];
   /** @type {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>} */
   let result = { errors: [] };
-  result = anonymousValidator16847607(value, propertyPath);
+  result = anonymousValidator62764704(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {

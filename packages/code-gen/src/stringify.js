@@ -17,6 +17,10 @@ export function stringifyType(type, includeSqlRelated = false) {
     validator,
     uniqueName,
     oneOf,
+    rawValue,
+    rawValueImport,
+    rawValidatorImport,
+    rawValidator,
     sql,
     enableQueries,
     queryOptions,
@@ -32,6 +36,10 @@ export function stringifyType(type, includeSqlRelated = false) {
     validator,
     type: type.type,
     oneOf,
+    rawValue,
+    rawValueImport,
+    rawValidatorImport,
+    rawValidator,
     ...(includeSqlRelated
       ? {
           sql,
