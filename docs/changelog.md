@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.164](https://github.com/compasjs/compas/releases/tag/v0.0.164)
+
+##### Changes
+
+- fix(cli,server): access-control-request-headers is not always set in a cors
+  preflight ([#1201](https://github.com/compasjs/compas/pull/1201))
+
 ### [v0.0.163](https://github.com/compasjs/compas/releases/tag/v0.0.163)
 
 ##### Changes
