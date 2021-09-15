@@ -131,7 +131,7 @@ export function cors(options = {}) {
 
       if (opts.allowHeaders) {
         ctx.set("Access-Control-Allow-Headers", opts.allowHeaders);
-      } else {
+      } else if (ctx.get("Access-Control-Request-Headers")) {
         ctx.set(
           "Access-Control-Allow-Headers",
           ctx.get("Access-Control-Request-Headers"),

@@ -86,11 +86,16 @@ export function proxyCommand(logger, command) {
       res.setHeader("Access-Control-Allow-Origin", origin);
       res.setHeader("Access-Control-Allow-Credentials", "true");
       res.setHeader("Access-Control-Allow-Methods", allowMethods);
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        // @ts-ignore
-        req.headers["access-control-request-headers"],
-      );
+      res.setHeader("Access-Control-Expose-Headers", "x-request-id");
+
+      if (req.headers["access-control-request-headers"]) {
+        res.setHeader(
+          "Access-Control-Allow-Headers",
+          // @ts-ignore
+          req.headers["access-control-request-headers"],
+        );
+      }
+
       res.writeHead(204);
       res.end();
     } else {
