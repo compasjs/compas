@@ -1,6 +1,6 @@
 {
   "name": "@compas/store",
-  "version": "0.0.163",
+  "version": "0.0.164",
   "description": "Postgres & S3-compatible wrappers for common things",
   "main": "./index.js",
   "exports": "./index.js",
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.0.163",
+    "@compas/stdlib": "0.0.164",
     "@types/minio": "7.0.10",
     "is-animated": "2.0.1",
     "minio": "7.0.19",
