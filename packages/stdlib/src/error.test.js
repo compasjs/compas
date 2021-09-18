@@ -118,4 +118,16 @@ test("stdlib/error", (t) => {
       t.ok(Array.isArray(formatted.originalError.stack));
     }
   });
+
+  t.test("AppError#format with Error#cause property", (t) => {
+    try {
+      const err = AppError.validationError("foo");
+      throw new Error("Bar", { cause: err });
+    } catch (e) {
+      const formatted = AppError.format(e);
+      t.ok(AppError.instanceOf(formatted.cause));
+      t.equal(formatted.message, "Bar");
+      t.equal(formatted.cause.key, "foo");
+    }
+  });
 });
