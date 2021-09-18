@@ -155,6 +155,7 @@ export class AppError extends Error {
       name: e.name,
       message: e.message,
       stack,
+      cause: e.cause ? AppError.format(e.cause) : undefined,
     };
   }
 
