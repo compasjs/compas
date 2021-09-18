@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { readFile } from "fs/promises";
 import { pathToFileURL } from "url";
 import {
@@ -77,8 +77,10 @@ export async function visualiseCommand(logger, command) {
 
   // Get the structure
 
-  const { structure, trie } =
-    // @ts-ignore
+  const {
+    structure,
+    trie,
+  } = // @ts-ignore
     (await getStructure(logger, codeGen, subCommand, resolvedStructureFile)) ??
     {};
   if (!structure) {
@@ -112,8 +114,8 @@ export async function visualiseCommand(logger, command) {
   // @ts-ignore
   const hash = createHash("sha256").update(graph).digest("hex").substr(0, 8);
 
-  // Add hash to output, this way we prevent large svg diffs caused by different Graphviz versions
-  // @ts-ignore
+  // Add hash to output, this way we prevent large svg diffs caused by different Graphviz
+  // versions @ts-ignore
   const [start, ...end] = graph.split(searchString);
   graph = `${start}"${label}${hash}"${end.join(searchString)}`;
 
@@ -130,6 +132,13 @@ export async function visualiseCommand(logger, command) {
       logger.info(`Graph of '${subCommand}' is available at ${output}`);
       return { exitCode: 0 };
     }
+  }
+
+  // Graphviz / Dot does not create the directory if it doesn't exists.
+  // So make sure to do that here.
+  const outputDir = output.split("/").slice(0, -1).join("/");
+  if (!existsSync(outputDir)) {
+    mkdirSync(outputDir, { recursive: true });
   }
 
   const tmpPathDot = `/tmp/${uuid()}.gv`;

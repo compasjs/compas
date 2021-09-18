@@ -25,6 +25,21 @@ test("cli/commands/visualise", (t) => {
     t.equal(exitCode, 0);
   });
 
+  t.test("visualise creates output dir", async (t) => {
+    await rm(`/tmp/visualise_dir`, { force: true, recursive: true });
+
+    const { exitCode } = await spawn(`yarn`, [
+      "compas",
+      "visualise",
+      "sql",
+      "./packages/store/src/generated/common/structure.js",
+      "--output",
+      "/tmp/visualise_dir/visualise.svg",
+    ]);
+
+    t.equal(exitCode, 0);
+  });
+
   t.test("visualise with arguments", async (t) => {
     await rm(`/tmp/visualise.svg`, { force: true });
 
