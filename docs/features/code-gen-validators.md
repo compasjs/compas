@@ -306,7 +306,7 @@ now contains our new validator:
 - `$.title`: The title property does not confirm the `validator.string.min`
   validator. And it also returns what the minimum length is via `info->min`.
 
-## More types and generators
+## More types and validators
 
 Compas code generators include a bunch more types and type specific validators.
 The following list is not completely exhaustive but should give a general idea
