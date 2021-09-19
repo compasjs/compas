@@ -91,6 +91,10 @@ function getHomeSidebar() {
           link: "/features/postgres-and-minio.html",
         },
         {
+          text: "Code generation",
+          link: "/features/code-gen-validators.html",
+        },
+        {
           text: "Postgres migrations",
           link: "/features/migrations.html",
         },

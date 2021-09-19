@@ -36,6 +36,13 @@ Parameters:
     immediately on logger creation, so changes made via a reference, will not be
     reflected.
 
+::: tip
+
+Make sure to have a `.env` file with `NODE_ENV=development` in it for local
+development so log lines are readable.
+
+:::
+
 A logger is a plain JavaScript object with 3 functions:
 
 **info** and **error**:
