@@ -3270,10 +3270,10 @@ postcss@^8.1.10, postcss@^8.3.6:
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
 
-postgres@2.0.0-beta.8:
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/postgres/-/postgres-2.0.0-beta.8.tgz#c6700c066744b8fa3d177132cac1a643eafd984a"
-  integrity sha512-az6/ogJs9/oWV43wKN4gpRSnQE0nmcnqznnD5B1YBRf1S6pfKm0CvGjQQ/NumqCPzsuOgyMZy/YtokfBE15pLg==
+postgres@2.0.0-beta.9:
+  version "2.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-2.0.0-beta.9.tgz#1548df1c83a3cd5f3ffedc53df5ca9bf0c26040c"
+  integrity sha512-CnohjNtw5HTfkmZZXREhcVfShbP3dnoYHNVZOXGRdL59xtviktykciEWgRcyMWZRwX03YaaB9PouUNtQM4WyHQ==
 
 preact@^10.0.0:
   version "10.5.14"
