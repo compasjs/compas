@@ -40,19 +40,6 @@ test("stdlib/error", (t) => {
     }
   });
 
-  t.test("AppError#format without stack", (t) => {
-    try {
-      throw AppError.validationError("test.error", {});
-    } catch (e) {
-      t.ok(AppError.instanceOf(e));
-
-      const formatted = AppError.format(e);
-      t.equal(formatted.key, "test.error");
-      t.ok(Array.isArray(formatted.stack));
-      t.deepEqual(formatted.info, {});
-    }
-  });
-
   t.test("AppError#format with original AppError", (t) => {
     try {
       throw AppError.validationError("test.error", {}, AppError.serverError());
