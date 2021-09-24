@@ -92,7 +92,7 @@ export async function visualiseCommand(logger, command) {
 
   // Execute and write
 
-  let graph;
+  let graph = "";
   if (subCommand === "sql") {
     graph = formatGraphOfSql(codeGen, structure);
   } else if (subCommand === "router") {

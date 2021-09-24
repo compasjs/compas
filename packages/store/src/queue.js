@@ -10,7 +10,8 @@ import {
   uuid,
 } from "@compas/stdlib";
 import { queries } from "./generated.js";
-import { queryJob } from "./generated/database/job.js";
+import { jobWhere, queryJob } from "./generated/database/job.js";
+import { query } from "./query.js";
 
 const COMPAS_RECURRING_JOB = "compas.job.recurring";
 
@@ -57,80 +58,64 @@ const COMPAS_RECURRING_JOB = "compas.job.recurring";
  *    to 5 retries.
  * @property {number|undefined} [handlerTimeout] Maximum time the handler could take to
  *    fulfill a job in milliseconds Defaults to 30 seconds.
+ * @property {string[]|undefined} [includedNames] Included job names for this job worker,
+ *   ignores all other jobs.
+ * @property {string[]|undefined} [excludedNames] Excluded job names for this job worker,
+ *   picks up all other jobs.
  */
 
 /**
  */
 const queueQueries = {
   // Should only run in a transaction
-  getAnyJob: (sql) => sql`
-     UPDATE "job"
-     SET
-       "isComplete" = TRUE,
-       "updatedAt" = now()
-     WHERE
-         id = (
-         SELECT "id"
-         FROM "job"
-         WHERE
-             NOT "isComplete"
-         AND "scheduledAt" < now()
-         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-         LIMIT 1
-       )
-     RETURNING id
-   `,
 
-  // Should only run in a transaction
-  getJobByName: (name, sql) => sql`
-     UPDATE "job"
-     SET
-       "isComplete" = TRUE,
-       "updatedAt" = now()
-     WHERE
-         id = (
-         SELECT "id"
-         FROM "job"
-         WHERE
-             NOT "isComplete"
-         AND "scheduledAt" < now()
-         AND "name" = ${name}
-         ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
-         LIMIT 1
-       )
-     RETURNING "id"
-   `,
+  /**
+   * @param {Postgres} sql
+   * @param {StoreJobWhere} where
+   */
+  getAnyJob: (sql, where) =>
+    query`
+    UPDATE "job"
+    SET
+      "isComplete" = TRUE,
+      "updatedAt" = now()
+    WHERE
+        id = (
+        SELECT "id"
+        FROM "job" j
+        WHERE
+            ${jobWhere(where, "j.", { skipValidator: true })}
+        AND NOT "isComplete"
+        AND "scheduledAt" < now()
+        ORDER BY "priority", "scheduledAt" FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
+    RETURNING id
+  `.exec(sql),
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
-  getPendingQueueSize: (sql) => sql`
-     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-     FROM "job"
-     WHERE
-       NOT "isComplete"
-   `,
-
-  // Alternatively use COUNT with a WHERE and UNION all to calculate the same
-  getPendingQueueSizeForName: (sql, name) => sql`
-     SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
-            sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
-     FROM "job"
-     WHERE
-         NOT "isComplete"
-     AND "name" = ${name}
-   `,
+  getPendingQueueSize: (sql, where) =>
+    query`
+    SELECT sum(CASE WHEN "scheduledAt" < now() THEN 1 ELSE 0 END) AS "pendingCount",
+           sum(CASE WHEN "scheduledAt" >= now() THEN 1 ELSE 0 END) AS "scheduledCount"
+    FROM "job" j
+    WHERE
+        ${jobWhere(where, "j.", { skipValidator: true })}
+    AND NOT "isComplete"
+  `.exec(sql),
 
   // Returns time in milliseconds
-  getAverageJobTime: (sql, name, dateStart, dateEnd) => sql`
-     SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-                (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-     FROM "job"
-     WHERE
-         "isComplete" IS TRUE
-     AND (coalesce(${name ?? null}) IS NULL OR "name" = ${name ?? null})
-     AND "updatedAt" > ${dateStart}
-     AND "updatedAt" <= ${dateEnd};
-   `,
+  getAverageJobTime: (sql, where, dateStart, dateEnd) =>
+    query`
+    SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
+               (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
+    FROM "job" j
+    WHERE
+        ${jobWhere(where, "j.", { skipValidator: true })}
+    AND "isComplete" IS TRUE
+    AND "updatedAt" > ${dateStart}
+    AND "updatedAt" <= ${dateEnd};
+  `.exec(sql),
 
   /**
    * @param {Postgres} sql
@@ -138,14 +123,14 @@ const queueQueries = {
    * @returns Promise<{ id: number }[]>
    */
   getRecurringJobForName: (sql, name) => sql`
-     SELECT id
-     FROM "job"
-     WHERE
-         name = ${COMPAS_RECURRING_JOB}
-     AND "isComplete" IS FALSE
-     AND data ->> 'name' = ${name}
-     ORDER BY "scheduledAt"
-   `,
+    SELECT id
+    FROM "job"
+    WHERE
+        name = ${COMPAS_RECURRING_JOB}
+    AND "isComplete" IS FALSE
+    AND data ->> 'name' = ${name}
+    ORDER BY "scheduledAt"
+  `,
 
   /**
    * @param {Postgres} sql
@@ -154,15 +139,15 @@ const queueQueries = {
    * @param {StoreJobInterval} interval
    */
   updateRecurringJob: (sql, id, priority, interval) => sql`
-     UPDATE "job"
-     SET
-       "priority" = ${priority},
-       "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
+    UPDATE "job"
+    SET
+      "priority" = ${priority},
+      "data" = jsonb_set("data", ${sql.array(["interval"])}, ${sql.json(
     interval,
   )})
-     WHERE
-       id = ${id}
-   `,
+    WHERE
+      id = ${id}
+  `,
 };
 
 /**
@@ -216,31 +201,23 @@ const queueQueries = {
 export class JobQueueWorker {
   /**
    * @param {Postgres} sql
-   * @param {string|JobQueueWorkerOptions} nameOrOptions
-   * @param {JobQueueWorkerOptions} [options]
+   * @param {JobQueueWorkerOptions} options
    */
-  constructor(sql, nameOrOptions, options) {
+  constructor(sql, options) {
     this.sql = sql;
-
-    // Default query ignores name
-    this.newJobQuery = queueQueries.getAnyJob.bind(undefined);
-
-    if (typeof nameOrOptions === "string") {
-      // Use the name query and bind the name already, else we would have to use this
-      // when executing the query
-      this.newJobQuery = queueQueries.getJobByName.bind(
-        undefined,
-        nameOrOptions,
-      );
-      this.name = nameOrOptions;
-    } else {
-      this.name = undefined;
-      options = nameOrOptions;
-    }
 
     this.pollInterval = options?.pollInterval ?? 1500;
     this.maxRetryCount = options?.maxRetryCount ?? 5;
     this.handlerTimeout = options?.handlerTimeout ?? 30000;
+
+    /** @type {StoreJobWhere} */
+    this.where = {};
+
+    if (options.includedNames) {
+      this.where.nameIn = options.includedNames;
+    } else if (options.excludedNames) {
+      this.where.nameNotIn = options.excludedNames;
+    }
 
     // Setup the worker array, each value is either undefined or a running Promise
     this.workers = Array(options?.parallelCount ?? 1).fill(undefined);
@@ -250,7 +227,7 @@ export class JobQueueWorker {
     this.isStarted = false;
 
     this.jobHandler = options?.handler;
-    this.logger = newLogger({ ctx: { type: this.name ?? "queue" } });
+    this.logger = newLogger({ ctx: { type: "queue" } });
   }
 
   start() {
@@ -281,11 +258,17 @@ export class JobQueueWorker {
   /**
    * @returns {Promise<{pendingCount: number, scheduledCount: number}|undefined>}
    */
-  pendingQueueSize() {
-    if (this.name) {
-      return getPendingQueueSizeForName(this.sql, this.name);
-    }
-    return getPendingQueueSize(this.sql);
+  async pendingQueueSize() {
+    const [result] = await queueQueries.getPendingQueueSize(
+      this.sql,
+      this.where,
+    );
+
+    // sql returns 'null' if no rows match, so coalesce in to '0'
+    return {
+      pendingCount: parseInt(result?.pendingCount ?? 0, 10),
+      scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
+    };
   }
 
   /**
@@ -293,22 +276,15 @@ export class JobQueueWorker {
    * @param {Date} endDate
    * @returns {Promise<number>}
    */
-  averageTimeToCompletion(startDate, endDate) {
-    if (this.name) {
-      return getAverageTimeToJobCompletion(
-        this.sql,
-        this.name,
-        startDate,
-        endDate,
-      );
-    }
-
-    return getAverageTimeToJobCompletion(
+  async averageTimeToCompletion(startDate, endDate) {
+    const [result] = await queueQueries.getAverageJobTime(
       this.sql,
-      undefined,
+      this.where,
       startDate,
       endDate,
     );
+
+    return Math.floor(parseFloat(result?.completionTime ?? "0"));
   }
 
   /**
@@ -345,7 +321,7 @@ export class JobQueueWorker {
     this.workers[idx] = this.sql.begin(async (sql) => {
       // run in transaction
 
-      const [job] = await this.newJobQuery(sql);
+      const [job] = await queueQueries.getAnyJob(sql, this.where);
       if (job === undefined || job.id === undefined) {
         // reset this 'worker'
         this.workers[idx] = undefined;
@@ -594,60 +570,6 @@ export async function addRecurringJobToQueue(
       name,
     },
   });
-}
-
-/**
- * Get the number of jobs that need to run
- *
- * @param {Postgres} sql
- * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
- */
-async function getPendingQueueSize(sql) {
-  const [result] = await queueQueries.getPendingQueueSize(sql);
-
-  // sql returns 'null' if no rows match, so coalesce in to '0'
-  return {
-    pendingCount: parseInt(result?.pendingCount ?? 0, 10),
-    scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
-  };
-}
-
-/**
- * Get the number of jobs that need to run for specified job name
- *
- * @param {Postgres} sql
- * @param {string} name
- * @returns {Promise<{pendingCount: number, scheduledCount: number}>}
- */
-async function getPendingQueueSizeForName(sql, name) {
-  const [result] = await queueQueries.getPendingQueueSizeForName(sql, name);
-
-  // sql returns 'null' if no rows match, so coalesce in to '0'
-  return {
-    pendingCount: parseInt(result?.pendingCount ?? 0, 10),
-    scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
-  };
-}
-
-/**
- * Return the average time between scheduled and completed for jobs completed in the
- * provided time range
- *
- * @param {Postgres} sql
- * @param {string|undefined} name
- * @param {Date} startDate
- * @param {Date} endDate
- * @returns {Promise<number>}
- */
-async function getAverageTimeToJobCompletion(sql, name, startDate, endDate) {
-  const [result] = await queueQueries.getAverageJobTime(
-    sql,
-    name,
-    startDate,
-    endDate,
-  );
-
-  return Math.floor(parseFloat(result?.completionTime ?? "0"));
 }
 
 /**
