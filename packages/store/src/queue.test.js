@@ -58,6 +58,7 @@ test("store/queue", (t) => {
       parallelCount: 1,
       pollInterval: 10,
       handler,
+      excludedNames: ["job.excludedName"],
     });
 
     t.equal(handlerCalls.length, 0);
@@ -259,6 +260,17 @@ test("store/queue", (t) => {
     }).exec(sql);
 
     t.equal(job3.isComplete, true);
+  });
+
+  t.test("pendingQueue - excludedNames", async (t) => {
+    const start = await qw.pendingQueueSize();
+    await addJobToQueue(sql, {
+      name: "job.excludedName",
+    });
+
+    const end = await qw.pendingQueueSize();
+
+    t.deepEqual(start, end);
   });
 
   t.test("addEventToQueue", async (t) => {

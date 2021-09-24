@@ -164,20 +164,15 @@ export function getUncompletedJobsByName(sql: Postgres): Promise<{
 export class JobQueueWorker {
   /**
    * @param {Postgres} sql
-   * @param {string|JobQueueWorkerOptions} nameOrOptions
-   * @param {JobQueueWorkerOptions} [options]
+   * @param {JobQueueWorkerOptions} options
    */
-  constructor(
-    sql: Postgres,
-    nameOrOptions: string | JobQueueWorkerOptions,
-    options?: JobQueueWorkerOptions | undefined,
-  );
+  constructor(sql: Postgres, options: JobQueueWorkerOptions);
   sql: import("../types/advanced-types").Postgres;
-  newJobQuery: (sql: any) => any;
-  name: string | undefined;
   pollInterval: number;
   maxRetryCount: number;
   handlerTimeout: number;
+  /** @type {StoreJobWhere} */
+  where: StoreJobWhere;
   workers: any[];
   /** @type {any} */
   timeout: any;
@@ -191,8 +186,7 @@ export class JobQueueWorker {
             handler: JobQueueHandlerFunction;
             timeout: number;
           }
-      >
-    | undefined;
+      >;
   logger: import("@compas/stdlib/types/advanced-types").Logger;
   start(): void;
   stop(): void;
@@ -282,5 +276,15 @@ export type JobQueueWorkerOptions = {
    * fulfill a job in milliseconds Defaults to 30 seconds.
    */
   handlerTimeout?: number | undefined;
+  /**
+   * Included job names for this job worker,
+   * ignores all other jobs.
+   */
+  includedNames?: string[] | undefined;
+  /**
+   * Excluded job names for this job worker,
+   * picks up all other jobs.
+   */
+  excludedNames?: string[] | undefined;
 };
 //# sourceMappingURL=queue.d.ts.map
