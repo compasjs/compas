@@ -144,11 +144,16 @@ export function printFailedResults(state, result, indentCount) {
       result.push(`${indent}  ${it}`);
     }
   } else if (failedAssertions.length > 0) {
-    for (const assertion of failedAssertions) {
+    for (const assertion of state.assertions) {
+      if (assertion.passed) {
+        result.push(`${indent}${assertion.type}: pass`);
+        continue;
+      }
+
       if (assertion.message) {
         result.push(`${indent}${assertion.type}: ${assertion.message}`);
       } else {
-        result.push(`${indent}${assertion.type}`);
+        result.push(`${indent}${assertion.type}: fail`);
       }
 
       if (!assertion.meta) {
