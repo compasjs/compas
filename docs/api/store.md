@@ -189,7 +189,7 @@ be described via this mechanism.
 - eventName `string`
 - data `Record\<string, any>`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L471)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L447)_
 
 ## addJobToQueue
 
@@ -205,7 +205,7 @@ priority. The default priority is '5'.
 - sql `Postgres`
 - job `JobInput`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L493)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L469)_
 
 ## addRecurringJobToQueue
 
@@ -224,7 +224,7 @@ than other jobs.
 - job
   `{ name: string, priority?: number|undefined, interval: StoreJobInterval }`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L564)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L540)_
 
 ## addJobWithCustomTimeoutToQueue
 
@@ -243,7 +243,7 @@ handler may run, before the 'InsightEvent' is aborted.
 - job `JobInput`
 - timeout `number`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L526)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L502)_
 
 ## getUncompletedJobsByName
 
@@ -258,7 +258,7 @@ Get all uncompleted jobs from the queue. Useful for testing if jobs are created.
 
 - sql `Postgres`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L725)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L647)_
 
 ## newSessionStore
 

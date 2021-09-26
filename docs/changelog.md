@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.0.165](https://github.com/compasjs/compas/releases/tag/v0.0.165)
+
+##### Changes
+
+- build(deps): bump @babel/eslint-parser from 7.15.4 to 7.15.7
+  ([#1210](https://github.com/compasjs/compas/pull/1210))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 16.9.1 to 16.10.1
+  ([#1203](https://github.com/compasjs/compas/pull/1203),
+  [#1213](https://github.com/compasjs/compas/pull/1213),
+  [#1217](https://github.com/compasjs/compas/pull/1217),
+  [#1228](https://github.com/compasjs/compas/pull/1228))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump koa from 2.13.1 to 2.13.3
+  ([#1222](https://github.com/compasjs/compas/pull/1222),
+  [#1227](https://github.com/compasjs/compas/pull/1227))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump postgres from 2.0.0-beta.8 to 2.0.0-beta.9
+  ([#1214](https://github.com/compasjs/compas/pull/1214))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump prettier from 2.4.0 to 2.4.1
+  ([#1204](https://github.com/compasjs/compas/pull/1204))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- feat(cli): also print passed test assertions around the failed assertion
+  ([#1224](https://github.com/compasjs/compas/pull/1224))
+  - Closes [#1220](https://github.com/compasjs/compas/pull/1220)
+- feat(docs): add code-gen setup and validators
+  ([#1211](https://github.com/compasjs/compas/pull/1211))
+  - Closes [#1137](https://github.com/compasjs/compas/pull/1137)
+- feat(stdlib): support formatting Error#clause in AppError#format
+  ([#1208](https://github.com/compasjs/compas/pull/1208))
+  - Closes [#1181](https://github.com/compasjs/compas/pull/1181)
+- feat(store): add job name filter to JobQueueWorker
+  ([#1225](https://github.com/compasjs/compas/pull/1225))
+  - Closes [#1223](https://github.com/compasjs/compas/pull/1223)
+- fix(cli): ensure visualise output directory exists
+  ([#1207](https://github.com/compasjs/compas/pull/1207))
+  - Closes [#1206](https://github.com/compasjs/compas/pull/1206)
+
+##### Breaking changes
+
+- **store**: add job name filter to JobQueueWorker
+  - Removed support for specifying a specific job name in the `JobQueueWorker`
+    constructor. Please migrate to the `{ includedNames: ["job.name"] }` syntax.
+
 ### [v0.0.164](https://github.com/compasjs/compas/releases/tag/v0.0.164)
 
 ##### Changes
