@@ -1,6 +1,6 @@
 {
   "name": "@compas/lint-config",
-  "version": "0.0.164",
+  "version": "0.0.165",
   "description": "ESLint & Prettier config",
   "main": "index.js",
   "keywords": [
