@@ -2,9 +2,9 @@ import { Transform } from "stream";
 import {
   eventStart,
   eventStop,
+  isNil,
   newEvent,
   newLogger,
-  isNil,
   uuid,
 } from "@compas/stdlib";
 
@@ -48,17 +48,10 @@ export function logMiddleware(options) {
 
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
-
-    let requestId = ctx.get("x-request-id");
-    if (isNil(requestId) || requestId.length === 0) {
-      requestId = uuid();
-    }
-    ctx.set("x-request-id", requestId);
-
     ctx.log = newLogger({
       ctx: {
         type: "http",
-        requestId,
+        requestId: uuid(),
       },
     });
 
