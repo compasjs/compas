@@ -4,6 +4,26 @@ editLink: false
 
 # Changelog
 
+### [v0.0.166](https://github.com/compasjs/compas/releases/tag/v0.0.166)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.10.1 to 16.10.2
+  ([#1233](https://github.com/compasjs/compas/pull/1233))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump postgres from 2.0.0-beta.9 to 2.0.0-beta.10
+  ([#1232](https://github.com/compasjs/compas/pull/1232))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- chore(deps): revert minio from 7.0.19 to 7.0.18
+  - Closes [#1197](https://github.com/compasjs/compas/pull/1197)
+- feat(code-gen,server): change requestId behaviour
+  ([#1235](https://github.com/compasjs/compas/pull/1235))
+
+##### Breaking changes
+
+- **code-gen**: change requestId behaviour
+  - Removed `addRequestIdInterceptors` from `$generatedDir/common/apiClient`
+
 ### [v0.0.165](https://github.com/compasjs/compas/releases/tag/v0.0.165)
 
 ##### Changes
