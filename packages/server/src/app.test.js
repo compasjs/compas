@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
-import { AppError, isPlainObject, uuid } from "@compas/stdlib";
+import { AppError, isPlainObject } from "@compas/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
@@ -86,34 +86,6 @@ test("server/app", (t) => {
       t.equal(formatted.axios.requestPath, "/wrap-500");
       t.equal(formatted.axios.requestMethod, "GET");
     }
-  });
-
-  t.test("consistent x-request-id handling", async (t) => {
-    const response = await client.get("/200");
-    const header = response.headers["x-request-id"];
-
-    t.ok(uuid.isValid(header));
-
-    const secondResponse = await client.get("/200", {
-      headers: { "x-request-id": header },
-    });
-
-    t.equal(header, secondResponse.headers["x-request-id"]);
-  });
-
-  t.test("consistent x-request-id with generated api client", async (t) => {
-    const commonApiClientImport = await import(
-      "./../../../generated/testing/server/common/apiClient.js"
-    );
-
-    commonApiClientImport.addRequestIdInterceptors(client);
-
-    const response = await client.get("/200");
-    const secondResponse = await client.get("/200");
-    t.equal(
-      response.headers["x-request-id"],
-      secondResponse.headers["x-request-id"],
-    );
   });
 
   t.test("close _server", async (t) => {

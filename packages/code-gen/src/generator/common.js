@@ -80,37 +80,6 @@ function generateCommonApiClientFile(context) {
     contents += `import { AxiosInstance } from "axios";`;
   }
 
-  contents += js`
-      export function addRequestIdInterceptors(instance
-
-      ${context.options.useTypescript ? ": AxiosInstance" : ""}
-      )
-      {
-         let requestId
-         ${
-           context.options.useTypescript ? ": string | undefined" : ""
-         } = undefined;
-         instance.interceptors.request.use((config) => {
-            if (requestId) {
-               config.headers["x-request-id"] = requestId;
-            }
-            return config;
-         });
-
-         instance.interceptors.response.use((response) => {
-            if (response.headers["x-request-id"]) {
-               requestId = response.headers["x-request-id"];
-            }
-            return response;
-         }, (error) => {
-            if (error.response && error.response.headers["x-request-id"]) {
-               requestId = error.response.headers["x-request-id"];
-            }
-            return Promise.reject(error);
-         });
-      }
-   `;
-
   return contents;
 }
 
@@ -159,8 +128,8 @@ export type AppErrorResponse = AxiosError<{
       stack?: string[];
     };
     [key: string]: any;
-  };
-}>;
+  }
+}>
 
 export type UseQueryOptions<Response, Error, TData = Response> = ReactUseQueryOptions<Response, Error, TData> & { cancelToken?: CancelTokenSource };
 `;

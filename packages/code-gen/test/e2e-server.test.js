@@ -13,9 +13,6 @@ import Axios from "axios";
 mainTestFn(import.meta);
 
 test("code-gen/e2e-server", async (t) => {
-  const commonApiClientImport = await import(
-    "../../../generated/testing/server/common/apiClient.js"
-  );
   const serverApiClientImport = await import(
     "../../../generated/testing/server/server/apiClient.js"
   );
@@ -29,8 +26,6 @@ test("code-gen/e2e-server", async (t) => {
   const app = await buildTestApp();
   const axiosInstance = Axios.create({});
   await createTestAppAndClient(app, axiosInstance);
-
-  commonApiClientImport.addRequestIdInterceptors(axiosInstance);
 
   t.test("client - request cancellation works", async (t) => {
     try {
