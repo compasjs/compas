@@ -82,7 +82,7 @@ export function getApp(opts = {}) {
     app.use(healthHandler());
   }
 
-  app.use(logMiddleware(opts.logOptions ?? {}));
+  app.use(logMiddleware(app, opts.logOptions ?? {}));
   app.use(errorHandler(opts.errorOptions ?? {}));
   app.use(notFoundHandler());
 
