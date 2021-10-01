@@ -61,6 +61,7 @@ export async function sendFile(ctx, file, getStreamFn) {
       }
 
       if (isNil(start) || start > file.contentLength) {
+        // '-500' results in the last 500 bytes send
         start = file.contentLength - end;
         end = file.contentLength - 1;
       }
