@@ -1,10 +1,75 @@
+/* eslint-disable import/no-unresolved */
+import { createReadStream } from "fs";
+import { setTimeout } from "timers/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { isNil } from "@compas/stdlib";
+import { isNil, streamToBuffer, uuid } from "@compas/stdlib";
+import {
+  cleanupTestPostgresDatabase,
+  createOrUpdateFile,
+  createTestPostgresDatabase,
+  ensureBucket,
+  FileCache,
+  newMinioClient,
+  removeBucketAndObjectsInBucket,
+} from "@compas/store";
+import Axios from "axios";
+import { queryFile } from "../../../../generated/testing/sql/database/file.js";
+import { getApp } from "../app.js";
+import { closeTestApp, createTestAppAndClient } from "../testing.js";
 import { sendFile } from "./sendFile.js";
 
 mainTestFn(import.meta);
 
-test("server/sendFile", (t) => {
+test("server/sendFile", async (t) => {
+  const sql = await createTestPostgresDatabase();
+  const minio = await newMinioClient({});
+  const bucketName = uuid();
+  const fileCache = new FileCache(sql, minio, bucketName, {});
+
+  const app = getApp();
+  const axiosInstance = Axios.create();
+
+  app.use(async (ctx, next) => {
+    const fileName = ctx.path.substring(1);
+    const [file] = await queryFile({
+      where: {
+        id: fileName,
+      },
+    }).exec(sql);
+
+    await sendFile(ctx, file, fileCache.getStreamFn);
+
+    return next();
+  });
+
+  await ensureBucket(minio, bucketName, "us-east-1");
+  await createTestAppAndClient(app, axiosInstance);
+
+  const [imageBuffer, videoBuffer] = await Promise.all([
+    streamToBuffer(createReadStream("./__fixtures__/server/image.png")),
+    streamToBuffer(createReadStream("./__fixtures__/server/video.mp4")),
+  ]);
+  const [image, video] = await Promise.all([
+    createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      {
+        name: "image.png",
+      },
+      "./__fixtures__/server/image.png",
+    ),
+    createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      {
+        name: "video.mp4",
+      },
+      "./__fixtures__/server/video.mp4",
+    ),
+  ]);
+
   const ctxMock = (headers = {}) => {
     return {
       getHeaders: () => {
@@ -158,5 +223,82 @@ test("server/sendFile", (t) => {
 
     t.equal(ctx.status, 304);
     t.ok(isNil(ctx.body));
+  });
+
+  t.test("e2e - image", async (t) => {
+    const response = await axiosInstance.get(`/${image.id}`, {
+      responseType: "stream",
+    });
+
+    const buffer = await streamToBuffer(response.data);
+
+    t.equal(buffer.length, imageBuffer.length);
+
+    t.ok(response.headers["accept-ranges"]);
+    t.equal(response.headers["content-type"], image.contentType);
+    t.equal(Number(response.headers["content-length"]), image.contentLength);
+  });
+
+  t.test("e2e - video", async (t) => {
+    const response = await axiosInstance.get(`/${video.id}`, {
+      responseType: "stream",
+    });
+
+    const buffer = await streamToBuffer(response.data);
+
+    t.equal(buffer.length, videoBuffer.length);
+
+    t.ok(response.headers["accept-ranges"]);
+    t.equal(response.headers["content-type"], video.contentType);
+    t.equal(Number(response.headers["content-length"]), video.contentLength);
+  });
+
+  t.test("e2e - video - kill stream", async (t) => {
+    const cancelToken = Axios.CancelToken;
+    const source = cancelToken.source();
+
+    let err = undefined;
+
+    app.on("error", (error) => {
+      err = error;
+    });
+
+    await axiosInstance.get(`/${video.id}`, {
+      responseType: "stream",
+      cancelToken: source.token,
+    });
+
+    source.cancel();
+
+    await setTimeout(10);
+    t.ok(err);
+  });
+
+  t.test("e2e - video- partial", async (t) => {
+    const response = await axiosInstance.get(`/${video.id}`, {
+      responseType: "stream",
+      headers: {
+        range: `bytes=0-1023`,
+      },
+    });
+
+    const buffer = await streamToBuffer(response.data);
+
+    t.equal(buffer.length, 1024);
+
+    t.equal(Number(response.headers["content-length"]), 1024);
+    t.equal(
+      response.headers["content-range"],
+      `bytes 0-1023/${video.contentLength}`,
+    );
+    t.equal(response.status, 206);
+  });
+
+  t.test("teardown", async (t) => {
+    await closeTestApp(app);
+    await cleanupTestPostgresDatabase(sql);
+    await removeBucketAndObjectsInBucket(minio, bucketName);
+
+    t.pass();
   });
 });
