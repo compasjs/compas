@@ -1,5 +1,6 @@
 import { Transform } from "stream";
 import {
+  AppError,
   eventStart,
   eventStop,
   isNil,
@@ -11,9 +12,10 @@ import {
 /**
  * Log basic request and response information
  *
+ * @param {import("koa")} app
  * @param {{ disableRootEvent?: boolean }} options
  */
-export function logMiddleware(options) {
+export function logMiddleware(app, options) {
   /**
    * Real log function
    *
@@ -45,6 +47,21 @@ export function logMiddleware(options) {
       eventStop(ctx.event);
     }
   }
+
+  // Log stream errors after the headers are sent
+  const logger = newLogger({
+    ctx: {
+      type: "http-error",
+    },
+  });
+  app.on("error", (error, ctx) => {
+    (ctx?.log ?? logger).info({
+      type: "http-error",
+      headerSent: error.headerSent,
+      syscall: error.syscall,
+      error: AppError.format(error),
+    });
+  });
 
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
