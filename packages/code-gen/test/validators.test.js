@@ -288,7 +288,6 @@ test("code-gen/validators", async (t) => {
   t.test("date", (t) => {
     const date = new Date();
     const str = date.toISOString();
-    const invalidFormat = "1221-10-13TAA:47:26.526Z";
     const time = date.getTime();
 
     assertAll(
@@ -309,12 +308,7 @@ test("code-gen/validators", async (t) => {
         {
           input: "foo",
           errorObjectKey: "$",
-          errorKey: "validator.string.min",
-        },
-        {
-          input: invalidFormat,
-          errorObjectKey: "$",
-          errorKey: "validator.string.pattern",
+          errorKey: "validator.date.invalid",
         },
       ],
       validators.validateValidatorDate,
