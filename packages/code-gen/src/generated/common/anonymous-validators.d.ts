@@ -308,15 +308,6 @@ export function anonymousValidator1573852460(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|string>}
- */
-export function anonymousValidator852571656(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | string>;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<undefined|Date>}
  */
 export function anonymousValidator1988053796(

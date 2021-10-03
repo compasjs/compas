@@ -585,19 +585,6 @@ function anonymousValidatorBoolean(context, imports, type) {
  * @param {CodeGenDateType} type
  */
 function anonymousValidatorDate(context, imports, type) {
-  const stringType = {
-    ...TypeBuilder.getBaseData(),
-    type: "string",
-    isOptional: type.isOptional,
-    validator: {
-      allowNull: type.validator.allowNull,
-      min: 24,
-      max: 29,
-      pattern:
-        "/^(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))$/gi",
-    },
-  };
-
   return js`
     if (typeof value !== "string" && typeof value !== "number" &&
       !(value instanceof Date)) {
@@ -611,35 +598,7 @@ function anonymousValidatorDate(context, imports, type) {
       };
     }
     
-    let date = new Date(value);
-
-    if (typeof value === "string") {
-      ${generateAnonymousValidatorCall(
-        context,
-        imports,
-        stringType,
-        "value",
-        "propertyPath",
-        "value =",
-      )}
-      
-      if (value.errors) {
-        return value;
-      }
-
-      ${
-        type.isOptional && !isNil(type.defaultValue)
-          ? `if (!value.value) { return { value: ${type.defaultValue} }; }`
-          : ""
-      }
-      ${
-        type.isOptional
-          ? `if (!value.value) { return { value: value.value }; }`
-          : ""
-      }
-      
-      date = new Date(value.value);
-    }
+    const date = new Date(value);
 
     if (isNaN(date.getTime())) {
       /** @type {{ errors: InternalError[] }} */

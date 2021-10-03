@@ -76,15 +76,6 @@ export function anonymousValidator56355924(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|string>}
- */
-export function anonymousValidator852571656(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | string>;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<Date>}
  */
 export function anonymousValidator1389014320(
@@ -294,15 +285,6 @@ export function anonymousValidator430889951(
   minutes?: undefined | number;
   seconds?: undefined | number;
 }>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<string>}
- */
-export function anonymousValidator1135331723(
-  value: any,
-  propertyPath: string,
-): EitherN<string>;
 /**
  * @param {*} value
  * @param {string} propertyPath
