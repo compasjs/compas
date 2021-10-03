@@ -4,6 +4,18 @@ editLink: false
 
 # Changelog
 
+### [v0.0.167](https://github.com/compasjs/compas/releases/tag/v0.0.167)
+
+##### Changes
+
+- feat(code-gen): make date validator more flexible
+  ([#1241](https://github.com/compasjs/compas/pull/1241))
+  - Closes [#1229](https://github.com/compasjs/compas/pull/1229)
+- feat(server): log middleware also handles Koa error events
+  ([#1239](https://github.com/compasjs/compas/pull/1239))
+- test(server): add more e2e tests for sendFile
+  ([#1238](https://github.com/compasjs/compas/pull/1238))
+
 ### [v0.0.166](https://github.com/compasjs/compas/releases/tag/v0.0.166)
 
 ##### Changes
