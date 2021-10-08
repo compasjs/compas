@@ -20,7 +20,7 @@
     "react": "17.0.2",
     "react-query": "3.25.1",
     "typescript": "4.4.3",
-    "vitepress": "0.19.2",
+    "vitepress": "0.20.0",
     "yup": "0.32.9"
   },
   "maintainers": [
