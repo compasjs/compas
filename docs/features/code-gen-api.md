@@ -14,10 +14,10 @@ Requires `@compas/cli`, `@compas/stdlib`, `@compas/server` and
 
 ## Getting started
 
-In the [validator & type generator](/code-gen-validators.html) we have seen how
-to utilize the Compas type system to generate types and validators. Here we are
-going to get some good use out of them. We are going to create API route
-definitions complete with integrated validators.
+In the [validator & type generator](/features/code-gen-validators.html) we have
+seen how to utilize the Compas type system to generate types and validators.
+Here we are going to get some good use out of them. We are going to create API
+route definitions complete with integrated validators.
 
 The `TypeCreator (T)` also contains the entry point for the route system, with
 `T.router(path)`. Let's define our first route:
