@@ -95,6 +95,14 @@ function getHomeSidebar() {
           link: "/features/code-gen-validators.html",
         },
         {
+          text: "Code generation HTTP api",
+          link: "/features/code-gen-api.html",
+        },
+        {
+          text: "Code generation api client",
+          link: "/features/code-gen-api-client.html",
+        },
+        {
           text: "Postgres migrations",
           link: "/features/migrations.html",
         },

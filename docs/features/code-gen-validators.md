@@ -57,8 +57,9 @@ Since our setup works now, we can add some types. For this we need to import the
 `const T = new TypeCreator("todo")`. We pass in `"todo"` as an argument to the
 `TypeCreator` to name our collection of types. Each item or type in the code
 generators has a 'group', in this case `"todo"` and a name, which we will come
-to shortly. We also use `T` as the variable name as a short abbreviation, and
-would be recommended to keep as a convention in your projects.
+by shortly. The default 'group' name, if not specified, is `"app"`. We also use
+`T` as the variable name as a short abbreviation, and would be recommended to
+keep as a convention in your projects.
 
 Know that we have a `TypeCreator` we can create some types.
 
