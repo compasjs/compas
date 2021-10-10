@@ -72,8 +72,8 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   body(builder) {
-    if (["POST", "PUT", "PATCH", "DELETE"].indexOf(this.data.method) === -1) {
-      throw new Error("Can only use body on POST, PUT, PATCH or DELETE routes");
+    if (["POST", "PUT", "PATCH"].indexOf(this.data.method) === -1) {
+      throw new Error("Can only use body on POST, PUT or PATCH routes");
     }
 
     this.bodyBuilder = builder;
@@ -406,7 +406,7 @@ export class RouteCreator {
 
     if (
       !isNil(this.bodyBuilder) &&
-      ["POST", "PUT", "PATCH", "DELETE"].indexOf(method) !== -1
+      ["POST", "PUT", "PATCH"].indexOf(method) !== -1
     ) {
       b.body(this.bodyBuilder);
     }
