@@ -1,4 +1,4 @@
-import { AppError, isNil, isStaging } from "@compas/stdlib";
+import { AppError, isStaging } from "@compas/stdlib";
 
 /**
  * @typedef {import("../app").ErrorHandlerOptions} ErrorHandlerOptions
@@ -45,15 +45,15 @@ export function errorHandler(opts) {
       }
 
       ctx.status = err.status;
-      ctx.body = onAppError(ctx, err.key, err.info);
 
-      const formatted = AppError.format(error);
+      const formatted = AppError.format(err);
       formatted.type = "api_error";
       log(formatted);
 
-      if (!isNil(err.originalError) && leakError) {
-        ctx.body.info = ctx.body.info || {};
-        ctx.body.info._error = formatted;
+      if (leakError && onAppError === defaultOnAppError) {
+        ctx.body = formatted;
+      } else {
+        ctx.body = onAppError(ctx, err.key, err.info);
       }
     }
   };
