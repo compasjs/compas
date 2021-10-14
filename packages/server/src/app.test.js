@@ -7,23 +7,35 @@ import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 mainTestFn(import.meta);
 
 test("server/app", (t) => {
-  const app = getApp();
-  const client = Axios.create();
-
-  app.use((ctx, next) => {
-    if (ctx.request.path === "/500") {
-      throw AppError.serverError({ foo: true });
-    } else if (ctx.request.path === "/wrap-500") {
-      throw new Error("o.0");
-    } else if (ctx.request.path === "/200") {
-      ctx.body = {};
-    }
-
-    return next();
+  const appWithoutErrorLeak = getApp({
+    errorOptions: {
+      leakError: false,
+    },
   });
+  const app = getApp();
+
+  const clientWithoutErrorLeak = Axios.create({});
+  const client = Axios.create({});
+
+  [appWithoutErrorLeak, app].forEach((app) =>
+    app.use((ctx, next) => {
+      if (ctx.request.path === "/500") {
+        throw AppError.serverError({ foo: true });
+      } else if (ctx.request.path === "/wrap-500") {
+        throw new Error("o.0");
+      } else if (ctx.request.path === "/200") {
+        ctx.body = {};
+      }
+
+      return next();
+    }),
+  );
 
   t.test("creat test app and client", async (t) => {
+    await createTestAppAndClient(appWithoutErrorLeak, clientWithoutErrorLeak);
     await createTestAppAndClient(app, client);
+
+    t.ok(appWithoutErrorLeak._server.listening);
     t.ok(app._server.listening);
   });
 
@@ -35,7 +47,7 @@ test("server/app", (t) => {
 
   t.test("404 and error handling", async (t) => {
     try {
-      await client.get("/nope");
+      await clientWithoutErrorLeak.get("/nope");
       t.fail("404, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 404);
@@ -49,7 +61,7 @@ test("server/app", (t) => {
 
   t.test("500 error handling", async (t) => {
     try {
-      await client.get("/500");
+      await clientWithoutErrorLeak.get("/500");
       t.fail("500, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 500);
@@ -64,19 +76,17 @@ test("server/app", (t) => {
   t.test("random error handling", async (t) => {
     try {
       await client.get("/wrap-500");
-      t.fail("wrap-500, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 500);
-      t.equal(response.data.key, response.data.message);
+      t.equal(response.data.key, response.data.key);
       t.equal(response.data.key, "error.server.internal");
-      t.ok(Array.isArray(response.data.info._error.stack));
+      t.ok(Array.isArray(response.data.stack));
     }
   });
 
   t.test("AppError format of Axios errors", async (t) => {
     try {
       await client.get("/wrap-500");
-      t.fail("wrap-500, so axios should have thrown");
     } catch (e) {
       const formatted = AppError.format(e);
       t.equal(formatted.name, "Error");
@@ -89,7 +99,8 @@ test("server/app", (t) => {
   });
 
   t.test("close _server", async (t) => {
+    await closeTestApp(appWithoutErrorLeak);
     await closeTestApp(app);
-    t.ok(!app._server.listening);
+    t.ok(!appWithoutErrorLeak._server.listening);
   });
 });
