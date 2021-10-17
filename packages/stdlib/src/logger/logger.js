@@ -1,9 +1,10 @@
+import pino from "pino";
 import { environment, isProduction } from "../env.js";
+import { isNil } from "../lodash.js";
 import { noop } from "../utils.js";
-import { writeGithubActions, writeNDJSON, writePretty } from "./writer.js";
+import { writeGithubActions, writePretty } from "./writer.js";
 
 const writersLookup = {
-  ndjson: writeNDJSON,
   pretty: writePretty,
   "github-actions": writeGithubActions,
 };
@@ -32,13 +33,36 @@ export function newLogger(options) {
         : "pretty"
       : "github-actions");
 
-  let context = options?.ctx ?? {};
-  if (isProduction()) {
-    if (app) {
-      context.application = app;
-    }
-    // Stringify context once
-    context = JSON.stringify(context);
+  const context = options?.ctx ?? {};
+  if (isProduction() && app) {
+    context.application = app;
+  }
+
+  if (printer === "ndjson") {
+    const pinoLogger = pino(
+      {
+        formatters: {
+          level: (label) => ({ level: label }),
+          bindings: () => ({}),
+        },
+        serializers: {},
+        base: {},
+        transport: options?.pinoOptions?.transport,
+      },
+      options?.pinoOptions?.destination ??
+        (isNil(options?.pinoOptions?.transport)
+          ? pino.destination(1)
+          : undefined),
+    ).child({ context });
+
+    return {
+      info: options?.disableInfoLogger
+        ? noop
+        : (message) => pinoLogger.info({ message }),
+      error: options?.disableErrorLogger
+        ? noop
+        : (message) => pinoLogger.error({ message }),
+    };
   }
 
   const info = options?.disableInfoLogger

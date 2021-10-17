@@ -1,9 +1,9 @@
 import { mainTestFn, test } from "@compas/cli";
-import { writeNDJSON, writePretty } from "./writer.js";
+import { writePretty } from "./writer.js";
 
 mainTestFn(import.meta);
 
-test("insight/writer", (t) => {
+test("stdlib/logger/writer", (t) => {
   t.test("writePretty", (t) => {
     const now = new Date();
     let result = [];
@@ -35,48 +35,5 @@ test("insight/writer", (t) => {
 
     t.equal(result.length, 1);
     t.ok(result[0].indexOf("foo") !== -1, "should print log type");
-  });
-
-  t.test("writeNDJSON", (t) => {
-    const now = new Date();
-    let result = [];
-    const mock = {
-      write: (arg) => {
-        result.push(arg);
-      },
-    };
-
-    writeNDJSON(mock, "info", now, "{}", {});
-
-    t.equal(result.length, 1);
-    t.equal(
-      JSON.parse(result[0]).level,
-      "info",
-      "log output can be parsed by json",
-    );
-
-    result = [];
-    writeNDJSON(
-      mock,
-      "info",
-      now,
-      JSON.stringify({
-        type: "foo",
-        application: "compas",
-      }),
-      { foo: { bar: { baz: "quix" } } },
-    );
-
-    t.equal(result.length, 1);
-    t.equal(
-      JSON.parse(result[0])?.context?.type,
-      "foo",
-      "should print log type",
-    );
-    t.equal(
-      JSON.parse(result[0])?.context?.application,
-      "compas",
-      "should print application type",
-    );
   });
 });

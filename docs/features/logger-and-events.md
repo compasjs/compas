@@ -31,7 +31,10 @@ Parameters:
     to use. Automatically inferred from the env variables.
   - `stream` (Stream): The stream to write to, defaults to `process.stdout`.
     This is the intended use case. Although streams to files may work, this is
-    not supported.
+    not supported. This option is ignored if the printer is `ndjson`.
+  - `pinoOptions`: Specify a custom Pino transport or destination. See the
+    [Pino docs](https://getpino.io) for more information. This field is only
+    used if the printer is `ndjson`.
   - `ctx` (object): Any context to add to log lines. This value is copied
     immediately on logger creation, so changes made via a reference, will not be
     reflected.
@@ -69,8 +72,8 @@ line is structured as follows:
 {
   // The log level, either 'info' or 'error'
   level: "info",
-  // Current date and time formatted as ISO8601-string
-  timestamp: "2021-01-19T21:17:11.693Z",
+  // Milliseconds since the unix epoch
+  time: 1634375371114,
   // The `ctx` that is passed in `newLogger`
   // In this case the default by `mainFn` from `@compas/stdlib`
   context: {
