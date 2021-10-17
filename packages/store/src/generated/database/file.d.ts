@@ -111,6 +111,8 @@ export function transformFile(
   values: any[],
   builder?: StoreFileQueryBuilder | undefined,
 ): void;
+/** @type {any} */
+export const fileWhereSpec: any;
 export namespace fileQueries {
   export { fileCount };
   export { fileDelete };

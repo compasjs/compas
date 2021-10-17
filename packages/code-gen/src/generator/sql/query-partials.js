@@ -23,6 +23,7 @@ export function generateQueryPartials(context, imports, type, src) {
   imports.destructureImport("isStaging", "@compas/stdlib");
   imports.destructureImport("query", "@compas/store");
   imports.destructureImport("isQueryPart", "@compas/store");
+  imports.destructureImport("generatedWhereBuilderHelper", "@compas/store");
 
   if (!type.queryOptions?.isView) {
     src.push(getFieldSet(context, type));
@@ -53,7 +54,7 @@ export function generateQueryPartials(context, imports, type, src) {
     }
   }
 
-  src.push(getWherePartial(context, type));
+  src.push(getWherePartial(context, imports, type));
   src.push(getOrderByPartial(context, type));
 
   if (!type.queryOptions?.isView) {

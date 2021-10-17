@@ -28,6 +28,8 @@ export { queries as storeQueries } from "./src/generated/database/index.js";
 
 export { setStoreQueries } from "./src/generated.js";
 
+export { generatedWhereBuilderHelper } from "./src/generator-helpers.js";
+
 export {
   newMinioClient,
   minio,

@@ -111,6 +111,8 @@ export function transformSession(
   values: any[],
   builder?: StoreSessionQueryBuilder | undefined,
 ): void;
+/** @type {any} */
+export const sessionWhereSpec: any;
 export namespace sessionQueries {
   export { sessionCount };
   export { sessionDelete };
