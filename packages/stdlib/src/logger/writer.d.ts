@@ -6,21 +6,6 @@
  * @param {*} message
  * @returns {void}
  */
-export function writeNDJSON(
-  stream: NodeJS.WritableStream,
-  level: string,
-  timestamp: Date,
-  context: string,
-  message: any,
-): void;
-/**
- * @param {NodeJS.WritableStream} stream
- * @param {string} level
- * @param {Date} timestamp
- * @param {string} context
- * @param {*} message
- * @returns {void}
- */
 export function writePretty(
   stream: NodeJS.WritableStream,
   level: string,

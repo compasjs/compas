@@ -10,22 +10,6 @@ import { inspect } from "util";
  * @param {*} message
  * @returns {void}
  */
-export function writeNDJSON(stream, level, timestamp, context, message) {
-  stream.write(
-    `{"level": "${level}", "timestamp": "${timestamp.toISOString()}", "context": ${context}, "message": ${JSON.stringify(
-      message,
-    )}}\n`,
-  );
-}
-
-/**
- * @param {NodeJS.WritableStream} stream
- * @param {string} level
- * @param {Date} timestamp
- * @param {string} context
- * @param {*} message
- * @returns {void}
- */
 export function writePretty(stream, level, timestamp, context, message) {
   stream.write(`${formatPretty(level, timestamp, context, message)}\n`);
 }
