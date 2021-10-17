@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { isQueryPart, query } from "@compas/store";
+import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
 import {
   validateStoreJobOrderBy,
   validateStoreJobOrderBySpec,
@@ -42,6 +42,87 @@ export function jobFields(tableName = "j.", options = {}) {
     `${tableName}"id", ${tableName}"isComplete", ${tableName}"handlerTimeout", ${tableName}"priority", ${tableName}"retryCount", ${tableName}"name", ${tableName}"scheduledAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
+/** @type {any} */
+export const jobWhereSpec = {
+  fieldSpecification: [
+    {
+      tableKey: "id",
+      keyType: "int",
+      matchers: [
+        { matcherKey: "id", matcherType: "equal" },
+        { matcherKey: "idNotEqual", matcherType: "notEqual" },
+        { matcherKey: "idIn", matcherType: "in" },
+        { matcherKey: "idNotIn", matcherType: "notIn" },
+        { matcherKey: "idGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "idLowerThan", matcherType: "lowerThan" },
+      ],
+    },
+    {
+      tableKey: "isComplete",
+      keyType: "uuid",
+      matchers: [
+        { matcherKey: "isComplete", matcherType: "equal" },
+        { matcherKey: "isCompleteIsNull", matcherType: "isNull" },
+        { matcherKey: "isCompleteIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+    {
+      tableKey: "name",
+      keyType: "varchar",
+      matchers: [
+        { matcherKey: "name", matcherType: "equal" },
+        { matcherKey: "nameNotEqual", matcherType: "notEqual" },
+        { matcherKey: "nameIn", matcherType: "in" },
+        { matcherKey: "nameNotIn", matcherType: "notIn" },
+        { matcherKey: "nameLike", matcherType: "like" },
+        { matcherKey: "nameILike", matcherType: "iLike" },
+        { matcherKey: "nameNotLike", matcherType: "notLike" },
+      ],
+    },
+    {
+      tableKey: "scheduledAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "scheduledAt", matcherType: "equal" },
+        { matcherKey: "scheduledAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "scheduledAtIn", matcherType: "in" },
+        { matcherKey: "scheduledAtNotIn", matcherType: "notIn" },
+        { matcherKey: "scheduledAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "scheduledAtLowerThan", matcherType: "lowerThan" },
+        { matcherKey: "scheduledAtIsNull", matcherType: "isNull" },
+        { matcherKey: "scheduledAtIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+    {
+      tableKey: "createdAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "createdAt", matcherType: "equal" },
+        { matcherKey: "createdAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "createdAtIn", matcherType: "in" },
+        { matcherKey: "createdAtNotIn", matcherType: "notIn" },
+        { matcherKey: "createdAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "createdAtLowerThan", matcherType: "lowerThan" },
+        { matcherKey: "createdAtIsNull", matcherType: "isNull" },
+        { matcherKey: "createdAtIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+    {
+      tableKey: "updatedAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "updatedAt", matcherType: "equal" },
+        { matcherKey: "updatedAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "updatedAtIn", matcherType: "in" },
+        { matcherKey: "updatedAtNotIn", matcherType: "notIn" },
+        { matcherKey: "updatedAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "updatedAtLowerThan", matcherType: "lowerThan" },
+        { matcherKey: "updatedAtIsNull", matcherType: "isNull" },
+        { matcherKey: "updatedAtIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+  ],
+};
 /**
  * Build 'WHERE ' part for job
  *
@@ -61,337 +142,7 @@ export function jobWhere(where = {}, tableName = "j.", options = {}) {
     }
     where = whereValidated.value;
   }
-  const strings = ["1 = 1"];
-  /** @type {QueryPartArg[]} */
-  const values = [undefined];
-  if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
-    strings.push(" AND ");
-    values.push(where.$raw);
-  }
-  if (Array.isArray(where.$or) && where.$or.length > 0) {
-    strings.push(" AND ((");
-    for (let i = 0; i < where.$or.length; i++) {
-      values.push(jobWhere(where.$or[i], tableName));
-      if (i === where.$or.length - 1) {
-        strings.push("))");
-        values.push(undefined);
-      } else {
-        strings.push(") OR (");
-      }
-    }
-  }
-  if (where.id !== undefined) {
-    strings.push(` AND ${tableName}"id" = `);
-    values.push(where.id);
-  }
-  if (where.idNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"id" != `);
-    values.push(where.idNotEqual);
-  }
-  if (where.idIn !== undefined) {
-    if (isQueryPart(where.idIn)) {
-      strings.push(` AND ${tableName}"id" = ANY(`, ")");
-      values.push(where.idIn, undefined);
-    } else if (Array.isArray(where.idIn)) {
-      strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
-      for (let i = 0; i < where.idIn.length; ++i) {
-        values.push(where.idIn[i]);
-        if (i !== where.idIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::int[])");
-      if (where.idIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.idNotIn !== undefined) {
-    if (isQueryPart(where.idNotIn)) {
-      strings.push(` AND ${tableName}"id" != ANY(`, ")");
-      values.push(where.idNotIn, undefined);
-    } else if (Array.isArray(where.idNotIn)) {
-      strings.push(` AND NOT (${tableName}"id" = ANY(ARRAY[`);
-      for (let i = 0; i < where.idNotIn.length; ++i) {
-        values.push(where.idNotIn[i]);
-        if (i !== where.idNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::int[]))");
-      if (where.idNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.idGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"id" > `);
-    values.push(where.idGreaterThan);
-  }
-  if (where.idLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"id" < `);
-    values.push(where.idLowerThan);
-  }
-  if (where.isComplete !== undefined) {
-    strings.push(` AND ${tableName}"isComplete" = `);
-    values.push(where.isComplete);
-  }
-  if (where.isCompleteIsNull !== undefined) {
-    strings.push(` AND ${tableName}"isComplete" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.isCompleteIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"isComplete" IS NOT NULL `);
-    values.push(undefined);
-  }
-  if (where.name !== undefined) {
-    strings.push(` AND ${tableName}"name" = `);
-    values.push(where.name);
-  }
-  if (where.nameNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"name" != `);
-    values.push(where.nameNotEqual);
-  }
-  if (where.nameIn !== undefined) {
-    if (isQueryPart(where.nameIn)) {
-      strings.push(` AND ${tableName}"name" = ANY(`, ")");
-      values.push(where.nameIn, undefined);
-    } else if (Array.isArray(where.nameIn)) {
-      strings.push(` AND ${tableName}"name" = ANY(ARRAY[`);
-      for (let i = 0; i < where.nameIn.length; ++i) {
-        values.push(where.nameIn[i]);
-        if (i !== where.nameIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::varchar[])");
-      if (where.nameIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.nameNotIn !== undefined) {
-    if (isQueryPart(where.nameNotIn)) {
-      strings.push(` AND ${tableName}"name" != ANY(`, ")");
-      values.push(where.nameNotIn, undefined);
-    } else if (Array.isArray(where.nameNotIn)) {
-      strings.push(` AND NOT (${tableName}"name" = ANY(ARRAY[`);
-      for (let i = 0; i < where.nameNotIn.length; ++i) {
-        values.push(where.nameNotIn[i]);
-        if (i !== where.nameNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::varchar[]))");
-      if (where.nameNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.nameLike !== undefined) {
-    strings.push(` AND ${tableName}"name" LIKE `);
-    values.push(`%${where.nameLike}%`);
-  }
-  if (where.nameILike !== undefined) {
-    strings.push(` AND ${tableName}"name" ILIKE `);
-    values.push(`%${where.nameILike}%`);
-  }
-  if (where.nameNotLike !== undefined) {
-    strings.push(` AND ${tableName}"name" NOT LIKE `);
-    values.push(`%${where.nameNotLike}%`);
-  }
-  if (where.scheduledAt !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" = `);
-    values.push(where.scheduledAt);
-  }
-  if (where.scheduledAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" != `);
-    values.push(where.scheduledAtNotEqual);
-  }
-  if (where.scheduledAtIn !== undefined) {
-    if (isQueryPart(where.scheduledAtIn)) {
-      strings.push(` AND ${tableName}"scheduledAt" = ANY(`, ")");
-      values.push(where.scheduledAtIn, undefined);
-    } else if (Array.isArray(where.scheduledAtIn)) {
-      strings.push(` AND ${tableName}"scheduledAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.scheduledAtIn.length; ++i) {
-        values.push(where.scheduledAtIn[i]);
-        if (i !== where.scheduledAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.scheduledAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.scheduledAtNotIn !== undefined) {
-    if (isQueryPart(where.scheduledAtNotIn)) {
-      strings.push(` AND ${tableName}"scheduledAt" != ANY(`, ")");
-      values.push(where.scheduledAtNotIn, undefined);
-    } else if (Array.isArray(where.scheduledAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"scheduledAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.scheduledAtNotIn.length; ++i) {
-        values.push(where.scheduledAtNotIn[i]);
-        if (i !== where.scheduledAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.scheduledAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.scheduledAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" > `);
-    values.push(where.scheduledAtGreaterThan);
-  }
-  if (where.scheduledAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" < `);
-    values.push(where.scheduledAtLowerThan);
-  }
-  if (where.scheduledAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.scheduledAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"scheduledAt" IS NOT NULL `);
-    values.push(undefined);
-  }
-  if (where.createdAt !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" = `);
-    values.push(where.createdAt);
-  }
-  if (where.createdAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" != `);
-    values.push(where.createdAtNotEqual);
-  }
-  if (where.createdAtIn !== undefined) {
-    if (isQueryPart(where.createdAtIn)) {
-      strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
-      values.push(where.createdAtIn, undefined);
-    } else if (Array.isArray(where.createdAtIn)) {
-      strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.createdAtIn.length; ++i) {
-        values.push(where.createdAtIn[i]);
-        if (i !== where.createdAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.createdAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.createdAtNotIn !== undefined) {
-    if (isQueryPart(where.createdAtNotIn)) {
-      strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
-      values.push(where.createdAtNotIn, undefined);
-    } else if (Array.isArray(where.createdAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"createdAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.createdAtNotIn.length; ++i) {
-        values.push(where.createdAtNotIn[i]);
-        if (i !== where.createdAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.createdAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.createdAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" > `);
-    values.push(where.createdAtGreaterThan);
-  }
-  if (where.createdAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" < `);
-    values.push(where.createdAtLowerThan);
-  }
-  if (where.createdAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.createdAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
-    values.push(undefined);
-  }
-  if (where.updatedAt !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" = `);
-    values.push(where.updatedAt);
-  }
-  if (where.updatedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" != `);
-    values.push(where.updatedAtNotEqual);
-  }
-  if (where.updatedAtIn !== undefined) {
-    if (isQueryPart(where.updatedAtIn)) {
-      strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
-      values.push(where.updatedAtIn, undefined);
-    } else if (Array.isArray(where.updatedAtIn)) {
-      strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.updatedAtIn.length; ++i) {
-        values.push(where.updatedAtIn[i]);
-        if (i !== where.updatedAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.updatedAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.updatedAtNotIn !== undefined) {
-    if (isQueryPart(where.updatedAtNotIn)) {
-      strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
-      values.push(where.updatedAtNotIn, undefined);
-    } else if (Array.isArray(where.updatedAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"updatedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
-        values.push(where.updatedAtNotIn[i]);
-        if (i !== where.updatedAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.updatedAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.updatedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" > `);
-    values.push(where.updatedAtGreaterThan);
-  }
-  if (where.updatedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" < `);
-    values.push(where.updatedAtLowerThan);
-  }
-  if (where.updatedAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.updatedAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
-    values.push(undefined);
-  }
-  strings.push("");
-  return query(strings, ...values);
+  return generatedWhereBuilderHelper(jobWhereSpec, where, tableName);
 }
 /**
  * Build 'ORDER BY ' part for job

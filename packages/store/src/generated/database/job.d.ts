@@ -111,6 +111,8 @@ export function transformJob(
   values: any[],
   builder?: StoreJobQueryBuilder | undefined,
 ): void;
+/** @type {any} */
+export const jobWhereSpec: any;
 export namespace jobQueries {
   export { jobCount };
   export { jobDelete };

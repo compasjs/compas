@@ -7,10 +7,12 @@ export function createWhereTypes(context: CodeGenContext): void;
 /**
  *
  * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 export function getWherePartial(
   context: CodeGenContext,
+  imports: any,
   type: CodeGenObjectType,
 ): string;
 /**

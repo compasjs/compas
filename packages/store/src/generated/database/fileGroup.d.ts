@@ -124,6 +124,8 @@ export function transformFileGroup(
   values: any[],
   builder?: StoreFileGroupQueryBuilder | undefined,
 ): void;
+/** @type {any} */
+export const fileGroupWhereSpec: any;
 export namespace fileGroupQueries {
   export { fileGroupCount };
   export { fileGroupDelete };

@@ -1,6 +1,7 @@
 export { structure as storeStructure } from "./src/generated/common/structure.js";
 export { queries as storeQueries } from "./src/generated/database/index.js";
 export { setStoreQueries } from "./src/generated.js";
+export { generatedWhereBuilderHelper } from "./src/generator-helpers.js";
 export { FileCache } from "./src/file-cache.js";
 export { newSessionStore } from "./src/sessions.js";
 export { postgresTableSizes } from "./src/insight.js";

@@ -20,7 +20,7 @@ import {
 const whereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   date: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
-  uuid: ["equal", "notEqual", "in", "notIn", "like", "notLike"],
+  uuid: ["equal", "notEqual", "in", "notIn"],
   string: ["equal", "notEqual", "in", "notIn", "like", "iLike", "notLike"],
   boolean: ["equal"],
 };
@@ -200,214 +200,113 @@ export function createWhereTypes(context) {
 /**
  *
  * @param {CodeGenContext} context
+ * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
-export function getWherePartial(context, type) {
-  const partials = [];
+export function getWherePartial(context, imports, type) {
+  let entityWhereString = `export const ${type.name}WhereSpec ={ "fieldSpecification": [`;
 
-  partials.push(`
-    if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
-      strings.push(" AND ");
-      values.push(where.$raw);
-    }
-    if (Array.isArray(where.$or) && where.$or.length > 0) {
-      strings.push(" AND ((");
-      for (let i = 0; i < where.$or.length; i++) {
-        values.push(${type.name}Where(where.$or[i], tableName));
-        
-        if (i === where.$or.length - 1) {
-          strings.push("))");
-          values.push(undefined);
-        } else {
-          strings.push(") OR (");
-        }
-      }
-    }
-  `);
-
+  const fieldsByKey = {};
   for (const field of type.where.fields) {
-    let str = "";
+    if (isNil(fieldsByKey[field.key])) {
+      fieldsByKey[field.key] = [];
+    }
 
-    if (field.isRelation) {
-      const relation = type.relations.find((it) => it.ownKey === field.key);
-      const primaryKey = getPrimaryKeyWithType(type);
+    fieldsByKey[field.key].push(field);
+  }
 
-      const exists = field.variant !== "exists" ? "NOT EXISTS" : "EXISTS";
-      const shortName =
-        relation.reference.reference.name === type.name
+  for (const key of Object.keys(fieldsByKey)) {
+    let matchers = `[`;
+    let keyType = undefined;
+
+    for (const field of fieldsByKey[key]) {
+      if (isNil(keyType) && !field.isRelation) {
+        const realField =
+          type.keys[field.key].reference ?? type.keys[field.key];
+        // Type to cast arrays to, use for in & notIn
+        keyType =
+          realField.type === "number" && !realField.floatingPoint
+            ? "int"
+            : realField.type === "number" && realField.floatingPoint
+            ? "float"
+            : realField.type === "string"
+            ? "varchar"
+            : realField.type === "date"
+            ? "timestamptz"
+            : "uuid";
+      }
+
+      matchers += `{ matcherKey: "${field.name}", matcherType: "${field.variant}", `;
+
+      if (field.isRelation) {
+        const relation = type.relations.find((it) => it.ownKey === field.key);
+        const primaryKey = getPrimaryKeyWithType(type);
+        const isSelfReference = relation.reference.reference.name === type.name;
+
+        const shortName = isSelfReference
           ? `${relation.reference.reference.shortName}2`
           : `${relation.reference.reference.shortName}`;
 
-      str += `
-        if (where.${field.name}) {
-          strings.push(\` AND ${exists} (SELECT FROM "${relation.reference.reference.name}" ${shortName} WHERE \`, \` AND ${shortName}."${relation.referencedKey}" = $\{tableName}"${primaryKey.key}")\`);
-          values.push(${relation.reference.reference.name}Where(where.${field.name}, "${shortName}.", { skipValidator: true }), undefined);
+        if (!isSelfReference) {
+          imports.destructureImport(
+            `${relation.reference.reference.name}WhereSpec`,
+            `./${relation.reference.reference.name}.js`,
+          );
         }
-      `;
-    } else {
-      const realField = type.keys[field.key].reference ?? type.keys[field.key];
-      // Type to cast arrays to, use for in & notIn
-      const fieldType =
-        realField.type === "number" && !realField.floatingPoint
-          ? "int"
-          : realField.type === "number" && realField.floatingPoint
-          ? "float"
-          : realField.type === "string"
-          ? "varchar"
-          : realField.type === "date"
-          ? "timestamptz"
-          : "uuid";
 
-      if (field.variant === "includeNotNull") {
-        str += `
-        if ((where.${field.name} ?? false) === false) {
-          strings.push(\` AND ($\{tableName}"${field.key}" IS NULL OR $\{tableName}"${field.key}" > now()) \`);
-          values.push(undefined);
-        }
-      `;
-      } else {
-        str += `if (where.${field.name} !== undefined) {\n`;
-
-        switch (field.variant) {
-          case "equal":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" = \`);
-            values.push(where.${field.name});
-          `;
-            break;
-          case "notEqual":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" != \`);
-            values.push(where.${field.name});
-          `;
-            break;
-          case "in":
-            str += `
-            if (isQueryPart(where.${field.name})) {
-              strings.push(\` AND $\{tableName}"${field.key}" = ANY(\`, ")");
-              values.push(where.${field.name}, undefined);
-            } else if (Array.isArray(where.${field.name})) {
-              strings.push(\` AND $\{tableName}"${field.key}" = ANY(ARRAY[\`);
-              for (let i = 0; i < where.${field.name}.length; ++i) {
-                values.push(where.${field.name}[i]);
-                if (i !== where.${field.name}.length - 1) {
-                  strings.push(", ");
-                }
-              }
-              strings.push("]::${fieldType}[])");
-              if (where.${field.name}.length === 0) {
-                values.push(undefined);
-              }
-              values.push(undefined);
-            }
-          `;
-            break;
-          case "notIn":
-            str += `
-            if (isQueryPart(where.${field.name})) {
-              strings.push(\` AND $\{tableName}"${field.key}" != ANY(\`, ")");
-              values.push(where.${field.name}, undefined);
-            } else if (Array.isArray(where.${field.name})) {
-              strings.push(\` AND NOT ($\{tableName}"${field.key}" = ANY(ARRAY[\`);
-              for (let i = 0; i < where.${field.name}.length; ++i) {
-                values.push(where.${field.name}[i]);
-                if (i !== where.${field.name}.length - 1) {
-                  strings.push(", ");
-                }
-              }
-              strings.push("]::${fieldType}[]))");
-              if (where.${field.name}.length === 0) {
-                values.push(undefined);
-              }
-              values.push(undefined);
-            }
-          `;
-            break;
-          case "greaterThan":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" > \`);
-            values.push(where.${field.name});
-          `;
-            break;
-          case "lowerThan":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" < \`);
-            values.push(where.${field.name});
-          `;
-            break;
-          case "isNull":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" IS NULL \`);
-            values.push(undefined);
-          `;
-            break;
-          case "isNotNull":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" IS NOT NULL \`);
-            values.push(undefined);
-          `;
-            break;
-          case "like":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" LIKE \`);
-            values.push(\`%$\{where.${field.name}}%\`);
-          `;
-            break;
-          case "iLike":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" ILIKE \`);
-            values.push(\`%$\{where.${field.name}}%\`);
-          `;
-            break;
-          case "notLike":
-            str += `
-            strings.push(\` AND $\{tableName}"${field.key}" NOT LIKE \`);
-            values.push(\`%$\{where.${field.name}}%\`);
-          `;
-            break;
-        }
-        str += "}";
+        matchers += `relation: {
+           entityName: "${relation.reference.reference.name}",
+           shortName: "${shortName}",
+           entityKey: "${relation.referencedKey}",
+           referencedKey: "${primaryKey.key}",
+           where: ${
+             isSelfReference
+               ? `"self"`
+               : `() => ${relation.reference.reference.name}WhereSpec`
+           },
+         },`;
       }
+
+      matchers += "},";
     }
 
-    partials.push(str);
+    matchers += "]";
+    entityWhereString += `{ tableKey: "${key}", keyType: "${keyType}", matchers: ${matchers} },`;
   }
 
+  entityWhereString += " ]};";
+
   return js`
-    /**
-     * Build 'WHERE ' part for ${type.name}
-     *
-     * @param {${type.where.type}} [where={}]
-     * @param {string} [tableName="${type.shortName}."]
-     * @param {{ skipValidator?: boolean|undefined }} [options={}]
-     * @returns {QueryPart}
-     */
-    export function ${type.name}Where(where = {},
-                                      tableName = "${type.shortName}.",
-                                      options = {}
-    ) {
-      if (tableName.length > 0 && !tableName.endsWith(".")) {
-        tableName = \`$\{tableName}.\`;
-      }
+    /** @type {any} */
+    ${entityWhereString}
 
-      if (!options.skipValidator) {
-        const whereValidated = validate${type.uniqueName}Where(
-          where, "$.${type.name}Where");
-        if (whereValidated.error) {
-          throw whereValidated.error;
-        }
-        where = whereValidated.value;
-      }
-
-      const strings = [ "1 = 1" ];
-      /** @type {QueryPartArg[]} */
-      const values = [ undefined ];
-
-      ${partials}
-      strings.push("");
-
-      return query(strings, ...values);
+  /**
+   * Build 'WHERE ' part for ${type.name}
+   *
+   * @param {${type.where.type}} [where={}]
+   * @param {string} [tableName="${type.shortName}."]
+   * @param {{ skipValidator?: boolean|undefined }} [options={}]
+   * @returns {QueryPart}
+   */
+  export function ${type.name}Where(where = {},
+                                    tableName = "${type.shortName}.",
+                                    options = {}
+  ) {
+    if (tableName.length > 0 && !tableName.endsWith(".")) {
+      tableName = \`$\{tableName}.\`;
     }
+
+    if (!options.skipValidator) {
+      const whereValidated = validate${type.uniqueName}Where(
+        where, "$.${type.name}Where");
+      if (whereValidated.error) {
+        throw whereValidated.error;
+      }
+      where = whereValidated.value;
+    }
+
+    return generatedWhereBuilderHelper(${type.name}WhereSpec, where, tableName)
+  }
   `;
 }
 

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { isQueryPart, query } from "@compas/store";
+import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
 import {
   validateStoreFileOrderBy,
   validateStoreFileOrderBySpec,
@@ -13,6 +13,7 @@ import {
   fileGroupOrderBy,
   fileGroupQueries,
   fileGroupWhere,
+  fileGroupWhereSpec,
   internalQueryFileGroup,
   transformFileGroup,
 } from "./fileGroup.js";
@@ -48,6 +49,106 @@ export function fileFields(tableName = "f.", options = {}) {
     `${tableName}"id", ${tableName}"contentLength", ${tableName}"bucketName", ${tableName}"contentType", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
   ]);
 }
+/** @type {any} */
+export const fileWhereSpec = {
+  fieldSpecification: [
+    {
+      tableKey: "id",
+      keyType: "uuid",
+      matchers: [
+        { matcherKey: "id", matcherType: "equal" },
+        { matcherKey: "idNotEqual", matcherType: "notEqual" },
+        { matcherKey: "idIn", matcherType: "in" },
+        { matcherKey: "idNotIn", matcherType: "notIn" },
+      ],
+    },
+    {
+      tableKey: "bucketName",
+      keyType: "varchar",
+      matchers: [
+        { matcherKey: "bucketName", matcherType: "equal" },
+        { matcherKey: "bucketNameNotEqual", matcherType: "notEqual" },
+        { matcherKey: "bucketNameIn", matcherType: "in" },
+        { matcherKey: "bucketNameNotIn", matcherType: "notIn" },
+        { matcherKey: "bucketNameLike", matcherType: "like" },
+        { matcherKey: "bucketNameILike", matcherType: "iLike" },
+        { matcherKey: "bucketNameNotLike", matcherType: "notLike" },
+      ],
+    },
+    {
+      tableKey: "createdAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "createdAt", matcherType: "equal" },
+        { matcherKey: "createdAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "createdAtIn", matcherType: "in" },
+        { matcherKey: "createdAtNotIn", matcherType: "notIn" },
+        { matcherKey: "createdAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "createdAtLowerThan", matcherType: "lowerThan" },
+        { matcherKey: "createdAtIsNull", matcherType: "isNull" },
+        { matcherKey: "createdAtIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+    {
+      tableKey: "updatedAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "updatedAt", matcherType: "equal" },
+        { matcherKey: "updatedAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "updatedAtIn", matcherType: "in" },
+        { matcherKey: "updatedAtNotIn", matcherType: "notIn" },
+        { matcherKey: "updatedAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "updatedAtLowerThan", matcherType: "lowerThan" },
+        { matcherKey: "updatedAtIsNull", matcherType: "isNull" },
+        { matcherKey: "updatedAtIsNotNull", matcherType: "isNotNull" },
+      ],
+    },
+    {
+      tableKey: "deletedAt",
+      keyType: "timestamptz",
+      matchers: [
+        { matcherKey: "deletedAt", matcherType: "equal" },
+        { matcherKey: "deletedAtNotEqual", matcherType: "notEqual" },
+        { matcherKey: "deletedAtIn", matcherType: "in" },
+        { matcherKey: "deletedAtNotIn", matcherType: "notIn" },
+        { matcherKey: "deletedAtGreaterThan", matcherType: "greaterThan" },
+        { matcherKey: "deletedAtLowerThan", matcherType: "lowerThan" },
+        {
+          matcherKey: "deletedAtIncludeNotNull",
+          matcherType: "includeNotNull",
+        },
+      ],
+    },
+    {
+      tableKey: "group",
+      keyType: "undefined",
+      matchers: [
+        {
+          matcherKey: "groupExists",
+          matcherType: "exists",
+          relation: {
+            entityName: "fileGroup",
+            shortName: "fg",
+            entityKey: "file",
+            referencedKey: "id",
+            where: () => fileGroupWhereSpec,
+          },
+        },
+        {
+          matcherKey: "groupNotExists",
+          matcherType: "notExists",
+          relation: {
+            entityName: "fileGroup",
+            shortName: "fg",
+            entityKey: "file",
+            referencedKey: "id",
+            where: () => fileGroupWhereSpec,
+          },
+        },
+      ],
+    },
+  ],
+};
 /**
  * Build 'WHERE ' part for file
  *
@@ -67,343 +168,7 @@ export function fileWhere(where = {}, tableName = "f.", options = {}) {
     }
     where = whereValidated.value;
   }
-  const strings = ["1 = 1"];
-  /** @type {QueryPartArg[]} */
-  const values = [undefined];
-  if (!isNil(where.$raw) && isQueryPart(where.$raw)) {
-    strings.push(" AND ");
-    values.push(where.$raw);
-  }
-  if (Array.isArray(where.$or) && where.$or.length > 0) {
-    strings.push(" AND ((");
-    for (let i = 0; i < where.$or.length; i++) {
-      values.push(fileWhere(where.$or[i], tableName));
-      if (i === where.$or.length - 1) {
-        strings.push("))");
-        values.push(undefined);
-      } else {
-        strings.push(") OR (");
-      }
-    }
-  }
-  if (where.id !== undefined) {
-    strings.push(` AND ${tableName}"id" = `);
-    values.push(where.id);
-  }
-  if (where.idNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"id" != `);
-    values.push(where.idNotEqual);
-  }
-  if (where.idIn !== undefined) {
-    if (isQueryPart(where.idIn)) {
-      strings.push(` AND ${tableName}"id" = ANY(`, ")");
-      values.push(where.idIn, undefined);
-    } else if (Array.isArray(where.idIn)) {
-      strings.push(` AND ${tableName}"id" = ANY(ARRAY[`);
-      for (let i = 0; i < where.idIn.length; ++i) {
-        values.push(where.idIn[i]);
-        if (i !== where.idIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::uuid[])");
-      if (where.idIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.idNotIn !== undefined) {
-    if (isQueryPart(where.idNotIn)) {
-      strings.push(` AND ${tableName}"id" != ANY(`, ")");
-      values.push(where.idNotIn, undefined);
-    } else if (Array.isArray(where.idNotIn)) {
-      strings.push(` AND NOT (${tableName}"id" = ANY(ARRAY[`);
-      for (let i = 0; i < where.idNotIn.length; ++i) {
-        values.push(where.idNotIn[i]);
-        if (i !== where.idNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::uuid[]))");
-      if (where.idNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.idLike !== undefined) {
-    strings.push(` AND ${tableName}"id" LIKE `);
-    values.push(`%${where.idLike}%`);
-  }
-  if (where.idNotLike !== undefined) {
-    strings.push(` AND ${tableName}"id" NOT LIKE `);
-    values.push(`%${where.idNotLike}%`);
-  }
-  if (where.bucketName !== undefined) {
-    strings.push(` AND ${tableName}"bucketName" = `);
-    values.push(where.bucketName);
-  }
-  if (where.bucketNameNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"bucketName" != `);
-    values.push(where.bucketNameNotEqual);
-  }
-  if (where.bucketNameIn !== undefined) {
-    if (isQueryPart(where.bucketNameIn)) {
-      strings.push(` AND ${tableName}"bucketName" = ANY(`, ")");
-      values.push(where.bucketNameIn, undefined);
-    } else if (Array.isArray(where.bucketNameIn)) {
-      strings.push(` AND ${tableName}"bucketName" = ANY(ARRAY[`);
-      for (let i = 0; i < where.bucketNameIn.length; ++i) {
-        values.push(where.bucketNameIn[i]);
-        if (i !== where.bucketNameIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::varchar[])");
-      if (where.bucketNameIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.bucketNameNotIn !== undefined) {
-    if (isQueryPart(where.bucketNameNotIn)) {
-      strings.push(` AND ${tableName}"bucketName" != ANY(`, ")");
-      values.push(where.bucketNameNotIn, undefined);
-    } else if (Array.isArray(where.bucketNameNotIn)) {
-      strings.push(` AND NOT (${tableName}"bucketName" = ANY(ARRAY[`);
-      for (let i = 0; i < where.bucketNameNotIn.length; ++i) {
-        values.push(where.bucketNameNotIn[i]);
-        if (i !== where.bucketNameNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::varchar[]))");
-      if (where.bucketNameNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.bucketNameLike !== undefined) {
-    strings.push(` AND ${tableName}"bucketName" LIKE `);
-    values.push(`%${where.bucketNameLike}%`);
-  }
-  if (where.bucketNameILike !== undefined) {
-    strings.push(` AND ${tableName}"bucketName" ILIKE `);
-    values.push(`%${where.bucketNameILike}%`);
-  }
-  if (where.bucketNameNotLike !== undefined) {
-    strings.push(` AND ${tableName}"bucketName" NOT LIKE `);
-    values.push(`%${where.bucketNameNotLike}%`);
-  }
-  if (where.createdAt !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" = `);
-    values.push(where.createdAt);
-  }
-  if (where.createdAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" != `);
-    values.push(where.createdAtNotEqual);
-  }
-  if (where.createdAtIn !== undefined) {
-    if (isQueryPart(where.createdAtIn)) {
-      strings.push(` AND ${tableName}"createdAt" = ANY(`, ")");
-      values.push(where.createdAtIn, undefined);
-    } else if (Array.isArray(where.createdAtIn)) {
-      strings.push(` AND ${tableName}"createdAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.createdAtIn.length; ++i) {
-        values.push(where.createdAtIn[i]);
-        if (i !== where.createdAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.createdAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.createdAtNotIn !== undefined) {
-    if (isQueryPart(where.createdAtNotIn)) {
-      strings.push(` AND ${tableName}"createdAt" != ANY(`, ")");
-      values.push(where.createdAtNotIn, undefined);
-    } else if (Array.isArray(where.createdAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"createdAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.createdAtNotIn.length; ++i) {
-        values.push(where.createdAtNotIn[i]);
-        if (i !== where.createdAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.createdAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.createdAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" > `);
-    values.push(where.createdAtGreaterThan);
-  }
-  if (where.createdAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" < `);
-    values.push(where.createdAtLowerThan);
-  }
-  if (where.createdAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.createdAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"createdAt" IS NOT NULL `);
-    values.push(undefined);
-  }
-  if (where.updatedAt !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" = `);
-    values.push(where.updatedAt);
-  }
-  if (where.updatedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" != `);
-    values.push(where.updatedAtNotEqual);
-  }
-  if (where.updatedAtIn !== undefined) {
-    if (isQueryPart(where.updatedAtIn)) {
-      strings.push(` AND ${tableName}"updatedAt" = ANY(`, ")");
-      values.push(where.updatedAtIn, undefined);
-    } else if (Array.isArray(where.updatedAtIn)) {
-      strings.push(` AND ${tableName}"updatedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.updatedAtIn.length; ++i) {
-        values.push(where.updatedAtIn[i]);
-        if (i !== where.updatedAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.updatedAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.updatedAtNotIn !== undefined) {
-    if (isQueryPart(where.updatedAtNotIn)) {
-      strings.push(` AND ${tableName}"updatedAt" != ANY(`, ")");
-      values.push(where.updatedAtNotIn, undefined);
-    } else if (Array.isArray(where.updatedAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"updatedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.updatedAtNotIn.length; ++i) {
-        values.push(where.updatedAtNotIn[i]);
-        if (i !== where.updatedAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.updatedAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.updatedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" > `);
-    values.push(where.updatedAtGreaterThan);
-  }
-  if (where.updatedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" < `);
-    values.push(where.updatedAtLowerThan);
-  }
-  if (where.updatedAtIsNull !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" IS NULL `);
-    values.push(undefined);
-  }
-  if (where.updatedAtIsNotNull !== undefined) {
-    strings.push(` AND ${tableName}"updatedAt" IS NOT NULL `);
-    values.push(undefined);
-  }
-  if (where.deletedAt !== undefined) {
-    strings.push(` AND ${tableName}"deletedAt" = `);
-    values.push(where.deletedAt);
-  }
-  if (where.deletedAtNotEqual !== undefined) {
-    strings.push(` AND ${tableName}"deletedAt" != `);
-    values.push(where.deletedAtNotEqual);
-  }
-  if (where.deletedAtIn !== undefined) {
-    if (isQueryPart(where.deletedAtIn)) {
-      strings.push(` AND ${tableName}"deletedAt" = ANY(`, ")");
-      values.push(where.deletedAtIn, undefined);
-    } else if (Array.isArray(where.deletedAtIn)) {
-      strings.push(` AND ${tableName}"deletedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.deletedAtIn.length; ++i) {
-        values.push(where.deletedAtIn[i]);
-        if (i !== where.deletedAtIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[])");
-      if (where.deletedAtIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.deletedAtNotIn !== undefined) {
-    if (isQueryPart(where.deletedAtNotIn)) {
-      strings.push(` AND ${tableName}"deletedAt" != ANY(`, ")");
-      values.push(where.deletedAtNotIn, undefined);
-    } else if (Array.isArray(where.deletedAtNotIn)) {
-      strings.push(` AND NOT (${tableName}"deletedAt" = ANY(ARRAY[`);
-      for (let i = 0; i < where.deletedAtNotIn.length; ++i) {
-        values.push(where.deletedAtNotIn[i]);
-        if (i !== where.deletedAtNotIn.length - 1) {
-          strings.push(", ");
-        }
-      }
-      strings.push("]::timestamptz[]))");
-      if (where.deletedAtNotIn.length === 0) {
-        values.push(undefined);
-      }
-      values.push(undefined);
-    }
-  }
-  if (where.deletedAtGreaterThan !== undefined) {
-    strings.push(` AND ${tableName}"deletedAt" > `);
-    values.push(where.deletedAtGreaterThan);
-  }
-  if (where.deletedAtLowerThan !== undefined) {
-    strings.push(` AND ${tableName}"deletedAt" < `);
-    values.push(where.deletedAtLowerThan);
-  }
-  if ((where.deletedAtIncludeNotNull ?? false) === false) {
-    strings.push(
-      ` AND (${tableName}"deletedAt" IS NULL OR ${tableName}"deletedAt" > now()) `,
-    );
-    values.push(undefined);
-  }
-  if (where.groupExists) {
-    strings.push(
-      ` AND EXISTS (SELECT FROM "fileGroup" fg WHERE `,
-      ` AND fg."file" = ${tableName}"id")`,
-    );
-    values.push(
-      fileGroupWhere(where.groupExists, "fg.", { skipValidator: true }),
-      undefined,
-    );
-  }
-  if (where.groupNotExists) {
-    strings.push(
-      ` AND NOT EXISTS (SELECT FROM "fileGroup" fg WHERE `,
-      ` AND fg."file" = ${tableName}"id")`,
-    );
-    values.push(
-      fileGroupWhere(where.groupNotExists, "fg.", { skipValidator: true }),
-      undefined,
-    );
-  }
-  strings.push("");
-  return query(strings, ...values);
+  return generatedWhereBuilderHelper(fileWhereSpec, where, tableName);
 }
 /**
  * Build 'ORDER BY ' part for file
