@@ -39,7 +39,7 @@ Create a new logger instance
 
 - options `LoggerOptions|undefined?`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/logger/logger.js#L23)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/logger/logger.js#L24)_
 
 ## newEvent
 

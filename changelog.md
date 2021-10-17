@@ -4,6 +4,62 @@ editLink: false
 
 # Changelog
 
+### [v0.0.168](https://github.com/compasjs/compas/releases/tag/v0.0.168)
+
+##### Changes
+
+- bench(stdlib): add better logger benchmarks
+- build(deps): bump @babel/core from 7.15.5 to 7.15.8
+  ([#1249](https://github.com/compasjs/compas/pull/1249))
+- build(deps): bump @babel/eslint-parser from 7.15.7 to 7.15.8
+  ([#1250](https://github.com/compasjs/compas/pull/1250))
+- build(deps): bump @types/node from 16.10.2 to 16.11.1
+  ([#1245](https://github.com/compasjs/compas/pull/1245),
+  [#1262](https://github.com/compasjs/compas/pull/1262),
+  [#1266](https://github.com/compasjs/compas/pull/1266),
+  [#1268](https://github.com/compasjs/compas/pull/1268),
+  [#1272](https://github.com/compasjs/compas/pull/1272))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump c8 from 7.9.0 to 7.10.0
+  ([#1248](https://github.com/compasjs/compas/pull/1248))
+- build(deps): bump eslint from 7.32.0 to 8.0.1
+  ([#1265](https://github.com/compasjs/compas/pull/1265))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-import from 2.24.2 to 2.25.2
+  ([#1263](https://github.com/compasjs/compas/pull/1263))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump eslint-plugin-jsdoc from 36.1.0 to 36.1.1
+  ([#1252](https://github.com/compasjs/compas/pull/1252))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(changelog): fix matcher on multiple git commit subjects
+- feat(code-gen,store): use a runtime helper to build the where clause
+  ([#1273](https://github.com/compasjs/compas/pull/1273))
+- feat(docs): add router & api client generator documents
+  ([#1254](https://github.com/compasjs/compas/pull/1254))
+  - References [#1138](https://github.com/compasjs/compas/pull/1138)
+  - Closes [#1140](https://github.com/compasjs/compas/pull/1140)
+- feat(docs): add some more body to the code-gen api doc.
+- feat(stdlib): use Pino as ndjson logger
+  ([#1274](https://github.com/compasjs/compas/pull/1274))
+  - Closes [#1271](https://github.com/compasjs/compas/pull/1271)
+- fix(code-gen): limit `body()` usage on `R.delete()`
+  ([#1256](https://github.com/compasjs/compas/pull/1256))
+  - Closes [#1246](https://github.com/compasjs/compas/pull/1246)
+- fix(server): redo leakError in de error handler middleware
+  ([#1267](https://github.com/compasjs/compas/pull/1267))
+  - Closes [#1257](https://github.com/compasjs/compas/pull/1257)
+
+##### Breaking changes
+
+- **deps**: bump eslint from 7.32.0 to 8.0.1
+  - Major version bump
+- **stdlib**: use Pino as ndjson logger
+  - The production log writer is replaced.
+  - `ndjson` log lines contain a `time` field with milliseconds since epoch
+    instead of a `timestamp` field with an ISO-8601 string.
+- **server**: redo leakError in de error handler middleware
+  - `leakError: true` is ignored if a custom `onAppError` is provided
+
 ### [v0.0.167](https://github.com/compasjs/compas/releases/tag/v0.0.167)
 
 ##### Changes
