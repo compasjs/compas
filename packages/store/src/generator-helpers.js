@@ -156,6 +156,7 @@ export function generatedWhereBuilderHelper(
           strings.push(
             ` AND (${shortName}"${fieldSpec.tableKey}" IS NULL OR ${shortName}"${fieldSpec.tableKey}" > now()) `,
           );
+          values.push(undefined);
         }
       } else if (matcherKeyExists && matcher.matcherType === "isNull") {
         // a.bar IS NULL
