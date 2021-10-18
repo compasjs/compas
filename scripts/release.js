@@ -25,7 +25,6 @@ async function main() {
   checkVersionFormat(version);
   checkOtpFormat(otp);
   await checkCleanWorkingDirectory();
-  await checkTypesGenerate();
 
   for (const pkg of packages) {
     await bumpPackageJson(pkg, version.substring(1));
@@ -71,14 +70,6 @@ async function checkCleanWorkingDirectory() {
     throw AppError.serverError({
       message:
         "Working directory is not clean. Make sure to commit all your changes.",
-    });
-  }
-}
-async function checkTypesGenerate() {
-  const { exitCode } = await spawn("yarn", ["compas", "types"]);
-  if (exitCode !== 0) {
-    throw AppError.serverError({
-      message: "Failed to generate types.",
     });
   }
 }
