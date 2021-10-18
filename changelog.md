@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.169](https://github.com/compasjs/compas/releases/tag/v0.0.169)
+
+##### Changes
+
+- fix(store): fix interpolation after `where.includeNotNull`
+  ([#1276](https://github.com/compasjs/compas/pull/1276))
+
 ### [v0.0.168](https://github.com/compasjs/compas/releases/tag/v0.0.168)
 
 ##### Changes
