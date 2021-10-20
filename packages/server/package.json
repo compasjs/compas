@@ -22,7 +22,7 @@
     "co-body": "6.1.0",
     "formidable": "2.0.0-canary.20200504.1",
     "keygrip": "1.1.0",
-    "koa": "2.13.3",
+    "koa": "2.13.4",
     "koa-session": "6.2.0"
   },
   "maintainers": [
