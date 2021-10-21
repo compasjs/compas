@@ -4,6 +4,20 @@ editLink: false
 
 # Changelog
 
+### [v0.0.170](https://github.com/compasjs/compas/releases/tag/v0.0.170)
+
+##### Changes
+
+- build(deps): bump @types/minio from 7.0.10 to 7.0.11
+  ([#1277](https://github.com/compasjs/compas/pull/1277))
+- build(deps): bump koa from 2.13.3 to 2.13.4
+  ([#1279](https://github.com/compasjs/compas/pull/1279))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump pino from 7.0.2 to 7.0.3
+  ([#1278](https://github.com/compasjs/compas/pull/1278))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- fix(store): matcher name for iLike was incorrect in where generator
+
 ### [v0.0.169](https://github.com/compasjs/compas/releases/tag/v0.0.169)
 
 ##### Changes
