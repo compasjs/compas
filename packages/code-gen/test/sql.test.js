@@ -125,6 +125,24 @@ test("code-gen/e2e/sql", (t) => {
     post = dbPost1;
   });
 
+  t.test("where iLike", async (t) => {
+    const noUsers = await queryUser({
+      where: {
+        emailILike: "foo",
+      },
+    }).exec(sql);
+
+    t.equal(noUsers.length, 0);
+
+    const users = await queryUser({
+      where: {
+        emailILike: "test@test",
+      },
+    }).exec(sql);
+
+    t.equal(users.length, 1);
+  });
+
   t.test("where exists", async (t) => {
     const categories = await queryCategory({
       where: {

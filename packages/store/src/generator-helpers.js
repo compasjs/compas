@@ -9,7 +9,7 @@ import { isQueryPart, query } from "./query.js";
  *   matchers: {
  *     matcherKey: string,
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
- *                    "like"|"ilike"|"notLike"|"notILike"|
+ *                    "like"|"iLike"|"notLike"|"notILike"|
  *                    "includeNotNull"|"isNull"|"isNotNull"|
  *                    "exists"|"notExists",
  *     relation: {
@@ -138,7 +138,7 @@ export function generatedWhereBuilderHelper(
         // a.bar LIKE %xxx%
         strings.push(` AND ${shortName}"${fieldSpec.tableKey}" LIKE `);
         values.push(`%${where[matcher.matcherKey]}%`);
-      } else if (matcherKeyExists && matcher.matcherType === "ilike") {
+      } else if (matcherKeyExists && matcher.matcherType === "iLike") {
         // a.bar ILIKE %xxx%
         strings.push(` AND ${shortName}"${fieldSpec.tableKey}" ILIKE `);
         values.push(`%${where[matcher.matcherKey]}%`);

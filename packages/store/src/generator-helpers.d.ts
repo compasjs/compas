@@ -6,7 +6,7 @@
  *   matchers: {
  *     matcherKey: string,
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
- *                    "like"|"ilike"|"notLike"|"notILike"|
+ *                    "like"|"iLike"|"notLike"|"notILike"|
  *                    "includeNotNull"|"isNull"|"isNotNull"|
  *                    "exists"|"notExists",
  *     relation: {
@@ -46,7 +46,7 @@ export type EntityWhere = {
         | "greaterThan"
         | "lowerThan"
         | "like"
-        | "ilike"
+        | "iLike"
         | "notLike"
         | "notILike"
         | "includeNotNull"
