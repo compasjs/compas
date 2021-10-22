@@ -11,7 +11,7 @@ To add Compas to your project, install the following most used packages:
 
 ```shell
 yarn add -D -E @compas/cli
-yarn add -E @cmpas/stdlib
+yarn add -E @compas/stdlib
 ```
 
 Let's explore Compas starting with the
