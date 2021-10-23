@@ -327,23 +327,30 @@ export class App {
 
     hoistNamedItems(this.data, this.data);
 
-    opts.enabledGroups = options.enabledGroups ?? Object.keys(this.data);
-
     // Make sure to do the same case conversion here as well as to not confuse the user.
-    opts.enabledGroups = opts.enabledGroups.map((it) => lowerCaseFirst(it));
+    // Other than that we don't mutate this array.
+    opts.enabledGroups = options.enabledGroups?.map((it) => lowerCaseFirst(it));
 
-    if (opts.enabledGroups.length === 0) {
-      throw new Error("Need at least a single group in enabledGroups");
+    if (
+      (opts.enabledGroups?.length ?? 0) === 0 &&
+      Object.keys(this.data).length === 0
+    ) {
+      throw new Error(
+        "Need at least a single group in enabledGroups, or no `enabledGroups` provided which defaults to all groups.",
+      );
     }
+
+    const groupsToInclude = opts.enabledGroups
+      ? [...opts.enabledGroups]
+      : Object.keys(this.data);
 
     // Make sure _compas/structure.json is enabled.
     // This is only needed when we have a router and dumpApiStructure is true
     if (
       opts.enabledGenerators.indexOf("router") !== -1 &&
-      opts.enabledGroups.indexOf("compas") === -1 &&
       opts.dumpApiStructure
     ) {
-      opts.enabledGroups.push("compas");
+      groupsToInclude.push("compas");
     }
 
     if (
@@ -360,7 +367,7 @@ export class App {
     /** @type {CodeGenStructure} */
     const generatorInput = {};
 
-    addGroupsToGeneratorInput(generatorInput, dataCopy, opts.enabledGroups);
+    addGroupsToGeneratorInput(generatorInput, dataCopy, groupsToInclude);
 
     // validators may not be present, fallback to just stringify
     if (!isNil(validateCodeGenStructure)) {

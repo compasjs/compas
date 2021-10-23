@@ -1613,6 +1613,8 @@ declare global {
     importExtension: string;
     outputFiles: CodeGenFile[];
     errors: (
+      | { key: "structureReservedGroupName"; groupName: string }
+      | { key: "structureUnknownOrEmptyGroup"; groupName: string }
       | { key: "sqlMissingPrimaryKey"; typeName: string }
       | {
           key: "sqlForgotEnableQueries";
@@ -1641,7 +1643,6 @@ declare global {
         }
       | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
       | { key: "sqlUsedRelationKey"; type: string; ownKey: string }
-      | { key: "coreReservedGroupName"; groupName: string }
     )[];
   };
   type CodeGenGenerateOpts = {

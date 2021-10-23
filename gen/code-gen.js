@@ -50,6 +50,14 @@ export function applyCodeGenStructure(app) {
       errors: [
         T.anyOf().values(
           {
+            key: "structureReservedGroupName",
+            groupName: T.string(),
+          },
+          {
+            key: "structureUnknownOrEmptyGroup",
+            groupName: T.string(),
+          },
+          {
             key: "sqlMissingPrimaryKey",
             typeName: T.string(),
           },
@@ -89,10 +97,6 @@ export function applyCodeGenStructure(app) {
             key: "sqlUsedRelationKey",
             type: T.string(),
             ownKey: T.string(),
-          },
-          {
-            key: "coreReservedGroupName",
-            groupName: T.string(),
           },
         ),
       ],
