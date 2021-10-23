@@ -1,11 +1,11 @@
+import { getHashForString } from "../utils.js";
+
 /**
  * If errors are present, they are printed and the process is exited.
  * Else this function will just return
  *
  * @param {CodeGenContext} context
  */
-import { getHashForString } from "../utils.js";
-
 export function exitOnErrorsOrReturn(context) {
   const errorHashes = new Set();
   const errors = [];
@@ -31,6 +31,14 @@ export function exitOnErrorsOrReturn(context) {
     let str = `- (${i + 1}/${errors.length}): `;
 
     switch (error.key) {
+      case "structureReservedGroupName":
+        str += `Group '${error.groupName}' is a JavaScript or TypeScript reserved keyword. Please use another group name.`;
+        break;
+
+      case "structureUnknownOrEmptyGroup":
+        str += `Group '${error.groupName}' is provided in 'enabledGenerators' but does not exists or does not contain any type.`;
+        break;
+
       case "sqlEnableValidator":
         str += `Validator generator not enabled. The sql generator requires this.
   Please add 'validator' to the 'App.generate({ enabledGenerators: ["sql"] })' array.`;
@@ -70,10 +78,6 @@ export function exitOnErrorsOrReturn(context) {
 
       case "sqlUsedRelationKey":
         str += `Relation name '${error.ownKey}' from type '${error.type}' is already used as a relation name. Use another relation name.`;
-        break;
-
-      case "coreReservedGroupName":
-        str += `Group '${error.groupName}' is a JavaScript or TypeScript reserved keyword. Please use another group name.`;
         break;
 
       default:

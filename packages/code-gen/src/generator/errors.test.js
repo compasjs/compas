@@ -5,6 +5,34 @@ import { TypeCreator } from "../builders/TypeCreator.js";
 mainTestFn(import.meta);
 
 test("code-gen/errors", (t) => {
+  t.test("structureReservedGroupName", async (t) => {
+    const T = new TypeCreator("static");
+    const { stdout, exitCode } = await generateAndRunForBuilders(
+      [T.object("foo").keys({}).enableQueries()],
+      {
+        enabledGenerators: ["type"],
+      },
+    );
+
+    t.equal(exitCode, 1);
+    t.ok(stdout.includes("Group 'static' is a JavaScript or TypeScript"));
+  });
+
+  t.test("structureUnknownOrEmptyGroup", async (t) => {
+    const T = new TypeCreator("app");
+    const { stdout, exitCode } = await generateAndRunForBuilders(
+      [T.object("foo").keys({}).enableQueries()],
+      {
+        enabledGenerators: ["type"],
+        enabledGroups: ["foo", "bar"],
+      },
+    );
+
+    t.equal(exitCode, 1);
+    t.ok(stdout.includes("Group 'foo' is provided in"));
+    t.ok(stdout.includes("Group 'bar' is provided in"));
+  });
+
   t.test("sqlEnableValidator", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await generateAndRunForBuilders(

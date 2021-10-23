@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
-import { pathJoin } from "@compas/stdlib";
+import { isNil, pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
@@ -73,7 +73,6 @@ export function generate(logger, options, structure) {
   // This contains all information needed to generate again, even if different options
   // are needed.
   generateStructureFile(context);
-
   exitOnErrorsOrReturn(context);
 
   // Don't execute any logic, we can just write the structure out only
@@ -101,6 +100,7 @@ export function generate(logger, options, structure) {
     exitOnErrorsOrReturn(context);
 
     checkReservedGroupNames(context);
+    checkIfEnabledGroupsHaveTypes(context);
     exitOnErrorsOrReturn(context);
 
     // Do initial sql checks and load in the types
@@ -292,7 +292,32 @@ function checkReservedGroupNames(context) {
   for (const group of Object.keys(context.structure)) {
     if (keywords.indexOf(group.toLowerCase()) !== -1) {
       context.errors.push({
-        key: "coreReservedGroupName",
+        key: "structureReservedGroupName",
+        groupName: group,
+      });
+    }
+  }
+}
+
+/**
+ * If enabledGroups are provided by the user, we check if they exist.
+ * If not we report it as an error. In most cases this is a user error.
+ * At this point we already normalized all references.
+ *
+ * @param {CodeGenContext} context
+ */
+function checkIfEnabledGroupsHaveTypes(context) {
+  if (!Array.isArray(context.options.enabledGroups)) {
+    return;
+  }
+
+  for (const group of context.options.enabledGroups) {
+    if (
+      isNil(context.structure[group]) ||
+      Object.keys(context.structure[group]).length === 0
+    ) {
+      context.errors.push({
+        key: "structureUnknownOrEmptyGroup",
         groupName: group,
       });
     }
