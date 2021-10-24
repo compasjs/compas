@@ -22,7 +22,7 @@ Unified backend tooling
 
 ## Requirements
 
-- Node.js >= 14
+- Node.js >= 16
 - Yarn 1.x.x
 
 ## Why
