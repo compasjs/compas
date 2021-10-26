@@ -23,6 +23,10 @@
  * @typedef {import("./src/sessions.js").SessionStore} SessionStore
  */
 
+/**
+ * @typedef {import("./src/session-store.js").StoreSessionStoreSettings} StoreSessionStoreSettings
+ */
+
 export { structure as storeStructure } from "./src/generated/common/structure.js";
 export { queries as storeQueries } from "./src/generated/database/index.js";
 
@@ -77,6 +81,8 @@ export {
   addRecurringJobToQueue,
   getUncompletedJobsByName,
 } from "./src/queue.js";
+
+export { sessionStoreCreate } from "./src/session-store.js";
 
 export { newSessionStore } from "./src/sessions.js";
 

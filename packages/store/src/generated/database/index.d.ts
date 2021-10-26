@@ -1,4 +1,62 @@
 export const queries: {
+  sessionStoreTokenCount: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreSessionStoreTokenWhere | undefined,
+  ) => Promise<number>;
+  sessionStoreTokenDelete: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreSessionStoreTokenWhere | undefined,
+  ) => Promise<void>;
+  sessionStoreTokenInsert: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert:
+      | StoreSessionStoreTokenInsertPartial
+      | StoreSessionStoreTokenInsertPartial[],
+    options?:
+      | {
+          withPrimaryKey?: boolean | undefined;
+        }
+      | undefined,
+  ) => Promise<StoreSessionStoreToken[]>;
+  sessionStoreTokenUpsertOnId: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert:
+      | StoreSessionStoreTokenInsertPartial
+      | StoreSessionStoreTokenInsertPartial[],
+    options?: {} | undefined,
+  ) => Promise<StoreSessionStoreToken[]>;
+  sessionStoreTokenUpdate: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    update: StoreSessionStoreTokenUpdatePartial,
+    where?: StoreSessionStoreTokenWhere | undefined,
+  ) => Promise<StoreSessionStoreToken[]>;
+  sessionStoreCount: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreSessionStoreWhere | undefined,
+  ) => Promise<number>;
+  sessionStoreDelete: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    where?: StoreSessionStoreWhere | undefined,
+  ) => Promise<void>;
+  sessionStoreInsert: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
+    options?:
+      | {
+          withPrimaryKey?: boolean | undefined;
+        }
+      | undefined,
+  ) => Promise<StoreSessionStore[]>;
+  sessionStoreUpsertOnId: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
+    options?: {} | undefined,
+  ) => Promise<StoreSessionStore[]>;
+  sessionStoreUpdate: (
+    sql: import("../../../types/advanced-types.js").Postgres,
+    update: StoreSessionStoreUpdatePartial,
+    where?: StoreSessionStoreWhere | undefined,
+  ) => Promise<StoreSessionStore[]>;
   sessionCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreSessionWhere | undefined,

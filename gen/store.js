@@ -20,9 +20,13 @@ export function applyStoreStructure(app) {
       minutes: T.number().optional(),
       seconds: T.number().optional(),
     }),
-  );
 
-  app.add(
+    T.object("sessionStoreSettings").keys({
+      accessTokenMaxAgeInSeconds: T.number(),
+      refreshTokenMaxAgeInSeconds: T.number(),
+      signingKey: T.string().min(20),
+    }),
+
     T.object("file")
       .keys({
         bucketName: T.string().searchable(),
@@ -39,9 +43,7 @@ export function applyStoreStructure(app) {
       })
       .enableQueries({ withSoftDeletes: true })
       .relations(),
-  );
 
-  app.add(
     T.object("fileGroup")
       .keys({
         name: T.string().optional(),
@@ -64,18 +66,44 @@ export function applyStoreStructure(app) {
         ).optional(),
         T.oneToMany("children", T.reference("store", "fileGroup")),
       ),
-  );
 
-  app.add(
     T.object("session")
       .keys({
         expires: T.date().searchable(),
         data: T.any().default("{}"),
       })
       .enableQueries({ withDates: true }),
-  );
 
-  app.add(
+    T.object("sessionStore")
+      .keys({
+        data: T.any().default("{}"),
+      })
+      .relations(
+        T.oneToMany("accessTokens", T.reference("store", "sessionStoreToken")),
+      )
+      .enableQueries({
+        withDates: true,
+      }),
+
+    T.object("sessionStoreToken")
+      .keys({
+        expiresAt: T.date().searchable(),
+        revokedAt: T.date().optional().searchable(),
+      })
+      .relations(
+        T.manyToOne(
+          "session",
+          T.reference("store", "sessionStore"),
+          "accessTokens",
+        ),
+        T.oneToOne(
+          "refreshToken",
+          T.reference("store", "sessionStoreToken"),
+          "accessToken",
+        ).optional(),
+      )
+      .enableQueries({}),
+
     T.object("job")
       .keys({
         id: T.number().primary(),

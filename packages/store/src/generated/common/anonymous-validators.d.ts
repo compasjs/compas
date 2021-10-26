@@ -312,6 +312,66 @@ export function anonymousValidator1108679019(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<{"data": any, "id": string, "createdAt": Date, "updatedAt": Date, }>}
+ */
+export function anonymousValidator503384244(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  data: any;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator1438635522(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"accessTokenMaxAgeInSeconds": number, "refreshTokenMaxAgeInSeconds": number, "signingKey": string, }>}
+ */
+export function anonymousValidator1757809551(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  accessTokenMaxAgeInSeconds: number;
+  refreshTokenMaxAgeInSeconds: number;
+  signingKey: string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator546012715(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"expiresAt": Date, "revokedAt"?: undefined|Date, "id": string, "session": string, "refreshToken"?: undefined|string, }>}
+ */
+export function anonymousValidator1337490931(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  expiresAt: Date;
+  revokedAt?: undefined | Date;
+  id: string;
+  session: string;
+  refreshToken?: undefined | string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|QueryPart<any>>}
  */
 export function anonymousValidator1930640707(
@@ -673,6 +733,109 @@ export function anonymousValidator500057262(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|(StoreSessionStoreWhere)[]>}
+ */
+export function anonymousValidator51142462(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreWhere[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|(StoreSessionStoreTokenWhere)[]>}
+ */
+export function anonymousValidator1886215561(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenWhere[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreTokenWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "session"?: undefined|string, "sessionNotEqual"?: undefined|string, "sessionIn"?: undefined|(string)[]|QueryPart<any>, "sessionNotIn"?: undefined|(string)[]|QueryPart<any>, "expiresAt"?: undefined|Date, "expiresAtNotEqual"?: undefined|Date, "expiresAtIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtGreaterThan"?: undefined|Date, "expiresAtLowerThan"?: undefined|Date, "refreshToken"?: undefined|string, "refreshTokenNotEqual"?: undefined|string, "refreshTokenIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenNotIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenIsNull"?: undefined|boolean, "refreshTokenIsNotNull"?: undefined|boolean, "revokedAt"?: undefined|Date, "revokedAtNotEqual"?: undefined|Date, "revokedAtIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtGreaterThan"?: undefined|Date, "revokedAtLowerThan"?: undefined|Date, "revokedAtIsNull"?: undefined|boolean, "revokedAtIsNotNull"?: undefined|boolean, "accessTokenExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokenNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
+ */
+export function anonymousValidator1430489818(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  $raw?: undefined | QueryPart<any>;
+  $or?: undefined | StoreSessionStoreTokenWhere[];
+  id?: undefined | string;
+  idNotEqual?: undefined | string;
+  idIn?: undefined | string[] | QueryPart<any>;
+  idNotIn?: undefined | string[] | QueryPart<any>;
+  session?: undefined | string;
+  sessionNotEqual?: undefined | string;
+  sessionIn?: undefined | string[] | QueryPart<any>;
+  sessionNotIn?: undefined | string[] | QueryPart<any>;
+  expiresAt?: undefined | Date;
+  expiresAtNotEqual?: undefined | Date;
+  expiresAtIn?: undefined | Date[] | QueryPart<any>;
+  expiresAtNotIn?: undefined | Date[] | QueryPart<any>;
+  expiresAtGreaterThan?: undefined | Date;
+  expiresAtLowerThan?: undefined | Date;
+  refreshToken?: undefined | string;
+  refreshTokenNotEqual?: undefined | string;
+  refreshTokenIn?: undefined | string[] | QueryPart<any>;
+  refreshTokenNotIn?: undefined | string[] | QueryPart<any>;
+  refreshTokenIsNull?: undefined | boolean;
+  refreshTokenIsNotNull?: undefined | boolean;
+  revokedAt?: undefined | Date;
+  revokedAtNotEqual?: undefined | Date;
+  revokedAtIn?: undefined | Date[] | QueryPart<any>;
+  revokedAtNotIn?: undefined | Date[] | QueryPart<any>;
+  revokedAtGreaterThan?: undefined | Date;
+  revokedAtLowerThan?: undefined | Date;
+  revokedAtIsNull?: undefined | boolean;
+  revokedAtIsNotNull?: undefined | boolean;
+  accessTokenExists?: undefined | StoreSessionStoreTokenWhere;
+  accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenWhere>}
+ */
+export function anonymousValidator2065515599(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenWhere>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "accessTokensExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokensNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
+ */
+export function anonymousValidator1334934277(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  $raw?: undefined | QueryPart<any>;
+  $or?: undefined | StoreSessionStoreWhere[];
+  id?: undefined | string;
+  idNotEqual?: undefined | string;
+  idIn?: undefined | string[] | QueryPart<any>;
+  idNotIn?: undefined | string[] | QueryPart<any>;
+  createdAt?: undefined | Date;
+  createdAtNotEqual?: undefined | Date;
+  createdAtIn?: undefined | Date[] | QueryPart<any>;
+  createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+  createdAtGreaterThan?: undefined | Date;
+  createdAtLowerThan?: undefined | Date;
+  createdAtIsNull?: undefined | boolean;
+  createdAtIsNotNull?: undefined | boolean;
+  updatedAt?: undefined | Date;
+  updatedAtNotEqual?: undefined | Date;
+  updatedAtIn?: undefined | Date[] | QueryPart<any>;
+  updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+  updatedAtGreaterThan?: undefined | Date;
+  updatedAtLowerThan?: undefined | Date;
+  updatedAtIsNull?: undefined | boolean;
+  updatedAtIsNotNull?: undefined | boolean;
+  accessTokensExists?: undefined | StoreSessionStoreTokenWhere;
+  accessTokensNotExists?: undefined | StoreSessionStoreTokenWhere;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<QueryPart<any>>}
  */
 export function anonymousValidator62764704(
@@ -917,6 +1080,91 @@ export function anonymousValidator144635851(
   expires?: undefined | CompasSqlOrderBy;
   createdAt?: undefined | CompasSqlOrderBy;
   updatedAt?: undefined | CompasSqlOrderBy;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<"id"|"createdAt"|"updatedAt">}
+ */
+export function anonymousValidator1417351642(
+  value: any,
+  propertyPath: string,
+): EitherN<"id" | "createdAt" | "updatedAt">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<("id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator800802652(
+  value: any,
+  propertyPath: string,
+): EitherN<("id" | "createdAt" | "updatedAt")[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<QueryPart<any>|("id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator1196685479(
+  value: any,
+  propertyPath: string,
+): EitherN<QueryPart<any> | ("id" | "createdAt" | "updatedAt")[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ */
+export function anonymousValidator362930508(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  id?: undefined | CompasSqlOrderBy;
+  createdAt?: undefined | CompasSqlOrderBy;
+  updatedAt?: undefined | CompasSqlOrderBy;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<"id"|"session"|"expiresAt"|"refreshToken"|"revokedAt">}
+ */
+export function anonymousValidator350591811(
+  value: any,
+  propertyPath: string,
+): EitherN<"id" | "session" | "expiresAt" | "refreshToken" | "revokedAt">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<("id"|"session"|"expiresAt"|"refreshToken"|"revokedAt")[]>}
+ */
+export function anonymousValidator644613499(
+  value: any,
+  propertyPath: string,
+): EitherN<("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<QueryPart<any>|("id"|"session"|"expiresAt"|"refreshToken"|"revokedAt")[]>}
+ */
+export function anonymousValidator2086080888(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | QueryPart<any>
+  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "session"?: undefined|CompasSqlOrderBy, "expiresAt"?: undefined|CompasSqlOrderBy, "refreshToken"?: undefined|CompasSqlOrderByOptionalField, "revokedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+ */
+export function anonymousValidator1864958291(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  id?: undefined | CompasSqlOrderBy;
+  session?: undefined | CompasSqlOrderBy;
+  expiresAt?: undefined | CompasSqlOrderBy;
+  refreshToken?: undefined | CompasSqlOrderByOptionalField;
+  revokedAt?: undefined | CompasSqlOrderByOptionalField;
 }>;
 /**
  * @param {*} value
@@ -1180,6 +1428,157 @@ export function anonymousValidator1805657267(
   where?: undefined | StoreSessionWhere;
   limit?: undefined | number;
   offset?: undefined | number;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreWhere>}
+ */
+export function anonymousValidator1582696858(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreWhere>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreOrderBy>}
+ */
+export function anonymousValidator1221642756(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreOrderBy>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreOrderBySpec>}
+ */
+export function anonymousValidator2142999519(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreOrderBySpec>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenOrderBy>}
+ */
+export function anonymousValidator1834466899(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenOrderBy>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenOrderBySpec>}
+ */
+export function anonymousValidator1672671480(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenOrderBySpec>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreQueryBuilder>}
+ */
+export function anonymousValidator1827379372(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreQueryBuilder>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaSession"?: undefined|StoreSessionStoreQueryTraverser, "viaRefreshToken"?: undefined|StoreSessionStoreTokenQueryTraverser, "viaAccessToken"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ */
+export function anonymousValidator770376901(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  where?: undefined | StoreSessionStoreTokenWhere;
+  limit?: undefined | number;
+  offset?: undefined | number;
+  viaSession?: undefined | StoreSessionStoreQueryTraverser;
+  viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+  viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenQueryTraverser>}
+ */
+export function anonymousValidator1149378288(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenQueryTraverser>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaAccessTokens"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ */
+export function anonymousValidator135209020(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  where?: undefined | StoreSessionStoreWhere;
+  limit?: undefined | number;
+  offset?: undefined | number;
+  viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreQueryTraverser>}
+ */
+export function anonymousValidator1095313735(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreQueryTraverser>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "session"?: undefined|StoreSessionStoreQueryBuilder, "viaSession"?: undefined|StoreSessionStoreQueryTraverser, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaRefreshToken"?: undefined|StoreSessionStoreTokenQueryTraverser, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaAccessToken"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ */
+export function anonymousValidator1856722848(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  where?: undefined | StoreSessionStoreTokenWhere;
+  orderBy?: undefined | StoreSessionStoreTokenOrderBy;
+  orderBySpec?: undefined | StoreSessionStoreTokenOrderBySpec;
+  as?: undefined | string;
+  limit?: undefined | number;
+  offset?: undefined | number;
+  session?: undefined | StoreSessionStoreQueryBuilder;
+  viaSession?: undefined | StoreSessionStoreQueryTraverser;
+  refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
+  viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+  accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
+  viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenQueryBuilder>}
+ */
+export function anonymousValidator145903947(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenQueryBuilder>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaAccessTokens"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ */
+export function anonymousValidator2093168415(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  where?: undefined | StoreSessionStoreWhere;
+  orderBy?: undefined | StoreSessionStoreOrderBy;
+  orderBySpec?: undefined | StoreSessionStoreOrderBySpec;
+  as?: undefined | string;
+  limit?: undefined | number;
+  offset?: undefined | number;
+  accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
+  viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
 }>;
 export type InternalError = {
   propertyPath: string;

@@ -46,4 +46,5 @@ declare global {
   type GetStreamFn = store.GetStreamFn;
   type SessionStore = store.SessionStore;
   type FileCache = store.FileCache;
+  type StoreSessionStoreSettings = store.StoreSessionStoreSettings;
 }
