@@ -254,23 +254,21 @@ test("server/sendFile", async (t) => {
   });
 
   t.test("e2e - video - kill stream", async (t) => {
-    const cancelToken = Axios.CancelToken;
-    const source = cancelToken.source();
-
     let err = undefined;
 
     app.on("error", (error) => {
       err = error;
     });
 
-    await axiosInstance.get(`/${video.id}`, {
-      responseType: "stream",
-      cancelToken: source.token,
-    });
+    try {
+      await axiosInstance.get(`/${video.id}`, {
+        timeout: 100,
+        responseType: "stream",
+      });
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-    source.cancel();
-
-    await setTimeout(10);
+    await setTimeout(200);
     t.ok(err);
   });
 
@@ -295,9 +293,13 @@ test("server/sendFile", async (t) => {
   });
 
   t.test("teardown", async (t) => {
+    t.log.info(1);
     await closeTestApp(app);
+    t.log.info(2);
     await cleanupTestPostgresDatabase(sql);
+    t.log.info(3);
     await removeBucketAndObjectsInBucket(minio, bucketName);
+    t.log.info(4);
 
     t.pass();
   });

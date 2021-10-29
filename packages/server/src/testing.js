@@ -54,6 +54,8 @@ export function closeTestApp(app) {
           resolve();
         }
       });
+    } else {
+      resolve();
     }
   });
 }
