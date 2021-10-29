@@ -266,7 +266,7 @@ declare global {
     nickName: string;
     email: string;
     authKey: string;
-    isCool: SqlCoolString;
+    isCool?: SqlCoolString;
     id: string;
     createdAt: Date;
     updatedAt: Date;
@@ -1225,7 +1225,7 @@ declare global {
   type ValidatorObject = { bool: boolean; string: string };
   type ValidatorObjectLoose = ValidatorObject;
   type ValidatorObjectOptional = undefined | { bool: boolean; string: string };
-  type ValidatorObjectWithOptionalReference = { ref: ValidatorObjectOptional };
+  type ValidatorObjectWithOptionalReference = { ref?: ValidatorObjectOptional };
   type ValidatorRecursive = { recursive?: undefined | ValidatorRecursive };
   type ValidatorString = string;
   type ValidatorStringAllowNull = undefined | null | string;
@@ -1244,7 +1244,7 @@ declare global {
   type DocParserUnknownBlock = {
     type: "unknown";
     raw: string;
-    range: DocParserRange;
+    range?: DocParserRange;
   };
   type DocParserRange =
     | undefined
@@ -1264,7 +1264,7 @@ declare global {
     availableSince?: undefined | string;
     isVariable: boolean;
     parsedType: DocParserFunctionType;
-    range: DocParserRange;
+    range?: DocParserRange;
   };
   type DocParserFunctionType = {
     type: "function";
@@ -1282,7 +1282,7 @@ declare global {
   type DocParserJSComment = {
     type: "MultiLine" | "SingleLine";
     value: string;
-    range: DocParserRange;
+    range?: DocParserRange;
   };
   type CodeGenAnyOfType = {
     type: "anyOf";

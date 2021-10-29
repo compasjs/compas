@@ -409,7 +409,7 @@ export function anonymousValidator185218226(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "unknown", "raw": string, "range": DocParserRange, }>}
+ * @returns {EitherN<{"type": "unknown", "raw": string, "range"?: DocParserRange, }>}
  */
 export function anonymousValidator730878810(value, propertyPath) {
   if (isNil(value)) {
@@ -1040,7 +1040,7 @@ export function anonymousValidator861139969(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "functionDeclaration", "name"?: undefined|string, "summary"?: undefined|string, "description"?: undefined|string, "availableSince"?: undefined|string, "isVariable": boolean, "parsedType": DocParserFunctionType, "range": DocParserRange, }>}
+ * @returns {EitherN<{"type": "functionDeclaration", "name"?: undefined|string, "summary"?: undefined|string, "description"?: undefined|string, "availableSince"?: undefined|string, "isVariable": boolean, "parsedType": DocParserFunctionType, "range"?: DocParserRange, }>}
  */
 export function anonymousValidator1282872738(value, propertyPath) {
   if (isNil(value)) {
@@ -1213,7 +1213,7 @@ export function anonymousValidator1303070771(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "MultiLine"|"SingleLine", "value": string, "range": DocParserRange, }>}
+ * @returns {EitherN<{"type": "MultiLine"|"SingleLine", "value": string, "range"?: DocParserRange, }>}
  */
 export function anonymousValidator1831335775(value, propertyPath) {
   if (isNil(value)) {
