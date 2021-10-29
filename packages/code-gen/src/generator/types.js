@@ -332,7 +332,13 @@ export function generateTypeDefinition(
         );
 
         let separator = ":";
-        if (right.startsWith("undefined|")) {
+        // If right is a reference, it doesn't have to start with 'undefined'
+        // So we need to manually check the reference as well
+        if (
+          right.startsWith("undefined|") ||
+          (type.keys[key].reference?.isOptional &&
+            (!useDefaults || isNil(type.keys[key].reference.defaultValue)))
+        ) {
           separator = "?:";
         }
 
