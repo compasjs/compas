@@ -49,6 +49,7 @@ export function newLogger(options) {
         base: {},
         transport: options?.pinoOptions?.transport,
       },
+      // @ts-ignore
       options?.pinoOptions?.destination ??
         (isNil(options?.pinoOptions?.transport)
           ? pino.destination(1)
