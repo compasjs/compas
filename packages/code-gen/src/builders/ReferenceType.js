@@ -13,7 +13,10 @@ export class ReferenceType extends TypeBuilder {
   };
 
   build() {
-    if (isNil(this.ref) && isNil(this.data.reference.group)) {
+    if (
+      isNil(this.ref) &&
+      (isNil(this.data.reference.group) || isNil(this.data.reference.name))
+    ) {
       throw new Error(
         "Call T.relation() with either a named TypeBuilder or a valid group and name",
       );
