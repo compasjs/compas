@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 import { createReadStream } from "fs";
-import { setTimeout } from "timers/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, streamToBuffer, uuid } from "@compas/stdlib";
 import {
@@ -253,24 +252,28 @@ test("server/sendFile", async (t) => {
     t.equal(Number(response.headers["content-length"]), video.contentLength);
   });
 
-  t.test("e2e - video - kill stream", async (t) => {
-    let err = undefined;
+  // Disabled below test:
+  // - Koa is flaky when the `on(error)` is fired
+  // - It's hard to set a good timeout value on Axios
 
-    app.on("error", (error) => {
-      err = error;
-    });
-
-    try {
-      await axiosInstance.get(`/${video.id}`, {
-        timeout: 100,
-        responseType: "stream",
-      });
-      // eslint-disable-next-line no-empty
-    } catch {}
-
-    await setTimeout(200);
-    t.ok(err);
-  });
+  // t.test("e2e - video - kill stream", async (t) => {
+  //   let err = undefined;
+  //
+  //   app.on("error", (error) => {
+  //     err = error;
+  //   });
+  //
+  //   try {
+  //     await axiosInstance.get(`/${video.id}`, {
+  //       timeout: 100,
+  //       responseType: "stream",
+  //     });
+  //     // eslint-disable-next-line no-empty
+  //   } catch {}
+  //
+  //   await setTimeout(200);
+  //   t.ok(err);
+  // });
 
   t.test("e2e - video- partial", async (t) => {
     const response = await axiosInstance.get(`/${video.id}`, {
@@ -293,13 +296,9 @@ test("server/sendFile", async (t) => {
   });
 
   t.test("teardown", async (t) => {
-    t.log.info(1);
     await closeTestApp(app);
-    t.log.info(2);
     await cleanupTestPostgresDatabase(sql);
-    t.log.info(3);
     await removeBucketAndObjectsInBucket(minio, bucketName);
-    t.log.info(4);
 
     t.pass();
   });
