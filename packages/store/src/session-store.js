@@ -9,15 +9,14 @@ import {
 } from "@compas/stdlib";
 import { createSign, createVerify } from "jws";
 import { queries } from "./generated.js";
+import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
 import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
+import { addJobToQueue } from "./queue.js";
 
 /**
- * @typedef {import("@compas/stdlib").Either} Either
- */
-
-/**
- * @typedef {import("@compas/stdlib").AppError} AppError
+ * @template T
+ * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 
 /**
@@ -44,10 +43,10 @@ const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {any} sessionData
- * @return {Promise<Either<{
+ * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
- * }, AppError>>}
+ * }>>}
  */
 export async function sessionStoreCreate(
   event,
@@ -86,7 +85,7 @@ export async function sessionStoreCreate(
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
- * @return {Promise<Either<{session: QueryResultStoreSessionStore}, AppError>>}
+ * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export async function sessionStoreGet(
   event,
@@ -159,7 +158,7 @@ export async function sessionStoreGet(
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<Either<void, AppError>>}
+ * @returns {Promise<Either<void>>}
  */
 export async function sessionStoreUpdate(event, sql, session) {
   eventStart(event, "sessionStore.update");
@@ -196,7 +195,7 @@ export async function sessionStoreUpdate(event, sql, session) {
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<Either<void, AppError>>}
+ * @returns {Promise<Either<void>>}
  */
 export async function sessionStoreInvalidate(event, sql, session) {
   eventStart(event, "sessionStore.invalidate");
@@ -236,10 +235,10 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
- * @return {Promise<Either<{
+ * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
- * }, AppError>>}
+ * }>>}
  */
 export async function sessionStoreRefreshTokens(
   event,
@@ -295,7 +294,12 @@ export async function sessionStoreRefreshTokens(
     storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
       Date.now()
   ) {
-    // TODO: REport via event
+    await sessionStoreReportAndRevokeLeakedSession(
+      newEventFromEvent(event),
+      sql,
+      storeToken.session.id,
+    );
+
     eventStop(event);
     return {
       error: AppError.validationError(`${event.name}.revokedToken`),
@@ -326,16 +330,126 @@ export async function sessionStoreRefreshTokens(
 }
 
 /**
+ * Cleanup tokens that are expired / revoked longer than 'maxRevokedAgeInDays' days ago.
+ * Also removes the session if no tokens exist anymore.
+ * Note that when tokens are removed, Compas can't detect refresh token reuse, which
+ * hints on session stealing. A good default may be 45 days.
+ *
+ * @param {InsightEvent} event
+ * @param {Postgres} sql
+ * @param {number} maxRevokedAgeInDays
+ * @returns {Promise<void>}
+ */
+export async function sessionStoreCleanupExpiredSessions(
+  event,
+  sql,
+  maxRevokedAgeInDays,
+) {
+  eventStart(event, "sessionStore.cleanupExpiredSessions");
+
+  const d = new Date();
+  d.setDate(d.getDate() - maxRevokedAgeInDays);
+
+  await queries.sessionStoreTokenDelete(sql, {
+    $or: [
+      {
+        expiresAtLowerThan: d,
+      },
+      {
+        revokedAtLowerThan: d,
+      },
+    ],
+  });
+
+  await queries.sessionStoreDelete(sql, {
+    accessTokensNotExists: {},
+  });
+
+  eventStop(event);
+}
+
+/**
+ * Format and report a potential leaked session.
+ * Revoking all tokens of that session in the process.
+ * Reports it via `compas.sessionStore.potentialLeakedSession` job.
+ * Note that there may be some overlap in tokens, since we allow a grace period in which
+ * another refresh token can be acquired. So if the client has some kind of race
+ * condition, the backend doesn't trip over it.
+ *
+ * @param {InsightEvent} event
+ * @param {Postgres} sql
+ * @param {string} sessionId
+ * @returns {Promise<void>}
+ */
+export async function sessionStoreReportAndRevokeLeakedSession(
+  event,
+  sql,
+  sessionId,
+) {
+  eventStart(event, "sessionStore.reportAndRevokeLeakedSession");
+
+  const jobName = `compas.sessionStore.potentialLeakedSession`;
+
+  const [session] = await querySessionStore({
+    where: {
+      id: sessionId,
+    },
+    accessTokens: {
+      where: {
+        refreshTokenIsNotNull: true,
+      },
+    },
+  }).exec(sql);
+
+  const report = {
+    session: {
+      id: session.id,
+      revokedAt: new Date(),
+      createdAt: session.createdAt,
+      updatedAt: session.updatedAt,
+      tokens: [],
+    },
+  };
+
+  for (const accessToken of session.accessTokens) {
+    report.session.tokens.push({
+      id: accessToken.id,
+      createdAt: accessToken.createdAt,
+      revokedAt: accessToken.revokedAt,
+      expiresAt: accessToken.expiresAt,
+    });
+  }
+
+  await addJobToQueue(sql, {
+    name: jobName,
+    data: { report },
+  });
+
+  await queries.sessionStoreTokenUpdate(
+    sql,
+    {
+      revokedAt: new Date(),
+    },
+    {
+      revokedAtIsNull: true,
+      session: session.id,
+    },
+  );
+
+  eventStop(event);
+}
+
+/**
  * Create a new token pair for the provided session
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<Either<{
+ * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string
- * }, AppError>>}
+ * }>>}
  */
 export async function sessionStoreCreateTokenPair(
   event,
@@ -371,12 +485,14 @@ export async function sessionStoreCreateTokenPair(
       id: refreshTokenId,
       session: session.id,
       expiresAt: refreshTokenExpireDate,
+      createdAt: new Date(),
     },
     {
       id: accessTokenId,
       session: session.id,
       expiresAt: accessTokenExpireDate,
       refreshToken: refreshTokenId,
+      createdAt: new Date(),
     },
   ]);
 
@@ -425,7 +541,7 @@ export async function sessionStoreCreateTokenPair(
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
  * @param {Date} expiresAt
- * @returns {Promise<Either<string, AppError>>}
+ * @returns {Promise<Either<string>>}
  */
 export function sessionStoreCreateJWT(
   event,
@@ -474,7 +590,7 @@ export function sessionStoreCreateJWT(
  *     compasSessionAccessToken?: string,
  *     compasSessionRefreshToken?: string,
  *   },
- * }, AppError>>}
+ * }>>}
  */
 export async function sessionStoreVerifyAndDecodeJWT(
   event,

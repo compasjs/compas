@@ -19,6 +19,7 @@ import {
 const sessionStoreTokenFieldSet = new Set([
   "expiresAt",
   "revokedAt",
+  "createdAt",
   "id",
   "session",
   "refreshToken",
@@ -36,11 +37,11 @@ export function sessionStoreTokenFields(tableName = "sst.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"session", ${tableName}"expiresAt", ${tableName}"refreshToken", ${tableName}"revokedAt"`,
+      `${tableName}"session", ${tableName}"expiresAt", ${tableName}"refreshToken", ${tableName}"revokedAt", ${tableName}"createdAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"session", ${tableName}"expiresAt", ${tableName}"refreshToken", ${tableName}"revokedAt"`,
+    `${tableName}"id", ${tableName}"session", ${tableName}"expiresAt", ${tableName}"refreshToken", ${tableName}"revokedAt", ${tableName}"createdAt"`,
   ]);
 }
 /** @type {any} */
@@ -254,6 +255,8 @@ export function sessionStoreTokenInsertValues(insert, options = {}) {
     str.push(", ");
     args.push(it.revokedAt ?? null);
     str.push(", ");
+    args.push(it.createdAt ?? null);
+    str.push(", ");
     // Fixup last comma & add undefined arg so strings are concatted correctly
     const lastStrIdx = str.length - 1;
     str[lastStrIdx] = str[lastStrIdx].substring(0, str[lastStrIdx].length - 2);
@@ -297,6 +300,10 @@ export function sessionStoreTokenUpdateSet(update) {
   if (update.revokedAt !== undefined) {
     strings.push(`, "revokedAt" = `);
     values.push(update.revokedAt ?? null);
+  }
+  if (update.createdAt !== undefined) {
+    strings.push(`, "createdAt" = `);
+    values.push(update.createdAt ?? null);
   }
   // Remove the comma suffix
   if (strings.length === 0) {
@@ -1004,6 +1011,9 @@ export function transformSessionStoreToken(values, builder = {}) {
     value.revokedAt = value.revokedAt ?? undefined;
     if (typeof value.revokedAt === "string") {
       value.revokedAt = new Date(value.revokedAt);
+    }
+    if (typeof value.createdAt === "string") {
+      value.createdAt = new Date(value.createdAt);
     }
     value[builder.session?.as ?? "session"] =
       value[builder.session?.as ?? "session"] ?? undefined;

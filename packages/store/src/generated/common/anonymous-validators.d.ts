@@ -357,7 +357,7 @@ export function anonymousValidator546012715(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"expiresAt": Date, "revokedAt"?: undefined|Date, "id": string, "session": string, "refreshToken"?: undefined|string, }>}
+ * @returns {EitherN<{"expiresAt": Date, "revokedAt"?: undefined|Date, "createdAt": Date, "id": string, "session": string, "refreshToken"?: undefined|string, }>}
  */
 export function anonymousValidator1337490931(
   value: any,
@@ -365,6 +365,7 @@ export function anonymousValidator1337490931(
 ): EitherN<{
   expiresAt: Date;
   revokedAt?: undefined | Date;
+  createdAt: Date;
   id: string;
   session: string;
   refreshToken?: undefined | string;

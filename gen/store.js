@@ -89,6 +89,7 @@ export function applyStoreStructure(app) {
       .keys({
         expiresAt: T.date().searchable(),
         revokedAt: T.date().optional().searchable(),
+        createdAt: T.date(),
       })
       .relations(
         T.manyToOne(

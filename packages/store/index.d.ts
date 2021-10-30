@@ -3,7 +3,6 @@ export { queries as storeQueries } from "./src/generated/database/index.js";
 export { setStoreQueries } from "./src/generated.js";
 export { generatedWhereBuilderHelper } from "./src/generator-helpers.js";
 export { FileCache } from "./src/file-cache.js";
-export { sessionStoreCreate } from "./src/session-store.js";
 export { newSessionStore } from "./src/sessions.js";
 export { postgresTableSizes } from "./src/insight.js";
 export { sendTransformedImage } from "./src/send-transformed-image.js";
@@ -54,6 +53,14 @@ export {
   addRecurringJobToQueue,
   getUncompletedJobsByName,
 } from "./src/queue.js";
+export {
+  sessionStoreCreate,
+  sessionStoreGet,
+  sessionStoreUpdate,
+  sessionStoreInvalidate,
+  sessionStoreRefreshTokens,
+  sessionStoreCleanupExpiredSessions,
+} from "./src/session-store.js";
 export {
   query,
   isQueryPart,

@@ -82,7 +82,14 @@ export {
   getUncompletedJobsByName,
 } from "./src/queue.js";
 
-export { sessionStoreCreate } from "./src/session-store.js";
+export {
+  sessionStoreCreate,
+  sessionStoreGet,
+  sessionStoreUpdate,
+  sessionStoreInvalidate,
+  sessionStoreRefreshTokens,
+  sessionStoreCleanupExpiredSessions,
+} from "./src/session-store.js";
 
 export { newSessionStore } from "./src/sessions.js";
 
