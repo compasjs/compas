@@ -13,6 +13,14 @@ import { querySessionStoreToken } from "./generated/database/sessionStoreToken.j
 import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
 
 /**
+ * @typedef {import("@compas/stdlib").Either} Either
+ */
+
+/**
+ * @typedef {import("@compas/stdlib").AppError} AppError
+ */
+
+/**
  * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent
  */
 
@@ -36,10 +44,10 @@ const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {any} sessionData
- * @return {Promise<{
+ * @return {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
- * }>}
+ * }, AppError>>}
  */
 export async function sessionStoreCreate(
   event,
@@ -49,14 +57,14 @@ export async function sessionStoreCreate(
 ) {
   eventStart(event, "sessionStore.create");
 
-  const { error } = validateStoreSessionStoreSettings(sessionSettings);
-  if (error) {
-    throw error;
+  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  if (validateResult.error) {
+    eventStop(event);
+    return validateResult;
   }
 
   const [session] = await queries.sessionStoreInsert(sql, {
-    data: sessionData,
-    // TODO: Create hash, so we can optimize updates
+    data: sessionData, // TODO: Create hash, so we can optimize updates
   });
 
   const tokens = await sessionStoreCreateTokenPair(
@@ -71,6 +79,15 @@ export async function sessionStoreCreate(
   return tokens;
 }
 
+/**
+ * Get a session from the provided access token string
+ *
+ * @param {InsightEvent} event
+ * @param {Postgres} sql
+ * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {string} accessTokenString
+ * @return {Promise<Either<{session: QueryResultStoreSessionStore}, AppError>>}
+ */
 export async function sessionStoreGet(
   event,
   sql,
@@ -79,37 +96,59 @@ export async function sessionStoreGet(
 ) {
   eventStart(event, "sessionStore.get");
 
+  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  if (validateResult.error) {
+    eventStop(event);
+    return validateResult;
+  }
+
   const token = await sessionStoreVerifyAndDecodeJWT(
     newEventFromEvent(event),
     sessionSettings,
     accessTokenString,
   );
 
-  if (isNil(token.compasSessionAccessToken)) {
-    throw AppError.validationError(`${event.name}.invalidAccessToken`);
+  if (token.error) {
+    eventStop(event);
+    return token;
+  }
+
+  if (isNil(token.value.payload.compasSessionAccessToken)) {
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidAccessToken`),
+    };
   }
 
   const [storeToken] = await querySessionStoreToken({
     session: {},
     where: {
-      id: token.payload.compasSessionAccessToken,
+      id: token.value.payload.compasSessionAccessToken,
       refreshTokenIsNotNull: true,
     },
   }).exec(sql);
 
   if (isNil(storeToken)) {
-    throw AppError.validationError(`${event.name}.invalidSession`);
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidSession`),
+    };
   }
 
   // Access token revocation doesn't need a grace period.
-  if (storeToken.revokedAt.getTime() < Date.now()) {
-    throw AppError.validationError(`${event.name}.revokedToken`);
+  if (storeToken.revokedAt && storeToken.revokedAt.getTime() < Date.now()) {
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.revokedToken`),
+    };
   }
 
   eventStop(event);
 
   return {
-    session: storeToken.session,
+    value: {
+      session: storeToken.session,
+    },
   };
 }
 
@@ -120,13 +159,16 @@ export async function sessionStoreGet(
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<void>}
+ * @return {Promise<Either<void, AppError>>}
  */
 export async function sessionStoreUpdate(event, sql, session) {
   eventStart(event, "sessionStore.update");
 
   if (isNil(session?.id) || !isPlainObject(session?.data)) {
-    throw AppError.validationError(`${event.name}.invalidSession`);
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidSession`),
+    };
   }
 
   // TODO: Check hash
@@ -142,6 +184,10 @@ export async function sessionStoreUpdate(event, sql, session) {
   );
 
   eventStop(event);
+
+  return {
+    value: undefined,
+  };
 }
 
 /**
@@ -150,13 +196,16 @@ export async function sessionStoreUpdate(event, sql, session) {
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<void>}
+ * @return {Promise<Either<void, AppError>>}
  */
 export async function sessionStoreInvalidate(event, sql, session) {
   eventStart(event, "sessionStore.invalidate");
 
   if (isNil(session?.id)) {
-    throw AppError.validationError(`${event.name}.invalidSession`);
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidSession`),
+    };
   }
 
   await queries.sessionStoreTokenUpdate(
@@ -170,6 +219,10 @@ export async function sessionStoreInvalidate(event, sql, session) {
   );
 
   eventStop(event);
+
+  return {
+    value: undefined,
+  };
 }
 
 /**
@@ -183,10 +236,10 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
- * @return {Promise<{
+ * @return {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
- * }>}
+ * }, AppError>>}
  */
 export async function sessionStoreRefreshTokens(
   event,
@@ -196,14 +249,28 @@ export async function sessionStoreRefreshTokens(
 ) {
   eventStart(event, "sessionStore.refreshTokens");
 
+  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  if (validateResult.error) {
+    eventStop(event);
+    return validateResult;
+  }
+
   const token = await sessionStoreVerifyAndDecodeJWT(
     newEventFromEvent(event),
     sessionSettings,
     refreshTokenString,
   );
 
-  if (isNil(token.compasSessionRefreshToken)) {
-    throw AppError.validationError(`${event.name}.invalidRefreshToken`);
+  if (token.error) {
+    eventStop(event);
+    return token;
+  }
+
+  if (isNil(token.value.payload.compasSessionRefreshToken)) {
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidRefreshToken`),
+    };
   }
 
   const [storeToken] = await querySessionStoreToken({
@@ -216,16 +283,23 @@ export async function sessionStoreRefreshTokens(
   }).exec(sql);
 
   if (isNil(storeToken)) {
-    throw AppError.validationError(`${event.name}.invalidSession`);
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.invalidSession`),
+    };
   }
 
   // Access token revocation doesn't need a grace period.
   if (
+    storeToken.revokedAt &&
     storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
-    Date.now()
+      Date.now()
   ) {
     // TODO: REport via event
-    throw AppError.validationError(`${event.name}.revokedToken`);
+    eventStop(event);
+    return {
+      error: AppError.validationError(`${event.name}.revokedToken`),
+    };
   }
 
   // Revoke both refresh and access token.
@@ -258,7 +332,10 @@ export async function sessionStoreRefreshTokens(
  * @param {Postgres} sql
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
- * @return {Promise<{accessToken: string, refreshToken: string}>}
+ * @return {Promise<Either<{
+ *   accessToken: string,
+ *   refreshToken: string
+ * }, AppError>>}
  */
 export async function sessionStoreCreateTokenPair(
   event,
@@ -267,6 +344,12 @@ export async function sessionStoreCreateTokenPair(
   session,
 ) {
   eventStart(event, "sessionStore.createTokenPair");
+
+  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  if (validateResult.error) {
+    eventStop(event);
+    return validateResult;
+  }
 
   const accessTokenId = uuid();
   const refreshTokenId = uuid();
@@ -314,11 +397,23 @@ export async function sessionStoreCreateTokenPair(
     ),
   ]);
 
+  if (accessToken.error) {
+    eventStop(event);
+    return accessToken;
+  }
+
+  if (refreshToken.error) {
+    eventStop(event);
+    return refreshToken;
+  }
+
   eventStop(event);
 
   return {
-    accessToken,
-    refreshToken,
+    value: {
+      accessToken: accessToken.value,
+      refreshToken: refreshToken.value,
+    },
   };
 }
 
@@ -330,7 +425,7 @@ export async function sessionStoreCreateTokenPair(
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
  * @param {Date} expiresAt
- * @returns {Promise<string>}
+ * @returns {Promise<Either<string, AppError>>}
  */
 export function sessionStoreCreateJWT(
   event,
@@ -341,7 +436,7 @@ export function sessionStoreCreateJWT(
 ) {
   eventStart(event, "sessionStore.createJWT");
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     createSign({
       header: {
         alg: "HS256",
@@ -353,10 +448,15 @@ export function sessionStoreCreateJWT(
         [type]: value,
       },
     })
-      .once("error", reject)
+      .once("error", (err) => {
+        eventStop(event);
+        resolve({ error: AppError.serverError({}, err) });
+      })
       .once("done", function (signature) {
         eventStop(event);
-        resolve(signature);
+        resolve({
+          value: signature,
+        });
       });
   });
 }
@@ -367,7 +467,14 @@ export function sessionStoreCreateJWT(
  * @param {InsightEvent} event
  * @param {StoreSessionStoreSettings} sessionSettings
  * @param {string} tokenString
- * @returns Promise<{}>
+ * @returns {Promise<Either<{
+ *   header: object,
+ *   payload: {
+ *     exp: number,
+ *     compasSessionAccessToken?: string,
+ *     compasSessionRefreshToken?: string,
+ *   },
+ * }, AppError>>}
  */
 export async function sessionStoreVerifyAndDecodeJWT(
   event,
@@ -376,25 +483,46 @@ export async function sessionStoreVerifyAndDecodeJWT(
 ) {
   eventStart(event, "sessionStore.verifyAndDecodeJWT");
 
-  const { valid, obj } = await new Promise((resolve, reject) => {
+  const { value, error } = await new Promise((resolve) => {
     createVerify({
       signature: tokenString,
       secret: sessionSettings.signingKey,
       algorithm: "HS256",
     })
-      .once("error", reject)
+      .once("error", (error) => {
+        resolve({
+          error: AppError.serverError({}, error),
+        });
+      })
       .once("done", function (valid, obj) {
-        resolve({ valid, obj });
+        resolve({ value: { valid, obj } });
       });
   });
 
-  if (!valid) {
-    throw new AppError(`${event.name}.invalidToken`, 401);
+  if (error) {
+    eventStop(event);
+    return {
+      error,
+    };
   }
 
-  if (obj.payload.exp * 1000 < Date.now()) {
-    throw new AppError(`${event.name}.expiredToken`, 401);
+  if (!value.valid) {
+    eventStop(event);
+    return {
+      error: new AppError(`${event.name}.invalidToken`, 401),
+    };
   }
 
-  return obj;
+  if (value.obj.payload.exp * 1000 < Date.now()) {
+    eventStop(event);
+    return {
+      error: new AppError(`${event.name}.expiredToken`, 401),
+    };
+  }
+
+  eventStop(event);
+
+  return {
+    value: value.obj,
+  };
 }
