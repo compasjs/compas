@@ -29,13 +29,6 @@ longer time to live, often limited based on the expected attack vectors like if
 the application is used in public libraries for example, and can be used to
 fetch a new token pair.
 
-::: tip
-
-Use headers to transport the access token from the client to the server, this
-way you are less susceptible to CSRF attacks.
-
-:::
-
 Let's take a look at the provided utilities by `@compas/store`. Most functions
 will return a `Either<X, AppError>`, meaning that callers should handle
 `returnValue.error` and handle these appropriately.
