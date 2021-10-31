@@ -19,9 +19,7 @@
     {{ if (item.files) { }}
      * @param { {{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }} } files
     {{ } }}
-    {{ if (options.isBrowser) { }}
-     * @param { { cancelToken?: CancelToken } } [options]
-    {{ } }}
+     * @param { { signal?: AbortSignal | undefined } } [requestConfig]
     {{ if (item.response) { }}
      * @returns {Promise<{{= getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", }) }}>}
     {{ } }}
@@ -42,6 +40,7 @@ export async function api{{= item.uniqueName }}(
     {{ if (item.files) { }}
     files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }},
     {{ } }}
+    requestConfig: { signal?: AbortSignal|undefined } = {},
 {{ } else { }}
     instance,
     {{ if (item.params) { }}
@@ -56,11 +55,7 @@ export async function api{{= item.uniqueName }}(
     {{ if (item.files) { }}
     files,
     {{ } }}
-{{ } }}
-{{ if (options.isBrowser && options.useTypescript) { }}
-options: { cancelToken?: CancelToken } = {},
-{{ } else if (options.useBrowser) { }}
-options = {},
+    requestConfig = {},
 {{ } }}
 {{= options.useTypescript && item.response ? `): Promise<T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", })}> {` : ") {" }}
     {{ if (item.files) { }}
@@ -106,9 +101,7 @@ options = {},
       {{ if (item.response?.reference?.type === "file") { }}
       responseType: "{{= options.isNode ? "stream" : "blob" }}",
       {{ } }}
-      {{ if (options.isBrowser) { }}
-      cancelToken: options?.cancelToken,
-      {{ } }}
+      ...requestConfig,
     });
 
     {{ if (!options.isNodeServer) { }}

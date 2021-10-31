@@ -88,15 +88,8 @@ function generateCommonApiClientFile(context) {
  */
 function generateCommonReactQueryFile() {
   return `
-import { AxiosError, AxiosInstance, CancelTokenSource } from "axios";
+import { AxiosError, AxiosInstance } from "axios";
 import { createContext, PropsWithChildren, useContext } from "react";
-import {
-  UseQueryOptions as ReactUseQueryOptions,
-} from "react-query";
-
-export interface CancellablePromise<T> extends Promise<T> {
-  cancel?: () => void;
-}
 
 const ApiContext = createContext<AxiosInstance | undefined>(undefined);
 
@@ -130,7 +123,5 @@ export type AppErrorResponse = AxiosError<{
     [key: string]: any;
   }
 }>
-
-export type UseQueryOptions<Response, Error, TData = Response> = ReactUseQueryOptions<Response, Error, TData> & { cancelToken?: CancelTokenSource };
 `;
 }

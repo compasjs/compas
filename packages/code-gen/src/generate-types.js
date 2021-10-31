@@ -149,6 +149,7 @@ export async function generateTypes(logger, options) {
           type BodyParserPair = server.BodyParserPair;
           type AxiosInstance = import("axios").AxiosInstance;
           type AxiosError = import("axios").AxiosError;
+          type AxiosRequestConfig = import("axios").AxiosRequestConfig;
           `;
       }
     }
