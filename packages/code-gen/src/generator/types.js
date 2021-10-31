@@ -282,13 +282,13 @@ export function generateTypeDefinition(
       } else if (fileTypeIO === "input" && isNode) {
         result += `{ name?: string, data: ReadableStream }`;
       } else if (fileTypeIO === "outputRouter") {
-        result += `{ size: number, path: string, name?: string, type?: string, lastModifiedDate?: Date, hash?: "sha1" | "md5" | "sha256" }`;
+        result += `{ size: number, filepath: string, originalFilename?: string, mimetype?: string, lastModifiedDate?: Date, hashAlgorithm?: "sha1" | "md5" | "sha256" }`;
       } else if (fileTypeIO === "outputClient" && isBrowser) {
         result += "Blob";
       } else if (fileTypeIO === "outputClient" && isNode) {
         result += "ReadableStream";
       } else {
-        result += useTypescript ? "unknown" : "*";
+        result += "unknown";
       }
       break;
     case "generic":

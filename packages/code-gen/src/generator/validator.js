@@ -731,13 +731,13 @@ function anonymousValidatorFile(context, imports, type) {
       return { value };
     }
     // Object as parsed by the file body parsers
-    if (typeof value?.path === "string" && typeof value?.type === "string" &&
+    if (typeof value?.filepath === "string" && typeof value?.mimetype === "string" &&
       typeof value?.size === "number") {
       ${() => {
         if (!isNil(type.validator?.mimeTypes)) {
           return js`
             if (${type.validator.mimeTypes
-              .map((it) => `value.type !== "${it}"`)
+              .map((it) => `value.mimetype !== "${it}"`)
               .join(" && ")}) {
               const mimeTypes = [
                 " ${type.validator.mimeTypes.join(`", "`)} "
