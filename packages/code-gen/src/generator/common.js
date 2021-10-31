@@ -89,7 +89,7 @@ function generateCommonApiClientFile(context) {
 function generateCommonReactQueryFile() {
   return `
 import { AxiosError, AxiosInstance } from "axios";
-import { createContext, PropsWithChildren, useContext } from "react";
+import React, { createContext, PropsWithChildren, useContext } from "react";
 
 const ApiContext = createContext<AxiosInstance | undefined>(undefined);
 
