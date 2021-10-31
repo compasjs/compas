@@ -2,6 +2,7 @@ CREATE TABLE "sessionStore"
 (
   "id"        uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
   "data"      jsonb            NOT NULL,
+  "revokedAt" timestamptz      NULL,
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now()
 );

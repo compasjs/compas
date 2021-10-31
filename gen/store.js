@@ -77,6 +77,7 @@ export function applyStoreStructure(app) {
     T.object("sessionStore")
       .keys({
         data: T.any().default("{}"),
+        revokedAt: T.date().optional(),
       })
       .relations(
         T.oneToMany("accessTokens", T.reference("store", "sessionStoreToken")),

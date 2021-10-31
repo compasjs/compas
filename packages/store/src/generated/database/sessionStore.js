@@ -17,7 +17,13 @@ import {
   transformSessionStoreToken,
 } from "./sessionStoreToken.js";
 
-const sessionStoreFieldSet = new Set(["data", "id", "createdAt", "updatedAt"]);
+const sessionStoreFieldSet = new Set([
+  "data",
+  "revokedAt",
+  "id",
+  "createdAt",
+  "updatedAt",
+]);
 /**
  * Get all fields for sessionStore
  *
@@ -31,11 +37,11 @@ export function sessionStoreFields(tableName = "ss.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+      `${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+    `${tableName}"id", ${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /** @type {any} */
@@ -208,6 +214,8 @@ export function sessionStoreInsertValues(insert, options = {}) {
       args.push(it.id);
       str.push(", ");
     }
+    args.push(it.revokedAt ?? null);
+    str.push(", ");
     args.push(JSON.stringify(it.data ?? {}));
     str.push(", ");
     args.push(it.createdAt ?? new Date());
@@ -237,6 +245,10 @@ export function sessionStoreUpdateSet(update) {
   const strings = [];
   const values = [];
   checkFieldsInSet("sessionStore", "update", sessionStoreFieldSet, update);
+  if (update.revokedAt !== undefined) {
+    strings.push(`, "revokedAt" = `);
+    values.push(update.revokedAt ?? null);
+  }
   if (update.data !== undefined) {
     strings.push(`, "data" = `);
     values.push(JSON.stringify(update.data ?? {}));
@@ -542,6 +554,10 @@ export function transformSessionStore(values, builder = {}) {
     if (isPlainObject(value.result) && Object.keys(value).length === 1) {
       values[i] = value.result;
       value = value.result;
+    }
+    value.revokedAt = value.revokedAt ?? undefined;
+    if (typeof value.revokedAt === "string") {
+      value.revokedAt = new Date(value.revokedAt);
     }
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);

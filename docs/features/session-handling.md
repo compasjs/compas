@@ -175,13 +175,78 @@ id or if the data is not a plain JS object.
 
 Revoke all tokens for the provided session.
 
-// TODO:
+**Example**:
+
+```js
+import { sessionStoreInvalidate } from "@compas/store";
+
+const { error } = await sessionStoreInvalidate(newEventFromEvent(event), sql, {
+  id: "my-session-id",
+});
+
+if (error) {
+  // handle error
+}
+// Session is completely invalidated
+```
+
+**Errors**:
+
+- `sessionStore.invalidate.invalidSession` -> the provided session does not
+  contain a valid identifier.
 
 ### `sessionStoreRefreshTokens`
 
-Get a new token pair via the provided refresh token.
+Get a new token pair via the provided refresh token. This invalidates the token
+pair that is used. To prevent refresh token stealing, it detects if the refresh
+token is already used, and if so does the following two things:
 
-// TODO // - Also mention reuse detection
+- Invalidates the session
+- Creates a `compas.sessionStore.potentialLeakedSession` job, with the digest of
+  session duration and tokens used as the job 'data'.
+
+**Example**:
+
+```js
+import { sessionStoreRefreshTokens } from "@compas/store";
+
+const settings = {
+  accessTokenMaxAgeInSeconds: 5 * 60, // 5 minutes
+  refreshTokenMaxAgeInSeconds: 24 * 60 * 60, // 24 hours
+  signingKey: "secure key loaded from secure place",
+};
+
+const { error, value } = await sessionStoreRefreshTokens(
+  newEventFromEvent(event),
+  sql,
+  settings,
+  ctx.validatedBody.refreshToken,
+);
+
+if (error) {
+  // handle error
+} else {
+  // return token pair to the caller
+}
+```
+
+**Errors**:
+
+- `validator.error` -> thrown when `sessionSettings` has validator errors
+- `error.server.internal` -> if for some reason the JWT validating and signing
+  library can't decode the refresh token, validate the provided refresh token or
+  can't sign the new tokens.
+- `sessionStore.verifyAndDecodeJWT.invalidToken` -> when the token is not issued
+  by this backend, or if it is edited by an unauthorized entity.
+- `sessionStore.verifyAndDecodeJWT.expiredToken` -> if the `exp` of the token
+  before the current time.
+- `sessionStore.refreshTokens.invalidRefreshToken` -> when the decoded refresh
+  token is not conforming the expected structure.
+- `sessionStore.refreshTokens.invalidSession` -> when no session can be found by
+  the provided refresh token.
+- `sessionStore.refreshTokens.revokedToken` -> when the token is revoked, via
+  for example `sessionStoreInvalidate` or when a new token pair is issued via
+  `sessionStoreRefreshTokens`.
 
 ### `sessionStoreCleanupExpiredSessions`
 
@@ -189,8 +254,6 @@ Cleanup tokens that are expired / revoked longer than 'maxRevokedAgeInDays' days
 ago. Also removes the session if no tokens exist anymore. Note that when tokens
 are removed, Compas can't detect refresh token reuse, which hints on session
 stealing. A good default may be 45 days.
-
-// TODO
 
 ## Cookie based
 

@@ -69,7 +69,13 @@ const objectKeys1108679019 = new Set([
   "createdAt",
   "updatedAt",
 ]);
-const objectKeys503384244 = new Set(["data", "id", "createdAt", "updatedAt"]);
+const objectKeys503384244 = new Set([
+  "data",
+  "revokedAt",
+  "id",
+  "createdAt",
+  "updatedAt",
+]);
 const objectKeys1757809551 = new Set([
   "accessTokenMaxAgeInSeconds",
   "refreshTokenMaxAgeInSeconds",
@@ -1851,7 +1857,7 @@ export function anonymousValidator1108679019(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"data": any, "id": string, "createdAt": Date, "updatedAt": Date, }>}
+ * @returns {EitherN<{"data": any, "revokedAt"?: undefined|Date, "id": string, "createdAt": Date, "updatedAt": Date, }>}
  */
 export function anonymousValidator503384244(value, propertyPath) {
   if (isNil(value)) {
@@ -1899,6 +1905,7 @@ export function anonymousValidator503384244(value, propertyPath) {
    */
   const validatorPairs = [
     ["data", anonymousValidator1462196493],
+    ["revokedAt", anonymousValidator1988053796],
     ["id", anonymousValidator56355924],
     ["createdAt", anonymousValidator1389014320],
     ["updatedAt", anonymousValidator1389014320],

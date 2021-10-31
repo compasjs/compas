@@ -135,7 +135,10 @@ export async function sessionStoreGet(
   }
 
   // Access token revocation doesn't need a grace period.
-  if (storeToken.revokedAt && storeToken.revokedAt.getTime() < Date.now()) {
+  if (
+    storeToken.session.revokedAt ||
+    (storeToken.revokedAt && storeToken.revokedAt.getTime() < Date.now())
+  ) {
     eventStop(event);
     return {
       error: AppError.validationError(`${event.name}.revokedToken`),
@@ -207,6 +210,17 @@ export async function sessionStoreInvalidate(event, sql, session) {
     };
   }
 
+  // Revoke the full session, else the refresh token can still be used in the grace
+  // period.
+  await queries.sessionStoreUpdate(
+    sql,
+    {
+      revokedAt: new Date(),
+    },
+    {
+      id: session.id,
+    },
+  );
   await queries.sessionStoreTokenUpdate(
     sql,
     {
@@ -214,6 +228,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
     },
     {
       session: session.id,
+      revokedAtIsNull: true,
     },
   );
 
@@ -276,7 +291,7 @@ export async function sessionStoreRefreshTokens(
     session: {},
     accessToken: {},
     where: {
-      id: token.payload.compasSessionRefreshToken,
+      id: token.value.payload.compasSessionRefreshToken,
       refreshTokenIsNull: true,
     },
   }).exec(sql);
@@ -288,11 +303,13 @@ export async function sessionStoreRefreshTokens(
     };
   }
 
-  // Access token revocation doesn't need a grace period.
+  // Check if the session or refresh token is revoked. Uses a grace period on the refresh
+  // token
   if (
-    storeToken.revokedAt &&
-    storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
-      Date.now()
+    storeToken.session.revokedAt ||
+    (storeToken.revokedAt &&
+      storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
+        Date.now())
   ) {
     await sessionStoreReportAndRevokeLeakedSession(
       newEventFromEvent(event),
@@ -354,13 +371,16 @@ export async function sessionStoreCleanupExpiredSessions(
     $or: [
       {
         expiresAtLowerThan: d,
+        refreshTokenIsNull: true,
       },
       {
         revokedAtLowerThan: d,
+        refreshTokenIsNull: true,
       },
     ],
   });
 
+  // Remove sessions without access tokens & thus no refresh tokens.
   await queries.sessionStoreDelete(sql, {
     accessTokensNotExists: {},
   });
@@ -404,7 +424,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
   const report = {
     session: {
       id: session.id,
-      revokedAt: new Date(),
+      revokedAt: session.revokedAt ?? new Date(),
       createdAt: session.createdAt,
       updatedAt: session.updatedAt,
       tokens: [],
@@ -425,16 +445,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
     data: { report },
   });
 
-  await queries.sessionStoreTokenUpdate(
-    sql,
-    {
-      revokedAt: new Date(),
-    },
-    {
-      revokedAtIsNull: true,
-      session: session.id,
-    },
-  );
+  await sessionStoreInvalidate(newEventFromEvent(event), sql, session);
 
   eventStop(event);
 }

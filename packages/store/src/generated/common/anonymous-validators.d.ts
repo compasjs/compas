@@ -312,13 +312,14 @@ export function anonymousValidator1108679019(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"data": any, "id": string, "createdAt": Date, "updatedAt": Date, }>}
+ * @returns {EitherN<{"data": any, "revokedAt"?: undefined|Date, "id": string, "createdAt": Date, "updatedAt": Date, }>}
  */
 export function anonymousValidator503384244(
   value: any,
   propertyPath: string,
 ): EitherN<{
   data: any;
+  revokedAt?: undefined | Date;
   id: string;
   createdAt: Date;
   updatedAt: Date;
