@@ -3,10 +3,10 @@ import {
   eventStart,
   eventStop,
   isNil,
-  isPlainObject,
   newEventFromEvent,
   uuid,
 } from "@compas/stdlib";
+import crc from "crc";
 import { createSign, createVerify } from "jws";
 import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
@@ -34,6 +34,9 @@ import { addJobToQueue } from "./queue.js";
  * @property {string} signingKey
  */
 
+/**
+ * @type {number}
+ */
 const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
 
 /**
@@ -63,7 +66,8 @@ export async function sessionStoreCreate(
   }
 
   const [session] = await queries.sessionStoreInsert(sql, {
-    data: sessionData, // TODO: Create hash, so we can optimize updates
+    data: sessionData,
+    checksum: sessionStoreChecksumForData(sessionData),
   });
 
   const tokens = await sessionStoreCreateTokenPair(
@@ -112,6 +116,7 @@ export async function sessionStoreGet(
     return token;
   }
 
+  // Force usage of access token
   if (isNil(token.value.payload.compasSessionAccessToken)) {
     eventStop(event);
     return {
@@ -123,6 +128,9 @@ export async function sessionStoreGet(
     session: {},
     where: {
       id: token.value.payload.compasSessionAccessToken,
+
+      // access tokens reference the refresh token, and if not the refresh token is
+      // invalidated
       refreshTokenIsNotNull: true,
     },
   }).exec(sql);
@@ -134,7 +142,9 @@ export async function sessionStoreGet(
     };
   }
 
-  // Access token revocation doesn't need a grace period.
+  // Check if either the session or access token is revoked.
+  // Note that we don't have a grace period for these tokens, like we have for refresh
+  // tokens
   if (
     storeToken.session.revokedAt ||
     (storeToken.revokedAt && storeToken.revokedAt.getTime() < Date.now())
@@ -166,19 +176,28 @@ export async function sessionStoreGet(
 export async function sessionStoreUpdate(event, sql, session) {
   eventStart(event, "sessionStore.update");
 
-  if (isNil(session?.id) || !isPlainObject(session?.data)) {
+  if (isNil(session?.id) || typeof session?.checksum !== "string") {
     eventStop(event);
     return {
       error: AppError.validationError(`${event.name}.invalidSession`),
     };
   }
 
-  // TODO: Check hash
+  // If the checksum is the same, we must have the same input, and thus can skip an
+  // update.
+  const checksum = sessionStoreChecksumForData(session.data);
+  if (checksum === session.checksum) {
+    eventStop(event);
+    return {
+      value: undefined,
+    };
+  }
 
   await queries.sessionStoreUpdate(
     sql,
     {
       data: session.data,
+      checksum,
     },
     {
       id: session.id,
@@ -221,6 +240,8 @@ export async function sessionStoreInvalidate(event, sql, session) {
       id: session.id,
     },
   );
+
+  // Revoke all tokens that are not revoked yet.
   await queries.sessionStoreTokenUpdate(
     sql,
     {
@@ -280,6 +301,7 @@ export async function sessionStoreRefreshTokens(
     return token;
   }
 
+  // Force usage of refresh token
   if (isNil(token.value.payload.compasSessionRefreshToken)) {
     eventStop(event);
     return {
@@ -304,7 +326,8 @@ export async function sessionStoreRefreshTokens(
   }
 
   // Check if the session or refresh token is revoked. Uses a grace period on the refresh
-  // token
+  // token. This way the api client can have race conditions, and thus in the end have
+  // multiple valid access tokens.
   if (
     storeToken.session.revokedAt ||
     (storeToken.revokedAt &&
@@ -367,6 +390,9 @@ export async function sessionStoreCleanupExpiredSessions(
   const d = new Date();
   d.setDate(d.getDate() - maxRevokedAgeInDays);
 
+  // Note that we only remove tokens where the 'refreshToken' is null, which means that
+  // these tokens are refresh tokens. We use these since they should have a longer expiry
+  // date.
   await queries.sessionStoreTokenDelete(sql, {
     $or: [
       {
@@ -421,6 +447,8 @@ export async function sessionStoreReportAndRevokeLeakedSession(
     },
   }).exec(sql);
 
+  // Not sure what kind of structure we need, and not sure if we should use a job for
+  // this. But let's just keep it as is for now.
   const report = {
     session: {
       id: session.id,
@@ -577,6 +605,7 @@ export function sessionStoreCreateJWT(
     })
       .once("error", (err) => {
         eventStop(event);
+        // Wrap unexpected errors, they are most likely a Compas or related backend bug.
         resolve({ error: AppError.serverError({}, err) });
       })
       .once("done", function (signature) {
@@ -617,6 +646,7 @@ export async function sessionStoreVerifyAndDecodeJWT(
       algorithm: "HS256",
     })
       .once("error", (error) => {
+        // Wrap unexpected errors, they are most likely a Compas or related backend bug.
         resolve({
           error: AppError.serverError({}, error),
         });
@@ -652,4 +682,14 @@ export async function sessionStoreVerifyAndDecodeJWT(
   return {
     value: value.obj,
   };
+}
+
+/**
+ * Create a fast checksum for the data object
+ *
+ * @param {any} data
+ * @returns {string}
+ */
+function sessionStoreChecksumForData(data) {
+  return crc.crc32(JSON.stringify(data ?? {})).toString(16);
 }

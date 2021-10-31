@@ -19,6 +19,7 @@ import {
 
 const sessionStoreFieldSet = new Set([
   "data",
+  "checksum",
   "revokedAt",
   "id",
   "createdAt",
@@ -37,11 +38,11 @@ export function sessionStoreFields(tableName = "ss.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+      `${tableName}"checksum", ${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
+    `${tableName}"id", ${tableName}"checksum", ${tableName}"revokedAt", ${tableName}"data", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /** @type {any} */
@@ -214,6 +215,8 @@ export function sessionStoreInsertValues(insert, options = {}) {
       args.push(it.id);
       str.push(", ");
     }
+    args.push(it.checksum ?? null);
+    str.push(", ");
     args.push(it.revokedAt ?? null);
     str.push(", ");
     args.push(JSON.stringify(it.data ?? {}));
@@ -245,6 +248,10 @@ export function sessionStoreUpdateSet(update) {
   const strings = [];
   const values = [];
   checkFieldsInSet("sessionStore", "update", sessionStoreFieldSet, update);
+  if (update.checksum !== undefined) {
+    strings.push(`, "checksum" = `);
+    values.push(update.checksum ?? null);
+  }
   if (update.revokedAt !== undefined) {
     strings.push(`, "revokedAt" = `);
     values.push(update.revokedAt ?? null);

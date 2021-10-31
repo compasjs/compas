@@ -71,6 +71,7 @@ const objectKeys1108679019 = new Set([
 ]);
 const objectKeys503384244 = new Set([
   "data",
+  "checksum",
   "revokedAt",
   "id",
   "createdAt",
@@ -1857,7 +1858,7 @@ export function anonymousValidator1108679019(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"data": any, "revokedAt"?: undefined|Date, "id": string, "createdAt": Date, "updatedAt": Date, }>}
+ * @returns {EitherN<{"data": any, "checksum": string, "revokedAt"?: undefined|Date, "id": string, "createdAt": Date, "updatedAt": Date, }>}
  */
 export function anonymousValidator503384244(value, propertyPath) {
   if (isNil(value)) {
@@ -1905,6 +1906,7 @@ export function anonymousValidator503384244(value, propertyPath) {
    */
   const validatorPairs = [
     ["data", anonymousValidator1462196493],
+    ["checksum", anonymousValidator186795873],
     ["revokedAt", anonymousValidator1988053796],
     ["id", anonymousValidator56355924],
     ["createdAt", anonymousValidator1389014320],

@@ -1780,6 +1780,7 @@ declare global {
   };
   type StoreSessionStore = {
     data: any;
+    checksum: string;
     revokedAt?: undefined | Date;
     id: string;
     createdAt: Date;
@@ -1930,12 +1931,14 @@ declare global {
   };
   type StoreSessionStoreInsertPartial = {
     id?: undefined | string;
+    checksum: string;
     revokedAt?: undefined | null | Date;
     data?: undefined | any;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
   };
   type StoreSessionStoreUpdatePartial = {
+    checksum?: undefined | string;
     revokedAt?: undefined | null | Date;
     data?: undefined | any;
     createdAt?: undefined | Date;

@@ -16,7 +16,7 @@ CREATE TABLE "sessionStoreToken"
   "revokedAt"    timestamptz      NULL,
   "createdAt"    timestamptz      NOT NULL,
   CONSTRAINT "sessionStoreTokenSessionFk" FOREIGN KEY ("session") REFERENCES "sessionStore" ("id") ON DELETE CASCADE,
-  CONSTRAINT "sessionStoreTokenRefreshTokenFk" FOREIGN KEY ("refreshToken") REFERENCES "sessionStoreToken" ("id") ON DELETE SET NULL
+  CONSTRAINT "sessionStoreTokenRefreshTokenFk" FOREIGN KEY ("refreshToken") REFERENCES "sessionStoreToken" ("id") ON DELETE CASCADE
 );
 
 CREATE INDEX "sessionStoreTokenSessionIdx" ON "sessionStoreToken" ("session");
