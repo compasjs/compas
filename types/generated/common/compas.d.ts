@@ -27,6 +27,7 @@ declare global {
   type BodyParserPair = server.BodyParserPair;
   type AxiosInstance = import("axios").AxiosInstance;
   type AxiosError = import("axios").AxiosError;
+  type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 
   type Logger = stdlib.Logger;
   type InsightEvent = stdlib.InsightEvent;

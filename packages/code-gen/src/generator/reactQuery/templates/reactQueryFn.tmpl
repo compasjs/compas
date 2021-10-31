@@ -89,20 +89,14 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
     opts.body,
     {{ } }}
     ),
-    () => {
-      const promise: CancellablePromise<{{= responseType }}> = api{{= item.uniqueName }}(
+    ({ signal }) => {
+      return api{{= item.uniqueName }}(
         axiosInstance,
         {{= item.params ? "opts.params, " : ""}}
         {{= item.query ? "opts.query, " : "" }}
         {{= item.body ? "opts.body, " : "" }}
-        { cancelToken: options.cancelToken?.token },
+        { signal },
       );
-
-      if (options.cancelToken) {
-        promise.cancel = () => options.cancelToken?.cancel();
-      }
-
-      return promise;
     },
     options,
   );
