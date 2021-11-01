@@ -4,6 +4,81 @@ editLink: false
 
 # Changelog
 
+### [v0.0.171](https://github.com/compasjs/compas/releases/tag/v0.0.171)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.15.8 to 7.16.0
+  ([#1314](https://github.com/compasjs/compas/pull/1314))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.15.8 to 7.16.0
+  ([#1315](https://github.com/compasjs/compas/pull/1315))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 16.11.1 to 16.11.6
+  ([#1285](https://github.com/compasjs/compas/pull/1285) ,
+  [#1291](https://github.com/compasjs/compas/pull/1291),
+  [#1299](https://github.com/compasjs/compas/pull/1299))
+- build(deps): bump eslint from 8.0.1 to 8.1.0
+  ([#1292](https://github.com/compasjs/compas/pull/1292))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 36.1.1 to 37.0.3
+  ([#1290](https://github.com/compasjs/compas/pull/1290) ,
+  [#1298](https://github.com/compasjs/compas/pull/1298),
+  [#1303](https://github.com/compasjs/compas/pull/1303))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump formidable from 2.0.0-canary.20200504.1 to 2.0.1
+  ([#1318](https://github.com/compasjs/compas/pull/1318))
+  - Closes [#1317](https://github.com/compasjs/compas/pull/1317)
+- build(deps): bump pino from 7.0.3 to 7.0.5
+  ([#1297](https://github.com/compasjs/compas/pull/1297))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump sharp from 0.29.1 to 0.29.2
+  ([#1284](https://github.com/compasjs/compas/pull/1284))
+- chore(ci): run tests on Node.js 17
+  ([#1295](https://github.com/compasjs/compas/pull/1295))
+- chore(docs): fix Node.js version in README's
+- chore(docs): fix typo in command on getting started page
+  ([#1287](https://github.com/compasjs/compas/pull/1287))
+- feat(code-gen): implement openApi spec exporter
+  ([#1283](https://github.com/compasjs/compas/pull/1283))
+- feat(code-gen): throw error on unused group name
+  ([#1288](https://github.com/compasjs/compas/pull/1288))
+  - Closes [#1286](https://github.com/compasjs/compas/pull/1286)
+- feat(code-gen): use abort signal in api clients
+  ([#1319](https://github.com/compasjs/compas/pull/1319))
+- feat(stdlib): add AppError#format support for various primitives
+  ([#1325](https://github.com/compasjs/compas/pull/1325))
+  - Closes [#1323](https://github.com/compasjs/compas/pull/1323)
+- fix(code-gen): add React import to reactQuery template
+  ([#1320](https://github.com/compasjs/compas/pull/1320))
+- fix(code-gen): handle optional object values that are references
+  ([#1311](https://github.com/compasjs/compas/pull/1311))
+  - Closes [#1309](https://github.com/compasjs/compas/pull/1309)
+- fix(code-gen): throw early error on missing arguments to T.reference()
+  ([#1310](https://github.com/compasjs/compas/pull/1310))
+  - Closes [#1305](https://github.com/compasjs/compas/pull/1305)
+- fix(stdlib): fix TS error on logger destination usage
+
+##### Breaking changes
+
+- **deps**: bump eslint-plugin-jsdoc from 36.1.1 to 37.0.3
+  - Major version bump
+- **deps**: bump formidable from 2.0.0-canary.20200504.1 to 2.0.1
+  - Renamed properties on `ctx.validatedFiles`.
+  - `ctx.validatedFiles.xxx.path` -> `ctx.validatedFiles.xxx.filepath`
+  - `ctx.validatedFiles.xxx.name` -> `ctx.validatedFiles.xxx.originalFilename`
+  - `ctx.validatedFiles.xxx.type` -> `ctx.validatedFiles.xxx.mimetype`
+- **code-gen**: use abort signal in api clients
+  - Removed the `cancelToken` support that where passed via react-query options.
+  - Generated hooks automatically pass the react-query based signal to the api
+    client functions.
+  - Requires react-query 3.30.0 or higher
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.171.html).
+
+Thanks to @tjonger and @bjarn for their contributions!
+
 ### [v0.0.170](https://github.com/compasjs/compas/releases/tag/v0.0.170)
 
 ##### Changes
