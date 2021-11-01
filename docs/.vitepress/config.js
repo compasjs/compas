@@ -152,6 +152,7 @@ function getApiSidebar() {
 
 function getReleaseNotesSidebar() {
   return [
+    { text: "Release v0.0.171", link: "/releases/0.0.171.html" },
     { text: "Release v0.0.158", link: "/releases/0.0.158.html" },
     { text: "Release v0.0.138", link: "/releases/0.0.138.html" },
     { text: "Release v0.0.124", link: "/releases/0.0.124.html" },
