@@ -93,13 +93,41 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
-   * @param {AppError|Error|undefined|null|{}} [e]
+   * @param {AppError|Error|undefined|null|{}|string|number|boolean|function} [e]
    * @returns {Record<string, any>}
    */
   static format(e) {
-    if (!e) {
+    if (isNil(e)) {
       return {
         warning: "Missing error",
+      };
+    }
+
+    const typeOf = typeof e;
+
+    if (typeOf === "symbol") {
+      return {
+        warning: "Can't serialize Symbol",
+      };
+    }
+
+    if (typeOf === "bigint") {
+      return {
+        warning: "Can't serialize BigInt",
+      };
+    }
+
+    if (typeOf === "string" || typeOf === "boolean" || typeOf === "number") {
+      return {
+        value: e,
+      };
+    }
+
+    if (typeOf === "function") {
+      return {
+        type: "function",
+        name: e.name,
+        parameterLength: e.length,
       };
     }
 
