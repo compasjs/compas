@@ -5,6 +5,8 @@ import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
 import { upperCaseFirst } from "./utils.js";
 
 /**
+ * Provided that input is empty
+ *
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} structure
  * @param {string[]} groups

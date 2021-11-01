@@ -73,6 +73,13 @@ export class App {
    */
   extendWithOpenApi(defaultGroup: string, data: Record<string, any>): this;
   /**
+   * @param {import("./generator/openAPI").GenerateOpenApiOpts} options
+   * @returns {Promise<void>}
+   */
+  generateOpenApi(
+    options: import("./generator/openAPI").GenerateOpenApiOpts,
+  ): Promise<void>;
+  /**
    * @param {import("./generate-types").GenerateTypeOpts} options
    * @returns {Promise<void>}
    */

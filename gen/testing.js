@@ -140,6 +140,44 @@ export function applyTestingServerStructure(app) {
   const T = new TypeCreator("server");
   const R = T.router("/");
 
+  // Group test
+  const testR = R.group("group", "/group");
+  app.add(
+    T.object("item").keys({
+      A: T.string(),
+      B: T.number(),
+      C: T.number().float(),
+      D: T.bool(),
+      E: T.date(),
+    }),
+
+    T.number("input").convert().docs("WITH DOCS"),
+
+    testR
+      .post("/file", "upload")
+      .files({
+        input1: T.file(),
+      })
+      .response(T.file()),
+
+    testR
+      .delete("/:id", "refRoute")
+      .query({ ref: T.string(), ref2: T.string() })
+      .params({ id: T.reference("server", "input") })
+      .response(T.reference("bench", "nested")),
+
+    testR
+      .put("/:full/:color/route", "fullRoute")
+      .params({ full: T.string(), color: T.number().convert() })
+      .body({
+        foo: T.anyOf().values(T.string()),
+        bar: T.reference("server", "options"),
+      })
+      .response({
+        items: [{ foo: T.string(), bar: T.reference("server", "item") }],
+      }),
+  );
+
   // Reference (validate TS output)
   app.add(
     T.string("options").oneOf("A", "B", "C"),

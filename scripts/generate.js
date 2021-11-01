@@ -5,6 +5,7 @@ import {
   generateStore,
   generateTestAndBench,
   generateTypes,
+  generateOpenApiSpec,
 } from "../src/generate.js";
 
 /** @type {CliWatchOptions} */
@@ -21,6 +22,7 @@ async function main(logger) {
   await generateRepo();
   await generateTestAndBench();
   await generateTypes();
+  await generateOpenApiSpec();
 
   logger.info("Transpiling typescript...");
 
