@@ -1,5 +1,5 @@
 node_modules/
 *.test.js
 __fixtures__/
-generate.js
+generator.js
 test/

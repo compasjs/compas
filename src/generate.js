@@ -28,7 +28,7 @@ export const generateTestAndBenchSettings = {
   server: {
     outputDirectory: "./generated/testing/server",
     enabledGenerators: ["apiClient", "router", "validator"],
-    enabledGroups: ["server"],
+    enabledGroups: ["server", "group"],
     isNodeServer: true,
     dumpStructure: true,
   },
@@ -64,6 +64,24 @@ export async function generateTypes() {
       "./packages/store/src/generated",
     ],
     dumpCompasTypes: true,
+  });
+}
+
+export async function generateOpenApiSpec() {
+  const app = new App({
+    verbose: true,
+  });
+
+  await app.generateOpenApi({
+    inputPath: "./generated/testing/server",
+    outputFile: "./generated/testing/server/common/openapi.json",
+    enabledGroups: ["server", "group"],
+    openApiOptions: {
+      version: "0.0.99",
+      title: "Compas Test server OpenAPI Docs",
+      description: "Lorem ipsum",
+      servers: [{ url: "https://api.compasjs.com" }],
+    },
   });
 }
 

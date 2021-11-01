@@ -19,6 +19,7 @@ import {
   validateCodeGenType,
 } from "./generated/codeGen/validators.js";
 import { generate } from "./generator/index.js";
+import { generateOpenApi } from "./generator/openAPI/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
 import { recursivelyRemoveInternalFields } from "./internal.js";
 import { loadFromOpenAPISpec } from "./loaders.js";
@@ -234,6 +235,32 @@ export class App {
    */
   extendWithOpenApi(defaultGroup, data) {
     return this.extendInternal(loadFromOpenAPISpec(defaultGroup, data), true);
+  }
+
+  /**
+   * @param {import("./generator/openAPI").GenerateOpenApiOpts} options
+   * @returns {Promise<void>}
+   */
+  async generateOpenApi(options) {
+    options.verbose = options.verbose ?? this.verbose;
+
+    if (isNil(options?.outputFile)) {
+      throw new Error("Need options.outputFile to write file to.");
+    }
+
+    if (isNil(options?.inputPath)) {
+      throw new Error("Need options.inputPath for compas structure");
+    }
+
+    const inputStructure = pathJoin(options.inputPath, "common/structure.js");
+    if (!existsSync(inputStructure)) {
+      throw new Error(
+        `Invalid inputPath '${options.inputPath}'. '${inputStructure}' does not exists. Is it correctly generated?`,
+      );
+    }
+    options.inputPath = inputStructure;
+
+    await generateOpenApi(this.logger, options);
   }
 
   /**

@@ -1,4 +1,6 @@
 /**
+ * Provided that input is empty
+ *
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} structure
  * @param {string[]} groups

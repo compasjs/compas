@@ -7,10 +7,25 @@ import { Next } from "@compas/server";
 import { Middleware } from "@compas/server";
 import { QueryPart } from "@compas/store";
 declare global {
+  type BenchNested = { foo: true; bar: 5; nest: BenchSimple[] };
+  type BenchSimple = { foo: boolean; bar: number; baz: string };
   type CompasStructure = undefined | any;
   type CompasStructureResponse = any;
-  type ServerAnswers = { [K in ServerOptions]: string };
+  type GroupFullRoute = CompasStructure;
+  type GroupFullRouteBody = { foo: string; bar: ServerOptions };
   type ServerOptions = "A" | "B" | "C";
+  type GroupFullRouteParams = { full: string; color: number };
+  type GroupFullRouteResponse = { items: { foo: string; bar: ServerItem }[] };
+  type ServerItem = { A: string; B: number; C: number; D: boolean; E: Date };
+  type GroupRefRoute = CompasStructure;
+  type GroupRefRouteParams = { id: ServerInput };
+  type ServerInput = number;
+  type GroupRefRouteQuery = { ref: string; ref2: string };
+  type GroupRefRouteResponse = BenchNested;
+  type GroupUpload = CompasStructure;
+  type GroupUploadFiles = { input1: ReadableStream };
+  type GroupUploadResponse = ReadableStream;
+  type ServerAnswers = { [K in ServerOptions]: string };
   type ServerCreate = CompasStructure;
   type ServerCreateBody = { foo: boolean; string?: undefined | null | string };
   type ServerCreateQuery = { alwaysTrue?: undefined | boolean };
@@ -19,7 +34,7 @@ declare global {
   type ServerEmptyResponseQuery = { foo?: undefined | string };
   type ServerGetFile = CompasStructure;
   type ServerGetFileQuery = { throwError?: undefined | boolean };
-  type ServerGetFileResponse = ReadableStream;
+  type ServerGetFileResponse = GroupUploadResponse;
   type ServerGetId = CompasStructure;
   type ServerGetIdParams = { id: number };
   type ServerGetIdResponse = ServerGetIdParams;
@@ -51,6 +66,47 @@ declare global {
   >;
   type CompasStructureFn = (
     ctx: CompasStructureCtx,
+    next: Next,
+  ) => void | Promise<void>;
+  type GroupFullRouteCtx = Context<
+    {},
+    {
+      event: InsightEvent;
+      log: Logger;
+      validatedParams: GroupFullRouteParams;
+      validatedBody: GroupFullRouteBody;
+    },
+    GroupFullRouteResponse
+  >;
+  type GroupFullRouteFn = (
+    ctx: GroupFullRouteCtx,
+    next: Next,
+  ) => void | Promise<void>;
+  type GroupRefRouteCtx = Context<
+    {},
+    {
+      event: InsightEvent;
+      log: Logger;
+      validatedQuery: GroupRefRouteQuery;
+      validatedParams: GroupRefRouteParams;
+    },
+    GroupRefRouteResponse
+  >;
+  type GroupRefRouteFn = (
+    ctx: GroupRefRouteCtx,
+    next: Next,
+  ) => void | Promise<void>;
+  type GroupUploadCtx = Context<
+    {},
+    {
+      event: InsightEvent;
+      log: Logger;
+      validatedFiles: GroupUploadFiles;
+    },
+    GroupUploadResponse
+  >;
+  type GroupUploadFn = (
+    ctx: GroupUploadCtx,
     next: Next,
   ) => void | Promise<void>;
   type ServerCreateCtx = Context<
@@ -196,9 +252,37 @@ declare global {
   ) => void | Promise<void>;
   type GroupMiddleware = {
     compas: Middleware | Middleware[];
+    group: Middleware | Middleware[];
     server: Middleware | Middleware[];
   };
   type CompasStructureResponseApiResponse = CompasStructureResponse;
+  type GroupFullRouteParamsInput = { full: string; color: number | string };
+  type GroupFullRouteBodyInput = { foo: string; bar: ServerOptionsInput };
+  type ServerOptionsInput = ServerOptions;
+  type GroupFullRouteResponseApiResponse = {
+    items: { foo: string; bar: ServerItemApiResponse }[];
+  };
+  type ServerItemApiResponse = {
+    A: string;
+    B: number;
+    C: number;
+    D: boolean;
+    E: string;
+  };
+  type GroupRefRouteParamsInput = { id: ServerInputInput };
+  type ServerInputInput = number | string;
+  type GroupRefRouteQueryInput = GroupRefRouteQuery;
+  type GroupRefRouteResponseApiResponse = BenchNestedApiResponse;
+  type BenchNestedApiResponse = {
+    foo: true;
+    bar: 5;
+    nest: BenchSimpleApiResponse[];
+  };
+  type BenchSimpleApiResponse = BenchSimple;
+  type GroupUploadFilesInput = {
+    input1: { name?: string; data: ReadableStream };
+  };
+  type GroupUploadResponseApiResponse = GroupUploadResponse;
   type ServerCreateQueryInput = ServerCreateQuery;
   type ServerCreateBodyInput = ServerCreateBody;
   type ServerCreateResponseApiResponse = ServerCreateResponse;
@@ -206,7 +290,7 @@ declare global {
   type ServerGetFileQueryInput = {
     throwError?: undefined | boolean | "true" | "false";
   };
-  type ServerGetFileResponseApiResponse = ServerGetFileResponse;
+  type ServerGetFileResponseApiResponse = GroupUploadResponse;
   type ServerGetIdParamsInput = { id: number | string };
   type ServerGetIdResponseApiResponse = ServerGetIdParams;
   type ServerInvalidResponseResponseApiResponse = ServerInvalidResponseResponse;
@@ -1217,10 +1301,10 @@ declare global {
   type ValidatorNamedLevelOne = { levelOne: ValidatorNamedLevelTwo };
   type ValidatorNamedLevelTwo = { two: ValidatorNamedLevelThree };
   type ValidatorNamedLevelThree = { foo?: undefined | ValidatorNamedLevelOne };
-  type ValidatorNumber = number;
-  type ValidatorNumberConvert = ValidatorNumber;
-  type ValidatorNumberFloat = ValidatorNumber;
-  type ValidatorNumberMinMax = ValidatorNumber;
+  type ValidatorNumber = ServerInput;
+  type ValidatorNumberConvert = ServerInput;
+  type ValidatorNumberFloat = ServerInput;
+  type ValidatorNumberMinMax = ServerInput;
   type ValidatorNumberOneOf = 1 | 3 | 5;
   type ValidatorObject = { bool: boolean; string: string };
   type ValidatorObjectLoose = ValidatorObject;
