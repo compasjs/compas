@@ -53,11 +53,20 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
-   * @param {AppError|Error|undefined|null|{}} [e]
+   * @param {AppError|Error|undefined|null|{}|string|number|boolean|function} [e]
    * @returns {Record<string, any>}
    */
   static format(
-    e?: AppError | Error | undefined | null | {},
+    e?:
+      | AppError
+      | Error
+      | undefined
+      | null
+      | {}
+      | string
+      | number
+      | boolean
+      | Function,
   ): Record<string, any>;
   /**
    * @param {string} key

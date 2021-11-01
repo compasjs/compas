@@ -117,4 +117,17 @@ test("stdlib/error", (t) => {
       t.equal(formatted.cause.key, "foo");
     }
   });
+
+  t.test("AppError.format primitives", (t) => {
+    const str = AppError.format("str");
+    const symbol = AppError.format(Symbol.for("symbol"));
+    const fn = AppError.format(function sum(a, b) {
+      return a + b;
+    });
+
+    t.equal(str.value, "str");
+    t.ok(symbol.warning);
+    t.equal(fn.name, "sum");
+    t.equal(fn.parameterLength, 2);
+  });
 });
