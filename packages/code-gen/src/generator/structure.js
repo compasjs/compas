@@ -51,11 +51,7 @@ export function generateStructureFile(context) {
     }
 
     // Include recursive references that are used in route types
-    const error = includeReferenceTypes(
-      context.structure,
-      apiStructure,
-      apiStructure,
-    );
+    const error = includeReferenceTypes(context.structure, apiStructure);
     if (error) {
       throw error;
     }

@@ -4,4612 +4,3891 @@
 import { isNil } from "@compas/stdlib";
 import { isQueryPart } from "@compas/store";
 
+    /**
+     * @typedef {{
+     *   propertyPath: string,
+     *   key: string,
+     *   info: any,
+     * }} InternalError
+     */
+     
+     /**
+      * @template T
+      * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
+      */
+     
+const objectKeys599447075 = new Set(["bucketName", "contentLength", "contentType", "name", "meta", "id", "createdAt", "updatedAt", "deletedAt"])
+const objectKeys2144828802 = new Set(["transforms", "transformedFromOriginal"])
+const objectKeys2060025506 = new Set(["name", "order", "meta", "id", "file", "parent", "createdAt", "updatedAt", "deletedAt"])
+const objectKeys420878393 = new Set([""])
+const objectKeys376443596 = new Set(["q", "w"])
+const objectKeys1781782332 = new Set(["id", "isComplete", "priority", "scheduledAt", "name", "data", "retryCount", "handlerTimeout", "createdAt", "updatedAt"])
+const objectKeys430889951 = new Set(["years", "months", "days", "hours", "minutes", "seconds"])
+const objectKeys1108679019 = new Set(["expires", "data", "id", "createdAt", "updatedAt"])
+const objectKeys2074494218 = new Set(["$raw", "$or", "id", "idNotEqual", "idIn", "idNotIn", "bucketName", "bucketNameNotEqual", "bucketNameIn", "bucketNameNotIn", "bucketNameLike", "bucketNameILike", "bucketNameNotLike", "createdAt", "createdAtNotEqual", "createdAtIn", "createdAtNotIn", "createdAtGreaterThan", "createdAtLowerThan", "createdAtIsNull", "createdAtIsNotNull", "updatedAt", "updatedAtNotEqual", "updatedAtIn", "updatedAtNotIn", "updatedAtGreaterThan", "updatedAtLowerThan", "updatedAtIsNull", "updatedAtIsNotNull", "deletedAt", "deletedAtNotEqual", "deletedAtIn", "deletedAtNotIn", "deletedAtGreaterThan", "deletedAtLowerThan", "deletedAtIncludeNotNull", "groupExists", "groupNotExists"])
+const objectKeys153017499 = new Set(["$raw", "$or", "id", "idNotEqual", "idIn", "idNotIn", "order", "orderNotEqual", "orderIn", "orderNotIn", "orderGreaterThan", "orderLowerThan", "orderIsNull", "orderIsNotNull", "file", "fileNotEqual", "fileIn", "fileNotIn", "fileIsNull", "fileIsNotNull", "parent", "parentNotEqual", "parentIn", "parentNotIn", "parentIsNull", "parentIsNotNull", "createdAt", "createdAtNotEqual", "createdAtIn", "createdAtNotIn", "createdAtGreaterThan", "createdAtLowerThan", "createdAtIsNull", "createdAtIsNotNull", "updatedAt", "updatedAtNotEqual", "updatedAtIn", "updatedAtNotIn", "updatedAtGreaterThan", "updatedAtLowerThan", "updatedAtIsNull", "updatedAtIsNotNull", "deletedAt", "deletedAtNotEqual", "deletedAtIn", "deletedAtNotIn", "deletedAtGreaterThan", "deletedAtLowerThan", "deletedAtIncludeNotNull", "childrenExists", "childrenNotExists"])
+const objectKeys1257773835 = new Set(["$raw", "$or", "id", "idNotEqual", "idIn", "idNotIn", "idGreaterThan", "idLowerThan", "isComplete", "isCompleteIsNull", "isCompleteIsNotNull", "name", "nameNotEqual", "nameIn", "nameNotIn", "nameLike", "nameILike", "nameNotLike", "scheduledAt", "scheduledAtNotEqual", "scheduledAtIn", "scheduledAtNotIn", "scheduledAtGreaterThan", "scheduledAtLowerThan", "scheduledAtIsNull", "scheduledAtIsNotNull", "createdAt", "createdAtNotEqual", "createdAtIn", "createdAtNotIn", "createdAtGreaterThan", "createdAtLowerThan", "createdAtIsNull", "createdAtIsNotNull", "updatedAt", "updatedAtNotEqual", "updatedAtIn", "updatedAtNotIn", "updatedAtGreaterThan", "updatedAtLowerThan", "updatedAtIsNull", "updatedAtIsNotNull"])
+const objectKeys500057262 = new Set(["$raw", "$or", "id", "idNotEqual", "idIn", "idNotIn", "expires", "expiresNotEqual", "expiresIn", "expiresNotIn", "expiresGreaterThan", "expiresLowerThan", "createdAt", "createdAtNotEqual", "createdAtIn", "createdAtNotIn", "createdAtGreaterThan", "createdAtLowerThan", "createdAtIsNull", "createdAtIsNotNull", "updatedAt", "updatedAtNotEqual", "updatedAtIn", "updatedAtNotIn", "updatedAtGreaterThan", "updatedAtLowerThan", "updatedAtIsNull", "updatedAtIsNotNull"])
+const objectKeys163358845 = new Set(["id", "bucketName", "createdAt", "updatedAt", "deletedAt"])
+const objectKeys322356638 = new Set(["id", "order", "file", "parent", "createdAt", "updatedAt", "deletedAt"])
+const objectKeys280827708 = new Set(["id", "isComplete", "name", "scheduledAt", "createdAt", "updatedAt"])
+const objectKeys144635851 = new Set(["id", "expires", "createdAt", "updatedAt"])
+const objectKeys310044624 = new Set(["where", "orderBy", "orderBySpec", "as", "limit", "offset", "group", "viaGroup"])
+const objectKeys1862233461 = new Set(["where", "orderBy", "orderBySpec", "as", "limit", "offset", "file", "viaFile", "parent", "viaParent", "children", "viaChildren"])
+const objectKeys1069465749 = new Set(["where", "limit", "offset", "viaGroup"])
+const objectKeys1274599578 = new Set(["where", "limit", "offset", "viaFile", "viaParent", "viaChildren"])
+const objectKeys343387919 = new Set(["where", "orderBy", "orderBySpec", "as", "limit", "offset"])
+const objectKeys1952914356 = new Set(["where", "limit", "offset"])
+const objectKeys647856360 = new Set(["where", "orderBy", "orderBySpec", "as", "limit", "offset"])
+const objectKeys1805657267 = new Set(["where", "limit", "offset"])
 /**
- * @typedef {{
- *   propertyPath: string,
- *   key: string,
- *   info: any,
- * }} InternalError
- */
-
-/**
- * @template T
- * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
- */
-
-const objectKeys599447075 = new Set([
-  "bucketName",
-  "contentLength",
-  "contentType",
-  "name",
-  "meta",
-  "id",
-  "createdAt",
-  "updatedAt",
-  "deletedAt",
-]);
-const objectKeys2144828802 = new Set(["transforms", "transformedFromOriginal"]);
-const objectKeys2060025506 = new Set([
-  "name",
-  "order",
-  "meta",
-  "id",
-  "file",
-  "parent",
-  "createdAt",
-  "updatedAt",
-  "deletedAt",
-]);
-const objectKeys420878393 = new Set([""]);
-const objectKeys376443596 = new Set(["q", "w"]);
-const objectKeys1781782332 = new Set([
-  "id",
-  "isComplete",
-  "priority",
-  "scheduledAt",
-  "name",
-  "data",
-  "retryCount",
-  "handlerTimeout",
-  "createdAt",
-  "updatedAt",
-]);
-const objectKeys430889951 = new Set([
-  "years",
-  "months",
-  "days",
-  "hours",
-  "minutes",
-  "seconds",
-]);
-const objectKeys1108679019 = new Set([
-  "expires",
-  "data",
-  "id",
-  "createdAt",
-  "updatedAt",
-]);
-const objectKeys2074494218 = new Set([
-  "$raw",
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "bucketName",
-  "bucketNameNotEqual",
-  "bucketNameIn",
-  "bucketNameNotIn",
-  "bucketNameLike",
-  "bucketNameILike",
-  "bucketNameNotLike",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-  "deletedAt",
-  "deletedAtNotEqual",
-  "deletedAtIn",
-  "deletedAtNotIn",
-  "deletedAtGreaterThan",
-  "deletedAtLowerThan",
-  "deletedAtIncludeNotNull",
-  "groupExists",
-  "groupNotExists",
-]);
-const objectKeys153017499 = new Set([
-  "$raw",
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "order",
-  "orderNotEqual",
-  "orderIn",
-  "orderNotIn",
-  "orderGreaterThan",
-  "orderLowerThan",
-  "orderIsNull",
-  "orderIsNotNull",
-  "file",
-  "fileNotEqual",
-  "fileIn",
-  "fileNotIn",
-  "fileIsNull",
-  "fileIsNotNull",
-  "parent",
-  "parentNotEqual",
-  "parentIn",
-  "parentNotIn",
-  "parentIsNull",
-  "parentIsNotNull",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-  "deletedAt",
-  "deletedAtNotEqual",
-  "deletedAtIn",
-  "deletedAtNotIn",
-  "deletedAtGreaterThan",
-  "deletedAtLowerThan",
-  "deletedAtIncludeNotNull",
-  "childrenExists",
-  "childrenNotExists",
-]);
-const objectKeys1257773835 = new Set([
-  "$raw",
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "idGreaterThan",
-  "idLowerThan",
-  "isComplete",
-  "isCompleteIsNull",
-  "isCompleteIsNotNull",
-  "name",
-  "nameNotEqual",
-  "nameIn",
-  "nameNotIn",
-  "nameLike",
-  "nameILike",
-  "nameNotLike",
-  "scheduledAt",
-  "scheduledAtNotEqual",
-  "scheduledAtIn",
-  "scheduledAtNotIn",
-  "scheduledAtGreaterThan",
-  "scheduledAtLowerThan",
-  "scheduledAtIsNull",
-  "scheduledAtIsNotNull",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-]);
-const objectKeys500057262 = new Set([
-  "$raw",
-  "$or",
-  "id",
-  "idNotEqual",
-  "idIn",
-  "idNotIn",
-  "expires",
-  "expiresNotEqual",
-  "expiresIn",
-  "expiresNotIn",
-  "expiresGreaterThan",
-  "expiresLowerThan",
-  "createdAt",
-  "createdAtNotEqual",
-  "createdAtIn",
-  "createdAtNotIn",
-  "createdAtGreaterThan",
-  "createdAtLowerThan",
-  "createdAtIsNull",
-  "createdAtIsNotNull",
-  "updatedAt",
-  "updatedAtNotEqual",
-  "updatedAtIn",
-  "updatedAtNotIn",
-  "updatedAtGreaterThan",
-  "updatedAtLowerThan",
-  "updatedAtIsNull",
-  "updatedAtIsNotNull",
-]);
-const objectKeys163358845 = new Set([
-  "id",
-  "bucketName",
-  "createdAt",
-  "updatedAt",
-  "deletedAt",
-]);
-const objectKeys322356638 = new Set([
-  "id",
-  "order",
-  "file",
-  "parent",
-  "createdAt",
-  "updatedAt",
-  "deletedAt",
-]);
-const objectKeys280827708 = new Set([
-  "id",
-  "isComplete",
-  "name",
-  "scheduledAt",
-  "createdAt",
-  "updatedAt",
-]);
-const objectKeys144635851 = new Set([
-  "id",
-  "expires",
-  "createdAt",
-  "updatedAt",
-]);
-const objectKeys310044624 = new Set([
-  "where",
-  "orderBy",
-  "orderBySpec",
-  "as",
-  "limit",
-  "offset",
-  "group",
-  "viaGroup",
-]);
-const objectKeys1862233461 = new Set([
-  "where",
-  "orderBy",
-  "orderBySpec",
-  "as",
-  "limit",
-  "offset",
-  "file",
-  "viaFile",
-  "parent",
-  "viaParent",
-  "children",
-  "viaChildren",
-]);
-const objectKeys1069465749 = new Set(["where", "limit", "offset", "viaGroup"]);
-const objectKeys1274599578 = new Set([
-  "where",
-  "limit",
-  "offset",
-  "viaFile",
-  "viaParent",
-  "viaChildren",
-]);
-const objectKeys343387919 = new Set([
-  "where",
-  "orderBy",
-  "orderBySpec",
-  "as",
-  "limit",
-  "offset",
-]);
-const objectKeys1952914356 = new Set(["where", "limit", "offset"]);
-const objectKeys647856360 = new Set([
-  "where",
-  "orderBy",
-  "orderBySpec",
-  "as",
-  "limit",
-  "offset",
-]);
-const objectKeys1805657267 = new Set(["where", "limit", "offset"]);
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<string>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<string>}
+*/
 export function anonymousValidator186795873(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator293751998(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.number.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|any>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|any>}
+*/
 export function anonymousValidator926956431(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|string>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|string>}
+*/
 export function anonymousValidator1443576836(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length === 0) {
-    return {
-      value: undefined,
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length === 0) {
+return {
+value: undefined
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }>}
+*/
 export function anonymousValidator2144828802(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: {} };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys2144828802.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["transforms", anonymousValidator926956431],
-    ["transformedFromOriginal", anonymousValidator1443576836],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: {} };
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys2144828802.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<StoreFileMeta>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["transforms",  anonymousValidator926956431],
+["transformedFromOriginal",  anonymousValidator1443576836],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<StoreFileMeta>}
+*/
 export function anonymousValidator329780902(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: {} };
-  }
-  return anonymousValidator2144828802(value, propertyPath);
+if (isNil(value)) {
+return { value: {} };
+}
+return  anonymousValidator2144828802(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<string>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<string>}
+*/
 export function anonymousValidator981662321(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  value = value.trim();
-  if (value.length < 36) {
-    const min = 36;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value.length > 36) {
-    const max = 36;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  value = value.toLowerCase();
-  if (
-    !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-      value,
-    )
-  ) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.pattern",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+value = value.trim();
+if (value.length < 36) {
+const min = 36;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value.length > 36) {
+const max = 36;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.max", info: { max },
+}
+],
+};
+}
+value = value.toLowerCase();
+if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.pattern", info: {},
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<string>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<string>}
+*/
 export function anonymousValidator56355924(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.uuid.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  return anonymousValidator981662321(value, propertyPath);
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.uuid.undefined",
+info: {},
+}],
+};
+}
+return  anonymousValidator981662321(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<Date>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<Date>}
+*/
 export function anonymousValidator1389014320(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: new Date() };
-  }
-  if (
-    typeof value !== "string" &&
-    typeof value !== "number" &&
-    !(value instanceof Date)
-  ) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  const date = new Date(value);
-  if (isNaN(date.getTime())) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value: date };
+if (isNil(value)) {
+return { value: (new Date()) };
+}
+if (typeof value !== "string" && typeof value !== "number" &&
+!(value instanceof Date)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+const date = new Date(value);
+if (isNaN(date.getTime())) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+return { value: date, };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|Date>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|Date>}
+*/
 export function anonymousValidator1988053796(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (
-    typeof value !== "string" &&
-    typeof value !== "number" &&
-    !(value instanceof Date)
-  ) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  const date = new Date(value);
-  if (isNaN(date.getTime())) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value: date };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "string" && typeof value !== "number" &&
+!(value instanceof Date)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+const date = new Date(value);
+if (isNaN(date.getTime())) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+return { value: date, };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
+*/
 export function anonymousValidator599447075(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys599447075.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["bucketName", anonymousValidator186795873],
-    ["contentLength", anonymousValidator293751998],
-    ["contentType", anonymousValidator186795873],
-    ["name", anonymousValidator186795873],
-    ["meta", anonymousValidator329780902],
-    ["id", anonymousValidator56355924],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-    ["deletedAt", anonymousValidator1988053796],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys599447075.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["bucketName",  anonymousValidator186795873],
+["contentLength",  anonymousValidator293751998],
+["contentType",  anonymousValidator186795873],
+["name",  anonymousValidator186795873],
+["meta",  anonymousValidator329780902],
+["id",  anonymousValidator56355924],
+["createdAt",  anonymousValidator1389014320],
+["updatedAt",  anonymousValidator1389014320],
+["deletedAt",  anonymousValidator1988053796],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator1789497143(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: Math.floor(Date.now() / 1000000) };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: Math.floor(Date.now() / 1000000) };
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{}>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{}>}
+*/
 export function anonymousValidator420878393(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: {} };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys420878393.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: {} };
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys420878393.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<StoreFileGroupMeta>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<StoreFileGroupMeta>}
+*/
 export function anonymousValidator128967953(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: {} };
-  }
-  return anonymousValidator420878393(value, propertyPath);
+if (isNil(value)) {
+return { value: {} };
+}
+return  anonymousValidator420878393(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|string>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|string>}
+*/
 export function anonymousValidator1802076175(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator981662321(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator981662321(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
+*/
 export function anonymousValidator2060025506(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys2060025506.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["name", anonymousValidator1443576836],
-    ["order", anonymousValidator1789497143],
-    ["meta", anonymousValidator128967953],
-    ["id", anonymousValidator56355924],
-    ["file", anonymousValidator1802076175],
-    ["parent", anonymousValidator1802076175],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-    ["deletedAt", anonymousValidator1988053796],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys2060025506.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["name",  anonymousValidator1443576836],
+["order",  anonymousValidator1789497143],
+["meta",  anonymousValidator128967953],
+["id",  anonymousValidator56355924],
+["file",  anonymousValidator1802076175],
+["parent",  anonymousValidator1802076175],
+["createdAt",  anonymousValidator1389014320],
+["updatedAt",  anonymousValidator1389014320],
+["deletedAt",  anonymousValidator1988053796],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator66994068(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: 75 };
-  }
-  if (typeof value !== "number") {
-    value = Number(value);
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < 0) {
-    const min = 0;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 100) {
-    const max = 100;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: 75 };
+}
+if (typeof value !== "number") {
+value = Number(value);
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < 0) {
+const min = 0;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 100) {
+const max = 100;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator1483765921(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "number") {
-    value = Number(value);
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.number.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "number") {
+value = Number(value);
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"q": number, "w": number, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"q": number, "w": number, }>}
+*/
 export function anonymousValidator376443596(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys376443596.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["q", anonymousValidator66994068],
-    ["w", anonymousValidator1483765921],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys376443596.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<boolean>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["q",  anonymousValidator66994068],
+["w",  anonymousValidator1483765921],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<boolean>}
+*/
 export function anonymousValidator1174857441(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: false };
-  }
-  if (typeof value !== "boolean") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.boolean.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: false };
+}
+if (typeof value !== "boolean") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.boolean.type", info: {},
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator326842456(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: 0 };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < 0) {
-    const min = 0;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: 0 };
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < 0) {
+const min = 0;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<any>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<any>}
+*/
 export function anonymousValidator1462196493(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: {} };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: {} };
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<number>}
+*/
 export function anonymousValidator1103865757(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: 0 };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: 0 };
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|number>}
+*/
 export function anonymousValidator1065942849(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < 1000) {
-    const min = 1000;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < 1000) {
+const min = 1000;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": any, "retryCount": number, "handlerTimeout"?: undefined|number, "createdAt": Date, "updatedAt": Date, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"id": number, "isComplete": boolean, "priority": number, "scheduledAt": Date, "name": string, "data": any, "retryCount": number, "handlerTimeout"?: undefined|number, "createdAt": Date, "updatedAt": Date, }>}
+*/
 export function anonymousValidator1781782332(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1781782332.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator1483765921],
-    ["isComplete", anonymousValidator1174857441],
-    ["priority", anonymousValidator326842456],
-    ["scheduledAt", anonymousValidator1389014320],
-    ["name", anonymousValidator186795873],
-    ["data", anonymousValidator1462196493],
-    ["retryCount", anonymousValidator1103865757],
-    ["handlerTimeout", anonymousValidator1065942849],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1781782332.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|number>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["id",  anonymousValidator1483765921],
+["isComplete",  anonymousValidator1174857441],
+["priority",  anonymousValidator326842456],
+["scheduledAt",  anonymousValidator1389014320],
+["name",  anonymousValidator186795873],
+["data",  anonymousValidator1462196493],
+["retryCount",  anonymousValidator1103865757],
+["handlerTimeout",  anonymousValidator1065942849],
+["createdAt",  anonymousValidator1389014320],
+["updatedAt",  anonymousValidator1389014320],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|number>}
+*/
 export function anonymousValidator963028965(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }>}
+*/
 export function anonymousValidator430889951(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys430889951.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["years", anonymousValidator963028965],
-    ["months", anonymousValidator963028965],
-    ["days", anonymousValidator963028965],
-    ["hours", anonymousValidator963028965],
-    ["minutes", anonymousValidator963028965],
-    ["seconds", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys430889951.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<Date>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["years",  anonymousValidator963028965],
+["months",  anonymousValidator963028965],
+["days",  anonymousValidator963028965],
+["hours",  anonymousValidator963028965],
+["minutes",  anonymousValidator963028965],
+["seconds",  anonymousValidator963028965],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<Date>}
+*/
 export function anonymousValidator448481401(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (
-    typeof value !== "string" &&
-    typeof value !== "number" &&
-    !(value instanceof Date)
-  ) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  const date = new Date(value);
-  if (isNaN(date.getTime())) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.date.invalid",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value: date };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.date.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string" && typeof value !== "number" &&
+!(value instanceof Date)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+const date = new Date(value);
+if (isNaN(date.getTime())) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.date.invalid", info: {},
+}
+]
+};
+}
+return { value: date, };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"expires": Date, "data": any, "id": string, "createdAt": Date, "updatedAt": Date, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"expires": Date, "data": any, "id": string, "createdAt": Date, "updatedAt": Date, }>}
+*/
 export function anonymousValidator1108679019(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1108679019.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["expires", anonymousValidator448481401],
-    ["data", anonymousValidator1462196493],
-    ["id", anonymousValidator56355924],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1108679019.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|QueryPart<any>>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["expires",  anonymousValidator448481401],
+["data",  anonymousValidator1462196493],
+["id",  anonymousValidator56355924],
+["createdAt",  anonymousValidator1389014320],
+["updatedAt",  anonymousValidator1389014320],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|QueryPart<any>>}
+*/
 export function anonymousValidator1930640707(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!isQueryPart(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.any.custom",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!isQueryPart(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.any.custom", info: {},
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(StoreFileWhere)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(StoreFileWhere)[]>}
+*/
 export function anonymousValidator1804070323(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator2074494218(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator2074494218(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(string)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(string)[]>}
+*/
 export function anonymousValidator1899069927(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator56355924(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator56355924(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
+*/
 export function anonymousValidator888270707(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
-  let result = { errors: [] };
-  result = anonymousValidator1899069927(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1930640707(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+return { value: undefined };
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
+let result = { errors: [] };
+result =  anonymousValidator1899069927(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1930640707(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(string)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(string)[]>}
+*/
 export function anonymousValidator890105892(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator186795873(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator186795873(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(string)[]|QueryPart<any>>}
+*/
 export function anonymousValidator869204168(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
-  let result = { errors: [] };
-  result = anonymousValidator890105892(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1930640707(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+return { value: undefined };
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<undefined|(string)[]|QueryPart<any>>} */
+let result = { errors: [] };
+result =  anonymousValidator890105892(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1930640707(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(Date)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(Date)[]>}
+*/
 export function anonymousValidator1891060044(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator448481401(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator448481401(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(Date)[]|QueryPart<any>>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(Date)[]|QueryPart<any>>}
+*/
 export function anonymousValidator764760480(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<undefined|(Date)[]|QueryPart<any>>} */
-  let result = { errors: [] };
-  result = anonymousValidator1891060044(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1930640707(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+return { value: undefined };
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<undefined|(Date)[]|QueryPart<any>>} */
+let result = { errors: [] };
+result =  anonymousValidator1891060044(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1930640707(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|boolean>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|boolean>}
+*/
 export function anonymousValidator196147222(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "boolean") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.boolean.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "boolean") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.boolean.type", info: {},
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(StoreFileGroupWhere)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(StoreFileGroupWhere)[]>}
+*/
 export function anonymousValidator58972158(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator153017499(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator153017499(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(number)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(number)[]>}
+*/
 export function anonymousValidator1370653763(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator293751998(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator293751998(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
+*/
 export function anonymousValidator1243460791(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
-  let result = { errors: [] };
-  result = anonymousValidator1370653763(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1930640707(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+return { value: undefined };
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
+let result = { errors: [] };
+result =  anonymousValidator1370653763(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1930640707(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "childrenExists"?: undefined|StoreFileGroupWhere, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "childrenExists"?: undefined|StoreFileGroupWhere, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
+*/
 export function anonymousValidator153017499(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys153017499.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator58972158],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["order", anonymousValidator963028965],
-    ["orderNotEqual", anonymousValidator963028965],
-    ["orderIn", anonymousValidator1243460791],
-    ["orderNotIn", anonymousValidator1243460791],
-    ["orderGreaterThan", anonymousValidator963028965],
-    ["orderLowerThan", anonymousValidator963028965],
-    ["orderIsNull", anonymousValidator196147222],
-    ["orderIsNotNull", anonymousValidator196147222],
-    ["file", anonymousValidator1802076175],
-    ["fileNotEqual", anonymousValidator1802076175],
-    ["fileIn", anonymousValidator888270707],
-    ["fileNotIn", anonymousValidator888270707],
-    ["fileIsNull", anonymousValidator196147222],
-    ["fileIsNotNull", anonymousValidator196147222],
-    ["parent", anonymousValidator1802076175],
-    ["parentNotEqual", anonymousValidator1802076175],
-    ["parentIn", anonymousValidator888270707],
-    ["parentNotIn", anonymousValidator888270707],
-    ["parentIsNull", anonymousValidator196147222],
-    ["parentIsNotNull", anonymousValidator196147222],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-    ["deletedAt", anonymousValidator1988053796],
-    ["deletedAtNotEqual", anonymousValidator1988053796],
-    ["deletedAtIn", anonymousValidator764760480],
-    ["deletedAtNotIn", anonymousValidator764760480],
-    ["deletedAtGreaterThan", anonymousValidator1988053796],
-    ["deletedAtLowerThan", anonymousValidator1988053796],
-    ["deletedAtIncludeNotNull", anonymousValidator196147222],
-    ["childrenExists", anonymousValidator481156646],
-    ["childrenNotExists", anonymousValidator481156646],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys153017499.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupWhere>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["$raw",  anonymousValidator1930640707],
+["$or",  anonymousValidator58972158],
+["id",  anonymousValidator1802076175],
+["idNotEqual",  anonymousValidator1802076175],
+["idIn",  anonymousValidator888270707],
+["idNotIn",  anonymousValidator888270707],
+["order",  anonymousValidator963028965],
+["orderNotEqual",  anonymousValidator963028965],
+["orderIn",  anonymousValidator1243460791],
+["orderNotIn",  anonymousValidator1243460791],
+["orderGreaterThan",  anonymousValidator963028965],
+["orderLowerThan",  anonymousValidator963028965],
+["orderIsNull",  anonymousValidator196147222],
+["orderIsNotNull",  anonymousValidator196147222],
+["file",  anonymousValidator1802076175],
+["fileNotEqual",  anonymousValidator1802076175],
+["fileIn",  anonymousValidator888270707],
+["fileNotIn",  anonymousValidator888270707],
+["fileIsNull",  anonymousValidator196147222],
+["fileIsNotNull",  anonymousValidator196147222],
+["parent",  anonymousValidator1802076175],
+["parentNotEqual",  anonymousValidator1802076175],
+["parentIn",  anonymousValidator888270707],
+["parentNotIn",  anonymousValidator888270707],
+["parentIsNull",  anonymousValidator196147222],
+["parentIsNotNull",  anonymousValidator196147222],
+["createdAt",  anonymousValidator1988053796],
+["createdAtNotEqual",  anonymousValidator1988053796],
+["createdAtIn",  anonymousValidator764760480],
+["createdAtNotIn",  anonymousValidator764760480],
+["createdAtGreaterThan",  anonymousValidator1988053796],
+["createdAtLowerThan",  anonymousValidator1988053796],
+["createdAtIsNull",  anonymousValidator196147222],
+["createdAtIsNotNull",  anonymousValidator196147222],
+["updatedAt",  anonymousValidator1988053796],
+["updatedAtNotEqual",  anonymousValidator1988053796],
+["updatedAtIn",  anonymousValidator764760480],
+["updatedAtNotIn",  anonymousValidator764760480],
+["updatedAtGreaterThan",  anonymousValidator1988053796],
+["updatedAtLowerThan",  anonymousValidator1988053796],
+["updatedAtIsNull",  anonymousValidator196147222],
+["updatedAtIsNotNull",  anonymousValidator196147222],
+["deletedAt",  anonymousValidator1988053796],
+["deletedAtNotEqual",  anonymousValidator1988053796],
+["deletedAtIn",  anonymousValidator764760480],
+["deletedAtNotIn",  anonymousValidator764760480],
+["deletedAtGreaterThan",  anonymousValidator1988053796],
+["deletedAtLowerThan",  anonymousValidator1988053796],
+["deletedAtIncludeNotNull",  anonymousValidator196147222],
+["childrenExists",  anonymousValidator481156646],
+["childrenNotExists",  anonymousValidator481156646],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileGroupWhere>}
+*/
 export function anonymousValidator481156646(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator153017499(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator153017499(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "groupExists"?: undefined|StoreFileGroupWhere, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "groupExists"?: undefined|StoreFileGroupWhere, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
+*/
 export function anonymousValidator2074494218(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys2074494218.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator1804070323],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["bucketName", anonymousValidator1443576836],
-    ["bucketNameNotEqual", anonymousValidator1443576836],
-    ["bucketNameIn", anonymousValidator869204168],
-    ["bucketNameNotIn", anonymousValidator869204168],
-    ["bucketNameLike", anonymousValidator1443576836],
-    ["bucketNameILike", anonymousValidator1443576836],
-    ["bucketNameNotLike", anonymousValidator1443576836],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-    ["deletedAt", anonymousValidator1988053796],
-    ["deletedAtNotEqual", anonymousValidator1988053796],
-    ["deletedAtIn", anonymousValidator764760480],
-    ["deletedAtNotIn", anonymousValidator764760480],
-    ["deletedAtGreaterThan", anonymousValidator1988053796],
-    ["deletedAtLowerThan", anonymousValidator1988053796],
-    ["deletedAtIncludeNotNull", anonymousValidator196147222],
-    ["groupExists", anonymousValidator481156646],
-    ["groupNotExists", anonymousValidator481156646],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys2074494218.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(StoreJobWhere)[]>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["$raw",  anonymousValidator1930640707],
+["$or",  anonymousValidator1804070323],
+["id",  anonymousValidator1802076175],
+["idNotEqual",  anonymousValidator1802076175],
+["idIn",  anonymousValidator888270707],
+["idNotIn",  anonymousValidator888270707],
+["bucketName",  anonymousValidator1443576836],
+["bucketNameNotEqual",  anonymousValidator1443576836],
+["bucketNameIn",  anonymousValidator869204168],
+["bucketNameNotIn",  anonymousValidator869204168],
+["bucketNameLike",  anonymousValidator1443576836],
+["bucketNameILike",  anonymousValidator1443576836],
+["bucketNameNotLike",  anonymousValidator1443576836],
+["createdAt",  anonymousValidator1988053796],
+["createdAtNotEqual",  anonymousValidator1988053796],
+["createdAtIn",  anonymousValidator764760480],
+["createdAtNotIn",  anonymousValidator764760480],
+["createdAtGreaterThan",  anonymousValidator1988053796],
+["createdAtLowerThan",  anonymousValidator1988053796],
+["createdAtIsNull",  anonymousValidator196147222],
+["createdAtIsNotNull",  anonymousValidator196147222],
+["updatedAt",  anonymousValidator1988053796],
+["updatedAtNotEqual",  anonymousValidator1988053796],
+["updatedAtIn",  anonymousValidator764760480],
+["updatedAtNotIn",  anonymousValidator764760480],
+["updatedAtGreaterThan",  anonymousValidator1988053796],
+["updatedAtLowerThan",  anonymousValidator1988053796],
+["updatedAtIsNull",  anonymousValidator196147222],
+["updatedAtIsNotNull",  anonymousValidator196147222],
+["deletedAt",  anonymousValidator1988053796],
+["deletedAtNotEqual",  anonymousValidator1988053796],
+["deletedAtIn",  anonymousValidator764760480],
+["deletedAtNotIn",  anonymousValidator764760480],
+["deletedAtGreaterThan",  anonymousValidator1988053796],
+["deletedAtLowerThan",  anonymousValidator1988053796],
+["deletedAtIncludeNotNull",  anonymousValidator196147222],
+["groupExists",  anonymousValidator481156646],
+["groupNotExists",  anonymousValidator481156646],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(StoreJobWhere)[]>}
+*/
 export function anonymousValidator807003800(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1257773835(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator1257773835(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|number>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|number>}
+*/
 export function anonymousValidator1108665246(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "number") {
-    value = Number(value);
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (typeof value !== "number") {
+value = Number(value);
+}
+if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.type", info: {},
+}
+]
+};
+}
+if (!Number.isInteger(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.integer", info: {},
+}
+]
+};
+}
+if (value < -2147483647) {
+const min = -2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.min", info: { min },
+}
+]
+};
+}
+if (value > 2147483647) {
+const max = 2147483647;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.number.max", info: { max },
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(number)[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(number)[]>}
+*/
 export function anonymousValidator1033385158(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1483765921(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator1483765921(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(number)[]|QueryPart<any>>}
+*/
 export function anonymousValidator2059610435(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
-  let result = { errors: [] };
-  result = anonymousValidator1033385158(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1930640707(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+return { value: undefined };
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<undefined|(number)[]|QueryPart<any>>} */
+let result = { errors: [] };
+result =  anonymousValidator1033385158(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1930640707(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreJobWhere)[], "id"?: undefined|number, "idNotEqual"?: undefined|number, "idIn"?: undefined|(number)[]|QueryPart<any>, "idNotIn"?: undefined|(number)[]|QueryPart<any>, "idGreaterThan"?: undefined|number, "idLowerThan"?: undefined|number, "isComplete"?: undefined|boolean, "isCompleteIsNull"?: undefined|boolean, "isCompleteIsNotNull"?: undefined|boolean, "name"?: undefined|string, "nameNotEqual"?: undefined|string, "nameIn"?: undefined|(string)[]|QueryPart<any>, "nameNotIn"?: undefined|(string)[]|QueryPart<any>, "nameLike"?: undefined|string, "nameILike"?: undefined|string, "nameNotLike"?: undefined|string, "scheduledAt"?: undefined|Date, "scheduledAtNotEqual"?: undefined|Date, "scheduledAtIn"?: undefined|(Date)[]|QueryPart<any>, "scheduledAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "scheduledAtGreaterThan"?: undefined|Date, "scheduledAtLowerThan"?: undefined|Date, "scheduledAtIsNull"?: undefined|boolean, "scheduledAtIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreJobWhere)[], "id"?: undefined|number, "idNotEqual"?: undefined|number, "idIn"?: undefined|(number)[]|QueryPart<any>, "idNotIn"?: undefined|(number)[]|QueryPart<any>, "idGreaterThan"?: undefined|number, "idLowerThan"?: undefined|number, "isComplete"?: undefined|boolean, "isCompleteIsNull"?: undefined|boolean, "isCompleteIsNotNull"?: undefined|boolean, "name"?: undefined|string, "nameNotEqual"?: undefined|string, "nameIn"?: undefined|(string)[]|QueryPart<any>, "nameNotIn"?: undefined|(string)[]|QueryPart<any>, "nameLike"?: undefined|string, "nameILike"?: undefined|string, "nameNotLike"?: undefined|string, "scheduledAt"?: undefined|Date, "scheduledAtNotEqual"?: undefined|Date, "scheduledAtIn"?: undefined|(Date)[]|QueryPart<any>, "scheduledAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "scheduledAtGreaterThan"?: undefined|Date, "scheduledAtLowerThan"?: undefined|Date, "scheduledAtIsNull"?: undefined|boolean, "scheduledAtIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }>}
+*/
 export function anonymousValidator1257773835(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1257773835.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator807003800],
-    ["id", anonymousValidator1108665246],
-    ["idNotEqual", anonymousValidator1108665246],
-    ["idIn", anonymousValidator2059610435],
-    ["idNotIn", anonymousValidator2059610435],
-    ["idGreaterThan", anonymousValidator1108665246],
-    ["idLowerThan", anonymousValidator1108665246],
-    ["isComplete", anonymousValidator196147222],
-    ["isCompleteIsNull", anonymousValidator196147222],
-    ["isCompleteIsNotNull", anonymousValidator196147222],
-    ["name", anonymousValidator1443576836],
-    ["nameNotEqual", anonymousValidator1443576836],
-    ["nameIn", anonymousValidator869204168],
-    ["nameNotIn", anonymousValidator869204168],
-    ["nameLike", anonymousValidator1443576836],
-    ["nameILike", anonymousValidator1443576836],
-    ["nameNotLike", anonymousValidator1443576836],
-    ["scheduledAt", anonymousValidator1988053796],
-    ["scheduledAtNotEqual", anonymousValidator1988053796],
-    ["scheduledAtIn", anonymousValidator764760480],
-    ["scheduledAtNotIn", anonymousValidator764760480],
-    ["scheduledAtGreaterThan", anonymousValidator1988053796],
-    ["scheduledAtLowerThan", anonymousValidator1988053796],
-    ["scheduledAtIsNull", anonymousValidator196147222],
-    ["scheduledAtIsNotNull", anonymousValidator196147222],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1257773835.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|(StoreSessionWhere)[]>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["$raw",  anonymousValidator1930640707],
+["$or",  anonymousValidator807003800],
+["id",  anonymousValidator1108665246],
+["idNotEqual",  anonymousValidator1108665246],
+["idIn",  anonymousValidator2059610435],
+["idNotIn",  anonymousValidator2059610435],
+["idGreaterThan",  anonymousValidator1108665246],
+["idLowerThan",  anonymousValidator1108665246],
+["isComplete",  anonymousValidator196147222],
+["isCompleteIsNull",  anonymousValidator196147222],
+["isCompleteIsNotNull",  anonymousValidator196147222],
+["name",  anonymousValidator1443576836],
+["nameNotEqual",  anonymousValidator1443576836],
+["nameIn",  anonymousValidator869204168],
+["nameNotIn",  anonymousValidator869204168],
+["nameLike",  anonymousValidator1443576836],
+["nameILike",  anonymousValidator1443576836],
+["nameNotLike",  anonymousValidator1443576836],
+["scheduledAt",  anonymousValidator1988053796],
+["scheduledAtNotEqual",  anonymousValidator1988053796],
+["scheduledAtIn",  anonymousValidator764760480],
+["scheduledAtNotIn",  anonymousValidator764760480],
+["scheduledAtGreaterThan",  anonymousValidator1988053796],
+["scheduledAtLowerThan",  anonymousValidator1988053796],
+["scheduledAtIsNull",  anonymousValidator196147222],
+["scheduledAtIsNotNull",  anonymousValidator196147222],
+["createdAt",  anonymousValidator1988053796],
+["createdAtNotEqual",  anonymousValidator1988053796],
+["createdAtIn",  anonymousValidator764760480],
+["createdAtNotIn",  anonymousValidator764760480],
+["createdAtGreaterThan",  anonymousValidator1988053796],
+["createdAtLowerThan",  anonymousValidator1988053796],
+["createdAtIsNull",  anonymousValidator196147222],
+["createdAtIsNotNull",  anonymousValidator196147222],
+["updatedAt",  anonymousValidator1988053796],
+["updatedAtNotEqual",  anonymousValidator1988053796],
+["updatedAtIn",  anonymousValidator764760480],
+["updatedAtNotIn",  anonymousValidator764760480],
+["updatedAtGreaterThan",  anonymousValidator1988053796],
+["updatedAtLowerThan",  anonymousValidator1988053796],
+["updatedAtIsNull",  anonymousValidator196147222],
+["updatedAtIsNotNull",  anonymousValidator196147222],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|(StoreSessionWhere)[]>}
+*/
 export function anonymousValidator688866095(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator500057262(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+return { value: undefined };
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator500057262(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "expires"?: undefined|Date, "expiresNotEqual"?: undefined|Date, "expiresIn"?: undefined|(Date)[]|QueryPart<any>, "expiresNotIn"?: undefined|(Date)[]|QueryPart<any>, "expiresGreaterThan"?: undefined|Date, "expiresLowerThan"?: undefined|Date, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "expires"?: undefined|Date, "expiresNotEqual"?: undefined|Date, "expiresIn"?: undefined|(Date)[]|QueryPart<any>, "expiresNotIn"?: undefined|(Date)[]|QueryPart<any>, "expiresGreaterThan"?: undefined|Date, "expiresLowerThan"?: undefined|Date, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, }>}
+*/
 export function anonymousValidator500057262(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys500057262.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator688866095],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["expires", anonymousValidator1988053796],
-    ["expiresNotEqual", anonymousValidator1988053796],
-    ["expiresIn", anonymousValidator764760480],
-    ["expiresNotIn", anonymousValidator764760480],
-    ["expiresGreaterThan", anonymousValidator1988053796],
-    ["expiresLowerThan", anonymousValidator1988053796],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys500057262.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["$raw",  anonymousValidator1930640707],
+["$or",  anonymousValidator688866095],
+["id",  anonymousValidator1802076175],
+["idNotEqual",  anonymousValidator1802076175],
+["idIn",  anonymousValidator888270707],
+["idNotIn",  anonymousValidator888270707],
+["expires",  anonymousValidator1988053796],
+["expiresNotEqual",  anonymousValidator1988053796],
+["expiresIn",  anonymousValidator764760480],
+["expiresNotIn",  anonymousValidator764760480],
+["expiresGreaterThan",  anonymousValidator1988053796],
+["expiresLowerThan",  anonymousValidator1988053796],
+["createdAt",  anonymousValidator1988053796],
+["createdAtNotEqual",  anonymousValidator1988053796],
+["createdAtIn",  anonymousValidator764760480],
+["createdAtNotIn",  anonymousValidator764760480],
+["createdAtGreaterThan",  anonymousValidator1988053796],
+["createdAtLowerThan",  anonymousValidator1988053796],
+["createdAtIsNull",  anonymousValidator196147222],
+["createdAtIsNotNull",  anonymousValidator196147222],
+["updatedAt",  anonymousValidator1988053796],
+["updatedAtNotEqual",  anonymousValidator1988053796],
+["updatedAtIn",  anonymousValidator764760480],
+["updatedAtNotIn",  anonymousValidator764760480],
+["updatedAtGreaterThan",  anonymousValidator1988053796],
+["updatedAtLowerThan",  anonymousValidator1988053796],
+["updatedAtIsNull",  anonymousValidator196147222],
+["updatedAtIsNotNull",  anonymousValidator196147222],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<QueryPart<any>>}
+*/
 export function anonymousValidator62764704(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.any.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!isQueryPart(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.any.custom",
-          info: {},
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.any.undefined",
+info: {},
+}],
+};
+}
+if (!isQueryPart(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.any.custom", info: {},
+}
+]
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt">}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt">}
+*/
 export function anonymousValidator237896171(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "id" &&
-    value !== "bucketName" &&
-    value !== "createdAt" &&
-    value !== "updatedAt" &&
-    value !== "deletedAt"
-  ) {
-    const oneOf = ["id", "bucketName", "createdAt", "updatedAt", "deletedAt"];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "id" && value !== "bucketName" && value !== "createdAt" && value !== "updatedAt" && value !== "deletedAt") {
+const oneOf = [ "id", "bucketName", "createdAt", "updatedAt", "deletedAt" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+*/
 export function anonymousValidator757309139(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator237896171(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.array.undefined",
+info: {},
+}],
+};
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator237896171(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+*/
 export function anonymousValidator1795948632(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.anyOf.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
-  let result = { errors: [] };
-  result = anonymousValidator62764704(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator757309139(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.anyOf.undefined",
+info: {},
+}],
+};
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
+let result = { errors: [] };
+result =  anonymousValidator62764704(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator757309139(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"ASC"|"DESC">}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"ASC"|"DESC">}
+*/
 export function anonymousValidator446238440(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value !== "ASC" && value !== "DESC") {
-    const oneOf = ["ASC", "DESC"];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "ASC" && value !== "DESC") {
+const oneOf = [ "ASC", "DESC" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderBy>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|CompasSqlOrderBy>}
+*/
 export function anonymousValidator20803901(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator446238440(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator446238440(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST">}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST">}
+*/
 export function anonymousValidator572766398(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "ASC" &&
-    value !== "DESC" &&
-    value !== "ASC NULLS FIRST" &&
-    value !== "DESC NULLS LAST"
-  ) {
-    const oneOf = ["ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST"];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "ASC" && value !== "DESC" && value !== "ASC NULLS FIRST" && value !== "DESC NULLS LAST") {
+const oneOf = [ "ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderByOptionalField>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|CompasSqlOrderByOptionalField>}
+*/
 export function anonymousValidator198346889(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator572766398(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator572766398(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+*/
 export function anonymousValidator163358845(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys163358845.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["bucketName", anonymousValidator20803901],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
-    ["deletedAt", anonymousValidator198346889],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys163358845.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt">}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["id",  anonymousValidator20803901],
+["bucketName",  anonymousValidator20803901],
+["createdAt",  anonymousValidator20803901],
+["updatedAt",  anonymousValidator20803901],
+["deletedAt",  anonymousValidator198346889],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt">}
+*/
 export function anonymousValidator1118242002(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "id" &&
-    value !== "order" &&
-    value !== "file" &&
-    value !== "parent" &&
-    value !== "createdAt" &&
-    value !== "updatedAt" &&
-    value !== "deletedAt"
-  ) {
-    const oneOf = [
-      "id",
-      "order",
-      "file",
-      "parent",
-      "createdAt",
-      "updatedAt",
-      "deletedAt",
-    ];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "id" && value !== "order" && value !== "file" && value !== "parent" && value !== "createdAt" && value !== "updatedAt" && value !== "deletedAt") {
+const oneOf = [ "id", "order", "file", "parent", "createdAt", "updatedAt", "deletedAt" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+*/
 export function anonymousValidator938090836(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1118242002(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.array.undefined",
+info: {},
+}],
+};
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator1118242002(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+*/
 export function anonymousValidator753972035(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.anyOf.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
-  let result = { errors: [] };
-  result = anonymousValidator62764704(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator938090836(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.anyOf.undefined",
+info: {},
+}],
+};
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>} */
+let result = { errors: [] };
+result =  anonymousValidator62764704(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator938090836(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+*/
 export function anonymousValidator322356638(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys322356638.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["order", anonymousValidator198346889],
-    ["file", anonymousValidator198346889],
-    ["parent", anonymousValidator198346889],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
-    ["deletedAt", anonymousValidator198346889],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys322356638.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt">}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["id",  anonymousValidator20803901],
+["order",  anonymousValidator198346889],
+["file",  anonymousValidator198346889],
+["parent",  anonymousValidator198346889],
+["createdAt",  anonymousValidator20803901],
+["updatedAt",  anonymousValidator20803901],
+["deletedAt",  anonymousValidator198346889],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt">}
+*/
 export function anonymousValidator1072183914(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "id" &&
-    value !== "isComplete" &&
-    value !== "name" &&
-    value !== "scheduledAt" &&
-    value !== "createdAt" &&
-    value !== "updatedAt"
-  ) {
-    const oneOf = [
-      "id",
-      "isComplete",
-      "name",
-      "scheduledAt",
-      "createdAt",
-      "updatedAt",
-    ];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "id" && value !== "isComplete" && value !== "name" && value !== "scheduledAt" && value !== "createdAt" && value !== "updatedAt") {
+const oneOf = [ "id", "isComplete", "name", "scheduledAt", "createdAt", "updatedAt" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>}
+*/
 export function anonymousValidator1693224812(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1072183914(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.array.undefined",
+info: {},
+}],
+};
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator1072183914(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>}
+*/
 export function anonymousValidator685221527(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.anyOf.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>} */
-  let result = { errors: [] };
-  result = anonymousValidator62764704(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator1693224812(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.anyOf.undefined",
+info: {},
+}],
+};
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<QueryPart<any>|("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[]>} */
+let result = { errors: [] };
+result =  anonymousValidator62764704(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator1693224812(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+*/
 export function anonymousValidator280827708(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys280827708.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["isComplete", anonymousValidator198346889],
-    ["name", anonymousValidator20803901],
-    ["scheduledAt", anonymousValidator198346889],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys280827708.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"id"|"expires"|"createdAt"|"updatedAt">}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["id",  anonymousValidator20803901],
+["isComplete",  anonymousValidator198346889],
+["name",  anonymousValidator20803901],
+["scheduledAt",  anonymousValidator198346889],
+["createdAt",  anonymousValidator20803901],
+["updatedAt",  anonymousValidator20803901],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<"id"|"expires"|"createdAt"|"updatedAt">}
+*/
 export function anonymousValidator1263846070(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "id" &&
-    value !== "expires" &&
-    value !== "createdAt" &&
-    value !== "updatedAt"
-  ) {
-    const oneOf = ["id", "expires", "createdAt", "updatedAt"];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
-        },
-      ],
-    };
-  }
-  return { value };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.string.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "string") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.type", info: {},
+}
+],
+};
+}
+if (value.length < 1) {
+const min = 1;
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.min", info: { min, },
+}
+],
+};
+}
+if (value !== "id" && value !== "expires" && value !== "createdAt" && value !== "updatedAt") {
+const oneOf = [ "id", "expires", "createdAt", "updatedAt" ];
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.string.oneOf", info: { oneOf },
+}
+],
+};
+}
+return { value };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<("id"|"expires"|"createdAt"|"updatedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<("id"|"expires"|"createdAt"|"updatedAt")[]>}
+*/
 export function anonymousValidator196705720(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1263846070(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.array.undefined",
+info: {},
+}],
+};
+}
+if (!Array.isArray(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.array.type", info: {},
+}
+],
+};
+}
+const result = Array.from({ length: value.length });
+let errors = [];
+for (let i = 0; i < value.length; ++i) {
+const arrVar =  anonymousValidator1263846070(value[i], propertyPath + "[" + i + "]");
+if (arrVar.errors) {
+errors.push(...arrVar.errors);
+} else {
+result[i] = arrVar.value;
+}
+}
+if (errors.length > 0) {
+/** @type {{ errors: InternalError[] }} */
+return { errors, };
+}
+return { value: result };
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>}
+*/
 export function anonymousValidator2038758416(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.anyOf.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  /** @type {InternalError[]} */
-  const errors = [];
-  /** @type {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>} */
-  let result = { errors: [] };
-  result = anonymousValidator62764704(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator196705720(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
-  return {
-    errors,
-  };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.anyOf.undefined",
+info: {},
+}],
+};
+}
+/** @type {InternalError[]} */
+let errors = [];
+/** @type {EitherN<QueryPart<any>|("id"|"expires"|"createdAt"|"updatedAt")[]>} */
+let result = { errors: [] };
+result =  anonymousValidator62764704(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+result =  anonymousValidator196705720(value, propertyPath);
+if (result.errors) {
+errors.push(...result.errors);
+} else {
+return result;
+}
+errors.unshift({
+propertyPath,
+key: "validator.anyOf",
+info: {},
+});
+return {
+errors
+};
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "expires"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "expires"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+*/
 export function anonymousValidator144635851(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys144635851.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["expires", anonymousValidator20803901],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys144635851.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileWhere>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["id",  anonymousValidator20803901],
+["expires",  anonymousValidator20803901],
+["createdAt",  anonymousValidator20803901],
+["updatedAt",  anonymousValidator20803901],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileWhere>}
+*/
 export function anonymousValidator65842827(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator2074494218(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator2074494218(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileOrderBy>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileOrderBy>}
+*/
 export function anonymousValidator1370514093(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1795948632(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator1795948632(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileOrderBySpec>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileOrderBySpec>}
+*/
 export function anonymousValidator1745737810(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator163358845(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator163358845(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupOrderBy>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileGroupOrderBy>}
+*/
 export function anonymousValidator1055135624(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator753972035(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator753972035(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupOrderBySpec>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileGroupOrderBySpec>}
+*/
 export function anonymousValidator2018879405(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator322356638(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator322356638(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileQueryBuilder>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileQueryBuilder>}
+*/
 export function anonymousValidator2119152283(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator310044624(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator310044624(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
+*/
 export function anonymousValidator1274599578(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1274599578.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator481156646],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["viaFile", anonymousValidator1978760330],
-    ["viaParent", anonymousValidator514437691],
-    ["viaChildren", anonymousValidator514437691],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1274599578.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupQueryTraverser>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator481156646],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+["viaFile",  anonymousValidator1978760330],
+["viaParent",  anonymousValidator514437691],
+["viaChildren",  anonymousValidator514437691],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileGroupQueryTraverser>}
+*/
 export function anonymousValidator514437691(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1274599578(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator1274599578(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
+*/
 export function anonymousValidator1069465749(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1069465749.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator65842827],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["viaGroup", anonymousValidator514437691],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1069465749.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileQueryTraverser>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator65842827],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+["viaGroup",  anonymousValidator514437691],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileQueryTraverser>}
+*/
 export function anonymousValidator1978760330(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1069465749(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator1069465749(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "orderBy"?: undefined|StoreFileGroupOrderBy, "orderBySpec"?: undefined|StoreFileGroupOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "orderBy"?: undefined|StoreFileGroupOrderBy, "orderBySpec"?: undefined|StoreFileGroupOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
+*/
 export function anonymousValidator1862233461(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1862233461.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator481156646],
-    ["orderBy", anonymousValidator1055135624],
-    ["orderBySpec", anonymousValidator2018879405],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["file", anonymousValidator2119152283],
-    ["viaFile", anonymousValidator1978760330],
-    ["parent", anonymousValidator1996607136],
-    ["viaParent", anonymousValidator514437691],
-    ["children", anonymousValidator1996607136],
-    ["viaChildren", anonymousValidator514437691],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1862233461.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupQueryBuilder>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator481156646],
+["orderBy",  anonymousValidator1055135624],
+["orderBySpec",  anonymousValidator2018879405],
+["as",  anonymousValidator1443576836],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+["file",  anonymousValidator2119152283],
+["viaFile",  anonymousValidator1978760330],
+["parent",  anonymousValidator1996607136],
+["viaParent",  anonymousValidator514437691],
+["children",  anonymousValidator1996607136],
+["viaChildren",  anonymousValidator514437691],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreFileGroupQueryBuilder>}
+*/
 export function anonymousValidator1996607136(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1862233461(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator1862233461(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
+*/
 export function anonymousValidator310044624(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys310044624.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator65842827],
-    ["orderBy", anonymousValidator1370514093],
-    ["orderBySpec", anonymousValidator1745737810],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["group", anonymousValidator1996607136],
-    ["viaGroup", anonymousValidator514437691],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys310044624.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreJobWhere>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator65842827],
+["orderBy",  anonymousValidator1370514093],
+["orderBySpec",  anonymousValidator1745737810],
+["as",  anonymousValidator1443576836],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+["group",  anonymousValidator1996607136],
+["viaGroup",  anonymousValidator514437691],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreJobWhere>}
+*/
 export function anonymousValidator634541376(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1257773835(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator1257773835(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreJobOrderBy>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreJobOrderBy>}
+*/
 export function anonymousValidator1683806814(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator685221527(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator685221527(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreJobOrderBySpec>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreJobOrderBySpec>}
+*/
 export function anonymousValidator608966855(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator280827708(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator280827708(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+*/
 export function anonymousValidator343387919(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys343387919.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator634541376],
-    ["orderBy", anonymousValidator1683806814],
-    ["orderBySpec", anonymousValidator608966855],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys343387919.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator634541376],
+["orderBy",  anonymousValidator1683806814],
+["orderBySpec",  anonymousValidator608966855],
+["as",  anonymousValidator1443576836],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreJobWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+*/
 export function anonymousValidator1952914356(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1952914356.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator634541376],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1952914356.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionWhere>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator634541376],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreSessionWhere>}
+*/
 export function anonymousValidator196488441(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator500057262(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator500057262(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionOrderBy>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreSessionOrderBy>}
+*/
 export function anonymousValidator1928069733(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator2038758416(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator2038758416(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionOrderBySpec>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<undefined|StoreSessionOrderBySpec>}
+*/
 export function anonymousValidator1053930432(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator144635851(value, propertyPath);
+if (isNil(value)) {
+return { value: undefined };
+}
+return  anonymousValidator144635851(value, propertyPath);
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionWhere, "orderBy"?: undefined|StoreSessionOrderBy, "orderBySpec"?: undefined|StoreSessionOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreSessionWhere, "orderBy"?: undefined|StoreSessionOrderBy, "orderBySpec"?: undefined|StoreSessionOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+*/
 export function anonymousValidator647856360(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys647856360.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator196488441],
-    ["orderBy", anonymousValidator1928069733],
-    ["orderBySpec", anonymousValidator1053930432],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys647856360.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
 }
 /**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator196488441],
+["orderBy",  anonymousValidator1928069733],
+["orderBySpec",  anonymousValidator1053930432],
+["as",  anonymousValidator1443576836],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
+}
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<{"where"?: undefined|StoreSessionWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+*/
 export function anonymousValidator1805657267(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1805657267.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator196488441],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
+if (isNil(value)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [{
+propertyPath,
+key: "validator.object.undefined",
+info: {},
+}],
+};
+}
+if (typeof value !== "object") {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.type", info: {},
+}
+],
+};
+}
+const result = Object.create(null);
+let errors = [];
+for (const key of Object.keys(value)) {
+if (!objectKeys1805657267.has(key)) {
+/** @type {{ errors: InternalError[] }} */
+return {
+errors: [
+{
+propertyPath, key: "validator.object.strict", info: { extraKey: key },
+}
+],
+};
+}
+}
+/**
+* @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+*/
+const validatorPairs = [
+["where",  anonymousValidator196488441],
+["limit",  anonymousValidator963028965],
+["offset",  anonymousValidator963028965],
+];
+for (const [key, validator] of validatorPairs) {
+const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+if (validatorResult.errors) {
+errors.push(...validatorResult.errors);
+} else {
+result[key] = validatorResult.value;
+}
+}
+if (errors.length > 0) {
+return { errors };
+}
+return { value: result };
 }

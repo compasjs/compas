@@ -1,0 +1,825 @@
+{
+  "openapi": "3.0.3",
+  "paths": {
+    "/account/register": {
+      "post": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountRegister",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountRegisterBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountRegisterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/remove": {
+      "delete": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountRemove",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountRemoveResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/me": {
+      "get": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountMe",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountMeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/preferences": {
+      "put": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountUpdatePreferences",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdatePreferencesBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountUpdatePreferencesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/favorites": {
+      "get": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountFavorites",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountFavoritesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/reservations": {
+      "get": {
+        "tags": ["account"],
+        "description": "",
+        "operationId": "AccountReservations",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountReservationsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Not Implemented Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "account",
+      "description": ""
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AppError": {
+        "type": "object",
+        "description": "https://compasjs.com/api/stdlib.html#AppError",
+        "properties": {
+          "info": {
+            "type": "object"
+          },
+          "key": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          }
+        }
+      },
+      "AccountPreferences": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "surname": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": ""
+          },
+          "postalCode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "houseNumber": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "suffix": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "street": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": ""
+          },
+          "company": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "description": ""
+              },
+              "kvk": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "description": ""
+              },
+              "btw": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "description": ""
+              },
+              "iban": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "description": ""
+              }
+            }
+          }
+        },
+        "required": ["birthDate"]
+      },
+      "AccountRegisterBody": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "subscribeNewsletter": {
+            "type": "boolean",
+            "description": ""
+          }
+        },
+        "required": ["email", "password", "type", "subscribeNewsletter"]
+      },
+      "AccountRegisterResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": ""
+          }
+        },
+        "required": ["success"]
+      },
+      "AccountRemoveResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": ""
+          }
+        },
+        "required": ["success"]
+      },
+      "AccountMeResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": ""
+          },
+          "relationNumber": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          }
+        },
+        "required": ["name", "relationNumber", "email", "type"]
+      },
+      "AccountGetPreferencesResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {},
+        "required": ["preferences"]
+      },
+      "AccountUpdatePreferencesBody": {
+        "type": "object",
+        "description": "",
+        "properties": {},
+        "required": ["preferences"]
+      },
+      "AccountUpdatePreferencesResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {},
+        "required": ["preferences"]
+      },
+      "AccountFavoritesResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "description": ""
+          }
+        },
+        "required": ["categories"]
+      },
+      "AccountReservationsResponse": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "current": {
+            "type": "array",
+            "description": ""
+          },
+          "upcoming": {
+            "type": "array",
+            "description": ""
+          }
+        },
+        "required": ["current", "upcoming"]
+      },
+      "AuthEmail": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 150,
+        "description": ""
+      },
+      "AuthPasswordBasedPassword": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 128,
+        "description": ""
+      },
+      "TypeAccountType": {
+        "type": "string",
+        "minLength": 1,
+        "enum": ["personal", "company"],
+        "description": ""
+      },
+      "CategoryItem": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "shortName": {
+            "type": "string",
+            "minLength": 1,
+            "description": ""
+          },
+          "favorite": {
+            "type": "boolean",
+            "description": ""
+          },
+          "addons": {
+            "type": "array",
+            "description": ""
+          },
+          "seats": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "doors": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "volume": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "freeKilometers": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "license": {
+            "type": "string",
+            "minLength": 1,
+            "description": ""
+          },
+          "hasAirco": {
+            "type": "boolean",
+            "description": ""
+          },
+          "hasNavigation": {
+            "type": "boolean",
+            "description": ""
+          },
+          "sizeExterior": {
+            "type": "array",
+            "description": ""
+          },
+          "sizeInterior": {
+            "type": "array",
+            "description": ""
+          },
+          "payloadMax": {
+            "type": "array",
+            "description": ""
+          },
+          "imageUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "description": ""
+            },
+            "description": ""
+          }
+        },
+        "required": [
+          "id",
+          "mainCategory",
+          "shortName",
+          "title",
+          "description",
+          "favorite",
+          "price",
+          "priceIncTax",
+          "pricePerKilometer",
+          "addons",
+          "seats",
+          "doors",
+          "volume",
+          "freeKilometers",
+          "license",
+          "hasAirco",
+          "hasNavigation",
+          "fuel",
+          "transmission",
+          "sizeExterior",
+          "sizeInterior",
+          "payloadMax",
+          "imageUrls"
+        ]
+      },
+      "ReservationItem": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "reservationId": {
+            "type": "integer",
+            "minimum": -2147483647,
+            "maximum": 2147483647,
+            "description": ""
+          },
+          "orderLines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "anyOf": [null, null, null],
+              "description": ""
+            },
+            "description": ""
+          },
+          "deletableOrderLineIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": -2147483647,
+              "maximum": 2147483647,
+              "description": ""
+            },
+            "description": ""
+          }
+        },
+        "required": [
+          "reservationId",
+          "orderLines",
+          "status",
+          "deletableOrderLineIds"
+        ]
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find more info here (Compas)",
+    "url": "https://compasjs.com/"
+  },
+  "servers": [],
+  "x-generator": "Compas (https://compasjs.com) v0.0.171",
+  "info": {
+    "title": "compas",
+    "description": "",
+    "version": "0.0.0"
+  }
+}
