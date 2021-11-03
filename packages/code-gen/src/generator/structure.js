@@ -1,4 +1,4 @@
-import { addToData, includeReferenceTypes } from "../generate.js";
+import { addGroupsToGeneratorInput, addToData } from "../generate.js";
 import { js } from "./tag/index.js";
 
 /**
@@ -22,9 +22,9 @@ export function generateStructureFile(context) {
         .replace(/[^\\]'/g, "\\'");
 
       structureSource += js`
-            export const ${group}StructureString = '${string}';
-            export const ${group}Structure = JSON.parse(${group}StructureString);
-         `;
+        export const ${group}StructureString = '${string}';
+        export const ${group}Structure = JSON.parse(${group}StructureString);
+      `;
     }
 
     const groups = Object.keys(context.structure)
@@ -32,9 +32,9 @@ export function generateStructureFile(context) {
       .join(", ");
 
     structureSource += js`
-         export const structure = Object.assign({}, ${groups});
-         export const structureString = JSON.stringify(structure);
-      `;
+      export const structure = Object.assign({}, ${groups});
+      export const structureString = JSON.stringify(structure);
+    `;
   }
 
   if (context.options.dumpApiStructure) {
@@ -51,10 +51,11 @@ export function generateStructureFile(context) {
     }
 
     // Include recursive references that are used in route types
-    const error = includeReferenceTypes(context.structure, apiStructure);
-    if (error) {
-      throw error;
-    }
+    addGroupsToGeneratorInput(
+      apiStructure,
+      context.structure,
+      Object.keys(apiStructure),
+    );
 
     const string = JSON.stringify(apiStructure)
       .replace(/\\/g, "\\\\")
@@ -63,8 +64,8 @@ export function generateStructureFile(context) {
     // We only need a string here at all times, which saves us on some doing a
     // stringify when sending the structure response.
     structureSource += js`
-         export const compasApiStructureString = '${string}';
-      `;
+      export const compasApiStructureString = '${string}';
+    `;
   }
 
   if (structureSource.length > 0) {

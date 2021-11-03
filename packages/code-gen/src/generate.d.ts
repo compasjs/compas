@@ -11,17 +11,6 @@ export function addGroupsToGeneratorInput(
   groups: string[],
 ): void;
 /**
- * Find nested references and add to generatorInput in the correct group
- *
- * @param {CodeGenStructure} structure
- * @param {CodeGenStructure} input
- * @returns {AppError|undefined}
- */
-export function includeReferenceTypes(
-  structure: CodeGenStructure,
-  input: CodeGenStructure,
-): AppError | undefined;
-/**
  * Using some more memory, but ensures a mostly consistent output.
  * JS Object iterators mostly follow insert order.
  * We do this so diffs are more logical
@@ -48,5 +37,4 @@ export function addToData(
  * @param structure
  */
 export function hoistNamedItems(root: any, structure: any): void;
-import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=generate.d.ts.map

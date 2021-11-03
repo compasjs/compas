@@ -16,10 +16,7 @@ export function addGroupsToGeneratorInput(input, structure, groups) {
     input[group] = structure[group] || {};
   }
 
-  const error = includeReferenceTypes(structure, input);
-  if (error) {
-    throw error;
-  }
+  includeReferenceTypes(structure, input);
 }
 
 /**
@@ -27,51 +24,30 @@ export function addGroupsToGeneratorInput(input, structure, groups) {
  *
  * @param {CodeGenStructure} structure
  * @param {CodeGenStructure} input
- * @returns {AppError|undefined}
+ * @returns {void}
  */
-export function includeReferenceTypes(structure, input) {
+function includeReferenceTypes(structure, input) {
   const stack = [input];
-
-  console.dir({ data: structure.meta }, { depth: 1 });
 
   while (stack.length) {
     const currentObject = stack.shift();
 
     // handle values
-    if (
-      isPlainObject(currentObject) &&
-      currentObject.type &&
-      currentObject.type === "reference" &&
-      isPlainObject(currentObject.reference)
-    ) {
+    if (currentObject?.type === "reference") {
       const { group, name, uniqueName } = currentObject.reference;
-
-      if (uniqueName === "MetaMetaRootResponse") {
-        console.dir(
-          {
-            group,
-            name,
-            uniqueName,
-            currentObject,
-            data: structure[group]?.[name],
-            data1: input[group]?.[name],
-          },
-          { depth: 3 },
-        );
-      }
-
-      // ensure group exists, or create
-      if (isNil(input[group])) {
-        input[group] = {};
-      }
 
       // ensure ref does not already exits
       if (!isNil(structure[group]?.[name]) && isNil(input[group]?.[name])) {
-        input[group][name] = structure[group][name];
-        stack.push(currentObject.reference);
+        addToData(input, structure[group][name]);
+
+        // Note that we need the full referenced object here, since
+        // currentObject.reference only contains { group, name, uniqueName }
+        stack.push(input[group][name]);
+
+        continue;
       } else if (isNil(structure[group]?.[name])) {
-        return new AppError("codeGen.app.followReferences", 500, {
-          message: `Could not resolve reference '${uniqueName}'.`,
+        throw new AppError("codeGen.app.followReferences", 500, {
+          message: `Could not resolve reference '${uniqueName}'`,
         });
       }
     }

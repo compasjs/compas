@@ -5,4 +5,10 @@ import { fileQueries } from "./file.js";
 import { fileGroupQueries } from "./fileGroup.js";
 import { jobQueries } from "./job.js";
 import { sessionQueries } from "./session.js";
-export const queries = { ...fileGroupQueries, ...fileQueries, ...jobQueries, ...sessionQueries };
+
+export const queries = {
+  ...fileGroupQueries,
+  ...fileQueries,
+  ...jobQueries,
+  ...sessionQueries,
+};
