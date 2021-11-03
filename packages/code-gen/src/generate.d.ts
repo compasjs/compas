@@ -33,18 +33,6 @@ export function addToData(
   item: CodeGenType,
 ): void;
 /**
- * Find nested references and add to generatorInput in the correct group
- *
- * @param rootData
- * @param generatorInput
- * @param value
- */
-export function includeReferenceTypes(
-  rootData: any,
-  generatorInput: any,
-  value: any,
-): any;
-/**
  * @param root
  * @param structure
  */

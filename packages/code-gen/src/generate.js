@@ -16,9 +16,52 @@ export function addGroupsToGeneratorInput(input, structure, groups) {
     input[group] = structure[group] || {};
   }
 
-  const error = includeReferenceTypes(structure, input, input);
-  if (error) {
-    throw error;
+  includeReferenceTypes(structure, input);
+}
+
+/**
+ * Find nested references and add to generatorInput in the correct group
+ *
+ * @param {CodeGenStructure} structure
+ * @param {CodeGenStructure} input
+ * @returns {void}
+ */
+function includeReferenceTypes(structure, input) {
+  const stack = [input];
+
+  while (stack.length) {
+    const currentObject = stack.shift();
+
+    // handle values
+    if (currentObject?.type === "reference") {
+      const { group, name, uniqueName } = currentObject.reference;
+
+      // ensure ref does not already exits
+      if (!isNil(structure[group]?.[name]) && isNil(input[group]?.[name])) {
+        addToData(input, structure[group][name]);
+
+        // Note that we need the full referenced object here, since
+        // currentObject.reference only contains { group, name, uniqueName }
+        stack.push(input[group][name]);
+
+        continue;
+      } else if (isNil(structure[group]?.[name])) {
+        throw new AppError("codeGen.app.followReferences", 500, {
+          message: `Could not resolve reference '${uniqueName}'`,
+        });
+      }
+    }
+
+    // extend stack
+    if (Array.isArray(currentObject)) {
+      for (const it of currentObject) {
+        stack.push(it);
+      }
+    } else if (isPlainObject(currentObject)) {
+      for (const key of Object.keys(currentObject)) {
+        stack.push(currentObject[key]);
+      }
+    }
   }
 }
 
@@ -64,75 +107,6 @@ export function addToData(dataStructure, item) {
   dataStructure[item.group][item.name] = item;
 
   item.uniqueName = upperCaseFirst(item.group) + upperCaseFirst(item.name);
-}
-
-/**
- * Find nested references and add to generatorInput in the correct group
- *
- * @param rootData
- * @param generatorInput
- * @param value
- */
-export function includeReferenceTypes(rootData, generatorInput, value) {
-  if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
-    // Skip primitives & null / undefined
-    return;
-  }
-
-  if (
-    isPlainObject(value) &&
-    value.type &&
-    value.type === "reference" &&
-    isPlainObject(value.reference)
-  ) {
-    const { group, name } = value.reference;
-    if (
-      !isNil(rootData[group]?.[name]) &&
-      isNil(generatorInput[group]?.[name])
-    ) {
-      if (isNil(generatorInput[group])) {
-        generatorInput[group] = {};
-      }
-
-      const refValue = rootData[group][name];
-      generatorInput[group][name] = refValue;
-
-      const err = includeReferenceTypes(rootData, generatorInput, refValue);
-      if (err) {
-        if (value.uniqueName) {
-          err.info.foundAt = value.uniqueName;
-        }
-        return err;
-      }
-    } else if (isNil(rootData[group]?.[name])) {
-      return new AppError("codeGen.app.followReferences", 500, {
-        message: `Could not resolve reference '${value.reference.uniqueName}'.`,
-        foundAt: "unknown",
-      });
-    }
-  }
-
-  if (isPlainObject(value)) {
-    for (const key of Object.keys(value)) {
-      const err = includeReferenceTypes(rootData, generatorInput, value[key]);
-      if (err) {
-        if (value.uniqueName) {
-          err.info.foundAt = value.uniqueName;
-        }
-        return err;
-      }
-    }
-  } else if (Array.isArray(value)) {
-    for (let i = 0; i < value.length; ++i) {
-      const err = includeReferenceTypes(rootData, generatorInput, value[i]);
-      if (err) {
-        if (value.uniqueName) {
-          err.info.foundAt = value.uniqueName;
-        }
-        return err;
-      }
-    }
-  }
 }
 
 /**
