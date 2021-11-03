@@ -28,13 +28,6 @@ import { addJobToQueue } from "./queue.js";
  */
 
 /**
- * @typedef {object} StoreSessionStoreSettings
- * @property {number} accessTokenMaxAgeInSeconds
- * @property {number} refreshTokenMaxAgeInSeconds
- * @property {string} signingKey
- */
-
-/**
  * @type {number}
  */
 const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
@@ -519,21 +512,25 @@ export async function sessionStoreCreateTokenPair(
       sessionSettings.refreshTokenMaxAgeInSeconds,
   );
 
-  await queries.sessionStoreTokenInsert(sql, [
-    {
-      id: refreshTokenId,
-      session: session.id,
-      expiresAt: refreshTokenExpireDate,
-      createdAt: new Date(),
-    },
-    {
-      id: accessTokenId,
-      session: session.id,
-      expiresAt: accessTokenExpireDate,
-      refreshToken: refreshTokenId,
-      createdAt: new Date(),
-    },
-  ]);
+  await queries.sessionStoreTokenInsert(
+    sql,
+    [
+      {
+        id: refreshTokenId,
+        session: session.id,
+        expiresAt: refreshTokenExpireDate,
+        createdAt: new Date(),
+      },
+      {
+        id: accessTokenId,
+        session: session.id,
+        expiresAt: accessTokenExpireDate,
+        refreshToken: refreshTokenId,
+        createdAt: new Date(),
+      },
+    ],
+    { withPrimaryKey: true },
+  );
 
   const [accessToken, refreshToken] = await Promise.all([
     sessionStoreCreateJWT(
