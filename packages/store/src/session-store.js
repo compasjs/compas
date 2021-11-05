@@ -12,6 +12,7 @@ import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
 import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
+import { query } from "./query.js";
 import { addJobToQueue } from "./queue.js";
 
 /**
@@ -231,6 +232,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
     },
     {
       id: session.id,
+      $raw: query`ss."revokedAt" IS NULL`,
     },
   );
 

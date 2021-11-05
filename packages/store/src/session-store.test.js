@@ -3,12 +3,16 @@ import { isNil, uuid } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
 import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
+import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
 import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
+import { getUncompletedJobsByName } from "./queue.js";
 import {
+  sessionStoreCleanupExpiredSessions,
   sessionStoreCreate,
   sessionStoreCreateJWT,
   sessionStoreGet,
   sessionStoreInvalidate,
+  sessionStoreRefreshTokens,
   sessionStoreUpdate,
   sessionStoreVerifyAndDecodeJWT,
 } from "./session-store.js";
@@ -354,5 +358,307 @@ test("store/session-store", (t) => {
         t.ok(token.revokedAt);
       }
     });
+  });
+
+  t.test("sessionStoreRefreshToken", async (t) => {
+    const sessionInfo = await createSession();
+
+    t.test("invalidToken", async (t) => {
+      const sessionRefreshResult = await sessionStoreGet(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        sessionInfo.tokens.accessToken.substring(
+          0,
+          sessionInfo.tokens.accessToken.length - 2,
+        ),
+      );
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.verifyAndDecodeJWT.invalidToken",
+      );
+    });
+
+    t.test("expiredToken", async (t) => {
+      const expiresAt = new Date();
+      expiresAt.setSeconds(expiresAt.getSeconds() - 20);
+
+      const refreshTokenString = await sessionStoreCreateJWT(
+        newTestEvent(t),
+        sessionSettings,
+        "compasSessionRefreshToken",
+        sessionInfo.session.accessTokens[0].id,
+        expiresAt,
+      );
+      if (refreshTokenString.error) {
+        throw refreshTokenString.error;
+      }
+
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        refreshTokenString.value,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.verifyAndDecodeJWT.expiredToken",
+      );
+    });
+
+    t.test("invalidRefreshToken", async (t) => {
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        sessionInfo.tokens.accessToken,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.refreshTokens.invalidRefreshToken",
+      );
+    });
+
+    t.test("invalidSession", async (t) => {
+      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      const customSessionInfo = await createSession();
+
+      await queries.sessionStoreDelete(sql, {
+        id: customSessionInfo.session.id,
+      });
+
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        customSessionInfo.tokens.refreshToken,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.refreshTokens.invalidSession",
+      );
+    });
+
+    t.test("revokedToken - revoked session", async (t) => {
+      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      const customSessionInfo = await createSession();
+
+      await queries.sessionStoreUpdate(
+        sql,
+        {
+          revokedAt: new Date(),
+        },
+        {
+          id: customSessionInfo.session.id,
+        },
+      );
+
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        customSessionInfo.tokens.refreshToken,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.refreshTokens.revokedToken",
+      );
+    });
+
+    t.test("revokedToken - revoked token", async (t) => {
+      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      const customSessionInfo = await createSession();
+      const revokedAt = new Date();
+      revokedAt.setSeconds(revokedAt.getSeconds() - 30);
+
+      await queries.sessionStoreTokenUpdate(
+        sql,
+        {
+          revokedAt,
+        },
+        {
+          session: customSessionInfo.session.id,
+        },
+      );
+
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        customSessionInfo.tokens.refreshToken,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.refreshTokens.revokedToken",
+      );
+    });
+
+    t.test("revokedToken - token leakage is reported", async (t) => {
+      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      const customSessionInfo = await createSession();
+      const startJobs = await getUncompletedJobsByName(sql);
+
+      await queries.sessionStoreUpdate(
+        sql,
+        {
+          revokedAt: new Date(),
+        },
+        {
+          id: customSessionInfo.session.id,
+        },
+      );
+
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        customSessionInfo.tokens.refreshToken,
+      );
+
+      t.equal(
+        sessionRefreshResult.error?.key,
+        "sessionStore.refreshTokens.revokedToken",
+      );
+
+      const endJobs = await getUncompletedJobsByName(sql);
+
+      t.ok(
+        endJobs["compas.sessionStore.potentialLeakedSession"].length >
+          startJobs["compas.sessionStore.potentialLeakedSession"].length,
+      );
+
+      const lastJob =
+        endJobs["compas.sessionStore.potentialLeakedSession"].pop();
+      t.equal(lastJob.data.report.session.id, customSessionInfo.session.id);
+    });
+
+    t.test("success", async (t) => {
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
+        newTestEvent(t),
+        sql,
+        sessionSettings,
+        sessionInfo.tokens.refreshToken,
+      );
+
+      t.ok(isNil(sessionRefreshResult.error));
+
+      t.ok(sessionRefreshResult.value?.accessToken);
+      t.ok(sessionRefreshResult.value?.refreshToken);
+
+      const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(
+        newTestEvent(t),
+        sessionSettings,
+        sessionRefreshResult.value.accessToken,
+      );
+      t.ok(isNil(accessTokenPayload.error));
+
+      const [session] = await querySessionStore({
+        viaAccessTokens: {
+          where: {
+            id: accessTokenPayload.value.payload.compasSessionAccessToken,
+          },
+        },
+        accessTokens: {
+          refreshToken: {},
+        },
+      }).exec(sql);
+
+      t.equal(session.accessTokens.length, 4);
+
+      const oldAccessToken = session.accessTokens.find(
+        (it) => it.id === sessionInfo.session.accessTokens[0].id,
+      );
+      const oldRefreshToken = session.accessTokens.find(
+        (it) => it.id === sessionInfo.session.accessTokens[0].refreshToken.id,
+      );
+
+      t.ok(!isNil(oldAccessToken.revokedAt));
+      t.ok(!isNil(oldRefreshToken.revokedAt));
+    });
+  });
+
+  t.test("sessionStoreCleanupExpiredSessions", async (t) => {
+    const longLivedSession = await createSession();
+    const [session] = await queries.sessionStoreInsert(sql, [
+      {
+        data: {},
+        checksum: "foo",
+        revokedAt: new Date(),
+      },
+    ]);
+
+    const [tokenId1, tokenId2, tokenId3] = [uuid(), uuid(), uuid(), uuid()];
+    await queries.sessionStoreTokenInsert(
+      sql,
+      [
+        {
+          id: tokenId1,
+          session: session.id,
+          expiresAt: new Date(2020, 1, 1),
+          createdAt: new Date(),
+        },
+        {
+          id: tokenId2,
+          session: session.id,
+          expiresAt: new Date(2022, 1, 1),
+          createdAt: new Date(),
+          refreshToken: tokenId3,
+        },
+        {
+          id: tokenId3,
+          session: session.id,
+          expiresAt: new Date(2022, 1, 1),
+          revokedAt: new Date(),
+          createdAt: new Date(),
+        },
+      ],
+      {
+        withPrimaryKey: true,
+      },
+    );
+
+    t.test("uses maxRevokeAgeInDays", async (t) => {
+      await sessionStoreCleanupExpiredSessions(newTestEvent(t), sql, 1);
+
+      const sessionsAfterCleanup = await querySessionStore({}).exec(sql);
+      const tokensAfterCleanup = await querySessionStoreToken({}).exec(sql);
+
+      t.ok(sessionsAfterCleanup.find((it) => it.id === session.id));
+      t.ok(
+        sessionsAfterCleanup.find(
+          (it) => it.id === longLivedSession.session.id,
+        ),
+      );
+
+      t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId1)));
+      t.ok(tokensAfterCleanup.find((it) => it.id === tokenId2));
+      t.ok(tokensAfterCleanup.find((it) => it.id === tokenId3));
+    });
+
+    t.test(
+      "expired tokens are cleaned, sessions without tokens removed",
+      async (t) => {
+        await sessionStoreCleanupExpiredSessions(newTestEvent(t), sql, 0);
+
+        const sessionsAfterCleanup = await querySessionStore({}).exec(sql);
+        const tokensAfterCleanup = await querySessionStoreToken({}).exec(sql);
+
+        t.ok(isNil(sessionsAfterCleanup.find((it) => it.id === session.id)));
+        t.ok(
+          sessionsAfterCleanup.find(
+            (it) => it.id === longLivedSession.session.id,
+          ),
+        );
+
+        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId1)));
+        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId2)));
+        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId3)));
+      },
+    );
   });
 });
