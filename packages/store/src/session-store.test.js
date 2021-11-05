@@ -592,7 +592,7 @@ test("store/session-store", (t) => {
       },
     ]);
 
-    const [tokenId1, tokenId2, tokenId3] = [uuid(), uuid(), uuid(), uuid()];
+    const [tokenId1, tokenId2, tokenId3] = [uuid(), uuid(), uuid()];
     await queries.sessionStoreTokenInsert(
       sql,
       [
