@@ -1778,6 +1778,27 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   };
+  type StoreSessionStore = {
+    data: any;
+    checksum: string;
+    revokedAt?: undefined | Date;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  type StoreSessionStoreSettings = {
+    accessTokenMaxAgeInSeconds: number;
+    refreshTokenMaxAgeInSeconds: number;
+    signingKey: string;
+  };
+  type StoreSessionStoreToken = {
+    expiresAt: Date;
+    revokedAt?: undefined | Date;
+    createdAt: Date;
+    id: string;
+    session: string;
+    refreshToken?: undefined | string;
+  };
   type StoreSessionWhere = {
     $raw?: undefined | QueryPart<any>;
     $or?: undefined | StoreSessionWhere[];
@@ -1808,6 +1829,66 @@ declare global {
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
   };
+  type StoreSessionStoreWhere = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreSessionStoreWhere[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    accessTokensExists?: undefined | StoreSessionStoreTokenWhere;
+    accessTokensNotExists?: undefined | StoreSessionStoreTokenWhere;
+  };
+  type StoreSessionStoreTokenWhere = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreSessionStoreTokenWhere[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    session?: undefined | string;
+    sessionNotEqual?: undefined | string;
+    sessionIn?: undefined | string[] | QueryPart<any>;
+    sessionNotIn?: undefined | string[] | QueryPart<any>;
+    expiresAt?: undefined | Date;
+    expiresAtNotEqual?: undefined | Date;
+    expiresAtIn?: undefined | Date[] | QueryPart<any>;
+    expiresAtNotIn?: undefined | Date[] | QueryPart<any>;
+    expiresAtGreaterThan?: undefined | Date;
+    expiresAtLowerThan?: undefined | Date;
+    refreshToken?: undefined | string;
+    refreshTokenNotEqual?: undefined | string;
+    refreshTokenIn?: undefined | string[] | QueryPart<any>;
+    refreshTokenNotIn?: undefined | string[] | QueryPart<any>;
+    refreshTokenIsNull?: undefined | boolean;
+    refreshTokenIsNotNull?: undefined | boolean;
+    revokedAt?: undefined | Date;
+    revokedAtNotEqual?: undefined | Date;
+    revokedAtIn?: undefined | Date[] | QueryPart<any>;
+    revokedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    revokedAtGreaterThan?: undefined | Date;
+    revokedAtLowerThan?: undefined | Date;
+    revokedAtIsNull?: undefined | boolean;
+    revokedAtIsNotNull?: undefined | boolean;
+    accessTokenExists?: undefined | StoreSessionStoreTokenWhere;
+    accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
+  };
   type StoreSessionOrderBy =
     | QueryPart<any>
     | ("id" | "expires" | "createdAt" | "updatedAt")[];
@@ -1816,6 +1897,24 @@ declare global {
     expires?: undefined | CompasSqlOrderBy;
     createdAt?: undefined | CompasSqlOrderBy;
     updatedAt?: undefined | CompasSqlOrderBy;
+  };
+  type StoreSessionStoreOrderBy =
+    | QueryPart<any>
+    | ("id" | "createdAt" | "updatedAt")[];
+  type StoreSessionStoreOrderBySpec = {
+    id?: undefined | CompasSqlOrderBy;
+    createdAt?: undefined | CompasSqlOrderBy;
+    updatedAt?: undefined | CompasSqlOrderBy;
+  };
+  type StoreSessionStoreTokenOrderBy =
+    | QueryPart<any>
+    | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
+  type StoreSessionStoreTokenOrderBySpec = {
+    id?: undefined | CompasSqlOrderBy;
+    session?: undefined | CompasSqlOrderBy;
+    expiresAt?: undefined | CompasSqlOrderBy;
+    refreshToken?: undefined | CompasSqlOrderByOptionalField;
+    revokedAt?: undefined | CompasSqlOrderByOptionalField;
   };
   type StoreSessionInsertPartial = {
     id?: undefined | string;
@@ -1830,6 +1929,36 @@ declare global {
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
   };
+  type StoreSessionStoreInsertPartial = {
+    id?: undefined | string;
+    checksum: string;
+    revokedAt?: undefined | null | Date;
+    data?: undefined | any;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
+  type StoreSessionStoreUpdatePartial = {
+    checksum?: undefined | string;
+    revokedAt?: undefined | null | Date;
+    data?: undefined | any;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
+  type StoreSessionStoreTokenInsertPartial = {
+    id?: undefined | string;
+    session: string;
+    expiresAt: Date;
+    refreshToken?: undefined | null | string;
+    revokedAt?: undefined | null | Date;
+    createdAt: Date;
+  };
+  type StoreSessionStoreTokenUpdatePartial = {
+    session?: undefined | string;
+    expiresAt?: undefined | Date;
+    refreshToken?: undefined | null | string;
+    revokedAt?: undefined | null | Date;
+    createdAt?: undefined | Date;
+  };
   type StoreSessionQueryBuilder = {
     where?: undefined | StoreSessionWhere;
     orderBy?: undefined | StoreSessionOrderBy;
@@ -1843,5 +1972,51 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
   };
+  type StoreSessionStoreQueryBuilder = {
+    where?: undefined | StoreSessionStoreWhere;
+    orderBy?: undefined | StoreSessionStoreOrderBy;
+    orderBySpec?: undefined | StoreSessionStoreOrderBySpec;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
+    viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
+  };
+  type StoreSessionStoreTokenQueryBuilder = {
+    where?: undefined | StoreSessionStoreTokenWhere;
+    orderBy?: undefined | StoreSessionStoreTokenOrderBy;
+    orderBySpec?: undefined | StoreSessionStoreTokenOrderBySpec;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    session?: undefined | StoreSessionStoreQueryBuilder;
+    viaSession?: undefined | StoreSessionStoreQueryTraverser;
+    refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
+    viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+    accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
+    viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+  };
+  type StoreSessionStoreQueryTraverser = {
+    where?: undefined | StoreSessionStoreWhere;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
+  };
+  type StoreSessionStoreTokenQueryTraverser = {
+    where?: undefined | StoreSessionStoreTokenWhere;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    viaSession?: undefined | StoreSessionStoreQueryTraverser;
+    viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+    viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
+  };
   type QueryResultStoreSession = StoreSession & {};
+  type QueryResultStoreSessionStore = StoreSessionStore & {
+    accessTokens?: QueryResultStoreSessionStoreToken[];
+  };
+  type QueryResultStoreSessionStoreToken = StoreSessionStoreToken & {
+    session?: QueryResultStoreSessionStore | string | number;
+    refreshToken?: QueryResultStoreSessionStoreToken | string | number;
+    accessToken?: QueryResultStoreSessionStoreToken | string | number;
+  };
 }

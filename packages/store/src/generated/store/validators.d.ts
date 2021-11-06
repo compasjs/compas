@@ -81,6 +81,33 @@ export function validateStoreSession(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStore>}
+ */
+export function validateStoreSessionStore(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStore>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreSettings>}
+ */
+export function validateStoreSessionStoreSettings(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreSettings>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreToken>}
+ */
+export function validateStoreSessionStoreToken(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreToken>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileWhere>}
  */
 export function validateStoreFileWhere(
@@ -114,6 +141,24 @@ export function validateStoreSessionWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreSessionWhere>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreWhere>}
+ */
+export function validateStoreSessionStoreWhere(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreWhere>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenWhere>}
+ */
+export function validateStoreSessionStoreTokenWhere(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
@@ -189,6 +234,42 @@ export function validateStoreSessionOrderBySpec(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreOrderBy>}
+ */
+export function validateStoreSessionStoreOrderBy(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreOrderBy>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreOrderBySpec>}
+ */
+export function validateStoreSessionStoreOrderBySpec(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreOrderBySpec>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenOrderBy>}
+ */
+export function validateStoreSessionStoreTokenOrderBy(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenOrderBy>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenOrderBySpec>}
+ */
+export function validateStoreSessionStoreTokenOrderBySpec(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenOrderBySpec>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileQueryBuilder>}
  */
 export function validateStoreFileQueryBuilder(
@@ -258,6 +339,42 @@ export function validateStoreSessionQueryTraverser(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreSessionQueryTraverser>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreQueryBuilder>}
+ */
+export function validateStoreSessionStoreQueryBuilder(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreQueryBuilder>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreQueryTraverser>}
+ */
+export function validateStoreSessionStoreQueryTraverser(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreQueryTraverser>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
+ */
+export function validateStoreSessionStoreTokenQueryBuilder(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenQueryBuilder>;
+/**
+ * @param {undefined|any} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenQueryTraverser>}
+ */
+export function validateStoreSessionStoreTokenQueryTraverser(
+  value: undefined | any,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenQueryTraverser>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map
