@@ -5,9 +5,7 @@
  */
 const settings = {
   root: true,
-  globals: {
-    AbortController: "readonly",
-  },
+  globals: {},
   extends: [
     "eslint:recommended",
     "plugin:import/errors",
@@ -59,7 +57,7 @@ const settings = {
   },
   env: {
     node: true,
-    es2020: true,
+    es2021: true,
   },
 };
 /**
