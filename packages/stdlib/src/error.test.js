@@ -13,7 +13,7 @@ test("stdlib/error", (t) => {
     t.equal(AppError.instanceOf(e), true);
     t.equal(e.key, "error.server.internal");
     t.equal(e.info.appErrorConstructParams.key, 500);
-    t.equal(e.originalError.key, 500);
+    t.equal(e.cause.key, 500);
   });
 
   t.test("throws on incorrect arguments: status", (t) => {
@@ -23,8 +23,8 @@ test("stdlib/error", (t) => {
     t.equal(e.key, "error.server.internal");
     t.equal(e.info.appErrorConstructParams.key, "test.error");
     t.equal(e.info.appErrorConstructParams.status, "500");
-    t.equal(e.originalError.key, "test.error");
-    t.equal(e.originalError.status, "500");
+    t.equal(e.cause.key, "test.error");
+    t.equal(e.cause.status, "500");
   });
 
   t.test("AppError#format with stack", (t) => {
@@ -51,9 +51,9 @@ test("stdlib/error", (t) => {
       t.ok(Array.isArray(formatted.stack));
       t.deepEqual(formatted.info, {});
 
-      t.equal(formatted.originalError.key, "error.server.internal");
-      t.equal(formatted.originalError.status, 500);
-      t.ok(Array.isArray(formatted.originalError.stack));
+      t.equal(formatted.cause.key, "error.server.internal");
+      t.equal(formatted.cause.status, 500);
+      t.ok(Array.isArray(formatted.cause.stack));
     }
   });
 
@@ -72,13 +72,13 @@ test("stdlib/error", (t) => {
       t.ok(Array.isArray(formatted.stack));
       t.deepEqual(formatted.info, {});
 
-      t.equal(formatted.originalError.message, "test message");
-      t.equal(formatted.originalError.name, "Error");
-      t.ok(Array.isArray(formatted.originalError.stack));
+      t.equal(formatted.cause.message, "test message");
+      t.equal(formatted.cause.name, "Error");
+      t.ok(Array.isArray(formatted.cause.stack));
     }
   });
 
-  t.test("AppError#format originalError with toJSON", (t) => {
+  t.test("AppError#format cause with toJSON", (t) => {
     try {
       throw AppError.validationError(
         "test.error",
@@ -100,9 +100,9 @@ test("stdlib/error", (t) => {
       t.ok(Array.isArray(formatted.stack));
       t.deepEqual(formatted.info, {});
 
-      t.equal(formatted.originalError.message, "JSON message");
-      t.equal(formatted.originalError.name, "JSONError");
-      t.ok(Array.isArray(formatted.originalError.stack));
+      t.equal(formatted.cause.message, "JSON message");
+      t.equal(formatted.cause.name, "JSONError");
+      t.ok(Array.isArray(formatted.cause.stack));
     }
   });
 
@@ -129,5 +129,20 @@ test("stdlib/error", (t) => {
     t.ok(symbol.warning);
     t.equal(fn.name, "sum");
     t.equal(fn.parameterLength, 2);
+  });
+
+  t.test("AppError#format Aggregate error", (t) => {
+    const err = AppError.format(
+      new AggregateError(
+        [new Error("foo"), AppError.serverError({})],
+        "message",
+      ),
+    );
+
+    t.equal(err.name, "AggregateError");
+    t.ok(err.stack);
+    t.ok(err.message);
+    t.ok(Array.isArray(err.cause));
+    t.equal(err.cause[1].key, "error.server.internal");
   });
 });

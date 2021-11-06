@@ -225,7 +225,7 @@ test("code-gen/e2e-server", async (t) => {
       t.ok(AppError.instanceOf(e));
       t.equal(e.key, "server.error");
       t.equal(e.status, 499);
-      t.equal(e.originalError.isAxiosError, true);
+      t.equal(e.cause.isAxiosError, true);
     }
   });
 
