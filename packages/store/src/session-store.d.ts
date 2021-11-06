@@ -200,10 +200,5 @@ export function sessionStoreVerifyAndDecodeJWT(
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 export type InsightEvent = import("@compas/stdlib").InsightEvent;
 export type Postgres = import("../types/advanced-types").Postgres;
-export type StoreSessionStoreSettings = {
-  accessTokenMaxAgeInSeconds: number;
-  refreshTokenMaxAgeInSeconds: number;
-  signingKey: string;
-};
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=session-store.d.ts.map

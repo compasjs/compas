@@ -72,18 +72,18 @@ export class AppError extends Error {
    * @param {string} key
    * @param {number} status
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [originalError]
+   * @param {Error} [cause]
    */
   constructor(
     key: string,
     status: number,
     info?: Record<string, any> | undefined,
-    originalError?: Error | undefined,
+    cause?: Error | undefined,
   );
   key: string;
   status: number;
   info: Record<string, any>;
-  originalError: Error | undefined;
+  cause: Error | undefined;
   /**
    * Use AppError#format when AppError is passed to JSON.stringify().
    * This is used in the compas insight logger in production mode.

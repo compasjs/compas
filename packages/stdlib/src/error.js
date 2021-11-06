@@ -15,15 +15,15 @@ export class AppError extends Error {
    * @param {string} key
    * @param {number} status
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [originalError]
+   * @param {Error} [cause]
    */
-  constructor(key, status, info, originalError) {
+  constructor(key, status, info, cause) {
     super();
 
     this.key = key;
     this.status = status;
     this.info = info || {};
-    this.originalError = originalError;
+    this.cause = cause;
 
     Object.setPrototypeOf(this, AppError.prototype);
 
@@ -143,9 +143,14 @@ export class AppError extends Error {
         status: e.status,
         info: e.info,
         stack,
-        originalError: e.originalError
-          ? AppError.format(e.originalError)
-          : undefined,
+        cause: e.cause ? AppError.format(e.cause) : undefined,
+      };
+    } else if (e.name === "AggregateError") {
+      return {
+        name: e.name,
+        message: e.message,
+        stack: stack,
+        cause: e.errors?.map((it) => AppError.format(it)),
       };
     } else if (e.name === "PostgresError") {
       return {
