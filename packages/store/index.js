@@ -24,7 +24,7 @@
  */
 
 /**
- * @typedef {import("./src/session-store.js").StoreSessionStoreSettings} StoreSessionStoreSettings
+ * @typedef {import("./src/session-store.js").SessionStoreSettings} SessionStoreSettings
  */
 
 export { structure as storeStructure } from "./src/generated/common/structure.js";

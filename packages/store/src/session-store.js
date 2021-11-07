@@ -11,7 +11,6 @@ import { createSign, createVerify } from "jws";
 import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
-import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
 import { query } from "./query.js";
 import { addJobToQueue } from "./queue.js";
 
@@ -29,6 +28,13 @@ import { addJobToQueue } from "./queue.js";
  */
 
 /**
+ * @typedef {object} SessionStoreSettings
+ * @property {number} accessTokenMaxAgeInSeconds
+ * @property {number} refreshTokenMaxAgeInSeconds
+ * @property {string} signingKey
+ */
+
+/**
  * @type {number}
  */
 const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
@@ -38,7 +44,7 @@ const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -53,7 +59,7 @@ export async function sessionStoreCreate(
 ) {
   eventStart(event, "sessionStore.create");
 
-  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  const validateResult = validateSessionStoreSettings(sessionSettings);
   if (validateResult.error) {
     eventStop(event);
     return validateResult;
@@ -81,7 +87,7 @@ export async function sessionStoreCreate(
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
@@ -93,7 +99,7 @@ export async function sessionStoreGet(
 ) {
   eventStart(event, "sessionStore.get");
 
-  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  const validateResult = validateSessionStoreSettings(sessionSettings);
   if (validateResult.error) {
     eventStop(event);
     return validateResult;
@@ -140,6 +146,7 @@ export async function sessionStoreGet(
   // Note that we don't have a grace period for these tokens, like we have for refresh
   // tokens
   if (
+    // @ts-ignore
     storeToken.session.revokedAt ||
     (storeToken.revokedAt && storeToken.revokedAt.getTime() < Date.now())
   ) {
@@ -153,6 +160,7 @@ export async function sessionStoreGet(
 
   return {
     value: {
+      // @ts-ignore
       session: storeToken.session,
     },
   };
@@ -264,7 +272,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -279,7 +287,7 @@ export async function sessionStoreRefreshTokens(
 ) {
   eventStart(event, "sessionStore.refreshTokens");
 
-  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  const validateResult = validateSessionStoreSettings(sessionSettings);
   if (validateResult.error) {
     eventStop(event);
     return validateResult;
@@ -324,6 +332,7 @@ export async function sessionStoreRefreshTokens(
   // token. This way the api client can have race conditions, and thus in the end have
   // multiple valid access tokens.
   if (
+    // @ts-ignore
     storeToken.session.revokedAt ||
     (storeToken.revokedAt &&
       storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
@@ -332,6 +341,7 @@ export async function sessionStoreRefreshTokens(
     await sessionStoreReportAndRevokeLeakedSession(
       newEventFromEvent(event),
       sql,
+      // @ts-ignore
       storeToken.session.id,
     );
 
@@ -348,6 +358,7 @@ export async function sessionStoreRefreshTokens(
       revokedAt: new Date(),
     },
     {
+      // @ts-ignore
       idIn: [storeToken.id, storeToken.accessToken.id],
     },
   );
@@ -356,6 +367,7 @@ export async function sessionStoreRefreshTokens(
     newEventFromEvent(event),
     sql,
     sessionSettings,
+    // @ts-ignore
     storeToken.session,
   );
 
@@ -454,11 +466,16 @@ export async function sessionStoreReportAndRevokeLeakedSession(
     },
   };
 
-  for (const accessToken of session.accessTokens) {
+  for (const accessToken of session.accessTokens ?? []) {
+    // @ts-ignore
     report.session.tokens.push({
+      // @ts-ignore
       id: accessToken.id,
+      // @ts-ignore
       createdAt: accessToken.createdAt,
+      // @ts-ignore
       revokedAt: accessToken.revokedAt,
+      // @ts-ignore
       expiresAt: accessToken.expiresAt,
     });
   }
@@ -478,7 +495,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -493,7 +510,7 @@ export async function sessionStoreCreateTokenPair(
 ) {
   eventStart(event, "sessionStore.createTokenPair");
 
-  const validateResult = validateStoreSessionStoreSettings(sessionSettings);
+  const validateResult = validateSessionStoreSettings(sessionSettings);
   if (validateResult.error) {
     eventStop(event);
     return validateResult;
@@ -575,7 +592,7 @@ export async function sessionStoreCreateTokenPair(
  * Create and sign a nwe JWT token
  *
  * @param {InsightEvent} event
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
  * @param {Date} expiresAt
@@ -620,7 +637,7 @@ export function sessionStoreCreateJWT(
  * Verify and decode a JWT token
  *
  * @param {InsightEvent} event
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} tokenString
  * @returns {Promise<Either<{
  *   header: object,
@@ -646,11 +663,13 @@ export async function sessionStoreVerifyAndDecodeJWT(
     })
       .once("error", (error) => {
         // Wrap unexpected errors, they are most likely a Compas or related backend bug.
+        // @ts-ignore
         resolve({
           error: AppError.serverError({}, error),
         });
       })
       .once("done", function (valid, obj) {
+        // @ts-ignore
         resolve({ value: { valid, obj } });
       });
   });
@@ -691,4 +710,51 @@ export async function sessionStoreVerifyAndDecodeJWT(
  */
 function sessionStoreChecksumForData(data) {
   return crc.crc32(JSON.stringify(data ?? {})).toString(16);
+}
+
+/**
+ * Validate session store settings
+ *
+ * @param {any} input
+ * @return {Either<void>}
+ */
+function validateSessionStoreSettings(input) {
+  const errObject = {};
+
+  if (typeof input.accessTokenMaxAgeInSeconds !== "number") {
+    errObject["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"] = {
+      key: "validator.number.type",
+    };
+  }
+  if (typeof input.refreshTokenMaxAgeInSeconds !== "number") {
+    errObject["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"] = {
+      key: "validator.number.type",
+    };
+  }
+  if (typeof input.signingKey !== "string" || input.signingKey.length < 20) {
+    errObject["$.sessionStoreSettings.signingKey"] = {
+      key: "validator.string.type",
+    };
+  }
+
+  if (Object.keys(errObject).length > 0) {
+    return {
+      error: new AppError("validator.error", 400, errObject),
+    };
+  }
+
+  if (input.accessTokenMaxAgeInSeconds >= input.refreshTokenMaxAgeInSeconds) {
+    return {
+      error: AppError.validationError("validator.error", {
+        "$.sessionStoreSettings.accessTokenMaxAgeInSeconds": {
+          message:
+            "Max age of refresh token should be longer than the max age of an access token",
+        },
+      }),
+    };
+  }
+
+  return {
+    value: undefined,
+  };
 }

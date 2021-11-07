@@ -1786,11 +1786,6 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   };
-  type StoreSessionStoreSettings = {
-    accessTokenMaxAgeInSeconds: number;
-    refreshTokenMaxAgeInSeconds: number;
-    signingKey: string;
-  };
   type StoreSessionStoreToken = {
     expiresAt: Date;
     revokedAt?: undefined | Date;

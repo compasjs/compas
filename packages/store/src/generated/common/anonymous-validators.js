@@ -77,11 +77,6 @@ const objectKeys503384244 = new Set([
   "createdAt",
   "updatedAt",
 ]);
-const objectKeys1757809551 = new Set([
-  "accessTokenMaxAgeInSeconds",
-  "refreshTokenMaxAgeInSeconds",
-  "signingKey",
-]);
 const objectKeys1337490931 = new Set([
   "expiresAt",
   "revokedAt",
@@ -1911,118 +1906,6 @@ export function anonymousValidator503384244(value, propertyPath) {
     ["id", anonymousValidator56355924],
     ["createdAt", anonymousValidator1389014320],
     ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<string>}
- */
-export function anonymousValidator1438635522(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 20) {
-    const min = 20;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  return { value };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"accessTokenMaxAgeInSeconds": number, "refreshTokenMaxAgeInSeconds": number, "signingKey": string, }>}
- */
-export function anonymousValidator1757809551(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys1757809551.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["accessTokenMaxAgeInSeconds", anonymousValidator293751998],
-    ["refreshTokenMaxAgeInSeconds", anonymousValidator293751998],
-    ["signingKey", anonymousValidator1438635522],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);

@@ -21,12 +21,6 @@ export function applyStoreStructure(app) {
       seconds: T.number().optional(),
     }),
 
-    T.object("sessionStoreSettings").keys({
-      accessTokenMaxAgeInSeconds: T.number(),
-      refreshTokenMaxAgeInSeconds: T.number(),
-      signingKey: T.string().min(20),
-    }),
-
     T.object("file")
       .keys({
         bucketName: T.string().searchable(),
