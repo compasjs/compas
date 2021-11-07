@@ -15,7 +15,6 @@ import {
   anonymousValidator144635851,
   anonymousValidator153017499,
   anonymousValidator163358845,
-  anonymousValidator1757809551,
   anonymousValidator1781782332,
   anonymousValidator1795948632,
   anonymousValidator1805657267,
@@ -285,32 +284,6 @@ export function validateStoreSessionStore(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreSessionStore}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreSettings>}
- */
-export function validateStoreSessionStoreSettings(value, propertyPath = "$") {
-  const result = anonymousValidator1757809551(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionStoreSettings}} */
   return { value: result.value };
 }
 /**

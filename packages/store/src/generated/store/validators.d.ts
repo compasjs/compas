@@ -90,15 +90,6 @@ export function validateStoreSessionStore(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreSettings>}
- */
-export function validateStoreSessionStoreSettings(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreSettings>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreToken>}
  */
 export function validateStoreSessionStoreToken(

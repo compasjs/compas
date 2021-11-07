@@ -4,7 +4,6 @@ import { sql } from "../../../src/testing.js";
 import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
-import { validateStoreSessionStoreSettings } from "./generated/store/validators.js";
 import { getUncompletedJobsByName } from "./queue.js";
 import {
   sessionStoreCleanupExpiredSessions,
@@ -22,7 +21,7 @@ mainTestFn(import.meta);
 test("store/session-store", (t) => {
   const sessionSettings = {
     accessTokenMaxAgeInSeconds: 5,
-    refreshTokenMaxAgeInSeconds: 5,
+    refreshTokenMaxAgeInSeconds: 10,
     signingKey: uuid(),
   };
 
@@ -68,21 +67,27 @@ test("store/session-store", (t) => {
     };
   };
 
-  t.test("validateStoreSessionStoreSettings", (t) => {
-    t.test("signingKey length", (t) => {
-      const result = validateStoreSessionStoreSettings({
-        accessTokenMaxAgeInSeconds: 5,
-        refreshTokenMaxAgeInSeconds: 5,
-        signingKey: "foo",
-      });
-
-      t.ok(result.error);
-      t.equal(result.error.info["$.signingKey"].key, "validator.string.min");
-    });
-  });
-
   t.test("sessionStoreCreate", (t) => {
     // No error case, or some unexpected issue with jws, which we can't really test
+
+    t.test("validator", async (t) => {
+      const result = await sessionStoreCreate(
+        newTestEvent(t),
+        sql,
+        {
+          accessTokenMaxAgeInSeconds: 5,
+          signingKey: uuid(),
+        },
+        {},
+      );
+
+      t.ok(result.error);
+      t.equal(
+        result.error.info["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"]
+          ?.key,
+        "validator.number.type",
+      );
+    });
 
     t.test("success", async (t) => {
       const data = {
@@ -125,6 +130,25 @@ test("store/session-store", (t) => {
 
   t.test("sessionStoreGet", async (t) => {
     const sessionInfo = await createSession();
+
+    t.test("validator", async (t) => {
+      const result = await sessionStoreGet(
+        newTestEvent(t),
+        sql,
+        {
+          refreshTokenMaxAgeInSeconds: 5,
+          signingKey: uuid(),
+        },
+        "",
+      );
+
+      t.ok(result.error);
+      t.equal(
+        result.error.info["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"]
+          ?.key,
+        "validator.number.type",
+      );
+    });
 
     t.test("invalidToken", async (t) => {
       const sessionGetResult = await sessionStoreGet(
@@ -363,14 +387,32 @@ test("store/session-store", (t) => {
   t.test("sessionStoreRefreshToken", async (t) => {
     const sessionInfo = await createSession();
 
+    t.test("validator", async (t) => {
+      const result = await sessionStoreGet(
+        newTestEvent(t),
+        sql,
+        {
+          accessTokenMaxAgeInSeconds: 5,
+          refreshTokenMaxAgeInSeconds: 5,
+        },
+        "",
+      );
+
+      t.ok(result.error);
+      t.equal(
+        result.error.info["$.sessionStoreSettings.signingKey"]?.key,
+        "validator.string.type",
+      );
+    });
+
     t.test("invalidToken", async (t) => {
-      const sessionRefreshResult = await sessionStoreGet(
+      const sessionRefreshResult = await sessionStoreRefreshTokens(
         newTestEvent(t),
         sql,
         sessionSettings,
-        sessionInfo.tokens.accessToken.substring(
+        sessionInfo.tokens.refreshToken.substring(
           0,
-          sessionInfo.tokens.accessToken.length - 2,
+          sessionInfo.tokens.refreshToken.length - 2,
         ),
       );
       t.equal(

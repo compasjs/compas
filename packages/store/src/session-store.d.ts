@@ -3,7 +3,7 @@
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -13,7 +13,7 @@
 export function sessionStoreCreate(
   event: InsightEvent,
   sql: Postgres,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   sessionData: any,
 ): Promise<
   Either<{
@@ -26,14 +26,14 @@ export function sessionStoreCreate(
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionStoreGet(
   event: InsightEvent,
   sql: Postgres,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   accessTokenString: string,
 ): Promise<
   Either<{
@@ -76,7 +76,7 @@ export function sessionStoreInvalidate(
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -86,7 +86,7 @@ export function sessionStoreInvalidate(
 export function sessionStoreRefreshTokens(
   event: InsightEvent,
   sql: Postgres,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   refreshTokenString: string,
 ): Promise<
   Either<{
@@ -133,7 +133,7 @@ export function sessionStoreReportAndRevokeLeakedSession(
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
  *   accessToken: string,
@@ -143,7 +143,7 @@ export function sessionStoreReportAndRevokeLeakedSession(
 export function sessionStoreCreateTokenPair(
   event: InsightEvent,
   sql: Postgres,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   session: QueryResultStoreSessionStore,
 ): Promise<
   Either<{
@@ -155,7 +155,7 @@ export function sessionStoreCreateTokenPair(
  * Create and sign a nwe JWT token
  *
  * @param {InsightEvent} event
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
  * @param {Date} expiresAt
@@ -163,7 +163,7 @@ export function sessionStoreCreateTokenPair(
  */
 export function sessionStoreCreateJWT(
   event: InsightEvent,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   type: "compasSessionAccessToken" | "compasSessionRefreshToken",
   value: string,
   expiresAt: Date,
@@ -172,7 +172,7 @@ export function sessionStoreCreateJWT(
  * Verify and decode a JWT token
  *
  * @param {InsightEvent} event
- * @param {StoreSessionStoreSettings} sessionSettings
+ * @param {SessionStoreSettings} sessionSettings
  * @param {string} tokenString
  * @returns {Promise<Either<{
  *   header: object,
@@ -185,7 +185,7 @@ export function sessionStoreCreateJWT(
  */
 export function sessionStoreVerifyAndDecodeJWT(
   event: InsightEvent,
-  sessionSettings: StoreSessionStoreSettings,
+  sessionSettings: SessionStoreSettings,
   tokenString: string,
 ): Promise<
   Either<{
@@ -200,5 +200,10 @@ export function sessionStoreVerifyAndDecodeJWT(
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 export type InsightEvent = import("@compas/stdlib").InsightEvent;
 export type Postgres = import("../types/advanced-types").Postgres;
+export type SessionStoreSettings = {
+  accessTokenMaxAgeInSeconds: number;
+  refreshTokenMaxAgeInSeconds: number;
+  signingKey: string;
+};
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=session-store.d.ts.map

@@ -12,8 +12,8 @@ export type QueryPart<T> = import("./types/advanced-types.js").QueryPart<T>;
 export type QueryPartArg = import("./types/advanced-types.js").QueryPartArg;
 export type GetStreamFn = import("./src/send-transformed-image").GetStreamFn;
 export type SessionStore = import("./src/sessions.js").SessionStore;
-export type StoreSessionStoreSettings =
-  import("./src/session-store.js").StoreSessionStoreSettings;
+export type SessionStoreSettings =
+  import("./src/session-store.js").SessionStoreSettings;
 export {
   newMinioClient,
   minio,
