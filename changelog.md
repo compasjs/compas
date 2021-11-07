@@ -4,6 +4,46 @@ editLink: false
 
 # Changelog
 
+### [v0.0.172](https://github.com/compasjs/compas/releases/tag/v0.0.172)
+
+##### Changes
+
+- build(deps): bump @types/formidable from 1.2.4 to 2.0.0
+  ([#1332](https://github.com/compasjs/compas/pull/1332))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.1.0 to 8.2.0
+  ([#1331](https://github.com/compasjs/compas/pull/1331))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 7.0.5 to 7.1.0
+  ([#1329](https://github.com/compasjs/compas/pull/1329))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- code-gen: replace `includeReferenceTypes` with non recursive one
+  ([#1327](https://github.com/compasjs/compas/pull/1327))
+- docs(migrations): add session store to store migrations
+- feat(lint-config): change env from es2020 to es2021
+  ([#1333](https://github.com/compasjs/compas/pull/1333))
+- feat(stdlib): support formatting Aggregate errors
+  ([#1334](https://github.com/compasjs/compas/pull/1334))
+  - Closes [#1205](https://github.com/compasjs/compas/pull/1205)
+- feat(store): add JWT based session store support
+  ([#1302](https://github.com/compasjs/compas/pull/1302))
+- fix(store): fix types of session-store functions
+  ([#1336](https://github.com/compasjs/compas/pull/1336))
+
+##### Breaking changes
+
+- **deps**: bump @types/formidable from 1.2.4 to 2.0.0
+  - Major version bump
+- **stdlib**: support formatting Aggregate errors
+  - Renamed `AppError#originalError` to `AppError#cause`
+  - Format also uses `cause` as the key when formatting `AppError` instead of
+    `originalError`
+- **store**: add JWT based session store support
+  - Includes a migration, see the release notes
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.172.html).
+
 ### [v0.0.171](https://github.com/compasjs/compas/releases/tag/v0.0.171)
 
 ##### Changes
