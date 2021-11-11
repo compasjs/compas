@@ -4,6 +4,27 @@ editLink: false
 
 # Changelog
 
+### [v0.0.173](https://github.com/compasjs/compas/releases/tag/v0.0.173)
+
+##### Changes
+
+- build(deps): bump @babel/eslint-parser from 7.16.0 to 7.16.3
+  ([#1340](https://github.com/compasjs/compas/pull/1340))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 16.11.6 to 16.11.7
+  ([#1339](https://github.com/compasjs/compas/pull/1339))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-import from 2.25.2 to 2.25.3
+  ([#1342](https://github.com/compasjs/compas/pull/1342))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump pino from 7.1.0 to 7.2.0
+  ([#1341](https://github.com/compasjs/compas/pull/1341))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- chore(docs): add release v0.0.172 to the sidebar
+- fix(store): saving of transforms in `sendTransformedImage`
+  ([#1343](https://github.com/compasjs/compas/pull/1343))
+  - Closes [#1338](https://github.com/compasjs/compas/pull/1338)
+
 ### [v0.0.172](https://github.com/compasjs/compas/releases/tag/v0.0.172)
 
 ##### Changes
