@@ -48,7 +48,7 @@ export async function sendTransformedImage(
   getStreamFn,
 ) {
   const { w, q } = ctx.validatedQuery ?? {};
-  if (isNil(w) || isNil(w)) {
+  if (isNil(w) || isNil(q)) {
     throw AppError.serverError({
       message: `'sendTransformedImage' is used, but 'T.reference("store", "imageTransformOptions")' is not referenced in the '.query()' call of this route definition.`,
     });
@@ -140,9 +140,12 @@ export async function sendTransformedImage(
     await sql.unsafe(
       `UPDATE "file"
                       SET
-                        "meta" = jsonb_set(meta, '{transforms,${transformKey}}', '${JSON.stringify(
-        loadedFile,
-      )}', TRUE)
+                        "meta" = jsonb_set(CASE
+                                             WHEN coalesce(meta, '{}'::jsonb) ? 'transforms'
+                                               THEN meta
+                                             ELSE jsonb_set(coalesce(meta, '{}'::jsonb), '{transforms}', '{}') END,
+                                           '{transforms,${transformKey}}',
+                                           '${JSON.stringify(loadedFile)}')
                       WHERE
                         id = $1`,
       [file.id],
@@ -163,14 +166,13 @@ export async function sendTransformedImage(
   }).exec(sql);
 
   if (!alreadyTransformedFile) {
-    // File does not exists for some reason, so recursively try again.
+    // File does not exist for some reason, so recursively try again.
     // To be sure that we don't try with the same transformKey again, we atomically
     // delete it from the database as well
     await sql.unsafe(
       `UPDATE "file"
                       SET
-                        "meta" = "meta" #- '{transforms,${transformKey}}',
-                        '${JSON.stringify(loadedFile)}'
+                        "meta" = "meta" #- '{transforms,${transformKey}}'
                       WHERE
                         id = $1`,
       [file.id],
