@@ -62,6 +62,10 @@ const COMPAS_RECURRING_JOB = "compas.job.recurring";
  *   ignores all other jobs.
  * @property {string[]|undefined} [excludedNames] Excluded job names for this job worker,
  *   picks up all other jobs.
+ * @property {boolean|undefined} [unsafeIgnoreSorting] Improve job throughput by ignoring
+ *   the 'priority' and 'scheduledAt' sort when picking up jobs. This still only picks up
+ *   jobs that are eligible to be picked up, however it doesn't guarantee any order. This
+ *   property is also not bound to any SemVer versioning of this package.
  */
 
 /**
@@ -72,9 +76,9 @@ const queueQueries = {
   /**
    * @param {Postgres} sql
    * @param {StoreJobWhere} where
+   * @returns {QueryPart}
    */
-  getAnyJob: (sql, where) =>
-    query`
+  getAnyJob: (where) => query`
     UPDATE "job"
     SET
       "isComplete" = TRUE,
@@ -91,7 +95,30 @@ const queueQueries = {
         LIMIT 1
       )
     RETURNING id
-  `.exec(sql),
+  `,
+
+  /**
+   * @param {Postgres} sql
+   * @param {StoreJobWhere} where
+   * @returns {QueryPart}
+   */
+  getUnsortedJob: (where) => query`
+    UPDATE "job"
+    SET
+      "isComplete" = TRUE,
+      "updatedAt" = now()
+    WHERE
+        id = (
+        SELECT "id"
+        FROM "job" j
+        WHERE
+            ${jobWhere(where, "j.", { skipValidator: true })}
+        AND NOT "isComplete"
+        AND "scheduledAt" < now() FOR UPDATE SKIP LOCKED
+        LIMIT 1
+      )
+    RETURNING id
+  `,
 
   // Alternatively use COUNT with a WHERE and UNION all to calculate the same
   getPendingQueueSize: (sql, where) =>
@@ -209,6 +236,7 @@ export class JobQueueWorker {
     this.pollInterval = options?.pollInterval ?? 1500;
     this.maxRetryCount = options?.maxRetryCount ?? 5;
     this.handlerTimeout = options?.handlerTimeout ?? 30000;
+    this.unsafeIgnoreSorting = options?.unsafeIgnoreSorting ?? false;
 
     /** @type {StoreJobWhere} */
     this.where = {};
@@ -321,7 +349,9 @@ export class JobQueueWorker {
     this.workers[idx] = this.sql.begin(async (sql) => {
       // run in transaction
 
-      const [job] = await queueQueries.getAnyJob(sql, this.where);
+      const [job] = this.unsafeIgnoreSorting
+        ? await queueQueries.getUnsortedJob(this.where).exec(sql)
+        : await queueQueries.getAnyJob(this.where).exec(sql);
       if (job === undefined || job.id === undefined) {
         // reset this 'worker'
         this.workers[idx] = undefined;
