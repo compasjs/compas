@@ -171,6 +171,7 @@ export class JobQueueWorker {
   pollInterval: number;
   maxRetryCount: number;
   handlerTimeout: number;
+  unsafeIgnoreSorting: boolean;
   /** @type {StoreJobWhere} */
   where: StoreJobWhere;
   workers: any[];
@@ -286,5 +287,12 @@ export type JobQueueWorkerOptions = {
    * picks up all other jobs.
    */
   excludedNames?: string[] | undefined;
+  /**
+   * Improve job throughput by ignoring
+   * the 'priority' and 'scheduledAt' sort when picking up jobs. This still only picks up
+   * jobs that are eligible to be picked up, however it doesn't guarantee any order. This
+   * property is also not bound to any SemVer versioning of this package.
+   */
+  unsafeIgnoreSorting?: boolean | undefined;
 };
 //# sourceMappingURL=queue.d.ts.map
