@@ -60,6 +60,7 @@ CREATE TABLE "job"
 CREATE INDEX "jobIsCompleteScheduledAtIdx" ON "job" ("isComplete", "scheduledAt");
 CREATE INDEX "jobNameIdx" ON "job" ("name");
 CREATE INDEX "jobScheduledAtIdx" ON "job" ("scheduledAt");
+CREATE INDEX IF NOT EXISTS "jobIsCompleteUpdatedAt" ON "job" ("isComplete", "updatedAt") WHERE "isComplete" IS TRUE;
 
 CREATE TABLE "fileGroup"
 (
