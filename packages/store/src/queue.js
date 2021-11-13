@@ -74,7 +74,6 @@ const queueQueries = {
   // Should only run in a transaction
 
   /**
-   * @param {Postgres} sql
    * @param {StoreJobWhere} where
    * @returns {QueryPart}
    */
@@ -98,7 +97,6 @@ const queueQueries = {
   `,
 
   /**
-   * @param {Postgres} sql
    * @param {StoreJobWhere} where
    * @returns {QueryPart}
    */
