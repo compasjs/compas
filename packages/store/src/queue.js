@@ -302,6 +302,7 @@ export class JobQueueWorker {
       updatedAtLowerThan: d,
     });
 
+    // @ts-ignore
     return result.count;
   }
 
