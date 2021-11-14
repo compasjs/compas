@@ -285,6 +285,27 @@ export class JobQueueWorker {
   }
 
   /**
+   * Cleanup jobs that finished longer 'maxAgeInDays' ago.
+   * Respects 'includedNames' and 'excludedNames' properties.
+   * Returns the number of removed rows
+   *
+   * @param {number} maxAgeInDays
+   * @return {Promise<number>}
+   */
+  async clean(maxAgeInDays) {
+    const d = new Date();
+    d.setDate(d.getDate() - maxAgeInDays);
+
+    const result = await queries.jobDelete(this.sql, {
+      ...this.where,
+      isComplete: true,
+      updatedAtLowerThan: d,
+    });
+
+    return result.count;
+  }
+
+  /**
    * @private
    */
   run() {
