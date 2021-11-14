@@ -129,19 +129,6 @@ const queueQueries = {
     AND NOT "isComplete"
   `.exec(sql),
 
-  // Returns time in milliseconds
-  getAverageJobTime: (sql, where, dateStart, dateEnd) =>
-    query`
-    SELECT avg((extract(EPOCH FROM "updatedAt" AT TIME ZONE 'UTC') * 1000) -
-               (extract(EPOCH FROM "scheduledAt" AT TIME ZONE 'UTC') * 1000)) AS "completionTime"
-    FROM "job" j
-    WHERE
-        ${jobWhere(where, "j.", { skipValidator: true })}
-    AND "isComplete" IS TRUE
-    AND "updatedAt" > ${dateStart}
-    AND "updatedAt" <= ${dateEnd};
-  `.exec(sql),
-
   /**
    * @param {Postgres} sql
    * @param {string} name
@@ -295,22 +282,6 @@ export class JobQueueWorker {
       pendingCount: parseInt(result?.pendingCount ?? 0, 10),
       scheduledCount: parseInt(result?.scheduledCount ?? 0, 10),
     };
-  }
-
-  /**
-   * @param {Date} startDate
-   * @param {Date} endDate
-   * @returns {Promise<number>}
-   */
-  async averageTimeToCompletion(startDate, endDate) {
-    const [result] = await queueQueries.getAverageJobTime(
-      this.sql,
-      this.where,
-      startDate,
-      endDate,
-    );
-
-    return Math.floor(parseFloat(result?.completionTime ?? "0"));
   }
 
   /**
