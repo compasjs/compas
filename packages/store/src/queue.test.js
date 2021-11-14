@@ -108,14 +108,6 @@ test("store/queue", (t) => {
     });
   });
 
-  t.test("average time to job completion should be 0", async (t) => {
-    const start = new Date();
-    const end = new Date();
-    start.setHours(start.getHours() - 1);
-
-    t.equal(await qw.averageTimeToCompletion(start, end), 0);
-  });
-
   t.test("handle a single job", async (t) => {
     qw.handleJob(0);
     await waitForWorkerPromise(qw, 0);
@@ -128,14 +120,6 @@ test("store/queue", (t) => {
       pendingCount: 0,
       scheduledCount: 1,
     });
-  });
-
-  t.test("average time to job completion should be over 0", async (t) => {
-    const start = new Date();
-    const end = new Date();
-    start.setHours(start.getHours() - 1);
-
-    t.ok((await qw.averageTimeToCompletion(start, end)) > 0);
   });
 
   t.test("on failure retryCount should be up", async (t) => {
