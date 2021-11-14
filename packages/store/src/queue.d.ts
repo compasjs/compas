@@ -202,11 +202,14 @@ export class JobQueueWorker {
     | undefined
   >;
   /**
-   * @param {Date} startDate
-   * @param {Date} endDate
-   * @returns {Promise<number>}
+   * Cleanup jobs that finished longer 'maxAgeInDays' ago.
+   * Respects 'includedNames' and 'excludedNames' properties.
+   * Returns the number of removed rows
+   *
+   * @param {number} maxAgeInDays
+   * @return {Promise<number>}
    */
-  averageTimeToCompletion(startDate: Date, endDate: Date): Promise<number>;
+  clean(maxAgeInDays: number): Promise<number>;
   /**
    * @private
    */

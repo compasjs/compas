@@ -334,6 +334,23 @@ test("store/queue", (t) => {
     t.deepEqual(job.data, payload);
   });
 
+  t.test("clean queue", async (t) => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    await queries.jobUpdate(
+      sql,
+      {
+        isComplete: true,
+        updatedAt: yesterday,
+      },
+      { isComplete: false },
+    );
+
+    const deleteCount = await qw.clean(0);
+    t.ok(deleteCount > 0);
+  });
+
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     t.ok(true, "closed postgres connection");
