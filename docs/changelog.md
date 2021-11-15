@@ -4,6 +4,32 @@ editLink: false
 
 # Changelog
 
+### [v0.0.174](https://github.com/compasjs/compas/releases/tag/v0.0.174)
+
+##### Changes
+
+- build(deps): bump sharp from 0.29.2 to 0.29.3
+  ([#1349](https://github.com/compasjs/compas/pull/1349))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- feat(store): add `JobQueueWorker.clean()` method
+  ([#1347](https://github.com/compasjs/compas/pull/1347))
+- feat(store): add `unsafeIgnoreSorting` as a queue worker option
+  ([#1345](https://github.com/compasjs/compas/pull/1345))
+  - References [#1344](https://github.com/compasjs/compas/pull/1344)
+- feat(store): add index on `job.updatedAt`
+  - Closes [#1344](https://github.com/compasjs/compas/pull/1344)
+- feat(store): remove `averageTimeToCompletion` from `JobQueueWorker`
+  ([#1346](https://github.com/compasjs/compas/pull/1346))
+
+##### Breaking changes
+
+- **store**: add index on `job.updatedAt`
+  - Add the following index in a sql migration:
+  ```sql
+  CREATE INDEX IF NOT EXISTS "jobIsCompleteUpdatedAt" ON "job" ("isComplete", "updatedAt") WHERE "isComplete" IS TRUE;
+  ```
+- **store**: remove `averageTimeToCompletion` from `JobQueueWorker`
+
 ### [v0.0.173](https://github.com/compasjs/compas/releases/tag/v0.0.173)
 
 ##### Changes
