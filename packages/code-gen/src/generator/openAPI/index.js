@@ -35,8 +35,11 @@ export async function generateOpenApi(logger, options) {
     });
   }
 
-  // @ts-ignore
-  const { structure } = await import(pathToFileURL(options.inputPath));
+  const { compasApiStructureString } = await import(
+    // @ts-ignore
+    pathToFileURL(options.inputPath)
+  );
+  const structure = JSON.parse(compasApiStructureString);
   if (!isPlainObject(structure)) {
     throw new Error(
       "Content of structure file is invalid. Is it correctly generated?",
