@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from "fs";
 import { pathToFileURL } from "url";
 import { isPlainObject } from "@compas/stdlib";
 import { addGroupsToGeneratorInput } from "../../generate.js";
+import { linkupReferencesInStructure } from "../linkup-references.js";
 import { generateOpenApiFile } from "./generator.js";
 
 /**
@@ -72,6 +73,10 @@ export async function generateOpenApi(logger, options) {
     structure,
     options.enabledGroups,
   );
+
+  // resolve references within structure
+  // @ts-ignore
+  linkupReferencesInStructure({ structure });
 
   // call generator and transform structure to json (openapi spec)
   // @ts-ignore
