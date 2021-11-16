@@ -4,6 +4,15 @@ editLink: false
 
 # Changelog
 
+### [v0.0.175](https://github.com/compasjs/compas/releases/tag/v0.0.175)
+
+##### Changes
+
+- feat(code-gen): replace whole structure with api subset
+  ([#1353](https://github.com/compasjs/compas/pull/1353))
+- fix(code-gen): fix issue with references (and resolve references within
+  structure) ([#1355](https://github.com/compasjs/compas/pull/1355))
+
 ### [v0.0.174](https://github.com/compasjs/compas/releases/tag/v0.0.174)
 
 ##### Changes
