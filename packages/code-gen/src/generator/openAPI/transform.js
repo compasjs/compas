@@ -268,8 +268,10 @@ export function transformComponents(structure, components) {
         };
 
       case "reference":
-        // @ts-ignore
-        return transformTypes(component.reference);
+        return {
+          // @ts-ignore
+          $ref: `#/components/schemas/${component.reference.uniqueName}`,
+        };
 
       case "anyOf":
         return {
