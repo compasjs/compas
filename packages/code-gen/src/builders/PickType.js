@@ -65,7 +65,7 @@ export class PickType extends TypeBuilder {
       (!(builder instanceof ObjectType) && !isPlainObject(builder))
     ) {
       throw new TypeError(
-        `T.omit() expects a ObjectType or plain Javascript object as the first argument`,
+        `T.pick() expects a ObjectType or plain Javascript object as the first argument`,
       );
     }
 
