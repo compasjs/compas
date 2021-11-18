@@ -20,7 +20,7 @@
     "is-animated": "2.0.1",
     "jws": "4.0.0",
     "minio": "7.0.18",
-    "postgres": "2.0.0-beta.10",
+    "postgres": "2.0.0-beta.11",
     "sharp": "0.29.3"
   },
   "maintainers": [
