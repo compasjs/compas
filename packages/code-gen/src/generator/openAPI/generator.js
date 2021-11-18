@@ -79,17 +79,21 @@ export function generateOpenApiFile(structure, options) {
       // define endpoint
       const method = route.method.toLowerCase();
       const path = transformRoutePath(route.path);
-      openApiSpec.paths[path] = {
-        [method]: {
-          tags: [route.group],
-          description: route.docString,
-          operationId: route.uniqueName,
-          // query, params
-          ...transformParams(structure, route),
-          // requestBody (with files, if any)
-          ...transformBody(structure, route),
-          responses: constructResponse(structure, route),
-        },
+
+      // ensure parent group is present for child methods
+      if (!openApiSpec.paths[path]) {
+        openApiSpec.paths[path] = {};
+      }
+
+      openApiSpec.paths[path][method] = {
+        tags: [route.group],
+        description: route.docString,
+        operationId: route.uniqueName,
+        // query, params
+        ...transformParams(structure, route),
+        // requestBody (with files, if any)
+        ...transformBody(structure, route),
+        responses: constructResponse(structure, route),
       };
     }
 
