@@ -12,7 +12,7 @@ export function createWhereTypes(context: CodeGenContext): void;
  */
 export function getWherePartial(
   context: CodeGenContext,
-  imports: any,
+  imports: ImportCreator,
   type: CodeGenObjectType,
 ): string;
 /**

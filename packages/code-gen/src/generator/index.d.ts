@@ -7,7 +7,7 @@
  */
 export function generate(
   logger: Logger,
-  options: any,
+  options: GenerateOpts,
   structure: CodeGenStructure,
 ): Promise<void>;
 /**
