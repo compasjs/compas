@@ -34,7 +34,6 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
         {{ } }}
       {{ } }}
     {{ } }}
-    {{ console.log({ params: item.params }); }}
     {{ if (item.params && !hasKeysAffectingQueryEnabled) { }}
       {{ for (const [key, value] of Object.entries(item.params?.keys  ?? item.params?.reference?.keys ?? {})) { }}
         {{ if (!value.isOptional) { }}
@@ -50,7 +49,6 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
       {{ } }}
     {{ } }}
 
-{{ console.log({ hasKeysAffectingQueryEnabled, funcName } ); }}
   {{ if (hasKeysAffectingQueryEnabled) { }}
   options.enabled = (
     options.enabled === true || (options.enabled !== false
