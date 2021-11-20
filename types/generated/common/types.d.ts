@@ -96,12 +96,24 @@ declare global {
     ctx: GroupRefRouteCtx,
     next: Next,
   ) => void | Promise<void>;
+  type GroupUploadFilesValidated = {
+    input1: {
+      size: number;
+      filepath: string;
+      originalFilename?: string;
+      newFilename?: string;
+      mimetype?: string;
+      mtime?: Date;
+      hashAlgorithm?: "sha1" | "md5" | "sha256";
+      hash?: string;
+    };
+  };
   type GroupUploadCtx = Context<
     {},
     {
       event: InsightEvent;
       log: Logger;
-      validatedFiles: GroupUploadFiles;
+      validatedFiles: GroupUploadFilesValidated;
     },
     GroupUploadResponse
   >;
@@ -211,12 +223,24 @@ declare global {
     ctx: ServerServerErrorCtx,
     next: Next,
   ) => void | Promise<void>;
+  type ServerSetFileFilesValidated = {
+    myFile: {
+      size: number;
+      filepath: string;
+      originalFilename?: string;
+      newFilename?: string;
+      mimetype?: string;
+      mtime?: Date;
+      hashAlgorithm?: "sha1" | "md5" | "sha256";
+      hash?: string;
+    };
+  };
   type ServerSetFileCtx = Context<
     {},
     {
       event: InsightEvent;
       log: Logger;
-      validatedFiles: ServerSetFileFiles;
+      validatedFiles: ServerSetFileFilesValidated;
     },
     ServerSetFileResponse
   >;
@@ -224,12 +248,13 @@ declare global {
     ctx: ServerSetFileCtx,
     next: Next,
   ) => void | Promise<void>;
+  type ServerSetMimeCheckedFileFilesValidated = ServerSetFileFilesValidated;
   type ServerSetMimeCheckedFileCtx = Context<
     {},
     {
       event: InsightEvent;
       log: Logger;
-      validatedFiles: ServerSetMimeCheckedFileFiles;
+      validatedFiles: ServerSetMimeCheckedFileFilesValidated;
     },
     ServerSetMimeCheckedFileResponse
   >;

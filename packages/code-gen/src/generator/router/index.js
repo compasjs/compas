@@ -50,6 +50,12 @@ export function generateRouterFiles(context) {
         continue;
       }
 
+      const fileTypeName = route.files
+        ? getTypeNameForType(context, route.files.reference, "Validated", {
+            fileTypeIO: "outputRouter",
+          })
+        : "";
+
       getTypeNameForType(
         context,
         {
@@ -73,11 +79,7 @@ export function generateRouterFiles(context) {
               ? `validatedBody: ${route.body.reference.uniqueName},`
               : ""
           }
-          ${
-            route.files
-              ? `validatedFiles: ${route.files.reference.uniqueName},`
-              : ""
-          }
+          ${route.files ? `validatedFiles: ${fileTypeName},` : ""}
         }, ${
           route.response ? route.response.reference.uniqueName : `unknown`
         }>`,
