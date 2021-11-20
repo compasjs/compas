@@ -6,7 +6,7 @@ import { convertOpenAPISpec } from "./open-api-importer.js";
  * @param {string} url
  * @returns {Promise<any>}
  */
-export async function loadFromRemote(Axios, url) {
+export async function loadApiStructureFromRemote(Axios, url) {
   if (isNil(url)) {
     throw new Error(
       "Missing 'url'. Please pass in the base url of an compas based backend.",
