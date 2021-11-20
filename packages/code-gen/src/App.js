@@ -34,8 +34,14 @@ import { lowerCaseFirst } from "./utils.js";
  * @property {boolean|undefined} [isBrowser]
  * @property {boolean|undefined} [isNode]
  * @property {boolean|undefined} [isNodeServer]
- * @property {("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[]|undefined}
- *   [enabledGenerators] Enabling specific generators.
+ * @property {(
+ *   "type"|
+ *   "validator"|
+ *   "router"|
+ *   "sql"|
+ *   "apiClient"|
+ *   "reactQuery"
+ *   )[]|undefined} [enabledGenerators] Enabling specific generators.
  * @property {boolean|undefined} [useTypescript] Enable Typescript for the generators
  *    that support it
  * @property {boolean|undefined} [dumpStructure] Dump a structure.js file with the used
