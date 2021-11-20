@@ -5,12 +5,12 @@
  * @property {boolean} verbose
  */
 /**
- * @param {CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {GenerateOpenApiFileOpts} options
  * @returns {string}
  */
 export function generateOpenApiFile(
-  structure: CodeGenStructure,
+  structure: import("../../generated/common/types").CodeGenStructure,
   options: GenerateOpenApiFileOpts,
 ): string;
 export type GenerateOpenApiFileOpts = {

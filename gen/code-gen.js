@@ -19,30 +19,8 @@ export function applyCodeGenStructure(app) {
   );
 
   app.add(
-    T.object("generateOpts").keys({
-      enabledGroups: T.array().values(T.string()),
-      isBrowser: T.bool(),
-      isNode: T.bool(),
-      isNodeServer: T.bool(),
-      enabledGenerators: T.array().values(
-        T.string().oneOf(
-          "type",
-          "validator",
-          "router",
-          "sql",
-          "apiClient",
-          "reactQuery",
-        ),
-      ),
-      useTypescript: T.bool(),
-      dumpStructure: T.bool(),
-      dumpApiStructure: T.bool(),
-      dumpPostgres: T.bool(),
-      fileHeader: T.string(),
-      outputDirectory: T.string(),
-    }),
     T.object("context").keys({
-      options: T.reference("codeGen", "generateOpts"),
+      options: T.any().raw(`import("../../App").GenerateOpts`),
       structure: T.reference("codeGen", "structure"),
       extension: T.string().oneOf(".js", ".ts"),
       importExtension: T.string(),
@@ -116,6 +94,8 @@ export function applyCodeGenStructure(app) {
       isNode: T.bool().optional(),
       isBrowser: T.bool().optional(),
       suffix: T.string().optional(),
+      isCommonFile: T.bool().optional(),
+      isTypeFile: T.bool().optional(),
       fileTypeIO: T.string()
         .oneOf("input", "outputRouter", "outputClient")
         .optional(),

@@ -14,7 +14,7 @@ import {
 /**
  * Creates the partial types for inserts and updates and assigns in to the object type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function createPartialTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
@@ -116,7 +116,7 @@ export function createPartialTypes(context) {
 /**
  * Adds builder to reuse inserts
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getInsertPartial(context, type) {
@@ -196,7 +196,7 @@ export function getInsertPartial(context, type) {
 /**
  * Adds builder to reuse updates
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getUpdatePartial(context, type) {

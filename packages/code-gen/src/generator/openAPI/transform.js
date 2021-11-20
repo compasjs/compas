@@ -1,10 +1,6 @@
 /**
- * @typedef {CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenReferenceType|CodeGenStringType|CodeGenUuidType|CodeGenObjectType|CodeGenRouteType} TransformCodeGenType
- */
-
-/**
- * @param {CodeGenStructure} structure
- * @param {CodeGenRouteType} route
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @returns {any}
  */
 export function transformParams(structure, route) {
@@ -38,7 +34,7 @@ export function transformParams(structure, route) {
 
   /**
    * @param {string} key
-   * @param {TransformCodeGenType} param
+   * @param {import("../../generated/common/types").CodeGenType} param
    * @param {"path"|"query"} paramType
    * @returns {any}
    */
@@ -80,6 +76,7 @@ export function transformParams(structure, route) {
 
     return {
       name: key,
+      // @ts-ignore
       description: param.docString,
       required: !param.isOptional,
       in: paramType,
@@ -89,8 +86,8 @@ export function transformParams(structure, route) {
 }
 
 /**
- * @param {CodeGenStructure} structure
- * @param {CodeGenRouteType} route
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @returns {any}
  */
 export function transformBody(structure, route) {
@@ -102,12 +99,13 @@ export function transformBody(structure, route) {
   }
 
   /**
-   * @type {TransformCodeGenType}
+   * @type {import("../../generated/common/types").CodeGenType}
    */
   // @ts-ignore
   const reference = field?.reference;
   if (reference) {
     content.schema = {
+      // @ts-ignore
       $ref: `#/components/schemas/${reference.uniqueName}`,
     };
   }
@@ -125,8 +123,8 @@ export function transformBody(structure, route) {
 }
 
 /**
- * @param {CodeGenStructure} structure
- * @param {CodeGenRouteType} route
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @returns {any}
  */
 export function transformResponse(structure, route) {
@@ -153,14 +151,15 @@ export function transformResponse(structure, route) {
 }
 
 /**
- * @param {CodeGenStructure} structure
- * @param {TransformCodeGenType[]} components
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {(import("../../generated/common/types").CodeGenType)[]} components
  * @returns {Object<string, any>}
  */
 export function transformComponents(structure, components) {
   const schemas = {};
 
   for (const component of components) {
+    // @ts-ignore
     schemas[component.uniqueName] = transformTypes(component);
   }
 
@@ -169,7 +168,9 @@ export function transformComponents(structure, components) {
   /**
    * Docs: https://swagger.io/docs/specification/data-models/data-types/
    *
-   * @param {TransformCodeGenType} component
+   * @param {import("../../generated/common/types").CodeGenType & {
+   *   docString: string,
+   * }} component
    * @returns {any}
    */
   function transformTypes(component) {
@@ -261,8 +262,7 @@ export function transformComponents(structure, components) {
 
       case "array":
         return {
-          type: "array",
-          // @ts-ignore
+          type: "array", // @ts-ignore
           items: transformTypes(component.values),
           ...property,
         };

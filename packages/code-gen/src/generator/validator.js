@@ -14,14 +14,14 @@ import { importCreator } from "./utils.js";
 
 /**
  * @typedef {object} ValidatorContext
- * @property {CodeGenContext} context
+ * @property {import("../generated/common/types").CodeGenContext} context
  * @property {Map<string, number>} anonymousFunctionMapping
  * @property {string[]} anonymousFunctions
  * @property {Map<string, string>} objectSets
  */
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function generateValidatorFile(context) {
   /**
@@ -141,12 +141,11 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
          isOptional: true,
        })}} value
        * @param {string|undefined} [propertyPath]
-       * @returns {Either<${getTypeNameForType(
-         context.context,
-         data[name],
-         "",
-         {},
-       )}>}
+       * @returns {Either<${
+         context.context.options.declareGlobalTypes === false
+           ? `import("../common/types").`
+           : ""
+       }${getTypeNameForType(context.context, data[name], "", {})}>}
        */
       export function validate${
         data[name].uniqueName
@@ -169,12 +168,11 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
           };
         }
         
-        /** @type {{ value: ${getTypeNameForType(
-          context.context,
-          data[name],
-          "",
-          {},
-        )}}} */
+        /** @type {{ value: ${
+          context.context.options.declareGlobalTypes === false
+            ? `import("../common/types").`
+            : ""
+        }${getTypeNameForType(context.context, data[name], "", {})}}} */
         return { value: result.value };
       }
     `);
@@ -268,6 +266,7 @@ function createOrUseAnonymousFunction(context, imports, type) {
      * @param {string} propertyPath
      * @returns {EitherN<${generateTypeDefinition(context.context, type, {
        useDefaults: true,
+       isCommonFile: true,
      })}>}
      */
     export function anonymousValidator${hash}(value, propertyPath) {
@@ -397,6 +396,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
 
     /** @type {EitherN<${generateTypeDefinition(context.context, type, {
       useDefaults: true,
+      isCommonFile: true,
     })}>} */
     let result = { errors: [] };
 

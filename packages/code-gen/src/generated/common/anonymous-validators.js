@@ -25,19 +25,6 @@ const objectKeys980814292 = new Set([
   "outputFiles",
   "errors",
 ]);
-const objectKeys2069957416 = new Set([
-  "enabledGroups",
-  "isBrowser",
-  "isNode",
-  "isNodeServer",
-  "enabledGenerators",
-  "useTypescript",
-  "dumpStructure",
-  "dumpApiStructure",
-  "dumpPostgres",
-  "fileHeader",
-  "outputDirectory",
-]);
 const objectKeys682118687 = new Set(["relativePath", "contents"]);
 const objectKeys729128062 = new Set(["key", "groupName"]);
 const objectKeys1592295867 = new Set(["key", "groupName"]);
@@ -74,6 +61,8 @@ const objectKeys1287070944 = new Set([
   "isNode",
   "isBrowser",
   "suffix",
+  "isCommonFile",
+  "isTypeFile",
   "fileTypeIO",
 ]);
 /**
@@ -888,7 +877,7 @@ export function anonymousValidator914179656(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenType>}
+ * @returns {EitherN<import("./types").CodeGenType>}
  */
 export function anonymousValidator169184843(value, propertyPath) {
   if (isNil(value)) {
@@ -908,7 +897,7 @@ export function anonymousValidator169184843(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "array", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"convert": boolean, "min"?: undefined|number, "max"?: undefined|number, }, "internalSettings": {}, "values": CodeGenType, }>}
+ * @returns {EitherN<{"type": "array", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"convert": boolean, "min"?: undefined|number, "max"?: undefined|number, }, "internalSettings": {}, "values": import("./types").CodeGenType, }>}
  */
 export function anonymousValidator1312175728(value, propertyPath) {
   if (isNil(value)) {
@@ -1668,7 +1657,7 @@ export function anonymousValidator315010317(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "generic", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": CodeGenType, "values": CodeGenType, }>}
+ * @returns {EitherN<{"type": "generic", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": import("./types").CodeGenType, "values": import("./types").CodeGenType, }>}
  */
 export function anonymousValidator1377926226(value, propertyPath) {
   if (isNil(value)) {
@@ -2077,7 +2066,7 @@ export function anonymousValidator438930840(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{ [ key: string]:CodeGenType}>}
+ * @returns {EitherN<{ [ key: string]:import("./types").CodeGenType}>}
  */
 export function anonymousValidator1529527338(value, propertyPath) {
   if (isNil(value)) {
@@ -2425,7 +2414,7 @@ export function anonymousValidator815277285(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }>}
+ * @returns {EitherN<import("./types").CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }>}
  */
 export function anonymousValidator2139331922(value, propertyPath) {
   if (isNil(value)) {
@@ -2442,7 +2431,7 @@ export function anonymousValidator2139331922(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   const errors = [];
-  /** @type {EitherN<CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }>} */
+  /** @type {EitherN<import("./types").CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }>} */
   let result = { errors: [] };
   result = anonymousValidator682551261(value, propertyPath);
   if (result.errors) {
@@ -2468,7 +2457,7 @@ export function anonymousValidator2139331922(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "reference", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "reference": CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }, }>}
+ * @returns {EitherN<{"type": "reference", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "reference": import("./types").CodeGenType|{"uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, }, }>}
  */
 export function anonymousValidator127554530(value, propertyPath) {
   if (isNil(value)) {
@@ -2529,7 +2518,7 @@ export function anonymousValidator127554530(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenReferenceType>}
+ * @returns {EitherN<import("./types").CodeGenReferenceType>}
  */
 export function anonymousValidator1480613130(value, propertyPath) {
   if (isNil(value)) {
@@ -2549,7 +2538,7 @@ export function anonymousValidator1480613130(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse", "reference": CodeGenReferenceType, "ownKey": string, "referencedKey"?: undefined|string, "isOptional": boolean, }>}
+ * @returns {EitherN<{"type": "relation", "subType": "manyToOne"|"oneToMany"|"oneToOne"|"oneToOneReverse", "reference": import("./types").CodeGenReferenceType, "ownKey": string, "referencedKey"?: undefined|string, "isOptional": boolean, }>}
  */
 export function anonymousValidator243901689(value, propertyPath) {
   if (isNil(value)) {
@@ -2605,7 +2594,7 @@ export function anonymousValidator243901689(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(CodeGenRelationType)[]>}
+ * @returns {EitherN<(import("./types").CodeGenRelationType)[]>}
  */
 export function anonymousValidator1064092154(value, propertyPath) {
   if (isNil(value)) {
@@ -2645,7 +2634,7 @@ export function anonymousValidator1064092154(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenObjectType>}
+ * @returns {EitherN<import("./types").CodeGenObjectType>}
  */
 export function anonymousValidator1913140908(value, propertyPath) {
   if (isNil(value)) {
@@ -2856,7 +2845,7 @@ export function anonymousValidator718135986(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"type": string, "rawType": CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }>}
+ * @returns {EitherN<undefined|{"type": string, "rawType": import("./types").CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }>}
  */
 export function anonymousValidator1907823387(value, propertyPath) {
   if (isNil(value)) {
@@ -3192,7 +3181,7 @@ export function anonymousValidator1837423837(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": { [ key: string]:CodeGenType}, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }, "relations": (CodeGenRelationType)[], "where"?: undefined|{"type": string, "rawType": CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "hasSqlDefault": boolean, "isJsonb": boolean, })[], }, }>}
+ * @returns {EitherN<{"type": "object", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "internalSettings": {}, "shortName"?: undefined|string, "keys": { [ key: string]:import("./types").CodeGenType}, "enableQueries": boolean, "queryOptions"?: undefined|{"withSoftDeletes": boolean, "withDates": boolean, "withPrimaryKey": boolean, "isView": boolean, "schema": string, }, "relations": (import("./types").CodeGenRelationType)[], "where"?: undefined|{"type": string, "rawType": import("./types").CodeGenObjectType, "fields": ({"key": string, "name": string, "isRelation": boolean, "variant": "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"isNull"|"isNotNull"|"includeNotNull"|"like"|"iLike"|"notLike"|"exists"|"notExists", })[], }, "orderBy"?: undefined|{"type": string, "specType": string, "fields": ({"key": string, "optional": boolean, })[], }, "partial"?: undefined|{"insertType": string, "updateType": string, "fields": ({"key": string, "defaultValue"?: undefined|string, "hasSqlDefault": boolean, "isJsonb": boolean, })[], }, }>}
  */
 export function anonymousValidator17105276(value, propertyPath) {
   if (isNil(value)) {
@@ -3981,7 +3970,7 @@ export function anonymousValidator1898391521(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|CodeGenType>}
+ * @returns {EitherN<undefined|import("./types").CodeGenType>}
  */
 export function anonymousValidator708039854(value, propertyPath) {
   if (isNil(value)) {
@@ -3992,7 +3981,7 @@ export function anonymousValidator708039854(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|CodeGenType, "params"?: undefined|CodeGenType, "body"?: undefined|CodeGenType, "files"?: undefined|CodeGenType, "response"?: undefined|CodeGenType, }>}
+ * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, }>}
  */
 export function anonymousValidator1390215584(value, propertyPath) {
   if (isNil(value)) {
@@ -4061,7 +4050,7 @@ export function anonymousValidator1390215584(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenObjectType|CodeGenReferenceType|CodeGenRelationType|CodeGenStringType|CodeGenUuidType|CodeGenRouteType>}
+ * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>}
  */
 export function anonymousValidator682551261(value, propertyPath) {
   if (isNil(value)) {
@@ -4078,7 +4067,7 @@ export function anonymousValidator682551261(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   const errors = [];
-  /** @type {EitherN<CodeGenAnyType|CodeGenAnyOfType|CodeGenArrayType|CodeGenBooleanType|CodeGenDateType|CodeGenFileType|CodeGenGenericType|CodeGenNumberType|CodeGenObjectType|CodeGenReferenceType|CodeGenRelationType|CodeGenStringType|CodeGenUuidType|CodeGenRouteType>} */
+  /** @type {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>} */
   let result = { errors: [] };
   result = anonymousValidator1519740867(value, propertyPath);
   if (result.errors) {
@@ -4176,7 +4165,7 @@ export function anonymousValidator682551261(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(CodeGenType)[]>}
+ * @returns {EitherN<(import("./types").CodeGenType)[]>}
  */
 export function anonymousValidator1978730633(value, propertyPath) {
   if (isNil(value)) {
@@ -4225,7 +4214,7 @@ export function anonymousValidator1978730633(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "values": (CodeGenType)[], }>}
+ * @returns {EitherN<{"type": "anyOf", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "values": (import("./types").CodeGenType)[], }>}
  */
 export function anonymousValidator20588538(value, propertyPath) {
   if (isNil(value)) {
@@ -4286,69 +4275,17 @@ export function anonymousValidator20588538(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery">}
+ * @returns {EitherN<import("../../App").GenerateOpts>}
  */
-export function anonymousValidator1059407447(value, propertyPath) {
+export function anonymousValidator634141747(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
       errors: [
         {
           propertyPath,
-          key: "validator.string.undefined",
+          key: "validator.any.undefined",
           info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (
-    value !== "type" &&
-    value !== "validator" &&
-    value !== "router" &&
-    value !== "sql" &&
-    value !== "apiClient" &&
-    value !== "reactQuery"
-  ) {
-    const oneOf = [
-      "type",
-      "validator",
-      "router",
-      "sql",
-      "apiClient",
-      "reactQuery",
-    ];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf },
         },
       ],
     };
@@ -4358,151 +4295,7 @@ export function anonymousValidator1059407447(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[]>}
- */
-export function anonymousValidator1173328807(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  const errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1059407447(
-      value[i],
-      `${propertyPath}[${i}]`,
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"enabledGroups": (string)[], "isBrowser": boolean, "isNode": boolean, "isNodeServer": boolean, "enabledGenerators": ("type"|"validator"|"router"|"sql"|"apiClient"|"reactQuery")[], "useTypescript": boolean, "dumpStructure": boolean, "dumpApiStructure": boolean, "dumpPostgres": boolean, "fileHeader": string, "outputDirectory": string, }>}
- */
-export function anonymousValidator2069957416(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys2069957416.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["enabledGroups", anonymousValidator1898391521],
-    ["isBrowser", anonymousValidator2047524467],
-    ["isNode", anonymousValidator2047524467],
-    ["isNodeServer", anonymousValidator2047524467],
-    ["enabledGenerators", anonymousValidator1173328807],
-    ["useTypescript", anonymousValidator2047524467],
-    ["dumpStructure", anonymousValidator2047524467],
-    ["dumpApiStructure", anonymousValidator2047524467],
-    ["dumpPostgres", anonymousValidator2047524467],
-    ["fileHeader", anonymousValidator186795873],
-    ["outputDirectory", anonymousValidator186795873],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<CodeGenGenerateOpts>}
- */
-export function anonymousValidator1610668368(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.reference.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  return anonymousValidator2069957416(value, propertyPath);
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{ [ key: string]:{ [ key: string]:CodeGenType}}>}
+ * @returns {EitherN<{ [ key: string]:{ [ key: string]:import("./types").CodeGenType}}>}
  */
 export function anonymousValidator1413365072(value, propertyPath) {
   if (isNil(value)) {
@@ -4558,7 +4351,7 @@ export function anonymousValidator1413365072(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<CodeGenStructure>}
+ * @returns {EitherN<import("./types").CodeGenStructure>}
  */
 export function anonymousValidator602578904(value, propertyPath) {
   if (isNil(value)) {
@@ -4702,7 +4495,7 @@ export function anonymousValidator682118687(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(CodeGenFile)[]>}
+ * @returns {EitherN<(import("./types").CodeGenFile)[]>}
  */
 export function anonymousValidator1979163207(value, propertyPath) {
   if (isNil(value)) {
@@ -6138,7 +5931,7 @@ export function anonymousValidator262283025(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": CodeGenGenerateOpts, "structure": CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, })[], }>}
+ * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "sqlUsedRelationKey", "type": string, "ownKey": string, })[], }>}
  */
 export function anonymousValidator980814292(value, propertyPath) {
   if (isNil(value)) {
@@ -6185,7 +5978,7 @@ export function anonymousValidator980814292(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["options", anonymousValidator1610668368],
+    ["options", anonymousValidator634141747],
     ["structure", anonymousValidator602578904],
     ["extension", anonymousValidator1146021598],
     ["importExtension", anonymousValidator186795873],
@@ -6387,7 +6180,7 @@ export function anonymousValidator1836086405(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isJSON"?: undefined|boolean, "nestedIsJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
+ * @returns {EitherN<{"isJSON"?: undefined|boolean, "nestedIsJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "isCommonFile"?: undefined|boolean, "isTypeFile"?: undefined|boolean, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
  */
 export function anonymousValidator1287070944(value, propertyPath) {
   if (isNil(value)) {
@@ -6441,6 +6234,8 @@ export function anonymousValidator1287070944(value, propertyPath) {
     ["isNode", anonymousValidator196147222],
     ["isBrowser", anonymousValidator196147222],
     ["suffix", anonymousValidator1443576836],
+    ["isCommonFile", anonymousValidator196147222],
+    ["isTypeFile", anonymousValidator196147222],
     ["fileTypeIO", anonymousValidator1836086405],
   ];
   for (const [key, validator] of validatorPairs) {

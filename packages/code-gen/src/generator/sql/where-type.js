@@ -28,7 +28,7 @@ const whereTypeTable = {
 /**
  * Creates a where type and assigns in to the object type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function createWhereTypes(context) {
   const defaults = {
@@ -199,7 +199,7 @@ export function createWhereTypes(context) {
 
 /**
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */

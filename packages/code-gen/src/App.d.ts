@@ -33,8 +33,8 @@ export class App {
   logger: Logger;
   /** @type {Set<TypeBuilderLike>} */
   unprocessedData: Set<TypeBuilderLike>;
-  /** @type {CodeGenStructure} */
-  data: CodeGenStructure;
+  /** @type {import("./generated/common/types").CodeGenStructure} */
+  data: import("./generated/common/types").CodeGenStructure;
   /**
    * @param {...TypeBuilderLike} builders
    * @returns {this}
@@ -129,7 +129,9 @@ export type GenerateOpts = {
   /**
    * Enabling specific generators.
    */
-  enabledGenerators?: string[] | undefined;
+  enabledGenerators?:
+    | ("type" | "validator" | "router" | "sql" | "apiClient" | "reactQuery")[]
+    | undefined;
   /**
    * Enable Typescript for the generators
    * that support it
@@ -159,6 +161,7 @@ export type GenerateOpts = {
    * recursively cleaned before writing the new files.
    */
   outputDirectory: string;
+  declareGlobalTypes?: false | undefined;
 };
 import { ReferenceType } from "./builders/ReferenceType.js";
 //# sourceMappingURL=App.d.ts.map

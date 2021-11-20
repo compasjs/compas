@@ -5,7 +5,7 @@ import { isNil } from "@compas/stdlib";
 /**
  * Links up references in the structure.
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function linkupReferencesInStructure(context) {
   for (const group of Object.values(context.structure)) {
@@ -16,7 +16,7 @@ export function linkupReferencesInStructure(context) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @param {CodeGenType} item
  * @returns {CodeGenType}
  */

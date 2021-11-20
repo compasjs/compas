@@ -1,17 +1,19 @@
 /**
  * Creates a where type and assigns in to the object type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function createWhereTypes(context: CodeGenContext): void;
+export function createWhereTypes(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 /**
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 export function getWherePartial(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   imports: ImportCreator,
   type: CodeGenObjectType,
 ): string;

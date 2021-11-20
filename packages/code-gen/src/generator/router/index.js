@@ -7,7 +7,7 @@ import { getTypeNameForType } from "../types.js";
 import { buildTrie } from "./trie.js";
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function generateRouterFiles(context) {
   // TODO: Handle validators
@@ -152,7 +152,7 @@ export function getInternalRoutes(options) {
 }
 
 /**
- * @param {CodeGenStructure} data
+ * @param {import("../../generated/common/types").CodeGenStructure} data
  */
 function buildRouteTags(data) {
   const set = new Set();

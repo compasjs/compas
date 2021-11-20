@@ -5,7 +5,7 @@ const MAX_COLLECT_LOOP = 13;
 
 /**
  * @callback StateFn
- * @param {CodeGenTemplateState} state
+ * @param {import("../../generated/common/types").CodeGenTemplateState} state
  * @returns {boolean|number|string|undefined|StateFn|Function}
  */
 
@@ -16,7 +16,7 @@ const MAX_COLLECT_LOOP = 13;
  */
 export function js(strings, ...args) {
   /**
-   * @type {CodeGenTemplateState}
+   * @type {import("../../generated/common/types").CodeGenTemplateState}
    */
   const state = {
     phase: "init",

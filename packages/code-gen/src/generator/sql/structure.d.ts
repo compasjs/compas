@@ -1,9 +1,11 @@
 /**
  * Generates the sql structure, this can be used to create migration files from
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function generateSqlStructure(context: CodeGenContext): void;
+export function generateSqlStructure(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 export namespace typeTable {
   const any: string;
   const anyOf: string;

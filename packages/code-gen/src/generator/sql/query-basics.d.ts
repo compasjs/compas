@@ -4,14 +4,14 @@
 /**
  * Generate the basic CRUD queries
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  * @returns {void}
  */
 export function generateBaseQueries(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   imports: ImportCreator,
   type: CodeGenObjectType,
   src: string[],

@@ -60,7 +60,6 @@ export async function generateTypes() {
       "./generated/testing/sql",
       "./generated/testing/validators",
       "./src/generated",
-      "./packages/code-gen/src/generated",
       "./packages/store/src/generated",
     ],
     dumpCompasTypes: true,
@@ -96,8 +95,9 @@ export async function generateCodeGen() {
     outputDirectory: `packages/code-gen/src/generated`,
     enabledGroups: ["codeGen"],
     isNode: true,
-    enabledGenerators: ["validator"],
+    enabledGenerators: ["validator", "type"],
     dumpStructure: true,
+    declareGlobalTypes: false,
   });
 }
 

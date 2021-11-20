@@ -1,5 +1,5 @@
 /**
- * @typedef {import("../../../../types/generated/common/types").CodeGenContext & {
+ * @typedef {import("../generated/common/types").CodeGenContext & {
  *   types: any,
  * }} CodeGenContext
  */
@@ -14,34 +14,38 @@ export function getTypeSuffixForUseCase(options: any): {
 /**
  * Setup stores for memoized types, so we can reuse types if necessary
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function setupMemoizedTypes(context: CodeGenContext): void;
+export function setupMemoizedTypes(
+  context: import("../generated/common/types").CodeGenContext,
+): void;
 /**
  * Use the memoized types and the provided settings to create a new type
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @param {CodeGenType} type
  * @param {string} suffix
  * @param {CodeGenTypeSettings} settings
  */
 export function getTypeNameForType(
-  context: CodeGenContext,
+  context: import("../generated/common/types").CodeGenContext,
   type: CodeGenType,
   suffix: string,
   settings: CodeGenTypeSettings,
 ): any;
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function generateTypeFile(context: CodeGenContext): void;
+export function generateTypeFile(
+  context: import("../generated/common/types").CodeGenContext,
+): void;
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @param {CodeGenType} type
  * @param {CodeGenTypeSettings} settings
  */
 export function generateTypeDefinition(
-  context: CodeGenContext,
+  context: import("../generated/common/types").CodeGenContext,
   type: CodeGenType,
   {
     isJSON,
@@ -49,6 +53,8 @@ export function generateTypeDefinition(
     useConvert,
     useDefaults,
     useTypescript,
+    isCommonFile,
+    isTypeFile,
     isNode,
     isBrowser,
     suffix,
@@ -56,7 +62,7 @@ export function generateTypeDefinition(
   }?: CodeGenTypeSettings,
 ): any;
 export type CodeGenContext =
-  import("../../../../types/generated/common/types").CodeGenContext & {
+  import("../generated/common/types").CodeGenContext & {
     types: any;
   };
 //# sourceMappingURL=types.d.ts.map

@@ -8,7 +8,7 @@ import { getQueryEnabledObjects } from "./utils.js";
 /**
  * Generate model files with query basic, partials and builder
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function generateModelFiles(context) {
   const queryObjectNames = [];

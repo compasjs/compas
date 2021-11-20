@@ -6,7 +6,7 @@ import { isNil } from "@compas/stdlib";
  * This short name is used in the default basic queries an can be overwritten / used in
  * other queries
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function addShortNamesToQueryEnabledObjects(context) {
   const knownShortNames = {};
@@ -41,7 +41,7 @@ export function addShortNamesToQueryEnabledObjects(context) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @returns {CodeGenObjectType[]}
  */
 export function getQueryEnabledObjects(context) {
@@ -65,7 +65,7 @@ export function getQueryEnabledObjects(context) {
  * If not exists, throw nicely.
  * The returned value is a copy, and not primary anymore.
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function staticCheckPrimaryKey(context, type) {
@@ -173,7 +173,7 @@ export function getSortedKeysForType(type) {
 /**
  * Statically check if objects are correctly setup do have queries enabled.
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function doSqlChecks(context) {
   if (context.options.enabledGenerators.indexOf("validator") === -1) {
@@ -197,7 +197,7 @@ export function doSqlChecks(context) {
 /**
  * Check if referenced side has enabled queries
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
@@ -269,7 +269,7 @@ function staticCheckRelation(context, type, relation) {
 /**
  * Create the reverse side of a one to one relation
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
@@ -298,7 +298,7 @@ function createOneToOneReverseRelation(context, type, relation) {
  * Check if relation keys use a reserved keyword.
  * Reserved keywords mainly keys used in the query builder
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */

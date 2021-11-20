@@ -34,7 +34,14 @@ import { lowerCaseFirst } from "./utils.js";
  * @property {boolean|undefined} [isBrowser]
  * @property {boolean|undefined} [isNode]
  * @property {boolean|undefined} [isNodeServer]
- * @property {string[]|undefined} [enabledGenerators] Enabling specific generators.
+ * @property {(
+ *   "type"|
+ *   "validator"|
+ *   "router"|
+ *   "sql"|
+ *   "apiClient"|
+ *   "reactQuery"
+ *   )[]|undefined} [enabledGenerators] Enabling specific generators.
  * @property {boolean|undefined} [useTypescript] Enable Typescript for the generators
  *    that support it
  * @property {boolean|undefined} [dumpStructure] Dump a structure.js file with the used
@@ -46,6 +53,7 @@ import { lowerCaseFirst } from "./utils.js";
  * @property {string|undefined} [fileHeader] Custom file header.
  * @property {string} outputDirectory Directory to write files to. Note that this is
  *    recursively cleaned before writing the new files.
+ * @property {false|undefined} [declareGlobalTypes]
  */
 
 /**
@@ -128,7 +136,7 @@ export class App {
     /** @type {Set<TypeBuilderLike>} */
     this.unprocessedData = new Set();
 
-    /** @type {CodeGenStructure} */
+    /** @type {import("./generated/common/types").CodeGenStructure} */
     this.data = {};
   }
 
@@ -330,6 +338,7 @@ export class App {
     }
 
     opts.useTypescript = options.useTypescript ?? !!opts.useTypescript;
+    opts.declareGlobalTypes = options.declareGlobalTypes;
     opts.dumpStructure = options.dumpStructure ?? !!opts.dumpStructure;
     opts.dumpApiStructure = options.dumpApiStructure ?? !!opts.dumpApiStructure;
     opts.dumpPostgres = options.dumpPostgres ?? !!opts.dumpPostgres;
@@ -391,7 +400,7 @@ export class App {
 
     // Ensure that we don't mutate the current working data of the user
     const dataCopy = JSON.parse(JSON.stringify(this.data));
-    /** @type {CodeGenStructure} */
+    /** @type {import("./generated/common/types").CodeGenStructure} */
     const generatorInput = {};
 
     addGroupsToGeneratorInput(generatorInput, dataCopy, groupsToInclude);

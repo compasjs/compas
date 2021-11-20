@@ -34,7 +34,7 @@ import { generateValidatorFile } from "./validator.js";
  *
  * @param {Logger} logger
  * @param {GenerateOpts} options
- * @param {CodeGenStructure} structure
+ * @param {import("../generated/common/types").CodeGenStructure} structure
  * @returns {Promise<void>}
  */
 export function generate(logger, options, structure) {
@@ -56,7 +56,7 @@ export function generate(logger, options, structure) {
   const isModule = shouldGenerateModules(logger);
 
   /**
-   * @type {CodeGenContext}
+   * @type {import("../generated/common/types").CodeGenContext}
    */
   const context = {
     logger,
@@ -175,7 +175,7 @@ export function generate(logger, options, structure) {
 /**
  * Use the fileHeader from options, and prefix all file contents with it
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function annotateFilesWithHeader(context) {
   for (const file of context.outputFiles) {
@@ -192,7 +192,7 @@ export function annotateFilesWithHeader(context) {
 /**
  * Write out all files
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function writeFiles(context) {
   for (const file of context.outputFiles) {
@@ -234,7 +234,7 @@ export function shouldGenerateModules(logger) {
  * Sourced from
  * https://github.com/microsoft/TypeScript/blob/66ecfcbd04b8234855a673adb85e5cff3f8458d4/src/compiler/types.ts#L112
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 function checkReservedGroupNames(context) {
   const keywords = [
@@ -304,7 +304,7 @@ function checkReservedGroupNames(context) {
  * If not we report it as an error. In most cases this is a user error.
  * At this point we already normalized all references.
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 function checkIfEnabledGroupsHaveTypes(context) {
   if (!Array.isArray(context.options.enabledGroups)) {

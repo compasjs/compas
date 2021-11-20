@@ -2,28 +2,28 @@
  * This short name is used in the default basic queries an can be overwritten / used in
  * other queries
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function addShortNamesToQueryEnabledObjects(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
 ): void;
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @returns {CodeGenObjectType[]}
  */
 export function getQueryEnabledObjects(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
 ): CodeGenObjectType[];
 /**
  * Get primary key of object type.
  * If not exists, throw nicely.
  * The returned value is a copy, and not primary anymore.
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function staticCheckPrimaryKey(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
 ): void;
 /**
@@ -51,7 +51,9 @@ export function getSortedKeysForType(type: CodeGenObjectType): string[];
 /**
  * Statically check if objects are correctly setup do have queries enabled.
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function doSqlChecks(context: CodeGenContext): void;
+export function doSqlChecks(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 //# sourceMappingURL=utils.d.ts.map
