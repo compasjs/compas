@@ -132,7 +132,9 @@ Either import from a Compas server:
 
 ```js
 const app = new App();
-app.extend(await loadFromRemote(Axios, "https://api.my-domain.com"));
+app.extend(
+  await loadApiStructureFromRemote(Axios, "https://api.my-domain.com"),
+);
 app.generate({
   outputDirectory: "./src/generated",
   isBrowser: true,

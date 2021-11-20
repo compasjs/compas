@@ -3,7 +3,7 @@
  * @param {string} url
  * @returns {Promise<any>}
  */
-export function loadFromRemote(
+export function loadApiStructureFromRemote(
   Axios: import("axios").AxiosInstance,
   url: string,
 ): Promise<any>;
