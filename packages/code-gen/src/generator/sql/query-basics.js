@@ -11,7 +11,7 @@ import { getPrimaryKeyWithType } from "./utils.js";
 /**
  * Generate the basic CRUD queries
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
@@ -51,7 +51,7 @@ export function generateBaseQueries(context, imports, type, src) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -76,7 +76,7 @@ function countQuery(context, imports, type) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -106,7 +106,7 @@ function deleteQuery(context, imports, type) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -178,7 +178,7 @@ function softDeleteQuery(context, imports, type) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -214,7 +214,7 @@ function insertQuery(context, imports, type) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -260,7 +260,7 @@ function upsertQueryByPrimaryKey(context, imports, type) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */

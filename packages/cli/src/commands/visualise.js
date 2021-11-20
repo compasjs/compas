@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { createHash } from "crypto";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { readFile } from "fs/promises";

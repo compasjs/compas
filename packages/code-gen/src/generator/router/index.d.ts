@@ -1,7 +1,9 @@
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function generateRouterFiles(context: CodeGenContext): void;
+export function generateRouterFiles(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 /**
  * @param {GenerateOpts} options
  */

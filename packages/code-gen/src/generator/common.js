@@ -6,17 +6,17 @@ import { js } from "./tag/tag.js";
  * generated output that is shared over all groups.
  * These generators will write to the common directory them selves.
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function generateCommonFiles(context) {
-  if (context.options.enabledGenerators.includes("apiClient")) {
+  if (context.options.enabledGenerators?.includes("apiClient")) {
     context.outputFiles.push({
       contents: generateCommonApiClientFile(context),
       relativePath: `./common/apiClient${context.extension}`,
     });
   }
 
-  if (context.options.enabledGenerators.includes("reactQuery")) {
+  if (context.options.enabledGenerators?.includes("reactQuery")) {
     context.outputFiles.push({
       contents: generateCommonReactQueryFile(),
       relativePath: `./common/reactQuery${context.extension}x`,
@@ -25,7 +25,7 @@ export function generateCommonFiles(context) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @returns {string}
  */
 function generateCommonApiClientFile(context) {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { environment, isNil } from "@compas/stdlib";
 
 /**

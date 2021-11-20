@@ -4,13 +4,13 @@
 /**
  * Generate all useful query partials
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  */
 export function generateQueryPartials(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   imports: ImportCreator,
   type: CodeGenObjectType,
   src: string[],
@@ -23,17 +23,17 @@ export function generateQueryPartials(
 export function knownFieldsCheckFunction(): string;
 /**
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getFieldSet(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
 ): string;
 /**
  * A list of fields for the provided type, with dynamic tableName
  *
- * @property {CodeGenContext} context
+ * @property {import("../../generated/common/types").CodeGenContext} context
  * @property {CodeGenObjectType} type
  * @returns {string}
  */

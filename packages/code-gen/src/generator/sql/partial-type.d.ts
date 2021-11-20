@@ -1,27 +1,29 @@
 /**
  * Creates the partial types for inserts and updates and assigns in to the object type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function createPartialTypes(context: CodeGenContext): void;
+export function createPartialTypes(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 /**
  * Adds builder to reuse inserts
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getInsertPartial(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
 ): string;
 /**
  * Adds builder to reuse updates
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getUpdatePartial(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
 ): string;
 //# sourceMappingURL=partial-type.d.ts.map

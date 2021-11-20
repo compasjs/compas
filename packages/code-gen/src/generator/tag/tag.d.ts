@@ -1,6 +1,6 @@
 /**
  * @callback StateFn
- * @param {CodeGenTemplateState} state
+ * @param {import("../../generated/common/types").CodeGenTemplateState} state
  * @returns {boolean|number|string|undefined|StateFn|Function}
  */
 /**
@@ -13,6 +13,6 @@ export function js(
   ...args: ((StateFn | string | any) | (StateFn | string | any)[])[]
 ): string;
 export type StateFn = (
-  state: CodeGenTemplateState,
+  state: import("../../generated/common/types").CodeGenTemplateState,
 ) => boolean | number | string | undefined | StateFn | Function;
 //# sourceMappingURL=tag.d.ts.map

@@ -5,7 +5,7 @@ import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 
 /**
- * @typedef {import("../../../../types/generated/common/types").CodeGenContext & {
+ * @typedef {import("../generated/common/types").CodeGenContext & {
  *   types: any,
  * }} CodeGenContext
  */
@@ -30,7 +30,7 @@ export function getTypeSuffixForUseCase(options) {
 /**
  * Setup stores for memoized types, so we can reuse types if necessary
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function setupMemoizedTypes(context) {
   context.types = {
@@ -59,7 +59,9 @@ export function setupMemoizedTypes(context) {
   if (!context.options.isBrowser) {
     for (const group of Object.values(context.structure)) {
       for (const type of Object.values(group)) {
-        getTypeNameForType(context, type, "", {});
+        getTypeNameForType(context, type, "", {
+          isTypeFile: true,
+        });
       }
     }
   }
@@ -68,7 +70,7 @@ export function setupMemoizedTypes(context) {
 /**
  * Use the memoized types and the provided settings to create a new type
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @param {CodeGenType} type
  * @param {string} suffix
  * @param {CodeGenTypeSettings} settings
@@ -127,9 +129,14 @@ export function getTypeNameForType(context, type, suffix, settings) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function generateTypeFile(context) {
+  const declareGlobal =
+    context.options.declareGlobalTypes === false
+      ? false
+      : !context.options.useTypescript;
+
   const typeFile = js`
       ${[...context.types.rawImports]}
       ${
@@ -138,11 +145,11 @@ export function generateTypeFile(context) {
           : ""
       }
       
-      ${context.options.useTypescript ? "" : "declare global {"}
+      ${!declareGlobal ? "" : "declare global {"}
 
       ${getMemoizedNamedTypes(context)}
       
-      ${context.options.useTypescript ? "" : "}"}
+      ${!declareGlobal ? "" : "}"}
 
    `;
 
@@ -155,7 +162,7 @@ export function generateTypeFile(context) {
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @param {CodeGenType} type
  * @param {CodeGenTypeSettings} settings
  */
@@ -168,6 +175,8 @@ export function generateTypeDefinition(
     useConvert,
     useDefaults,
     useTypescript,
+    isCommonFile,
+    isTypeFile,
     isNode,
     isBrowser,
     suffix,
@@ -181,6 +190,8 @@ export function generateTypeDefinition(
     useConvert,
     useDefaults,
     useTypescript,
+    isCommonFile,
+    isTypeFile,
     isNode,
     isBrowser,
     suffix: suffix ?? "",
@@ -347,12 +358,20 @@ export function generateTypeDefinition(
       result += "}";
       break;
     case "reference": {
-      result += getTypeNameForType(
+      const typeName = getTypeNameForType(
         context,
         type.reference,
         suffix,
         recurseSettings,
       );
+
+      if (context.options.declareGlobalTypes === false && !isTypeFile) {
+        result += `import("./${
+          isCommonFile ? "" : "../common/"
+        }types").${typeName}`;
+      } else {
+        result += typeName;
+      }
 
       break;
     }
@@ -375,12 +394,14 @@ export function generateTypeDefinition(
 }
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  * @returns {string[]}
  */
 function getMemoizedNamedTypes(context) {
   const result = [];
   const { useTypescript } = context.types.defaultSettings;
+  const declareGlobal =
+    context.options.declareGlobalTypes === false ? false : !useTypescript;
   const uniqueNameDocsMap = {};
 
   for (const group of Object.values(context.structure)) {
@@ -400,7 +421,7 @@ function getMemoizedNamedTypes(context) {
         "\n // ",
       )}\n`;
     }
-    intermediate += `${useTypescript ? "export " : ""}type ${name} = `;
+    intermediate += `${!declareGlobal ? "export " : ""}type ${name} = `;
     intermediate += type;
     intermediate += `;`;
 

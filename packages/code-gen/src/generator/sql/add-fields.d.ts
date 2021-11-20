@@ -1,16 +1,18 @@
 /**
  * Adds the fields that are added by relations
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
-export function addFieldsOfRelations(context: CodeGenContext): void;
+export function addFieldsOfRelations(
+  context: import("../../generated/common/types").CodeGenContext,
+): void;
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  * @param {CodeGenRelationType} relation
  */
 export function addFieldsForRelation(
-  context: CodeGenContext,
+  context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
   relation: CodeGenRelationType,
 ): void;

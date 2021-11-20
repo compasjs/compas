@@ -2,7 +2,7 @@ import { dirnameForModule, isNil, pathJoin } from "@compas/stdlib";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 
 /**
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function generateApiClientFiles(context) {
   compileTemplateDirectory(

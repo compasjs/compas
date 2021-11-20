@@ -49,7 +49,7 @@ const OPENAPI_SPEC_TEMPLATE = {
  */
 
 /**
- * @param {CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {GenerateOpenApiFileOpts} options
  * @returns {string}
  */
@@ -60,7 +60,7 @@ export function generateOpenApiFile(structure, options) {
     const groupStructure = structure[group];
 
     /**
-     * @type {CodeGenRouteType[]}
+     * @type {import("../../generated/common/types").CodeGenRouteType[]}
      */
     // @ts-ignore
     const groupRoutes = Object.values(groupStructure).filter(
@@ -98,7 +98,7 @@ export function generateOpenApiFile(structure, options) {
     }
 
     /**
-     * @type {import('./transform.js').TransformCodeGenType[]}
+     * @type {import("../../generated/common/types").CodeGenType[]}
      */
     // @ts-ignore
     const groupComponents = Object.values(groupStructure).filter(
@@ -136,8 +136,8 @@ export function generateOpenApiFile(structure, options) {
  * Transform routes to responses but wrapped with possible compas
  * error (http status codes) states (and explanation)
  *
- * @param {CodeGenStructure} structure
- * @param {CodeGenRouteType} route
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {import("../../generated/common/types").CodeGenRouteType} route
  */
 function constructResponse(structure, route) {
   const contentAppError = {

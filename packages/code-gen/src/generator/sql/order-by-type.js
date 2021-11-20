@@ -16,7 +16,7 @@ import { getSearchableFields } from "./where-type.js";
 /**
  * Creates a order by type and assigns in to the object type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function createOrderByTypes(context) {
   const orderByType = new StringType("compas", "sqlOrderBy")
@@ -130,7 +130,7 @@ export function createOrderByTypes(context) {
  * Working correctly, with or without dates. Supporting dynamic order by based on
  * searchable fields.
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getOrderByPartial(context, type) {

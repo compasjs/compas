@@ -21,7 +21,7 @@ import {
 /**
  * Generate query builders that include relations in to the query result via left joins
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
@@ -39,7 +39,7 @@ export function generateQueryBuilder(context, imports, type, src) {
 /**
  * Generate the necessary query builder types
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function createQueryBuilderTypes(context) {
   const T = new TypeCreator();
@@ -190,7 +190,7 @@ export function createQueryBuilderTypes(context) {
 /**
  * Generate the query builder and traverse parts for a type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
@@ -315,7 +315,7 @@ function queryBuilderForType(context, imports, type) {
  *
  * Self referencing works now based on name shadowing
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string} shortName
@@ -518,7 +518,7 @@ if (!isNil(builder.${key}.limit)) {
 /**
  * Generate a transform for the passed in type
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */

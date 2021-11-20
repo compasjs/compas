@@ -13,7 +13,7 @@ import { getWherePartial } from "./where-type.js";
 /**
  * Generate all useful query partials
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
@@ -98,7 +98,7 @@ export function knownFieldsCheckFunction() {
 
 /**
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {CodeGenObjectType} type
  */
 export function getFieldSet(context, type) {
@@ -110,7 +110,7 @@ export function getFieldSet(context, type) {
 /**
  * A list of fields for the provided type, with dynamic tableName
  *
- * @property {CodeGenContext} context
+ * @property {import("../../generated/common/types").CodeGenContext} context
  * @property {CodeGenObjectType} type
  * @returns {string}
  */

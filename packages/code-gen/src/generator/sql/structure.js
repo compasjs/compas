@@ -33,7 +33,7 @@ export const typeTable = {
 /**
  * Generates the sql structure, this can be used to create migration files from
  *
- * @param {CodeGenContext} context
+ * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function generateSqlStructure(context) {
   const partials = [

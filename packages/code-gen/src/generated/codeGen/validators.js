@@ -18,7 +18,6 @@ import {
   anonymousValidator1836970168,
   anonymousValidator2019605291,
   anonymousValidator20588538,
-  anonymousValidator2069957416,
   anonymousValidator243901689,
   anonymousValidator508679687,
   anonymousValidator682118687,
@@ -32,7 +31,7 @@ import {
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenAnyOfType>}
+ * @returns {Either<import("../common/types").CodeGenAnyOfType>}
  */
 export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   const result = anonymousValidator20588538(value, propertyPath);
@@ -52,13 +51,13 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenAnyOfType}} */
+  /** @type {{ value: import("../common/types").CodeGenAnyOfType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenAnyType>}
+ * @returns {Either<import("../common/types").CodeGenAnyType>}
  */
 export function validateCodeGenAnyType(value, propertyPath = "$") {
   const result = anonymousValidator1519740867(value, propertyPath);
@@ -78,13 +77,13 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenAnyType}} */
+  /** @type {{ value: import("../common/types").CodeGenAnyType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenArrayType>}
+ * @returns {Either<import("../common/types").CodeGenArrayType>}
  */
 export function validateCodeGenArrayType(value, propertyPath = "$") {
   const result = anonymousValidator1312175728(value, propertyPath);
@@ -104,13 +103,13 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenArrayType}} */
+  /** @type {{ value: import("../common/types").CodeGenArrayType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenBooleanType>}
+ * @returns {Either<import("../common/types").CodeGenBooleanType>}
  */
 export function validateCodeGenBooleanType(value, propertyPath = "$") {
   const result = anonymousValidator17476225(value, propertyPath);
@@ -130,13 +129,13 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenBooleanType}} */
+  /** @type {{ value: import("../common/types").CodeGenBooleanType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenContext>}
+ * @returns {Either<import("../common/types").CodeGenContext>}
  */
 export function validateCodeGenContext(value, propertyPath = "$") {
   const result = anonymousValidator980814292(value, propertyPath);
@@ -156,13 +155,13 @@ export function validateCodeGenContext(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenContext}} */
+  /** @type {{ value: import("../common/types").CodeGenContext}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenDateType>}
+ * @returns {Either<import("../common/types").CodeGenDateType>}
  */
 export function validateCodeGenDateType(value, propertyPath = "$") {
   const result = anonymousValidator2019605291(value, propertyPath);
@@ -182,13 +181,13 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenDateType}} */
+  /** @type {{ value: import("../common/types").CodeGenDateType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenFile>}
+ * @returns {Either<import("../common/types").CodeGenFile>}
  */
 export function validateCodeGenFile(value, propertyPath = "$") {
   const result = anonymousValidator682118687(value, propertyPath);
@@ -208,13 +207,13 @@ export function validateCodeGenFile(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenFile}} */
+  /** @type {{ value: import("../common/types").CodeGenFile}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenFileType>}
+ * @returns {Either<import("../common/types").CodeGenFileType>}
  */
 export function validateCodeGenFileType(value, propertyPath = "$") {
   const result = anonymousValidator508679687(value, propertyPath);
@@ -234,39 +233,13 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenFileType}} */
+  /** @type {{ value: import("../common/types").CodeGenFileType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenGenerateOpts>}
- */
-export function validateCodeGenGenerateOpts(value, propertyPath = "$") {
-  const result = anonymousValidator2069957416(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: CodeGenGenerateOpts}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenGenericType>}
+ * @returns {Either<import("../common/types").CodeGenGenericType>}
  */
 export function validateCodeGenGenericType(value, propertyPath = "$") {
   const result = anonymousValidator1377926226(value, propertyPath);
@@ -286,13 +259,13 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenGenericType}} */
+  /** @type {{ value: import("../common/types").CodeGenGenericType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenNumberType>}
+ * @returns {Either<import("../common/types").CodeGenNumberType>}
  */
 export function validateCodeGenNumberType(value, propertyPath = "$") {
   const result = anonymousValidator1441913722(value, propertyPath);
@@ -312,13 +285,13 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenNumberType}} */
+  /** @type {{ value: import("../common/types").CodeGenNumberType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenObjectType>}
+ * @returns {Either<import("../common/types").CodeGenObjectType>}
  */
 export function validateCodeGenObjectType(value, propertyPath = "$") {
   const result = anonymousValidator17105276(value, propertyPath);
@@ -338,13 +311,13 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenObjectType}} */
+  /** @type {{ value: import("../common/types").CodeGenObjectType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenReferenceType>}
+ * @returns {Either<import("../common/types").CodeGenReferenceType>}
  */
 export function validateCodeGenReferenceType(value, propertyPath = "$") {
   const result = anonymousValidator127554530(value, propertyPath);
@@ -364,13 +337,13 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenReferenceType}} */
+  /** @type {{ value: import("../common/types").CodeGenReferenceType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenRelationType>}
+ * @returns {Either<import("../common/types").CodeGenRelationType>}
  */
 export function validateCodeGenRelationType(value, propertyPath = "$") {
   const result = anonymousValidator243901689(value, propertyPath);
@@ -390,13 +363,13 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenRelationType}} */
+  /** @type {{ value: import("../common/types").CodeGenRelationType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenRouteType>}
+ * @returns {Either<import("../common/types").CodeGenRouteType>}
  */
 export function validateCodeGenRouteType(value, propertyPath = "$") {
   const result = anonymousValidator1390215584(value, propertyPath);
@@ -416,13 +389,13 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenRouteType}} */
+  /** @type {{ value: import("../common/types").CodeGenRouteType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenStringType>}
+ * @returns {Either<import("../common/types").CodeGenStringType>}
  */
 export function validateCodeGenStringType(value, propertyPath = "$") {
   const result = anonymousValidator1672152398(value, propertyPath);
@@ -442,13 +415,13 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenStringType}} */
+  /** @type {{ value: import("../common/types").CodeGenStringType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenStructure>}
+ * @returns {Either<import("../common/types").CodeGenStructure>}
  */
 export function validateCodeGenStructure(value, propertyPath = "$") {
   const result = anonymousValidator1413365072(value, propertyPath);
@@ -468,13 +441,13 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenStructure}} */
+  /** @type {{ value: import("../common/types").CodeGenStructure}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenTemplateState>}
+ * @returns {Either<import("../common/types").CodeGenTemplateState>}
  */
 export function validateCodeGenTemplateState(value, propertyPath = "$") {
   const result = anonymousValidator1664519436(value, propertyPath);
@@ -494,13 +467,13 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenTemplateState}} */
+  /** @type {{ value: import("../common/types").CodeGenTemplateState}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenType>}
+ * @returns {Either<import("../common/types").CodeGenType>}
  */
 export function validateCodeGenType(value, propertyPath = "$") {
   const result = anonymousValidator682551261(value, propertyPath);
@@ -520,13 +493,13 @@ export function validateCodeGenType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenType}} */
+  /** @type {{ value: import("../common/types").CodeGenType}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenTypeSettings>}
+ * @returns {Either<import("../common/types").CodeGenTypeSettings>}
  */
 export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   const result = anonymousValidator1287070944(value, propertyPath);
@@ -546,13 +519,13 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenTypeSettings}} */
+  /** @type {{ value: import("../common/types").CodeGenTypeSettings}} */
   return { value: result.value };
 }
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenUuidType>}
+ * @returns {Either<import("../common/types").CodeGenUuidType>}
  */
 export function validateCodeGenUuidType(value, propertyPath = "$") {
   const result = anonymousValidator1836970168(value, propertyPath);
@@ -572,6 +545,6 @@ export function validateCodeGenUuidType(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CodeGenUuidType}} */
+  /** @type {{ value: import("../common/types").CodeGenUuidType}} */
   return { value: result.value };
 }

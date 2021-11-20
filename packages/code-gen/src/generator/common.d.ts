@@ -4,7 +4,9 @@
  * generated output that is shared over all groups.
  * These generators will write to the common directory them selves.
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function generateCommonFiles(context: CodeGenContext): void;
+export function generateCommonFiles(
+  context: import("../generated/common/types").CodeGenContext,
+): void;
 //# sourceMappingURL=common.d.ts.map

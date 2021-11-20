@@ -2,26 +2,30 @@
  *
  * @param {Logger} logger
  * @param {GenerateOpts} options
- * @param {CodeGenStructure} structure
+ * @param {import("../generated/common/types").CodeGenStructure} structure
  * @returns {Promise<void>}
  */
 export function generate(
   logger: Logger,
   options: GenerateOpts,
-  structure: CodeGenStructure,
+  structure: import("../generated/common/types").CodeGenStructure,
 ): Promise<void>;
 /**
  * Use the fileHeader from options, and prefix all file contents with it
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function annotateFilesWithHeader(context: CodeGenContext): void;
+export function annotateFilesWithHeader(
+  context: import("../generated/common/types").CodeGenContext,
+): void;
 /**
  * Write out all files
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function writeFiles(context: CodeGenContext): void;
+export function writeFiles(
+  context: import("../generated/common/types").CodeGenContext,
+): void;
 /**
  * Check if we should generate ES Modules based on the package.json
  *

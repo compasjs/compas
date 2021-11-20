@@ -19,8 +19,13 @@ export async function main() {
 function cleanUpTypeDefinitionFiles() {
   const files = [];
   processDirectoryRecursiveSync(process.cwd(), (file) => {
-    // Exclude global generated types
     if (file.includes("types/generated/common/")) {
+      // Exclude global generated types
+      return;
+    }
+
+    if (file.includes("generated/common/types.d.ts")) {
+      // Exclude package specific types
       return;
     }
 

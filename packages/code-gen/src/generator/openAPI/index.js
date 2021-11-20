@@ -65,7 +65,7 @@ export async function generateOpenApi(logger, options) {
     structureGroups.filter((group) => group !== "compas");
 
   /**
-   * @type {CodeGenStructure}
+   * @type {import("../../generated/common/types").CodeGenStructure}
    */
   const extendedStructure = {};
   addGroupsToGeneratorInput(

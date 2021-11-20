@@ -5,192 +5,183 @@
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenAnyOfType>}
+ * @returns {Either<import("../common/types").CodeGenAnyOfType>}
  */
 export function validateCodeGenAnyOfType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenAnyOfType>;
+): Either<import("../common/types").CodeGenAnyOfType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenAnyType>}
+ * @returns {Either<import("../common/types").CodeGenAnyType>}
  */
 export function validateCodeGenAnyType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenAnyType>;
+): Either<import("../common/types").CodeGenAnyType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenArrayType>}
+ * @returns {Either<import("../common/types").CodeGenArrayType>}
  */
 export function validateCodeGenArrayType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenArrayType>;
+): Either<import("../common/types").CodeGenArrayType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenBooleanType>}
+ * @returns {Either<import("../common/types").CodeGenBooleanType>}
  */
 export function validateCodeGenBooleanType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenBooleanType>;
+): Either<import("../common/types").CodeGenBooleanType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenContext>}
+ * @returns {Either<import("../common/types").CodeGenContext>}
  */
 export function validateCodeGenContext(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenContext>;
+): Either<import("../common/types").CodeGenContext>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenDateType>}
+ * @returns {Either<import("../common/types").CodeGenDateType>}
  */
 export function validateCodeGenDateType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenDateType>;
+): Either<import("../common/types").CodeGenDateType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenFile>}
+ * @returns {Either<import("../common/types").CodeGenFile>}
  */
 export function validateCodeGenFile(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenFile>;
+): Either<import("../common/types").CodeGenFile>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenFileType>}
+ * @returns {Either<import("../common/types").CodeGenFileType>}
  */
 export function validateCodeGenFileType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenFileType>;
+): Either<import("../common/types").CodeGenFileType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenGenerateOpts>}
- */
-export function validateCodeGenGenerateOpts(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<CodeGenGenerateOpts>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenGenericType>}
+ * @returns {Either<import("../common/types").CodeGenGenericType>}
  */
 export function validateCodeGenGenericType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenGenericType>;
+): Either<import("../common/types").CodeGenGenericType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenNumberType>}
+ * @returns {Either<import("../common/types").CodeGenNumberType>}
  */
 export function validateCodeGenNumberType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenNumberType>;
+): Either<import("../common/types").CodeGenNumberType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenObjectType>}
+ * @returns {Either<import("../common/types").CodeGenObjectType>}
  */
 export function validateCodeGenObjectType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenObjectType>;
+): Either<import("../common/types").CodeGenObjectType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenReferenceType>}
+ * @returns {Either<import("../common/types").CodeGenReferenceType>}
  */
 export function validateCodeGenReferenceType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenReferenceType>;
+): Either<import("../common/types").CodeGenReferenceType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenRelationType>}
+ * @returns {Either<import("../common/types").CodeGenRelationType>}
  */
 export function validateCodeGenRelationType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenRelationType>;
+): Either<import("../common/types").CodeGenRelationType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenRouteType>}
+ * @returns {Either<import("../common/types").CodeGenRouteType>}
  */
 export function validateCodeGenRouteType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenRouteType>;
+): Either<import("../common/types").CodeGenRouteType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenStringType>}
+ * @returns {Either<import("../common/types").CodeGenStringType>}
  */
 export function validateCodeGenStringType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenStringType>;
+): Either<import("../common/types").CodeGenStringType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenStructure>}
+ * @returns {Either<import("../common/types").CodeGenStructure>}
  */
 export function validateCodeGenStructure(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenStructure>;
+): Either<import("../common/types").CodeGenStructure>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenTemplateState>}
+ * @returns {Either<import("../common/types").CodeGenTemplateState>}
  */
 export function validateCodeGenTemplateState(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenTemplateState>;
+): Either<import("../common/types").CodeGenTemplateState>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenType>}
+ * @returns {Either<import("../common/types").CodeGenType>}
  */
 export function validateCodeGenType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenType>;
+): Either<import("../common/types").CodeGenType>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenTypeSettings>}
+ * @returns {Either<import("../common/types").CodeGenTypeSettings>}
  */
 export function validateCodeGenTypeSettings(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenTypeSettings>;
+): Either<import("../common/types").CodeGenTypeSettings>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CodeGenUuidType>}
+ * @returns {Either<import("../common/types").CodeGenUuidType>}
  */
 export function validateCodeGenUuidType(
   value: undefined | any,
   propertyPath?: string | undefined,
-): Either<CodeGenUuidType>;
+): Either<import("../common/types").CodeGenUuidType>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map

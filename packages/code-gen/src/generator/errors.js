@@ -4,7 +4,7 @@ import { getHashForString } from "../utils.js";
  * If errors are present, they are printed and the process is exited.
  * Else this function will just return
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function exitOnErrorsOrReturn(context) {
   const errorHashes = new Set();

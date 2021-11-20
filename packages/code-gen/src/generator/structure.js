@@ -5,7 +5,7 @@ import { js } from "./tag/index.js";
  * If `options.dumpStructure` and/or `options.dumpApiStructure` is true, create a
  * structure.js file with the structure payload
  *
- * @param {CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function generateStructureFile(context) {
   let structureSource = "";
@@ -38,7 +38,7 @@ export function generateStructureFile(context) {
   }
 
   if (context.options.dumpApiStructure) {
-    /** @type {CodeGenStructure} */
+    /** @type {import("../generated/common/types").CodeGenStructure} */
     const apiStructure = {};
     // Create a new structure object with all routes
     for (const groupValues of Object.values(context.structure)) {
