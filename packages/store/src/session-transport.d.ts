@@ -81,14 +81,14 @@ export function sessionTransportLoadFromContext(
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("koa").Context} ctx
- * @param {{ accessToken: string, refreshToken: string }} [tokenPair]
+ * @param {{ accessToken: string, refreshToken: string }|undefined} tokenPair
  * @param {SessionTransportSettings} options
  * @returns <Promise<void>}
  */
 export function sessionTransportAddAsCookiesToContext(
   event: import("@compas/stdlib").InsightEvent,
   ctx: import("koa").Context,
-  tokenPair?:
+  tokenPair:
     | {
         accessToken: string;
         refreshToken: string;

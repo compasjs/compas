@@ -104,7 +104,7 @@ export async function sessionTransportLoadFromContext(event, sql, ctx, opts) {
     newEventFromEvent(event),
     sql,
     options.sessionStoreSettings,
-    accessToken,
+    accessToken ?? "",
   );
 
   eventStop(event);
@@ -121,7 +121,7 @@ export async function sessionTransportLoadFromContext(event, sql, ctx, opts) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("koa").Context} ctx
- * @param {{ accessToken: string, refreshToken: string }} [tokenPair]
+ * @param {{ accessToken: string, refreshToken: string }|undefined} tokenPair
  * @param {SessionTransportSettings} options
  * @returns <Promise<void>}
  */
@@ -154,7 +154,7 @@ export async function sessionTransportAddAsCookiesToContext(
       )
     : undefined;
 
-  for (const cookie of options.cookieOptions.cookies) {
+  for (const cookie of options.cookieOptions?.cookies ?? []) {
     const domain = getResolvedDomain(ctx, cookie.domain);
 
     ctx.cookies.set(
@@ -235,8 +235,12 @@ function validateSessionTransportSettings(opts) {
   }
 
   for (const cookieOpt of opts.cookieOptions.cookies) {
-    cookieOpt.cookiePrefix =
-      cookieOpt.cookiePrefix ?? opts.cookieOptions.cookiePrefix;
+    if (!cookieOpt.domain) {
+      throw AppError.serverError({
+        message: "Missing domain in SessionTransportCookieSettings",
+      });
+    }
+
     cookieOpt.sameSite = cookieOpt.sameSite ?? opts.cookieOptions.sameSite;
     cookieOpt.secure = cookieOpt.secure ?? opts.cookieOptions.secure;
   }
@@ -268,7 +272,7 @@ function sessionTransportLoadAuthorizationHeader(ctx) {
  * @param {Postgres} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} options
- * @returns {string|undefined}
+ * @returns {Promise<string|undefined>}
  */
 async function sessionTransportLoadCookies(event, sql, ctx, options) {
   eventStart(event, "sessionTransport.loadCookies");
@@ -327,7 +331,7 @@ async function sessionTransportLoadCookies(event, sql, ctx, options) {
  * @returns {string}
  */
 function getCookieName(options, suffix) {
-  return options.cookieOptions.cookiePrefix + suffix;
+  return (options.cookieOptions?.cookiePrefix ?? "") + suffix;
 }
 
 /**

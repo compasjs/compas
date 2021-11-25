@@ -93,7 +93,7 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
-   * @param {AppError|Error|undefined|null|{}|string|number|boolean|function} [e]
+   * @param {AppError|Error|undefined|null|{}|string|number|boolean|function|unknown} [e]
    * @returns {Record<string, any>}
    */
   static format(e) {
