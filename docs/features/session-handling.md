@@ -33,7 +33,12 @@ Let's take a look at the provided utilities by `@compas/store`. Most functions
 will return a `Either<X, AppError>`, meaning that callers should handle
 `returnValue.error` and handle these appropriately.
 
-### `sessionStoreSettings`
+### Session store
+
+Let's look at the primitives first. These do not require a specific way of
+transporting the JWT's over for example HTTP headers or cookies.
+
+#### `sessionStoreSettings`
 
 Session store settings is an object expected by various functions, containing
 the following properties:
@@ -46,7 +51,7 @@ the following properties:
   this value, all sessions will be invalidated. The value should be handled as a
   secret and should be generated in a secure random way.
 
-### `sessionStoreCreate`
+#### `sessionStoreCreate`
 
 Creates a new session with the provided `sessionData` and returns a token pair.
 
@@ -84,7 +89,7 @@ if (error) {
 - `error.server.internal` -> if for some reason the JWT signing library can't
   create the access or refresh token.
 
-### `sessionStoreGet`
+#### `sessionStoreGet`
 
 Get the session object from the `accessTokenString`. Note that this returns the
 full database backed object. The `id` is necessary for updating the session
@@ -141,7 +146,7 @@ if (error) {
   `sessionStoreInvalidate` or when a new token pair is issued via
   `sessionStoreRefreshTokens`.
 
-## `sessionStoreUpdate`
+#### `sessionStoreUpdate`
 
 Update the data stored for the provided session. This function will check if the
 object is changed and only do a database call when that is the case.
@@ -171,7 +176,7 @@ if (error) {
 `sessionStore.update.invalidSession` -> when the provided session has an invalid
 id or if the data is not a plain JS object.
 
-### `sessionStoreInvalidate`
+#### `sessionStoreInvalidate`
 
 Revoke all tokens for the provided session.
 
@@ -195,7 +200,7 @@ if (error) {
 - `sessionStore.invalidate.invalidSession` -> the provided session does not
   contain a valid identifier.
 
-### `sessionStoreRefreshTokens`
+#### `sessionStoreRefreshTokens`
 
 Get a new token pair via the provided refresh token. This invalidates the token
 pair that is used. To prevent refresh token stealing, it detects if the refresh
@@ -248,12 +253,193 @@ if (error) {
   for example `sessionStoreInvalidate` or when a new token pair is issued via
   `sessionStoreRefreshTokens`.
 
-### `sessionStoreCleanupExpiredSessions`
+#### `sessionStoreCleanupExpiredSessions`
 
 Cleanup tokens that are expired / revoked longer than 'maxRevokedAgeInDays' days
 ago. Also removes the session if no tokens exist anymore. Note that when tokens
 are removed, Compas can't detect refresh token reuse, which hints on session
 stealing. A good default may be 45 days.
+
+### Session transport
+
+Compas also supports ways of transporting the JWT's. For now limited to reading
+from the HTTP Authorization header and reading and writing to HTTP cookies.
+
+#### `SessionTransportSettings`
+
+An object that is expected by some session transport functions. Most of the
+properties have sensible defaults and are thus optional, but allow overriding.
+
+- `sessionStoreSettings` (`SessionStoreSettings`): Specify the session store
+  settings, this is passed to `sessionStoreGet` and helps decoding and verifying
+  tokens.
+
+The above properties are all required.
+
+- `enableHeaderTransport` (boolean): Enable or disable using the 'Authorization'
+  header for access token transport. Defaults to `true`.
+- `enableCookieTransport` (boolean): Enable or disable using HTTP cookies for
+  access and refresh token support.
+
+Transports are checked in the above order, and at least a single transport needs
+to be enabled.
+
+- `autoRefreshCookies` (boolean): Specifies if the cookie transport should
+  automatically try to refresh cookies. Defaults to `true`.
+- `headerOptions` (object): A still empty object to configure reading the header
+  transport.
+- `cookieOptions` (object): An object to configure reading and writing cookies.
+  - `cookiePrefix` (string): A prefix to use when formatting cookie names. See
+    the 'Cookie names' section below.
+  - `sameSite` ("strict"|"lax"): Configure the same site cookie option. Defaults
+    to 'lax'.
+  - `secure` (boolean): Configure the `Secure` property of cookies. Defaults to
+    `isProduction()`.
+  - `cookies` (SessionTransportCookieSettings[]): Array with cookies you want to
+    set. See ' SessionTransportCookieSettings' below for more information.
+    Defaults to `[{ domain: "own" }, { domain: "origin" }]`
+
+**Cookie names**
+
+Cookies always come in triples, `accessToken`, `refreshToken` and `public`. The
+`public` cookie is the only non-`httpOnly` cookie and is thus readable (and
+writeable, but not advisable) by client side JavaScript. These names can
+automatically be prefixed by specifying one of the following:
+
+- `options.cookieOptions.cookiePrefix` -> `$prefix$.accessToken`
+- `environment.APP_NAME` -> `$environment.APP_NAME$.accessToken`
+
+**SessionTransportCookieSettings**
+
+An object defining domains on which cookies need to be set. All properties
+except of `domain` default to the `cookieOptions.xxx` defined above. The cookie
+expiration is taken from the JWT's and the `public` cookie uses the same
+expiration from the refresh token.
+
+- `domain` ("own"|"origin"|string): The domain on which the cookie triplet is
+  set. 'Origin' reads the request origin header, and 'own' does not specify a
+  domain when setting the cookies.
+- `sameSite` ("strict"|"lax"): Set the 'SameSite' behaviour, defaults to
+  `cookieOptions.sameSite`.
+- `secure` (boolean): Set the `Secure` behaviour, defaults to
+  `cookieOptions.secure`.
+
+Some examples of which cookies are set based on the `cookies` array:
+
+- `[]` -> no cookies are sent
+- `[{ domain: "origin" }]` -> Three cookies (accessToken, refreshToken and
+  public) are set for the request origin domain.
+- `[{ domain: "own" }]` -> The cookie triplet is set without a domain, and thus
+  on the domain where the api lives.
+- `[{ domain: "api.example.com" }, { domain: "own" }]` -> Set's the triplet both
+  on `api.exmaple.com` as well as on the domain where the api is hosted on.
+
+#### `sessionTransportLoadFromContext`
+
+Tries to load the session based on the provided context and options.
+
+If `enableHeaderTransport` is set, the `Authorization` header is read first. The
+value is expected to be in the `Bearer $accessToken` format. When a token is
+found in the header, it is passed to [`sessionStoreGet`](#sessionstoreget) and
+the result is returned. If no access token is found, the following steps are
+taken.
+
+If `enableCookieTransport` is set, it will try to load a session from the
+cookies. When there is only an 'refreshToken' found, it will automatically
+refresh the tokens and set new cookies. For more information about setting the
+cookies, see
+[`sessionTransportAddAsCookiesToContext`](#sessiontransportaddascookiestocontext)
+
+**Example**:
+
+```js
+import { sessionTransportLoadFromContext } from "@compas/store";
+import { getApp } from "@compas/server";
+
+const sessionStoreSettings = {
+  accessTokenMaxAgeInSeconds: 5 * 60, // 5 minutes
+  refreshTokenMaxAgeInSeconds: 24 * 60 * 60, // 24 hours
+  signingKey: "secure key loaded from secure place",
+};
+
+const sessionTransportSettings = {
+  sessionStoreSettings, // use defaults
+};
+
+const app = getApp();
+app.use(async (ctx, next) => {
+  const { error, value: session } = await sessionTransportLoadFromContext(
+    newEventFromEvent(ctx.event),
+    sql,
+    ctx,
+    sessionTransportSettings,
+  );
+
+  if (error) {
+    // handle error
+  } else {
+    // return token pair to the caller
+  }
+});
+```
+
+**Errors**:
+
+- Infers all errors from [`sessionStoreGet`](#sessionstoreget)
+- `error.server.internal` -> if the provided `SessionTransportSettings` are
+  invalid.
+
+#### `sessionTransportAddAsCookiesToContext`
+
+Set new cookies based on the provided `tokenPair` and supports invalidating the
+cookies when no `tokenPair` is provided. See [`SessionTransportSettings`] for
+more information about how cookies are set.
+
+**Example**:
+
+```js
+import {
+  sessionTransportAddAsCookiesToContext,
+  sessionStoreCreate,
+} from "@compas/store";
+import { getApp } from "@compas/server";
+
+const sessionStoreSettings = {
+  accessTokenMaxAgeInSeconds: 5 * 60, // 5 minutes
+  refreshTokenMaxAgeInSeconds: 24 * 60 * 60, // 24 hours
+  signingKey: "secure key loaded from secure place",
+};
+
+const sessionTransportSettings = {
+  sessionStoreSettings, // use defaults
+};
+
+const app = getApp();
+app.use(async (ctx, next) => {
+  const tokenPair = await sessionStoreCreate(
+    newEventFromEvent(ctx.event),
+    sql,
+    sessionStoreSettings,
+    {},
+  );
+  if (tokenPair.error) {
+    // handle error
+  }
+
+  await sessionTransportAddAsCookiesToContext(
+    newEventFromEvent(ctx.event),
+    ctx,
+    tokenPair.value,
+    sessionTransportSettings,
+  );
+});
+```
+
+**Errors**:
+
+- Infers all errors from [`sessionStoreGet`](#sessionstoreget)
+- `error.server.internal` -> if the provided `SessionTransportSettings` are
+  invalid.
 
 ## Cookie based
 

@@ -655,6 +655,14 @@ export async function sessionStoreVerifyAndDecodeJWT(
 ) {
   eventStart(event, "sessionStore.verifyAndDecodeJWT");
 
+  if (isNil(tokenString) || tokenString.length === 0) {
+    eventStop(event);
+
+    return {
+      error: AppError.validationError(`${event.name}.missingToken`),
+    };
+  }
+
   const { value, error } = await new Promise((resolve) => {
     createVerify({
       signature: tokenString,

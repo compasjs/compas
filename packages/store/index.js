@@ -27,6 +27,10 @@
  * @typedef {import("./src/session-store.js").SessionStoreSettings} SessionStoreSettings
  */
 
+/**
+ * @typedef {import("./src/session-transport.js").SessionTransportSettings} SessionTransportSettings
+ */
+
 export { structure as storeStructure } from "./src/generated/common/structure.js";
 export { queries as storeQueries } from "./src/generated/database/index.js";
 
@@ -90,6 +94,11 @@ export {
   sessionStoreRefreshTokens,
   sessionStoreCleanupExpiredSessions,
 } from "./src/session-store.js";
+
+export {
+  sessionTransportLoadFromContext,
+  sessionTransportAddAsCookiesToContext,
+} from "./src/session-transport.js";
 
 export { newSessionStore } from "./src/sessions.js";
 

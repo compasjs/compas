@@ -14,6 +14,8 @@ export type GetStreamFn = import("./src/send-transformed-image").GetStreamFn;
 export type SessionStore = import("./src/sessions.js").SessionStore;
 export type SessionStoreSettings =
   import("./src/session-store.js").SessionStoreSettings;
+export type SessionTransportSettings =
+  import("./src/session-transport.js").SessionTransportSettings;
 export {
   newMinioClient,
   minio,
@@ -61,6 +63,10 @@ export {
   sessionStoreRefreshTokens,
   sessionStoreCleanupExpiredSessions,
 } from "./src/session-store.js";
+export {
+  sessionTransportLoadFromContext,
+  sessionTransportAddAsCookiesToContext,
+} from "./src/session-transport.js";
 export {
   query,
   isQueryPart,
