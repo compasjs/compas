@@ -4,6 +4,55 @@ editLink: false
 
 # Changelog
 
+### [v0.0.176](https://github.com/compasjs/compas/releases/tag/v0.0.176)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.11.7 to 16.11.10
+  ([#1362](https://github.com/compasjs/compas/pull/1362),
+  [#1369](https://github.com/compasjs/compas/pull/1369),
+  [#1375](https://github.com/compasjs/compas/pull/1375))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.2.0 to 8.3.0
+  ([#1371](https://github.com/compasjs/compas/pull/1371))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 7.2.0 to 7.4.1
+  ([#1363](https://github.com/compasjs/compas/pull/1363),
+  [#1374](https://github.com/compasjs/compas/pull/1374),
+  [#1377](https://github.com/compasjs/compas/pull/1377))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump postgres from 2.0.0-beta.10 to 2.0.0-beta.11
+  ([#1358](https://github.com/compasjs/compas/pull/1358))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump prettier from 2.4.1 to 2.5.0
+  ([#1381](https://github.com/compasjs/compas/pull/1381))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- chore(code-gen): remove unnecessary logs in react-query generator
+  ([#1364](https://github.com/compasjs/compas/pull/1364))
+- feat(code-gen): rename `loadFromRemote` to `loadApiStructureFromRemote`
+  ([#1365](https://github.com/compasjs/compas/pull/1365))
+  - Closes [#1351](https://github.com/compasjs/compas/pull/1351)
+- feat(code-gen): support `declareGlobalTypes: false` as generate option for
+  packages ([#1367](https://github.com/compasjs/compas/pull/1367))
+- feat(store): add session transports
+  ([#1380](https://github.com/compasjs/compas/pull/1380))
+- fix(code-gen): fix types of validated files in the router
+  ([#1366](https://github.com/compasjs/compas/pull/1366))
+  - Closes [#1350](https://github.com/compasjs/compas/pull/1350)
+- fix(code-gen): openapi exporter support for multiple methods within the same
+  path ([#1361](https://github.com/compasjs/compas/pull/1361))
+- fix(code-gen): pickType error typo fix
+  ([#1357](https://github.com/compasjs/compas/pull/1357))
+
+##### Breaking changes
+
+- **code-gen**: rename `loadFromRemote` to `loadApiStructureFromRemote`
+
+Read more on session transports in the
+[docs](https://compasjs.com/features/session-handling.html#session-transport).
+
+Thanks to @tjonger and @kaliumxyz for their contributions!
+
 ### [v0.0.175](https://github.com/compasjs/compas/releases/tag/v0.0.175)
 
 ##### Changes
