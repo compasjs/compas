@@ -78,32 +78,37 @@ import {
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {import("koa").Context} ctx
- * @param {SessionTransportSettings} opts
+ * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
-export async function sessionTransportLoadFromContext(event, sql, ctx, opts) {
+export async function sessionTransportLoadFromContext(
+  event,
+  sql,
+  ctx,
+  settings,
+) {
   eventStart(event, "sessionTransport.loadFromContext");
 
-  const options = validateSessionTransportSettings(opts);
+  validateSessionTransportSettings(settings);
 
   let accessToken;
-  if (options.enableHeaderTransport) {
+  if (settings.enableHeaderTransport) {
     accessToken = sessionTransportLoadAuthorizationHeader(ctx);
   }
 
-  if (!accessToken && options.enableCookieTransport) {
+  if (!accessToken && settings.enableCookieTransport) {
     accessToken = await sessionTransportLoadCookies(
       newEventFromEvent(event),
       sql,
       ctx,
-      options,
+      settings,
     );
   }
 
   const session = await sessionStoreGet(
     newEventFromEvent(event),
     sql,
-    options.sessionStoreSettings,
+    settings.sessionStoreSettings,
     accessToken ?? "",
   );
 
@@ -122,18 +127,20 @@ export async function sessionTransportLoadFromContext(event, sql, ctx, opts) {
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("koa").Context} ctx
  * @param {{ accessToken: string, refreshToken: string }|undefined} tokenPair
- * @param {SessionTransportSettings} options
+ * @param {SessionTransportSettings} settings
  * @returns <Promise<void>}
  */
 export async function sessionTransportAddAsCookiesToContext(
   event,
   ctx,
   tokenPair,
-  options,
+  settings,
 ) {
   eventStart(event, "sessionTransport.addAsCookiesToContext");
 
-  if (!options.enableCookieTransport) {
+  validateSessionTransportSettings(settings);
+
+  if (!settings.enableCookieTransport) {
     throw AppError.serverError({
       message: "Can't set cookies if the cookie transport is disabled.",
     });
@@ -142,23 +149,26 @@ export async function sessionTransportAddAsCookiesToContext(
   const accessToken = tokenPair?.accessToken
     ? await sessionStoreVerifyAndDecodeJWT(
         newEventFromEvent(event),
-        options.sessionStoreSettings,
+        settings.sessionStoreSettings,
         tokenPair.accessToken,
       )
     : undefined;
   const refreshToken = tokenPair?.refreshToken
     ? await sessionStoreVerifyAndDecodeJWT(
         newEventFromEvent(event),
-        options.sessionStoreSettings,
+        settings.sessionStoreSettings,
         tokenPair.refreshToken,
       )
     : undefined;
 
-  for (const cookie of options.cookieOptions?.cookies ?? []) {
+  for (const cookie of settings.cookieOptions?.cookies ?? []) {
     const domain = getResolvedDomain(ctx, cookie.domain);
+    if (cookie.domain === "origin" && isNil(domain)) {
+      continue;
+    }
 
     ctx.cookies.set(
-      getCookieName(options, "accessToken"),
+      getCookieName(settings, "accessToken"),
       tokenPair?.accessToken,
       {
         expires: new Date((accessToken?.value?.payload?.exp ?? 0) * 1000),
@@ -169,7 +179,7 @@ export async function sessionTransportAddAsCookiesToContext(
       },
     );
     ctx.cookies.set(
-      getCookieName(options, "refreshToken"),
+      getCookieName(settings, "refreshToken"),
       tokenPair?.refreshToken,
       {
         expires: new Date((refreshToken?.value?.payload?.exp ?? 0) * 1000),
@@ -183,7 +193,7 @@ export async function sessionTransportAddAsCookiesToContext(
     // Maintain a JS readable public cookie so the frontend can do logic without
     // executing requests.
     ctx.cookies.set(
-      getCookieName(options, "public"),
+      getCookieName(settings, "public"),
       tokenPair?.refreshToken ? "truthy" : undefined,
       {
         expires: new Date((refreshToken?.value?.payload?.exp ?? 0) * 1000),
@@ -203,7 +213,7 @@ export async function sessionTransportAddAsCookiesToContext(
  * @param {SessionTransportSettings} opts
  * @returns {SessionTransportSettings}
  */
-function validateSessionTransportSettings(opts) {
+export function validateSessionTransportSettings(opts) {
   opts.enableHeaderTransport = opts.enableHeaderTransport ?? true;
   opts.enableCookieTransport = opts.enableCookieTransport ?? true;
   opts.headerOptions = opts.headerOptions ?? {};
@@ -224,6 +234,13 @@ function validateSessionTransportSettings(opts) {
     throw AppError.serverError({
       message:
         "Invalid session transport settings. Either needs `enableHeaderTransport` or `enabledCookieTransport` set.",
+    });
+  }
+
+  if (opts.cookieOptions.cookies.length === 0) {
+    throw AppError.serverError({
+      message:
+        "If a cookies array is provided on 'cookieOptions' at least a single item is required.",
     });
   }
 
@@ -282,8 +299,7 @@ async function sessionTransportLoadCookies(event, sql, ctx, options) {
 
   if (
     options.autoRefreshCookies &&
-    !isNil(accessToken) &&
-    accessToken.length === 0 &&
+    (isNil(accessToken) || accessToken.length === 0) &&
     !isNil(refreshToken) &&
     refreshToken.length > 0
   ) {
