@@ -136,6 +136,7 @@ export async function generateTypes(logger, options) {
           type SessionStore = store.SessionStore;
           type FileCache = store.FileCache;
           type SessionStoreSettings = store.SessionStoreSettings;
+          type SessionTransportSettings = store.SessionTransportSettings;
           `;
       } else if (generator === "server") {
         contents += `
