@@ -279,7 +279,7 @@ The above properties are all required.
 - `enableHeaderTransport` (boolean): Enable or disable using the 'Authorization'
   header for access token transport. Defaults to `true`.
 - `enableCookieTransport` (boolean): Enable or disable using HTTP cookies for
-  access and refresh token support.
+  access and refresh token support. Defaults to `true`.
 
 Transports are checked in the above order, and at least a single transport needs
 to be enabled.
