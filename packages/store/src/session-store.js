@@ -338,12 +338,14 @@ export async function sessionStoreRefreshTokens(
       storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
         Date.now())
   ) {
-    await sessionStoreReportAndRevokeLeakedSession(
-      newEventFromEvent(event),
-      sql,
-      // @ts-ignore
-      storeToken.session.id,
-    );
+    if (isNil(storeToken.session.revokedAt)) {
+      await sessionStoreReportAndRevokeLeakedSession(
+        newEventFromEvent(event),
+        sql,
+        // @ts-ignore
+        storeToken.session.id,
+      );
+    }
 
     eventStop(event);
     return {

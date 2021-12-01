@@ -545,13 +545,16 @@ test("store/session-store", (t) => {
       const customSessionInfo = await createSession();
       const startJobs = await getUncompletedJobsByName(sql);
 
-      await queries.sessionStoreUpdate(
+      const revokedAt = new Date();
+      revokedAt.setDate(revokedAt.getDate() - 2);
+
+      await queries.sessionStoreTokenUpdate(
         sql,
         {
-          revokedAt: new Date(),
+          revokedAt,
         },
         {
-          id: customSessionInfo.session.id,
+          id: customSessionInfo.session.accessTokens[0].refreshToken.id,
         },
       );
 
