@@ -57,14 +57,14 @@
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {import("koa").Context} ctx
- * @param {SessionTransportSettings} opts
+ * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionTransportLoadFromContext(
   event: InsightEvent,
   sql: Postgres,
   ctx: import("koa").Context,
-  opts: SessionTransportSettings,
+  settings: SessionTransportSettings,
 ): Promise<
   import("@compas/stdlib").Either<
     {
@@ -82,7 +82,7 @@ export function sessionTransportLoadFromContext(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("koa").Context} ctx
  * @param {{ accessToken: string, refreshToken: string }|undefined} tokenPair
- * @param {SessionTransportSettings} options
+ * @param {SessionTransportSettings} settings
  * @returns <Promise<void>}
  */
 export function sessionTransportAddAsCookiesToContext(
@@ -94,8 +94,16 @@ export function sessionTransportAddAsCookiesToContext(
         refreshToken: string;
       }
     | undefined,
-  options: SessionTransportSettings,
+  settings: SessionTransportSettings,
 ): Promise<void>;
+/**
+ *
+ * @param {SessionTransportSettings} opts
+ * @returns {SessionTransportSettings}
+ */
+export function validateSessionTransportSettings(
+  opts: SessionTransportSettings,
+): SessionTransportSettings;
 export type SessionStoreSettings =
   import("./session-store").SessionStoreSettings;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
