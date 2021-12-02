@@ -4,6 +4,27 @@ editLink: false
 
 # Changelog
 
+### [v0.0.177](https://github.com/compasjs/compas/releases/tag/v0.0.177)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.11.10 to 16.11.11
+  ([#1385](https://github.com/compasjs/compas/pull/1385))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.0.3 to 37.1.0
+  ([#1390](https://github.com/compasjs/compas/pull/1390))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump pino from 7.4.1 to 7.5.1
+  ([#1384](https://github.com/compasjs/compas/pull/1384),
+  [#1388](https://github.com/compasjs/compas/pull/1388))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- docs(session-handling): mention default of 'enableCookieTransport'
+- feat(code-gen): add `SessionTransportSettings` to `dumpCompasTypes`
+- feat(code-gen): validate `defaultGroup` when extending with OpenAPI
+  ([#1391](https://github.com/compasjs/compas/pull/1391))
+- fix(code-gen): don't report leaked sessions if the complete session is
+  invalidated ([#1387](https://github.com/compasjs/compas/pull/1387))
+
 ### [v0.0.176](https://github.com/compasjs/compas/releases/tag/v0.0.176)
 
 ##### Changes
