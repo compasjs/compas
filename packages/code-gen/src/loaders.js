@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "@compas/stdlib";
+import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 /**
@@ -26,6 +26,16 @@ export async function loadApiStructureFromRemote(Axios, url) {
 export function loadFromOpenAPISpec(defaultGroup, data) {
   if (!isPlainObject(data)) {
     throw new TypeError("Expecting a plain js object");
+  }
+
+  if (
+    typeof defaultGroup !== "string" ||
+    defaultGroup.length === 0 ||
+    /[^\w]/g.test(defaultGroup)
+  ) {
+    throw AppError.serverError({
+      message: `The 'defaultGroup' passed to 'app.extendWithOpenAPI' should be a 'camelCase' name, found '${defaultGroup}'.`,
+    });
   }
 
   return convertOpenAPISpec(defaultGroup, data);
