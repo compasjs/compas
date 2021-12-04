@@ -8,7 +8,7 @@ export let sql = undefined;
 /**
  * Inject services that can be used in tests across this repo.
  *
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function injectTestServices() {
   sql = await createTestPostgresDatabase();
@@ -17,7 +17,7 @@ export async function injectTestServices() {
 /**
  * Destroy services that are used for testing
  *
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function destroyTestServices() {
   await sql.end({});

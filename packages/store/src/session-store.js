@@ -727,7 +727,7 @@ function sessionStoreChecksumForData(data) {
  * Validate session store settings
  *
  * @param {any} input
- * @return {Either<void>}
+ * @returns {Either<void>}
  */
 function validateSessionStoreSettings(input) {
   const errObject = {};

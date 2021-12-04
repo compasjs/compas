@@ -269,7 +269,7 @@ export function validateSessionTransportSettings(opts) {
  * Read the authorization header from the Koa context
  *
  * @param {import("koa").Context} ctx
- * @return {string|undefined}
+ * @returns {string|undefined}
  */
 function sessionTransportLoadAuthorizationHeader(ctx) {
   const header = ctx.headers?.["authorization"] ?? "";
@@ -355,7 +355,7 @@ function getCookieName(options, suffix) {
  *
  * @param {import("koa").Context} ctx
  * @param {"own"|"origin"|string} domain
- * @return {undefined|string}
+ * @returns {undefined|string}
  */
 function getResolvedDomain(ctx, domain) {
   if (domain === "own") {

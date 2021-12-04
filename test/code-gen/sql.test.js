@@ -20,7 +20,7 @@ mainTestFn(import.meta);
  *     post2: Post{ categories: [category1, category2] }
  *   ]
  *
- * @return {Promise<{category: SqlCategory[], user: SqlUser, posts: SqlPost[]}>}
+ * @returns {Promise<{category: SqlCategory[], user: SqlUser, posts: SqlPost[]}>}
  */
 async function sqlTestSeed() {
   const [user] = await queries.userInsert(sql, {
