@@ -1,5 +1,10 @@
 import { createReadStream } from "fs";
-import { uuid } from "@compas/stdlib";
+import { AppError, isNil, uuid } from "@compas/stdlib";
+import {
+  fileTypeFromBuffer,
+  fileTypeFromFile,
+  fileTypeStream,
+} from "file-type";
 import mime from "mime-types";
 import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
@@ -16,23 +21,29 @@ import { query } from "./query.js";
 
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
-     INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
-     SELECT ${targetId},
-            ${targetBucket},
-            "contentType",
-            "contentLength",
-            "name",
-            "meta"
-     FROM "file"
-     WHERE
-       id = ${sourceId}
-     AND "bucketName" = ${sourceBucket}
-     RETURNING id
-   `,
+    INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
+    SELECT ${targetId},
+           ${targetBucket},
+           "contentType",
+           "contentLength",
+           "name",
+           "meta"
+    FROM "file"
+    WHERE
+      id = ${sourceId}
+    AND "bucketName" = ${sourceBucket}
+    RETURNING id
+  `,
 };
 
 /**
  * Create or update a file. The file store is backed by a Postgres table and S3 object.
+ * If no 'contentType' is passed, it is inferred from the 'magic bytes' from the source.
+ * Defaulting to a wildcard.
+ *
+ * By passing in an `allowedContentTypes` array via the last options object, it is
+ * possible to validate the inferred content type. This also overwrites the passed in
+ * content type.
  *
  * @since 0.1.0
  *
@@ -56,6 +67,9 @@ const fileQueries = {
  *  deletedAt?: undefined | Date;
  * }} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
+ * @param {{
+ *   allowedContentTypes?: string[]
+ * }} [options]
  * @returns {Promise<StoreFile>}
  */
 export async function createOrUpdateFile(
@@ -64,16 +78,54 @@ export async function createOrUpdateFile(
   bucketName,
   props,
   source,
+  { allowedContentTypes } = {},
 ) {
   if (!props.name) {
-    throw new Error("name is required on file props");
+    throw AppError.validationError("store.createOrUpdateFile.invalidName");
   }
 
-  if (!props.contentType) {
-    props.contentType = mime.lookup(props.name) || "*/*";
+  if (
+    Array.isArray(allowedContentTypes) ||
+    isNil(props.contentType) ||
+    props.contentType === "*/*"
+  ) {
+    let contentType = undefined;
+
+    if (source instanceof Uint8Array || source instanceof ArrayBuffer) {
+      const result = await fileTypeFromBuffer(source);
+      contentType = result?.mime;
+    } else if (typeof source === "string") {
+      const result = await fileTypeFromFile(source);
+      contentType = result?.mime;
+    } else if (
+      typeof source?.pipe === "function" &&
+      typeof source?._read === "function"
+    ) {
+      const sourceWithFileType = await fileTypeStream(source);
+
+      // Set source to the new pass through stream created by `fileTypeStream`
+      source = sourceWithFileType;
+      contentType = sourceWithFileType.fileType?.mime;
+    }
+
+    props.contentType = contentType ?? mime.lookup(props.name) ?? "*/*";
+
+    if (
+      Array.isArray(allowedContentTypes) &&
+      !allowedContentTypes.includes(props.contentType)
+    ) {
+      throw AppError.validationError(
+        "store.createOrUpdateFile.invalidContentType",
+        {
+          found: props.contentType,
+          allowed: allowedContentTypes,
+        },
+      );
+    }
   }
 
   props.bucketName = bucketName;
+  props.meta = props.meta ?? {};
 
   // Do a manual insert first to get an id
   if (!props.id) {

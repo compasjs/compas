@@ -3,7 +3,6 @@ import {
   createTestPostgresDatabase,
   setPostgresDatabaseTemplate,
   setStoreQueries,
-  storeQueries,
 } from "@compas/store";
 import { destroyTestServices, injectTestServices } from "../src/testing.js";
 
@@ -15,7 +14,9 @@ export async function setup() {
   const sql = await createTestPostgresDatabase();
   await setPostgresDatabaseTemplate(sql);
 
-  setStoreQueries(storeQueries);
+  setStoreQueries(
+    (await import("../packages/store/src/generated/database/index.js")).queries,
+  );
 
   await sql.end({ timeout: 0 });
 

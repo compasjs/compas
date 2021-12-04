@@ -211,7 +211,7 @@ function getTypes(T) {
     ...typeBase,
     validator: T.object()
       .keys({
-        mimeTypes: T.array().values(T.string()).optional(),
+        allowedContentTypes: T.array().values(T.string()).optional(),
       })
       .default("{}")
       .loose(),
