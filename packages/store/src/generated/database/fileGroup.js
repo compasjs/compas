@@ -12,6 +12,7 @@ import {
 import {
   fileOrderBy,
   fileWhere,
+  fileWhereSpec,
   internalQueryFile,
   transformFile,
 } from "./file.js";
@@ -84,6 +85,17 @@ export const fileGroupWhereSpec = {
         { matcherKey: "fileNotIn", matcherType: "notIn" },
         { matcherKey: "fileIsNull", matcherType: "isNull" },
         { matcherKey: "fileIsNotNull", matcherType: "isNotNull" },
+        {
+          matcherKey: "viaFile",
+          matcherType: "via",
+          relation: {
+            entityName: "file",
+            shortName: "f",
+            entityKey: "id",
+            referencedKey: "file",
+            where: () => fileWhereSpec,
+          },
+        },
       ],
     },
     {
@@ -96,6 +108,17 @@ export const fileGroupWhereSpec = {
         { matcherKey: "parentNotIn", matcherType: "notIn" },
         { matcherKey: "parentIsNull", matcherType: "isNull" },
         { matcherKey: "parentIsNotNull", matcherType: "isNotNull" },
+        {
+          matcherKey: "viaParent",
+          matcherType: "via",
+          relation: {
+            entityName: "fileGroup",
+            shortName: "fg2",
+            entityKey: "id",
+            referencedKey: "parent",
+            where: "self",
+          },
+        },
       ],
     },
     {
@@ -146,6 +169,17 @@ export const fileGroupWhereSpec = {
       tableKey: "children",
       keyType: "undefined",
       matchers: [
+        {
+          matcherKey: "viaChildren",
+          matcherType: "via",
+          relation: {
+            entityName: "fileGroup",
+            shortName: "fg2",
+            entityKey: "parent",
+            referencedKey: "id",
+            where: "self",
+          },
+        },
         {
           matcherKey: "childrenExists",
           matcherType: "exists",

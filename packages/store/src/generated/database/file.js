@@ -124,6 +124,17 @@ export const fileWhereSpec = {
       keyType: "undefined",
       matchers: [
         {
+          matcherKey: "viaGroup",
+          matcherType: "via",
+          relation: {
+            entityName: "fileGroup",
+            shortName: "fg",
+            entityKey: "file",
+            referencedKey: "id",
+            where: () => fileGroupWhereSpec,
+          },
+        },
+        {
           matcherKey: "groupExists",
           matcherType: "exists",
           relation: {

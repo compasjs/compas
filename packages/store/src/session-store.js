@@ -338,6 +338,7 @@ export async function sessionStoreRefreshTokens(
       storeToken.revokedAt.getTime() + REFRESH_TOKEN_GRACE_PERIOD_IN_MS <
         Date.now())
   ) {
+    // @ts-ignore
     if (isNil(storeToken.session.revokedAt)) {
       await sessionStoreReportAndRevokeLeakedSession(
         newEventFromEvent(event),

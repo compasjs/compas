@@ -103,6 +103,10 @@ function getHomeSidebar() {
           link: "/features/code-gen-api-client.html",
         },
         {
+          text: "Code generation SQL queries",
+          link: "/features/code-gen-sql.html",
+        },
+        {
           text: "Postgres migrations",
           link: "/features/migrations.html",
         },

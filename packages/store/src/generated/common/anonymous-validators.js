@@ -122,9 +122,11 @@ const objectKeys2074494218 = new Set([
   "deletedAtGreaterThan",
   "deletedAtLowerThan",
   "deletedAtIncludeNotNull",
+  "viaGroup",
   "groupExists",
   "groupNotExists",
 ]);
+const objectKeys495895385 = new Set(["where", "limit", "offset"]);
 const objectKeys153017499 = new Set([
   "$raw",
   "$or",
@@ -175,9 +177,13 @@ const objectKeys153017499 = new Set([
   "deletedAtGreaterThan",
   "deletedAtLowerThan",
   "deletedAtIncludeNotNull",
+  "viaFile",
+  "viaParent",
+  "viaChildren",
   "childrenExists",
   "childrenNotExists",
 ]);
+const objectKeys1854593336 = new Set(["where", "limit", "offset"]);
 const objectKeys1257773835 = new Set([
   "$raw",
   "$or",
@@ -275,9 +281,11 @@ const objectKeys1334934277 = new Set([
   "updatedAtLowerThan",
   "updatedAtIsNull",
   "updatedAtIsNotNull",
+  "viaAccessTokens",
   "accessTokensExists",
   "accessTokensNotExists",
 ]);
+const objectKeys600974204 = new Set(["where", "limit", "offset"]);
 const objectKeys1430489818 = new Set([
   "$raw",
   "$or",
@@ -309,9 +317,13 @@ const objectKeys1430489818 = new Set([
   "revokedAtLowerThan",
   "revokedAtIsNull",
   "revokedAtIsNotNull",
+  "viaSession",
+  "viaRefreshToken",
+  "viaAccessToken",
   "accessTokenExists",
   "accessTokenNotExists",
 ]);
+const objectKeys1577551207 = new Set(["where", "limit", "offset"]);
 const objectKeys163358845 = new Set([
   "id",
   "bucketName",
@@ -2435,7 +2447,76 @@ export function anonymousValidator1243460791(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "childrenExists"?: undefined|StoreFileGroupWhere, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
+ * @returns {EitherN<undefined|StoreFileWhere>}
+ */
+export function anonymousValidator65842827(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator2074494218(value, propertyPath);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ */
+export function anonymousValidator1854593336(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1854593336.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["where", anonymousValidator65842827],
+    ["limit", anonymousValidator963028965],
+    ["offset", anonymousValidator963028965],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "viaFile"?: undefined|{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaParent"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaChildren"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "childrenExists"?: undefined|StoreFileGroupWhere, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
  */
 export function anonymousValidator153017499(value, propertyPath) {
   if (isNil(value)) {
@@ -2531,6 +2612,9 @@ export function anonymousValidator153017499(value, propertyPath) {
     ["deletedAtGreaterThan", anonymousValidator1988053796],
     ["deletedAtLowerThan", anonymousValidator1988053796],
     ["deletedAtIncludeNotNull", anonymousValidator196147222],
+    ["viaFile", anonymousValidator1854593336],
+    ["viaParent", anonymousValidator495895385],
+    ["viaChildren", anonymousValidator495895385],
     ["childrenExists", anonymousValidator481156646],
     ["childrenNotExists", anonymousValidator481156646],
   ];
@@ -2561,7 +2645,65 @@ export function anonymousValidator481156646(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "groupExists"?: undefined|StoreFileGroupWhere, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
+ * @returns {EitherN<undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ */
+export function anonymousValidator495895385(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys495895385.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["where", anonymousValidator481156646],
+    ["limit", anonymousValidator963028965],
+    ["offset", anonymousValidator963028965],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "viaGroup"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "groupExists"?: undefined|StoreFileGroupWhere, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
  */
 export function anonymousValidator2074494218(value, propertyPath) {
   if (isNil(value)) {
@@ -2644,6 +2786,7 @@ export function anonymousValidator2074494218(value, propertyPath) {
     ["deletedAtGreaterThan", anonymousValidator1988053796],
     ["deletedAtLowerThan", anonymousValidator1988053796],
     ["deletedAtIncludeNotNull", anonymousValidator196147222],
+    ["viaGroup", anonymousValidator495895385],
     ["groupExists", anonymousValidator481156646],
     ["groupNotExists", anonymousValidator481156646],
   ];
@@ -3159,7 +3302,76 @@ export function anonymousValidator1886215561(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreTokenWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "session"?: undefined|string, "sessionNotEqual"?: undefined|string, "sessionIn"?: undefined|(string)[]|QueryPart<any>, "sessionNotIn"?: undefined|(string)[]|QueryPart<any>, "expiresAt"?: undefined|Date, "expiresAtNotEqual"?: undefined|Date, "expiresAtIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtGreaterThan"?: undefined|Date, "expiresAtLowerThan"?: undefined|Date, "refreshToken"?: undefined|string, "refreshTokenNotEqual"?: undefined|string, "refreshTokenIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenNotIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenIsNull"?: undefined|boolean, "refreshTokenIsNotNull"?: undefined|boolean, "revokedAt"?: undefined|Date, "revokedAtNotEqual"?: undefined|Date, "revokedAtIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtGreaterThan"?: undefined|Date, "revokedAtLowerThan"?: undefined|Date, "revokedAtIsNull"?: undefined|boolean, "revokedAtIsNotNull"?: undefined|boolean, "accessTokenExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokenNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
+ * @returns {EitherN<undefined|StoreSessionStoreWhere>}
+ */
+export function anonymousValidator1582696858(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator1334934277(value, propertyPath);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"where"?: undefined|StoreSessionStoreWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ */
+export function anonymousValidator1577551207(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1577551207.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["where", anonymousValidator1582696858],
+    ["limit", anonymousValidator963028965],
+    ["offset", anonymousValidator963028965],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreTokenWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "session"?: undefined|string, "sessionNotEqual"?: undefined|string, "sessionIn"?: undefined|(string)[]|QueryPart<any>, "sessionNotIn"?: undefined|(string)[]|QueryPart<any>, "expiresAt"?: undefined|Date, "expiresAtNotEqual"?: undefined|Date, "expiresAtIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "expiresAtGreaterThan"?: undefined|Date, "expiresAtLowerThan"?: undefined|Date, "refreshToken"?: undefined|string, "refreshTokenNotEqual"?: undefined|string, "refreshTokenIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenNotIn"?: undefined|(string)[]|QueryPart<any>, "refreshTokenIsNull"?: undefined|boolean, "refreshTokenIsNotNull"?: undefined|boolean, "revokedAt"?: undefined|Date, "revokedAtNotEqual"?: undefined|Date, "revokedAtIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "revokedAtGreaterThan"?: undefined|Date, "revokedAtLowerThan"?: undefined|Date, "revokedAtIsNull"?: undefined|boolean, "revokedAtIsNotNull"?: undefined|boolean, "viaSession"?: undefined|{"where"?: undefined|StoreSessionStoreWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaRefreshToken"?: undefined|{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaAccessToken"?: undefined|{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "accessTokenExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokenNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
  */
 export function anonymousValidator1430489818(value, propertyPath) {
   if (isNil(value)) {
@@ -3236,6 +3448,9 @@ export function anonymousValidator1430489818(value, propertyPath) {
     ["revokedAtLowerThan", anonymousValidator1988053796],
     ["revokedAtIsNull", anonymousValidator196147222],
     ["revokedAtIsNotNull", anonymousValidator196147222],
+    ["viaSession", anonymousValidator1577551207],
+    ["viaRefreshToken", anonymousValidator600974204],
+    ["viaAccessToken", anonymousValidator600974204],
     ["accessTokenExists", anonymousValidator2065515599],
     ["accessTokenNotExists", anonymousValidator2065515599],
   ];
@@ -3266,7 +3481,65 @@ export function anonymousValidator2065515599(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "accessTokensExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokensNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
+ * @returns {EitherN<undefined|{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ */
+export function anonymousValidator600974204(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys600974204.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["where", anonymousValidator2065515599],
+    ["limit", anonymousValidator963028965],
+    ["offset", anonymousValidator963028965],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreSessionStoreWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "viaAccessTokens"?: undefined|{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "accessTokensExists"?: undefined|StoreSessionStoreTokenWhere, "accessTokensNotExists"?: undefined|StoreSessionStoreTokenWhere, }>}
  */
 export function anonymousValidator1334934277(value, propertyPath) {
   if (isNil(value)) {
@@ -3335,6 +3608,7 @@ export function anonymousValidator1334934277(value, propertyPath) {
     ["updatedAtLowerThan", anonymousValidator1988053796],
     ["updatedAtIsNull", anonymousValidator196147222],
     ["updatedAtIsNotNull", anonymousValidator196147222],
+    ["viaAccessTokens", anonymousValidator600974204],
     ["accessTokensExists", anonymousValidator2065515599],
     ["accessTokensNotExists", anonymousValidator2065515599],
   ];
@@ -4890,17 +5164,6 @@ export function anonymousValidator1864958291(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileWhere>}
- */
-export function anonymousValidator65842827(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator2074494218(value, propertyPath);
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreFileOrderBy>}
  */
 export function anonymousValidator1370514093(value, propertyPath) {
@@ -5611,17 +5874,6 @@ export function anonymousValidator1805657267(value, propertyPath) {
     return { errors };
   }
   return { value: result };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionStoreWhere>}
- */
-export function anonymousValidator1582696858(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  return anonymousValidator1334934277(value, propertyPath);
 }
 /**
  * @param {*} value
