@@ -363,10 +363,15 @@ _Available since 0.1.0_
 
 _function createOrUpdateFile(sql, minio, bucketName,
 {{ id?: undefined | string;   contentLength?: number;   bucketName?: string;   contentType: string;   name: string;   meta?:     | undefined     | {         transforms?: undefined | any;         transformedFromOriginal?: undefined | string;       }     | object;   createdAt?: undefined | Date;   updatedAt?: undefined | Date;   deletedAt?: undefined | Date;  }}
-props, source): Promise\<StoreFile>_
+props, source, {{    allowedContentTypes?: string[]  }} [options]):
+Promise\<StoreFile>_
 
 Create or update a file. The file store is backed by a Postgres table and S3
-object.
+object. If no 'contentType' is passed, it is inferred from the 'magic bytes'
+from the source. Defaulting to a wildcard. By passing in an
+`allowedContentTypes` array via the last options object, it is possible to
+validate the inferred content type. This also overwrites the passed in content
+type.
 
 **Parameters**:
 
@@ -379,8 +384,11 @@ object.
   {{ id?: undefined | string;   contentLength?: number;   bucketName?: string;   contentType: string;   name: string;   meta?:     | undefined     | {         transforms?: undefined | any;         transformedFromOriginal?: undefined | string;       }     | object;   createdAt?: undefined | Date;   updatedAt?: undefined | Date;   deletedAt?: undefined | Date;  }}
   props
 - source `NodeJS.ReadableStream|string|Buffer`
+- {{    allowedContentTypes?: string[]  }} [options]
+  `{{ allowedContentTypes?: string[] }} [options]`:
+  {{    allowedContentTypes?: string[]  }} [options]
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L61)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L75)_
 
 ## copyFile
 
@@ -400,7 +408,7 @@ id, into the provided bucket.
 - id `string`
 - targetBucket `string=bucketName`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L145)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L197)_
 
 ## getFileStream
 
@@ -419,7 +427,7 @@ the 'id'. A 'start' and 'end' value can optionally be specified.
 - id `string`
 - seek `{ start?: number|undefined, end?: number|undefined }={}`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L117)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L169)_
 
 ## syncDeletedFiles
 
@@ -437,7 +445,7 @@ the S3 bucket.
 - minio `MinioClient`
 - bucketName `string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L184)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L236)_
 
 ## updateFileGroupOrder
 

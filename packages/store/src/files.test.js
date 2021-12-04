@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@compas/cli";
-import { isNil, uuid } from "@compas/stdlib";
+import { AppError, isNil, uuid } from "@compas/stdlib";
 import {
   copyFile,
   createOrUpdateFile,
@@ -44,9 +44,29 @@ test("store/files", async (t) => {
   t.test("createOrUpdateFile no name specified", async (t) => {
     try {
       await createOrUpdateFile(sql, minio, bucketName, {}, "");
-      t.fail("Should throw for unknown name");
     } catch (e) {
       t.ok(e);
+    }
+  });
+
+  t.test("createOrUpdateFile - invalid mime type", async (t) => {
+    try {
+      await createOrUpdateFile(
+        sql,
+        minio,
+        bucketName,
+        {
+          name: "foo.js",
+        },
+        Buffer.from("const foo = 5;"),
+        {
+          allowedContentTypes: ["image/png"],
+        },
+      );
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.key, "store.createOrUpdateFile.invalidContentType");
+      t.equal(e.info.found, "application/javascript");
     }
   });
 
@@ -58,6 +78,7 @@ test("store/files", async (t) => {
       { name },
       filePath,
     );
+
     t.ok(!!file.id);
     t.equal(file.contentType, "application/x-sql");
     t.ok(!!file.contentLength);
@@ -77,6 +98,9 @@ test("store/files", async (t) => {
         bucketName,
         { name, updatedAt },
         createReadStream(filePath),
+        {
+          allowedContentTypes: ["application/x-sql"],
+        },
       );
 
       t.equal(file.contentType, "application/x-sql");

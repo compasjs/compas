@@ -114,6 +114,10 @@ function getHomeSidebar() {
           text: "Session handling",
           link: "/features/session-handling.html",
         },
+        {
+          text: "File handling",
+          link: "/features/file-handling.html",
+        },
       ],
     },
     {
