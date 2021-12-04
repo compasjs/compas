@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
 import { uuid } from "@compas/stdlib";
 import { queries } from "../../generated/testing/sql/database/index.js";
