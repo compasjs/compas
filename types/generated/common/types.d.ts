@@ -452,8 +452,22 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
+    viaPosts?:
+      | undefined
+      | {
+          where?: undefined | SqlPostCategoryWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     postsExists?: undefined | SqlPostCategoryWhere;
     postsNotExists?: undefined | SqlPostCategoryWhere;
+    viaMeta?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryMetaWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     metaExists?: undefined | SqlCategoryMetaWhere;
     metaNotExists?: undefined | SqlCategoryMetaWhere;
   };
@@ -488,35 +502,20 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-  };
-  type SqlCategoryMetaWhere = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | SqlCategoryMetaWhere[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    category?: undefined | string;
-    categoryNotEqual?: undefined | string;
-    categoryIn?: undefined | string[] | QueryPart<any>;
-    categoryNotIn?: undefined | string[] | QueryPart<any>;
-    isHighlighted?: undefined | boolean;
-    isHighlightedIsNull?: undefined | boolean;
-    isHighlightedIsNotNull?: undefined | boolean;
-  };
-  type SqlJobStatusAggregateWhere = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | SqlJobStatusAggregateWhere[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    job?: undefined | number;
-    jobNotEqual?: undefined | number;
-    jobIn?: undefined | number[] | QueryPart<any>;
-    jobNotIn?: undefined | number[] | QueryPart<any>;
-    jobGreaterThan?: undefined | number;
-    jobLowerThan?: undefined | number;
+    viaPost?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaCategory?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
   };
   type SqlPostWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -559,49 +558,31 @@ declare global {
     deletedAtGreaterThan?: undefined | Date;
     deletedAtLowerThan?: undefined | Date;
     deletedAtIncludeNotNull?: undefined | boolean;
+    viaWriter?:
+      | undefined
+      | {
+          where?: undefined | SqlUserWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaCategories?:
+      | undefined
+      | {
+          where?: undefined | SqlPostCategoryWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     categoriesExists?: undefined | SqlPostCategoryWhere;
     categoriesNotExists?: undefined | SqlPostCategoryWhere;
+    viaPostages?:
+      | undefined
+      | {
+          where?: undefined | SqlPostageWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     postagesExists?: undefined | SqlPostageWhere;
     postagesNotExists?: undefined | SqlPostageWhere;
-  };
-  type SqlPostageWhere = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | SqlPostageWhere[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    images?: undefined | string;
-    imagesNotEqual?: undefined | string;
-    imagesIn?: undefined | string[] | QueryPart<any>;
-    imagesNotIn?: undefined | string[] | QueryPart<any>;
-    post?: undefined | string;
-    postNotEqual?: undefined | string;
-    postIn?: undefined | string[] | QueryPart<any>;
-    postNotIn?: undefined | string[] | QueryPart<any>;
-    createdAt?: undefined | Date;
-    createdAtNotEqual?: undefined | Date;
-    createdAtIn?: undefined | Date[] | QueryPart<any>;
-    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
-    createdAtGreaterThan?: undefined | Date;
-    createdAtLowerThan?: undefined | Date;
-    createdAtIsNull?: undefined | boolean;
-    createdAtIsNotNull?: undefined | boolean;
-    updatedAt?: undefined | Date;
-    updatedAtNotEqual?: undefined | Date;
-    updatedAtIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtGreaterThan?: undefined | Date;
-    updatedAtLowerThan?: undefined | Date;
-    updatedAtIsNull?: undefined | boolean;
-    updatedAtIsNotNull?: undefined | boolean;
-    deletedAt?: undefined | Date;
-    deletedAtNotEqual?: undefined | Date;
-    deletedAtIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtGreaterThan?: undefined | Date;
-    deletedAtLowerThan?: undefined | Date;
-    deletedAtIncludeNotNull?: undefined | boolean;
   };
   type SqlUserWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -649,23 +630,31 @@ declare global {
     deletedAtGreaterThan?: undefined | Date;
     deletedAtLowerThan?: undefined | Date;
     deletedAtIncludeNotNull?: undefined | boolean;
+    viaPosts?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     postsExists?: undefined | SqlPostWhere;
     postsNotExists?: undefined | SqlPostWhere;
   };
-  type StoreFileWhere = {
+  type SqlPostageWhere = {
     $raw?: undefined | QueryPart<any>;
-    $or?: undefined | StoreFileWhere[];
+    $or?: undefined | SqlPostageWhere[];
     id?: undefined | string;
     idNotEqual?: undefined | string;
     idIn?: undefined | string[] | QueryPart<any>;
     idNotIn?: undefined | string[] | QueryPart<any>;
-    bucketName?: undefined | string;
-    bucketNameNotEqual?: undefined | string;
-    bucketNameIn?: undefined | string[] | QueryPart<any>;
-    bucketNameNotIn?: undefined | string[] | QueryPart<any>;
-    bucketNameLike?: undefined | string;
-    bucketNameILike?: undefined | string;
-    bucketNameNotLike?: undefined | string;
+    images?: undefined | string;
+    imagesNotEqual?: undefined | string;
+    imagesIn?: undefined | string[] | QueryPart<any>;
+    imagesNotIn?: undefined | string[] | QueryPart<any>;
+    post?: undefined | string;
+    postNotEqual?: undefined | string;
+    postIn?: undefined | string[] | QueryPart<any>;
+    postNotIn?: undefined | string[] | QueryPart<any>;
     createdAt?: undefined | Date;
     createdAtNotEqual?: undefined | Date;
     createdAtIn?: undefined | Date[] | QueryPart<any>;
@@ -689,8 +678,20 @@ declare global {
     deletedAtGreaterThan?: undefined | Date;
     deletedAtLowerThan?: undefined | Date;
     deletedAtIncludeNotNull?: undefined | boolean;
-    groupExists?: undefined | StoreFileGroupWhere;
-    groupNotExists?: undefined | StoreFileGroupWhere;
+    viaPost?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaImages?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
   };
   type StoreFileGroupWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -742,10 +743,128 @@ declare global {
     deletedAtGreaterThan?: undefined | Date;
     deletedAtLowerThan?: undefined | Date;
     deletedAtIncludeNotNull?: undefined | boolean;
+    viaFile?:
+      | undefined
+      | {
+          where?: undefined | StoreFileWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaParent?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaChildren?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     childrenExists?: undefined | StoreFileGroupWhere;
     childrenNotExists?: undefined | StoreFileGroupWhere;
+    viaPostageImages?:
+      | undefined
+      | {
+          where?: undefined | SqlPostageWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     postageImagesExists?: undefined | SqlPostageWhere;
     postageImagesNotExists?: undefined | SqlPostageWhere;
+  };
+  type StoreFileWhere = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreFileWhere[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    bucketName?: undefined | string;
+    bucketNameNotEqual?: undefined | string;
+    bucketNameIn?: undefined | string[] | QueryPart<any>;
+    bucketNameNotIn?: undefined | string[] | QueryPart<any>;
+    bucketNameLike?: undefined | string;
+    bucketNameILike?: undefined | string;
+    bucketNameNotLike?: undefined | string;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaGroup?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    groupExists?: undefined | StoreFileGroupWhere;
+    groupNotExists?: undefined | StoreFileGroupWhere;
+  };
+  type SqlCategoryMetaWhere = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlCategoryMetaWhere[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    category?: undefined | string;
+    categoryNotEqual?: undefined | string;
+    categoryIn?: undefined | string[] | QueryPart<any>;
+    categoryNotIn?: undefined | string[] | QueryPart<any>;
+    isHighlighted?: undefined | boolean;
+    isHighlightedIsNull?: undefined | boolean;
+    isHighlightedIsNotNull?: undefined | boolean;
+    viaCategory?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+  };
+  type SqlJobStatusAggregateWhere = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlJobStatusAggregateWhere[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    job?: undefined | number;
+    jobNotEqual?: undefined | number;
+    jobIn?: undefined | number[] | QueryPart<any>;
+    jobNotIn?: undefined | number[] | QueryPart<any>;
+    jobGreaterThan?: undefined | number;
+    jobLowerThan?: undefined | number;
+    viaJob?:
+      | undefined
+      | {
+          where?: undefined | StoreJobWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
   };
   type StoreJobWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -790,6 +909,13 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
+    viaStatus?:
+      | undefined
+      | {
+          where?: undefined | SqlJobStatusAggregateWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     statusExists?: undefined | SqlJobStatusAggregateWhere;
     statusNotExists?: undefined | SqlJobStatusAggregateWhere;
   };
@@ -1478,6 +1604,13 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
+    viaAccessTokens?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     accessTokensExists?: undefined | StoreSessionStoreTokenWhere;
     accessTokensNotExists?: undefined | StoreSessionStoreTokenWhere;
   };
@@ -1512,6 +1645,27 @@ declare global {
     revokedAtLowerThan?: undefined | Date;
     revokedAtIsNull?: undefined | boolean;
     revokedAtIsNotNull?: undefined | boolean;
+    viaSession?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaRefreshToken?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaAccessToken?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhere;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
     accessTokenExists?: undefined | StoreSessionStoreTokenWhere;
     accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
   };

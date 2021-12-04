@@ -1,11 +1,14 @@
 // @ts-nocheck
 
 import { isNil } from "@compas/stdlib";
-import { AnyOfType } from "../../builders/AnyOfType.js";
 import { AnyType } from "../../builders/AnyType.js";
-import { ArrayType } from "../../builders/ArrayType.js";
-import { BooleanType } from "../../builders/BooleanType.js";
-import { ObjectType } from "../../builders/ObjectType.js";
+import {
+  AnyOfType,
+  ArrayType,
+  BooleanType,
+  NumberType,
+  ObjectType,
+} from "../../builders/index.js";
 import { ReferenceType } from "../../builders/ReferenceType.js";
 import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
@@ -147,12 +150,38 @@ export function createWhereTypes(context) {
   // Add where, based on relations
   for (const type of getQueryEnabledObjects(context)) {
     for (const relation of type.relations) {
+      const otherSide = relation.reference.reference;
+
+      // Add via support via the where builder.
+      type.where.rawType.keys[`via${upperCaseFirst(relation.ownKey)}`] =
+        new ObjectType()
+          .keys({
+            where: new ReferenceType(
+              otherSide.group,
+              `${otherSide.name}Where`,
+            ).optional(),
+            limit: new NumberType().optional(),
+            offset: new NumberType().optional(),
+          })
+          .optional()
+          .build();
+
+      type.where.rawType.keys[
+        `via${upperCaseFirst(relation.ownKey)}`
+      ].keys.where.reference =
+        context.structure[otherSide.group][`${otherSide.name}Where`];
+
+      type.where.fields.push({
+        key: relation.ownKey,
+        name: `via${upperCaseFirst(relation.ownKey)}`,
+        variant: "via",
+        isRelation: true,
+      });
+
       if (
         relation.subType === "oneToMany" ||
         relation.subType === "oneToOneReverse"
       ) {
-        const otherSide = relation.reference.reference;
-
         // Support other side of the relation exists, which is the same as
         // `owningSideOfTheRelation`.isNotNull.
         type.where.rawType.keys[`${relation.ownKey}Exists`] = {
@@ -240,29 +269,39 @@ export function getWherePartial(context, imports, type) {
 
       if (field.isRelation) {
         const relation = type.relations.find((it) => it.ownKey === field.key);
-        const primaryKey = getPrimaryKeyWithType(type);
-        const isSelfReference = relation.reference.reference.name === type.name;
+        const otherSide = relation.reference.reference;
+        const isSelfReference = otherSide.name === type.name;
 
         const shortName = isSelfReference
-          ? `${relation.reference.reference.shortName}2`
-          : `${relation.reference.reference.shortName}`;
+          ? `${otherSide.shortName}2`
+          : `${otherSide.shortName}`;
 
         if (!isSelfReference) {
           imports.destructureImport(
-            `${relation.reference.reference.name}WhereSpec`,
-            `./${relation.reference.reference.name}.js`,
+            `${otherSide.name}WhereSpec`,
+            `./${otherSide.name}.js`,
           );
         }
 
+        const { key: primaryKey } = getPrimaryKeyWithType(type);
+
+        const referencedKey =
+          ["oneToMany", "oneToOneReverse"].indexOf(relation.subType) !== -1
+            ? relation.referencedKey
+            : getPrimaryKeyWithType(otherSide).key;
+
+        const ownKey =
+          ["manyToOne", "oneToOne"].indexOf(relation.subType) !== -1
+            ? relation.ownKey
+            : primaryKey;
+
         matchers += `relation: {
-           entityName: "${relation.reference.reference.name}",
+           entityName: "${otherSide.name}",
            shortName: "${shortName}",
-           entityKey: "${relation.referencedKey}",
-           referencedKey: "${primaryKey.key}",
+           entityKey: "${referencedKey}",
+           referencedKey: "${ownKey}",
            where: ${
-             isSelfReference
-               ? `"self"`
-               : `() => ${relation.reference.reference.name}WhereSpec`
+             isSelfReference ? `"self"` : `() => ${otherSide.name}WhereSpec`
            },
          },`;
       }
@@ -280,33 +319,33 @@ export function getWherePartial(context, imports, type) {
     /** @type {any} */
     ${entityWhereString}
 
-  /**
-   * Build 'WHERE ' part for ${type.name}
-   *
-   * @param {${type.where.type}} [where={}]
-   * @param {string} [tableName="${type.shortName}."]
-   * @param {{ skipValidator?: boolean|undefined }} [options={}]
-   * @returns {QueryPart}
-   */
-  export function ${type.name}Where(where = {},
-                                    tableName = "${type.shortName}.",
-                                    options = {}
-  ) {
-    if (tableName.length > 0 && !tableName.endsWith(".")) {
-      tableName = \`$\{tableName}.\`;
-    }
-
-    if (!options.skipValidator) {
-      const whereValidated = validate${type.uniqueName}Where(
-        where, "$.${type.name}Where");
-      if (whereValidated.error) {
-        throw whereValidated.error;
+    /**
+     * Build 'WHERE ' part for ${type.name}
+     *
+     * @param {${type.where.type}} [where={}]
+     * @param {string} [tableName="${type.shortName}."]
+     * @param {{ skipValidator?: boolean|undefined }} [options={}]
+     * @returns {QueryPart}
+     */
+    export function ${type.name}Where(where = {},
+                                      tableName = "${type.shortName}.",
+                                      options = {}
+    ) {
+      if (tableName.length > 0 && !tableName.endsWith(".")) {
+        tableName = \`$\{tableName}.\`;
       }
-      where = whereValidated.value;
-    }
 
-    return generatedWhereBuilderHelper(${type.name}WhereSpec, where, tableName)
-  }
+      if (!options.skipValidator) {
+        const whereValidated = validate${type.uniqueName}Where(
+          where, "$.${type.name}Where");
+        if (whereValidated.error) {
+          throw whereValidated.error;
+        }
+        where = whereValidated.value;
+      }
+
+      return generatedWhereBuilderHelper(${type.name}WhereSpec, where, tableName)
+    }
   `;
 }
 

@@ -1,5 +1,11 @@
 /**
  * Create or update a file. The file store is backed by a Postgres table and S3 object.
+ * If no 'contentType' is passed, it is inferred from the 'magic bytes' from the source.
+ * Defaulting to a wildcard.
+ *
+ * By passing in an `allowedContentTypes` array via the last options object, it is
+ * possible to validate the inferred content type. This also overwrites the passed in
+ * content type.
  *
  * @since 0.1.0
  *
@@ -23,6 +29,9 @@
  *  deletedAt?: undefined | Date;
  * }} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
+ * @param {{
+ *   allowedContentTypes?: string[]
+ * }} [options]
  * @returns {Promise<StoreFile>}
  */
 export function createOrUpdateFile(
@@ -47,6 +56,13 @@ export function createOrUpdateFile(
     deletedAt?: undefined | Date;
   },
   source: NodeJS.ReadableStream | string | Buffer,
+  {
+    allowedContentTypes,
+  }?:
+    | {
+        allowedContentTypes?: string[] | undefined;
+      }
+    | undefined,
 ): Promise<StoreFile>;
 /**
  * Get a file stream based on the 'id'. It is expected that an object exists with the

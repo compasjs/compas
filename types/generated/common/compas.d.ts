@@ -47,4 +47,5 @@ declare global {
   type SessionStore = store.SessionStore;
   type FileCache = store.FileCache;
   type SessionStoreSettings = store.SessionStoreSettings;
+  type SessionTransportSettings = store.SessionTransportSettings;
 }

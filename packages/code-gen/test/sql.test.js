@@ -200,6 +200,35 @@ test("code-gen/e2e/sql", (t) => {
     t.notEqual(result[0].deletedAt, null, "deletedAt is undefined");
   });
 
+  t.test("queryBuilder via = where via", async (t) => {
+    t.deepEqual(
+      [
+        ...(await queryPost({
+          viaWriter: {
+            viaPosts: {
+              where: {
+                id: post.id,
+              },
+            },
+          },
+        }).exec(sql)),
+      ],
+      [
+        ...(await queryPost({
+          where: {
+            viaWriter: {
+              where: {
+                viaPosts: {
+                  where: { id: post.id },
+                },
+              },
+            },
+          },
+        }).exec(sql)),
+      ],
+    );
+  });
+
   t.test("update user nick name", async (t) => {
     const [dbUser] = await queries.userUpdate(
       sql,

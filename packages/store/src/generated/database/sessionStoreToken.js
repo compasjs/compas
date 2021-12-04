@@ -13,6 +13,7 @@ import {
   internalQuerySessionStore,
   sessionStoreOrderBy,
   sessionStoreWhere,
+  sessionStoreWhereSpec,
   transformSessionStore,
 } from "./sessionStore.js";
 
@@ -65,6 +66,17 @@ export const sessionStoreTokenWhereSpec = {
         { matcherKey: "sessionNotEqual", matcherType: "notEqual" },
         { matcherKey: "sessionIn", matcherType: "in" },
         { matcherKey: "sessionNotIn", matcherType: "notIn" },
+        {
+          matcherKey: "viaSession",
+          matcherType: "via",
+          relation: {
+            entityName: "sessionStore",
+            shortName: "ss",
+            entityKey: "id",
+            referencedKey: "session",
+            where: () => sessionStoreWhereSpec,
+          },
+        },
       ],
     },
     {
@@ -89,6 +101,17 @@ export const sessionStoreTokenWhereSpec = {
         { matcherKey: "refreshTokenNotIn", matcherType: "notIn" },
         { matcherKey: "refreshTokenIsNull", matcherType: "isNull" },
         { matcherKey: "refreshTokenIsNotNull", matcherType: "isNotNull" },
+        {
+          matcherKey: "viaRefreshToken",
+          matcherType: "via",
+          relation: {
+            entityName: "sessionStoreToken",
+            shortName: "sst2",
+            entityKey: "id",
+            referencedKey: "refreshToken",
+            where: "self",
+          },
+        },
       ],
     },
     {
@@ -109,6 +132,17 @@ export const sessionStoreTokenWhereSpec = {
       tableKey: "accessToken",
       keyType: "undefined",
       matchers: [
+        {
+          matcherKey: "viaAccessToken",
+          matcherType: "via",
+          relation: {
+            entityName: "sessionStoreToken",
+            shortName: "sst2",
+            entityKey: "refreshToken",
+            referencedKey: "id",
+            where: "self",
+          },
+        },
         {
           matcherKey: "accessTokenExists",
           matcherType: "exists",

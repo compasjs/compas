@@ -99,8 +99,10 @@ export async function createOrUpdateFile(
       contentType = result?.mime;
     } else if (
       typeof source?.pipe === "function" &&
+      // @ts-ignore
       typeof source?._read === "function"
     ) {
+      // @ts-ignore
       const sourceWithFileType = await fileTypeStream(source);
 
       // Set source to the new pass through stream created by `fileTypeStream`

@@ -11,7 +11,7 @@ import { isQueryPart, query } from "./query.js";
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
  *                    "like"|"iLike"|"notLike"|"notILike"|
  *                    "includeNotNull"|"isNull"|"isNotNull"|
- *                    "exists"|"notExists",
+ *                    "via"|"exists"|"notExists",
  *     relation: {
  *       entityName: string,
  *       shortName: string,
@@ -152,7 +152,8 @@ export function generatedWhereBuilderHelper(
         values.push(`%${where[matcher.matcherKey]}%`);
       } else if (matcher.matcherType === "includeNotNull") {
         if ((where[matcher.matcherKey] ?? false) === false) {
-          // Used on soft delete tables, which by default don't return the soft deleted records.
+          // Used on soft delete tables, which by default don't return the soft deleted
+          // records.
           strings.push(
             ` AND (${shortName}"${fieldSpec.tableKey}" IS NULL OR ${shortName}"${fieldSpec.tableKey}" > now()) `,
           );
@@ -166,6 +167,34 @@ export function generatedWhereBuilderHelper(
         // a.bar IS NOT NULL
         strings.push(` AND ${shortName}"${fieldSpec.tableKey}" IS NOT NULL `);
         values.push(undefined);
+      } else if (matcherKeyExists && matcher.matcherType === "via") {
+        const offsetLimit = !isNil(where[matcher.matcherKey]?.offset)
+          ? query`OFFSET ${where[matcher.matcherKey]?.offset}`
+          : query``;
+
+        if (!isNil(where[matcher.matcherKey]?.limit)) {
+          offsetLimit.append(
+            query`FETCH NEXT ${where[matcher.matcherKey]?.limit} ROWS ONLY`,
+          );
+        }
+
+        strings.push(
+          `AND ${shortName}"${matcher.relation.referencedKey}" = ANY (select ${matcher.relation.shortName}."${matcher.relation.entityKey}" FROM "${matcher.relation.entityName}" ${matcher.relation.shortName} WHERE `,
+          ``,
+          `)`,
+        );
+
+        values.push(
+          generatedWhereBuilderHelper(
+            matcher.relation.where === "self"
+              ? entityWhereInformation
+              : matcher.relation.where,
+            where[matcher.matcherKey]?.where,
+            `${matcher.relation.shortName}.`,
+          ),
+          offsetLimit,
+          undefined,
+        );
       } else if (matcherKeyExists && matcher.matcherType === "exists") {
         strings.push(
           ` AND EXISTS (SELECT FROM "${matcher.relation.entityName}" ${matcher.relation.shortName} WHERE `,

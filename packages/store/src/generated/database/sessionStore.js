@@ -91,6 +91,17 @@ export const sessionStoreWhereSpec = {
       keyType: "undefined",
       matchers: [
         {
+          matcherKey: "viaAccessTokens",
+          matcherType: "via",
+          relation: {
+            entityName: "sessionStoreToken",
+            shortName: "sst",
+            entityKey: "session",
+            referencedKey: "id",
+            where: () => sessionStoreTokenWhereSpec,
+          },
+        },
+        {
           matcherKey: "accessTokensExists",
           matcherType: "exists",
           relation: {
