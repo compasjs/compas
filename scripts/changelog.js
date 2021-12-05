@@ -194,9 +194,10 @@ function combineCommits(commits) {
  */
 function decorateCommits(commits) {
   for (const commit of commits) {
+    // feat(xxx,yy-zz):
     // feat(xxxx):
     // chore:
-    const subjectMatch = commit.title.match(/^\w+(\(([\w,]+)\))?: ([^#(]+)/i);
+    const subjectMatch = commit.title.match(/^\w+(\(([\w,-]+)\))?: ([^#(]+)/i);
 
     if (subjectMatch?.[2]?.length > 0) {
       commit.subject = subjectMatch[2];
