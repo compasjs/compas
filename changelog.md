@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.0.178](https://github.com/compasjs/compas/releases/tag/v0.0.178)
+
+##### Changes
+
+- chore(changelog): fix matcher for subject and message
+- chore(ci): remove bench action from PR's
+- chore(cli,server,store): remove old session setup
+  - Closes [#1281](https://github.com/compasjs/compas/pull/1281)
+- chore(code-gen): remove @compas/cli as a dependency
+- feat(code-gen,store): remove generated `where.exists`
+  ([#1396](https://github.com/compasjs/compas/pull/1396))
+  - Closes [#1393](https://github.com/compasjs/compas/pull/1393)
+- feat(code-gen,store): support viaXxx in where clause
+  ([#1395](https://github.com/compasjs/compas/pull/1395))
+  - Closes [#703](https://github.com/compasjs/compas/pull/703)
+- feat(code-gen): remove 'via' traversers from the query builders
+  ([#1397](https://github.com/compasjs/compas/pull/1397))
+  - Closes [#1394](https://github.com/compasjs/compas/pull/1394)
+- feat(store): infer and validate content-type support in createOrUpdateFile
+  ([#1392](https://github.com/compasjs/compas/pull/1392))
+  - Closes [#1352](https://github.com/compasjs/compas/pull/1352)
+
+##### Breaking changes
+
+- **cli,server,store**: remove old session setup
+  - Removed both the `session` middleware and `newSessionStore`. And should be
+    replaced with the new session-store and session-transport. See the
+    [docs](https://compasjs.com/features/session-handling.html) for more
+    information.
+  - Create the following migration to clean up the old table:
+  ```sql
+  DROP TABLE IF EXISTS "session" CASCADE;
+  ```
+- **code-gen,store**: remove generated `where.exists`
+  - Removed `xxxExists` from being generated with the sql where clause
+    generator. They can be replaced with `viaXxx` now available in the where
+    clause generator.
+- **code-gen**: remove 'via' traversers from the query builders
+  - This should be done in the new `where.viaXxx`. Giving more flexibility by
+    combining it with `where.$or` and allowed usage in update and delete
+    queries.
+  - Note that the query builder functions validate their inputs, so if you have
+    decent test coverage, your tests should be able to catch most of your usages
+    for you.
+
 ### [v0.0.177](https://github.com/compasjs/compas/releases/tag/v0.0.177)
 
 ##### Changes
