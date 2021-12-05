@@ -8,7 +8,7 @@
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
  *                    "like"|"iLike"|"notLike"|"notILike"|
  *                    "includeNotNull"|"isNull"|"isNotNull"|
- *                    "via"|"exists"|"notExists",
+ *                    "via"|"notExists",
  *     relation: {
  *       entityName: string,
  *       shortName: string,
@@ -53,7 +53,6 @@ export type EntityWhere = {
         | "isNull"
         | "isNotNull"
         | "via"
-        | "exists"
         | "notExists";
       relation: {
         entityName: string;

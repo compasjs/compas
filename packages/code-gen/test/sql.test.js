@@ -146,7 +146,7 @@ test("code-gen/e2e/sql", (t) => {
   t.test("where exists", async (t) => {
     const categories = await queryCategory({
       where: {
-        postsExists: {},
+        viaPosts: {},
       },
     }).exec(sql);
 

@@ -135,17 +135,6 @@ export const fileWhereSpec = {
           },
         },
         {
-          matcherKey: "groupExists",
-          matcherType: "exists",
-          relation: {
-            entityName: "fileGroup",
-            shortName: "fg",
-            entityKey: "file",
-            referencedKey: "id",
-            where: () => fileGroupWhereSpec,
-          },
-        },
-        {
           matcherKey: "groupNotExists",
           matcherType: "notExists",
           relation: {

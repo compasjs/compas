@@ -459,7 +459,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    postsExists?: undefined | SqlPostCategoryWhere;
     postsNotExists?: undefined | SqlPostCategoryWhere;
     viaMeta?:
       | undefined
@@ -468,7 +467,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    metaExists?: undefined | SqlCategoryMetaWhere;
     metaNotExists?: undefined | SqlCategoryMetaWhere;
   };
   type SqlPostCategoryWhere = {
@@ -572,7 +570,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    categoriesExists?: undefined | SqlPostCategoryWhere;
     categoriesNotExists?: undefined | SqlPostCategoryWhere;
     viaPostages?:
       | undefined
@@ -581,7 +578,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    postagesExists?: undefined | SqlPostageWhere;
     postagesNotExists?: undefined | SqlPostageWhere;
   };
   type SqlUserWhere = {
@@ -637,7 +633,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    postsExists?: undefined | SqlPostWhere;
     postsNotExists?: undefined | SqlPostWhere;
   };
   type SqlPostageWhere = {
@@ -764,7 +759,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    childrenExists?: undefined | StoreFileGroupWhere;
     childrenNotExists?: undefined | StoreFileGroupWhere;
     viaPostageImages?:
       | undefined
@@ -773,7 +767,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    postageImagesExists?: undefined | SqlPostageWhere;
     postageImagesNotExists?: undefined | SqlPostageWhere;
   };
   type StoreFileWhere = {
@@ -820,7 +813,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    groupExists?: undefined | StoreFileGroupWhere;
     groupNotExists?: undefined | StoreFileGroupWhere;
   };
   type SqlCategoryMetaWhere = {
@@ -916,7 +908,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    statusExists?: undefined | SqlJobStatusAggregateWhere;
     statusNotExists?: undefined | SqlJobStatusAggregateWhere;
   };
   type SqlCategoryOrderBy =
@@ -1611,7 +1602,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    accessTokensExists?: undefined | StoreSessionStoreTokenWhere;
     accessTokensNotExists?: undefined | StoreSessionStoreTokenWhere;
   };
   type StoreSessionStoreTokenWhere = {
@@ -1666,7 +1656,6 @@ declare global {
           limit?: undefined | number;
           offset?: undefined | number;
         };
-    accessTokenExists?: undefined | StoreSessionStoreTokenWhere;
     accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
   };
   type StoreSessionOrderBy =
