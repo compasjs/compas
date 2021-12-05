@@ -15,7 +15,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/cli": "0.0.177",
     "@compas/stdlib": "0.0.177"
   },
   "maintainers": [
