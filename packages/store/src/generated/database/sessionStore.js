@@ -393,48 +393,12 @@ export const sessionStoreQueries = {
   sessionStoreUpdate,
 };
 /**
- * @param {StoreSessionStoreQueryBuilder & StoreSessionStoreQueryTraverser} builder
+ * @param {StoreSessionStoreQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStore(builder, wherePartial) {
   const joinQb = query``;
-  if (builder.viaAccessTokens) {
-    builder.where = builder.where ?? {};
-    // Prepare idIn
-    if (isQueryPart(builder.where.idIn)) {
-      builder.where.idIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.idIn) &&
-      builder.where.idIn.length > 0
-    ) {
-      builder.where.idIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.idIn,
-      );
-    } else {
-      builder.where.idIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaAccessTokens.offset)
-      ? query`OFFSET ${builder.viaAccessTokens.offset}`
-      : query``;
-    if (!isNil(builder.viaAccessTokens.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaAccessTokens.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.idIn.append(query`
-SELECT DISTINCT sst."session"
-${internalQuerySessionStoreToken(builder.viaAccessTokens ?? {})}
-${offsetLimitQb}
-`);
-  }
   if (builder.accessTokens) {
     const joinedKeys = [];
     const offsetLimitQb = !isNil(builder.accessTokens.offset)

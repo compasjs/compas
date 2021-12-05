@@ -74,21 +74,21 @@ export function fileGroupUpdateSet(
   update: StoreFileGroupUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser} builder
+ * @param {StoreFileGroupQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQueryFileGroup2(
-  builder: StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser,
+  builder: StoreFileGroupQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**
- * @param {StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser} builder
+ * @param {StoreFileGroupQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQueryFileGroup(
-  builder: StoreFileGroupQueryBuilder & StoreFileGroupQueryTraverser,
+  builder: StoreFileGroupQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**

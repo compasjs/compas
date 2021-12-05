@@ -1329,55 +1329,7 @@ export function anonymousValidator2119152283(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaFile"?: undefined|StoreFileQueryTraverser, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
-export function anonymousValidator1274599578(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreFileGroupWhere;
-  limit?: undefined | number;
-  offset?: undefined | number;
-  viaFile?: undefined | StoreFileQueryTraverser;
-  viaParent?: undefined | StoreFileGroupQueryTraverser;
-  viaChildren?: undefined | StoreFileGroupQueryTraverser;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileGroupQueryTraverser>}
- */
-export function anonymousValidator514437691(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | StoreFileGroupQueryTraverser>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
- */
-export function anonymousValidator1069465749(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreFileWhere;
-  limit?: undefined | number;
-  offset?: undefined | number;
-  viaGroup?: undefined | StoreFileGroupQueryTraverser;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreFileQueryTraverser>}
- */
-export function anonymousValidator1978760330(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | StoreFileQueryTraverser>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "orderBy"?: undefined|StoreFileGroupOrderBy, "orderBySpec"?: undefined|StoreFileGroupOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "viaFile"?: undefined|StoreFileQueryTraverser, "parent"?: undefined|StoreFileGroupQueryBuilder, "viaParent"?: undefined|StoreFileGroupQueryTraverser, "children"?: undefined|StoreFileGroupQueryBuilder, "viaChildren"?: undefined|StoreFileGroupQueryTraverser, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreFileGroupWhere, "orderBy"?: undefined|StoreFileGroupOrderBy, "orderBySpec"?: undefined|StoreFileGroupOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "file"?: undefined|StoreFileQueryBuilder, "parent"?: undefined|StoreFileGroupQueryBuilder, "children"?: undefined|StoreFileGroupQueryBuilder, }>}
  */
 export function anonymousValidator1862233461(
   value: any,
@@ -1390,11 +1342,8 @@ export function anonymousValidator1862233461(
   limit?: undefined | number;
   offset?: undefined | number;
   file?: undefined | StoreFileQueryBuilder;
-  viaFile?: undefined | StoreFileQueryTraverser;
   parent?: undefined | StoreFileGroupQueryBuilder;
-  viaParent?: undefined | StoreFileGroupQueryTraverser;
   children?: undefined | StoreFileGroupQueryBuilder;
-  viaChildren?: undefined | StoreFileGroupQueryTraverser;
 }>;
 /**
  * @param {*} value
@@ -1408,7 +1357,7 @@ export function anonymousValidator1996607136(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, "viaGroup"?: undefined|StoreFileGroupQueryTraverser, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "group"?: undefined|StoreFileGroupQueryBuilder, }>}
  */
 export function anonymousValidator310044624(
   value: any,
@@ -1421,7 +1370,6 @@ export function anonymousValidator310044624(
   limit?: undefined | number;
   offset?: undefined | number;
   group?: undefined | StoreFileGroupQueryBuilder;
-  viaGroup?: undefined | StoreFileGroupQueryTraverser;
 }>;
 /**
  * @param {*} value
@@ -1469,19 +1417,6 @@ export function anonymousValidator343387919(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
-export function anonymousValidator1952914356(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreJobWhere;
-  limit?: undefined | number;
-  offset?: undefined | number;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreSessionWhere>}
  */
 export function anonymousValidator196488441(
@@ -1519,19 +1454,6 @@ export function anonymousValidator647856360(
   orderBy?: undefined | StoreSessionOrderBy;
   orderBySpec?: undefined | StoreSessionOrderBySpec;
   as?: undefined | string;
-  limit?: undefined | number;
-  offset?: undefined | number;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionWhere, "limit"?: undefined|number, "offset"?: undefined|number, }>}
- */
-export function anonymousValidator1805657267(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreSessionWhere;
   limit?: undefined | number;
   offset?: undefined | number;
 }>;
@@ -1583,55 +1505,7 @@ export function anonymousValidator1827379372(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaSession"?: undefined|StoreSessionStoreQueryTraverser, "viaRefreshToken"?: undefined|StoreSessionStoreTokenQueryTraverser, "viaAccessToken"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
- */
-export function anonymousValidator770376901(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreSessionStoreTokenWhere;
-  limit?: undefined | number;
-  offset?: undefined | number;
-  viaSession?: undefined | StoreSessionStoreQueryTraverser;
-  viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
-  viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionStoreTokenQueryTraverser>}
- */
-export function anonymousValidator1149378288(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | StoreSessionStoreTokenQueryTraverser>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "limit"?: undefined|number, "offset"?: undefined|number, "viaAccessTokens"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
- */
-export function anonymousValidator135209020(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  where?: undefined | StoreSessionStoreWhere;
-  limit?: undefined | number;
-  offset?: undefined | number;
-  viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|StoreSessionStoreQueryTraverser>}
- */
-export function anonymousValidator1095313735(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | StoreSessionStoreQueryTraverser>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "session"?: undefined|StoreSessionStoreQueryBuilder, "viaSession"?: undefined|StoreSessionStoreQueryTraverser, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaRefreshToken"?: undefined|StoreSessionStoreTokenQueryTraverser, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaAccessToken"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator1856722848(
   value: any,
@@ -1644,11 +1518,8 @@ export function anonymousValidator1856722848(
   limit?: undefined | number;
   offset?: undefined | number;
   session?: undefined | StoreSessionStoreQueryBuilder;
-  viaSession?: undefined | StoreSessionStoreQueryTraverser;
   refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
-  viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
   accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
-  viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
 }>;
 /**
  * @param {*} value
@@ -1662,7 +1533,7 @@ export function anonymousValidator145903947(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, "viaAccessTokens"?: undefined|StoreSessionStoreTokenQueryTraverser, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator2093168415(
   value: any,
@@ -1675,7 +1546,6 @@ export function anonymousValidator2093168415(
   limit?: undefined | number;
   offset?: undefined | number;
   accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
-  viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
 }>;
 export type InternalError = {
   propertyPath: string;

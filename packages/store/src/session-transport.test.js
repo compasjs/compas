@@ -21,7 +21,7 @@ import {
 
 mainTestFn(import.meta);
 
-test("store/session-store", (t) => {
+test("store/session-transport", (t) => {
   const sessionStoreSettings = {
     accessTokenMaxAgeInSeconds: 5,
     refreshTokenMaxAgeInSeconds: 10,
@@ -64,9 +64,11 @@ test("store/session-store", (t) => {
     }
 
     const [session] = await querySessionStore({
-      viaAccessTokens: {
-        where: {
-          id: accessTokenResult.value.payload.compasSessionAccessToken,
+      where: {
+        viaAccessTokens: {
+          where: {
+            id: accessTokenResult.value.payload.compasSessionAccessToken,
+          },
         },
       },
       accessTokens: {

@@ -48,9 +48,11 @@ test("store/session-store", (t) => {
     }
 
     const [session] = await querySessionStore({
-      viaAccessTokens: {
-        where: {
-          id: accessTokenResult.value.payload.compasSessionAccessToken,
+      where: {
+        viaAccessTokens: {
+          where: {
+            id: accessTokenResult.value.payload.compasSessionAccessToken,
+          },
         },
       },
       accessTokens: {
@@ -113,9 +115,11 @@ test("store/session-store", (t) => {
       t.ok(isNil(accessTokenPayload.error));
 
       const [session] = await querySessionStore({
-        viaAccessTokens: {
-          where: {
-            id: accessTokenPayload.value.payload.compasSessionAccessToken,
+        where: {
+          viaAccessTokens: {
+            where: {
+              id: accessTokenPayload.value.payload.compasSessionAccessToken,
+            },
           },
         },
         accessTokens: {
@@ -603,9 +607,11 @@ test("store/session-store", (t) => {
       t.ok(isNil(accessTokenPayload.error));
 
       const [session] = await querySessionStore({
-        viaAccessTokens: {
-          where: {
-            id: accessTokenPayload.value.payload.compasSessionAccessToken,
+        where: {
+          viaAccessTokens: {
+            where: {
+              id: accessTokenPayload.value.payload.compasSessionAccessToken,
+            },
           },
         },
         accessTokens: {

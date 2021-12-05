@@ -458,48 +458,12 @@ export const fileQueries = {
   fileDeletePermanent,
 };
 /**
- * @param {StoreFileQueryBuilder & StoreFileQueryTraverser} builder
+ * @param {StoreFileQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQueryFile(builder, wherePartial) {
   const joinQb = query``;
-  if (builder.viaGroup) {
-    builder.where = builder.where ?? {};
-    // Prepare idIn
-    if (isQueryPart(builder.where.idIn)) {
-      builder.where.idIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.idIn) &&
-      builder.where.idIn.length > 0
-    ) {
-      builder.where.idIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.idIn,
-      );
-    } else {
-      builder.where.idIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaGroup.offset)
-      ? query`OFFSET ${builder.viaGroup.offset}`
-      : query``;
-    if (!isNil(builder.viaGroup.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaGroup.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.idIn.append(query`
-SELECT DISTINCT fg."file"
-${internalQueryFileGroup(builder.viaGroup ?? {})}
-${offsetLimitQb}
-`);
-  }
   if (builder.group) {
     const joinedKeys = [];
     const offsetLimitQb = !isNil(builder.group.offset)

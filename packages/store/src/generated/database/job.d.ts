@@ -72,12 +72,12 @@ export function jobInsertValues(
  */
 export function jobUpdateSet(update: StoreJobUpdatePartial): QueryPart;
 /**
- * @param {StoreJobQueryBuilder & StoreJobQueryTraverser} builder
+ * @param {StoreJobQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQueryJob(
-  builder: StoreJobQueryBuilder & StoreJobQueryTraverser,
+  builder: StoreJobQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**
