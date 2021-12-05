@@ -68,31 +68,6 @@ koa-body parses url-encoded, form data, json and text by default.
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/server/src/middleware/body.js#L46)_
 
-## session
-
-_Available since 0.1.0_
-
-_function session({import("../app").KoaApplication} app,
-{Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?: boolean
-}>} opts KoaSession options): Middleware_
-
-Session middleware. Requires process.env.APP_KEYS to be set. To generate a key
-use something like:
-`node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
-This also accepts the session store as provided by `@compas/store`.
-
-**Parameters**:
-
-- {import("../app").KoaApplication} app `{import("../app").KoaApplication} app`:
-  {import("../app").KoaApplication} app
-- {Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?:
-  boolean }>} opts KoaSession options
-  `{Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?: boolean }>} opts KoaSession options`:
-  {Partial\<koaSession.opts & { renew: number|boolean, keepPublicCookie?:
-  boolean }>} opts KoaSession options
-
-_[source](https://github.com/compasjs/compas/blob/main/packages/server/src/middleware/session.js#L25)_
-
 ## compose
 
 _Available since 0.1.0_

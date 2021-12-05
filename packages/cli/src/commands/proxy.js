@@ -38,15 +38,6 @@ export function proxyCommand(logger, command) {
   const localProxy = proxy.createProxyServer({});
 
   localProxy.on("proxyRes", (proxyResponse, req) => {
-    // Remove secure flag since localhost connection is not secure
-    if (proxyResponse.headers["set-cookie"]) {
-      const cookies = proxyResponse.headers["set-cookie"];
-
-      for (let i = 0; i < cookies.length; ++i) {
-        cookies[i] = cookies[i].replace(/; secure/gi, "");
-      }
-    }
-
     if (verbose) {
       logger.info({
         method: req.method,

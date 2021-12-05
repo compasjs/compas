@@ -260,24 +260,6 @@ Get all uncompleted jobs from the queue. Useful for testing if jobs are created.
 
 _[source](https://github.com/compasjs/compas/blob/main/packages/store/src/queue.js#L668)_
 
-## newSessionStore
-
-_Available since 0.1.0_
-
-_function newSessionStore({import("../types/advanced-types").Postgres} sql):
-SessionStore_
-
-Create a new session store, to be used in combination with the `session` as
-provided in `@compas/server`.
-
-**Parameters**:
-
-- {import("../types/advanced-types").Postgres} sql
-  `{import("../types/advanced-types").Postgres} sql`:
-  {import("../types/advanced-types").Postgres} sql
-
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/sessions.js#L54)_
-
 ## newMinioClient
 
 _Available since 0.1.0_
@@ -408,7 +390,7 @@ id, into the provided bucket.
 - id `string`
 - targetBucket `string=bucketName`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L197)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L199)_
 
 ## getFileStream
 
@@ -427,7 +409,7 @@ the 'id'. A 'start' and 'end' value can optionally be specified.
 - id `string`
 - seek `{ start?: number|undefined, end?: number|undefined }={}`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L169)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L171)_
 
 ## syncDeletedFiles
 
@@ -445,7 +427,7 @@ the S3 bucket.
 - minio `MinioClient`
 - bucketName `string`
 
-_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L236)_
+_[source](https://github.com/compasjs/compas/blob/main/packages/store/src/files.js#L238)_
 
 ## updateFileGroupOrder
 

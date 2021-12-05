@@ -7,7 +7,6 @@ export type BodyParserPair = import("./src/middleware/body").BodyParserPair;
 export {
   createBodyParsers,
   sendFile,
-  session,
   compose,
 } from "./src/middleware/index.js";
 export { closeTestApp, createTestAppAndClient } from "./src/testing.js";

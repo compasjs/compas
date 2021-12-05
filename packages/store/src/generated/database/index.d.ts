@@ -57,33 +57,6 @@ export const queries: {
     update: StoreSessionStoreUpdatePartial,
     where?: StoreSessionStoreWhere | undefined,
   ) => Promise<StoreSessionStore[]>;
-  sessionCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreSessionWhere | undefined,
-  ) => Promise<number>;
-  sessionDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreSessionWhere | undefined,
-  ) => Promise<void>;
-  sessionInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreSessionInsertPartial | StoreSessionInsertPartial[],
-    options?:
-      | {
-          withPrimaryKey?: boolean | undefined;
-        }
-      | undefined,
-  ) => Promise<StoreSession[]>;
-  sessionUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreSessionInsertPartial | StoreSessionInsertPartial[],
-    options?: {} | undefined,
-  ) => Promise<StoreSession[]>;
-  sessionUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    update: StoreSessionUpdatePartial,
-    where?: StoreSessionWhere | undefined,
-  ) => Promise<StoreSession[]>;
   jobCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreJobWhere | undefined,

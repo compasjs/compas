@@ -44,7 +44,6 @@ declare global {
   type QueryPartArg = store.QueryPartArg;
   type MinioClient = store.MinioClient;
   type GetStreamFn = store.GetStreamFn;
-  type SessionStore = store.SessionStore;
   type FileCache = store.FileCache;
   type SessionStoreSettings = store.SessionStoreSettings;
   type SessionTransportSettings = store.SessionTransportSettings;

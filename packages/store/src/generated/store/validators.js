@@ -3,13 +3,11 @@
 
 import { AppError, isNil } from "@compas/stdlib";
 import {
-  anonymousValidator1108679019,
   anonymousValidator1196685479,
   anonymousValidator1257773835,
   anonymousValidator1334934277,
   anonymousValidator1337490931,
   anonymousValidator1430489818,
-  anonymousValidator144635851,
   anonymousValidator153017499,
   anonymousValidator163358845,
   anonymousValidator1781782332,
@@ -17,7 +15,6 @@ import {
   anonymousValidator1856722848,
   anonymousValidator1862233461,
   anonymousValidator1864958291,
-  anonymousValidator2038758416,
   anonymousValidator2060025506,
   anonymousValidator2074494218,
   anonymousValidator2086080888,
@@ -31,10 +28,8 @@ import {
   anonymousValidator376443596,
   anonymousValidator420878393,
   anonymousValidator430889951,
-  anonymousValidator500057262,
   anonymousValidator503384244,
   anonymousValidator599447075,
-  anonymousValidator647856360,
   anonymousValidator685221527,
   anonymousValidator753972035,
 } from "../common/anonymous-validators.js";
@@ -231,32 +226,6 @@ export function validateStoreJobInterval(value, propertyPath = "$") {
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSession>}
- */
-export function validateStoreSession(value, propertyPath = "$") {
-  const result = anonymousValidator1108679019(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSession}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStore>}
  */
 export function validateStoreSessionStore(value, propertyPath = "$") {
@@ -382,32 +351,6 @@ export function validateStoreJobWhere(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreJobWhere}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionWhere>}
- */
-export function validateStoreSessionWhere(value, propertyPath = "$") {
-  const result = anonymousValidator500057262(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionWhere}} */
   return { value: result.value };
 }
 /**
@@ -621,58 +564,6 @@ export function validateStoreJobOrderBySpec(value, propertyPath = "$") {
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionOrderBy>}
- */
-export function validateStoreSessionOrderBy(value, propertyPath = "$") {
-  const result = anonymousValidator2038758416(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionOrderBy}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionOrderBySpec>}
- */
-export function validateStoreSessionOrderBySpec(value, propertyPath = "$") {
-  const result = anonymousValidator144635851(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionOrderBySpec}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreOrderBy>}
  */
 export function validateStoreSessionStoreOrderBy(value, propertyPath = "$") {
@@ -859,32 +750,6 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreJobQueryBuilder}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionQueryBuilder>}
- */
-export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
-  const result = anonymousValidator647856360(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionQueryBuilder}} */
   return { value: result.value };
 }
 /**

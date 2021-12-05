@@ -61,13 +61,6 @@ export function applyStoreStructure(app) {
         T.oneToMany("children", T.reference("store", "fileGroup")),
       ),
 
-    T.object("session")
-      .keys({
-        expires: T.date().searchable(),
-        data: T.any().default("{}"),
-      })
-      .enableQueries({ withDates: true }),
-
     T.object("sessionStore")
       .keys({
         data: T.any().default("{}"),

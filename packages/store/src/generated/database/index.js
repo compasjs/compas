@@ -4,7 +4,6 @@
 import { fileQueries } from "./file.js";
 import { fileGroupQueries } from "./fileGroup.js";
 import { jobQueries } from "./job.js";
-import { sessionQueries } from "./session.js";
 import { sessionStoreQueries } from "./sessionStore.js";
 import { sessionStoreTokenQueries } from "./sessionStoreToken.js";
 
@@ -12,7 +11,6 @@ export const queries = {
   ...fileGroupQueries,
   ...fileQueries,
   ...jobQueries,
-  ...sessionQueries,
   ...sessionStoreQueries,
   ...sessionStoreTokenQueries,
 };

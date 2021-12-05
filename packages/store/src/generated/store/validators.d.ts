@@ -72,15 +72,6 @@ export function validateStoreJobInterval(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSession>}
- */
-export function validateStoreSession(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSession>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStore>}
  */
 export function validateStoreSessionStore(
@@ -123,15 +114,6 @@ export function validateStoreJobWhere(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreJobWhere>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionWhere>}
- */
-export function validateStoreSessionWhere(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionWhere>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
@@ -207,24 +189,6 @@ export function validateStoreJobOrderBySpec(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionOrderBy>}
- */
-export function validateStoreSessionOrderBy(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionOrderBy>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionOrderBySpec>}
- */
-export function validateStoreSessionOrderBySpec(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionOrderBySpec>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreOrderBy>}
  */
 export function validateStoreSessionStoreOrderBy(
@@ -285,15 +249,6 @@ export function validateStoreJobQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreJobQueryBuilder>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionQueryBuilder>}
- */
-export function validateStoreSessionQueryBuilder(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionQueryBuilder>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]

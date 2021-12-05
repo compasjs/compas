@@ -20,10 +20,6 @@
  */
 
 /**
- * @typedef {import("./src/sessions.js").SessionStore} SessionStore
- */
-
-/**
  * @typedef {import("./src/session-store.js").SessionStoreSettings} SessionStoreSettings
  */
 
@@ -99,8 +95,6 @@ export {
   sessionTransportLoadFromContext,
   sessionTransportAddAsCookiesToContext,
 } from "./src/session-transport.js";
-
-export { newSessionStore } from "./src/sessions.js";
 
 export {
   query,
