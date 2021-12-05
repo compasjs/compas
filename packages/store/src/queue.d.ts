@@ -207,7 +207,7 @@ export class JobQueueWorker {
    * Returns the number of removed rows
    *
    * @param {number} maxAgeInDays
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   clean(maxAgeInDays: number): Promise<number>;
   /**

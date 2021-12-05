@@ -181,17 +181,6 @@ export const fileGroupWhereSpec = {
           },
         },
         {
-          matcherKey: "childrenExists",
-          matcherType: "exists",
-          relation: {
-            entityName: "fileGroup",
-            shortName: "fg2",
-            entityKey: "parent",
-            referencedKey: "id",
-            where: "self",
-          },
-        },
-        {
           matcherKey: "childrenNotExists",
           matcherType: "notExists",
           relation: {

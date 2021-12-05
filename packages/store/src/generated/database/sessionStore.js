@@ -102,17 +102,6 @@ export const sessionStoreWhereSpec = {
           },
         },
         {
-          matcherKey: "accessTokensExists",
-          matcherType: "exists",
-          relation: {
-            entityName: "sessionStoreToken",
-            shortName: "sst",
-            entityKey: "session",
-            referencedKey: "id",
-            where: () => sessionStoreTokenWhereSpec,
-          },
-        },
-        {
           matcherKey: "accessTokensNotExists",
           matcherType: "notExists",
           relation: {

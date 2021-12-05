@@ -11,7 +11,7 @@ import { isQueryPart, query } from "./query.js";
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
  *                    "like"|"iLike"|"notLike"|"notILike"|
  *                    "includeNotNull"|"isNull"|"isNotNull"|
- *                    "via"|"exists"|"notExists",
+ *                    "via"|"notExists",
  *     relation: {
  *       entityName: string,
  *       shortName: string,
@@ -189,25 +189,10 @@ export function generatedWhereBuilderHelper(
             matcher.relation.where === "self"
               ? entityWhereInformation
               : matcher.relation.where,
-            where[matcher.matcherKey]?.where,
+            where[matcher.matcherKey]?.where ?? {},
             `${matcher.relation.shortName}.`,
           ),
           offsetLimit,
-          undefined,
-        );
-      } else if (matcherKeyExists && matcher.matcherType === "exists") {
-        strings.push(
-          ` AND EXISTS (SELECT FROM "${matcher.relation.entityName}" ${matcher.relation.shortName} WHERE `,
-          ` AND ${matcher.relation.shortName}."${matcher.relation.entityKey}" = ${shortName}"${matcher.relation.referencedKey}")`,
-        );
-        values.push(
-          generatedWhereBuilderHelper(
-            matcher.relation.where === "self"
-              ? entityWhereInformation
-              : matcher.relation.where,
-            where[matcher.matcherKey],
-            `${matcher.relation.shortName}.`,
-          ),
           undefined,
         );
       } else if (matcherKeyExists && matcher.matcherType === "notExists") {

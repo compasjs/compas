@@ -182,16 +182,6 @@ export function createWhereTypes(context) {
         relation.subType === "oneToMany" ||
         relation.subType === "oneToOneReverse"
       ) {
-        // Support other side of the relation exists, which is the same as
-        // `owningSideOfTheRelation`.isNotNull.
-        type.where.rawType.keys[`${relation.ownKey}Exists`] = {
-          ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
-            .optional()
-            .build(),
-          reference:
-            context.structure[otherSide.group][`${otherSide.name}Where`],
-        };
-
         type.where.rawType.keys[`${relation.ownKey}NotExists`] = {
           ...new ReferenceType(otherSide.group, `${otherSide.name}Where`)
             .optional()
@@ -200,20 +190,12 @@ export function createWhereTypes(context) {
             context.structure[otherSide.group][`${otherSide.name}Where`],
         };
 
-        type.where.fields.push(
-          {
-            key: relation.ownKey,
-            name: `${relation.ownKey}Exists`,
-            variant: "exists",
-            isRelation: true,
-          },
-          {
-            key: relation.ownKey,
-            name: `${relation.ownKey}NotExists`,
-            variant: "notExists",
-            isRelation: true,
-          },
-        );
+        type.where.fields.push({
+          key: relation.ownKey,
+          name: `${relation.ownKey}NotExists`,
+          variant: "notExists",
+          isRelation: true,
+        });
       }
     }
   }

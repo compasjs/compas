@@ -144,17 +144,6 @@ export const sessionStoreTokenWhereSpec = {
           },
         },
         {
-          matcherKey: "accessTokenExists",
-          matcherType: "exists",
-          relation: {
-            entityName: "sessionStoreToken",
-            shortName: "sst2",
-            entityKey: "refreshToken",
-            referencedKey: "id",
-            where: "self",
-          },
-        },
-        {
           matcherKey: "accessTokenNotExists",
           matcherType: "notExists",
           relation: {
