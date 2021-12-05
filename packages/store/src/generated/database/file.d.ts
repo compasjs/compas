@@ -72,12 +72,12 @@ export function fileInsertValues(
  */
 export function fileUpdateSet(update: StoreFileUpdatePartial): QueryPart;
 /**
- * @param {StoreFileQueryBuilder & StoreFileQueryTraverser} builder
+ * @param {StoreFileQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQueryFile(
-  builder: StoreFileQueryBuilder & StoreFileQueryTraverser,
+  builder: StoreFileQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**

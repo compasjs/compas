@@ -72,12 +72,12 @@ export function sessionInsertValues(
  */
 export function sessionUpdateSet(update: StoreSessionUpdatePartial): QueryPart;
 /**
- * @param {StoreSessionQueryBuilder & StoreSessionQueryTraverser} builder
+ * @param {StoreSessionQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySession(
-  builder: StoreSessionQueryBuilder & StoreSessionQueryTraverser,
+  builder: StoreSessionQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**

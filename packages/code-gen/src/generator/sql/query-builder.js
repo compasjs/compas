@@ -73,24 +73,10 @@ export function createQueryBuilderTypes(context) {
       })
       .build();
 
-    const queryTraverserType = new ObjectType(
-      type.group,
-      `${type.name}QueryTraverser`,
-    )
-      .keys({
-        where: T.reference(type.group, `${type.name}Where`).optional(),
-        limit: T.number().optional(),
-        offset: T.number().optional(),
-      })
-      .build();
-
     addToData(context.structure, queryBuilderType);
-    addToData(context.structure, queryTraverserType);
 
     // Link reference manually
     queryBuilderType.keys.where.reference =
-      context.structure[type.group][`${type.name}Where`];
-    queryTraverserType.keys.where.reference =
       context.structure[type.group][`${type.name}Where`];
 
     queryBuilderType.keys.orderBy.reference =
@@ -104,8 +90,6 @@ export function createQueryBuilderTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
     const queryBuilderType =
       context.structure[type.group][`${type.name}QueryBuilder`];
-    const queryTraverserType =
-      context.structure[type.group][`${type.name}QueryTraverser`];
 
     const relations = {};
 
@@ -131,17 +115,6 @@ export function createQueryBuilderTypes(context) {
           context.structure[otherSide.group][`${otherSide.name}QueryBuilder`],
       };
 
-      queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`] = {
-        ...T.reference(otherSide.group, `${otherSide.name}QueryTraverser`)
-          .optional()
-          .build(),
-        reference:
-          context.structure[otherSide.group][`${otherSide.name}QueryTraverser`],
-      };
-
-      queryTraverserType.keys[`via${upperCaseFirst(relation.ownKey)}`] =
-        queryBuilderType.keys[`via${upperCaseFirst(relation.ownKey)}`];
-
       const joinKey = `${type.shortName}_${otherSide.shortName}`;
       if (!joinKeyMapping.has(joinKey)) {
         joinKeyMapping.set(joinKey, 0);
@@ -160,7 +133,6 @@ export function createQueryBuilderTypes(context) {
 
     type.queryBuilder = {
       type: undefined,
-      traverseType: undefined,
       relations,
     };
   }
@@ -169,21 +141,10 @@ export function createQueryBuilderTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
     const queryBuilderType =
       context.structure[type.group][`${type.name}QueryBuilder`];
-    const queryTraverserType =
-      context.structure[type.group][`${type.name}QueryTraverser`];
 
     type.queryBuilder.type = getTypeNameForType(context, queryBuilderType, "", {
       useDefaults: false,
     });
-
-    type.queryBuilder.traverseType = getTypeNameForType(
-      context,
-      queryTraverserType,
-      "",
-      {
-        useDefaults: false,
-      },
-    );
   }
 }
 
@@ -308,7 +269,6 @@ function queryBuilderForType(context, imports, type) {
  * Create an internal query builder for the specified type
  * Handling all of the following:
  *    - Nested joins
- *    - Query traversal 'via'-queries
  *    - Self referencing tables, by generating the same function with a different
  * shortName
  *    - limit and offset
@@ -327,7 +287,6 @@ function internalQueryBuilderForType(
   shortName = type.shortName,
 ) {
   const nestedJoinPartials = [];
-  const traverseJoinPartials = [];
   let secondInternalBuilder = ``;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
@@ -447,42 +406,7 @@ if (!isNil(builder.${key}.limit)) {
     if (typeof sqlCastType === "function") {
       sqlCastType = sqlCastType(type.keys[ownKey], true);
     }
-    const traverseJoinPart = js`
-         if (builder.via${upperCaseFirst(relationKey)}) {
-            builder.where = builder.where ?? {};
 
-               // Prepare ${ownKey}In
-            if (isQueryPart(builder.where.${ownKey}In)) {
-               builder.where.${ownKey}In.append(query\` INTERSECT \`);
-            } else if (Array.isArray(builder.where.${ownKey}In) &&
-               builder.where.${ownKey}In.length > 0) {
-               builder.where.${ownKey}In = query([
-                                                    "(SELECT value::${sqlCastType} FROM(values (",
-                                                    ...Array.from({ length: builder.where.${ownKey}In.length - 1 }).map(
-                                                       () => "), ("),
-                                                    ")) as ids(value)) INTERSECT "
-                                                 ], ...builder.where.${ownKey}In)
-            } else {
-               builder.where.${ownKey}In = query\`\`;
-            }
-
-            ${getLimitOffset(true)}
-
-            builder.where.${ownKey}In.append(query\`
-          SELECT DISTINCT ${otherShortName}."${referencedKey}"
-           $\{internalQuery${
-             upperCaseFirst(otherSide.name) +
-             (otherSide === type && otherShortName !== type.shortName
-               ? "2"
-               : "")
-           }(
-               builder.via${upperCaseFirst(relationKey)} ?? {})}
-           $\{offsetLimitQb} 
-        \`);
-         }
-      `;
-
-    traverseJoinPartials.push(traverseJoinPart);
     nestedJoinPartials.push(queryBuilderPart);
   }
 
@@ -490,9 +414,7 @@ if (!isNil(builder.${key}.limit)) {
       ${secondInternalBuilder}
 
       /**
-       * @param {${type.queryBuilder.type} & ${
-    type.queryBuilder.traverseType
-  }} builder
+       * @param {${type.queryBuilder.type}} builder
        * @param {QueryPart|undefined} [wherePartial]
        * @returns {QueryPart}
        */
@@ -501,7 +423,6 @@ if (!isNil(builder.${key}.limit)) {
       }(builder, wherePartial) {
          let joinQb = query\`\`;
 
-         ${traverseJoinPartials}
          ${nestedJoinPartials}
 
          return query\`

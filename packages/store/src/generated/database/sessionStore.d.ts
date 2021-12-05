@@ -74,12 +74,12 @@ export function sessionStoreUpdateSet(
   update: StoreSessionStoreUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreSessionStoreQueryBuilder & StoreSessionStoreQueryTraverser} builder
+ * @param {StoreSessionStoreQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStore(
-  builder: StoreSessionStoreQueryBuilder & StoreSessionStoreQueryTraverser,
+  builder: StoreSessionStoreQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**

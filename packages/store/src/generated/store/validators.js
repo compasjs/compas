@@ -3,25 +3,20 @@
 
 import { AppError, isNil } from "@compas/stdlib";
 import {
-  anonymousValidator1069465749,
   anonymousValidator1108679019,
   anonymousValidator1196685479,
   anonymousValidator1257773835,
-  anonymousValidator1274599578,
   anonymousValidator1334934277,
   anonymousValidator1337490931,
-  anonymousValidator135209020,
   anonymousValidator1430489818,
   anonymousValidator144635851,
   anonymousValidator153017499,
   anonymousValidator163358845,
   anonymousValidator1781782332,
   anonymousValidator1795948632,
-  anonymousValidator1805657267,
   anonymousValidator1856722848,
   anonymousValidator1862233461,
   anonymousValidator1864958291,
-  anonymousValidator1952914356,
   anonymousValidator2038758416,
   anonymousValidator2060025506,
   anonymousValidator2074494218,
@@ -42,7 +37,6 @@ import {
   anonymousValidator647856360,
   anonymousValidator685221527,
   anonymousValidator753972035,
-  anonymousValidator770376901,
 } from "../common/anonymous-validators.js";
 /**
  * @template T
@@ -818,32 +812,6 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileQueryTraverser>}
- */
-export function validateStoreFileQueryTraverser(value, propertyPath = "$") {
-  const result = anonymousValidator1069465749(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileQueryTraverser}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupQueryBuilder>}
  */
 export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
@@ -865,35 +833,6 @@ export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreFileGroupQueryBuilder}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupQueryTraverser>}
- */
-export function validateStoreFileGroupQueryTraverser(
-  value,
-  propertyPath = "$",
-) {
-  const result = anonymousValidator1274599578(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupQueryTraverser}} */
   return { value: result.value };
 }
 /**
@@ -925,32 +864,6 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobQueryTraverser>}
- */
-export function validateStoreJobQueryTraverser(value, propertyPath = "$") {
-  const result = anonymousValidator1952914356(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreJobQueryTraverser}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionQueryBuilder>}
  */
 export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
@@ -972,32 +885,6 @@ export function validateStoreSessionQueryBuilder(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreSessionQueryBuilder}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionQueryTraverser>}
- */
-export function validateStoreSessionQueryTraverser(value, propertyPath = "$") {
-  const result = anonymousValidator1805657267(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionQueryTraverser}} */
   return { value: result.value };
 }
 /**
@@ -1032,35 +919,6 @@ export function validateStoreSessionStoreQueryBuilder(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreQueryTraverser>}
- */
-export function validateStoreSessionStoreQueryTraverser(
-  value,
-  propertyPath = "$",
-) {
-  const result = anonymousValidator135209020(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionStoreQueryTraverser}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
  */
 export function validateStoreSessionStoreTokenQueryBuilder(
@@ -1085,34 +943,5 @@ export function validateStoreSessionStoreTokenQueryBuilder(
     };
   }
   /** @type {{ value: StoreSessionStoreTokenQueryBuilder}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenQueryTraverser>}
- */
-export function validateStoreSessionStoreTokenQueryTraverser(
-  value,
-  propertyPath = "$",
-) {
-  const result = anonymousValidator770376901(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreSessionStoreTokenQueryTraverser}} */
   return { value: result.value };
 }

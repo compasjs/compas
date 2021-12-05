@@ -1207,9 +1207,7 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     posts?: undefined | SqlPostCategoryQueryBuilder;
-    viaPosts?: undefined | SqlPostCategoryQueryTraverser;
     meta?: undefined | SqlCategoryMetaQueryBuilder;
-    viaMeta?: undefined | SqlCategoryMetaQueryTraverser;
   };
   type SqlPostCategoryQueryBuilder = {
     where?: undefined | SqlPostCategoryWhere;
@@ -1219,9 +1217,7 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     post?: undefined | SqlPostQueryBuilder;
-    viaPost?: undefined | SqlPostQueryTraverser;
     category?: undefined | SqlCategoryQueryBuilder;
-    viaCategory?: undefined | SqlCategoryQueryTraverser;
   };
   type SqlPostQueryBuilder = {
     where?: undefined | SqlPostWhere;
@@ -1231,11 +1227,8 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     writer?: undefined | SqlUserQueryBuilder;
-    viaWriter?: undefined | SqlUserQueryTraverser;
     categories?: undefined | SqlPostCategoryQueryBuilder;
-    viaCategories?: undefined | SqlPostCategoryQueryTraverser;
     postages?: undefined | SqlPostageQueryBuilder;
-    viaPostages?: undefined | SqlPostageQueryTraverser;
   };
   type SqlUserQueryBuilder = {
     where?: undefined | SqlUserWhere;
@@ -1245,63 +1238,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     posts?: undefined | SqlPostQueryBuilder;
-    viaPosts?: undefined | SqlPostQueryTraverser;
-  };
-  type SqlPostQueryTraverser = {
-    where?: undefined | SqlPostWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaWriter?: undefined | SqlUserQueryTraverser;
-    viaCategories?: undefined | SqlPostCategoryQueryTraverser;
-    viaPostages?: undefined | SqlPostageQueryTraverser;
-  };
-  type SqlUserQueryTraverser = {
-    where?: undefined | SqlUserWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaPosts?: undefined | SqlPostQueryTraverser;
-  };
-  type SqlPostCategoryQueryTraverser = {
-    where?: undefined | SqlPostCategoryWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaPost?: undefined | SqlPostQueryTraverser;
-    viaCategory?: undefined | SqlCategoryQueryTraverser;
-  };
-  type SqlCategoryQueryTraverser = {
-    where?: undefined | SqlCategoryWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaPosts?: undefined | SqlPostCategoryQueryTraverser;
-    viaMeta?: undefined | SqlCategoryMetaQueryTraverser;
-  };
-  type SqlCategoryMetaQueryTraverser = {
-    where?: undefined | SqlCategoryMetaWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaCategory?: undefined | SqlCategoryQueryTraverser;
-  };
-  type SqlPostageQueryTraverser = {
-    where?: undefined | SqlPostageWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaPost?: undefined | SqlPostQueryTraverser;
-    viaImages?: undefined | StoreFileGroupQueryTraverser;
-  };
-  type StoreFileGroupQueryTraverser = {
-    where?: undefined | StoreFileGroupWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaFile?: undefined | StoreFileQueryTraverser;
-    viaParent?: undefined | StoreFileGroupQueryTraverser;
-    viaChildren?: undefined | StoreFileGroupQueryTraverser;
-    viaPostageImages?: undefined | SqlPostageQueryTraverser;
-  };
-  type StoreFileQueryTraverser = {
-    where?: undefined | StoreFileWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaGroup?: undefined | StoreFileGroupQueryTraverser;
   };
   type SqlPostageQueryBuilder = {
     where?: undefined | SqlPostageWhere;
@@ -1311,9 +1247,7 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     post?: undefined | SqlPostQueryBuilder;
-    viaPost?: undefined | SqlPostQueryTraverser;
     images?: undefined | StoreFileGroupQueryBuilder;
-    viaImages?: undefined | StoreFileGroupQueryTraverser;
   };
   type StoreFileGroupQueryBuilder = {
     where?: undefined | StoreFileGroupWhere;
@@ -1323,13 +1257,9 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     file?: undefined | StoreFileQueryBuilder;
-    viaFile?: undefined | StoreFileQueryTraverser;
     parent?: undefined | StoreFileGroupQueryBuilder;
-    viaParent?: undefined | StoreFileGroupQueryTraverser;
     children?: undefined | StoreFileGroupQueryBuilder;
-    viaChildren?: undefined | StoreFileGroupQueryTraverser;
     postageImages?: undefined | SqlPostageQueryBuilder;
-    viaPostageImages?: undefined | SqlPostageQueryTraverser;
   };
   type StoreFileQueryBuilder = {
     where?: undefined | StoreFileWhere;
@@ -1339,7 +1269,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     group?: undefined | StoreFileGroupQueryBuilder;
-    viaGroup?: undefined | StoreFileGroupQueryTraverser;
   };
   type SqlCategoryMetaQueryBuilder = {
     where?: undefined | SqlCategoryMetaWhere;
@@ -1349,7 +1278,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     category?: undefined | SqlCategoryQueryBuilder;
-    viaCategory?: undefined | SqlCategoryQueryTraverser;
   };
   type SqlJobStatusAggregateQueryBuilder = {
     where?: undefined | SqlJobStatusAggregateWhere;
@@ -1359,7 +1287,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     job?: undefined | StoreJobQueryBuilder;
-    viaJob?: undefined | StoreJobQueryTraverser;
   };
   type StoreJobQueryBuilder = {
     where?: undefined | StoreJobWhere;
@@ -1369,19 +1296,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     status?: undefined | SqlJobStatusAggregateQueryBuilder;
-    viaStatus?: undefined | SqlJobStatusAggregateQueryTraverser;
-  };
-  type SqlJobStatusAggregateQueryTraverser = {
-    where?: undefined | SqlJobStatusAggregateWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaJob?: undefined | StoreJobQueryTraverser;
-  };
-  type StoreJobQueryTraverser = {
-    where?: undefined | StoreJobWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaStatus?: undefined | SqlJobStatusAggregateQueryTraverser;
   };
   type QueryResultSqlCategory = SqlCategory & {
     posts?: QueryResultSqlPostCategory[];
@@ -1736,11 +1650,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
   };
-  type StoreSessionQueryTraverser = {
-    where?: undefined | StoreSessionWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-  };
   type StoreSessionStoreQueryBuilder = {
     where?: undefined | StoreSessionStoreWhere;
     orderBy?: undefined | StoreSessionStoreOrderBy;
@@ -1749,7 +1658,6 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
-    viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
   };
   type StoreSessionStoreTokenQueryBuilder = {
     where?: undefined | StoreSessionStoreTokenWhere;
@@ -1759,25 +1667,8 @@ declare global {
     limit?: undefined | number;
     offset?: undefined | number;
     session?: undefined | StoreSessionStoreQueryBuilder;
-    viaSession?: undefined | StoreSessionStoreQueryTraverser;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
-    viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
-    viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
-  };
-  type StoreSessionStoreQueryTraverser = {
-    where?: undefined | StoreSessionStoreWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaAccessTokens?: undefined | StoreSessionStoreTokenQueryTraverser;
-  };
-  type StoreSessionStoreTokenQueryTraverser = {
-    where?: undefined | StoreSessionStoreTokenWhere;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    viaSession?: undefined | StoreSessionStoreQueryTraverser;
-    viaRefreshToken?: undefined | StoreSessionStoreTokenQueryTraverser;
-    viaAccessToken?: undefined | StoreSessionStoreTokenQueryTraverser;
   };
   type QueryResultStoreSession = StoreSession & {};
   type QueryResultStoreSessionStore = StoreSessionStore & {

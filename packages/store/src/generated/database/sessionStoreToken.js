@@ -455,120 +455,12 @@ export const sessionStoreTokenQueries = {
   sessionStoreTokenUpdate,
 };
 /**
- * @param {StoreSessionStoreTokenQueryBuilder & StoreSessionStoreTokenQueryTraverser} builder
+ * @param {StoreSessionStoreTokenQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStoreToken2(builder, wherePartial) {
   const joinQb = query``;
-  if (builder.viaSession) {
-    builder.where = builder.where ?? {};
-    // Prepare sessionIn
-    if (isQueryPart(builder.where.sessionIn)) {
-      builder.where.sessionIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.sessionIn) &&
-      builder.where.sessionIn.length > 0
-    ) {
-      builder.where.sessionIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.sessionIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.sessionIn,
-      );
-    } else {
-      builder.where.sessionIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaSession.offset)
-      ? query`OFFSET ${builder.viaSession.offset}`
-      : query``;
-    if (!isNil(builder.viaSession.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaSession.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.sessionIn.append(query`
-SELECT DISTINCT ss."id"
-${internalQuerySessionStore(builder.viaSession ?? {})}
-${offsetLimitQb}
-`);
-  }
-  if (builder.viaRefreshToken) {
-    builder.where = builder.where ?? {};
-    // Prepare refreshTokenIn
-    if (isQueryPart(builder.where.refreshTokenIn)) {
-      builder.where.refreshTokenIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.refreshTokenIn) &&
-      builder.where.refreshTokenIn.length > 0
-    ) {
-      builder.where.refreshTokenIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({
-            length: builder.where.refreshTokenIn.length - 1,
-          }).map(() => "), ("),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.refreshTokenIn,
-      );
-    } else {
-      builder.where.refreshTokenIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaRefreshToken.offset)
-      ? query`OFFSET ${builder.viaRefreshToken.offset}`
-      : query``;
-    if (!isNil(builder.viaRefreshToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaRefreshToken.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.refreshTokenIn.append(query`
-SELECT DISTINCT sst."id"
-${internalQuerySessionStoreToken(builder.viaRefreshToken ?? {})}
-${offsetLimitQb}
-`);
-  }
-  if (builder.viaAccessToken) {
-    builder.where = builder.where ?? {};
-    // Prepare idIn
-    if (isQueryPart(builder.where.idIn)) {
-      builder.where.idIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.idIn) &&
-      builder.where.idIn.length > 0
-    ) {
-      builder.where.idIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.idIn,
-      );
-    } else {
-      builder.where.idIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaAccessToken.offset)
-      ? query`OFFSET ${builder.viaAccessToken.offset}`
-      : query``;
-    if (!isNil(builder.viaAccessToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaAccessToken.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.idIn.append(query`
-SELECT DISTINCT sst."refreshToken"
-${internalQuerySessionStoreToken(builder.viaAccessToken ?? {})}
-${offsetLimitQb}
-`);
-  }
   if (builder.session) {
     const joinedKeys = [];
     const offsetLimitQb = !isNil(builder.session.offset)
@@ -698,120 +590,12 @@ WHERE ${sessionStoreTokenWhere(builder.where, "sst2.", {
 `;
 }
 /**
- * @param {StoreSessionStoreTokenQueryBuilder & StoreSessionStoreTokenQueryTraverser} builder
+ * @param {StoreSessionStoreTokenQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStoreToken(builder, wherePartial) {
   const joinQb = query``;
-  if (builder.viaSession) {
-    builder.where = builder.where ?? {};
-    // Prepare sessionIn
-    if (isQueryPart(builder.where.sessionIn)) {
-      builder.where.sessionIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.sessionIn) &&
-      builder.where.sessionIn.length > 0
-    ) {
-      builder.where.sessionIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.sessionIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.sessionIn,
-      );
-    } else {
-      builder.where.sessionIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaSession.offset)
-      ? query`OFFSET ${builder.viaSession.offset}`
-      : query``;
-    if (!isNil(builder.viaSession.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaSession.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.sessionIn.append(query`
-SELECT DISTINCT ss."id"
-${internalQuerySessionStore(builder.viaSession ?? {})}
-${offsetLimitQb}
-`);
-  }
-  if (builder.viaRefreshToken) {
-    builder.where = builder.where ?? {};
-    // Prepare refreshTokenIn
-    if (isQueryPart(builder.where.refreshTokenIn)) {
-      builder.where.refreshTokenIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.refreshTokenIn) &&
-      builder.where.refreshTokenIn.length > 0
-    ) {
-      builder.where.refreshTokenIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({
-            length: builder.where.refreshTokenIn.length - 1,
-          }).map(() => "), ("),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.refreshTokenIn,
-      );
-    } else {
-      builder.where.refreshTokenIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaRefreshToken.offset)
-      ? query`OFFSET ${builder.viaRefreshToken.offset}`
-      : query``;
-    if (!isNil(builder.viaRefreshToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaRefreshToken.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.refreshTokenIn.append(query`
-SELECT DISTINCT sst2."id"
-${internalQuerySessionStoreToken2(builder.viaRefreshToken ?? {})}
-${offsetLimitQb}
-`);
-  }
-  if (builder.viaAccessToken) {
-    builder.where = builder.where ?? {};
-    // Prepare idIn
-    if (isQueryPart(builder.where.idIn)) {
-      builder.where.idIn.append(query` INTERSECT `);
-    } else if (
-      Array.isArray(builder.where.idIn) &&
-      builder.where.idIn.length > 0
-    ) {
-      builder.where.idIn = query(
-        [
-          "(SELECT value::uuid FROM(values (",
-          ...Array.from({ length: builder.where.idIn.length - 1 }).map(
-            () => "), (",
-          ),
-          ")) as ids(value)) INTERSECT ",
-        ],
-        ...builder.where.idIn,
-      );
-    } else {
-      builder.where.idIn = query``;
-    }
-    const offsetLimitQb = !isNil(builder.viaAccessToken.offset)
-      ? query`OFFSET ${builder.viaAccessToken.offset}`
-      : query``;
-    if (!isNil(builder.viaAccessToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.viaAccessToken.limit} ROWS ONLY`,
-      );
-    }
-    builder.where.idIn.append(query`
-SELECT DISTINCT sst2."refreshToken"
-${internalQuerySessionStoreToken2(builder.viaAccessToken ?? {})}
-${offsetLimitQb}
-`);
-  }
   if (builder.session) {
     const joinedKeys = [];
     const offsetLimitQb = !isNil(builder.session.offset)

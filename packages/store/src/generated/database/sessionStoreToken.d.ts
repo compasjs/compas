@@ -76,23 +76,21 @@ export function sessionStoreTokenUpdateSet(
   update: StoreSessionStoreTokenUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreSessionStoreTokenQueryBuilder & StoreSessionStoreTokenQueryTraverser} builder
+ * @param {StoreSessionStoreTokenQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStoreToken2(
-  builder: StoreSessionStoreTokenQueryBuilder &
-    StoreSessionStoreTokenQueryTraverser,
+  builder: StoreSessionStoreTokenQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**
- * @param {StoreSessionStoreTokenQueryBuilder & StoreSessionStoreTokenQueryTraverser} builder
+ * @param {StoreSessionStoreTokenQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */
 export function internalQuerySessionStoreToken(
-  builder: StoreSessionStoreTokenQueryBuilder &
-    StoreSessionStoreTokenQueryTraverser,
+  builder: StoreSessionStoreTokenQueryBuilder,
   wherePartial?: QueryPart | undefined,
 ): QueryPart;
 /**

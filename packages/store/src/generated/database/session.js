@@ -356,7 +356,7 @@ export const sessionQueries = {
   sessionUpdate,
 };
 /**
- * @param {StoreSessionQueryBuilder & StoreSessionQueryTraverser} builder
+ * @param {StoreSessionQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */

@@ -215,8 +215,12 @@ test("store/file-group", async (t) => {
 
   t.test("get parents of all files", async (t) => {
     const result = await queryFileGroup({
-      viaChildren: {
-        viaFile: {},
+      where: {
+        viaChildren: {
+          where: {
+            viaFile: {},
+          },
+        },
       },
     }).exec(sql);
 

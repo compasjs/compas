@@ -415,7 +415,7 @@ export const jobQueries = {
   jobUpdate,
 };
 /**
- * @param {StoreJobQueryBuilder & StoreJobQueryTraverser} builder
+ * @param {StoreJobQueryBuilder} builder
  * @param {QueryPart|undefined} [wherePartial]
  * @returns {QueryPart}
  */

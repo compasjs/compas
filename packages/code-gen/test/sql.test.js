@@ -183,10 +183,14 @@ test("code-gen/e2e/sql", (t) => {
 
   t.test("get posts for user", async (t) => {
     const result = await queryPost({
-      viaWriter: {
-        viaPosts: {
+      where: {
+        viaWriter: {
           where: {
-            id: post.id,
+            viaPosts: {
+              where: {
+                id: post.id,
+              },
+            },
           },
         },
       },
@@ -198,35 +202,6 @@ test("code-gen/e2e/sql", (t) => {
     t.equal(typeof result[0].createdAt, "object");
     t.equal(typeof result[0].updatedAt, "object");
     t.notEqual(result[0].deletedAt, null, "deletedAt is undefined");
-  });
-
-  t.test("queryBuilder via = where via", async (t) => {
-    t.deepEqual(
-      [
-        ...(await queryPost({
-          viaWriter: {
-            viaPosts: {
-              where: {
-                id: post.id,
-              },
-            },
-          },
-        }).exec(sql)),
-      ],
-      [
-        ...(await queryPost({
-          where: {
-            viaWriter: {
-              where: {
-                viaPosts: {
-                  where: { id: post.id },
-                },
-              },
-            },
-          },
-        }).exec(sql)),
-      ],
-    );
   });
 
   t.test("update user nick name", async (t) => {
@@ -494,13 +469,27 @@ test("code-gen/e2e/sql", (t) => {
           },
         },
       },
-      viaCategories: {
-        viaCategory: {
-          viaPosts: {
-            viaPost: {
-              viaWriter: {
+      where: {
+        viaCategories: {
+          where: {
+            viaCategory: {
+              where: {
                 viaPosts: {
-                  viaPostages: {},
+                  where: {
+                    viaPost: {
+                      where: {
+                        viaWriter: {
+                          where: {
+                            viaPosts: {
+                              where: {
+                                viaPostages: {},
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -514,9 +503,11 @@ test("code-gen/e2e/sql", (t) => {
 
   t.test("traverse via queryUser", async (t) => {
     const [dbUser] = await queryUser({
-      viaPosts: {
-        where: {
-          id: post.id,
+      where: {
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
         },
       },
     }).exec(sql);
@@ -528,10 +519,10 @@ test("code-gen/e2e/sql", (t) => {
     const [dbUser] = await queryUser({
       where: {
         idIn: [post.writer],
-      },
-      viaPosts: {
-        where: {
-          id: post.id,
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
         },
       },
     }).exec(sql);
@@ -543,10 +534,10 @@ test("code-gen/e2e/sql", (t) => {
     const [dbUser] = await queryUser({
       where: {
         idIn: [post.writer, uuid()],
-      },
-      viaPosts: {
-        where: {
-          id: post.id,
+        viaPosts: {
+          where: {
+            id: post.id,
+          },
         },
       },
     }).exec(sql);
@@ -556,18 +547,30 @@ test("code-gen/e2e/sql", (t) => {
 
   t.test("traverse via queryCategory", async (t) => {
     const builder = {
-      viaPosts: {
-        viaPost: {
-          viaWriter: {
-            where: {
-              id: user.id,
-            },
-            viaPosts: {
-              viaCategories: {
-                viaCategory: {
-                  viaMeta: {
-                    where: {
-                      isHighlighted: false,
+      where: {
+        viaPosts: {
+          where: {
+            viaPost: {
+              where: {
+                viaWriter: {
+                  where: {
+                    id: user.id,
+                    viaPosts: {
+                      where: {
+                        viaCategories: {
+                          where: {
+                            viaCategory: {
+                              where: {
+                                viaMeta: {
+                                  where: {
+                                    isHighlighted: false,
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                     },
                   },
                 },

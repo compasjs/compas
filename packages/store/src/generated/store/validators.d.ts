@@ -270,30 +270,12 @@ export function validateStoreFileQueryBuilder(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileQueryTraverser>}
- */
-export function validateStoreFileQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreFileQueryTraverser>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupQueryBuilder>}
  */
 export function validateStoreFileGroupQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreFileGroupQueryBuilder>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupQueryTraverser>}
- */
-export function validateStoreFileGroupQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupQueryTraverser>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
@@ -306,30 +288,12 @@ export function validateStoreJobQueryBuilder(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobQueryTraverser>}
- */
-export function validateStoreJobQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreJobQueryTraverser>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionQueryBuilder>}
  */
 export function validateStoreSessionQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreSessionQueryBuilder>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionQueryTraverser>}
- */
-export function validateStoreSessionQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionQueryTraverser>;
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
@@ -342,30 +306,12 @@ export function validateStoreSessionStoreQueryBuilder(
 /**
  * @param {undefined|any} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreQueryTraverser>}
- */
-export function validateStoreSessionStoreQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreQueryTraverser>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
  */
 export function validateStoreSessionStoreTokenQueryBuilder(
   value: undefined | any,
   propertyPath?: string | undefined,
 ): Either<StoreSessionStoreTokenQueryBuilder>;
-/**
- * @param {undefined|any} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenQueryTraverser>}
- */
-export function validateStoreSessionStoreTokenQueryTraverser(
-  value: undefined | any,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenQueryTraverser>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map
