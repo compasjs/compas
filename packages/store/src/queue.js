@@ -338,11 +338,10 @@ export class JobQueueWorker {
    */
   handleJob(idx) {
     this.workers[idx] = this.sql.begin(async (sql) => {
-      // run in transaction
-
       const [job] = this.unsafeIgnoreSorting
         ? await queueQueries.getUnsortedJob(this.where).exec(sql)
         : await queueQueries.getAnyJob(this.where).exec(sql);
+
       if (job === undefined || job.id === undefined) {
         // reset this 'worker'
         this.workers[idx] = undefined;
@@ -372,6 +371,7 @@ export class JobQueueWorker {
       // while the job is still row locked.
       const savepointId = uuid().replace(/-/g, "_");
       await sql`SAVEPOINT ${sql(savepointId)}`;
+      let isCompasInternalJob = false;
 
       eventStart(event, `job.handler.${jobData.name}`);
 
@@ -381,6 +381,7 @@ export class JobQueueWorker {
         let handlerTimeout = jobData.handlerTimeout ?? this.handlerTimeout;
 
         if (jobData.name === COMPAS_RECURRING_JOB) {
+          isCompasInternalJob = true;
           handlerFn = handleCompasRecurring;
         } else if (
           isPlainObject(handlerFn) &&
@@ -439,7 +440,12 @@ export class JobQueueWorker {
           { id: jobData.id },
         );
       } finally {
-        eventStop(event);
+        // Skip printing the event call stack if it is a Compas internal job.
+        // Since this generates a bunch of useless logs when running multiple 1 second interval jobs.
+        if (!isCompasInternalJob) {
+          eventStop(event);
+        }
+
         this.workers[idx] = undefined;
 
         // Run again as soon as possible
