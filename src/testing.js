@@ -1,9 +1,16 @@
+import { rm } from "node:fs/promises";
+import { uuid } from "@compas/stdlib";
 import { createTestPostgresDatabase } from "@compas/store";
 
 /**
  * @type {Postgres}
  */
-export let sql = undefined;
+export let sql;
+
+/**
+ * @type {string}
+ */
+export let temporaryDirectory;
 
 /**
  * Inject services that can be used in tests across this repo.
@@ -12,6 +19,8 @@ export let sql = undefined;
  */
 export async function injectTestServices() {
   sql = await createTestPostgresDatabase();
+
+  temporaryDirectory = `./test/tmp/${uuid()}/`;
 }
 
 /**
@@ -21,4 +30,6 @@ export async function injectTestServices() {
  */
 export async function destroyTestServices() {
   await sql.end({});
+
+  await rm(temporaryDirectory, { force: true, recursive: true });
 }

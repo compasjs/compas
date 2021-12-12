@@ -1433,13 +1433,6 @@ declare global {
     minutes?: undefined | number;
     seconds?: undefined | number;
   };
-  type StoreSession = {
-    expires: Date;
-    data: any;
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
   type StoreSessionStore = {
     data: any;
     checksum: string;
@@ -1455,36 +1448,6 @@ declare global {
     id: string;
     session: string;
     refreshToken?: undefined | string;
-  };
-  type StoreSessionWhere = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | StoreSessionWhere[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    expires?: undefined | Date;
-    expiresNotEqual?: undefined | Date;
-    expiresIn?: undefined | Date[] | QueryPart<any>;
-    expiresNotIn?: undefined | Date[] | QueryPart<any>;
-    expiresGreaterThan?: undefined | Date;
-    expiresLowerThan?: undefined | Date;
-    createdAt?: undefined | Date;
-    createdAtNotEqual?: undefined | Date;
-    createdAtIn?: undefined | Date[] | QueryPart<any>;
-    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
-    createdAtGreaterThan?: undefined | Date;
-    createdAtLowerThan?: undefined | Date;
-    createdAtIsNull?: undefined | boolean;
-    createdAtIsNotNull?: undefined | boolean;
-    updatedAt?: undefined | Date;
-    updatedAtNotEqual?: undefined | Date;
-    updatedAtIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtGreaterThan?: undefined | Date;
-    updatedAtLowerThan?: undefined | Date;
-    updatedAtIsNull?: undefined | boolean;
-    updatedAtIsNotNull?: undefined | boolean;
   };
   type StoreSessionStoreWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -1572,15 +1535,6 @@ declare global {
         };
     accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
   };
-  type StoreSessionOrderBy =
-    | QueryPart<any>
-    | ("id" | "expires" | "createdAt" | "updatedAt")[];
-  type StoreSessionOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    expires?: undefined | CompasSqlOrderBy;
-    createdAt?: undefined | CompasSqlOrderBy;
-    updatedAt?: undefined | CompasSqlOrderBy;
-  };
   type StoreSessionStoreOrderBy =
     | QueryPart<any>
     | ("id" | "createdAt" | "updatedAt")[];
@@ -1598,19 +1552,6 @@ declare global {
     expiresAt?: undefined | CompasSqlOrderBy;
     refreshToken?: undefined | CompasSqlOrderByOptionalField;
     revokedAt?: undefined | CompasSqlOrderByOptionalField;
-  };
-  type StoreSessionInsertPartial = {
-    id?: undefined | string;
-    expires: Date;
-    data?: undefined | any;
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-  };
-  type StoreSessionUpdatePartial = {
-    expires?: undefined | Date;
-    data?: undefined | any;
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
   };
   type StoreSessionStoreInsertPartial = {
     id?: undefined | string;
@@ -1642,14 +1583,6 @@ declare global {
     revokedAt?: undefined | null | Date;
     createdAt?: undefined | Date;
   };
-  type StoreSessionQueryBuilder = {
-    where?: undefined | StoreSessionWhere;
-    orderBy?: undefined | StoreSessionOrderBy;
-    orderBySpec?: undefined | StoreSessionOrderBySpec;
-    as?: undefined | string;
-    limit?: undefined | number;
-    offset?: undefined | number;
-  };
   type StoreSessionStoreQueryBuilder = {
     where?: undefined | StoreSessionStoreWhere;
     orderBy?: undefined | StoreSessionStoreOrderBy;
@@ -1670,7 +1603,6 @@ declare global {
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
   };
-  type QueryResultStoreSession = StoreSession & {};
   type QueryResultStoreSessionStore = StoreSessionStore & {
     accessTokens?: QueryResultStoreSessionStoreToken[];
   };

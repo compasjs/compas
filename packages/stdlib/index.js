@@ -15,12 +15,25 @@
  */
 
 /**
+ * @typedef {import("./src/config-loader").ConfigLoaderOptions} ConfigLoaderOptions
+ */
+
+/**
+ * @typedef {import("./src/config-loader").ConfigLoaderResult} ConfigLoaderResult
+ */
+
+/**
  * @typedef {import("./src/events").InsightEvent} InsightEvent
  */
 
 /**
  * @typedef {import("./src/node").ProcessDirectoryOptions} ProcessDirectoryOptions
  */
+
+export {
+  configLoaderGet,
+  configLoaderDeleteCache,
+} from "./src/config-loader.js";
 
 export { uuid } from "./src/datatypes.js";
 
