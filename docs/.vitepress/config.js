@@ -79,6 +79,10 @@ function getHomeSidebar() {
           link: "/features/logger-and-events.html",
         },
         {
+          text: "Configuration files",
+          link: "/features/config-files.html",
+        },
+        {
           text: "Testing and benchmarking",
           link: "/features/test-and-bench-runner.html",
         },

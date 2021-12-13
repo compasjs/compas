@@ -4,9 +4,17 @@ export { newLogger } from "./src/logger/logger.js";
 export type Either<T, E> = import("./types/advanced-types").Either<T, E>;
 export type EitherN<T, E> = import("./types/advanced-types").EitherN<T, E>;
 export type Logger = import("./types/advanced-types").Logger;
+export type ConfigLoaderOptions =
+  import("./src/config-loader").ConfigLoaderOptions;
+export type ConfigLoaderResult =
+  import("./src/config-loader").ConfigLoaderResult;
 export type InsightEvent = import("./src/events").InsightEvent;
 export type ProcessDirectoryOptions =
   import("./src/node").ProcessDirectoryOptions;
+export {
+  configLoaderGet,
+  configLoaderDeleteCache,
+} from "./src/config-loader.js";
 export {
   isProduction,
   isStaging,

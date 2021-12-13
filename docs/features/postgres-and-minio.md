@@ -100,8 +100,8 @@ async function main(logger) {
 ```
 
 This ties in various parts of your local environment. We don't have any tables
-yet in our database, so we execute a ' simple' sum query and log the result. So
-let's run it:
+yet in our database, so we execute a sum query and log the result. So let's run
+it:
 
 ```shell
 yarn compas database

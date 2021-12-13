@@ -29,9 +29,11 @@ declare global {
   type AxiosError = import("axios").AxiosError;
   type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 
-  type Logger = stdlib.Logger;
-  type InsightEvent = stdlib.InsightEvent;
   type AppError = stdlib.AppError;
+  type ConfigLoaderOptions = stdlib.ConfigLoaderOptions;
+  type ConfigLoaderResult = stdlib.ConfigLoaderResult;
+  type InsightEvent = stdlib.InsightEvent;
+  type Logger = stdlib.Logger;
   type Either<T, E = AppError> =
     | { value: T; error?: never }
     | { value?: never; error: E };
