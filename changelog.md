@@ -4,6 +4,36 @@ editLink: false
 
 # Changelog
 
+### [v0.0.179](https://github.com/compasjs/compas/releases/tag/v0.0.179)
+
+##### Changes
+
+- build(deps): bump @types/node from 16.11.11 to 16.11.12
+  ([#1407](https://github.com/compasjs/compas/pull/1407))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.3.0 to 8.4.1
+  ([#1400](https://github.com/compasjs/compas/pull/1400),
+  [#1403](https://github.com/compasjs/compas/pull/1403))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.1.0 to 37.2.0
+  ([#1410](https://github.com/compasjs/compas/pull/1410))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump minio from 7.0.18 to 7.0.25
+  ([#1406](https://github.com/compasjs/compas/pull/1406))
+  - [Release notes](https://github.com/minio/minio-js/releases)
+- build(deps): bump prettier from 2.5.0 to 2.5.1
+  ([#1399](https://github.com/compasjs/compas/pull/1399))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- chore(server): remove koa-session as dependency
+  - Closes [#1398](https://github.com/compasjs/compas/pull/1398)
+- feat(stdlib): add config loader
+  ([#1415](https://github.com/compasjs/compas/pull/1415))
+  - Closes [#1414](https://github.com/compasjs/compas/pull/1414)
+- feat(store): skip `eventStop` on Compas internal handled jobs
+  ([#1411](https://github.com/compasjs/compas/pull/1411))
+- fix(store): fix spacing of 'where' generator helper when working with 'via'.
+  ([#1416](https://github.com/compasjs/compas/pull/1416))
+
 ### [v0.0.178](https://github.com/compasjs/compas/releases/tag/v0.0.178)
 
 ##### Changes
