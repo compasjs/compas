@@ -83,7 +83,7 @@ export async function configLoaderGet(options) {
         pathJoin(resolvedLocation.directory, resolvedLocation.filename),
       )
     );
-    data = imported.config();
+    data = imported.config() ?? {};
   }
 
   configLoaderCache.set(cacheKey, {
