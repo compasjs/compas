@@ -179,7 +179,7 @@ export function generatedWhereBuilderHelper(
         }
 
         strings.push(
-          `AND ${shortName}"${matcher.relation.referencedKey}" = ANY (select ${matcher.relation.shortName}."${matcher.relation.entityKey}" FROM "${matcher.relation.entityName}" ${matcher.relation.shortName} WHERE `,
+          ` AND ${shortName}"${matcher.relation.referencedKey}" = ANY (select ${matcher.relation.shortName}."${matcher.relation.entityKey}" FROM "${matcher.relation.entityName}" ${matcher.relation.shortName} WHERE `,
           ``,
           `)`,
         );
