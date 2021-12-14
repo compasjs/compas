@@ -72,7 +72,10 @@ export async function sendTransformedImage(
     file.meta = file.meta ?? {};
     file.meta.transforms = file.meta.transforms ?? {};
 
-    if (file.contentType === "image/svg+xml") {
+    if (file.contentLength === 0) {
+      // Empty files can't be transformed
+      file.meta.transforms[transformKey] = file.id;
+    } else if (file.contentType === "image/svg+xml") {
       // SVG's are not transformed, so use the original file id here.
       file.meta.transforms[transformKey] = file.id;
     } else if (

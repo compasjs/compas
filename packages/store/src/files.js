@@ -84,6 +84,11 @@ export async function createOrUpdateFile(
     throw AppError.validationError("store.createOrUpdateFile.invalidName");
   }
 
+  if (isNil(props.id)) {
+    props.id = uuid();
+    props.contentLength = 0;
+  }
+
   if (
     Array.isArray(allowedContentTypes) ||
     isNil(props.contentType) ||
@@ -129,14 +134,6 @@ export async function createOrUpdateFile(
   props.bucketName = bucketName;
   props.meta = props.meta ?? {};
 
-  // Do a manual insert first to get an id
-  if (!props.id) {
-    props.contentLength = 0;
-    // @ts-ignore
-    const [intermediate] = await queries.fileInsert(sql, props);
-    props.id = intermediate.id;
-  }
-
   if (typeof source === "string") {
     source = createReadStream(source);
   }
@@ -149,9 +146,7 @@ export async function createOrUpdateFile(
   const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
-  const [result] = await queries.fileUpdate(sql, props, {
-    id: props.id,
-  });
+  const [result] = await queries.fileUpsertOnId(sql, props);
 
   return result;
 }
