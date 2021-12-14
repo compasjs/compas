@@ -87,28 +87,25 @@ test("store/files", async (t) => {
     t.deepEqual(file.meta, {});
   });
 
-  t.test(
-    "createOrUpdateFile overwrite updatedAt and use a stream",
-    async (t) => {
-      const updatedAt = new Date(2019, 1, 1, 1);
+  t.test("createOrUpdateFile accepts updatedAt and use a stream", async (t) => {
+    const updatedAt = new Date(2019, 1, 1, 1);
 
-      const file = await createOrUpdateFile(
-        sql,
-        minio,
-        bucketName,
-        { name, updatedAt },
-        createReadStream(filePath),
-        {
-          allowedContentTypes: ["application/x-sql"],
-        },
-      );
+    const file = await createOrUpdateFile(
+      sql,
+      minio,
+      bucketName,
+      { name, updatedAt },
+      createReadStream(filePath),
+      {
+        allowedContentTypes: ["application/x-sql"],
+      },
+    );
 
-      t.equal(file.contentType, "application/x-sql");
-      t.ok(!!file.contentLength);
-      t.ok(!!file.createdAt);
-      t.notEqual(file.updatedAt.getTime(), updatedAt.getTime());
-    },
-  );
+    t.equal(file.contentType, "application/x-sql");
+    t.ok(!!file.contentLength);
+    t.ok(!!file.createdAt);
+    t.equal(file.updatedAt.getTime(), updatedAt.getTime());
+  });
 
   let storedFiles = [];
 
