@@ -170,7 +170,7 @@ export function anonymousValidator2060025506(
  * @param {string} propertyPath
  * @returns {EitherN<number>}
  */
-export function anonymousValidator66994068(
+export function anonymousValidator760095765(
   value: any,
   propertyPath: string,
 ): EitherN<number>;
@@ -179,7 +179,7 @@ export function anonymousValidator66994068(
  * @param {string} propertyPath
  * @returns {EitherN<number>}
  */
-export function anonymousValidator1483765921(
+export function anonymousValidator2089226208(
   value: any,
   propertyPath: string,
 ): EitherN<number>;
@@ -195,6 +195,15 @@ export function anonymousValidator376443596(
   q: number;
   w: number;
 }>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<number>}
+ */
+export function anonymousValidator1483765921(
+  value: any,
+  propertyPath: string,
+): EitherN<number>;
 /**
  * @param {*} value
  * @param {string} propertyPath
