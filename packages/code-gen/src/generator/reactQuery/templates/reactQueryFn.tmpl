@@ -104,7 +104,7 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
 /**
  * Base key used by {{= funcName }}.queryKey()
  */
-{{= funcName }}.baseKey = (): QueryKey => "{{= item.uniqueName }}";
+{{= funcName }}.baseKey = (): QueryKey => ["{{= item.group }}", "{{= item.name }}"];
 
 ((newline))
 /**
@@ -121,7 +121,7 @@ query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { use
 body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
 {{ } }}
 ): QueryKey => [
-  {{= funcName }}.baseKey(),
+  ...{{= funcName }}.baseKey(),
  {{ if (item.params) { }}
  params,
  {{ } }}
