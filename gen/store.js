@@ -7,10 +7,12 @@ export function applyStoreStructure(app) {
   const T = new TypeCreator("store");
 
   app.add(
-    T.object("imageTransformOptions").keys({
-      q: T.number().min(0).max(100).convert().default(75),
-      w: T.number().convert(),
-    }),
+    T.object("imageTransformOptions")
+      .keys({
+        q: T.number().min(1).max(100).convert().default(75),
+        w: T.number().min(1).max(99999).convert(),
+      })
+      .loose(),
 
     T.object("jobInterval").keys({
       years: T.number().optional(),

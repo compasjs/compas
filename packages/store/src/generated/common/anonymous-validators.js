@@ -41,7 +41,6 @@ const objectKeys2060025506 = new Set([
   "deletedAt",
 ]);
 const objectKeys420878393 = new Set([""]);
-const objectKeys376443596 = new Set(["q", "w"]);
 const objectKeys1781782332 = new Set([
   "id",
   "isComplete",
@@ -1062,7 +1061,7 @@ export function anonymousValidator2060025506(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<number>}
  */
-export function anonymousValidator66994068(value, propertyPath) {
+export function anonymousValidator760095765(value, propertyPath) {
   if (isNil(value)) {
     return { value: 75 };
   }
@@ -1093,8 +1092,8 @@ export function anonymousValidator66994068(value, propertyPath) {
       ],
     };
   }
-  if (value < 0) {
-    const min = 0;
+  if (value < 1) {
+    const min = 1;
     /** @type {{ errors: InternalError[] }} */
     return {
       errors: [
@@ -1120,6 +1119,131 @@ export function anonymousValidator66994068(value, propertyPath) {
     };
   }
   return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<number>}
+ */
+export function anonymousValidator2089226208(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "number") {
+    value = Number(value);
+  }
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (!Number.isInteger(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.integer",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  if (value > 99999) {
+    const max = 99999;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.max",
+          info: { max },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"q": number, "w": number, }>}
+ */
+export function anonymousValidator376443596(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  const errors = [];
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["q", anonymousValidator760095765],
+    ["w", anonymousValidator2089226208],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
 }
 /**
  * @param {*} value
@@ -1193,72 +1317,6 @@ export function anonymousValidator1483765921(value, propertyPath) {
     };
   }
   return { value };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"q": number, "w": number, }>}
- */
-export function anonymousValidator376443596(value, propertyPath) {
-  if (isNil(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.undefined",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (typeof value !== "object") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.object.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Object.create(null);
-  const errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys376443596.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["q", anonymousValidator66994068],
-    ["w", anonymousValidator1483765921],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
-  if (errors.length > 0) {
-    return { errors };
-  }
-  return { value: result };
 }
 /**
  * @param {*} value
