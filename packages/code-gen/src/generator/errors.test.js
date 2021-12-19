@@ -109,6 +109,58 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Type 'bar' did not call 'enableQueries'"));
   });
 
+  t.test("sqlDuplicateRelationOwnKey", async (t) => {
+    const T = new TypeCreator("app");
+    const { stdout, exitCode } = await generateAndRunForBuilders(
+      [
+        T.object("foo")
+          .keys({})
+          .enableQueries({})
+          .relations(
+            T.manyToOne("baz", T.reference("app", "bar"), "baz"),
+            T.oneToOne("baz", T.reference("app", "bar"), "baz"),
+          ),
+
+        T.object("bar")
+          .keys({})
+          .enableQueries({})
+          .relations(T.oneToMany("baz", T.reference("app", "foo"))),
+      ],
+      {
+        isNodeServer: true,
+      },
+    );
+
+    t.equal(exitCode, 1);
+    t.ok(stdout.includes("multiple relations with the same own key 'baz'"));
+  });
+
+  t.test("sqlDuplicateRelationReferencedKey", async (t) => {
+    const T = new TypeCreator("app");
+    const { stdout, exitCode } = await generateAndRunForBuilders(
+      [
+        T.object("foo")
+          .keys({})
+          .enableQueries({})
+          .relations(
+            T.manyToOne("baz", T.reference("app", "bar"), "baz"),
+            T.oneToOne("baz", T.reference("app", "bar"), "baz"),
+          ),
+
+        T.object("bar")
+          .keys({})
+          .enableQueries({})
+          .relations(T.oneToMany("baz", T.reference("app", "foo"))),
+      ],
+      {
+        isNodeServer: true,
+      },
+    );
+
+    t.equal(exitCode, 1);
+    t.ok(stdout.includes("multiple relations to 'AppBar'.'baz'"));
+  });
+
   t.test("sqlMissingOneToMany", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await generateAndRunForBuilders(
@@ -170,7 +222,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Short name 'test' is used by both"));
   });
 
-  t.test("sqlReservedRelationKey - built-in", async (t) => {
+  t.test("sqlReservedRelationKey", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await generateAndRunForBuilders(
       [
@@ -191,34 +243,5 @@ test("code-gen/errors", (t) => {
     t.equal(exitCode, 1);
     t.ok(stdout.includes("Relation name 'select' from type 'foo'"));
     t.ok(stdout.includes("Relation name 'orderBy' from type 'bar'"));
-  });
-
-  t.test("sqlReservedRelationKey - same relation key", async (t) => {
-    const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
-      [
-        T.object("foo")
-          .keys({})
-          .enableQueries({})
-          .relations(T.oneToMany("bar", T.reference("app", "bar"))),
-
-        T.object("bar")
-          .keys({})
-          .relations(
-            T.manyToOne("foo", T.reference("app", "foo"), "bar"),
-            T.oneToOne("foo", T.reference("app", "foo"), "bar"),
-          )
-          .enableQueries(),
-      ],
-      {
-        isNodeServer: true,
-      },
-    );
-
-    t.equal(exitCode, 1);
-    t.ok(stdout.includes("Relation name 'foo' from type 'bar"));
-    t.ok(
-      stdout.includes("Relation name 'bar' from type 'foo' is already used"),
-    );
   });
 });

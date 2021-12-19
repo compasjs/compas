@@ -8,6 +8,7 @@
 # Build and deps
 dist
 node_modules
+.eslintcache
 
 # NPM / Yarn
 *-debug.log
@@ -27,9 +28,7 @@ coverage
 /packages/*/generated/*
 /packages/*/test-generated/*
 /test/tmp
-
-# Real code-gen output
-!packages/store/generated/
+__fixtures__/tmp
 
 # Benchmark output on CI
 /benchmark_output.txt
@@ -39,9 +38,6 @@ coverage
 
 # Ignore sql structure, which is never formatted.
 **/generated/common/structure.sql
-
-# Ignore all tmp files created based on fixtures
-__fixtures__/tmp
 
 # Types
 **.d.ts.map
