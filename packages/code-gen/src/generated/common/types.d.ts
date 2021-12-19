@@ -338,6 +338,12 @@ export type CodeGenContext = {
         typeName: string;
         referencedByType: string;
       }
+    | { key: "sqlDuplicateRelationOwnKey"; type: string; relationKey: string }
+    | {
+        key: "sqlDuplicateRelationReferencedKey";
+        type: string;
+        relationKey: string;
+      }
     | {
         key: "sqlMissingOneToMany";
         referencedByGroup: string;
@@ -359,7 +365,6 @@ export type CodeGenContext = {
         secondName: string;
       }
     | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
-    | { key: "sqlUsedRelationKey"; type: string; ownKey: string }
   )[];
 };
 export type CodeGenStructure = {

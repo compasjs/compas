@@ -45,6 +45,16 @@ export function applyCodeGenStructure(app) {
             referencedByType: T.string(),
           },
           {
+            key: "sqlDuplicateRelationOwnKey",
+            type: T.string(),
+            relationKey: T.string(),
+          },
+          {
+            key: "sqlDuplicateRelationReferencedKey",
+            type: T.string(),
+            relationKey: T.string(),
+          },
+          {
             key: "sqlMissingOneToMany",
             referencedByGroup: T.string(),
             referencedByType: T.string(),
@@ -68,11 +78,6 @@ export function applyCodeGenStructure(app) {
           },
           {
             key: "sqlReservedRelationKey",
-            type: T.string(),
-            ownKey: T.string(),
-          },
-          {
-            key: "sqlUsedRelationKey",
             type: T.string(),
             ownKey: T.string(),
           },

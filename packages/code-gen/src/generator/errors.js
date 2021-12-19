@@ -56,6 +56,18 @@ export function exitOnErrorsOrReturn(context) {
 `;
         break;
 
+      case "sqlDuplicateRelationOwnKey":
+        str += `Type '${error.type}' has multiple relations with the same own key '${error.relationKey}'.
+  Please use unique own keys.
+`;
+        break;
+
+      case "sqlDuplicateRelationReferencedKey":
+        str += `There are multiple relations to '${error.type}'.'${error.relationKey}'.
+  Make sure that they all have their own unique referenced key.
+`;
+        break;
+
       case "sqlMissingOneToMany":
         str += `Relation from '${error.referencedByType}' is missing the inverse 'T.oneToMany()' on '${error.typeName}'.
   Add 'T.oneToMany("${error.relationOwnKey}", T.reference("${error.referencedByGroup}", "${error.referencedByType}"))' to the 'relations()' call on '${error.typeName}'.

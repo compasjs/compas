@@ -184,11 +184,48 @@ export function doSqlChecks(context) {
 
   // TODO: Handle validators
 
+  const referencedKeySet = new Map();
+
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
     staticCheckPrimaryKey(context, type);
 
+    const ownKeySet = new Set();
     for (const relation of type.relations) {
+      if (!referencedKeySet.has(relation.reference.reference.uniqueName)) {
+        referencedKeySet.set(
+          relation.reference.reference.uniqueName,
+          new Set(),
+        );
+      }
+
+      if (ownKeySet.has(relation.ownKey)) {
+        context.errors.push({
+          key: "sqlDuplicateRelationOwnKey",
+          type: type.uniqueName,
+          relationKey: relation.ownKey,
+        });
+      }
+
+      if (["manyToOne", "oneToOne"].includes(relation.subType)) {
+        if (
+          referencedKeySet
+            .get(relation.reference.reference.uniqueName)
+            .has(relation.referencedKey)
+        ) {
+          context.errors.push({
+            key: "sqlDuplicateRelationReferencedKey",
+            type: relation.reference.reference.uniqueName,
+            relationKey: relation.referencedKey,
+          });
+        }
+      }
+
+      ownKeySet.add(relation.ownKey);
+      referencedKeySet
+        .get(relation.reference.reference.uniqueName)
+        .add(relation.referencedKey);
+
       staticCheckRelation(context, type, relation);
     }
   }
@@ -316,23 +353,6 @@ function checkReservedRelationNames(context, type, relation) {
   if (reservedRelationNames.includes(relation.ownKey)) {
     context.errors.push({
       key: "sqlReservedRelationKey",
-      type: type.name,
-      ownKey: relation.ownKey,
-    });
-  }
-
-  const usedRelationNames = [];
-
-  for (const innerRelation of type.relations) {
-    if (innerRelation === relation) {
-      continue;
-    }
-    usedRelationNames.push(innerRelation.ownKey);
-  }
-
-  if (usedRelationNames.includes(relation.ownKey)) {
-    context.errors.push({
-      key: "sqlUsedRelationKey",
       type: type.name,
       ownKey: relation.ownKey,
     });
