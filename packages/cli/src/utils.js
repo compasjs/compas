@@ -1,8 +1,8 @@
 import { spawn as cpSpawn } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
-import { exec, pathJoin, spawn } from "@compas/stdlib";
-import chokidar from "chokidar";
+import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
 import treeKill from "tree-kill";
+import { watcherKillProcess, watcherRun } from "./watcher.js";
 
 /**
  * @typedef {object} CollectedScript
@@ -230,34 +230,23 @@ export function executeCommand(
     watchOptionsWithDefaults(watchOptions),
   );
 
-  let timeout = undefined;
-  let instance = undefined;
-  let instanceKilled = false;
-
-  const watcher = chokidar.watch(".", {
+  const chokidarOptions = {
     persistent: true,
     ignorePermissionErrors: true,
     ignored,
     cwd: process.cwd(),
-  });
+  };
 
-  watcher.on("change", (path) => {
-    if (verbose) {
-      logger.info(`Restarted because of ${path}`);
-    }
+  let instance = undefined;
+  let instanceKilled = false;
 
-    debounceRestart();
-  });
-
-  watcher.on("ready", () => {
-    if (verbose) {
-      logger.info({
-        watched: watcher.getWatched(),
-      });
-    }
-
-    start();
-    prepareStdin(debounceRestart);
+  watcherRun({
+    chokidarOptions,
+    hooks: {
+      onRestart: () => {
+        killAndStart();
+      },
+    },
   });
 
   function exitListener(code, signal) {
@@ -288,6 +277,16 @@ export function executeCommand(
       instanceKilled = true;
       instance.removeListener("exit", exitListener);
 
+      watcherKillProcess(instance, "SIGTERM")
+        .then(() => {
+          start();
+        })
+        .catch((e) => {
+          logger.error({
+            message: "Could not kill process",
+            error: AppError.format(e),
+          });
+        });
       // Needs tree-kill since `instance.kill` does not kill spawned processes by this
       // instance
       treeKill(instance.pid, "SIGTERM", (error) => {
@@ -304,45 +303,4 @@ export function executeCommand(
       start();
     }
   }
-
-  /**
-   * Restart with debounce
-   *
-   * @param {boolean} [skipDebounce]
-   */
-  function debounceRestart(skipDebounce) {
-    // Restart may be called multiple times in a row
-    // We may want to add some kind of graceful back off here
-    if (timeout !== undefined) {
-      clearTimeout(timeout);
-      timeout = undefined;
-    }
-
-    if (skipDebounce) {
-      killAndStart();
-    } else {
-      timeout = setTimeout(() => {
-        killAndStart();
-        timeout = undefined;
-      }, 250);
-    }
-  }
-}
-
-/**
- * Prepare stdin to be used for manual restarting
- *
- * @param {Function} restart
- */
-function prepareStdin(restart) {
-  process.stdin.resume();
-  process.stdin.setEncoding("utf-8");
-  process.stdin.on("data", (data) => {
-    const input = data.toString().trim().toLowerCase();
-
-    // Consistency with Nodemon
-    if (input === "rs") {
-      restart(true);
-    }
-  });
 }

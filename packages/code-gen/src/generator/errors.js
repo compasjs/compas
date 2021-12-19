@@ -88,10 +88,6 @@ export function exitOnErrorsOrReturn(context) {
         str += `Relation name '${error.ownKey}' from type '${error.type}' is a reserved keyword. Use another relation name.`;
         break;
 
-      case "sqlUsedRelationKey":
-        str += `Relation name '${error.ownKey}' from type '${error.type}' is already used as a relation name. Use another relation name.`;
-        break;
-
       default:
         str += `[${error["key"] ?? "unknown"}]: ${JSON.stringify(
           error,

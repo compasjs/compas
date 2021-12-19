@@ -1,5 +1,6 @@
 node_modules
 .nyc_output
+.clinic
 coverage
 packages/code-gen/test-generated
 lerna.json
