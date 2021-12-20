@@ -142,10 +142,12 @@ export async function createOrUpdateFile(
   await minio.putObject(bucketName, props.id, source, {
     "content-type": props.contentType,
   });
+
   // @ts-ignore
   const stat = await minio.statObject(bucketName, props.id);
   props.contentLength = stat.size;
 
+  // @ts-ignore
   const [result] = await queries.fileUpsertOnId(sql, props);
 
   return result;

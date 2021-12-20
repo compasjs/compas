@@ -126,6 +126,10 @@ function getHomeSidebar() {
           text: "File handling",
           link: "/features/file-handling.html",
         },
+        {
+          text: "File watcher",
+          link: "/features/cli-watcher.html",
+        },
       ],
     },
     {

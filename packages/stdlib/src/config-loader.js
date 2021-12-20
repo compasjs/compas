@@ -33,7 +33,7 @@ export const configLoaderCache = new Map();
 /**
  *
  * @param {ConfigLoaderOptions} options
- * @return {Promise<ConfigLoaderResult>}
+ * @returns {Promise<ConfigLoaderResult>}
  */
 export async function configLoaderGet(options) {
   if (
@@ -105,7 +105,7 @@ export async function configLoaderGet(options) {
  *   name?: string,
  *   location?: "project"|"user"
  * }} [options]
- * @return {void}
+ * @returns {void}
  */
 export function configLoaderDeleteCache(options) {
   options = options ?? {};
@@ -137,7 +137,7 @@ export function configLoaderDeleteCache(options) {
 /**
  *
  * @param {ConfigLoaderOptions} options
- * @return {{
+ * @returns {{
  *   directory: string,
  *   filename: string,
  * }|undefined}
@@ -223,7 +223,7 @@ function configLoaderResolveDirectory({ name, location }) {
  * is the same as the config name.
  *
  * @param {string} name
- * @return {string}
+ * @returns {string}
  */
 function configLoaderGetUserConfigDir(name) {
   // Inspired by:

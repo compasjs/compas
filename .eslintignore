@@ -1,4 +1,5 @@
 packages/cli/template/*
+.clinic
 coverage
 packages/code-gen/test-generated
 lerna.json
