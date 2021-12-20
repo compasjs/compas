@@ -10,7 +10,7 @@ import treeKill from "tree-kill";
  *
  * @param {import("child_process").ChildProcess} process
  * @param {NodeJS.Signals | number} signal
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export function watcherKillProcess(process, signal) {
   const pid = process?.pid;
@@ -46,7 +46,7 @@ export function watcherKillProcess(process, signal) {
  *     onRestart: () => void,
  *   }
  * }} options
- * @return {{ closeWatcher: () => Promise<void> }}
+ * @returns {{ closeWatcher: () => Promise<void> }}
  */
 export function watcherRun({ chokidarOptions, hooks }) {
   const stdinCallback = (data) => {
