@@ -4,4 +4,8 @@
 
 export { test, mainTestFn, newTestEvent } from "./src/testing/index.js";
 export { bench, mainBenchFn } from "./src/benchmarking/index.js";
-export { watcherKillProcess, watcherRun } from "./src/watcher.js";
+export {
+  watcherKillProcess,
+  watcherRun,
+  watcherRunWithSpawn,
+} from "./src/watcher.js";

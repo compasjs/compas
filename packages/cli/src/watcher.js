@@ -1,3 +1,4 @@
+import { spawn as cpSpawn } from "child_process";
 import { clearTimeout } from "timers";
 import { AppError } from "@compas/stdlib";
 import chokidar from "chokidar";
@@ -112,8 +113,67 @@ export function watcherRun({ chokidarOptions, hooks }) {
   };
 }
 
-// watcherRun({ chokidarOpts, compasWatcherOpts: {}, hooks: {
-//   watcherReady(files: string[]): void,
-//   watcherRestart(),
-// },
-// }): Promise<{ killWatcher: () => {}; }>
+/**
+ * Run watcher run & wrap around child process spawn.
+ * Makes sure the instance is fully killed, before starting up again.
+ *
+ * @param {Logger} logger
+ * @param {{
+ *   chokidarOptions: chokidar.WatchOptions,
+ *   hooks: {
+ *     onRestart: () => void,
+ *   }
+ * }} watcherOptions
+ * @param {{
+ *   cpArguments: Parameters<cpSpawn>
+ * }} spawnOptions
+ */
+export function watcherRunWithSpawn(logger, watcherOptions, spawnOptions) {
+  let instance = undefined;
+  let instanceKilled = false;
+
+  watcherOptions.hooks.onRestart = killAndStart;
+
+  watcherRun(watcherOptions);
+
+  function exitListener(code, signal) {
+    // Print normal exit behaviour or if verbose is requested.
+    if (!instanceKilled) {
+      logger.info({
+        message: "Process exited",
+        code: code ?? 0,
+        signal,
+      });
+    }
+
+    // We don't need to kill this instance, and just let it be garbage collected.
+    instance = undefined;
+  }
+
+  function start() {
+    instance = cpSpawn(...spawnOptions.cpArguments);
+
+    instanceKilled = false;
+    instance.once("exit", exitListener);
+  }
+
+  function killAndStart() {
+    if (instance && !instanceKilled) {
+      instanceKilled = true;
+      instance.removeListener("exit", exitListener);
+
+      watcherKillProcess(instance, "SIGTERM")
+        .then(() => {
+          start();
+        })
+        .catch((e) => {
+          logger.error({
+            message: "Could not kill process",
+            error: AppError.format(e),
+          });
+        });
+    } else {
+      start();
+    }
+  }
+}

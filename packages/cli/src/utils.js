@@ -1,8 +1,6 @@
-import { spawn as cpSpawn } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
-import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
-import treeKill from "tree-kill";
-import { watcherKillProcess, watcherRun } from "./watcher.js";
+import { exec, pathJoin, spawn } from "@compas/stdlib";
+import { watcherRunWithSpawn } from "./watcher.js";
 
 /**
  * @typedef {object} CollectedScript
@@ -237,70 +235,20 @@ export function executeCommand(
     cwd: process.cwd(),
   };
 
-  let instance = undefined;
-  let instanceKilled = false;
-
-  watcherRun({
-    chokidarOptions,
-    hooks: {
-      onRestart: () => {
-        killAndStart();
-      },
+  watcherRunWithSpawn(
+    logger,
+    {
+      chokidarOptions,
+      hooks: {},
     },
-  });
-
-  function exitListener(code, signal) {
-    // Print normal exit behaviour or if verbose is requested.
-    if (!instanceKilled || verbose) {
-      logger.info({
-        message: "Process exited",
-        code: code ?? 0,
-        signal,
-      });
-    }
-
-    // We don't need to kill this instance, and just let it be garbage collected.
-    instance = undefined;
-  }
-
-  function start() {
-    instance = cpSpawn(command, commandArgs, {
-      stdio: "inherit",
-    });
-
-    instanceKilled = false;
-    instance.once("exit", exitListener);
-  }
-
-  function killAndStart() {
-    if (instance && !instanceKilled) {
-      instanceKilled = true;
-      instance.removeListener("exit", exitListener);
-
-      watcherKillProcess(instance, "SIGTERM")
-        .then(() => {
-          start();
-        })
-        .catch((e) => {
-          logger.error({
-            message: "Could not kill process",
-            error: AppError.format(e),
-          });
-        });
-      // Needs tree-kill since `instance.kill` does not kill spawned processes by this
-      // instance
-      treeKill(instance.pid, "SIGTERM", (error) => {
-        if (error) {
-          logger.error({
-            message: "Could not kill process",
-            error,
-          });
-        }
-
-        start();
-      });
-    } else {
-      start();
-    }
-  }
+    {
+      cpArguments: [
+        command,
+        commandArgs,
+        {
+          stdio: "inherit",
+        },
+      ],
+    },
+  );
 }
