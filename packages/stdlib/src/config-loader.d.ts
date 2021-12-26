@@ -1,7 +1,7 @@
 /**
  *
  * @param {ConfigLoaderOptions} options
- * @return {Promise<ConfigLoaderResult>}
+ * @returns {Promise<ConfigLoaderResult>}
  */
 export function configLoaderGet(
   options: ConfigLoaderOptions,
@@ -14,7 +14,7 @@ export function configLoaderGet(
  *   name?: string,
  *   location?: "project"|"user"
  * }} [options]
- * @return {void}
+ * @returns {void}
  */
 export function configLoaderDeleteCache(
   options?:

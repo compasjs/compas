@@ -5,7 +5,7 @@
  *
  * @param {import("child_process").ChildProcess} process
  * @param {NodeJS.Signals | number} signal
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export function watcherKillProcess(
   process: import("child_process").ChildProcess,
@@ -20,7 +20,7 @@ export function watcherKillProcess(
  *     onRestart: () => void,
  *   }
  * }} options
- * @return {{ closeWatcher: () => Promise<void> }}
+ * @returns {{ closeWatcher: () => Promise<void> }}
  */
 export function watcherRun({
   chokidarOptions,
