@@ -239,6 +239,7 @@ export function executeCommand(
     logger,
     {
       chokidarOptions,
+      // @ts-ignore
       hooks: {},
     },
     {
