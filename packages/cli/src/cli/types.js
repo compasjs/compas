@@ -23,7 +23,7 @@
  */
 
 /**
- * @typedef {object} CliDefinition
+ * @typedef {{}} CliDefinition
  */
 
 /**

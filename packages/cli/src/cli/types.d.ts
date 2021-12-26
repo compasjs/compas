@@ -19,7 +19,7 @@
  *   The values of parsed flags
  */
 /**
- * @typedef {object} CliDefinition
+ * @typedef {{}} CliDefinition
  */
 /**
  * @type {boolean}
@@ -55,5 +55,5 @@ export type CliCommandExecutorState = {
     boolean | number | string | string[] | number[] | boolean[]
   >;
 };
-export type CliDefinition = object;
+export type CliDefinition = {};
 //# sourceMappingURL=types.d.ts.map
