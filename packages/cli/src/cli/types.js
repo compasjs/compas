@@ -1,5 +1,5 @@
 /**
- * @template {{exitStatus: "passed"|"failed" }} [T={ exitStatus: "passed"|"failed" }]
+ * @template {{exitStatus: "passed"|"failed"|"keepAlive" }} [T={ exitStatus: "passed"|"failed"|"keepAlive" }]
  * @typedef {T} CliResult
  */
 

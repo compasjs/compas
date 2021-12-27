@@ -7,7 +7,7 @@ import { isProduction, newLogger } from "@compas/stdlib";
  * @return {import("@compas/stdlib").Logger}
  */
 export function cliLoggerCreate(cliName) {
-  return newLogger({
+  const logger = newLogger({
     ctx: !isProduction()
       ? { type: cliName }
       : {
@@ -15,4 +15,25 @@ export function cliLoggerCreate(cliName) {
           application: cliName,
         },
   });
+
+  if (isProduction()) {
+    return {
+      info(arg) {
+        if (typeof arg === "string") {
+          logger.info({ message: arg });
+        } else {
+          logger.info(arg);
+        }
+      },
+      error(arg) {
+        if (typeof arg === "string") {
+          logger.error({ message: arg });
+        } else {
+          logger.error(arg);
+        }
+      },
+    };
+  }
+
+  return logger;
 }

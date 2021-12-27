@@ -1,5 +1,5 @@
 /**
- * @template {{exitStatus: "passed"|"failed" }} [T={ exitStatus: "passed"|"failed" }]
+ * @template {{exitStatus: "passed"|"failed"|"keepAlive" }} [T={ exitStatus: "passed"|"failed"|"keepAlive" }]
  * @typedef {T} CliResult
  */
 /**
@@ -17,9 +17,9 @@
 export const __types: boolean;
 export type CliResult<
   T extends {
-    exitStatus: "passed" | "failed";
+    exitStatus: "passed" | "failed" | "keepAlive";
   } = {
-    exitStatus: "passed" | "failed";
+    exitStatus: "passed" | "failed" | "keepAlive";
   },
 > = T;
 export type CliExecutorState = {
