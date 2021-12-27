@@ -29,7 +29,7 @@ import {
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenAnyOfTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenAnyOfType>}
  */
@@ -55,7 +55,7 @@ export function validateCodeGenAnyOfType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenAnyTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenAnyType>}
  */
@@ -81,7 +81,7 @@ export function validateCodeGenAnyType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenArrayTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenArrayType>}
  */
@@ -107,7 +107,7 @@ export function validateCodeGenArrayType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenBooleanTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenBooleanType>}
  */
@@ -133,7 +133,7 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenContextInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenContext>}
  */
@@ -159,7 +159,7 @@ export function validateCodeGenContext(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenDateTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenDateType>}
  */
@@ -185,7 +185,7 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenFileInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenFile>}
  */
@@ -211,7 +211,7 @@ export function validateCodeGenFile(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenFileTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenFileType>}
  */
@@ -237,7 +237,7 @@ export function validateCodeGenFileType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenGenericTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenGenericType>}
  */
@@ -263,7 +263,7 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenNumberTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenNumberType>}
  */
@@ -289,7 +289,7 @@ export function validateCodeGenNumberType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenObjectTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenObjectType>}
  */
@@ -315,7 +315,7 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenReferenceTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenReferenceType>}
  */
@@ -341,7 +341,7 @@ export function validateCodeGenReferenceType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenRelationTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenRelationType>}
  */
@@ -367,7 +367,7 @@ export function validateCodeGenRelationType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenRouteTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenRouteType>}
  */
@@ -393,7 +393,7 @@ export function validateCodeGenRouteType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenStringTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenStringType>}
  */
@@ -419,7 +419,7 @@ export function validateCodeGenStringType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenStructureInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenStructure>}
  */
@@ -445,7 +445,7 @@ export function validateCodeGenStructure(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenTemplateStateInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenTemplateState>}
  */
@@ -471,7 +471,7 @@ export function validateCodeGenTemplateState(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenType>}
  */
@@ -497,7 +497,7 @@ export function validateCodeGenType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenTypeSettingsInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenTypeSettings>}
  */
@@ -523,7 +523,7 @@ export function validateCodeGenTypeSettings(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|import("../common/types").CodeGenUuidTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenUuidType>}
  */

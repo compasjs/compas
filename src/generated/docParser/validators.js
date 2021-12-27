@@ -18,7 +18,7 @@ import {
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserBlockInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserBlock>}
  */
@@ -44,7 +44,7 @@ export function validateDocParserBlock(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserFunctionDeclarationBlockInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserFunctionDeclarationBlock>}
  */
@@ -73,7 +73,7 @@ export function validateDocParserFunctionDeclarationBlock(
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserFunctionTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserFunctionType>}
  */
@@ -99,7 +99,7 @@ export function validateDocParserFunctionType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserJSCommentInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserJSComment>}
  */
@@ -125,7 +125,7 @@ export function validateDocParserJSComment(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserLiteralTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserLiteralType>}
  */
@@ -151,7 +151,7 @@ export function validateDocParserLiteralType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserPackageInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserPackage>}
  */
@@ -177,7 +177,7 @@ export function validateDocParserPackage(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserRangeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserRange>}
  */
@@ -203,7 +203,7 @@ export function validateDocParserRange(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserType>}
  */
@@ -229,7 +229,7 @@ export function validateDocParserType(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|DocParserUnknownBlockInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<DocParserUnknownBlock>}
  */

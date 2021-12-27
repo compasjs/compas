@@ -1,3 +1,4 @@
+import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { extendWithRepo } from "../gen/repo.js";
 import { applyStoreStructure } from "../gen/store.js";
@@ -81,6 +82,23 @@ export async function generateOpenApiSpec() {
       description: "Lorem ipsum",
       servers: [{ url: "https://api.compasjs.com" }],
     },
+  });
+}
+
+export async function generateCli() {
+  const app = new App({
+    verbose: true,
+  });
+
+  applyCliStructure(app);
+
+  await app.generate({
+    outputDirectory: `packages/cli/src/generated`,
+    enabledGroups: ["cli"],
+    isNode: true,
+    enabledGenerators: ["validator", "type"],
+    dumpStructure: true,
+    declareGlobalTypes: false,
   });
 }
 

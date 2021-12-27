@@ -2,9 +2,28 @@ import { writeFile } from "fs/promises";
 import { pathJoin } from "@compas/stdlib";
 
 /**
+ * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ */
+export const cliDefinition = {
+  name: "init",
+  shortDescription: "Init various files in the current project.",
+  flags: [
+    {
+      name: "dumpJSConfig",
+      rawName: "--jsconfig",
+      description:
+        "Creates or overwrites the root jsconfig.json file To use with the Typescript Language Server.",
+      modifiers: {
+        isRequired: true,
+      },
+    },
+  ],
+};
+
+/**
  *
- * @param {import("../types").CliLogger} logger
- * @param {import("../types").CliCommandExecutorState} state
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("../types").CliExecutorState} state
  * @returns {Promise<import("../types").CliResult>}
  */
 export async function cliExecutor(logger, state) {
@@ -15,27 +34,17 @@ export async function cliExecutor(logger, state) {
   }
 
   if (didDump) {
-    logger.info("Init successful.", {
-      type: "command:init:result",
-      init: { dumpJSConfig: state.flags.dumpJSConfig },
-    });
+    logger.info("Init successful.");
 
     return {
-      value: {
-        exitCode: 0,
-      },
+      exitStatus: "passed",
     };
   }
 
-  logger.info("Init did not write any files.", {
-    type: "command:init:result",
-    init: {},
-  });
+  logger.info("Init did not write any files.");
 
   return {
-    value: {
-      exitCode: 1,
-    },
+    exitStatus: "failed",
   };
 }
 

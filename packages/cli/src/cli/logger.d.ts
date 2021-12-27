@@ -2,11 +2,9 @@
  * Create a new logger
  *
  * @param {string} cliName
- * @param {boolean} useJSON
- * @return {import("./types").CliLogger}
+ * @return {import("@compas/stdlib").Logger}
  */
 export function cliLoggerCreate(
   cliName: string,
-  useJSON: boolean,
-): import("./types").CliLogger;
+): import("@compas/stdlib").Logger;
 //# sourceMappingURL=logger.d.ts.map

@@ -6,7 +6,7 @@
 export function dockerCommand(
   logger: Logger,
   command: import("../parse").UtilCommand,
-): Promise<void | {
-  exitCode?: number | undefined;
-}>;
+): Promise<{
+  exitCode?: number;
+} | void>;
 //# sourceMappingURL=docker.d.ts.map

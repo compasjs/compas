@@ -1,47 +1,33 @@
 /**
- * @typedef {import("@compas/stdlib").AppError} AppError
+ * @template {{exitStatus: "passed"|"failed" }} [T={ exitStatus: "passed"|"failed" }]
+ * @typedef {T} CliResult
  */
 /**
- * @typedef {object} CliLogger
- * @property {(pretty: string, ndjson: any) => void} info
- * @property {(pretty: string, ndjson: any) => void} error
- */
-/**
- * @template {{exitCode?: number }} [T={ exitCode?: number }]
- * @typedef {import("@compas/stdlib").Either<T, AppError>} CliResult
- */
-/**
- * @typedef {object} CliCommandExecutorState
- * @property {CliDefinition} cli The known cli definition
+ * @typedef {object} CliExecutorState
+ * @property {import("../generated/common/types").CliCommandDefinition} cli The known cli
+ *   definition
  * @property {string[]} command The parsed command, can be used to figure out values of
  *   dynamic commands
  * @property {Record<string, boolean|number|string|string[]|number[]|boolean[]>} flags
  *   The values of parsed flags
  */
 /**
- * @typedef {{}} CliDefinition
- */
-/**
  * @type {boolean}
  */
 export const __types: boolean;
-export type AppError = import("@compas/stdlib").AppError;
-export type CliLogger = {
-  info: (pretty: string, ndjson: any) => void;
-  error: (pretty: string, ndjson: any) => void;
-};
 export type CliResult<
   T extends {
-    exitCode?: number | undefined;
+    exitStatus: "passed" | "failed";
   } = {
-    exitCode?: number | undefined;
+    exitStatus: "passed" | "failed";
   },
-> = import("@compas/stdlib").Either<T, AppError>;
-export type CliCommandExecutorState = {
+> = T;
+export type CliExecutorState = {
   /**
-   * The known cli definition
+   * The known cli
+   * definition
    */
-  cli: CliDefinition;
+  cli: import("../generated/common/types").CliCommandDefinition;
   /**
    * The parsed command, can be used to figure out values of
    * dynamic commands
@@ -55,5 +41,4 @@ export type CliCommandExecutorState = {
     boolean | number | string | string[] | number[] | boolean[]
   >;
 };
-export type CliDefinition = {};
 //# sourceMappingURL=types.d.ts.map
