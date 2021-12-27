@@ -74,7 +74,7 @@ export async function cliExecutor(logger, state) {
     };
   }
 
-  let sql = await newPostgresConnection(sqlOptions);
+  let sql = await newPostgresConnection(sqlOptions.value);
   const mc = await newMigrateContext(sql);
 
   // Always print current state;
