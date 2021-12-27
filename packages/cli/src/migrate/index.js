@@ -1,7 +1,6 @@
-import { existsSync } from "fs";
-import path from "path";
-import { pathToFileURL } from "url";
-import { isNil, isPlainObject } from "@compas/stdlib";
+import { isNil } from "@compas/stdlib";
+import { cliExecutor as migrateExecutor } from "../cli/commands/migrate.js";
+import { cliLoggerCreate } from "../cli/logger.js";
 
 /**
  * @param {Logger} logger
@@ -9,11 +8,6 @@ import { isNil, isPlainObject } from "@compas/stdlib";
  * @returns {Promise<{ exitCode?: number }|void>}
  */
 export async function dockerMigrateCommand(logger, command) {
-  const { exitCode } = await checkStoreImport(logger);
-  if (exitCode !== 0) {
-    return { exitCode };
-  }
-
   // First arg was `migrate`
   const shouldRebuild = command.arguments.includes("rebuild");
   const shouldPrintInfo = command.arguments.includes("info");
@@ -39,111 +33,52 @@ export async function dockerMigrateCommand(logger, command) {
     return { exitCode: 1 };
   }
 
-  // @ts-ignore
-  const { newPostgresConnection, newMigrateContext } = await import(
-    "@compas/store"
-  );
-
-  let sqlOptions = {
-    max: 1,
-    createIfNotExists: true,
-  };
-
   if (shouldLoadConnectionSettings) {
-    const filePath =
-      command.arguments[command.arguments.indexOf("--connection-settings") + 1];
-
-    const errorMessage = `Could not load the file as specified by '--connection-settings ./path/to/file.js'.`;
-
-    if (isNil(filePath)) {
-      logger.error(errorMessage);
-      return {
-        exitCode: 1,
-      };
-    }
-
-    const fullPath = path.resolve(filePath);
-
-    if (!existsSync(fullPath)) {
-      logger.error(errorMessage);
-      return {
-        exitCode: 1,
-      };
-    }
-
-    // @ts-ignore
-    const { postgresConnectionSettings } = await import(
-      // @ts-ignore
-      pathToFileURL(fullPath)
+    const value = command.arguments.at(
+      command.arguments.indexOf("--connection-settings") + 1,
     );
-    if (isPlainObject(postgresConnectionSettings)) {
-      sqlOptions = postgresConnectionSettings;
+
+    if (typeof value !== "string") {
+      logger.error(
+        "Could not load the file as specified by '--connection-settings ./path/to/file.js'.",
+      );
+
+      return {
+        exitCode: 1,
+      };
     }
   }
 
-  let sql = await newPostgresConnection(sqlOptions);
-  const mc = await newMigrateContext(sql);
-
-  // Always print current state;
-  logger.info({
-    message: "Current migrate state",
-    ...mc.info(),
+  const cliLogger = cliLoggerCreate("compas");
+  const migrateResult = await migrateExecutor(cliLogger, {
+    command: [
+      "compas",
+      "migrate",
+      ...(shouldRebuild ? ["rebuild"] : shouldPrintInfo ? ["info"] : []),
+    ],
+    // @ts-ignore,
+    cli: {},
+    flags: {
+      keepAlive: shouldKeepAlive,
+      withoutLock: !shouldKeepLock,
+      ...(shouldLoadConnectionSettings
+        ? {
+            connectionSettings: command.arguments.at(
+              command.arguments.indexOf("--connection-settings") + 1,
+            ),
+          }
+        : {}),
+    },
   });
 
-  if (shouldRebuild) {
-    logger.info({
-      message: "Rebuilding migration state",
-    });
-    await mc.rebuild();
-    logger.info({
-      message: "Done rebuilding migration state",
-    });
-    return { exitCode: 0 };
+  if (migrateResult.exitStatus === "passed") {
+    return {
+      exitCode: 0,
+    };
   }
-
-  if (shouldPrintInfo) {
-    return { exitCode: 0 };
-  }
-
-  logger.info({
-    message: "Start migrating",
-  });
-  await mc.do();
-  logger.info({
-    message: "Done migrating",
-  });
-
-  if (!shouldKeepAlive) {
-    await sql.end();
-    return { exitCode: 0 };
-  }
-
-  if (!shouldKeepLock) {
-    // Drop the existing connection to release the advisory lock
-    await sql.end();
-
-    sql = await newPostgresConnection(sqlOptions);
-
-    // Execute a query to keep the event loop alive.
-    await sql`SELECT 1 + 1 as "sum"`;
-  }
-
-  // Leak postgres connection, with a single connection, to keep the event loop spinning
-  logger.info({
-    message: "Migrate service keep-alive...",
-    withLock: shouldKeepLock,
-  });
-}
-
-async function checkStoreImport(logger) {
-  try {
-    await import("@compas/store");
-    return { exitCode: 0 };
-  } catch {
-    logger.error({
-      message:
-        "Could not load @compas/store. Install it via 'yarn add --exact @compas/store'.",
-    });
-    return { exitCode: 1 };
+  if (migrateResult.exitStatus === "failed") {
+    return {
+      exitCode: 1,
+    };
   }
 }
