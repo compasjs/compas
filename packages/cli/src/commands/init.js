@@ -13,15 +13,15 @@ export async function initCommand(logger, command) {
     flags.dumpJSConfig = true;
   }
 
-  const cliLogger = cliLoggerCreate("compas", false);
+  const cliLogger = cliLoggerCreate("compas");
   const result = await initExecutor(cliLogger, {
-    command: ["compas init"],
+    command: ["compas", "init"],
+    // @ts-ignore
     cli: {},
     flags,
   });
 
-  if (result.error) {
-    throw result.error;
-  }
-  return result.value;
+  return {
+    exitCode: result.exitStatus === "passed" ? 0 : 1,
+  };
 }

@@ -56,6 +56,44 @@ declare global {
   type ServerValidatorShim = CompasStructure;
   type ServerValidatorShimBody = { anyOf: boolean | string };
   type ServerValidatorShimResponse = ServerSetFileResponse;
+  type BenchNestedInput = { foo: true; bar: 5; nest: BenchSimpleInput[] };
+  type BenchSimpleInput = BenchSimple;
+  type CompasStructureResponseInput = CompasStructureResponse;
+  type GroupFullRouteBodyInput = { foo: string; bar: ServerOptionsInput };
+  type ServerOptionsInput = ServerOptions;
+  type GroupFullRouteParamsInput = { full: string; color: number | string };
+  type GroupFullRouteResponseInput = {
+    items: { foo: string; bar: ServerItemInput }[];
+  };
+  type ServerItemInput = ServerItem;
+  type GroupRefRouteParamsInput = { id: ServerInputInput };
+  type ServerInputInput = number | string;
+  type GroupRefRouteQueryInput = GroupRefRouteQuery;
+  type GroupRefRouteResponseInput = BenchNestedInput;
+  type GroupUploadFilesInput = GroupUploadFiles;
+  type GroupUploadResponseInput = GroupUploadResponse;
+  type ServerAnswersInput = { [K in ServerOptionsInput]: string };
+  type ServerCreateBodyInput = ServerCreateBody;
+  type ServerCreateQueryInput = ServerCreateQuery;
+  type ServerCreateResponseInput = ServerCreateResponse;
+  type ServerEmptyResponseQueryInput = ServerEmptyResponseQuery;
+  type ServerGetFileQueryInput = {
+    throwError?: undefined | boolean | "true" | "false";
+  };
+  type ServerGetFileResponseInput = GroupUploadResponse;
+  type ServerGetIdParamsInput = { id: number | string };
+  type ServerGetIdResponseInput = ServerGetIdParams;
+  type ServerInvalidResponseResponseInput = ServerInvalidResponseResponse;
+  type ServerPatchTestResponseInput = ServerPatchTestResponse;
+  type ServerSearchBodyInput = ServerCreateResponse;
+  type ServerSearchResponseInput = ServerSearchResponse;
+  type ServerServerErrorResponseInput = ServerPatchTestResponse;
+  type ServerSetFileFilesInput = ServerSetFileFiles;
+  type ServerSetFileResponseInput = ServerSetFileResponse;
+  type ServerSetMimeCheckedFileFilesInput = ServerSetFileFiles;
+  type ServerSetMimeCheckedFileResponseInput = ServerSetFileResponse;
+  type ServerValidatorShimBodyInput = ServerValidatorShimBody;
+  type ServerValidatorShimResponseInput = ServerSetFileResponse;
   type CompasStructureCtx = Context<
     {},
     {
@@ -281,9 +319,6 @@ declare global {
     server: Middleware | Middleware[];
   };
   type CompasStructureResponseApiResponse = CompasStructureResponse;
-  type GroupFullRouteParamsInput = { full: string; color: number | string };
-  type GroupFullRouteBodyInput = { foo: string; bar: ServerOptionsInput };
-  type ServerOptionsInput = ServerOptions;
   type GroupFullRouteResponseApiResponse = {
     items: { foo: string; bar: ServerItemApiResponse }[];
   };
@@ -294,9 +329,6 @@ declare global {
     D: boolean;
     E: string;
   };
-  type GroupRefRouteParamsInput = { id: ServerInputInput };
-  type ServerInputInput = number | string;
-  type GroupRefRouteQueryInput = GroupRefRouteQuery;
   type GroupRefRouteResponseApiResponse = BenchNestedApiResponse;
   type BenchNestedApiResponse = {
     foo: true;
@@ -304,32 +336,16 @@ declare global {
     nest: BenchSimpleApiResponse[];
   };
   type BenchSimpleApiResponse = BenchSimple;
-  type GroupUploadFilesInput = {
-    input1: { name?: string; data: ReadableStream };
-  };
   type GroupUploadResponseApiResponse = GroupUploadResponse;
-  type ServerCreateQueryInput = ServerCreateQuery;
-  type ServerCreateBodyInput = ServerCreateBody;
   type ServerCreateResponseApiResponse = ServerCreateResponse;
-  type ServerEmptyResponseQueryInput = ServerEmptyResponseQuery;
-  type ServerGetFileQueryInput = {
-    throwError?: undefined | boolean | "true" | "false";
-  };
   type ServerGetFileResponseApiResponse = GroupUploadResponse;
-  type ServerGetIdParamsInput = { id: number | string };
   type ServerGetIdResponseApiResponse = ServerGetIdParams;
   type ServerInvalidResponseResponseApiResponse = ServerInvalidResponseResponse;
   type ServerPatchTestResponseApiResponse = ServerPatchTestResponse;
-  type ServerSearchBodyInput = ServerCreateResponse;
   type ServerSearchResponseApiResponse = ServerSearchResponse;
   type ServerServerErrorResponseApiResponse = ServerPatchTestResponse;
-  type ServerSetFileFilesInput = {
-    myFile: { name?: string; data: ReadableStream };
-  };
   type ServerSetFileResponseApiResponse = ServerSetFileResponse;
-  type ServerSetMimeCheckedFileFilesInput = ServerSetFileFilesInput;
   type ServerSetMimeCheckedFileResponseApiResponse = ServerSetFileResponse;
-  type ServerValidatorShimBodyInput = ServerValidatorShimBody;
   type ServerValidatorShimResponseApiResponse = ServerSetFileResponse;
   type SqlCategory = {
     id: string;
@@ -1297,6 +1313,759 @@ declare global {
     offset?: undefined | number;
     status?: undefined | SqlJobStatusAggregateQueryBuilder;
   };
+  type SqlCategoryInput = {
+    id: string;
+    label: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
+  type SqlCategoryMetaInput = SqlCategoryMeta;
+  type SqlCoolStringInput = SqlCoolString;
+  type SqlJobStatusAggregateInput = { id: string; job: number | string };
+  type SqlPostInput = {
+    title: string;
+    body: string;
+    id: string;
+    writer: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+    deletedAt?: undefined | Date;
+  };
+  type SqlPostCategoryInput = {
+    id: string;
+    post: string;
+    category: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
+  type SqlPostageInput = {
+    value: number;
+    id: string;
+    post: string;
+    images: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+    deletedAt?: undefined | Date;
+  };
+  type SqlUserInput = {
+    nickName: string;
+    email: string;
+    authKey: string;
+    isCool?: SqlCoolStringInput;
+    id: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+    deletedAt?: undefined | Date;
+  };
+  type SqlCategoryWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlCategoryWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    label?: undefined | string;
+    labelNotEqual?: undefined | string;
+    labelIn?: undefined | string[] | QueryPart<any>;
+    labelNotIn?: undefined | string[] | QueryPart<any>;
+    labelLike?: undefined | string;
+    labelILike?: undefined | string;
+    labelNotLike?: undefined | string;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    viaPosts?:
+      | undefined
+      | {
+          where?: undefined | SqlPostCategoryWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    postsNotExists?: undefined | SqlPostCategoryWhereInput;
+    viaMeta?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryMetaWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    metaNotExists?: undefined | SqlCategoryMetaWhereInput;
+  };
+  type SqlPostCategoryWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlPostCategoryWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    category?: undefined | string;
+    categoryNotEqual?: undefined | string;
+    categoryIn?: undefined | string[] | QueryPart<any>;
+    categoryNotIn?: undefined | string[] | QueryPart<any>;
+    post?: undefined | string;
+    postNotEqual?: undefined | string;
+    postIn?: undefined | string[] | QueryPart<any>;
+    postNotIn?: undefined | string[] | QueryPart<any>;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    viaPost?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaCategory?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+  };
+  type SqlPostWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlPostWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    writer?: undefined | string;
+    writerNotEqual?: undefined | string;
+    writerIn?: undefined | string[] | QueryPart<any>;
+    writerNotIn?: undefined | string[] | QueryPart<any>;
+    title?: undefined | string;
+    titleNotEqual?: undefined | string;
+    titleIn?: undefined | string[] | QueryPart<any>;
+    titleNotIn?: undefined | string[] | QueryPart<any>;
+    titleLike?: undefined | string;
+    titleILike?: undefined | string;
+    titleNotLike?: undefined | string;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaWriter?:
+      | undefined
+      | {
+          where?: undefined | SqlUserWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaCategories?:
+      | undefined
+      | {
+          where?: undefined | SqlPostCategoryWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    categoriesNotExists?: undefined | SqlPostCategoryWhereInput;
+    viaPostages?:
+      | undefined
+      | {
+          where?: undefined | SqlPostageWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    postagesNotExists?: undefined | SqlPostageWhereInput;
+  };
+  type SqlUserWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlUserWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    email?: undefined | string;
+    emailNotEqual?: undefined | string;
+    emailIn?: undefined | string[] | QueryPart<any>;
+    emailNotIn?: undefined | string[] | QueryPart<any>;
+    emailLike?: undefined | string;
+    emailILike?: undefined | string;
+    emailNotLike?: undefined | string;
+    isCool?: undefined | "true" | "false";
+    isCoolNotEqual?: undefined | "true" | "false";
+    isCoolIn?: undefined | ("true" | "false")[] | QueryPart<any>;
+    isCoolNotIn?: undefined | ("true" | "false")[] | QueryPart<any>;
+    isCoolLike?: undefined | "true" | "false";
+    isCoolILike?: undefined | "true" | "false";
+    isCoolNotLike?: undefined | "true" | "false";
+    isCoolIsNull?: undefined | boolean;
+    isCoolIsNotNull?: undefined | boolean;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaPosts?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    postsNotExists?: undefined | SqlPostWhereInput;
+  };
+  type SqlPostageWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlPostageWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    images?: undefined | string;
+    imagesNotEqual?: undefined | string;
+    imagesIn?: undefined | string[] | QueryPart<any>;
+    imagesNotIn?: undefined | string[] | QueryPart<any>;
+    post?: undefined | string;
+    postNotEqual?: undefined | string;
+    postIn?: undefined | string[] | QueryPart<any>;
+    postNotIn?: undefined | string[] | QueryPart<any>;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaPost?:
+      | undefined
+      | {
+          where?: undefined | SqlPostWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaImages?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+  };
+  type StoreFileGroupWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreFileGroupWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    order?: undefined | number;
+    orderNotEqual?: undefined | number;
+    orderIn?: undefined | number[] | QueryPart<any>;
+    orderNotIn?: undefined | number[] | QueryPart<any>;
+    orderGreaterThan?: undefined | number;
+    orderLowerThan?: undefined | number;
+    orderIsNull?: undefined | boolean;
+    orderIsNotNull?: undefined | boolean;
+    file?: undefined | string;
+    fileNotEqual?: undefined | string;
+    fileIn?: undefined | string[] | QueryPart<any>;
+    fileNotIn?: undefined | string[] | QueryPart<any>;
+    fileIsNull?: undefined | boolean;
+    fileIsNotNull?: undefined | boolean;
+    parent?: undefined | string;
+    parentNotEqual?: undefined | string;
+    parentIn?: undefined | string[] | QueryPart<any>;
+    parentNotIn?: undefined | string[] | QueryPart<any>;
+    parentIsNull?: undefined | boolean;
+    parentIsNotNull?: undefined | boolean;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaFile?:
+      | undefined
+      | {
+          where?: undefined | StoreFileWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaParent?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaChildren?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    childrenNotExists?: undefined | StoreFileGroupWhereInput;
+    viaPostageImages?:
+      | undefined
+      | {
+          where?: undefined | SqlPostageWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    postageImagesNotExists?: undefined | SqlPostageWhereInput;
+  };
+  type StoreFileWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreFileWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    bucketName?: undefined | string;
+    bucketNameNotEqual?: undefined | string;
+    bucketNameIn?: undefined | string[] | QueryPart<any>;
+    bucketNameNotIn?: undefined | string[] | QueryPart<any>;
+    bucketNameLike?: undefined | string;
+    bucketNameILike?: undefined | string;
+    bucketNameNotLike?: undefined | string;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    deletedAt?: undefined | Date;
+    deletedAtNotEqual?: undefined | Date;
+    deletedAtIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    deletedAtGreaterThan?: undefined | Date;
+    deletedAtLowerThan?: undefined | Date;
+    deletedAtIncludeNotNull?: undefined | boolean;
+    viaGroup?:
+      | undefined
+      | {
+          where?: undefined | StoreFileGroupWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    groupNotExists?: undefined | StoreFileGroupWhereInput;
+  };
+  type SqlCategoryMetaWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlCategoryMetaWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    category?: undefined | string;
+    categoryNotEqual?: undefined | string;
+    categoryIn?: undefined | string[] | QueryPart<any>;
+    categoryNotIn?: undefined | string[] | QueryPart<any>;
+    isHighlighted?: undefined | boolean;
+    isHighlightedIsNull?: undefined | boolean;
+    isHighlightedIsNotNull?: undefined | boolean;
+    viaCategory?:
+      | undefined
+      | {
+          where?: undefined | SqlCategoryWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+  };
+  type SqlJobStatusAggregateWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | SqlJobStatusAggregateWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    job?: undefined | number | string;
+    jobNotEqual?: undefined | number | string;
+    jobIn?: undefined | (number | string)[] | QueryPart<any>;
+    jobNotIn?: undefined | (number | string)[] | QueryPart<any>;
+    jobGreaterThan?: undefined | number | string;
+    jobLowerThan?: undefined | number | string;
+    viaJob?:
+      | undefined
+      | {
+          where?: undefined | StoreJobWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+  };
+  type StoreJobWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreJobWhereInput[];
+    id?: undefined | number | string;
+    idNotEqual?: undefined | number | string;
+    idIn?: undefined | (number | string)[] | QueryPart<any>;
+    idNotIn?: undefined | (number | string)[] | QueryPart<any>;
+    idGreaterThan?: undefined | number | string;
+    idLowerThan?: undefined | number | string;
+    isComplete?: undefined | boolean;
+    isCompleteIsNull?: undefined | boolean;
+    isCompleteIsNotNull?: undefined | boolean;
+    name?: undefined | string;
+    nameNotEqual?: undefined | string;
+    nameIn?: undefined | string[] | QueryPart<any>;
+    nameNotIn?: undefined | string[] | QueryPart<any>;
+    nameLike?: undefined | string;
+    nameILike?: undefined | string;
+    nameNotLike?: undefined | string;
+    scheduledAt?: undefined | Date;
+    scheduledAtNotEqual?: undefined | Date;
+    scheduledAtIn?: undefined | Date[] | QueryPart<any>;
+    scheduledAtNotIn?: undefined | Date[] | QueryPart<any>;
+    scheduledAtGreaterThan?: undefined | Date;
+    scheduledAtLowerThan?: undefined | Date;
+    scheduledAtIsNull?: undefined | boolean;
+    scheduledAtIsNotNull?: undefined | boolean;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    viaStatus?:
+      | undefined
+      | {
+          where?: undefined | SqlJobStatusAggregateWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    statusNotExists?: undefined | SqlJobStatusAggregateWhereInput;
+  };
+  type SqlCategoryOrderByInput = SqlCategoryOrderBy;
+  type SqlCategoryOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    label?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+  };
+  type CompasSqlOrderByInput = CompasSqlOrderBy;
+  type SqlCategoryMetaOrderByInput = SqlCategoryMetaOrderBy;
+  type SqlCategoryMetaOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    category?: undefined | CompasSqlOrderByInput;
+    isHighlighted?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
+  type SqlJobStatusAggregateOrderByInput = SqlJobStatusAggregateOrderBy;
+  type SqlJobStatusAggregateOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    job?: undefined | CompasSqlOrderByInput;
+  };
+  type SqlPostOrderByInput = SqlPostOrderBy;
+  type SqlPostOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    writer?: undefined | CompasSqlOrderByInput;
+    title?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type SqlPostCategoryOrderByInput = SqlPostCategoryOrderBy;
+  type SqlPostCategoryOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    category?: undefined | CompasSqlOrderByInput;
+    post?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+  };
+  type SqlPostageOrderByInput = SqlPostageOrderBy;
+  type SqlPostageOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    images?: undefined | CompasSqlOrderByInput;
+    post?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type SqlUserOrderByInput = SqlUserOrderBy;
+  type SqlUserOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    email?: undefined | CompasSqlOrderByInput;
+    isCool?: undefined | CompasSqlOrderByOptionalFieldInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type SqlCategoryQueryBuilderInput = {
+    where?: undefined | SqlCategoryWhereInput;
+    orderBy?: undefined | SqlCategoryOrderByInput;
+    orderBySpec?: undefined | SqlCategoryOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    posts?: undefined | SqlPostCategoryQueryBuilderInput;
+    meta?: undefined | SqlCategoryMetaQueryBuilderInput;
+  };
+  type SqlPostCategoryQueryBuilderInput = {
+    where?: undefined | SqlPostCategoryWhereInput;
+    orderBy?: undefined | SqlPostCategoryOrderByInput;
+    orderBySpec?: undefined | SqlPostCategoryOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    post?: undefined | SqlPostQueryBuilderInput;
+    category?: undefined | SqlCategoryQueryBuilderInput;
+  };
+  type SqlPostQueryBuilderInput = {
+    where?: undefined | SqlPostWhereInput;
+    orderBy?: undefined | SqlPostOrderByInput;
+    orderBySpec?: undefined | SqlPostOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    writer?: undefined | SqlUserQueryBuilderInput;
+    categories?: undefined | SqlPostCategoryQueryBuilderInput;
+    postages?: undefined | SqlPostageQueryBuilderInput;
+  };
+  type SqlUserQueryBuilderInput = {
+    where?: undefined | SqlUserWhereInput;
+    orderBy?: undefined | SqlUserOrderByInput;
+    orderBySpec?: undefined | SqlUserOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    posts?: undefined | SqlPostQueryBuilderInput;
+  };
+  type SqlPostageQueryBuilderInput = {
+    where?: undefined | SqlPostageWhereInput;
+    orderBy?: undefined | SqlPostageOrderByInput;
+    orderBySpec?: undefined | SqlPostageOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    post?: undefined | SqlPostQueryBuilderInput;
+    images?: undefined | StoreFileGroupQueryBuilderInput;
+  };
+  type StoreFileGroupQueryBuilderInput = {
+    where?: undefined | StoreFileGroupWhereInput;
+    orderBy?: undefined | StoreFileGroupOrderByInput;
+    orderBySpec?: undefined | StoreFileGroupOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    file?: undefined | StoreFileQueryBuilderInput;
+    parent?: undefined | StoreFileGroupQueryBuilderInput;
+    children?: undefined | StoreFileGroupQueryBuilderInput;
+    postageImages?: undefined | SqlPostageQueryBuilderInput;
+  };
+  type StoreFileGroupOrderByInput = StoreFileGroupOrderBy;
+  type StoreFileGroupOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    order?: undefined | CompasSqlOrderByOptionalFieldInput;
+    file?: undefined | CompasSqlOrderByOptionalFieldInput;
+    parent?: undefined | CompasSqlOrderByOptionalFieldInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type StoreFileQueryBuilderInput = {
+    where?: undefined | StoreFileWhereInput;
+    orderBy?: undefined | StoreFileOrderByInput;
+    orderBySpec?: undefined | StoreFileOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    group?: undefined | StoreFileGroupQueryBuilderInput;
+  };
+  type StoreFileOrderByInput = StoreFileOrderBy;
+  type StoreFileOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    bucketName?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type SqlCategoryMetaQueryBuilderInput = {
+    where?: undefined | SqlCategoryMetaWhereInput;
+    orderBy?: undefined | SqlCategoryMetaOrderByInput;
+    orderBySpec?: undefined | SqlCategoryMetaOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    category?: undefined | SqlCategoryQueryBuilderInput;
+  };
+  type SqlJobStatusAggregateQueryBuilderInput = {
+    where?: undefined | SqlJobStatusAggregateWhereInput;
+    orderBy?: undefined | SqlJobStatusAggregateOrderByInput;
+    orderBySpec?: undefined | SqlJobStatusAggregateOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    job?: undefined | StoreJobQueryBuilderInput;
+  };
+  type StoreJobQueryBuilderInput = {
+    where?: undefined | StoreJobWhereInput;
+    orderBy?: undefined | StoreJobOrderByInput;
+    orderBySpec?: undefined | StoreJobOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    status?: undefined | SqlJobStatusAggregateQueryBuilderInput;
+  };
+  type StoreJobOrderByInput = StoreJobOrderBy;
+  type StoreJobOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    isComplete?: undefined | CompasSqlOrderByOptionalFieldInput;
+    name?: undefined | CompasSqlOrderByInput;
+    scheduledAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+  };
+  type StoreFileInput = {
+    bucketName: string;
+    contentLength: number;
+    contentType: string;
+    name: string;
+    meta?: StoreFileMetaInput;
+    id: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+    deletedAt?: undefined | Date;
+  };
+  type StoreFileMetaInput =
+    | undefined
+    | {
+        transforms?: undefined | any;
+        transformedFromOriginal?: undefined | string;
+      };
+  type StoreFileGroupInput = {
+    name?: undefined | string;
+    order?: undefined | number;
+    meta?: StoreFileGroupMetaInput;
+    id: string;
+    file?: undefined | string;
+    parent?: undefined | string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+    deletedAt?: undefined | Date;
+  };
+  type StoreFileGroupMetaInput = undefined | {};
+  type StoreJobInput = {
+    id: number | string;
+    isComplete?: undefined | boolean;
+    priority?: undefined | number;
+    scheduledAt?: undefined | Date;
+    name: string;
+    data?: undefined | any;
+    retryCount?: undefined | number;
+    handlerTimeout?: undefined | number;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
   type QueryResultSqlCategory = SqlCategory & {
     posts?: QueryResultSqlPostCategory[];
     meta?: QueryResultSqlCategoryMeta | string | number;
@@ -1378,6 +2147,55 @@ declare global {
   type ValidatorStringTrim = ValidatorString;
   type ValidatorStringUpper = ValidatorString;
   type ValidatorUuid = ValidatorString;
+  type ValidatorAnyOfInput = ValidatorAnyOf;
+  type ValidatorArrayInput = ValidatorArray;
+  type ValidatorArrayConvertInput = boolean[] | boolean;
+  type ValidatorArrayMinMaxInput = ValidatorArray;
+  type ValidatorBoolInput = ValidatorBool;
+  type ValidatorBoolAllowNullInput = ValidatorBoolAllowNull;
+  type ValidatorBoolConvertInput = boolean | "true" | "false";
+  type ValidatorBoolDefaultInput = ValidatorBoolOptional;
+  type ValidatorBoolOneOfInput = ValidatorBoolOneOf;
+  type ValidatorBoolOptionalInput = ValidatorBoolOptional;
+  type ValidatorDateInput = ValidatorDate;
+  type ValidatorDateAllowNullInput = ValidatorDateAllowNull;
+  type ValidatorDateDefaultInput = ValidatorDateOptional;
+  type ValidatorDateFutureInput = ValidatorDate;
+  type ValidatorDateMaxInput = ValidatorDate;
+  type ValidatorDateMinInput = ValidatorDate;
+  type ValidatorDateOptionalInput = ValidatorDateOptional;
+  type ValidatorDatePastInput = ValidatorDate;
+  type ValidatorGenericInput = { [key: number | string]: boolean };
+  type ValidatorNamedLevelOneInput = { levelOne: ValidatorNamedLevelTwoInput };
+  type ValidatorNamedLevelTwoInput = { two: ValidatorNamedLevelThreeInput };
+  type ValidatorNamedLevelThreeInput = {
+    foo?: undefined | ValidatorNamedLevelOneInput;
+  };
+  type ValidatorNumberInput = ServerInput;
+  type ValidatorNumberConvertInput = ServerInputInput;
+  type ValidatorNumberFloatInput = ServerInput;
+  type ValidatorNumberMinMaxInput = ServerInput;
+  type ValidatorNumberOneOfInput = ValidatorNumberOneOf;
+  type ValidatorObjectInput = ValidatorObject;
+  type ValidatorObjectLooseInput = ValidatorObject;
+  type ValidatorObjectOptionalInput = ValidatorObjectOptional;
+  type ValidatorObjectWithOptionalReferenceInput = {
+    ref?: ValidatorObjectOptionalInput;
+  };
+  type ValidatorRecursiveInput = {
+    recursive?: undefined | ValidatorRecursiveInput;
+  };
+  type ValidatorStringInput = ValidatorString;
+  type ValidatorStringAllowNullInput = ValidatorStringAllowNull;
+  type ValidatorStringConvertInput = ValidatorString;
+  type ValidatorStringDisallowedCharactersInput = ValidatorString;
+  type ValidatorStringLowerInput = ValidatorString;
+  type ValidatorStringMinMaxInput = ValidatorString;
+  type ValidatorStringOneOfInput = ValidatorStringOneOf;
+  type ValidatorStringPatternInput = ValidatorString;
+  type ValidatorStringTrimInput = ValidatorString;
+  type ValidatorStringUpperInput = ValidatorString;
+  type ValidatorUuidInput = ValidatorString;
   type DocParserBlock =
     | DocParserUnknownBlock
     | DocParserFunctionDeclarationBlock;
@@ -1423,6 +2241,48 @@ declare global {
     type: "MultiLine" | "SingleLine";
     value: string;
     range?: DocParserRange;
+  };
+  type DocParserBlockInput =
+    | DocParserUnknownBlockInput
+    | DocParserFunctionDeclarationBlockInput;
+  type DocParserUnknownBlockInput = {
+    type: "unknown";
+    raw: string;
+    range?: DocParserRangeInput;
+  };
+  type DocParserRangeInput =
+    | undefined
+    | {
+        start: number;
+        end: number;
+        pkg: DocParserPackageInput;
+        file: string;
+        line?: undefined | string;
+      };
+  type DocParserPackageInput = DocParserPackage;
+  type DocParserFunctionDeclarationBlockInput = {
+    type: "functionDeclaration";
+    name?: undefined | string;
+    summary?: undefined | string;
+    description?: undefined | string;
+    availableSince?: undefined | string;
+    isVariable: boolean;
+    parsedType: DocParserFunctionTypeInput;
+    range?: DocParserRangeInput;
+  };
+  type DocParserFunctionTypeInput = {
+    type: "function";
+    params: { name: string; description: string; type: DocParserTypeInput }[];
+    returnType: DocParserTypeInput;
+  };
+  type DocParserTypeInput =
+    | DocParserLiteralTypeInput
+    | DocParserFunctionTypeInput;
+  type DocParserLiteralTypeInput = DocParserLiteralType;
+  type DocParserJSCommentInput = {
+    type: "MultiLine" | "SingleLine";
+    value: string;
+    range?: DocParserRangeInput;
   };
   type StoreImageTransformOptions = { q: number; w: number };
   type StoreJobInterval = {
@@ -1602,6 +2462,140 @@ declare global {
     session?: undefined | StoreSessionStoreQueryBuilder;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
+  };
+  type StoreImageTransformOptionsInput = {
+    q?: undefined | number | string;
+    w: number | string;
+  };
+  type StoreJobIntervalInput = StoreJobInterval;
+  type StoreSessionStoreInput = {
+    data?: undefined | any;
+    checksum: string;
+    revokedAt?: undefined | Date;
+    id: string;
+    createdAt?: undefined | Date;
+    updatedAt?: undefined | Date;
+  };
+  type StoreSessionStoreTokenInput = StoreSessionStoreToken;
+  type StoreSessionStoreWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreSessionStoreWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    createdAt?: undefined | Date;
+    createdAtNotEqual?: undefined | Date;
+    createdAtIn?: undefined | Date[] | QueryPart<any>;
+    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
+    createdAtGreaterThan?: undefined | Date;
+    createdAtLowerThan?: undefined | Date;
+    createdAtIsNull?: undefined | boolean;
+    createdAtIsNotNull?: undefined | boolean;
+    updatedAt?: undefined | Date;
+    updatedAtNotEqual?: undefined | Date;
+    updatedAtIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    updatedAtGreaterThan?: undefined | Date;
+    updatedAtLowerThan?: undefined | Date;
+    updatedAtIsNull?: undefined | boolean;
+    updatedAtIsNotNull?: undefined | boolean;
+    viaAccessTokens?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    accessTokensNotExists?: undefined | StoreSessionStoreTokenWhereInput;
+  };
+  type StoreSessionStoreTokenWhereInput = {
+    $raw?: undefined | QueryPart<any>;
+    $or?: undefined | StoreSessionStoreTokenWhereInput[];
+    id?: undefined | string;
+    idNotEqual?: undefined | string;
+    idIn?: undefined | string[] | QueryPart<any>;
+    idNotIn?: undefined | string[] | QueryPart<any>;
+    session?: undefined | string;
+    sessionNotEqual?: undefined | string;
+    sessionIn?: undefined | string[] | QueryPart<any>;
+    sessionNotIn?: undefined | string[] | QueryPart<any>;
+    expiresAt?: undefined | Date;
+    expiresAtNotEqual?: undefined | Date;
+    expiresAtIn?: undefined | Date[] | QueryPart<any>;
+    expiresAtNotIn?: undefined | Date[] | QueryPart<any>;
+    expiresAtGreaterThan?: undefined | Date;
+    expiresAtLowerThan?: undefined | Date;
+    refreshToken?: undefined | string;
+    refreshTokenNotEqual?: undefined | string;
+    refreshTokenIn?: undefined | string[] | QueryPart<any>;
+    refreshTokenNotIn?: undefined | string[] | QueryPart<any>;
+    refreshTokenIsNull?: undefined | boolean;
+    refreshTokenIsNotNull?: undefined | boolean;
+    revokedAt?: undefined | Date;
+    revokedAtNotEqual?: undefined | Date;
+    revokedAtIn?: undefined | Date[] | QueryPart<any>;
+    revokedAtNotIn?: undefined | Date[] | QueryPart<any>;
+    revokedAtGreaterThan?: undefined | Date;
+    revokedAtLowerThan?: undefined | Date;
+    revokedAtIsNull?: undefined | boolean;
+    revokedAtIsNotNull?: undefined | boolean;
+    viaSession?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaRefreshToken?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    viaAccessToken?:
+      | undefined
+      | {
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          limit?: undefined | number;
+          offset?: undefined | number;
+        };
+    accessTokenNotExists?: undefined | StoreSessionStoreTokenWhereInput;
+  };
+  type StoreSessionStoreOrderByInput = StoreSessionStoreOrderBy;
+  type StoreSessionStoreOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    createdAt?: undefined | CompasSqlOrderByInput;
+    updatedAt?: undefined | CompasSqlOrderByInput;
+  };
+  type StoreSessionStoreTokenOrderByInput = StoreSessionStoreTokenOrderBy;
+  type StoreSessionStoreTokenOrderBySpecInput = {
+    id?: undefined | CompasSqlOrderByInput;
+    session?: undefined | CompasSqlOrderByInput;
+    expiresAt?: undefined | CompasSqlOrderByInput;
+    refreshToken?: undefined | CompasSqlOrderByOptionalFieldInput;
+    revokedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+  };
+  type StoreSessionStoreQueryBuilderInput = {
+    where?: undefined | StoreSessionStoreWhereInput;
+    orderBy?: undefined | StoreSessionStoreOrderByInput;
+    orderBySpec?: undefined | StoreSessionStoreOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    accessTokens?: undefined | StoreSessionStoreTokenQueryBuilderInput;
+  };
+  type StoreSessionStoreTokenQueryBuilderInput = {
+    where?: undefined | StoreSessionStoreTokenWhereInput;
+    orderBy?: undefined | StoreSessionStoreTokenOrderByInput;
+    orderBySpec?: undefined | StoreSessionStoreTokenOrderBySpecInput;
+    as?: undefined | string;
+    limit?: undefined | number;
+    offset?: undefined | number;
+    session?: undefined | StoreSessionStoreQueryBuilderInput;
+    refreshToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
+    accessToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
   };
   type QueryResultStoreSessionStore = StoreSessionStore & {
     accessTokens?: QueryResultStoreSessionStoreToken[];

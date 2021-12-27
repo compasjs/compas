@@ -38,7 +38,7 @@ import {
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFile>}
  */
@@ -64,7 +64,7 @@ export function validateStoreFile(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroup>}
  */
@@ -92,7 +92,7 @@ export function validateStoreFileGroup(value, propertyPath = "$") {
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupMetaInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupMeta>}
  */
@@ -120,7 +120,7 @@ export function validateStoreFileGroupMeta(value, propertyPath = "$") {
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileMetaInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileMeta>}
  */
@@ -146,7 +146,7 @@ export function validateStoreFileMeta(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreImageTransformOptionsInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreImageTransformOptions>}
  */
@@ -172,7 +172,7 @@ export function validateStoreImageTransformOptions(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJob>}
  */
@@ -198,7 +198,7 @@ export function validateStoreJob(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobIntervalInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobInterval>}
  */
@@ -224,7 +224,7 @@ export function validateStoreJobInterval(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStore>}
  */
@@ -250,7 +250,7 @@ export function validateStoreSessionStore(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreTokenInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreToken>}
  */
@@ -276,7 +276,7 @@ export function validateStoreSessionStoreToken(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileWhere>}
  */
@@ -302,7 +302,7 @@ export function validateStoreFileWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupWhere>}
  */
@@ -328,7 +328,7 @@ export function validateStoreFileGroupWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobWhere>}
  */
@@ -354,7 +354,7 @@ export function validateStoreJobWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreWhere>}
  */
@@ -380,7 +380,7 @@ export function validateStoreSessionStoreWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreTokenWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenWhere>}
  */
@@ -406,7 +406,7 @@ export function validateStoreSessionStoreTokenWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileOrderBy>}
  */
@@ -432,7 +432,7 @@ export function validateStoreFileOrderBy(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileOrderBySpecInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileOrderBySpec>}
  */
@@ -458,7 +458,7 @@ export function validateStoreFileOrderBySpec(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupOrderBy>}
  */
@@ -484,7 +484,7 @@ export function validateStoreFileGroupOrderBy(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupOrderBySpecInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupOrderBySpec>}
  */
@@ -510,7 +510,7 @@ export function validateStoreFileGroupOrderBySpec(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobOrderBy>}
  */
@@ -536,7 +536,7 @@ export function validateStoreJobOrderBy(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobOrderBySpecInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobOrderBySpec>}
  */
@@ -562,7 +562,7 @@ export function validateStoreJobOrderBySpec(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreOrderBy>}
  */
@@ -588,7 +588,7 @@ export function validateStoreSessionStoreOrderBy(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreOrderBySpecInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreOrderBySpec>}
  */
@@ -617,7 +617,7 @@ export function validateStoreSessionStoreOrderBySpec(
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreTokenOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenOrderBy>}
  */
@@ -646,7 +646,7 @@ export function validateStoreSessionStoreTokenOrderBy(
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreTokenOrderBySpecInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenOrderBySpec>}
  */
@@ -675,7 +675,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileQueryBuilder>}
  */
@@ -701,7 +701,7 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreFileGroupQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupQueryBuilder>}
  */
@@ -727,7 +727,7 @@ export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreJobQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobQueryBuilder>}
  */
@@ -753,7 +753,7 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreQueryBuilder>}
  */
@@ -782,7 +782,7 @@ export function validateStoreSessionStoreQueryBuilder(
   return { value: result.value };
 }
 /**
- * @param {undefined|any} value
+ * @param {undefined|any|StoreSessionStoreTokenQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
  */

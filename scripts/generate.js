@@ -1,11 +1,12 @@
 import { mainFn, spawn } from "@compas/stdlib";
 import {
+  generateCli,
   generateCodeGen,
+  generateOpenApiSpec,
   generateRepo,
   generateStore,
   generateTestAndBench,
   generateTypes,
-  generateOpenApiSpec,
 } from "../src/generate.js";
 
 /** @type {CliWatchOptions} */
@@ -17,6 +18,7 @@ export const cliWatchOptions = {
 mainFn(import.meta, main);
 
 async function main(logger) {
+  await generateCli();
   await generateCodeGen();
   await generateStore();
   await generateRepo();

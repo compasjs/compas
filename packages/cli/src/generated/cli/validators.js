@@ -3,20 +3,20 @@
 
 import { AppError, isNil } from "@compas/stdlib";
 import {
-  anonymousValidator446238440,
-  anonymousValidator572766398,
+  anonymousValidator1833756126,
+  anonymousValidator1885876481,
 } from "../common/anonymous-validators.js";
 /**
  * @template T
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any|CompasSqlOrderByInput} value
+ * @param {undefined|any|import("../common/types").CliCommandDefinitionInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderBy>}
+ * @returns {Either<import("../common/types").CliCommandDefinition>}
  */
-export function validateCompasSqlOrderBy(value, propertyPath = "$") {
-  const result = anonymousValidator446238440(value, propertyPath);
+export function validateCliCommandDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1833756126(value, propertyPath);
   if (result.errors) {
     const info = {};
     for (const err of result.errors) {
@@ -33,19 +33,16 @@ export function validateCompasSqlOrderBy(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CompasSqlOrderBy}} */
+  /** @type {{ value: import("../common/types").CliCommandDefinition}} */
   return { value: result.value };
 }
 /**
- * @param {undefined|any|CompasSqlOrderByOptionalFieldInput} value
+ * @param {undefined|any|import("../common/types").CliFlagDefinitionInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderByOptionalField>}
+ * @returns {Either<import("../common/types").CliFlagDefinition>}
  */
-export function validateCompasSqlOrderByOptionalField(
-  value,
-  propertyPath = "$",
-) {
-  const result = anonymousValidator572766398(value, propertyPath);
+export function validateCliFlagDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1885876481(value, propertyPath);
   if (result.errors) {
     const info = {};
     for (const err of result.errors) {
@@ -62,6 +59,6 @@ export function validateCompasSqlOrderByOptionalField(
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CompasSqlOrderByOptionalField}} */
+  /** @type {{ value: import("../common/types").CliFlagDefinition}} */
   return { value: result.value };
 }

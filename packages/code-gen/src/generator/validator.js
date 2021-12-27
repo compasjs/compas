@@ -139,7 +139,14 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
        * @param {${generateTypeDefinition(context.context, {
          type: "any",
          isOptional: true,
-       })}} value
+       })}|${
+      context.context.options.declareGlobalTypes === false
+        ? `import("../common/types").`
+        : ""
+    }${getTypeNameForType(context.context, data[name], "Input", {
+      useDefaults: false,
+      useConvert: true,
+    })}} value
        * @param {string|undefined} [propertyPath]
        * @returns {Either<${
          context.context.options.declareGlobalTypes === false

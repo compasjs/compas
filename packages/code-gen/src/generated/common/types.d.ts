@@ -384,3 +384,433 @@ export type CodeGenTypeSettings = {
   isTypeFile?: undefined | boolean;
   fileTypeIO?: undefined | "input" | "outputRouter" | "outputClient";
 };
+export type CodeGenAnyOfTypeInput = {
+  type: "anyOf";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?: undefined | {};
+  values: import("./../common/types").CodeGenTypeInput[];
+};
+export type CodeGenTypeInput =
+  | import("./../common/types").CodeGenAnyTypeInput
+  | import("./../common/types").CodeGenAnyOfTypeInput
+  | import("./../common/types").CodeGenArrayTypeInput
+  | import("./../common/types").CodeGenBooleanTypeInput
+  | import("./../common/types").CodeGenDateTypeInput
+  | import("./../common/types").CodeGenFileTypeInput
+  | import("./../common/types").CodeGenGenericTypeInput
+  | import("./../common/types").CodeGenNumberTypeInput
+  | import("./../common/types").CodeGenObjectTypeInput
+  | import("./../common/types").CodeGenReferenceTypeInput
+  | import("./../common/types").CodeGenRelationTypeInput
+  | import("./../common/types").CodeGenStringTypeInput
+  | import("./../common/types").CodeGenUuidTypeInput
+  | import("./../common/types").CodeGenRouteTypeInput;
+export type CodeGenAnyTypeInput = {
+  type: "any";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | { allowNull?: undefined | boolean };
+  internalSettings?: undefined | {};
+  rawValue?: undefined | string;
+  rawValueImport?:
+    | undefined
+    | { javaScript?: undefined | string; typeScript?: undefined | string };
+  rawValidator?: undefined | string;
+  rawValidatorImport?:
+    | undefined
+    | { javaScript?: undefined | string; typeScript?: undefined | string };
+};
+export type CodeGenArrayTypeInput = {
+  type: "array";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: {
+    convert?: undefined | boolean;
+    min?: undefined | number;
+    max?: undefined | number;
+  };
+  internalSettings?: undefined | {};
+  values: import("./../common/types").CodeGenTypeInput;
+};
+export type CodeGenBooleanTypeInput = {
+  type: "boolean";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: { convert?: undefined | boolean; allowNull?: undefined | boolean };
+  internalSettings?: undefined | {};
+  oneOf?: undefined | boolean;
+};
+export type CodeGenDateTypeInput = {
+  type: "date";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?:
+    | undefined
+    | {
+        allowNull?: undefined | boolean;
+        min?: undefined | Date;
+        max?: undefined | Date;
+        inFuture?: undefined | boolean;
+        inPast?: undefined | boolean;
+      };
+  internalSettings?: undefined | {};
+};
+export type CodeGenFileTypeInput = {
+  type: "file";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | { mimeTypes?: undefined | string[] };
+  internalSettings?: undefined | {};
+};
+export type CodeGenGenericTypeInput = {
+  type: "generic";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?: undefined | {};
+  keys: import("./../common/types").CodeGenTypeInput;
+  values: import("./../common/types").CodeGenTypeInput;
+};
+export type CodeGenNumberTypeInput = {
+  type: "number";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: {
+    convert?: undefined | boolean;
+    floatingPoint?: undefined | boolean;
+    min?: undefined | number;
+    max?: undefined | number;
+    allowNull?: undefined | boolean;
+  };
+  internalSettings?: undefined | {};
+  oneOf?: undefined | number[];
+};
+export type CodeGenObjectTypeInput = {
+  type: "object";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: { allowNull?: undefined | boolean; strict?: undefined | boolean };
+  internalSettings?: undefined | {};
+  shortName?: undefined | string;
+  keys: { [key: string]: import("./../common/types").CodeGenTypeInput };
+  enableQueries?: undefined | boolean;
+  queryOptions?:
+    | undefined
+    | {
+        withSoftDeletes?: undefined | boolean;
+        withDates?: undefined | boolean;
+        withPrimaryKey?: undefined | boolean;
+        isView?: undefined | boolean;
+        schema?: undefined | string;
+      };
+  relations?:
+    | undefined
+    | import("./../common/types").CodeGenRelationTypeInput[];
+  where?:
+    | undefined
+    | {
+        type: string;
+        rawType: import("./../common/types").CodeGenObjectTypeInput;
+        fields: {
+          key: string;
+          name: string;
+          isRelation?: undefined | boolean;
+          variant:
+            | "equal"
+            | "notEqual"
+            | "in"
+            | "notIn"
+            | "greaterThan"
+            | "lowerThan"
+            | "isNull"
+            | "isNotNull"
+            | "includeNotNull"
+            | "like"
+            | "iLike"
+            | "notLike"
+            | "exists"
+            | "notExists";
+        }[];
+      };
+  orderBy?:
+    | undefined
+    | {
+        type: string;
+        specType: string;
+        fields: { key: string; optional: boolean }[];
+      };
+  partial?:
+    | undefined
+    | {
+        insertType: string;
+        updateType: string;
+        fields: {
+          key: string;
+          defaultValue?: undefined | string;
+          hasSqlDefault?: undefined | boolean;
+          isJsonb?: undefined | boolean;
+        }[];
+      };
+};
+export type CodeGenRelationTypeInput = {
+  type: "relation";
+  subType: "manyToOne" | "oneToMany" | "oneToOne" | "oneToOneReverse";
+  reference: import("./../common/types").CodeGenReferenceTypeInput;
+  ownKey: string;
+  referencedKey?: undefined | string;
+  isOptional?: undefined | boolean;
+};
+export type CodeGenReferenceTypeInput = {
+  type: "reference";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?: undefined | {};
+  reference:
+    | import("./../common/types").CodeGenTypeInput
+    | {
+        uniqueName?: undefined | string;
+        group?: undefined | string;
+        name?: undefined | string;
+      };
+};
+export type CodeGenStringTypeInput = {
+  type: "string";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: {
+    convert?: undefined | boolean;
+    trim?: undefined | boolean;
+    lowerCase?: undefined | boolean;
+    upperCase?: undefined | boolean;
+    min?: undefined | number;
+    max?: undefined | number;
+    pattern?: undefined | string;
+    allowNull?: undefined | boolean;
+    disallowedCharacters?: undefined | string[];
+  };
+  internalSettings?: undefined | {};
+  oneOf?: undefined | string[];
+};
+export type CodeGenUuidTypeInput = {
+  type: "uuid";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | { allowNull?: undefined | boolean };
+  internalSettings?: undefined | {};
+};
+export type CodeGenRouteTypeInput = {
+  type: "route";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?:
+    | undefined
+    | { requestBodyType?: undefined | "json" | "form-data" };
+  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
+  idempotent?: undefined | boolean;
+  path: string;
+  tags: string[];
+  query?: undefined | import("./../common/types").CodeGenTypeInput;
+  params?: undefined | import("./../common/types").CodeGenTypeInput;
+  body?: undefined | import("./../common/types").CodeGenTypeInput;
+  files?: undefined | import("./../common/types").CodeGenTypeInput;
+  response?: undefined | import("./../common/types").CodeGenTypeInput;
+};
+export type CodeGenContextInput = {
+  options: import("../../App").GenerateOpts;
+  structure: import("./../common/types").CodeGenStructureInput;
+  extension: ".js" | ".ts";
+  importExtension: string;
+  outputFiles: import("./../common/types").CodeGenFileInput[];
+  errors: (
+    | { key: "structureReservedGroupName"; groupName: string }
+    | { key: "structureUnknownOrEmptyGroup"; groupName: string }
+    | { key: "sqlMissingPrimaryKey"; typeName: string }
+    | {
+        key: "sqlForgotEnableQueries";
+        typeName: string;
+        referencedByType: string;
+      }
+    | { key: "sqlDuplicateRelationOwnKey"; type: string; relationKey: string }
+    | {
+        key: "sqlDuplicateRelationReferencedKey";
+        type: string;
+        relationKey: string;
+      }
+    | {
+        key: "sqlMissingOneToMany";
+        referencedByGroup: string;
+        referencedByType: string;
+        typeName: string;
+        relationOwnKey: string;
+      }
+    | {
+        key: "sqlUnusedOneToMany";
+        type: string;
+        referencedType: string;
+        ownKey: string;
+      }
+    | { key: "sqlEnableValidator" }
+    | {
+        key: "sqlDuplicateShortName";
+        shortName: string;
+        firstName: string;
+        secondName: string;
+      }
+    | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
+  )[];
+};
+export type CodeGenStructureInput = {
+  [key: string]: {
+    [key: string]: import("./../common/types").CodeGenTypeInput;
+  };
+};
+export type CodeGenFileInput = CodeGenFile;
+export type CodeGenTemplateStateInput = CodeGenTemplateState;
+export type CodeGenTypeSettingsInput = CodeGenTypeSettings;

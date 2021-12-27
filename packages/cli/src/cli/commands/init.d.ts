@@ -1,11 +1,15 @@
 /**
  *
- * @param {import("../types").CliLogger} logger
- * @param {import("../types").CliCommandExecutorState} state
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("../types").CliExecutorState} state
  * @returns {Promise<import("../types").CliResult>}
  */
 export function cliExecutor(
-  logger: import("../types").CliLogger,
-  state: import("../types").CliCommandExecutorState,
+  logger: import("@compas/stdlib").Logger,
+  state: import("../types").CliExecutorState,
 ): Promise<import("../types").CliResult>;
+/**
+ * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ */
+export const cliDefinition: import("../../generated/common/types").CliCommandDefinitionInput;
 //# sourceMappingURL=init.d.ts.map
