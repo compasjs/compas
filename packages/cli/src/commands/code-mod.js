@@ -1,5 +1,6 @@
-import { eventStart, eventStop, isNil, newEvent } from "@compas/stdlib";
-import { codeModMap } from "../code-mod/constants.js";
+import { isNil } from "@compas/stdlib";
+import { cliExecutor as codeModExecutor } from "../cli/commands/code-mod.js";
+import { cliLoggerCreate } from "../cli/logger.js";
 
 const SUB_COMMANDS = ["list", "exec"];
 
@@ -26,13 +27,20 @@ export async function codeModCommand(logger, command) {
   }
 
   if (subCommand === "list") {
-    let str = `Available code-mods:\n`;
-    for (const [key, value] of Object.entries(codeModMap)) {
-      str += `- ${key}: ${value.description}\n`;
-    }
-    logger.info(str);
+    const cliLogger = cliLoggerCreate("compas");
+    const result = await codeModExecutor(cliLogger, {
+      command: ["compas", "code-mod", "list"],
+      flags: {
+        verbose,
+      },
 
-    return { exitCode: 0 };
+      // @ts-ignore
+      cli: {},
+    });
+
+    return {
+      exitCode: result.exitStatus === "passed" ? 0 : 1,
+    };
   }
 
   // subCommand == 'exec'
@@ -45,33 +53,19 @@ export async function codeModCommand(logger, command) {
     return { exitCode: 1 };
   }
 
-  const selectedCodeMod = codeModMap[codeModName];
-  if (isNil(selectedCodeMod) && /^v\d+\.\d+\.\d+$/gi.test(codeModName)) {
-    logger.info(`No code-mod for version ${codeModName}.`);
+  const cliLogger = cliLoggerCreate("compas");
+  const result = await codeModExecutor(cliLogger, {
+    command: ["compas", "code-mod", "exec"],
+    flags: {
+      verbose,
+      codeModName,
+    },
 
-    return { exitCode: 0 };
-  } else if (isNil(selectedCodeMod)) {
-    logger.error(
-      `Unknown code-mod '${codeModName}' provided. To see a list of available code-mods use 'yarn compas code-mod list'. To execute a code-mod use 'yarn compas code-mod exec $name'.`,
-    );
-    return { exitCode: 1 };
-  }
-
-  logger.info(
-    `Executing '${codeModName}' code-mod.\nDescription: ${selectedCodeMod.description}`,
-  );
-
-  const event = newEvent(logger);
-  eventStart(event, `cli.codeMod.${codeModName}`);
-
-  await Promise.resolve(selectedCodeMod.exec(event, verbose));
-
-  if (verbose) {
-    // Only print call stack if verbose is set
-    eventStop(event);
-  }
+    // @ts-ignore
+    cli: {},
+  });
 
   return {
-    exitCode: 0,
+    exitCode: result.exitStatus === "passed" ? 0 : 1,
   };
 }
