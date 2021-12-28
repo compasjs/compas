@@ -1913,10 +1913,10 @@ file-entry-cache@^6.0.1:
   dependencies:
     flat-cache "^3.0.4"
 
-file-type@17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/file-type/-/file-type-17.0.2.tgz#7e7564058a18aeb232b75832e5f38c6881fc7822"
-  integrity sha512-lrBLqujGI8O1aOsXuCuwvAu0kmU+pUNsusQNlp2Xs+8JNJm8VNGGPDwLfmtQPmnOxoIKvwk5rOEijrF0RbYHvQ==
+file-type@17.1.0:
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-17.1.0.tgz#b9c725a4e00e04f68929c72c1f37343346187523"
+  integrity sha512-qxBAiuvxjAT/sPOVSccSiVp/s4vl/K+j2ppkbbh8haLNwDbtKOdoHmWRllSLXUnvNKBZhuGsDgeGprHr/UciyA==
   dependencies:
     readable-web-to-node-stream "^3.0.2"
     strtok3 "^7.0.0-alpha.7"
