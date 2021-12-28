@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { environment, isNil } from "@compas/stdlib";
-import { cliExecutor } from "../cli/commands/visualise.js";
+import { cliExecutor as visualiseExecutor } from "../cli/commands/visualise.js";
 import { cliLoggerCreate } from "../cli/logger.js";
 
 const SUB_COMMANDS = ["sql"];
@@ -41,7 +41,7 @@ export async function visualiseCommand(logger, command) {
   );
 
   const cliLogger = cliLoggerCreate("compas");
-  const result = await cliExecutor(cliLogger, {
+  const result = await visualiseExecutor(cliLogger, {
     command: ["compas", "visualise", "erd"],
     flags: {
       format,
