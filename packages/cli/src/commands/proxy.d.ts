@@ -1,10 +1,14 @@
 /**
  * @param {Logger} logger
  * @param {import("../parse").UtilCommand} command
- * @returns {void}
+ * @returns {{exitCode?: number}|undefined}
  */
 export function proxyCommand(
   logger: Logger,
   command: import("../parse").UtilCommand,
-): void;
+):
+  | {
+      exitCode?: number;
+    }
+  | undefined;
 //# sourceMappingURL=proxy.d.ts.map
