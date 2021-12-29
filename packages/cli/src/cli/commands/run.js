@@ -96,7 +96,7 @@ export async function cliExecutor(logger, state) {
     }
 
     // @ts-ignore
-    if (state.flags.nodeArguments.length > 0)
+    if (state.flags.nodeArguments?.length > 0)
       logger.error(
         "Node arguments are not supported if the script is defined in the package.json",
       );
