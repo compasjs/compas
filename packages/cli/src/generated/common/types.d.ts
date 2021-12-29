@@ -6,6 +6,9 @@ export type CliCommandDefinition = {
   shortDescription: string;
   longDescription?: undefined | string;
   modifiers: { isDynamic: boolean; isCosmetic: boolean };
+  dynamicValidator?:
+    | undefined
+    | ((value: string) => { isValid: boolean; error?: { message: string } });
   subCommands: CliCommandDefinition[];
   flags: CliFlagDefinition[];
 };
@@ -14,7 +17,12 @@ export type CliFlagDefinition = {
   rawName: string;
   description?: undefined | string;
   modifiers: { isRepeatable: boolean; isRequired: boolean };
-  valueSpecification: "boolean" | "number" | "string" | "booleanOrString";
+  value: {
+    specification: "boolean" | "number" | "string" | "booleanOrString";
+    validator?:
+      | undefined
+      | ((value: any) => { isValid: boolean; error?: { message: string } });
+  };
 };
 export type CliCommandDefinitionInput = {
   name: string;
@@ -23,6 +31,9 @@ export type CliCommandDefinitionInput = {
   modifiers?:
     | undefined
     | { isDynamic?: undefined | boolean; isCosmetic?: undefined | boolean };
+  dynamicValidator?:
+    | undefined
+    | ((value: string) => { isValid: boolean; error?: { message: string } });
   subCommands?:
     | undefined
     | import("./../common/types").CliCommandDefinitionInput[];
@@ -35,10 +46,17 @@ export type CliFlagDefinitionInput = {
   modifiers?:
     | undefined
     | { isRepeatable?: undefined | boolean; isRequired?: undefined | boolean };
-  valueSpecification?:
+  value?:
     | undefined
-    | "boolean"
-    | "number"
-    | "string"
-    | "booleanOrString";
+    | {
+        specification?:
+          | undefined
+          | "boolean"
+          | "number"
+          | "string"
+          | "booleanOrString";
+        validator?:
+          | undefined
+          | ((value: any) => { isValid: boolean; error?: { message: string } });
+      };
 };

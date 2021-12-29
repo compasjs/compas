@@ -25,7 +25,25 @@ export const cliDefinition = {
       rawName: "--connection-settings",
       description:
         "Specify a path that contains the PostgreSQL connection object.",
-      valueSpecification: "string",
+      value: {
+        specification: "string",
+        validator: (value) => {
+          const isValid = existsSync(value);
+
+          if (isValid) {
+            return {
+              isValid,
+            };
+          }
+
+          return {
+            isValid,
+            error: {
+              message: `Could not find the specified file relative to the current working directory. Make sure it exists.`,
+            },
+          };
+        },
+      },
     },
     {
       name: "keepAlive",
@@ -132,7 +150,7 @@ ${mcInfo.hashChanges.map((it) => `- ${it.number}-${it.name}`).join("\n")}`;
     sql = await newPostgresConnection(sqlOptions);
 
     // Execute a query to keep the event loop alive.
-    await sql`SELECT 1 + 1 as "sum"`;
+    await sql`SELECT 1 + 1 AS "sum"`;
   }
 
   // Leak postgres connection, with a single connection, to keep the event loop spinning

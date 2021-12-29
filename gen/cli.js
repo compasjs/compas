@@ -24,9 +24,23 @@ export function applyCliStructure(app) {
             isRequired: false,
           }),
         ),
-      valueSpecification: T.string()
-        .oneOf("boolean", "number", "string", "booleanOrString")
-        .default(`"boolean"`),
+      value: T.object()
+        .keys({
+          specification: T.string()
+            .oneOf("boolean", "number", "string", "booleanOrString")
+            .default(`"boolean"`),
+          validator: T.any()
+            .raw(
+              "((value: any) => { isValid: boolean, error?: { message: string }})",
+            )
+            .validator(`((v) => typeof v === "function")`)
+            .optional(),
+        })
+        .default(
+          JSON.stringify({
+            specification: "boolean",
+          }),
+        ),
     }),
 
     T.object("commandDefinition").keys({
@@ -44,6 +58,12 @@ export function applyCliStructure(app) {
             isCosmetic: false,
           }),
         ),
+      dynamicValidator: T.any()
+        .raw(
+          "((value: string) => { isValid: boolean, error?: { message: string }})",
+        )
+        .validator(`((v) => typeof v === "function")`)
+        .optional(),
       subCommands: T.array()
         .values(T.reference("cli", "commandDefinition"))
         .default("[]"),

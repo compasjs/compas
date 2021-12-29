@@ -1,6 +1,25 @@
 import { eventStart, eventStop, isNil, newEvent } from "@compas/stdlib";
 import { codeModMap } from "../../code-mod/constants.js";
 
+const codeModNameFlagValidator = (value) => {
+  const isValid = !isNil(codeModMap[value]);
+
+  if (isValid) {
+    return {
+      isValid,
+    };
+  }
+
+  return {
+    isValid,
+    error: {
+      message: `The available names are:\n${Object.keys(codeModMap).join(
+        ", ",
+      )}\n\nTo get more details of a specific code-mod run 'compas code-mod list'.`,
+    },
+  };
+};
+
 /**
  * @type {import("../../generated/common/types").CliCommandDefinitionInput}
  */
@@ -26,7 +45,10 @@ export const cliDefinition = {
           modifiers: {
             isRequired: true,
           },
-          valueSpecification: "string",
+          value: {
+            specification: "string",
+            validator: codeModNameFlagValidator,
+          },
         },
       ],
     },
@@ -58,12 +80,6 @@ export async function cliExecutor(logger, state) {
     const codeModName = state.flags.codeModName;
 
     const selectedCodeMod = codeModMap[codeModName];
-    if (isNil(selectedCodeMod)) {
-      logger.error(
-        `Unknown code-mod '${codeModName}' provided. To see a list of available code-mods use 'compas code-mod list'. To execute a code-mod use 'compas code-mod exec $name'.`,
-      );
-      return { exitStatus: "failed" };
-    }
 
     logger.info(
       `Executing '${codeModName}' code-mod.\nDescription: ${selectedCodeMod.description}`,

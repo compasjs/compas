@@ -36,21 +36,62 @@ export const cliDefinition = {
           modifiers: {
             isRequired: true,
           },
-          valueSpecification: "string",
+          value: {
+            specification: "string",
+            validator: (value) => {
+              const isValid = existsSync(
+                pathJoin(value, "common/structure.js"),
+              );
+
+              if (isValid) {
+                return {
+                  isValid,
+                };
+              }
+
+              return {
+                isValid,
+                error: {
+                  message: `The specified directory does not have a 'common/structure.js'. Did you enable 'dumpStructure' when generating?`,
+                },
+              };
+            },
+          },
         },
         {
           name: "format",
           rawName: "--format",
           description:
             "Output file format. Supports png, webp, pdf and svg. Defaults to svg.",
-          valueSpecification: "string",
+          value: {
+            specification: "string",
+            validator: (value) => {
+              const isValid = ["png", "webp", "pdf", "svg"].includes(value);
+
+              if (isValid) {
+                return {
+                  isValid,
+                };
+              }
+
+              return {
+                isValid,
+                error: {
+                  message:
+                    "Supported formats are 'png', 'webp', 'pdf' and 'svg'.",
+                },
+              };
+            },
+          },
         },
         {
           name: "outputFile",
           rawName: "--output",
           description:
             "Path to write the output to. Defaults to a random temporary file.",
-          valueSpecification: "string",
+          value: {
+            specification: "string",
+          },
         },
       ],
     },

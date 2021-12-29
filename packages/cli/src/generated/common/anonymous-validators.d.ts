@@ -49,6 +49,23 @@ export function anonymousValidator423569622(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|((value: string) => { isValid: boolean, error?: { message: string }})>}
+ */
+export function anonymousValidator35935037(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | ((value: string) => {
+      isValid: boolean;
+      error?: {
+        message: string;
+      };
+    })
+  | undefined
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<(import("./types").CliCommandDefinition)[]>}
  */
 export function anonymousValidator1489856765(
@@ -97,7 +114,43 @@ export function anonymousValidator1672956483(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "rawName": string, "description"?: undefined|string, "modifiers": {"isRepeatable": boolean, "isRequired": boolean, }, "valueSpecification": "boolean"|"number"|"string"|"booleanOrString", }>}
+ * @returns {EitherN<undefined|((value: any) => { isValid: boolean, error?: { message: string }})>}
+ */
+export function anonymousValidator1674692164(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | ((value: any) => {
+      isValid: boolean;
+      error?: {
+        message: string;
+      };
+    })
+  | undefined
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}), }>}
+ */
+export function anonymousValidator378249307(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  specification: "boolean" | "number" | "string" | "booleanOrString";
+  validator?:
+    | ((value: any) => {
+        isValid: boolean;
+        error?: {
+          message: string;
+        };
+      })
+    | undefined;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"name": string, "rawName": string, "description"?: undefined|string, "modifiers": {"isRepeatable": boolean, "isRequired": boolean, }, "value": {"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}), }, }>}
  */
 export function anonymousValidator1885876481(
   value: any,
@@ -110,7 +163,17 @@ export function anonymousValidator1885876481(
     isRepeatable: boolean;
     isRequired: boolean;
   };
-  valueSpecification: "boolean" | "number" | "string" | "booleanOrString";
+  value: {
+    specification: "boolean" | "number" | "string" | "booleanOrString";
+    validator?:
+      | ((value: any) => {
+          isValid: boolean;
+          error?: {
+            message: string;
+          };
+        })
+      | undefined;
+  };
 }>;
 /**
  * @param {*} value
@@ -124,7 +187,7 @@ export function anonymousValidator1259325376(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], }>}
+ * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "dynamicValidator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}), "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], }>}
  */
 export function anonymousValidator1833756126(
   value: any,
@@ -137,6 +200,14 @@ export function anonymousValidator1833756126(
     isDynamic: boolean;
     isCosmetic: boolean;
   };
+  dynamicValidator?:
+    | ((value: string) => {
+        isValid: boolean;
+        error?: {
+          message: string;
+        };
+      })
+    | undefined;
   subCommands: import("./types").CliCommandDefinition[];
   flags: import("./types").CliFlagDefinition[];
 }>;
