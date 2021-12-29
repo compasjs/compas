@@ -1,58 +1,40 @@
-import { pathToFileURL } from "url";
-import { pathJoin } from "@compas/stdlib";
-import { executeCommand, watchOptionsWithDefaults } from "../utils.js";
+import { cliExecutor as runExecutor } from "../cli/commands/run.js";
+import { cliLoggerCreate } from "../cli/logger.js";
 
 /**
  * @param {Logger} logger
  * @param {import("../parse").ExecCommand} command
- * @param {import("../utils").ScriptCollection} scriptCollection
  * @returns {Promise<void | { exitCode: number; }>}
  */
-export async function runCommand(logger, command, scriptCollection) {
-  // @ts-ignore
-  const script = scriptCollection[command.script];
-
-  let cmd;
-  const args = [];
-  let watchOptions = undefined;
-
-  if (script && script.type === "package") {
-    cmd = "yarn";
-    args.push("run", script.name);
-    args.push(...command.execArguments);
-
-    if (command.nodeArguments.length > 0) {
-      logger.error("Ignoring node arguments in a package.json script");
-    }
-  } else {
+export async function runCommand(logger, command) {
+  const cliLogger = cliLoggerCreate("compas");
+  const result = await runExecutor(cliLogger, {
     // @ts-ignore
-    const src = script ? script.path : pathJoin(process.cwd(), command.script);
+    command: ["compas", "run", command.script],
+    flags: {
+      verbose: command.verbose,
+      watch: command.watch,
 
-    cmd = "node";
-    args.push(...command.nodeArguments);
-    args.push(src);
-    args.push(...command.execArguments);
-
-    if (command.watch) {
-      // Try to import script, to see if it wants to control watch behaviour
-      // See CliWatchOptions
       // @ts-ignore
-      const f = await import(pathToFileURL(src));
+      nodeArguments:
+        command.nodeArguments.length > 0
+          ? command.nodeArguments.join(" ")
+          : undefined,
 
-      watchOptions = watchOptionsWithDefaults(f?.cliWatchOptions);
-      if (watchOptions.disable) {
-        logger.error("Script prevents running in watch mode.");
-        command.watch = false;
-      }
-    }
+      // @ts-ignore
+      scriptArguments:
+        command.execArguments.length > 0
+          ? command.execArguments.join(" ")
+          : undefined,
+    },
+
+    // @ts-ignore
+    cli: {},
+  });
+
+  if (result?.exitStatus && result.exitStatus !== "keepAlive") {
+    return {
+      exitCode: result.exitStatus === "passed" ? 0 : 1,
+    };
   }
-
-  return executeCommand(
-    logger,
-    command.verbose,
-    command.watch,
-    cmd,
-    args,
-    watchOptions,
-  );
 }

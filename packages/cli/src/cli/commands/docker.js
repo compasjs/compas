@@ -50,7 +50,9 @@ export const cliDefinition = {
           modifiers: {
             isRepeatable: true,
           },
-          valueSpecification: "booleanOrString",
+          value: {
+            specification: "booleanOrString",
+          },
         },
       ],
     },
@@ -60,7 +62,23 @@ export const cliDefinition = {
       name: "postgresVersion",
       rawName: "--postgres-version",
       description: "Specify the PostgreSQL version to use. Defaults to 12",
-      valueSpecification: "number",
+      value: {
+        specification: "number",
+        validator: (value) => {
+          const isValid = [12, 13, 14].includes(value);
+
+          if (isValid) {
+            return { isValid };
+          }
+
+          return {
+            isValid,
+            error: {
+              message: "Only PostgreSQL version 12, 13 and 14 are supported.",
+            },
+          };
+        },
+      },
     },
   ],
 };
