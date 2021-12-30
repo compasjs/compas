@@ -468,10 +468,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/formidable@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/formidable/-/formidable-2.0.1.tgz#081be8a4fe73c574b890533d7d864f7ea14b04a5"
-  integrity sha512-8bSEqY+gGRoZmRH3R91O6B80LQ3ilG3g81yFqJyOeYJf9qKZWbK9lxLYP/fO3napDPZwIXF9x5Rmwn9uZxkzJw==
+"@types/formidable@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/formidable/-/formidable-2.0.2.tgz#89f727e1d42b19e355963193328b535248558af1"
+  integrity sha512-ymCNFNXwcBCwtjZUUE5Fxcp4/IGH4QX1PGO29tHMu8kFrCRDvwRRB5dlMkbhZGHgmvzmfUaHzX+cffqI3f96kg==
   dependencies:
     "@types/node" "*"
 
