@@ -1,13 +1,13 @@
 /**
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
- * @returns {Promise<import("../types").CliResult>}
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export function cliExecutor(
   logger: import("@compas/stdlib").Logger,
-  state: import("../types").CliExecutorState,
-): Promise<import("../types").CliResult>;
+  state: import("../../cli/types.js").CliExecutorState,
+): Promise<import("../../cli/types.js").CliResult>;
 /**
  * @typedef {{
  *   containersForContext: {
@@ -22,9 +22,9 @@ export function cliExecutor(
  * }} DockerContext
  */
 /**
- * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
  */
-export const cliDefinition: import("../../generated/common/types").CliCommandDefinitionInput;
+export const cliDefinition: import("../../generated/common/types.js").CliCommandDefinitionInput;
 export type DockerContext = {
   containersForContext: {
     [p: string]: {

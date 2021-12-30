@@ -8,9 +8,19 @@ export type CliCommandDefinition = {
   modifiers: { isDynamic: boolean; isCosmetic: boolean };
   dynamicValidator?:
     | undefined
-    | ((value: string) => { isValid: boolean; error?: { message: string } });
+    | ((
+        value: string,
+      ) =>
+        | { isValid: boolean; error?: { message: string } }
+        | Promise<{ isValid: boolean; error?: { message: string } }>);
   subCommands: CliCommandDefinition[];
   flags: CliFlagDefinition[];
+  executor?:
+    | undefined
+    | ((
+        logger: import("@compas/stdlib").Logger,
+        state: import("../../cli/types").CliExecutorState,
+      ) => Promise<import("../../cli/types").CliResult> | CliResult);
 };
 export type CliFlagDefinition = {
   name: string;
@@ -21,7 +31,11 @@ export type CliFlagDefinition = {
     specification: "boolean" | "number" | "string" | "booleanOrString";
     validator?:
       | undefined
-      | ((value: any) => { isValid: boolean; error?: { message: string } });
+      | ((
+          value: any,
+        ) =>
+          | { isValid: boolean; error?: { message: string } }
+          | Promise<{ isValid: boolean; error?: { message: string } }>);
   };
 };
 export type CliCommandDefinitionInput = {
@@ -33,11 +47,21 @@ export type CliCommandDefinitionInput = {
     | { isDynamic?: undefined | boolean; isCosmetic?: undefined | boolean };
   dynamicValidator?:
     | undefined
-    | ((value: string) => { isValid: boolean; error?: { message: string } });
+    | ((
+        value: string,
+      ) =>
+        | { isValid: boolean; error?: { message: string } }
+        | Promise<{ isValid: boolean; error?: { message: string } }>);
   subCommands?:
     | undefined
     | import("./../common/types").CliCommandDefinitionInput[];
   flags?: undefined | import("./../common/types").CliFlagDefinitionInput[];
+  executor?:
+    | undefined
+    | ((
+        logger: import("@compas/stdlib").Logger,
+        state: import("../../cli/types").CliExecutorState,
+      ) => Promise<import("../../cli/types").CliResult> | CliResult);
 };
 export type CliFlagDefinitionInput = {
   name: string;
@@ -57,6 +81,10 @@ export type CliFlagDefinitionInput = {
           | "booleanOrString";
         validator?:
           | undefined
-          | ((value: any) => { isValid: boolean; error?: { message: string } });
+          | ((
+              value: any,
+            ) =>
+              | { isValid: boolean; error?: { message: string } }
+              | Promise<{ isValid: boolean; error?: { message: string } }>);
       };
 };

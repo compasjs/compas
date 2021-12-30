@@ -12,6 +12,12 @@
  *   The values of parsed flags
  */
 /**
+ * @typedef {Exclude<import("../generated/common/types").CliCommandDefinition, "subCommands"> & {
+ *   parent?: CliResolved,
+ *   subCommands: CliResolved[],
+ * }} CliResolved
+ */
+/**
  * @type {boolean}
  */
 export const __types: boolean;
@@ -40,5 +46,12 @@ export type CliExecutorState = {
     string,
     boolean | number | string | string[] | number[] | boolean[]
   >;
+};
+export type CliResolved = Exclude<
+  import("../generated/common/types").CliCommandDefinition,
+  "subCommands"
+> & {
+  parent?: CliResolved;
+  subCommands: CliResolved[];
 };
 //# sourceMappingURL=types.d.ts.map

@@ -49,18 +49,25 @@ export function anonymousValidator423569622(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|((value: string) => { isValid: boolean, error?: { message: string }})>}
+ * @returns {EitherN<undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)>}
  */
-export function anonymousValidator35935037(
+export function anonymousValidator193358577(
   value: any,
   propertyPath: string,
 ): EitherN<
-  | ((value: string) => {
-      isValid: boolean;
-      error?: {
-        message: string;
-      };
-    })
+  | ((value: string) =>
+      | {
+          isValid: boolean;
+          error?: {
+            message: string;
+          };
+        }
+      | Promise<{
+          isValid: boolean;
+          error?: {
+            message: string;
+          };
+        }>)
   | undefined
 >;
 /**
@@ -114,43 +121,57 @@ export function anonymousValidator1672956483(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|((value: any) => { isValid: boolean, error?: { message: string }})>}
+ * @returns {EitherN<undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)>}
  */
-export function anonymousValidator1674692164(
+export function anonymousValidator126524240(
   value: any,
   propertyPath: string,
 ): EitherN<
-  | ((value: any) => {
-      isValid: boolean;
-      error?: {
-        message: string;
-      };
-    })
+  | ((value: any) =>
+      | {
+          isValid: boolean;
+          error?: {
+            message: string;
+          };
+        }
+      | Promise<{
+          isValid: boolean;
+          error?: {
+            message: string;
+          };
+        }>)
   | undefined
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}), }>}
+ * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), }>}
  */
-export function anonymousValidator378249307(
+export function anonymousValidator621901455(
   value: any,
   propertyPath: string,
 ): EitherN<{
   specification: "boolean" | "number" | "string" | "booleanOrString";
   validator?:
-    | ((value: any) => {
-        isValid: boolean;
-        error?: {
-          message: string;
-        };
-      })
+    | ((value: any) =>
+        | {
+            isValid: boolean;
+            error?: {
+              message: string;
+            };
+          }
+        | Promise<{
+            isValid: boolean;
+            error?: {
+              message: string;
+            };
+          }>)
     | undefined;
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "rawName": string, "description"?: undefined|string, "modifiers": {"isRepeatable": boolean, "isRequired": boolean, }, "value": {"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}), }, }>}
+ * @returns {EitherN<{"name": string, "rawName": string, "description"?: undefined|string, "modifiers": {"isRepeatable": boolean, "isRequired": boolean, }, "value": {"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), }, }>}
  */
 export function anonymousValidator1885876481(
   value: any,
@@ -166,12 +187,19 @@ export function anonymousValidator1885876481(
   value: {
     specification: "boolean" | "number" | "string" | "booleanOrString";
     validator?:
-      | ((value: any) => {
-          isValid: boolean;
-          error?: {
-            message: string;
-          };
-        })
+      | ((value: any) =>
+          | {
+              isValid: boolean;
+              error?: {
+                message: string;
+              };
+            }
+          | Promise<{
+              isValid: boolean;
+              error?: {
+                message: string;
+              };
+            }>)
       | undefined;
   };
 }>;
@@ -187,7 +215,22 @@ export function anonymousValidator1259325376(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "dynamicValidator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}), "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], }>}
+ * @returns {EitherN<undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))>}
+ */
+export function anonymousValidator779701095(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | ((
+      logger: import("@compas/stdlib").Logger,
+      state: import("../../cli/types").CliExecutorState,
+    ) => Promise<import("../../cli/types").CliResult> | CliResult)
+  | undefined
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "dynamicValidator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], "executor"?: undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult)), }>}
  */
 export function anonymousValidator1833756126(
   value: any,
@@ -201,15 +244,28 @@ export function anonymousValidator1833756126(
     isCosmetic: boolean;
   };
   dynamicValidator?:
-    | ((value: string) => {
-        isValid: boolean;
-        error?: {
-          message: string;
-        };
-      })
+    | ((value: string) =>
+        | {
+            isValid: boolean;
+            error?: {
+              message: string;
+            };
+          }
+        | Promise<{
+            isValid: boolean;
+            error?: {
+              message: string;
+            };
+          }>)
     | undefined;
   subCommands: import("./types").CliCommandDefinition[];
   flags: import("./types").CliFlagDefinition[];
+  executor?:
+    | ((
+        logger: import("@compas/stdlib").Logger,
+        state: import("../../cli/types").CliExecutorState,
+      ) => Promise<import("../../cli/types").CliResult> | CliResult)
+    | undefined;
 }>;
 export type InternalError = {
   propertyPath: string;

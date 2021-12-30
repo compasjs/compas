@@ -9,7 +9,7 @@ import {
 } from "../../utils.js";
 
 /**
- * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
  */
 export const cliDefinition = {
   name: "run",
@@ -37,15 +37,22 @@ export const cliDefinition = {
         return {
           isValid,
           error: {
-            message: `Accepts either file names located in the 'scripts' directory, scripts defined in the package.json or file paths to JavaScript files.
-Scripts directory: ${Object.entries(scriptCollection)
-              .filter(([, value]) => value.type === "user")
-              .map(([key]) => key)
-              .join(", ")}
-Package.json scripts: ${Object.entries(scriptCollection)
-              .filter(([, value]) => value.type === "package")
-              .map(([key]) => key)
-              .join(", ")}
+            message: `Can run files from the following places:
+- Files located in the scripts directory.
+- Scripts defined in the package.json
+- Any path to a JavaScript file
+
+Scripts directory:
+${Object.entries(scriptCollection)
+  .filter(([, value]) => value.type === "user")
+  .map(([key]) => `  - ${key}`)
+  .join("\n")}
+
+Package.json scripts:
+${Object.entries(scriptCollection)
+  .filter(([, value]) => value.type === "package")
+  .map(([key]) => `  - ${key}`)
+  .join("\n")}
 `,
           },
         };
@@ -69,15 +76,18 @@ Package.json scripts: ${Object.entries(scriptCollection)
       },
     },
   ],
+  executor: cliExecutor,
 };
 
 /**
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
- * @returns {Promise<import("../types").CliResult>}
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export async function cliExecutor(logger, state) {
+  // TODO: Remove scripts that export a `cliDefinition`.
+
   const scriptCollection = collectScripts();
   const scriptName = state.command.at(-1);
   // @ts-ignore
