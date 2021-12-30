@@ -14,5 +14,4 @@ yarn add -D -E @compas/cli
 yarn add -E @compas/stdlib
 ```
 
-Let's explore Compas starting with the
-[script runner](/features/script-runner.md)
+Let's explore Compas starting with the [CLI](/features/cli.md)
