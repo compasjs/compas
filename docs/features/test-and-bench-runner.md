@@ -162,7 +162,7 @@ Provided by `@compas/cli`
 
 This marks a file as a test file and starts the test runner when a file is
 executed directly as Node.js script. It is based on `mainFn` as explained in the
-[script runner page](/features/script-runner.html#mainfn).
+[cli page](/features/cli.html#mainfn).
 
 There is only a single way to call this function, always:
 
