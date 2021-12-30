@@ -10,8 +10,8 @@ Requires `@compas/cli` and `@compas/lint-config` to be installed as
 The `@compas/lint-config` package provides a Prettier config and ESLint
 configuration. This configuration is tailored towards Javascript projects. When
 using Typescript you can still use the Prettier config, however the command
-(`yarn compas lint`) shouldn't be used. To get the configuration in your
-project, create the following three files:
+(`compas lint`) shouldn't be used. To get the configuration in your project,
+create the following three files:
 
 **/.eslintrc.cjs**
 
@@ -57,7 +57,7 @@ range of features, but for now we focus on two of them. Let's start with running
 the linters:
 
 ```shell
-yarn compas lint
+compas lint
 ```
 
 This runs both ESLint and Prettier in auto fix mode over your Javascript files.
@@ -69,7 +69,7 @@ be enabled by setting `CI=true`:
 
 ```shell
 export CI=true
-yarn compas lint
+compas lint
 unset CI
 ```
 

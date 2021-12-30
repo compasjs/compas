@@ -5,11 +5,18 @@ import { environment, spawn } from "@compas/stdlib";
  */
 export const cliDefinition = {
   name: "lint",
-  shortDescription: "Run Prettier and ESLint on all files",
+  shortDescription: "Lint all project files.",
+  longDescription: `Uses Prettier and ESLint to lint project files.
+  
+ESLint is used for all JavaScript files and Prettier runs on JavaScript, JSON, Markdown, and YAML files.
+The default configuration can be initialized via 'compas init --lint-config'.
+`,
   flags: [
     {
       name: "jsdoc",
       rawName: "--jsdoc",
+      description:
+        "Run ESLint with JSDoc rules enabled. This could degrade performance on big projects.",
     },
   ],
   executor: cliExecutor,

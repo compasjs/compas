@@ -19,9 +19,20 @@ import { environment, exec, isNil, spawn } from "@compas/stdlib";
  */
 export const cliDefinition = {
   name: "docker",
-  shortDescription: "Manage common docker components",
-  longDescription:
-    "Manage a Postgres and Minio container, to use for all your projects using Compas.",
+  shortDescription: "Manage common docker components.",
+  longDescription: `Manages a single PostgreSQL and Minio container for use in all your local projects.
+It can switch between multiple PostgreSQL versions (12, 13 and 14 are supported via --postgres-version), however only a single version can be 'up' at a time.
+
+PostgreSQL credentials:
+> postgresql://postgres:postgres@localhost:5432/postgres
+
+Minio credentials:
+- ACCESS_KEY: minio
+- SECRET_KEY: minio123
+
+
+Don't use this command and secrets for your production deployment.
+`,
   modifiers: {
     isCosmetic: true,
   },
@@ -40,13 +51,18 @@ export const cliDefinition = {
     {
       name: "clean",
       shortDescription:
-        "Remove the managed containers and volumes. Or only the databases and buckets from that specific project.",
+        "Clean up all containers and volumes, or only the PostgreSQL databases of the specified projects.",
+      longDescription: `When no arguments are passed, all created docker containers and volumes are removed.
+
+By passing '--project', it can clean up PostgreSQL databases without having to restart the containers.
+The flag is repeatable, so multiple projects can be cleaned at the same time. If no value is passed, it defaults to 'process.env.APP_NAME'.
+`,
       flags: [
         {
           name: "projects",
           rawName: "--project",
           description:
-            "Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`. ",
+            "Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`.",
           modifiers: {
             isRepeatable: true,
           },
@@ -61,7 +77,7 @@ export const cliDefinition = {
     {
       name: "postgresVersion",
       rawName: "--postgres-version",
-      description: "Specify the PostgreSQL version to use. Defaults to 12",
+      description: "Specify the PostgreSQL version to use. Defaults to 12.",
       value: {
         specification: "number",
         validator: (value) => {

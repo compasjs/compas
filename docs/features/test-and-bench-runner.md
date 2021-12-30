@@ -32,11 +32,10 @@ test("my test", (t) => {
 
 ### Running tests
 
-There are two ways to run tests. The short way is to use `yarn compas test`
-which will run all test files in your project. There is also the option to run a
-test file directly like `node ./file.test.js` or
-`yarn compas run ./file.test.js`. However, to do this you need to add the
-following to your test file:
+There are two ways to run tests. The short way is to use `compas test` which
+will run all test files in your project. There is also the option to run a test
+file directly like `node ./file.test.js` or `compas run ./file.test.js`.
+However, to do this you need to add the following to your test file:
 
 ```js
 import { mainTestFn } from "@compas/cli";
@@ -172,7 +171,7 @@ mainTestFn(import.meta);
 ```
 
 This call may exists in all test files and does nothing when tests are executed
-via `yarn compas test`.
+via `compas test`.
 
 #### test(name, callback)
 
@@ -296,21 +295,21 @@ Compare `value` and `expected` using the Node.js built-in
 
 There are two ways to run tests:
 
-- `yarn compas test` runs all tests in files where the name ends with `.test.js`
-- `yarn compas ./path/to/file.test.js` runs a single test file, provided that
-  the file calls `mainTestFn(import.meta)`.
+- `compas test` runs all tests in files where the name ends with `.test.js`
+- `compas ./path/to/file.test.js` runs a single test file, provided that the
+  file calls `mainTestFn(import.meta)`.
 
 Whe running all tests, Compas will automatically utilize
 [worker threads](https://nodejs.org/api/worker_threads.html) to do some parallel
 test running. Compas will run `cpu core count - 1` workers. Workers will execute
 a single suite and then request a new test file from the runner. All test suites
 registered by importing a test file, will run in serial on a single worker.
-Executing with `yarn compas test --serial` will disable the workers and run all
-test suite in a single process.
+Executing with `compas test --serial` will disable the workers and run all test
+suite in a single process.
 
-The `--watch` feature can also be used, via `yarn compas test --watch` or
-`yarn compas --watch ./path/to/file.test.js`. The test runner will then restart
-when a JavaScript or json file is changed.
+The `--watch` feature can also be used, via `compas test --watch` or
+`compas --watch ./path/to/file.test.js`. The test runner will then restart when
+a JavaScript or json file is changed.
 
 ### Config
 
@@ -330,10 +329,10 @@ single assertion or creates at least a single subtest.
 **setup**
 
 A function that is called before any test file is imported. Executed both for
-single file tests and when running all tests via `yarn compas test`. When
-workers are used as explained in the [cli section](#cli), all workers will run
-this setup function. If the function returns a promise, the runner will wait
-till the promise is resolved before loading any test file.
+single file tests and when running all tests via `compas test`. When workers are
+used as explained in the [cli section](#cli), all workers will run this setup
+function. If the function returns a promise, the runner will wait till the
+promise is resolved before loading any test file.
 
 Note that when a single test file is executed, the test file and it's imports
 are already resolved before this setup function will be called.
@@ -439,8 +438,8 @@ should be compatible as well, but are not tested.
 
 Another feature of the test runner is to run the tests multiple times, changing
 the order of file loading. This feature can be enabled by using
-`yarn compas test --randomize-rounds=n` where `n` is any integer, for example
-`3`. This may be useful to discover flaky tests or may enable you to do some
+`compas test --randomize-rounds=n` where `n` is any integer, for example `3`.
+This may be useful to discover flaky tests or may enable you to do some
 'fuzzing' although not completely made for that.
 
 The tests will run as described above, workers will spawn, global setup
@@ -454,6 +453,6 @@ number of assertions will be printed. This does not work in combination with
 ### Coverage
 
 A test runner isn't complete without a coverage checker. So we utilize
-[c8](https://www.npmjs.com/package/c8) for that. By running
-`yarn compas coverage` collecting coverage is enabled. Check
-[c8](https://www.npmjs.com/package/c8) for configuration options.
+[c8](https://www.npmjs.com/package/c8) for that. By running `compas coverage`
+collecting coverage is enabled. Check [c8](https://www.npmjs.com/package/c8) for
+configuration options.

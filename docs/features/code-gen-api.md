@@ -42,8 +42,8 @@ await app.generate({
 });
 ```
 
-And execute the 'magic', `yarn compas generate`. This created a bunch of new
-files, so let's explain a few of them:
+And execute the 'magic', `compas generate`. This created a bunch of new files,
+so let's explain a few of them:
 
 - `src/generated/common/router.js`: this contains the full JavaScript route
   matcher, and the router entrypoint `router(ctx, next)` so you can add it to
@@ -94,7 +94,7 @@ See [Http server](/features/http-server.html) for more details on `getApp`.
 Let's run the server and execute a request:
 
 ```shell
-yarn compas api
+compas api
 curl http://localhost:3000/hello
 ```
 
@@ -162,7 +162,7 @@ async function main() {
 Lets startup the api again and execute some requests:
 
 ```shell
-yarn compas api
+compas api
 ```
 
 - `curl http://localhost:3000/hello/world`: As expected, results in a

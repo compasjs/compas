@@ -7,7 +7,13 @@ import proxy from "http-proxy";
  */
 export const cliDefinition = {
   name: "proxy",
-  shortDescription: "Proxy a remote API via localhost",
+  shortDescription: "Proxy a remote API via localhost.",
+  longDescription: `It handles CORS pre-flight requests locally and proxies all other requests to the target.
+
+This is fully configured via environment variables:
+- API_URL,NEXT_PUBLIC_API_URL: the url which is expected by your frontend. Should be in the form of 'http://localhost:$PORT'. This determines the port to listen on.
+- PROXY_URL: the target used for passing the proxy-ed requests to.
+`,
   executor: cliExecutor,
 };
 

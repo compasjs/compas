@@ -27,7 +27,7 @@ export function cliHelpInit(cli) {
     name: "help",
     subCommands: cli.subCommands,
     flags: [],
-    shortDescription: "Display help text",
+    shortDescription: "Display help for any of the available commands.",
     longDescription: "// TODO",
     modifiers: {
       isCosmetic: false,
@@ -49,7 +49,7 @@ export function cliHelpInit(cli) {
         isRepeatable: false,
         isRequired: false,
       },
-      description: "Display help text",
+      description: "Display information about the current command.",
       value: {
         specification: "boolean",
       },
@@ -61,7 +61,7 @@ export function cliHelpInit(cli) {
         isRepeatable: false,
         isRequired: false,
       },
-      description: "Display help text",
+      description: "Display information about the current command.",
       value: {
         specification: "boolean",
       },
@@ -143,7 +143,11 @@ export async function cliHelpGetMessage(event, cli, userInput) {
     return command;
   }
 
-  const knownFlags = [...cliParserGetKnownFlags(command.value).values()]
+  const knownFlagsMap = cliParserGetKnownFlags(command.value);
+  const knownFlags = [
+    ...knownFlagsMap.values(),
+    { ...knownFlagsMap.get("-h"), rawName: "-h, --help" },
+  ]
     .filter((it) => it.rawName !== "-h" && it.rawName !== "--help")
     .sort((a, b) => a.rawName.localeCompare(b.rawName));
   const subCommands = command.value.subCommands
@@ -153,7 +157,7 @@ export async function cliHelpGetMessage(event, cli, userInput) {
     (it) => it.modifiers.isDynamic,
   );
 
-  let synopsis = `${cli.name} ${commandArgs.join(" ")}`.trim();
+  let synopsis = commandArgs.join(" ");
 
   if (subCommands.length && command.value.modifiers.isCosmetic) {
     synopsis += " COMMAND";
@@ -163,16 +167,14 @@ export async function cliHelpGetMessage(event, cli, userInput) {
     synopsis += ` {${dynamicSubCommand.name}}`;
   }
 
+  synopsis = synopsis.trim();
+
   const value = `
 
-Usage: ${synopsis}
+Usage: ${cli.name} ${synopsis}
 
 ${command.value.shortDescription}
-${
-  command.value.longDescription
-    ? `\n\n${command.value.longDescription}\n\n`
-    : "\n"
-}
+${command.value.longDescription ? `\n${command.value.longDescription}\n` : "\n"}
 Commands:
 ${formatTable(
   subCommands.map((it) => {
@@ -196,6 +198,10 @@ ${formatTable(
     };
   }),
 )}
+
+Run '${
+    cli.name
+  } help ${synopsis}' for more information of a specific sub command.
 `;
 
   eventStop(event);

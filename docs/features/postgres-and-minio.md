@@ -16,7 +16,7 @@ helps here, by managing a Docker based PostgreSQL server. Previously you have
 already installed `@compas/cli`, which contains the necessary commands.
 
 ```shell
-yarn compas docker up
+compas docker up
 ```
 
 As you may have seen in the output, it does not only start a PostgreSQL
@@ -27,9 +27,9 @@ Some other docker commands provided by `@compas/cli`:
 
 ```shell
 # Stop the running containers
-yarn compas docker down
+compas docker down
 # Remove all created Docker containers and volumes
-yarn compas docker clean
+compas docker clean
 ```
 
 ## Setup @compas/store
@@ -104,7 +104,7 @@ yet in our database, so we execute a sum query and log the result. So let's run
 it:
 
 ```shell
-yarn compas database
+compas database
 # or
 node ./scripts/database.js
 ```

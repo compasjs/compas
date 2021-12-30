@@ -63,8 +63,8 @@ function getHomeSidebar() {
       text: "Features",
       children: [
         {
-          text: "Script runner",
-          link: "/features/script-runner.html",
+          text: "CLI",
+          link: "/features/cli.html",
         },
         {
           text: "Linting and formatting",

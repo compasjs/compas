@@ -14,7 +14,7 @@ import {
 export const cliDefinition = {
   name: "run",
   shortDescription:
-    "Run a JavaScript file, script or file from the scripts directory.",
+    "Run arbitrary JavaScript files, scripts defined in the package.json and scripts located in the scripts directory.",
   modifiers: {
     isCosmetic: true,
   },

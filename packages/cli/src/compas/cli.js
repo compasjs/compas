@@ -35,6 +35,18 @@ export async function compasGetCli(event, options) {
   const compas = {
     name: "compas",
     shortDescription: "The Compas CLI",
+    longDescription: `Unified backend tooling.
+
+Examples:
+- compas docker up
+- compas lint --jsdoc
+- compas visualise erd --generated-directory ./src/generated
+
+References:
+- Docs: https://compasjs.com
+- Source: https://github.com/compasjs/compas
+- Issues: https://github.com/compasjs/compas/issues
+`,
     subCommands: [],
     flags: [
       {

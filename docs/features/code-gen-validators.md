@@ -40,8 +40,8 @@ async function main() {
 
 It creates a new `App` instance which is the code generator entrypoint. After
 that we directly call `app.generate`, this is where the magic happens, and the
-output files are written. If you execute `yarn compas generate` a few files
-should have been created in `src/generated`:
+output files are written. If you execute `compas generate` a few files should
+have been created in `src/generated`:
 
 - `common/structure.js`: All information known to the code generators
   serialized. This way you can for example regenerate without knowing the
@@ -94,7 +94,7 @@ async function main() {
 
 On the `T` (`TypeCreator`) we have a bunch of 'type' methods. These mostly
 correspond to the equivalent JavaScript and TypeScript types. Let's check that
-out, but first regenerate with `yarn compas generate`.
+out, but first regenerate with `compas generate`.
 
 Our `common/types.d.ts` now contains some relevant types for us, a `TodoItem`
 (consisting of the group name (`todo`) and the type name (`item`) as the unique
@@ -126,8 +126,7 @@ await app.generate({
 });
 ```
 
-And let's generate again with `yarn compas generate`. This added a few more
-files:
+And let's generate again with `compas generate`. This added a few more files:
 
 - `common/anonymous-validators.js`: pure JavaScript validator code internally
   used for all validators in you project, this file can get huge if your project
@@ -167,7 +166,7 @@ function main(logger) {
 ```
 
 And check if the validators are doing what they should with
-`yarn compas validator-test`. Which should output something like:
+`compas validator-test`. Which should output something like:
 
 ```text
 /* ... */ {
@@ -270,8 +269,8 @@ function main(logger) {
 }
 ```
 
-Regenerate with `yarn compas generate` and run the validators with
-`yarn compas validator-test`, which yields the following:
+Regenerate with `compas generate` and run the validators with
+`compas validator-test`, which yields the following:
 
 ```text
 /* ... */ {
