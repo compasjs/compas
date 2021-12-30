@@ -1,8 +1,50 @@
-# Script runner
+# CLI
 
 ::: tip
 
 Requires `@compas/cli` and `@compas/stdlib` to be installed
+
+:::
+
+The first thing that we will take a look at is the Compas CLI. This packs quite
+a lot of features. Let's see what it has to offer:
+
+```shell
+compas help
+```
+
+As you can see, there is quite a variety of commands, feel free to explore them
+with `compas help COMMAND` or `compas COMMAND --help`. Some commands also
+require inputs in the form of flags. The expected value is often put at the end
+of a flag description. Let's see some examples:
+
+**Toggle flags**
+
+These are fine without a value, or with a number / string representing true and
+false.
+
+```text
+// --help   Display help text (boolean)
+-> `--help`, `--help=1`, `--help false`
+```
+
+As you can see both `--help=1` and `--help false` are supported when specifying
+a value.
+
+**Multiple strings**
+
+Some flags can be passed multiple times, this is denoted by the `[]` after
+`string[]`.
+
+```text
+// --file   Specify files to operate on (string[])
+-> `--file ./x.js`, `--file ./a.js --file ./bar/b.js`
+```
+
+::: info
+
+If you are unable to run the CLI, you can take a look at the reference at
+[TODO](/).
 
 :::
 
@@ -16,7 +58,7 @@ The script runner at its base starts your scripts the same way as you would with
 Node.js.
 
 ```shell
-yarn compas ./src/a.js
+compas run ./src/a.js
 # Is the same as `node ./src/a.js`
 ```
 
@@ -34,30 +76,14 @@ function main(logger) {
 }
 ```
 
-When running `yarn compas help` it should list `hello` under the available
-script names. Let's run it:
+Let's run it:
 
 ```shell
-yarn compas hello
-# Is the same as
-yarn compas run hello
+compas run hello
 ```
 
-As you may have seen in the output from `yarn compas help`, there is also a
-`--watch` flag. This flag can be used when specifying a path, but also when
-running a 'named' script.
-
-Let's start our `hello` script in watch-mode:
-
-```shell
-yarn compas --watch hello
-```
-
-Now when making any changes to the log line and saving, you should see the
-script being restarted. If you just want to restart, type in `rs` and press
-enter in your terminal. By default, all your JavaScript files are watched. This
-is customizable via the
-[watch options](/features/script-runner.html#watch-options).
+This script is only printing 'Hello!', but you can use it for all tasks that
+require some code, and that you need to execute while developing or deploying.
 
 ## mainFn
 
@@ -117,19 +143,6 @@ point of your program, ie started via `node ./src/a.js`. Consequently, the
 callback passed in `src/b.js` is only called when you start your program with
 `node ./src/b.js`.
 
-## Watch options
-
-Scripts can export this to control if and how they will be watched.
-
-```js
-export const cliWatchOptions = {
-  disable: false,
-  extensions: ["js"],
-  // ignore changes in the docs directory or ending with '.test.js'.
-  ignoredPatterns: ["docs", /\.test\.js$/],
-};
-```
-
 ## Environment
 
 The `mainFn` function from `@compas/stdlib`, and by extension `mainTestFn` and
@@ -138,11 +151,10 @@ of the project. The idea is that the `.env` contains default values for a quick
 development setup, so a new person on the team can just clone the project and
 run it directly. The `.env.local` values take precedence over values defined the
 `.env` file, and should be `.gitingore`'d. This is useful when your particular
-dev setup is somehow different, ie your not using the `yarn compas docker` based
+dev setup is somehow different, ie your not using the `compas docker` based
 Postgres instance, but need to connect to a different Postgres instance.
 
 It is expected that production values for these environment variables are
 injected by the hosting method of choice.
 
-Use `yarn compas help --check` to see if your `.env.local` is `.gitignore`'d
-properly.
+Use `compas check-env` to see if your `.env.local` is `.gitignore`'d properly.

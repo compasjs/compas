@@ -8,7 +8,15 @@ import { isNil, isPlainObject } from "@compas/stdlib";
  */
 export const cliDefinition = {
   name: "migrate",
-  shortDescription: "Run PostgreSQL migrations.",
+  shortDescription:
+    "Run PostgreSQL migrations via the @compas/store migration system.",
+  longDescription: `The migrations are managed via the @compas/store provided system. And are forward only.
+
+A custom Postgres connection object can be provided by exporting a 'postgresConnectionSettings' object from the files specified via the '--connection-settings' flag.
+
+This command can keep running if for example your deploy system does not support one of tasks. You can use '--keep-alive' for that. It keeps a single Postgres connection alive to ensure that the process doesn't exit.
+The migration runner uses an advisory lock to ensure only a single migration process runs at the same time. To disable this behaviour when the command enters watch mode, '--without-lock' can be passed.
+`,
   subCommands: [
     {
       name: "info",

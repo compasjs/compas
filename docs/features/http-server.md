@@ -30,7 +30,7 @@ async function main() {
 When we run this file we can already check out some default features.
 
 ```shell
-yarn compas api
+compas api
 # Or
 node ./scripts/api.js
 ```

@@ -27,21 +27,23 @@ export const cliDefinition = {
   name: "code-mod",
   shortDescription:
     "Execute code-mods to help migrating to new Compas versions.",
+  longDescription: `Since Compas generates quite a bit of boilerplate, this command can help you migrate to new Compas versions that have breaking changes in generated code. By detecting usage patterns of the generated output of a previous Compas version, it can migrate (most of) your usages to whatever the new version brings.`,
   modifiers: {
     isCosmetic: true,
   },
   subCommands: [
     {
       name: "list",
-      shortDescription: "List the available code-mods",
+      shortDescription: "List the available code-mods.",
     },
     {
       name: "exec",
-      shortDescription: "Execute the specified code-mod",
+      shortDescription: "Execute the specified code-mod.",
       flags: [
         {
           name: "codeModName",
           rawName: "--name",
+          description: "The code-mod name to execute.",
           modifiers: {
             isRequired: true,
           },

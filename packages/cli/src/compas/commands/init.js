@@ -12,7 +12,7 @@ export const cliDefinition = {
       name: "dumpJSConfig",
       rawName: "--jsconfig",
       description:
-        "Creates or overwrites the root jsconfig.json file To use with the Typescript Language Server.",
+        "Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server.",
       modifiers: {
         isRequired: true,
       },
