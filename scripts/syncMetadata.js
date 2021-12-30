@@ -1,7 +1,5 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
-import { syncJSDocToDocs } from "../src/doc-parser/index.js";
-import { syncJSDocBasedToc } from "../src/doc-parser/toc.js";
 
 mainFn(import.meta, main);
 
@@ -22,8 +20,6 @@ async function main(logger) {
 
   syncReadmes(logger);
   syncDocs(logger);
-  await syncJSDocToDocs(logger);
-  await syncJSDocBasedToc();
 
   logger.info("Running linter");
   await spawn("yarn", ["compas", "lint"]);

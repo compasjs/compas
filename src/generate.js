@@ -1,6 +1,5 @@
 import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
-import { extendWithRepo } from "../gen/repo.js";
 import { applyStoreStructure } from "../gen/store.js";
 import {
   applyBenchStructure,
@@ -60,7 +59,6 @@ export async function generateTypes() {
       "./generated/testing/server",
       "./generated/testing/sql",
       "./generated/testing/validators",
-      "./src/generated",
       "./packages/store/src/generated",
     ],
     dumpCompasTypes: true,
@@ -134,21 +132,6 @@ export async function generateStore() {
     dumpStructure: true,
     dumpApiStructure: false,
     dumpPostgres: true,
-  });
-}
-
-export async function generateRepo() {
-  const app = new App({
-    verbose: true,
-  });
-
-  extendWithRepo(app);
-
-  await app.generate({
-    outputDirectory: "./src/generated",
-    enabledGenerators: ["validator"],
-    isNode: true,
-    dumpStructure: true,
   });
 }
 
