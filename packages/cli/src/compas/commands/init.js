@@ -2,7 +2,7 @@ import { writeFile } from "fs/promises";
 import { pathJoin } from "@compas/stdlib";
 
 /**
- * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
  */
 export const cliDefinition = {
   name: "init",
@@ -18,13 +18,14 @@ export const cliDefinition = {
       },
     },
   ],
+  executor: cliExecutor,
 };
 
 /**
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
- * @returns {Promise<import("../types").CliResult>}
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export async function cliExecutor(logger, state) {
   let didDump = false;

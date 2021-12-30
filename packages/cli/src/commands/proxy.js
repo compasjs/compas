@@ -1,5 +1,5 @@
-import { cliExecutor as proxyExecutor } from "../cli/commands/proxy.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as proxyExecutor } from "../compas/commands/proxy.js";
 
 /**
  * @param {Logger} logger

@@ -4,7 +4,7 @@ import { isProduction, newLogger } from "@compas/stdlib";
  * Create a new logger
  *
  * @param {string} cliName
- * @return {import("@compas/stdlib").Logger}
+ * @returns {import("@compas/stdlib").Logger}
  */
 export function cliLoggerCreate(cliName) {
   const logger = newLogger({

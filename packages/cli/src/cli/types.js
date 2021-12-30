@@ -14,6 +14,13 @@
  */
 
 /**
+ * @typedef {Exclude<import("../generated/common/types").CliCommandDefinition, "subCommands"> & {
+ *   parent?: CliResolved,
+ *   subCommands: CliResolved[],
+ * }} CliResolved
+ */
+
+/**
  * @type {boolean}
  */
 export const __types = false;

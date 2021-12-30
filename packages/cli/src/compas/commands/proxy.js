@@ -3,18 +3,19 @@ import { AppError, environment, isNil } from "@compas/stdlib";
 import proxy from "http-proxy";
 
 /**
- * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
  */
 export const cliDefinition = {
   name: "proxy",
   shortDescription: "Proxy a remote API via localhost",
+  executor: cliExecutor,
 };
 
 /**
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
- * @returns {import("../types").CliResult}
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {import("../../cli/types.js").CliResult}
  */
 export function cliExecutor(logger, state) {
   const apiUrlUsed =

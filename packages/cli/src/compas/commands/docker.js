@@ -15,7 +15,7 @@ import { environment, exec, isNil, spawn } from "@compas/stdlib";
  */
 
 /**
- * @type {import("../../generated/common/types").CliCommandDefinitionInput}
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
  */
 export const cliDefinition = {
   name: "docker",
@@ -81,13 +81,14 @@ export const cliDefinition = {
       },
     },
   ],
+  executor: cliExecutor,
 };
 
 /**
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
- * @returns {Promise<import("../types").CliResult>}
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export async function cliExecutor(logger, state) {
   const context = getContainerInformation(state.flags.postgresVersion ?? "12");
@@ -144,9 +145,9 @@ export async function cliExecutor(logger, state) {
  * Bring containers up based on context
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
+ * @param {import("../../cli/types.js").CliExecutorState} state
  * @param {DockerContext} context
- * @returns {Promise<import("../types").CliResult>}
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 async function startContainers(logger, state, context) {
   // Stop all containers that should not be brought up by this context.
@@ -239,9 +240,9 @@ async function startContainers(logger, state, context) {
  * Stop all known containers, disregarding any context.
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
+ * @param {import("../../cli/types.js").CliExecutorState} state
  * @param {DockerContext} context
- * @returns {Promise<import("../types").CliResult>}
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 async function stopContainers(logger, state, context) {
   const containersToStop = context.globalContainers.filter((it) =>
@@ -274,9 +275,9 @@ async function stopContainers(logger, state, context) {
  * Bring containers up based on context
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types").CliExecutorState} state
+ * @param {import("../../cli/types.js").CliExecutorState} state
  * @param {DockerContext} context
- * @returns {Promise<import("../types").CliResult>}
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 async function cleanContainers(logger, state, context) {
   const allProjects = isNil(state.flags.projects);
@@ -384,7 +385,7 @@ async function cleanContainers(logger, state, context) {
 /**
 
  * @param postgresVersion
- * @return {DockerContext}
+ * @returns {DockerContext}
  */
 function getContainerInformation(postgresVersion) {
   return {

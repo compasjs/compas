@@ -1,8 +1,8 @@
 // @ts-nocheck
 
 import { environment, isNil } from "@compas/stdlib";
-import { cliExecutor as visualiseExecutor } from "../cli/commands/visualise.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as visualiseExecutor } from "../compas/commands/visualise.js";
 
 const SUB_COMMANDS = ["sql"];
 

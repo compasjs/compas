@@ -1,5 +1,5 @@
-import { cliExecutor as lintExecutor } from "../cli/commands/lint.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as lintExecutor } from "../compas/commands/lint.js";
 
 /**
  * @param {Logger} logger

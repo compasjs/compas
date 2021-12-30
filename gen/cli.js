@@ -31,7 +31,7 @@ export function applyCliStructure(app) {
             .default(`"boolean"`),
           validator: T.any()
             .raw(
-              "((value: any) => { isValid: boolean, error?: { message: string }})",
+              "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
             )
             .validator(`((v) => typeof v === "function")`)
             .optional(),
@@ -60,7 +60,7 @@ export function applyCliStructure(app) {
         ),
       dynamicValidator: T.any()
         .raw(
-          "((value: string) => { isValid: boolean, error?: { message: string }})",
+          "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
         )
         .validator(`((v) => typeof v === "function")`)
         .optional(),
@@ -70,6 +70,12 @@ export function applyCliStructure(app) {
       flags: T.array()
         .values(T.reference("cli", "flagDefinition"))
         .default("[]"),
+      executor: T.any()
+        .raw(
+          `((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))`,
+        )
+        .validator(`((v) => typeof v === "function")`)
+        .optional(),
     }),
   );
 }

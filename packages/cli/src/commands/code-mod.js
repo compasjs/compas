@@ -1,6 +1,6 @@
 import { isNil } from "@compas/stdlib";
-import { cliExecutor as codeModExecutor } from "../cli/commands/code-mod.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as codeModExecutor } from "../compas/commands/code-mod.js";
 
 const SUB_COMMANDS = ["list", "exec"];
 

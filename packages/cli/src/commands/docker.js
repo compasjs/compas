@@ -1,6 +1,6 @@
 import { environment } from "@compas/stdlib";
-import { cliExecutor as dockerExecutor } from "../cli/commands/docker.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as dockerExecutor } from "../compas/commands/docker.js";
 import { dockerMigrateCommand } from "../migrate/index.js";
 
 const SUB_COMMANDS = ["up", "down", "clean", "reset", "migrate"];

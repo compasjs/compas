@@ -1,5 +1,5 @@
-import { cliExecutor as initExecutor } from "../cli/commands/init.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as initExecutor } from "../compas/commands/init.js";
 
 /**
  * @param {Logger} logger

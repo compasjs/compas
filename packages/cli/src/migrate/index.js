@@ -1,6 +1,6 @@
 import { isNil } from "@compas/stdlib";
-import { cliExecutor as migrateExecutor } from "../cli/commands/migrate.js";
 import { cliLoggerCreate } from "../cli/logger.js";
+import { cliExecutor as migrateExecutor } from "../compas/commands/migrate.js";
 
 /**
  * @param {Logger} logger
