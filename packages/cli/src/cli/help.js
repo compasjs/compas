@@ -1,4 +1,9 @@
-import { eventStart, eventStop, newEventFromEvent } from "@compas/stdlib";
+import {
+  AppError,
+  eventStart,
+  eventStop,
+  newEventFromEvent,
+} from "@compas/stdlib";
 import {
   cliParserGetKnownFlags,
   cliParserParseCommand,
@@ -16,6 +21,8 @@ import {
  * @param {import("./types").CliResolved} cli
  */
 export function cliHelpInit(cli) {
+  cliHelpCheckForReservedKeys(cli);
+
   cli.subCommands.push({
     name: "help",
     subCommands: cli.subCommands,
@@ -60,6 +67,32 @@ export function cliHelpInit(cli) {
       },
     },
   );
+}
+
+/**
+ * Make sure other commands are not using flags and command names used by the 'help'
+ * system.
+ *
+ * @param {import("./types").CliResolved} command
+ */
+export function cliHelpCheckForReservedKeys(command) {
+  if (
+    command.name === "help" ||
+    command.flags.find(
+      (it) =>
+        it.name === "help" || it.rawName === "-h" || it.rawName === "--help",
+    )
+  ) {
+    throw AppError.serverError({
+      message:
+        "Command name 'help' and flag names 'help', '-h' and '--help' are reserved by the buil-in help command.",
+      offendingCommand: `${command.name} - ${command.shortDescription}`,
+    });
+  }
+
+  for (const cmd of command.subCommands) {
+    cliHelpCheckForReservedKeys(cmd);
+  }
 }
 
 /**
