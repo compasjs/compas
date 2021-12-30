@@ -44,7 +44,7 @@ mainTestFn(import.meta);
 ```
 
 It works based on `mainFn` as explained in the
-[script runner page](/features/script-runner.html#mainfn).
+[cli page](/features/cli.html#mainfn).
 
 ### Setup and teardown per test file
 
