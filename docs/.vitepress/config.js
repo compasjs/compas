@@ -19,11 +19,6 @@ module.exports = {
         activeMatch: "^/$|/getting-started|^/features/|^/migrations/",
       },
       {
-        text: "API reference",
-        link: "/api/index.html",
-        activeMatch: "^/api/",
-      },
-      {
         text: "Changelog",
         link: "/changelog",
       },
@@ -35,7 +30,6 @@ module.exports = {
     ],
 
     sidebar: {
-      "/api/": getApiSidebar(),
       "/releases/": getReleaseNotesSidebar(),
       "/": getHomeSidebar(),
     },
@@ -141,27 +135,6 @@ function getHomeSidebar() {
           link: "/migrations/store.html",
         },
       ],
-    },
-  ];
-}
-
-function getApiSidebar() {
-  return [
-    {
-      text: "@compas/stdlib",
-      link: "/api/stdlib.html",
-    },
-    {
-      text: "@compas/cli",
-      link: "/api/cli.html",
-    },
-    {
-      text: "@compas/store",
-      link: "/api/store.html",
-    },
-    {
-      text: "@compas/server",
-      link: "/api/server.html",
     },
   ];
 }

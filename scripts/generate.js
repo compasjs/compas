@@ -3,7 +3,6 @@ import {
   generateCli,
   generateCodeGen,
   generateOpenApiSpec,
-  generateRepo,
   generateStore,
   generateTestAndBench,
   generateTypes,
@@ -21,7 +20,6 @@ async function main(logger) {
   await generateCli();
   await generateCodeGen();
   await generateStore();
-  await generateRepo();
   await generateTestAndBench();
   await generateTypes();
   await generateOpenApiSpec();

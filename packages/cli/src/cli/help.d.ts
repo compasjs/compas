@@ -10,6 +10,15 @@
  */
 export function cliHelpInit(cli: import("./types").CliResolved): void;
 /**
+ * Make sure other commands are not using flags and command names used by the 'help'
+ * system.
+ *
+ * @param {import("./types").CliResolved} command
+ */
+export function cliHelpCheckForReservedKeys(
+  command: import("./types").CliResolved,
+): void;
+/**
  *
  * @param {string[]} commandArgs
  * @param {string[]} flagArgs

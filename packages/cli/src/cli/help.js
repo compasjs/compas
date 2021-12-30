@@ -144,6 +144,9 @@ export async function cliHelpGetMessage(event, cli, userInput) {
   }
 
   const knownFlagsMap = cliParserGetKnownFlags(command.value);
+
+  /** @type {import("../generated/common/types").CliFlagDefinition[]} */
+  // @ts-ignore
   const knownFlags = [
     ...knownFlagsMap.values(),
     { ...knownFlagsMap.get("-h"), rawName: "-h, --help" },
