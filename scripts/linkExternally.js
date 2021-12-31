@@ -3,11 +3,6 @@ import { isNil, mainFn, pathJoin, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 
-/** @type {CliWatchOptions} */
-export const cliWatchOptions = {
-  disable: true,
-};
-
 /**
  * @param logger
  */

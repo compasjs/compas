@@ -28,7 +28,7 @@ test("repo/code-gen", async (t) => {
     Object.keys(existingFileMap).length !== Object.keys(generatedFileMap).length
   ) {
     t.fail(
-      "A new generate call contains more/less files than the existing directory. Call 'yarn compas generate' to fix this.",
+      "A new generate call contains more/less files than the existing directory. Call 'compas run generate' to fix this.",
     );
     return;
   }
@@ -37,7 +37,7 @@ test("repo/code-gen", async (t) => {
   for (const key of Object.keys(existingFileMap)) {
     if (generatedFileMap[key] !== existingFileMap[key]) {
       t.fail(
-        `File ./generated/testing${key} is outdated. Call 'yarn compas generate' to fix this.`,
+        `File ./generated/testing${key} is outdated. Call 'compas run generate' to fix this.`,
       );
     } else {
       t.pass(`Generated file ${key} is up to date.`);

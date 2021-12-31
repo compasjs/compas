@@ -1,12 +1,7 @@
 import { existsSync } from "fs";
 import path from "path";
-import { pathToFileURL } from "url";
-import { isNil } from "@compas/stdlib";
-import {
-  collectScripts,
-  executeCommand,
-  watchOptionsWithDefaults,
-} from "../../utils.js";
+import { isNil, spawn } from "@compas/stdlib";
+import { collectScripts } from "../../utils.js";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
@@ -95,7 +90,6 @@ export async function cliExecutor(logger, state) {
 
   let cmd;
   const args = [];
-  let watchOptions = undefined;
 
   if (script && script.type === "package") {
     cmd = "yarn";
@@ -126,37 +120,12 @@ export async function cliExecutor(logger, state) {
       // @ts-ignore
       args.push(...state.flags.scriptsArguments.split(" "));
     }
-
-    if (state.flags.watch) {
-      // Try to import script, to see if it wants to control watch behaviour
-      // See CliWatchOptions
-      // @ts-ignore
-      const f = await import(pathToFileURL(src));
-
-      watchOptions = watchOptionsWithDefaults(f?.cliWatchOptions);
-      if (watchOptions.disable) {
-        logger.error("Script prevents running in watch mode.");
-        state.flags.watch = false;
-      }
-    }
   }
 
-  const result = await executeCommand(
-    logger,
-    state.flags.verbose,
-    state.flags.watch,
-    cmd,
-    args,
-    watchOptions,
-  );
-
-  if (state.flags.watch) {
-    return {
-      exitStatus: "keepAlive",
-    };
-  }
+  // Easy mode
+  const { exitCode } = await spawn(cmd, args);
 
   return {
-    exitStatus: result?.exitCode === 0 ? "passed" : "failed",
+    exitStatus: exitCode === 0 ? "passed" : "failed",
   };
 }

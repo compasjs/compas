@@ -27,4 +27,4 @@ jobs:
       - name: Create release
         run: |
           yarn install
-          yarn compas create-release ${{ secrets.COMPAS_GITHUB_TOKEN }}
+          yarn compas create-release --github-token ${{ secrets.COMPAS_GITHUB_TOKEN }}

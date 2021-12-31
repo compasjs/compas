@@ -26,7 +26,7 @@ test("repo/migrations", (t) => {
 
     const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
 
-    const message = `Tests are not running with the latest migrations, please run 'yarn compas docker reset && yarn compas migrate'.`;
+    const message = `Tests are not running with the latest migrations, please run 'compas docker clean --project && compas migrate'.`;
     t.equal(migrationQueue.length, 0, message);
     t.equal(hashChanges.length, 0, message);
   });
