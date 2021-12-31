@@ -4,7 +4,7 @@ import {
   isNil,
   mainFn,
   processDirectoryRecursiveSync,
-} from "../packages/stdlib/index.js";
+} from "@compas/stdlib";
 
 mainFn(import.meta, main);
 

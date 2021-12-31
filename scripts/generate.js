@@ -8,12 +8,6 @@ import {
   generateTypes,
 } from "../src/generate.js";
 
-/** @type {CliWatchOptions} */
-export const cliWatchOptions = {
-  ignoredPatterns: ["generated"],
-  extensions: ["tmpl", "js", "json"],
-};
-
 mainFn(import.meta, main);
 
 async function main(logger) {

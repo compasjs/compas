@@ -16,21 +16,21 @@ test("cli/docker/migrate", async (t) => {
 
   t.test("no --connection-settings specified", async (t) => {
     const { exitCode } = await exec(
-      `yarn compas docker migrate info --connection-settings`,
+      `yarn compas migrate info --connection-settings`,
     );
     t.equal(exitCode, 1);
   });
 
   t.test("--connection-settings invalid file", async (t) => {
     const { exitCode } = await exec(
-      `yarn compas docker migrate info --connection-settings /tmp/${uuid()}.js`,
+      `yarn compas migrate info --connection-settings /tmp/${uuid()}.js`,
     );
     t.equal(exitCode, 1);
   });
 
   t.test("--connection-settings are loaded", async (t) => {
     const { exitCode, stdout, stderr } = await exec(
-      `yarn compas docker migrate info --connection-settings ${filePath}`,
+      `yarn compas migrate info --connection-settings ${filePath}`,
     );
 
     t.equal(exitCode, 0);

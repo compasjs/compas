@@ -104,7 +104,9 @@ export async function generateTypes(logger, options) {
     for (const generator of options.dumpCompasTypes) {
       if (generator === "cli") {
         contents += `
-          type CliWatchOptions = cli.CliWatchOptions;
+          type CliResult = cli.CliResult;
+          type CliCommandDefinitionInput = cli.CliCommandDefinitionInput;
+          type CliExecutorState = cli.CliExecutorState;
         `;
       } else if (generator === "code-gen") {
         contents += `

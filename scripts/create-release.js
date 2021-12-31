@@ -1,12 +1,34 @@
 import { readFile } from "fs/promises";
-import { environment, mainFn } from "@compas/stdlib";
+import { environment } from "@compas/stdlib";
 import axios from "axios";
 
-mainFn(import.meta, main);
+/** @type {import("@compas/cli").CliCommandDefinitionInput} */
+export const cliDefinition = {
+  name: "create-release",
+  shortDescription: "Create a new release on GitHub.",
+  flags: [
+    {
+      name: "githubToken",
+      rawName: "--githubToken",
+      modifiers: {
+        isRequired: true,
+      },
+      value: {
+        specification: "string",
+      },
+    },
+  ],
+  executor: cliExecutor,
+};
 
-async function main() {
+/**
+ *
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("@compas/cli").CliExecutorState} state
+ * @return {Promise<import("@compas/cli").CliResult>}
+ */
+async function cliExecutor(logger, state) {
   const rawRef = environment.GITHUB_REF ?? "";
-  const [githubToken] = process.argv.slice(2);
 
   const tag = rawRef.replace(/^refs\/tags\//, "");
   const fullChangelog = await readFile("./changelog.md", "utf8");
@@ -18,7 +40,7 @@ async function main() {
     method: "POST",
     auth: {
       username: "github-actions[bot]",
-      password: githubToken,
+      password: state.flags.githubToken,
     },
     data: {
       tag_name: tag,
@@ -28,6 +50,10 @@ async function main() {
       prerelease: false,
     },
   });
+
+  return {
+    exitStatus: "passed",
+  };
 }
 
 /**

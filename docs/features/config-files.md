@@ -57,7 +57,7 @@ export function config() {
 ```
 
 Or it can be used by for example Compas to let you specify your migrations
-directory to make `compas docker migrate` more configurable.
+directory to make `compas migrate` more configurable.
 
 The configuration files can be in 2 formats: JSON or ES modules (both `.js` and
 `.mjs` extensions are supported). The ES module should export a synchronous

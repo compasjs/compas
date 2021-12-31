@@ -28,8 +28,8 @@ jobs:
         run: |
           yarn install
           yarn compas docker up
-          yarn compas generate
-          yarn compas docker migrate
+          yarn compas run generate
+          yarn compas migrate
           yarn compas test
 
   coverage:
@@ -54,10 +54,9 @@ jobs:
         run: |
           yarn install
           yarn compas docker up
-          yarn compas generate
-          yarn compas docker migrate
-          yarn compas coverage
-          yarn compas docker reset
+          yarn compas run generate
+          yarn compas migrate
+          yarn compas test --coverage
 
       - name: Comment test coverage
         uses: codecov/codecov-action@v2.1.0
@@ -87,7 +86,7 @@ jobs:
         run: |
           yarn
           echo 'VITE_USER_NODE_ENV=production' > ./docs/.env
-          yarn compas docs:build
+          yarn compas run docs:build
           cd ./docs/.vitepress/dist
           echo 'compasjs.com' > CNAME
           git config --global init.defaultBranch main

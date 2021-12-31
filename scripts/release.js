@@ -1,16 +1,42 @@
 import { readFile, writeFile } from "fs/promises";
-import {
-  AppError,
-  environment,
-  exec,
-  mainFn,
-  pathJoin,
-  spawn,
-} from "@compas/stdlib";
+import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
 
-mainFn(import.meta, main);
+/** @type {import("@compas/cli").CliCommandDefinitionInput} */
+export const cliDefinition = {
+  name: "release",
+  shortDescription: "Release a new Compas version",
+  flags: [
+    {
+      name: "version",
+      rawName: "--version",
+      modifiers: {
+        isRequired: true,
+      },
+      value: {
+        specification: "string",
+      },
+    },
+    {
+      name: "otp",
+      rawName: "--otp",
+      modifiers: {
+        isRequired: true,
+      },
+      value: {
+        specification: "string",
+      },
+    },
+  ],
+  executor: cliExecutor,
+};
 
-async function main() {
+/**
+ *
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("@compas/cli").CliExecutorState} state
+ * @return {Promise<import("@compas/cli").CliResult>}
+ */
+async function cliExecutor(logger, state) {
   const packages = [
     "lint-config",
     "stdlib",
@@ -19,21 +45,25 @@ async function main() {
     "server",
     "store",
   ];
-  const version = process.argv[2];
-  const otp = process.argv[3];
 
-  checkVersionFormat(version);
-  checkOtpFormat(otp);
+  checkVersionFormat(state.flags.version);
+  checkOtpFormat(state.flags.otp);
   await checkCleanWorkingDirectory();
 
   for (const pkg of packages) {
-    await bumpPackageJson(pkg, version.substring(1));
+    await bumpPackageJson(pkg, state.flags.version.substring(1));
   }
 
-  await spawn("git", ["commit", "-m", `${version}`]);
-  await spawn("git", ["tag", "-a", version, "-m", `${version}`]);
+  await spawn("git", ["commit", "-m", `${state.flags.version}`]);
+  await spawn("git", [
+    "tag",
+    "-a",
+    state.flags.version,
+    "-m",
+    `${state.flags.version}`,
+  ]);
   await spawn("git", ["push"]);
-  await spawn("git", ["push", "origin", version]);
+  await spawn("git", ["push", "origin", state.flags.version]);
 
   for (const pkg of packages) {
     await spawn("npm", ["publish", "--access", "public"], {
@@ -41,10 +71,14 @@ async function main() {
       env: {
         ...environment,
         npm_config_registry: undefined,
-        npm_config_otp: otp,
+        npm_config_otp: state.flags.otp,
       },
     });
   }
+
+  return {
+    exitStatus: "passed",
+  };
 }
 
 async function bumpPackageJson(pkg, version) {
