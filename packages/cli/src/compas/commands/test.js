@@ -1,93 +1,130 @@
 import { url } from "inspector";
 import { cpus } from "os";
-import { pathToFileURL } from "url";
 import { isMainThread, Worker } from "worker_threads";
 import {
   dirnameForModule,
   filenameForModule,
   isNil,
-  mainFn,
   pathJoin,
   processDirectoryRecursiveSync,
+  spawn,
 } from "@compas/stdlib";
-import { mainTestFn } from "../index.js";
-import { printTestResultsFromWorkers } from "../src/testing/printer.js";
+import { printTestResultsFromWorkers } from "../../testing/printer.js";
 import {
   setAreTestRunning,
   setTestLogger,
   testLogger,
-} from "../src/testing/state.js";
+} from "../../testing/state.js";
 
 const __filename = filenameForModule(import.meta);
 const workerFile = new URL(
-  `file://${pathJoin(dirnameForModule(import.meta), "../src/testing/test.js")}`,
+  `file://${pathJoin(dirnameForModule(import.meta), "../../testing/test.js")}`,
 );
 
-mainFn(import.meta, main);
+/**
+ * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
+ */
+export const cliDefinition = {
+  name: "test",
+  shortDescription: "Run all tests in your project.",
+  longDescription: `The test runner searches for all files ending with '.test.js' and runs them.
+Tests run in series in a single worker and subtests run serially in the order they are defined. If '--serial' is not passed, there will be multiple workers each executing parts of the tests.
 
-async function main(logger) {
-  // Note that the arguments are also used for coverage. So if an argument is added or
-  // changed. The filter in commands/coverage.js needs to change as well.
+Test files should be ordinary JavaScript files. By calling 'mainTestFn' at the top of your file you can still use 'node ./path/to/file.test.js' to execute the tests.
+  
+Global configuration can be applied to the test runners via a 'test/config.js' file.
+A global timeout can be configured by setting 'export const timeout = 2500;'. The value is specified in milliseconds.
+By default, every subtest should have at least a single assertion or register a subtest via 't.test()'. To disable this, you can set 'export const enforceSingleAssertion = false'.
+There is also a global 'setup' and 'teardown' function that can be exported from the 'test/config.js' file. They may return a Promise.
 
+To prevent flaky tests, '--randomize-rounds' can be used. This shuffles the order in which the tests are started. And prevents dependencies between test files. Making it easier to run a single test file via for examples 'compas run ./path/to/file.test.js'.
+
+Collecting and processing coverage information is done using C8. Use one of the supported configuration files by C8 to alter its behaviour. See https://www.npmjs.com/package/c8 for more information.
+`,
+  flags: [
+    {
+      name: "serial",
+      rawName: "--serial",
+      description:
+        "Run tests serially instead of in parallel. Alternatively set '--parallel-count 1'",
+    },
+    {
+      name: "parallelCount",
+      rawName: "--parallel-count",
+      description:
+        "The number of workers to use, when running in parallel. Defaulting to (the number of CPU cores - 1) or 4, whichever is lower.",
+      value: {
+        specification: "number",
+      },
+    },
+    {
+      name: "randomizeRounds",
+      rawName: "--randomize-rounds",
+      description:
+        "Runs test the specified amount of times, shuffling the test file order between runs.",
+      value: {
+        specification: "number",
+      },
+    },
+    {
+      name: "coverage",
+      rawName: "--coverage",
+      description: "Collect coverage information while running the tests.",
+    },
+  ],
+  executor: cliExecutor,
+};
+
+/**
+ *
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("../../cli/types.js").CliExecutorState} state
+ * @returns {Promise<import("../../cli/types.js").CliResult>}
+ */
+export async function cliExecutor(logger, state) {
   if (!isMainThread) {
-    logger.error("Test runner can only run as main thread");
-    process.exit(1);
+    logger.error("The test runner can only run as the main thread.");
+    return {
+      exitStatus: "failed",
+    };
   }
 
-  if (process.argv.indexOf("--serial") !== -1) {
-    logger.info({ message: "Running tests in serial." });
-    // Allow same process execution for coverage collecting and easier debugging
-    const files = listTestFiles();
-    for (const file of files) {
-      // @ts-ignore
-      await import(pathToFileURL(file));
-    }
-    mainTestFn(import.meta);
-    return;
+  if (state.flags.coverage && !isNil(state.flags.randomizeRounds)) {
+    logger.error("Can't run '--coverage' with '--randomize-rounds'.");
+    return {
+      exitStatus: "failed",
+    };
   }
 
-  setTestLogger(logger);
-  setAreTestRunning(true);
-
-  // Remove 1 for the main thread
-  let workerCount = Math.min(4, cpus().length - 1);
-
-  if (process.argv.indexOf("--parallel-count") !== -1) {
-    // Support customizing parallel count
-    const parallelCountArg =
-      process.argv[process.argv.indexOf("--parallel-count") + 1];
-
-    const parallelCount = Number(parallelCountArg);
-
-    if (
-      isNil(parallelCountArg) ||
-      parallelCountArg.length === 0 ||
-      isNaN(parallelCount) ||
-      !isFinite(parallelCount) ||
-      !Number.isInteger(parallelCount)
-    ) {
-      logger.error(
-        "--parallel-count expects a number, eg '--parallel-count 5'.",
-      );
-      process.exit(1);
-    }
-
-    workerCount = parallelCount;
+  if (state.flags.serial && !isNil(state.flags.parallelCount)) {
+    logger.error("Can't specify both '--serial' and '--parallel-count'.");
+    return {
+      exitStatus: "failed",
+    };
   }
 
-  logger.info({
-    message: `Running tests in parallel with ${workerCount} runners.`,
-  });
+  /** @type {number} */
+  // @ts-ignore
+  const parallelCount = state.flags.serial
+    ? 1
+    : state.flags.parallelCount ?? Math.min(4, cpus().length - 1);
 
-  let randomizeRounds = Number(
-    (
-      process.argv.find((it) => it.startsWith("--randomize-rounds")) ?? "=1"
-    ).split("=")[1],
-  );
+  if (state.flags.coverage) {
+    const { exitCode } = await spawn(`node`, [
+      "./node_modules/.bin/c8",
+      "node",
+      process.argv[1],
+      "test",
+      "--parallel-count",
+      `${parallelCount}`,
+    ]);
 
-  if (isNaN(randomizeRounds) || !isFinite(randomizeRounds)) {
-    randomizeRounds = 1;
+    return {
+      exitStatus: exitCode === 0 ? "passed" : "failed",
+    };
   }
+
+  state.flags.randomizeRounds = state.flags.randomizeRounds ?? 1;
 
   // Make sure to set tests running, so `mainTestFn` is 'disabled'.
   setAreTestRunning(true);
@@ -98,7 +135,7 @@ async function main(logger) {
   const files = listTestFiles();
   const results = [];
 
-  for (let i = 0; i < randomizeRounds; ++i) {
+  for (let i = 0; i < state.flags.randomizeRounds; ++i) {
     if (i !== 0) {
       // Shuffle files in place
       // From: https://stackoverflow.com/a/6274381
@@ -108,7 +145,7 @@ async function main(logger) {
       }
     }
 
-    const workers = initializeWorkers(workerCount);
+    const workers = initializeWorkers(parallelCount);
     const testResult = await runTests(workers, files);
 
     // Early exit on test failure
@@ -129,7 +166,10 @@ async function main(logger) {
 
   // @ts-ignore
   const exitCode = printTestResultsFromWorkers(results);
-  process.exit(exitCode);
+
+  return {
+    exitStatus: exitCode === 0 ? "passed" : "failed",
+  };
 }
 
 /**
