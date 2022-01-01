@@ -293,7 +293,16 @@ async function buildTestApp() {
     "../../../generated/testing/server/common/router.js"
   );
 
-  const app = getApp();
+  const app = getApp({
+    logOptions: {
+      requestInformation: {
+        includePath: true,
+        includeEventName: true,
+        includeValidatedQuery: true,
+        includeValidatedParams: true,
+      },
+    },
+  });
   app.use(commonImport.router);
   commonImport.setBodyParsers(createBodyParsers({}));
 

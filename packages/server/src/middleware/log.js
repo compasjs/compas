@@ -10,12 +10,27 @@ import {
 } from "@compas/stdlib";
 
 /**
+ * @typedef {object} LogOptions
+ * @property {boolean|undefined} [disableRootEvent]
+ * @property {{
+ *     includeEventName?: boolean,
+ *     includePath?: boolean,
+ *     includeValidatedParams?: boolean,
+ *     includeValidatedQuery?: boolean,
+ *   }|undefined} [requestInformation]
+ */
+
+/**
  * Log basic request and response information
  *
  * @param {import("koa")} app
- * @param {{ disableRootEvent?: boolean }} options
+ * @param {LogOptions} options
  */
 export function logMiddleware(app, options) {
+  const requestInformation = options.requestInformation ?? {
+    includePath: true,
+  };
+
   /**
    * Real log function
    *
@@ -28,12 +43,29 @@ export function logMiddleware(app, options) {
       Number(process.hrtime.bigint() - startTime) / 1000000,
     );
 
+    const request = {
+      length: Number(ctx.get("Content-Length") || "0"),
+    };
+
+    if (requestInformation.includePath) {
+      request.method = ctx.method;
+      request.path = ctx.path;
+    }
+
+    if (requestInformation.includeEventName && ctx.event?.name) {
+      request.eventName = ctx.event.name;
+    }
+
+    if (requestInformation.includeValidatedParams && ctx.validatedParams) {
+      request.params = ctx.validatedParams;
+    }
+
+    if (requestInformation.includeValidatedQuery && ctx.validatedQuery) {
+      request.query = ctx.validatedQuery;
+    }
+
     ctx.log.info({
-      request: {
-        method: ctx.method,
-        path: ctx.path,
-        length: Number(ctx.get("Content-Length") || "0"),
-      },
+      request,
       response: {
         duration,
         length,
