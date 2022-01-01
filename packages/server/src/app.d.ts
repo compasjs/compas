@@ -9,7 +9,7 @@
  * @property {ErrorHandlerOptions|undefined} [errorOptions] Flexible error handling
  *    options
  * @property {HeaderOptions|undefined} [headers] Argument for defaultHeader middleware
- * @property {{ disableRootEvent?: boolean|undefined }|undefined} [logOptions]
+ * @property {import("./middleware/log.js").LogOptions|undefined} [logOptions]
  */
 /**
  * @typedef {object} ErrorHandlerOptions
@@ -85,11 +85,7 @@ export type GetAppOptions = {
    * Argument for defaultHeader middleware
    */
   headers?: HeaderOptions | undefined;
-  logOptions?:
-    | {
-        disableRootEvent?: boolean | undefined;
-      }
-    | undefined;
+  logOptions?: import("./middleware/log.js").LogOptions | undefined;
 };
 export type ErrorHandlerOptions = {
   /**
