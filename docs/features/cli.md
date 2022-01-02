@@ -43,8 +43,8 @@ Some flags can be passed multiple times, this is denoted by the `[]` after
 
 ::: info
 
-If you are unable to run the CLI, you can take a look at the reference at
-[TODO](/).
+If you are unable to run the CLI, you can take a look at
+[the reference](/references/cli.html).
 
 :::
 
