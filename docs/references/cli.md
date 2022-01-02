@@ -152,11 +152,12 @@ cleaned at the same time. If no value is passed, it defaults to
 
 Init various files in the current project.
 
-| Option     | Description                                                                                                        |
-| ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| --jsconfig | Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server. (boolean, required) |
-| --timings  | Print information about CLI execution time. (boolean)                                                              |
-| -h, --help | Display information about the current command. (boolean)                                                           |
+| Option        | Description                                                                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| --jsconfig    | Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server. (boolean)                                       |
+| --lint-config | Creates or overwrites .eslintrc.cjs, .eslintignore and .prettierignore files, and overwrites the 'prettier' key in the package.json. (boolean) |
+| --timings     | Print information about CLI execution time. (boolean)                                                                                          |
+| -h, --help    | Display information about the current command. (boolean)                                                                                       |
 
 ## `compas lint`
 
