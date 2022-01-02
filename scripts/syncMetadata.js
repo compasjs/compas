@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
+import { syncCliReference } from "../src/cli-reference.js";
 
 mainFn(import.meta, main);
 
@@ -15,6 +16,7 @@ async function main(logger) {
 
   syncReadmes(logger);
   syncDocs(logger);
+  await syncCliReference(logger);
 
   logger.info("Running linter");
   await spawn("yarn", ["compas", "lint"]);

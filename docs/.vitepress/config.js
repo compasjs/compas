@@ -123,6 +123,10 @@ function getHomeSidebar() {
       ],
     },
     {
+      text: "CLI Reference",
+      link: "/references/cli.html",
+    },
+    {
       text: "Migrations",
       link: "/migrations/index.html",
       children: [
