@@ -1,4 +1,5 @@
-import { writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import { readFile, writeFile } from "fs/promises";
 import { pathJoin } from "@compas/stdlib";
 
 /**
@@ -13,9 +14,12 @@ export const cliDefinition = {
       rawName: "--jsconfig",
       description:
         "Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server.",
-      modifiers: {
-        isRequired: true,
-      },
+    },
+    {
+      name: "dumpLintConfig",
+      rawName: "--lint-config",
+      description:
+        "Creates or overwrites .eslintrc.cjs, .eslintignore and .prettierignore files, and overwrites the 'prettier' key in the package.json.",
     },
   ],
   executor: cliExecutor,
@@ -32,6 +36,11 @@ export async function cliExecutor(logger, state) {
   if (state.flags.dumpJSConfig) {
     didDump = true;
     await writeJSConfig();
+  }
+
+  if (state.flags.dumpLintConfig) {
+    didDump = true;
+    await writeLintConfig();
   }
 
   if (didDump) {
@@ -74,5 +83,42 @@ async function writeJSConfig() {
       null,
       2,
     ),
+  );
+}
+
+async function writeLintConfig() {
+  if (existsSync("./package.json")) {
+    const pkgJson = JSON.parse(await readFile("./package.json", "utf-8"));
+    pkgJson.prettier = "@compas/lint-config/prettierrc";
+
+    await writeFile("./package.json", `${JSON.stringify(pkgJson, null, 2)}\n`);
+  }
+
+  await writeFile(
+    "./.eslintrc.cjs",
+    `const config = require("@compas/lint-config");
+
+config.root = true;
+
+module.exports = config;
+`,
+  );
+
+  await writeFile(
+    "./.prettierignore",
+    `coverage
+node_modules
+.nyc_output
+.clinic
+`,
+  );
+
+  await writeFile(
+    "./.eslintignore",
+    `coverage
+node_modules
+.nyc_output
+.clinic
+`,
   );
 }
