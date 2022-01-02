@@ -27,7 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.0.179",
-    "c8": "7.10.0",
+    "c8": "7.11.0",
     "http-proxy": "1.18.1",
     "recast": "0.20.5"
   },
