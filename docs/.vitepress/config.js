@@ -120,6 +120,10 @@ function getHomeSidebar() {
           text: "File handling",
           link: "/features/file-handling.html",
         },
+        {
+          text: "Extending the CLI",
+          link: "/features/extending-the-cli.html",
+        },
       ],
     },
     {
