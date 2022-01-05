@@ -10,7 +10,12 @@ export const typeTable = {
   anyOf: "jsonb",
   array: "jsonb",
   boolean: "boolean",
-  date: "timestamptz",
+  date: (type) =>
+    type.specifier === "dateOnly"
+      ? "date"
+      : type.specifier === "timeOnly"
+      ? "time"
+      : "timestamptz",
   generic: "jsonb",
   /**
    *

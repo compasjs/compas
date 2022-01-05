@@ -1297,7 +1297,61 @@ export function anonymousValidator517837192(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }, "internalSettings": {}, }>}
+ * @returns {EitherN<undefined|"dateOnly"|"timeOnly">}
+ */
+export function anonymousValidator38390704(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length === 0) {
+    return {
+      value: undefined,
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  if (value !== "dateOnly" && value !== "timeOnly") {
+    const oneOf = ["dateOnly", "timeOnly"];
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.oneOf",
+          info: { oneOf },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }, "internalSettings": {}, "specifier"?: undefined|"dateOnly"|"timeOnly", }>}
  */
 export function anonymousValidator2019605291(value, propertyPath) {
   if (isNil(value)) {
@@ -1340,6 +1394,7 @@ export function anonymousValidator2019605291(value, propertyPath) {
     ["sql", anonymousValidator368068670],
     ["validator", anonymousValidator517837192],
     ["internalSettings", anonymousValidator1963780689],
+    ["specifier", anonymousValidator38390704],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);

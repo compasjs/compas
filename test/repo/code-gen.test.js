@@ -40,7 +40,7 @@ test("repo/code-gen", async (t) => {
         `File ./generated/testing${key} is outdated. Call 'compas run generate' to fix this.`,
       );
     } else {
-      t.pass(`Generated file ${key} is up to date.`);
+      t.pass(`Generated file ${key} is up-to-date.`);
     }
   }
 

@@ -108,6 +108,7 @@ export type CodeGenDateType = {
     inPast?: undefined | boolean;
   };
   internalSettings: {};
+  specifier?: undefined | "dateOnly" | "timeOnly";
 };
 export type CodeGenFileType = {
   type: "file";
@@ -511,6 +512,7 @@ export type CodeGenDateTypeInput = {
         inPast?: undefined | boolean;
       };
   internalSettings?: undefined | {};
+  specifier?: undefined | "dateOnly" | "timeOnly";
 };
 export type CodeGenFileTypeInput = {
   type: "file";

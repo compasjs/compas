@@ -28,7 +28,6 @@ coverage
 /packages/*/generated/*
 /packages/*/test-generated/*
 /test/tmp
-__fixtures__/tmp
 
 # Benchmark output on CI
 /benchmark_output.txt

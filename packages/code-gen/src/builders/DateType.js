@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class DateType extends TypeBuilder {
@@ -13,12 +14,66 @@ export class DateType extends TypeBuilder {
   }
 
   /**
+   * Make it a date only type.
+   *
+   * @public
+   *
+   * @return {DateType}
+   */
+  dateOnly() {
+    this.data.specifier = "dateOnly";
+
+    if (
+      !isNil(this.data.validator.min) ||
+      !isNil(this.data.validator.max) ||
+      !isNil(this.data.validator.inFuture) ||
+      !isNil(this.data.validator.inPast)
+    ) {
+      throw new Error(
+        `Can't specify 'dateOnly' with any of 'min', 'max', 'inTheFuture' or 'inThePast'.`,
+      );
+    }
+
+    return this;
+  }
+
+  /**
+   * Make it a time only type.
+   *
+   * @public
+   *
+   * @return {DateType}
+   */
+  timeOnly() {
+    this.data.specifier = "timeOnly";
+
+    if (
+      !isNil(this.data.validator.min) ||
+      !isNil(this.data.validator.max) ||
+      !isNil(this.data.validator.inFuture) ||
+      !isNil(this.data.validator.inPast)
+    ) {
+      throw new Error(
+        `Can't specify 'timeOnly' with any of 'min', 'max', 'inTheFuture' or 'inThePast'.`,
+      );
+    }
+
+    return this;
+  }
+
+  /**
    * Set as optional and default to new Date()
    *
    * @public
    * @returns {DateType}
    */
   defaultToNow() {
+    if (this.data.specifier) {
+      throw new Error(
+        `Can't set the default to now if '${this.data.specifier}' is used.`,
+      );
+    }
+
     return this.default("(new Date())");
   }
 
@@ -29,6 +84,10 @@ export class DateType extends TypeBuilder {
    * @returns {DateType}
    */
   min(value) {
+    if (!isNil(this.data.specifier)) {
+      throw new Error(`Can't set 'min' if '${this.data.specifier}' is called.`);
+    }
+
     if (typeof value === "string" || typeof value === "number") {
       value = new Date(value);
     }
@@ -51,6 +110,10 @@ export class DateType extends TypeBuilder {
    * @returns {DateType}
    */
   max(value) {
+    if (!isNil(this.data.specifier)) {
+      throw new Error(`Can't set 'max' if '${this.data.specifier}' is called.`);
+    }
+
     if (typeof value === "string" || typeof value === "number") {
       value = new Date(value);
     }
@@ -72,6 +135,12 @@ export class DateType extends TypeBuilder {
    * @returns {DateType}
    */
   inTheFuture() {
+    if (!isNil(this.data.specifier)) {
+      throw new Error(
+        `Can't set 'inTheFuture' if '${this.data.specifier}' is called.`,
+      );
+    }
+
     this.data.validator.inFuture = true;
 
     if (this.data.validator.inPast) {
@@ -89,6 +158,12 @@ export class DateType extends TypeBuilder {
    * @returns {DateType}
    */
   inThePast() {
+    if (!isNil(this.data.specifier)) {
+      throw new Error(
+        `Can't set 'inThePast' if '${this.data.specifier}' is called.`,
+      );
+    }
+
     this.data.validator.inPast = true;
 
     if (this.data.validator.inFuture) {

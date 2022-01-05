@@ -2,6 +2,22 @@ export class DateType extends TypeBuilder {
   static baseData: {};
   constructor(group: any, name: any);
   /**
+   * Make it a date only type.
+   *
+   * @public
+   *
+   * @return {DateType}
+   */
+  public dateOnly(): DateType;
+  /**
+   * Make it a time only type.
+   *
+   * @public
+   *
+   * @return {DateType}
+   */
+  public timeOnly(): DateType;
+  /**
    * Set as optional and default to new Date()
    *
    * @public

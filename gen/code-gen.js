@@ -199,6 +199,7 @@ function getTypes(T) {
   const dateType = T.object("dateType").keys({
     type: "date",
     ...typeBase,
+    specifier: T.string().oneOf("dateOnly", "timeOnly").optional(),
     validator: T.object()
       .keys({
         allowNull: T.bool().default(false),
