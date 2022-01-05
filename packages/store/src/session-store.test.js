@@ -127,6 +127,8 @@ test("store/session-store", (t) => {
         },
       }).exec(sql);
 
+      t.log.info(session);
+
       t.equal(session.accessTokens.length, 2);
       t.equal(session.data.foo, data.foo);
     });

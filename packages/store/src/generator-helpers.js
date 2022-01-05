@@ -17,10 +17,30 @@ import { isQueryPart, query } from "./query.js";
  *       shortName: string,
  *       entityKey: string,
  *       referencedKey: string,
- *       where: "self"|EntityWhere,
+ *       where: () => EntityWhere,
  *     },
  *   }[],
  * }[]} fieldSpecification
+ */
+
+/**
+ * @typedef {object} EntityQueryBuilder
+ * @property {string} name
+ * @property {string} shortName
+ * @property {string[]} columns
+ * @property {( orderBy?: any[],
+ *   orderBySpec?: *,
+ *   shortName?: string,
+ *   options?: { skipValidator?: boolean|undefined },
+ *   ) => import("../types/advanced-types").QueryPart} orderBy
+ * @property {EntityWhere} where
+ * @property {{
+ *   builderKey: string,
+ *   ownKey: string,
+ *   referencedKey: string,
+ *   returnsMany: boolean,
+ *   entityInformation: () => EntityQueryBuilder,
+ * }[]} relations
  */
 
 /**
@@ -169,7 +189,8 @@ export function generatedWhereBuilderHelper(
         values.push(undefined);
       } else if (matcherKeyExists && matcher.matcherType === "via") {
         const offsetLimit = !isNil(where[matcher.matcherKey]?.offset)
-          ? query`OFFSET ${where[matcher.matcherKey]?.offset}`
+          ? query`OFFSET
+        ${where[matcher.matcherKey]?.offset}`
           : query``;
 
         if (!isNil(where[matcher.matcherKey]?.limit)) {
@@ -186,9 +207,7 @@ export function generatedWhereBuilderHelper(
 
         values.push(
           generatedWhereBuilderHelper(
-            matcher.relation.where === "self"
-              ? entityWhereInformation
-              : matcher.relation.where,
+            matcher.relation.where(),
             where[matcher.matcherKey]?.where ?? {},
             `${matcher.relation.shortName}.`,
           ),
@@ -202,9 +221,7 @@ export function generatedWhereBuilderHelper(
         );
         values.push(
           generatedWhereBuilderHelper(
-            matcher.relation.where === "self"
-              ? entityWhereInformation
-              : matcher.relation.where,
+            matcher.relation.where(),
             where[matcher.matcherKey],
             `${matcher.relation.shortName}.`,
           ),
@@ -216,4 +233,161 @@ export function generatedWhereBuilderHelper(
 
   strings.push("");
   return query(strings, ...values);
+}
+
+/**
+ * Helper to generate the correct queries to be used with the query builder.
+ * Works with correlated sub queries to fetched nested result sets.
+ *
+ * Calls itself recursively with the entities that need to be included.
+ *
+ * @param {EntityQueryBuilder} entity
+ * @param {*} builder
+ * @param {{
+ *   shortName?: string,
+ *   wherePart?: string,
+ *   nestedIndex?: number,
+ * }} options
+ * @return {import("../types/advanced-types").QueryPart<any[]>}
+ */
+export function generatedQueryBuilderHelper(
+  entity,
+  builder,
+  { shortName, wherePart, nestedIndex },
+) {
+  shortName = shortName ?? entity.shortName;
+  nestedIndex = nestedIndex ?? 0;
+
+  const strings = [];
+  const args = [];
+
+  // select all columns that are not overwritten by a joined relation.
+  const tableColumns = entity.columns.filter((it) => isNil(builder[it]));
+  strings.push(
+    ` SELECT ${tableColumns.map((it) => `${shortName}."${it}"`).join(", ")} `,
+  );
+  args.push(undefined);
+
+  // Add sub selects for each relation that should be included
+  for (const relation of entity.relations) {
+    if (isNil(builder[relation.builderKey])) {
+      continue;
+    }
+
+    const subEntity = relation.entityInformation();
+
+    // Use a `shortName2` if it is the same table. This way we can work with shadowed
+    // variables, without keeping track of them, since for joins we only need to know
+    // this shortName and the nested shortName
+    const otherShortName =
+      subEntity !== entity
+        ? subEntity.shortName
+        : shortName === entity.shortName
+        ? `${shortName}2`
+        : entity.shortName;
+
+    // We build a JSON object for all columns and it's relations, since sub queries need
+    // to return a single column result.
+    const columnObj = {};
+
+    for (const column of subEntity.columns) {
+      if (!isNil(builder[relation.builderKey][column])) {
+        continue;
+      }
+      columnObj[column] = `j${nestedIndex}."${column}"`;
+    }
+
+    for (const subRelation of subEntity.relations) {
+      if (isNil(builder[relation.builderKey][subRelation.builderKey])) {
+        continue;
+      }
+
+      columnObj[
+        builder[relation.builderKey][subRelation.builderKey].as ??
+          subRelation.builderKey
+      ] = `j${nestedIndex}."${
+        builder[relation.builderKey][subRelation.builderKey].as ??
+        subRelation.builderKey
+      }"`;
+    }
+
+    const columns = Object.entries(columnObj)
+      .map(([key, value]) => `'${key}', ${value}`)
+      .join(",");
+
+    // Recursively call the query builder.
+    if (relation.returnsMany) {
+      // For the same reason that we build an object, we aggregate it to an array here,
+      // because sub queries need to return single column, single row result.
+      strings.push(
+        `, (select array(select jsonb_build_object(${columns}) FROM (`,
+        `) j${nestedIndex})) as "${
+          builder[relation.builderKey].as ?? relation.builderKey
+        }"`,
+      );
+      args.push(
+        generatedQueryBuilderHelper(subEntity, builder[relation.builderKey], {
+          shortName: otherShortName,
+          wherePart: ` ${shortName}."${relation.ownKey}" = ${otherShortName}."${relation.referencedKey}" `,
+          nestedIndex: nestedIndex + 1,
+        }),
+        undefined,
+      );
+    } else {
+      // Note that this will fail hard if the result contains more than a single row,
+      // basically failing to hold up the contract with code-gen.
+
+      strings.push(
+        `, (select jsonb_build_object(${columns}) as "result" FROM (`,
+        `) j${nestedIndex}) as "${
+          builder[relation.builderKey].as ?? relation.builderKey
+        }" `,
+      );
+      args.push(
+        generatedQueryBuilderHelper(subEntity, builder[relation.builderKey], {
+          shortName: otherShortName,
+          wherePart: ` ${shortName}."${relation.ownKey}" = ${otherShortName}."${relation.referencedKey}" `,
+          nestedIndex: nestedIndex + 1,
+        }),
+        undefined,
+      );
+    }
+  }
+
+  strings.push(` FROM "${entity.name}" ${shortName} `);
+  args.push(undefined);
+
+  strings.push(` WHERE `);
+  args.push(
+    generatedWhereBuilderHelper(
+      entity.where,
+      builder.where ?? {},
+      `${shortName}.`,
+    ),
+  );
+
+  if (wherePart) {
+    strings.push(` AND ${wherePart}`);
+    args.push(undefined);
+  }
+
+  strings.push(` ORDER BY `);
+  args.push(
+    entity.orderBy(builder.orderBy, builder.orderBySpec, `${shortName}.`, {
+      skipValidator: true,
+    }),
+  );
+
+  if (!isNil(builder.offset)) {
+    strings.push(` OFFSET `);
+    args.push(builder.offset);
+  }
+  if (!isNil(builder.limit)) {
+    strings.push(` FETCH NEXT `, ` ROWS ONLY `);
+    args.push(builder.limit, undefined);
+  }
+
+  strings.push("");
+
+  return query(strings, ...args);
 }

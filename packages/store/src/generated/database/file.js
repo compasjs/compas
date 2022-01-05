@@ -2,7 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
+import {
+  generatedQueryBuilderHelper,
+  generatedWhereBuilderHelper,
+  isQueryPart,
+  query,
+} from "@compas/store";
 import {
   validateStoreFileOrderBy,
   validateStoreFileOrderBySpec,
@@ -10,11 +15,10 @@ import {
   validateStoreFileWhere,
 } from "../store/validators.js";
 import {
-  fileGroupOrderBy,
   fileGroupQueries,
+  fileGroupQueryBuilderSpec,
   fileGroupWhere,
   fileGroupWhereSpec,
-  internalQueryFileGroup,
   transformFileGroup,
 } from "./fileGroup.js";
 
@@ -457,61 +461,34 @@ export const fileQueries = {
   fileUpdate,
   fileDeletePermanent,
 };
-/**
- * @param {StoreFileQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFile(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.group) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.group.offset)
-      ? query`OFFSET ${builder.group.offset}`
-      : query``;
-    if (!isNil(builder.group.limit)) {
-      offsetLimitQb.append(query`FETCH NEXT ${builder.group.limit} ROWS ONLY`);
-    }
-    if (builder.group.file) {
-      joinedKeys.push(
-        `'${builder.group.file?.as ?? "file"}'`,
-        `"fg_f_0"."result"`,
-      );
-    }
-    if (builder.group.parent) {
-      joinedKeys.push(
-        `'${builder.group.parent?.as ?? "parent"}'`,
-        `"fg_fg_0"."result"`,
-      );
-    }
-    if (builder.group.children) {
-      joinedKeys.push(
-        `'${builder.group.children?.as ?? "children"}'`,
-        `coalesce("fg_fg_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFileGroup(builder.group ?? {}, query`AND fg."file" = f."id"`)}
-ORDER BY ${fileGroupOrderBy(
-      builder.group.orderBy,
-      builder.group.orderBySpec,
-      "fg.",
-    )}
-${offsetLimitQb}
-) as "f_fg_0" ON TRUE`);
-  }
-  return query`
-FROM "file" f
-${joinQb}
-WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
-`;
-}
+export const fileQueryBuilderSpec = {
+  name: "file",
+  shortName: "f",
+  orderBy: fileOrderBy,
+  where: fileWhereSpec,
+  columns: [
+    "bucketName",
+    "contentLength",
+    "contentType",
+    "name",
+    "meta",
+    "id",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+  ],
+  relations: [
+    {
+      builderKey: "group",
+      ownKey: "id",
+      referencedKey: "file",
+      returnsMany: false,
+      entityInformation: () => fileGroupQueryBuilderSpec,
+    },
+  ],
+};
 /**
  * Query Builder for file
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
@@ -522,7 +499,6 @@ WHERE ${fileWhere(builder.where, "f.", { skipValidator: true })} ${wherePartial}
  * }}
  */
 export function queryFile(builder = {}) {
-  const joinedKeys = [];
   const builderValidated = validateStoreFileQueryBuilder(
     builder,
     "$.fileBuilder",
@@ -531,22 +507,7 @@ export function queryFile(builder = {}) {
     throw builderValidated.error;
   }
   builder = builderValidated.value;
-  if (builder.group) {
-    joinedKeys.push(`'${builder.group?.as ?? "group"}'`, `"f_fg_0"."result"`);
-  }
-  const qb = query`
-SELECT to_jsonb(f.*) || jsonb_build_object(${query([
-    joinedKeys.join(","),
-  ])}) as "result"
-${internalQueryFile(builder ?? {})}
-ORDER BY ${fileOrderBy(builder.orderBy, builder.orderBySpec)}
-`;
-  if (!isNil(builder.offset)) {
-    qb.append(query`OFFSET ${builder.offset}`);
-  }
-  if (!isNil(builder.limit)) {
-    qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
-  }
+  const qb = generatedQueryBuilderHelper(fileQueryBuilderSpec, builder, {});
   return {
     then: () => {
       throw AppError.serverError({

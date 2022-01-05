@@ -7,7 +7,6 @@ import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
 import { getTypeNameForType } from "../types.js";
-import { typeTable } from "./structure.js";
 import {
   getPrimaryKeyWithType,
   getQueryEnabledObjects,
@@ -161,6 +160,8 @@ function queryBuilderForType(context, imports, type) {
     `../${type.group}/validators${context.importExtension}`,
   );
 
+  imports.destructureImport("generatedQueryBuilderHelper", "@compas/store");
+
   getTypeNameForType(context, {
     type: "any",
     uniqueName: `QueryResult${type.uniqueName}`,
@@ -186,11 +187,10 @@ function queryBuilderForType(context, imports, type) {
   });
 
   return js`
-      ${internalQueryBuilderForType(context, imports, type)}
+      ${dumpQueryBuilderSpec(context, imports, type)}
 
       /**
        * Query Builder for ${type.name}
-       * Note that nested limit and offset don't work yet.
        *
        * @param {${type.queryBuilder.type}} [builder={}]
        * @returns {{
@@ -201,8 +201,6 @@ function queryBuilderForType(context, imports, type) {
        * }}
        */
       export function query${upperCaseFirst(type.name)}(builder = {}) {
-         const joinedKeys = [];
-
          const builderValidated = validate${
            type.uniqueName
          }QueryBuilder(builder, "$.${type.name}Builder");
@@ -212,39 +210,9 @@ function queryBuilderForType(context, imports, type) {
          }
          builder = builderValidated.value;
 
-         ${Object.entries(type.queryBuilder.relations).map(
-           ([
-             key,
-             {
-               joinKey,
-               relation: { subType },
-             },
-           ]) => {
-             const coalescedValue =
-               subType === "oneToMany"
-                 ? `coalesce("${joinKey}"."result", '{}')`
-                 : `"${joinKey}"."result"`;
-             return `
-            if (builder.${key}) {
-              joinedKeys.push("'" + (builder.${key}?.as ?? "${key}") + "'", \`${coalescedValue}\`);
-            }
-          `;
-           },
-         )}
-
-         const qb = query\`
-        SELECT to_jsonb(${type.shortName}.*) || jsonb_build_object($\{query(
-            [ joinedKeys.join(",") ])}) as "result"
-         $\{internalQuery${upperCaseFirst(type.name)}(builder ?? {})}
-         ORDER BY $\{${type.name}OrderBy(builder.orderBy, builder.orderBySpec)}
-        \`;
-
-         if (!isNil(builder.offset)) {
-            qb.append(query\`OFFSET $\{builder.offset}\`);
-         }
-         if (!isNil(builder.limit)) {
-            qb.append(query\`FETCH NEXT $\{builder.limit} ROWS ONLY\`);
-         }
+         const qb = generatedQueryBuilderHelper(${
+           type.name
+         }QueryBuilderSpec, builder, {});
 
          return {
             then: () => {
@@ -266,174 +234,52 @@ function queryBuilderForType(context, imports, type) {
 }
 
 /**
- * Create an internal query builder for the specified type
- * Handling all of the following:
- *    - Nested joins
- *    - Self referencing tables, by generating the same function with a different
- * shortName
- *    - limit and offset
- *
- * Self referencing works now based on name shadowing
+ * Create a constant with the query builder specification of this entity. To be used with
+ * the generatedQueryBuilderHelper.
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
- * @param {string} shortName
  */
-function internalQueryBuilderForType(
-  context,
-  imports,
-  type,
-  shortName = type.shortName,
-) {
-  const nestedJoinPartials = [];
-  let secondInternalBuilder = ``;
+function dumpQueryBuilderSpec(context, imports, type) {
+  let str = `export const ${type.name}QueryBuilderSpec = {
+  name: "${type.name}",
+  shortName: "${
+    type.shortName.endsWith(".")
+      ? type.shortName.substring(0, type.shortName.length - 1)
+      : type.shortName
+  }",
+  orderBy: ${type.name}OrderBy,
+  where: ${type.name}WhereSpec,
+  columns: [${Object.keys(type.keys)
+    .map((it) => `"${it}"`)
+    .join(", ")}],
+  relations: [
+`;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
-    const { relation, otherSide, referencedKey, ownKey, joinKey } =
+    const { relation, otherSide, referencedKey, ownKey } =
       type.queryBuilder.relations[relationKey];
-
-    // Determine shortName of other side of the relation
-    const otherShortName =
-      otherSide === type
-        ? shortName === type.shortName
-          ? `${type.shortName}2`
-          : otherSide.shortName
-        : otherSide.shortName;
-
-    if (
-      secondInternalBuilder === `` &&
-      otherSide === type &&
-      otherShortName !== type.shortName
-    ) {
-      // Generate another internal query builder with a different shortName
-      // This way we can hop back and forth in self referencing queries
-      secondInternalBuilder = internalQueryBuilderForType(
-        context,
-        imports,
-        type,
-        otherShortName,
-      );
-    }
 
     if (otherSide !== type) {
       imports.destructureImport(
-        `internalQuery${upperCaseFirst(otherSide.name)}`,
-        `./${otherSide.name}.js`,
-      );
-      imports.destructureImport(
-        `${otherSide.name}OrderBy`,
-        `./${otherSide.name}.js`,
-      );
-      imports.destructureImport(
-        `transform${upperCaseFirst(otherSide.name)}`,
+        `${otherSide.name}QueryBuilderSpec`,
         `./${otherSide.name}.js`,
       );
     }
 
-    const selectValue = `to_jsonb(${otherShortName}.*) || jsonb_build_object($\{query(
-          [ joinedKeys.join(",") ])})`;
-
-    const getLimitOffset = (isVia = false) => {
-      const key = isVia ? `via${upperCaseFirst(relationKey)}` : relationKey;
-      return `
-let offsetLimitQb = !isNil(builder.${key}.offset) ? query\`OFFSET $\{builder.${key}.offset}\`
-                                   : query\`\`;
-if (!isNil(builder.${key}.limit)) {
-  offsetLimitQb.append(query\`FETCH NEXT $\{builder.${key}.limit} ROWS ONLY\`)
-}
-`;
-    };
-
-    const orderBy = `ORDER BY $\{${otherSide.name}OrderBy(builder.${relationKey}.orderBy, builder.${relationKey}.orderBySpec, "${otherShortName}.")}`;
-
-    let select = ``;
-    let selectSuffix = ``;
-
-    if (relation.subType === "oneToMany") {
-      select = `ARRAY (SELECT ${selectValue}`;
-      selectSuffix = `) as result`;
-    } else {
-      select = `${selectValue} as "result"`;
-    }
-
-    // Base with join keys
-    const queryBuilderPart = js`
-         if (builder.${relationKey}) {
-            const joinedKeys = [];
-            ${getLimitOffset()}
-
-            ${Object.entries(otherSide.queryBuilder.relations).map(
-              ([
-                key,
-                {
-                  joinKey: otherJoinKey,
-                  relation: { subType: otherSubType },
-                },
-              ]) => {
-                const coalescedValue =
-                  otherSubType === "oneToMany"
-                    ? `coalesce("${otherJoinKey}"."result", '{}')`
-                    : `"${otherJoinKey}"."result"`;
-                return `
-            if (builder.${relationKey}.${key}) {
-              joinedKeys.push("'" + (builder.${relationKey}.${key}?.as ?? "${key}") + "'", \`${coalescedValue}\`);
-            }
-          `;
-              },
-            )}
-
-            joinQb.append(query\`LEFT JOIN LATERAL (
-          SELECT ${select} 
-          $\{internalQuery${
-            upperCaseFirst(otherSide.name) +
-            (otherSide === type && otherShortName !== type.shortName ? "2" : "")
-          }(
-               builder.${relationKey} ?? {},
-               query\`AND ${otherShortName}."${referencedKey}" = ${shortName}."${ownKey}"\`
-            )}
-        ${orderBy}
-      $\{offsetLimitQb} 
-        ${selectSuffix}) as "${joinKey}" ON TRUE\`);
-         }
-      `;
-
-    // Note that we need to the xxxIn params first before we can add xxxIn and set it
-    // to a query. The user may have set it to an array or another traverser may have
-    // set a query object already. To get the same guarantees ('AND') we convert
-    // arrays with values to a query part & if a query part exists, add 'INTERSECT'.
-    let sqlCastType = typeTable[type.keys[ownKey].type];
-    if (typeof sqlCastType === "function") {
-      sqlCastType = sqlCastType(type.keys[ownKey], true);
-    }
-
-    nestedJoinPartials.push(queryBuilderPart);
+    str += `{
+      builderKey: "${relationKey}",
+      ownKey: "${ownKey}",
+      referencedKey: "${referencedKey}",
+      returnsMany: ${relation.subType === "oneToMany"},
+      entityInformation: () => ${otherSide.name}QueryBuilderSpec,
+    },`;
   }
 
-  return js`
-      ${secondInternalBuilder}
+  str += "],};";
 
-      /**
-       * @param {${type.queryBuilder.type}} builder
-       * @param {QueryPart|undefined} [wherePartial]
-       * @returns {QueryPart}
-       */
-      export function internalQuery${
-        upperCaseFirst(type.name) + (shortName !== type.shortName ? "2" : "")
-      }(builder, wherePartial) {
-         let joinQb = query\`\`;
-
-         ${nestedJoinPartials}
-
-         return query\`
-        FROM ${type.queryOptions.schema}"${type.name}" ${shortName}
-        $\{joinQb}
-        WHERE $\{${type.name}Where(
-            builder.where, "${shortName}.", { skipValidator: true })} $\{wherePartial}
-        \`;
-      }
-
-   `;
+  return str;
 }
 
 /**
@@ -459,6 +305,13 @@ function transformerForType(context, imports, type) {
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
     const { relation, otherSide } = type.queryBuilder.relations[relationKey];
+
+    if (otherSide !== type) {
+      imports.destructureImport(
+        `transform${upperCaseFirst(otherSide.name)}`,
+        `./${otherSide.name}.js`,
+      );
+    }
 
     const valueKey = `builder.${relationKey}?.as ?? "${relationKey}"`;
 

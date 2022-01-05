@@ -72,17 +72,7 @@ export function jobInsertValues(
  */
 export function jobUpdateSet(update: StoreJobUpdatePartial): QueryPart;
 /**
- * @param {StoreJobQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryJob(
-  builder: StoreJobQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
  * Query Builder for job
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
@@ -119,6 +109,14 @@ export namespace jobQueries {
   export { jobInsert };
   export { jobUpsertOnId };
   export { jobUpdate };
+}
+export namespace jobQueryBuilderSpec {
+  export const name: string;
+  export const shortName: string;
+  export { jobOrderBy as orderBy };
+  export { jobWhereSpec as where };
+  export const columns: string[];
+  export const relations: never[];
 }
 /**
  * @param {Postgres} sql

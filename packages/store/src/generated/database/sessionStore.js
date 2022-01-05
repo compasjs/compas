@@ -2,7 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
+import {
+  generatedQueryBuilderHelper,
+  generatedWhereBuilderHelper,
+  isQueryPart,
+  query,
+} from "@compas/store";
 import {
   validateStoreSessionStoreOrderBy,
   validateStoreSessionStoreOrderBySpec,
@@ -10,8 +15,7 @@ import {
   validateStoreSessionStoreWhere,
 } from "../store/validators.js";
 import {
-  internalQuerySessionStoreToken,
-  sessionStoreTokenOrderBy,
+  sessionStoreTokenQueryBuilderSpec,
   sessionStoreTokenWhere,
   sessionStoreTokenWhereSpec,
   transformSessionStoreToken,
@@ -392,68 +396,24 @@ export const sessionStoreQueries = {
   sessionStoreUpsertOnId,
   sessionStoreUpdate,
 };
-/**
- * @param {StoreSessionStoreQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStore(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.accessTokens) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.accessTokens.offset)
-      ? query`OFFSET ${builder.accessTokens.offset}`
-      : query``;
-    if (!isNil(builder.accessTokens.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.accessTokens.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.accessTokens.session) {
-      joinedKeys.push(
-        `'${builder.accessTokens.session?.as ?? "session"}'`,
-        `"sst_ss_0"."result"`,
-      );
-    }
-    if (builder.accessTokens.refreshToken) {
-      joinedKeys.push(
-        `'${builder.accessTokens.refreshToken?.as ?? "refreshToken"}'`,
-        `"sst_sst_0"."result"`,
-      );
-    }
-    if (builder.accessTokens.accessToken) {
-      joinedKeys.push(
-        `'${builder.accessTokens.accessToken?.as ?? "accessToken"}'`,
-        `"sst_sst_1"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT ARRAY (SELECT to_jsonb(sst.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])})
-${internalQuerySessionStoreToken(
-  builder.accessTokens ?? {},
-  query`AND sst."session" = ss."id"`,
-)}
-ORDER BY ${sessionStoreTokenOrderBy(
-      builder.accessTokens.orderBy,
-      builder.accessTokens.orderBySpec,
-      "sst.",
-    )}
-${offsetLimitQb}
-) as result) as "ss_sst_0" ON TRUE`);
-  }
-  return query`
-FROM "sessionStore" ss
-${joinQb}
-WHERE ${sessionStoreWhere(builder.where, "ss.", {
-    skipValidator: true,
-  })} ${wherePartial}
-`;
-}
+export const sessionStoreQueryBuilderSpec = {
+  name: "sessionStore",
+  shortName: "ss",
+  orderBy: sessionStoreOrderBy,
+  where: sessionStoreWhereSpec,
+  columns: ["data", "checksum", "revokedAt", "id", "createdAt", "updatedAt"],
+  relations: [
+    {
+      builderKey: "accessTokens",
+      ownKey: "id",
+      referencedKey: "session",
+      returnsMany: true,
+      entityInformation: () => sessionStoreTokenQueryBuilderSpec,
+    },
+  ],
+};
 /**
  * Query Builder for sessionStore
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreSessionStoreQueryBuilder} [builder={}]
  * @returns {{
@@ -464,7 +424,6 @@ WHERE ${sessionStoreWhere(builder.where, "ss.", {
  * }}
  */
 export function querySessionStore(builder = {}) {
-  const joinedKeys = [];
   const builderValidated = validateStoreSessionStoreQueryBuilder(
     builder,
     "$.sessionStoreBuilder",
@@ -473,25 +432,11 @@ export function querySessionStore(builder = {}) {
     throw builderValidated.error;
   }
   builder = builderValidated.value;
-  if (builder.accessTokens) {
-    joinedKeys.push(
-      `'${builder.accessTokens?.as ?? "accessTokens"}'`,
-      `coalesce("ss_sst_0"."result", '{}')`,
-    );
-  }
-  const qb = query`
-SELECT to_jsonb(ss.*) || jsonb_build_object(${query([
-    joinedKeys.join(","),
-  ])}) as "result"
-${internalQuerySessionStore(builder ?? {})}
-ORDER BY ${sessionStoreOrderBy(builder.orderBy, builder.orderBySpec)}
-`;
-  if (!isNil(builder.offset)) {
-    qb.append(query`OFFSET ${builder.offset}`);
-  }
-  if (!isNil(builder.limit)) {
-    qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
-  }
+  const qb = generatedQueryBuilderHelper(
+    sessionStoreQueryBuilderSpec,
+    builder,
+    {},
+  );
   return {
     then: () => {
       throw AppError.serverError({

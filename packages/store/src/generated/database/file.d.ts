@@ -72,17 +72,7 @@ export function fileInsertValues(
  */
 export function fileUpdateSet(update: StoreFileUpdatePartial): QueryPart;
 /**
- * @param {StoreFileQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFile(
-  builder: StoreFileQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
  * Query Builder for file
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{
@@ -120,6 +110,20 @@ export namespace fileQueries {
   export { fileUpsertOnId };
   export { fileUpdate };
   export { fileDeletePermanent };
+}
+export namespace fileQueryBuilderSpec {
+  export const name: string;
+  export const shortName: string;
+  export { fileOrderBy as orderBy };
+  export { fileWhereSpec as where };
+  export const columns: string[];
+  export const relations: {
+    builderKey: string;
+    ownKey: string;
+    referencedKey: string;
+    returnsMany: boolean;
+    entityInformation: () => any;
+  }[];
 }
 /**
  * @param {Postgres} sql

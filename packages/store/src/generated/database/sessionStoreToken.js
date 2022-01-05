@@ -2,7 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
+import {
+  generatedQueryBuilderHelper,
+  generatedWhereBuilderHelper,
+  isQueryPart,
+  query,
+} from "@compas/store";
 import {
   validateStoreSessionStoreTokenOrderBy,
   validateStoreSessionStoreTokenOrderBySpec,
@@ -10,8 +15,7 @@ import {
   validateStoreSessionStoreTokenWhere,
 } from "../store/validators.js";
 import {
-  internalQuerySessionStore,
-  sessionStoreOrderBy,
+  sessionStoreQueryBuilderSpec,
   sessionStoreWhere,
   sessionStoreWhereSpec,
   transformSessionStore,
@@ -109,7 +113,7 @@ export const sessionStoreTokenWhereSpec = {
             shortName: "sst2",
             entityKey: "id",
             referencedKey: "refreshToken",
-            where: "self",
+            where: () => sessionStoreTokenWhereSpec,
           },
         },
       ],
@@ -140,7 +144,7 @@ export const sessionStoreTokenWhereSpec = {
             shortName: "sst2",
             entityKey: "refreshToken",
             referencedKey: "id",
-            where: "self",
+            where: () => sessionStoreTokenWhereSpec,
           },
         },
         {
@@ -151,7 +155,7 @@ export const sessionStoreTokenWhereSpec = {
             shortName: "sst2",
             entityKey: "refreshToken",
             referencedKey: "id",
-            where: "self",
+            where: () => sessionStoreTokenWhereSpec,
           },
         },
       ],
@@ -454,279 +458,45 @@ export const sessionStoreTokenQueries = {
   sessionStoreTokenUpsertOnId,
   sessionStoreTokenUpdate,
 };
-/**
- * @param {StoreSessionStoreTokenQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStoreToken2(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.session) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.session.offset)
-      ? query`OFFSET ${builder.session.offset}`
-      : query``;
-    if (!isNil(builder.session.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.session.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.session.accessTokens) {
-      joinedKeys.push(
-        `'${builder.session.accessTokens?.as ?? "accessTokens"}'`,
-        `coalesce("ss_sst_0"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(ss.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStore(
-  builder.session ?? {},
-  query`AND ss."id" = sst2."session"`,
-)}
-ORDER BY ${sessionStoreOrderBy(
-      builder.session.orderBy,
-      builder.session.orderBySpec,
-      "ss.",
-    )}
-${offsetLimitQb}
-) as "sst_ss_0" ON TRUE`);
-  }
-  if (builder.refreshToken) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.refreshToken.offset)
-      ? query`OFFSET ${builder.refreshToken.offset}`
-      : query``;
-    if (!isNil(builder.refreshToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.refreshToken.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.refreshToken.session) {
-      joinedKeys.push(
-        `'${builder.refreshToken.session?.as ?? "session"}'`,
-        `"sst_ss_0"."result"`,
-      );
-    }
-    if (builder.refreshToken.refreshToken) {
-      joinedKeys.push(
-        `'${builder.refreshToken.refreshToken?.as ?? "refreshToken"}'`,
-        `"sst_sst_0"."result"`,
-      );
-    }
-    if (builder.refreshToken.accessToken) {
-      joinedKeys.push(
-        `'${builder.refreshToken.accessToken?.as ?? "accessToken"}'`,
-        `"sst_sst_1"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(sst.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStoreToken(
-  builder.refreshToken ?? {},
-  query`AND sst."id" = sst2."refreshToken"`,
-)}
-ORDER BY ${sessionStoreTokenOrderBy(
-      builder.refreshToken.orderBy,
-      builder.refreshToken.orderBySpec,
-      "sst.",
-    )}
-${offsetLimitQb}
-) as "sst_sst_0" ON TRUE`);
-  }
-  if (builder.accessToken) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.accessToken.offset)
-      ? query`OFFSET ${builder.accessToken.offset}`
-      : query``;
-    if (!isNil(builder.accessToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.accessToken.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.accessToken.session) {
-      joinedKeys.push(
-        `'${builder.accessToken.session?.as ?? "session"}'`,
-        `"sst_ss_0"."result"`,
-      );
-    }
-    if (builder.accessToken.refreshToken) {
-      joinedKeys.push(
-        `'${builder.accessToken.refreshToken?.as ?? "refreshToken"}'`,
-        `"sst_sst_0"."result"`,
-      );
-    }
-    if (builder.accessToken.accessToken) {
-      joinedKeys.push(
-        `'${builder.accessToken.accessToken?.as ?? "accessToken"}'`,
-        `"sst_sst_1"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(sst.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStoreToken(
-  builder.accessToken ?? {},
-  query`AND sst."refreshToken" = sst2."id"`,
-)}
-ORDER BY ${sessionStoreTokenOrderBy(
-      builder.accessToken.orderBy,
-      builder.accessToken.orderBySpec,
-      "sst.",
-    )}
-${offsetLimitQb}
-) as "sst_sst_1" ON TRUE`);
-  }
-  return query`
-FROM "sessionStoreToken" sst2
-${joinQb}
-WHERE ${sessionStoreTokenWhere(builder.where, "sst2.", {
-    skipValidator: true,
-  })} ${wherePartial}
-`;
-}
-/**
- * @param {StoreSessionStoreTokenQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStoreToken(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.session) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.session.offset)
-      ? query`OFFSET ${builder.session.offset}`
-      : query``;
-    if (!isNil(builder.session.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.session.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.session.accessTokens) {
-      joinedKeys.push(
-        `'${builder.session.accessTokens?.as ?? "accessTokens"}'`,
-        `coalesce("ss_sst_0"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(ss.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStore(
-  builder.session ?? {},
-  query`AND ss."id" = sst."session"`,
-)}
-ORDER BY ${sessionStoreOrderBy(
-      builder.session.orderBy,
-      builder.session.orderBySpec,
-      "ss.",
-    )}
-${offsetLimitQb}
-) as "sst_ss_0" ON TRUE`);
-  }
-  if (builder.refreshToken) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.refreshToken.offset)
-      ? query`OFFSET ${builder.refreshToken.offset}`
-      : query``;
-    if (!isNil(builder.refreshToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.refreshToken.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.refreshToken.session) {
-      joinedKeys.push(
-        `'${builder.refreshToken.session?.as ?? "session"}'`,
-        `"sst_ss_0"."result"`,
-      );
-    }
-    if (builder.refreshToken.refreshToken) {
-      joinedKeys.push(
-        `'${builder.refreshToken.refreshToken?.as ?? "refreshToken"}'`,
-        `"sst_sst_0"."result"`,
-      );
-    }
-    if (builder.refreshToken.accessToken) {
-      joinedKeys.push(
-        `'${builder.refreshToken.accessToken?.as ?? "accessToken"}'`,
-        `"sst_sst_1"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(sst2.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStoreToken2(
-  builder.refreshToken ?? {},
-  query`AND sst2."id" = sst."refreshToken"`,
-)}
-ORDER BY ${sessionStoreTokenOrderBy(
-      builder.refreshToken.orderBy,
-      builder.refreshToken.orderBySpec,
-      "sst2.",
-    )}
-${offsetLimitQb}
-) as "sst_sst_0" ON TRUE`);
-  }
-  if (builder.accessToken) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.accessToken.offset)
-      ? query`OFFSET ${builder.accessToken.offset}`
-      : query``;
-    if (!isNil(builder.accessToken.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.accessToken.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.accessToken.session) {
-      joinedKeys.push(
-        `'${builder.accessToken.session?.as ?? "session"}'`,
-        `"sst_ss_0"."result"`,
-      );
-    }
-    if (builder.accessToken.refreshToken) {
-      joinedKeys.push(
-        `'${builder.accessToken.refreshToken?.as ?? "refreshToken"}'`,
-        `"sst_sst_0"."result"`,
-      );
-    }
-    if (builder.accessToken.accessToken) {
-      joinedKeys.push(
-        `'${builder.accessToken.accessToken?.as ?? "accessToken"}'`,
-        `"sst_sst_1"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(sst2.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQuerySessionStoreToken2(
-  builder.accessToken ?? {},
-  query`AND sst2."refreshToken" = sst."id"`,
-)}
-ORDER BY ${sessionStoreTokenOrderBy(
-      builder.accessToken.orderBy,
-      builder.accessToken.orderBySpec,
-      "sst2.",
-    )}
-${offsetLimitQb}
-) as "sst_sst_1" ON TRUE`);
-  }
-  return query`
-FROM "sessionStoreToken" sst
-${joinQb}
-WHERE ${sessionStoreTokenWhere(builder.where, "sst.", {
-    skipValidator: true,
-  })} ${wherePartial}
-`;
-}
+export const sessionStoreTokenQueryBuilderSpec = {
+  name: "sessionStoreToken",
+  shortName: "sst",
+  orderBy: sessionStoreTokenOrderBy,
+  where: sessionStoreTokenWhereSpec,
+  columns: [
+    "expiresAt",
+    "revokedAt",
+    "createdAt",
+    "id",
+    "session",
+    "refreshToken",
+  ],
+  relations: [
+    {
+      builderKey: "session",
+      ownKey: "session",
+      referencedKey: "id",
+      returnsMany: false,
+      entityInformation: () => sessionStoreQueryBuilderSpec,
+    },
+    {
+      builderKey: "refreshToken",
+      ownKey: "refreshToken",
+      referencedKey: "id",
+      returnsMany: false,
+      entityInformation: () => sessionStoreTokenQueryBuilderSpec,
+    },
+    {
+      builderKey: "accessToken",
+      ownKey: "id",
+      referencedKey: "refreshToken",
+      returnsMany: false,
+      entityInformation: () => sessionStoreTokenQueryBuilderSpec,
+    },
+  ],
+};
 /**
  * Query Builder for sessionStoreToken
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreSessionStoreTokenQueryBuilder} [builder={}]
  * @returns {{
@@ -737,7 +507,6 @@ WHERE ${sessionStoreTokenWhere(builder.where, "sst.", {
  * }}
  */
 export function querySessionStoreToken(builder = {}) {
-  const joinedKeys = [];
   const builderValidated = validateStoreSessionStoreTokenQueryBuilder(
     builder,
     "$.sessionStoreTokenBuilder",
@@ -746,37 +515,11 @@ export function querySessionStoreToken(builder = {}) {
     throw builderValidated.error;
   }
   builder = builderValidated.value;
-  if (builder.session) {
-    joinedKeys.push(
-      `'${builder.session?.as ?? "session"}'`,
-      `"sst_ss_0"."result"`,
-    );
-  }
-  if (builder.refreshToken) {
-    joinedKeys.push(
-      `'${builder.refreshToken?.as ?? "refreshToken"}'`,
-      `"sst_sst_0"."result"`,
-    );
-  }
-  if (builder.accessToken) {
-    joinedKeys.push(
-      `'${builder.accessToken?.as ?? "accessToken"}'`,
-      `"sst_sst_1"."result"`,
-    );
-  }
-  const qb = query`
-SELECT to_jsonb(sst.*) || jsonb_build_object(${query([
-    joinedKeys.join(","),
-  ])}) as "result"
-${internalQuerySessionStoreToken(builder ?? {})}
-ORDER BY ${sessionStoreTokenOrderBy(builder.orderBy, builder.orderBySpec)}
-`;
-  if (!isNil(builder.offset)) {
-    qb.append(query`OFFSET ${builder.offset}`);
-  }
-  if (!isNil(builder.limit)) {
-    qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
-  }
+  const qb = generatedQueryBuilderHelper(
+    sessionStoreTokenQueryBuilderSpec,
+    builder,
+    {},
+  );
   return {
     then: () => {
       throw AppError.serverError({
