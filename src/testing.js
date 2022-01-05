@@ -1,5 +1,5 @@
 import { rm } from "node:fs/promises";
-import { environment, uuid } from "@compas/stdlib";
+import { uuid } from "@compas/stdlib";
 import { createTestPostgresDatabase } from "@compas/store";
 
 /**
@@ -31,7 +31,5 @@ export async function injectTestServices() {
 export async function destroyTestServices() {
   await sql.end({});
 
-  if (environment.CI !== "true") {
-    await rm(temporaryDirectory, { force: true, recursive: true });
-  }
+  await rm(temporaryDirectory, { force: true, recursive: true });
 }
