@@ -2,7 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
+import {
+  generatedQueryBuilderHelper,
+  generatedWhereBuilderHelper,
+  isQueryPart,
+  query,
+} from "@compas/store";
 import {
   validateStoreFileGroupOrderBy,
   validateStoreFileGroupOrderBySpec,
@@ -10,10 +15,9 @@ import {
   validateStoreFileGroupWhere,
 } from "../store/validators.js";
 import {
-  fileOrderBy,
+  fileQueryBuilderSpec,
   fileWhere,
   fileWhereSpec,
-  internalQueryFile,
   transformFile,
 } from "./file.js";
 
@@ -116,7 +120,7 @@ export const fileGroupWhereSpec = {
             shortName: "fg2",
             entityKey: "id",
             referencedKey: "parent",
-            where: "self",
+            where: () => fileGroupWhereSpec,
           },
         },
       ],
@@ -177,7 +181,7 @@ export const fileGroupWhereSpec = {
             shortName: "fg2",
             entityKey: "parent",
             referencedKey: "id",
-            where: "self",
+            where: () => fileGroupWhereSpec,
           },
         },
         {
@@ -188,7 +192,7 @@ export const fileGroupWhereSpec = {
             shortName: "fg2",
             entityKey: "parent",
             referencedKey: "id",
-            where: "self",
+            where: () => fileGroupWhereSpec,
           },
         },
       ],
@@ -506,257 +510,48 @@ export const fileGroupQueries = {
   fileGroupUpdate,
   fileGroupDeletePermanent,
 };
-/**
- * @param {StoreFileGroupQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFileGroup2(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.file) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.file.offset)
-      ? query`OFFSET ${builder.file.offset}`
-      : query``;
-    if (!isNil(builder.file.limit)) {
-      offsetLimitQb.append(query`FETCH NEXT ${builder.file.limit} ROWS ONLY`);
-    }
-    if (builder.file.group) {
-      joinedKeys.push(
-        `'${builder.file.group?.as ?? "group"}'`,
-        `"f_fg_0"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(f.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFile(builder.file ?? {}, query`AND f."id" = fg2."file"`)}
-ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
-${offsetLimitQb}
-) as "fg_f_0" ON TRUE`);
-  }
-  if (builder.parent) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.parent.offset)
-      ? query`OFFSET ${builder.parent.offset}`
-      : query``;
-    if (!isNil(builder.parent.limit)) {
-      offsetLimitQb.append(query`FETCH NEXT ${builder.parent.limit} ROWS ONLY`);
-    }
-    if (builder.parent.file) {
-      joinedKeys.push(
-        `'${builder.parent.file?.as ?? "file"}'`,
-        `"fg_f_0"."result"`,
-      );
-    }
-    if (builder.parent.parent) {
-      joinedKeys.push(
-        `'${builder.parent.parent?.as ?? "parent"}'`,
-        `"fg_fg_0"."result"`,
-      );
-    }
-    if (builder.parent.children) {
-      joinedKeys.push(
-        `'${builder.parent.children?.as ?? "children"}'`,
-        `coalesce("fg_fg_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFileGroup(
-  builder.parent ?? {},
-  query`AND fg."id" = fg2."parent"`,
-)}
-ORDER BY ${fileGroupOrderBy(
-      builder.parent.orderBy,
-      builder.parent.orderBySpec,
-      "fg.",
-    )}
-${offsetLimitQb}
-) as "fg_fg_0" ON TRUE`);
-  }
-  if (builder.children) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.children.offset)
-      ? query`OFFSET ${builder.children.offset}`
-      : query``;
-    if (!isNil(builder.children.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.children.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.children.file) {
-      joinedKeys.push(
-        `'${builder.children.file?.as ?? "file"}'`,
-        `"fg_f_0"."result"`,
-      );
-    }
-    if (builder.children.parent) {
-      joinedKeys.push(
-        `'${builder.children.parent?.as ?? "parent"}'`,
-        `"fg_fg_0"."result"`,
-      );
-    }
-    if (builder.children.children) {
-      joinedKeys.push(
-        `'${builder.children.children?.as ?? "children"}'`,
-        `coalesce("fg_fg_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT ARRAY (SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])})
-${internalQueryFileGroup(
-  builder.children ?? {},
-  query`AND fg."parent" = fg2."id"`,
-)}
-ORDER BY ${fileGroupOrderBy(
-      builder.children.orderBy,
-      builder.children.orderBySpec,
-      "fg.",
-    )}
-${offsetLimitQb}
-) as result) as "fg_fg_1" ON TRUE`);
-  }
-  return query`
-FROM "fileGroup" fg2
-${joinQb}
-WHERE ${fileGroupWhere(builder.where, "fg2.", {
-    skipValidator: true,
-  })} ${wherePartial}
-`;
-}
-/**
- * @param {StoreFileGroupQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFileGroup(builder, wherePartial) {
-  const joinQb = query``;
-  if (builder.file) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.file.offset)
-      ? query`OFFSET ${builder.file.offset}`
-      : query``;
-    if (!isNil(builder.file.limit)) {
-      offsetLimitQb.append(query`FETCH NEXT ${builder.file.limit} ROWS ONLY`);
-    }
-    if (builder.file.group) {
-      joinedKeys.push(
-        `'${builder.file.group?.as ?? "group"}'`,
-        `"f_fg_0"."result"`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(f.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFile(builder.file ?? {}, query`AND f."id" = fg."file"`)}
-ORDER BY ${fileOrderBy(builder.file.orderBy, builder.file.orderBySpec, "f.")}
-${offsetLimitQb}
-) as "fg_f_0" ON TRUE`);
-  }
-  if (builder.parent) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.parent.offset)
-      ? query`OFFSET ${builder.parent.offset}`
-      : query``;
-    if (!isNil(builder.parent.limit)) {
-      offsetLimitQb.append(query`FETCH NEXT ${builder.parent.limit} ROWS ONLY`);
-    }
-    if (builder.parent.file) {
-      joinedKeys.push(
-        `'${builder.parent.file?.as ?? "file"}'`,
-        `"fg_f_0"."result"`,
-      );
-    }
-    if (builder.parent.parent) {
-      joinedKeys.push(
-        `'${builder.parent.parent?.as ?? "parent"}'`,
-        `"fg_fg_0"."result"`,
-      );
-    }
-    if (builder.parent.children) {
-      joinedKeys.push(
-        `'${builder.parent.children?.as ?? "children"}'`,
-        `coalesce("fg_fg_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])}) as "result"
-${internalQueryFileGroup2(
-  builder.parent ?? {},
-  query`AND fg2."id" = fg."parent"`,
-)}
-ORDER BY ${fileGroupOrderBy(
-      builder.parent.orderBy,
-      builder.parent.orderBySpec,
-      "fg2.",
-    )}
-${offsetLimitQb}
-) as "fg_fg_0" ON TRUE`);
-  }
-  if (builder.children) {
-    const joinedKeys = [];
-    const offsetLimitQb = !isNil(builder.children.offset)
-      ? query`OFFSET ${builder.children.offset}`
-      : query``;
-    if (!isNil(builder.children.limit)) {
-      offsetLimitQb.append(
-        query`FETCH NEXT ${builder.children.limit} ROWS ONLY`,
-      );
-    }
-    if (builder.children.file) {
-      joinedKeys.push(
-        `'${builder.children.file?.as ?? "file"}'`,
-        `"fg_f_0"."result"`,
-      );
-    }
-    if (builder.children.parent) {
-      joinedKeys.push(
-        `'${builder.children.parent?.as ?? "parent"}'`,
-        `"fg_fg_0"."result"`,
-      );
-    }
-    if (builder.children.children) {
-      joinedKeys.push(
-        `'${builder.children.children?.as ?? "children"}'`,
-        `coalesce("fg_fg_1"."result", '{}')`,
-      );
-    }
-    joinQb.append(query`LEFT JOIN LATERAL (
-SELECT ARRAY (SELECT to_jsonb(fg2.*) || jsonb_build_object(${query([
-      joinedKeys.join(","),
-    ])})
-${internalQueryFileGroup2(
-  builder.children ?? {},
-  query`AND fg2."parent" = fg."id"`,
-)}
-ORDER BY ${fileGroupOrderBy(
-      builder.children.orderBy,
-      builder.children.orderBySpec,
-      "fg2.",
-    )}
-${offsetLimitQb}
-) as result) as "fg_fg_1" ON TRUE`);
-  }
-  return query`
-FROM "fileGroup" fg
-${joinQb}
-WHERE ${fileGroupWhere(builder.where, "fg.", {
-    skipValidator: true,
-  })} ${wherePartial}
-`;
-}
+export const fileGroupQueryBuilderSpec = {
+  name: "fileGroup",
+  shortName: "fg",
+  orderBy: fileGroupOrderBy,
+  where: fileGroupWhereSpec,
+  columns: [
+    "name",
+    "order",
+    "meta",
+    "id",
+    "file",
+    "parent",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+  ],
+  relations: [
+    {
+      builderKey: "file",
+      ownKey: "file",
+      referencedKey: "id",
+      returnsMany: false,
+      entityInformation: () => fileQueryBuilderSpec,
+    },
+    {
+      builderKey: "parent",
+      ownKey: "parent",
+      referencedKey: "id",
+      returnsMany: false,
+      entityInformation: () => fileGroupQueryBuilderSpec,
+    },
+    {
+      builderKey: "children",
+      ownKey: "id",
+      referencedKey: "parent",
+      returnsMany: true,
+      entityInformation: () => fileGroupQueryBuilderSpec,
+    },
+  ],
+};
 /**
  * Query Builder for fileGroup
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
@@ -767,7 +562,6 @@ WHERE ${fileGroupWhere(builder.where, "fg.", {
  * }}
  */
 export function queryFileGroup(builder = {}) {
-  const joinedKeys = [];
   const builderValidated = validateStoreFileGroupQueryBuilder(
     builder,
     "$.fileGroupBuilder",
@@ -776,34 +570,11 @@ export function queryFileGroup(builder = {}) {
     throw builderValidated.error;
   }
   builder = builderValidated.value;
-  if (builder.file) {
-    joinedKeys.push(`'${builder.file?.as ?? "file"}'`, `"fg_f_0"."result"`);
-  }
-  if (builder.parent) {
-    joinedKeys.push(
-      `'${builder.parent?.as ?? "parent"}'`,
-      `"fg_fg_0"."result"`,
-    );
-  }
-  if (builder.children) {
-    joinedKeys.push(
-      `'${builder.children?.as ?? "children"}'`,
-      `coalesce("fg_fg_1"."result", '{}')`,
-    );
-  }
-  const qb = query`
-SELECT to_jsonb(fg.*) || jsonb_build_object(${query([
-    joinedKeys.join(","),
-  ])}) as "result"
-${internalQueryFileGroup(builder ?? {})}
-ORDER BY ${fileGroupOrderBy(builder.orderBy, builder.orderBySpec)}
-`;
-  if (!isNil(builder.offset)) {
-    qb.append(query`OFFSET ${builder.offset}`);
-  }
-  if (!isNil(builder.limit)) {
-    qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
-  }
+  const qb = generatedQueryBuilderHelper(
+    fileGroupQueryBuilderSpec,
+    builder,
+    {},
+  );
   return {
     then: () => {
       throw AppError.serverError({

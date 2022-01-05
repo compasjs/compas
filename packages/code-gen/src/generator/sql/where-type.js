@@ -282,9 +282,7 @@ export function getWherePartial(context, imports, type) {
            shortName: "${shortName}",
            entityKey: "${referencedKey}",
            referencedKey: "${ownKey}",
-           where: ${
-             isSelfReference ? `"self"` : `() => ${otherSide.name}WhereSpec`
-           },
+           where: () => ${otherSide.name}WhereSpec,
          },`;
       }
 

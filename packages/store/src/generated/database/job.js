@@ -2,7 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
-import { generatedWhereBuilderHelper, isQueryPart, query } from "@compas/store";
+import {
+  generatedQueryBuilderHelper,
+  generatedWhereBuilderHelper,
+  isQueryPart,
+  query,
+} from "@compas/store";
 import {
   validateStoreJobOrderBy,
   validateStoreJobOrderBySpec,
@@ -414,22 +419,27 @@ export const jobQueries = {
   jobUpsertOnId,
   jobUpdate,
 };
-/**
- * @param {StoreJobQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryJob(builder, wherePartial) {
-  const joinQb = query``;
-  return query`
-FROM "job" j
-${joinQb}
-WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
-`;
-}
+export const jobQueryBuilderSpec = {
+  name: "job",
+  shortName: "j",
+  orderBy: jobOrderBy,
+  where: jobWhereSpec,
+  columns: [
+    "id",
+    "isComplete",
+    "priority",
+    "scheduledAt",
+    "name",
+    "data",
+    "retryCount",
+    "handlerTimeout",
+    "createdAt",
+    "updatedAt",
+  ],
+  relations: [],
+};
 /**
  * Query Builder for job
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{
@@ -440,7 +450,6 @@ WHERE ${jobWhere(builder.where, "j.", { skipValidator: true })} ${wherePartial}
  * }}
  */
 export function queryJob(builder = {}) {
-  const joinedKeys = [];
   const builderValidated = validateStoreJobQueryBuilder(
     builder,
     "$.jobBuilder",
@@ -449,19 +458,7 @@ export function queryJob(builder = {}) {
     throw builderValidated.error;
   }
   builder = builderValidated.value;
-  const qb = query`
-SELECT to_jsonb(j.*) || jsonb_build_object(${query([
-    joinedKeys.join(","),
-  ])}) as "result"
-${internalQueryJob(builder ?? {})}
-ORDER BY ${jobOrderBy(builder.orderBy, builder.orderBySpec)}
-`;
-  if (!isNil(builder.offset)) {
-    qb.append(query`OFFSET ${builder.offset}`);
-  }
-  if (!isNil(builder.limit)) {
-    qb.append(query`FETCH NEXT ${builder.limit} ROWS ONLY`);
-  }
+  const qb = generatedQueryBuilderHelper(jobQueryBuilderSpec, builder, {});
   return {
     then: () => {
       throw AppError.serverError({

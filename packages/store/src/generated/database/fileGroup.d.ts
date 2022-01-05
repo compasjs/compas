@@ -74,26 +74,7 @@ export function fileGroupUpdateSet(
   update: StoreFileGroupUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreFileGroupQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFileGroup2(
-  builder: StoreFileGroupQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
- * @param {StoreFileGroupQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQueryFileGroup(
-  builder: StoreFileGroupQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
  * Query Builder for fileGroup
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{
@@ -134,6 +115,7 @@ export namespace fileGroupQueries {
   export { fileGroupUpdate };
   export { fileGroupDeletePermanent };
 }
+export const fileGroupQueryBuilderSpec: any;
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where]

@@ -74,17 +74,7 @@ export function sessionStoreUpdateSet(
   update: StoreSessionStoreUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreSessionStoreQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStore(
-  builder: StoreSessionStoreQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
  * Query Builder for sessionStore
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreSessionStoreQueryBuilder} [builder={}]
  * @returns {{
@@ -123,6 +113,20 @@ export namespace sessionStoreQueries {
   export { sessionStoreInsert };
   export { sessionStoreUpsertOnId };
   export { sessionStoreUpdate };
+}
+export namespace sessionStoreQueryBuilderSpec {
+  export const name: string;
+  export const shortName: string;
+  export { sessionStoreOrderBy as orderBy };
+  export { sessionStoreWhereSpec as where };
+  export const columns: string[];
+  export const relations: {
+    builderKey: string;
+    ownKey: string;
+    referencedKey: string;
+    returnsMany: boolean;
+    entityInformation: () => any;
+  }[];
 }
 /**
  * @param {Postgres} sql

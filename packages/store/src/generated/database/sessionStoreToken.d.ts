@@ -76,26 +76,7 @@ export function sessionStoreTokenUpdateSet(
   update: StoreSessionStoreTokenUpdatePartial,
 ): QueryPart;
 /**
- * @param {StoreSessionStoreTokenQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStoreToken2(
-  builder: StoreSessionStoreTokenQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
- * @param {StoreSessionStoreTokenQueryBuilder} builder
- * @param {QueryPart|undefined} [wherePartial]
- * @returns {QueryPart}
- */
-export function internalQuerySessionStoreToken(
-  builder: StoreSessionStoreTokenQueryBuilder,
-  wherePartial?: QueryPart | undefined,
-): QueryPart;
-/**
  * Query Builder for sessionStoreToken
- * Note that nested limit and offset don't work yet.
  *
  * @param {StoreSessionStoreTokenQueryBuilder} [builder={}]
  * @returns {{
@@ -135,6 +116,7 @@ export namespace sessionStoreTokenQueries {
   export { sessionStoreTokenUpsertOnId };
   export { sessionStoreTokenUpdate };
 }
+export const sessionStoreTokenQueryBuilderSpec: any;
 /**
  * @param {Postgres} sql
  * @param {StoreSessionStoreTokenWhere} [where]
