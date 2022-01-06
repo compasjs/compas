@@ -1,3 +1,4 @@
+import { mkdir } from "fs/promises";
 import { rm } from "node:fs/promises";
 import { uuid } from "@compas/stdlib";
 import { createTestPostgresDatabase } from "@compas/store";
@@ -21,6 +22,7 @@ export async function injectTestServices() {
   sql = await createTestPostgresDatabase();
 
   temporaryDirectory = `./test/tmp/${uuid()}/`;
+  await mkdir(temporaryDirectory, { recursive: true });
 }
 
 /**
@@ -31,5 +33,5 @@ export async function injectTestServices() {
 export async function destroyTestServices() {
   await sql.end({});
 
-  await rm(temporaryDirectory, { force: true, recursive: true });
+  await rm("./test/tmp", { force: true, recursive: true });
 }

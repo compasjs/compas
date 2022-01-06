@@ -79,6 +79,24 @@ await queries.postDelete(sql, {
 });
 ```
 
+**Dates and times**:
+
+Compas uses `timestampt` for `T.date()` types. This ensures that you can insert
+any date with timezone, and instruct Postgres to return them in whatever
+timezone you want. Any query, except `queryBuilder.execRaw()`, will return
+JavaScript Date objects.
+
+There is also `T.date().dateOnly()` which uses a Postgres `date` column. Compas
+makes sure that the Postgres client doesn't convert these to dates, but instead
+always handles them in the form of `YYYY-MM-DD` in selects, inserts and
+where-clauses. `T.date().timeOnly()` works almost the same and uses a
+`time without timezone` column. Inserts and where clauses can use
+`HH:MM(:SS(.mmm))` strings, but selects are always returned as `HH:MM:SS(.mmm)`.
+
+To get this behaviour, Compas ensures that connections created via
+`newPostgresConnection` from @compas/store, disable any conversion to JavaScript
+Date objects for any `date` & `time` columns.
+
 ## Relations
 
 // TODO: Add relations
@@ -133,5 +151,3 @@ const dashboardsForAllGroupsThatAUserIsIn = await queryDashboard({
   },
 }).exec(sql);
 ```
-
-## Query traversal
