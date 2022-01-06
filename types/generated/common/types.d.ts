@@ -7,8 +7,6 @@ import { Next } from "@compas/server";
 import { Middleware } from "@compas/server";
 import { QueryPart } from "@compas/store";
 declare global {
-  type BenchNested = { foo: true; bar: 5; nest: BenchSimple[] };
-  type BenchSimple = { foo: boolean; bar: number; baz: string };
   type CompasStructure = undefined | any;
   type CompasStructureResponse = any;
   type GroupFullRoute = CompasStructure;
@@ -21,7 +19,6 @@ declare global {
   type GroupRefRouteParams = { id: ServerInput };
   type ServerInput = number;
   type GroupRefRouteQuery = { ref: string; ref2: string };
-  type GroupRefRouteResponse = BenchNested;
   type GroupUpload = CompasStructure;
   type GroupUploadFiles = { input1: ReadableStream };
   type GroupUploadResponse = ReadableStream;
@@ -40,8 +37,10 @@ declare global {
   type ServerGetIdResponse = ServerGetIdParams;
   type ServerInvalidResponse = CompasStructure;
   type ServerInvalidResponseResponse = { id: string };
+  type ServerNested = { bool: boolean };
   type ServerPatchTest = CompasStructure;
   type ServerPatchTestResponse = {};
+  type ServerRoot = { value: ServerNested };
   type ServerSearch = CompasStructure;
   type ServerSearchBody = ServerCreateResponse;
   type ServerSearchResponse = { bar: boolean };
@@ -56,8 +55,6 @@ declare global {
   type ServerValidatorShim = CompasStructure;
   type ServerValidatorShimBody = { anyOf: boolean | string };
   type ServerValidatorShimResponse = ServerSetFileResponse;
-  type BenchNestedInput = { foo: true; bar: 5; nest: BenchSimpleInput[] };
-  type BenchSimpleInput = BenchSimple;
   type CompasStructureResponseInput = CompasStructureResponse;
   type GroupFullRouteBodyInput = { foo: string; bar: ServerOptionsInput };
   type ServerOptionsInput = ServerOptions;
@@ -69,7 +66,6 @@ declare global {
   type GroupRefRouteParamsInput = { id: ServerInputInput };
   type ServerInputInput = number | string;
   type GroupRefRouteQueryInput = GroupRefRouteQuery;
-  type GroupRefRouteResponseInput = BenchNestedInput;
   type GroupUploadFilesInput = GroupUploadFiles;
   type GroupUploadResponseInput = GroupUploadResponse;
   type ServerAnswersInput = { [K in ServerOptionsInput]: string };
@@ -84,7 +80,9 @@ declare global {
   type ServerGetIdParamsInput = { id: number | string };
   type ServerGetIdResponseInput = ServerGetIdParams;
   type ServerInvalidResponseResponseInput = ServerInvalidResponseResponse;
+  type ServerNestedInput = ServerNested;
   type ServerPatchTestResponseInput = ServerPatchTestResponse;
+  type ServerRootInput = { value: ServerNestedInput };
   type ServerSearchBodyInput = ServerCreateResponse;
   type ServerSearchResponseInput = ServerSearchResponse;
   type ServerServerErrorResponseInput = ServerPatchTestResponse;
@@ -128,7 +126,7 @@ declare global {
       validatedQuery: GroupRefRouteQuery;
       validatedParams: GroupRefRouteParams;
     },
-    GroupRefRouteResponse
+    ServerRoot
   >;
   type GroupRefRouteFn = (
     ctx: GroupRefRouteCtx,
@@ -329,13 +327,8 @@ declare global {
     D: boolean;
     E: string;
   };
-  type GroupRefRouteResponseApiResponse = BenchNestedApiResponse;
-  type BenchNestedApiResponse = {
-    foo: true;
-    bar: 5;
-    nest: BenchSimpleApiResponse[];
-  };
-  type BenchSimpleApiResponse = BenchSimple;
+  type ServerRootApiResponse = { value: ServerNestedApiResponse };
+  type ServerNestedApiResponse = ServerNested;
   type GroupUploadResponseApiResponse = GroupUploadResponse;
   type ServerCreateResponseApiResponse = ServerCreateResponse;
   type ServerGetFileResponseApiResponse = GroupUploadResponse;

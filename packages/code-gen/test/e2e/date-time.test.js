@@ -4,14 +4,14 @@ import { mainTestFn, test } from "@compas/cli";
 import { pathJoin, uuid } from "@compas/stdlib";
 import { sql } from "../../../../src/testing.js";
 import { TypeCreator } from "../../src/builders/index.js";
-import { generateAndRunForBuilders } from "../utils.test.js";
+import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);
 
 test("code-gen/e2e/date-time", async (t) => {
   const T = new TypeCreator("app");
 
-  const { exitCode, generatedDirectory } = await generateAndRunForBuilders(
+  const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
     [
       T.object("codeGenDateTime")
         .keys({

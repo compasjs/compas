@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
-import { generateAndRunForBuilders } from "../../test/utils.test.js";
+import { codeGenToTemporaryDirectory } from "../../test/utils.test.js";
 import { TypeCreator } from "../builders/TypeCreator.js";
 
 mainTestFn(import.meta);
@@ -7,7 +7,7 @@ mainTestFn(import.meta);
 test("code-gen/errors", (t) => {
   t.test("structureReservedGroupName", async (t) => {
     const T = new TypeCreator("static");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
       {
         enabledGenerators: ["type"],
@@ -20,7 +20,7 @@ test("code-gen/errors", (t) => {
 
   t.test("structureUnknownOrEmptyGroup", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
       {
         enabledGenerators: ["type"],
@@ -35,7 +35,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlEnableValidator", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
       {
         enabledGenerators: ["sql"],
@@ -48,7 +48,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlMissingPrimaryKey", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo").keys({}).enableQueries({
           withPrimaryKey: false,
@@ -67,7 +67,7 @@ test("code-gen/errors", (t) => {
     "sqlMissingPrimaryKey - via reference that has no queries enabled",
     async (t) => {
       const T = new TypeCreator("app");
-      const { stdout, exitCode } = await generateAndRunForBuilders(
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [
           T.object("foo")
             .keys({})
@@ -88,15 +88,15 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlForgotEnableQueries", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo")
           .keys({})
           .enableQueries({})
           .relations(T.oneToOne("bar", T.reference("app", "bar"), "foo")),
 
+        // Needs a primary key, else a missing primary key error will be thrown
         T.object("bar").keys({
-          // Needs a primary key, else a missing primary key error will be thrown
           id: T.uuid().primary(),
         }),
       ],
@@ -111,7 +111,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlDuplicateRelationOwnKey", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo")
           .keys({})
@@ -137,7 +137,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlDuplicateRelationReferencedKey", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo")
           .keys({})
@@ -163,7 +163,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlMissingOneToMany", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo")
           .keys({})
@@ -187,7 +187,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlUnusedOneToMany", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo").keys({}).enableQueries({}),
 
@@ -207,7 +207,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlDuplicateShortName", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo").keys({}).enableQueries({}).shortName("test"),
 
@@ -224,7 +224,7 @@ test("code-gen/errors", (t) => {
 
   t.test("sqlReservedRelationKey", async (t) => {
     const T = new TypeCreator("app");
-    const { stdout, exitCode } = await generateAndRunForBuilders(
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
         T.object("foo")
           .keys({})

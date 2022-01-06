@@ -6,3 +6,4 @@ packages/code-gen/test-generated
 lerna.json
 reactQueries.tsx
 docs/.vitepress/dist
+test/tmp

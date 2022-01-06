@@ -2,7 +2,6 @@ import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
 import {
-  applyBenchStructure,
   applyTestingServerStructure,
   applyTestingSqlStructure,
 } from "../gen/testing.js";
@@ -10,13 +9,6 @@ import { App } from "../packages/code-gen/index.js";
 import { storeStructure } from "../packages/store/index.js";
 
 export const generateTestAndBenchSettings = {
-  bench: {
-    outputDirectory: "./generated/testing/bench",
-    enabledGroups: ["bench", "githubApi"],
-    isNodeServer: true,
-    enabledGenerators: ["validator", "router"],
-    dumpStructure: true,
-  },
   server: {
     outputDirectory: "./generated/testing/server",
     enabledGenerators: ["apiClient", "router", "validator"],
@@ -133,7 +125,6 @@ export async function generateTestAndBench() {
 
   applyAllLocalGenerate(app);
 
-  await app.generate(generateTestAndBenchSettings.bench);
   await app.generate(generateTestAndBenchSettings.server);
   await app.generate(generateTestAndBenchSettings.client);
   await app.generate(generateTestAndBenchSettings.sql);
@@ -142,7 +133,6 @@ export async function generateTestAndBench() {
 export function applyAllLocalGenerate(app) {
   app.extend(storeStructure);
 
-  applyBenchStructure(app);
   applyTestingServerStructure(app);
   applyTestingSqlStructure(app);
 }

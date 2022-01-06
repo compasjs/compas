@@ -3,7 +3,7 @@ import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
 import { TypeCreator } from "../../src/builders/index.js";
-import { generateAndRunForBuilders } from "../utils.test.js";
+import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);
 
@@ -66,7 +66,7 @@ const assertAll = (t, cases, fn) => {
 
 test("code-gen/e2e/validators", async (t) => {
   const T = new TypeCreator("validator");
-  const { exitCode, generatedDirectory } = await generateAndRunForBuilders(
+  const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
     [
       // AnyOf
       T.anyOf("anyOf").values(T.bool(), T.number(), T.bool()),

@@ -1,36 +1,4 @@
-import { readFileSync } from "fs";
 import { TypeCreator } from "@compas/code-gen";
-import { pathJoin } from "../packages/stdlib/index.js";
-
-const githubApiFixture = pathJoin(
-  process.cwd(),
-  "__fixtures__/code-gen/githubapi.json",
-);
-
-/**
- * @param {App} app
- */
-export function applyBenchStructure(app) {
-  const T = new TypeCreator("bench");
-
-  app.add(
-    T.object("simple").keys({
-      foo: T.bool(),
-      bar: T.number(),
-      baz: T.string().trim().lowerCase(),
-    }),
-    T.object("nested").keys({
-      foo: true,
-      bar: 5,
-      nest: [T.reference("bench", "simple")],
-    }),
-  );
-
-  app.extendWithOpenApi(
-    "githubApi",
-    JSON.parse(readFileSync(githubApiFixture, "utf-8")),
-  );
-}
 
 export function applyTestingServerStructure(app) {
   const T = new TypeCreator("server");
@@ -60,7 +28,13 @@ export function applyTestingServerStructure(app) {
       .delete("/:id", "refRoute")
       .query({ ref: T.string(), ref2: T.string() })
       .params({ id: T.reference("server", "input") })
-      .response(T.reference("bench", "nested")),
+      .response(
+        T.object("root").keys({
+          value: T.object("nested").keys({
+            bool: T.bool(),
+          }),
+        }),
+      ),
 
     testR
       .put("/:full/:color/route", "fullRoute")
