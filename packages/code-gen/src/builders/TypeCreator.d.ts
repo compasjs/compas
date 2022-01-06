@@ -1,8 +1,8 @@
 export class TypeCreator {
   /**
-   * @param {string} group
+   * @param {string} [group]
    */
-  constructor(group: string);
+  constructor(group?: string | undefined);
   group: string;
   /**
    * @param {string} [name]

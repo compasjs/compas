@@ -1,6 +1,9 @@
 /* eslint-disable import/no-unresolved */
+import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
-import { isNil, isPlainObject } from "@compas/stdlib";
+import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
+import { TypeCreator } from "../../src/builders/index.js";
+import { generateAndRunForBuilders } from "../utils.test.js";
 
 mainTestFn(import.meta);
 
@@ -61,10 +64,66 @@ const assertAll = (t, cases, fn) => {
   }
 };
 
-test("code-gen/validators", async (t) => {
-  const validators = await import(
-    "../../../generated/testing/validators/validator/validators.js"
+test("code-gen/e2e/validators", async (t) => {
+  const T = new TypeCreator("validator");
+  const { exitCode, generatedDirectory } = await generateAndRunForBuilders(
+    [
+      // AnyOf
+      T.anyOf("anyOf").values(T.bool(), T.number(), T.bool()),
+
+      // Array
+      T.array("array").values(T.bool()),
+      T.array("arrayConvert").values(T.bool()).convert(),
+      T.array("arrayMinMax").values(T.bool()).min(1).max(10),
+
+      // Bool
+      T.bool("bool"),
+      T.bool("boolOneOf").oneOf(true),
+      T.bool("boolConvert").convert(),
+      T.bool("boolOptional").optional(),
+      T.bool("boolDefault").default("true"),
+      T.bool("boolAllowNull").allowNull(),
+
+      // Date
+      T.date("date"),
+      T.date("dateOptional").optional(),
+      T.date("dateAllowNull").allowNull(),
+      T.date("dateMin").min(new Date(2020, 0, 0, 0, 0, 0, 0)),
+      T.date("dateMax").max(new Date(2020, 0, 0, 0, 0, 0, 0)),
+      T.date("datePast").inThePast(),
+      T.date("dateFuture").inTheFuture(),
+
+      // Generic
+      T.generic("generic").keys(T.number().convert()).values(T.bool()),
+
+      // String
+      T.string("stringAllowNull").allowNull(),
+      T.string("stringDisallowedCharacters")
+        .disallowCharacters([">", "<", "\\\\"])
+        .max(10),
+
+      // Object
+      T.object("object").keys({
+        bool: T.bool(),
+        string: T.string(),
+      }),
+      T.object("objectWithOptionalReference").keys({
+        ref: T.optional().value(T.reference("validator", "object")),
+      }),
+    ],
+    {
+      enabledGroups: ["validator"],
+      isNode: true,
+      dumpStructure: true,
+    },
   );
+
+  t.equal(exitCode, 0);
+
+  const validators = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "validator/validators.js"))
+  );
+
   t.test("anyOf", (t) => {
     assertAll(
       t,
@@ -572,7 +631,4 @@ test("code-gen/validators", async (t) => {
       validators.validateValidatorObjectWithOptionalReference,
     );
   });
-
-  // TODO:
-  // - number, object, string
 });

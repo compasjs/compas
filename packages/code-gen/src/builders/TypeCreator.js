@@ -19,7 +19,7 @@ import { UuidType } from "./UuidType.js";
 
 export class TypeCreator {
   /**
-   * @param {string} group
+   * @param {string} [group]
    */
   constructor(group) {
     this.group = group || "app";
