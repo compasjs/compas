@@ -12,18 +12,45 @@ import { App } from "../src/App.js";
  *
  * Since we use a sub directory on the 'temporaryDirectory', we don't have to clean up.
  *
- * @param {TypeBuilder[]} builders
+ * @param {{
+ *   add?: Parameters<typeof App.prototype.add>,
+ *   extend?: Parameters<typeof App.prototype.extend>[],
+ *   extendWithOpenApi?: Parameters<typeof App.prototype.extendWithOpenApi>[],
+ * }|TypeBuilderLike[]} input
  * @param {GenerateOpts} [opts]
  * @returns {Promise<{ stdout: string, exitCode: number }>}
  */
-export async function generateAndRunForBuilders(builders, opts = {}) {
+export async function codeGenToTemporaryDirectory(input, opts = {}) {
   const randomDir = uuid();
-  const baseDirectory = pathJoin(process.cwd(), temporaryDirectory, randomDir);
+  const baseDirectory = pathJoin(
+    process.cwd(),
+    temporaryDirectory ?? `./test/tmp/${randomDir}`,
+    randomDir,
+  );
   const structureDirectory = pathJoin(baseDirectory, "/structure");
   const generatedDirectory = pathJoin(baseDirectory, "/generated");
 
   const app = new App();
-  app.add(...builders);
+
+  if (Array.isArray(input)) {
+    app.add(...input);
+  }
+
+  if (Array.isArray(input?.add)) {
+    app.add(...input.add);
+  }
+
+  if (Array.isArray(input?.extend)) {
+    for (const ext of input.extend) {
+      app.extend(...ext);
+    }
+  }
+
+  if (Array.isArray(input?.extendWithOpenApi)) {
+    for (const ext of input.extendWithOpenApi) {
+      app.extendWithOpenApi(...ext);
+    }
+  }
 
   // Disable all (inferred) generators
   await app.generate({

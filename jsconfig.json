@@ -14,5 +14,5 @@
   "typeAcquisition": {
     "enable": true
   },
-  "exclude": ["generated/testing/bench/**/*", "**/*.test.js", "**/*.bench.js"]
+  "exclude": ["**/*.test.js", "**/*.bench.js"]
 }
