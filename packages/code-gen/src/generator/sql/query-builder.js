@@ -422,11 +422,13 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       break;
     }
     case "date":
-      partials.push(`
+      if (isNil(type.specifier)) {
+        partials.push(`
         if (typeof ${path} === "string") { 
           ${path} = new Date(${path});
         }
       `);
+      }
       break;
     case "generic": {
       const subPartials = [];

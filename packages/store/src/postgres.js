@@ -23,6 +23,18 @@ export function buildAndCheckOpts(opts) {
       host: environment.POSTGRES_HOST,
       port: environment.POSTGRES_PORT,
       max: 15,
+      types: {
+        // Used by
+        // `T.date().dateOnly()`
+        // and
+        // `T.date().timeOnly()`
+        dateOrTimeOnly: {
+          to: 25,
+          from: [1082, 1083],
+          serialize: (x) => x,
+          parse: (x) => x,
+        },
+      },
     },
     opts,
   );
@@ -39,6 +51,10 @@ export function buildAndCheckOpts(opts) {
 /**
  * Create a new postgres connection, using the default environment variables.
  * A database may be created using the provided credentials.
+ *
+ * Note that by default we add a 'dateOrTimeOnly' type, which serializes and parses
+ * 'date' and 'time' columns, used by `T.date().timeOnly()` and `T.date().dateOnly()', as
+ * strings.
  *
  * @since 0.1.0
  *
@@ -89,10 +105,8 @@ export async function createDatabaseIfNotExists(
     sql = postgres(environment.POSTGRES_URI ?? opts, opts);
   }
   const [db] = await sql`
-    SELECT
-      datname
-    FROM
-      pg_database
+    SELECT datname
+    FROM pg_database
     WHERE
       datname = ${databaseName}
   `;

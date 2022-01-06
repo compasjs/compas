@@ -283,6 +283,8 @@ export function generateTypeDefinition(
     case "date":
       if (isBrowser || isJSON) {
         result += "string";
+      } else if (type.specifier) {
+        result += "string";
       } else {
         result += "Date";
       }

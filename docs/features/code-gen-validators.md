@@ -149,8 +149,7 @@ function main(logger) {
     validateTodoItem({
       id: uuid(),
       title: "Finish reading Compas documentation",
-      createdAt: new Date(),
-      // We can leave out 'isFinished' since it is `.optional()`
+      createdAt: new Date(), // We can leave out 'isFinished' since it is `.optional()`
     }),
   );
 
@@ -352,3 +351,16 @@ converted to an integer between 3 and 10`
 | T.string().oneOf("NORTH", "SOUTH") | "NORTH"   | "NORTH"                    |
 | T.string().oneOf("NORTH", "SOUTH") | "WEST"    | validator.string.oneOf     |
 | T.string().pattern(/\d+/g)         | "foo"     | validator.string.pattern   |
+
+**date**:
+
+| Type                | Input                              | Output                   |
+| ------------------- | ---------------------------------- | ------------------------ |
+| T.date()            | Any input accepted by `new Date()` | Date                     |
+| T.date().dateOnly() | "2020-01-01"                       | "2020-01-01"             |
+| T.date().dateOnly() | "2020-01"                          | validator.string.min     |
+| T.date().dateOnly() | "2020-01001"                       | validator.string.pattern |
+| T.date().timeOnly() | "20:59"                            | "20:59"                  |
+| T.date().timeOnly() | "24:59"                            | validator.string.pattern |
+| T.date().timeOnly() | "10:10:10"                         | "10:10:10"               |
+| T.date().timeOnly() | "10:10:10.123"                     | "10:10:10.123"           |

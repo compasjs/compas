@@ -592,7 +592,29 @@ function anonymousValidatorBoolean(context, imports, type) {
  * @param {CodeGenDateType} type
  */
 function anonymousValidatorDate(context, imports, type) {
-  return js`
+  const dateOnlyType = {
+    ...TypeBuilder.baseData,
+    type: "string",
+    validator: {
+      min: 10,
+      max: 10,
+      pattern:
+        "/^\\d{4}-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))$/gi",
+    },
+  };
+
+  const timeOnlyType = {
+    ...TypeBuilder.baseData,
+    type: "string",
+    validator: {
+      min: 5,
+      max: 12,
+      pattern:
+        "/^(([0-1][0-9])|(2[0-3])):[0-5][0-9](:[0-5][0-9](\\.\\d{3})?)?$/gi",
+    },
+  };
+
+  const head = js`
     if (typeof value !== "string" && typeof value !== "number" &&
       !(value instanceof Date)) {
       /** @type {{ errors: InternalError[] }} */
@@ -604,6 +626,36 @@ function anonymousValidatorDate(context, imports, type) {
         ]
       };
     }
+  `;
+
+  if (type.specifier === "dateOnly") {
+    return (
+      head +
+      generateAnonymousValidatorCall(
+        context,
+        imports,
+        dateOnlyType,
+        "value",
+        "propertyPath",
+        "return ",
+      )
+    );
+  } else if (type.specifier === "timeOnly") {
+    return (
+      head +
+      generateAnonymousValidatorCall(
+        context,
+        imports,
+        timeOnlyType,
+        "value",
+        "propertyPath",
+        "return ",
+      )
+    );
+  }
+
+  return js`
+    ${head}
     
     const date = new Date(value);
 

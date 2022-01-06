@@ -12,6 +12,10 @@ export function buildAndCheckOpts(
  * Create a new postgres connection, using the default environment variables.
  * A database may be created using the provided credentials.
  *
+ * Note that by default we add a 'dateOrTimeOnly' type, which serializes and parses
+ * 'date' and 'time' columns, used by `T.date().timeOnly()` and `T.date().dateOnly()', as
+ * strings.
+ *
  * @since 0.1.0
  *
  * @param {Postgres["connectionOptions"]} [opts]

@@ -332,7 +332,16 @@ export function anonymousValidator517837192(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }, "internalSettings": {}, }>}
+ * @returns {EitherN<undefined|"dateOnly"|"timeOnly">}
+ */
+export function anonymousValidator38390704(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | "dateOnly" | "timeOnly">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "date", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }, "internalSettings": {}, "specifier"?: undefined|"dateOnly"|"timeOnly", }>}
  */
 export function anonymousValidator2019605291(
   value: any,
@@ -360,6 +369,7 @@ export function anonymousValidator2019605291(
     inPast?: undefined | boolean;
   };
   internalSettings: {};
+  specifier?: undefined | "dateOnly" | "timeOnly";
 }>;
 /**
  * @param {*} value
