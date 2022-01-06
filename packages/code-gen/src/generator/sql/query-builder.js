@@ -428,12 +428,6 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
           ${path} = new Date(${path});
         }
       `);
-      } else if (type.specifier === "dateOnly") {
-        partials.push(`
-        if (${path} instanceof Date) {
-          ${path} = ${path}.toISOString().split("T")[0];
-        }
-        `);
       }
       break;
     case "generic": {
