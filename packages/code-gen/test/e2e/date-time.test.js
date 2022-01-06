@@ -16,8 +16,8 @@ test("code-gen/e2e/date-time", async (t) => {
       T.object("codeGenDateTime")
         .keys({
           fullDate: T.date().defaultToNow(),
-          dateOnly: T.date().dateOnly(),
-          timeOnly: T.date().timeOnly(),
+          dateOnly: T.date().dateOnly().searchable(),
+          timeOnly: T.date().timeOnly().searchable(),
         })
         .enableQueries(),
     ],
@@ -90,48 +90,6 @@ test("code-gen/e2e/date-time", async (t) => {
     t.ok(updatePartial.includes(`"timeOnly"?: undefined|string,`));
   });
 
-  t.test("insert and retrieve", async (t) => {
-    const { queryCodeGenDateTime, codeGenDateTimeQueries } = await import(
-      pathToFileURL(pathJoin(generatedDirectory, "database/codeGenDateTime.js"))
-    );
-
-    const date = new Date();
-
-    for (const { fullDate, dateOnly, timeOnly, expectTimeOnly } of [
-      {
-        fullDate: date,
-        dateOnly: "2020-01-01",
-        timeOnly: "12:34:56.789",
-        expectTimeOnly: "12:34:56.789",
-      },
-      {
-        fullDate: date,
-        dateOnly: "2020-01-01",
-        timeOnly: "12:34",
-        expectTimeOnly: "12:34:00",
-      },
-    ]) {
-      const [inserted] = await codeGenDateTimeQueries.codeGenDateTimeInsert(
-        sql,
-        {
-          fullDate,
-          dateOnly,
-          timeOnly,
-        },
-      );
-
-      const [fetched] = await queryCodeGenDateTime({
-        where: {
-          id: inserted.id,
-        },
-      }).exec(sql);
-
-      t.equal(fetched.dateOnly, dateOnly);
-      t.equal(fetched.timeOnly, expectTimeOnly);
-      t.deepEqual(fetched.fullDate, fullDate);
-    }
-  });
-
   t.test("validator", async (t) => {
     const { validateAppCodeGenDateTime } = await import(
       pathToFileURL(pathJoin(generatedDirectory, "app/validators.js"))
@@ -186,6 +144,120 @@ test("code-gen/e2e/date-time", async (t) => {
           t.equal(value.timeOnly, expected);
         }
       }
+    });
+  });
+
+  t.test("sql", async (t) => {
+    const { queryCodeGenDateTime, codeGenDateTimeQueries } = await import(
+      pathToFileURL(pathJoin(generatedDirectory, "database/codeGenDateTime.js"))
+    );
+
+    t.test("insert and retrieve", async (t) => {
+      const date = new Date();
+
+      for (const { fullDate, dateOnly, timeOnly, expectTimeOnly } of [
+        {
+          fullDate: date,
+          dateOnly: "2020-01-01",
+          timeOnly: "12:34:56.789",
+          expectTimeOnly: "12:34:56.789",
+        },
+        {
+          fullDate: date,
+          dateOnly: "2020-01-01",
+          timeOnly: "12:34",
+          expectTimeOnly: "12:34:00",
+        },
+      ]) {
+        const [inserted] = await codeGenDateTimeQueries.codeGenDateTimeInsert(
+          sql,
+          {
+            fullDate,
+            dateOnly,
+            timeOnly,
+          },
+        );
+
+        const [fetched] = await queryCodeGenDateTime({
+          where: {
+            id: inserted.id,
+          },
+        }).exec(sql);
+
+        t.equal(fetched.dateOnly, dateOnly);
+        t.equal(fetched.timeOnly, expectTimeOnly);
+        t.deepEqual(fetched.fullDate, fullDate);
+      }
+    });
+
+    t.test("where validator", async (t) => {
+      try {
+        await queryCodeGenDateTime({
+          where: {
+            dateOnly: new Date(),
+          },
+        }).exec(sql);
+      } catch (e) {
+        t.equal(
+          e.info["$.codeGenDateTimeBuilder.where.dateOnly"].key,
+          "validator.string.type",
+        );
+      }
+    });
+
+    t.test("where", async (t) => {
+      await codeGenDateTimeQueries.codeGenDateTimeInsert(sql, [
+        {
+          dateOnly: "2021-01-01",
+          timeOnly: "01:01",
+        },
+        {
+          dateOnly: "2021-02-02",
+          timeOnly: "02:02",
+        },
+        {
+          dateOnly: "2021-03-03",
+          timeOnly: "03:03:03",
+        },
+        {
+          dateOnly: "2021-04-04",
+          timeOnly: "04:04",
+        },
+        {
+          dateOnly: "2021-05-05",
+          timeOnly: "05:05",
+        },
+        {
+          dateOnly: "2021-06-06",
+          timeOnly: "06:06",
+        },
+      ]);
+
+      const result = await queryCodeGenDateTime({
+        where: {
+          dateOnlyGreaterThan: "2021-02-01",
+          dateOnlyLowerThan: "2021-05-15",
+          timeOnlyGreaterThan: "03:00",
+        },
+      }).exec(sql);
+
+      t.equal(result.length, 3);
+
+      t.ok(
+        result.find(
+          (it) => it.dateOnly === "2021-03-03" && it.timeOnly === "03:03:03",
+        ),
+      );
+      t.ok(
+        result.find(
+          (it) => it.dateOnly === "2021-04-04" && it.timeOnly === "04:04:00",
+        ),
+      );
+      t.ok(
+        result.find(
+          (it) => it.dateOnly === "2021-05-05" && it.timeOnly === "05:05:00",
+        ),
+      );
     });
   });
 });
