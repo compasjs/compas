@@ -181,7 +181,7 @@ test("code-gen/e2e/server", async (t) => {
 
   t.equal(clientExitCode, 0);
 
-  t.timeout = 10000;
+  t.timeout = 20000;
 
   const serverApiClientImport = await import(
     pathToFileURL(pathJoin(serverGeneratedDirectory, "server/apiClient.js"))
