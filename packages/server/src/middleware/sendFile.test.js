@@ -9,10 +9,10 @@ import {
   ensureBucket,
   FileCache,
   newMinioClient,
+  query,
   removeBucketAndObjectsInBucket,
 } from "@compas/store";
 import Axios from "axios";
-import { queryFile } from "../../../../generated/testing/sql/database/file.js";
 import { getApp } from "../app.js";
 import { closeTestApp, createTestAppAndClient } from "../testing.js";
 import { sendFile } from "./sendFile.js";
@@ -30,11 +30,8 @@ test("server/sendFile", async (t) => {
 
   app.use(async (ctx, next) => {
     const fileName = ctx.path.substring(1);
-    const [file] = await queryFile({
-      where: {
-        id: fileName,
-      },
-    }).exec(sql);
+    const [file] =
+      await query`select * from "file" WHERE id = ${fileName}`.exec(sql);
 
     await sendFile(ctx, file, fileCache.getStreamFn);
 

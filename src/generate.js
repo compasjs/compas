@@ -1,20 +1,7 @@
 import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
-import { applyTestingSqlStructure } from "../gen/testing.js";
 import { App } from "../packages/code-gen/index.js";
-import { storeStructure } from "../packages/store/index.js";
-
-export const generateTestAndBenchSettings = {
-  sql: {
-    outputDirectory: "./generated/testing/sql",
-    enabledGroups: ["sql"],
-    enabledGenerators: ["sql", "validator"],
-    isNodeServer: true,
-    dumpApiStructure: false,
-    dumpStructure: true,
-  },
-};
 
 export async function generateTypes() {
   const app = new App({
@@ -23,7 +10,7 @@ export async function generateTypes() {
 
   await app.generateTypes({
     outputDirectory: "./types/generated",
-    inputPaths: ["./generated/testing/sql", "./packages/store/src/generated"],
+    inputPaths: ["./packages/store/src/generated"],
     dumpCompasTypes: true,
   });
 }
@@ -78,20 +65,4 @@ export async function generateStore() {
     dumpApiStructure: false,
     dumpPostgres: true,
   });
-}
-
-export async function generateTestAndBench() {
-  const app = new App({
-    verbose: true,
-  });
-
-  applyAllLocalGenerate(app);
-
-  await app.generate(generateTestAndBenchSettings.sql);
-}
-
-export function applyAllLocalGenerate(app) {
-  app.extend(storeStructure);
-
-  applyTestingSqlStructure(app);
 }
