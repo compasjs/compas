@@ -14,5 +14,5 @@
 export function convertOpenAPISpec(
   defaultGroup: string,
   data: Record<string, any>,
-): any;
+): CompasStructure;
 //# sourceMappingURL=open-api-importer.d.ts.map

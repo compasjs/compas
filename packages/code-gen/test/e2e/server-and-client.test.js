@@ -1,5 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { createReadStream } from "fs";
+import { writeFile } from "fs/promises";
+import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
 import {
   closeTestApp,
@@ -7,25 +9,224 @@ import {
   createTestAppAndClient,
   getApp,
 } from "@compas/server";
-import { AppError, isPlainObject, streamToBuffer } from "@compas/stdlib";
+import {
+  AppError,
+  isPlainObject,
+  pathJoin,
+  spawn,
+  streamToBuffer,
+} from "@compas/stdlib";
 import Axios from "axios";
+import { TypeCreator } from "../../src/builders/index.js";
+import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/e2e-server", async (t) => {
-  const serverApiClientImport = await import(
-    "../../../generated/testing/server/server/apiClient.js"
-  );
-  const serverControllerImport = await import(
-    "../../../generated/testing/server/server/controller.js"
-  );
-  const clientApiClientImport = await import(
-    "../../../generated/testing/client/server/apiClient.js"
+test("code-gen/e2e/server", async (t) => {
+  const T = new TypeCreator("server");
+  const R = T.router("/");
+  const testR = R.group("group", "/group");
+
+  const {
+    exitCode: serverExitCode,
+    generatedDirectory: serverGeneratedDirectory,
+  } = await codeGenToTemporaryDirectory(
+    [
+      T.object("item").keys({
+        A: T.string(),
+        B: T.number(),
+        C: T.number().float(),
+        D: T.bool(),
+        E: T.date(),
+      }),
+
+      T.number("input").convert().docs("WITH DOCS"),
+
+      testR
+        .post("/file", "upload")
+        .files({
+          input1: T.file(),
+        })
+        .response(T.file()),
+
+      testR
+        .delete("/:id", "refRoute")
+        .query({ ref: T.string(), ref2: T.string() })
+        .params({ id: T.reference("server", "input") })
+        .response(
+          T.object("root").keys({
+            value: T.object("nested").keys({
+              bool: T.bool(),
+            }),
+          }),
+        ),
+
+      testR
+        .put("/:full/:color/route", "fullRoute")
+        .params({
+          full: T.string(),
+          color: T.number().convert(),
+        })
+        .body({
+          foo: T.anyOf().values(T.string()),
+          bar: T.reference("server", "options"),
+        })
+        .response({
+          items: [
+            {
+              foo: T.string(),
+              bar: T.reference("server", "item"),
+            },
+          ],
+        }),
+
+      T.string("options").oneOf("A", "B", "C"),
+      T.generic("answers")
+        .keys(T.reference("server", "options"))
+        .values(T.string()),
+      R.get("/:id", "getId")
+        .params({
+          id: T.number().convert(),
+        })
+        .response({
+          id: T.number(),
+        })
+        .tags("tag"),
+
+      R.post("/search", "search")
+        .idempotent()
+        .body({
+          foo: T.bool(),
+        })
+        .response({
+          bar: T.bool(),
+        }),
+
+      R.post("/", "create")
+        .query({
+          alwaysTrue: T.bool().optional(),
+        })
+        .body({
+          foo: T.bool(),
+          string: T.string().allowNull(),
+        })
+        .response({
+          foo: T.bool(),
+        }),
+
+      R.get("/invalid-response", "invalidResponse").response({
+        id: T.string(),
+      }),
+
+      R.post("/server-error", "serverError").response({}),
+
+      R.patch("/patch", "patchTest").response({}),
+
+      R.get("/file", "getFile")
+        .query({
+          throwError: T.bool().optional().convert(),
+        })
+        .response(T.file()),
+
+      R.post("/file", "setFile").files({ myFile: T.file() }).response({
+        success: true,
+      }),
+
+      R.post("/file/mime", "setMimeCheckedFile")
+        .files({
+          myFile: T.file().mimeTypes("application/json"),
+        })
+        .response({
+          success: true,
+        }),
+
+      R.post("/validate", "validatorShim")
+        .body({
+          anyOf: T.anyOf().values(T.bool(), T.string()),
+        })
+        .response({
+          success: true,
+        }),
+
+      R.get("/empty-response", "emptyResponse").query({
+        foo: T.string().optional(),
+      }),
+    ],
+    {
+      enabledGenerators: ["apiClient", "router", "validator"],
+      isNodeServer: true,
+      dumpStructure: true,
+    },
   );
 
-  const app = await buildTestApp();
+  t.equal(serverExitCode, 0);
+
+  const { structure: serverStructure } = await import(
+    pathToFileURL(
+      pathJoin(serverGeneratedDirectory, "../structure/common/structure.js"),
+    )
+  );
+  const {
+    exitCode: clientExitCode,
+    generatedDirectory: clientGeneratedDirectory,
+  } = await codeGenToTemporaryDirectory(
+    {
+      extend: [[serverStructure]],
+    },
+    {
+      enabledGenerators: ["type", "apiClient" /*, "reactQuery"*/],
+      isBrowser: true,
+    },
+  );
+
+  t.equal(clientExitCode, 0);
+
+  t.timeout = 20000;
+
+  const serverApiClientImport = await import(
+    pathToFileURL(pathJoin(serverGeneratedDirectory, "server/apiClient.js"))
+  );
+  const serverControllerImport = await import(
+    pathToFileURL(pathJoin(serverGeneratedDirectory, "server/controller.js"))
+  );
+  let clientApiClientImport;
+
+  const app = await buildTestApp(serverGeneratedDirectory);
   const axiosInstance = Axios.create({});
   await createTestAppAndClient(app, axiosInstance);
+
+  t.test("client - transpile and import", async (t) => {
+    await writeFile(
+      pathJoin(clientGeneratedDirectory, "../tsconfig.json"),
+      JSON.stringify({
+        compilerOptions: {
+          strict: true,
+          allowJs: true,
+          noErrorTruncation: true,
+          moduleResolution: "node",
+          esModuleInterop: true,
+          downlevelIteration: true,
+          jsx: "preserve",
+          module: "ES6",
+          lib: ["ESNext", "DOM"],
+          target: "ESNext",
+        },
+        include: ["./**/*.ts"],
+      }),
+    );
+
+    const { exitCode: transpileExitCode } = await spawn(
+      "yarn",
+      ["tsc", "-p", pathJoin(clientGeneratedDirectory, "../")],
+      {},
+    );
+
+    t.equal(transpileExitCode, 0);
+
+    clientApiClientImport = await import(
+      pathToFileURL(pathJoin(clientGeneratedDirectory, "server/apiClient.js"))
+    );
+  });
 
   t.test("client - request cancellation works", async (t) => {
     try {
@@ -254,11 +455,11 @@ test("code-gen/e2e-server", async (t) => {
 
   t.test("routerClearMemoizedHandlers", async (t) => {
     const controllerImport = await import(
-      "../../../generated/testing/server/server/controller.js"
+      pathToFileURL(pathJoin(serverGeneratedDirectory, "server/controller.js"))
     );
 
     const commonImport = await import(
-      "../../../generated/testing/server/common/router.js"
+      pathToFileURL(pathJoin(serverGeneratedDirectory, "common/router.js"))
     );
 
     controllerImport.serverHandlers.getId = () => {
@@ -285,12 +486,12 @@ test("code-gen/e2e-server", async (t) => {
   });
 });
 
-async function buildTestApp() {
+async function buildTestApp(importDir) {
   const controllerImport = await import(
-    "../../../generated/testing/server/server/controller.js"
+    pathToFileURL(pathJoin(importDir, "server/controller.js"))
   );
   const commonImport = await import(
-    "../../../generated/testing/server/common/router.js"
+    pathToFileURL(pathJoin(importDir, "common/router.js"))
   );
 
   const app = getApp({
