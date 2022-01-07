@@ -939,11 +939,11 @@ declare global {
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
   };
   type QueryResultStoreFile = StoreFile & {
-    group?: QueryResultStoreFileGroup | string | number;
+    group?: QueryResultStoreFileGroup | string;
   };
   type QueryResultStoreFileGroup = StoreFileGroup & {
-    file?: QueryResultStoreFile | string | number;
-    parent?: QueryResultStoreFileGroup | string | number;
+    file?: QueryResultStoreFile | string;
+    parent?: QueryResultStoreFileGroup | string;
     children?: QueryResultStoreFileGroup[];
   };
   type QueryResultStoreJob = StoreJob & {};
@@ -951,8 +951,8 @@ declare global {
     accessTokens?: QueryResultStoreSessionStoreToken[];
   };
   type QueryResultStoreSessionStoreToken = StoreSessionStoreToken & {
-    session?: QueryResultStoreSessionStore | string | number;
-    refreshToken?: QueryResultStoreSessionStoreToken | string | number;
-    accessToken?: QueryResultStoreSessionStoreToken | string | number;
+    session?: QueryResultStoreSessionStore | string;
+    refreshToken?: QueryResultStoreSessionStoreToken | string;
+    accessToken?: QueryResultStoreSessionStoreToken | string;
   };
 }

@@ -6,7 +6,7 @@ import { TypeCreator } from "../../builders/TypeCreator.js";
 import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/tag.js";
-import { getTypeNameForType } from "../types.js";
+import { generateTypeDefinition, getTypeNameForType } from "../types.js";
 import {
   getPrimaryKeyWithType,
   getQueryEnabledObjects,
@@ -175,10 +175,14 @@ function queryBuilderForType(context, imports, type) {
                relation: { subType },
              },
            ]) => {
+             const { field } = getPrimaryKeyWithType(otherSide);
+
              if (subType === "oneToMany") {
                return `${key}?: QueryResult${otherSide.uniqueName}[]`;
              }
-             return `${key}?: QueryResult${otherSide.uniqueName}|string|number`;
+             return `${key}?: QueryResult${
+               otherSide.uniqueName
+             }|${generateTypeDefinition(context, field)}`;
            },
          )
          .join(",\n")}
