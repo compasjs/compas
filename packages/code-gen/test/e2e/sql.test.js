@@ -1,20 +1,128 @@
 /* eslint-disable import/no-unresolved */
+import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
-import { AppError, isNil, uuid } from "@compas/stdlib";
+import { AppError, isNil, pathJoin, uuid } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   query,
+  storeStructure,
 } from "@compas/store";
-import { queryCategory } from "../../../generated/testing/sql/database/category.js";
-import { queries } from "../../../generated/testing/sql/database/index.js";
-import { queryPost } from "../../../generated/testing/sql/database/post.js";
-import { queryPostage } from "../../../generated/testing/sql/database/postage.js";
-import { queryUser } from "../../../generated/testing/sql/database/user.js";
+import { TypeCreator } from "../../src/builders/index.js";
+import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/e2e/sql", (t) => {
+test("code-gen/e2e/sql", async (t) => {
+  const T = new TypeCreator("sql");
+  const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+    {
+      add: [
+        T.string("coolString").oneOf("true", "false").optional(),
+
+        T.object("user")
+          .keys({
+            nickName: T.string(),
+            email: T.string().searchable(),
+            authKey: T.string(),
+            isCool: T.reference("sql", "coolString").searchable(),
+          })
+          .enableQueries({ withSoftDeletes: true, schema: "public" })
+          .relations(T.oneToMany("posts", T.reference("sql", "post"))),
+
+        T.object("category")
+          .keys({
+            id: T.uuid().primary(),
+            label: T.string().searchable(),
+          })
+          .enableQueries({ withDates: true })
+          .relations(T.oneToMany("posts", T.reference("sql", "postCategory"))),
+
+        T.object("post")
+          .docs("Store a 'user' post.")
+          .keys({
+            title: T.string().searchable(),
+            body: T.string(),
+          })
+          .enableQueries({ withSoftDeletes: true })
+          .relations(
+            T.manyToOne("writer", T.reference("sql", "user"), "posts"),
+
+            T.oneToMany("categories", T.reference("sql", "postCategory")),
+            T.oneToMany("postages", T.reference("sql", "postage")),
+          ),
+
+        T.object("postage")
+          .shortName("pst")
+          .docs("o.0")
+          .keys({
+            value: T.number(),
+          })
+          .enableQueries({ withSoftDeletes: true })
+          .relations(
+            T.manyToOne("post", T.reference("sql", "post"), "postages"),
+            T.oneToOne(
+              "images",
+              T.reference("store", "fileGroup"),
+              "postageImages",
+            ),
+          ),
+
+        // m-m join table
+        T.object("postCategory")
+          .keys({})
+          .enableQueries({ withDates: true })
+          .relations(
+            T.manyToOne("post", T.reference("sql", "post"), "categories"),
+            T.manyToOne("category", T.reference("sql", "category"), "posts"),
+          ),
+
+        // 1-1 test
+        T.object("categoryMeta")
+          .keys({
+            postCount: T.number(),
+            isHighlighted: T.bool().optional().searchable(),
+            isNew: T.bool().sqlDefault(),
+          })
+          .enableQueries()
+          .relations(
+            T.oneToOne("category", T.reference("sql", "category"), "meta"),
+          ),
+
+        // Reference to number primary key
+        T.object("jobStatusAggregate")
+          .keys({})
+          .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
+          .enableQueries(),
+      ],
+      extend: [[storeStructure]],
+    },
+    {
+      enabledGenerators: ["sql", "validator"],
+      isNodeServer: true,
+      dumpApiStructure: false,
+      dumpStructure: true,
+    },
+  );
+
+  t.equal(exitCode, 0);
+
+  const { queries } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/index.js"))
+  );
+  const { queryCategory } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/category.js"))
+  );
+  const { queryPost } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/post.js"))
+  );
+  const { queryPostage } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/postage.js"))
+  );
+  const { queryUser } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/user.js"))
+  );
+
   let sql = undefined;
 
   t.test("create a test db", async (t) => {
@@ -758,8 +866,130 @@ test("code-gen/e2e/sql", (t) => {
     }
   });
 
+  for (let i = 0; i < 5; ++i) {
+    t.test(`${i}: testing sql where with more results`, async (t) => {
+      const { user, posts } = await sqlTestSeed(sql, generatedDirectory);
+
+      t.test(`id equal - user`, async (t) => {
+        const result = await queryUser({
+          where: {
+            id: user.id,
+          },
+        }).exec(sql);
+
+        t.ok(result.length, 1);
+        t.equal(result[0].id, user.id);
+      });
+
+      t.test(`viaXxx - post.viaWriter`, async (t) => {
+        const result = await queryPost({
+          where: {
+            viaWriter: {
+              where: {
+                id: user.id,
+              },
+            },
+          },
+        }).exec(sql);
+
+        t.equal(result.length, 2);
+        for (const post of result) {
+          t.ok(posts.find((it) => it.id === post.id));
+        }
+      });
+
+      t.test(`viaXxx offset+limit - user.viaPosts{0,1}`, async (t) => {
+        const result = await queryUser({
+          where: {
+            viaPosts: {
+              where: {
+                writer: user.id,
+              },
+              offset: 1,
+              limit: 1,
+            },
+          },
+        }).exec(sql);
+
+        t.equal(result.length, 1);
+        t.equal(result[0].id, user.id);
+      });
+    });
+  }
+
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     t.ok(true);
   });
 });
+
+/**
+ * Seeds the following:
+ *
+ * - categories: [
+ *     category1: Category{},
+ *     category2: Category{},
+ *   ]
+ * - user: User{}
+ * - posts: [
+ *     post1: Post{ categories: [category1], },
+ *     post2: Post{ categories: [category1, category2] }
+ *   ]
+ *
+ * @param {Postgres} sql
+ * @param {string} generatedDirectory
+ * @returns {Promise<{category: SqlCategory[], user: SqlUser, posts: SqlPost[]}>}
+ */
+async function sqlTestSeed(sql, generatedDirectory) {
+  const { queries } = await import(
+    pathToFileURL(pathJoin(generatedDirectory, "database/index.js"))
+  );
+
+  const [user] = await queries.userInsert(sql, {
+    email: `${uuid()}@test.com`,
+    authKey: uuid(),
+    isCool: "true",
+    nickName: "Test user",
+  });
+
+  const [category1, category2] = await queries.categoryInsert(sql, [
+    {
+      label: uuid(),
+    },
+    { label: uuid() },
+  ]);
+
+  const [post1, post2] = await queries.postInsert(sql, [
+    {
+      writer: user.id,
+      body: "Post 1",
+      title: "Post 1",
+    },
+    {
+      writer: user.id,
+      body: "Post 2",
+      title: "Post 2",
+    },
+  ]);
+
+  await queries.postCategoryInsert(sql, [
+    {
+      post: post1.id,
+      category: category1.id,
+    },
+    {
+      post: post2.id,
+      category: category1.id,
+    },
+    {
+      post: post2.id,
+      category: category2.id,
+    },
+  ]);
+
+  return {
+    user,
+    posts: [post1, post2],
+    category: [category1, category2],
+  };
+}

@@ -3,7 +3,6 @@ import {
   generateCli,
   generateCodeGen,
   generateStore,
-  generateTestAndBench,
   generateTypes,
 } from "../src/generate.js";
 
@@ -13,6 +12,5 @@ async function main() {
   await generateCli();
   await generateCodeGen();
   await generateStore();
-  await generateTestAndBench();
   await generateTypes();
 }
