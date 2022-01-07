@@ -1,8 +1,7 @@
-import { mainFn, spawn } from "@compas/stdlib";
+import { mainFn } from "@compas/stdlib";
 import {
   generateCli,
   generateCodeGen,
-  generateOpenApiSpec,
   generateStore,
   generateTestAndBench,
   generateTypes,
@@ -10,17 +9,10 @@ import {
 
 mainFn(import.meta, main);
 
-async function main(logger) {
+async function main() {
   await generateCli();
   await generateCodeGen();
   await generateStore();
   await generateTestAndBench();
   await generateTypes();
-  await generateOpenApiSpec();
-
-  logger.info("Transpiling typescript...");
-
-  await spawn("yarn", ["tsc", "-p", "./tsconfig.client-gen.json"], {
-    shell: true,
-  });
 }

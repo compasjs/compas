@@ -8,10 +8,5 @@
     "extendedDiagnostics": true
   },
   "include": ["packages/**/*", "types/**/*"],
-  "exclude": [
-    "generated/testing/bench/**/*",
-    "packages/lint-config/**/*",
-    "**/*.test.js",
-    "**/*.bench.js"
-  ]
+  "exclude": ["packages/lint-config/**/*", "**/*.test.js", "**/*.bench.js"]
 }
