@@ -4,6 +4,138 @@ editLink: false
 
 # Changelog
 
+### [v0.0.180](https://github.com/compasjs/compas/releases/tag/v0.0.180)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.16.0 to 7.16.7
+  ([#1418](https://github.com/compasjs/compas/pull/1418) ,
+  [#1482](https://github.com/compasjs/compas/pull/1482))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.16.3 to 7.16.5
+  ([#1417](https://github.com/compasjs/compas/pull/1417))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/formidable from 2.0.0 to 2.0.3
+  ([#1455](https://github.com/compasjs/compas/pull/1455) ,
+  [#1475](https://github.com/compasjs/compas/pull/1475),
+  [#1494](https://github.com/compasjs/compas/pull/1494))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 16.11.12 to 17.0.8
+  ([#1427](https://github.com/compasjs/compas/pull/1427) ,
+  [#1430](https://github.com/compasjs/compas/pull/1430),
+  [#1445](https://github.com/compasjs/compas/pull/1445) ,
+  [#1447](https://github.com/compasjs/compas/pull/1447),
+  [#1450](https://github.com/compasjs/compas/pull/1450) ,
+  [#1454](https://github.com/compasjs/compas/pull/1454),
+  [#1458](https://github.com/compasjs/compas/pull/1458) ,
+  [#1495](https://github.com/compasjs/compas/pull/1495),
+  [#1496](https://github.com/compasjs/compas/pull/1496) ,
+  [#1498](https://github.com/compasjs/compas/pull/1498))
+- build(deps): bump c8 from 7.10.0 to 7.11.0
+  ([#1481](https://github.com/compasjs/compas/pull/1481))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump crc from 3.8.0 to 4.1.0
+  ([#1449](https://github.com/compasjs/compas/pull/1449) ,
+  [#1491](https://github.com/compasjs/compas/pull/1491))
+  - [Release notes](https://github.com/alexgorbatchev/node-crc/releases)
+- build(deps): bump eslint from 8.4.1 to 8.6.0
+  ([#1439](https://github.com/compasjs/compas/pull/1439) ,
+  [#1492](https://github.com/compasjs/compas/pull/1492))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-import from 2.25.3 to 2.25.4
+  ([#1493](https://github.com/compasjs/compas/pull/1493))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.2.0 to 37.5.1
+  ([#1423](https://github.com/compasjs/compas/pull/1423) ,
+  [#1431](https://github.com/compasjs/compas/pull/1431),
+  [#1440](https://github.com/compasjs/compas/pull/1440) ,
+  [#1444](https://github.com/compasjs/compas/pull/1444),
+  [#1446](https://github.com/compasjs/compas/pull/1446) ,
+  [#1487](https://github.com/compasjs/compas/pull/1487),
+  [#1497](https://github.com/compasjs/compas/pull/1497))
+- build(deps): bump file-type from 17.0.0 to 17.1.1
+  ([#1425](https://github.com/compasjs/compas/pull/1425) ,
+  [#1436](https://github.com/compasjs/compas/pull/1436),
+  [#1471](https://github.com/compasjs/compas/pull/1471))
+- build(deps): bump pino from 7.5.1 to 7.6.2
+  ([#1448](https://github.com/compasjs/compas/pull/1448) ,
+  [#1452](https://github.com/compasjs/compas/pull/1452),
+  [#1470](https://github.com/compasjs/compas/pull/1470))
+- chore(code-gen,store): let sql generator tests use e2e infra
+  ([#1505](https://github.com/compasjs/compas/pull/1505))
+- chore(code-gen): let benchmarks use e2e infra for code-gen
+  ([#1502](https://github.com/compasjs/compas/pull/1502))
+- chore(code-gen): let server, client and open api generator tests use e2e infra
+  for code-gen ([#1504](https://github.com/compasjs/compas/pull/1504))
+- chore(code-gen): move validator tests to e2e tests
+  ([#1501](https://github.com/compasjs/compas/pull/1501))
+- chore(docs): remove api reference generator
+  ([#1480](https://github.com/compasjs/compas/pull/1480))
+- docs(features): add extending the cli docs
+- docs(releases): start with 0.0.180 release notes
+- feat(cli): refactor CLI
+  ([#1456](https://github.com/compasjs/compas/pull/1456),
+  [#1459](https://github.com/compasjs/compas/pull/1459),
+  [#1460](https://github.com/compasjs/compas/pull/1460),
+  [#1467](https://github.com/compasjs/compas/pull/1467),
+  [#1468](https://github.com/compasjs/compas/pull/1468),
+  [#1469](https://github.com/compasjs/compas/pull/1469),
+  [#1474](https://github.com/compasjs/compas/pull/1474),
+  [#1476](https://github.com/compasjs/compas/pull/1476),
+  [#1477](https://github.com/compasjs/compas/pull/1477),
+  [#1479](https://github.com/compasjs/compas/pull/1479),
+  [#1484](https://github.com/compasjs/compas/pull/1484))
+  [#1485](https://github.com/compasjs/compas/pull/1485))
+  [#1486](https://github.com/compasjs/compas/pull/1486))
+  - Closes [#1306](https://github.com/compasjs/compas/pull/1306)
+- feat(cli): add '--lint-config' to compas init
+  ([#1490](https://github.com/compasjs/compas/pull/1490))
+  - Closes [#1478](https://github.com/compasjs/compas/pull/1478)
+- feat(cli): add 'compas check-env' command
+  ([#1483](https://github.com/compasjs/compas/pull/1483))
+- feat(code-gen,store): migrate query builder to generator helper
+  ([#1499](https://github.com/compasjs/compas/pull/1499))
+  - Closes [#1465](https://github.com/compasjs/compas/pull/1465)
+- feat(code-gen): add check to unique relation references
+  ([#1442](https://github.com/compasjs/compas/pull/1442))
+  - Closes [#1437](https://github.com/compasjs/compas/pull/1437)
+- feat(code-gen): make reactQuery generator compatible with react-query@v4
+  ([#1435](https://github.com/compasjs/compas/pull/1435))
+  - Closes [#1422](https://github.com/compasjs/compas/pull/1422)
+- feat(code-gen): support date / time only types
+  ([#1500](https://github.com/compasjs/compas/pull/1500))
+  - Closes [#1421](https://github.com/compasjs/compas/pull/1421)
+- feat(code-gen): use primary key type in query-result union types
+  ([#1506](https://github.com/compasjs/compas/pull/1506))
+- feat(docs): add CLI reference to the docs
+  ([#1489](https://github.com/compasjs/compas/pull/1489))
+  - Closes [#1462](https://github.com/compasjs/compas/pull/1462)
+- feat(server): add options to log middleware to log event name, query and param
+  objects ([#1488](https://github.com/compasjs/compas/pull/1488))
+  - Closes [#1463](https://github.com/compasjs/compas/pull/1463)
+- fix(store): sendTransformedImage requires width higher than zero
+  ([#1434](https://github.com/compasjs/compas/pull/1434))
+  - Closes [#1428](https://github.com/compasjs/compas/pull/1428)
+- fix(store): short circuit image transformer on empty files
+  ([#1420](https://github.com/compasjs/compas/pull/1420))
+
+##### Breaking changes
+
+- **deps**: bump @types/node from 16.11.12 to 17.0.8
+  - Major version bump
+- **deps**: bump crc from 3.8.0 to 4.1.0
+  - Major version bump
+- **cli**: promote new cli to be used
+  - See the release notes for more information
+- **code-gen,store**: migrate query builder to generator helper
+  - `queryXxx().execRaw` has some output differences, verify your usages.
+- **code-gen**: make reactQuery generator compatible with react-query@v4
+  - The `useFooBar.baseKey()` functions now returns an array, and is spread when
+    used in `useFooBar.queryKey()`
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.180.html).
+
 ### [v0.0.179](https://github.com/compasjs/compas/releases/tag/v0.0.179)
 
 ##### Changes
