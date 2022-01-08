@@ -9,7 +9,7 @@ export const cliDefinition = {
   flags: [
     {
       name: "githubToken",
-      rawName: "--githubToken",
+      rawName: "--github-token",
       modifiers: {
         isRequired: true,
       },
