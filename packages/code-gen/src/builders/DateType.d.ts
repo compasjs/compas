@@ -6,7 +6,7 @@ export class DateType extends TypeBuilder {
    *
    * @public
    *
-   * @return {DateType}
+   * @returns {DateType}
    */
   public dateOnly(): DateType;
   /**
@@ -14,7 +14,7 @@ export class DateType extends TypeBuilder {
    *
    * @public
    *
-   * @return {DateType}
+   * @returns {DateType}
    */
   public timeOnly(): DateType;
   /**

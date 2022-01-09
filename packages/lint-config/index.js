@@ -6,12 +6,18 @@
 const settings = {
   root: true,
   globals: {},
+  plugins: ["jsdoc"],
   extends: [
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "prettier",
   ],
+  settings: {
+    jsdoc: {
+      mode: "typescript",
+    },
+  },
   parser: "@babel/eslint-parser",
   parserOptions: {
     requireConfigFile: false,
@@ -54,18 +60,7 @@ const settings = {
         alphabetize: { order: "asc", caseInsensitive: true },
       },
     ],
-  },
-  env: {
-    node: true,
-    es2021: true,
-  },
-};
-/**
- * @type {Record<string, any>} Eslint settings
- */
-const jsdocSettings = {
-  plugins: ["jsdoc"],
-  rules: {
+
     // ESLint plugin jsdoc
     "jsdoc/check-alignment": "error",
     "jsdoc/check-examples": ["off", { padding: 2 }],
@@ -89,24 +84,13 @@ const jsdocSettings = {
     "jsdoc/require-returns-type": "off",
     "jsdoc/valid-types": "off",
   },
-  settings: {
-    jsdoc: {
-      mode: "typescript",
-    },
+  env: {
+    node: true,
+    es2021: true,
   },
 };
 
 /**
  * @type {Record<string, any>} Eslint settings
  */
-module.exports =
-  process.env.CI === "true" || process.env.LINT_JSDOC === "true"
-    ? {
-        ...settings,
-        ...jsdocSettings,
-        rules: {
-          ...settings.rules,
-          ...jsdocSettings.rules,
-        },
-      }
-    : settings;
+module.exports = settings;

@@ -13,10 +13,23 @@ The default configuration can be initialized via 'compas init --lint-config'.
 `,
   flags: [
     {
-      name: "jsdoc",
-      rawName: "--jsdoc",
+      name: "skipPrettier",
+      rawName: "--skip-prettier",
+      description: "Skip running Prettier.",
+    },
+    {
+      name: "skipEslint",
+      rawName: "--skip-eslint",
+      description: "Skip running ESLint.",
+    },
+    {
+      name: "eslintCacheLocation",
+      rawName: "--eslint-cache-location",
       description:
-        "Run ESLint with JSDoc rules enabled. This could degrade performance on big projects.",
+        "Location of ESLint cache directory. Defaults to '.cache/eslint/'.",
+      value: {
+        specification: "string",
+      },
     },
   ],
   executor: cliExecutor,
@@ -29,44 +42,50 @@ The default configuration can be initialized via 'compas init --lint-config'.
  * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export async function cliExecutor(logger, state) {
-  const eslintOptions = state.flags.jsdoc
-    ? {
-        env: {
-          ...environment,
-          LINT_JSDOC: "true",
-        },
-      }
-    : {};
+  let exitCode = 0;
 
-  const { exitCode: lint } = await spawn(
-    "./node_modules/.bin/eslint",
-    [
+  if (state.flags.skipEslint !== true) {
+    /** @type {string} */
+    // @ts-ignore
+    const cacheLocation = state.flags.eslintCacheLocation ?? "./.cache/eslint/";
+
+    const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [
       "./**/*.js",
       "--ignore-pattern",
       "node_modules",
-      "--fix",
+      ...(environment.CI === "true" ? [] : ["--fix"]),
       "--no-error-on-unmatched-pattern",
-    ],
-    eslintOptions,
-  );
+      "--cache",
+      "--cache-strategy",
+      "content",
+      "--cache-location",
+      cacheLocation,
+    ]);
+
+    exitCode = lint;
+  }
 
   const prettierCommand =
     environment.CI === "true" ? ["--check"] : ["--write", "--list-different"];
 
-  const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
-    ...prettierCommand,
-    "--ignore-unknown",
-    "--no-error-on-unmatched-pattern",
-    ".",
-  ]);
+  if (state.flags.skipPrettier !== true) {
+    const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
+      ...prettierCommand,
+      "--ignore-unknown",
+      "--no-error-on-unmatched-pattern",
+      ".",
+    ]);
 
-  if (lint === 0 && pretty === 0) {
+    exitCode = exitCode === 0 ? pretty : exitCode;
+  }
+
+  if (exitCode !== 0) {
     return {
-      exitStatus: "passed",
+      exitStatus: "failed",
     };
   }
 
   return {
-    exitStatus: "failed",
+    exitStatus: "passed",
   };
 }

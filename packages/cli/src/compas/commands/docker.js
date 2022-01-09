@@ -399,7 +399,7 @@ async function cleanContainers(logger, state, context) {
 }
 
 /**
-
+ 
  * @param postgresVersion
  * @returns {DockerContext}
  */

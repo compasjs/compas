@@ -248,7 +248,7 @@ export function generatedWhereBuilderHelper(
  *   wherePart?: string,
  *   nestedIndex?: number,
  * }} options
- * @return {import("../types/advanced-types").QueryPart<any[]>}
+ * @returns {import("../types/advanced-types").QueryPart<any[]>}
  */
 export function generatedQueryBuilderHelper(
   entity,

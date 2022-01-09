@@ -10,6 +10,7 @@ export function lowerCaseFirst(str = "") {
 
 /**
  * Converts 'code-mod', 'code_mod' to 'codeMod'
+ *
  * @param {string} str
  * @returns {string}
  */
