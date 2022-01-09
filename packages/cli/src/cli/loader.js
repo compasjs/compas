@@ -12,6 +12,7 @@ import { validateCliCommandDefinition } from "../generated/cli/validators.js";
 
 /**
  * Load the specified directories and return a command array
+ *
  * @param {InsightEvent} event
  * @param {{inputs: { directory: string, validateOnLoad: boolean }[]}} options
  * @returns {Promise<import("../generated/common/types").CliCommandDefinitionInput[]>}

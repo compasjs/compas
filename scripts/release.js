@@ -34,7 +34,7 @@ export const cliDefinition = {
  *
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("@compas/cli").CliExecutorState} state
- * @return {Promise<import("@compas/cli").CliResult>}
+ * @returns {Promise<import("@compas/cli").CliResult>}
  */
 async function cliExecutor(logger, state) {
   const packages = [

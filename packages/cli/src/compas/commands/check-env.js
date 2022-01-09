@@ -57,7 +57,7 @@ ${envLocalResult.message}
 /**
  * If a `.env.local` exists, it should be ignored
  *
- * @return {Promise<{ failed: boolean, message: string }>}
+ * @returns {Promise<{ failed: boolean, message: string }>}
  */
 async function isEnvLocalNotIgnored() {
   let result;
@@ -88,7 +88,7 @@ async function isEnvLocalNotIgnored() {
  * leads to weird behaviour. So warn if that is happening.
  *
  * @param {string} compasVersion
- * @return {Promise<{ failed: boolean, message: string }>}
+ * @returns {Promise<{ failed: boolean, message: string }>}
  */
 async function areOtherCompasVersionsInstalled(compasVersion) {
   const foundVersions = [];

@@ -7,6 +7,7 @@
 export function lowerCaseFirst(str?: string | undefined): string;
 /**
  * Converts 'code-mod', 'code_mod' to 'codeMod'
+ *
  * @param {string} str
  * @returns {string}
  */

@@ -169,11 +169,13 @@ ESLint is used for all JavaScript files and Prettier runs on JavaScript, JSON,
 Markdown, and YAML files. The default configuration can be initialized via
 'compas init --lint-config'.
 
-| Option     | Description                                                                                    |
-| ---------- | ---------------------------------------------------------------------------------------------- |
-| --jsdoc    | Run ESLint with JSDoc rules enabled. This could degrade performance on big projects. (boolean) |
-| --timings  | Print information about CLI execution time. (boolean)                                          |
-| -h, --help | Display information about the current command. (boolean)                                       |
+| Option                  | Description                                                                |
+| ----------------------- | -------------------------------------------------------------------------- |
+| --skip-prettier         | Skip running Prettier. (boolean)                                           |
+| --skip-eslint           | Skip running ESLint. (boolean)                                             |
+| --eslint-cache-location | Location of ESLint cache directory. Defaults to '.cache/eslint/'. (string) |
+| --timings               | Print information about CLI execution time. (boolean)                      |
+| -h, --help              | Display information about the current command. (boolean)                   |
 
 ## `compas migrate`
 

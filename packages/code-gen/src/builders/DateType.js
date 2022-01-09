@@ -18,7 +18,7 @@ export class DateType extends TypeBuilder {
    *
    * @public
    *
-   * @return {DateType}
+   * @returns {DateType}
    */
   dateOnly() {
     this.data.specifier = "dateOnly";
@@ -42,7 +42,7 @@ export class DateType extends TypeBuilder {
    *
    * @public
    *
-   * @return {DateType}
+   * @returns {DateType}
    */
   timeOnly() {
     this.data.specifier = "timeOnly";
