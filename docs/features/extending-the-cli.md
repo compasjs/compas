@@ -30,7 +30,10 @@ following config object:
 ```
 
 All files in the specified directories should also export a cli definition
-object to be loaded.
+object to be loaded. When checking if a custom file is indeed a command fails,
+the file is skipped. This also results in files depending on missing
+dependencies, like dev dependencies in production environments, not registering
+as a command.
 
 ## CLI Definition
 

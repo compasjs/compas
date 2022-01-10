@@ -10,8 +10,7 @@ Let's start by checking the system and project requirements;
 To add Compas to your project, install the following most used packages:
 
 ```shell
-yarn add -D -E @compas/cli
-yarn add -E @compas/stdlib
+yarn add -E @compas/cli @compas/stdlib
 ```
 
 Let's explore Compas starting with the [CLI](/features/cli.md)

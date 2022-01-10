@@ -6,6 +6,7 @@ import {
   eventStart,
   eventStop,
   isNil,
+  isProduction,
   pathJoin,
 } from "@compas/stdlib";
 import { validateCliCommandDefinition } from "../generated/cli/validators.js";
@@ -40,27 +41,39 @@ export async function cliLoaderLoadDirectories(event, options) {
       }
 
       const filePath = pathJoin(input.directory, f);
-      const imported = await import(
-        // @ts-ignore
-        pathToFileURL(filePath)
-      );
-      if (isNil(imported.cliDefinition)) {
-        continue;
-      }
 
-      if (input.validateOnLoad) {
-        const validateResult = validateCliCommandDefinition(
-          imported.cliDefinition,
+      try {
+        const imported = await import(
+          // @ts-ignore
+          pathToFileURL(filePath)
         );
-
-        if (validateResult.error) {
-          event.log.error(`Error loading 'cliDefinition' from '${filePath}'`);
-          event.log.error(AppError.format(validateResult.error));
+        if (isNil(imported.cliDefinition)) {
           continue;
         }
-      }
 
-      result.push(imported.cliDefinition);
+        if (input.validateOnLoad) {
+          const validateResult = validateCliCommandDefinition(
+            imported.cliDefinition,
+          );
+
+          if (validateResult.error) {
+            event.log.error(
+              `Error loading 'cliDefinition' from '${filePath}'.`,
+            );
+            event.log.error(AppError.format(validateResult.error));
+            continue;
+          }
+        }
+
+        result.push(imported.cliDefinition);
+      } catch (e) {
+        // Skip logging on production, may be because of not installed dev dependencies.
+        // The user will get an error anyway, since the command does not exist.
+        if (!isProduction()) {
+          event.log.error(`Error loading 'cliDefinition' from '${filePath}'.`);
+          event.log.error(AppError.format(e));
+        }
+      }
     }
   }
 
