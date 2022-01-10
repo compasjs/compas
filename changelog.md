@@ -4,6 +4,28 @@ editLink: false
 
 # Changelog
 
+### [v0.0.181](https://github.com/compasjs/compas/releases/tag/v0.0.181)
+
+##### Changes
+
+- build(deps): bump eslint-plugin-jsdoc from 37.5.1 to 37.6.1
+  ([#1511](https://github.com/compasjs/compas/pull/1511))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(create-release): fix cliDefinition
+- feat(cli): use ESLint cache, default enable JSDoc rules for `compas lint`
+  ([#1510](https://github.com/compasjs/compas/pull/1510))
+  - Closes [#1429](https://github.com/compasjs/compas/pull/1429)
+- fix(cli): catch import errors when loading project level commands
+  ([#1512](https://github.com/compasjs/compas/pull/1512))
+
+##### Breaking changes
+
+- **cli**: use ESLint cache, default enable JSDoc rules for `compas lint`
+  - JSDoc related ESLint rules are enabled by default locally now, they were
+    already enabled on `CI=true` (which is set by most CI platforms).
+  - Add `.cache` to your `.gitignore`. Or specify another ESLint cache directory
+    via `--eslint-cache-location`.
+
 ### [v0.0.180](https://github.com/compasjs/compas/releases/tag/v0.0.180)
 
 ##### Changes
