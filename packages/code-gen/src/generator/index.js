@@ -10,6 +10,7 @@ import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
+import { processRouteInvalidations } from "./router/invalidations.js";
 import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { generateModelFiles } from "./sql/models.js";
 import { createOrderByTypes } from "./sql/order-by-type.js";
@@ -122,24 +123,36 @@ export function generate(logger, options, structure) {
       exitOnErrorsOrReturn(context);
     }
 
+    if (
+      context.options.enabledGenerators.includes("router") ||
+      context.options.enabledGenerators.includes("reactQuery")
+    ) {
+      processRouteInvalidations(context);
+      exitOnErrorsOrReturn(context);
+    }
+
     generateCommonFiles(context);
 
     if (context.options.enabledGenerators.indexOf("validator") !== -1) {
       generateValidatorFile(context);
       exitOnErrorsOrReturn(context);
     }
+
     if (context.options.enabledGenerators.indexOf("router") !== -1) {
       generateRouterFiles(context);
       exitOnErrorsOrReturn(context);
     }
+
     if (context.options.enabledGenerators.indexOf("apiClient") !== -1) {
       generateApiClientFiles(context);
       exitOnErrorsOrReturn(context);
     }
+
     if (context.options.enabledGenerators.indexOf("reactQuery") !== -1) {
       generateReactQueryFiles(context);
       exitOnErrorsOrReturn(context);
     }
+
     if (context.options.enabledGenerators.indexOf("sql") !== -1) {
       generateModelFiles(context);
       exitOnErrorsOrReturn(context);

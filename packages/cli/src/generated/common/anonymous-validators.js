@@ -224,7 +224,7 @@ export function anonymousValidator423569622(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  const errors = [];
+  let errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys423569622.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -304,11 +304,11 @@ export function anonymousValidator1489856765(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  const errors = [];
+  let errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1833756126(
       value[i],
-      `${propertyPath}[${i}]`,
+      propertyPath + "[" + i + "]",
     );
     if (arrVar.errors) {
       errors.push(...arrVar.errors);
@@ -455,7 +455,7 @@ export function anonymousValidator334628214(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  const errors = [];
+  let errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys334628214.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -592,7 +592,7 @@ export function anonymousValidator621901455(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  const errors = [];
+  let errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys621901455.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -658,7 +658,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  const errors = [];
+  let errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1885876481.has(key)) {
       /** @type {{ errors: InternalError[] }} */
@@ -718,11 +718,11 @@ export function anonymousValidator1259325376(value, propertyPath) {
     };
   }
   const result = Array.from({ length: value.length });
-  const errors = [];
+  let errors = [];
   for (let i = 0; i < value.length; ++i) {
     const arrVar = anonymousValidator1885876481(
       value[i],
-      `${propertyPath}[${i}]`,
+      propertyPath + "[" + i + "]",
     );
     if (arrVar.errors) {
       errors.push(...arrVar.errors);
@@ -790,7 +790,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     };
   }
   const result = Object.create(null);
-  const errors = [];
+  let errors = [];
   for (const key of Object.keys(value)) {
     if (!objectKeys1833756126.has(key)) {
       /** @type {{ errors: InternalError[] }} */

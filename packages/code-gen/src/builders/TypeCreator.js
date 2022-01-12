@@ -13,6 +13,7 @@ import { PickType } from "./PickType.js";
 import { ReferenceType } from "./ReferenceType.js";
 import { RelationType } from "./RelationType.js";
 import { RouteCreator } from "./RouteBuilder.js";
+import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { SearchableType } from "./SearchableType.js";
 import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
@@ -199,5 +200,18 @@ export class TypeCreator {
    */
   oneToOne(ownKey, reference, referencedKey) {
     return new RelationType("oneToOne", ownKey, reference, referencedKey);
+  }
+
+  /**
+   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
+   * can be executed when the generated hook is called.
+   *
+   * @param {string} group
+   * @param {string} [name]
+   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @returns {RouteInvalidationType}
+   */
+  invalidates(group, name, properties) {
+    return new RouteInvalidationType(group, name, properties);
   }
 }

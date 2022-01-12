@@ -88,6 +88,27 @@ export function exitOnErrorsOrReturn(context) {
         str += `Relation name '${error.ownKey}' from type '${error.type}' is a reserved keyword. Use another relation name.`;
         break;
 
+      case "routerUnknownInvalidationTarget":
+        str += `Invalidation from '${
+          error.from
+        }' specifies an invalid target (group: '${error.target.group}'${
+          error.target.name ? `, name: '${error.target.name}'` : ""
+        }).
+  Valid targets are 'R.get()' and 'R.post().idempotent()' routes.`;
+        break;
+
+      case "routerIncorrectlySpecifiedInvalidation":
+        str += `Invalidation from '${error.from}' to '(group: '${
+          error.target.group
+        }'${
+          error.target.name ? `, name: '${error.target.name}'` : ""
+        })' has an invalid specification.
+  The specified source ([${error.sourcePropertyPath.join(
+    ", ",
+  )}]) or target ('${error.targetPropertyPath.join(".")}') does not exist.
+  Both should be defined on their appropriate routes. See the docs for the constraints.`;
+        break;
+
       default:
         str += `[${error["key"] ?? "unknown"}]: ${JSON.stringify(
           error,

@@ -81,6 +81,24 @@ export function applyCodeGenStructure(app) {
             type: T.string(),
             ownKey: T.string(),
           },
+          {
+            key: "routerUnknownInvalidationTarget",
+            from: T.string(),
+            target: {
+              group: T.string(),
+              name: T.string().optional(),
+            },
+          },
+          {
+            key: "routerIncorrectlySpecifiedInvalidation",
+            from: T.string(),
+            target: {
+              group: T.string(),
+              name: T.string().optional(),
+            },
+            sourcePropertyPath: [T.string()],
+            targetPropertyPath: [T.string()],
+          },
         ),
       ],
     }),
@@ -403,14 +421,47 @@ function getTypes(T) {
     body: T.reference("codeGen", "type").optional(),
     files: T.reference("codeGen", "type").optional(),
     response: T.reference("codeGen", "type").optional(),
+    invalidations: T.array()
+      .values(T.reference("codeGen", "routeInvalidationType"))
+      .default("[]"),
 
-    // Needs to be in sync with `recursivelyRemoveInternalFields`
+    // Needs to be in sync with
+    // `recursivelyRemoveInternalFields`
     internalSettings: T.object()
       .keys({
         requestBodyType: T.string().oneOf("json", "form-data").optional(),
       })
       .loose()
       .default(`{ "requestBodyType": "json" }`),
+  });
+
+  const routeInvalidationType = T.object("routeInvalidationType").keys({
+    type: "routeInvalidation",
+    target: T.object()
+      .keys({
+        group: T.string(),
+        name: T.string().optional(),
+      })
+      .loose(),
+    properties: T.object()
+      .keys({
+        useSharedParams: T.bool().default(false),
+        useSharedQuery: T.bool().default(false),
+        specification: T.object()
+          .keys({
+            params: T.generic()
+              .keys(T.string())
+              .values([T.string()])
+              .default("{}"),
+            query: T.generic()
+              .keys(T.string())
+              .values([T.string()])
+              .default("{}"),
+          })
+          .default("{ params: {}, query: {}, }")
+          .loose(),
+      })
+      .loose(),
   });
 
   const allTypes = [
@@ -428,6 +479,7 @@ function getTypes(T) {
     stringType,
     uuidType,
     routeType,
+    routeInvalidationType,
   ];
 
   return allTypes.map((it) => it.loose());

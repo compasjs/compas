@@ -12,6 +12,8 @@ export class RouteBuilder extends TypeBuilder {
     this.data.tags = [];
     this.data.idempotent = false;
 
+    this.invalidates = [];
+
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
     this.bodyBuilder = undefined;
@@ -96,6 +98,24 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
+   * Specify routes that can be invalidated when this route is called.
+   *
+   * @param {...import("./RouteInvalidationType.js").RouteInvalidationType} invalidates
+   * @returns {RouteBuilder}
+   */
+  invalidations(...invalidates) {
+    if (["POST", "PUT", "PATCH", "DELETE"].indexOf(this.data.method) === -1) {
+      throw new Error(
+        "Can only use invalidations on POST, PUT, PATCH or DELETE routes.",
+      );
+    }
+
+    this.invalidates = invalidates;
+
+    return this;
+  }
+
+  /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
@@ -112,6 +132,11 @@ export class RouteBuilder extends TypeBuilder {
       throw new Error(
         `Route ${result.group} - ${result.name} can't have both body and files.`,
       );
+    }
+
+    result.invalidations = [];
+    for (const invalidation of this.invalidates) {
+      result.invalidations.push(invalidation.build());
     }
 
     if (this.queryBuilder) {

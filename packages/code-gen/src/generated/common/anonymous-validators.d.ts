@@ -1224,7 +1224,111 @@ export function anonymousValidator708039854(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, }>}
+ * @returns {EitherN<"routeInvalidation">}
+ */
+export function anonymousValidator719331197(
+  value: any,
+  propertyPath: string,
+): EitherN<"routeInvalidation">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"group": string, "name"?: undefined|string, }>}
+ */
+export function anonymousValidator146110107(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  group: string;
+  name?: undefined | string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{ [ key: string]:(string)[]}>}
+ */
+export function anonymousValidator1711070661(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  [key: string]: string[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"params": { [ key: string]:(string)[]}, "query": { [ key: string]:(string)[]}, }>}
+ */
+export function anonymousValidator1719563809(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  params: {
+    [key: string]: string[];
+  };
+  query: {
+    [key: string]: string[];
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"useSharedParams": boolean, "useSharedQuery": boolean, "specification": {"params": { [ key: string]:(string)[]}, "query": { [ key: string]:(string)[]}, }, }>}
+ */
+export function anonymousValidator1005870638(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  useSharedParams: boolean;
+  useSharedQuery: boolean;
+  specification: {
+    params: {
+      [key: string]: string[];
+    };
+    query: {
+      [key: string]: string[];
+    };
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "routeInvalidation", "target": {"group": string, "name"?: undefined|string, }, "properties": {"useSharedParams": boolean, "useSharedQuery": boolean, "specification": {"params": { [ key: string]:(string)[]}, "query": { [ key: string]:(string)[]}, }, }, }>}
+ */
+export function anonymousValidator224332322(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "routeInvalidation";
+  target: {
+    group: string;
+    name?: undefined | string;
+  };
+  properties: {
+    useSharedParams: boolean;
+    useSharedQuery: boolean;
+    specification: {
+      params: {
+        [key: string]: string[];
+      };
+      query: {
+        [key: string]: string[];
+      };
+    };
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CodeGenRouteInvalidationType)[]>}
+ */
+export function anonymousValidator1463282173(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CodeGenRouteInvalidationType[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, "invalidations": (import("./types").CodeGenRouteInvalidationType)[], }>}
  */
 export function anonymousValidator1390215584(
   value: any,
@@ -1257,11 +1361,12 @@ export function anonymousValidator1390215584(
   body?: undefined | import("./types").CodeGenType;
   files?: undefined | import("./types").CodeGenType;
   response?: undefined | import("./types").CodeGenType;
+  invalidations: import("./types").CodeGenRouteInvalidationType[];
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>}
+ * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenRouteInvalidationType>}
  */
 export function anonymousValidator682551261(
   value: any,
@@ -1281,6 +1386,7 @@ export function anonymousValidator682551261(
   | import("./types").CodeGenStringType
   | import("./types").CodeGenUuidType
   | import("./types").CodeGenRouteType
+  | import("./types").CodeGenRouteInvalidationType
 >;
 /**
  * @param {*} value
@@ -1623,9 +1729,73 @@ export function anonymousValidator40811832(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }>}
+ * @returns {EitherN<"routerUnknownInvalidationTarget">}
  */
-export function anonymousValidator1377212765(
+export function anonymousValidator1533397242(
+  value: any,
+  propertyPath: string,
+): EitherN<"routerUnknownInvalidationTarget">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"group": string, "name"?: undefined|string, }>}
+ */
+export function anonymousValidator825072268(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  group: string;
+  name?: undefined | string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }>}
+ */
+export function anonymousValidator398159942(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  key: "routerUnknownInvalidationTarget";
+  from: string;
+  target: {
+    group: string;
+    name?: undefined | string;
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<"routerIncorrectlySpecifiedInvalidation">}
+ */
+export function anonymousValidator1127951435(
+  value: any,
+  propertyPath: string,
+): EitherN<"routerIncorrectlySpecifiedInvalidation">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
+ */
+export function anonymousValidator860724709(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  key: "routerIncorrectlySpecifiedInvalidation";
+  from: string;
+  target: {
+    group: string;
+    name?: undefined | string;
+  };
+  sourcePropertyPath: string[];
+  targetPropertyPath: string[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
+ */
+export function anonymousValidator21212968(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1683,13 +1853,31 @@ export function anonymousValidator1377212765(
       type: string;
       ownKey: string;
     }
+  | {
+      key: "routerUnknownInvalidationTarget";
+      from: string;
+      target: {
+        group: string;
+        name?: undefined | string;
+      };
+    }
+  | {
+      key: "routerIncorrectlySpecifiedInvalidation";
+      from: string;
+      target: {
+        group: string;
+        name?: undefined | string;
+      };
+      sourcePropertyPath: string[];
+      targetPropertyPath: string[];
+    }
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, })[]>}
+ * @returns {EitherN<({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[]>}
  */
-export function anonymousValidator1318063775(
+export function anonymousValidator1323339094(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1748,12 +1936,30 @@ export function anonymousValidator1318063775(
         type: string;
         ownKey: string;
       }
+    | {
+        key: "routerUnknownInvalidationTarget";
+        from: string;
+        target: {
+          group: string;
+          name?: undefined | string;
+        };
+      }
+    | {
+        key: "routerIncorrectlySpecifiedInvalidation";
+        from: string;
+        target: {
+          group: string;
+          name?: undefined | string;
+        };
+        sourcePropertyPath: string[];
+        targetPropertyPath: string[];
+      }
   )[]
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, })[], }>}
+ * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[], }>}
  */
 export function anonymousValidator980814292(
   value: any,
@@ -1818,6 +2024,24 @@ export function anonymousValidator980814292(
         key: "sqlReservedRelationKey";
         type: string;
         ownKey: string;
+      }
+    | {
+        key: "routerUnknownInvalidationTarget";
+        from: string;
+        target: {
+          group: string;
+          name?: undefined | string;
+        };
+      }
+    | {
+        key: "routerIncorrectlySpecifiedInvalidation";
+        from: string;
+        target: {
+          group: string;
+          name?: undefined | string;
+        };
+        sourcePropertyPath: string[];
+        targetPropertyPath: string[];
       }
   )[];
 }>;

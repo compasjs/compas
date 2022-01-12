@@ -1,5 +1,6 @@
 export class RouteBuilder extends TypeBuilder {
   constructor(method: any, group: any, name: any, path: any);
+  invalidates: any[];
   queryBuilder: any;
   paramsBuilder: any;
   bodyBuilder: any;
@@ -38,6 +39,15 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   files(builder: any): RouteBuilder;
+  /**
+   * Specify routes that can be invalidated when this route is called.
+   *
+   * @param {...import("./RouteInvalidationType.js").RouteInvalidationType} invalidates
+   * @returns {RouteBuilder}
+   */
+  invalidations(
+    ...invalidates: import("./RouteInvalidationType.js").RouteInvalidationType[]
+  ): RouteBuilder;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
