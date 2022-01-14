@@ -176,9 +176,12 @@ export function transformComponents(structure, components) {
    * @returns {any}
    */
   function transformTypes(component) {
-    const property = {
-      description: component.docString,
-    };
+    const property = {};
+
+    // set description, if docString is not empty
+    if (component.docString.length !== 0) {
+      property.description = component.docString;
+    }
 
     switch (component.type) {
       // primitive
