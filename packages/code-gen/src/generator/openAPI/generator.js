@@ -33,10 +33,6 @@ const OPENAPI_SPEC_TEMPLATE = {
       },
     },
   },
-  externalDocs: {
-    description: "Find more info here (Compas)",
-    url: "https://compasjs.com/",
-  },
   // pass-through (settings)
   servers: [],
 };
