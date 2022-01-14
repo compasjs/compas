@@ -121,39 +121,6 @@ export class TypeCreator {
     reference: ReferenceType,
     referencedKey: string,
   ): RelationType;
-  /**
-   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
-   * can be executed when the generated hook is called.
-   *
-   * @param {string} group
-   * @param {string} [name]
-   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
-   * @returns {RouteInvalidationType}
-   */
-  invalidates(
-    group: string,
-    name?: string | undefined,
-    properties?:
-      | {
-          useSharedParams?: boolean | undefined;
-          useSharedQuery?: boolean | undefined;
-          specification?:
-            | {
-                params?:
-                  | {
-                      [key: string]: string[];
-                    }
-                  | undefined;
-                query?:
-                  | {
-                      [key: string]: string[];
-                    }
-                  | undefined;
-              }
-            | undefined;
-        }
-      | undefined,
-  ): RouteInvalidationType;
 }
 import { AnyType } from "./AnyType.js";
 import { AnyOfType } from "./AnyOfType.js";
@@ -173,5 +140,4 @@ import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
 import { RouteCreator } from "./RouteBuilder.js";
 import { RelationType } from "./RelationType.js";
-import { RouteInvalidationType } from "./RouteInvalidationType.js";
 //# sourceMappingURL=TypeCreator.d.ts.map

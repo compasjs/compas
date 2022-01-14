@@ -29,7 +29,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
 
   t.test("error with unknown group", async (t) => {
     const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [R.post("/").invalidations(T.invalidates("unknown"))],
+      [R.post("/").invalidations(R.invalidates("unknown"))],
       {
         enabledGenerators: ["validator", "router", "type"],
         isNodeServer: true,
@@ -47,7 +47,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
 
   t.test("error with unknown name", async (t) => {
     const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [R.post("/").invalidations(T.invalidates("app", "unknown"))],
+      [R.post("/").invalidations(R.invalidates("app", "unknown"))],
       {
         enabledGenerators: ["validator", "router", "type"],
         isNodeServer: true,
@@ -67,7 +67,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
     const { exitCode, stdout } = await codeGenToTemporaryDirectory(
       [
         R.post("/", "list").response({}),
-        R.post("/update", "update").invalidations(T.invalidates("app", "list")),
+        R.post("/update", "update").invalidations(R.invalidates("app", "list")),
       ],
       {
         enabledGenerators: ["validator", "router", "type"],
@@ -88,7 +88,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
     const { exitCode } = await codeGenToTemporaryDirectory(
       [
         R.post("/", "list").idempotent().response({}),
-        R.post("/update", "update").invalidations(T.invalidates("app", "list")),
+        R.post("/update", "update").invalidations(R.invalidates("app", "list")),
       ],
       {
         enabledGenerators: ["validator", "router", "type"],
@@ -112,7 +112,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
               id: T.uuid(),
             })
             .invalidations(
-              T.invalidates("app", "list", {
+              R.invalidates("app", "list", {
                 useSharedParams: true,
                 useSharedQuery: true,
               }),
@@ -152,7 +152,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
               endDate: T.date().optional(),
             })
             .invalidations(
-              T.invalidates("app", "get", {
+              R.invalidates("app", "get", {
                 useSharedParams: true,
                 useSharedQuery: true,
               }),
@@ -190,7 +190,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
             endDate: T.date().optional(),
           })
           .invalidations(
-            T.invalidates("app", "get", {
+            R.invalidates("app", "get", {
               specification: {
                 params: {
                   id: ["params", "id"],
@@ -222,7 +222,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
           .response({}),
 
         R.post("/update", "update").invalidations(
-          T.invalidates("app", "get", {
+          R.invalidates("app", "get", {
             specification: {
               params: {
                 id: ["params", "id"],
@@ -261,7 +261,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
             id: T.uuid(),
           })
           .invalidations(
-            T.invalidates("app", "list", {
+            R.invalidates("app", "list", {
               specification: {
                 query: {
                   id: ["params", "id"],

@@ -1,5 +1,6 @@
 import { isNil } from "@compas/stdlib";
 import { lowerCaseFirst } from "../utils.js";
+import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -310,6 +311,19 @@ export class RouteCreator {
     this.responseBuilder = builder;
 
     return this;
+  }
+
+  /**
+   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
+   * can be executed when the generated hook is called.
+   *
+   * @param {string} group
+   * @param {string} [name]
+   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @returns {RouteInvalidationType}
+   */
+  invalidates(group, name, properties) {
+    return new RouteInvalidationType(group, name, properties);
   }
 
   /**

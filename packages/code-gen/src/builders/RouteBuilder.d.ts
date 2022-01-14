@@ -98,6 +98,39 @@ export class RouteCreator {
    */
   response(builder: any): RouteCreator;
   /**
+   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
+   * can be executed when the generated hook is called.
+   *
+   * @param {string} group
+   * @param {string} [name]
+   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @returns {RouteInvalidationType}
+   */
+  invalidates(
+    group: string,
+    name?: string | undefined,
+    properties?:
+      | {
+          useSharedParams?: boolean | undefined;
+          useSharedQuery?: boolean | undefined;
+          specification?:
+            | {
+                params?:
+                  | {
+                      [key: string]: string[];
+                    }
+                  | undefined;
+                query?:
+                  | {
+                      [key: string]: string[];
+                    }
+                  | undefined;
+              }
+            | undefined;
+        }
+      | undefined,
+  ): RouteInvalidationType;
+  /**
    * @param {string} name
    * @param {string} path
    * @returns {RouteCreator}
@@ -153,4 +186,5 @@ export class RouteCreator {
   private create;
 }
 import { TypeBuilder } from "./TypeBuilder.js";
+import { RouteInvalidationType } from "./RouteInvalidationType.js";
 //# sourceMappingURL=RouteBuilder.d.ts.map
