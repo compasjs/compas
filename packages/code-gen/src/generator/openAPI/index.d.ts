@@ -7,13 +7,16 @@
  * @property {any[]} [components]
  */
 /**
+ * @typedef {Object<string,object>} OpenApiRouteExtensions
+ */
+/**
  * @typedef {object} GenerateOpenApiOpts
  * @property {string} inputPath
  * @property {string} outputFile
- * @property {OpenApiExtensions} [openApiExtensions]
- * @property {Object<string,{security:string[]}>} [routeExtensions]
  * @property {string[]} [enabledGroups]
  * @property {boolean} [verbose]
+ * @property {OpenApiExtensions} [openApiExtensions]
+ * @property {OpenApiRouteExtensions} [openApiRouteExtensions]
  */
 /**
  * @param {Logger} logger
@@ -31,18 +34,19 @@ export type OpenApiExtensions = {
   servers?: any[] | undefined;
   components?: any[] | undefined;
 };
+export type OpenApiRouteExtensions = {
+  [x: string]: object;
+};
 export type GenerateOpenApiOpts = {
   inputPath: string;
   outputFile: string;
-  openApiExtensions?: OpenApiExtensions | undefined;
-  routeExtensions?:
-    | {
-        [x: string]: {
-          security: string[];
-        };
-      }
-    | undefined;
   enabledGroups?: string[] | undefined;
   verbose?: boolean | undefined;
+  openApiExtensions?: OpenApiExtensions | undefined;
+  openApiRouteExtensions?:
+    | {
+        [x: string]: any;
+      }
+    | undefined;
 };
 //# sourceMappingURL=index.d.ts.map

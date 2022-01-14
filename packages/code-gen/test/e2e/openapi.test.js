@@ -176,8 +176,9 @@ test("code-gen/e2e/openapi", async (t) => {
           },
         },
       },
-      routeExtensions: {
-        fooBar: {
+      openApiRouteExtensions: {
+        GroupUpload: {
+          // used one of server routes
           security: {
             acceptance: ["read", "write"],
             production: ["read"],
@@ -194,6 +195,18 @@ test("code-gen/e2e/openapi", async (t) => {
 
     t.equal(contents.openapi, "3.0.3");
     t.equal(contents.info.version, "0.0.99");
+
+    t.ok(contents.info.title.length > 0);
+    t.ok(contents.info.description.length > 0);
+  });
+
+  t.test("assert pass-through props", async (t) => {
+    const contents = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.equal(contents.servers.length, 1);
+
+    t.ok(!!contents.components.securitySchemes);
+    t.equal(Object.keys(contents.components.securitySchemes).length, 2);
   });
 
   t.test("assert on path conversion", async (t) => {
@@ -202,6 +215,18 @@ test("code-gen/e2e/openapi", async (t) => {
     for (const path of Object.keys(paths)) {
       t.ok(!path.includes(":"), "path contains compas path identifier");
     }
+  });
+
+  t.test("assert on RouteExtensions", async (t) => {
+    const { paths } = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    // find and destructure route with uniqueName: `GroupUpload`
+    const [, { post: groupUpload }] = Object.entries(paths).find(
+      ([path]) => path === "/group/file",
+    );
+
+    t.ok(groupUpload.security);
+    t.equal(Object.keys(groupUpload.security).length, 2);
   });
 
   t.test("assert that structure can be imported", async (t) => {

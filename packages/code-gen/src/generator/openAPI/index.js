@@ -15,13 +15,17 @@ import { generateOpenApiFile } from "./generator.js";
  */
 
 /**
+ * @typedef {Object<string,object>} OpenApiRouteExtensions
+ */
+
+/**
  * @typedef {object} GenerateOpenApiOpts
  * @property {string} inputPath
  * @property {string} outputFile
- * @property {OpenApiExtensions} [openApiExtensions]
- * @property {Object<string,{security:string[]}>} [routeExtensions]
  * @property {string[]} [enabledGroups]
  * @property {boolean} [verbose]
+ * @property {OpenApiExtensions} [openApiExtensions]
+ * @property {OpenApiRouteExtensions} [openApiRouteExtensions]
  */
 
 /**
@@ -63,6 +67,24 @@ export async function generateOpenApi(logger, options) {
         )}"`,
       );
     }
+  }
+
+  // Create set of RouteExtensions uniqueNames, pop one by one.
+  // if name left, a uniqueName is provided that does not exist
+  const routeExtensionsUniqueNames = new Set(
+    Object.keys(options?.openApiRouteExtensions ?? {}),
+  );
+  for (const group of Object.values(structure)) {
+    for (const type of Object.values(group)) {
+      routeExtensionsUniqueNames.delete(type.uniqueName);
+    }
+  }
+  if (routeExtensionsUniqueNames.size > 0) {
+    throw new Error(
+      `RouteExtension(s) provided for non existing uniqueName: ${Array.from(
+        routeExtensionsUniqueNames,
+      ).join(",")}`,
+    );
   }
 
   // if no enabledGroups are provided, take all groups in structure (without compas group)

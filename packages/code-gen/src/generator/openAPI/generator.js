@@ -40,6 +40,7 @@ const OPENAPI_SPEC_TEMPLATE = {
 /**
  * @typedef GenerateOpenApiFileOpts
  * @property {import("./index.js").OpenApiExtensions} openApiExtensions
+ * @property {import("./index.js").OpenApiRouteExtensions} openApiRouteExtensions
  * @property {string[]} enabledGroups
  * @property {boolean} verbose
  */
@@ -90,6 +91,8 @@ export function generateOpenApiFile(structure, options) {
         // requestBody (with files, if any)
         ...transformBody(structure, route),
         responses: constructResponse(structure, route),
+        // @ts-ignore
+        ...(options.openApiRouteExtensions?.[route.uniqueName] ?? {}),
       };
     }
 

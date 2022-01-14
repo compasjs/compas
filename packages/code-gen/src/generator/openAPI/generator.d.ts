@@ -1,6 +1,7 @@
 /**
  * @typedef GenerateOpenApiFileOpts
  * @property {import("./index.js").OpenApiExtensions} openApiExtensions
+ * @property {import("./index.js").OpenApiRouteExtensions} openApiRouteExtensions
  * @property {string[]} enabledGroups
  * @property {boolean} verbose
  */
@@ -15,6 +16,7 @@ export function generateOpenApiFile(
 ): string;
 export type GenerateOpenApiFileOpts = {
   openApiExtensions: import("./index.js").OpenApiExtensions;
+  openApiRouteExtensions: import("./index.js").OpenApiRouteExtensions;
   enabledGroups: string[];
   verbose: boolean;
 };
