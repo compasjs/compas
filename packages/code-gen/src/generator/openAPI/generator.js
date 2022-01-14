@@ -102,7 +102,9 @@ export function generateOpenApiFile(structure, options) {
      */
     // @ts-ignore
     const groupComponents = Object.values(groupStructure).filter(
-      (it) => it.type !== "route",
+      // Strip params types because they're transformed inline
+      // @ts-ignore
+      (it) => it.type !== "route" && !it.uniqueName.endsWith("Params"),
     );
 
     // transform components
