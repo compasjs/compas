@@ -1,17 +1,19 @@
 /**
- * @typedef {object} OpenApiOpts
- * @property {string|undefined} [version]
- * @property {string|undefined} [title]
- * @property {string|undefined} [description]
- * @property {any[]|undefined} [servers]
+ * @typedef {object} OpenApiExtensions
+ * @property {string} [version]
+ * @property {string} [title]
+ * @property {string} [description]
+ * @property {any[]} [servers]
+ * @property {any[]} [components]
  */
 /**
  * @typedef {object} GenerateOpenApiOpts
  * @property {string} inputPath
  * @property {string} outputFile
- * @property {OpenApiOpts} [openApiOptions]
- * @property {string[]|undefined} [enabledGroups]
- * @property {boolean|undefined} [verbose]
+ * @property {OpenApiExtensions} [openApiExtensions]
+ * @property {Object<string,{security:string[]}>} [routeExtensions]
+ * @property {string[]} [enabledGroups]
+ * @property {boolean} [verbose]
  */
 /**
  * @param {Logger} logger
@@ -22,16 +24,24 @@ export function generateOpenApi(
   logger: Logger,
   options: GenerateOpenApiOpts,
 ): Promise<void>;
-export type OpenApiOpts = {
+export type OpenApiExtensions = {
   version?: string | undefined;
   title?: string | undefined;
   description?: string | undefined;
   servers?: any[] | undefined;
+  components?: any[] | undefined;
 };
 export type GenerateOpenApiOpts = {
   inputPath: string;
   outputFile: string;
-  openApiOptions?: OpenApiOpts | undefined;
+  openApiExtensions?: OpenApiExtensions | undefined;
+  routeExtensions?:
+    | {
+        [x: string]: {
+          security: string[];
+        };
+      }
+    | undefined;
   enabledGroups?: string[] | undefined;
   verbose?: boolean | undefined;
 };

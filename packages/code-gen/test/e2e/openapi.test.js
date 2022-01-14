@@ -143,11 +143,46 @@ test("code-gen/e2e/openapi", async (t) => {
       inputPath: serverGeneratedDirectory,
       outputFile,
       enabledGroups: ["server", "group"],
-      openApiOptions: {
+      openApiExtensions: {
         version: "0.0.99",
         title: "Compas Test server OpenAPI Docs",
         description: "Lorem ipsum",
         servers: [{ url: "https://api.compasjs.com" }],
+        components: {
+          securitySchemes: {
+            production: {
+              type: "oauth2",
+              flows: {
+                clientCredentials: {
+                  tokenUrl: "https://api.compasjs.com/token",
+                  scopes: {
+                    read: "Allow to read",
+                  },
+                },
+              },
+            },
+            acceptance: {
+              type: "oauth2",
+              flows: {
+                clientCredentials: {
+                  tokenUrl: "https://api.compasjs.com/token",
+                  scopes: {
+                    read: "Allow to read",
+                    write: "Allow to write",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      routeExtensions: {
+        fooBar: {
+          security: {
+            acceptance: ["read", "write"],
+            production: ["read"],
+          },
+        },
       },
     });
 

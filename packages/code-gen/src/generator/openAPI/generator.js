@@ -12,8 +12,10 @@ import {
  */
 const OPENAPI_SPEC_TEMPLATE = {
   openapi: "3.0.3",
-  paths: {},
+  info: {},
+  servers: [],
   tags: [],
+  paths: {},
   components: {
     schemas: {
       AppError: {
@@ -33,13 +35,11 @@ const OPENAPI_SPEC_TEMPLATE = {
       },
     },
   },
-  // pass-through (settings)
-  servers: [],
 };
 
 /**
  * @typedef GenerateOpenApiFileOpts
- * @property {import("./index.js").OpenApiOpts} openApiOptions
+ * @property {import("./index.js").OpenApiExtensions} openApiExtensions
  * @property {string[]} enabledGroups
  * @property {boolean} verbose
  */
@@ -105,10 +105,10 @@ export function generateOpenApiFile(structure, options) {
 
     // transform components
     const schemas = transformComponents(structure, groupComponents);
-    openApiSpec.components.schemas = {
-      ...openApiSpec.components.schemas,
-      ...schemas,
-    };
+    openApiSpec.components.schemas = Object.assign(
+      schemas,
+      openApiSpec.components.schemas,
+    );
   }
 
   // determine compas version
@@ -119,13 +119,20 @@ export function generateOpenApiFile(structure, options) {
 
   // set meta
   openApiSpec.info = {
-    title: `${options.openApiOptions?.title ?? process.env.APP_NAME}`,
-    description: options.openApiOptions?.description ?? "",
-    version: options.openApiOptions?.version ?? "0.0.0",
+    title: `${options.openApiExtensions?.title ?? process.env.APP_NAME}`,
+    description: options.openApiExtensions?.description ?? "",
+    version: options.openApiExtensions?.version ?? "0.0.0",
   };
 
   // set servers, if any (pass-trough settings)
-  openApiSpec.servers = options.openApiOptions?.servers ?? [];
+  openApiSpec.servers = options.openApiExtensions?.servers ?? [];
+
+  // merge components, if any (pass-trough settings)
+  openApiSpec.components = Object.assign(
+    options.openApiExtensions?.components,
+    {},
+    openApiSpec.components,
+  );
 
   return openApiSpec;
 }

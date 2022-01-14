@@ -6,20 +6,22 @@ import { linkupReferencesInStructure } from "../linkup-references.js";
 import { generateOpenApiFile } from "./generator.js";
 
 /**
- * @typedef {object} OpenApiOpts
- * @property {string|undefined} [version]
- * @property {string|undefined} [title]
- * @property {string|undefined} [description]
- * @property {any[]|undefined} [servers]
+ * @typedef {object} OpenApiExtensions
+ * @property {string} [version]
+ * @property {string} [title]
+ * @property {string} [description]
+ * @property {any[]} [servers]
+ * @property {any[]} [components]
  */
 
 /**
  * @typedef {object} GenerateOpenApiOpts
  * @property {string} inputPath
  * @property {string} outputFile
- * @property {OpenApiOpts} [openApiOptions]
- * @property {string[]|undefined} [enabledGroups]
- * @property {boolean|undefined} [verbose]
+ * @property {OpenApiExtensions} [openApiExtensions]
+ * @property {Object<string,{security:string[]}>} [routeExtensions]
+ * @property {string[]} [enabledGroups]
+ * @property {boolean} [verbose]
  */
 
 /**
@@ -28,7 +30,7 @@ import { generateOpenApiFile } from "./generator.js";
  * @returns {Promise<void>}
  */
 export async function generateOpenApi(logger, options) {
-  options.openApiOptions = options?.openApiOptions ?? {};
+  options.openApiExtensions = options?.openApiExtensions ?? {};
 
   if (options.verbose) {
     logger.info({
@@ -40,6 +42,10 @@ export async function generateOpenApi(logger, options) {
     // @ts-ignore
     pathToFileURL(options.inputPath)
   );
+
+  /**
+   * @type {import("../../generated/common/types").CodeGenContext}
+   */
   const structure = JSON.parse(compasApiStructureString);
   if (!isPlainObject(structure)) {
     throw new Error(
