@@ -30,7 +30,8 @@ export type CodeGenType =
   | CodeGenRelationType
   | CodeGenStringType
   | CodeGenUuidType
-  | CodeGenRouteType;
+  | CodeGenRouteType
+  | CodeGenRouteInvalidationType;
 export type CodeGenAnyType = {
   type: "any";
   docString: string;
@@ -323,6 +324,19 @@ export type CodeGenRouteType = {
   body?: undefined | CodeGenType;
   files?: undefined | CodeGenType;
   response?: undefined | CodeGenType;
+  invalidations: CodeGenRouteInvalidationType[];
+};
+export type CodeGenRouteInvalidationType = {
+  type: "routeInvalidation";
+  target: { group: string; name?: undefined | string };
+  properties: {
+    useSharedParams: boolean;
+    useSharedQuery: boolean;
+    specification: {
+      params: { [key: string]: string[] };
+      query: { [key: string]: string[] };
+    };
+  };
 };
 export type CodeGenContext = {
   options: import("../../App").GenerateOpts;
@@ -366,6 +380,18 @@ export type CodeGenContext = {
         secondName: string;
       }
     | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
+    | {
+        key: "routerUnknownInvalidationTarget";
+        from: string;
+        target: { group: string; name?: undefined | string };
+      }
+    | {
+        key: "routerIncorrectlySpecifiedInvalidation";
+        from: string;
+        target: { group: string; name?: undefined | string };
+        sourcePropertyPath: string[];
+        targetPropertyPath: string[];
+      }
   )[];
 };
 export type CodeGenStructure = {
@@ -418,7 +444,8 @@ export type CodeGenTypeInput =
   | import("./../common/types").CodeGenRelationTypeInput
   | import("./../common/types").CodeGenStringTypeInput
   | import("./../common/types").CodeGenUuidTypeInput
-  | import("./../common/types").CodeGenRouteTypeInput;
+  | import("./../common/types").CodeGenRouteTypeInput
+  | import("./../common/types").CodeGenRouteInvalidationTypeInput;
 export type CodeGenAnyTypeInput = {
   type: "any";
   docString?: undefined | string;
@@ -763,6 +790,23 @@ export type CodeGenRouteTypeInput = {
   body?: undefined | import("./../common/types").CodeGenTypeInput;
   files?: undefined | import("./../common/types").CodeGenTypeInput;
   response?: undefined | import("./../common/types").CodeGenTypeInput;
+  invalidations?:
+    | undefined
+    | import("./../common/types").CodeGenRouteInvalidationTypeInput[];
+};
+export type CodeGenRouteInvalidationTypeInput = {
+  type: "routeInvalidation";
+  target: { group: string; name?: undefined | string };
+  properties: {
+    useSharedParams?: undefined | boolean;
+    useSharedQuery?: undefined | boolean;
+    specification?:
+      | undefined
+      | {
+          params?: undefined | { [key: string]: string[] };
+          query?: undefined | { [key: string]: string[] };
+        };
+  };
 };
 export type CodeGenContextInput = {
   options: import("../../App").GenerateOpts;
@@ -806,6 +850,18 @@ export type CodeGenContextInput = {
         secondName: string;
       }
     | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
+    | {
+        key: "routerUnknownInvalidationTarget";
+        from: string;
+        target: { group: string; name?: undefined | string };
+      }
+    | {
+        key: "routerIncorrectlySpecifiedInvalidation";
+        from: string;
+        target: { group: string; name?: undefined | string };
+        sourcePropertyPath: string[];
+        targetPropertyPath: string[];
+      }
   )[];
 };
 export type CodeGenStructureInput = {

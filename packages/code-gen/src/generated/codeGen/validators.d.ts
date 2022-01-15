@@ -120,6 +120,18 @@ export function validateCodeGenRelationType(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenRelationType>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenRouteInvalidationTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenRouteInvalidationType>}
+ */
+export function validateCodeGenRouteInvalidationType(
+  value:
+    | undefined
+    | any
+    | import("../common/types").CodeGenRouteInvalidationTypeInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenRouteInvalidationType>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenRouteTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenRouteType>}

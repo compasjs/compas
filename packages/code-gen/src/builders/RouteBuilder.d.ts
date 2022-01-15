@@ -1,5 +1,6 @@
 export class RouteBuilder extends TypeBuilder {
   constructor(method: any, group: any, name: any, path: any);
+  invalidates: any[];
   queryBuilder: any;
   paramsBuilder: any;
   bodyBuilder: any;
@@ -38,6 +39,15 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   files(builder: any): RouteBuilder;
+  /**
+   * Specify routes that can be invalidated when this route is called.
+   *
+   * @param {...import("./RouteInvalidationType.js").RouteInvalidationType} invalidates
+   * @returns {RouteBuilder}
+   */
+  invalidations(
+    ...invalidates: import("./RouteInvalidationType.js").RouteInvalidationType[]
+  ): RouteBuilder;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
@@ -87,6 +97,39 @@ export class RouteCreator {
    * @returns {RouteCreator}
    */
   response(builder: any): RouteCreator;
+  /**
+   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
+   * can be executed when the generated hook is called.
+   *
+   * @param {string} group
+   * @param {string} [name]
+   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @returns {RouteInvalidationType}
+   */
+  invalidates(
+    group: string,
+    name?: string | undefined,
+    properties?:
+      | {
+          useSharedParams?: boolean | undefined;
+          useSharedQuery?: boolean | undefined;
+          specification?:
+            | {
+                params?:
+                  | {
+                      [key: string]: string[];
+                    }
+                  | undefined;
+                query?:
+                  | {
+                      [key: string]: string[];
+                    }
+                  | undefined;
+              }
+            | undefined;
+        }
+      | undefined,
+  ): RouteInvalidationType;
   /**
    * @param {string} name
    * @param {string} path
@@ -143,4 +186,5 @@ export class RouteCreator {
   private create;
 }
 import { TypeBuilder } from "./TypeBuilder.js";
+import { RouteInvalidationType } from "./RouteInvalidationType.js";
 //# sourceMappingURL=RouteBuilder.d.ts.map

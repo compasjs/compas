@@ -1,5 +1,6 @@
 import { isNil } from "@compas/stdlib";
 import { lowerCaseFirst } from "../utils.js";
+import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -11,6 +12,8 @@ export class RouteBuilder extends TypeBuilder {
     this.data.path = path;
     this.data.tags = [];
     this.data.idempotent = false;
+
+    this.invalidates = [];
 
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
@@ -96,6 +99,24 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
+   * Specify routes that can be invalidated when this route is called.
+   *
+   * @param {...import("./RouteInvalidationType.js").RouteInvalidationType} invalidates
+   * @returns {RouteBuilder}
+   */
+  invalidations(...invalidates) {
+    if (["POST", "PUT", "PATCH", "DELETE"].indexOf(this.data.method) === -1) {
+      throw new Error(
+        "Can only use invalidations on POST, PUT, PATCH or DELETE routes.",
+      );
+    }
+
+    this.invalidates = invalidates;
+
+    return this;
+  }
+
+  /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
@@ -112,6 +133,11 @@ export class RouteBuilder extends TypeBuilder {
       throw new Error(
         `Route ${result.group} - ${result.name} can't have both body and files.`,
       );
+    }
+
+    result.invalidations = [];
+    for (const invalidation of this.invalidates) {
+      result.invalidations.push(invalidation.build());
     }
 
     if (this.queryBuilder) {
@@ -285,6 +311,19 @@ export class RouteCreator {
     this.responseBuilder = builder;
 
     return this;
+  }
+
+  /**
+   * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
+   * can be executed when the generated hook is called.
+   *
+   * @param {string} group
+   * @param {string} [name]
+   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @returns {RouteInvalidationType}
+   */
+  invalidates(group, name, properties) {
+    return new RouteInvalidationType(group, name, properties);
   }
 
   /**

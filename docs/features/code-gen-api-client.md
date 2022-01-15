@@ -101,7 +101,12 @@ hooks arguments and return types. All hooks also have two special functions:
   query key
 
 With these two you can do custom prefetching, invalidating and optimistic
-updates.
+updates. Invalidations can also be defined from the backend router. That is the
+place where the designers should know which data are mutated and, in turn, which
+routes should be invalidated. If added, mutation hooks will accept an extra
+'hookOptions' object with the option to 'invalidateQueries'. This is off by
+default. To check which queries are invalidated, look at the source of the
+generated hook.
 
 `GET` requests have another speciality generated. An automatic
 `options.enabled`. All required `param`, `query` and `body` parameters are used

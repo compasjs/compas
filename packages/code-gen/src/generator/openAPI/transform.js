@@ -78,6 +78,8 @@ export function transformParams(structure, route) {
       name: key,
       // @ts-ignore
       description: param.docString,
+
+      // @ts-ignore
       required: !param.isOptional,
       in: paramType,
       schema,
@@ -238,6 +240,7 @@ export function transformComponents(structure, components) {
           ),
           required: Object.entries(component.keys).reduce(
             (curr, [key, property]) => {
+              // @ts-ignore
               if (!property?.isOptional) {
                 if (!curr) {
                   // @ts-ignore
