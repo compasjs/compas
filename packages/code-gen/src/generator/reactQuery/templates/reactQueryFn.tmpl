@@ -135,6 +135,8 @@ body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDe
 
 {{ } else { }}
 
+{{ const hasInvalidations = item.invalidations.length > 0; }}
+
 interface {{= upperCaseFirst(funcName) }}Props {
    {{ if (item.params) { }}
    params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
@@ -155,12 +157,55 @@ interface {{= upperCaseFirst(funcName) }}Props {
 /**
  * {{= funcName }}
  {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
+ {{ if (hasInvalidations) { }}* Check the implemenation of this hook to see which routes are invalidated if `hookOptions.invalidateQueries` is truthy.{{ } }}
  * Docs: {{= item.docString }}
  */
 export function {{= funcName }}(
   options: UseMutationOptions<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},
+  {{ if (hasInvalidations) { }}hookOptions: { invalidateQueries?: boolean } = {}, {{ } }}
 ): UseMutationResult<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props, unknown> {
   const axiosInstance = useApi();
+
+  {{ if (hasInvalidations) { }}
+  const queryClient = useQueryClient();
+
+  if (hookOptions?.invalidateQueries) {
+    const originalOnSuccess = options.onSuccess;
+    options.onSuccess = async (data, variables, context) => {
+      {{ for (const invalidation of item.invalidations) { }}
+        {{ let paramsObject = ""; }}
+        {{ let queryObject = ""; }}
+        {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.params).length > 0) { }}
+          {{ paramsObject += "{ "; }}
+          {{ for (const [key, value] of Object.entries(invalidation.properties.specification.params)) { }}
+            {{ paramsObject += key + ": " + "variables." + value.join("."); }}
+          {{ } }}
+          {{ paramsObject += "}"; }}
+        {{ } }}
+
+        {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.query).length > 0) { }}
+          {{ queryObject += "{ "; }}
+          {{ for (const [key, value] of Object.entries(invalidation.properties.specification.query)) { }}
+            {{ queryObject += key + ": " + "variables." + value.join("."); }}
+          {{ } }}
+          {{ queryObject += "}"; }}
+        {{ } }}
+
+        await queryClient.invalidateQueries([
+          "{{= invalidation.target.group }}",
+          {{ if (invalidation.target.name) { }}"{{= invalidation.target.name }}",{{ } }}
+          {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.params).length > 0) { }}{{= paramsObject }},{{ } }}
+          {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.query).length > 0) { }}{{= queryObject }},{{ } }}
+        ]);
+      {{ } }}
+
+      if (typeof originalOnSuccess === "function") {
+        return await originalOnSuccess(data, variables, context);
+      }
+    };
+  }
+
+  {{ } }}
 
   return useMutation(
     (variables) => api{{= item.uniqueName }}(

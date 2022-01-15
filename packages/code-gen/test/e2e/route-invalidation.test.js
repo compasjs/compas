@@ -1,4 +1,6 @@
+import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
+import { pathJoin } from "@compas/stdlib";
 import { TypeCreator } from "../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
@@ -288,5 +290,66 @@ test("code-gen/e2e/route-invalidation", (t) => {
         "source ([params, id]) or target ('specification.query.id')",
       ),
     );
+  });
+
+  t.test("react-query generator", async (t) => {
+    const { exitCode, stdout, generatedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.post("/", "list").idempotent().response({}),
+          R.get("/:id", "get").params({ id: T.uuid() }).response({}),
+          R.post("/:id", "update")
+            .params({ id: T.uuid() })
+            .response({})
+            .invalidations(
+              R.invalidates("app", "list"),
+              R.invalidates("app", "get", { useSharedParams: true }),
+            ),
+        ],
+        {
+          isBrowser: true,
+          enabledGenerators: ["type", "apiClient", "reactQuery"],
+        },
+      );
+
+    t.equal(exitCode, 0, stdout);
+
+    const source = await readFile(
+      pathJoin(generatedDirectory, "app/reactQueries.tsx"),
+      "utf-8",
+    );
+
+    const sourceWithoutNewLines = source.split(/\r?\n/gi).join("");
+
+    t.log.info(sourceWithoutNewLines);
+
+    t.test("get - skips hookOptions", (t) => {
+      t.ok(
+        sourceWithoutNewLines.includes(
+          "options?: UseQueryOptions<T.AppListResponseApi, AppErrorResponse, TData> | undefined,}|undefined) {",
+        ),
+      );
+    });
+
+    t.test("post - defines hookOptions", (t) => {
+      t.ok(
+        sourceWithoutNewLines.includes(
+          `options: UseMutationOptions<T.AppUpdateResponseApi, AppErrorResponse, UseAppUpdateProps> = {},hookOptions: { invalidateQueries?: boolean } = {},`,
+        ),
+      );
+    });
+
+    t.test("post - contains invalidations", (t) => {
+      t.ok(
+        sourceWithoutNewLines.includes(
+          `queryClient.invalidateQueries(["app","list",]);`,
+        ),
+      );
+      t.ok(
+        sourceWithoutNewLines.includes(
+          `queryClient.invalidateQueries(["app","get",{ id: variables.params.id},]);`,
+        ),
+      );
+    });
   });
 });
