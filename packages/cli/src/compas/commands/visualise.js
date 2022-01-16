@@ -82,6 +82,16 @@ export const cliDefinition = {
                 },
               };
             },
+            completions: () => {
+              return {
+                completions: [
+                  { name: "png" },
+                  { name: "webp" },
+                  { name: "pdf" },
+                  { name: "svg" },
+                ],
+              };
+            },
           },
         },
         {

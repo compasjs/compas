@@ -6,6 +6,9 @@ import { TypeCreator } from "@compas/code-gen";
 export function applyCliStructure(app) {
   const T = new TypeCreator("cli");
 
+  // Note that if this is updated, both `compasGetCli` and `cliHelpInit` should be updated.
+  // This is also a downstream breaking change.
+
   app.add(
     T.object("flagDefinition").keys({
       name: T.string(),
@@ -17,11 +20,13 @@ export function applyCliStructure(app) {
         .keys({
           isRepeatable: T.bool().default(false),
           isRequired: T.bool().default(false),
+          isInternal: T.bool().default(false),
         })
         .default(
           JSON.stringify({
             isRepeatable: false,
             isRequired: false,
+            isInternal: false,
           }),
         ),
       value: T.object()
@@ -32,6 +37,12 @@ export function applyCliStructure(app) {
           validator: T.any()
             .raw(
               "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+            )
+            .validator(`((v) => typeof v === "function")`)
+            .optional(),
+          completions: T.any()
+            .raw(
+              "(() => Promise<{ completions: { name: string, description?: string }[] }>|{ completions: { name: string, description?: string }[] })",
             )
             .validator(`((v) => typeof v === "function")`)
             .optional(),
@@ -58,12 +69,22 @@ export function applyCliStructure(app) {
             isCosmetic: false,
           }),
         ),
-      dynamicValidator: T.any()
-        .raw(
-          "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
-        )
-        .validator(`((v) => typeof v === "function")`)
-        .optional(),
+      dynamicValue: T.object()
+        .keys({
+          validator: T.any()
+            .raw(
+              "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+            )
+            .validator(`((v) => typeof v === "function")`)
+            .optional(),
+          completions: T.any()
+            .raw(
+              "(() => Promise<{ completions: { name: string, description?: string }[] }>|{ completions: { name: string, description?: string }[] })",
+            )
+            .validator(`((v) => typeof v === "function")`)
+            .optional(),
+        })
+        .default("{}"),
       subCommands: T.array()
         .values(T.reference("cli", "commandDefinition"))
         .default("[]"),

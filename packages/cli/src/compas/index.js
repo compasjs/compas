@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+import { writeFileSync } from "fs";
 import {
+  AppError,
   eventStart,
   eventStop,
   mainFn,
@@ -15,33 +17,39 @@ async function main(mainLogger) {
   const event = newEvent(mainLogger);
   eventStart(event, "compas.cli");
 
-  const { cli, logger } = await compasGetCli(newEventFromEvent(event), {
-    commandDirectories: {
-      loadScripts: true,
-      loadProjectConfig: true,
-      loadUserConfig: true,
-    },
-  });
+  try {
+    const { cli, logger } = await compasGetCli(newEventFromEvent(event), {
+      commandDirectories: {
+        loadScripts: true,
+        loadProjectConfig: true,
+        loadUserConfig: true,
+      },
+    });
 
-  const { flags, result } = await compasExecCli(
-    newEventFromEvent(event),
-    logger,
-    cli,
-    process.argv.slice(2),
-  );
+    const { flags, result } = await compasExecCli(
+      newEventFromEvent(event),
+      logger,
+      cli,
+      process.argv.slice(2),
+    );
 
-  if (result.error) {
-    logger.error(result.error.message);
-    process.exit(1);
-  }
+    if (result.error) {
+      logger.error(result.error.message);
+      process.exit(1);
+    }
 
-  if (flags?.printTimings) {
-    eventStop(event);
-  }
+    if (flags?.printTimings) {
+      eventStop(event);
+    }
 
-  if (result.value.exitStatus === "passed") {
-    process.exit(0);
-  } else if (result.value.exitStatus === "failed") {
-    process.exit(1);
+    if (result.value.exitStatus === "passed") {
+      process.exit(0);
+    } else if (result.value.exitStatus === "failed") {
+      process.exit(1);
+    }
+  } catch (e) {
+    console.log(`error:${e.message}`);
+    console.log(`e`);
+    writeFileSync("./error.json", JSON.stringify(AppError.format(e), null, 2));
   }
 }

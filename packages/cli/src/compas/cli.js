@@ -53,6 +53,9 @@ References:
         name: "printTimings",
         rawName: "--timings",
         description: "Print information about CLI execution time.",
+        modifiers: {
+          isInternal: true,
+        },
       },
     ],
     modifiers: {

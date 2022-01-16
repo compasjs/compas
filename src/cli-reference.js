@@ -47,9 +47,14 @@ function formatMarkdown(command, options) {
   src += "| Option | Description |\n";
   src += "| --- | --- |\n";
   for (const flag of cliParserGetKnownFlags(command).values()) {
+    if (flag.modifiers.isInternal) {
+      continue;
+    }
+
     if (flag.rawName === "-h") {
       continue;
     }
+
     if (flag.rawName === "--help") {
       flag.rawName = "-h, --help";
     }

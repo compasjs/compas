@@ -19,20 +19,21 @@ export const cliDefinition = {
       modifiers: {
         isDynamic: true,
       },
-      dynamicValidator: (value) => {
-        const scriptCollection = collectScripts();
-        const isValid = !isNil(scriptCollection[value]) || existsSync(value);
+      dynamicValue: {
+        validator: (value) => {
+          const scriptCollection = collectScripts();
+          const isValid = !isNil(scriptCollection[value]) || existsSync(value);
 
-        if (isValid) {
+          if (isValid) {
+            return {
+              isValid,
+            };
+          }
+
           return {
             isValid,
-          };
-        }
-
-        return {
-          isValid,
-          error: {
-            message: `Can run files from the following places:
+            error: {
+              message: `Can run files from the following places:
 - Files located in the scripts directory.
 - Scripts defined in the package.json
 - Any path to a JavaScript file
@@ -49,8 +50,36 @@ ${Object.entries(scriptCollection)
   .map(([key]) => `  - ${key}`)
   .join("\n")}
 `,
-          },
-        };
+            },
+          };
+        },
+        completions: () => {
+          const scriptCollection = collectScripts();
+
+          return {
+            completions: [
+              {
+                name: "<file>",
+                description: "A path to a valid JavaScript file.",
+              },
+              ...Object.keys(scriptCollection).map((it) => {
+                const value = scriptCollection[it];
+
+                if (value.type === "package") {
+                  return {
+                    name: it,
+                    description: `The '${it}' script from the package.json.`,
+                  };
+                }
+
+                return {
+                  name: it,
+                  description: `The '${it}' script defined in ./scripts.`,
+                };
+              }),
+            ],
+          };
+        },
       },
       shortDescription: "The file or script to run.",
     },
