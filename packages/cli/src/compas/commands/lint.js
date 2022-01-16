@@ -45,6 +45,8 @@ export async function cliExecutor(logger, state) {
   let exitCode = 0;
 
   if (state.flags.skipEslint !== true) {
+    logger.info("Running ESLint...");
+
     /** @type {string} */
     // @ts-ignore
     const cacheLocation = state.flags.eslintCacheLocation ?? "./.cache/eslint/";
@@ -65,10 +67,12 @@ export async function cliExecutor(logger, state) {
     exitCode = lint;
   }
 
-  const prettierCommand =
-    environment.CI === "true" ? ["--check"] : ["--write", "--list-different"];
-
   if (state.flags.skipPrettier !== true) {
+    logger.info("Running Prettier...");
+
+    const prettierCommand =
+      environment.CI === "true" ? ["--check"] : ["--write", "--list-different"];
+
     const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
       ...prettierCommand,
       "--ignore-unknown",
