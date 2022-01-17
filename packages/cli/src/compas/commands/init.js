@@ -10,6 +10,17 @@ export const cliDefinition = {
   shortDescription: "Init various files in the current project.",
   flags: [
     {
+      name: "dumpAll",
+      rawName: "--all",
+      description: "Enable '--gitignore', '--jsconfig' and '--lint-config'.",
+    },
+    {
+      name: "dumpGitignore",
+      rawName: "--gitignore",
+      description:
+        "Creates or overwrites the .gitignore, with defaults for IDE(s), Yarn and caches.",
+    },
+    {
       name: "dumpJSConfig",
       rawName: "--jsconfig",
       description:
@@ -33,12 +44,18 @@ export const cliDefinition = {
  */
 export async function cliExecutor(logger, state) {
   let didDump = false;
-  if (state.flags.dumpJSConfig) {
+
+  if (state.flags.dumpGitignore || state.flags.dumpAll) {
+    didDump = true;
+    await writeGitignore();
+  }
+
+  if (state.flags.dumpJSConfig || state.flags.dumpAll) {
     didDump = true;
     await writeJSConfig();
   }
 
-  if (state.flags.dumpLintConfig) {
+  if (state.flags.dumpLintConfig || state.flags.dumpaAll) {
     didDump = true;
     await writeLintConfig();
   }
@@ -56,6 +73,45 @@ export async function cliExecutor(logger, state) {
   return {
     exitStatus: "failed",
   };
+}
+
+async function writeGitignore() {
+  await writeFile(
+    pathJoin(process.cwd(), ".gitignore"),
+    `# OS
+.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules
+
+# Various tools + cache
+.cache
+.clinic
+coverage
+.nyc_output
+
+# Common build directories
+dist
+out
+
+# Generator output
+structure.sql
+
+# Local environment
+.env.local
+`,
+  );
 }
 
 async function writeJSConfig() {
@@ -106,7 +162,8 @@ module.exports = config;
 
   await writeFile(
     "./.prettierignore",
-    `coverage
+    `.cache
+coverage
 node_modules
 .nyc_output
 .clinic
@@ -115,7 +172,8 @@ node_modules
 
   await writeFile(
     "./.eslintignore",
-    `coverage
+    `.cache
+coverage
 node_modules
 .nyc_output
 .clinic
