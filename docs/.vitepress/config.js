@@ -124,6 +124,10 @@ function getHomeSidebar() {
           text: "Extending the CLI",
           link: "/features/extending-the-cli.html",
         },
+        {
+          text: "Route invalidations",
+          link: "/features/route-invalidations.html",
+        },
       ],
     },
     {

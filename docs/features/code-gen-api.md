@@ -177,74 +177,9 @@ compas api
 - `curl http://localhost:3000/hello/world/`: However trailing slashes are
   allowed and ignored.
 
-## Route invalidations
+## Advanced usages
 
-The structure also allows for defining invalidations on POST, PUT, PATCH and
-DELETE routes. For most generators, like the router, validator and apiClient,
-this is a noop. But for caching query clients like reactQuery, this achieves a
-way of communicating which routes should be refetched and allows the consumers
-to do that with a toggle of an boolean.
-
-There are 3 types of invalidations: group level, route level, and parameter
-level. Let's look at an example;
-
-```js
-const T = new TypeCreator("app");
-const R = T.router("/app");
-
-app.add(
-  // Example get routes
-  R.get("/list", "list").response({}),
-  R.get("/:id", "get").params({ id: T.uuid() }).response({}),
-
-  // For operations that mutate all responses in this group, just invalidate the whole group.
-  R.post("/shuffle", "shuffle")
-    .response({})
-    .invalidations(R.invalidates("app")),
-
-  // For operations invalidating a specific route.
-  R.post("/", "create")
-    .body({})
-    .response({})
-    .invalidations(R.invalidates("app", "list")),
-
-  // Invalidate multiple routes,
-  // Both this update route and `AppGet` define a `id` param, so we can use `useSharedParams` to only invalidate the get route of this specific entity.
-  R.put("/:id", "update")
-    .params({ id: T.uuid() })
-    .response({})
-    .invalidations(
-      R.invalidates("app", "list"),
-      R.invalidates("app", "get", { useSharedParams: true }),
-    ),
-
-  // Provide a specification to map properties.
-  R.post("/toggle", "toggle")
-    .body({
-      id: T.uuid(),
-    })
-    .response({})
-    .invalidations(
-      R.invalidates("app", "get", {
-        specification: {
-          params: {
-            id: ["body", "id"],
-          },
-        },
-      }),
-    ),
-);
-```
-
-All above examples can be mixed and matched, to represent how your route
-structure relates to your underlying data source. `useSharedParams` and
-`useQueryParams` are shorthand properties for populating the `specification`.
-They extract the shared properties of the source and target route and build up
-the specification. Existing specification properties take precedence over
-properties that would be defined because of `useSharedParams` or
-`useSharedQuery`. The specification structure is a way of specifying how the
-target `params` and `query` object look like, where the values define an 'object
-path' for which values of the current route to use.
+- [Route invalidations](/features/route-invalidations.html)
 
 [//]: #
 [//]: # "## TODO:"
