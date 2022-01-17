@@ -20,7 +20,6 @@ const OPENAPI_SPEC_TEMPLATE = {
     schemas: {
       AppError: {
         type: "object",
-        description: "https://compasjs.com/api/stdlib.html#AppError",
         properties: {
           info: {
             type: "object",
@@ -53,9 +52,11 @@ const OPENAPI_SPEC_TEMPLATE = {
 export function generateOpenApiFile(structure, options) {
   const openApiSpec = Object.assign({}, OPENAPI_SPEC_TEMPLATE);
 
-  for (const group of Object.keys(structure)) {
-    const groupStructure = structure[group];
+  // holds all referenced objects, used to determine components in schema
+  const uniqueNameSet = new Set();
 
+  // transform CodeGenRouteTypes to endpoints/paths
+  for (const [group, groupStructure] of Object.entries(structure)) {
     /**
      * @type {import("../../generated/common/types").CodeGenRouteType[]}
      */
@@ -86,33 +87,28 @@ export function generateOpenApiFile(structure, options) {
         tags: [route.group],
         description: route.docString,
         operationId: route.uniqueName,
-        // query, params
-        ...transformParams(structure, route),
-        // requestBody (with files, if any)
-        ...transformBody(structure, route),
-        responses: constructResponse(structure, route),
+        ...transformParams(structure, route, uniqueNameSet),
+        ...transformBody(structure, route, uniqueNameSet),
+        responses: constructResponse(structure, route, uniqueNameSet),
         // @ts-ignore
         ...(options.openApiRouteExtensions?.[route.uniqueName] ?? {}),
       };
     }
-
-    /**
-     * @type {import("../../generated/common/types").CodeGenType[]}
-     */
-    // @ts-ignore
-    const groupComponents = Object.values(groupStructure).filter(
-      // Strip params types because they're transformed inline
-      // @ts-ignore
-      (it) => it.type !== "route" && !it.uniqueName.endsWith("Params"),
-    );
-
-    // transform components
-    const schemas = transformComponents(structure, groupComponents);
-    openApiSpec.components.schemas = Object.assign(
-      schemas,
-      openApiSpec.components.schemas,
-    );
   }
+
+  const flattenStructure = Object.assign(
+    {},
+    ...Object.values(structure).flat(),
+  );
+
+  // Recursively resolve nested references
+  resolveComponents(flattenStructure, uniqueNameSet);
+
+  // transform uniqueNameSet to component list (merger)
+  openApiSpec.components.schemas = Object.assign(
+    transformComponents(flattenStructure, uniqueNameSet),
+    openApiSpec.components.schemas,
+  );
 
   // determine compas version
   const compasVersion = parseCompasVersionNumber();
@@ -141,13 +137,58 @@ export function generateOpenApiFile(structure, options) {
 }
 
 /**
+ * Resolve references object for already existing unique object identifiers in uniqueNameSet
+ *
+ * @param {Object<string, import("../../generated/common/types").CodeGenStructure>} flattenStructure
+ * @param {Set<string>} uniqueNameSet
+ * @returns {void}
+ */
+function resolveComponents(flattenStructure, uniqueNameSet) {
+  const components = Object.values(flattenStructure).filter((it) =>
+    // @ts-ignore
+    uniqueNameSet.has(it.uniqueName),
+  );
+
+  for (const component of components) {
+    resolveReferences(component);
+  }
+
+  function resolveReferences(component) {
+    switch (component.type) {
+      case "object":
+        for (const item of Object.values(component.keys)) {
+          resolveReferences(item);
+        }
+        break;
+
+      case "array":
+        resolveReferences(component.values);
+        break;
+
+      case "reference":
+        // @ts-ignore
+        uniqueNameSet.add(component.reference.uniqueName);
+        break;
+
+      case "anyOf":
+        for (const item of component.values) {
+          resolveReferences(item);
+        }
+        break;
+    }
+  }
+}
+
+/**
  * Transform routes to responses but wrapped with possible compas
  * error (http status codes) states (and explanation)
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Set<string>} uniqueNameSet
+ * @returns {Object}
  */
-function constructResponse(structure, route) {
+function constructResponse(structure, route, uniqueNameSet) {
   const contentAppError = {
     "application/json": {
       schema: {
@@ -181,7 +222,7 @@ function constructResponse(structure, route) {
   };
 
   // 200 behaviour
-  const response = transformResponse(structure, route);
+  const response = transformResponse(structure, route, uniqueNameSet);
 
   return {
     200: response,

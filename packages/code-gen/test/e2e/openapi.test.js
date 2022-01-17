@@ -43,6 +43,7 @@ test("code-gen/e2e/openapi", async (t) => {
           T.object("root").keys({
             value: T.object("nested").keys({
               bool: T.bool(),
+              // input: T.reference("server", "input"),
             }),
           }),
         ),
@@ -179,10 +180,10 @@ test("code-gen/e2e/openapi", async (t) => {
       openApiRouteExtensions: {
         GroupUpload: {
           // used one of server routes
-          security: {
-            acceptance: ["read", "write"],
-            production: ["read"],
-          },
+          security: [
+            { acceptance: ["read", "write"] },
+            { production: ["read"] },
+          ],
         },
       },
     });

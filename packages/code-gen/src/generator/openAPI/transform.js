@@ -1,9 +1,12 @@
 /**
+ * Transforms compas query params to OpenApi parameters objects
+ *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {any}
+ * @param {Set<string>} uniqueNameSet
+ * @returns {{parameters?: Object[]}}
  */
-export function transformParams(structure, route) {
+export function transformParams(structure, route, uniqueNameSet) {
   if (!route?.params && !route?.query) {
     return {};
   }
@@ -16,6 +19,7 @@ export function transformParams(structure, route) {
   for (const [key, param] of Object.entries(paramFields)) {
     switch (param.type) {
       case "reference":
+        uniqueNameSet.add(param.reference.uniqueName);
         parameters.push(transformGenType(key, param.reference, "path"));
         break;
       default:
@@ -88,11 +92,14 @@ export function transformParams(structure, route) {
 }
 
 /**
+ * Transform compas body and files to OpenApi requestBody object
+ *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {any}
+ * @param {Set<string>} uniqueNameSet
+ * @returns {{requestBody?: Object}}
  */
-export function transformBody(structure, route) {
+export function transformBody(structure, route, uniqueNameSet) {
   const content = {};
   const field = route?.body ?? route?.files;
 
@@ -106,6 +113,8 @@ export function transformBody(structure, route) {
   // @ts-ignore
   const reference = field?.reference;
   if (reference) {
+    // @ts-ignore
+    uniqueNameSet.add(reference.uniqueName);
     content.schema = {
       // @ts-ignore
       $ref: `#/components/schemas/${reference.uniqueName}`,
@@ -127,9 +136,10 @@ export function transformBody(structure, route) {
 /**
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Set<string>} uniqueNameSet
  * @returns {any}
  */
-export function transformResponse(structure, route) {
+export function transformResponse(structure, route, uniqueNameSet) {
   // 200 behaviour
   const response = {
     // @ts-ignore
@@ -143,6 +153,8 @@ export function transformResponse(structure, route) {
 
   // @ts-ignore
   if (route.response?.reference) {
+    // @ts-ignore
+    uniqueNameSet.add(route.response.reference.uniqueName);
     response.content["application/json"].schema = {
       // @ts-ignore
       $ref: `#/components/schemas/${route.response.reference.uniqueName}`,
@@ -153,12 +165,18 @@ export function transformResponse(structure, route) {
 }
 
 /**
- * @param {import("../../generated/common/types").CodeGenStructure} structure
- * @param {(import("../../generated/common/types").CodeGenType)[]} components
+ *
+ * @param {Object<string,import("../../generated/common/types").CodeGenStructure>} flattenStructure
+ * @param {Set<string>} uniqueNameSet
  * @returns {Object<string, any>}
  */
-export function transformComponents(structure, components) {
+export function transformComponents(flattenStructure, uniqueNameSet) {
   const schemas = {};
+
+  const components = Object.values(flattenStructure).filter((it) =>
+    // @ts-ignore
+    uniqueNameSet.has(it.uniqueName),
+  );
 
   for (const component of components) {
     // @ts-ignore
