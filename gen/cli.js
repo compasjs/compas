@@ -55,7 +55,7 @@ export function applyCliStructure(app) {
     }),
 
     T.object("commandDefinition").keys({
-      name: T.string(),
+      name: T.string().pattern(/^[\w-]+$/g),
       shortDescription: T.string().pattern(/^[^\n]+$/g),
       longDescription: T.string().optional(),
       modifiers: T.object()

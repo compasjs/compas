@@ -1,3 +1,4 @@
+import { writeFile } from "fs/promises";
 import { environment, isNil } from "@compas/stdlib";
 import { cliParserGetKnownFlags, cliParserSplitArgs } from "../parser.js";
 
@@ -78,21 +79,32 @@ export async function cliExecutor(logger, state) {
   /** @type {{ name: string ,description?: string }[] } */
   const completions = [];
 
-  // Always add all sub commands
-  for (const subCommand of matchedCommand.subCommands) {
-    if (subCommand.modifiers.isDynamic) {
-      // Dynamic sub commands always have some form of completions defined, so integrate those.
-      completions.push(
-        ...(await subCommand.dynamicValue.completions()).completions,
-      );
+  // Add sub commands; but don't be to greedy;
+  //  - We don't support flags in between commands, so if flags are found, skip sub
+  // commands.
+  //  - We don't support commands ending in 'isCosmetic' commands, so force sub commands
+  //  - We expect commands to be strings containing only 'a-z' and dashes (-), so if not it is a dynamic value or flag.
+  if (
+    matchedCommand?.modifiers.isCosmetic &&
+    flagArgs.length === 0 &&
+    /^[\w-]*$/g.test(commandArgs.at(-1))
+  ) {
+    for (const subCommand of matchedCommand.subCommands) {
+      if (subCommand.modifiers.isDynamic) {
+        // Dynamic sub commands always have some form of completions defined, so
+        // integrate those.
+        completions.push(
+          ...(await subCommand.dynamicValue.completions()).completions,
+        );
 
-      continue;
+        continue;
+      }
+
+      completions.push({
+        name: subCommand.name,
+        description: subCommand.shortDescription,
+      });
     }
-
-    completions.push({
-      name: subCommand.name,
-      description: subCommand.shortDescription,
-    });
   }
 
   const flagCompletions = await completionGetFlagCompletions(
@@ -105,6 +117,19 @@ export async function cliExecutor(logger, state) {
 
   completions.push(...flagCompletions);
 
+  if (environment.COMPAS_DEBUG_COMPLETIONS === "true") {
+    await writeFile(
+      "./compas-debug-completions.json",
+      JSON.stringify(
+        {
+          completions,
+        },
+        null,
+        2,
+      ),
+    );
+  }
+
   if (isZSH) {
     completionsPrintForZsh(completions);
   } else {
@@ -112,7 +137,7 @@ export async function cliExecutor(logger, state) {
   }
 
   return {
-    exitStatus: "passed",
+    exitStatus: completions.length === 0 ? "failed" : "passed",
   };
 }
 
