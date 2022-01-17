@@ -154,6 +154,8 @@ Init various files in the current project.
 
 | Option        | Description                                                                                                                                    |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| --all         | Enable '--gitignore', '--jsconfig' and '--lint-config'. (boolean)                                                                              |
+| --gitignore   | Creates or overwrites the .gitignore, with defaults for IDE(s), Yarn and caches. (boolean)                                                     |
 | --jsconfig    | Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server. (boolean)                                       |
 | --lint-config | Creates or overwrites .eslintrc.cjs, .eslintignore and .prettierignore files, and overwrites the 'prettier' key in the package.json. (boolean) |
 | --timings     | Print information about CLI execution time. (boolean)                                                                                          |
