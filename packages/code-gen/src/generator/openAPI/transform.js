@@ -163,10 +163,18 @@ export function transformResponse(structure, route, existingSchemas) {
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {Record<string, any>} existingSchemas
- * @param {import("../../generated/common/types").CodeGenType} type
+ * @param {import("../../generated/common/types").CodeGenType & { uniqueName?:
+ *   string|undefined }} type
+ * @param {Set<string>} [resolveStack] Internally used, to limit recursion on types that
+ *   we are already resolving
  * @returns {any}
  */
-function transformTypes(structure, existingSchemas, type) {
+function transformTypes(
+  structure,
+  existingSchemas,
+  type,
+  resolveStack = new Set(),
+) {
   let property = {};
 
   // set description, if docString is not empty
@@ -176,13 +184,19 @@ function transformTypes(structure, existingSchemas, type) {
     property.description = type.docString;
   }
 
-  // @ts-ignore
-  if (type.uniqueName && !isNil(existingSchemas[type.uniqueName])) {
+  if (
+    type.uniqueName &&
+    (!isNil(existingSchemas[type.uniqueName]) ||
+      resolveStack.has(type.uniqueName))
+  ) {
     // We already went through this type, so just short circuit
     return {
-      // @ts-ignore
       $ref: `#/components/schemas/${type.uniqueName}`,
     };
+  }
+
+  if (type.uniqueName) {
+    resolveStack.add(type.uniqueName);
   }
 
   switch (type.type) {
@@ -237,7 +251,12 @@ function transformTypes(structure, existingSchemas, type) {
         properties: Object.entries(type.keys).reduce(
           (curr, [key, property]) => {
             // @ts-ignore
-            curr[key] = transformTypes(structure, existingSchemas, property);
+            curr[key] = transformTypes(
+              structure,
+              existingSchemas,
+              property,
+              resolveStack,
+            );
             return curr;
           },
           {},
@@ -269,7 +288,12 @@ function transformTypes(structure, existingSchemas, type) {
       Object.assign(property, {
         type: "array",
 
-        items: transformTypes(structure, existingSchemas, type.values),
+        items: transformTypes(
+          structure,
+          existingSchemas,
+          type.values,
+          resolveStack,
+        ),
       });
       break;
 
@@ -280,35 +304,31 @@ function transformTypes(structure, existingSchemas, type) {
 
         // @ts-ignore
         structure[type.reference.group][type.reference.name],
+        resolveStack,
       );
       break;
 
     case "anyOf":
       Object.assign(property, {
         type: "object",
-        anyOf: Object.entries(type.values).reduce((curr, [, property]) => {
-          // @ts-ignore
-          curr.push(transformTypes(structure, existingSchemas, property));
-          return curr;
-        }, []),
+        anyOf: type.values.map((it) =>
+          transformTypes(structure, existingSchemas, it, resolveStack),
+        ),
       });
       break;
   }
 
   // If schema is named, we add it to the top level 'components.schemas' and we can
   // return a reference instead of the buildup property.
-  // @ts-ignore
   if (type.uniqueName) {
+    resolveStack.delete(type.uniqueName);
     // Only overwrite if not exists, since the first time the full property will be
     // build, but afterwards we only get a reference back.
-    // @ts-ignore
     if (isNil(existingSchemas[type.uniqueName])) {
-      // @ts-ignore
       existingSchemas[type.uniqueName] = property;
     }
 
     return {
-      // @ts-ignore
       $ref: `#/components/schemas/${type.uniqueName}`,
     };
   }

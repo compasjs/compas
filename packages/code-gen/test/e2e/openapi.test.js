@@ -391,4 +391,44 @@ test("code-gen/e2e/openapi", async (t) => {
 
     t.ok(isNil(source.components.schemas.AppHouseNumber));
   });
+
+  t.test("does work with recursive types", async (t) => {
+    const T = new TypeCreator("app");
+    const R = T.router("/app");
+
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+      [
+        T.object("recursive").keys({
+          property: T.object("recursiveNested").keys({
+            nested: T.reference("app", "recursive").optional(),
+          }),
+        }),
+
+        R.get("/user", "user").response({
+          recursive: T.reference("app", "recursive"),
+        }),
+      ],
+      {
+        isNodeServer: true,
+        enabledGenerators: [],
+        dumpStructure: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    const outputFile = pathJoin(generatedDirectory, "./openapi.json");
+    await new App().generateOpenApi({
+      inputPath: generatedDirectory,
+      enabledGroups: ["app"],
+      openApiExtensions: {},
+      openApiRouteExtensions: {},
+      outputFile,
+    });
+
+    const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.ok(!isNil(source.components.schemas.AppRecursive));
+    t.ok(!isNil(source.components.schemas.AppRecursiveNested));
+  });
 });
