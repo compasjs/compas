@@ -4,6 +4,55 @@ editLink: false
 
 # Changelog
 
+### [v0.0.182](https://github.com/compasjs/compas/releases/tag/v0.0.182)
+
+##### Changes
+
+- build(deps): bump @types/node from 17.0.8 to 17.0.9
+  ([#1532](https://github.com/compasjs/compas/pull/1532))
+- build(deps): bump dotenv from 10.0.0 to 14.2.0
+  ([#1514](https://github.com/compasjs/compas/pull/1514),
+  [#1527](https://github.com/compasjs/compas/pull/1527),
+  [#1533](https://github.com/compasjs/compas/pull/1533))
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
+- build(deps): bump eslint from 8.6.0 to 8.7.0
+  ([#1529](https://github.com/compasjs/compas/pull/1529))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump follow-redirects from 1.14.6 to 1.14.7
+  ([#1521](https://github.com/compasjs/compas/pull/1521))
+  - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+- build(deps): bump is-animated from 2.0.1 to 2.0.2
+  ([#1522](https://github.com/compasjs/compas/pull/1522))
+  - [Release notes](https://github.com/qzb/is-animated/releases)
+- build(deps): bump minio from 7.0.25 to 7.0.26
+  ([#1519](https://github.com/compasjs/compas/pull/1519))
+  - [Release notes](https://github.com/minio/minio-js/releases)
+- build(deps): bump pino from 7.6.2 to 7.6.3
+  ([#1513](https://github.com/compasjs/compas/pull/1513))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- docs(route-invalidation): add route-invalidation documentation
+  ([#1531](https://github.com/compasjs/compas/pull/1531))
+- feat(cli): add `--gitignore` and `--all` support to `compas init`
+  ([#1530](https://github.com/compasjs/compas/pull/1530))
+  - Closes [#1525](https://github.com/compasjs/compas/pull/1525)
+- feat(cli): add informational logs to lint output
+  ([#1524](https://github.com/compasjs/compas/pull/1524))
+  - Closes [#1516](https://github.com/compasjs/compas/pull/1516)
+- feat(code-gen): openApi generator more strict and extend
+  ([#1523](https://github.com/compasjs/compas/pull/1523))
+  - Closes [#1520](https://github.com/compasjs/compas/pull/1520)
+- feat(code-gen): support route invalidations
+  ([#1515](https://github.com/compasjs/compas/pull/1515),
+  [#1534](https://github.com/compasjs/compas/pull/1534))
+
+##### Breaking changes
+
+- **deps**: bump dotenv from 10.0.0 to 14.2.0
+  - Major version bump
+- **code-gen**: openApi generator more strict and extend
+  - `app.generateOpenApi` accepts `openApiExtensions` and `routeExtensions`
+    instead of `openApiOptions`
+
 ### [v0.0.181](https://github.com/compasjs/compas/releases/tag/v0.0.181)
 
 ##### Changes
