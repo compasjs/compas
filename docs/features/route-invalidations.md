@@ -68,8 +68,8 @@ app.add(
 );
 ```
 
-All above examples can be mixed and matched, and the generator will guide you
-in the right direction if some invalidation is invalid.
+All above examples can be mixed and matched, and the generator will guide you in
+the right direction if some invalidation is invalid.
 
 - `useSharedParams` and `useQueryParams` are shorthand properties for populating
   the `specification`. They extract the shared properties of the source and
@@ -83,8 +83,8 @@ in the right direction if some invalidation is invalid.
 ## Usage
 
 When this definition is used with the `reactQuery` generator, Compas generates
-something like the below snippet with based on the above defined `R.put("/:id",
-"update")`:
+something like the below snippet with based on the above defined
+`R.put("/:id", "update")`:
 
 ```tsx
 export function useAppUpdate(
