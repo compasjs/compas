@@ -8,7 +8,7 @@ Requires an understanding of the code generated api and api clients. See
 :::
 
 The Compas structure also allows for defining route invalidations. Route
-invalidations are a typed and validated way for specifyig which routes data is
+invalidations are a typed and validated way for specifying which route data are
 altered on a successful call of a POST, PUT, PATCH or DELETE route. For most
 generators, like the `router`, `validator` and `apiClient` this is a noop. But
 for caching api clients, like react-query (via the `reactQuery` generator), this
@@ -17,7 +17,7 @@ a result of a successful mutation, with the toggle of an option.
 
 ## Structure
 
-The structure is defined via a `.invalidations` function on routes. Lets take a
+The structure is defined via a `.invalidations` function on routes. Let's take a
 look at some examples;
 
 ```js
@@ -68,7 +68,7 @@ app.add(
 );
 ```
 
-All above examples can be miexed and matched, and the generator will guide you
+All above examples can be mixed and matched, and the generator will guide you
 in the right direction if some invalidation is invalid.
 
 - `useSharedParams` and `useQueryParams` are shorthand properties for populating
@@ -83,7 +83,7 @@ in the right direction if some invalidation is invalid.
 ## Usage
 
 When this definition is used with the `reactQuery` generator, Compas generates
-something like the below snippet with based on the above defined R.put("/:id",
+something like the below snippet with based on the above defined `R.put("/:id",
 "update")`:
 
 ```tsx
@@ -97,8 +97,8 @@ export function useAppUpdate(
     const originalOnSuccess = options.onSuccess;
 
     options.onSuccess = async (data, variables, context) => {
-      await queryClient.invalidateQueries(["app", "list"]);
-      await queryClient.invalidateQueries([
+      queryClient.invalidateQueries(["app", "list"]);
+      queryClient.invalidateQueries([
         "app",
         "get",
         { id: variables.params.id },
