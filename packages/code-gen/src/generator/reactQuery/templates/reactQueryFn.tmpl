@@ -191,7 +191,7 @@ export function {{= funcName }}(
           {{ queryObject += "}"; }}
         {{ } }}
 
-        await queryClient.invalidateQueries([
+        queryClient.invalidateQueries([
           "{{= invalidation.target.group }}",
           {{ if (invalidation.target.name) { }}"{{= invalidation.target.name }}",{{ } }}
           {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.params).length > 0) { }}{{= paramsObject }},{{ } }}
