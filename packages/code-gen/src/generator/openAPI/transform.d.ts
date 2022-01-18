@@ -40,15 +40,12 @@ export function transformResponse(
   uniqueNameSet: Set<string>,
 ): any;
 /**
- *
- * @param {Object<string,import("../../generated/common/types").CodeGenStructure>} flattenStructure
+ * @param {import("../../generated/common/types").CodeGenStructure} groupStructure
  * @param {Set<string>} uniqueNameSet
  * @returns {Object<string, any>}
  */
 export function transformComponents(
-  flattenStructure: {
-    [x: string]: import("../../generated/common/types").CodeGenStructure;
-  },
+  groupStructure: import("../../generated/common/types").CodeGenStructure,
   uniqueNameSet: Set<string>,
 ): {
   [x: string]: any;

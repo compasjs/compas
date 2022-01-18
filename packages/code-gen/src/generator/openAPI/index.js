@@ -7,11 +7,16 @@ import { generateOpenApiFile } from "./generator.js";
 
 /**
  * @typedef {object} OpenApiExtensions
+ * @property {OpenApiExtensionsInfo} [info]
+ * @property {any[]} [servers]
+ * @property {any[]} [components]
+ */
+
+/**
+ * @typedef {object} OpenApiExtensionsInfo
  * @property {string} [version]
  * @property {string} [title]
  * @property {string} [description]
- * @property {any[]} [servers]
- * @property {any[]} [components]
  */
 
 /**

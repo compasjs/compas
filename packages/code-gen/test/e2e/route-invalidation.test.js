@@ -321,8 +321,6 @@ test("code-gen/e2e/route-invalidation", (t) => {
 
     const sourceWithoutNewLines = source.split(/\r?\n/gi).join("");
 
-    t.log.info(sourceWithoutNewLines);
-
     t.test("get - skips hookOptions", (t) => {
       t.ok(
         sourceWithoutNewLines.includes(

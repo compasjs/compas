@@ -145,9 +145,11 @@ test("code-gen/e2e/openapi", async (t) => {
       outputFile,
       enabledGroups: ["server", "group"],
       openApiExtensions: {
-        version: "0.0.99",
-        title: "Compas Test server OpenAPI Docs",
-        description: "Lorem ipsum",
+        info: {
+          version: "0.0.99",
+          title: "Compas Test server OpenAPI Docs",
+          description: "Lorem ipsum",
+        },
         servers: [{ url: "https://api.compasjs.com" }],
         components: {
           securitySchemes: {
@@ -189,6 +191,26 @@ test("code-gen/e2e/openapi", async (t) => {
     });
 
     t.pass();
+  });
+
+  t.test("error with unknown uniqueName / routes", async (t) => {
+    try {
+      const app = new App();
+      await app.generateOpenApi({
+        inputPath: serverGeneratedDirectory,
+        outputFile,
+        enabledGroups: ["server"],
+        openApiExtensions: {},
+        openApiRouteExtensions: {
+          NonExistingKey: {}, // <-- incorrect
+        },
+      });
+    } catch (e) {
+      t.equal(
+        e.message,
+        `RouteExtension(s) provided for non existing uniqueName: NonExistingKey`,
+      );
+    }
   });
 
   t.test("assert spec version", async (t) => {

@@ -165,15 +165,14 @@ export function transformResponse(structure, route, uniqueNameSet) {
 }
 
 /**
- *
- * @param {Object<string,import("../../generated/common/types").CodeGenStructure>} flattenStructure
+ * @param {import("../../generated/common/types").CodeGenStructure} groupStructure
  * @param {Set<string>} uniqueNameSet
  * @returns {Object<string, any>}
  */
-export function transformComponents(flattenStructure, uniqueNameSet) {
+export function transformComponents(groupStructure, uniqueNameSet) {
   const schemas = {};
 
-  const components = Object.values(flattenStructure).filter((it) =>
+  const components = Object.values(groupStructure).filter((it) =>
     // @ts-ignore
     uniqueNameSet.has(it.uniqueName),
   );

@@ -1,10 +1,14 @@
 /**
  * @typedef {object} OpenApiExtensions
+ * @property {OpenApiExtensionsInfo} [info]
+ * @property {any[]} [servers]
+ * @property {any[]} [components]
+ */
+/**
+ * @typedef {object} OpenApiExtensionsInfo
  * @property {string} [version]
  * @property {string} [title]
  * @property {string} [description]
- * @property {any[]} [servers]
- * @property {any[]} [components]
  */
 /**
  * @typedef {Object<string,object>} OpenApiRouteExtensions
@@ -28,11 +32,14 @@ export function generateOpenApi(
   options: GenerateOpenApiOpts,
 ): Promise<void>;
 export type OpenApiExtensions = {
+  info?: OpenApiExtensionsInfo | undefined;
+  servers?: any[] | undefined;
+  components?: any[] | undefined;
+};
+export type OpenApiExtensionsInfo = {
   version?: string | undefined;
   title?: string | undefined;
   description?: string | undefined;
-  servers?: any[] | undefined;
-  components?: any[] | undefined;
 };
 export type OpenApiRouteExtensions = {
   [x: string]: object;

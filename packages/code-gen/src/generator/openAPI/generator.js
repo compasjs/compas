@@ -12,7 +12,11 @@ import {
  */
 const OPENAPI_SPEC_TEMPLATE = {
   openapi: "3.0.3",
-  info: {},
+  info: {
+    title: process.env.APP_NAME,
+    description: "",
+    version: "0.0.0",
+  },
   servers: [],
   tags: [],
   paths: {},
@@ -50,7 +54,11 @@ const OPENAPI_SPEC_TEMPLATE = {
  * @returns {string}
  */
 export function generateOpenApiFile(structure, options) {
-  const openApiSpec = Object.assign({}, OPENAPI_SPEC_TEMPLATE);
+  const openApiSpec = Object.assign(
+    {},
+    OPENAPI_SPEC_TEMPLATE,
+    options.openApiExtensions,
+  );
 
   // holds all referenced objects, used to determine components in schema
   const uniqueNameSet = new Set();
@@ -96,19 +104,20 @@ export function generateOpenApiFile(structure, options) {
     }
   }
 
-  const flattenStructure = Object.assign(
-    {},
-    ...Object.values(structure).flat(),
-  );
-
   // Recursively resolve nested references
-  resolveComponents(flattenStructure, uniqueNameSet);
+  for (const groupStructure of Object.values(structure)) {
+    // @ts-ignore
+    resolveComponents(groupStructure, uniqueNameSet);
+  }
 
   // transform uniqueNameSet to component list (merger)
-  openApiSpec.components.schemas = Object.assign(
-    transformComponents(flattenStructure, uniqueNameSet),
-    openApiSpec.components.schemas,
-  );
+  for (const groupStructure of Object.values(structure)) {
+    openApiSpec.components.schemas = Object.assign(
+      // @ts-ignore
+      transformComponents(groupStructure, uniqueNameSet),
+      openApiSpec.components.schemas,
+    );
+  }
 
   // determine compas version
   const compasVersion = parseCompasVersionNumber();
@@ -116,20 +125,13 @@ export function generateOpenApiFile(structure, options) {
     "x-generator"
   ] = `Compas (https://compasjs.com) v${compasVersion}`;
 
-  // set meta
-  openApiSpec.info = {
-    title: `${options.openApiExtensions?.title ?? process.env.APP_NAME}`,
-    description: options.openApiExtensions?.description ?? "",
-    version: options.openApiExtensions?.version ?? "0.0.0",
-  };
-
   // set servers, if any (pass-trough settings)
   openApiSpec.servers = options.openApiExtensions?.servers ?? [];
 
   // merge components, if any (pass-trough settings)
   openApiSpec.components = Object.assign(
-    options.openApiExtensions?.components,
     {},
+    options.openApiExtensions?.components,
     openApiSpec.components,
   );
 
@@ -139,12 +141,12 @@ export function generateOpenApiFile(structure, options) {
 /**
  * Resolve references object for already existing unique object identifiers in uniqueNameSet
  *
- * @param {Object<string, import("../../generated/common/types").CodeGenStructure>} flattenStructure
+ * @param {import("../../generated/common/types").CodeGenStructure} groupStructure
  * @param {Set<string>} uniqueNameSet
  * @returns {void}
  */
-function resolveComponents(flattenStructure, uniqueNameSet) {
-  const components = Object.values(flattenStructure).filter((it) =>
+function resolveComponents(groupStructure, uniqueNameSet) {
+  const components = Object.values(groupStructure).filter((it) =>
     // @ts-ignore
     uniqueNameSet.has(it.uniqueName),
   );
