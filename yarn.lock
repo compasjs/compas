@@ -1393,10 +1393,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dotenv@14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.0.0.tgz#a993719c572eb39066922fa2031f0bc40ad88311"
-  integrity sha512-lO8c74ruYOG0hCK6fWT7t/PVxqcLKhfOqTahXZQN2UCyfN+ZTJmu48wRUVpkBAXsUGjPOG+ndTh8rjZxyf2xqw==
+dotenv@14.2.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.2.0.tgz#7e77fd5dd6cff5942c4496e1acf2d0f37a9e67aa"
+  integrity sha512-05POuPJyPpO6jqzTNweQFfAyMSD4qa4lvsMOWyTRTdpHKy6nnnN+IYWaXF+lHivhBH/ufDKlR4IWCAN3oPnHuw==
 
 duplexify@^4.1.2:
   version "4.1.2"
