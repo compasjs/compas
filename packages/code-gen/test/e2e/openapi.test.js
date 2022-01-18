@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { pathJoin, uuid } from "@compas/stdlib";
+import { isNil, pathJoin, uuid } from "@compas/stdlib";
 import { temporaryDirectory } from "../../../../src/testing.js";
 import { App } from "../../src/App.js";
 import { TypeCreator } from "../../src/builders/index.js";
@@ -267,5 +267,128 @@ test("code-gen/e2e/openapi", async (t) => {
     );
 
     t.equal(exitCode, 0);
+  });
+
+  t.test("regenerate does not contain old routes", async (t) => {
+    const T = new TypeCreator("app");
+    const R = T.router("/app");
+
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+      [
+        R.get("/user", "user").response({
+          foo: T.bool(),
+        }),
+      ],
+      {
+        isNodeServer: true,
+        enabledGenerators: [],
+        dumpStructure: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    const outputFile = pathJoin(generatedDirectory, "./openapi.json");
+    await new App().generateOpenApi({
+      inputPath: generatedDirectory,
+      enabledGroups: ["app"],
+      openApiExtensions: {},
+      openApiRouteExtensions: {},
+      outputFile,
+    });
+
+    const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.ok(!isNil(source.paths["/app/user"]));
+    t.equal(Object.keys(source.paths).length, 1);
+  });
+
+  t.test("nested references across groups are included", async (t) => {
+    const T = new TypeCreator("app");
+    const R = T.router("/app");
+
+    const Tuser = new TypeCreator("user");
+
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+      [
+        T.string("houseNumber").min(1),
+
+        Tuser.object("user").keys({
+          address: T.reference("user", "address"),
+        }),
+        Tuser.object("address").keys({
+          city: T.string(),
+          houseNumber: T.reference("app", "houseNumber"),
+        }),
+
+        R.get("/user", "user").response({
+          user: T.reference("user", "user"),
+        }),
+      ],
+      {
+        isNodeServer: true,
+        enabledGenerators: [],
+        dumpStructure: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    const outputFile = pathJoin(generatedDirectory, "./openapi.json");
+    await new App().generateOpenApi({
+      inputPath: generatedDirectory,
+      enabledGroups: ["app"],
+      openApiExtensions: {},
+      openApiRouteExtensions: {},
+      outputFile,
+    });
+
+    const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.ok(!isNil(source.components.schemas.AppHouseNumber));
+  });
+
+  t.test("does not contain unused schemas", async (t) => {
+    const T = new TypeCreator("app");
+    const R = T.router("/app");
+
+    const Tuser = new TypeCreator("user");
+
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+      [
+        T.string("houseNumber").min(1),
+
+        Tuser.object("user").keys({
+          address: T.reference("user", "address"),
+        }),
+        Tuser.object("address").keys({
+          city: T.string(),
+        }),
+
+        R.get("/user", "user").response({
+          user: T.reference("user", "user"),
+        }),
+      ],
+      {
+        isNodeServer: true,
+        enabledGenerators: [],
+        dumpStructure: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    const outputFile = pathJoin(generatedDirectory, "./openapi.json");
+    await new App().generateOpenApi({
+      inputPath: generatedDirectory,
+      enabledGroups: ["app"],
+      openApiExtensions: {},
+      openApiRouteExtensions: {},
+      outputFile,
+    });
+
+    const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.ok(isNil(source.components.schemas.AppHouseNumber));
   });
 });

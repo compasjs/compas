@@ -1,12 +1,13 @@
+import { isNil } from "@compas/stdlib";
+
 /**
  * Transforms compas query params to OpenApi parameters objects
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @param {Set<string>} uniqueNameSet
  * @returns {{parameters?: Object[]}}
  */
-export function transformParams(structure, route, uniqueNameSet) {
+export function transformParams(structure, route) {
   if (!route?.params && !route?.query) {
     return {};
   }
@@ -17,14 +18,7 @@ export function transformParams(structure, route, uniqueNameSet) {
   // @ts-ignore
   const paramFields = route?.params?.reference?.keys ?? {};
   for (const [key, param] of Object.entries(paramFields)) {
-    switch (param.type) {
-      case "reference":
-        uniqueNameSet.add(param.reference.uniqueName);
-        parameters.push(transformGenType(key, param.reference, "path"));
-        break;
-      default:
-        parameters.push(transformGenType(key, param, "path"));
-    }
+    parameters.push(transformGenType(key, param, "path"));
   }
 
   // query
@@ -44,6 +38,7 @@ export function transformParams(structure, route, uniqueNameSet) {
    */
   function transformGenType(key, param, paramType) {
     const schema = {};
+
     switch (param.type) {
       case "string":
         schema.type = "string";
@@ -73,6 +68,13 @@ export function transformParams(structure, route, uniqueNameSet) {
         schema.maximum = param.validator?.max;
         break;
 
+      case "reference":
+        return transformGenType(
+          key,
+          structure[param.reference.group][param.reference.name],
+          paramType,
+        );
+
       default:
         schema.type = param.type;
         break;
@@ -80,6 +82,7 @@ export function transformParams(structure, route, uniqueNameSet) {
 
     return {
       name: key,
+
       // @ts-ignore
       description: param.docString,
 
@@ -96,10 +99,10 @@ export function transformParams(structure, route, uniqueNameSet) {
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @param {Set<string>} uniqueNameSet
+ * @param {Record<string, any>} existingSchemas
  * @returns {{requestBody?: Object}}
  */
-export function transformBody(structure, route, uniqueNameSet) {
+export function transformBody(structure, route, existingSchemas) {
   const content = {};
   const field = route?.body ?? route?.files;
 
@@ -107,18 +110,8 @@ export function transformBody(structure, route, uniqueNameSet) {
     return {};
   }
 
-  /**
-   * @type {import("../../generated/common/types").CodeGenType}
-   */
-  // @ts-ignore
-  const reference = field?.reference;
-  if (reference) {
-    // @ts-ignore
-    uniqueNameSet.add(reference.uniqueName);
-    content.schema = {
-      // @ts-ignore
-      $ref: `#/components/schemas/${reference.uniqueName}`,
-    };
+  if (field?.reference) {
+    content.schema = transformTypes(structure, existingSchemas, field);
   }
 
   const contentType = route?.files ? "multipart/form-data" : "application/json";
@@ -136,10 +129,10 @@ export function transformBody(structure, route, uniqueNameSet) {
 /**
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @param {Set<string>} uniqueNameSet
+ * @param {Record<string, any>} existingSchemas
  * @returns {any}
  */
-export function transformResponse(structure, route, uniqueNameSet) {
+export function transformResponse(structure, route, existingSchemas) {
   // 200 behaviour
   const response = {
     // @ts-ignore
@@ -151,167 +144,161 @@ export function transformResponse(structure, route, uniqueNameSet) {
     },
   };
 
-  // @ts-ignore
   if (route.response?.reference) {
-    // @ts-ignore
-    uniqueNameSet.add(route.response.reference.uniqueName);
-    response.content["application/json"].schema = {
-      // @ts-ignore
-      $ref: `#/components/schemas/${route.response.reference.uniqueName}`,
-    };
+    response.content["application/json"].schema = transformTypes(
+      structure,
+      existingSchemas,
+      route.response,
+    );
   }
 
   return response;
 }
 
 /**
- * @param {import("../../generated/common/types").CodeGenStructure} groupStructure
- * @param {Set<string>} uniqueNameSet
- * @returns {Object<string, any>}
+ * Docs: https://swagger.io/docs/specification/data-models/data-types/
+ *
+ * @param {import("../../generated/common/types").CodeGenStructure} structure
+ * @param {Record<string, any>} existingSchemas
+ * @param {import("../../generated/common/types").CodeGenType & {
+ *   docString: string,
+ * }} type
+ * @returns {any}
  */
-export function transformComponents(groupStructure, uniqueNameSet) {
-  const schemas = {};
+function transformTypes(structure, existingSchemas, type) {
+  let property = {};
 
-  const components = Object.values(groupStructure).filter((it) =>
-    // @ts-ignore
-    uniqueNameSet.has(it.uniqueName),
-  );
-
-  for (const component of components) {
-    // @ts-ignore
-    schemas[component.uniqueName] = transformTypes(component);
+  // set description, if docString is not empty
+  if (type.docString.length !== 0) {
+    property.description = type.docString;
   }
 
-  return schemas;
+  if (type.uniqueName && !isNil(existingSchemas[type.uniqueName])) {
+    // We already went through this type, so just short circuit
+    return {
+      $ref: `#/components/schemas/${type.uniqueName}`,
+    };
+  }
 
-  /**
-   * Docs: https://swagger.io/docs/specification/data-models/data-types/
-   *
-   * @param {import("../../generated/common/types").CodeGenType & {
-   *   docString: string,
-   * }} component
-   * @returns {any}
-   */
-  function transformTypes(component) {
-    const property = {};
+  switch (type.type) {
+    case "string":
+      Object.assign(property, {
+        type: "string",
+        minLength: type.validator?.min,
+        maxLength: type.validator?.max,
+        enum: type?.oneOf,
+      });
+      break;
 
-    // set description, if docString is not empty
-    if (component.docString.length !== 0) {
-      property.description = component.docString;
-    }
+    case "file":
+      Object.assign(property, {
+        type: "string",
+        format: "binary",
+      });
+      break;
 
-    switch (component.type) {
-      // primitive
-      case "string":
-        return {
-          type: "string",
-          minLength: component.validator?.min,
-          maxLength: component.validator?.max,
-          enum: component?.oneOf,
-          ...property,
-        };
+    case "uuid":
+      Object.assign(property, {
+        type: "string",
+        format: "uuid",
+      });
+      break;
 
-      case "file":
-        return {
-          type: "string",
-          format: "binary",
-          ...property,
-        };
+    case "date":
+      Object.assign(property, {
+        type: "string",
+        format: "date-time",
+      });
+      break;
 
-      case "uuid":
-        return {
-          type: "string",
-          format: "uuid",
-          ...property,
-        };
+    case "boolean":
+      Object.assign(property, {
+        type: "boolean",
+      });
+      break;
 
-      case "date":
-        return {
-          type: "string",
-          format: "date-time",
-          ...property,
-        };
+    case "number":
+      Object.assign(property, {
+        type: type.validator.floatingPoint ? "number" : "integer",
+        minimum: type.validator?.min,
+        maximum: type.validator?.max,
+      });
+      break;
 
-      case "boolean":
-        return {
-          type: "boolean",
-          ...property,
-        };
-
-      case "number":
-        return {
-          type: component.validator.floatingPoint ? "number" : "integer",
-          minimum: component.validator?.min,
-          maximum: component.validator?.max,
-          ...property,
-        };
-
-      case "object":
-        return {
-          type: "object",
-          description: component.docString,
-          properties: Object.entries(component.keys).reduce(
-            (curr, [key, property]) => {
-              // @ts-ignore
-              curr[key] = transformTypes(property);
-              return curr;
-            },
-            {},
-          ),
-          required: Object.entries(component.keys).reduce(
-            (curr, [key, property]) => {
-              // @ts-ignore
-              if (!property?.isOptional) {
-                if (!curr) {
-                  // @ts-ignore
-                  curr = [];
-                }
-
-                // @ts-ignore
-                curr.push(key);
-              }
-              return curr;
-            },
-            undefined,
-          ),
-        };
-
-      case "generic":
-        return {
-          type: "object",
-          additionalProperties: true,
-          ...property,
-        };
-
-      case "array":
-        return {
-          type: "array", // @ts-ignore
-          items: transformTypes(component.values),
-          ...property,
-        };
-
-      case "reference":
-        return {
+    case "object":
+      Object.assign(property, {
+        type: "object",
+        description: type.docString,
+        properties: Object.entries(type.keys).reduce(
+          (curr, [key, property]) => {
+            // @ts-ignore
+            curr[key] = transformTypes(structure, existingSchemas, property);
+            return curr;
+          },
+          {},
+        ),
+        required: Object.entries(type.keys).reduce((curr, [key, property]) => {
           // @ts-ignore
-          $ref: `#/components/schemas/${component.reference.uniqueName}`,
-        };
-
-      case "anyOf":
-        return {
-          type: "object",
-          anyOf: Object.entries(component.values).reduce(
-            (curr, [, property]) => {
+          if (!property?.isOptional) {
+            if (!curr) {
               // @ts-ignore
-              curr.push(transformTypes(property));
-              return curr;
-            },
-            [],
-          ),
-          ...property,
-        };
+              curr = [];
+            }
 
-      default:
-        return undefined;
-    }
+            // @ts-ignore
+            curr.push(key);
+          }
+          return curr;
+        }, undefined),
+      });
+      break;
+
+    case "generic":
+      Object.assign(property, {
+        type: "object",
+        additionalProperties: true,
+      });
+      break;
+
+    case "array":
+      Object.assign(property, {
+        type: "array",
+
+        items: transformTypes(structure, existingSchemas, type.values),
+      });
+      break;
+
+    case "reference":
+      property = transformTypes(
+        structure,
+        existingSchemas,
+        structure[type.reference.group][type.reference.name],
+      );
+      break;
+
+    case "anyOf":
+      Object.assign(property, {
+        type: "object",
+        anyOf: Object.entries(type.values).reduce((curr, [, property]) => {
+          curr.push(transformTypes(structure, existingSchemas, property));
+          return curr;
+        }, []),
+      });
+      break;
   }
+
+  // If schema is named, we add it to the top level 'components.schemas' and we can
+  // return a reference instead of the buildup property.
+  if (type.uniqueName) {
+    // Only overwrite if not exists, since the first time the full property will be
+    // build, but afterwards we only get a reference back.
+    if (isNil(existingSchemas[type.uniqueName])) {
+      existingSchemas[type.uniqueName] = property;
+    }
+
+    return {
+      $ref: `#/components/schemas/${type.uniqueName}`,
+    };
+  }
+  return property;
 }

@@ -1,8 +1,7 @@
 import { readFileSync } from "fs";
-import { pathJoin } from "@compas/stdlib";
+import { merge, pathJoin } from "@compas/stdlib";
 import {
   transformBody,
-  transformComponents,
   transformParams,
   transformResponse,
 } from "./transform.js";
@@ -54,14 +53,11 @@ const OPENAPI_SPEC_TEMPLATE = {
  * @returns {string}
  */
 export function generateOpenApiFile(structure, options) {
-  const openApiSpec = Object.assign(
+  const openApiSpec = merge(
     {},
     OPENAPI_SPEC_TEMPLATE,
     options.openApiExtensions,
   );
-
-  // holds all referenced objects, used to determine components in schema
-  const uniqueNameSet = new Set();
 
   // transform CodeGenRouteTypes to endpoints/paths
   for (const [group, groupStructure] of Object.entries(structure)) {
@@ -95,28 +91,16 @@ export function generateOpenApiFile(structure, options) {
         tags: [route.group],
         description: route.docString,
         operationId: route.uniqueName,
-        ...transformParams(structure, route, uniqueNameSet),
-        ...transformBody(structure, route, uniqueNameSet),
-        responses: constructResponse(structure, route, uniqueNameSet),
-        // @ts-ignore
+        ...transformParams(structure, route),
+        ...transformBody(structure, route, openApiSpec.components.schemas),
+        responses: constructResponse(
+          structure,
+          route,
+          openApiSpec.components.schemas,
+        ), // @ts-ignore
         ...(options.openApiRouteExtensions?.[route.uniqueName] ?? {}),
       };
     }
-  }
-
-  // Recursively resolve nested references
-  for (const groupStructure of Object.values(structure)) {
-    // @ts-ignore
-    resolveComponents(groupStructure, uniqueNameSet);
-  }
-
-  // transform uniqueNameSet to component list (merger)
-  for (const groupStructure of Object.values(structure)) {
-    openApiSpec.components.schemas = Object.assign(
-      // @ts-ignore
-      transformComponents(groupStructure, uniqueNameSet),
-      openApiSpec.components.schemas,
-    );
   }
 
   // determine compas version
@@ -125,60 +109,7 @@ export function generateOpenApiFile(structure, options) {
     "x-generator"
   ] = `Compas (https://compasjs.com) v${compasVersion}`;
 
-  // set servers, if any (pass-trough settings)
-  openApiSpec.servers = options.openApiExtensions?.servers ?? [];
-
-  // merge components, if any (pass-trough settings)
-  openApiSpec.components = Object.assign(
-    {},
-    options.openApiExtensions?.components,
-    openApiSpec.components,
-  );
-
   return openApiSpec;
-}
-
-/**
- * Resolve references object for already existing unique object identifiers in uniqueNameSet
- *
- * @param {import("../../generated/common/types").CodeGenStructure} groupStructure
- * @param {Set<string>} uniqueNameSet
- * @returns {void}
- */
-function resolveComponents(groupStructure, uniqueNameSet) {
-  const components = Object.values(groupStructure).filter((it) =>
-    // @ts-ignore
-    uniqueNameSet.has(it.uniqueName),
-  );
-
-  for (const component of components) {
-    resolveReferences(component);
-  }
-
-  function resolveReferences(component) {
-    switch (component.type) {
-      case "object":
-        for (const item of Object.values(component.keys)) {
-          resolveReferences(item);
-        }
-        break;
-
-      case "array":
-        resolveReferences(component.values);
-        break;
-
-      case "reference":
-        // @ts-ignore
-        uniqueNameSet.add(component.reference.uniqueName);
-        break;
-
-      case "anyOf":
-        for (const item of component.values) {
-          resolveReferences(item);
-        }
-        break;
-    }
-  }
 }
 
 /**
@@ -187,10 +118,10 @@ function resolveComponents(groupStructure, uniqueNameSet) {
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @param {Set<string>} uniqueNameSet
+ * @param {Record<string, any>} existingSchemas
  * @returns {Object}
  */
-function constructResponse(structure, route, uniqueNameSet) {
+function constructResponse(structure, route, existingSchemas) {
   const contentAppError = {
     "application/json": {
       schema: {
@@ -224,7 +155,7 @@ function constructResponse(structure, route, uniqueNameSet) {
   };
 
   // 200 behaviour
-  const response = transformResponse(structure, route, uniqueNameSet);
+  const response = transformResponse(structure, route, existingSchemas);
 
   return {
     200: response,
