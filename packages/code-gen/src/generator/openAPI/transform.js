@@ -71,6 +71,8 @@ export function transformParams(structure, route) {
       case "reference":
         return transformGenType(
           key,
+
+          // @ts-ignore
           structure[param.reference.group][param.reference.name],
           paramType,
         );
@@ -110,9 +112,8 @@ export function transformBody(structure, route, existingSchemas) {
     return {};
   }
 
-  if (field?.reference) {
-    content.schema = transformTypes(structure, existingSchemas, field);
-  }
+  // @ts-ignore
+  content.schema = transformTypes(structure, existingSchemas, field);
 
   const contentType = route?.files ? "multipart/form-data" : "application/json";
 
@@ -144,10 +145,12 @@ export function transformResponse(structure, route, existingSchemas) {
     },
   };
 
-  if (route.response?.reference) {
+  if (route.response) {
     response.content["application/json"].schema = transformTypes(
       structure,
       existingSchemas,
+
+      // @ts-ignore
       route.response,
     );
   }
@@ -160,22 +163,24 @@ export function transformResponse(structure, route, existingSchemas) {
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {Record<string, any>} existingSchemas
- * @param {import("../../generated/common/types").CodeGenType & {
- *   docString: string,
- * }} type
+ * @param {import("../../generated/common/types").CodeGenType} type
  * @returns {any}
  */
 function transformTypes(structure, existingSchemas, type) {
   let property = {};
 
   // set description, if docString is not empty
+  // @ts-ignore
   if (type.docString.length !== 0) {
+    // @ts-ignore
     property.description = type.docString;
   }
 
+  // @ts-ignore
   if (type.uniqueName && !isNil(existingSchemas[type.uniqueName])) {
     // We already went through this type, so just short circuit
     return {
+      // @ts-ignore
       $ref: `#/components/schemas/${type.uniqueName}`,
     };
   }
@@ -272,6 +277,8 @@ function transformTypes(structure, existingSchemas, type) {
       property = transformTypes(
         structure,
         existingSchemas,
+
+        // @ts-ignore
         structure[type.reference.group][type.reference.name],
       );
       break;
@@ -280,6 +287,7 @@ function transformTypes(structure, existingSchemas, type) {
       Object.assign(property, {
         type: "object",
         anyOf: Object.entries(type.values).reduce((curr, [, property]) => {
+          // @ts-ignore
           curr.push(transformTypes(structure, existingSchemas, property));
           return curr;
         }, []),
@@ -289,14 +297,18 @@ function transformTypes(structure, existingSchemas, type) {
 
   // If schema is named, we add it to the top level 'components.schemas' and we can
   // return a reference instead of the buildup property.
+  // @ts-ignore
   if (type.uniqueName) {
     // Only overwrite if not exists, since the first time the full property will be
     // build, but afterwards we only get a reference back.
+    // @ts-ignore
     if (isNil(existingSchemas[type.uniqueName])) {
+      // @ts-ignore
       existingSchemas[type.uniqueName] = property;
     }
 
     return {
+      // @ts-ignore
       $ref: `#/components/schemas/${type.uniqueName}`,
     };
   }
