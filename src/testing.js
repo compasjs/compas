@@ -1,5 +1,4 @@
-import { mkdir } from "fs/promises";
-import { rm } from "node:fs/promises";
+import { mkdir, rm } from "node:fs/promises";
 import { uuid } from "@compas/stdlib";
 import { createTestPostgresDatabase } from "@compas/store";
 

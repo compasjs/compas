@@ -1,8 +1,7 @@
 import { readFileSync } from "fs";
-import { pathJoin } from "@compas/stdlib";
+import { merge, pathJoin } from "@compas/stdlib";
 import {
   transformBody,
-  transformComponents,
   transformParams,
   transformResponse,
 } from "./transform.js";
@@ -12,13 +11,18 @@ import {
  */
 const OPENAPI_SPEC_TEMPLATE = {
   openapi: "3.0.3",
-  paths: {},
+  info: {
+    title: process.env.APP_NAME,
+    description: "",
+    version: "0.0.0",
+  },
+  servers: [],
   tags: [],
+  paths: {},
   components: {
     schemas: {
       AppError: {
         type: "object",
-        description: "https://compasjs.com/api/stdlib.html#AppError",
         properties: {
           info: {
             type: "object",
@@ -33,17 +37,12 @@ const OPENAPI_SPEC_TEMPLATE = {
       },
     },
   },
-  externalDocs: {
-    description: "Find more info here (Compas)",
-    url: "https://compasjs.com/",
-  },
-  // pass-through (settings)
-  servers: [],
 };
 
 /**
  * @typedef GenerateOpenApiFileOpts
- * @property {import("./index.js").OpenApiOpts} openApiOptions
+ * @property {import("./index.js").OpenApiExtensions} openApiExtensions
+ * @property {import("./index.js").OpenApiRouteExtensions} openApiRouteExtensions
  * @property {string[]} enabledGroups
  * @property {boolean} verbose
  */
@@ -54,11 +53,14 @@ const OPENAPI_SPEC_TEMPLATE = {
  * @returns {string}
  */
 export function generateOpenApiFile(structure, options) {
-  const openApiSpec = Object.assign({}, OPENAPI_SPEC_TEMPLATE);
+  const openApiSpec = merge(
+    {},
+    OPENAPI_SPEC_TEMPLATE,
+    options.openApiExtensions,
+  );
 
-  for (const group of Object.keys(structure)) {
-    const groupStructure = structure[group];
-
+  // transform CodeGenRouteTypes to endpoints/paths
+  for (const [group, groupStructure] of Object.entries(structure)) {
     /**
      * @type {import("../../generated/common/types").CodeGenRouteType[]}
      */
@@ -89,28 +91,16 @@ export function generateOpenApiFile(structure, options) {
         tags: [route.group],
         description: route.docString,
         operationId: route.uniqueName,
-        // query, params
         ...transformParams(structure, route),
-        // requestBody (with files, if any)
-        ...transformBody(structure, route),
-        responses: constructResponse(structure, route),
+        ...transformBody(structure, route, openApiSpec.components.schemas),
+        responses: constructResponse(
+          structure,
+          route,
+          openApiSpec.components.schemas,
+        ), // @ts-ignore
+        ...(options.openApiRouteExtensions?.[route.uniqueName] ?? {}),
       };
     }
-
-    /**
-     * @type {import("../../generated/common/types").CodeGenType[]}
-     */
-    // @ts-ignore
-    const groupComponents = Object.values(groupStructure).filter(
-      (it) => it.type !== "route",
-    );
-
-    // transform components
-    const schemas = transformComponents(structure, groupComponents);
-    openApiSpec.components.schemas = {
-      ...openApiSpec.components.schemas,
-      ...schemas,
-    };
   }
 
   // determine compas version
@@ -118,16 +108,6 @@ export function generateOpenApiFile(structure, options) {
   openApiSpec[
     "x-generator"
   ] = `Compas (https://compasjs.com) v${compasVersion}`;
-
-  // set meta
-  openApiSpec.info = {
-    title: `${options.openApiOptions?.title ?? process.env.APP_NAME}`,
-    description: options.openApiOptions?.description ?? "",
-    version: options.openApiOptions?.version ?? "0.0.0",
-  };
-
-  // set servers, if any (pass-trough settings)
-  openApiSpec.servers = options.openApiOptions?.servers ?? [];
 
   return openApiSpec;
 }
@@ -138,8 +118,10 @@ export function generateOpenApiFile(structure, options) {
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Record<string, any>} existingSchemas
+ * @returns {Object}
  */
-function constructResponse(structure, route) {
+function constructResponse(structure, route, existingSchemas) {
   const contentAppError = {
     "application/json": {
       schema: {
@@ -173,7 +155,7 @@ function constructResponse(structure, route) {
   };
 
   // 200 behaviour
-  const response = transformResponse(structure, route);
+  const response = transformResponse(structure, route, existingSchemas);
 
   return {
     200: response,

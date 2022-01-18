@@ -6,20 +6,31 @@ import { linkupReferencesInStructure } from "../linkup-references.js";
 import { generateOpenApiFile } from "./generator.js";
 
 /**
- * @typedef {object} OpenApiOpts
- * @property {string|undefined} [version]
- * @property {string|undefined} [title]
- * @property {string|undefined} [description]
- * @property {any[]|undefined} [servers]
+ * @typedef {object} OpenApiExtensions
+ * @property {OpenApiExtensionsInfo} [info]
+ * @property {any[]} [servers]
+ * @property {any[]} [components]
+ */
+
+/**
+ * @typedef {object} OpenApiExtensionsInfo
+ * @property {string} [version]
+ * @property {string} [title]
+ * @property {string} [description]
+ */
+
+/**
+ * @typedef {Object<string,object>} OpenApiRouteExtensions
  */
 
 /**
  * @typedef {object} GenerateOpenApiOpts
  * @property {string} inputPath
  * @property {string} outputFile
- * @property {OpenApiOpts} [openApiOptions]
- * @property {string[]|undefined} [enabledGroups]
- * @property {boolean|undefined} [verbose]
+ * @property {string[]} [enabledGroups]
+ * @property {boolean} [verbose]
+ * @property {OpenApiExtensions} [openApiExtensions]
+ * @property {OpenApiRouteExtensions} [openApiRouteExtensions]
  */
 
 /**
@@ -28,7 +39,7 @@ import { generateOpenApiFile } from "./generator.js";
  * @returns {Promise<void>}
  */
 export async function generateOpenApi(logger, options) {
-  options.openApiOptions = options?.openApiOptions ?? {};
+  options.openApiExtensions = options?.openApiExtensions ?? {};
 
   if (options.verbose) {
     logger.info({
@@ -40,6 +51,10 @@ export async function generateOpenApi(logger, options) {
     // @ts-ignore
     pathToFileURL(options.inputPath)
   );
+
+  /**
+   * @type {import("../../generated/common/types").CodeGenContext}
+   */
   const structure = JSON.parse(compasApiStructureString);
   if (!isPlainObject(structure)) {
     throw new Error(
@@ -57,6 +72,24 @@ export async function generateOpenApi(logger, options) {
         )}"`,
       );
     }
+  }
+
+  // Create set of RouteExtensions uniqueNames, pop one by one.
+  // if name left, a uniqueName is provided that does not exist
+  const routeExtensionsUniqueNames = new Set(
+    Object.keys(options?.openApiRouteExtensions ?? {}),
+  );
+  for (const group of Object.values(structure)) {
+    for (const type of Object.values(group)) {
+      routeExtensionsUniqueNames.delete(type.uniqueName);
+    }
+  }
+  if (routeExtensionsUniqueNames.size > 0) {
+    throw new Error(
+      `RouteExtension(s) provided for non existing uniqueName: ${Array.from(
+        routeExtensionsUniqueNames,
+      ).join(",")}`,
+    );
   }
 
   // if no enabledGroups are provided, take all groups in structure (without compas group)

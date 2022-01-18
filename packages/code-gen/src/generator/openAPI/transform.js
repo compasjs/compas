@@ -1,7 +1,11 @@
+import { isNil } from "@compas/stdlib";
+
 /**
+ * Transforms compas query params to OpenApi parameters objects
+ *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {any}
+ * @returns {{parameters?: Object[]}}
  */
 export function transformParams(structure, route) {
   if (!route?.params && !route?.query) {
@@ -14,13 +18,7 @@ export function transformParams(structure, route) {
   // @ts-ignore
   const paramFields = route?.params?.reference?.keys ?? {};
   for (const [key, param] of Object.entries(paramFields)) {
-    switch (param.type) {
-      case "reference":
-        parameters.push(transformGenType(key, param.reference, "path"));
-        break;
-      default:
-        parameters.push(transformGenType(key, param, "path"));
-    }
+    parameters.push(transformGenType(key, param, "path"));
   }
 
   // query
@@ -40,6 +38,7 @@ export function transformParams(structure, route) {
    */
   function transformGenType(key, param, paramType) {
     const schema = {};
+
     switch (param.type) {
       case "string":
         schema.type = "string";
@@ -69,6 +68,15 @@ export function transformParams(structure, route) {
         schema.maximum = param.validator?.max;
         break;
 
+      case "reference":
+        return transformGenType(
+          key,
+
+          // @ts-ignore
+          structure[param.reference.group][param.reference.name],
+          paramType,
+        );
+
       default:
         schema.type = param.type;
         break;
@@ -76,6 +84,7 @@ export function transformParams(structure, route) {
 
     return {
       name: key,
+
       // @ts-ignore
       description: param.docString,
 
@@ -88,11 +97,14 @@ export function transformParams(structure, route) {
 }
 
 /**
+ * Transform compas body and files to OpenApi requestBody object
+ *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {any}
+ * @param {Record<string, any>} existingSchemas
+ * @returns {{requestBody?: Object}}
  */
-export function transformBody(structure, route) {
+export function transformBody(structure, route, existingSchemas) {
   const content = {};
   const field = route?.body ?? route?.files;
 
@@ -100,17 +112,8 @@ export function transformBody(structure, route) {
     return {};
   }
 
-  /**
-   * @type {import("../../generated/common/types").CodeGenType}
-   */
   // @ts-ignore
-  const reference = field?.reference;
-  if (reference) {
-    content.schema = {
-      // @ts-ignore
-      $ref: `#/components/schemas/${reference.uniqueName}`,
-    };
-  }
+  content.schema = transformTypes(structure, existingSchemas, field);
 
   const contentType = route?.files ? "multipart/form-data" : "application/json";
 
@@ -127,9 +130,10 @@ export function transformBody(structure, route) {
 /**
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Record<string, any>} existingSchemas
  * @returns {any}
  */
-export function transformResponse(structure, route) {
+export function transformResponse(structure, route, existingSchemas) {
   // 200 behaviour
   const response = {
     // @ts-ignore
@@ -141,157 +145,192 @@ export function transformResponse(structure, route) {
     },
   };
 
-  // @ts-ignore
-  if (route.response?.reference) {
-    response.content["application/json"].schema = {
+  if (route.response) {
+    response.content["application/json"].schema = transformTypes(
+      structure,
+      existingSchemas,
+
       // @ts-ignore
-      $ref: `#/components/schemas/${route.response.reference.uniqueName}`,
-    };
+      route.response,
+    );
   }
 
   return response;
 }
 
 /**
+ * Docs: https://swagger.io/docs/specification/data-models/data-types/
+ *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
- * @param {(import("../../generated/common/types").CodeGenType)[]} components
- * @returns {Object<string, any>}
+ * @param {Record<string, any>} existingSchemas
+ * @param {import("../../generated/common/types").CodeGenType & { uniqueName?:
+ *   string|undefined }} type
+ * @param {Set<string>} [resolveStack] Internally used, to limit recursion on types that
+ *   we are already resolving
+ * @returns {any}
  */
-export function transformComponents(structure, components) {
-  const schemas = {};
+function transformTypes(
+  structure,
+  existingSchemas,
+  type,
+  resolveStack = new Set(),
+) {
+  let property = {};
 
-  for (const component of components) {
+  // set description, if docString is not empty
+  // @ts-ignore
+  if (type.docString.length !== 0) {
     // @ts-ignore
-    schemas[component.uniqueName] = transformTypes(component);
+    property.description = type.docString;
   }
 
-  return schemas;
-
-  /**
-   * Docs: https://swagger.io/docs/specification/data-models/data-types/
-   *
-   * @param {import("../../generated/common/types").CodeGenType & {
-   *   docString: string,
-   * }} component
-   * @returns {any}
-   */
-  function transformTypes(component) {
-    const property = {
-      description: component.docString,
+  if (
+    type.uniqueName &&
+    (!isNil(existingSchemas[type.uniqueName]) ||
+      resolveStack.has(type.uniqueName))
+  ) {
+    // We already went through this type, so just short circuit
+    return {
+      $ref: `#/components/schemas/${type.uniqueName}`,
     };
-
-    switch (component.type) {
-      // primitive
-      case "string":
-        return {
-          type: "string",
-          minLength: component.validator?.min,
-          maxLength: component.validator?.max,
-          enum: component?.oneOf,
-          ...property,
-        };
-
-      case "file":
-        return {
-          type: "string",
-          format: "binary",
-          ...property,
-        };
-
-      case "uuid":
-        return {
-          type: "string",
-          format: "uuid",
-          ...property,
-        };
-
-      case "date":
-        return {
-          type: "string",
-          format: "date-time",
-          ...property,
-        };
-
-      case "boolean":
-        return {
-          type: "boolean",
-          ...property,
-        };
-
-      case "number":
-        return {
-          type: component.validator.floatingPoint ? "number" : "integer",
-          minimum: component.validator?.min,
-          maximum: component.validator?.max,
-          ...property,
-        };
-
-      case "object":
-        return {
-          type: "object",
-          description: component.docString,
-          properties: Object.entries(component.keys).reduce(
-            (curr, [key, property]) => {
-              // @ts-ignore
-              curr[key] = transformTypes(property);
-              return curr;
-            },
-            {},
-          ),
-          required: Object.entries(component.keys).reduce(
-            (curr, [key, property]) => {
-              // @ts-ignore
-              if (!property?.isOptional) {
-                if (!curr) {
-                  // @ts-ignore
-                  curr = [];
-                }
-
-                // @ts-ignore
-                curr.push(key);
-              }
-              return curr;
-            },
-            undefined,
-          ),
-        };
-
-      case "generic":
-        return {
-          type: "object",
-          additionalProperties: true,
-          ...property,
-        };
-
-      case "array":
-        return {
-          type: "array", // @ts-ignore
-          items: transformTypes(component.values),
-          ...property,
-        };
-
-      case "reference":
-        return {
-          // @ts-ignore
-          $ref: `#/components/schemas/${component.reference.uniqueName}`,
-        };
-
-      case "anyOf":
-        return {
-          type: "object",
-          anyOf: Object.entries(component.values).reduce(
-            (curr, [, property]) => {
-              // @ts-ignore
-              curr.push(transformTypes(property));
-              return curr;
-            },
-            [],
-          ),
-          ...property,
-        };
-
-      default:
-        return undefined;
-    }
   }
+
+  if (type.uniqueName) {
+    resolveStack.add(type.uniqueName);
+  }
+
+  switch (type.type) {
+    case "string":
+      Object.assign(property, {
+        type: "string",
+        minLength: type.validator?.min,
+        maxLength: type.validator?.max,
+        enum: type?.oneOf,
+      });
+      break;
+
+    case "file":
+      Object.assign(property, {
+        type: "string",
+        format: "binary",
+      });
+      break;
+
+    case "uuid":
+      Object.assign(property, {
+        type: "string",
+        format: "uuid",
+      });
+      break;
+
+    case "date":
+      Object.assign(property, {
+        type: "string",
+        format: "date-time",
+      });
+      break;
+
+    case "boolean":
+      Object.assign(property, {
+        type: "boolean",
+      });
+      break;
+
+    case "number":
+      Object.assign(property, {
+        type: type.validator.floatingPoint ? "number" : "integer",
+        minimum: type.validator?.min,
+        maximum: type.validator?.max,
+      });
+      break;
+
+    case "object":
+      Object.assign(property, {
+        type: "object",
+        description: type.docString,
+        properties: Object.entries(type.keys).reduce(
+          (curr, [key, property]) => {
+            // @ts-ignore
+            curr[key] = transformTypes(
+              structure,
+              existingSchemas,
+              property,
+              resolveStack,
+            );
+            return curr;
+          },
+          {},
+        ),
+        required: Object.entries(type.keys).reduce((curr, [key, property]) => {
+          // @ts-ignore
+          if (!property?.isOptional) {
+            if (!curr) {
+              // @ts-ignore
+              curr = [];
+            }
+
+            // @ts-ignore
+            curr.push(key);
+          }
+          return curr;
+        }, undefined),
+      });
+      break;
+
+    case "generic":
+      Object.assign(property, {
+        type: "object",
+        additionalProperties: true,
+      });
+      break;
+
+    case "array":
+      Object.assign(property, {
+        type: "array",
+
+        items: transformTypes(
+          structure,
+          existingSchemas,
+          type.values,
+          resolveStack,
+        ),
+      });
+      break;
+
+    case "reference":
+      property = transformTypes(
+        structure,
+        existingSchemas,
+
+        // @ts-ignore
+        structure[type.reference.group][type.reference.name],
+        resolveStack,
+      );
+      break;
+
+    case "anyOf":
+      Object.assign(property, {
+        type: "object",
+        anyOf: type.values.map((it) =>
+          transformTypes(structure, existingSchemas, it, resolveStack),
+        ),
+      });
+      break;
+  }
+
+  // If schema is named, we add it to the top level 'components.schemas' and we can
+  // return a reference instead of the buildup property.
+  if (type.uniqueName) {
+    resolveStack.delete(type.uniqueName);
+    // Only overwrite if not exists, since the first time the full property will be
+    // build, but afterwards we only get a reference back.
+    if (isNil(existingSchemas[type.uniqueName])) {
+      existingSchemas[type.uniqueName] = property;
+    }
+
+    return {
+      $ref: `#/components/schemas/${type.uniqueName}`,
+    };
+  }
+  return property;
 }
