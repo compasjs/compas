@@ -154,17 +154,28 @@ export const cliDefinition = {
     },
 
     // Called for shell auto-complete, may return a promise.
+    // Depending on the shell that is used, some features may or may not work.
     completions: () => {
       return {
         completions: [
           {
-            name: "toogle",
-          },
-          {
-            name: "add",
+            // Get directory completions
+            type: "directory",
+          }, {
+            // Get file completions
+            type: "file",
+          }, {
+            type: "completion", name: "toggle",
+          }, {
+            type: "completion", name: "add",
 
-            // Optional description
-            description: "Add a new todo."
+            // optional
+            description: "Add a new todo",
+          }, {
+            type: "value", specification: "string",
+
+            // Optional
+            description: "A todo name".
           }
         ]
       }

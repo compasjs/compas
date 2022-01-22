@@ -12,6 +12,15 @@ export function validateCliCommandDefinition(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CliCommandDefinition>;
 /**
+ * @param {undefined|any|import("../common/types").CliCompletionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CliCompletion>}
+ */
+export function validateCliCompletion(
+  value: undefined | any | import("../common/types").CliCompletionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CliCompletion>;
+/**
  * @param {undefined|any|import("../common/types").CliFlagDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CliFlagDefinition>}

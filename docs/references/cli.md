@@ -18,7 +18,14 @@ References:
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
+| -h, --help | Display information about the current command. (boolean) |
+
+## `compas completions`
+
+Configure shell auto-complete for this CLI.
+
+| Option     | Description                                              |
+| ---------- | -------------------------------------------------------- |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas bench`
@@ -27,7 +34,6 @@ Run all '.bench.js' files in this project.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas check-env`
@@ -42,7 +48,6 @@ is optimally configured.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas code-mod`
@@ -56,7 +61,6 @@ it can migrate (most of) your usages to whatever the new version brings.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ### `compas code-mod list`
@@ -65,7 +69,6 @@ List the available code-mods.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ### `compas code-mod exec`
@@ -75,7 +78,6 @@ Execute the specified code-mod.
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
 | --name     | The code-mod name to execute. (string, required)         |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas docker`
@@ -101,7 +103,6 @@ Don't use this command and secrets for your production deployment.
 | Option             | Description                                                     |
 | ------------------ | --------------------------------------------------------------- |
 | --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number) |
-| --timings          | Print information about CLI execution time. (boolean)           |
 | -h, --help         | Display information about the current command. (boolean)        |
 
 ### `compas docker up`
@@ -111,7 +112,6 @@ Start the managed containers.
 | Option             | Description                                                     |
 | ------------------ | --------------------------------------------------------------- |
 | --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number) |
-| --timings          | Print information about CLI execution time. (boolean)           |
 | -h, --help         | Display information about the current command. (boolean)        |
 
 ### `compas docker down`
@@ -125,7 +125,6 @@ ignores context and stops any PostgreSQL container started by this CLI, ignoring
 | Option             | Description                                                     |
 | ------------------ | --------------------------------------------------------------- |
 | --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number) |
-| --timings          | Print information about CLI execution time. (boolean)           |
 | -h, --help         | Display information about the current command. (boolean)        |
 
 ### `compas docker clean`
@@ -145,7 +144,6 @@ cleaned at the same time. If no value is passed, it defaults to
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | --project          | Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`. (booleanOrString[]) |
 | --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number)                                                                       |
-| --timings          | Print information about CLI execution time. (boolean)                                                                                 |
 | -h, --help         | Display information about the current command. (boolean)                                                                              |
 
 ## `compas init`
@@ -158,7 +156,6 @@ Init various files in the current project.
 | --gitignore   | Creates or overwrites the .gitignore, with defaults for IDE(s), Yarn and caches. (boolean)                                                     |
 | --jsconfig    | Creates or overwrites the root jsconfig.json file, to use with the Typescript Language Server. (boolean)                                       |
 | --lint-config | Creates or overwrites .eslintrc.cjs, .eslintignore and .prettierignore files, and overwrites the 'prettier' key in the package.json. (boolean) |
-| --timings     | Print information about CLI execution time. (boolean)                                                                                          |
 | -h, --help    | Display information about the current command. (boolean)                                                                                       |
 
 ## `compas lint`
@@ -176,7 +173,6 @@ Markdown, and YAML files. The default configuration can be initialized via
 | --skip-prettier         | Skip running Prettier. (boolean)                                           |
 | --skip-eslint           | Skip running ESLint. (boolean)                                             |
 | --eslint-cache-location | Location of ESLint cache directory. Defaults to '.cache/eslint/'. (string) |
-| --timings               | Print information about CLI execution time. (boolean)                      |
 | -h, --help              | Display information about the current command. (boolean)                   |
 
 ## `compas migrate`
@@ -202,7 +198,6 @@ time. To disable this behaviour when the command enters watch mode,
 | --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
 | --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
 | --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --timings             | Print information about CLI execution time. (boolean)                                                                    |
 | -h, --help            | Display information about the current command. (boolean)                                                                 |
 
 ### `compas migrate info`
@@ -214,7 +209,6 @@ Print the current migration state.
 | --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
 | --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
 | --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --timings             | Print information about CLI execution time. (boolean)                                                                    |
 | -h, --help            | Display information about the current command. (boolean)                                                                 |
 
 ### `compas migrate rebuild`
@@ -226,7 +220,6 @@ Recreate migration state based on the file system.
 | --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
 | --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
 | --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --timings             | Print information about CLI execution time. (boolean)                                                                    |
 | -h, --help            | Display information about the current command. (boolean)                                                                 |
 
 ## `compas proxy`
@@ -245,7 +238,6 @@ This is fully configured via environment variables:
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas run`
@@ -257,7 +249,6 @@ located in the scripts directory.
 | ------------- | -------------------------------------------------------- |
 | --script-args | undefined (string)                                       |
 | --node-args   | undefined (string)                                       |
-| --timings     | Print information about CLI execution time. (boolean)    |
 | -h, --help    | Display information about the current command. (boolean) |
 
 ### `compas run $script`
@@ -268,7 +259,6 @@ The file or script to run.
 | ------------- | -------------------------------------------------------- |
 | --script-args | undefined (string)                                       |
 | --node-args   | undefined (string)                                       |
-| --timings     | Print information about CLI execution time. (boolean)    |
 | -h, --help    | Display information about the current command. (boolean) |
 
 ## `compas test`
@@ -307,7 +297,6 @@ https://www.npmjs.com/package/c8 for more information.
 | --parallel-count   | The number of workers to use, when running in parallel. Defaulting to (the number of CPU cores - 1) or 4, whichever is lower. (number) |
 | --randomize-rounds | Runs test the specified amount of times, shuffling the test file order between runs. (number)                                          |
 | --coverage         | Collect coverage information while running the tests. (boolean)                                                                        |
-| --timings          | Print information about CLI execution time. (boolean)                                                                                  |
 | -h, --help         | Display information about the current command. (boolean)                                                                               |
 
 ## `compas version`
@@ -316,7 +305,6 @@ Print the installed Compas version and exit
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ## `compas visualise`
@@ -325,7 +313,6 @@ Visualise various code-generated structures.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |
 
 ### `compas visualise erd`
@@ -337,7 +324,6 @@ Visualise entity structure and relations in a diagram.
 | --generated-directory | The directory containing the generated files. (string, required)               |
 | --format              | Output file format. Supports png, webp, pdf and svg. Defaults to svg. (string) |
 | --output              | Path to write the output to. Defaults to a random temporary file. (string)     |
-| --timings             | Print information about CLI execution time. (boolean)                          |
 | -h, --help            | Display information about the current command. (boolean)                       |
 
 ## `compas help`
@@ -348,5 +334,4 @@ Display help for any of the available commands.
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
-| --timings  | Print information about CLI execution time. (boolean)    |
 | -h, --help | Display information about the current command. (boolean) |

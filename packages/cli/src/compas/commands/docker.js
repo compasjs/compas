@@ -345,12 +345,9 @@ async function cleanContainers(logger, state, context) {
    * @type {string[]}
    */
   // @ts-ignore
-  const projects =
-    Array.isArray(state.flags.projects) &&
-    state.flags.projects.length === 1 &&
-    state.flags.projects[0] === true
-      ? [environment.APP_NAME]
-      : state.flags.projects;
+  const projects = state.flags.projects.map((it) =>
+    it === true ? environment.APP_NAME : it,
+  );
 
   logger.info(`Resetting databases for '${projects.join("', '")}'.`);
 

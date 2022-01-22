@@ -6,10 +6,32 @@ import { TypeCreator } from "@compas/code-gen";
 export function applyCliStructure(app) {
   const T = new TypeCreator("cli");
 
-  // Note that if this is updated, both `compasGetCli` and `cliHelpInit` should be updated.
-  // This is also a downstream breaking change.
+  // Note that if this is updated, both `compasGetCli` and `cliHelpInit` should be
+  // updated. This is also a downstream breaking change.
 
   app.add(
+    T.anyOf("completion").values(
+      { type: "directory" },
+      {
+        type: "file",
+      },
+      {
+        type: "completion",
+        name: T.string(),
+        description: T.string().optional(),
+      },
+      {
+        type: "value",
+        specification: T.string().oneOf(
+          "boolean",
+          "number",
+          "string",
+          "booleanOrString",
+        ),
+        description: T.string().optional(),
+      },
+    ),
+
     T.object("flagDefinition").keys({
       name: T.string(),
       rawName: T.string().pattern(/^--\w/g).lowerCase(),
@@ -42,7 +64,7 @@ export function applyCliStructure(app) {
             .optional(),
           completions: T.any()
             .raw(
-              "(() => Promise<{ completions: { name: string, description?: string }[] }>|{ completions: { name: string, description?: string }[] })",
+              "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
             )
             .validator(`((v) => typeof v === "function")`)
             .optional(),
@@ -55,7 +77,7 @@ export function applyCliStructure(app) {
     }),
 
     T.object("commandDefinition").keys({
-      name: T.string().pattern(/^[\w-]+$/g),
+      name: T.string().pattern(/^[a-z-]+$/g),
       shortDescription: T.string().pattern(/^[^\n]+$/g),
       longDescription: T.string().optional(),
       modifiers: T.object()
@@ -79,7 +101,7 @@ export function applyCliStructure(app) {
             .optional(),
           completions: T.any()
             .raw(
-              "(() => Promise<{ completions: { name: string, description?: string }[] }>|{ completions: { name: string, description?: string }[] })",
+              "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
             )
             .validator(`((v) => typeof v === "function")`)
             .optional(),

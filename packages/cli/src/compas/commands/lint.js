@@ -29,6 +29,9 @@ The default configuration can be initialized via 'compas init --lint-config'.
         "Location of ESLint cache directory. Defaults to '.cache/eslint/'.",
       value: {
         specification: "string",
+        completions: () => ({
+          completions: [{ type: "directory" }],
+        }),
       },
     },
   ],

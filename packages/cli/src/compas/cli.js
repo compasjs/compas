@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import { writeFile } from "fs/promises";
 import {
-  AppError,
   configLoaderGet,
   dirnameForModule,
   eventStart,
@@ -155,28 +153,21 @@ export async function compasExecCli(event, logger, cli, userInput) {
     };
   }
 
-  try {
-    const result = await cliCommandExec(
-      newEventFromEvent(event),
-      logger,
-      cli,
-      commandResult.value,
-      flagResult.value,
-      userInput,
-    );
+  const result = await cliCommandExec(
+    newEventFromEvent(event),
+    logger,
+    cli,
+    commandResult.value,
+    flagResult.value,
+    userInput,
+  );
 
-    eventStop(event);
+  eventStop(event);
 
-    return {
-      flags: flagResult.value,
-      result,
-    };
-  } catch (e) {
-    await writeFile(
-      "./error.json",
-      JSON.stringify(AppError.format(e), null, 2),
-    );
-  }
+  return {
+    flags: flagResult.value,
+    result,
+  };
 }
 
 /**

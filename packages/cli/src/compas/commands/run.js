@@ -53,26 +53,32 @@ ${Object.entries(scriptCollection)
             },
           };
         },
+
+        /**
+         * @returns {{ completions: CliCompletion[] }}
+         */
         completions: () => {
           const scriptCollection = collectScripts();
 
           return {
             completions: [
               {
-                name: "<file>",
-                description: "A path to a valid JavaScript file.",
+                type: "file",
               },
+              // @ts-ignore
               ...Object.keys(scriptCollection).map((it) => {
                 const value = scriptCollection[it];
 
                 if (value.type === "package") {
                   return {
+                    type: "completion",
                     name: it,
                     description: `The '${it}' script from the package.json.`,
                   };
                 }
 
                 return {
+                  type: "completion",
                   name: it,
                   description: `The '${it}' script defined in ./scripts.`,
                 };
@@ -129,10 +135,11 @@ export async function cliExecutor(logger, state) {
     }
 
     // @ts-ignore
-    if (state.flags.nodeArguments?.length > 0)
+    if (state.flags.nodeArguments?.length > 0) {
       logger.error(
         "Node arguments are not supported if the script is defined in the package.json",
       );
+    }
   } else {
     // @ts-ignore
     const src = script ? script.path : path.resolve(scriptName);

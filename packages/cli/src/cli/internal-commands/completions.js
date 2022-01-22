@@ -1,5 +1,6 @@
+import { appendFileSync } from "fs";
 import { writeFile } from "fs/promises";
-import { environment, isNil } from "@compas/stdlib";
+import { AppError, environment, isNil } from "@compas/stdlib";
 import { cliParserGetKnownFlags, cliParserSplitArgs } from "../parser.js";
 
 /**
@@ -22,15 +23,29 @@ export const cliDefinition = {
     },
   ],
   shortDescription: "Configure shell auto-complete for this CLI.",
-  executor: cliExecutor,
+  executor: async (...args) => {
+    try {
+      return await cliExecutor(...args);
+    } catch (e) {
+      if (environment.COMPAS_DEBUG_COMPLETIONS === "true") {
+        await writeFile(
+          "./error.json",
+          JSON.stringify(
+            {
+              now: new Date().toISOString(),
+              error: AppError.format(e),
+            },
+            null,
+            2,
+          ),
+        );
+      }
+      throw e;
+    }
+  },
 };
 
 /**
- * From Yargs:
- * https://github.com/yargs/yargs/blob/30edd5067111b2b59387dcc47f4e7af93b9054f3/LICENSE
- * https://github.com/yargs/yargs/blob/30edd5067111b2b59387dcc47f4e7af93b9054f3/lib/completion.ts
- * https://github.com/yargs/yargs/blob/30edd5067111b2b59387dcc47f4e7af93b9054f3/lib/completion-templates.ts
- *
  * Auto completes commands, flags, flag values
  *
  * @param {import("@compas/stdlib").Logger} logger
@@ -46,118 +61,173 @@ export async function cliExecutor(logger, state) {
   if (isNil(state.flags.getCompletions)) {
     // TODO: Disable JSON logger?
     printCompletionScripts(state.cli, { isZSH });
+
     return {
       exitStatus: "passed",
     };
   }
 
-  let inputCommand = state.flags.getCompletions;
-  if (inputCommand === true) {
-    inputCommand = state.cli.name;
-  }
-
-  // We use \t as the seperator when passing the current command to be auto-completed to
+  // We use \t as the separator when passing the current command to be auto-completed to
   // '--get-completions'
   /** @type {string[]} */
   // @ts-ignore
-  inputCommand = inputCommand.split("\t");
+  const inputCommand = state.flags.getCompletions.split("\t");
 
-  // We can reuse the split args function
-  // @ts-ignore
-  const { commandArgs, flagArgs } = cliParserSplitArgs(inputCommand);
-
-  const matchedCommand = completionsMatchCommand(state.cli, commandArgs);
-  if (isNil(matchedCommand)) {
-    // No match, so early return without any auto complete options.
-    return {
-      exitStatus: "passed",
-    };
-  }
-
-  const availableFlags = cliParserGetKnownFlags(matchedCommand);
-
-  /** @type {{ name: string ,description?: string }[] } */
-  const completions = [];
-
-  // Add sub commands; but don't be to greedy;
-  //  - We don't support flags in between commands, so if flags are found, skip sub
-  // commands.
-  //  - We don't support commands ending in 'isCosmetic' commands, so force sub commands
-  //  - We expect commands to be strings containing only 'a-z' and dashes (-), so if not it is a dynamic value or flag.
-  if (
-    matchedCommand?.modifiers.isCosmetic &&
-    flagArgs.length === 0 &&
-    /^[\w-]*$/g.test(commandArgs.at(-1))
-  ) {
-    for (const subCommand of matchedCommand.subCommands) {
-      if (subCommand.modifiers.isDynamic) {
-        // Dynamic sub commands always have some form of completions defined, so
-        // integrate those.
-        completions.push(
-          ...(await subCommand.dynamicValue.completions()).completions,
-        );
-
-        continue;
-      }
-
-      completions.push({
-        name: subCommand.name,
-        description: subCommand.shortDescription,
-      });
-    }
-  }
-
-  const flagCompletions = await completionGetFlagCompletions(
-    availableFlags,
-    flagArgs,
-    {
-      forceFlagCompletions: !matchedCommand?.modifiers.isCosmetic,
-    },
-  );
-
-  completions.push(...flagCompletions);
-
-  if (environment.COMPAS_DEBUG_COMPLETIONS === "true") {
-    await writeFile(
-      "./compas-debug-completions.json",
-      JSON.stringify(
-        {
-          completions,
-        },
-        null,
-        2,
-      ),
-    );
-  }
+  const { commandCompletions, flagCompletions } =
+    await completionsGetCompletions(state.cli, inputCommand);
 
   if (isZSH) {
-    completionsPrintForZsh(completions);
+    completionsPrintForZsh(commandCompletions, flagCompletions);
   } else {
-    completionsPrintForBash(completions);
+    completionsPrintForBash(commandCompletions, flagCompletions);
   }
 
   return {
-    exitStatus: completions.length === 0 ? "failed" : "passed",
+    exitStatus: "passed",
   };
 }
 
 /**
- * @param {{ name: string, description?: string }[]} completions
+ * Resolve completions for the cli and input array
+ *
+ * @param {import("../types").CliResolved} cli
+ * @param {string[]} input
+ * @returns {Promise<{
+ *   commandCompletions: CliCompletion[],
+ *   flagCompletions: CliCompletion[],
+ * }>}
  */
-function completionsPrintForZsh(completions) {
-  for (const cmp of completions) {
-    // eslint-disable-next-line no-console
-    console.log(`${cmp.name}${cmp.description ? `:${cmp.description}` : ""}`);
+export async function completionsGetCompletions(cli, input) {
+  /** @type {CliCompletion[]} */
+  let commandCompletions = [];
+  /** @type {CliCompletion[]} */
+  let flagCompletions = [];
+
+  const command = completionsMatchCommand(cli, input);
+
+  if (isNil(command)) {
+    // We don't have any match, so we can't even give auto-complete results.
+    return {
+      commandCompletions,
+      flagCompletions,
+    };
   }
+
+  commandCompletions = await completionsDetermineCommandCompletions(
+    command,
+    input,
+  );
+
+  const availableFlags = cliParserGetKnownFlags(command);
+
+  const flagsResult = await completionGetFlagCompletions(
+    availableFlags,
+    input,
+    {
+      forceFlagCompletions: !command?.modifiers.isCosmetic,
+    },
+  );
+
+  if (flagsResult.shouldSkipCommands) {
+    commandCompletions = [];
+  }
+
+  flagCompletions = flagsResult.flagCompletions;
+
+  return {
+    commandCompletions,
+    flagCompletions,
+  };
 }
 
 /**
- * @param {{ name: string, description?: string }[]} completions
+ * @param {import("../../generated/common/types").CliCompletion[]} commandCompletions
+ * @param {import("../../generated/common/types").CliCompletion[]} flagCompletions
  */
-function completionsPrintForBash(completions) {
-  for (const cmp of completions) {
+function completionsPrintForZsh(commandCompletions, flagCompletions) {
+  let completionResult = `local commands\ncommands=(`;
+  let postResult = ``;
+
+  /**
+   *
+   * @param {import("../../generated/common/types").CliCompletion} completion
+   */
+  const addCompletion = (completion) => {
+    // @ts-ignore
+    const escapedDescription = completion?.description?.replaceAll(
+      /(['"`])/g,
+      (it) => `\\${it}`,
+    );
+
+    switch (completion.type) {
+      case "directory":
+        postResult += `\n_files -/`;
+        break;
+      case "file":
+        postResult += `\n_files`;
+        break;
+      case "completion":
+        completionResult += `"${completion.name}${
+          completion.description ? `:${escapedDescription}` : ""
+        }" `;
+        break;
+      case "value": {
+        const options = {
+          boolean: ["true", "false"],
+          number: ["<number>"],
+          string: ["<string>"],
+          booleanOrString: ["true", "false", "<string>"],
+        };
+        postResult += `\n_message -r 'Input: ${options[
+          completion.specification
+        ].join(`,`)}${
+          completion.description ? `\nDescription: ${escapedDescription}` : ""
+        }'`;
+        break;
+      }
+    }
+  };
+
+  for (const cmp of commandCompletions) {
+    addCompletion(cmp);
+  }
+
+  for (const cmp of flagCompletions) {
+    addCompletion(cmp);
+  }
+
+  let result = completionResult;
+  if (result.endsWith("commands=(")) {
+    result = "";
+  } else {
+    result += `)\n_describe 'values' commands`;
+  }
+
+  result += postResult;
+
+  if (environment.COMPAS_DEBUG_COMPLETIONS === "true") {
+    appendFileSync(
+      "./compas-debug-completions.txt",
+      `\n${new Date().toISOString()}\n${result}\n`,
+    );
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(result);
+}
+
+/**
+ * @param {import("../../generated/common/types").CliCompletion[]} commandCompletions
+ * @param {import("../../generated/common/types").CliCompletion[]} flagCompletions
+ */
+function completionsPrintForBash(commandCompletions, flagCompletions) {
+  for (const cmp of commandCompletions) {
     // eslint-disable-next-line no-console
-    console.log(`${cmp.name}`);
+    console.log(`${cmp.type}`);
+  }
+  for (const cmp of flagCompletions) {
+    // eslint-disable-next-line no-console
+    console.log(`${cmp.type}`);
   }
 }
 
@@ -169,41 +239,102 @@ function completionsPrintForBash(completions) {
  *
  * @param {import("../../cli/types.js").CliResolved} cli
  * @param {string[]} input
- * @returns {import("../../cli/types.js").CliResolved|undefined}
+ * @returns {import("../../cli/types.js").CliResolved|undefined|undefined}
  */
 function completionsMatchCommand(cli, input) {
-  let cmd = cli;
+  let command = cli;
+  const { commandArgs, flagArgs } = cliParserSplitArgs(input);
 
-  for (let i = 1; i < input.length - 1; ++i) {
-    const currentInput = input[i];
+  // commandArgs[0] is always cli.name, so skip that match
+  for (
+    let i = 1;
+    i < commandArgs.length - (flagArgs.length === 0 ? 1 : 0);
+    ++i
+  ) {
+    const currentInput = commandArgs[i];
 
-    const matchedCommand = cmd.subCommands.find(
+    const matchedCommand = command.subCommands.find(
       (it) => it.name === currentInput,
     );
-    const dynamicCommand = cmd.subCommands.find((it) => it.modifiers.isDynamic);
+    const dynamicCommand = command.subCommands.find(
+      (it) => it.modifiers.isDynamic,
+    );
 
     if (matchedCommand) {
-      cmd = matchedCommand;
+      command = matchedCommand;
     } else if (dynamicCommand) {
-      cmd = dynamicCommand;
-    } else {
-      return undefined;
+      command = dynamicCommand;
+    } else if (i !== commandArgs.length - 1) {
+      // @ts-ignore
+      command = undefined;
+      break;
     }
   }
 
-  return cmd;
+  return command;
+}
+
+/**
+ * Add sub commands; but don't be too greedy;
+ *  - We don't support flags in between commands, so if flags are found, skip sub
+ * commands.
+ *  - We don't support commands ending in 'isCosmetic' commands, so force sub commands
+ *  - We expect commands to be strings containing only 'a-z' and dashes (-), so if not
+ * it is a dynamic value or flag.
+ *
+ * @param {import("../types").CliResolved} command
+ * @param {string[]} input
+ * @returns {Promise<import("../../generated/common/types").CliCompletion[]>}
+ */
+async function completionsDetermineCommandCompletions(command, input) {
+  /** @type {CliCompletion[]} */
+  const completions = [];
+
+  const { flagArgs } = cliParserSplitArgs(input);
+
+  if (command?.modifiers.isCosmetic && flagArgs.length === 0) {
+    for (const subCommand of command.subCommands) {
+      if (subCommand.modifiers.isDynamic) {
+        // Dynamic sub commands always have some form of completions defined, so
+        // integrate those.
+        completions.push(
+          ...((await subCommand?.dynamicValue?.completions?.())?.completions ??
+            []),
+        );
+
+        continue;
+      }
+
+      completions.push({
+        type: "completion",
+        name: subCommand.name,
+        description: subCommand.shortDescription,
+      });
+    }
+  }
+
+  return completions;
 }
 
 /**
  *
  * @param {Map<string, import("../../generated/common/types").CliFlagDefinition>} availableFlags
- * @param {string[]} flagArgs
+ * @param {string[]} input
  * @param {{ forceFlagCompletions: boolean }} options
- * @returns {Promise<{ name: string, description?: string }[]>}
+ * @returns {Promise<{
+ *   shouldSkipCommands: boolean,
+ *   flagCompletions: import("../../generated/common/types").CliCompletion[],
+ * }>}
  */
-async function completionGetFlagCompletions(availableFlags, flagArgs, options) {
-  if (flagArgs.length === 0 && !options.forceFlagCompletions) {
-    return [];
+async function completionGetFlagCompletions(availableFlags, input, options) {
+  const { commandArgs, flagArgs } = cliParserSplitArgs(input);
+
+  if (
+    flagArgs.length === 0 &&
+    commandArgs.at(-1) !== "-" &&
+    !options.forceFlagCompletions
+  ) {
+    return { shouldSkipCommands: false, flagCompletions: [] };
   }
 
   availableFlags.delete("-h");
@@ -215,19 +346,44 @@ async function completionGetFlagCompletions(availableFlags, flagArgs, options) {
     const [flagName] = lastItem.split("=");
     const definition = availableFlags.get(flagName);
 
-    return (await definition.value.completions()).completions.map((it) => {
-      return {
-        name: `${flagName}=${it.name}`,
-        description: it.description,
-      };
-    });
+    return {
+      shouldSkipCommands: true,
+
+      // @ts-ignore
+      flagCompletions: (
+        await definition?.value?.completions?.()
+      )?.completions.map((it) => {
+        if (it.type === "completion" && it.name) {
+          it.name = `${flagName}=${it.name}`;
+        }
+
+        return it;
+      }),
+    };
   }
 
+  /** @type {CliCompletion[]} */
   let oneToLastCompletions = [];
-  if (availableFlags.has(oneToLastItem)) {
-    oneToLastCompletions = (
-      await availableFlags.get(oneToLastItem).value.completions()
-    ).completions;
+  if (availableFlags.has(oneToLastItem ?? "")) {
+    oneToLastCompletions =
+      (await availableFlags.get(oneToLastItem ?? "")?.value?.completions?.())
+        ?.completions ?? [];
+  }
+
+  if (
+    oneToLastCompletions.length > 0 &&
+    !(
+      oneToLastCompletions.length === 1 &&
+      oneToLastCompletions[0].type === "value" &&
+      ["boolean", "booleanOrString"].includes(
+        oneToLastCompletions[0].specification,
+      )
+    )
+  ) {
+    return {
+      shouldSkipCommands: true,
+      flagCompletions: oneToLastCompletions,
+    };
   }
 
   for (let i = 0; i < flagArgs.length - 1; ++i) {
@@ -239,18 +395,27 @@ async function completionGetFlagCompletions(availableFlags, flagArgs, options) {
 
     if (
       availableFlags.has(value) &&
-      !availableFlags.get(value).modifiers.isRepeatable
+      !availableFlags.get(value ?? "")?.modifiers.isRepeatable
     ) {
       availableFlags.delete(value);
     }
   }
 
-  return [...availableFlags.keys()]
-    .map((it) => ({
-      name: it,
-      description: availableFlags.get(it).description,
-    }))
-    .concat(oneToLastCompletions);
+  return {
+    shouldSkipCommands: false,
+
+    // @ts-ignore
+    flagCompletions: [...availableFlags.keys()]
+      .map((it) => ({
+        type: "completion",
+        name: it,
+        description: availableFlags.get(it ?? "")?.description,
+      }))
+      .concat(
+        // @ts-ignore
+        oneToLastCompletions,
+      ),
+  };
 }
 
 /**
@@ -302,14 +467,19 @@ complete -o bashdefault -o default -F _${cli.name}_compas_completions ${cli.name
 #
 _${cli.name}_compas_completions()
 {
-  local reply
   local args
   local si=$IFS
+  
   IFS=$'\\t' 
   args=$words[*]
-  IFS=$'\\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" ${cli.name} completions --get-completions "$args"))
+  IFS=$'\\n'
+  COMP_CWORD="$((CURRENT-1))"
+  COMP_LINE="$BUFFER"
+  COMP_POINT="$CURSOR"
+  
+  eval "$(${cli.name} completions --get-completions "$args")"
+  
   IFS=$si
-  _describe 'values' reply
 }
 compdef _${cli.name}_compas_completions ${cli.name}
 ###-end-${cli.name}-completions-###

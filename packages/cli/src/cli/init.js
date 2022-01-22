@@ -172,8 +172,9 @@ function cliInitAddDefaultCompletions(command) {
       return {
         completions: [
           {
-            name: "<command>",
-            description: "Dynamic subcommand",
+            type: "value",
+            specification: "string",
+            description: `Dynamic value for '${command.name}'.`,
           },
         ],
       };
@@ -185,46 +186,22 @@ function cliInitAddDefaultCompletions(command) {
       continue;
     }
 
-    const items = [];
-
-    if (
-      flag.value.specification === "boolean" ||
-      flag.value.specification === "booleanOrString"
-    ) {
-      items.push(
-        {
-          name: "true",
-        },
-        { name: "false" },
-      );
-    }
-
-    if (flag.value.specification === "number") {
-      items.push({
-        name: "<number>",
-      });
-    }
-
-    if (
-      flag.value.specification === "string" ||
-      flag.value.specification === "booleanOrString"
-    ) {
-      items.push({
-        name: "<string>",
-      });
-    }
-
     flag.value.completions = () => {
       return {
-        completions: [...items],
+        completions: [
+          {
+            type: "value",
+            specification: flag.value.specification,
+            description: flag.description,
+          },
+        ],
       };
     };
   }
 
-  for (const cmd of command.subCommands) {
-    if (cmd.name === "help") {
-      continue;
+  if (command.name !== "help") {
+    for (const cmd of command.subCommands) {
+      cliInitAddDefaultCompletions(cmd);
     }
-    cliInitAddDefaultCompletions(cmd);
   }
 }

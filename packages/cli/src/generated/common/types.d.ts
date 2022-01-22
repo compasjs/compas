@@ -17,8 +17,8 @@ export type CliCommandDefinition = {
     completions?:
       | undefined
       | (() =>
-          | Promise<{ completions: { name: string; description?: string }[] }>
-          | { completions: { name: string; description?: string }[] });
+          | Promise<{ completions: CliCompletion[] }>
+          | { completions: CliCompletion[] });
   };
   subCommands: CliCommandDefinition[];
   flags: CliFlagDefinition[];
@@ -50,10 +50,19 @@ export type CliFlagDefinition = {
     completions?:
       | undefined
       | (() =>
-          | Promise<{ completions: { name: string; description?: string }[] }>
-          | { completions: { name: string; description?: string }[] });
+          | Promise<{ completions: CliCompletion[] }>
+          | { completions: CliCompletion[] });
   };
 };
+export type CliCompletion =
+  | { type: "directory" }
+  | { type: "file" }
+  | { type: "completion"; name: string; description?: undefined | string }
+  | {
+      type: "value";
+      specification: "boolean" | "number" | "string" | "booleanOrString";
+      description?: undefined | string;
+    };
 export type CliCommandDefinitionInput = {
   name: string;
   shortDescription: string;
@@ -74,10 +83,8 @@ export type CliCommandDefinitionInput = {
         completions?:
           | undefined
           | (() =>
-              | Promise<{
-                  completions: { name: string; description?: string }[];
-                }>
-              | { completions: { name: string; description?: string }[] });
+              | Promise<{ completions: CliCompletion[] }>
+              | { completions: CliCompletion[] });
       };
   subCommands?:
     | undefined
@@ -120,9 +127,8 @@ export type CliFlagDefinitionInput = {
         completions?:
           | undefined
           | (() =>
-              | Promise<{
-                  completions: { name: string; description?: string }[];
-                }>
-              | { completions: { name: string; description?: string }[] });
+              | Promise<{ completions: CliCompletion[] }>
+              | { completions: CliCompletion[] });
       };
 };
+export type CliCompletionInput = CliCompletion;
