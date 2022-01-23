@@ -165,17 +165,20 @@ export const cliDefinition = {
             // Get file completions
             type: "file",
           }, {
+            // A direct completion for the user
             type: "completion", name: "toggle",
           }, {
+            // A direct completion for the user
             type: "completion", name: "add",
 
             // optional
             description: "Add a new todo",
           }, {
+            // Print message with specification and description
             type: "value", specification: "string",
 
             // Optional
-            description: "A todo name".
+            description: "A todo name",
           }
         ]
       }

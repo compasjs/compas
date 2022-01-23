@@ -58,6 +58,14 @@ export async function cliExecutor(logger, state) {
     environment.ZSH_NAME?.includes("zsh") ??
     false;
 
+  if (!isZSH) {
+    logger.info("This CLI only supports completions for ZSH.");
+
+    return {
+      exitStatus: "failed",
+    };
+  }
+
   if (isNil(state.flags.getCompletions)) {
     // TODO: Disable JSON logger?
     printCompletionScripts(state.cli, { isZSH });
@@ -76,11 +84,7 @@ export async function cliExecutor(logger, state) {
   const { commandCompletions, flagCompletions } =
     await completionsGetCompletions(state.cli, inputCommand);
 
-  if (isZSH) {
-    completionsPrintForZsh(commandCompletions, flagCompletions);
-  } else {
-    completionsPrintForBash(commandCompletions, flagCompletions);
-  }
+  completionsPrintForZsh(commandCompletions, flagCompletions);
 
   return {
     exitStatus: "passed",
@@ -173,14 +177,14 @@ function completionsPrintForZsh(commandCompletions, flagCompletions) {
         break;
       case "value": {
         const options = {
-          boolean: ["true", "false"],
-          number: ["<number>"],
-          string: ["<string>"],
-          booleanOrString: ["true", "false", "<string>"],
+          boolean: "true, false",
+          number: "number",
+          string: "string ",
+          booleanOrString: "true, false or a string",
         };
-        postResult += `\n_message -r 'Input: ${options[
-          completion.specification
-        ].join(`,`)}${
+        postResult += `\n_message -r 'Input: ${
+          options[completion.specification]
+        }${
           completion.description ? `\nDescription: ${escapedDescription}` : ""
         }'`;
         break;
@@ -217,21 +221,6 @@ function completionsPrintForZsh(commandCompletions, flagCompletions) {
 }
 
 /**
- * @param {import("../../generated/common/types").CliCompletion[]} commandCompletions
- * @param {import("../../generated/common/types").CliCompletion[]} flagCompletions
- */
-function completionsPrintForBash(commandCompletions, flagCompletions) {
-  for (const cmp of commandCompletions) {
-    // eslint-disable-next-line no-console
-    console.log(`${cmp.type}`);
-  }
-  for (const cmp of flagCompletions) {
-    // eslint-disable-next-line no-console
-    console.log(`${cmp.type}`);
-  }
-}
-
-/**
  * Match the command based on the input.
  * When an invalid match is encountered, we abort any matching.
  * If an invalid match is the last 'command' input like 'compas foo<tab>' we can return
@@ -246,6 +235,8 @@ function completionsMatchCommand(cli, input) {
   const { commandArgs, flagArgs } = cliParserSplitArgs(input);
 
   // commandArgs[0] is always cli.name, so skip that match
+  // If flags are passed, we expect that the command is fully correct, else we expect to
+  // generate completions for the last commandArgs item.
   for (
     let i = 1;
     i < commandArgs.length - (flagArgs.length === 0 ? 1 : 0);
@@ -421,40 +412,8 @@ async function completionGetFlagCompletions(availableFlags, input, options) {
 /**
  *
  * @param {import("../../cli/types.js").CliResolved} cli
- * @param {{ isZSH: boolean }} options
  */
-function printCompletionScripts(cli, { isZSH }) {
-  if (!isZSH) {
-    // Bash
-    // eslint-disable-next-line no-console
-    console.log(`
-###-begin-${cli.name}-completions-###
-#
-# Compas command completion script
-#
-# Installation: ${cli.name} completions >> ~/.bashrc
-#    or ${cli.name} completions >> ~/.bash_profile on OSX.
-#
-_${cli.name}_compas_completions()
-{
-    local cur_word args type_list
-    cur_word="\${COMP_WORDS[COMP_CWORD]}"
-    args=("\${COMP_WORDS[@]}")
-    # ask ${cli.name} to generate completions via a Compas internal flag.
-    type_list=$(${cli.name} completions --get-completions "\${args[@]}")
-    COMPREPLY=( $(compgen -W "\${type_list}" -- \${cur_word}) )
-    # if no match was found, fall back to filename completion
-    if [ \${#COMPREPLY[@]} -eq 0 ]; then
-      COMPREPLY=()
-    fi
-    return 0
-}
-complete -o bashdefault -o default -F _${cli.name}_compas_completions ${cli.name}
-###-end-${cli.name}-completions-###
-`);
-    return;
-  }
-
+function printCompletionScripts(cli) {
   // ZSH
   // eslint-disable-next-line no-console
   console.log(`#compdef ${cli.name}
