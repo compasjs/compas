@@ -1,7 +1,4 @@
 /**
- * From Yargs:
- * https://github.com/yargs/yargs/blob/30edd5067111b2b59387dcc47f4e7af93b9054f3/lib/completion-templates.ts
- *
  * Auto completes commands, flags, flag values
  *
  * @param {import("@compas/stdlib").Logger} logger

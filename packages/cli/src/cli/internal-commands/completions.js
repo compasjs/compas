@@ -68,7 +68,7 @@ export async function cliExecutor(logger, state) {
 
   if (isNil(state.flags.getCompletions)) {
     // TODO: Disable JSON logger?
-    printCompletionScripts(state.cli, { isZSH });
+    printCompletionScripts(state.cli);
 
     return {
       exitStatus: "passed",
