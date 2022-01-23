@@ -5,9 +5,10 @@ import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
 import { newLogger } from "@compas/stdlib";
 import dotenv from "dotenv";
-import { refreshEnvironmentCache } from "./env.js";
+import { environment, isProduction, refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
+import { extendGlobalLoggerContext } from "./logger/logger.js";
 
 /**
  * @typedef {import("../types/advanced-types.js").Logger} Logger
@@ -79,6 +80,12 @@ export function mainFn(meta, cb) {
   dotenv.config();
 
   refreshEnvironmentCache();
+
+  if (isProduction() && environment.APP_NAME) {
+    extendGlobalLoggerContext({
+      application: environment.APP_NAME,
+    });
+  }
 
   const logger = newLogger({
     ctx: { type: name },

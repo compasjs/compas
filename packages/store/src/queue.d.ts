@@ -108,11 +108,11 @@ export function getNextScheduledAt(
  * Useful for testing if jobs are created.
  *
  * @param {Postgres} sql
- * @returns {Promise<Object<string, QueryResultStoreJob[]>>}
+ * @returns {Promise<Record<string, QueryResultStoreJob[]>>}
  */
-export function getUncompletedJobsByName(sql: Postgres): Promise<{
-  [x: string]: QueryResultStoreJob[];
-}>;
+export function getUncompletedJobsByName(
+  sql: Postgres,
+): Promise<Record<string, QueryResultStoreJob[]>>;
 /**
  * The queue system is based on 'static' units of work to be done in the background.
  * It supports the following:

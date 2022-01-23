@@ -36,15 +36,11 @@ export function executeTemplate(name: string, data: any): string;
  * } ProcessDirectoryOptions
  */
 /**
- * @type {{context: Object<string, Function>, globals: Object<string, Function>}}
+ * @type {{context: Record<string, Function>, globals: Record<string, Function>}}
  */
 export const templateContext: {
-  context: {
-    [x: string]: Function;
-  };
-  globals: {
-    [x: string]: Function;
-  };
+  context: Record<string, Function>;
+  globals: Record<string, Function>;
 };
 export type ProcessDirectoryOptions =
   import("@compas/stdlib").ProcessDirectoryOptions;

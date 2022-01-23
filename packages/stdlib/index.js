@@ -75,7 +75,11 @@ export {
   dirnameForModule,
 } from "./src/utils.js";
 
-export { newLogger } from "./src/logger/logger.js";
+export {
+  newLogger,
+  extendGlobalLoggerContext,
+  setGlobalLoggerOptions,
+} from "./src/logger/logger.js";
 
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
 

@@ -1,6 +1,4 @@
 import { RandomUUIDOptions } from "crypto";
-import Pino from "pino";
-import { SonicBoom } from "sonic-boom";
 
 import { AppError } from "../src/error.js";
 
@@ -125,25 +123,6 @@ export interface LoggerOptions<T extends LoggerContext> {
    * The stream to write the logs to, is not used for the 'ndjson' printer
    */
   stream?: NodeJS.WriteStream;
-
-  /**
-   * Supported Pino options if the 'ndjson' logger is used
-   */
-  pinoOptions?:
-    | {
-        transport?:
-          | Pino.TransportSingleOptions
-          | Pino.TransportMultiOptions
-          | Pino.TransportPipelineOptions;
-        destination?:
-          | string
-          | number
-          | Pino.DestinationObjectOptions
-          | Pino.DestinationStream
-          | NodeJS.WritableStream
-          | SonicBoom;
-      }
-    | undefined;
 
   /**
    * Context that should be logged in all log lines. e.g
