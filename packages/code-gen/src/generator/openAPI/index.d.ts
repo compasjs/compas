@@ -11,7 +11,7 @@
  * @property {string} [description]
  */
 /**
- * @typedef {Object<string,object>} OpenApiRouteExtensions
+ * @typedef {Record<string, object>} OpenApiRouteExtensions
  */
 /**
  * @typedef {object} GenerateOpenApiOpts
@@ -41,19 +41,13 @@ export type OpenApiExtensionsInfo = {
   title?: string | undefined;
   description?: string | undefined;
 };
-export type OpenApiRouteExtensions = {
-  [x: string]: object;
-};
+export type OpenApiRouteExtensions = Record<string, object>;
 export type GenerateOpenApiOpts = {
   inputPath: string;
   outputFile: string;
   enabledGroups?: string[] | undefined;
   verbose?: boolean | undefined;
   openApiExtensions?: OpenApiExtensions | undefined;
-  openApiRouteExtensions?:
-    | {
-        [x: string]: any;
-      }
-    | undefined;
+  openApiRouteExtensions?: Record<string, any> | undefined;
 };
 //# sourceMappingURL=index.d.ts.map

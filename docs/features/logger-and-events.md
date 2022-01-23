@@ -32,9 +32,6 @@ Parameters:
   - `stream` (Stream): The stream to write to, defaults to `process.stdout`.
     This is the intended use case. Although streams to files may work, this is
     not supported. This option is ignored if the printer is `ndjson`.
-  - `pinoOptions`: Specify a custom Pino transport or destination. See the
-    [Pino docs](https://getpino.io) for more information. This field is only
-    used if the printer is `ndjson`.
   - `ctx` (object): Any context to add to log lines. This value is copied
     immediately on logger creation, so changes made via a reference, will not be
     reflected.
@@ -52,6 +49,22 @@ A logger is a plain JavaScript object with 3 functions:
 
 The info and error function accept a single argument that is logged. This
 happens in a single `write` call when pretty printing or not.
+
+### setGlobalLogOptions
+
+There is also some global log configuration that can be set. For now these
+options only apply to the 'ndjson' logger. You can specify a custom Pino
+transport or destination that is used for all loggers created after calling this
+function. See the [Pino docs](https://getpino.io) for more information on what
+you can pass in.
+
+### extendGlobalLoggerContext
+
+An application is able to gradually add more information to the shared context
+used by loggers. All properties added via this function will end up in each log
+line like the 'ctx' option of 'newLogger'. You can still overwrite values via
+the `ctx` option of `newLogger`. The added properties will only show up in
+loggers created after calling this function.
 
 ### On log levels and processing
 

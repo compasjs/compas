@@ -3,7 +3,7 @@
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {{parameters?: Object[]}}
+ * @returns {{parameters?: object[]}}
  */
 export function transformParams(
   structure: import("../../generated/common/types").CodeGenStructure,
@@ -17,14 +17,14 @@ export function transformParams(
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @param {Record<string, any>} existingSchemas
- * @returns {{requestBody?: Object}}
+ * @returns {{requestBody?: object}}
  */
 export function transformBody(
   structure: import("../../generated/common/types").CodeGenStructure,
   route: import("../../generated/common/types").CodeGenRouteType,
   existingSchemas: Record<string, any>,
 ): {
-  requestBody?: any;
+  requestBody?: object;
 };
 /**
  * @param {import("../../generated/common/types").CodeGenStructure} structure
