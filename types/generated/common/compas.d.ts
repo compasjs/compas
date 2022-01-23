@@ -8,6 +8,7 @@ import * as stdlib from "@compas/stdlib";
 import * as store from "@compas/store";
 
 declare global {
+  type CliCompletion = cli.CliCompletion;
   type CliResult = cli.CliResult;
   type CliCommandDefinitionInput = cli.CliCommandDefinitionInput;
   type CliExecutorState = cli.CliExecutorState;

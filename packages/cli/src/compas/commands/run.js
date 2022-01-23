@@ -19,20 +19,21 @@ export const cliDefinition = {
       modifiers: {
         isDynamic: true,
       },
-      dynamicValidator: (value) => {
-        const scriptCollection = collectScripts();
-        const isValid = !isNil(scriptCollection[value]) || existsSync(value);
+      dynamicValue: {
+        validator: (value) => {
+          const scriptCollection = collectScripts();
+          const isValid = !isNil(scriptCollection[value]) || existsSync(value);
 
-        if (isValid) {
+          if (isValid) {
+            return {
+              isValid,
+            };
+          }
+
           return {
             isValid,
-          };
-        }
-
-        return {
-          isValid,
-          error: {
-            message: `Can run files from the following places:
+            error: {
+              message: `Can run files from the following places:
 - Files located in the scripts directory.
 - Scripts defined in the package.json
 - Any path to a JavaScript file
@@ -49,8 +50,42 @@ ${Object.entries(scriptCollection)
   .map(([key]) => `  - ${key}`)
   .join("\n")}
 `,
-          },
-        };
+            },
+          };
+        },
+
+        /**
+         * @returns {{ completions: CliCompletion[] }}
+         */
+        completions: () => {
+          const scriptCollection = collectScripts();
+
+          return {
+            completions: [
+              {
+                type: "file",
+              },
+              // @ts-ignore
+              ...Object.keys(scriptCollection).map((it) => {
+                const value = scriptCollection[it];
+
+                if (value.type === "package") {
+                  return {
+                    type: "completion",
+                    name: it,
+                    description: `The '${it}' script from the package.json.`,
+                  };
+                }
+
+                return {
+                  type: "completion",
+                  name: it,
+                  description: `The '${it}' script defined in ./scripts.`,
+                };
+              }),
+            ],
+          };
+        },
       },
       shortDescription: "The file or script to run.",
     },
@@ -100,10 +135,11 @@ export async function cliExecutor(logger, state) {
     }
 
     // @ts-ignore
-    if (state.flags.nodeArguments?.length > 0)
+    if (state.flags.nodeArguments?.length > 0) {
       logger.error(
         "Node arguments are not supported if the script is defined in the package.json",
       );
+    }
   } else {
     // @ts-ignore
     const src = script ? script.path : path.resolve(scriptName);

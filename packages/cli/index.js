@@ -3,6 +3,10 @@
  */
 
 /**
+ * @typedef {import("./src/generated/common/types").CliCompletion} CliCompletion
+ */
+
+/**
  * @typedef {import("./src/cli/types").CliResult} CliResult
  */
 

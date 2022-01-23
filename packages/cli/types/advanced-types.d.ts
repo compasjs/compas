@@ -5,7 +5,7 @@ export interface TestRunner {
   /**
    * Available test logger
    */
-  log: Logger;
+  log: import("@compas/stdlib").Logger;
 
   /**
    * Configurable timeout used for sub tests

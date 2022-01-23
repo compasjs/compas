@@ -9,7 +9,8 @@ import { cliCommandGetRoot } from "./command.js";
  */
 export function cliParserSplitArgs(args) {
   for (let i = 0; i < args.length; ++i) {
-    if (args[i].startsWith("-")) {
+    // Match '-h' exact, since it is the only flag with a single '-'
+    if (args[i].startsWith("--") || args[i] === "-h") {
       return {
         commandArgs: args.slice(0, i),
         flagArgs: args.slice(i),
@@ -74,9 +75,9 @@ export async function cliParserParseCommand(event, cli, args) {
     if (directMatch) {
       foundCommand = directMatch;
     } else if (dynamicMatch) {
-      if (dynamicMatch.dynamicValidator) {
+      if (dynamicMatch.dynamicValue.validator) {
         const { isValid, error } = await Promise.resolve(
-          dynamicMatch.dynamicValidator(arg),
+          dynamicMatch.dynamicValue.validator(arg),
         );
         if (!isValid) {
           return {

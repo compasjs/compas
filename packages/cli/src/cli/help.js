@@ -33,6 +33,7 @@ export function cliHelpInit(cli) {
       isCosmetic: false,
       isDynamic: false,
     },
+    dynamicValue: {},
     executor: () => {
       throw new Error(
         `This should never happen, please report this to the maintainers of this cli.`,
@@ -48,6 +49,7 @@ export function cliHelpInit(cli) {
       modifiers: {
         isRepeatable: false,
         isRequired: false,
+        isInternal: false,
       },
       description: "Display information about the current command.",
       value: {
@@ -60,6 +62,7 @@ export function cliHelpInit(cli) {
       modifiers: {
         isRepeatable: false,
         isRequired: false,
+        isInternal: false,
       },
       description: "Display information about the current command.",
       value: {
@@ -151,11 +154,18 @@ export async function cliHelpGetMessage(event, cli, userInput) {
     ...knownFlagsMap.values(),
     { ...knownFlagsMap.get("-h"), rawName: "-h, --help" },
   ]
-    .filter((it) => it.rawName !== "-h" && it.rawName !== "--help")
+    .filter(
+      (it) =>
+        it.rawName !== "-h" &&
+        it.rawName !== "--help" &&
+        !it.modifiers?.isInternal,
+    )
     .sort((a, b) => a.rawName.localeCompare(b.rawName));
+
   const subCommands = command.value.subCommands
     .filter((it) => !it.modifiers.isDynamic)
     .sort((a, b) => a.name.localeCompare(b.name));
+
   const dynamicSubCommand = command.value.subCommands.find(
     (it) => it.modifiers.isDynamic,
   );

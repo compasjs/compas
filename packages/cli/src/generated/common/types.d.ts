@@ -6,13 +6,20 @@ export type CliCommandDefinition = {
   shortDescription: string;
   longDescription?: undefined | string;
   modifiers: { isDynamic: boolean; isCosmetic: boolean };
-  dynamicValidator?:
-    | undefined
-    | ((
-        value: string,
-      ) =>
-        | { isValid: boolean; error?: { message: string } }
-        | Promise<{ isValid: boolean; error?: { message: string } }>);
+  dynamicValue: {
+    validator?:
+      | undefined
+      | ((
+          value: string,
+        ) =>
+          | { isValid: boolean; error?: { message: string } }
+          | Promise<{ isValid: boolean; error?: { message: string } }>);
+    completions?:
+      | undefined
+      | (() =>
+          | Promise<{ completions: CliCompletion[] }>
+          | { completions: CliCompletion[] });
+  };
   subCommands: CliCommandDefinition[];
   flags: CliFlagDefinition[];
   executor?:
@@ -26,7 +33,11 @@ export type CliFlagDefinition = {
   name: string;
   rawName: string;
   description?: undefined | string;
-  modifiers: { isRepeatable: boolean; isRequired: boolean };
+  modifiers: {
+    isRepeatable: boolean;
+    isRequired: boolean;
+    isInternal: boolean;
+  };
   value: {
     specification: "boolean" | "number" | "string" | "booleanOrString";
     validator?:
@@ -36,8 +47,22 @@ export type CliFlagDefinition = {
         ) =>
           | { isValid: boolean; error?: { message: string } }
           | Promise<{ isValid: boolean; error?: { message: string } }>);
+    completions?:
+      | undefined
+      | (() =>
+          | Promise<{ completions: CliCompletion[] }>
+          | { completions: CliCompletion[] });
   };
 };
+export type CliCompletion =
+  | { type: "directory" }
+  | { type: "file" }
+  | { type: "completion"; name: string; description?: undefined | string }
+  | {
+      type: "value";
+      specification: "boolean" | "number" | "string" | "booleanOrString";
+      description?: undefined | string;
+    };
 export type CliCommandDefinitionInput = {
   name: string;
   shortDescription: string;
@@ -45,13 +70,22 @@ export type CliCommandDefinitionInput = {
   modifiers?:
     | undefined
     | { isDynamic?: undefined | boolean; isCosmetic?: undefined | boolean };
-  dynamicValidator?:
+  dynamicValue?:
     | undefined
-    | ((
-        value: string,
-      ) =>
-        | { isValid: boolean; error?: { message: string } }
-        | Promise<{ isValid: boolean; error?: { message: string } }>);
+    | {
+        validator?:
+          | undefined
+          | ((
+              value: string,
+            ) =>
+              | { isValid: boolean; error?: { message: string } }
+              | Promise<{ isValid: boolean; error?: { message: string } }>);
+        completions?:
+          | undefined
+          | (() =>
+              | Promise<{ completions: CliCompletion[] }>
+              | { completions: CliCompletion[] });
+      };
   subCommands?:
     | undefined
     | import("./../common/types").CliCommandDefinitionInput[];
@@ -69,7 +103,11 @@ export type CliFlagDefinitionInput = {
   description?: undefined | string;
   modifiers?:
     | undefined
-    | { isRepeatable?: undefined | boolean; isRequired?: undefined | boolean };
+    | {
+        isRepeatable?: undefined | boolean;
+        isRequired?: undefined | boolean;
+        isInternal?: undefined | boolean;
+      };
   value?:
     | undefined
     | {
@@ -86,5 +124,11 @@ export type CliFlagDefinitionInput = {
             ) =>
               | { isValid: boolean; error?: { message: string } }
               | Promise<{ isValid: boolean; error?: { message: string } }>);
+        completions?:
+          | undefined
+          | (() =>
+              | Promise<{ completions: CliCompletion[] }>
+              | { completions: CliCompletion[] });
       };
 };
+export type CliCompletionInput = CliCompletion;

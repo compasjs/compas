@@ -39,9 +39,9 @@ async function main(mainLogger) {
     eventStop(event);
   }
 
-  if (result.value.exitStatus === "passed") {
+  if (result.value?.exitStatus === "passed") {
     process.exit(0);
-  } else if (result.value.exitStatus === "failed") {
+  } else if (result.value?.exitStatus === "failed") {
     process.exit(1);
   }
 }

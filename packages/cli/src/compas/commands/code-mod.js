@@ -50,6 +50,15 @@ export const cliDefinition = {
           value: {
             specification: "string",
             validator: codeModNameFlagValidator,
+            completions: () => {
+              return {
+                completions: Object.entries(codeModMap).map(([key, value]) => ({
+                  type: "completion",
+                  name: key,
+                  description: value.description,
+                })),
+              };
+            },
           },
         },
       ],

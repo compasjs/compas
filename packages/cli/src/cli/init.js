@@ -1,9 +1,11 @@
 import {
   AppError,
+  dirnameForModule,
   eventStart,
   eventStop,
   isNil,
   newEventFromEvent,
+  pathJoin,
 } from "@compas/stdlib";
 import { validateCliCommandDefinition } from "../generated/cli/validators.js";
 import { cliHelpInit } from "./help.js";
@@ -25,6 +27,11 @@ import { lowerCaseFirst } from "./utils.js";
 export async function cliInit(event, root, options) {
   eventStart(event, "cli.init");
 
+  options.commandDirectories.unshift({
+    directory: pathJoin(dirnameForModule(import.meta), "./internal-commands"),
+    validateOnLoad: false,
+  });
+
   root.subCommands = await cliLoaderLoadDirectories(newEventFromEvent(event), {
     inputs: options.commandDirectories,
   });
@@ -41,6 +48,8 @@ export async function cliInit(event, root, options) {
 
   cliHelpInit(cli);
   // TODO: cliWatchInit
+
+  cliInitAddDefaultCompletions(cli);
 
   eventStop(event);
 
@@ -148,5 +157,51 @@ function cliInitValidateFlags(command, existingFlags = []) {
 
     // Sub commands on the same level, can define the same flags.
     existingFlags.splice(flagLength);
+  }
+}
+
+/**
+ * Add completion functions to `command.dynamicValue.completions' and
+ * 'flag.value.completions'
+ *
+ * @param {import("./types").CliResolved} command
+ */
+function cliInitAddDefaultCompletions(command) {
+  if (command.modifiers.isDynamic && isNil(command.dynamicValue.completions)) {
+    command.dynamicValue.completions = () => {
+      return {
+        completions: [
+          {
+            type: "value",
+            specification: "string",
+            description: `Dynamic value for '${command.name}'.`,
+          },
+        ],
+      };
+    };
+  }
+
+  for (const flag of command.flags) {
+    if (!isNil(flag.value.completions)) {
+      continue;
+    }
+
+    flag.value.completions = () => {
+      return {
+        completions: [
+          {
+            type: "value",
+            specification: flag.value.specification,
+            description: flag.description,
+          },
+        ],
+      };
+    };
+  }
+
+  if (command.name !== "help") {
+    for (const cmd of command.subCommands) {
+      cliInitAddDefaultCompletions(cmd);
+    }
   }
 }

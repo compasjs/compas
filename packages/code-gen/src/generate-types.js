@@ -104,6 +104,7 @@ export async function generateTypes(logger, options) {
     for (const generator of options.dumpCompasTypes) {
       if (generator === "cli") {
         contents += `
+          type CliCompletion = cli.CliCompletion;
           type CliResult = cli.CliResult;
           type CliCommandDefinitionInput = cli.CliCommandDefinitionInput;
           type CliExecutorState = cli.CliExecutorState;

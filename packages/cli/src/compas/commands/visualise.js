@@ -56,6 +56,11 @@ export const cliDefinition = {
                 },
               };
             },
+            completions: () => {
+              return {
+                completions: [{ type: "directory" }],
+              };
+            },
           },
         },
         {
@@ -82,6 +87,16 @@ export const cliDefinition = {
                 },
               };
             },
+            completions: () => {
+              return {
+                completions: [
+                  { type: "completion", name: "png" },
+                  { type: "completion", name: "webp" },
+                  { type: "completion", name: "pdf" },
+                  { type: "completion", name: "svg" },
+                ],
+              };
+            },
           },
         },
         {
@@ -91,6 +106,7 @@ export const cliDefinition = {
             "Path to write the output to. Defaults to a random temporary file.",
           value: {
             specification: "string",
+            completions: () => ({ completions: [{ type: "file" }] }),
           },
         },
       ],

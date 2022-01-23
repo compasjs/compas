@@ -51,6 +51,11 @@ The migration runner uses an advisory lock to ensure only a single migration pro
             },
           };
         },
+        completions: () => {
+          return {
+            completions: [{ type: "file" }],
+          };
+        },
       },
     },
     {

@@ -83,7 +83,10 @@ export const cliDefinition = {
         isRequired: false
 
         // This flag can be repeated, resulting in an array that is passed to the executor.
-        isRepeatable: false
+        isRepeatable: false,
+
+        // This flag will not show up in any help output.
+        isInternal: false,
       },
 
       // Optional value specification
@@ -112,6 +115,9 @@ export const cliDefinition = {
             },
           };
         },
+
+        // Optional completions function, see below at 'dynamicValue.completions'.
+        // completions: () => {},
       },
     },
   ],
@@ -127,24 +133,57 @@ export const cliDefinition = {
   // An optional executor. If a command does not have an executor, the executor of it's (recursive) parent is used.
   executor: cliExecutor,
 
-  // Validate the value if this command is dynamic (`modifiers.isDynamic').
-  // Can return a Promise.
-  dynamicValidator: (value) => {
-    const isValid = [ "toggle", "add" ].includes(value);
+  // Extra prperties for 'modifiers.isDynamic' commands
+  dynamicValue: {
+    // Called when parsing the command. May return a Promise.
+    validator: (value) => {
+      const isValid = [ "toggle", "add" ].includes(value);
 
-    if (isValid) {
+      if (isValid) {
+        return {
+          isValid,
+        }
+      }
+
+      // Full error message: "Invalid sub command 'xxx' for 'compas todo'. Allowed values are 'toggle' and 'add'.
       return {
-        isValid,
+        isValid, error: {
+          message: "Allowed values are 'toggle' and 'add'.",
+        }
       }
-    }
+    },
 
-    // Full error message: "Invalid sub command 'xxx' for 'compas todo'. Allowed values are 'toggle' and 'add'.
-    return {
-      isValid, error: {
-        message: "Allowed values are 'toggle' and 'add'.",
+    // Called for shell auto-complete, may return a promise.
+    // Depending on the shell that is used, some features may or may not work.
+    completions: () => {
+      return {
+        completions: [
+          {
+            // Get directory completions
+            type: "directory",
+          }, {
+            // Get file completions
+            type: "file",
+          }, {
+            // A direct completion for the user
+            type: "completion", name: "toggle",
+          }, {
+            // A direct completion for the user
+            type: "completion", name: "add",
+
+            // optional
+            description: "Add a new todo",
+          }, {
+            // Print message with specification and description
+            type: "value", specification: "string",
+
+            // Optional
+            description: "A todo name",
+          }
+        ]
       }
     }
-  }
+  },
 };
 
 /**
