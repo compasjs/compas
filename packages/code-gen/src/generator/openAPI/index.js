@@ -20,7 +20,7 @@ import { generateOpenApiFile } from "./generator.js";
  */
 
 /**
- * @typedef {Object<string,object>} OpenApiRouteExtensions
+ * @typedef {Record<string, object>} OpenApiRouteExtensions
  */
 
 /**

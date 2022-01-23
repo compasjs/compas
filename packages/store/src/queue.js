@@ -669,7 +669,7 @@ export function getNextScheduledAt(scheduledAt, interval) {
  * Useful for testing if jobs are created.
  *
  * @param {Postgres} sql
- * @returns {Promise<Object<string, QueryResultStoreJob[]>>}
+ * @returns {Promise<Record<string, QueryResultStoreJob[]>>}
  */
 export async function getUncompletedJobsByName(sql) {
   const jobs = await queryJob({

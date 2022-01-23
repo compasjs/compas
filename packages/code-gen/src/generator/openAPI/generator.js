@@ -119,7 +119,7 @@ export function generateOpenApiFile(structure, options) {
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @param {Record<string, any>} existingSchemas
- * @returns {Object}
+ * @returns {object}
  */
 function constructResponse(structure, route, existingSchemas) {
   const contentAppError = {

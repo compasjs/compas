@@ -6,7 +6,7 @@ import {
   newEventFromEvent,
   uuid,
 } from "@compas/stdlib";
-import crc from "crc";
+import { crc32 } from "crc";
 import { createSign, createVerify } from "jws";
 import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
@@ -720,7 +720,7 @@ export async function sessionStoreVerifyAndDecodeJWT(
  * @returns {string}
  */
 function sessionStoreChecksumForData(data) {
-  return crc.crc32(JSON.stringify(data ?? {})).toString(16);
+  return crc32(JSON.stringify(data ?? {})).toString(16);
 }
 
 /**

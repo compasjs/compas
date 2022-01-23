@@ -15,7 +15,7 @@ import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
  */
 
 /**
- * @type {{context: Object<string, Function>, globals: Object<string, Function>}}
+ * @type {{context: Record<string, Function>, globals: Record<string, Function>}}
  */
 export const templateContext = {
   globals: {
