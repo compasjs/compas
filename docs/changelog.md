@@ -4,6 +4,48 @@ editLink: false
 
 # Changelog
 
+### [v0.0.183](https://github.com/compasjs/compas/releases/tag/v0.0.183)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.16.7 to 7.16.10
+  ([#1538](https://github.com/compasjs/compas/pull/1538))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 17.0.9 to 17.0.10
+  ([#1537](https://github.com/compasjs/compas/pull/1537))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.6.1 to 37.6.3
+  ([#1542](https://github.com/compasjs/compas/pull/1542),
+  [#1546](https://github.com/compasjs/compas/pull/1546))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump nanoid from 3.1.30 to 3.2.0
+  ([#1544](https://github.com/compasjs/compas/pull/1544))
+  - [Release notes](https://github.com/ai/nanoid/releases)
+- build(deps): bump pino from 7.6.3 to 7.6.4
+  ([#1541](https://github.com/compasjs/compas/pull/1541))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- feat(cli): add `compas completions`
+  ([#1526](https://github.com/compasjs/compas/pull/1526))
+  - Closes [#1508](https://github.com/compasjs/compas/pull/1508)
+- feat(code-gen): generate errors on too much inserts
+  ([#1547](https://github.com/compasjs/compas/pull/1547))
+  - Closes [#1543](https://github.com/compasjs/compas/pull/1543)
+- feat(lint-config): add preferredTypes for primitives, objects and records
+  ([#1548](https://github.com/compasjs/compas/pull/1548))
+- feat(stdlib): add `setGlobalLoggerOptions` and `extendGlobalLoggerContext`
+  ([#1549](https://github.com/compasjs/compas/pull/1549))
+  - Closes [#1539](https://github.com/compasjs/compas/pull/1539)
+
+##### Breaking changes
+
+- **lint-config**: add preferredTypes for primitives, objects and records
+  - Linter prefers `object` over `Object`, `boolean` over `Boolean`,
+    `Record<string,number>[]` over `Array<Object<string, number>>` etc. The
+    linter will try to autofix this, but may require multiple runs.
+- **stdlib**: add `setGlobalLoggerOptions` and 'extendGlobalLoggerContext'
+  - Removed support for `pinoOption` via `newLogger`. Pass these to
+    `setGlobalLoggerOptions` as `pinoTransport` and `pinoDestination`.
+
 ### [v0.0.182](https://github.com/compasjs/compas/releases/tag/v0.0.182)
 
 ##### Changes
