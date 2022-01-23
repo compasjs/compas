@@ -188,6 +188,14 @@ export function getInsertPartial(context, type) {
         }
       }
 
+      if (args.length > 100000) {
+        throw AppError.serverError({
+                                     message: "Insert array has too many values, split up your array in smaller batches and execute '${
+                                       type.name
+                                     }Insert' multiple times."
+                                   })
+      }
+
       return query(str, ...args);
     }
   `;
@@ -231,27 +239,27 @@ export function getUpdatePartial(context, type) {
   }
 
   return js`
-  /**
-   * Build 'SET ' part for ${type.name}
-   *
-   * @param {${type.partial.updateType}} update
-   * @returns {QueryPart}
-   */
-  export function ${type.name}UpdateSet(update) {
-    const strings = [];
-    const values = [];
+    /**
+     * Build 'SET ' part for ${type.name}
+     *
+     * @param {${type.partial.updateType}} update
+     * @returns {QueryPart}
+     */
+    export function ${type.name}UpdateSet(update) {
+      const strings = [];
+      const values = [];
 
-    checkFieldsInSet("${type.name}", "update", ${type.name}FieldSet, update);
+      checkFieldsInSet("${type.name}", "update", ${type.name}FieldSet, update);
 
-    ${partials}
-    // Remove the comma suffix
-    if (strings.length === 0) {
-      throw AppError.validationError("${type.name}.updateSet.emptyUpdateStatement");
+      ${partials}
+      // Remove the comma suffix
+      if (strings.length === 0) {
+        throw AppError.validationError("${type.name}.updateSet.emptyUpdateStatement");
+      }
+      strings[0] = strings[0].substring(2);
+      strings.push("");
+
+      return query(strings, ...values);
     }
-    strings[0] = strings[0].substring(2);
-    strings.push("");
-
-    return query(strings, ...values);
-  }
   `;
 }

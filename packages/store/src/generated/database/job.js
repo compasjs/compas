@@ -253,6 +253,12 @@ export function jobInsertValues(insert, options = {}) {
       str.push(",");
     }
   }
+  if (args.length > 100000) {
+    throw AppError.serverError({
+      message:
+        "Insert array has too many values, split up your array in smaller batches and execute 'jobInsert' multiple times.",
+    });
+  }
   return query(str, ...args);
 }
 /**

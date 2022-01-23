@@ -917,6 +917,22 @@ test("code-gen/e2e/sql", async (t) => {
     });
   }
 
+  t.test("too big insert error", async (t) => {
+    try {
+      await queries.postInsert(
+        sql,
+        Array.from({ length: 80000 }).map(() => ({
+          writer: user.id,
+          body: "Post 1",
+          title: "Post 1",
+        })),
+      );
+    } catch (e) {
+      t.ok(AppError.instanceOf(e));
+      t.equal(e.status, 500);
+    }
+  });
+
   t.test("destroy test db", async (t) => {
     await cleanupTestPostgresDatabase(sql);
     t.ok(true);
