@@ -16,6 +16,18 @@ const settings = {
   settings: {
     jsdoc: {
       mode: "typescript",
+      preferredTypes: {
+        Object: "object",
+        "object<>": "Record<>",
+        "Object<>": "Record<>",
+        "object.<>": "Record<>",
+        "Object.<>": "Record<>",
+        "Array.<>": "[]",
+        "Array<>": "[]",
+        String: "string",
+        Boolean: "boolean",
+        Number: "number",
+      },
     },
   },
   parser: "@babel/eslint-parser",

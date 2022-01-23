@@ -5,7 +5,7 @@ import { executeCodeModVZeroDotZeroDotHundredFortySix } from "./mods/v0.0.146.js
 export const PARALLEL_COUNT = Math.max(cpus().length - 1, 1);
 
 /**
- * @type {Object<string, {
+ * @type {Record<string, {
  *    description: string,
  *    exec: (event: InsightEvent, verbose: boolean) => Promise<void>
  * }>}

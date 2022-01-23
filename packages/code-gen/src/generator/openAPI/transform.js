@@ -5,7 +5,7 @@ import { isNil } from "@compas/stdlib";
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
- * @returns {{parameters?: Object[]}}
+ * @returns {{parameters?: object[]}}
  */
 export function transformParams(structure, route) {
   if (!route?.params && !route?.query) {
@@ -102,7 +102,7 @@ export function transformParams(structure, route) {
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
  * @param {Record<string, any>} existingSchemas
- * @returns {{requestBody?: Object}}
+ * @returns {{requestBody?: object}}
  */
 export function transformBody(structure, route, existingSchemas) {
   const content = {};

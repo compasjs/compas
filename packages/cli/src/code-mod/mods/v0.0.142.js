@@ -124,7 +124,7 @@ async function listGeneratedReactQueryFiles(event) {
  *
  * @param {InsightEvent} event
  * @param {string[]} fileList
- * @returns {Promise<Object<string, { parameters: string [] }>>}
+ * @returns {Promise<Record<string, {parameters: string[]}>>}
  */
 async function collectGeneratedReactQueryHooks(event, fileList) {
   eventStart(event, "v00142.collectGeneratedReactQueryHooks");
