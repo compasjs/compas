@@ -16,7 +16,7 @@
   "dependencies": {
     "@compas/stdlib": "0.0.183",
     "@types/koa": "2.13.4",
-    "@types/minio": "7.0.11",
+    "@types/minio": "7.0.12",
     "crc": "4.1.0",
     "file-type": "17.1.1",
     "is-animated": "2.0.2",
