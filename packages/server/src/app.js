@@ -14,13 +14,17 @@ import {
 
 /**
  * @typedef {object} GetAppOptions
- * @property {boolean|undefined} [proxy] Trust proxy headers
- * @property {boolean|undefined} [disableHeaders] Don't handle cors headers
+ * @property {boolean|undefined} [proxy] Trust proxy headers, defaults to true in
+ *   production.
+ * @property {boolean|undefined} [disableHeaders] Skip CORS and Strict Transport Security
+ *   headers.
  * @property {boolean|undefined} [disableHealthRoute] Disable GET /_health
  * @property {ErrorHandlerOptions|undefined} [errorOptions] Flexible error handling
  *    options
- * @property {HeaderOptions|undefined} [headers] Argument for defaultHeader middleware
- * @property {import("./middleware/log.js").LogOptions|undefined} [logOptions]
+ * @property {HeaderOptions|undefined} [headers] Argument for defaultHeader middleware.
+ *   Can only be completely disabled by setting `disableHeaders`.
+ * @property {import("./middleware/log.js").LogOptions|undefined} [logOptions] Pass
+ *   custom log options to the log middleware.
  */
 
 /**
@@ -40,7 +44,7 @@ import {
 
 /**
  * @typedef {object} HeaderOptions
- * @property {CorsOptions|undefined} [cors]
+ * @property {CorsOptions|undefined} [cors] CORS options, defaults to empty object.
  */
 
 /**
@@ -60,13 +64,9 @@ import {
  * Adds the following:
  *
  * - Health check route on `/_health`
- *
  * - Log middleware to add the Logger from @compas/stdlib on `ctx.log`
- *
  * - Error handler to catch any errors thrown by route handlers
- *
  * - A 404 handler when no response is set by other middleware
- *
  * - Default headers to respond to things like CORS requests
  *
  * @since 0.1.0
