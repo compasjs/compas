@@ -6,10 +6,10 @@ import { TypeCreator } from "@compas/code-gen";
 export function applyCodeGenStructure(app) {
   const T = new TypeCreator("codeGen");
 
-  const types = getTypes(T);
+  const { baseTypes, extraTypes } = getTypes(T);
 
-  app.add(T.anyOf("type").values(...types));
-  app.add(...types);
+  app.add(T.anyOf("type").values(...baseTypes));
+  app.add(...extraTypes);
   app.add(
     T.generic("structure")
       .keys(T.string())
@@ -111,7 +111,6 @@ export function applyCodeGenStructure(app) {
     }),
     T.object("typeSettings").keys({
       isJSON: T.bool().optional(),
-      nestedIsJSON: T.bool().optional(),
       useDefaults: T.bool().optional(),
       useTypescript: T.bool().optional(),
       isNode: T.bool().optional(),
@@ -464,23 +463,22 @@ function getTypes(T) {
       .loose(),
   });
 
-  const allTypes = [
-    anyType,
-    anyOfType,
-    arrayType,
-    booleanType,
-    dateType,
-    fileType,
-    genericType,
-    numberType,
-    objectType,
-    referenceType,
-    relationType,
-    stringType,
-    uuidType,
-    routeType,
-    routeInvalidationType,
-  ];
-
-  return allTypes.map((it) => it.loose());
+  return {
+    baseTypes: [
+      anyType,
+      anyOfType,
+      arrayType,
+      booleanType,
+      dateType,
+      fileType,
+      genericType,
+      numberType,
+      objectType,
+      referenceType,
+      stringType,
+      uuidType,
+      routeType,
+    ].map((it) => it.loose()),
+    extraTypes: [relationType, routeInvalidationType].map((it) => it.loose()),
+  };
 }

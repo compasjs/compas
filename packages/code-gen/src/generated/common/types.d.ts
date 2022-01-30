@@ -27,11 +27,9 @@ export type CodeGenType =
   | CodeGenNumberType
   | CodeGenObjectType
   | CodeGenReferenceType
-  | CodeGenRelationType
   | CodeGenStringType
   | CodeGenUuidType
-  | CodeGenRouteType
-  | CodeGenRouteInvalidationType;
+  | CodeGenRouteType;
 export type CodeGenAnyType = {
   type: "any";
   docString: string;
@@ -401,7 +399,6 @@ export type CodeGenFile = { relativePath: string; contents: string };
 export type CodeGenTemplateState = { phase: "init" | "collect" | "finish" };
 export type CodeGenTypeSettings = {
   isJSON?: undefined | boolean;
-  nestedIsJSON?: undefined | boolean;
   useDefaults?: undefined | boolean;
   useTypescript?: undefined | boolean;
   isNode?: undefined | boolean;
@@ -441,11 +438,9 @@ export type CodeGenTypeInput =
   | import("./../common/types").CodeGenNumberTypeInput
   | import("./../common/types").CodeGenObjectTypeInput
   | import("./../common/types").CodeGenReferenceTypeInput
-  | import("./../common/types").CodeGenRelationTypeInput
   | import("./../common/types").CodeGenStringTypeInput
   | import("./../common/types").CodeGenUuidTypeInput
-  | import("./../common/types").CodeGenRouteTypeInput
-  | import("./../common/types").CodeGenRouteInvalidationTypeInput;
+  | import("./../common/types").CodeGenRouteTypeInput;
 export type CodeGenAnyTypeInput = {
   type: "any";
   docString?: undefined | string;

@@ -503,6 +503,7 @@ export const sessionStoreTokenQueryBuilderSpec = {
 };
 /**
  * Query Builder for sessionStoreToken
+ * Store all tokens that belong to a session.
  *
  * @param {StoreSessionStoreTokenQueryBuilder} [builder={}]
  * @returns {{

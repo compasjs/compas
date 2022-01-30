@@ -8,22 +8,28 @@ export function applyStoreStructure(app) {
 
   app.add(
     T.object("imageTransformOptions")
+      .docs(
+        `Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.`,
+      )
       .keys({
         q: T.number().min(1).max(100).convert().default(75),
         w: T.number().min(1).max(99999).convert(),
       })
       .loose(),
 
-    T.object("jobInterval").keys({
-      years: T.number().optional(),
-      months: T.number().optional(),
-      days: T.number().optional(),
-      hours: T.number().optional(),
-      minutes: T.number().optional(),
-      seconds: T.number().optional(),
-    }),
+    T.object("jobInterval")
+      .docs(`Interval specification of 'addRecurringJobToQueue'.`)
+      .keys({
+        years: T.number().optional(),
+        months: T.number().optional(),
+        days: T.number().optional(),
+        hours: T.number().optional(),
+        minutes: T.number().optional(),
+        seconds: T.number().optional(),
+      }),
 
     T.object("file")
+      .docs(`Postgres based file storage.`)
       .keys({
         bucketName: T.string().searchable(),
         contentLength: T.number(),
@@ -41,12 +47,16 @@ export function applyStoreStructure(app) {
       .relations(),
 
     T.object("fileGroup")
+      .docs(
+        `Create a 'folder' like structure referencing to 'file', with custom ordering support.`,
+      )
       .keys({
         name: T.string().optional(),
+
+        // Hack to get an increasing integer by default.
         order: T.number()
           .searchable()
-          .default("Math.floor(Date.now() / 1000000)")
-          .docs("Hack to get an increasing integer by default"),
+          .default("Math.floor(Date.now() / 1000000)"),
         meta: T.object("fileGroupMeta")
           .keys({})
           .default("{}")
@@ -64,6 +74,7 @@ export function applyStoreStructure(app) {
       ),
 
     T.object("sessionStore")
+      .docs(`Session data store, used by 'sessionStore*' functions.`)
       .keys({
         data: T.any().default("{}"),
         checksum: T.string(),
@@ -77,6 +88,7 @@ export function applyStoreStructure(app) {
       }),
 
     T.object("sessionStoreToken")
+      .docs(`Store all tokens that belong to a session.`)
       .keys({
         expiresAt: T.date().searchable(),
         revokedAt: T.date().optional().searchable(),
@@ -97,6 +109,14 @@ export function applyStoreStructure(app) {
       .enableQueries({}),
 
     T.object("job")
+      .docs(
+        `
+      Postgres based job queue.
+      Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
+      to insert new jobs in to the queue.
+      Use {@link JobQueueWorker} as a way to pick up jobs.
+      `,
+      )
       .keys({
         id: T.number().primary(),
         isComplete: T.bool().default("false").searchable(),

@@ -55,7 +55,8 @@ export function addFieldsForRelation(context, type, relation) {
 
   try {
     const { field } = getPrimaryKeyWithType(
-      /** @type {CodeGenObjectType} */ relation.reference.reference,
+      /** @type {CodeGenObjectType} */
+      relation.reference.reference,
     );
     type.keys[relation.ownKey] = {
       ...field,
@@ -67,8 +68,7 @@ export function addFieldsForRelation(context, type, relation) {
     };
   } catch {
     context.errors.push({
-      key: "sqlMissingPrimaryKey",
-      // @ts-ignore
+      key: "sqlMissingPrimaryKey", // @ts-ignore
       typeName: relation.reference.reference.name,
     });
   }

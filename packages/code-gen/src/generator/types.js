@@ -39,7 +39,6 @@ export function setupMemoizedTypes(context) {
       useTypescript: context.options.useTypescript,
       useConvert: false,
       useDefaults: true,
-      nestedIsJSON: false,
       isNode: context.options.isNode,
       isBrowser: context.options.isBrowser,
       suffix: "",
@@ -171,7 +170,6 @@ export function generateTypeDefinition(
   type,
   {
     isJSON,
-    nestedIsJSON,
     useConvert,
     useDefaults,
     useTypescript,
@@ -184,9 +182,7 @@ export function generateTypeDefinition(
   } = {},
 ) {
   const recurseSettings = {
-    isRoot: false,
-    isJSON: isJSON || nestedIsJSON || false,
-    nestedIsJSON,
+    isJSON: isJSON || false,
     useConvert,
     useDefaults,
     useTypescript,

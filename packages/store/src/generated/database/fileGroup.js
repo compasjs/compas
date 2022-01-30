@@ -558,6 +558,7 @@ export const fileGroupQueryBuilderSpec = {
 };
 /**
  * Query Builder for fileGroup
+ * Create a 'folder' like structure referencing to 'file', with custom ordering support.
  *
  * @param {StoreFileGroupQueryBuilder} [builder={}]
  * @returns {{

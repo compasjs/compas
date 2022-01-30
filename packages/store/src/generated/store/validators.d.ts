@@ -3,6 +3,8 @@
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
+ * Postgres based file storage.
+ *
  * @param {undefined|any|StoreFileInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFile>}
@@ -12,6 +14,8 @@ export function validateStoreFile(
   propertyPath?: string | undefined,
 ): Either<StoreFile>;
 /**
+ * Create a 'folder' like structure referencing to 'file', with custom ordering support.
+ *
  * @param {undefined|any|StoreFileGroupInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroup>}
@@ -43,6 +47,8 @@ export function validateStoreFileMeta(
   propertyPath?: string | undefined,
 ): Either<StoreFileMeta>;
 /**
+ * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
+ *
  * @param {undefined|any|StoreImageTransformOptionsInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreImageTransformOptions>}
@@ -52,6 +58,11 @@ export function validateStoreImageTransformOptions(
   propertyPath?: string | undefined,
 ): Either<StoreImageTransformOptions>;
 /**
+ * Postgres based job queue.
+ * Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
+ * to insert new jobs in to the queue.
+ * Use {@link JobQueueWorker} as a way to pick up jobs.
+ *
  * @param {undefined|any|StoreJobInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJob>}
@@ -61,6 +72,8 @@ export function validateStoreJob(
   propertyPath?: string | undefined,
 ): Either<StoreJob>;
 /**
+ * Interval specification of 'addRecurringJobToQueue'.
+ *
  * @param {undefined|any|StoreJobIntervalInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobInterval>}
@@ -70,6 +83,8 @@ export function validateStoreJobInterval(
   propertyPath?: string | undefined,
 ): Either<StoreJobInterval>;
 /**
+ * Session data store, used by 'sessionStore\*' functions.
+ *
  * @param {undefined|any|StoreSessionStoreInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStore>}
@@ -79,6 +94,8 @@ export function validateStoreSessionStore(
   propertyPath?: string | undefined,
 ): Either<StoreSessionStore>;
 /**
+ * Store all tokens that belong to a session.
+ *
  * @param {undefined|any|StoreSessionStoreTokenInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreToken>}

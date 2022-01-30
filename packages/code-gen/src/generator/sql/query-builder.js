@@ -5,6 +5,7 @@ import { ObjectType } from "../../builders/ObjectType.js";
 import { TypeCreator } from "../../builders/TypeCreator.js";
 import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
+import { formatDocString } from "../comments.js";
 import { js } from "../tag/tag.js";
 import { generateTypeDefinition, getTypeNameForType } from "../types.js";
 import {
@@ -195,6 +196,7 @@ function queryBuilderForType(context, imports, type) {
 
       /**
        * Query Builder for ${type.name}
+       ${formatDocString(type.docString, { format: "jsdoc", indentSize: 7 })}
        *
        * @param {${type.queryBuilder.type}} [builder={}]
        * @returns {{

@@ -75,6 +75,7 @@ export function sessionStoreUpdateSet(
 ): QueryPart;
 /**
  * Query Builder for sessionStore
+ * Session data store, used by 'sessionStore\*' functions.
  *
  * @param {StoreSessionStoreQueryBuilder} [builder={}]
  * @returns {{

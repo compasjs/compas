@@ -6,10 +6,7 @@
 
 ((newline))
 /**
- * {{= funcName }}
-  {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
-  {{ if (item.idempotent) { }}* Note that a custom options.enabled may be beneficial for your use case{{ } }}
- * Docs: {{= item.docString.replace(/\n/g, "\n  * ") }}
+{{= formatDocString(item.docString + (item.tags.length === 0 ? "" : "\n\nTags: " + item.tags.join(", ")), { format: "jsdoc", }) }}
  */
 export function {{= funcName }}<TData = {{= responseType }}>({{= item.params || item.query || item.body ? "opts:" : "opts?:" }} {
 {{ if (item.params) { }}
@@ -155,10 +152,7 @@ interface {{= upperCaseFirst(funcName) }}Props {
 ((newline))
 
 /**
- * {{= funcName }}
- {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
- {{ if (hasInvalidations) { }}* Check the implemenation of this hook to see which routes are invalidated if `hookOptions.invalidateQueries` is truthy.{{ } }}
- * Docs: {{= item.docString }}
+{{= formatDocString(item.docString + (item.tags.length === 0 ? "" : "\n\nTags: " + item.tags.join(", ")), { format: "jsdoc", }) }}
  */
 export function {{= funcName }}(
   options: UseMutationOptions<{{= responseType }}, AppErrorResponse, {{= upperCaseFirst(funcName) }}Props> = {},

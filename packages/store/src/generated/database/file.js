@@ -495,6 +495,7 @@ export const fileQueryBuilderSpec = {
 };
 /**
  * Query Builder for file
+ * Postgres based file storage.
  *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{

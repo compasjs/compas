@@ -17,9 +17,10 @@ export function generateStructureFile(context) {
   if (context.options.dumpStructure) {
     for (const group of Object.keys(context.structure)) {
       // Make it safe to inject in contents
-      const string = JSON.stringify(context.structure[group])
-        .replace(/\\/g, "\\\\")
-        .replace(/[^\\]'/g, "\\'");
+      const string = JSON.stringify(context.structure[group]).replace(
+        /(['\\])/gm,
+        (v) => `\\${v}`,
+      );
 
       structureSource += js`
         export const ${group}StructureString = '${string}';
@@ -57,9 +58,10 @@ export function generateStructureFile(context) {
       Object.keys(apiStructure),
     );
 
-    const string = JSON.stringify(apiStructure)
-      .replace(/\\/g, "\\\\")
-      .replace(/[^\\]'/g, "\\'");
+    const string = JSON.stringify(apiStructure).replace(
+      /(['\\])/gm,
+      (v) => `\\${v}`,
+    );
 
     // We only need a string here at all times, which saves us on some doing a
     // stringify when sending the structure response.
