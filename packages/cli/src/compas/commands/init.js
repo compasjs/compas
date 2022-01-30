@@ -55,7 +55,7 @@ export async function cliExecutor(logger, state) {
     await writeJSConfig();
   }
 
-  if (state.flags.dumpLintConfig || state.flags.dumpaAll) {
+  if (state.flags.dumpLintConfig || state.flags.dumpAll) {
     didDump = true;
     await writeLintConfig();
   }
@@ -117,7 +117,7 @@ structure.sql
 async function writeJSConfig() {
   await writeFile(
     pathJoin(process.cwd(), "jsconfig.json"),
-    JSON.stringify(
+    `${JSON.stringify(
       {
         compilerOptions: {
           target: "esnext",
@@ -138,7 +138,7 @@ async function writeJSConfig() {
       },
       null,
       2,
-    ),
+    )}\n`,
   );
 }
 
