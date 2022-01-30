@@ -4,6 +4,7 @@ import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "../builders/index.js";
 import { stringifyType } from "../stringify.js";
 import { getHashForString } from "../utils.js";
+import { formatDocString } from "./comments.js";
 import { js } from "./tag/index.js";
 import { generateTypeDefinition, getTypeNameForType } from "./types.js";
 import { importCreator } from "./utils.js";
@@ -131,11 +132,12 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
 
   for (const name of Object.keys(mapping)) {
     sources.push(js`
-      /**${
-        data[name].docString && data[name].docString.length > 0
-          ? `\n * ${data[name].docString}\n *`
-          : ""
-      }
+      /**
+       ${formatDocString(data[name].docString, {
+         format: "jsdoc",
+         indentSize: 7,
+       })}
+       *
        * @param {${generateTypeDefinition(context.context, {
          type: "any",
          isOptional: true,

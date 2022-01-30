@@ -49,7 +49,6 @@ export function generateTypeDefinition(
   type: CodeGenType,
   {
     isJSON,
-    nestedIsJSON,
     useConvert,
     useDefaults,
     useTypescript,

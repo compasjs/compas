@@ -94,14 +94,13 @@ export class App {
   /**
    * Internally used extend
    *
+   * @private
+   *
    * @param {Record<string, any>} rawStructure
    * @param {boolean} allowInternalProperties
    * @returns {this}
    */
-  extendInternal(
-    rawStructure: Record<string, any>,
-    allowInternalProperties: boolean,
-  ): this;
+  private extendInternal;
   /**
    * Process unprocessed list, normalize references
    * Depends on referentType being available

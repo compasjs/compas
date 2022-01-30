@@ -23,9 +23,8 @@ export const {{= groupName }}Handlers = {
   {{ } }}
 
   /**
-   * {{= item.docString.replace(/\n/g, "\n  * ") }}
-   {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
    * {{= item.method }} {{= item.path }}
+{{= formatDocString(item.docString + (item.tags.length === 0 ? "" : "\n\nTags: " + item.tags.join(", ")), { format: "jsdoc", indent: 3, }) }}
    */
    {{= item.name }}: (ctx, next) => {
      throw AppError.notImplemented();

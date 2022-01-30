@@ -73,6 +73,7 @@ export function fileInsertValues(
 export function fileUpdateSet(update: StoreFileUpdatePartial): QueryPart;
 /**
  * Query Builder for file
+ * Postgres based file storage.
  *
  * @param {StoreFileQueryBuilder} [builder={}]
  * @returns {{

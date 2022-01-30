@@ -65,7 +65,6 @@ const objectKeys860724709 = new Set([
 const objectKeys1664519436 = new Set(["phase"]);
 const objectKeys1287070944 = new Set([
   "isJSON",
-  "nestedIsJSON",
   "useDefaults",
   "useTypescript",
   "isNode",
@@ -4462,7 +4461,7 @@ export function anonymousValidator1390215584(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenRouteInvalidationType>}
+ * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>}
  */
 export function anonymousValidator682551261(value, propertyPath) {
   if (isNil(value)) {
@@ -4479,7 +4478,7 @@ export function anonymousValidator682551261(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   const errors = [];
-  /** @type {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenRouteInvalidationType>} */
+  /** @type {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>} */
   let result = { errors: [] };
   result = anonymousValidator1519740867(value, propertyPath);
   if (result.errors) {
@@ -4541,12 +4540,6 @@ export function anonymousValidator682551261(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator243901689(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
   result = anonymousValidator1672152398(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
@@ -4560,12 +4553,6 @@ export function anonymousValidator682551261(value, propertyPath) {
     return result;
   }
   result = anonymousValidator1390215584(value, propertyPath);
-  if (result.errors) {
-    errors.push(...result.errors);
-  } else {
-    return result;
-  }
-  result = anonymousValidator224332322(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
   } else {
@@ -7059,7 +7046,7 @@ export function anonymousValidator1836086405(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isJSON"?: undefined|boolean, "nestedIsJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "isCommonFile"?: undefined|boolean, "isTypeFile"?: undefined|boolean, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
+ * @returns {EitherN<{"isJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "isCommonFile"?: undefined|boolean, "isTypeFile"?: undefined|boolean, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
  */
 export function anonymousValidator1287070944(value, propertyPath) {
   if (isNil(value)) {
@@ -7107,7 +7094,6 @@ export function anonymousValidator1287070944(value, propertyPath) {
    */
   const validatorPairs = [
     ["isJSON", anonymousValidator196147222],
-    ["nestedIsJSON", anonymousValidator196147222],
     ["useDefaults", anonymousValidator196147222],
     ["useTypescript", anonymousValidator196147222],
     ["isNode", anonymousValidator196147222],

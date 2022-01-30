@@ -3,6 +3,7 @@
 
 import { QueryPart } from "@compas/store";
 declare global {
+  // Postgres based file storage.
   type StoreFile = {
     bucketName: string;
     contentLength: number;
@@ -19,6 +20,7 @@ declare global {
     transforms?: undefined | any;
     transformedFromOriginal?: undefined | string;
   };
+  // Create a 'folder' like structure referencing to 'file', with custom ordering support.
   type StoreFileGroup = {
     name?: undefined | string;
     order: number;
@@ -32,7 +34,12 @@ declare global {
   };
   // User definable, optional object to store whatever you want
   type StoreFileGroupMeta = {};
+  // Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
   type StoreImageTransformOptions = { q: number; w: number };
+  // Postgres based job queue.
+  // Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
+  // to insert new jobs in to the queue.
+  // Use {@link JobQueueWorker} as a way to pick up jobs.
   type StoreJob = {
     id: number;
     isComplete: boolean;
@@ -45,6 +52,7 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   };
+  // Interval specification of 'addRecurringJobToQueue'.
   type StoreJobInterval = {
     years?: undefined | number;
     months?: undefined | number;
@@ -53,6 +61,7 @@ declare global {
     minutes?: undefined | number;
     seconds?: undefined | number;
   };
+  // Session data store, used by 'sessionStore\*' functions.
   type StoreSessionStore = {
     data: any;
     checksum: string;
@@ -61,6 +70,7 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   };
+  // Store all tokens that belong to a session.
   type StoreSessionStoreToken = {
     expiresAt: Date;
     revokedAt?: undefined | Date;

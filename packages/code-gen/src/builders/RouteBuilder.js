@@ -236,7 +236,7 @@ export class RouteCreator {
   constructor(group, path) {
     this.data = {
       group,
-      path,
+      path: path ?? "",
     };
 
     if (this.data.path.startsWith("/")) {

@@ -6,6 +6,7 @@ import {
   isNil,
   processDirectoryRecursiveSync,
 } from "@compas/stdlib";
+import { formatDocString } from "./generator/comments.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
@@ -24,6 +25,7 @@ export const templateContext = {
     lowerCaseFirst,
     camelToSnakeCase,
     quote: (x) => `"${x}"`,
+    formatDocString,
   },
   context: {},
 };
@@ -77,20 +79,21 @@ export function compileTemplate(name, str, opts = {}) {
       .replace(/[ \\t\\r]+/g, ' ') // Replace all multiple spaces, with a single
       .replace(/^[ \\t\\r]+/gm, '') // Replace spaces at start of sentence with nothing
       .replace(/^(\\s*\\r?\\n){1,}/gm, '\\n') // Replace multiple new lines
-      .replace(/^\\s*\\*\\s*([^\\n\\/\\*]+)\\s*\\n+/gm, ' * $1\\n ') // replace empty lines in JSDoc
+      .replace(/^\\s*\\*\\s*([^\\n\\/\\*]+)\\s*\\n+/gm, ' * $1\\n') // Reformat lines in JSDoc
       .replace(/\\n\\n/gm, '\\n') // Remove empty lines
       .replace(/\\(\\(newline\\)\\)/g, '\\n\\n'); // Controlled newlines 
   `,
     );
   } catch (e) {
-    const err = new Error(`Error while compiling ${name} template`);
-    // @ts-ignore
-    err.originalErr = e;
-    // @ts-ignore
-    err.templateName = name;
-    // @ts-ignore
-    err.compiled = compiled;
-    throw err;
+    throw AppError.serverError(
+      {
+        message: `Error while compiling template`,
+        templateName: name,
+        compiled,
+      },
+      // @ts-ignore
+      e,
+    );
   }
 }
 

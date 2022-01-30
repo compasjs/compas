@@ -422,6 +422,8 @@ export class App {
   /**
    * Internally used extend
    *
+   * @private
+   *
    * @param {Record<string, any>} rawStructure
    * @param {boolean} allowInternalProperties
    * @returns {this}

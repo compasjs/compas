@@ -19,7 +19,12 @@ import { App } from "../src/App.js";
  *
  * }|TypeBuilderLike[]} input
  * @param {GenerateOpts} [opts]
- * @returns {Promise<{ stdout: string, exitCode: number }>}
+ * @returns {Promise<{
+ *   stdout: string,
+ *   stderr?: string,
+ *   exitCode: number,
+ *   generatedDirectory: string
+ *  }>}
  */
 export async function codeGenToTemporaryDirectory(input, opts = {}) {
   const randomDir = uuid();

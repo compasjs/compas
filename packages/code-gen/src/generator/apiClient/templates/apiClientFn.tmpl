@@ -1,9 +1,7 @@
 {{ const url = item.path.split("/").map(part => { if (part.startsWith(":")) { return "${params." + part.substring(1) + "}"; } else { return part; } }).join("/"); }}
 
 /**
- * {{= item.uniqueName }}
- {{ if (item.tags.length > 0 ) { }}* Tags: {{= item.tags.join(", ") }}{{ } }}
- {{ if (item.docString && item.docString.length > 0) { }}* Docs: {{= item.docString }}{{ } }}
+{{= formatDocString(item.docString + (item.tags.length === 0 ? "" : "\n\nTags: " + item.tags.join(", ")), { format: "jsdoc", }) }}
  *
 {{ if (!options.useTypescript) { }}
     * @param {AxiosInstance} instance

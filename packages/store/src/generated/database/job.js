@@ -446,6 +446,10 @@ export const jobQueryBuilderSpec = {
 };
 /**
  * Query Builder for job
+ * Postgres based job queue.
+ * Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
+ * to insert new jobs in to the queue.
+ * Use {@link JobQueueWorker} as a way to pick up jobs.
  *
  * @param {StoreJobQueryBuilder} [builder={}]
  * @returns {{

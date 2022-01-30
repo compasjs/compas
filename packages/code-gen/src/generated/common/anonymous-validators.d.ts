@@ -1366,7 +1366,7 @@ export function anonymousValidator1390215584(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenRelationType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenRouteInvalidationType>}
+ * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType>}
  */
 export function anonymousValidator682551261(
   value: any,
@@ -1382,11 +1382,9 @@ export function anonymousValidator682551261(
   | import("./types").CodeGenNumberType
   | import("./types").CodeGenObjectType
   | import("./types").CodeGenReferenceType
-  | import("./types").CodeGenRelationType
   | import("./types").CodeGenStringType
   | import("./types").CodeGenUuidType
   | import("./types").CodeGenRouteType
-  | import("./types").CodeGenRouteInvalidationType
 >;
 /**
  * @param {*} value
@@ -2077,14 +2075,13 @@ export function anonymousValidator1836086405(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isJSON"?: undefined|boolean, "nestedIsJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "isCommonFile"?: undefined|boolean, "isTypeFile"?: undefined|boolean, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
+ * @returns {EitherN<{"isJSON"?: undefined|boolean, "useDefaults"?: undefined|boolean, "useTypescript"?: undefined|boolean, "isNode"?: undefined|boolean, "isBrowser"?: undefined|boolean, "suffix"?: undefined|string, "isCommonFile"?: undefined|boolean, "isTypeFile"?: undefined|boolean, "fileTypeIO"?: undefined|"input"|"outputRouter"|"outputClient", }>}
  */
 export function anonymousValidator1287070944(
   value: any,
   propertyPath: string,
 ): EitherN<{
   isJSON?: undefined | boolean;
-  nestedIsJSON?: undefined | boolean;
   useDefaults?: undefined | boolean;
   useTypescript?: undefined | boolean;
   isNode?: undefined | boolean;

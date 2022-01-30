@@ -5,6 +5,7 @@ import { isNil, pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
+import { formatDocStringsOfTypes } from "./comments.js";
 import { generateCommonFiles } from "./common.js";
 import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
@@ -82,6 +83,7 @@ export function generate(logger, options, structure) {
     // places.
     linkupReferencesInStructure(context);
     addFieldsOfRelations(context);
+    formatDocStringsOfTypes(context);
 
     exitOnErrorsOrReturn(context);
 
