@@ -646,6 +646,9 @@ test("store/session-store", (t) => {
     ]);
 
     const [tokenId1, tokenId2, tokenId3] = [uuid(), uuid(), uuid()];
+    const tenDaysInTheFuture = new Date();
+    tenDaysInTheFuture.setDate(tenDaysInTheFuture.getDate() + 10);
+
     await queries.sessionStoreTokenInsert(
       sql,
       [
@@ -658,14 +661,14 @@ test("store/session-store", (t) => {
         {
           id: tokenId2,
           session: session.id,
-          expiresAt: new Date(2022, 1, 1),
+          expiresAt: new Date(tenDaysInTheFuture),
           createdAt: new Date(),
           refreshToken: tokenId3,
         },
         {
           id: tokenId3,
           session: session.id,
-          expiresAt: new Date(2022, 1, 1),
+          expiresAt: new Date(tenDaysInTheFuture),
           revokedAt: new Date(),
           createdAt: new Date(),
         },
