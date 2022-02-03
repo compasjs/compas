@@ -161,7 +161,7 @@ ${mcInfo.hashChanges.map((it) => `- ${it.number}-${it.name}`).join("\n")}`;
     // Drop the existing connection to release the advisory lock
     await sql.end();
 
-    sql = await newPostgresConnection(sqlOptions);
+    sql = await newPostgresConnection(sqlOptions.value);
 
     // Execute a query to keep the event loop alive.
     await sql`SELECT 1 + 1 AS "sum"`;
@@ -194,7 +194,7 @@ async function checkStoreImport() {
  * @returns {Promise<import("@compas/stdlib").Either<object, string>>}
  */
 async function loadConnectionSettings(connectionSettings) {
-  let sqlOptions = {
+  const sqlOptions = {
     max: 1,
     createIfNotExists: true,
   };
@@ -216,7 +216,8 @@ async function loadConnectionSettings(connectionSettings) {
       pathToFileURL(fullPath)
     );
     if (isPlainObject(postgresConnectionSettings)) {
-      sqlOptions = postgresConnectionSettings;
+      Object.assign(sqlOptions, postgresConnectionSettings);
+      sqlOptions.max = 1;
     }
   }
 
