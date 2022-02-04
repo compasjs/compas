@@ -5,9 +5,10 @@ import { isNil } from "@compas/stdlib";
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Record<string, any>} existingSchemas
  * @returns {{parameters?: object[]}}
  */
-export function transformParams(structure, route) {
+export function transformParams(structure, route, existingSchemas) {
   if (!route?.params && !route?.query) {
     return {};
   }
@@ -37,7 +38,7 @@ export function transformParams(structure, route) {
    * @returns {any}
    */
   function transformGenType(key, param, paramType) {
-    const schema = {};
+    let schema = {};
 
     switch (param.type) {
       case "string":
@@ -69,13 +70,9 @@ export function transformParams(structure, route) {
         break;
 
       case "reference":
-        return transformGenType(
-          key,
-
-          // @ts-ignore
-          structure[param.reference.group][param.reference.name],
-          paramType,
-        );
+        // @ts-ignore
+        schema = transformTypes(structure, existingSchemas, param.reference);
+        break;
 
       default:
         schema.type = param.type;

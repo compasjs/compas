@@ -91,7 +91,7 @@ export function generateOpenApiFile(structure, options) {
         tags: [route.group],
         description: route.docString,
         operationId: route.uniqueName,
-        ...transformParams(structure, route),
+        ...transformParams(structure, route, openApiSpec.components.schemas),
         ...transformBody(structure, route, openApiSpec.components.schemas),
         responses: constructResponse(
           structure,

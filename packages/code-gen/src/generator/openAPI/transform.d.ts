@@ -3,11 +3,13 @@
  *
  * @param {import("../../generated/common/types").CodeGenStructure} structure
  * @param {import("../../generated/common/types").CodeGenRouteType} route
+ * @param {Record<string, any>} existingSchemas
  * @returns {{parameters?: object[]}}
  */
 export function transformParams(
   structure: import("../../generated/common/types").CodeGenStructure,
   route: import("../../generated/common/types").CodeGenRouteType,
+  existingSchemas: Record<string, any>,
 ): {
   parameters?: any[] | undefined;
 };
