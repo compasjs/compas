@@ -175,6 +175,7 @@ node_modules
     `.cache
 coverage
 node_modules
+generated
 .nyc_output
 .clinic
 `,
