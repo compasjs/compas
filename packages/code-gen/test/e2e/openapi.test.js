@@ -43,7 +43,6 @@ test("code-gen/e2e/openapi", async (t) => {
           T.object("root").keys({
             value: T.object("nested").keys({
               bool: T.bool(),
-              // input: T.reference("server", "input"),
             }),
           }),
         ),
@@ -430,5 +429,42 @@ test("code-gen/e2e/openapi", async (t) => {
 
     t.ok(!isNil(source.components.schemas.AppRecursive));
     t.ok(!isNil(source.components.schemas.AppRecursiveNested));
+  });
+
+  t.test("does work with referenced query/param types", async (t) => {
+    const T = new TypeCreator("app");
+    const R = T.router("/app");
+
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+      [
+        R.get("/single", "get").query({ title: T.string("titleFilter") }),
+        R.get("/", "list").query({
+          title: T.reference("app", "titleFilter").optional(),
+        }),
+      ],
+      {
+        isNodeServer: true,
+        enabledGenerators: [],
+        dumpStructure: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    const outputFile = pathJoin(generatedDirectory, "./openapi.json");
+    await new App().generateOpenApi({
+      inputPath: generatedDirectory,
+      enabledGroups: ["app"],
+      openApiExtensions: {},
+      openApiRouteExtensions: {},
+      outputFile,
+    });
+
+    const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    t.equal(source.paths["/app/single"].get.parameters[0].required, true);
+    t.equal(source.paths["/app"].get.parameters[0].required, false);
+
+    t.ok(!isNil(source.components.schemas.AppTitleFilter));
   });
 });
