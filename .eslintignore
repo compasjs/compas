@@ -4,3 +4,4 @@ coverage
 packages/code-gen/test-generated
 lerna.json
 docs/.vitepress/dist
+generated

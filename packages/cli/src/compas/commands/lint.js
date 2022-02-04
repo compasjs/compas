@@ -56,8 +56,6 @@ export async function cliExecutor(logger, state) {
 
     const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [
       "./**/*.js",
-      "--ignore-pattern",
-      "node_modules",
       ...(environment.CI === "true" ? [] : ["--fix"]),
       "--no-error-on-unmatched-pattern",
       "--cache",

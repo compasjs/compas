@@ -6,7 +6,6 @@ import { fileGroupQueries } from "./fileGroup.js";
 import { jobQueries } from "./job.js";
 import { sessionStoreQueries } from "./sessionStore.js";
 import { sessionStoreTokenQueries } from "./sessionStoreToken.js";
-
 export const queries = {
   ...fileGroupQueries,
   ...fileQueries,
