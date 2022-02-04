@@ -4,6 +4,73 @@ editLink: false
 
 # Changelog
 
+### [v0.0.184](https://github.com/compasjs/compas/releases/tag/v0.0.184)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.16.10 to 7.17.0
+  ([#1550](https://github.com/compasjs/compas/pull/1550),
+  [#1569](https://github.com/compasjs/compas/pull/1569))
+- build(deps): bump @babel/eslint-parser from 7.16.5 to 7.17.0
+  ([#1571](https://github.com/compasjs/compas/pull/1571))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/formidable from 2.0.3 to 2.0.4
+  ([#1560](https://github.com/compasjs/compas/pull/1560))
+- build(deps): bump @types/minio from 7.0.11 to 7.0.12
+  ([#1558](https://github.com/compasjs/compas/pull/1558))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 17.0.10 to 17.0.14
+  ([#1554](https://github.com/compasjs/compas/pull/1554),
+  [#1559](https://github.com/compasjs/compas/pull/1559),
+  [#1567](https://github.com/compasjs/compas/pull/1567))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump dotenv from 14.2.0 to 16.0.0
+  ([#1552](https://github.com/compasjs/compas/pull/1552),
+  [#1556](https://github.com/compasjs/compas/pull/1556),
+  [#1566](https://github.com/compasjs/compas/pull/1566),
+  [#1570](https://github.com/compasjs/compas/pull/1570))
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
+- build(deps): bump eslint from 8.7.0 to 8.8.0
+  ([#1564](https://github.com/compasjs/compas/pull/1564))
+- build(deps): bump eslint-plugin-jsdoc from 37.6.3 to 37.7.1
+  ([#1557](https://github.com/compasjs/compas/pull/1557),
+  [#1576](https://github.com/compasjs/compas/pull/1576))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump pino from 7.6.4 to 7.6.5
+  ([#1565](https://github.com/compasjs/compas/pull/1565))
+- build(deps): bump sharp from 0.29.3 to 0.30.0
+  ([#1568](https://github.com/compasjs/compas/pull/1568))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump simple-get from 4.0.0 to 4.0.1
+  ([#1561](https://github.com/compasjs/compas/pull/1561))
+  - [Release notes](https://github.com/feross/simple-get/releases)
+- feat(cli): improve lint performance
+  ([#1579](https://github.com/compasjs/compas/pull/1579))
+  - Closes [#1578](https://github.com/compasjs/compas/pull/1578)
+- feat(code-gen): print docs consistently
+  ([#1563](https://github.com/compasjs/compas/pull/1563))
+  - References [#1562](https://github.com/compasjs/compas/pull/1562)
+- fix(cli): add '--lint-config' to '--all'
+- fix(cli): migrate keep-alive should use connection-settings
+  ([#1574](https://github.com/compasjs/compas/pull/1574))
+  - Closes [#1572](https://github.com/compasjs/compas/pull/1572)
+- fix(server): update docs on 'disableHeaders'
+  - Closes [#1555](https://github.com/compasjs/compas/pull/1555)
+- test(store): fix flaky session-store tests
+  ([#1573](https://github.com/compasjs/compas/pull/1573))
+
+##### Breaking changes
+
+- **deps**: bump dotenv from 14.2.0 to 16.0.0
+  - Major version bump
+- **deps**: bump sharp from 0.29.3 to 0.30.0
+  - Major version bump
+- **cli**: improve lint performance
+  - `node_modules` are not automatically ignored by ESLint, but should be added
+    to your `.eslintignore`
+  - The default `.eslintignore` has been changed to ignore files in `generated`
+    directories. Run `compas init --lint-config` to update the file.
+
 ### [v0.0.183](https://github.com/compasjs/compas/releases/tag/v0.0.183)
 
 ##### Changes
