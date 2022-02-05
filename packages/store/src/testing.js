@@ -60,12 +60,14 @@ export async function cleanupPostgresDatabaseTemplate() {
  *
  * @since 0.1.0
  *
- * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all
- *   queries.
  * @param {Postgres["connectionOptions"]} [rawOpts]
+ * @param {{
+ *   verboseSql?: boolean
+ * }} [options] If verboseSql is true, creates a new logger and prints all
+ *   queries.
  * @returns {Promise<Postgres>}
  */
-export async function createTestPostgresDatabase(verboseSql = false, rawOpts) {
+export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
   const connectionOptions = buildAndCheckOpts(rawOpts);
   const name = connectionOptions.database + uuid().substring(0, 7);
 
