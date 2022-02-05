@@ -7,9 +7,14 @@ updates:
       time: "04:15"
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    reviewers:
+      - dirkdev98
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
       time: "04:15"
     open-pull-requests-limit: 10
+    reviewers:
+      - dirkdev98
