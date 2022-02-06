@@ -84,11 +84,13 @@ export function applyCliStructure(app) {
         .keys({
           isDynamic: T.bool().default(false),
           isCosmetic: T.bool().default(false),
+          isWatchable: T.bool().default(false),
         })
         .default(
           JSON.stringify({
             isDynamic: false,
             isCosmetic: false,
+            isWatchable: false,
           }),
         ),
       dynamicValue: T.object()
@@ -107,6 +109,19 @@ export function applyCliStructure(app) {
             .optional(),
         })
         .default("{}"),
+      watchSettings: T.object()
+        .keys({
+          extensions: T.array().values(T.string()).default(`["js", "json"]`),
+          ignorePatterns: T.array()
+            .values(T.string())
+            .default(`[".cache", "coverage", "node_modules"]`),
+        })
+        .default(
+          JSON.stringify({
+            extensions: ["js", "json"],
+            ignorePatterns: [".cache", "coverage", "node_modules"],
+          }),
+        ),
       subCommands: T.array()
         .values(T.reference("cli", "commandDefinition"))
         .default("[]"),

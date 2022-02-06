@@ -25,14 +25,22 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  *
  * @since 0.1.0
  *
- * @param {boolean} [verboseSql=false] If true, creates a new logger and prints all
- *   queries.
  * @param {Postgres["connectionOptions"]} [rawOpts]
+ * @param {{
+ *   verboseSql?: boolean
+ * }} [options] If verboseSql is true, creates a new logger and prints all
+ *   queries.
  * @returns {Promise<Postgres>}
  */
 export function createTestPostgresDatabase(
-  verboseSql?: boolean | undefined,
   rawOpts?: Postgres["connectionOptions"],
+  {
+    verboseSql,
+  }?:
+    | {
+        verboseSql?: boolean | undefined;
+      }
+    | undefined,
 ): Promise<Postgres>;
 /**
  * Try to remove a test database. Can only happen if the connection is created by

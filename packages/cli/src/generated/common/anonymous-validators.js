@@ -22,12 +22,14 @@ const objectKeys1833756126 = new Set([
   "longDescription",
   "modifiers",
   "dynamicValue",
+  "watchSettings",
   "subCommands",
   "flags",
   "executor",
 ]);
-const objectKeys423569622 = new Set(["isDynamic", "isCosmetic"]);
+const objectKeys229352914 = new Set(["isDynamic", "isCosmetic", "isWatchable"]);
 const objectKeys695211961 = new Set(["validator", "completions"]);
+const objectKeys385137474 = new Set(["extensions", "ignorePatterns"]);
 const objectKeys1885876481 = new Set([
   "name",
   "rawName",
@@ -230,11 +232,13 @@ export function anonymousValidator1174857441(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, }>}
+ * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }>}
  */
-export function anonymousValidator423569622(value, propertyPath) {
+export function anonymousValidator229352914(value, propertyPath) {
   if (isNil(value)) {
-    return { value: { isDynamic: false, isCosmetic: false } };
+    return {
+      value: { isDynamic: false, isCosmetic: false, isWatchable: false },
+    };
   }
   if (typeof value !== "object") {
     /** @type {{ errors: InternalError[] }} */
@@ -251,7 +255,7 @@ export function anonymousValidator423569622(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys423569622.has(key)) {
+    if (!objectKeys229352914.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -270,6 +274,7 @@ export function anonymousValidator423569622(value, propertyPath) {
   const validatorPairs = [
     ["isDynamic", anonymousValidator1174857441],
     ["isCosmetic", anonymousValidator1174857441],
+    ["isWatchable", anonymousValidator1174857441],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -390,46 +395,6 @@ export function anonymousValidator695211961(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(import("./types").CliCommandDefinition)[]>}
- */
-export function anonymousValidator1489856765(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: [] };
-  }
-  if (!Array.isArray(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.array.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  const result = Array.from({ length: value.length });
-  let errors = [];
-  for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator1833756126(
-      value[i],
-      propertyPath + "[" + i + "]",
-    );
-    if (arrVar.errors) {
-      errors.push(...arrVar.errors);
-    } else {
-      result[i] = arrVar.value;
-    }
-  }
-  if (errors.length > 0) {
-    /** @type {{ errors: InternalError[] }} */
-    return { errors };
-  }
-  return { value: result };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
 export function anonymousValidator186795873(value, propertyPath) {
@@ -471,6 +436,188 @@ export function anonymousValidator186795873(value, propertyPath) {
     };
   }
   return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(string)[]>}
+ */
+export function anonymousValidator546555051(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: ["js", "json"] };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator186795873(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(string)[]>}
+ */
+export function anonymousValidator1532809334(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: [".cache", "coverage", "node_modules"] };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator186795873(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"extensions": (string)[], "ignorePatterns": (string)[], }>}
+ */
+export function anonymousValidator385137474(value, propertyPath) {
+  if (isNil(value)) {
+    return {
+      value: {
+        extensions: ["js", "json"],
+        ignorePatterns: [".cache", "coverage", "node_modules"],
+      },
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys385137474.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["extensions", anonymousValidator546555051],
+    ["ignorePatterns", anonymousValidator1532809334],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CliCommandDefinition)[]>}
+ */
+export function anonymousValidator1489856765(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: [] };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator1833756126(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
 }
 /**
  * @param {*} value
@@ -916,7 +1063,7 @@ export function anonymousValidator779701095(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "dynamicValue": {"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }, "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], "executor"?: undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult)), }>}
+ * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }, "dynamicValue": {"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }, "watchSettings": {"extensions": (string)[], "ignorePatterns": (string)[], }, "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], "executor"?: undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult)), }>}
  */
 export function anonymousValidator1833756126(value, propertyPath) {
   if (isNil(value)) {
@@ -966,8 +1113,9 @@ export function anonymousValidator1833756126(value, propertyPath) {
     ["name", anonymousValidator2102379298],
     ["shortDescription", anonymousValidator1987407853],
     ["longDescription", anonymousValidator1443576836],
-    ["modifiers", anonymousValidator423569622],
+    ["modifiers", anonymousValidator229352914],
     ["dynamicValue", anonymousValidator695211961],
+    ["watchSettings", anonymousValidator385137474],
     ["subCommands", anonymousValidator1489856765],
     ["flags", anonymousValidator1259325376],
     ["executor", anonymousValidator779701095],

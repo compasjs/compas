@@ -41,6 +41,9 @@ To prevent flaky tests, '--randomize-rounds' can be used. This shuffles the orde
 
 Collecting and processing coverage information is done using C8. Use one of the supported configuration files by C8 to alter its behaviour. See https://www.npmjs.com/package/c8 for more information.
 `,
+  modifiers: {
+    isWatchable: true,
+  },
   flags: [
     {
       name: "serial",

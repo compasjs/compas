@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import {
   configLoaderGet,
   dirnameForModule,
@@ -13,6 +11,7 @@ import { cliHelpGetMessage } from "../cli/help.js";
 import { cliInit } from "../cli/init.js";
 import { cliLoggerCreate } from "../cli/logger.js";
 import { cliParserParseFlags } from "../cli/parser.js";
+import { cliWatchExec } from "../cli/watch.js";
 
 /**
  * Get the compas cli with loaded commands
@@ -133,6 +132,34 @@ export async function compasExecCli(event, logger, cli, userInput) {
       result: {
         value: {
           exitStatus: "passed",
+        },
+      },
+    };
+  }
+
+  if (commandResult.value.name === "watch") {
+    const watchResult = await cliWatchExec(
+      newEventFromEvent(event),
+      cli,
+      userInput,
+    );
+
+    if (watchResult.error) {
+      return {
+        flags: {
+          printTimings: userInput.includes("--timings"),
+        },
+        result: watchResult,
+      };
+    }
+
+    return {
+      flags: {
+        printTimings: userInput.includes("--timings"),
+      },
+      result: {
+        value: {
+          exitStatus: "keepAlive",
         },
       },
     };

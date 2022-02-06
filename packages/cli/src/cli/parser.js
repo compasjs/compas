@@ -198,8 +198,7 @@ export async function cliParserParseFlags(event, command, userInput) {
       }
     } else if (
       !flagDefinition.modifiers.isRepeatable &&
-      !isNil(result[flagDefinition.name]) &&
-      flagDefinition.name !== "help"
+      !isNil(result[flagDefinition.name])
     ) {
       return {
         error: {

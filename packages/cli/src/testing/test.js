@@ -21,7 +21,7 @@ mainFn(import.meta, main);
 
 async function main(logger) {
   if (isMainThread) {
-    logger.error("Can't run worker as main thread.");
+    logger.error("Can't run test worker on the main thread.");
     process.exit(1);
   }
 

@@ -18,6 +18,7 @@ export const cliDefinition = {
       name: "script",
       modifiers: {
         isDynamic: true,
+        isWatchable: true,
       },
       dynamicValue: {
         validator: (value) => {

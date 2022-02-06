@@ -1,1 +1,8 @@
-{}
+{
+  "cli": {
+    "globalWatchOptions": {
+      "extensions": [],
+      "ignorePatterns": ["__fixtures__", "test/tmp"]
+    }
+  }
+}
