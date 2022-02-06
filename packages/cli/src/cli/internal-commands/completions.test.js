@@ -80,7 +80,7 @@ test("cli/internal-commands/completions", async (t) => {
       }
     };
 
-    validateCommand(cli);
+    await validateCommand(cli);
     t.pass();
   });
 
@@ -171,6 +171,17 @@ test("cli/internal-commands/completions", async (t) => {
       t.ok(commandCompletions.length > 0);
       t.ok(commandCompletions.find((it) => it.type === "file"));
       t.ok(commandCompletions.find((it) => it.type === "completion"));
+    });
+
+    t.test("completion on help", async (t) => {
+      const { commandCompletions } = await generateCompletions([
+        "compas",
+        "help",
+        "",
+      ]);
+
+      t.ok(commandCompletions.length > 0);
+      t.ok(commandCompletions.find((it) => it.name === "run"));
     });
   });
 
