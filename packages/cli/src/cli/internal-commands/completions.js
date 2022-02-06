@@ -283,7 +283,7 @@ async function completionsDetermineCommandCompletions(command, input) {
 
   const { flagArgs } = cliParserSplitArgs(input);
 
-  if (command?.modifiers.isCosmetic && flagArgs.length === 0) {
+  if (command?.modifiers.isCosmetic || flagArgs.length === 0) {
     for (const subCommand of command.subCommands) {
       if (subCommand.modifiers.isDynamic) {
         // Dynamic sub commands always have some form of completions defined, so
