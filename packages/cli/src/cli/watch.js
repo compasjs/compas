@@ -117,6 +117,7 @@ function cliWatchFilterCommands(commands) {
  * @param {import("./types").CliResolved} command
  */
 function cliWatchAddFlagToWatchableCommands(cliName, command) {
+  /** @type {import("../generated/common/types").CliFlagDefinition} */
   const flag = {
     name: "watch",
     rawName: "--watch",
