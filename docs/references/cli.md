@@ -381,7 +381,6 @@ config loader (https://compasjs.com/features/config-files.html#config-loader)
 for more information about config files.
 
 ```json
-// config/compas.json
 {
   "cli": {
     "globalWatchOptions": {
