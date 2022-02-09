@@ -25,18 +25,41 @@ export function cliWatchInit(cli) {
   cli.subCommands.push({
     name: "watch",
 
-    // Not sure why this is needed, but we get weird behavior if we
-    // do `subCommands: cli.subCommands`
-    //
-    // - compas run ./path/to/cli/completions.test.js doesn't exit
-    // - compas test also doesn't exit, and the worker just hangs in
-    //   the teardown
-    subCommands: [...cli.subCommands],
-
+    subCommands: cliWatchFilterCommands(cli.subCommands),
     flags: [],
     shortDescription:
       "Run the command, restarting it when file changes happen.",
-    longDescription: "// TODO",
+    longDescription: `Some commands in this CLI can be watched. 
+They can be executed via '${cli.name} watch [..subCommand]' or by adding the '--watch' flag when invoking the command.
+
+The watching happens by monitoring all the files in your project and restarting the command once files are changed. Manually restarting is also possible by sending 'rs<enter>' to the program.
+
+Watch behaviour can be tuned by commands. Setting 'modifiers.isWatchable' to 'true' is necessary for it to allow watching, and 'watchSettings' can be specified with custom extensions to be watched or specific directories to ignore. When watch behavior is needed for custom scripts, following the steps in 'extending the cli' (https://compasjs.com/features/extending-the-cli.html) is mandatory.
+
+export const cliDefinition = {
+  name: "my-command",
+  shortDescription: "My command",
+  modifiers: {
+    isWatchable: true, // This is mandatory
+  },
+  watchSettings: {
+    extensions: ["js", "ts"], // Defaults to '["js", "json"]'
+    ignorePatterns: ["__fixtures__"], // Defaults to '[".cache", "coverage", "node_modules"]'
+  },
+}
+
+You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the config loader (https://compasjs.com/features/config-files.html#config-loader) for more information about config files.
+
+// config/compas.json
+{
+  "cli": {
+   "globalWatchOptions": {
+      "extensions": [],
+      "ignorePatterns": ["__fixtures__", "test/tmp"]
+    }
+  }
+}
+`,
     modifiers: {
       isCosmetic: false,
       isDynamic: false,
@@ -55,7 +78,42 @@ export function cliWatchInit(cli) {
     parent: cli,
   });
 
-  cli.flags.push({
+  cliWatchAddFlagToWatchableCommands(cli.name, cli);
+}
+
+/**
+ *
+ * @param {import("./types").CliResolved[]} commands
+ */
+function cliWatchFilterCommands(commands) {
+  const result = [];
+
+  for (const cmd of commands) {
+    if (["help", "watch"].includes(cmd.name)) {
+      continue;
+    }
+
+    if (cmd.modifiers.isWatchable) {
+      result.push(cmd);
+    } else if (cmd.subCommands.length > 0) {
+      const subResult = cliWatchFilterCommands(cmd.subCommands);
+      if (subResult.length > 0) {
+        result.push(cmd);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Add the `--watch` flag to all watchable commands.
+ *
+ * @param {string} cliName
+ * @param {import("./types").CliResolved} command
+ */
+function cliWatchAddFlagToWatchableCommands(cliName, command) {
+  const flag = {
     name: "watch",
     rawName: "--watch",
     modifiers: {
@@ -63,11 +121,26 @@ export function cliWatchInit(cli) {
       isRequired: false,
       isInternal: false,
     },
-    description: "Run the command, restarting it when file changes happen.",
+    description: `Run the command, restarting it when file changes happen. See '${cliName} help watch' for more information.`,
     value: {
       specification: "boolean",
     },
-  });
+  };
+
+  if (command.modifiers.isWatchable) {
+    command.flags.push(flag);
+
+    // Flags propagate downwards, so don't add them to sub commands
+    return;
+  }
+
+  if (["help", "watch"].includes(command.name)) {
+    return;
+  }
+
+  for (const cmd of command.subCommands) {
+    cliWatchAddFlagToWatchableCommands(cliName, cmd);
+  }
 }
 
 /**

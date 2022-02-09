@@ -61,6 +61,10 @@ export const cliDefinition = {
     // When set to true, instead of matching on the name any value can be passed, i.e `compas run generate`, `compas run foo`.
     // Defaults to false.
     isDynamic: false,
+
+    // When set to true, this command allows '--watch' and `cli watch [command.name]`, see 'watchSettings' below, to tune the behaviour.
+    // Defaults to false.
+    isWatchable: false,
   },
 
   // Optional flag array. Sub commands also allow the flags defined by their parents.
@@ -132,6 +136,19 @@ export const cliDefinition = {
 
   // An optional executor. If a command does not have an executor, the executor of it's (recursive) parent is used.
   executor: cliExecutor,
+
+  // Extra properties for 'modifiers.isWatchable' commands
+  // Defaults to
+  // { extensions: ["js", "json"], ignorePatterns: [".cache", "coverage", "node_modules"], }
+  watchSettings: {
+    // Specific extensions to watch for
+    // Is optional
+    extensions: [ "js", "json" ],
+
+    // Specific patterns to filter out.
+    // Use this if your program or another program writes files that you don't want this command to be restarted for.
+    ignorePatterns: [ ".cache" ],
+  },
 
   // Extra prperties for 'modifiers.isDynamic' commands
   dynamicValue: {
