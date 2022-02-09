@@ -36,6 +36,7 @@ The watching happens by monitoring all the files in your project and restarting 
 
 Watch behaviour can be tuned by commands. Setting 'modifiers.isWatchable' to 'true' is necessary for it to allow watching, and 'watchSettings' can be specified with custom extensions to be watched or specific directories to ignore. When watch behavior is needed for custom scripts, following the steps in 'extending the cli' (https://compasjs.com/features/extending-the-cli.html) is mandatory.
 
+\`\`\`js
 export const cliDefinition = {
   name: "my-command",
   shortDescription: "My command",
@@ -47,9 +48,12 @@ export const cliDefinition = {
     ignorePatterns: ["__fixtures__"], // Defaults to '[".cache", "coverage", "node_modules"]'
   },
 }
+\`\`\`
+
 
 You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the config loader (https://compasjs.com/features/config-files.html#config-loader) for more information about config files.
 
+\`\`\`json
 // config/compas.json
 {
   "cli": {
@@ -59,6 +63,7 @@ You can also add a compas config file at 'config/compas.{js,json}' to specify pr
     }
   }
 }
+\`\`\`
 `,
     modifiers: {
       isCosmetic: false,
