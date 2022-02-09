@@ -26,11 +26,6 @@ export async function cliLoaderLoadDirectories(event, options) {
 
   for (const input of options.inputs) {
     if (!existsSync(input.directory)) {
-      if (input.validateOnLoad) {
-        event.log.error(
-          `Could not find directory '${input.directory}' to load commands from.`,
-        );
-      }
       continue;
     }
 
