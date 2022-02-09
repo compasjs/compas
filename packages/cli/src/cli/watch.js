@@ -278,14 +278,14 @@ function cliWatchGetChokidarOpts(...settings) {
   patternArray.push(
     new RegExp(
       `\\.(?!${settings
-        .map((it) => it.extensions)
+        .map((it) => it.extensions ?? [])
         .flat()
         .join("|")})[a-z]{1,8}$`,
     ),
   );
 
   for (const setting of settings) {
-    for (const pattern of setting.ignorePatterns) {
+    for (const pattern of setting?.ignorePatterns ?? []) {
       patternArray.push(new RegExp(pattern));
     }
   }

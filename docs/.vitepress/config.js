@@ -130,10 +130,21 @@ function getHomeSidebar() {
         },
       ],
     },
+
     {
-      text: "CLI Reference",
-      link: "/references/cli.html",
+      text: "References",
+      children: [
+        {
+          text: "Compas configuration",
+          link: "/references/compas-config.html",
+        },
+        {
+          text: "CLI Reference",
+          link: "/references/cli.html",
+        },
+      ],
     },
+
     {
       text: "Migrations",
       link: "/migrations/index.html",
