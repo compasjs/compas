@@ -1,6 +1,7 @@
+import { setTimeout } from "timers/promises";
 import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
-import { mainFn } from "@compas/stdlib";
+import { AppError, mainFn } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import {
   markTestFailuresRecursively,
@@ -29,11 +30,36 @@ async function main(logger) {
   setTestLogger(logger);
 
   await loadTestConfig();
-  await globalSetup();
+
+  try {
+    await globalSetup();
+  } catch (e) {
+    logger.error({
+      message: "Error when calling the 'setup' defined in 'test/config.js'.",
+      error: AppError.format(e),
+    });
+
+    // Give time to propagate the message to the main thread
+    await setTimeout(5);
+    process.exit(1);
+  }
 
   const teardown = async () => {
-    await globalTeardown();
-    process.exit(0);
+    try {
+      await globalTeardown();
+      await setTimeout(5);
+      process.exit(0);
+    } catch (e) {
+      logger.error({
+        message:
+          "Error when calling the 'teardown' defined in 'test/config.js'.",
+        error: AppError.format(e),
+      });
+
+      // Give time to propagate the message to the main thread
+      await setTimeout(5);
+      process.exit(1);
+    }
   };
 
   const messageDispatcher = createMessageDispatcher(logger, teardown);
