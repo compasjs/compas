@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.0.185](https://github.com/compasjs/compas/releases/tag/v0.0.185)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.0 to 7.17.2
+  ([#1592](https://github.com/compasjs/compas/pull/1592))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 17.0.14 to 17.0.16
+  ([#1582](https://github.com/compasjs/compas/pull/1582) ,
+  [#1589](https://github.com/compasjs/compas/pull/1589))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.7.1 to 37.8.0
+  ([#1590](https://github.com/compasjs/compas/pull/1590))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(dependabot): add default reviewer
+  ([#1583](https://github.com/compasjs/compas/pull/1583))
+- feat(cli): add `compas watch [..sub-commands]` and `--watch`
+  ([#1587](https://github.com/compasjs/compas/pull/1587))
+  - Closes [#1509](https://github.com/compasjs/compas/pull/1509)
+- feat(code-gen): support for reference types in query and params in openApi
+  exporter ([#1580](https://github.com/compasjs/compas/pull/1580))
+- feat(lint-config): disable labels and optional function parameters should be
+  last ([#1584](https://github.com/compasjs/compas/pull/1584))
+- fix(cli): add completions for all commands under 'help'
+  ([#1585](https://github.com/compasjs/compas/pull/1585))
+- fix(cli): remove error log if command directory is not found
+  ([#1593](https://github.com/compasjs/compas/pull/1593))
+  - Closes [#1591](https://github.com/compasjs/compas/pull/1591)
+- fix(test): catch errors from global setup and teardown
+  ([#1594](https://github.com/compasjs/compas/pull/1594))
+
+##### Breaking changes
+
+- **lint-config**: disable labels and optional functionn parameters last
+- **store**: disable labels and optional functionn parameters last
+  - Changed parameter order of `createTestPostgresDatabase`, and nested
+    `verboseSql` in to an object.
+
+##### Documentation updates
+
+- New reference documentation for
+  [Compas configuration](https://compasjs.com/references/compas-config.html).
+- [`compas watch`](https://compasjs.com/references/cli.html#compas-watch) is
+  added to the CLI reference.
+
 ### [v0.0.184](https://github.com/compasjs/compas/releases/tag/v0.0.184)
 
 ##### Changes
