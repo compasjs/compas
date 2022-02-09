@@ -5,7 +5,7 @@ import {
   getApp,
   sendFile,
 } from "@compas/server";
-import { AppError, isNil, pathJoin, uuid } from "@compas/stdlib";
+import { isNil, pathJoin, uuid } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createOrUpdateFile,
@@ -121,7 +121,6 @@ test("store/send-transformed-image", async (t) => {
         url: "/5?",
       });
     } catch (e) {
-      t.log.info(AppError.format(e));
       t.equal(e.response.status, 400);
       t.ok(e.response.data.key.startsWith("validator."));
     }

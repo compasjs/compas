@@ -5,7 +5,7 @@ export type CliCommandDefinition = {
   name: string;
   shortDescription: string;
   longDescription?: undefined | string;
-  modifiers: { isDynamic: boolean; isCosmetic: boolean };
+  modifiers: { isDynamic: boolean; isCosmetic: boolean; isWatchable: boolean };
   dynamicValue: {
     validator?:
       | undefined
@@ -20,6 +20,7 @@ export type CliCommandDefinition = {
           | Promise<{ completions: CliCompletion[] }>
           | { completions: CliCompletion[] });
   };
+  watchSettings: { extensions: string[]; ignorePatterns: string[] };
   subCommands: CliCommandDefinition[];
   flags: CliFlagDefinition[];
   executor?:
@@ -69,7 +70,11 @@ export type CliCommandDefinitionInput = {
   longDescription?: undefined | string;
   modifiers?:
     | undefined
-    | { isDynamic?: undefined | boolean; isCosmetic?: undefined | boolean };
+    | {
+        isDynamic?: undefined | boolean;
+        isCosmetic?: undefined | boolean;
+        isWatchable?: undefined | boolean;
+      };
   dynamicValue?:
     | undefined
     | {
@@ -85,6 +90,12 @@ export type CliCommandDefinitionInput = {
           | (() =>
               | Promise<{ completions: CliCompletion[] }>
               | { completions: CliCompletion[] });
+      };
+  watchSettings?:
+    | undefined
+    | {
+        extensions?: undefined | string[];
+        ignorePatterns?: undefined | string[];
       };
   subCommands?:
     | undefined

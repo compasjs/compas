@@ -37,14 +37,15 @@ export function anonymousValidator1174857441(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, }>}
+ * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }>}
  */
-export function anonymousValidator423569622(
+export function anonymousValidator229352914(
   value: any,
   propertyPath: string,
 ): EitherN<{
   isDynamic: boolean;
   isCosmetic: boolean;
+  isWatchable: boolean;
 }>;
 /**
  * @param {*} value
@@ -125,21 +126,51 @@ export function anonymousValidator695211961(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(import("./types").CliCommandDefinition)[]>}
- */
-export function anonymousValidator1489856765(
-  value: any,
-  propertyPath: string,
-): EitherN<import("./types").CliCommandDefinition[]>;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
 export function anonymousValidator186795873(
   value: any,
   propertyPath: string,
 ): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(string)[]>}
+ */
+export function anonymousValidator546555051(
+  value: any,
+  propertyPath: string,
+): EitherN<string[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(string)[]>}
+ */
+export function anonymousValidator1532809334(
+  value: any,
+  propertyPath: string,
+): EitherN<string[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"extensions": (string)[], "ignorePatterns": (string)[], }>}
+ */
+export function anonymousValidator385137474(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  extensions: string[];
+  ignorePatterns: string[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CliCommandDefinition)[]>}
+ */
+export function anonymousValidator1489856765(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CliCommandDefinition[]>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -311,7 +342,7 @@ export function anonymousValidator779701095(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, }, "dynamicValue": {"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }, "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], "executor"?: undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult)), }>}
+ * @returns {EitherN<{"name": string, "shortDescription": string, "longDescription"?: undefined|string, "modifiers": {"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }, "dynamicValue": {"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }, "watchSettings": {"extensions": (string)[], "ignorePatterns": (string)[], }, "subCommands": (import("./types").CliCommandDefinition)[], "flags": (import("./types").CliFlagDefinition)[], "executor"?: undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult)), }>}
  */
 export function anonymousValidator1833756126(
   value: any,
@@ -323,6 +354,7 @@ export function anonymousValidator1833756126(
   modifiers: {
     isDynamic: boolean;
     isCosmetic: boolean;
+    isWatchable: boolean;
   };
   dynamicValue: {
     validator?:
@@ -349,6 +381,10 @@ export function anonymousValidator1833756126(
           | {
               completions: CliCompletion[];
             });
+  };
+  watchSettings: {
+    extensions: string[];
+    ignorePatterns: string[];
   };
   subCommands: import("./types").CliCommandDefinition[];
   flags: import("./types").CliFlagDefinition[];

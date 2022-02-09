@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Get the compas cli with loaded commands
  *

@@ -11,6 +11,7 @@ import { validateCliCommandDefinition } from "../generated/cli/validators.js";
 import { cliHelpInit } from "./help.js";
 import { cliLoaderLoadDirectories } from "./loader.js";
 import { lowerCaseFirst } from "./utils.js";
+import { cliWatchInit } from "./watch.js";
 
 /**
  *
@@ -47,7 +48,7 @@ export async function cliInit(event, root, options) {
   cliInitValidateFlags(cli);
 
   cliHelpInit(cli);
-  // TODO: cliWatchInit
+  cliWatchInit(cli);
 
   cliInitAddDefaultCompletions(cli);
 
@@ -199,7 +200,7 @@ function cliInitAddDefaultCompletions(command) {
     };
   }
 
-  if (command.name !== "help") {
+  if (!["help", "watch"].includes(command.name)) {
     for (const cmd of command.subCommands) {
       cliInitAddDefaultCompletions(cmd);
     }

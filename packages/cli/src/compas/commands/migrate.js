@@ -17,10 +17,22 @@ A custom Postgres connection object can be provided by exporting a 'postgresConn
 This command can keep running if for example your deploy system does not support one of tasks. You can use '--keep-alive' for that. It keeps a single Postgres connection alive to ensure that the process doesn't exit.
 The migration runner uses an advisory lock to ensure only a single migration process runs at the same time. To disable this behaviour when the command enters watch mode, '--without-lock' can be passed.
 `,
+  modifiers: {
+    isWatchable: true,
+  },
+  watchSettings: {
+    extensions: ["sql"],
+  },
   subCommands: [
     {
       name: "info",
       shortDescription: "Print the current migration state.",
+      modifiers: {
+        isWatchable: true,
+      },
+      watchSettings: {
+        extensions: ["sql"],
+      },
     },
     {
       name: "rebuild",

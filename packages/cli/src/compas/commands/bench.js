@@ -15,6 +15,12 @@ import {
 export const cliDefinition = {
   name: "bench",
   shortDescription: "Run all '.bench.js' files in this project.",
+  modifiers: {
+    isWatchable: true,
+  },
+  watchSettings: {
+    extensions: ["bench.js"],
+  },
   executor: cliExecutor,
 };
 

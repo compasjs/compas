@@ -6,6 +6,7 @@ import {
 } from "@compas/stdlib";
 import { cliHelpShouldRun } from "./help.js";
 import { cliParserParseCommand, cliParserSplitArgs } from "./parser.js";
+import { cliWatchShouldRun } from "./watch.js";
 
 /**
  * Get the CLI root, skips 'help'.
@@ -52,6 +53,11 @@ export async function cliCommandDetermine(event, cli, input) {
     // @ts-ignore
     return {
       value: cli.subCommands.find((it) => it.name === "help"),
+    };
+  } else if (cliWatchShouldRun(commandArgs, flagArgs)) {
+    // @ts-ignore
+    return {
+      value: cli.subCommands.find((it) => it.name === "watch"),
     };
   }
 

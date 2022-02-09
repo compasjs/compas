@@ -32,6 +32,11 @@ export function cliHelpInit(cli) {
     modifiers: {
       isCosmetic: false,
       isDynamic: false,
+      isWatchable: false,
+    },
+    watchSettings: {
+      extensions: [],
+      ignorePatterns: [],
     },
     dynamicValue: {},
     executor: () => {
@@ -93,8 +98,10 @@ export function cliHelpCheckForReservedKeys(command) {
     });
   }
 
-  for (const cmd of command.subCommands) {
-    cliHelpCheckForReservedKeys(cmd);
+  if (!["help", "watch"].includes(command.name)) {
+    for (const cmd of command.subCommands) {
+      cliHelpCheckForReservedKeys(cmd);
+    }
   }
 }
 
@@ -143,6 +150,7 @@ export async function cliHelpGetMessage(event, cli, userInput) {
   );
 
   if (command.error) {
+    eventStop(event);
     return command;
   }
 

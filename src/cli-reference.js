@@ -66,7 +66,7 @@ function formatMarkdown(command, options) {
   }
   src += "\n\n";
 
-  if (command.name === "help") {
+  if (["help", "watch"].includes(command.name)) {
     return src;
   }
 
