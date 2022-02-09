@@ -51,7 +51,7 @@ export const cliDefinition = {
 \`\`\`
 
 
-You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the [config loader](https://compasjs.com/features/config-files.html#config-loader) for more information about config files.
+You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the [Compas configuration reference](https://compasjs.com/references/compas-config.html) for more information about the allowed options.
 
 \`\`\`json
 {
