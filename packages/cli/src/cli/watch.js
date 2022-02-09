@@ -30,11 +30,11 @@ export function cliWatchInit(cli) {
     shortDescription:
       "Run the command, restarting it when file changes happen.",
     longDescription: `Some commands in this CLI can be watched. 
-They can be executed via '${cli.name} watch [..subCommand]' or by adding the '--watch' flag when invoking the command.
+They can be executed via \`${cli.name} watch [..subCommand]\` or by adding the '--watch' flag when invoking the command.
 
-The watching happens by monitoring all the files in your project and restarting the command once files are changed. Manually restarting is also possible by sending 'rs<enter>' to the program.
+The watching happens by monitoring all the files in your project and restarting the command once files are changed. Manually restarting is also possible by sending \`rs<enter>\` to the program.
 
-Watch behaviour can be tuned by commands. Setting 'modifiers.isWatchable' to 'true' is necessary for it to allow watching, and 'watchSettings' can be specified with custom extensions to be watched or specific directories to ignore. When watch behavior is needed for custom scripts, following the steps in 'extending the cli' (https://compasjs.com/features/extending-the-cli.html) is mandatory.
+Watch behaviour can be tuned by commands. Setting 'modifiers.isWatchable' to 'true' is necessary for it to allow watching, and 'watchSettings' can be specified with custom extensions to be watched or specific directories to ignore. When watch behavior is needed for custom scripts, following the steps in [extending the cli](https://compasjs.com/features/extending-the-cli.html) is mandatory.
 
 \`\`\`js
 export const cliDefinition = {
@@ -51,7 +51,7 @@ export const cliDefinition = {
 \`\`\`
 
 
-You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the config loader (https://compasjs.com/features/config-files.html#config-loader) for more information about config files.
+You can also add a compas config file at 'config/compas.{js,json}' to specify project specific items. They are appended to the specification of the command and can be used if your tests write files that may trigger the watcher. See the [config loader](https://compasjs.com/features/config-files.html#config-loader) for more information about config files.
 
 \`\`\`json
 {
