@@ -1,15 +1,6 @@
 import { mainFn } from "@compas/stdlib";
-import { loadTestConfig } from "./config.js";
-import { printTestResults } from "./printer.js";
-import { runTestsRecursively } from "./runner.js";
-import {
-  areTestsRunning,
-  globalSetup,
-  globalTeardown,
-  setAreTestRunning,
-  setTestLogger,
-  state,
-} from "./state.js";
+import { areTestsRunning, setAreTestRunning, setTestLogger } from "./state.js";
+import { runTestsInProcess } from "./test-worker-internal.js";
 
 /**
  * Wraps `mainFn` and starts the test runner if not already started.
@@ -31,18 +22,7 @@ export function mainTestFn(meta) {
     setTestLogger(logger);
     setAreTestRunning(true);
 
-    // Used when `mainTestFn` is called the first thing of the process,
-    // which results in no tests registered yet
-    await new Promise((r) => {
-      setTimeout(r, 2);
-    });
-
-    await loadTestConfig();
-    await globalSetup();
-    await runTestsRecursively(state);
-    await globalTeardown();
-
-    const exitCode = printTestResults();
+    const exitCode = await runTestsInProcess({});
 
     process.exit(exitCode);
   });

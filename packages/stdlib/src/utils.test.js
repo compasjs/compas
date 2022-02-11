@@ -26,6 +26,9 @@ test("stdlib/utils", (t) => {
 
     t.equal(nonMainFnResult.isMainFn, false);
     // Still returns the name of the file that is the process entrypoint
-    t.equal(nonMainFnResult.name, "test");
+    t.ok(
+      nonMainFnResult.name === "test-worker" ||
+        nonMainFnResult.name === "index",
+    );
   });
 });
