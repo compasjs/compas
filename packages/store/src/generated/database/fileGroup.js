@@ -335,7 +335,7 @@ export function fileGroupInsertValues(insert, options = {}) {
 /**
  * Build 'SET ' part for fileGroup
  *
- * @param {StoreFileGroupUpdatePartial} update
+ * @param {StoreFileGroupUpdate} update
  * @returns {QueryPart}
  */
 export function fileGroupUpdateSet(update) {
@@ -474,7 +474,7 @@ RETURNING ${fileGroupFields("")}
 }
 /**
  * @param {Postgres} sql
- * @param {StoreFileGroupUpdatePartial} update
+ * @param {StoreFileGroupUpdate} update
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<StoreFileGroup[]>}
  */

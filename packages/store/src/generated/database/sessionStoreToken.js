@@ -305,7 +305,7 @@ export function sessionStoreTokenInsertValues(insert, options = {}) {
 /**
  * Build 'SET ' part for sessionStoreToken
  *
- * @param {StoreSessionStoreTokenUpdatePartial} update
+ * @param {StoreSessionStoreTokenUpdate} update
  * @returns {QueryPart}
  */
 export function sessionStoreTokenUpdateSet(update) {
@@ -442,7 +442,7 @@ RETURNING ${sessionStoreTokenFields("")}
 }
 /**
  * @param {Postgres} sql
- * @param {StoreSessionStoreTokenUpdatePartial} update
+ * @param {StoreSessionStoreTokenUpdate} update
  * @param {StoreSessionStoreTokenWhere} [where={}]
  * @returns {Promise<StoreSessionStoreToken[]>}
  */

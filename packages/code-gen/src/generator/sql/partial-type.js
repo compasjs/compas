@@ -32,14 +32,6 @@ export function createPartialTypes(context) {
       insertPartial.group,
     )}${upperCaseFirst(insertPartial.name)}`;
 
-    const updatePartial = new ObjectType(
-      type.group,
-      `${type.name}UpdatePartial`,
-    ).build();
-    updatePartial.uniqueName = `${upperCaseFirst(
-      updatePartial.group,
-    )}${upperCaseFirst(updatePartial.name)}`;
-
     for (const key of getSortedKeysForType(type)) {
       let fieldType = type.keys[key];
       if (fieldType.reference) {
@@ -78,15 +70,6 @@ export function createPartialTypes(context) {
         isOptional: hasSqlDefault || fieldType.isOptional,
       };
 
-      updatePartial.keys[key] = {
-        ...fieldType,
-        isOptional: true,
-        validator: {
-          ...(fieldType?.validator ?? {}),
-          allowNull: fieldType.isOptional && isNil(fieldType.defaultValue),
-        },
-      };
-
       // Create correct types by setting allowNull, since the value will be used in the
       // update statement
       if (
@@ -95,21 +78,19 @@ export function createPartialTypes(context) {
       ) {
         insertPartial.keys[key].validator = Object.assign(
           {},
-          updatePartial.keys[key].validator,
-          { allowNull: true },
+          {
+            ...(fieldType?.validator ?? {}),
+            allowNull: true,
+          },
         );
       }
     }
 
-    type.partial = {
-      insertType: getTypeNameForType(context, insertPartial, "", {
-        useDefaults: false,
-      }),
-      updateType: getTypeNameForType(context, updatePartial, "", {
-        useDefaults: false,
-      }),
-      fields: fieldsArray,
-    };
+    type.partial = type.partial ?? {};
+    type.partial.insertType = getTypeNameForType(context, insertPartial, "", {
+      useDefaults: false,
+    });
+    type.partial.fields = fieldsArray;
   }
 }
 

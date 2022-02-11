@@ -18,9 +18,11 @@ export type QueryPartArg =
 
 export interface QueryPart<T = any> {
   get strings(): string[];
+
   get values(): QueryPartArg[];
 
   append(query: QueryPart): QueryPart<T>;
+
   exec(sql: Postgres): PendingQuery<T>;
 }
 

@@ -263,7 +263,7 @@ export function jobInsertValues(insert, options = {}) {
 /**
  * Build 'SET ' part for job
  *
- * @param {StoreJobUpdatePartial} update
+ * @param {StoreJobUpdate} update
  * @returns {QueryPart}
  */
 export function jobUpdateSet(update) {
@@ -403,7 +403,7 @@ RETURNING ${jobFields("")}
 }
 /**
  * @param {Postgres} sql
- * @param {StoreJobUpdatePartial} update
+ * @param {StoreJobUpdate} update
  * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
  */

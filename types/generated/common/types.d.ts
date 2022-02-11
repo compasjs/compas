@@ -328,6 +328,206 @@ declare global {
         };
     accessTokenNotExists?: undefined | StoreSessionStoreTokenWhere;
   };
+  type StoreFileUpdate = {
+    update: StoreFileUpdatePartial;
+    where: StoreFileWhere;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "bucketName"
+          | "contentLength"
+          | "contentType"
+          | "name"
+          | "meta"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+          | "deletedAt"
+        )[];
+  };
+  type StoreFileUpdatePartial = {
+    bucketName?: undefined | string | { $append: string };
+    contentLength?:
+      | undefined
+      | number
+      | { $add: number }
+      | { $subtract: number }
+      | { $multiply: number }
+      | { $divide: number };
+    contentType?: undefined | string | { $append: string };
+    name?: undefined | string | { $append: string };
+    meta?:
+      | undefined
+      | {
+          transforms?: undefined | any;
+          transformedFromOriginal?: undefined | string;
+        }
+      | { $set: { path: (string | number)[]; value: any } }
+      | { $remove: { path: (string | number)[] } };
+    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
+    updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
+    deletedAt?:
+      | undefined
+      | null
+      | Date
+      | { $add: string }
+      | { $subtract: string };
+  };
+  type StoreFileGroupUpdate = {
+    update: StoreFileGroupUpdatePartial;
+    where: StoreFileGroupWhere;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "name"
+          | "order"
+          | "meta"
+          | "id"
+          | "file"
+          | "parent"
+          | "createdAt"
+          | "updatedAt"
+          | "deletedAt"
+        )[];
+  };
+  type StoreFileGroupUpdatePartial = {
+    name?: undefined | null | string | { $append: string };
+    order?:
+      | undefined
+      | number
+      | { $add: number }
+      | { $subtract: number }
+      | { $multiply: number }
+      | { $divide: number };
+    meta?:
+      | undefined
+      | {}
+      | { $set: { path: (string | number)[]; value: any } }
+      | { $remove: { path: (string | number)[] } };
+    file?: undefined | null | string;
+    parent?: undefined | null | string;
+    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
+    updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
+    deletedAt?:
+      | undefined
+      | null
+      | Date
+      | { $add: string }
+      | { $subtract: string };
+  };
+  type StoreJobUpdate = {
+    update: StoreJobUpdatePartial;
+    where: StoreJobWhere;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "id"
+          | "isComplete"
+          | "priority"
+          | "scheduledAt"
+          | "name"
+          | "data"
+          | "retryCount"
+          | "handlerTimeout"
+          | "createdAt"
+          | "updatedAt"
+        )[];
+  };
+  type StoreJobUpdatePartial = {
+    isComplete?: undefined | boolean | { $negate: boolean };
+    priority?:
+      | undefined
+      | number
+      | { $add: number }
+      | { $subtract: number }
+      | { $multiply: number }
+      | { $divide: number };
+    scheduledAt?: undefined | Date | { $add: string } | { $subtract: string };
+    name?: undefined | string | { $append: string };
+    data?:
+      | undefined
+      | any
+      | { $set: { path: (string | number)[]; value: any } }
+      | { $remove: { path: (string | number)[] } };
+    retryCount?:
+      | undefined
+      | number
+      | { $add: number }
+      | { $subtract: number }
+      | { $multiply: number }
+      | { $divide: number };
+    handlerTimeout?:
+      | undefined
+      | null
+      | number
+      | { $add: number }
+      | { $subtract: number }
+      | { $multiply: number }
+      | { $divide: number };
+    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
+    updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
+  };
+  type StoreSessionStoreUpdate = {
+    update: StoreSessionStoreUpdatePartial;
+    where: StoreSessionStoreWhere;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "data"
+          | "checksum"
+          | "revokedAt"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
+  };
+  type StoreSessionStoreUpdatePartial = {
+    data?:
+      | undefined
+      | any
+      | { $set: { path: (string | number)[]; value: any } }
+      | { $remove: { path: (string | number)[] } };
+    checksum?: undefined | string | { $append: string };
+    revokedAt?:
+      | undefined
+      | null
+      | Date
+      | { $add: string }
+      | { $subtract: string };
+    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
+    updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
+  };
+  type StoreSessionStoreTokenUpdate = {
+    update: StoreSessionStoreTokenUpdatePartial;
+    where: StoreSessionStoreTokenWhere;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "expiresAt"
+          | "revokedAt"
+          | "createdAt"
+          | "id"
+          | "session"
+          | "refreshToken"
+        )[];
+  };
+  type StoreSessionStoreTokenUpdatePartial = {
+    expiresAt?: undefined | Date | { $add: string } | { $subtract: string };
+    revokedAt?:
+      | undefined
+      | null
+      | Date
+      | { $add: string }
+      | { $subtract: string };
+    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
+    session?: undefined | string;
+    refreshToken?: undefined | null | string;
+  };
   type StoreFileOrderBy =
     | QueryPart<any>
     | ("id" | "bucketName" | "createdAt" | "updatedAt" | "deletedAt")[];
@@ -416,33 +616,8 @@ declare global {
     updatedAt?: undefined | Date;
     deletedAt?: undefined | null | Date;
   };
-  type StoreFileUpdatePartial = {
-    contentLength?: undefined | number;
-    bucketName?: undefined | string;
-    contentType?: undefined | string;
-    name?: undefined | string;
-    meta?:
-      | undefined
-      | {
-          transforms?: undefined | any;
-          transformedFromOriginal?: undefined | string;
-        };
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-    deletedAt?: undefined | null | Date;
-  };
   type StoreFileGroupInsertPartial = {
     id?: undefined | string;
-    order?: undefined | number;
-    file?: undefined | null | string;
-    parent?: undefined | null | string;
-    name?: undefined | null | string;
-    meta?: undefined | {};
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-    deletedAt?: undefined | null | Date;
-  };
-  type StoreFileGroupUpdatePartial = {
     order?: undefined | number;
     file?: undefined | null | string;
     parent?: undefined | null | string;
@@ -464,27 +639,9 @@ declare global {
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
   };
-  type StoreJobUpdatePartial = {
-    isComplete?: undefined | boolean;
-    handlerTimeout?: undefined | null | number;
-    priority?: undefined | number;
-    retryCount?: undefined | number;
-    name?: undefined | string;
-    scheduledAt?: undefined | Date;
-    data?: undefined | any;
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-  };
   type StoreSessionStoreInsertPartial = {
     id?: undefined | string;
     checksum: string;
-    revokedAt?: undefined | null | Date;
-    data?: undefined | any;
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-  };
-  type StoreSessionStoreUpdatePartial = {
-    checksum?: undefined | string;
     revokedAt?: undefined | null | Date;
     data?: undefined | any;
     createdAt?: undefined | Date;
@@ -497,13 +654,6 @@ declare global {
     refreshToken?: undefined | null | string;
     revokedAt?: undefined | null | Date;
     createdAt: Date;
-  };
-  type StoreSessionStoreTokenUpdatePartial = {
-    session?: undefined | string;
-    expiresAt?: undefined | Date;
-    refreshToken?: undefined | null | string;
-    revokedAt?: undefined | null | Date;
-    createdAt?: undefined | Date;
   };
   type StoreFileQueryBuilder = {
     where?: undefined | StoreFileWhere;
@@ -856,6 +1006,97 @@ declare global {
           offset?: undefined | number;
         };
     accessTokenNotExists?: undefined | StoreSessionStoreTokenWhereInput;
+  };
+  type StoreFileUpdatePartialInput = StoreFileUpdatePartial;
+  type StoreFileUpdateInput = {
+    update: StoreFileUpdatePartialInput;
+    where: StoreFileWhereInput;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "bucketName"
+          | "contentLength"
+          | "contentType"
+          | "name"
+          | "meta"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+          | "deletedAt"
+        )[];
+  };
+  type StoreFileGroupUpdatePartialInput = StoreFileGroupUpdatePartial;
+  type StoreFileGroupUpdateInput = {
+    update: StoreFileGroupUpdatePartialInput;
+    where: StoreFileGroupWhereInput;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "name"
+          | "order"
+          | "meta"
+          | "id"
+          | "file"
+          | "parent"
+          | "createdAt"
+          | "updatedAt"
+          | "deletedAt"
+        )[];
+  };
+  type StoreJobUpdatePartialInput = StoreJobUpdatePartial;
+  type StoreJobUpdateInput = {
+    update: StoreJobUpdatePartialInput;
+    where: StoreJobWhereInput;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "id"
+          | "isComplete"
+          | "priority"
+          | "scheduledAt"
+          | "name"
+          | "data"
+          | "retryCount"
+          | "handlerTimeout"
+          | "createdAt"
+          | "updatedAt"
+        )[];
+  };
+  type StoreSessionStoreUpdatePartialInput = StoreSessionStoreUpdatePartial;
+  type StoreSessionStoreUpdateInput = {
+    update: StoreSessionStoreUpdatePartialInput;
+    where: StoreSessionStoreWhereInput;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "data"
+          | "checksum"
+          | "revokedAt"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
+  };
+  type StoreSessionStoreTokenUpdatePartialInput =
+    StoreSessionStoreTokenUpdatePartial;
+  type StoreSessionStoreTokenUpdateInput = {
+    update: StoreSessionStoreTokenUpdatePartialInput;
+    where: StoreSessionStoreTokenWhereInput;
+    returning?:
+      | undefined
+      | "*"
+      | (
+          | "expiresAt"
+          | "revokedAt"
+          | "createdAt"
+          | "id"
+          | "session"
+          | "refreshToken"
+        )[];
   };
   type StoreFileOrderByInput = StoreFileOrderBy;
   type StoreFileOrderBySpecInput = {

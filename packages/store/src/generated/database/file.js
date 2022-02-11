@@ -286,7 +286,7 @@ export function fileInsertValues(insert, options = {}) {
 /**
  * Build 'SET ' part for file
  *
- * @param {StoreFileUpdatePartial} update
+ * @param {StoreFileUpdate} update
  * @returns {QueryPart}
  */
 export function fileUpdateSet(update) {
@@ -425,7 +425,7 @@ RETURNING ${fileFields("")}
 }
 /**
  * @param {Postgres} sql
- * @param {StoreFileUpdatePartial} update
+ * @param {StoreFileUpdate} update
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<StoreFile[]>}
  */

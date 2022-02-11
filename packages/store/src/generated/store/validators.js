@@ -6,9 +6,12 @@ import {
   anonymousValidator1257773835,
   anonymousValidator1334934277,
   anonymousValidator1337490931,
+  anonymousValidator1345595702,
   anonymousValidator1430489818,
+  anonymousValidator1516794677,
   anonymousValidator153017499,
   anonymousValidator163358845,
+  anonymousValidator165104378,
   anonymousValidator1781782332,
   anonymousValidator1795948632,
   anonymousValidator1856722848,
@@ -18,8 +21,10 @@ import {
   anonymousValidator2074494218,
   anonymousValidator2086080888,
   anonymousValidator2093168415,
+  anonymousValidator2102646924,
   anonymousValidator2144828802,
   anonymousValidator280827708,
+  anonymousValidator286367525,
   anonymousValidator310044624,
   anonymousValidator322356638,
   anonymousValidator343387919,
@@ -27,10 +32,15 @@ import {
   anonymousValidator376443596,
   anonymousValidator420878393,
   anonymousValidator430889951,
+  anonymousValidator498490869,
   anonymousValidator503384244,
   anonymousValidator599447075,
+  anonymousValidator600940900,
+  anonymousValidator617486747,
   anonymousValidator685221527,
   anonymousValidator753972035,
+  anonymousValidator761369354,
+  anonymousValidator84897941,
 } from "../common/anonymous-validators.js";
 import { AppError, isNil } from "@compas/stdlib";
 /**
@@ -420,6 +430,275 @@ export function validateStoreSessionStoreTokenWhere(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreSessionStoreTokenWhere}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreFileUpdatePartialInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileUpdatePartial>}
+ */
+export function validateStoreFileUpdatePartial(value, propertyPath = "$") {
+  const result = anonymousValidator617486747(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileUpdatePartial}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreFileUpdateInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileUpdate>}
+ */
+export function validateStoreFileUpdate(value, propertyPath = "$") {
+  const result = anonymousValidator165104378(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreFileGroupUpdatePartialInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileGroupUpdatePartial>}
+ */
+export function validateStoreFileGroupUpdatePartial(value, propertyPath = "$") {
+  const result = anonymousValidator761369354(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileGroupUpdatePartial}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreFileGroupUpdateInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileGroupUpdate>}
+ */
+export function validateStoreFileGroupUpdate(value, propertyPath = "$") {
+  const result = anonymousValidator498490869(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileGroupUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreJobUpdatePartialInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobUpdatePartial>}
+ */
+export function validateStoreJobUpdatePartial(value, propertyPath = "$") {
+  const result = anonymousValidator600940900(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreJobUpdatePartial}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreJobUpdateInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobUpdate>}
+ */
+export function validateStoreJobUpdate(value, propertyPath = "$") {
+  const result = anonymousValidator286367525(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreJobUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreUpdatePartialInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreUpdatePartial>}
+ */
+export function validateStoreSessionStoreUpdatePartial(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator2102646924(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreUpdatePartial}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreUpdateInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreUpdate>}
+ */
+export function validateStoreSessionStoreUpdate(value, propertyPath = "$") {
+  const result = anonymousValidator1516794677(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreTokenUpdatePartialInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenUpdatePartial>}
+ */
+export function validateStoreSessionStoreTokenUpdatePartial(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator84897941(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreTokenUpdatePartial}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreTokenUpdateInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenUpdate>}
+ */
+export function validateStoreSessionStoreTokenUpdate(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator1345595702(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreTokenUpdate}} */
   return { value: result.value };
 }
 /**

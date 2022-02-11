@@ -250,7 +250,7 @@ export function sessionStoreInsertValues(insert, options = {}) {
 /**
  * Build 'SET ' part for sessionStore
  *
- * @param {StoreSessionStoreUpdatePartial} update
+ * @param {StoreSessionStoreUpdate} update
  * @returns {QueryPart}
  */
 export function sessionStoreUpdateSet(update) {
@@ -380,7 +380,7 @@ RETURNING ${sessionStoreFields("")}
 }
 /**
  * @param {Postgres} sql
- * @param {StoreSessionStoreUpdatePartial} update
+ * @param {StoreSessionStoreUpdate} update
  * @param {StoreSessionStoreWhere} [where={}]
  * @returns {Promise<StoreSessionStore[]>}
  */

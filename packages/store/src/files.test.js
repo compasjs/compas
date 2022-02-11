@@ -170,7 +170,17 @@ test("store/files", async (t) => {
   t.test("update files by idIn", async (t) => {
     const result = await queries.fileUpdate(
       sql,
-      { updatedAt: new Date() },
+      {
+        where: {},
+        update: {
+          meta: {
+            $set: {
+              path: [],
+              value: "foo",
+            },
+          },
+        },
+      },
       {
         idIn: storedFiles.map((it) => it.id),
       },
