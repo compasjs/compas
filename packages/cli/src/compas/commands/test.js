@@ -15,10 +15,14 @@ import {
   setTestLogger,
   testLogger,
 } from "../../testing/state.js";
+import { runTestsInProcess } from "../../testing/test-worker-internal.js";
 
 const __filename = filenameForModule(import.meta);
 const workerFile = new URL(
-  `file://${pathJoin(dirnameForModule(import.meta), "../../testing/test.js")}`,
+  `file://${pathJoin(
+    dirnameForModule(import.meta),
+    "../../testing/test-worker.js",
+  )}`,
 );
 
 /**
@@ -133,9 +137,19 @@ export async function cliExecutor(logger, state) {
   setAreTestRunning(true);
   setTestLogger(logger);
 
+  const files = listTestFiles();
+
+  if (parallelCount === 1 && state.flags.randomizeRounds === 1) {
+    // Run serial tests in the same process
+    const exitCode = await runTestsInProcess({ files });
+
+    return {
+      exitStatus: exitCode === 0 ? "passed" : "failed",
+    };
+  }
+
   // Almost does the same things as `mainTestFn`, however since tests are run by workers
   // instead of directly. We dispatch them, and then print the results.
-  const files = listTestFiles();
   const results = [];
 
   for (let i = 0; i < state.flags.randomizeRounds; ++i) {
