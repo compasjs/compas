@@ -27,7 +27,10 @@ test("code-gen/e2e/sql", async (t) => {
             authKey: T.string(),
             isCool: T.reference("sql", "coolString").searchable(),
           })
-          .enableQueries({ withSoftDeletes: true, schema: "public" })
+          .enableQueries({
+            withSoftDeletes: true,
+            schema: "public",
+          })
           .relations(T.oneToMany("posts", T.reference("sql", "post"))),
 
         T.object("category")
@@ -94,6 +97,17 @@ test("code-gen/e2e/sql", async (t) => {
           .keys({})
           .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
           .enableQueries(),
+
+        T.object("settings")
+          .keys({
+            toggles: T.object()
+              .keys({
+                darkMode: T.bool(),
+              })
+              .optional()
+              .searchable(),
+          })
+          .enableQueries(),
       ],
       extend: [[storeStructure]],
     },
@@ -133,6 +147,18 @@ test("code-gen/e2e/sql", async (t) => {
       SELECT 1 + 2 AS sum
     `;
     t.equal(result[0].sum, 3);
+  });
+
+  t.test("init 'settings' table", async (t) => {
+    await sql`
+      CREATE TABLE "settings"
+      (
+        id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+        toggles jsonb NULL
+      );
+    `;
+
+    t.pass();
   });
 
   let user, category, post;
@@ -273,6 +299,26 @@ test("code-gen/e2e/sql", async (t) => {
     t.notEqual(categories[0].id, category.id);
   });
 
+  t.test("insert jsonb null behavior", async (t) => {
+    const [inserted] = await queries.settingsInsert(sql, {});
+
+    const plainIsNull = await sql`SELECT *
+                                  FROM "settings"
+                                  WHERE
+                                    "toggles" IS NULL;`;
+
+    const jsonIsNull = await sql`SELECT *
+                                 FROM "settings"
+                                 WHERE
+                                   "toggles" = 'null';`;
+
+    t.ok(
+      !plainIsNull.find((it) => it.id === inserted.id),
+      "null is inserted as jsonb null, so no match here.",
+    );
+    t.ok(jsonIsNull.find((it) => it.id === inserted.id));
+  });
+
   t.test("add category meta", async (t) => {
     const categories = await queryCategory().exec(sql);
 
@@ -411,7 +457,7 @@ test("code-gen/e2e/sql", async (t) => {
   t.test("query filter by 'in' sub query", async (t) => {
     await queryUser({
       where: {
-        emailIn: query`SELECT 'test@test.com' as foo`,
+        emailIn: query`SELECT 'test@test.com' AS foo`,
       },
     }).exec(sql);
     t.pass();
