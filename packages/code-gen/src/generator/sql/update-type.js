@@ -15,7 +15,7 @@ import { addToData } from "../../generate.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
-import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
+import { getQueryEnabledObjects } from "./utils.js";
 
 export const atomicUpdateFieldsTable = {
   boolean: ["$negate"],
@@ -32,6 +32,10 @@ export const atomicUpdateFieldsTable = {
  */
 export function createUpdateTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
+    if (type.queryOptions.isView) {
+      continue;
+    }
+
     const updateType = new ObjectType(type.group, `${type.name}Update`).build();
     updateType.uniqueName = `${upperCaseFirst(type.group)}${upperCaseFirst(
       type.name,
@@ -164,6 +168,19 @@ export function createUpdateTypes(context) {
     type.partial.updateType = getTypeNameForType(context, updateType, "", {
       useDefaults: false,
     });
+
+    const updateFnType = new AnyType(type.group, `${type.name}UpdateFn`)
+      .raw(
+        `<I extends ${type.uniqueName}Update>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("@compas/store").Returning<${type.uniqueName}, I["returning"]>
+  >`,
+      )
+      .build();
+    updateFnType.uniqueName = `${type.uniqueName}UpdateFn`;
+    addToData(context.structure, updateFnType);
   }
 }
 
@@ -173,117 +190,75 @@ export function createUpdateTypes(context) {
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
-export function getWherePartial(context, imports, type) {
-  let entityWhereString = `export const ${type.name}WhereSpec ={ "fieldSpecification": [`;
+export function getUpdateQuery(context, imports, type) {
+  let entityUpdateSpec = `export const ${type.name}UpdateSpec = {
+   "schemaName": \`${type.queryOptions.schema}\`,
+   "name": "${type.name}",
+   "shortName": "${type.shortName}",
+   "columns": [${Object.keys(type.keys)
+     .map((it) => `"${it}"`)
+     .join(", ")}],
+   "where": ${type.name}WhereSpec,
+   "injectUpdatedAt": ${
+     type.queryOptions?.withDates || type.queryOptions?.withSoftDeletes
+   },
+    "fields": {`;
 
-  const fieldsByKey = {};
-  for (const field of type.where.fields) {
-    if (isNil(fieldsByKey[field.key])) {
-      fieldsByKey[field.key] = [];
+  for (const key of Object.keys(type.keys)) {
+    let fieldType = type.keys[key];
+    if (fieldType.reference) {
+      fieldType = fieldType.reference;
     }
 
-    fieldsByKey[field.key].push(field);
+    const subType = ["number", "boolean", "string", "date", "uuid"].includes(
+      fieldType.type,
+    )
+      ? fieldType.type
+      : "jsonb";
+
+    entityUpdateSpec += `"${key}": { "type": "${subType}", "atomicUpdates": [${(
+      atomicUpdateFieldsTable[subType] ?? []
+    )
+      .map((it) => `"${it}"`)
+      .join(", ")}], },`;
   }
 
-  for (const key of Object.keys(fieldsByKey)) {
-    let matchers = `[`;
-    let keyType = undefined;
+  entityUpdateSpec += " }};";
 
-    for (const field of fieldsByKey[key]) {
-      if (isNil(keyType) && !field.isRelation) {
-        const realField =
-          type.keys[field.key].reference ?? type.keys[field.key];
-        // Type to cast arrays to, use for in & notIn
-        keyType =
-          realField.type === "number" && !realField.floatingPoint
-            ? "int"
-            : realField.type === "number" && realField.floatingPoint
-            ? "float"
-            : realField.type === "string"
-            ? "varchar"
-            : realField.type === "date"
-            ? "timestamptz"
-            : "uuid";
-      }
-
-      matchers += `{ matcherKey: "${field.name}", matcherType: "${field.variant}", `;
-
-      if (field.isRelation) {
-        const relation = type.relations.find((it) => it.ownKey === field.key);
-        const otherSide = relation.reference.reference;
-        const isSelfReference = otherSide.name === type.name;
-
-        const shortName = isSelfReference
-          ? `${otherSide.shortName}2`
-          : `${otherSide.shortName}`;
-
-        if (!isSelfReference) {
-          imports.destructureImport(
-            `${otherSide.name}WhereSpec`,
-            `./${otherSide.name}.js`,
-          );
-        }
-
-        const { key: primaryKey } = getPrimaryKeyWithType(type);
-
-        const referencedKey =
-          ["oneToMany", "oneToOneReverse"].indexOf(relation.subType) !== -1
-            ? relation.referencedKey
-            : getPrimaryKeyWithType(otherSide).key;
-
-        const ownKey =
-          ["manyToOne", "oneToOne"].indexOf(relation.subType) !== -1
-            ? relation.ownKey
-            : primaryKey;
-
-        matchers += `relation: {
-           entityName: "${otherSide.name}",
-           shortName: "${shortName}",
-           entityKey: "${referencedKey}",
-           referencedKey: "${ownKey}",
-           where: () => ${otherSide.name}WhereSpec,
-         },`;
-      }
-
-      matchers += "},";
-    }
-
-    matchers += "]";
-    entityWhereString += `{ tableKey: "${key}", keyType: "${keyType}", matchers: ${matchers} },`;
-  }
-
-  entityWhereString += " ]};";
+  imports.destructureImport(
+    `validate${type.uniqueName}Update`,
+    `../${type.group}/validators.js`,
+  );
 
   return js`
     /** @type {any} */
-    ${entityWhereString}
+    ${entityUpdateSpec}
 
     /**
-     * Build 'WHERE ' part for ${type.name}
-     *
-     * @param {${type.where.type}} [where={}]
-     * @param {string} [tableName="${type.shortName}."]
-     * @param {{ skipValidator?: boolean|undefined }} [options={}]
-     * @returns {QueryPart}
+     * (Atomic) update queries for ${type.name}
+     * 
+     * @type {${type.uniqueName}UpdateFn}
      */
-    export function ${type.name}Where(where = {},
-                                      tableName = "${type.shortName}.",
-                                      options = {}
-    ) {
-      if (tableName.length > 0 && !tableName.endsWith(".")) {
-        tableName = \`$\{tableName}.\`;
+    const ${type.name}Update = async (sql, input) => {
+      const updateValidated = validate${type.uniqueName}Update(
+        input, "$.${type.uniqueName}Update");
+      if (updateValidated.error) {
+        throw updateValidated.error;
       }
 
-      if (!options.skipValidator) {
-        const whereValidated = validate${type.uniqueName}Where(
-          where, "$.${type.name}Where");
-        if (whereValidated.error) {
-          throw whereValidated.error;
-        }
-        where = whereValidated.value;
+      const result = await generatedUpdateHelper(${
+        type.name
+      }UpdateSpec, input).exec(
+        sql);
+      if (!isNil(input.returning)) {
+        transform${upperCaseFirst(type.name)}(result);
+        
+        // @ts-ignore
+        return result;
       }
 
-      return generatedWhereBuilderHelper(${type.name}WhereSpec, where, tableName)
+      // @ts-ignore
+       return undefined;
     }
   `;
 }

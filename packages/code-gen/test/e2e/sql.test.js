@@ -379,14 +379,29 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.deletedAt, undefined);
   });
 
+  t.test("empty where update", async (t) => {
+    try {
+      await queries.categoryMetaUpdate(sql, {
+        update: {
+          isHighlighted: true,
+        },
+        where: {},
+      });
+    } catch (e) {
+      t.equal(e.key, "error.server.internal");
+    }
+  });
+
   t.test("empty update of entity without default date columns", async (t) => {
     try {
       await queries.categoryMetaUpdate(sql, {
         update: {},
-        where: {},
+        where: {
+          isHighlighted: true,
+        },
       });
     } catch (e) {
-      t.equal(e.key, "categoryMeta.updateSet.emptyUpdateStatement");
+      t.equal(e.key, "error.server.internal");
     }
   });
 
@@ -867,11 +882,11 @@ test("code-gen/e2e/sql", async (t) => {
           foo: "bar",
         },
       });
-      t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));
-      t.equal(e.key, `query.post.updateFields`);
-      t.equal(e.info.extraKey, "baz");
+      t.equal(e.key, "validator.error");
+      t.ok(e.info["$.SqlPostUpdate.update"]);
+      t.equal(e.info["$.SqlPostUpdate.update"].key, "validator.object.strict");
     }
   });
 

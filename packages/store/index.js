@@ -16,6 +16,12 @@
  */
 
 /**
+ * @template Type
+ * @template {undefined | "*" | string[]} Selector
+ * @typedef {import("./types/advanced-types.js").Returning<Type, Selector>} Returning
+ */
+
+/**
  * @typedef {import("./src/send-transformed-image").GetStreamFn} GetStreamFn
  */
 
@@ -34,6 +40,7 @@ export { setStoreQueries } from "./src/generated.js";
 
 export {
   generatedWhereBuilderHelper,
+  generatedUpdateHelper,
   generatedQueryBuilderHelper,
 } from "./src/generator-helpers.js";
 

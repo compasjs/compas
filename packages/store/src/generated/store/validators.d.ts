@@ -168,6 +168,15 @@ export function validateStoreFileUpdate(
   propertyPath?: string | undefined,
 ): Either<StoreFileUpdate>;
 /**
+ * @param {undefined|any|StoreFileUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileUpdateFn>}
+ */
+export function validateStoreFileUpdateFn(
+  value: undefined | any | StoreFileUpdateFnInput,
+  propertyPath?: string | undefined,
+): Either<StoreFileUpdateFn>;
+/**
  * @param {undefined|any|StoreFileGroupUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupUpdatePartial>}
@@ -185,6 +194,15 @@ export function validateStoreFileGroupUpdate(
   value: undefined | any | StoreFileGroupUpdateInput,
   propertyPath?: string | undefined,
 ): Either<StoreFileGroupUpdate>;
+/**
+ * @param {undefined|any|StoreFileGroupUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileGroupUpdateFn>}
+ */
+export function validateStoreFileGroupUpdateFn(
+  value: undefined | any | StoreFileGroupUpdateFnInput,
+  propertyPath?: string | undefined,
+): Either<StoreFileGroupUpdateFn>;
 /**
  * @param {undefined|any|StoreJobUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
@@ -204,6 +222,15 @@ export function validateStoreJobUpdate(
   propertyPath?: string | undefined,
 ): Either<StoreJobUpdate>;
 /**
+ * @param {undefined|any|StoreJobUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobUpdateFn>}
+ */
+export function validateStoreJobUpdateFn(
+  value: undefined | any | StoreJobUpdateFnInput,
+  propertyPath?: string | undefined,
+): Either<StoreJobUpdateFn>;
+/**
  * @param {undefined|any|StoreSessionStoreUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreUpdatePartial>}
@@ -222,6 +249,15 @@ export function validateStoreSessionStoreUpdate(
   propertyPath?: string | undefined,
 ): Either<StoreSessionStoreUpdate>;
 /**
+ * @param {undefined|any|StoreSessionStoreUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreUpdateFn>}
+ */
+export function validateStoreSessionStoreUpdateFn(
+  value: undefined | any | StoreSessionStoreUpdateFnInput,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreUpdateFn>;
+/**
  * @param {undefined|any|StoreSessionStoreTokenUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenUpdatePartial>}
@@ -239,6 +275,15 @@ export function validateStoreSessionStoreTokenUpdate(
   value: undefined | any | StoreSessionStoreTokenUpdateInput,
   propertyPath?: string | undefined,
 ): Either<StoreSessionStoreTokenUpdate>;
+/**
+ * @param {undefined|any|StoreSessionStoreTokenUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenUpdateFn>}
+ */
+export function validateStoreSessionStoreTokenUpdateFn(
+  value: undefined | any | StoreSessionStoreTokenUpdateFnInput,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenUpdateFn>;
 /**
  * @param {undefined|any|StoreFileOrderByInput} value
  * @param {string|undefined} [propertyPath]

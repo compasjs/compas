@@ -27,3 +27,13 @@ export interface QueryPart<T = any> {
 }
 
 export type MinioClient = minioVendor.Client;
+
+export type Returning<
+  Type,
+  Selector extends undefined | "*" | string[],
+> = Selector extends "*"
+  ? Type[]
+  : Selector extends Array<infer T>
+  ? // @ts-ignore
+    Pick<Type, T>[]
+  : undefined;

@@ -5,6 +5,7 @@ import {
   validateStoreSessionStoreTokenOrderBy,
   validateStoreSessionStoreTokenOrderBySpec,
   validateStoreSessionStoreTokenQueryBuilder,
+  validateStoreSessionStoreTokenUpdate,
   validateStoreSessionStoreTokenWhere,
 } from "../store/validators.js";
 import {
@@ -16,6 +17,7 @@ import {
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -303,51 +305,6 @@ export function sessionStoreTokenInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for sessionStoreToken
- *
- * @param {StoreSessionStoreTokenUpdate} update
- * @returns {QueryPart}
- */
-export function sessionStoreTokenUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet(
-    "sessionStoreToken",
-    "update",
-    sessionStoreTokenFieldSet,
-    update,
-  );
-  if (update.session !== undefined) {
-    strings.push(`, "session" = `);
-    values.push(update.session ?? null);
-  }
-  if (update.expiresAt !== undefined) {
-    strings.push(`, "expiresAt" = `);
-    values.push(update.expiresAt ?? null);
-  }
-  if (update.refreshToken !== undefined) {
-    strings.push(`, "refreshToken" = `);
-    values.push(update.refreshToken ?? null);
-  }
-  if (update.revokedAt !== undefined) {
-    strings.push(`, "revokedAt" = `);
-    values.push(update.revokedAt ?? null);
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? null);
-  }
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError(
-      "sessionStoreToken.updateSet.emptyUpdateStatement",
-    );
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -440,21 +397,55 @@ RETURNING ${sessionStoreTokenFields("")}
   transformSessionStoreToken(result);
   return result;
 }
+/** @type {any} */
+export const sessionStoreTokenUpdateSpec = {
+  schemaName: ``,
+  name: "sessionStoreToken",
+  shortName: "sst",
+  columns: [
+    "expiresAt",
+    "revokedAt",
+    "createdAt",
+    "id",
+    "session",
+    "refreshToken",
+  ],
+  where: sessionStoreTokenWhereSpec,
+  injectUpdatedAt: undefined,
+  fields: {
+    expiresAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    revokedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    id: { type: "uuid", atomicUpdates: [] },
+    session: { type: "uuid", atomicUpdates: [] },
+    refreshToken: { type: "uuid", atomicUpdates: [] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenUpdate} update
- * @returns {Promise<StoreSessionStoreToken[]>}
+ * (Atomic) update queries for sessionStoreToken
+ *
+ * @type {StoreSessionStoreTokenUpdateFn}
  */
-async function sessionStoreTokenUpdate(sql, { update, where }) {
-  const result = await query`
-UPDATE "sessionStoreToken" sst
-SET ${sessionStoreTokenUpdateSet(update)}
-WHERE ${sessionStoreTokenWhere(where)}
-RETURNING ${sessionStoreTokenFields()}
-`.exec(sql);
-  transformSessionStoreToken(result);
-  return result;
-}
+const sessionStoreTokenUpdate = async (sql, input) => {
+  const updateValidated = validateStoreSessionStoreTokenUpdate(
+    input,
+    "$.StoreSessionStoreTokenUpdate",
+  );
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(
+    sessionStoreTokenUpdateSpec,
+    input,
+  ).exec(sql);
+  if (!isNil(input.returning)) {
+    transformSessionStoreToken(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 export const sessionStoreTokenQueries = {
   sessionStoreTokenCount,
   sessionStoreTokenDelete,

@@ -131,6 +131,7 @@ export function traverseType(structure, type, callback) {
         break;
       case "reference":
         stackPushSkipHandled(
+          // @ts-ignore
           structure[item.reference.group][item.reference.name],
         );
         break;

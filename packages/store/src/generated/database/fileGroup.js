@@ -5,6 +5,7 @@ import {
   validateStoreFileGroupOrderBy,
   validateStoreFileGroupOrderBySpec,
   validateStoreFileGroupQueryBuilder,
+  validateStoreFileGroupUpdate,
   validateStoreFileGroupWhere,
 } from "../store/validators.js";
 import {
@@ -16,6 +17,7 @@ import {
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -333,54 +335,6 @@ export function fileGroupInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for fileGroup
- *
- * @param {StoreFileGroupUpdate} update
- * @returns {QueryPart}
- */
-export function fileGroupUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet("fileGroup", "update", fileGroupFieldSet, update);
-  if (update.order !== undefined) {
-    strings.push(`, "order" = `);
-    values.push(update.order ?? Math.floor(Date.now() / 1000000));
-  }
-  if (update.file !== undefined) {
-    strings.push(`, "file" = `);
-    values.push(update.file ?? null);
-  }
-  if (update.parent !== undefined) {
-    strings.push(`, "parent" = `);
-    values.push(update.parent ?? null);
-  }
-  if (update.name !== undefined) {
-    strings.push(`, "name" = `);
-    values.push(update.name ?? null);
-  }
-  if (update.meta !== undefined) {
-    strings.push(`, "meta" = `);
-    values.push(JSON.stringify(update.meta ?? {}));
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? new Date());
-  }
-  strings.push(`, "updatedAt" = `);
-  values.push(new Date());
-  if (update.deletedAt !== undefined) {
-    strings.push(`, "deletedAt" = `);
-    values.push(update.deletedAt ?? null);
-  }
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError("fileGroup.updateSet.emptyUpdateStatement");
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -472,21 +426,63 @@ RETURNING ${fileGroupFields("")}
   transformFileGroup(result);
   return result;
 }
+/** @type {any} */
+export const fileGroupUpdateSpec = {
+  schemaName: ``,
+  name: "fileGroup",
+  shortName: "fg",
+  columns: [
+    "name",
+    "order",
+    "meta",
+    "id",
+    "file",
+    "parent",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+  ],
+  where: fileGroupWhereSpec,
+  injectUpdatedAt: true,
+  fields: {
+    name: { type: "string", atomicUpdates: ["$append"] },
+    order: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    meta: { type: "jsonb", atomicUpdates: ["$set", "$remove"] },
+    id: { type: "uuid", atomicUpdates: [] },
+    file: { type: "uuid", atomicUpdates: [] },
+    parent: { type: "uuid", atomicUpdates: [] },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    updatedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    deletedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreFileGroupUpdate} update
- * @returns {Promise<StoreFileGroup[]>}
+ * (Atomic) update queries for fileGroup
+ *
+ * @type {StoreFileGroupUpdateFn}
  */
-async function fileGroupUpdate(sql, { update, where }) {
-  const result = await query`
-UPDATE "fileGroup" fg
-SET ${fileGroupUpdateSet(update)}
-WHERE ${fileGroupWhere(where)}
-RETURNING ${fileGroupFields()}
-`.exec(sql);
-  transformFileGroup(result);
-  return result;
-}
+const fileGroupUpdate = async (sql, input) => {
+  const updateValidated = validateStoreFileGroupUpdate(
+    input,
+    "$.StoreFileGroupUpdate",
+  );
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(fileGroupUpdateSpec, input).exec(
+    sql,
+  );
+  if (!isNil(input.returning)) {
+    transformFileGroup(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where={}]

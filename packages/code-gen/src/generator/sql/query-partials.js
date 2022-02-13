@@ -2,7 +2,7 @@
 
 import { js } from "../tag/index.js";
 import { getOrderByPartial } from "./order-by-type.js";
-import { getInsertPartial, getUpdatePartial } from "./partial-type.js";
+import { getInsertPartial } from "./partial-type.js";
 import { getPrimaryKeyWithType, getSortedKeysForType } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
 
@@ -59,7 +59,6 @@ export function generateQueryPartials(context, imports, type, src) {
 
   if (!type.queryOptions?.isView) {
     src.push(getInsertPartial(context, type));
-    src.push(getUpdatePartial(context, type));
   }
 
   src.push(knownFieldsCheckFunction());

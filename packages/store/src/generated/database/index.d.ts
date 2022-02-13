@@ -25,10 +25,7 @@ export const queries: {
       | StoreSessionStoreTokenInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreSessionStoreToken[]>;
-  sessionStoreTokenUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    { update, where }: StoreSessionStoreTokenUpdate,
-  ) => Promise<StoreSessionStoreToken[]>;
+  sessionStoreTokenUpdate: StoreSessionStoreTokenUpdateFnInput;
   sessionStoreCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreSessionStoreWhere | undefined,
@@ -51,10 +48,7 @@ export const queries: {
     insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreSessionStore[]>;
-  sessionStoreUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    { update, where }: StoreSessionStoreUpdate,
-  ) => Promise<StoreSessionStore[]>;
+  sessionStoreUpdate: StoreSessionStoreUpdateFnInput;
   jobCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreJobWhere | undefined,
@@ -77,10 +71,7 @@ export const queries: {
     insert: StoreJobInsertPartial | StoreJobInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreJob[]>;
-  jobUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    { update, where }: StoreJobUpdate,
-  ) => Promise<StoreJob[]>;
+  jobUpdate: StoreJobUpdateFnInput;
   fileCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileWhere | undefined,
@@ -108,10 +99,7 @@ export const queries: {
     insert: StoreFileInsertPartial | StoreFileInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreFile[]>;
-  fileUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    { update, where }: StoreFileUpdate,
-  ) => Promise<StoreFile[]>;
+  fileUpdate: StoreFileUpdateFnInput;
   fileDeletePermanent: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileWhere | undefined,
@@ -143,10 +131,7 @@ export const queries: {
     insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreFileGroup[]>;
-  fileGroupUpdate: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    { update, where }: StoreFileGroupUpdate,
-  ) => Promise<StoreFileGroup[]>;
+  fileGroupUpdate: StoreFileGroupUpdateFnInput;
   fileGroupDeletePermanent: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileGroupWhere | undefined,

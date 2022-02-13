@@ -1383,6 +1383,27 @@ export function anonymousValidator165104378(
       )[];
 }>;
 /**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<<I extends StoreFileUpdate>(
+sql: import("@compas/store").Postgres,
+input: I,
+) => Promise<
+import("@compas/store").Returning<StoreFile, I["returning"]>
+>>}
+*/
+export function anonymousValidator248484974(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  <I extends StoreFileUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("../../../types/advanced-types").Returning<StoreFile, I["returning"]>
+  >
+>;
+/**
  * @param {*} value
  * @param {string} propertyPath
  * @returns {EitherN<undefined|null|string>}
@@ -1664,6 +1685,30 @@ export function anonymousValidator498490869(
         | "deletedAt"
       )[];
 }>;
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<<I extends StoreFileGroupUpdate>(
+sql: import("@compas/store").Postgres,
+input: I,
+) => Promise<
+import("@compas/store").Returning<StoreFileGroup, I["returning"]>
+>>}
+*/
+export function anonymousValidator1986614323(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  <I extends StoreFileGroupUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("../../../types/advanced-types").Returning<
+      StoreFileGroup,
+      I["returning"]
+    >
+  >
+>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -2061,6 +2106,27 @@ export function anonymousValidator286367525(
       )[];
 }>;
 /**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<<I extends StoreJobUpdate>(
+sql: import("@compas/store").Postgres,
+input: I,
+) => Promise<
+import("@compas/store").Returning<StoreJob, I["returning"]>
+>>}
+*/
+export function anonymousValidator321286861(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  <I extends StoreJobUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("../../../types/advanced-types").Returning<StoreJob, I["returning"]>
+  >
+>;
+/**
  * @param {*} value
  * @param {string} propertyPath
  * @returns {EitherN<{"data"?: undefined|any|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }, "checksum"?: undefined|string|{"$append": string, }, "revokedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
@@ -2187,6 +2253,30 @@ export function anonymousValidator1516794677(
     | "*"
     | ("data" | "checksum" | "revokedAt" | "id" | "createdAt" | "updatedAt")[];
 }>;
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<<I extends StoreSessionStoreUpdate>(
+sql: import("@compas/store").Postgres,
+input: I,
+) => Promise<
+import("@compas/store").Returning<StoreSessionStore, I["returning"]>
+>>}
+*/
+export function anonymousValidator1645773533(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  <I extends StoreSessionStoreUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("../../../types/advanced-types").Returning<
+      StoreSessionStore,
+      I["returning"]
+    >
+  >
+>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -2353,6 +2443,30 @@ export function anonymousValidator1345595702(
         | "refreshToken"
       )[];
 }>;
+/**
+* @param {*} value
+* @param {string} propertyPath
+* @returns {EitherN<<I extends StoreSessionStoreTokenUpdate>(
+sql: import("@compas/store").Postgres,
+input: I,
+) => Promise<
+import("@compas/store").Returning<StoreSessionStoreToken, I["returning"]>
+>>}
+*/
+export function anonymousValidator332315806(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  <I extends StoreSessionStoreTokenUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("../../../types/advanced-types").Returning<
+      StoreSessionStoreToken,
+      I["returning"]
+    >
+  >
+>;
 /**
  * @param {*} value
  * @param {string} propertyPath

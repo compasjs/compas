@@ -5,6 +5,7 @@ import {
   validateStoreFileOrderBy,
   validateStoreFileOrderBySpec,
   validateStoreFileQueryBuilder,
+  validateStoreFileUpdate,
   validateStoreFileWhere,
 } from "../store/validators.js";
 import {
@@ -17,6 +18,7 @@ import {
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -284,54 +286,6 @@ export function fileInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for file
- *
- * @param {StoreFileUpdate} update
- * @returns {QueryPart}
- */
-export function fileUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet("file", "update", fileFieldSet, update);
-  if (update.contentLength !== undefined) {
-    strings.push(`, "contentLength" = `);
-    values.push(update.contentLength ?? null);
-  }
-  if (update.bucketName !== undefined) {
-    strings.push(`, "bucketName" = `);
-    values.push(update.bucketName ?? null);
-  }
-  if (update.contentType !== undefined) {
-    strings.push(`, "contentType" = `);
-    values.push(update.contentType ?? null);
-  }
-  if (update.name !== undefined) {
-    strings.push(`, "name" = `);
-    values.push(update.name ?? null);
-  }
-  if (update.meta !== undefined) {
-    strings.push(`, "meta" = `);
-    values.push(JSON.stringify(update.meta ?? {}));
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? new Date());
-  }
-  strings.push(`, "updatedAt" = `);
-  values.push(new Date());
-  if (update.deletedAt !== undefined) {
-    strings.push(`, "deletedAt" = `);
-    values.push(update.deletedAt ?? null);
-  }
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError("file.updateSet.emptyUpdateStatement");
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -423,21 +377,58 @@ RETURNING ${fileFields("")}
   transformFile(result);
   return result;
 }
+/** @type {any} */
+export const fileUpdateSpec = {
+  schemaName: ``,
+  name: "file",
+  shortName: "f",
+  columns: [
+    "bucketName",
+    "contentLength",
+    "contentType",
+    "name",
+    "meta",
+    "id",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+  ],
+  where: fileWhereSpec,
+  injectUpdatedAt: true,
+  fields: {
+    bucketName: { type: "string", atomicUpdates: ["$append"] },
+    contentLength: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    contentType: { type: "string", atomicUpdates: ["$append"] },
+    name: { type: "string", atomicUpdates: ["$append"] },
+    meta: { type: "jsonb", atomicUpdates: ["$set", "$remove"] },
+    id: { type: "uuid", atomicUpdates: [] },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    updatedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    deletedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreFileUpdate} update
- * @returns {Promise<StoreFile[]>}
+ * (Atomic) update queries for file
+ *
+ * @type {StoreFileUpdateFn}
  */
-async function fileUpdate(sql, { update, where }) {
-  const result = await query`
-UPDATE "file" f
-SET ${fileUpdateSet(update)}
-WHERE ${fileWhere(where)}
-RETURNING ${fileFields()}
-`.exec(sql);
-  transformFile(result);
-  return result;
-}
+const fileUpdate = async (sql, input) => {
+  const updateValidated = validateStoreFileUpdate(input, "$.StoreFileUpdate");
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(fileUpdateSpec, input).exec(sql);
+  if (!isNil(input.returning)) {
+    transformFile(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 /**
  * @param {Postgres} sql
  * @param {StoreFileWhere} [where={}]

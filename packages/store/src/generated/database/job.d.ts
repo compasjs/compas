@@ -65,13 +65,6 @@ export function jobInsertValues(
     | undefined,
 ): QueryPart;
 /**
- * Build 'SET ' part for job
- *
- * @param {StoreJobUpdate} update
- * @returns {QueryPart}
- */
-export function jobUpdateSet(update: StoreJobUpdate): QueryPart;
-/**
  * Query Builder for job
  * Postgres based job queue.
  * Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
@@ -107,6 +100,8 @@ export function transformJob(
 ): void;
 /** @type {any} */
 export const jobWhereSpec: any;
+/** @type {any} */
+export const jobUpdateSpec: any;
 export namespace jobQueries {
   export { jobCount };
   export { jobDelete };
@@ -167,13 +162,10 @@ declare function jobUpsertOnId(
   options?: {} | undefined,
 ): Promise<StoreJob[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreJobUpdate} update
- * @returns {Promise<StoreJob[]>}
+ * (Atomic) update queries for job
+ *
+ * @type {StoreJobUpdateFn}
  */
-declare function jobUpdate(
-  sql: Postgres,
-  { update, where }: StoreJobUpdate,
-): Promise<StoreJob[]>;
+declare const jobUpdate: StoreJobUpdateFn;
 export {};
 //# sourceMappingURL=job.d.ts.map

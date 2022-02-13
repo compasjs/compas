@@ -11,22 +11,27 @@ import {
   anonymousValidator1516794677,
   anonymousValidator153017499,
   anonymousValidator163358845,
+  anonymousValidator1645773533,
   anonymousValidator165104378,
   anonymousValidator1781782332,
   anonymousValidator1795948632,
   anonymousValidator1856722848,
   anonymousValidator1862233461,
   anonymousValidator1864958291,
+  anonymousValidator1986614323,
   anonymousValidator2060025506,
   anonymousValidator2074494218,
   anonymousValidator2086080888,
   anonymousValidator2093168415,
   anonymousValidator2102646924,
   anonymousValidator2144828802,
+  anonymousValidator248484974,
   anonymousValidator280827708,
   anonymousValidator286367525,
   anonymousValidator310044624,
+  anonymousValidator321286861,
   anonymousValidator322356638,
+  anonymousValidator332315806,
   anonymousValidator343387919,
   anonymousValidator362930508,
   anonymousValidator376443596,
@@ -485,6 +490,32 @@ export function validateStoreFileUpdate(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|StoreFileUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileUpdateFn>}
+ */
+export function validateStoreFileUpdateFn(value, propertyPath = "$") {
+  const result = anonymousValidator248484974(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileUpdateFn}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|StoreFileGroupUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreFileGroupUpdatePartial>}
@@ -537,6 +568,32 @@ export function validateStoreFileGroupUpdate(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|StoreFileGroupUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileGroupUpdateFn>}
+ */
+export function validateStoreFileGroupUpdateFn(value, propertyPath = "$") {
+  const result = anonymousValidator1986614323(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileGroupUpdateFn}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|StoreJobUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobUpdatePartial>}
@@ -586,6 +643,32 @@ export function validateStoreJobUpdate(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreJobUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreJobUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobUpdateFn>}
+ */
+export function validateStoreJobUpdateFn(value, propertyPath = "$") {
+  const result = anonymousValidator321286861(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreJobUpdateFn}} */
   return { value: result.value };
 }
 /**
@@ -644,6 +727,32 @@ export function validateStoreSessionStoreUpdate(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|StoreSessionStoreUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreUpdateFn>}
+ */
+export function validateStoreSessionStoreUpdateFn(value, propertyPath = "$") {
+  const result = anonymousValidator1645773533(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreUpdateFn}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|StoreSessionStoreTokenUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenUpdatePartial>}
@@ -699,6 +808,35 @@ export function validateStoreSessionStoreTokenUpdate(
     };
   }
   /** @type {{ value: StoreSessionStoreTokenUpdate}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreTokenUpdateFnInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenUpdateFn>}
+ */
+export function validateStoreSessionStoreTokenUpdateFn(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator332315806(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreTokenUpdateFn}} */
   return { value: result.value };
 }
 /**

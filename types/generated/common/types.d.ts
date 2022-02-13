@@ -1026,6 +1026,11 @@ declare global {
           | "deletedAt"
         )[];
   };
+  type StoreFileUpdateFnInput = <I extends StoreFileUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<import("@compas/store").Returning<StoreFile, I["returning"]>>;
+  type StoreFileUpdateFn = StoreFileUpdateFnInput;
   type StoreFileGroupUpdatePartialInput = StoreFileGroupUpdatePartial;
   type StoreFileGroupUpdateInput = {
     update: StoreFileGroupUpdatePartialInput;
@@ -1045,6 +1050,13 @@ declare global {
           | "deletedAt"
         )[];
   };
+  type StoreFileGroupUpdateFnInput = <I extends StoreFileGroupUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("@compas/store").Returning<StoreFileGroup, I["returning"]>
+  >;
+  type StoreFileGroupUpdateFn = StoreFileGroupUpdateFnInput;
   type StoreJobUpdatePartialInput = StoreJobUpdatePartial;
   type StoreJobUpdateInput = {
     update: StoreJobUpdatePartialInput;
@@ -1065,6 +1077,11 @@ declare global {
           | "updatedAt"
         )[];
   };
+  type StoreJobUpdateFnInput = <I extends StoreJobUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<import("@compas/store").Returning<StoreJob, I["returning"]>>;
+  type StoreJobUpdateFn = StoreJobUpdateFnInput;
   type StoreSessionStoreUpdatePartialInput = StoreSessionStoreUpdatePartial;
   type StoreSessionStoreUpdateInput = {
     update: StoreSessionStoreUpdatePartialInput;
@@ -1081,6 +1098,13 @@ declare global {
           | "updatedAt"
         )[];
   };
+  type StoreSessionStoreUpdateFnInput = <I extends StoreSessionStoreUpdate>(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("@compas/store").Returning<StoreSessionStore, I["returning"]>
+  >;
+  type StoreSessionStoreUpdateFn = StoreSessionStoreUpdateFnInput;
   type StoreSessionStoreTokenUpdatePartialInput =
     StoreSessionStoreTokenUpdatePartial;
   type StoreSessionStoreTokenUpdateInput = {
@@ -1098,6 +1122,15 @@ declare global {
           | "refreshToken"
         )[];
   };
+  type StoreSessionStoreTokenUpdateFnInput = <
+    I extends StoreSessionStoreTokenUpdate,
+  >(
+    sql: import("@compas/store").Postgres,
+    input: I,
+  ) => Promise<
+    import("@compas/store").Returning<StoreSessionStoreToken, I["returning"]>
+  >;
+  type StoreSessionStoreTokenUpdateFn = StoreSessionStoreTokenUpdateFnInput;
   type StoreFileOrderByInput = StoreFileOrderBy;
   type StoreFileOrderBySpecInput = {
     id?: undefined | CompasSqlOrderByInput;

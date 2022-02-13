@@ -12,7 +12,7 @@ export function createUpdateTypes(
  * @param {ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
-export function getWherePartial(
+export function getUpdateQuery(
   context: import("../../generated/common/types").CodeGenContext,
   imports: ImportCreator,
   type: CodeGenObjectType,

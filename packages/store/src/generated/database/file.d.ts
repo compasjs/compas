@@ -65,13 +65,6 @@ export function fileInsertValues(
     | undefined,
 ): QueryPart;
 /**
- * Build 'SET ' part for file
- *
- * @param {StoreFileUpdate} update
- * @returns {QueryPart}
- */
-export function fileUpdateSet(update: StoreFileUpdate): QueryPart;
-/**
  * Query Builder for file
  * Postgres based file storage.
  *
@@ -104,6 +97,8 @@ export function transformFile(
 ): void;
 /** @type {any} */
 export const fileWhereSpec: any;
+/** @type {any} */
+export const fileUpdateSpec: any;
 export namespace fileQueries {
   export { fileCount };
   export { fileDelete };
@@ -177,14 +172,11 @@ declare function fileUpsertOnId(
   options?: {} | undefined,
 ): Promise<StoreFile[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreFileUpdate} update
- * @returns {Promise<StoreFile[]>}
+ * (Atomic) update queries for file
+ *
+ * @type {StoreFileUpdateFn}
  */
-declare function fileUpdate(
-  sql: Postgres,
-  { update, where }: StoreFileUpdate,
-): Promise<StoreFile[]>;
+declare const fileUpdate: StoreFileUpdateFn;
 /**
  * @param {Postgres} sql
  * @param {StoreFileWhere} [where={}]
