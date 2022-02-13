@@ -172,11 +172,9 @@ test("store/files", async (t) => {
       update: {
         updatedAt: new Date(),
       },
-
       where: {
         idIn: storedFiles.map((it) => it.id),
       },
-
       returning: "*",
     });
 

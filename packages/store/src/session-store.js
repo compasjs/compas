@@ -200,7 +200,6 @@ export async function sessionStoreUpdate(event, sql, session) {
       data: session.data,
       checksum,
     },
-
     where: {
       id: session.id,
     },
@@ -237,7 +236,6 @@ export async function sessionStoreInvalidate(event, sql, session) {
     update: {
       revokedAt: new Date(),
     },
-
     where: {
       id: session.id,
       $raw: query`ss."revokedAt" IS NULL`,
@@ -249,7 +247,6 @@ export async function sessionStoreInvalidate(event, sql, session) {
     update: {
       revokedAt: new Date(),
     },
-
     where: {
       session: session.id,
       revokedAtIsNull: true,
@@ -359,7 +356,6 @@ export async function sessionStoreRefreshTokens(
     update: {
       revokedAt: new Date(),
     },
-
     where: {
       // @ts-ignore
       idIn: [storeToken.id, storeToken.accessToken.id],

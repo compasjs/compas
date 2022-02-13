@@ -238,7 +238,6 @@ test("store/session-store", (t) => {
         update: {
           revokedAt: new Date(),
         },
-
         where: {
           session: customSessionInfo.session.id,
         },
@@ -496,7 +495,6 @@ test("store/session-store", (t) => {
         update: {
           revokedAt: new Date(),
         },
-
         where: {
           id: customSessionInfo.session.id,
         },
@@ -525,7 +523,6 @@ test("store/session-store", (t) => {
         update: {
           revokedAt,
         },
-
         where: {
           session: customSessionInfo.session.id,
         },
@@ -556,7 +553,6 @@ test("store/session-store", (t) => {
         update: {
           revokedAt,
         },
-
         where: {
           id: customSessionInfo.session.accessTokens[0].refreshToken.id,
         },

@@ -343,7 +343,6 @@ test("store/queue", (t) => {
         isComplete: true,
         updatedAt: yesterday,
       },
-
       where: {
         isComplete: false,
       },

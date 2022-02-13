@@ -436,7 +436,6 @@ export class JobQueueWorker {
             isComplete: jobData.retryCount + 1 >= this.maxRetryCount,
             retryCount: jobData.retryCount + 1,
           },
-
           where: {
             id: jobData.id,
           },

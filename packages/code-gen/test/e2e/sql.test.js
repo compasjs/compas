@@ -363,11 +363,9 @@ test("code-gen/e2e/sql", async (t) => {
       update: {
         nickName: "TestUser",
       },
-
       where: {
         id: user.id,
       },
-
       returning: "*",
     });
 
@@ -865,7 +863,6 @@ test("code-gen/e2e/sql", async (t) => {
         update: {
           baz: true,
         },
-
         where: {
           foo: "bar",
         },

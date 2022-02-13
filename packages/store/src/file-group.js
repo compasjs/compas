@@ -42,11 +42,9 @@ export async function hoistChildrenToParent(sql, fileGroup) {
     update: {
       parent: fileGroup.parent ?? null,
     },
-
     where: {
       parent: fileGroup.id,
     },
-
     returning: "*",
   });
 }
