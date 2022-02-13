@@ -222,6 +222,43 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Short name 'test' is used by both"));
   });
 
+  t.test("sqlReservedObjectKey", async (t) => {
+    const T = new TypeCreator("app");
+    const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+      [
+        T.object("foo")
+          .keys({
+            $append: T.string(),
+            recursively: T.object().keys({
+              $add: T.number(),
+            }),
+            recursivelyNamed: T.object("named").keys({
+              $set: T.string(),
+            }),
+          })
+          .enableQueries({}),
+      ],
+      {
+        isNodeServer: true,
+      },
+    );
+
+    t.equal(exitCode, 1);
+    t.ok(
+      stdout.includes(
+        `Type 'AppFoo' recursively uses the reserved key '$append'`,
+      ),
+    );
+    t.ok(
+      stdout.includes(`Type 'AppFoo' recursively uses the reserved key '$add'`),
+    );
+    t.ok(
+      stdout.includes(
+        `Type 'AppNamed' recursively uses the reserved key '$set'`,
+      ),
+    );
+  });
+
   t.test("sqlReservedRelationKey", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(

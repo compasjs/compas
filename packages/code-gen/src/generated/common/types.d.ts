@@ -377,6 +377,7 @@ export type CodeGenContext = {
         firstName: string;
         secondName: string;
       }
+    | { key: "sqlReservedObjectKey"; type: string; reservedKey: string }
     | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
     | {
         key: "routerUnknownInvalidationTarget";
@@ -844,6 +845,7 @@ export type CodeGenContextInput = {
         firstName: string;
         secondName: string;
       }
+    | { key: "sqlReservedObjectKey"; type: string; reservedKey: string }
     | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
     | {
         key: "routerUnknownInvalidationTarget";

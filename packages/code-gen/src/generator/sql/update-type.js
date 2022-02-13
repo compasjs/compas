@@ -17,7 +17,7 @@ import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
 
-const atomicUpdateFieldsTable = {
+export const atomicUpdateFieldsTable = {
   boolean: ["$negate"],
   number: ["$add", "$subtract", "$multiply", "$divide"],
   string: ["$append"],

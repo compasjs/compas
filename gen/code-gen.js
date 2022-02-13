@@ -77,6 +77,11 @@ export function applyCodeGenStructure(app) {
             secondName: T.string(),
           },
           {
+            key: "sqlReservedObjectKey",
+            type: T.string(),
+            reservedKey: T.string(),
+          },
+          {
             key: "sqlReservedRelationKey",
             type: T.string(),
             ownKey: T.string(),

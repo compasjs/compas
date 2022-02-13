@@ -1,6 +1,8 @@
 // @ts-nocheck
 
 import { isNil } from "@compas/stdlib";
+import { traverseType } from "../structure-traverser.js";
+import { atomicUpdateFieldsTable } from "./update-type.js";
 
 /**
  * This short name is used in the default basic queries an can be overwritten / used in
@@ -189,6 +191,7 @@ export function doSqlChecks(context) {
   for (const type of getQueryEnabledObjects(context)) {
     // Throw errors for missing primary keys
     staticCheckPrimaryKey(context, type);
+    checkReservedObjectKeys(context, type);
 
     const ownKeySet = new Set();
     for (const relation of type.relations) {
@@ -329,6 +332,33 @@ function createOneToOneReverseRelation(context, type, relation) {
     inverseSide,
     inverseSide.relations[inverseSide.relations.length - 1],
   );
+}
+
+/**
+ * Check if the object (recursively) uses any reserved keys like those used for atomic
+ * updates
+ *
+ * @param {import("../../generated/common/types").CodeGenContext} context
+ * @param {CodeGenObjectType} type
+ */
+function checkReservedObjectKeys(context, type) {
+  const reservedKeys = Object.values(atomicUpdateFieldsTable).flat();
+
+  traverseType(context.structure, type, (objectType) => {
+    if (objectType.type !== "object") {
+      return;
+    }
+
+    for (const key of Object.keys(objectType.keys)) {
+      if (reservedKeys.includes(key)) {
+        context.errors.push({
+          key: "sqlReservedObjectKey",
+          type: objectType.uniqueName ?? type.uniqueName,
+          reservedKey: key,
+        });
+      }
+    }
+  });
 }
 
 /**

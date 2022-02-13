@@ -17,4 +17,11 @@ export function getWherePartial(
   imports: ImportCreator,
   type: CodeGenObjectType,
 ): string;
+export namespace atomicUpdateFieldsTable {
+  const boolean: string[];
+  const number: string[];
+  const string: string[];
+  const date: string[];
+  const jsonb: string[];
+}
 //# sourceMappingURL=update-type.d.ts.map
