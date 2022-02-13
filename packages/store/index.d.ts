@@ -8,7 +8,7 @@ export type Postgres = import("./types/advanced-types.js").Postgres;
 export type MinioClient = import("./types/advanced-types.js").MinioClient;
 export type QueryPart<T> = import("./types/advanced-types.js").QueryPart<T>;
 export type QueryPartArg = import("./types/advanced-types.js").QueryPartArg;
-export type ObjectPaths = any;
+export type ObjectPaths = import("./types/advanced-types.js").ObjectPaths;
 export type GetStreamFn = import("./src/send-transformed-image").GetStreamFn;
 export type SessionStoreSettings =
   import("./src/session-store.js").SessionStoreSettings;

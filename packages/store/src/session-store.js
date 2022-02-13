@@ -195,16 +195,16 @@ export async function sessionStoreUpdate(event, sql, session) {
     };
   }
 
-  await queries.sessionStoreUpdate(
-    sql,
-    {
+  await queries.sessionStoreUpdate(sql, {
+    update: {
       data: session.data,
       checksum,
     },
-    {
+
+    where: {
       id: session.id,
     },
-  );
+  });
 
   eventStop(event);
 
@@ -233,28 +233,28 @@ export async function sessionStoreInvalidate(event, sql, session) {
 
   // Revoke the full session, else the refresh token can still be used in the grace
   // period.
-  await queries.sessionStoreUpdate(
-    sql,
-    {
+  await queries.sessionStoreUpdate(sql, {
+    update: {
       revokedAt: new Date(),
     },
-    {
+
+    where: {
       id: session.id,
       $raw: query`ss."revokedAt" IS NULL`,
     },
-  );
+  });
 
   // Revoke all tokens that are not revoked yet.
-  await queries.sessionStoreTokenUpdate(
-    sql,
-    {
+  await queries.sessionStoreTokenUpdate(sql, {
+    update: {
       revokedAt: new Date(),
     },
-    {
+
+    where: {
       session: session.id,
       revokedAtIsNull: true,
     },
-  );
+  });
 
   eventStop(event);
 
@@ -355,16 +355,16 @@ export async function sessionStoreRefreshTokens(
   }
 
   // Revoke both refresh and access token.
-  await queries.sessionStoreTokenUpdate(
-    sql,
-    {
+  await queries.sessionStoreTokenUpdate(sql, {
+    update: {
       revokedAt: new Date(),
     },
-    {
+
+    where: {
       // @ts-ignore
       idIn: [storeToken.id, storeToken.accessToken.id],
     },
-  );
+  });
 
   const tokens = await sessionStoreCreateTokenPair(
     newEventFromEvent(event),

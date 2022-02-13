@@ -443,10 +443,9 @@ RETURNING ${sessionStoreTokenFields("")}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionStoreTokenUpdate} update
- * @param {StoreSessionStoreTokenWhere} [where={}]
  * @returns {Promise<StoreSessionStoreToken[]>}
  */
-async function sessionStoreTokenUpdate(sql, update, where = {}) {
+async function sessionStoreTokenUpdate(sql, { update, where }) {
   const result = await query`
 UPDATE "sessionStoreToken" sst
 SET ${sessionStoreTokenUpdateSet(update)}

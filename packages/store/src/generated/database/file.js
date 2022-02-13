@@ -426,10 +426,9 @@ RETURNING ${fileFields("")}
 /**
  * @param {Postgres} sql
  * @param {StoreFileUpdate} update
- * @param {StoreFileWhere} [where={}]
  * @returns {Promise<StoreFile[]>}
  */
-async function fileUpdate(sql, update, where = {}) {
+async function fileUpdate(sql, { update, where }) {
   const result = await query`
 UPDATE "file" f
 SET ${fileUpdateSet(update)}

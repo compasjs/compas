@@ -269,10 +269,9 @@ function updateQuery(context, imports, type) {
     /**
      * @param {Postgres} sql
      * @param {${type.partial.updateType}} update
-     * @param {${type.where.type}} [where={}]
      * @returns {Promise<${type.uniqueName}[]>}
      */
-    async function ${type.name}Update(sql, update, where = {}) {
+    async function ${type.name}Update(sql, { update, where }) {
       const result = await query\`
         UPDATE ${type.queryOptions.schema}"${type.name}" ${type.shortName}
         SET $\{${type.name}UpdateSet(update)}

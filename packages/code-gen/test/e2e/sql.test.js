@@ -359,11 +359,17 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("update user nick name", async (t) => {
-    const [dbUser] = await queries.userUpdate(
-      sql,
-      { nickName: "TestUser" },
-      { id: user.id },
-    );
+    const [dbUser] = await queries.userUpdate(sql, {
+      update: {
+        nickName: "TestUser",
+      },
+
+      where: {
+        id: user.id,
+      },
+
+      returning: "*",
+    });
 
     t.notEqual(dbUser.updatedAt.getTime(), user.updatedAt.getTime());
     t.equal(dbUser.nickName, "TestUser");
@@ -377,7 +383,10 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("empty update of entity without default date columns", async (t) => {
     try {
-      await queries.categoryMetaUpdate(sql, {}, {});
+      await queries.categoryMetaUpdate(sql, {
+        update: {},
+        where: {},
+      });
     } catch (e) {
       t.equal(e.key, "categoryMeta.updateSet.emptyUpdateStatement");
     }
@@ -852,7 +861,15 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("extra key 'update'", async (t) => {
     try {
-      await queries.postUpdate(sql, { baz: true }, { foo: "bar" });
+      await queries.postUpdate(sql, {
+        update: {
+          baz: true,
+        },
+
+        where: {
+          foo: "bar",
+        },
+      });
       t.fail("Should throw with AppError, based on checkFields function.");
     } catch (e) {
       t.ok(AppError.instanceOf(e));

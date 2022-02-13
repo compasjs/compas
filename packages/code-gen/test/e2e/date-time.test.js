@@ -85,9 +85,9 @@ test("code-gen/e2e/date-time", async (t) => {
     t.ok(insertPartial.includes(`"dateOnly": string,`));
     t.ok(insertPartial.includes(`"timeOnly": string,`));
 
-    t.ok(updatePartial.includes(`"fullDate"?: undefined|Date,`));
-    t.ok(updatePartial.includes(`"dateOnly"?: undefined|string,`));
-    t.ok(updatePartial.includes(`"timeOnly"?: undefined|string,`));
+    t.ok(updatePartial.includes(`"fullDate"?: undefined|Date|`));
+    t.ok(updatePartial.includes(`"dateOnly"?: undefined|string|`));
+    t.ok(updatePartial.includes(`"timeOnly"?: undefined|string|`));
   });
 
   t.test("validator", async (t) => {

@@ -234,15 +234,15 @@ test("store/session-store", (t) => {
       // Just create a new session for this specific subtest, since we don't want to recover the mutations.
       const customSessionInfo = await createSession();
 
-      await queries.sessionStoreTokenUpdate(
-        sql,
-        {
+      await queries.sessionStoreTokenUpdate(sql, {
+        update: {
           revokedAt: new Date(),
         },
-        {
+
+        where: {
           session: customSessionInfo.session.id,
         },
-      );
+      });
 
       const sessionGetResult = await sessionStoreGet(
         newTestEvent(t),
@@ -492,15 +492,15 @@ test("store/session-store", (t) => {
       // Just create a new session for this specific subtest, since we don't want to recover the mutations.
       const customSessionInfo = await createSession();
 
-      await queries.sessionStoreUpdate(
-        sql,
-        {
+      await queries.sessionStoreUpdate(sql, {
+        update: {
           revokedAt: new Date(),
         },
-        {
+
+        where: {
           id: customSessionInfo.session.id,
         },
-      );
+      });
 
       const sessionRefreshResult = await sessionStoreRefreshTokens(
         newTestEvent(t),
@@ -521,15 +521,15 @@ test("store/session-store", (t) => {
       const revokedAt = new Date();
       revokedAt.setSeconds(revokedAt.getSeconds() - 30);
 
-      await queries.sessionStoreTokenUpdate(
-        sql,
-        {
+      await queries.sessionStoreTokenUpdate(sql, {
+        update: {
           revokedAt,
         },
-        {
+
+        where: {
           session: customSessionInfo.session.id,
         },
-      );
+      });
 
       const sessionRefreshResult = await sessionStoreRefreshTokens(
         newTestEvent(t),
@@ -552,15 +552,15 @@ test("store/session-store", (t) => {
       const revokedAt = new Date();
       revokedAt.setDate(revokedAt.getDate() - 2);
 
-      await queries.sessionStoreTokenUpdate(
-        sql,
-        {
+      await queries.sessionStoreTokenUpdate(sql, {
+        update: {
           revokedAt,
         },
-        {
+
+        where: {
           id: customSessionInfo.session.accessTokens[0].refreshToken.id,
         },
-      );
+      });
 
       const sessionRefreshResult = await sessionStoreRefreshTokens(
         newTestEvent(t),

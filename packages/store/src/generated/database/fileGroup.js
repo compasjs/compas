@@ -475,10 +475,9 @@ RETURNING ${fileGroupFields("")}
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupUpdate} update
- * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<StoreFileGroup[]>}
  */
-async function fileGroupUpdate(sql, update, where = {}) {
+async function fileGroupUpdate(sql, { update, where }) {
   const result = await query`
 UPDATE "fileGroup" fg
 SET ${fileGroupUpdateSet(update)}

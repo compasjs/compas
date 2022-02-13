@@ -431,14 +431,16 @@ export class JobQueueWorker {
 
         // Roll back to before the handler did it's thing
         await sql`ROLLBACK TO SAVEPOINT ${sql(savepointId)}`;
-        await queries.jobUpdate(
-          sql,
-          {
+        await queries.jobUpdate(sql, {
+          update: {
             isComplete: jobData.retryCount + 1 >= this.maxRetryCount,
             retryCount: jobData.retryCount + 1,
           },
-          { id: jobData.id },
-        );
+
+          where: {
+            id: jobData.id,
+          },
+        });
       } finally {
         // Skip printing the event call stack if it is a Compas internal job.
         // Since this generates a bunch of useless logs when running multiple 1 second interval jobs.

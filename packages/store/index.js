@@ -16,10 +16,6 @@
  */
 
 /**
- * @typedef {import("./types/advanced-types.js").ObjectPaths} ObjectPaths
- */
-
-/**
  * @typedef {import("./src/send-transformed-image").GetStreamFn} GetStreamFn
  */
 

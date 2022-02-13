@@ -168,13 +168,17 @@ test("store/files", async (t) => {
   });
 
   t.test("update files by idIn", async (t) => {
-    const result = await queries.fileUpdate(
-      sql,
-      { updatedAt: new Date() },
-      {
+    const result = await queries.fileUpdate(sql, {
+      update: {
+        updatedAt: new Date(),
+      },
+
+      where: {
         idIn: storedFiles.map((it) => it.id),
       },
-    );
+
+      returning: "*",
+    });
 
     t.equal(result.length, 2);
   });

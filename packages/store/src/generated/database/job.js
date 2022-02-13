@@ -404,10 +404,9 @@ RETURNING ${jobFields("")}
 /**
  * @param {Postgres} sql
  * @param {StoreJobUpdate} update
- * @param {StoreJobWhere} [where={}]
  * @returns {Promise<StoreJob[]>}
  */
-async function jobUpdate(sql, update, where = {}) {
+async function jobUpdate(sql, { update, where }) {
   const result = await query`
 UPDATE "job" j
 SET ${jobUpdateSet(update)}

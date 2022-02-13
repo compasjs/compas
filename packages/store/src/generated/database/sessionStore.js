@@ -381,10 +381,9 @@ RETURNING ${sessionStoreFields("")}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionStoreUpdate} update
- * @param {StoreSessionStoreWhere} [where={}]
  * @returns {Promise<StoreSessionStore[]>}
  */
-async function sessionStoreUpdate(sql, update, where = {}) {
+async function sessionStoreUpdate(sql, { update, where }) {
   const result = await query`
 UPDATE "sessionStore" ss
 SET ${sessionStoreUpdateSet(update)}
