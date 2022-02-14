@@ -2,6 +2,7 @@ module.exports = {
   lang: "en-US",
   title: "Compas",
   description: "Unified backend tooling",
+  lastUpdated: true,
 
   themeConfig: {
     repo: "compasjs/compas",
