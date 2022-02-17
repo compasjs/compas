@@ -544,12 +544,15 @@ export function transformFile(values, builder = {}) {
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
     }
-    value.deletedAt = value.deletedAt ?? undefined;
+    if (value.deletedAt === null) {
+      value.deletedAt = undefined;
+    }
     if (typeof value.deletedAt === "string") {
       value.deletedAt = new Date(value.deletedAt);
     }
-    value[builder.group?.as ?? "group"] =
-      value[builder.group?.as ?? "group"] ?? undefined;
+    if (value[builder.group?.as ?? "group"] === null) {
+      value[builder.group?.as ?? "group"] = undefined;
+    }
     if (isPlainObject(value[builder.group?.as ?? "group"])) {
       let arr = [value[builder.group?.as ?? "group"]];
       transformFileGroup(arr, builder.group);

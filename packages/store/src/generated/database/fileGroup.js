@@ -610,35 +610,46 @@ export function transformFileGroup(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
-    value.file = value.file ?? undefined;
-    value.parent = value.parent ?? undefined;
-    value.name = value.name ?? undefined;
+    if (value.file === null) {
+      value.file = undefined;
+    }
+    if (value.parent === null) {
+      value.parent = undefined;
+    }
+    if (value.name === null) {
+      value.name = undefined;
+    }
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
     }
-    value.deletedAt = value.deletedAt ?? undefined;
+    if (value.deletedAt === null) {
+      value.deletedAt = undefined;
+    }
     if (typeof value.deletedAt === "string") {
       value.deletedAt = new Date(value.deletedAt);
     }
-    value[builder.file?.as ?? "file"] =
-      value[builder.file?.as ?? "file"] ?? undefined;
+    if (value[builder.file?.as ?? "file"] === null) {
+      value[builder.file?.as ?? "file"] = undefined;
+    }
     if (isPlainObject(value[builder.file?.as ?? "file"])) {
       let arr = [value[builder.file?.as ?? "file"]];
       transformFile(arr, builder.file);
       value[builder.file?.as ?? "file"] = arr[0];
     }
-    value[builder.parent?.as ?? "parent"] =
-      value[builder.parent?.as ?? "parent"] ?? undefined;
+    if (value[builder.parent?.as ?? "parent"] === null) {
+      value[builder.parent?.as ?? "parent"] = undefined;
+    }
     if (isPlainObject(value[builder.parent?.as ?? "parent"])) {
       let arr = [value[builder.parent?.as ?? "parent"]];
       transformFileGroup(arr, builder.parent);
       value[builder.parent?.as ?? "parent"] = arr[0];
     }
-    value[builder.children?.as ?? "children"] =
-      value[builder.children?.as ?? "children"] ?? undefined;
+    if (value[builder.children?.as ?? "children"] === null) {
+      value[builder.children?.as ?? "children"] = undefined;
+    }
     if (Array.isArray(value[builder.children?.as ?? "children"])) {
       transformFileGroup(
         value[builder.children?.as ?? "children"],

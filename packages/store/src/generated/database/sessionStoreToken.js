@@ -553,30 +553,37 @@ export function transformSessionStoreToken(values, builder = {}) {
     if (typeof value.expiresAt === "string") {
       value.expiresAt = new Date(value.expiresAt);
     }
-    value.refreshToken = value.refreshToken ?? undefined;
-    value.revokedAt = value.revokedAt ?? undefined;
+    if (value.refreshToken === null) {
+      value.refreshToken = undefined;
+    }
+    if (value.revokedAt === null) {
+      value.revokedAt = undefined;
+    }
     if (typeof value.revokedAt === "string") {
       value.revokedAt = new Date(value.revokedAt);
     }
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
-    value[builder.session?.as ?? "session"] =
-      value[builder.session?.as ?? "session"] ?? undefined;
+    if (value[builder.session?.as ?? "session"] === null) {
+      value[builder.session?.as ?? "session"] = undefined;
+    }
     if (isPlainObject(value[builder.session?.as ?? "session"])) {
       let arr = [value[builder.session?.as ?? "session"]];
       transformSessionStore(arr, builder.session);
       value[builder.session?.as ?? "session"] = arr[0];
     }
-    value[builder.refreshToken?.as ?? "refreshToken"] =
-      value[builder.refreshToken?.as ?? "refreshToken"] ?? undefined;
+    if (value[builder.refreshToken?.as ?? "refreshToken"] === null) {
+      value[builder.refreshToken?.as ?? "refreshToken"] = undefined;
+    }
     if (isPlainObject(value[builder.refreshToken?.as ?? "refreshToken"])) {
       let arr = [value[builder.refreshToken?.as ?? "refreshToken"]];
       transformSessionStoreToken(arr, builder.refreshToken);
       value[builder.refreshToken?.as ?? "refreshToken"] = arr[0];
     }
-    value[builder.accessToken?.as ?? "accessToken"] =
-      value[builder.accessToken?.as ?? "accessToken"] ?? undefined;
+    if (value[builder.accessToken?.as ?? "accessToken"] === null) {
+      value[builder.accessToken?.as ?? "accessToken"] = undefined;
+    }
     if (isPlainObject(value[builder.accessToken?.as ?? "accessToken"])) {
       let arr = [value[builder.accessToken?.as ?? "accessToken"]];
       transformSessionStoreToken(arr, builder.accessToken);

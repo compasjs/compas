@@ -467,7 +467,9 @@ export function transformSessionStore(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
-    value.revokedAt = value.revokedAt ?? undefined;
+    if (value.revokedAt === null) {
+      value.revokedAt = undefined;
+    }
     if (typeof value.revokedAt === "string") {
       value.revokedAt = new Date(value.revokedAt);
     }
@@ -477,8 +479,9 @@ export function transformSessionStore(values, builder = {}) {
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
     }
-    value[builder.accessTokens?.as ?? "accessTokens"] =
-      value[builder.accessTokens?.as ?? "accessTokens"] ?? undefined;
+    if (value[builder.accessTokens?.as ?? "accessTokens"] === null) {
+      value[builder.accessTokens?.as ?? "accessTokens"] = undefined;
+    }
     if (Array.isArray(value[builder.accessTokens?.as ?? "accessTokens"])) {
       transformSessionStoreToken(
         value[builder.accessTokens?.as ?? "accessTokens"],

@@ -296,9 +296,11 @@ export function generatedUpdateHelper(entity, input) {
           continue;
         }
 
+        addedAtomicUpdate = true;
+
         if (type === "boolean") {
-          if (atomicKey === "$negate") {
-            strings.push(`${state.hasSet ? ", " : ""}"${key}" = !"${key}"`);
+          if (atomicKey === "$negate" && updateSpec[atomicKey] === true) {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = NOT "${key}"`);
             args.push(undefined);
           }
         } else if (type === "number") {
@@ -323,14 +325,16 @@ export function generatedUpdateHelper(entity, input) {
         } else if (type === "date") {
           if (atomicKey === "$add") {
             strings.push(
-              `${state.hasSet ? ", " : ""}"${key}" = "${key}" + INTERVAL `,
+              `${state.hasSet ? ", " : ""}"${key}" = "${key}" + `,
+              `::interval`,
             );
-            args.push(updateSpec.$add);
+            args.push(updateSpec.$add, undefined);
           } else if (atomicKey === "$subtract") {
             strings.push(
-              `${state.hasSet ? ", " : ""}"${key}" = "${key}" - INTERVAL `,
+              `${state.hasSet ? ", " : ""}"${key}" = "${key}" - `,
+              `::interval`,
             );
-            args.push(updateSpec.$subtract);
+            args.push(updateSpec.$subtract, undefined);
           }
         } else if (type === "jsonb") {
           if (atomicKey === "$set") {
@@ -346,12 +350,9 @@ export function generatedUpdateHelper(entity, input) {
             );
           } else if (atomicKey === "$remove") {
             strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" #- `);
-            args.push(`{${updateSpec.$set.path.join(",")}}`);
+            args.push(`{${updateSpec.$remove.path.join(",")}}`);
           }
         }
-
-        addedAtomicUpdate = true;
-        break;
       }
 
       if (!addedAtomicUpdate) {
