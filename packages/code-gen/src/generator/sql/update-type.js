@@ -111,11 +111,9 @@ export function createUpdateTypes(context) {
       } else if (
         ["any", "anyOf", "array", "generic", "object"].includes(fieldType.type)
       ) {
-        const pathType = new AnyType()
-          .validator(
-            "((value) => Array.isArray(value) && !!value.find(it => typeof it !== 'string' && typeof it !== 'number'))",
-          )
-          .raw(`(string|number)[]`);
+        const pathType = new ArrayType().values(
+          new AnyOfType().values(new NumberType(), new StringType()),
+        );
 
         updatePartialType.keys[key].values.push(
           new ObjectType()
@@ -236,7 +234,7 @@ export function getUpdateQuery(context, imports, type) {
 
     /**
      * (Atomic) update queries for ${type.name}
-     * 
+     *
      * @type {${type.uniqueName}UpdateFn}
      */
     const ${type.name}Update = async (sql, input) => {
@@ -248,17 +246,16 @@ export function getUpdateQuery(context, imports, type) {
 
       const result = await generatedUpdateHelper(${
         type.name
-      }UpdateSpec, input).exec(
-        sql);
+      }UpdateSpec, input).exec(sql);
       if (!isNil(input.returning)) {
         transform${upperCaseFirst(type.name)}(result);
-        
+
         // @ts-ignore
         return result;
       }
 
       // @ts-ignore
-       return undefined;
+      return undefined;
     }
   `;
 }

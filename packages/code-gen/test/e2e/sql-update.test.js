@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { isNil, pathJoin } from "@compas/stdlib";
+import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import { TypeCreator } from "../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
@@ -20,6 +20,7 @@ test("code-gen/e2e/sql-update", (t) => {
               settings: {
                 sendNotifications: T.bool().default(false),
               },
+              optionalField: T.bool().allowNull(),
             })
             .enableQueries({ withDates: true }),
         ],
@@ -46,6 +47,9 @@ test("code-gen/e2e/sql-update", (t) => {
       t.ok(updatePartialLine);
       t.ok(updatePartialLine.includes(`"name"?: undefined|string|{"$append"`));
       t.ok(updatePartialLine.includes(`"age"?: undefined|number|{"$add"`));
+      t.ok(
+        updatePartialLine.includes(`"optionalField"?: undefined|null|boolean`),
+      );
 
       for (const key of [
         "$add",
@@ -91,6 +95,7 @@ test("code-gen/e2e/sql-update", (t) => {
               settings: {
                 sendNotifications: T.bool().default(false),
               },
+              optionalField: T.bool().allowNull(),
             })
             .enableQueries({ withDates: true }),
         ],
@@ -109,7 +114,81 @@ test("code-gen/e2e/sql-update", (t) => {
     t.equal(typeof validateAppSettingsUpdate, "function");
 
     t.test("update", (t) => {
-      t.pass("TODO");
+      t.test("basic usage", (t) => {
+        const { error } = validateAppSettingsUpdate({
+          update: {
+            name: "foo",
+            age: 15,
+            settings: {
+              sendNotifications: true,
+            },
+            optionalField: null,
+          },
+          where: {},
+        });
+
+        t.ok(isNil(error));
+      });
+
+      t.test("partial update", (t) => {
+        const { error } = validateAppSettingsUpdate({
+          update: {
+            name: "foo",
+          },
+          where: {},
+        });
+
+        t.ok(isNil(error));
+      });
+
+      t.test("converted null-usage", (t) => {
+        const { value } = validateAppSettingsUpdate({
+          update: {
+            name: null,
+          },
+          where: {},
+        });
+
+        t.equal(value.update.name, undefined);
+      });
+
+      t.test("atomic update", (t) => {
+        const { error } = validateAppSettingsUpdate({
+          update: {
+            name: {
+              $append: "bar",
+            },
+            age: {
+              $add: 5,
+            },
+            settings: {
+              $remove: {
+                path: ["sendNotifications"],
+              },
+            },
+            optionalField: {
+              $negate: true,
+            },
+          },
+          where: {},
+        });
+
+        t.ok(isNil(error));
+      });
+
+      t.test("incorrect atomic update", (t) => {
+        const { error } = validateAppSettingsUpdate({
+          update: {
+            age: {
+              $subtract: 3,
+              $multiply: 5,
+            },
+          },
+          where: {},
+        });
+
+        t.ok(AppError.instanceOf(error));
+      });
     });
 
     t.test("returning", (t) => {

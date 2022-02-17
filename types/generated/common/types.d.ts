@@ -363,8 +363,8 @@ declare global {
           transforms?: undefined | any;
           transformedFromOriginal?: undefined | string;
         }
-      | { $set: { path: (string | number)[]; value: any } }
-      | { $remove: { path: (string | number)[] } };
+      | { $set: { path: (number | string)[]; value: any } }
+      | { $remove: { path: (number | string)[] } };
     createdAt?: undefined | Date | { $add: string } | { $subtract: string };
     updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
     deletedAt?:
@@ -404,8 +404,8 @@ declare global {
     meta?:
       | undefined
       | {}
-      | { $set: { path: (string | number)[]; value: any } }
-      | { $remove: { path: (string | number)[] } };
+      | { $set: { path: (number | string)[]; value: any } }
+      | { $remove: { path: (number | string)[] } };
     file?: undefined | null | string;
     parent?: undefined | null | string;
     createdAt?: undefined | Date | { $add: string } | { $subtract: string };
@@ -450,8 +450,8 @@ declare global {
     data?:
       | undefined
       | any
-      | { $set: { path: (string | number)[]; value: any } }
-      | { $remove: { path: (string | number)[] } };
+      | { $set: { path: (number | string)[]; value: any } }
+      | { $remove: { path: (number | string)[] } };
     retryCount?:
       | undefined
       | number
@@ -489,8 +489,8 @@ declare global {
     data?:
       | undefined
       | any
-      | { $set: { path: (string | number)[]; value: any } }
-      | { $remove: { path: (string | number)[] } };
+      | { $set: { path: (number | string)[]; value: any } }
+      | { $remove: { path: (number | string)[] } };
     checksum?: undefined | string | { $append: string };
     revokedAt?:
       | undefined

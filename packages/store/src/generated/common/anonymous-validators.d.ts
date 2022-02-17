@@ -1010,12 +1010,21 @@ export function anonymousValidator222290681(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(string|number)[]>}
+ * @returns {EitherN<number|string>}
  */
-export function anonymousValidator1443060809(
+export function anonymousValidator2035392241(
   value: any,
   propertyPath: string,
-): EitherN<(string | number)[]>;
+): EitherN<number | string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(number|string)[]>}
+ */
+export function anonymousValidator418417331(
+  value: any,
+  propertyPath: string,
+): EitherN<(number | string)[]>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -1028,59 +1037,59 @@ export function anonymousValidator1027346252(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"path": (string|number)[], "value": any, }>}
+ * @returns {EitherN<{"path": (number|string)[], "value": any, }>}
  */
-export function anonymousValidator1732998388(
+export function anonymousValidator1925201648(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  path: (string | number)[];
+  path: (number | string)[];
   value: any;
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$set": {"path": (string|number)[], "value": any, }, }>}
+ * @returns {EitherN<{"$set": {"path": (number|string)[], "value": any, }, }>}
  */
-export function anonymousValidator1824113017(
+export function anonymousValidator1476139765(
   value: any,
   propertyPath: string,
 ): EitherN<{
   $set: {
-    path: (string | number)[];
+    path: (number | string)[];
     value: any;
   };
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"path": (string|number)[], }>}
+ * @returns {EitherN<{"path": (number|string)[], }>}
  */
-export function anonymousValidator1325495517(
+export function anonymousValidator1247704095(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  path: (string | number)[];
+  path: (number | string)[];
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$remove": {"path": (string|number)[], }, }>}
+ * @returns {EitherN<{"$remove": {"path": (number|string)[], }, }>}
  */
-export function anonymousValidator487940124(
+export function anonymousValidator1462381984(
   value: any,
   propertyPath: string,
 ): EitherN<{
   $remove: {
-    path: (string | number)[];
+    path: (number | string)[];
   };
 }>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }>}
+ * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
  */
-export function anonymousValidator1756318(
+export function anonymousValidator127301142(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1091,13 +1100,13 @@ export function anonymousValidator1756318(
     }
   | {
       $set: {
-        path: (string | number)[];
+        path: (number | string)[];
         value: any;
       };
     }
   | {
       $remove: {
-        path: (string | number)[];
+        path: (number | string)[];
       };
     }
 >;
@@ -1181,7 +1190,7 @@ export function anonymousValidator1827465744(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator617486747(
   value: any,
@@ -1228,13 +1237,13 @@ export function anonymousValidator617486747(
       }
     | {
         $set: {
-          path: (string | number)[];
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (string | number)[];
+          path: (number | string)[];
         };
       };
   createdAt?:
@@ -1464,9 +1473,9 @@ export function anonymousValidator1803539111(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{}|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }>}
+ * @returns {EitherN<undefined|{}|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
  */
-export function anonymousValidator134639251(
+export function anonymousValidator628111605(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1474,13 +1483,13 @@ export function anonymousValidator134639251(
   | {}
   | {
       $set: {
-        path: (string | number)[];
+        path: (number | string)[];
         value: any;
       };
     }
   | {
       $remove: {
-        path: (string | number)[];
+        path: (number | string)[];
       };
     }
 >;
@@ -1505,7 +1514,7 @@ export function anonymousValidator1314728024(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name"?: undefined|null|string|{"$append": string, }, "order"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "meta"?: undefined|{}|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }, "file"?: undefined|null|string, "parent"?: undefined|null|string, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"name"?: undefined|null|string|{"$append": string, }, "order"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "meta"?: undefined|{}|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "file"?: undefined|null|string, "parent"?: undefined|null|string, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator761369354(
   value: any,
@@ -1538,13 +1547,13 @@ export function anonymousValidator761369354(
     | {}
     | {
         $set: {
-          path: (string | number)[];
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (string | number)[];
+          path: (number | string)[];
         };
       };
   file?: undefined | null | string;
@@ -1798,9 +1807,9 @@ export function anonymousValidator721172342(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|any|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }>}
+ * @returns {EitherN<undefined|any|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
  */
-export function anonymousValidator1896719408(
+export function anonymousValidator618537896(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1808,13 +1817,13 @@ export function anonymousValidator1896719408(
   | any
   | {
       $set: {
-        path: (string | number)[];
+        path: (number | string)[];
         value: any;
       };
     }
   | {
       $remove: {
-        path: (string | number)[];
+        path: (number | string)[];
       };
     }
 >;
@@ -1888,7 +1897,7 @@ export function anonymousValidator1048226008(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"isComplete"?: undefined|boolean|{"$negate": boolean, }, "priority"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "scheduledAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "name"?: undefined|string|{"$append": string, }, "data"?: undefined|any|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }, "retryCount"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "handlerTimeout"?: undefined|null|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"isComplete"?: undefined|boolean|{"$negate": boolean, }, "priority"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "scheduledAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "name"?: undefined|string|{"$append": string, }, "data"?: undefined|any|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "retryCount"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "handlerTimeout"?: undefined|null|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator600940900(
   value: any,
@@ -1935,13 +1944,13 @@ export function anonymousValidator600940900(
     | any
     | {
         $set: {
-          path: (string | number)[];
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (string | number)[];
+          path: (number | string)[];
         };
       };
   retryCount?:
@@ -2129,7 +2138,7 @@ export function anonymousValidator321286861(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"data"?: undefined|any|{"$set": {"path": (string|number)[], "value": any, }, }|{"$remove": {"path": (string|number)[], }, }, "checksum"?: undefined|string|{"$append": string, }, "revokedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"data"?: undefined|any|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "checksum"?: undefined|string|{"$append": string, }, "revokedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator2102646924(
   value: any,
@@ -2140,13 +2149,13 @@ export function anonymousValidator2102646924(
     | any
     | {
         $set: {
-          path: (string | number)[];
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (string | number)[];
+          path: (number | string)[];
         };
       };
   checksum?:
