@@ -20,6 +20,21 @@
  * }[]} fieldSpecification
  */
 /**
+ * @typedef {object} EntityUpdate
+ * @property {string} schemaName
+ * @property {string} name
+ * @property {string} shortName
+ * @property {string[]} columns
+ * @property {EntityWhere} where
+ * @property {boolean} injectUpdatedAt
+ * @property {Record<string, {
+ *   type: "boolean"|"number"|"string"|"date"|"jsonb",
+ *   atomicUpdates: ("$negate"|"$add"|"$subtract"|
+ *       "$multiply"|"$divide"|
+ *       "$append"|"$set"|"$remove")[]
+ * }>} fields
+ */
+/**
  * @typedef {object} EntityQueryBuilder
  * @property {string} name
  * @property {string} shortName
@@ -51,6 +66,18 @@ export function generatedWhereBuilderHelper(
   where: any,
   shortName: string,
 ): import("../types/advanced-types").QueryPart;
+/**
+ * Helper to generate update queries based on the dumped spec and the input data.
+ * The input data is validated, so we can safely access it as 'any'.
+ *
+ * @param {EntityUpdate} entity
+ * @param {*} input
+ * @returns {import("../types/advanced-types").QueryPart<any[]>}
+ */
+export function generatedUpdateHelper(
+  entity: EntityUpdate,
+  input: any,
+): import("../types/advanced-types").QueryPart<any[]>;
 /**
  * Helper to generate the correct queries to be used with the query builder.
  * Works with correlated sub queries to fetched nested result sets.
@@ -110,6 +137,30 @@ export type EntityWhere = {
       };
     }[];
   }[];
+};
+export type EntityUpdate = {
+  schemaName: string;
+  name: string;
+  shortName: string;
+  columns: string[];
+  where: EntityWhere;
+  injectUpdatedAt: boolean;
+  fields: Record<
+    string,
+    {
+      type: "boolean" | "number" | "string" | "date" | "jsonb";
+      atomicUpdates: (
+        | "$negate"
+        | "$add"
+        | "$subtract"
+        | "$multiply"
+        | "$divide"
+        | "$append"
+        | "$set"
+        | "$remove"
+      )[];
+    }
+  >;
 };
 export type EntityQueryBuilder = {
   name: string;

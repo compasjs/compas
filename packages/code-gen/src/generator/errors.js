@@ -62,6 +62,15 @@ export function exitOnErrorsOrReturn(context) {
 `;
         break;
 
+      case "sqlReservedObjectKey":
+        str += `Type '${error.type}' recursively uses the reserved key '${
+          error.reservedKey
+        }'.
+  Use '${error.reservedKey.substring(1)}' instead.
+`;
+
+        break;
+
       case "sqlDuplicateRelationReferencedKey":
         str += `There are multiple relations to '${error.type}'.'${error.relationKey}'.
   Make sure that they all have their own unique referenced key.

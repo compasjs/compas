@@ -38,11 +38,15 @@ const fileGroupQueries = {
  * @returns {Promise<StoreFileGroup[]>}
  */
 export async function hoistChildrenToParent(sql, fileGroup) {
-  return await queries.fileGroupUpdate(
-    sql,
-    { parent: fileGroup.parent ?? null },
-    { parent: fileGroup.id },
-  );
+  return await queries.fileGroupUpdate(sql, {
+    update: {
+      parent: fileGroup.parent ?? null,
+    },
+    where: {
+      parent: fileGroup.id,
+    },
+    returning: "*",
+  });
 }
 
 /**

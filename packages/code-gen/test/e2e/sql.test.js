@@ -359,11 +359,15 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("update user nick name", async (t) => {
-    const [dbUser] = await queries.userUpdate(
-      sql,
-      { nickName: "TestUser" },
-      { id: user.id },
-    );
+    const [dbUser] = await queries.userUpdate(sql, {
+      update: {
+        nickName: "TestUser",
+      },
+      where: {
+        id: user.id,
+      },
+      returning: "*",
+    });
 
     t.notEqual(dbUser.updatedAt.getTime(), user.updatedAt.getTime());
     t.equal(dbUser.nickName, "TestUser");
@@ -375,11 +379,29 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(dbUser.deletedAt, undefined);
   });
 
+  t.test("empty where update", async (t) => {
+    try {
+      await queries.categoryMetaUpdate(sql, {
+        update: {
+          isHighlighted: true,
+        },
+        where: {},
+      });
+    } catch (e) {
+      t.equal(e.key, "error.server.internal");
+    }
+  });
+
   t.test("empty update of entity without default date columns", async (t) => {
     try {
-      await queries.categoryMetaUpdate(sql, {}, {});
+      await queries.categoryMetaUpdate(sql, {
+        update: {},
+        where: {
+          isHighlighted: true,
+        },
+      });
     } catch (e) {
-      t.equal(e.key, "categoryMeta.updateSet.emptyUpdateStatement");
+      t.equal(e.key, "error.server.internal");
     }
   });
 
@@ -852,12 +874,19 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("extra key 'update'", async (t) => {
     try {
-      await queries.postUpdate(sql, { baz: true }, { foo: "bar" });
-      t.fail("Should throw with AppError, based on checkFields function.");
+      await queries.postUpdate(sql, {
+        update: {
+          baz: true,
+        },
+        where: {
+          foo: "bar",
+        },
+      });
     } catch (e) {
       t.ok(AppError.instanceOf(e));
-      t.equal(e.key, `query.post.updateFields`);
-      t.equal(e.info.extraKey, "baz");
+      t.equal(e.key, "validator.error");
+      t.ok(e.info["$.SqlPostUpdate.update"]);
+      t.equal(e.info["$.SqlPostUpdate.update"].key, "validator.object.strict");
     }
   });
 

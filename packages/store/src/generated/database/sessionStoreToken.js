@@ -5,6 +5,7 @@ import {
   validateStoreSessionStoreTokenOrderBy,
   validateStoreSessionStoreTokenOrderBySpec,
   validateStoreSessionStoreTokenQueryBuilder,
+  validateStoreSessionStoreTokenUpdate,
   validateStoreSessionStoreTokenWhere,
 } from "../store/validators.js";
 import {
@@ -16,6 +17,7 @@ import {
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -303,51 +305,6 @@ export function sessionStoreTokenInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for sessionStoreToken
- *
- * @param {StoreSessionStoreTokenUpdatePartial} update
- * @returns {QueryPart}
- */
-export function sessionStoreTokenUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet(
-    "sessionStoreToken",
-    "update",
-    sessionStoreTokenFieldSet,
-    update,
-  );
-  if (update.session !== undefined) {
-    strings.push(`, "session" = `);
-    values.push(update.session ?? null);
-  }
-  if (update.expiresAt !== undefined) {
-    strings.push(`, "expiresAt" = `);
-    values.push(update.expiresAt ?? null);
-  }
-  if (update.refreshToken !== undefined) {
-    strings.push(`, "refreshToken" = `);
-    values.push(update.refreshToken ?? null);
-  }
-  if (update.revokedAt !== undefined) {
-    strings.push(`, "revokedAt" = `);
-    values.push(update.revokedAt ?? null);
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? null);
-  }
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError(
-      "sessionStoreToken.updateSet.emptyUpdateStatement",
-    );
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -440,22 +397,55 @@ RETURNING ${sessionStoreTokenFields("")}
   transformSessionStoreToken(result);
   return result;
 }
+/** @type {any} */
+export const sessionStoreTokenUpdateSpec = {
+  schemaName: ``,
+  name: "sessionStoreToken",
+  shortName: "sst",
+  columns: [
+    "expiresAt",
+    "revokedAt",
+    "createdAt",
+    "id",
+    "session",
+    "refreshToken",
+  ],
+  where: sessionStoreTokenWhereSpec,
+  injectUpdatedAt: undefined,
+  fields: {
+    expiresAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    revokedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    id: { type: "uuid", atomicUpdates: [] },
+    session: { type: "uuid", atomicUpdates: [] },
+    refreshToken: { type: "uuid", atomicUpdates: [] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenUpdatePartial} update
- * @param {StoreSessionStoreTokenWhere} [where={}]
- * @returns {Promise<StoreSessionStoreToken[]>}
+ * (Atomic) update queries for sessionStoreToken
+ *
+ * @type {StoreSessionStoreTokenUpdateFn}
  */
-async function sessionStoreTokenUpdate(sql, update, where = {}) {
-  const result = await query`
-UPDATE "sessionStoreToken" sst
-SET ${sessionStoreTokenUpdateSet(update)}
-WHERE ${sessionStoreTokenWhere(where)}
-RETURNING ${sessionStoreTokenFields()}
-`.exec(sql);
-  transformSessionStoreToken(result);
-  return result;
-}
+const sessionStoreTokenUpdate = async (sql, input) => {
+  const updateValidated = validateStoreSessionStoreTokenUpdate(
+    input,
+    "$.StoreSessionStoreTokenUpdate",
+  );
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(
+    sessionStoreTokenUpdateSpec,
+    input,
+  ).exec(sql);
+  if (!isNil(input.returning)) {
+    transformSessionStoreToken(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 export const sessionStoreTokenQueries = {
   sessionStoreTokenCount,
   sessionStoreTokenDelete,
@@ -563,30 +553,37 @@ export function transformSessionStoreToken(values, builder = {}) {
     if (typeof value.expiresAt === "string") {
       value.expiresAt = new Date(value.expiresAt);
     }
-    value.refreshToken = value.refreshToken ?? undefined;
-    value.revokedAt = value.revokedAt ?? undefined;
+    if (value.refreshToken === null) {
+      value.refreshToken = undefined;
+    }
+    if (value.revokedAt === null) {
+      value.revokedAt = undefined;
+    }
     if (typeof value.revokedAt === "string") {
       value.revokedAt = new Date(value.revokedAt);
     }
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
-    value[builder.session?.as ?? "session"] =
-      value[builder.session?.as ?? "session"] ?? undefined;
+    if (value[builder.session?.as ?? "session"] === null) {
+      value[builder.session?.as ?? "session"] = undefined;
+    }
     if (isPlainObject(value[builder.session?.as ?? "session"])) {
       let arr = [value[builder.session?.as ?? "session"]];
       transformSessionStore(arr, builder.session);
       value[builder.session?.as ?? "session"] = arr[0];
     }
-    value[builder.refreshToken?.as ?? "refreshToken"] =
-      value[builder.refreshToken?.as ?? "refreshToken"] ?? undefined;
+    if (value[builder.refreshToken?.as ?? "refreshToken"] === null) {
+      value[builder.refreshToken?.as ?? "refreshToken"] = undefined;
+    }
     if (isPlainObject(value[builder.refreshToken?.as ?? "refreshToken"])) {
       let arr = [value[builder.refreshToken?.as ?? "refreshToken"]];
       transformSessionStoreToken(arr, builder.refreshToken);
       value[builder.refreshToken?.as ?? "refreshToken"] = arr[0];
     }
-    value[builder.accessToken?.as ?? "accessToken"] =
-      value[builder.accessToken?.as ?? "accessToken"] ?? undefined;
+    if (value[builder.accessToken?.as ?? "accessToken"] === null) {
+      value[builder.accessToken?.as ?? "accessToken"] = undefined;
+    }
     if (isPlainObject(value[builder.accessToken?.as ?? "accessToken"])) {
       let arr = [value[builder.accessToken?.as ?? "accessToken"]];
       transformSessionStoreToken(arr, builder.accessToken);

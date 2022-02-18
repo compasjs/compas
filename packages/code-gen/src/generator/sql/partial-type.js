@@ -32,14 +32,6 @@ export function createPartialTypes(context) {
       insertPartial.group,
     )}${upperCaseFirst(insertPartial.name)}`;
 
-    const updatePartial = new ObjectType(
-      type.group,
-      `${type.name}UpdatePartial`,
-    ).build();
-    updatePartial.uniqueName = `${upperCaseFirst(
-      updatePartial.group,
-    )}${upperCaseFirst(updatePartial.name)}`;
-
     for (const key of getSortedKeysForType(type)) {
       let fieldType = type.keys[key];
       if (fieldType.reference) {
@@ -78,15 +70,6 @@ export function createPartialTypes(context) {
         isOptional: hasSqlDefault || fieldType.isOptional,
       };
 
-      updatePartial.keys[key] = {
-        ...fieldType,
-        isOptional: true,
-        validator: {
-          ...(fieldType?.validator ?? {}),
-          allowNull: fieldType.isOptional && isNil(fieldType.defaultValue),
-        },
-      };
-
       // Create correct types by setting allowNull, since the value will be used in the
       // update statement
       if (
@@ -95,21 +78,19 @@ export function createPartialTypes(context) {
       ) {
         insertPartial.keys[key].validator = Object.assign(
           {},
-          updatePartial.keys[key].validator,
-          { allowNull: true },
+          {
+            ...(fieldType?.validator ?? {}),
+            allowNull: true,
+          },
         );
       }
     }
 
-    type.partial = {
-      insertType: getTypeNameForType(context, insertPartial, "", {
-        useDefaults: false,
-      }),
-      updateType: getTypeNameForType(context, updatePartial, "", {
-        useDefaults: false,
-      }),
-      fields: fieldsArray,
-    };
+    type.partial = type.partial ?? {};
+    type.partial.insertType = getTypeNameForType(context, insertPartial, "", {
+      useDefaults: false,
+    });
+    type.partial.fields = fieldsArray;
   }
 }
 
@@ -197,69 +178,6 @@ export function getInsertPartial(context, type) {
       }
 
       return query(str, ...args);
-    }
-  `;
-}
-
-/**
- * Adds builder to reuse updates
- *
- * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {CodeGenObjectType} type
- */
-export function getUpdatePartial(context, type) {
-  const partials = [];
-
-  for (const field of type.partial.fields) {
-    if (type.queryOptions?.withDates || type.queryOptions?.withSoftDeletes) {
-      if (field.key === "updatedAt") {
-        partials.push(`
-          strings.push(\`, "${field.key}" = \`);
-          values.push(new Date());
-        `);
-        continue;
-      }
-    }
-
-    partials.push(js`
-      if (update.${field.key} !== undefined) {
-        strings.push(\`, "${field.key}" = \`);
-        ${() => {
-          if (field.isJsonb) {
-            return `values.push(JSON.stringify(update.${field.key} ?? ${
-              field.defaultValue ?? "null"
-            }));`;
-          }
-          return `values.push(update.${field.key} ?? ${
-            field.defaultValue ?? "null"
-          });`;
-        }}
-      }
-    `);
-  }
-
-  return js`
-    /**
-     * Build 'SET ' part for ${type.name}
-     *
-     * @param {${type.partial.updateType}} update
-     * @returns {QueryPart}
-     */
-    export function ${type.name}UpdateSet(update) {
-      const strings = [];
-      const values = [];
-
-      checkFieldsInSet("${type.name}", "update", ${type.name}FieldSet, update);
-
-      ${partials}
-      // Remove the comma suffix
-      if (strings.length === 0) {
-        throw AppError.validationError("${type.name}.updateSet.emptyUpdateStatement");
-      }
-      strings[0] = strings[0].substring(2);
-      strings.push("");
-
-      return query(strings, ...values);
     }
   `;
 }

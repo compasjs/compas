@@ -1,4 +1,4 @@
-import { isNil } from "../../stdlib/src/lodash.js";
+import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { isQueryPart, query } from "./query.js";
 
 /**
@@ -21,6 +21,22 @@ import { isQueryPart, query } from "./query.js";
  *     },
  *   }[],
  * }[]} fieldSpecification
+ */
+
+/**
+ * @typedef {object} EntityUpdate
+ * @property {string} schemaName
+ * @property {string} name
+ * @property {string} shortName
+ * @property {string[]} columns
+ * @property {EntityWhere} where
+ * @property {boolean} injectUpdatedAt
+ * @property {Record<string, {
+ *   type: "boolean"|"number"|"string"|"date"|"jsonb",
+ *   atomicUpdates: ("$negate"|"$add"|"$subtract"|
+ *       "$multiply"|"$divide"|
+ *       "$append"|"$set"|"$remove")[]
+ * }>} fields
  */
 
 /**
@@ -233,6 +249,147 @@ export function generatedWhereBuilderHelper(
 
   strings.push("");
   return query(strings, ...values);
+}
+
+/**
+ * Helper to generate update queries based on the dumped spec and the input data.
+ * The input data is validated, so we can safely access it as 'any'.
+ *
+ * @param {EntityUpdate} entity
+ * @param {*} input
+ * @returns {import("../types/advanced-types").QueryPart<any[]>}
+ */
+export function generatedUpdateHelper(entity, input) {
+  if (Object.keys(input.where).length === 0) {
+    throw AppError.serverError({
+      message: `Empty 'where' input when calling 'queries.${entity.name}Update', this is not allowed. If you need to update all records, use 'where: { $raw: query\`TRUE\`, }'.`,
+    });
+  }
+
+  if (Object.keys(input.update).length === 0) {
+    throw AppError.serverError({
+      message: `Empty 'update' input when calling 'queries.${entity.name}Update'. Check if the 'input.update' value has any keys before calling.`,
+    });
+  }
+
+  const strings = [
+    `UPDATE ${entity.schemaName}"${entity.name}" ${entity.shortName}
+     SET `,
+  ];
+  /** @type {any[]} */
+  const args = [undefined];
+
+  const state = {
+    hasSet: false,
+  };
+
+  for (const [key, updateSpec] of Object.entries(input.update)) {
+    if (!isPlainObject(updateSpec)) {
+      strings.push(`${state.hasSet ? ", " : ""}"${key}" = `);
+      args.push(updateSpec);
+    } else {
+      let addedAtomicUpdate = false;
+
+      const { atomicUpdates, type } = entity.fields[key];
+      for (const atomicKey of atomicUpdates) {
+        if (isNil(updateSpec[atomicKey])) {
+          continue;
+        }
+
+        addedAtomicUpdate = true;
+
+        if (type === "boolean") {
+          if (atomicKey === "$negate" && updateSpec[atomicKey] === true) {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = NOT "${key}"`);
+            args.push(undefined);
+          }
+        } else if (type === "number") {
+          if (atomicKey === "$add") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" + `);
+            args.push(updateSpec.$add);
+          } else if (atomicKey === "$subtract") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" - `);
+            args.push(updateSpec.$subtract);
+          } else if (atomicKey === "$multiply") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" * `);
+            args.push(updateSpec.$multiply);
+          } else if (atomicKey === "$divide") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" / `);
+            args.push(updateSpec.$divide);
+          }
+        } else if (type === "string") {
+          if (atomicKey === "$append") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" || `);
+            args.push(updateSpec.$append);
+          }
+        } else if (type === "date") {
+          if (atomicKey === "$add") {
+            strings.push(
+              `${state.hasSet ? ", " : ""}"${key}" = "${key}" + `,
+              `::interval`,
+            );
+            args.push(updateSpec.$add, undefined);
+          } else if (atomicKey === "$subtract") {
+            strings.push(
+              `${state.hasSet ? ", " : ""}"${key}" = "${key}" - `,
+              `::interval`,
+            );
+            args.push(updateSpec.$subtract, undefined);
+          }
+        } else if (type === "jsonb") {
+          if (atomicKey === "$set") {
+            strings.push(
+              `${state.hasSet ? ", " : ""}"${key}" = jsonb_set("${key}", `,
+              `, `,
+              `)`,
+            );
+            args.push(
+              `{${updateSpec.$set.path.join(",")}}`,
+              JSON.stringify(updateSpec.$set.value),
+              undefined,
+            );
+          } else if (atomicKey === "$remove") {
+            strings.push(`${state.hasSet ? ", " : ""}"${key}" = "${key}" #- `);
+            args.push(`{${updateSpec.$remove.path.join(",")}}`);
+          }
+        }
+      }
+
+      if (!addedAtomicUpdate) {
+        strings.push(`${state.hasSet ? ", " : ""}"${key}" = `);
+        args.push(JSON.stringify(updateSpec));
+      }
+    }
+
+    state.hasSet = true;
+  }
+
+  if (entity.injectUpdatedAt && isNil(input.update.updatedAt)) {
+    strings.push(`, "updatedAt" = `);
+    args.push(new Date());
+  }
+
+  strings.push(` WHERE `);
+  args.push(
+    generatedWhereBuilderHelper(
+      entity.where,
+      input.where ?? {},
+      `${entity.shortName}.`,
+    ),
+  );
+
+  if (input.returning === "*") {
+    strings.push(` RETURNING *`);
+    args.push(undefined);
+  } else if (Array.isArray(input.returning)) {
+    strings.push(
+      ` RETURNING ${input.returning.map((it) => `"${it}"`).join(", ")}`,
+    );
+    args.push(undefined);
+  }
+
+  strings.push("");
+  return query(strings, ...args);
 }
 
 /**

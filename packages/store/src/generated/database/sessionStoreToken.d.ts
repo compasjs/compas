@@ -67,15 +67,6 @@ export function sessionStoreTokenInsertValues(
     | undefined,
 ): QueryPart;
 /**
- * Build 'SET ' part for sessionStoreToken
- *
- * @param {StoreSessionStoreTokenUpdatePartial} update
- * @returns {QueryPart}
- */
-export function sessionStoreTokenUpdateSet(
-  update: StoreSessionStoreTokenUpdatePartial,
-): QueryPart;
-/**
  * Query Builder for sessionStoreToken
  * Store all tokens that belong to a session.
  *
@@ -110,6 +101,8 @@ export function transformSessionStoreToken(
 ): void;
 /** @type {any} */
 export const sessionStoreTokenWhereSpec: any;
+/** @type {any} */
+export const sessionStoreTokenUpdateSpec: any;
 export namespace sessionStoreTokenQueries {
   export { sessionStoreTokenCount };
   export { sessionStoreTokenDelete };
@@ -167,15 +160,10 @@ declare function sessionStoreTokenUpsertOnId(
   options?: {} | undefined,
 ): Promise<StoreSessionStoreToken[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenUpdatePartial} update
- * @param {StoreSessionStoreTokenWhere} [where={}]
- * @returns {Promise<StoreSessionStoreToken[]>}
+ * (Atomic) update queries for sessionStoreToken
+ *
+ * @type {StoreSessionStoreTokenUpdateFn}
  */
-declare function sessionStoreTokenUpdate(
-  sql: Postgres,
-  update: StoreSessionStoreTokenUpdatePartial,
-  where?: StoreSessionStoreTokenWhere | undefined,
-): Promise<StoreSessionStoreToken[]>;
+declare const sessionStoreTokenUpdate: StoreSessionStoreTokenUpdateFn;
 export {};
 //# sourceMappingURL=sessionStoreToken.d.ts.map

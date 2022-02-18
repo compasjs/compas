@@ -2,6 +2,7 @@
 
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
+import { getUpdateQuery } from "./update-type.js";
 import { getPrimaryKeyWithType } from "./utils.js";
 
 /**
@@ -19,6 +20,7 @@ import { getPrimaryKeyWithType } from "./utils.js";
  */
 export function generateBaseQueries(context, imports, type, src) {
   imports.destructureImport("query", `@compas/store`);
+  imports.destructureImport("generatedUpdateHelper", "@compas/store");
 
   const names = [`${type.name}Count`];
 
@@ -39,7 +41,7 @@ export function generateBaseQueries(context, imports, type, src) {
     src.push(deleteQuery(context, imports, type));
     src.push(insertQuery(context, imports, type));
     src.push(upsertQueryByPrimaryKey(context, imports, type));
-    src.push(updateQuery(context, imports, type));
+    src.push(getUpdateQuery(context, imports, type));
 
     if (type.queryOptions.withSoftDeletes) {
       names.push(`${type.name}DeletePermanent`);
@@ -250,34 +252,6 @@ function upsertQueryByPrimaryKey(context, imports, type) {
         insert, { includePrimaryKey: true })}
         ON CONFLICT ("${primaryKey.key}") DO UPDATE SET $\{query([fieldString])}
         RETURNING $\{${type.name}Fields("")}
-      \`.exec(sql);
-
-      transform${upperCaseFirst(type.name)}(result);
-
-      return result;
-    }
-  `;
-}
-
-/**
- * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
- * @param {CodeGenObjectType} type
- */
-function updateQuery(context, imports, type) {
-  return js`
-    /**
-     * @param {Postgres} sql
-     * @param {${type.partial.updateType}} update
-     * @param {${type.where.type}} [where={}]
-     * @returns {Promise<${type.uniqueName}[]>}
-     */
-    async function ${type.name}Update(sql, update, where = {}) {
-      const result = await query\`
-        UPDATE ${type.queryOptions.schema}"${type.name}" ${type.shortName}
-        SET $\{${type.name}UpdateSet(update)}
-        WHERE $\{${type.name}Where(where)}
-        RETURNING $\{${type.name}Fields()}
       \`.exec(sql);
 
       transform${upperCaseFirst(type.name)}(result);

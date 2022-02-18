@@ -47,6 +47,10 @@ declare global {
   type Postgres = store.Postgres;
   type QueryPart<T = any> = store.QueryPart<T>;
   type QueryPartArg = store.QueryPartArg;
+  type Returning<
+    Type,
+    Selector extends undefined | "*" | string[],
+  > = store.Returning<Type, Selector>;
   type MinioClient = store.MinioClient;
   type GetStreamFn = store.GetStreamFn;
   type FileCache = store.FileCache;

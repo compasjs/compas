@@ -1,4 +1,4 @@
-import { eventStart, eventStop, isNil, newEvent } from "@compas/stdlib";
+import { isNil } from "@compas/stdlib";
 import { codeModMap } from "../../code-mod/constants.js";
 
 const codeModNameFlagValidator = (value) => {
@@ -77,7 +77,11 @@ export async function cliExecutor(logger, state) {
   if (state.command.includes("list")) {
     let str = `Available code-mods:\n`;
     for (const [key, value] of Object.entries(codeModMap)) {
-      str += `- ${key}: ${value.description}\n`;
+      str += `- ${key}:
+  ${value.description}
+  
+  Execute with '${state.cli.name} code-mod exec --name ${key}'
+`;
     }
     logger.info(str);
 
@@ -93,20 +97,9 @@ export async function cliExecutor(logger, state) {
 
     const selectedCodeMod = codeModMap[codeModName];
 
-    logger.info(
-      `Executing '${codeModName}' code-mod.\nDescription: ${selectedCodeMod.description}`,
-    );
+    logger.info(`Executing '${codeModName}' code-mod.\n`);
 
-    const event = newEvent(logger);
-    eventStart(event, `cli.codeMod.${codeModName}`);
-
-    await Promise.resolve(selectedCodeMod.exec(event, !!state.flags.verbose));
-
-    if (state.flags.verbose) {
-      // Only print call stack if verbose is set
-      eventStop(event);
-    }
-
+    await Promise.resolve(selectedCodeMod.exec(logger));
     return {
       exitStatus: "passed",
     };

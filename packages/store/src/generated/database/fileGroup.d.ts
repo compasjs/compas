@@ -65,15 +65,6 @@ export function fileGroupInsertValues(
     | undefined,
 ): QueryPart;
 /**
- * Build 'SET ' part for fileGroup
- *
- * @param {StoreFileGroupUpdatePartial} update
- * @returns {QueryPart}
- */
-export function fileGroupUpdateSet(
-  update: StoreFileGroupUpdatePartial,
-): QueryPart;
-/**
  * Query Builder for fileGroup
  * Create a 'folder' like structure referencing to 'file', with custom ordering support.
  *
@@ -108,6 +99,8 @@ export function transformFileGroup(
 ): void;
 /** @type {any} */
 export const fileGroupWhereSpec: any;
+/** @type {any} */
+export const fileGroupUpdateSpec: any;
 export namespace fileGroupQueries {
   export { fileGroupCount };
   export { fileGroupDelete };
@@ -168,16 +161,11 @@ declare function fileGroupUpsertOnId(
   options?: {} | undefined,
 ): Promise<StoreFileGroup[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreFileGroupUpdatePartial} update
- * @param {StoreFileGroupWhere} [where={}]
- * @returns {Promise<StoreFileGroup[]>}
+ * (Atomic) update queries for fileGroup
+ *
+ * @type {StoreFileGroupUpdateFn}
  */
-declare function fileGroupUpdate(
-  sql: Postgres,
-  update: StoreFileGroupUpdatePartial,
-  where?: StoreFileGroupWhere | undefined,
-): Promise<StoreFileGroup[]>;
+declare const fileGroupUpdate: StoreFileGroupUpdateFn;
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where={}]

@@ -5,11 +5,13 @@ import {
   validateStoreJobOrderBy,
   validateStoreJobOrderBySpec,
   validateStoreJobQueryBuilder,
+  validateStoreJobUpdate,
   validateStoreJobWhere,
 } from "../store/validators.js";
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -261,58 +263,6 @@ export function jobInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for job
- *
- * @param {StoreJobUpdatePartial} update
- * @returns {QueryPart}
- */
-export function jobUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet("job", "update", jobFieldSet, update);
-  if (update.isComplete !== undefined) {
-    strings.push(`, "isComplete" = `);
-    values.push(update.isComplete ?? false);
-  }
-  if (update.handlerTimeout !== undefined) {
-    strings.push(`, "handlerTimeout" = `);
-    values.push(update.handlerTimeout ?? null);
-  }
-  if (update.priority !== undefined) {
-    strings.push(`, "priority" = `);
-    values.push(update.priority ?? 0);
-  }
-  if (update.retryCount !== undefined) {
-    strings.push(`, "retryCount" = `);
-    values.push(update.retryCount ?? 0);
-  }
-  if (update.name !== undefined) {
-    strings.push(`, "name" = `);
-    values.push(update.name ?? null);
-  }
-  if (update.scheduledAt !== undefined) {
-    strings.push(`, "scheduledAt" = `);
-    values.push(update.scheduledAt ?? new Date());
-  }
-  if (update.data !== undefined) {
-    strings.push(`, "data" = `);
-    values.push(JSON.stringify(update.data ?? {}));
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? new Date());
-  }
-  strings.push(`, "updatedAt" = `);
-  values.push(new Date());
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError("job.updateSet.emptyUpdateStatement");
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -401,22 +351,69 @@ RETURNING ${jobFields("")}
   transformJob(result);
   return result;
 }
+/** @type {any} */
+export const jobUpdateSpec = {
+  schemaName: ``,
+  name: "job",
+  shortName: "j",
+  columns: [
+    "id",
+    "isComplete",
+    "priority",
+    "scheduledAt",
+    "name",
+    "data",
+    "retryCount",
+    "handlerTimeout",
+    "createdAt",
+    "updatedAt",
+  ],
+  where: jobWhereSpec,
+  injectUpdatedAt: true,
+  fields: {
+    id: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    isComplete: { type: "boolean", atomicUpdates: ["$negate"] },
+    priority: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    scheduledAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    name: { type: "string", atomicUpdates: ["$append"] },
+    data: { type: "jsonb", atomicUpdates: ["$set", "$remove"] },
+    retryCount: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    handlerTimeout: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    updatedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreJobUpdatePartial} update
- * @param {StoreJobWhere} [where={}]
- * @returns {Promise<StoreJob[]>}
+ * (Atomic) update queries for job
+ *
+ * @type {StoreJobUpdateFn}
  */
-async function jobUpdate(sql, update, where = {}) {
-  const result = await query`
-UPDATE "job" j
-SET ${jobUpdateSet(update)}
-WHERE ${jobWhere(where)}
-RETURNING ${jobFields()}
-`.exec(sql);
-  transformJob(result);
-  return result;
-}
+const jobUpdate = async (sql, input) => {
+  const updateValidated = validateStoreJobUpdate(input, "$.StoreJobUpdate");
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(jobUpdateSpec, input).exec(sql);
+  if (!isNil(input.returning)) {
+    transformJob(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 export const jobQueries = {
   jobCount,
   jobDelete,
@@ -502,7 +499,9 @@ export function transformJob(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
-    value.handlerTimeout = value.handlerTimeout ?? undefined;
+    if (value.handlerTimeout === null) {
+      value.handlerTimeout = undefined;
+    }
     if (typeof value.scheduledAt === "string") {
       value.scheduledAt = new Date(value.scheduledAt);
     }

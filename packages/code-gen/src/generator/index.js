@@ -18,6 +18,7 @@ import { createOrderByTypes } from "./sql/order-by-type.js";
 import { createPartialTypes } from "./sql/partial-type.js";
 import { createQueryBuilderTypes } from "./sql/query-builder.js";
 import { generateSqlStructure } from "./sql/structure.js";
+import { createUpdateTypes } from "./sql/update-type.js";
 import {
   addShortNamesToQueryEnabledObjects,
   doSqlChecks,
@@ -118,6 +119,7 @@ export function generate(logger, options, structure) {
       generateSqlStructure(context);
 
       createWhereTypes(context);
+      createUpdateTypes(context);
       createOrderByTypes(context);
       createPartialTypes(context);
       createQueryBuilderTypes(context);

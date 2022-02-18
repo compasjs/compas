@@ -16,14 +16,4 @@ export function getInsertPartial(
   context: import("../../generated/common/types").CodeGenContext,
   type: CodeGenObjectType,
 ): string;
-/**
- * Adds builder to reuse updates
- *
- * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {CodeGenObjectType} type
- */
-export function getUpdatePartial(
-  context: import("../../generated/common/types").CodeGenContext,
-  type: CodeGenObjectType,
-): string;
 //# sourceMappingURL=partial-type.d.ts.map

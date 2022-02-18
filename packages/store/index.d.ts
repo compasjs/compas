@@ -8,6 +8,10 @@ export type Postgres = import("./types/advanced-types.js").Postgres;
 export type MinioClient = import("./types/advanced-types.js").MinioClient;
 export type QueryPart<T> = import("./types/advanced-types.js").QueryPart<T>;
 export type QueryPartArg = import("./types/advanced-types.js").QueryPartArg;
+export type Returning<
+  Type,
+  Selector extends string[] | "*" | undefined,
+> = import("./types/advanced-types.js").Returning<Type, Selector>;
 export type GetStreamFn = import("./src/send-transformed-image").GetStreamFn;
 export type SessionStoreSettings =
   import("./src/session-store.js").SessionStoreSettings;
@@ -15,6 +19,7 @@ export type SessionTransportSettings =
   import("./src/session-transport.js").SessionTransportSettings;
 export {
   generatedWhereBuilderHelper,
+  generatedUpdateHelper,
   generatedQueryBuilderHelper,
 } from "./src/generator-helpers.js";
 export {

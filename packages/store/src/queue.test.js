@@ -338,14 +338,15 @@ test("store/queue", (t) => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
-    await queries.jobUpdate(
-      sql,
-      {
+    await queries.jobUpdate(sql, {
+      update: {
         isComplete: true,
         updatedAt: yesterday,
       },
-      { isComplete: false },
-    );
+      where: {
+        isComplete: false,
+      },
+    });
 
     const deleteCount = await qw.clean(0);
     t.ok(deleteCount > 0);

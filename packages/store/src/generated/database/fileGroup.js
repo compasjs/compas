@@ -5,6 +5,7 @@ import {
   validateStoreFileGroupOrderBy,
   validateStoreFileGroupOrderBySpec,
   validateStoreFileGroupQueryBuilder,
+  validateStoreFileGroupUpdate,
   validateStoreFileGroupWhere,
 } from "../store/validators.js";
 import {
@@ -16,6 +17,7 @@ import {
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
+  generatedUpdateHelper,
   generatedWhereBuilderHelper,
   isQueryPart,
   query,
@@ -333,54 +335,6 @@ export function fileGroupInsertValues(insert, options = {}) {
   return query(str, ...args);
 }
 /**
- * Build 'SET ' part for fileGroup
- *
- * @param {StoreFileGroupUpdatePartial} update
- * @returns {QueryPart}
- */
-export function fileGroupUpdateSet(update) {
-  const strings = [];
-  const values = [];
-  checkFieldsInSet("fileGroup", "update", fileGroupFieldSet, update);
-  if (update.order !== undefined) {
-    strings.push(`, "order" = `);
-    values.push(update.order ?? Math.floor(Date.now() / 1000000));
-  }
-  if (update.file !== undefined) {
-    strings.push(`, "file" = `);
-    values.push(update.file ?? null);
-  }
-  if (update.parent !== undefined) {
-    strings.push(`, "parent" = `);
-    values.push(update.parent ?? null);
-  }
-  if (update.name !== undefined) {
-    strings.push(`, "name" = `);
-    values.push(update.name ?? null);
-  }
-  if (update.meta !== undefined) {
-    strings.push(`, "meta" = `);
-    values.push(JSON.stringify(update.meta ?? {}));
-  }
-  if (update.createdAt !== undefined) {
-    strings.push(`, "createdAt" = `);
-    values.push(update.createdAt ?? new Date());
-  }
-  strings.push(`, "updatedAt" = `);
-  values.push(new Date());
-  if (update.deletedAt !== undefined) {
-    strings.push(`, "deletedAt" = `);
-    values.push(update.deletedAt ?? null);
-  }
-  // Remove the comma suffix
-  if (strings.length === 0) {
-    throw AppError.validationError("fileGroup.updateSet.emptyUpdateStatement");
-  }
-  strings[0] = strings[0].substring(2);
-  strings.push("");
-  return query(strings, ...values);
-}
-/**
  * @param {string} entity
  * @param {string} subType
  * @param {Set} set
@@ -472,22 +426,63 @@ RETURNING ${fileGroupFields("")}
   transformFileGroup(result);
   return result;
 }
+/** @type {any} */
+export const fileGroupUpdateSpec = {
+  schemaName: ``,
+  name: "fileGroup",
+  shortName: "fg",
+  columns: [
+    "name",
+    "order",
+    "meta",
+    "id",
+    "file",
+    "parent",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+  ],
+  where: fileGroupWhereSpec,
+  injectUpdatedAt: true,
+  fields: {
+    name: { type: "string", atomicUpdates: ["$append"] },
+    order: {
+      type: "number",
+      atomicUpdates: ["$add", "$subtract", "$multiply", "$divide"],
+    },
+    meta: { type: "jsonb", atomicUpdates: ["$set", "$remove"] },
+    id: { type: "uuid", atomicUpdates: [] },
+    file: { type: "uuid", atomicUpdates: [] },
+    parent: { type: "uuid", atomicUpdates: [] },
+    createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    updatedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+    deletedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
+  },
+};
 /**
- * @param {Postgres} sql
- * @param {StoreFileGroupUpdatePartial} update
- * @param {StoreFileGroupWhere} [where={}]
- * @returns {Promise<StoreFileGroup[]>}
+ * (Atomic) update queries for fileGroup
+ *
+ * @type {StoreFileGroupUpdateFn}
  */
-async function fileGroupUpdate(sql, update, where = {}) {
-  const result = await query`
-UPDATE "fileGroup" fg
-SET ${fileGroupUpdateSet(update)}
-WHERE ${fileGroupWhere(where)}
-RETURNING ${fileGroupFields()}
-`.exec(sql);
-  transformFileGroup(result);
-  return result;
-}
+const fileGroupUpdate = async (sql, input) => {
+  const updateValidated = validateStoreFileGroupUpdate(
+    input,
+    "$.StoreFileGroupUpdate",
+  );
+  if (updateValidated.error) {
+    throw updateValidated.error;
+  }
+  const result = await generatedUpdateHelper(fileGroupUpdateSpec, input).exec(
+    sql,
+  );
+  if (!isNil(input.returning)) {
+    transformFileGroup(result);
+    // @ts-ignore
+    return result;
+  }
+  // @ts-ignore
+  return undefined;
+};
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where={}]
@@ -615,35 +610,46 @@ export function transformFileGroup(values, builder = {}) {
       values[i] = value.result;
       value = value.result;
     }
-    value.file = value.file ?? undefined;
-    value.parent = value.parent ?? undefined;
-    value.name = value.name ?? undefined;
+    if (value.file === null) {
+      value.file = undefined;
+    }
+    if (value.parent === null) {
+      value.parent = undefined;
+    }
+    if (value.name === null) {
+      value.name = undefined;
+    }
     if (typeof value.createdAt === "string") {
       value.createdAt = new Date(value.createdAt);
     }
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
     }
-    value.deletedAt = value.deletedAt ?? undefined;
+    if (value.deletedAt === null) {
+      value.deletedAt = undefined;
+    }
     if (typeof value.deletedAt === "string") {
       value.deletedAt = new Date(value.deletedAt);
     }
-    value[builder.file?.as ?? "file"] =
-      value[builder.file?.as ?? "file"] ?? undefined;
+    if (value[builder.file?.as ?? "file"] === null) {
+      value[builder.file?.as ?? "file"] = undefined;
+    }
     if (isPlainObject(value[builder.file?.as ?? "file"])) {
       let arr = [value[builder.file?.as ?? "file"]];
       transformFile(arr, builder.file);
       value[builder.file?.as ?? "file"] = arr[0];
     }
-    value[builder.parent?.as ?? "parent"] =
-      value[builder.parent?.as ?? "parent"] ?? undefined;
+    if (value[builder.parent?.as ?? "parent"] === null) {
+      value[builder.parent?.as ?? "parent"] = undefined;
+    }
     if (isPlainObject(value[builder.parent?.as ?? "parent"])) {
       let arr = [value[builder.parent?.as ?? "parent"]];
       transformFileGroup(arr, builder.parent);
       value[builder.parent?.as ?? "parent"] = arr[0];
     }
-    value[builder.children?.as ?? "children"] =
-      value[builder.children?.as ?? "children"] ?? undefined;
+    if (value[builder.children?.as ?? "children"] === null) {
+      value[builder.children?.as ?? "children"] = undefined;
+    }
     if (Array.isArray(value[builder.children?.as ?? "children"])) {
       transformFileGroup(
         value[builder.children?.as ?? "children"],

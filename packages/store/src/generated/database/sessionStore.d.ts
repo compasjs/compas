@@ -65,15 +65,6 @@ export function sessionStoreInsertValues(
     | undefined,
 ): QueryPart;
 /**
- * Build 'SET ' part for sessionStore
- *
- * @param {StoreSessionStoreUpdatePartial} update
- * @returns {QueryPart}
- */
-export function sessionStoreUpdateSet(
-  update: StoreSessionStoreUpdatePartial,
-): QueryPart;
-/**
  * Query Builder for sessionStore
  * Session data store, used by 'sessionStore\*' functions.
  *
@@ -108,6 +99,8 @@ export function transformSessionStore(
 ): void;
 /** @type {any} */
 export const sessionStoreWhereSpec: any;
+/** @type {any} */
+export const sessionStoreUpdateSpec: any;
 export namespace sessionStoreQueries {
   export { sessionStoreCount };
   export { sessionStoreDelete };
@@ -174,15 +167,10 @@ declare function sessionStoreUpsertOnId(
   options?: {} | undefined,
 ): Promise<StoreSessionStore[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreUpdatePartial} update
- * @param {StoreSessionStoreWhere} [where={}]
- * @returns {Promise<StoreSessionStore[]>}
+ * (Atomic) update queries for sessionStore
+ *
+ * @type {StoreSessionStoreUpdateFn}
  */
-declare function sessionStoreUpdate(
-  sql: Postgres,
-  update: StoreSessionStoreUpdatePartial,
-  where?: StoreSessionStoreWhere | undefined,
-): Promise<StoreSessionStore[]>;
+declare const sessionStoreUpdate: StoreSessionStoreUpdateFn;
 export {};
 //# sourceMappingURL=sessionStore.d.ts.map

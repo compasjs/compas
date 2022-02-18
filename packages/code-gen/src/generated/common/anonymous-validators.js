@@ -52,6 +52,7 @@ const objectKeys914281176 = new Set([
   "firstName",
   "secondName",
 ]);
+const objectKeys1152297043 = new Set(["key", "type", "reservedKey"]);
 const objectKeys40811832 = new Set(["key", "type", "ownKey"]);
 const objectKeys398159942 = new Set(["key", "from", "target"]);
 const objectKeys825072268 = new Set(["group", "name"]);
@@ -6196,6 +6197,131 @@ export function anonymousValidator914281176(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<"sqlReservedObjectKey">}
+ */
+export function anonymousValidator727977168(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  if (value !== "sqlReservedObjectKey") {
+    const oneOf = ["sqlReservedObjectKey"];
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.oneOf",
+          info: { oneOf },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }>}
+ */
+export function anonymousValidator1152297043(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1152297043.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["key", anonymousValidator727977168],
+    ["type", anonymousValidator186795873],
+    ["reservedKey", anonymousValidator186795873],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<"sqlReservedRelationKey">}
  */
 export function anonymousValidator1364042925(value, propertyPath) {
@@ -6639,9 +6765,9 @@ export function anonymousValidator860724709(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
+ * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
  */
-export function anonymousValidator21212968(value, propertyPath) {
+export function anonymousValidator1417810181(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -6656,7 +6782,7 @@ export function anonymousValidator21212968(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   let errors = [];
-  /** @type {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>} */
+  /** @type {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>} */
   let result = { errors: [] };
   result = anonymousValidator729128062(value, propertyPath);
   if (result.errors) {
@@ -6718,6 +6844,12 @@ export function anonymousValidator21212968(value, propertyPath) {
   } else {
     return result;
   }
+  result = anonymousValidator1152297043(value, propertyPath);
+  if (result.errors) {
+    errors.push(...result.errors);
+  } else {
+    return result;
+  }
   result = anonymousValidator40811832(value, propertyPath);
   if (result.errors) {
     errors.push(...result.errors);
@@ -6748,9 +6880,9 @@ export function anonymousValidator21212968(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[]>}
+ * @returns {EitherN<({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[]>}
  */
-export function anonymousValidator1323339094(value, propertyPath) {
+export function anonymousValidator788615357(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -6778,7 +6910,7 @@ export function anonymousValidator1323339094(value, propertyPath) {
   const result = Array.from({ length: value.length });
   let errors = [];
   for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator21212968(
+    const arrVar = anonymousValidator1417810181(
       value[i],
       propertyPath + "[" + i + "]",
     );
@@ -6797,7 +6929,7 @@ export function anonymousValidator1323339094(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[], }>}
+ * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[], }>}
  */
 export function anonymousValidator980814292(value, propertyPath) {
   if (isNil(value)) {
@@ -6849,7 +6981,7 @@ export function anonymousValidator980814292(value, propertyPath) {
     ["extension", anonymousValidator1146021598],
     ["importExtension", anonymousValidator186795873],
     ["outputFiles", anonymousValidator1979163207],
-    ["errors", anonymousValidator1323339094],
+    ["errors", anonymousValidator788615357],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);

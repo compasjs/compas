@@ -302,7 +302,9 @@ function transformerForType(context, imports, type) {
 
     if (keyType.isOptional && isNil(keyType.defaultValue)) {
       partials.push(`
-        value.${key} = value.${key} ?? undefined;
+        if (value.${key} === null) {
+          value.${key} = undefined;
+        }
       `);
     }
 
@@ -322,7 +324,9 @@ function transformerForType(context, imports, type) {
     const valueKey = `builder.${relationKey}?.as ?? "${relationKey}"`;
 
     partials.push(`
-        value[${valueKey}] = value[${valueKey}] ?? undefined;
+        if (value[${valueKey}] === null) {
+          value[${valueKey}] = undefined;
+        }
       `);
 
     if (relation.subType === "oneToMany") {
