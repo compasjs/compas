@@ -7,9 +7,9 @@ export type ConfigLoaderOptions =
   import("./src/config-loader").ConfigLoaderOptions;
 export type ConfigLoaderResult =
   import("./src/config-loader").ConfigLoaderResult;
-export type InsightEvent = import("./src/events").InsightEvent;
+export type InsightEvent = import("./types/advanced-types").InsightEvent;
 export type ProcessDirectoryOptions =
-  import("./src/node").ProcessDirectoryOptions;
+  import("./types/advanced-types.js").ProcessDirectoryOptions;
 export {
   configLoaderGet,
   configLoaderDeleteCache,

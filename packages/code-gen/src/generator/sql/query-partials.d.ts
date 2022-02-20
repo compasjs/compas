@@ -1,17 +1,14 @@
 /**
- * @typedef {import("../utils").ImportCreator} ImportCreator
- */
-/**
  * Generate all useful query partials
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  */
 export function generateQueryPartials(
   context: import("../../generated/common/types").CodeGenContext,
-  imports: ImportCreator,
+  imports: import("../utils").ImportCreator,
   type: CodeGenObjectType,
   src: string[],
 ): void;
@@ -38,5 +35,4 @@ export function getFieldSet(
  * @returns {string}
  */
 export function getFieldsPartial(context: any, type: any): string;
-export type ImportCreator = import("../utils").ImportCreator;
 //# sourceMappingURL=query-partials.d.ts.map

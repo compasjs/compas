@@ -2,17 +2,13 @@ import { environment, isProduction, merge } from "@compas/stdlib";
 import minio from "minio";
 
 /**
- * @typedef {import("../types/advanced-types").MinioClient} MinioClient
- */
-
-/**
  * Create a minio client with the default environment variables as defaults.
  * Minio is an S3 compatible client, so can be used against any S3 compatible interface.
  *
  * @since 0.1.0
  *
  * @param {minio.ClientOptions} opts
- * @returns {MinioClient}
+ * @returns {import("../types/advanced-types").MinioClient}
  */
 export function newMinioClient(opts) {
   const config = /** @type {minio.ClientOptions} */ merge(
@@ -34,7 +30,7 @@ export function newMinioClient(opts) {
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} region
  * @returns {Promise<void>}
@@ -51,7 +47,7 @@ export async function ensureBucket(minio, bucketName, region) {
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} [filter]
  * @returns {Promise<{name: string, prefix: string, size: number, etag: string,
@@ -75,7 +71,7 @@ export async function listObjects(minio, bucketName, filter = "") {
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @returns {Promise<void>}
  */
@@ -88,7 +84,7 @@ export async function removeBucket(minio, bucketName) {
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @returns {Promise<void>}
  */
@@ -107,7 +103,7 @@ export async function removeBucketAndObjectsInBucket(minio, bucketName) {
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} sourceBucket
  * @param {string} destinationBucket
  * @param {string} region

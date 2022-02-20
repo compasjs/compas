@@ -11,14 +11,6 @@ import { queryFile } from "./generated/database/file.js";
 import { listObjects } from "./minio.js";
 import { query } from "./query.js";
 
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
- * @typedef {import("../types/advanced-types").MinioClient} MinioClient
- */
-
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
     INSERT INTO "file" ("id", "bucketName", "contentType", "contentLength", "name", "meta")
@@ -47,8 +39,8 @@ const fileQueries = {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {{ id?: undefined | string;
  *  contentLength?: number;
@@ -159,7 +151,7 @@ export async function createOrUpdateFile(
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {{ start?: number|undefined, end?: number|undefined }} [seek={}]
@@ -186,8 +178,8 @@ export async function getFileStream(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {string} [targetBucket=bucketName]
@@ -227,8 +219,8 @@ export async function copyFile(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @returns {Promise<number>}
  */

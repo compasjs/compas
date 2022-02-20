@@ -14,20 +14,8 @@ import {
 } from "./session-store.js";
 
 /**
- * @typedef {import("./session-store").SessionStoreSettings} SessionStoreSettings
- */
-
-/**
  * @template T
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
- */
-
-/**
- * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent
- */
-
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
  */
 
 /**
@@ -44,7 +32,8 @@ import {
 
 /**
  * @typedef {object} SessionTransportSettings
- * @property {SessionStoreSettings} sessionStoreSettings JWT generation settings
+ * @property {import("./session-store").SessionStoreSettings} sessionStoreSettings JWT
+ *   generation settings
  *
  * @property {boolean} [enableHeaderTransport] Defaults to true, can be used to disable
  *   reading the `Authorization` header
@@ -75,8 +64,8 @@ import {
  * If Cookies and autoRefresh is set, automatically refresh with the found refresh
  * token. This way the accessToken cookie can expiry, and will be set again.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
@@ -285,8 +274,8 @@ function sessionTransportLoadAuthorizationHeader(ctx) {
  * Load the access token from cookies, refreshing the tokens when a only a refresh token
  * is found. Returns
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} options
  * @returns {Promise<string|undefined>}

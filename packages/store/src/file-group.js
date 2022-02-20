@@ -1,10 +1,6 @@
 import { queries } from "./generated.js";
 import { query } from "./query.js";
 
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
 const fileGroupQueries = {
   updateOrderByIds: (sql, ids) => {
     const q = query`
@@ -33,7 +29,7 @@ const fileGroupQueries = {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {StoreFileGroup} fileGroup
  * @returns {Promise<StoreFileGroup[]>}
  */
@@ -56,7 +52,7 @@ export async function hoistChildrenToParent(sql, fileGroup) {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string[]} ids
  * @returns {Promise<void>}
  */

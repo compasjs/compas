@@ -1,17 +1,13 @@
 import { AppError, isStaging } from "@compas/stdlib";
 
 /**
- * @typedef {import("../app").ErrorHandlerOptions} ErrorHandlerOptions
- */
-
-/**
- * @type {NonNullable<ErrorHandlerOptions["onError"]>}
+ * @type {NonNullable<import("../app").ErrorHandlerOptions["onError"]>}
  * Default onError handler that doesn't handle anything
  */
 const defaultOnError = () => false;
 
 /**
- * @type {NonNullable<ErrorHandlerOptions["onAppError"]>}
+ * @type {NonNullable<import("../app").ErrorHandlerOptions["onAppError"]>}
  * Default onAppError handler that builds a simple object with key, message and info.
  */
 const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
@@ -19,7 +15,7 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
 /**
  * Handle any upstream errors
  *
- * @param {ErrorHandlerOptions} opts
+ * @param {import("../app").ErrorHandlerOptions} opts
  * @returns {Middleware}
  */
 export function errorHandler(opts) {

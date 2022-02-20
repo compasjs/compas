@@ -1,7 +1,4 @@
 /**
- * @typedef {import("./state").TestState} TestState
- */
-/**
  * Prints test results and returns the exit code
  *
  * @returns {number}
@@ -30,12 +27,12 @@ export function printTestResultsFromWorkers(
 /**
  * Prints information over test failures
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  * @param {string[]} result
  * @param {number} indentCount
  */
 export function printFailedResults(
-  state: TestState,
+  state: import("./state").TestState,
   result: string[],
   indentCount: number,
 ): void;
@@ -43,18 +40,19 @@ export function printFailedResults(
  * Recursively marks hasFailure if test has a caughtException or if an assertion did not
  * pass
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  */
-export function markTestFailuresRecursively(state: TestState): void;
+export function markTestFailuresRecursively(
+  state: import("./state").TestState,
+): void;
 /**
  * Returns a sum of all assertions recursively, ignoring caught exceptions.
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  * @returns {{ passed: number, failed: number }}
  */
-export function sumAssertions(state: TestState): {
+export function sumAssertions(state: import("./state").TestState): {
   passed: number;
   failed: number;
 };
-export type TestState = import("./state").TestState;
 //# sourceMappingURL=printer.d.ts.map

@@ -1,9 +1,10 @@
 /**
  * Handle any upstream errors
  *
- * @param {ErrorHandlerOptions} opts
+ * @param {import("../app").ErrorHandlerOptions} opts
  * @returns {Middleware}
  */
-export function errorHandler(opts: ErrorHandlerOptions): Middleware;
-export type ErrorHandlerOptions = import("../app").ErrorHandlerOptions;
+export function errorHandler(
+  opts: import("../app").ErrorHandlerOptions,
+): Middleware;
 //# sourceMappingURL=error.d.ts.map

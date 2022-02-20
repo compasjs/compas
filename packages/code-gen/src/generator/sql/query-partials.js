@@ -7,14 +7,10 @@ import { getPrimaryKeyWithType, getSortedKeysForType } from "./utils.js";
 import { getWherePartial } from "./where-type.js";
 
 /**
- * @typedef {import("../utils").ImportCreator} ImportCreator
- */
-
-/**
  * Generate all useful query partials
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  */

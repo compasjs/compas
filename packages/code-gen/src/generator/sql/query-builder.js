@@ -15,14 +15,10 @@ import {
 } from "./utils.js";
 
 /**
- * @typedef {import("../utils").ImportCreator} ImportCreator
- */
-
-/**
  * Generate query builders that include relations in to the query result via left joins
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  */
@@ -152,7 +148,7 @@ export function createQueryBuilderTypes(context) {
  * Generate the query builder and traverse parts for a type
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function queryBuilderForType(context, imports, type) {
@@ -244,7 +240,7 @@ function queryBuilderForType(context, imports, type) {
  * the generatedQueryBuilderHelper.
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function dumpQueryBuilderSpec(context, imports, type) {
@@ -292,7 +288,7 @@ function dumpQueryBuilderSpec(context, imports, type) {
  * Generate a transform for the passed in type
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function transformerForType(context, imports, type) {

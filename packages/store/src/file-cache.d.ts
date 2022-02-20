@@ -1,14 +1,8 @@
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-/**
- * @typedef {import("../types/advanced-types").MinioClient} MinioClient
- */
 export class FileCache {
   static fileCachePath: string;
   /**
-   * @param {Postgres} sql
-   * @param {MinioClient} minio
+   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("../types/advanced-types").MinioClient} minio
    * @param {string} bucketName
    * @param {{
    *   cacheControlHeader?: string,
@@ -16,8 +10,8 @@ export class FileCache {
    * }} [options]
    */
   constructor(
-    sql: Postgres,
-    minio: MinioClient,
+    sql: import("../types/advanced-types").Postgres,
+    minio: import("../types/advanced-types").MinioClient,
     bucketName: string,
     options?:
       | {
@@ -97,6 +91,4 @@ export class FileCache {
    */
   private cacheFileOnDisk;
 }
-export type Postgres = import("../types/advanced-types").Postgres;
-export type MinioClient = import("../types/advanced-types").MinioClient;
 //# sourceMappingURL=file-cache.d.ts.map

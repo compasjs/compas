@@ -1,10 +1,6 @@
 import { noop } from "@compas/stdlib";
 
 /**
- * @typedef {import("../../types/advanced-types.js").TestRunner} TestRunner
- */
-
-/**
  * @typedef {object} TestAssertion
  * @property {string} type
  * @property {boolean} passed
@@ -19,7 +15,8 @@ import { noop } from "@compas/stdlib";
  */
 
 /**
- * @typedef {(t: TestRunner) => (void|any|Promise<any>)} TestCallback
+ * @typedef {(t: import("../../types/advanced-types.js").TestRunner) =>
+ *   (void|any|Promise<any>)} TestCallback
  */
 
 /**

@@ -6,10 +6,6 @@ import {
 } from "./postgres.js";
 
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
  * If set, new databases are derived from this database
  *
  * @type {Postgres|undefined}
@@ -23,7 +19,7 @@ let testDatabase = undefined;
  *
  * @since 0.1.0
  *
- * @param {Postgres} connection
+ * @param {import("../types/advanced-types").Postgres} connection
  * @returns {void}
  */
 export function setPostgresDatabaseTemplate(connection) {
@@ -156,7 +152,7 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @returns {Promise<void>}
  */
 export async function cleanupTestPostgresDatabase(sql) {

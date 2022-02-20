@@ -1,9 +1,5 @@
 import { isProduction } from "./env.js";
 
-/**
- * @typedef {import("../types/advanced-types.js").Logger} Logger
- */
-
 const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
 
 /**
@@ -38,7 +34,7 @@ export function bytesToHumanReadable(bytes) {
  *
  * @since 0.1.0
  *
- * @param {Logger} logger
+ * @param {import("../types/advanced-types.js").Logger} logger
  * @returns {void}
  */
 export function printProcessMemoryUsage(logger) {

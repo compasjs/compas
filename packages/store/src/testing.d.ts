@@ -5,10 +5,12 @@
  *
  * @since 0.1.0
  *
- * @param {Postgres} connection
+ * @param {import("../types/advanced-types").Postgres} connection
  * @returns {void}
  */
-export function setPostgresDatabaseTemplate(connection: Postgres): void;
+export function setPostgresDatabaseTemplate(
+  connection: import("../types/advanced-types").Postgres,
+): void;
 /**
  * Cleanup the test template database.
  *
@@ -48,9 +50,10 @@ export function createTestPostgresDatabase(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @returns {Promise<void>}
  */
-export function cleanupTestPostgresDatabase(sql: Postgres): Promise<void>;
-export type Postgres = import("../types/advanced-types").Postgres;
+export function cleanupTestPostgresDatabase(
+  sql: import("../types/advanced-types").Postgres,
+): Promise<void>;
 //# sourceMappingURL=testing.d.ts.map

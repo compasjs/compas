@@ -5,10 +5,6 @@ import { noop } from "../utils.js";
 import { writeGithubActions, writePretty } from "./writer.js";
 
 /**
- * @typedef {import("../../types/advanced-types").LoggerOptions} LoggerOptions
- */
-
-/**
  * @typedef {object} GlobalLoggerOptions
  * @property {Parameters<import("pino").transport<any>>[0]} [pinoTransport] Set pino
  *   transport, only used if the printer is 'ndjson'.
@@ -92,7 +88,7 @@ export function setGlobalLoggerOptions({ pinoTransport, pinoDestination }) {
  *
  * @since 0.1.0
  *
- * @param {LoggerOptions|undefined} [options]
+ * @param {import("../../types/advanced-types.js").LoggerOptions|undefined} [options]
  * @returns {import("../../types/advanced-types.js").Logger}
  */
 export function newLogger(options) {

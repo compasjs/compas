@@ -10,12 +10,6 @@ import { formatDocString } from "./generator/comments.js";
 import { lowerCaseFirst, upperCaseFirst } from "./utils.js";
 
 /**
- * @typedef {import("@compas/stdlib")
- *   .ProcessDirectoryOptions
- * } ProcessDirectoryOptions
- */
-
-/**
  * @type {{context: Record<string, Function>, globals: Record<string, Function>}}
  */
 export const templateContext = {
@@ -100,7 +94,7 @@ export function compileTemplate(name, str, opts = {}) {
 /**
  * @param {string} dir
  * @param {string} extension
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("@compas/stdlib").ProcessDirectoryOptions} [opts]
  */
 export function compileTemplateDirectory(dir, extension, opts) {
   const ext = extension[0] !== "." ? `.${extension}` : extension;

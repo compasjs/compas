@@ -23,11 +23,11 @@
  */
 
 /**
- * @typedef {import("./src/events").InsightEvent} InsightEvent
+ * @typedef {import("./types/advanced-types").InsightEvent} InsightEvent
  */
 
 /**
- * @typedef {import("./src/node").ProcessDirectoryOptions} ProcessDirectoryOptions
+ * @typedef {import("./types/advanced-types.js").ProcessDirectoryOptions} ProcessDirectoryOptions
  */
 
 export {

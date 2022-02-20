@@ -3,10 +3,6 @@ import { ObjectType } from "./ObjectType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
-/**
- * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
- */
-
 export class PickType extends TypeBuilder {
   static baseData = {
     keys: [],
@@ -56,7 +52,7 @@ export class PickType extends TypeBuilder {
   }
 
   /**
-   * @param {ObjectType|Record<string, TypeBuilderLike>} builder
+   * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
    * @returns {PickType}
    */
   object(builder) {

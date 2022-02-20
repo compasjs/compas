@@ -2,10 +2,6 @@ import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
-/**
- * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
- */
-
 export class OptionalType extends TypeBuilder {
   static baseData = {};
 
@@ -46,7 +42,7 @@ export class OptionalType extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} builder
+   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {OptionalType}
    */
   value(builder) {

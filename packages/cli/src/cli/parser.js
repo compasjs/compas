@@ -186,6 +186,7 @@ export async function cliParserParseFlags(event, command, userInput) {
       rawValue,
       genericErrorMessage,
     );
+
     if (validatedFlagValue.error) {
       return validatedFlagValue;
     }

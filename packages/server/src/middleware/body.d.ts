@@ -13,7 +13,6 @@ export function createBodyParsers(
   bodyOpts?: KoaBodyOptions | undefined,
   multipartBodyOpts?: formidable.Options | undefined,
 ): BodyParserPair;
-export type Middleware = import("koa").Middleware;
 export type KoaBodyOptions = {
   urlencoded?: boolean | undefined;
   json?: boolean | undefined;
@@ -29,8 +28,8 @@ export type KoaBodyOptions = {
   parsedMethods?: string[] | undefined;
 };
 export type BodyParserPair = {
-  bodyParser: Middleware;
-  multipartBodyParser: Middleware;
+  bodyParser: import("koa").Middleware;
+  multipartBodyParser: import("koa").Middleware;
 };
 import formidable from "formidable";
 //# sourceMappingURL=body.d.ts.map

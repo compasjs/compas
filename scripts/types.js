@@ -6,7 +6,7 @@ mainFn(import.meta, main);
 export async function main() {
   const arg = process.argv[2];
 
-  const cleanOnly = arg === "--clean";
+  const cleanOnly = arg === "clean";
   cleanUpTypeDefinitionFiles();
 
   if (cleanOnly) {

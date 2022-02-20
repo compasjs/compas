@@ -1,8 +1,8 @@
 /**
  * Store a new session, and returns a access & refresh token pair
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
@@ -11,8 +11,8 @@
  * }>>}
  */
 export function sessionStoreCreate(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   sessionSettings: SessionStoreSettings,
   sessionData: any,
 ): Promise<
@@ -24,15 +24,15 @@ export function sessionStoreCreate(
 /**
  * Get a session from the provided access token string
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionStoreGet(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   sessionSettings: SessionStoreSettings,
   accessTokenString: string,
 ): Promise<
@@ -44,27 +44,27 @@ export function sessionStoreGet(
  * Update the session. Expects `session.id`, `session.hash` and `session.data` to exist.
  * If the hash of the data is the same as `hash`, this function call is ignored.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreUpdate(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   session: QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
  * Revoke all tokens related to the session
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreInvalidate(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   session: QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
@@ -74,8 +74,8 @@ export function sessionStoreInvalidate(
  * - If a refresh token is reused outside the of the grace period, all tokens are revoked
  * and an `compas.store.sessionHijackDetected` event is created.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
@@ -84,8 +84,8 @@ export function sessionStoreInvalidate(
  * }>>}
  */
 export function sessionStoreRefreshTokens(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   sessionSettings: SessionStoreSettings,
   refreshTokenString: string,
 ): Promise<
@@ -100,14 +100,14 @@ export function sessionStoreRefreshTokens(
  * Note that when tokens are removed, Compas can't detect refresh token reuse, which
  * hints on session stealing. A good default may be 45 days.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {number} maxRevokedAgeInDays
  * @returns {Promise<void>}
  */
 export function sessionStoreCleanupExpiredSessions(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   maxRevokedAgeInDays: number,
 ): Promise<void>;
 /**
@@ -118,21 +118,21 @@ export function sessionStoreCleanupExpiredSessions(
  * another refresh token can be acquired. So if the client has some kind of race
  * condition, the backend doesn't trip over it.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string} sessionId
  * @returns {Promise<void>}
  */
 export function sessionStoreReportAndRevokeLeakedSession(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   sessionId: string,
 ): Promise<void>;
 /**
  * Create a new token pair for the provided session
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
@@ -141,8 +141,8 @@ export function sessionStoreReportAndRevokeLeakedSession(
  * }>>}
  */
 export function sessionStoreCreateTokenPair(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   sessionSettings: SessionStoreSettings,
   session: QueryResultStoreSessionStore,
 ): Promise<
@@ -154,7 +154,7 @@ export function sessionStoreCreateTokenPair(
 /**
  * Create and sign a nwe JWT token
  *
- * @param {InsightEvent} event
+ * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
@@ -162,7 +162,7 @@ export function sessionStoreCreateTokenPair(
  * @returns {Promise<Either<string>>}
  */
 export function sessionStoreCreateJWT(
-  event: InsightEvent,
+  event: import("@compas/stdlib").InsightEvent,
   sessionSettings: SessionStoreSettings,
   type: "compasSessionAccessToken" | "compasSessionRefreshToken",
   value: string,
@@ -171,7 +171,7 @@ export function sessionStoreCreateJWT(
 /**
  * Verify and decode a JWT token
  *
- * @param {InsightEvent} event
+ * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} tokenString
  * @returns {Promise<Either<{
@@ -184,7 +184,7 @@ export function sessionStoreCreateJWT(
  * }>>}
  */
 export function sessionStoreVerifyAndDecodeJWT(
-  event: InsightEvent,
+  event: import("@compas/stdlib").InsightEvent,
   sessionSettings: SessionStoreSettings,
   tokenString: string,
 ): Promise<
@@ -198,8 +198,6 @@ export function sessionStoreVerifyAndDecodeJWT(
   }>
 >;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
-export type InsightEvent = import("@compas/stdlib").InsightEvent;
-export type Postgres = import("../types/advanced-types").Postgres;
 export type SessionStoreSettings = {
   accessTokenMaxAgeInSeconds: number;
   refreshTokenMaxAgeInSeconds: number;

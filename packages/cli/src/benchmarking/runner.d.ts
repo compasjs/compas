@@ -1,7 +1,4 @@
 /**
- * @typedef {import("./state").BenchCallback} BenchCallback
- */
-/**
  * @param {import("./state").BenchState[]} state
  * @returns {Promise<void>}
  */
@@ -15,9 +12,11 @@ export function runBenchmarks(
  * @since 0.1.0
  *
  * @param {string} name
- * @param {BenchCallback} callback
+ * @param {import("./state").BenchCallback} callback
  * @returns {void}
  */
-export function bench(name: string, callback: BenchCallback): void;
-export type BenchCallback = import("./state").BenchCallback;
+export function bench(
+  name: string,
+  callback: import("./state").BenchCallback,
+): void;
 //# sourceMappingURL=runner.d.ts.map
