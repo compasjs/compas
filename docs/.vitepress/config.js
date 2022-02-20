@@ -2,7 +2,6 @@ module.exports = {
   lang: "en-US",
   title: "Compas",
   description: "Unified backend tooling",
-  lastUpdated: true,
 
   themeConfig: {
     repo: "compasjs/compas",
@@ -11,7 +10,6 @@ module.exports = {
 
     editLinks: true,
     editLinkText: "Edit this page on GitHub",
-    lastUpdated: "Last updated",
 
     nav: [
       {
