@@ -206,6 +206,11 @@ time. To disable this behaviour when the command enters watch mode,
 
 Print the current migration state.
 
+Print information about the migration state and exit. The information consists
+of migrations that are not applied yet, and migrations that have 'hashChanges',
+basically saying that the file on disk is out of sync with the migration that
+was applied in the past.
+
 | Option                | Description                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
@@ -217,6 +222,12 @@ Print the current migration state.
 ### `compas migrate rebuild`
 
 Recreate migration state based on the file system.
+
+Rebuild migration table with current file state. This allows for reordering
+migrations, squashing migrations and other things that alter the migration
+files, but do not affect the schema in any way. Note that Compas can't enforce
+any consistency between the migration files and the current schema state. So use
+with caution.
 
 | Option                | Description                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------ |

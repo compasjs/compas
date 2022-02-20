@@ -46,33 +46,6 @@ export async function migrate(sql) {
 Note that it is suggested to keep the amount of differences per environment to a
 minimal, since it makes issues harder to debug.
 
-## Synopsis of @compas/cli
-
-`compas migrate [rebuild|info] [--keep-alive]`
-
-### `compas migrate`
-
-Read the `$project/migrations` directory, print out migration information, see
-`compas migrate info`, and execute the pending migrations. The process exits
-afterwards.
-
-### `compas migrate info`
-
-Print information about the migration state and exit. The information consists
-of migrations that are not applied yet, and migrations that have 'hashChanges',
-basically saying that the file on disk is out of sync with the migration that
-was applied in the past.
-
-### `compas migrate rebuild`
-
-Rebuild migration table with current file state. This allows for reordering
-migrations, squashing migrations and other things that alter the migration
-files, but do not affect the schema in any way. Note that Compas can't enforce
-any consistency between the migration files and the current schema state. So use
-with caution.
-
-### `compas migrate --keep-alive`
-
-Same as `compas migrate`, except keeping the Postgres connection running. This
-is useful when your deploy solution doesn't allow for one of commands, but
-allows private services that consume some sporadic resources.
+See the CLI reference for
+[`compas migrate`](/references/cli.html#compas-migrate) for the build-in
+migration runner.
