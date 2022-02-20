@@ -2,10 +2,6 @@ import { environment, isNil, isProduction, merge } from "@compas/stdlib";
 import postgres from "postgres";
 
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
  * @param {Postgres["connectionOptions"]} opts
  * @returns {Postgres["connectionOptions"]}
  */

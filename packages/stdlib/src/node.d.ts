@@ -1,13 +1,5 @@
 /// <reference types="node" />
 /**
- * @typedef {import("child_process").ExecOptions} ExecOptions
- */
-/**
- * @typedef {import("../types/advanced-types")
- *   .ProcessDirectoryOptions
- * } ProcessDirectoryOptions
- */
-/**
  * Join all arguments together and normalize the resulting path. Arguments must be
  * strings. Using Node.js built-in path.posix.join().
  * Which forces use of Posix path separators, '/'.
@@ -23,7 +15,7 @@ export function pathJoin(...paths: string[]): string;
  * @since 0.1.0
  *
  * @param {string} command
- * @param {ExecOptions} [opts={}]
+ * @param {import("child_process").ExecOptions} [opts={}]
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
  */
 export function exec(
@@ -69,12 +61,14 @@ export function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer>;
  *
  * @param {string} dir
  * @param {(file: string) => (void|Promise<void>)} cb
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("../types/advanced-types.js").ProcessDirectoryOptions} [opts]
  */
 export function processDirectoryRecursive(
   dir: string,
   cb: (file: string) => void | Promise<void>,
-  opts?: import("../types/advanced-types").ProcessDirectoryOptions | undefined,
+  opts?:
+    | import("../types/advanced-types.js").ProcessDirectoryOptions
+    | undefined,
 ): Promise<void>;
 /**
  * Sync version of processDirectoryRecursive
@@ -83,14 +77,13 @@ export function processDirectoryRecursive(
  *
  * @param {string} dir
  * @param {(file: string) => (void)} cb
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("../types/advanced-types.js").ProcessDirectoryOptions} [opts]
  */
 export function processDirectoryRecursiveSync(
   dir: string,
   cb: (file: string) => void,
-  opts?: import("../types/advanced-types").ProcessDirectoryOptions | undefined,
+  opts?:
+    | import("../types/advanced-types.js").ProcessDirectoryOptions
+    | undefined,
 ): void;
-export type ExecOptions = import("child_process").ExecOptions;
-export type ProcessDirectoryOptions =
-  import("../types/advanced-types").ProcessDirectoryOptions;
 //# sourceMappingURL=node.d.ts.map

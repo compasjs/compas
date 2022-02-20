@@ -1,6 +1,3 @@
-/**
- * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
- */
 export class ArrayType extends TypeBuilder {
   static baseData: {
     validator: {
@@ -12,7 +9,7 @@ export class ArrayType extends TypeBuilder {
   constructor(group: any, name: any);
   internalValues: any;
   /**
-   * @param {TypeBuilderLike} [value]
+   * @param {import("../../types/advanced-types").TypeBuilderLike} [value]
    * @returns {ArrayType}
    */
   values(value?: any): ArrayType;
@@ -31,7 +28,5 @@ export class ArrayType extends TypeBuilder {
    */
   max(max: number): ArrayType;
 }
-export type TypeBuilderLike =
-  import("../../types/advanced-types").TypeBuilderLike;
 import { TypeBuilder } from "./TypeBuilder.js";
 //# sourceMappingURL=ArrayType.d.ts.map

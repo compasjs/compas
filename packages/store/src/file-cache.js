@@ -7,20 +7,12 @@ import { getFileStream } from "./files.js";
 
 const pipeline = promisify(pipelineCallbacks);
 
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
- * @typedef {import("../types/advanced-types").MinioClient} MinioClient
- */
-
 export class FileCache {
   static fileCachePath = `/tmp/compas-cache/${uuid()}/`;
 
   /**
-   * @param {Postgres} sql
-   * @param {MinioClient} minio
+   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("../types/advanced-types").MinioClient} minio
    * @param {string} bucketName
    * @param {{
    *   cacheControlHeader?: string,

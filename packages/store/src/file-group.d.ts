@@ -3,12 +3,12 @@
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {StoreFileGroup} fileGroup
  * @returns {Promise<StoreFileGroup[]>}
  */
 export function hoistChildrenToParent(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   fileGroup: StoreFileGroup,
 ): Promise<StoreFileGroup[]>;
 /**
@@ -18,13 +18,12 @@ export function hoistChildrenToParent(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string[]} ids
  * @returns {Promise<void>}
  */
 export function updateFileGroupOrder(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   ids: string[],
 ): Promise<void>;
-export type Postgres = import("../types/advanced-types").Postgres;
 //# sourceMappingURL=file-group.d.ts.map

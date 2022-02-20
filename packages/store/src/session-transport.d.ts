@@ -1,15 +1,6 @@
 /**
- * @typedef {import("./session-store").SessionStoreSettings} SessionStoreSettings
- */
-/**
  * @template T
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
- */
-/**
- * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent
- */
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
  */
 /**
  * @typedef {object} SessionTransportCookieSettings
@@ -24,7 +15,8 @@
  */
 /**
  * @typedef {object} SessionTransportSettings
- * @property {SessionStoreSettings} sessionStoreSettings JWT generation settings
+ * @property {import("./session-store").SessionStoreSettings} sessionStoreSettings JWT
+ *   generation settings
  *
  * @property {boolean} [enableHeaderTransport] Defaults to true, can be used to disable
  *   reading the `Authorization` header
@@ -54,15 +46,15 @@
  * If Cookies and autoRefresh is set, automatically refresh with the found refresh
  * token. This way the accessToken cookie can expiry, and will be set again.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionTransportLoadFromContext(
-  event: InsightEvent,
-  sql: Postgres,
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("../types/advanced-types").Postgres,
   ctx: import("koa").Context,
   settings: SessionTransportSettings,
 ): Promise<
@@ -104,11 +96,7 @@ export function sessionTransportAddAsCookiesToContext(
 export function validateSessionTransportSettings(
   opts: SessionTransportSettings,
 ): SessionTransportSettings;
-export type SessionStoreSettings =
-  import("./session-store").SessionStoreSettings;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
-export type InsightEvent = import("@compas/stdlib").InsightEvent;
-export type Postgres = import("../types/advanced-types").Postgres;
 export type SessionTransportCookieSettings = {
   /**
    * The domain to use.
@@ -130,9 +118,10 @@ export type SessionTransportCookieSettings = {
 };
 export type SessionTransportSettings = {
   /**
-   * JWT generation settings
+   * JWT
+   * generation settings
    */
-  sessionStoreSettings: SessionStoreSettings;
+  sessionStoreSettings: import("./session-store").SessionStoreSettings;
   /**
    * Defaults to true, can be used to disable
    * reading the `Authorization` header

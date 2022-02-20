@@ -1,7 +1,4 @@
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-/**
  * @param {Postgres["connectionOptions"]} opts
  * @returns {Postgres["connectionOptions"]}
  */
@@ -38,6 +35,5 @@ export function createDatabaseIfNotExists(
   connectionOptions: any,
 ): Promise<Postgres>;
 export { postgres };
-export type Postgres = import("../types/advanced-types").Postgres;
 import postgres from "postgres";
 //# sourceMappingURL=postgres.d.ts.map

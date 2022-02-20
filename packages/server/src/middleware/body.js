@@ -3,10 +3,6 @@ import coBody from "co-body";
 import formidable from "formidable";
 
 /**
- * @typedef {import("koa").Middleware} Middleware
- */
-
-/**
  * @typedef {object} KoaBodyOptions
  * @property {boolean|undefined} [urlencoded]
  * @property {boolean|undefined} [json]
@@ -21,8 +17,8 @@ import formidable from "formidable";
 
 /**
  * @typedef {object} BodyParserPair
- * @property {Middleware} bodyParser
- * @property {Middleware} multipartBodyParser
+ * @property {import("koa").Middleware} bodyParser
+ * @property {import("koa").Middleware} multipartBodyParser
  */
 
 const jsonTypes = [
@@ -135,7 +131,7 @@ function koaBody(opts = {}) {
  * https://github.com/node-formidable/formidable/blob/master/src/Formidable.js#L103
  *
  * @param {formidable.Options} opts
- * @returns {Middleware}
+ * @returns {import("koa").Middleware}
  */
 function koaFormidable(opts = {}) {
   // support for arrays

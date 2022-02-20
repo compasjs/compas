@@ -3,10 +3,10 @@
  *
  * @since 0.1.0
  *
- * @param {import("./state").TestRunner} t
+ * @param {import("../../types/advanced-types").TestRunner} t
  * @returns {import("@compas/stdlib").InsightEvent}
  */
 export function newTestEvent(
-  t: import("./state").TestRunner,
+  t: import("../../types/advanced-types").TestRunner,
 ): import("@compas/stdlib").InsightEvent;
 //# sourceMappingURL=events.d.ts.map

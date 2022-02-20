@@ -10,10 +10,6 @@ import { generateTypeDefinition, getTypeNameForType } from "./types.js";
 import { importCreator } from "./utils.js";
 
 /**
- * @typedef {import("./utils").ImportCreator} ImportCreator
- */
-
-/**
  * @typedef {object} ValidatorContext
  * @property {import("../generated/common/types").CodeGenContext} context
  * @property {Map<string, number>} anonymousFunctionMapping
@@ -87,8 +83,8 @@ export function generateValidatorFile(context) {
 /**
  *
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
- * @param {ImportCreator} anonymousImports
+ * @param {import("./utils").ImportCreator} imports
+ * @param {import("./utils").ImportCreator} anonymousImports
  * @param {string} group
  * @returns {{ sources: string[] }}
  */
@@ -194,7 +190,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenType} type
  * @param {string} valueString
  * @param {string} propertyPath
@@ -242,7 +238,7 @@ function getHashForType(type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenType} type
  */
 function createOrUseAnonymousFunction(context, imports, type) {
@@ -309,7 +305,7 @@ function createOrUseAnonymousFunction(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenType} type
  */
 function anonymousValidatorForType(context, imports, type) {
@@ -357,7 +353,7 @@ function anonymousValidatorForType(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenAnyType} type
  */
 function anonymousValidatorAny(context, imports, type) {
@@ -395,7 +391,7 @@ function anonymousValidatorAny(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenAnyOfType} type
  */
 function anonymousValidatorAnyOf(context, imports, type) {
@@ -442,7 +438,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenArrayType} type
  */
 function anonymousValidatorArray(context, imports, type) {
@@ -536,7 +532,7 @@ function anonymousValidatorArray(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenBooleanType} type
  */
 function anonymousValidatorBoolean(context, imports, type) {
@@ -590,7 +586,7 @@ function anonymousValidatorBoolean(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenDateType} type
  */
 function anonymousValidatorDate(context, imports, type) {
@@ -754,7 +750,7 @@ function anonymousValidatorDate(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenFileType} type
  * @returns {string}
  */
@@ -832,7 +828,7 @@ function anonymousValidatorFile(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenGenericType} type
  */
 function anonymousValidatorGeneric(context, imports, type) {
@@ -892,7 +888,7 @@ function anonymousValidatorGeneric(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenNumberType} type
  */
 function anonymousValidatorNumber(context, imports, type) {
@@ -995,7 +991,7 @@ function anonymousValidatorNumber(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function anonymousValidatorObject(context, imports, type) {
@@ -1078,7 +1074,7 @@ function anonymousValidatorObject(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenReferenceType} type
  */
 function anonymousValidatorReference(context, imports, type) {
@@ -1094,7 +1090,7 @@ function anonymousValidatorReference(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenStringType} type
  */
 function anonymousValidatorString(context, imports, type) {
@@ -1266,7 +1262,7 @@ function anonymousValidatorString(context, imports, type) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  */
 function anonymousValidatorUuid(context, imports) {
   const stringType = {
@@ -1294,7 +1290,7 @@ function anonymousValidatorUuid(context, imports) {
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenType} type
  * @param {string} valueString
  * @param {string} propertyPath
@@ -1334,7 +1330,7 @@ function createInlineValidator(
 
 /**
  * @param {ValidatorContext} context
- * @param {ImportCreator} imports
+ * @param {import("./utils").ImportCreator} imports
  * @param {CodeGenReferenceType} type
  * @param {string} valueString
  * @param {string} propertyPath

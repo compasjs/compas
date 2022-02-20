@@ -1,6 +1,3 @@
-/**
- * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
- */
 export class ObjectType extends TypeBuilder {
   static baseData: {
     validator: {
@@ -12,10 +9,12 @@ export class ObjectType extends TypeBuilder {
   internalKeys: {};
   internalRelations: any[];
   /**
-   * @param {Record<string, TypeBuilderLike>} obj
+   * @param {Record<string, import("../../types/advanced-types").TypeBuilderLike>} obj
    * @returns {ObjectType}
    */
-  keys(obj: Record<string, TypeBuilderLike>): ObjectType;
+  keys(
+    obj: Record<string, import("../../types/advanced-types").TypeBuilderLike>,
+  ): ObjectType;
   /**
    * @returns {ObjectType}
    */
@@ -54,8 +53,6 @@ export class ObjectType extends TypeBuilder {
    */
   relations(...relations: RelationType[]): ObjectType;
 }
-export type TypeBuilderLike =
-  import("../../types/advanced-types").TypeBuilderLike;
 import { TypeBuilder } from "./TypeBuilder.js";
 import { RelationType } from "./RelationType.js";
 //# sourceMappingURL=ObjectType.d.ts.map

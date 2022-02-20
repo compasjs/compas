@@ -9,8 +9,8 @@
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {{ id?: undefined | string;
  *  contentLength?: number;
@@ -35,8 +35,8 @@
  * @returns {Promise<StoreFile>}
  */
 export function createOrUpdateFile(
-  sql: Postgres,
-  minio: MinioClient,
+  sql: import("../types/advanced-types").Postgres,
+  minio: import("../types/advanced-types").MinioClient,
   bucketName: string,
   props: {
     id?: undefined | string;
@@ -70,14 +70,14 @@ export function createOrUpdateFile(
  *
  * @since 0.1.0
  *
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {{ start?: number|undefined, end?: number|undefined }} [seek={}]
  * @returns {Promise<NodeJS.ReadableStream>}
  */
 export function getFileStream(
-  minio: MinioClient,
+  minio: import("../types/advanced-types").MinioClient,
   bucketName: string,
   id: string,
   {
@@ -96,16 +96,16 @@ export function getFileStream(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @param {string} id
  * @param {string} [targetBucket=bucketName]
  * @returns {Promise<StoreFile>}
  */
 export function copyFile(
-  sql: Postgres,
-  minio: MinioClient,
+  sql: import("../types/advanced-types").Postgres,
+  minio: import("../types/advanced-types").MinioClient,
   bucketName: string,
   id: string,
   targetBucket?: string | undefined,
@@ -117,16 +117,14 @@ export function copyFile(
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {string} bucketName
  * @returns {Promise<number>}
  */
 export function syncDeletedFiles(
-  sql: Postgres,
-  minio: MinioClient,
+  sql: import("../types/advanced-types").Postgres,
+  minio: import("../types/advanced-types").MinioClient,
   bucketName: string,
 ): Promise<number>;
-export type Postgres = import("../types/advanced-types").Postgres;
-export type MinioClient = import("../types/advanced-types").MinioClient;
 //# sourceMappingURL=files.d.ts.map

@@ -5,12 +5,6 @@ import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 
 /**
- * @typedef {import("../generated/common/types").CodeGenContext & {
- *   types: any,
- * }} CodeGenContext
- */
-
-/**
  * @param options
  * @returns {{apiInput: string, apiResponse: string}}
  */

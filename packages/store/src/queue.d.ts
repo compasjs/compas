@@ -9,13 +9,13 @@
  * @see JobQueueWorker
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string} eventName
  * @param {Record<string, any>} data
  * @returns {Promise<number>}
  */
 export function addEventToQueue(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   eventName: string,
   data: Record<string, any>,
 ): Promise<number>;
@@ -27,11 +27,14 @@ export function addEventToQueue(
  * @see JobQueueWorker
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {JobInput} job
  * @returns {Promise<number>}
  */
-export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
+export function addJobToQueue(
+  sql: import("../types/advanced-types").Postgres,
+  job: JobInput,
+): Promise<number>;
 /**
  * Add a new job to the queue.
  * Use this for normal jobs or to customize the job priority.
@@ -43,13 +46,13 @@ export function addJobToQueue(sql: Postgres, job: JobInput): Promise<number>;
  * @see JobQueueWorker
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {JobInput} job
  * @param {number} timeout
  * @returns {Promise<number>}
  */
 export function addJobWithCustomTimeoutToQueue(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   job: JobInput,
   timeout: number,
 ): Promise<number>;
@@ -62,12 +65,12 @@ export function addJobWithCustomTimeoutToQueue(
  * @see JobQueueWorker
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {{ name: string, priority?: number|undefined, interval: StoreJobInterval }} job
  * @returns {Promise<void>}
  */
 export function addRecurringJobToQueue(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   {
     name,
     priority,
@@ -84,12 +87,12 @@ export function addRecurringJobToQueue(
  * Date.
  *
  * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {StoreJob} job
  */
 export function handleCompasRecurring(
   event: InsightEvent,
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   job: StoreJob,
 ): Promise<void>;
 /**
@@ -107,11 +110,11 @@ export function getNextScheduledAt(
  * Get all uncompleted jobs from the queue.
  * Useful for testing if jobs are created.
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @returns {Promise<Record<string, QueryResultStoreJob[]>>}
  */
 export function getUncompletedJobsByName(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
 ): Promise<Record<string, QueryResultStoreJob[]>>;
 /**
  * The queue system is based on 'static' units of work to be done in the background.
@@ -163,10 +166,13 @@ export function getUncompletedJobsByName(
  */
 export class JobQueueWorker {
   /**
-   * @param {Postgres} sql
+   * @param {import("../types/advanced-types").Postgres} sql
    * @param {JobQueueWorkerOptions} options
    */
-  constructor(sql: Postgres, options: JobQueueWorkerOptions);
+  constructor(
+    sql: import("../types/advanced-types").Postgres,
+    options: JobQueueWorkerOptions,
+  );
   sql: import("../types/advanced-types").Postgres;
   pollInterval: number;
   maxRetryCount: number;
@@ -220,7 +226,6 @@ export class JobQueueWorker {
    */
   private handleJob;
 }
-export type Postgres = import("../types/advanced-types").Postgres;
 export type JobInput = {
   /**
    * Defaults to 0
@@ -238,7 +243,7 @@ export type JobInput = {
 };
 export type JobQueueHandlerFunction = (
   event: InsightEvent,
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   data: StoreJob,
 ) => void | Promise<void>;
 export type JobQueueWorkerOptions = {

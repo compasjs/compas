@@ -20,14 +20,6 @@ import { addJobToQueue } from "./queue.js";
  */
 
 /**
- * @typedef {import("@compas/stdlib").InsightEvent} InsightEvent
- */
-
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
  * @typedef {object} SessionStoreSettings
  * @property {number} accessTokenMaxAgeInSeconds
  * @property {number} refreshTokenMaxAgeInSeconds
@@ -42,8 +34,8 @@ const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
 /**
  * Store a new session, and returns a access & refresh token pair
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
@@ -85,8 +77,8 @@ export async function sessionStoreCreate(
 /**
  * Get a session from the provided access token string
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
@@ -170,8 +162,8 @@ export async function sessionStoreGet(
  * Update the session. Expects `session.id`, `session.hash` and `session.data` to exist.
  * If the hash of the data is the same as `hash`, this function call is ignored.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -215,8 +207,8 @@ export async function sessionStoreUpdate(event, sql, session) {
 /**
  * Revoke all tokens related to the session
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -267,8 +259,8 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * - If a refresh token is reused outside the of the grace period, all tokens are revoked
  * and an `compas.store.sessionHijackDetected` event is created.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
@@ -381,8 +373,8 @@ export async function sessionStoreRefreshTokens(
  * Note that when tokens are removed, Compas can't detect refresh token reuse, which
  * hints on session stealing. A good default may be 45 days.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {number} maxRevokedAgeInDays
  * @returns {Promise<void>}
  */
@@ -428,8 +420,8 @@ export async function sessionStoreCleanupExpiredSessions(
  * another refresh token can be acquired. So if the client has some kind of race
  * condition, the backend doesn't trip over it.
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string} sessionId
  * @returns {Promise<void>}
  */
@@ -492,8 +484,8 @@ export async function sessionStoreReportAndRevokeLeakedSession(
 /**
  * Create a new token pair for the provided session
  *
- * @param {InsightEvent} event
- * @param {Postgres} sql
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
@@ -590,7 +582,7 @@ export async function sessionStoreCreateTokenPair(
 /**
  * Create and sign a nwe JWT token
  *
- * @param {InsightEvent} event
+ * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
  * @param {"compasSessionAccessToken"|"compasSessionRefreshToken"} type
  * @param {string} value
@@ -635,7 +627,7 @@ export function sessionStoreCreateJWT(
 /**
  * Verify and decode a JWT token
  *
- * @param {InsightEvent} event
+ * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} tokenString
  * @returns {Promise<Either<{

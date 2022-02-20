@@ -6,14 +6,10 @@ import { getUpdateQuery } from "./update-type.js";
 import { getPrimaryKeyWithType } from "./utils.js";
 
 /**
- * @typedef {import("../utils").ImportCreator} ImportCreator
- */
-
-/**
  * Generate the basic CRUD queries
  *
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  * @param {string[]} src
  * @returns {void}
@@ -54,7 +50,7 @@ export function generateBaseQueries(context, imports, type, src) {
 
 /**
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function countQuery(context, imports, type) {
@@ -79,7 +75,7 @@ function countQuery(context, imports, type) {
 
 /**
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function deleteQuery(context, imports, type) {
@@ -109,7 +105,7 @@ function deleteQuery(context, imports, type) {
 
 /**
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function softDeleteQuery(context, imports, type) {
@@ -181,7 +177,7 @@ function softDeleteQuery(context, imports, type) {
 
 /**
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function insertQuery(context, imports, type) {
@@ -217,7 +213,7 @@ function insertQuery(context, imports, type) {
 
 /**
  * @param {import("../../generated/common/types").CodeGenContext} context
- * @param {ImportCreator} imports
+ * @param {import("../utils").ImportCreator} imports
  * @param {CodeGenObjectType} type
  */
 function upsertQueryByPrimaryKey(context, imports, type) {

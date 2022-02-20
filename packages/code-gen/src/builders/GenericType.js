@@ -1,10 +1,6 @@
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
-/**
- * @typedef {import("../../types/advanced-types").TypeBuilderLike} TypeBuilderLike
- */
-
 export class GenericType extends TypeBuilder {
   static baseData = {};
 
@@ -30,7 +26,7 @@ export class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} [key]
+   * @param {import("../../types/advanced-types").TypeBuilderLike} [key]
    * @returns {GenericType}
    */
   keys(key) {
@@ -39,7 +35,7 @@ export class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {TypeBuilderLike} [value]
+   * @param {import("../../types/advanced-types").TypeBuilderLike} [value]
    * @returns {GenericType}
    */
   values(value) {

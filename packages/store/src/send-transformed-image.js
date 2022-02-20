@@ -16,25 +16,13 @@ import { queryFile } from "./generated/database/file.js";
  */
 
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
- * @typedef {import("../types/advanced-types").MinioClient} MinioClient
- */
-
-/**
- * @typedef {import("koa").Context} Context
- */
-
-/**
  * Wraps 'server'.sendFile, to include an image transformer compatible with Next.js image
  * loader. Only works if the input file is an image.
  *
  * @param {typeof import("@compas/server").sendFile} sendFile
- * @param {Context} ctx
- * @param {Postgres} sql
- * @param {MinioClient} minio
+ * @param {import("koa").Context} ctx
+ * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("../types/advanced-types").MinioClient} minio
  * @param {StoreFile} file
  * @param {GetStreamFn} getStreamFn
  * @returns {Promise<void>}

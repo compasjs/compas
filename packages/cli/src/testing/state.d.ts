@@ -31,9 +31,6 @@ export function setGlobalSetup(value: any): void;
  */
 export function setGlobalTeardown(value: any): void;
 /**
- * @typedef {import("../../types/advanced-types.js").TestRunner} TestRunner
- */
-/**
  * @typedef {object} TestAssertion
  * @property {string} type
  * @property {boolean} passed
@@ -47,7 +44,8 @@ export function setGlobalTeardown(value: any): void;
  * @property {string|undefined} [message]
  */
 /**
- * @typedef {(t: TestRunner) => (void|any|Promise<any>)} TestCallback
+ * @typedef {(t: import("../../types/advanced-types.js").TestRunner) =>
+ *   (void|any|Promise<any>)} TestCallback
  */
 /**
  * @typedef {object} TestState
@@ -87,7 +85,6 @@ export let globalTeardown: () => void | Promise<void>;
  * @type {TestState}
  */
 export const state: TestState;
-export type TestRunner = import("../../types/advanced-types.js").TestRunner;
 export type TestAssertion = {
   type: string;
   passed: boolean;
@@ -103,7 +100,9 @@ export type TestAssertion = {
     | undefined;
   message?: string | undefined;
 };
-export type TestCallback = (t: TestRunner) => void | any | Promise<any>;
+export type TestCallback = (
+  t: import("../../types/advanced-types.js").TestRunner,
+) => void | any | Promise<any>;
 export type TestState = {
   parent?: TestState | undefined;
   hasFailure?: boolean | undefined;

@@ -7,16 +7,6 @@ import { promisify } from "util";
 const internalExec = promisify(cpExec);
 
 /**
- * @typedef {import("child_process").ExecOptions} ExecOptions
- */
-
-/**
- * @typedef {import("../types/advanced-types")
- *   .ProcessDirectoryOptions
- * } ProcessDirectoryOptions
- */
-
-/**
  * Join all arguments together and normalize the resulting path. Arguments must be
  * strings. Using Node.js built-in path.posix.join().
  * Which forces use of Posix path separators, '/'.
@@ -35,7 +25,7 @@ export function pathJoin(...paths) {
  * @since 0.1.0
  *
  * @param {string} command
- * @param {ExecOptions} [opts={}]
+ * @param {import("child_process").ExecOptions} [opts={}]
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
  */
 export async function exec(command, opts = {}) {
@@ -116,7 +106,7 @@ export async function streamToBuffer(stream) {
  *
  * @param {string} dir
  * @param {(file: string) => (void|Promise<void>)} cb
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("../types/advanced-types.js").ProcessDirectoryOptions} [opts]
  */
 export async function processDirectoryRecursive(
   dir,
@@ -151,7 +141,7 @@ export async function processDirectoryRecursive(
  *
  * @param {string} dir
  * @param {(file: string) => (void)} cb
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("../types/advanced-types.js").ProcessDirectoryOptions} [opts]
  */
 export function processDirectoryRecursiveSync(
   dir,

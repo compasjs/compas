@@ -1,7 +1,4 @@
 /**
- * @typedef {import("./utils").ImportCreator} ImportCreator
- */
-/**
  * @typedef {object} ValidatorContext
  * @property {import("../generated/common/types").CodeGenContext} context
  * @property {Map<string, number>} anonymousFunctionMapping
@@ -14,7 +11,6 @@
 export function generateValidatorFile(
   context: import("../generated/common/types").CodeGenContext,
 ): void;
-export type ImportCreator = import("./utils").ImportCreator;
 export type ValidatorContext = {
   context: import("../generated/common/types").CodeGenContext;
   anonymousFunctionMapping: Map<string, number>;

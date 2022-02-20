@@ -5,10 +5,6 @@ import { pathToFileURL } from "url";
 import { AppError, environment, pathJoin } from "@compas/stdlib";
 
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
  * @typedef {object} MigrationFile
  * @property {number} number
  * @property {boolean} repeatable
@@ -22,7 +18,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
 /**
  * @typedef {object} MigrateContext
  * @property {MigrationFile[]} files
- * @property {Postgres} sql
+ * @property {import("../types/advanced-types").Postgres} sql
  * @property {any|undefined} [rebuild]
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
@@ -35,7 +31,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
@@ -228,7 +224,7 @@ function filterMigrationsToBeApplied(mc) {
 }
 
 /**
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {MigrationFile} migration
  * @returns {Promise<void>}
  */
@@ -275,7 +271,7 @@ async function runMigration(sql, migration) {
 }
 
 /**
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {MigrationFile} migration
  */
 function runInsert(sql, migration) {
@@ -325,7 +321,7 @@ async function syncWithSchemaState(mc) {
 }
 
 /**
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  */
 async function acquireLock(sql) {
   // Should be automatically released by Postgres once this connection ends.

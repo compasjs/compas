@@ -1,7 +1,4 @@
 /**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-/**
  * @typedef {object} MigrationFile
  * @property {number} number
  * @property {boolean} repeatable
@@ -14,7 +11,7 @@
 /**
  * @typedef {object} MigrateContext
  * @property {MigrationFile[]} files
- * @property {Postgres} sql
+ * @property {import("../types/advanced-types").Postgres} sql
  * @property {any|undefined} [rebuild]
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
@@ -26,12 +23,12 @@
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
 export function newMigrateContext(
-  sql: Postgres,
+  sql: import("../types/advanced-types").Postgres,
   migrationDirectory?: string,
 ): Promise<MigrateContext>;
 /**
@@ -83,7 +80,6 @@ export function runMigrations(mc: MigrateContext): Promise<void>;
  * @returns {Promise<void>}
  */
 export function rebuildMigrations(mc: MigrateContext): Promise<void>;
-export type Postgres = import("../types/advanced-types").Postgres;
 export type MigrationFile = {
   number: number;
   repeatable: boolean;
@@ -95,7 +91,7 @@ export type MigrationFile = {
 };
 export type MigrateContext = {
   files: MigrationFile[];
-  sql: Postgres;
+  sql: import("../types/advanced-types").Postgres;
   rebuild?: any | undefined;
   info?: any | undefined;
   do?: any | undefined;

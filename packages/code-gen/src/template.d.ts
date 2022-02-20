@@ -15,7 +15,7 @@ export function compileTemplate(
 /**
  * @param {string} dir
  * @param {string} extension
- * @param {ProcessDirectoryOptions} [opts]
+ * @param {import("@compas/stdlib").ProcessDirectoryOptions} [opts]
  */
 export function compileTemplateDirectory(
   dir: string,
@@ -31,17 +31,10 @@ export function compileTemplateDirectory(
  */
 export function executeTemplate(name: string, data: any): string;
 /**
- * @typedef {import("@compas/stdlib")
- *   .ProcessDirectoryOptions
- * } ProcessDirectoryOptions
- */
-/**
  * @type {{context: Record<string, Function>, globals: Record<string, Function>}}
  */
 export const templateContext: {
   context: Record<string, Function>;
   globals: Record<string, Function>;
 };
-export type ProcessDirectoryOptions =
-  import("@compas/stdlib").ProcessDirectoryOptions;
 //# sourceMappingURL=template.d.ts.map

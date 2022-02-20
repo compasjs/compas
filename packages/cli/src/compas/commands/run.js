@@ -132,7 +132,7 @@ export async function cliExecutor(logger, state) {
     args.push("run", script.name);
     if (state.flags.scriptArguments) {
       // @ts-ignore
-      args.push(...state.flags.scriptsArguments.split(" "));
+      args.push(...state.flags.scriptArguments.split(" "));
     }
 
     // @ts-ignore
@@ -155,7 +155,7 @@ export async function cliExecutor(logger, state) {
 
     if (state.flags.scriptArguments) {
       // @ts-ignore
-      args.push(...state.flags.scriptsArguments.split(" "));
+      args.push(...state.flags.scriptArguments.split(" "));
     }
   }
 

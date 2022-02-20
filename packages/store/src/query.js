@@ -3,14 +3,6 @@
 import { isNil } from "@compas/stdlib";
 
 /**
- * @typedef {import("../types/advanced-types").QueryPartArg} QueryPartArg
- */
-
-/**
- * @typedef {import("../types/advanced-types").Postgres} Postgres
- */
-
-/**
  * Format and append query parts, and execute the final result in a safe way.
  * Undefined values are skipped, as they are not allowed in queries.
  * The query call may be one of the interpolated values. Supports being called as a
@@ -21,7 +13,9 @@ import { isNil } from "@compas/stdlib";
  * @template T
  *
  * @param {TemplateStringsArray | string[]} strings
- * @param {...(QueryPartArg | QueryPartArg[])} values
+ * @param {...(import("../types/advanced-types").QueryPartArg
+ *   | import("../types/advanced-types").QueryPartArg[]
+ *   )} values
  * @returns {import("../types/advanced-types").QueryPart<T>}
  */
 export function query(strings, ...values) {
@@ -75,7 +69,7 @@ export function query(strings, ...values) {
   }
 
   /**
-   * @param {Postgres} sql
+   * @param {import("../types/advanced-types").Postgres} sql
    * @returns {Promise<import("postgres").PendingQuery<T>>}
    */
   async function exec(sql) {
@@ -92,9 +86,8 @@ export function query(strings, ...values) {
     // Strip out undefined values
     return await sql.unsafe(
       str,
-      /** @type {NonNullable<QueryPartArg>} */ _values.filter(
-        (it) => it !== undefined,
-      ),
+      /** @type {NonNullable<QueryPartArg>} */
+      _values.filter((it) => it !== undefined),
     );
   }
 }
@@ -173,7 +166,7 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
  *
  * @since 0.1.0
  *
- * @param {Postgres} sql
+ * @param {import("../types/advanced-types").Postgres} sql
  * @param {import("../types/advanced-types").QueryPart<any>} queryItem
  * @param {{ jsonResult?: boolean }} [options={}]
  * @returns {Promise<string|object>}

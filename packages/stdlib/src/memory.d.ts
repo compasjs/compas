@@ -12,9 +12,10 @@ export function bytesToHumanReadable(bytes?: number | undefined): string;
  *
  * @since 0.1.0
  *
- * @param {Logger} logger
+ * @param {import("../types/advanced-types.js").Logger} logger
  * @returns {void}
  */
-export function printProcessMemoryUsage(logger: Logger): void;
-export type Logger = import("../types/advanced-types.js").Logger;
+export function printProcessMemoryUsage(
+  logger: import("../types/advanced-types.js").Logger,
+): void;
 //# sourceMappingURL=memory.d.ts.map

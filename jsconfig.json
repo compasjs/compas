@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext"],
     "noEmit": true,
     "module": "esnext",
     "checkJs": true,
@@ -14,5 +14,6 @@
   "typeAcquisition": {
     "enable": true
   },
+  "include": ["**/*.js", "**/*.d.ts"],
   "exclude": ["**/*.test.js", "**/*.bench.js"]
 }

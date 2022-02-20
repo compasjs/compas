@@ -3,10 +3,6 @@ import { AppError, isNil } from "@compas/stdlib";
 import { state, testLogger } from "./state.js";
 
 /**
- * @typedef {import("./state").TestState} TestState
- */
-
-/**
  * Prints test results and returns the exit code
  *
  * @returns {number}
@@ -84,7 +80,7 @@ export function printTestResultsFromWorkers(testResults) {
 /**
  * Prints a quick test summary for the provided state
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  * @param {string[]} result
  * @param {number} indentCount
  */
@@ -97,7 +93,7 @@ function printTreeSummary(state, result, indentCount) {
 /**
  * Prints information over test failures
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  * @param {string[]} result
  * @param {number} indentCount
  */
@@ -187,7 +183,7 @@ export function printFailedResults(state, result, indentCount) {
  * Recursively marks hasFailure if test has a caughtException or if an assertion did not
  * pass
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  */
 export function markTestFailuresRecursively(state) {
   if (state.caughtException) {
@@ -211,7 +207,7 @@ export function markTestFailuresRecursively(state) {
 /**
  * Marks this state as hasFailure and recursively the parents as well
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  */
 function markFailure(state) {
   state.hasFailure = true;
@@ -224,7 +220,7 @@ function markFailure(state) {
 /**
  * Returns a sum of all assertions recursively, ignoring caught exceptions.
  *
- * @param {TestState} state
+ * @param {import("./state").TestState} state
  * @returns {{ passed: number, failed: number }}
  */
 export function sumAssertions(state) {

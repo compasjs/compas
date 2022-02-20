@@ -11,10 +11,6 @@ import { isNil } from "./lodash.js";
 import { extendGlobalLoggerContext } from "./logger/logger.js";
 
 /**
- * @typedef {import("../types/advanced-types.js").Logger} Logger
- */
-
-/**
  * Get the number of seconds since Unix epoch (1-1-1970).
  *
  * @since 0.1.0
@@ -66,7 +62,7 @@ export function gc() {
  * @summary Process entrypoint executor
  *
  * @param {ImportMeta} meta
- * @param {(logger: Logger) => void|Promise<void>} cb
+ * @param {(logger: import("../types/advanced-types.js").Logger) => void|Promise<void>} cb
  * @returns {void}
  */
 export function mainFn(meta, cb) {

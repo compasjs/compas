@@ -1,9 +1,4 @@
 /**
- * @typedef {import("../generated/common/types").CodeGenContext & {
- *   types: any,
- * }} CodeGenContext
- */
-/**
  * @param options
  * @returns {{apiInput: string, apiResponse: string}}
  */
@@ -60,8 +55,4 @@ export function generateTypeDefinition(
     fileTypeIO,
   }?: CodeGenTypeSettings,
 ): any;
-export type CodeGenContext =
-  import("../generated/common/types").CodeGenContext & {
-    types: any;
-  };
 //# sourceMappingURL=types.d.ts.map
