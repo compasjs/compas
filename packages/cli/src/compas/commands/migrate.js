@@ -27,6 +27,11 @@ The migration runner uses an advisory lock to ensure only a single migration pro
     {
       name: "info",
       shortDescription: "Print the current migration state.",
+      longDescription: `Print information about the migration state and exit. The information consists
+of migrations that are not applied yet, and migrations that have 'hashChanges',
+basically saying that the file on disk is out of sync with the migration that
+was applied in the past.
+`,
       modifiers: {
         isWatchable: true,
       },
@@ -37,6 +42,12 @@ The migration runner uses an advisory lock to ensure only a single migration pro
     {
       name: "rebuild",
       shortDescription: "Recreate migration state based on the file system.",
+      longDescription: `Rebuild migration table with current file state. This allows for reordering
+migrations, squashing migrations and other things that alter the migration
+files, but do not affect the schema in any way. Note that Compas can't enforce
+any consistency between the migration files and the current schema state. So use
+with caution.
+`,
     },
   ],
   flags: [
