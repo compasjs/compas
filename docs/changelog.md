@@ -4,6 +4,70 @@ editLink: false
 
 # Changelog
 
+### [v0.0.186](https://github.com/compasjs/compas/releases/tag/v0.0.186)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.2 to 7.17.5
+  ([#1612](https://github.com/compasjs/compas/pull/1612),
+  [#1615](https://github.com/compasjs/compas/pull/1615))
+- build(deps): bump @types/node from 17.0.16 to 17.0.18
+  ([#1598](https://github.com/compasjs/compas/pull/1598),
+  [#1609](https://github.com/compasjs/compas/pull/1609))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.8.0 to 8.9.0
+  ([#1605](https://github.com/compasjs/compas/pull/1605))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 37.8.0 to 37.9.4
+  ([#1596](https://github.com/compasjs/compas/pull/1596),
+  [#1607](https://github.com/compasjs/compas/pull/1607),
+  [#1613](https://github.com/compasjs/compas/pull/1613),
+  [#1614](https://github.com/compasjs/compas/pull/1614),
+  [#1617](https://github.com/compasjs/compas/pull/1617))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump follow-redirects from 1.14.7 to 1.14.8
+  ([#1603](https://github.com/compasjs/compas/pull/1603))
+  - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+- build(deps): bump pino from 7.6.5 to 7.8.0
+  ([#1611](https://github.com/compasjs/compas/pull/1611))
+- build(deps): bump sharp from 0.30.0 to 0.30.1
+  ([#1597](https://github.com/compasjs/compas/pull/1597))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- chore(types): remove a bunch of file global type imports
+  ([#1618](https://github.com/compasjs/compas/pull/1618))
+- feat(code-gen): support atomic updates and dynamic return types in generated
+  update queries ([#1601](https://github.com/compasjs/compas/pull/1601))
+  - Closes [#383](https://github.com/compasjs/compas/pull/383)
+- fix(cli): make sure that `--serial` runs tests without worker threads
+  ([#1599](https://github.com/compasjs/compas/pull/1599))
+  - Closes [#1586](https://github.com/compasjs/compas/pull/1586)
+- test(code-gen): jsonb null insert behavior
+  ([#1602](https://github.com/compasjs/compas/pull/1602))
+  - Closes [#1600](https://github.com/compasjs/compas/pull/1600)
+
+##### Breaking changes
+
+- **code-gen**: support atomic updates and dynamic return types in generated
+  update queries
+  - Various keys starting with `$` are recursively reserved in `T.object()`
+    types with `.enableQueries()`.
+  - Updated signature for `queries.entityUpdate`. Providing better intent and
+    less prone to bugs by naming the keys. See `compas code-mod list` for the
+    `update-queries-signature-change` code-mod which can automatically fix most
+    cases. Note that it may add some extra whitespace, this needs to be cleaned
+    up manually.
+  - `queries.entityUpdate` by default does not return any values anymore. See
+    the [docs](https://compasjs.com/features/code-gen-sql.html#crud) for more
+    information.
+  - Removed `xxxUpdateSet` functions from the generator output.
+  - Stricter checks on update queries if both `where` and `update` are specified
+
+##### Documentation updates
+
+- Added more docs to
+  [Code generator SQL](https://compasjs.com/features/code-gen-sql.html) with
+  examples for where-clauses, atomic updates and docs about relations.
+
 ### [v0.0.185](https://github.com/compasjs/compas/releases/tag/v0.0.185)
 
 ##### Changes
