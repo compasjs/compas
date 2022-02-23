@@ -344,6 +344,51 @@ test("code-gen/e2e/sql-update", (t) => {
       t.equal(result.name, setting.name);
     });
 
+    t.test("partial update - with undefined field", async (t) => {
+      const [setting] = await queries.settingsInsert(sql, {
+        name: uuid(),
+        age: 18,
+        settings: {},
+      });
+
+      const [result] = await queries.settingsUpdate(sql, {
+        update: {
+          age: undefined,
+          name: "bar",
+        },
+        where: {
+          id: setting.id,
+        },
+        returning: "*",
+      });
+
+      t.equal(result.id, setting.id);
+      t.equal(result.age, setting.age);
+      t.equal(result.name, "bar");
+    });
+
+    t.test("partial update - with undefined field", async (t) => {
+      const [setting] = await queries.settingsInsert(sql, {
+        name: uuid(),
+        age: 18,
+        settings: {},
+      });
+
+      const update = Object.create(null);
+      update.age = 20;
+
+      const [result] = await queries.settingsUpdate(sql, {
+        update,
+        where: {
+          id: setting.id,
+        },
+        returning: "*",
+      });
+
+      t.equal(result.id, setting.id);
+      t.equal(result.age, 20);
+    });
+
     t.test("null update", async (t) => {
       const [setting] = await queries.settingsInsert(sql, {
         name: uuid(),

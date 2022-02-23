@@ -1,4 +1,4 @@
-import { AppError, isNil, isPlainObject } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { isQueryPart, query } from "./query.js";
 
 /**
@@ -284,7 +284,19 @@ export function generatedUpdateHelper(entity, input) {
   };
 
   for (const [key, updateSpec] of Object.entries(input.update)) {
-    if (!isPlainObject(updateSpec)) {
+    // Can't update 'undefined', needs to be 'null' if allowed
+    if (updateSpec === undefined) {
+      continue;
+    }
+
+    // isPlainObject equivalent, but handling Object.create(null)
+    if (
+      !(
+        typeof updateSpec === "object" &&
+        !isNil(updateSpec) &&
+        Object.prototype.toString.call(updateSpec) === "[object Object]"
+      )
+    ) {
       strings.push(`${state.hasSet ? ", " : ""}"${key}" = `);
       args.push(updateSpec);
     } else {
