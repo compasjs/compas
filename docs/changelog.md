@@ -4,6 +4,22 @@ editLink: false
 
 # Changelog
 
+### [v0.0.187](https://github.com/compasjs/compas/releases/tag/v0.0.187)
+
+##### Changes
+
+- build(deps): bump @types/node from 17.0.18 to 17.0.19
+  ([#1624](https://github.com/compasjs/compas/pull/1624))
+- build(deps): bump eslint-config-prettier from 8.3.0 to 8.4.0
+  ([#1622](https://github.com/compasjs/compas/pull/1622))
+- chore(ci): add permissions to CodeQL job
+- chore(docs): remove last updated from pages
+  ([#1620](https://github.com/compasjs/compas/pull/1620))
+- docs(migrate): move docs to the migrate command and reference it
+  ([#1621](https://github.com/compasjs/compas/pull/1621))
+- fix(code-gen): handle 'undefined' keys and update objects coming from the
+  validators correctly ([#1626](https://github.com/compasjs/compas/pull/1626))
+
 ### [v0.0.186](https://github.com/compasjs/compas/releases/tag/v0.0.186)
 
 ##### Changes
