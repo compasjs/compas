@@ -4,6 +4,12 @@ editLink: false
 
 # Changelog
 
+### [v0.0.188](https://github.com/compasjs/compas/releases/tag/v0.0.188)
+
+##### Changes
+
+- fix(store): correctly handle generated array columns in update helper
+
 ### [v0.0.187](https://github.com/compasjs/compas/releases/tag/v0.0.187)
 
 ##### Changes
