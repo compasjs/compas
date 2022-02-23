@@ -259,6 +259,7 @@ test("code-gen/e2e/sql-update", (t) => {
                 sendNotifications: T.bool().default(false),
               },
               optionalField: T.bool().allowNull(),
+              someArrayField: T.array().values(T.bool()).default("[]"),
             })
             .enableQueries({ withDates: true }),
         ],
@@ -342,6 +343,7 @@ test("code-gen/e2e/sql-update", (t) => {
       t.equal(result.optionalField, false);
       t.equal(result.id, setting.id);
       t.equal(result.name, setting.name);
+      t.deepEqual(result.someArrayField, []);
     });
 
     t.test("partial update - with undefined field", async (t) => {
@@ -355,6 +357,7 @@ test("code-gen/e2e/sql-update", (t) => {
         update: {
           age: undefined,
           name: "bar",
+          someArrayField: [true],
         },
         where: {
           id: setting.id,
@@ -365,6 +368,7 @@ test("code-gen/e2e/sql-update", (t) => {
       t.equal(result.id, setting.id);
       t.equal(result.age, setting.age);
       t.equal(result.name, "bar");
+      t.deepEqual(result.someArrayField, [true]);
     });
 
     t.test("partial update - with undefined field", async (t) => {

@@ -295,10 +295,14 @@ export function generatedUpdateHelper(entity, input) {
         typeof updateSpec === "object" &&
         !isNil(updateSpec) &&
         Object.prototype.toString.call(updateSpec) === "[object Object]"
-      )
+      ) &&
+      !Array.isArray(updateSpec)
     ) {
       strings.push(`${state.hasSet ? ", " : ""}"${key}" = `);
       args.push(updateSpec);
+    } else if (Array.isArray(updateSpec)) {
+      strings.push(`${state.hasSet ? ", " : ""}"${key}" = `);
+      args.push(JSON.stringify(updateSpec));
     } else {
       let addedAtomicUpdate = false;
 
