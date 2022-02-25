@@ -4,6 +4,12 @@ editLink: false
 
 # Changelog
 
+### [v0.0.190](https://github.com/compasjs/compas/releases/tag/v0.0.190)
+
+##### Changes
+
+- fix(store): localhost cookies should work now
+
 ### [v0.0.189](https://github.com/compasjs/compas/releases/tag/v0.0.189)
 
 ##### Changes
