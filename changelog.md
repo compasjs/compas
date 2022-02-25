@@ -4,6 +4,19 @@ editLink: false
 
 # Changelog
 
+### [v0.0.189](https://github.com/compasjs/compas/releases/tag/v0.0.189)
+
+##### Changes
+
+- build(deps): bump @types/node from 17.0.19 to 17.0.21
+  ([#1627](https://github.com/compasjs/compas/pull/1627))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump actions/setup-node from 2 to 3.0.0
+  ([#1628](https://github.com/compasjs/compas/pull/1628))
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- fix(store): set cookie on origin 'host' instead of 'hostname' in the
+  session-transport
+
 ### [v0.0.188](https://github.com/compasjs/compas/releases/tag/v0.0.188)
 
 ##### Changes
