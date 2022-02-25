@@ -152,9 +152,12 @@ export async function sessionTransportAddAsCookiesToContext(
 
   for (const cookie of settings.cookieOptions?.cookies ?? []) {
     const domain = getResolvedDomain(ctx, cookie.domain);
+
     if (cookie.domain === "origin" && isNil(domain)) {
       continue;
     }
+
+    const secure = domain !== "localhost" && cookie.secure;
 
     ctx.cookies.set(
       getCookieName(settings, "accessToken"),
@@ -162,7 +165,7 @@ export async function sessionTransportAddAsCookiesToContext(
       {
         expires: new Date((accessToken?.value?.payload?.exp ?? 0) * 1000),
         domain,
-        secure: cookie.secure,
+        secure,
         httpOnly: true,
         sameSite: cookie.sameSite,
       },
@@ -173,7 +176,7 @@ export async function sessionTransportAddAsCookiesToContext(
       {
         expires: new Date((refreshToken?.value?.payload?.exp ?? 0) * 1000),
         domain,
-        secure: cookie.secure,
+        secure,
         httpOnly: true,
         sameSite: cookie.sameSite,
       },
@@ -187,7 +190,7 @@ export async function sessionTransportAddAsCookiesToContext(
       {
         expires: new Date((refreshToken?.value?.payload?.exp ?? 0) * 1000),
         domain,
-        secure: cookie.secure,
+        secure,
         httpOnly: false,
         sameSite: cookie.sameSite,
       },
@@ -348,12 +351,16 @@ function getCookieName(options, suffix) {
  */
 function getResolvedDomain(ctx, domain) {
   if (domain === "own") {
+    if (ctx.get("host")) {
+      return ctx.get("host");
+    }
+
     return undefined;
   } else if (domain === "origin") {
     const originHeader = ctx.get("origin");
 
     if (originHeader) {
-      return new URL(originHeader).host;
+      return new URL(originHeader).hostname;
     }
 
     return undefined;
