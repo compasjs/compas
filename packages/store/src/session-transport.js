@@ -353,7 +353,7 @@ function getResolvedDomain(ctx, domain) {
     const originHeader = ctx.get("origin");
 
     if (originHeader) {
-      return new URL(originHeader).hostname;
+      return new URL(originHeader).host;
     }
 
     return undefined;
