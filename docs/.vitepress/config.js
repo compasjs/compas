@@ -131,6 +131,11 @@ function getHomeSidebar() {
     },
 
     {
+      text: "Examples",
+      link: "/examples.html",
+    },
+
+    {
       text: "References",
       children: [
         {

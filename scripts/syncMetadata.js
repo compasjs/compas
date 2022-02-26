@@ -1,4 +1,6 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { readFile, writeFile } from "fs/promises";
+import { readdir } from "node:fs/promises";
 import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
 import { syncCliReference } from "../src/cli-reference.js";
 
@@ -17,9 +19,15 @@ async function main(logger) {
   syncReadmes(logger);
   syncDocs(logger);
   await syncCliReference(logger);
+  await syncExamples(logger);
 
   logger.info("Running linter");
-  await spawn("yarn", ["compas", "lint"]);
+  await spawn("yarn", ["compas", "lint"], {
+    env: {
+      ...process.env,
+      CI: "false",
+    },
+  });
   logger.info("Done");
 }
 
@@ -81,4 +89,43 @@ function getReadmeSource() {
   const src = readFileSync(pathJoin(process.cwd(), "README.md"), "utf-8");
 
   return src.split("\n").slice(1).join("\n");
+}
+
+async function syncExamples() {
+  let source = `# Compas examples
+
+Examples of how to do various tasks with Compas. The sources are contained as
+much as possible. However, the tests may need some changes to work outside the
+Compas monorepo. If that is the case, there will be a note in the appropriate
+test files.
+`;
+
+  const tags = {
+    "Code gen": [],
+    Other: [],
+  };
+
+  for (const exampleName of await readdir("./examples", {
+    encoding: "utf-8",
+  })) {
+    const { tag } = JSON.parse(
+      await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
+    );
+
+    tags[tag ?? "Other"].push(exampleName);
+  }
+
+  for (const tag of Object.keys(tags)) {
+    if (tags[tag].length === 0) {
+      continue;
+    }
+
+    source += `\n\n## ${tag}`;
+
+    for (const name of tags[tag]) {
+      source += `\n- [${name}](https://github.com/compasjs/compas/tree/main/examples/${name})`;
+    }
+  }
+
+  await writeFile(`./docs/examples.md`, source);
 }
