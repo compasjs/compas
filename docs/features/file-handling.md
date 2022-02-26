@@ -74,3 +74,92 @@ export async function appSaveFile(event, files) {
 - `store.createOrUpdateFile.invalidName` -> When name is not specified.
 - `store.createOrUpdateFile.invalidContentType` -> When the content type is not
   one of `allowedContentTypes`.
+
+## Securing file downloads
+
+In some cases you want to have private files as well, you can accomplish this by
+using `fileSignAccessToken` and `fileVerifyAccessToken`. When returning an image
+url to the client, you can add a JWT based token to the url specific for that
+file id, and with a short expiration date via `fileSignAccessToken`. Then, when
+the user requests the file, `fileVerifyAccessToken` can be used to check if the
+token is still valid and issued for that file id.
+
+Let's look at a quick example;
+
+**Definition**:
+
+```js
+const T = new TypeCreator();
+const R = T.router("/");
+
+R.get("/product", "getProduct").response({
+  publicImageUrl: T.string(),
+  privateAvatarUrl: T.string(),
+});
+
+R.get("/product/public-image", "publicImage")
+  .params({
+    id: T.uuid(),
+  })
+  .response(T.file());
+
+R.get("/product/private-avatar", "privateAvatar")
+  .query({
+    accessToken: T.string(),
+  })
+  .response(T.file());
+```
+
+**Implementation**:
+
+```js
+// For the example :)
+const publicImageId = uuid();
+const privateAvatarId = uuid();
+
+appController.getProduct = (ctx, next) => {
+  // Do user checks here, so see if the privateAvatarUrl should be added.
+
+  ctx.body = {
+    publicImageUrl: "https://example.com/product/public-image",
+    privateAvatarUrl: `https://example.com/product/private-avatar?accessToken=${fileSignAccessToken(
+      {
+        fileId: privateAvatarId,
+        signingKey: "secure key loaded from secure place",
+        maxAgeInSeconds: 2 * 60, // User should load the image in 2 minutes
+      },
+    )}`,
+  };
+
+  return next();
+};
+
+appController.publicImage = async (ctx, next) => {
+  const file = await queryFile({ where: { id: publicImageId } }).exec(sql);
+
+  await sendFile(ctx, file /* ... */);
+
+  return next();
+};
+
+appController.privateAvatar = async (ctx, next) => {
+  const file = await queryFile({ where: { id: privateAvatarId } }).exec(sql);
+
+  // Throws if expired or invalid
+  fileVerifyAccessToken({
+    signingKey: "secure key loaded from secure place",
+    expectedFileId: file.id,
+    fileAccessToken: ctx.validatedQuery.accessToken,
+  });
+
+  await sendFile(ctx, file /* ... */);
+
+  return next();
+};
+```
+
+An important note is that the tokens can't be revoked. So if you have that
+requirement there are two options;
+
+- Keep a blacklist of tokens somewhere
+- Regenerate the `signingKey`, rendering all tokens invalid.

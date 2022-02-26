@@ -5,6 +5,7 @@ import {
   fileTypeFromFile,
   fileTypeStream,
 } from "file-type";
+import { decode, sign, verify } from "jws";
 import mime from "mime-types";
 import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
@@ -95,8 +96,7 @@ export async function createOrUpdateFile(
       const result = await fileTypeFromFile(source);
       contentType = result?.mime;
     } else if (
-      typeof source?.pipe === "function" &&
-      // @ts-ignore
+      typeof source?.pipe === "function" && // @ts-ignore
       typeof source?._read === "function"
     ) {
       // @ts-ignore
@@ -253,4 +253,94 @@ export async function syncDeletedFiles(sql, minio, bucketName) {
   await minio.removeObjects(bucketName, deletingSet);
 
   return deletingSet.length;
+}
+
+/**
+ * Generate a signed string, based on the file id and the max age that it is allowed ot
+ * be accessed.
+ *
+ * @see {fileVerifyAccessToken}
+ *
+ * @param {{
+ *   fileId: string,
+ *   signingKey: string,
+ *   maxAgeInSeconds: number,
+ * }} options
+ * @returns {string}
+ */
+export function fileSignAccessToken(options) {
+  if (
+    typeof options.fileId !== "string" ||
+    typeof options.signingKey !== "string" ||
+    typeof options.maxAgeInSeconds !== "number"
+  ) {
+    throw AppError.serverError({
+      message:
+        "Incorrect arguments to 'fileSignAccessToken'. Expects fileId: string, signingKey: string, maxAgeInSeconds: number.",
+    });
+  }
+
+  const d = new Date();
+  d.setSeconds(d.getSeconds() + options.maxAgeInSeconds);
+
+  return sign({
+    header: {
+      alg: "HS256",
+      typ: "JWT",
+    },
+    secret: options.signingKey,
+    payload: {
+      fileId: options.fileId,
+      exp: Math.floor(d.getTime() / 1000),
+    },
+  });
+}
+
+/**
+ * Verify and decode the fileAccessToken returning the fileId that it was signed for.
+ * Returns an Either<fileId: string, AppError>
+ *
+ * @see {fileSignAccessToken}
+ *
+ * @param {{
+ *   fileAccessToken: string,
+ *   signingKey: string,
+ *   expectedFileId: string,
+ * }} options
+ * @returns {void}
+ */
+export function fileVerifyAccessToken(options) {
+  if (
+    typeof options.fileAccessToken !== "string" ||
+    typeof options.signingKey !== "string" ||
+    typeof options.expectedFileId !== "string"
+  ) {
+    throw AppError.serverError({
+      message:
+        "Incorrect arguments to 'fileVerifyAndDecodeSignedAccessToken'. Expects fileAccessToken: string, signingKey: string.",
+    });
+  }
+
+  const isValid = verify(options.fileAccessToken, "HS256", options.signingKey);
+
+  if (!isValid) {
+    throw AppError.validationError(
+      "file.verifyAndDecodeAccessToken.invalidToken",
+      {},
+    );
+  }
+
+  const decoded = decode(options.fileAccessToken);
+
+  if (decoded.payload.exp * 1000 < Date.now()) {
+    throw AppError.validationError(
+      `file.verifyAndDecodeAccessToken.expiredToken`,
+    );
+  }
+
+  if (decoded.payload.fileId !== options.expectedFileId) {
+    throw AppError.validationError(
+      `file.verifyAndDecodeAccessToken.invalidToken`,
+    );
+  }
 }

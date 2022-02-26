@@ -48,6 +48,8 @@ export {
   copyFile,
   getFileStream,
   syncDeletedFiles,
+  fileSignAccessToken,
+  fileVerifyAccessToken,
 } from "./src/files.js";
 export {
   hoistChildrenToParent,
