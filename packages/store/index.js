@@ -30,7 +30,8 @@
  */
 
 /**
- * @typedef {import("./src/session-transport.js").SessionTransportSettings} SessionTransportSettings
+ * @typedef {import("./src/session-transport.js").SessionTransportSettings}
+ *   SessionTransportSettings
  */
 
 export { structure as storeStructure } from "./src/generated/common/structure.js";
@@ -74,6 +75,8 @@ export {
   copyFile,
   getFileStream,
   syncDeletedFiles,
+  fileSignAccessToken,
+  fileVerifyAndDecodeAccessToken,
 } from "./src/files.js";
 
 export {

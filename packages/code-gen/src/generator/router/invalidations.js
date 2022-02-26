@@ -119,8 +119,11 @@ function processInvalidation(context, route, invalidation) {
           continue;
         }
 
-        invalidation.properties.specification =
-          invalidation.properties.specification ?? {};
+        invalidation.properties.specification = invalidation.properties
+          .specification ?? {
+          params: {},
+          query: {},
+        };
         invalidation.properties.specification[specificationKey] =
           invalidation.properties.specification[specificationKey] ?? {};
         invalidation.properties.specification[specificationKey][targetParam] = [

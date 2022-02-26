@@ -1,9 +1,12 @@
 import { createReadStream, createWriteStream, readFileSync } from "fs";
 import { mainTestFn, test } from "@compas/cli";
 import { AppError, isNil, uuid } from "@compas/stdlib";
+import { decode } from "jws";
 import {
   copyFile,
   createOrUpdateFile,
+  fileSignAccessToken,
+  fileVerifyAndDecodeAccessToken,
   getFileStream,
   syncDeletedFiles,
 } from "./files.js";
@@ -218,6 +221,119 @@ test("store/files", async (t) => {
     }).exec(sql);
 
     t.ok(isNil(file));
+  });
+
+  t.test("fileSignAccessToken", (t) => {
+    t.test("all options are mandatory", (t) => {
+      try {
+        fileSignAccessToken({
+          fileId: uuid(),
+          signingKey: 5,
+        });
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 500);
+      }
+
+      try {
+        fileSignAccessToken({
+          signingKey: uuid(),
+          maxAgeInSeconds: 5,
+        });
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 500);
+      }
+    });
+
+    t.test("returns string", (t) => {
+      const result = fileSignAccessToken({
+        fileId: uuid(),
+        signingKey: uuid(),
+        maxAgeInSeconds: 5,
+      });
+
+      const decoded = decode(result);
+
+      t.equal(typeof result, "string");
+      t.ok(uuid.isValid(decoded.payload.fileId));
+    });
+  });
+
+  t.test("fileVerifyAndDecodeAccessToken", (t) => {
+    t.test("all options are mandatory", (t) => {
+      try {
+        fileVerifyAndDecodeAccessToken({
+          fileAccessToken: uuid(),
+        });
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 500);
+      }
+
+      try {
+        fileVerifyAndDecodeAccessToken({
+          signingKey: uuid(),
+        });
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 500);
+      }
+    });
+
+    t.test("handles unknown signingKey", (t) => {
+      const accessToken = fileSignAccessToken({
+        fileId: uuid(),
+        signingKey: uuid(),
+        maxAgeInSeconds: 5,
+      });
+
+      const { error } = fileVerifyAndDecodeAccessToken({
+        fileAccessToken: accessToken,
+        signingKey: uuid(),
+      });
+
+      t.equal(typeof accessToken, "string");
+      t.ok(AppError.instanceOf(error));
+      t.equal(error.status, 400);
+      t.ok(error.key.includes("invalidToken"));
+    });
+
+    t.test("handles expired token", (t) => {
+      const signingKey = uuid();
+      const accessToken = fileSignAccessToken({
+        fileId: uuid(),
+        signingKey,
+        maxAgeInSeconds: -5,
+      });
+
+      const { error } = fileVerifyAndDecodeAccessToken({
+        fileAccessToken: accessToken,
+        signingKey,
+      });
+
+      t.equal(typeof accessToken, "string");
+      t.ok(AppError.instanceOf(error));
+      t.equal(error.status, 400);
+      t.ok(error.key.includes("expiredToken"));
+    });
+
+    t.test("returns value", (t) => {
+      const fileId = uuid();
+      const signingKey = uuid();
+      const accessToken = fileSignAccessToken({
+        fileId,
+        signingKey,
+        maxAgeInSeconds: 5,
+      });
+
+      const { value } = fileVerifyAndDecodeAccessToken({
+        fileAccessToken: accessToken,
+        signingKey,
+      });
+
+      t.equal(fileId, value);
+    });
   });
 
   t.test("destroy test db", async (t) => {

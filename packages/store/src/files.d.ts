@@ -127,4 +127,38 @@ export function syncDeletedFiles(
   minio: import("../types/advanced-types").MinioClient,
   bucketName: string,
 ): Promise<number>;
+/**
+ * Generate a signed string, based on the file id and the max age that it is allowed ot
+ * be accessed.
+ *
+ * @see {fileVerifyAndDecodeAccessToken}
+ *
+ * @param {{
+ *   fileId: string,
+ *   signingKey: string,
+ *   maxAgeInSeconds: number,
+ * }} options
+ * @returns {string}
+ */
+export function fileGetSignedAccessToken(options: {
+  fileId: string;
+  signingKey: string;
+  maxAgeInSeconds: number;
+}): string;
+/**
+ * Verify and decode the fileAccessToken returning the fileId that it was signed for.
+ * Returns an Either<fileId: string, AppError>
+ *
+ * @see {fileGetSignedAccessToken}
+ *
+ * @param {{
+ *   fileAccessToken: string,
+ *   signingKey: string,
+ * }} options
+ * @returns {import("@compas/stdlib").Either<string, import("@compas/stdlib").AppError>}
+ */
+export function fileVerifyAndDecodeAccessToken(options: {
+  fileAccessToken: string;
+  signingKey: string;
+}): import("@compas/stdlib").Either<string, import("@compas/stdlib").AppError>;
 //# sourceMappingURL=files.d.ts.map

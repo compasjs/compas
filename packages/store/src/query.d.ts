@@ -9,8 +9,9 @@
  * @template T
  *
  * @param {TemplateStringsArray | string[]} strings
- * @param {...(import("../types/advanced-types").QueryPartArg | import("../types/advanced-types").QueryPartArg[])}
- *   values
+ * @param {...(import("../types/advanced-types").QueryPartArg
+ *   | import("../types/advanced-types").QueryPartArg[]
+ *   )} values
  * @returns {import("../types/advanced-types").QueryPart<T>}
  */
 export function query<T>(
