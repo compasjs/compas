@@ -105,7 +105,7 @@ function processInvalidation(context, route, invalidation) {
       for (const targetParam of targetParams) {
         if (
           !isNil(
-            invalidation.properties.specification[specificationKey][
+            invalidation.properties.specification?.[specificationKey]?.[
               targetParam
             ],
           )
@@ -119,6 +119,10 @@ function processInvalidation(context, route, invalidation) {
           continue;
         }
 
+        invalidation.properties.specification =
+          invalidation.properties.specification ?? {};
+        invalidation.properties.specification[specificationKey] =
+          invalidation.properties.specification[specificationKey] ?? {};
         invalidation.properties.specification[specificationKey][targetParam] = [
           specificationKey,
           targetParam,
@@ -130,7 +134,7 @@ function processInvalidation(context, route, invalidation) {
   // Check for errors in the specification;
   for (const specificationKey of ["params", "query"]) {
     for (const key of Object.keys(
-      invalidation.properties.specification[specificationKey],
+      invalidation.properties.specification?.[specificationKey] ?? {},
     )) {
       const targetObject =
         targetRoute[specificationKey]?.reference?.keys ??
