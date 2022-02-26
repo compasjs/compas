@@ -108,6 +108,10 @@ test files.
   for (const exampleName of await readdir("./examples", {
     encoding: "utf-8",
   })) {
+    if (exampleName.includes(".")) {
+      continue;
+    }
+
     const { tag } = JSON.parse(
       await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
     );
