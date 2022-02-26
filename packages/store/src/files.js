@@ -259,7 +259,7 @@ export async function syncDeletedFiles(sql, minio, bucketName) {
  * Generate a signed string, based on the file id and the max age that it is allowed ot
  * be accessed.
  *
- * @see {fileVerifyAndDecodeAccessToken}
+ * @see {fileVerifyAccessToken}
  *
  * @param {{
  *   fileId: string,
@@ -305,13 +305,15 @@ export function fileSignAccessToken(options) {
  * @param {{
  *   fileAccessToken: string,
  *   signingKey: string,
+ *   expectedFileId: string,
  * }} options
- * @returns {import("@compas/stdlib").Either<string, import("@compas/stdlib").AppError>}
+ * @returns {void}
  */
-export function fileVerifyAndDecodeAccessToken(options) {
+export function fileVerifyAccessToken(options) {
   if (
     typeof options.fileAccessToken !== "string" ||
-    typeof options.signingKey !== "string"
+    typeof options.signingKey !== "string" ||
+    typeof options.expectedFileId !== "string"
   ) {
     throw AppError.serverError({
       message:
@@ -322,33 +324,23 @@ export function fileVerifyAndDecodeAccessToken(options) {
   const isValid = verify(options.fileAccessToken, "HS256", options.signingKey);
 
   if (!isValid) {
-    return {
-      error: AppError.validationError(
-        "file.verifyAndDecodeAccessToken.invalidToken",
-        {},
-      ),
-    };
+    throw AppError.validationError(
+      "file.verifyAndDecodeAccessToken.invalidToken",
+      {},
+    );
   }
 
   const decoded = decode(options.fileAccessToken);
 
   if (decoded.payload.exp * 1000 < Date.now()) {
-    return {
-      error: AppError.validationError(
-        `file.verifyAndDecodeAccessToken.expiredToken`,
-      ),
-    };
+    throw AppError.validationError(
+      `file.verifyAndDecodeAccessToken.expiredToken`,
+    );
   }
 
-  if (isNil(decoded.payload.fileId)) {
-    return {
-      error: AppError.validationError(
-        `file.verifyAndDecodeAccessToken.invalidToken`,
-      ),
-    };
+  if (decoded.payload.fileId !== options.expectedFileId) {
+    throw AppError.validationError(
+      `file.verifyAndDecodeAccessToken.invalidToken`,
+    );
   }
-
-  return {
-    value: decoded.payload.fileId,
-  };
 }

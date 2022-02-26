@@ -6,7 +6,7 @@ import {
   copyFile,
   createOrUpdateFile,
   fileSignAccessToken,
-  fileVerifyAndDecodeAccessToken,
+  fileVerifyAccessToken,
   getFileStream,
   syncDeletedFiles,
 } from "./files.js";
@@ -260,11 +260,12 @@ test("store/files", async (t) => {
     });
   });
 
-  t.test("fileVerifyAndDecodeAccessToken", (t) => {
+  t.test("fileVerifyAccessToken", (t) => {
     t.test("all options are mandatory", (t) => {
       try {
-        fileVerifyAndDecodeAccessToken({
+        fileVerifyAccessToken({
           fileAccessToken: uuid(),
+          expectedFileId: uuid(),
         });
       } catch (e) {
         t.ok(AppError.instanceOf(e));
@@ -272,7 +273,7 @@ test("store/files", async (t) => {
       }
 
       try {
-        fileVerifyAndDecodeAccessToken({
+        fileVerifyAccessToken({
           signingKey: uuid(),
         });
       } catch (e) {
@@ -288,15 +289,18 @@ test("store/files", async (t) => {
         maxAgeInSeconds: 5,
       });
 
-      const { error } = fileVerifyAndDecodeAccessToken({
-        fileAccessToken: accessToken,
-        signingKey: uuid(),
-      });
-
-      t.equal(typeof accessToken, "string");
-      t.ok(AppError.instanceOf(error));
-      t.equal(error.status, 400);
-      t.ok(error.key.includes("invalidToken"));
+      try {
+        fileVerifyAccessToken({
+          fileAccessToken: accessToken,
+          signingKey: uuid(),
+          expectedFileId: uuid(),
+        });
+      } catch (e) {
+        t.equal(typeof accessToken, "string");
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 400);
+        t.ok(e.key.includes("invalidToken"));
+      }
     });
 
     t.test("handles expired token", (t) => {
@@ -307,18 +311,21 @@ test("store/files", async (t) => {
         maxAgeInSeconds: -5,
       });
 
-      const { error } = fileVerifyAndDecodeAccessToken({
-        fileAccessToken: accessToken,
-        signingKey,
-      });
-
-      t.equal(typeof accessToken, "string");
-      t.ok(AppError.instanceOf(error));
-      t.equal(error.status, 400);
-      t.ok(error.key.includes("expiredToken"));
+      try {
+        fileVerifyAccessToken({
+          fileAccessToken: accessToken,
+          signingKey,
+          expectedFileId: uuid(),
+        });
+      } catch (e) {
+        t.equal(typeof accessToken, "string");
+        t.ok(AppError.instanceOf(e));
+        t.equal(e.status, 400);
+        t.ok(e.key.includes("expiredToken"));
+      }
     });
 
-    t.test("returns value", (t) => {
+    t.test("incorrect file id", (t) => {
       const fileId = uuid();
       const signingKey = uuid();
       const accessToken = fileSignAccessToken({
@@ -327,12 +334,36 @@ test("store/files", async (t) => {
         maxAgeInSeconds: 5,
       });
 
-      const { value } = fileVerifyAndDecodeAccessToken({
-        fileAccessToken: accessToken,
+      try {
+        fileVerifyAccessToken({
+          fileAccessToken: accessToken,
+          signingKey,
+          expectedFileId: uuid(),
+        });
+      } catch (e) {
+        t.equal(e.status, 400);
+        t.ok(e.key.includes("invalidToken"));
+      }
+
+      t.pass();
+    });
+
+    t.test("success", (t) => {
+      const fileId = uuid();
+      const signingKey = uuid();
+      const accessToken = fileSignAccessToken({
+        fileId,
         signingKey,
+        maxAgeInSeconds: 5,
       });
 
-      t.equal(fileId, value);
+      fileVerifyAccessToken({
+        fileAccessToken: accessToken,
+        signingKey,
+        expectedFileId: fileId,
+      });
+
+      t.pass();
     });
   });
 

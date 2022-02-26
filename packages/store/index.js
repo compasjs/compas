@@ -76,7 +76,7 @@ export {
   getFileStream,
   syncDeletedFiles,
   fileSignAccessToken,
-  fileVerifyAndDecodeAccessToken,
+  fileVerifyAccessToken,
 } from "./src/files.js";
 
 export {

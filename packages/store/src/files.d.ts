@@ -131,7 +131,7 @@ export function syncDeletedFiles(
  * Generate a signed string, based on the file id and the max age that it is allowed ot
  * be accessed.
  *
- * @see {fileVerifyAndDecodeAccessToken}
+ * @see {fileVerifyAccessToken}
  *
  * @param {{
  *   fileId: string,
@@ -140,7 +140,7 @@ export function syncDeletedFiles(
  * }} options
  * @returns {string}
  */
-export function fileGetSignedAccessToken(options: {
+export function fileSignAccessToken(options: {
   fileId: string;
   signingKey: string;
   maxAgeInSeconds: number;
@@ -149,16 +149,18 @@ export function fileGetSignedAccessToken(options: {
  * Verify and decode the fileAccessToken returning the fileId that it was signed for.
  * Returns an Either<fileId: string, AppError>
  *
- * @see {fileGetSignedAccessToken}
+ * @see {fileSignAccessToken}
  *
  * @param {{
  *   fileAccessToken: string,
  *   signingKey: string,
+ *   expectedFileId: string,
  * }} options
- * @returns {import("@compas/stdlib").Either<string, import("@compas/stdlib").AppError>}
+ * @returns {void}
  */
-export function fileVerifyAndDecodeAccessToken(options: {
+export function fileVerifyAccessToken(options: {
   fileAccessToken: string;
   signingKey: string;
-}): import("@compas/stdlib").Either<string, import("@compas/stdlib").AppError>;
+  expectedFileId: string;
+}): void;
 //# sourceMappingURL=files.d.ts.map
