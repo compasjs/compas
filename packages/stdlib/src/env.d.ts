@@ -38,32 +38,6 @@ export function isProduction(): boolean;
  */
 export function isStaging(): boolean;
 /**
- * Try to calculate the CORS_URL environment variable from the APP_URL environment
- * variable. Assumes the APP_URL is in the following format: http(s)://api.xxx.xx.com and
- * generates the following CORS_URL value: http(s)://xxx.xx.com.
- * If the APP_URL host only contains xxx.com the CORS_URL value will be equivalent.
- *
- * Refreshing the environment cache via `refreshEnvironmentCache` is not necessary.
- *
- * @since 0.1.0
- *
- * @returns {void}
- */
-export function calculateCorsUrlFromAppUrl(): void;
-/**
- * Try to calculate the COOKIE_URL environment variable from the APP_URL environment
- * variable. Assumes the APP_URL is in the following format: http(s)://api.xxx.xx.com and
- * generates the following COOKIE_URL value: xxx.xx.com.
- * If the APP_URL host only contains xxx.com the CORS_URL value will be equivalent.
- *
- * Refreshing the environment cache via `refreshEnvironmentCache` is not necessary.
- *
- * @since 0.1.0
- *
- * @returns {void}
- */
-export function calculateCookieUrlFromAppUrl(): void;
-/**
  * Cached process.env
  *
  * @type {Record<string, string>}

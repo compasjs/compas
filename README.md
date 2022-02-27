@@ -66,12 +66,12 @@ copying and pasting things around, this project was born.
 - 404 en error handling
 - Handle CORS
 - Send file helper
-- Session support with safe, browser readable cookies
 
 **@compas/store**:
 
 - Wrapper around the Minio S3 client
 - Wrapper around Postgres connection
+- Session support via JSON Web tokens
 - Utilities for providing temporary databases in a test environment
 - Postgres migrations
 - Postgres and S3 combined for file storage
