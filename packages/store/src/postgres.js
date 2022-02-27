@@ -2,8 +2,8 @@ import { environment, isNil, isProduction, merge } from "@compas/stdlib";
 import postgres from "postgres";
 
 /**
- * @param {Postgres["connectionOptions"]} opts
- * @returns {Postgres["connectionOptions"]}
+ * @param {import("../types/advanced-types.js").Postgres["connectionOptions"]} opts
+ * @returns {NonNullable<import("../types/advanced-types.js").Postgres["connectionOptions"]>}
  */
 export function buildAndCheckOpts(opts) {
   const finalOpts = /** @type {postgres.Options} */ merge(
@@ -54,8 +54,8 @@ export function buildAndCheckOpts(opts) {
  *
  * @since 0.1.0
  *
- * @param {Postgres["connectionOptions"]} [opts]
- * @returns {Promise<Postgres>}
+ * @param {import("../types/advanced-types.js").Postgres["connectionOptions"]} [opts]
+ * @returns {Promise<import("../types/advanced-types.js").Postgres>}
  */
 export async function newPostgresConnection(opts) {
   const connectionOpts = buildAndCheckOpts(opts);
@@ -78,7 +78,7 @@ export async function newPostgresConnection(opts) {
  * @param databaseName
  * @param template
  * @param connectionOptions
- * @returns {Promise<Postgres>}
+ * @returns {Promise<import("../types/advanced-types.js").Postgres>}
  */
 export async function createDatabaseIfNotExists(
   sql,

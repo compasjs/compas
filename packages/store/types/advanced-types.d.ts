@@ -1,9 +1,8 @@
 import * as minioVendor from "minio";
-import * as postgresVendor from "postgres";
-import { PendingQuery } from "postgres";
+import type { Options, PendingQuery, Sql } from "postgres";
 
-export type Postgres = postgresVendor.Sql<{}> & {
-  connectionOptions?: postgresVendor.Options & { createIfNotExists?: true };
+export type Postgres = Sql<{}> & {
+  connectionOptions?: Options<{}> & { createIfNotExists?: true };
 };
 
 export type QueryPartArg =

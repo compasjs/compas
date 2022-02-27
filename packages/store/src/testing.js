@@ -100,6 +100,7 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
 
   // Clean all connections
   // They prevent from using this as a template
+  // @ts-ignore
   await creationSql`
     SELECT pg_terminate_backend(pg_stat_activity.pid)
     FROM pg_stat_activity
