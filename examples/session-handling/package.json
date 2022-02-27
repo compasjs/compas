@@ -1,19 +1,21 @@
 {
-  "name": "@compas-example/code-gen-basics",
+  "name": "@compas-example/session-handling",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "@compas/stdlib": "*"
+    "@compas/cli": "*",
+    "@compas/server": "*",
+    "@compas/stdlib": "*",
+    "@compas/store": "*"
   },
   "devDependencies": {
-    "@compas/cli": "*",
     "@compas/code-gen": "*"
   },
   "exampleMetadata": {
     "tags": [
-      "Code gen"
+      "Server"
     ],
-    "includeGenerated": false
+    "includeGenerated": true
   }
 }

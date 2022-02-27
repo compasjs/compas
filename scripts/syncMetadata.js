@@ -1,7 +1,13 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { readdir } from "node:fs/promises";
-import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
+import {
+  dirnameForModule,
+  exec,
+  mainFn,
+  pathJoin,
+  spawn,
+} from "@compas/stdlib";
 import { syncCliReference } from "../src/cli-reference.js";
 
 mainFn(import.meta, main);
@@ -18,8 +24,10 @@ async function main(logger) {
 
   syncReadmes(logger);
   syncDocs(logger);
+  await syncDocExamples(logger);
+
   await syncCliReference(logger);
-  await syncExamples(logger);
+  await syncExampleBasedOnMetadata();
 
   logger.info("Running linter");
   await spawn("yarn", ["compas", "lint"], {
@@ -91,7 +99,7 @@ function getReadmeSource() {
   return src.split("\n").slice(1).join("\n");
 }
 
-async function syncExamples() {
+async function syncDocExamples() {
   let source = `# Compas examples
 
 Examples of how to do various tasks with Compas. The sources are contained as
@@ -102,6 +110,7 @@ test files.
 
   const tags = {
     "Code gen": [],
+    Server: [],
     Other: [],
   };
 
@@ -112,11 +121,13 @@ test files.
       continue;
     }
 
-    const { tag } = JSON.parse(
+    const { exampleMetadata } = JSON.parse(
       await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
     );
 
-    tags[tag ?? "Other"].push(exampleName);
+    for (const tag of exampleMetadata?.tags ?? ["Other"]) {
+      tags[tag].push(exampleName);
+    }
   }
 
   for (const tag of Object.keys(tags)) {
@@ -132,4 +143,24 @@ test files.
   }
 
   await writeFile(`./docs/examples.md`, source);
+}
+
+async function syncExampleBasedOnMetadata() {
+  for (const exampleName of await readdir("./examples", {
+    encoding: "utf-8",
+  })) {
+    if (exampleName.includes(".")) {
+      continue;
+    }
+
+    const { exampleMetadata } = JSON.parse(
+      await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
+    );
+
+    if (exampleMetadata?.includeGenerated) {
+      await exec(`yarn compas run generate`, {
+        cwd: `./examples/${exampleName}`,
+      });
+    }
+  }
 }

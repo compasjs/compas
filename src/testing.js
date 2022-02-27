@@ -3,7 +3,7 @@ import { uuid } from "@compas/stdlib";
 import { createTestPostgresDatabase } from "@compas/store";
 
 /**
- * @type {Postgres}
+ * @type {import("@compas/store").Postgres}
  */
 export let sql;
 
