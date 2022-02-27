@@ -12,3 +12,4 @@ test files.
 ## Server
 
 - [session-handling](https://github.com/compasjs/compas/tree/main/examples/session-handling)
+- [session-handling-frontend](https://github.com/compasjs/compas/tree/main/examples/session-handling-frontend)
