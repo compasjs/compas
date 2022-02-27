@@ -35,6 +35,7 @@ export async function apiAuthLogin(instance, requestConfig = {}) {
  *
  * @param {AxiosInstance} instance
  * @param { { signal?: AbortSignal | undefined } } [requestConfig]
+ * @returns {Promise<AuthLogoutResponseApiResponse>}
  */
 export async function apiAuthLogout(instance, requestConfig = {}) {
   try {
@@ -43,6 +44,10 @@ export async function apiAuthLogout(instance, requestConfig = {}) {
       method: "post",
       ...requestConfig,
     });
+    const { error } = validators.validateAuthLogoutResponse(response.data);
+    if (error) {
+      throw error;
+    }
     return response.data;
   } catch (e) {
     return handleError(e, "auth", "logout");

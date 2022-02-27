@@ -17,6 +17,7 @@ import { isQueryPart } from "@compas/store";
  * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
  */
 
+const objectKeys1649918931 = new Set(["success"]);
 const objectKeys1027736033 = new Set(["session"]);
 const objectKeys1347962962 = new Set(["id", "createdAt"]);
 const objectKeys592157009 = new Set(["refreshToken"]);
@@ -428,6 +429,114 @@ const objectKeys1856722848 = new Set([
   "refreshToken",
   "accessToken",
 ]);
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<true>}
+ */
+export function anonymousValidator1006701760(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.boolean.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "boolean") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.boolean.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value !== true) {
+    const oneOf = true;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.boolean.oneOf",
+          info: { oneOf },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"success": true, }>}
+ */
+export function anonymousValidator1649918931(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1649918931.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: { extraKey: key },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [["success", anonymousValidator1006701760]];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
 /**
  * @param {*} value
  * @param {string} propertyPath

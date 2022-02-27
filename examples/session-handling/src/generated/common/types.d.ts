@@ -9,6 +9,7 @@ import { Middleware } from "@compas/server";
 declare global {
   type AuthLogin = undefined | any;
   type AuthLogout = AuthLogin;
+  type AuthLogoutResponse = { success: true };
   type AuthMe = AuthLogin;
   type AuthMeResponse = { session: AuthSession };
   type AuthSession = { id: string; createdAt: Date };
@@ -718,6 +719,7 @@ declare global {
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
   };
+  type AuthLogoutResponseInput = AuthLogoutResponse;
   type AuthMeResponseInput = { session: AuthSessionInput };
   type AuthSessionInput = AuthSession;
   type AuthRefreshTokensBodyInput = AuthRefreshTokensBody;
@@ -1257,7 +1259,7 @@ declare global {
       event: InsightEvent;
       log: Logger;
     },
-    unknown
+    AuthLogoutResponse
   >;
   type AuthLogoutFn = (ctx: AuthLogoutCtx, next: Next) => void | Promise<void>;
   type AuthMeCtx = Context<
@@ -1299,6 +1301,7 @@ declare global {
     compas: Middleware | Middleware[];
   };
   type AuthTokenPairApiResponse = AuthTokenPair;
+  type AuthLogoutResponseApiResponse = AuthLogoutResponse;
   type AuthMeResponseApiResponse = { session: AuthSessionApiResponse };
   type AuthSessionApiResponse = { id: string; createdAt: string };
   type CompasStructureResponseApiResponse = CompasStructureResponse;

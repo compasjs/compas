@@ -8,3 +8,7 @@ test files.
 ## Code gen
 
 - [code-gen-basics](https://github.com/compasjs/compas/tree/main/examples/code-gen-basics)
+
+## Server
+
+- [session-handling](https://github.com/compasjs/compas/tree/main/examples/session-handling)
