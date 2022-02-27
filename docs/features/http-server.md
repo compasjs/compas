@@ -75,5 +75,3 @@ These two together are explained in
   callable middleware
 - `sendFile` is a utility to easily send out files. Supports partial responses,
   when for example sending a video.
-- `session` is a cookie based session handling, see the
-  [session handling docs](/features/session-handling.html) for more information

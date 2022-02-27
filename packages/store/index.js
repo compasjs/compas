@@ -104,10 +104,7 @@ export {
   sessionStoreCleanupExpiredSessions,
 } from "./src/session-store.js";
 
-export {
-  sessionTransportLoadFromContext,
-  sessionTransportAddAsCookiesToContext,
-} from "./src/session-transport.js";
+export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 
 export {
   query,

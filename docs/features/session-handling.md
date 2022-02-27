@@ -1,8 +1,7 @@
 # Session handling
 
 Since Compas v0.0.172 Compas provides a session store based on JSON Web Tokens
-and provides session transport support via both headers as well as server
-managed cookies.
+and provides session transport support via authorizatoin headers.
 
 ## JSON Web Token based
 
@@ -35,8 +34,8 @@ will return a `Either<X, AppError>`, meaning that callers should handle
 
 ### Session store
 
-Let's look at the primitives first. These do not require a specific way of
-transporting the JWT's over for example HTTP headers or cookies.
+Let's look at the primitives first. These are for creating session tokens,
+storing information with that session and invalidating it.
 
 #### `sessionStoreSettings`
 
@@ -263,7 +262,7 @@ stealing. A good default may be 45 days.
 ### Session transport
 
 Compas also supports ways of transporting the JWT's. For now limited to reading
-from the HTTP Authorization header and reading and writing to HTTP cookies.
+from the HTTP Authorization header.
 
 #### `SessionTransportSettings`
 
@@ -278,61 +277,9 @@ The above properties are all required.
 
 - `enableHeaderTransport` (boolean): Enable or disable using the 'Authorization'
   header for access token transport. Defaults to `true`.
-- `enableCookieTransport` (boolean): Enable or disable using HTTP cookies for
-  access and refresh token support. Defaults to `true`.
 
-Transports are checked in the above order, and at least a single transport needs
-to be enabled.
-
-- `autoRefreshCookies` (boolean): Specifies if the cookie transport should
-  automatically try to refresh cookies. Defaults to `true`.
-- `headerOptions` (object): A still empty object to configure reading the header
-  transport.
-- `cookieOptions` (object): An object to configure reading and writing cookies.
-  - `cookiePrefix` (string): A prefix to use when formatting cookie names. See
-    the 'Cookie names' section below.
-  - `sameSite` ("strict"|"lax"): Configure the same site cookie option. Defaults
-    to 'lax'.
-  - `secure` (boolean): Configure the `Secure` property of cookies. Defaults to
-    `isProduction()`.
-  - `cookies` (SessionTransportCookieSettings[]): Array with cookies you want to
-    set. See ' SessionTransportCookieSettings' below for more information.
-    Defaults to `[{ domain: "own" }, { domain: "origin" }]`
-
-**Cookie names**
-
-Cookies always come in triples, `accessToken`, `refreshToken` and `public`. The
-`public` cookie is the only non-`httpOnly` cookie and is thus readable (and
-writeable, but not advisable) by client side JavaScript. These names can
-automatically be prefixed by specifying one of the following:
-
-- `options.cookieOptions.cookiePrefix` -> `$prefix$.accessToken`
-- `environment.APP_NAME` -> `$environment.APP_NAME$.accessToken`
-
-**SessionTransportCookieSettings**
-
-An object defining domains on which cookies need to be set. All properties
-except of `domain` default to the `cookieOptions.xxx` defined above. The cookie
-expiration is taken from the JWT's and the `public` cookie uses the same
-expiration from the refresh token.
-
-- `domain` ("own"|"origin"|string): The domain on which the cookie triplet is
-  set. 'Origin' reads the request origin header, and 'own' does not specify a
-  domain when setting the cookies.
-- `sameSite` ("strict"|"lax"): Set the 'SameSite' behaviour, defaults to
-  `cookieOptions.sameSite`.
-- `secure` (boolean): Set the `Secure` behaviour, defaults to
-  `cookieOptions.secure`.
-
-Some examples of which cookies are set based on the `cookies` array:
-
-- `[]` -> no cookies are sent
-- `[{ domain: "origin" }]` -> Three cookies (accessToken, refreshToken and
-  public) are set for the request origin domain.
-- `[{ domain: "own" }]` -> The cookie triplet is set without a domain, and thus
-  on the domain where the api lives.
-- `[{ domain: "api.example.com" }, { domain: "own" }]` -> Set's the triplet both
-  on `api.exmaple.com` as well as on the domain where the api is hosted on.
+Transports are checked in the above order, and at least one transport needs to
+be enabled.
 
 #### `sessionTransportLoadFromContext`
 
@@ -343,12 +290,6 @@ value is expected to be in the `Bearer $accessToken` format. When a token is
 found in the header, it is passed to [`sessionStoreGet`](#sessionstoreget) and
 the result is returned. If no access token is found, the following steps are
 taken.
-
-If `enableCookieTransport` is set, it will try to load a session from the
-cookies. When there is only an 'refreshToken' found, it will automatically
-refresh the tokens and set new cookies. For more information about setting the
-cookies, see
-[`sessionTransportAddAsCookiesToContext`](#sessiontransportaddascookiestocontext)
 
 **Example**:
 
@@ -380,58 +321,6 @@ app.use(async (ctx, next) => {
   } else {
     // return token pair to the caller
   }
-});
-```
-
-**Errors**:
-
-- Infers all errors from [`sessionStoreGet`](#sessionstoreget)
-- `error.server.internal` -> if the provided `SessionTransportSettings` are
-  invalid.
-
-#### `sessionTransportAddAsCookiesToContext`
-
-Set new cookies based on the provided `tokenPair` and supports invalidating the
-cookies when no `tokenPair` is provided. See [`SessionTransportSettings`] for
-more information about how cookies are set.
-
-**Example**:
-
-```js
-import {
-  sessionTransportAddAsCookiesToContext,
-  sessionStoreCreate,
-} from "@compas/store";
-import { getApp } from "@compas/server";
-
-const sessionStoreSettings = {
-  accessTokenMaxAgeInSeconds: 5 * 60, // 5 minutes
-  refreshTokenMaxAgeInSeconds: 24 * 60 * 60, // 24 hours
-  signingKey: "secure key loaded from secure place",
-};
-
-const sessionTransportSettings = {
-  sessionStoreSettings, // use defaults
-};
-
-const app = getApp();
-app.use(async (ctx, next) => {
-  const tokenPair = await sessionStoreCreate(
-    newEventFromEvent(ctx.event),
-    sql,
-    sessionStoreSettings,
-    {},
-  );
-  if (tokenPair.error) {
-    // handle error
-  }
-
-  await sessionTransportAddAsCookiesToContext(
-    newEventFromEvent(ctx.event),
-    ctx,
-    tokenPair.value,
-    sessionTransportSettings,
-  );
 });
 ```
 

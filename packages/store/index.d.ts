@@ -2,6 +2,7 @@ export { structure as storeStructure } from "./src/generated/common/structure.js
 export { queries as storeQueries } from "./src/generated/database/index.js";
 export { setStoreQueries } from "./src/generated.js";
 export { FileCache } from "./src/file-cache.js";
+export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 export { postgresTableSizes } from "./src/insight.js";
 export { sendTransformedImage } from "./src/send-transformed-image.js";
 export type Postgres = import("./types/advanced-types.js").Postgres;
@@ -71,10 +72,6 @@ export {
   sessionStoreRefreshTokens,
   sessionStoreCleanupExpiredSessions,
 } from "./src/session-store.js";
-export {
-  sessionTransportLoadFromContext,
-  sessionTransportAddAsCookiesToContext,
-} from "./src/session-transport.js";
 export {
   query,
   isQueryPart,

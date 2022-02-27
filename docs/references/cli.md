@@ -237,24 +237,6 @@ with caution.
 | --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean)         |
 | -h, --help            | Display information about the current command. (boolean)                                                                 |
 
-## `compas proxy`
-
-Proxy a remote API via localhost.
-
-It handles CORS pre-flight requests locally and proxies all other requests to
-the target.
-
-This is fully configured via environment variables:
-
-- API_URL,NEXT_PUBLIC_API_URL: the url which is expected by your frontend.
-  Should be in the form of 'http://localhost:$PORT'. This determines the port to
-  listen on.
-- PROXY_URL: the target used for passing the proxy-ed requests to.
-
-| Option     | Description                                              |
-| ---------- | -------------------------------------------------------- |
-| -h, --help | Display information about the current command. (boolean) |
-
 ## `compas run`
 
 Run arbitrary JavaScript files, scripts defined in the package.json and scripts

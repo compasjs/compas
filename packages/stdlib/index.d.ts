@@ -19,8 +19,6 @@ export {
   isStaging,
   environment,
   refreshEnvironmentCache,
-  calculateCorsUrlFromAppUrl,
-  calculateCookieUrlFromAppUrl,
 } from "./src/env.js";
 export {
   isNil,
