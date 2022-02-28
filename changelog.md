@@ -4,6 +4,47 @@ editLink: false
 
 # Changelog
 
+### [v0.0.191](https://github.com/compasjs/compas/releases/tag/v0.0.191)
+
+##### Changes
+
+- build(deps): bump eslint from 8.9.0 to 8.10.0
+  ([#1635](https://github.com/compasjs/compas/pull/1635))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump prismjs from 1.25.0 to 1.27.0
+  ([#1629](https://github.com/compasjs/compas/pull/1629))
+  - [Release notes](https://github.com/PrismJS/prism/releases)
+- chore: add initial example and sync job for docs
+  ([#1630](https://github.com/compasjs/compas/pull/1630))
+- example(session-handling-frontend): cleanup function signatures
+- feat(cli,stdlib,store): remove cookie and proxy support
+  ([#1634](https://github.com/compasjs/compas/pull/1634))
+- feat(example): add session handling example
+  ([#1632](https://github.com/compasjs/compas/pull/1632))
+- feat(example): add session handling frontend example
+  ([#1633](https://github.com/compasjs/compas/pull/1633))
+- feat(store): add support for file access tokens
+  ([#1631](https://github.com/compasjs/compas/pull/1631))
+  - References [#1307](https://github.com/compasjs/compas/pull/1307)
+
+##### Breaking changes
+
+- **cli,stdlib,store**: remove cookie and proxy support
+  - Remove the `compas proxy` command
+  - Remove `calculateCorsUrlFromAppUrl` and `calculateCookieUrlFromAppUrl` from
+    @compas/stdlib
+  - Remove cookie support from `sessionTransport*` functions. Including the
+    options on `sessionTransportOptions` and
+    `sessionTransportAddAsCookiesToContext`
+
+##### Documentation updates
+
+- Improved
+  [file-handling](https://compasjs.com/features/file-handling.html#securing-file-downloads)
+  docs, and added information about singed file urls.
+- Add an [examples](https://compasjs.com/examples.html) page, auto updated with
+  examples that are added to the Compas repo.
+
 ### [v0.0.190](https://github.com/compasjs/compas/releases/tag/v0.0.190)
 
 ##### Changes
