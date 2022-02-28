@@ -39,10 +39,12 @@ export function createCookiesFromTokenPair(
   setCookie(ctx, "accessToken", tokenPair.accessToken, {
     expires: new Date(accessToken.exp * 1000),
     secure: process.env.NODE_ENV === "production",
+    path: "/",
   });
   setCookie(ctx, "refreshToken", tokenPair.refreshToken, {
     expires: new Date(refreshToken.exp * 1000),
     secure: process.env.NODE_ENV === "production",
+    path: "/",
   });
 }
 
@@ -82,10 +84,15 @@ export function axiosRefreshTokenInterceptor(
   let isRefreshing = false;
   const queueWhileRefreshing: (() => AxiosRequestConfig)[] = [];
 
+  // Only used in SSR context, keeping a local copy of the tokens before setting them as
+  // cookies. This is necessary since 'parseCookies' does not read the cookies that are
+  // already set on the response.
+  let tokenCache: AuthTokenPairApi | undefined = undefined;
+
   const interceptor = async (
     config: AxiosRequestConfig,
   ): Promise<AxiosRequestConfig> => {
-    let cookies: AuthTokenPairApi = parseCookies(ctx) as any;
+    let cookies: AuthTokenPairApi = tokenCache ?? (parseCookies(ctx) as any);
 
     if (isRefreshing) {
       return new Promise((r) => {
@@ -98,11 +105,15 @@ export function axiosRefreshTokenInterceptor(
 
       try {
         cookies = await apiAuthRefreshTokens(
-          axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL }),
+          axios.create({ baseURL: config.baseURL }),
           {
             refreshToken: cookies.refreshToken,
           },
         );
+
+        if (ctx) {
+          tokenCache = cookies;
+        }
 
         createCookiesFromTokenPair(cookies, ctx);
       } catch {
