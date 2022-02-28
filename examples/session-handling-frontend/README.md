@@ -30,8 +30,8 @@ import { AuthTokenPairApi } from "../generated/common/types";
  * It decodes the tokens, so the cookies expire when the tokens expire.
  */
 export function createCookiesFromTokenPair(
-  ctx: GetServerSidePropsContext | undefined,
   tokenPair: AuthTokenPairApi,
+  ctx?: GetServerSidePropsContext,
 ) {
   const accessToken = jwtDecode(tokenPair.accessToken) as any;
   const refreshToken = jwtDecode(tokenPair.refreshToken) as any;
@@ -49,7 +49,7 @@ export function createCookiesFromTokenPair(
 /**
  * Remove the access and refresh token cookies
  */
-export function removeCookies(ctx: GetServerSidePropsContext | undefined) {
+export function removeCookies(ctx?: GetServerSidePropsContext) {
   destroyCookie(ctx, "accessToken");
   destroyCookie(ctx, "refreshToken");
 }
@@ -77,7 +77,7 @@ import { AuthTokenPairApi } from "../generated/common/types";
  *    - If successfully, runs all requests in the queue and resolves the current request
  */
 export function axiosRefreshTokenInterceptor(
-  ctx: GetServerSidePropsContext | undefined,
+  ctx?: GetServerSidePropsContext,
 ): (config: AxiosRequestConfig) => Promise<AxiosRequestConfig> {
   let isRefreshing = false;
   const queueWhileRefreshing: (() => AxiosRequestConfig)[] = [];
@@ -104,9 +104,10 @@ export function axiosRefreshTokenInterceptor(
           },
         );
 
-        createCookiesFromTokenPair(ctx, cookies);
+        createCookiesFromTokenPair(cookies, ctx);
       } catch {
         // If we can't refresh, we can safely remove the refresh token
+        // This way this refresh logic isn't triggered for any subsequent requests
         removeCookies(ctx);
       }
 
@@ -147,7 +148,7 @@ const [axiosInstance] = useState(() => {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
   });
 
-  client.interceptors.request.use(axiosRefreshTokenInterceptor(undefined));
+  client.interceptors.request.use(axiosRefreshTokenInterceptor());
 
   return client;
 });
@@ -162,13 +163,13 @@ const queryClient = useQueryClient();
 const isLoggedIn = useAuthMe();
 const login = useAuthLogin({
   onSuccess: (data) => {
-    createCookiesFromTokenPair(undefined, data);
+    createCookiesFromTokenPair(data);
     queryClient.invalidateQueries([]);
   },
 });
 const logout = useAuthLogout({
   onSuccess: () => {
-    removeCookies(undefined);
+    removeCookies();
     queryClient.invalidateQueries([]);
   },
 });
