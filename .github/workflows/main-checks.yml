@@ -16,7 +16,7 @@ jobs:
       CI: true
       POSTGRES_VERSION: ${{ matrix.postgres_version }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.0.0
@@ -42,7 +42,7 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.0.0
@@ -74,7 +74,7 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.0.0
@@ -113,7 +113,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
