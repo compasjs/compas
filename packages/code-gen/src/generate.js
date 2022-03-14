@@ -26,7 +26,7 @@ export function addGroupsToGeneratorInput(input, structure, groups) {
  * @param {CodeGenStructure} input
  * @returns {void}
  */
-function includeReferenceTypes(structure, input) {
+export function includeReferenceTypes(structure, input) {
   const stack = [input];
 
   while (stack.length) {

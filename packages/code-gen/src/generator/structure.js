@@ -1,4 +1,4 @@
-import { addGroupsToGeneratorInput, addToData } from "../generate.js";
+import { addToData, includeReferenceTypes } from "../generate.js";
 import { js } from "./tag/index.js";
 
 /**
@@ -52,11 +52,7 @@ export function generateStructureFile(context) {
     }
 
     // Include recursive references that are used in route types
-    addGroupsToGeneratorInput(
-      apiStructure,
-      context.structure,
-      Object.keys(apiStructure),
-    );
+    includeReferenceTypes(context.structure, apiStructure);
 
     const string = JSON.stringify(apiStructure).replace(
       /(['\\])/gm,
