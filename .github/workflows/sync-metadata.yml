@@ -33,6 +33,6 @@ jobs:
           yarn compas run syncMetadata
 
       - name: Commit and push
-        uses: EndBug/add-and-commit@v8
+        uses: EndBug/add-and-commit@v9
         with:
           message: "chore(sync): sync generated doc files"
