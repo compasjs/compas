@@ -3,6 +3,7 @@ export class PickType extends TypeBuilder {
     keys: never[];
   };
   constructor(group: any, name: any);
+  build(): any;
   /**
    * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
    * @returns {PickType}

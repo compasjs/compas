@@ -11,6 +11,17 @@ export function addGroupsToGeneratorInput(
   groups: string[],
 ): void;
 /**
+ * Find nested references and add to generatorInput in the correct group
+ *
+ * @param {CodeGenStructure} structure
+ * @param {CodeGenStructure} input
+ * @returns {void}
+ */
+export function includeReferenceTypes(
+  structure: CodeGenStructure,
+  input: CodeGenStructure,
+): void;
+/**
  * Using some more memory, but ensures a mostly consistent output.
  * JS Object iterators mostly follow insert order.
  * We do this so diffs are more logical
