@@ -71,6 +71,10 @@ function syncReadmes(logger) {
   const packagesDir = pathJoin(process.cwd(), "packages");
   const packages = readdirSync(packagesDir);
   const readmeSource = getReadmeSource();
+  const licenseSource = readFileSync(
+    pathJoin(process.cwd(), "LICENSE"),
+    "utf-8",
+  );
 
   logger.info(`Updating ${packages.length} README.md's`);
 
@@ -82,6 +86,8 @@ function syncReadmes(logger) {
       buildReadmeSource(pkg, readmeSource),
       "utf-8",
     );
+
+    writeFileSync(pathJoin(pkgDir, "LICENSE"), licenseSource, "utf-8");
   }
 }
 
