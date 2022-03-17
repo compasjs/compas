@@ -1,5 +1,5 @@
 export type CliCommandDefinitionInput =
-  import("./src/generated/common/types").CliCommandDefinition;
+  import("./src/generated/common/types").CliCommandDefinitionInput;
 export type CliCompletion =
   import("./src/generated/common/types").CliCompletion;
 export type CliResult = import("./src/cli/types").CliResult;

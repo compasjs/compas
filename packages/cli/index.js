@@ -1,5 +1,5 @@
 /**
- * @typedef {import("./src/generated/common/types").CliCommandDefinition} CliCommandDefinitionInput
+ * @typedef {import("./src/generated/common/types").CliCommandDefinitionInput} CliCommandDefinitionInput
  */
 
 /**
