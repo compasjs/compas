@@ -2,14 +2,14 @@
 
 ::: tip
 
-Requires `@compas/cli` and `@compas/lint-config` to be installed as
+Requires `@compas/cli` and `@compas/eslint-plugin` to be installed as
 'devDependencies'.
 
 :::
 
-The `@compas/lint-config` package provides a Prettier config and ESLint
-configuration. This configuration is tailored towards Javascript projects. When
-using Typescript you can still use the Prettier config, however the command
+The `@compas/eslint-plugin` package provides a Prettier config and ESLint
+plugin. This configuration is tailored towards Javascript projects. When using
+Typescript you can still use the Prettier config, however the command
 (`compas lint`) shouldn't be used. To get the configuration in your project,
 create the following three files:
 
@@ -19,8 +19,7 @@ create the following three files:
 /* eslint-disable import/no-commonjs */
 
 module.exports = {
-  extends: ["./node_modules/@compas/lint-config"],
-  root: true,
+  extends: ["plugin:@compas/full"],
 };
 ```
 
@@ -30,7 +29,7 @@ module.exports = {
 /* eslint-disable import/no-commonjs */
 
 module.exports = {
-  ...require("@compas/lint-config/prettierrc.js"),
+  ...require("@compas/eslint-plugin/prettierrc.js"),
 };
 ```
 

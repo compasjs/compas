@@ -38,7 +38,7 @@
     "type": "git",
     "url": "https://github.com/compasjs/compas.git"
   },
-  "prettier": "@compas/lint-config/prettierrc",
+  "prettier": "@compas/eslint-plugin/prettierrc",
   "workspaces": [
     "packages/*",
     "examples/*"

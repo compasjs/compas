@@ -1,5 +1,5 @@
-import { readFile, writeFile } from "fs/promises";
 import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
+import { readFile, writeFile } from "fs/promises";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {
@@ -38,7 +38,7 @@ export const cliDefinition = {
  */
 async function cliExecutor(logger, state) {
   const packages = [
-    "lint-config",
+    "eslint-plugin",
     "stdlib",
     "cli",
     "code-gen",

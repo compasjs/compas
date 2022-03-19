@@ -145,18 +145,14 @@ async function writeJSConfig() {
 async function writeLintConfig() {
   if (existsSync("./package.json")) {
     const pkgJson = JSON.parse(await readFile("./package.json", "utf-8"));
-    pkgJson.prettier = "@compas/lint-config/prettierrc";
+    pkgJson.prettier = "@compas/eslint-plugin/prettierrc";
 
     await writeFile("./package.json", `${JSON.stringify(pkgJson, null, 2)}\n`);
   }
 
   await writeFile(
     "./.eslintrc.cjs",
-    `const config = require("@compas/lint-config");
-
-config.root = true;
-
-module.exports = config;
+    `module.exports = { extends: ["plugin:@compas/full"];
 `,
   );
 

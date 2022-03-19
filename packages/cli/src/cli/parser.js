@@ -80,6 +80,8 @@ export async function cliParserParseCommand(event, cli, args) {
           dynamicMatch.dynamicValue.validator(arg),
         );
         if (!isValid) {
+          eventStop(event);
+
           return {
             error: {
               message: `Invalid sub command '${arg}' for '${input
@@ -164,6 +166,7 @@ export async function cliParserParseFlags(event, command, userInput) {
     const flagDefinition = availableFlags.get(flagName);
 
     if (isNil(flagDefinition)) {
+      eventStop(event);
       return {
         error: {
           // TODO: always add help text for flags of this specific command?
@@ -188,6 +191,7 @@ export async function cliParserParseFlags(event, command, userInput) {
     );
 
     if (validatedFlagValue.error) {
+      eventStop(event);
       return validatedFlagValue;
     }
 
@@ -201,6 +205,7 @@ export async function cliParserParseFlags(event, command, userInput) {
       !flagDefinition.modifiers.isRepeatable &&
       !isNil(result[flagDefinition.name])
     ) {
+      eventStop(event);
       return {
         error: {
           message: `Flag '${flagDefinition.rawName}' is not repeatable, but has be found more than once in the input.\n\n${genericErrorMessage}`,
@@ -224,6 +229,7 @@ export async function cliParserParseFlags(event, command, userInput) {
   }
 
   if (missingFlags.length > 0) {
+    eventStop(event);
     return {
       error: {
         message: `Missing required flags: ${missingFlags

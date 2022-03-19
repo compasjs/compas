@@ -42,10 +42,11 @@ copying and pasting things around, this project was born.
 - Necessary Docker container management
 - Visualise the known database structure of @compas/code-gen
 
-**@compas/lint-config**:
+**@compas/eslint-plugin**:
 
 - All necessary ESLint and Prettier dependencies
 - Default configuration for ESLint and Prettier
+- Handy rules for things like the event system from @compas/stdlib
 
 **@compas/stdlib**:
 

@@ -102,6 +102,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
   );
 
   if (commandResult.error) {
+    eventStop(event);
     return {
       result: commandResult,
     };
@@ -115,6 +116,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
     );
 
     if (helpResult.error) {
+      eventStop(event);
       return {
         flags: {
           printTimings: userInput.includes("--timings"),
@@ -125,6 +127,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
 
     logger.info(helpResult.value);
 
+    eventStop(event);
     return {
       flags: {
         printTimings: userInput.includes("--timings"),
@@ -145,6 +148,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
     );
 
     if (watchResult.error) {
+      eventStop(event);
       return {
         flags: {
           printTimings: userInput.includes("--timings"),
@@ -153,6 +157,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
       };
     }
 
+    eventStop(event);
     return {
       flags: {
         printTimings: userInput.includes("--timings"),
@@ -172,6 +177,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
   );
 
   if (flagResult.error) {
+    eventStop(event);
     return {
       flags: {
         printTimings: userInput.includes("--timings"),

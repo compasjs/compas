@@ -220,10 +220,14 @@ export async function cliWatchExec(event, cli, userInput) {
   );
 
   if (flagResult.error) {
+    eventStop(event);
+
     return flagResult;
   }
 
   if (!command.value.modifiers.isWatchable) {
+    eventStop(event);
+
     return {
       error: {
         message: `Can't start watcher for '${cli.name} ${commandArgs.join(
