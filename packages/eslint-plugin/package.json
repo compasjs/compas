@@ -1,14 +1,15 @@
 {
-  "name": "@compas/lint-config",
+  "name": "@compas/eslint-plugin",
   "version": "0.0.191",
-  "description": "ESLint & Prettier config",
+  "description": "ESLint plugin",
   "main": "index.js",
   "keywords": [
     "compas",
     "lint",
     "eslint",
     "eslintconfig",
-    "prettier"
+    "prettier",
+    "eslin-plugin"
   ],
   "license": "MIT",
   "dependencies": {
@@ -35,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/compasjs/compas.git",
-    "directory": "packages/lint-config"
+    "directory": "packages/eslint-plugin"
   },
   "publishConfig": {
     "access": "public"

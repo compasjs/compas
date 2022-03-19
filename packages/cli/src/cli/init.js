@@ -39,6 +39,7 @@ export async function cliInit(event, root, options) {
 
   const validateResult = validateCliCommandDefinition(root, "$.cli");
   if (validateResult.error) {
+    eventStop(event);
     throw validateResult.error;
   }
 

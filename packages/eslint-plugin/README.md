@@ -1,6 +1,6 @@
-# @compas/lint-config
+# @compas/eslint-plugin
 
-[![install size lint-config](https://packagephobia.com/badge?p=@compas/lint-config)](https://packagephobia.com/result?p=@compas/lint-config)
+[![install size eslint-plugin](https://packagephobia.com/badge?p=@compas/eslint-plugin)](https://packagephobia.com/result?p=@compas/eslint-plugin)
 ![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
 [![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
 

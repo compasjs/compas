@@ -605,6 +605,7 @@ export async function addRecurringJobToQueue(
  * @param {import("../types/advanced-types").Postgres} sql
  * @param {StoreJob} job
  */
+// eslint-disable-next-line @compas/enforce-event-stop
 export async function handleCompasRecurring(event, sql, job) {
   const {
     scheduledAt,

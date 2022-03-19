@@ -43,6 +43,7 @@ export async function cliCommandDetermine(event, cli, input) {
   );
 
   if (commandResult.error) {
+    eventStop(event);
     return commandResult;
   }
 
@@ -50,11 +51,15 @@ export async function cliCommandDetermine(event, cli, input) {
     cliHelpShouldRun(commandArgs, flagArgs) ||
     commandResult.value.modifiers.isCosmetic
   ) {
+    eventStop(event);
+
     // @ts-ignore
     return {
       value: cli.subCommands.find((it) => it.name === "help"),
     };
   } else if (cliWatchShouldRun(commandArgs, flagArgs)) {
+    eventStop(event);
+
     // @ts-ignore
     return {
       value: cli.subCommands.find((it) => it.name === "watch"),
@@ -94,6 +99,8 @@ export async function cliCommandExec(
   }
 
   if (isNil(commandWithExecutor?.executor)) {
+    eventStop(event);
+
     return {
       error: {
         message: `Command executor is missing for '${
@@ -112,7 +119,6 @@ export async function cliCommandExec(
   });
 
   eventStop(event);
-
   return {
     value: result,
   };

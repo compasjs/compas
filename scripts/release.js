@@ -38,7 +38,7 @@ export const cliDefinition = {
  */
 async function cliExecutor(logger, state) {
   const packages = [
-    "lint-config",
+    "eslint-plugin",
     "stdlib",
     "cli",
     "code-gen",

@@ -242,7 +242,8 @@ async function parseFile(file, contents) {
     babel = await import("@babel/parser");
   } catch (e) {
     throw new AppError("cli.codeMod.failedToLoadBabel", 500, {
-      message: "Please install @compas/lint-config, or @babel/parser directly.",
+      message:
+        "Please install @compas/eslint-plugin, or @babel/parser directly.",
     });
   }
 

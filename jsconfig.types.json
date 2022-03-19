@@ -8,5 +8,5 @@
     "extendedDiagnostics": true
   },
   "include": ["packages/**/*", "types/**/*"],
-  "exclude": ["packages/lint-config/**/*", "**/*.test.js", "**/*.bench.js"]
+  "exclude": ["packages/eslint-plugin/**/*", "**/*.test.js", "**/*.bench.js"]
 }
