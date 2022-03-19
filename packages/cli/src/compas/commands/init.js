@@ -1,6 +1,6 @@
+import { pathJoin } from "@compas/stdlib";
 import { existsSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
-import { pathJoin } from "@compas/stdlib";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
@@ -152,7 +152,9 @@ async function writeLintConfig() {
 
   await writeFile(
     "./.eslintrc.cjs",
-    `module.exports = { extends: ["plugin:@compas/full"];
+    `module.exports = {
+  extends: ["plugin:@compas/full"],
+};
 `,
   );
 
