@@ -151,11 +151,8 @@ async function writeLintConfig() {
   }
 
   await writeFile(
-    "./.eslintrc.cjs",
-    `module.exports = {
-  extends: ["plugin:@compas/full"],
-};
-`,
+    "./.eslintrc",
+    `${JSON.stringify({ extends: ["plugin:@compas/full"] }, null, 2)}\n`,
   );
 
   await writeFile(

@@ -1,4 +1,5 @@
 import { cpus } from "os";
+import { executeLintConfigToEslintPlugin } from "./mods/lint-config-to-eslint-plugin.js";
 import { executeUpdateQueriesSignatureChange } from "./mods/update-queries-signature-change.js";
 
 export const PARALLEL_COUNT = Math.max(cpus().length - 1, 1);
@@ -45,5 +46,12 @@ export const codeModMap = {
   Or any combination of the above.
 `,
     exec: executeUpdateQueriesSignatureChange,
+  },
+  "lint-config-to-eslint-plugin": {
+    description: `Converts all known usages of @compas/lint-config to use @compas/eslint-plugin.
+
+  This only updates the configuration files and does not update the code to be consistent with the newly enforced rules.
+`,
+    exec: executeLintConfigToEslintPlugin,
   },
 };
