@@ -1,7 +1,7 @@
 // @ts-nocheck
 
-import { AppError, processDirectoryRecursive } from "@compas/stdlib";
 import { readFile, writeFile } from "fs/promises";
+import { AppError, processDirectoryRecursive } from "@compas/stdlib";
 import * as recast from "recast";
 import { PARALLEL_COUNT } from "../constants.js";
 
