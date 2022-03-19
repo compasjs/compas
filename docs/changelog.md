@@ -4,6 +4,67 @@ editLink: false
 
 # Changelog
 
+### [v0.0.192](https://github.com/compasjs/compas/releases/tag/v0.0.192)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.5 to 7.17.7
+  ([#1655](https://github.com/compasjs/compas/pull/1655))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump actions/checkout from 2 to 3
+  ([#1639](https://github.com/compasjs/compas/pull/1639))
+- build(deps): bump EndBug/add-and-commit from 8 to 9
+  ([#1651](https://github.com/compasjs/compas/pull/1651))
+  - [Release notes](https://github.com/EndBug/add-and-commit/releases)
+- build(deps): bump eslint from 8.10.0 to 8.11.0
+  ([#1649](https://github.com/compasjs/compas/pull/1649))
+- build(deps): bump eslint-config-prettier from 8.4.0 to 8.5.0
+  ([#1642](https://github.com/compasjs/compas/pull/1642))
+- build(deps): bump eslint-plugin-jsdoc from 37.9.4 to 38.0.4
+  ([#1637](https://github.com/compasjs/compas/pull/1637),
+  [#1638](https://github.com/compasjs/compas/pull/1638),
+  [#1643](https://github.com/compasjs/compas/pull/1643),
+  [#1647](https://github.com/compasjs/compas/pull/1647),
+  [#1650](https://github.com/compasjs/compas/pull/1650),
+  [#1653](https://github.com/compasjs/compas/pull/1653))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump mime-types from 2.1.34 to 2.1.35
+  ([#1648](https://github.com/compasjs/compas/pull/1648))
+- build(deps): bump pino from 7.8.0 to 7.9.1
+  ([#1645](https://github.com/compasjs/compas/pull/1645),
+  [#1658](https://github.com/compasjs/compas/pull/1658))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump prettier from 2.5.1 to 2.6.0
+  ([#1657](https://github.com/compasjs/compas/pull/1657))
+- build(deps): bump sharp from 0.30.1 to 0.30.3
+  ([#1641](https://github.com/compasjs/compas/pull/1641),
+  [#1654](https://github.com/compasjs/compas/pull/1654))
+- chore: add LICENSE to packages
+  ([#1656](https://github.com/compasjs/compas/pull/1656))
+  - Closes [#1640](https://github.com/compasjs/compas/pull/1640)
+- example(session-handling-frontend): minor fixes from real project usage
+- feat(cli): add lint-config-to-eslint-plugin code-mod
+  ([#1660](https://github.com/compasjs/compas/pull/1660))
+- feat(eslint-plugin): turn lint-config into working eslint-plugin
+  ([#1659](https://github.com/compasjs/compas/pull/1659))
+  - Closes [#1308](https://github.com/compasjs/compas/pull/1308)
+- fix(cli): export correct command definition type
+- fix(code-gen): correctly shake out unused types in dumped api structure
+  ([#1652](https://github.com/compasjs/compas/pull/1652))
+
+##### Breaking changes
+
+- **deps**: bump eslint-plugin-jsdoc from 37.9.4 to 38.0.4
+  - Major version bump
+- **eslint-plugin**: turn lint-config into working eslint-plugin
+  - Removed the @compas/lint-config package. Use
+    `compas code-mod exec --name lint-config-to-eslint-plugin` to fix your
+    configurations.
+  - Added a default rule to enforce calling `eventStop` in async functions that
+    accept `event` as their first parameter. This can be disabled via
+    `rules: { "@compas/enforce-event-stop": "off" }` in your eslint
+    configuration.
+
 ### [v0.0.191](https://github.com/compasjs/compas/releases/tag/v0.0.191)
 
 ##### Changes
