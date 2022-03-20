@@ -4,6 +4,14 @@ editLink: false
 
 # Changelog
 
+### [v0.0.193](https://github.com/compasjs/compas/releases/tag/v0.0.193)
+
+##### Changes
+
+- fix(eslint-plugin): don't suggest enforce-event-stop after code paths that can
+  leave a function ([#1663](https://github.com/compasjs/compas/pull/1663))
+  - Closes [#1662](https://github.com/compasjs/compas/pull/1662)
+
 ### [v0.0.192](https://github.com/compasjs/compas/releases/tag/v0.0.192)
 
 ##### Changes
