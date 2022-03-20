@@ -32,15 +32,32 @@ ruleTester.run("enforce-event-stop", rule, {
       }`,
     },
     {
-      code: `async function asyncFnWithEventStopAllPaths(event, baz) {
+      code: `async function noEventStopNoReturn(event, baz) {
         if (baz) {
-          eventStop(event);
+         eventStop(event);
 
-          return baz;
+         return baz;
         }
-
+        
         eventStop(event);
       }`,
+      errors: [{ message: rule.meta.messages.missingEventStop }],
+    },
+    {
+      code: `async function noEventStopNoReturn(event, baz) {
+        if (baz) {
+         eventStop(event);
+
+         return baz;
+        } else if (baz) {
+         eventStop(event);
+
+         return baz;
+        }
+        
+        eventStop(event);
+      }`,
+      errors: [{ message: rule.meta.messages.missingEventStop }],
     },
     {
       code: `async function asyncFnWithoutEventParam(baz) {
@@ -49,6 +66,31 @@ ruleTester.run("enforce-event-stop", rule, {
         }
 
         return baz;
+      }`,
+    },
+    {
+      code: `async function tryCatchThrow(event) {
+        try {
+          foo();
+
+          eventStop(event);
+          return true;
+        } catch (e) {
+          throw new Error();
+        }
+      }`,
+    },
+    {
+      code: `async function tryCatchReturn(event) {
+        try {
+          foo();
+
+          eventStop(event);
+          return true;
+        } catch (e) {
+          eventStop(event);
+          return false;
+        }
       }`,
     },
   ],
@@ -73,9 +115,11 @@ ruleTester.run("enforce-event-stop", rule, {
          eventStop(event);
 
          return baz;
-        }
+        } else if (baz) {
+          return bar;
+        } else {
+        } 
 
-        return false;
       }`,
       errors: [{ message: rule.meta.messages.missingEventStop }],
     },
@@ -90,10 +134,47 @@ ruleTester.run("enforce-event-stop", rule, {
       errors: [{ message: rule.meta.messages.missingEventStop }],
     },
     {
+      code: `async function noEventStopNoReturn(event, baz) {
+        if (baz) {
+         eventStop(event);
+
+         return baz;
+        } else {
+          return false;
+        }
+      }`,
+      errors: [{ message: rule.meta.messages.missingEventStop }],
+    },
+    {
       code: `async function inlineReturn(event, baz) {
         if (baz) return true;
-        
+
         eventStop(event);
+      }`,
+      errors: [{ message: rule.meta.messages.missingEventStop }],
+    },
+    {
+      code: `async function tryCatchThrow(event) {
+        try {
+          foo();
+
+          return true;
+        } catch (e) {
+          throw new Error();
+        }
+      }`,
+      errors: [{ message: rule.meta.messages.missingEventStop }],
+    },
+    {
+      code: `async function tryCatchReturn(event) {
+        try {
+          foo();
+
+          eventStop(event);
+          return true;
+        } catch (e) {
+          return false;
+        }
       }`,
       errors: [{ message: rule.meta.messages.missingEventStop }],
     },
