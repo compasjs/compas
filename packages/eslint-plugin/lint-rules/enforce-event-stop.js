@@ -32,6 +32,10 @@ module.exports = {
     }
 
     function blockEnter(node) {
+      if (!currentFunction) {
+        return;
+      }
+
       currentFunction.block = {
         node,
         parent: currentFunction.block,
@@ -45,6 +49,10 @@ module.exports = {
     }
 
     function blockExit(node) {
+      if (!currentFunction) {
+        return;
+      }
+
       const block = currentFunction.block;
       currentFunction.block = currentFunction.block?.parent;
 

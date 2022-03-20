@@ -3,12 +3,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { setFlagsFromString } from "v8";
 import { runInNewContext } from "vm";
-import { newLogger } from "@compas/stdlib";
 import dotenv from "dotenv";
 import { environment, isProduction, refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
-import { extendGlobalLoggerContext } from "./logger/logger.js";
+import { extendGlobalLoggerContext, newLogger } from "./logger/logger.js";
 
 /**
  * Get the number of seconds since Unix epoch (1-1-1970).
