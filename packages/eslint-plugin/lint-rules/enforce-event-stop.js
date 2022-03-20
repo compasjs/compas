@@ -5,7 +5,7 @@ module.exports = {
   meta: {
     type: "suggestion",
     docs: {
-      description: `Enforce that 'eventStop' is called in async functions that define 'event' as its first parameter.`,
+      description: `Suggest that 'eventStop' is called in async functions that define 'event' as its first parameter.`,
     },
     hasSuggestions: true,
 
@@ -23,7 +23,7 @@ module.exports = {
         parent: currentFunction,
         node,
         isAsyncEventFunction: node.async && node.params[0]?.name === "event",
-        blocks: [],
+        block: undefined,
       };
     }
 
@@ -32,51 +32,64 @@ module.exports = {
     }
 
     function blockEnter(node) {
-      const currentBlock = currentFunction.blocks.at(-1);
-
-      currentFunction.blocks.push({
+      currentFunction.block = {
         node,
-        hasEventStop: currentBlock?.hasEventStop ?? false,
+        parent: currentFunction.block,
+        hasEventStop: currentFunction.block?.hasEventStop ?? false,
         returnStatement: undefined,
-      });
+        children: [],
+      };
+      if (currentFunction.block.parent) {
+        currentFunction.block.parent.children.push(currentFunction.block);
+      }
     }
 
     function blockExit(node) {
-      const lastBlock = currentFunction.blocks.pop();
+      const block = currentFunction.block;
+      currentFunction.block = currentFunction.block?.parent;
+
       if (!currentFunction.isAsyncEventFunction) {
         return;
       }
 
-      if (
-        !lastBlock.returnStatement &&
-        (!node.parent?.type.includes("Function") ||
-          !currentFunction.isAsyncEventFunction)
-      ) {
+      const blocksFound = !(
+        block.children.length === 0 &&
+        block.node.parent.type.includes("Function")
+      );
+
+      const noBareIfStatementFound = !(
+        block.node.parent.type.includes("Function") &&
+        block.children.length === 1 &&
+        block.children[0].node === block.children[0].node.parent?.consequent &&
+        block.children[0].returnStatement
+      );
+
+      // If there is no return statement, we are not sure if this code path is reachable
+      if (!block.returnStatement && blocksFound && noBareIfStatementFound) {
         return;
       }
 
-      const hasEventStop =
-        lastBlock.hasEventStop ||
-        (currentFunction.blocks.find((it) => it.hasEventStop)?.hasEventStop ??
-          false);
+      const hasEventStop = block.hasEventStop;
 
       if (hasEventStop) {
         return;
       }
 
       context.report({
-        node: lastBlock.returnStatement ?? node,
+        node: block.returnStatement ?? node,
         messageId: "missingEventStop",
-        suggest: [
-          {
-            messageId: "addEventStop",
-            fix: (fixer) =>
-              fixer.insertTextBefore(
-                lastBlock.returnStatement ?? node,
-                "eventStop(event);\n",
-              ),
-          },
-        ],
+        suggest: block.returnStatement
+          ? [
+              {
+                messageId: "addEventStop",
+                fix: (fixer) =>
+                  fixer.insertTextBefore(
+                    block.returnStatement,
+                    "eventStop(event);\n",
+                  ),
+              },
+            ]
+          : [],
       });
     }
 
@@ -91,14 +104,13 @@ module.exports = {
 
       // Check if eventStop is called
       "CallExpression[callee.name='eventStop']"() {
-        if (currentFunction.blocks.at(-1)) {
-          currentFunction.blocks.at(-1).hasEventStop = true;
+        if (currentFunction.block) {
+          currentFunction.block.hasEventStop = true;
         }
-      },
-      // Check if block has return statement
+      }, // Check if block has return statement
       ReturnStatement(node) {
-        if (currentFunction.blocks.at(-1)) {
-          currentFunction.blocks.at(-1).returnStatement = node;
+        if (currentFunction.block) {
+          currentFunction.block.returnStatement = node;
         }
       },
 
@@ -108,7 +120,7 @@ module.exports = {
           return;
         }
 
-        if (currentFunction.blocks.find((it) => it.hasEventStop)) {
+        if (currentFunction.block.hasEventStop) {
           return;
         }
 
@@ -118,8 +130,10 @@ module.exports = {
           suggest: [
             {
               messageId: "addEventStop",
-              fix: (fixer) =>
-                fixer.insertTextBefore(node.body, "eventStop(event);\n"),
+              fix: (fixer) => {
+                fixer.insertTextBefore(node.body, "{\neventStop(event);\n");
+                fixer.insertTextAfter(node.body, "}");
+              },
             },
           ],
         });
@@ -129,7 +143,7 @@ module.exports = {
           return;
         }
 
-        if (currentFunction.blocks.find((it) => it.hasEventStop)) {
+        if (currentFunction.block.hasEventStop) {
           return;
         }
 
@@ -139,8 +153,13 @@ module.exports = {
           suggest: [
             {
               messageId: "addEventStop",
-              fix: (fixer) =>
-                fixer.insertTextBefore(node.consequent, "eventStop(event);\n"),
+              fix: (fixer) => {
+                fixer.insertTextBefore(
+                  node.consequent,
+                  "{\neventStop(event);\n",
+                );
+                fixer.insertTextAfter(node.consequent, "}");
+              },
             },
           ],
         });
@@ -150,7 +169,7 @@ module.exports = {
           return;
         }
 
-        if (currentFunction.blocks.find((it) => it.hasEventStop)) {
+        if (currentFunction.block.hasEventStop) {
           return;
         }
 
@@ -160,8 +179,13 @@ module.exports = {
           suggest: [
             {
               messageId: "addEventStop",
-              fix: (fixer) =>
-                fixer.insertTextBefore(node.alternate, "eventStop(event);\n"),
+              fix: (fixer) => {
+                fixer.insertTextBefore(
+                  node.alternate,
+                  "{\neventStop(event);\n",
+                );
+                fixer.insertTextAfter(node.alternate, "}");
+              },
             },
           ],
         });
