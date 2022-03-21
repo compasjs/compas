@@ -4,6 +4,18 @@ editLink: false
 
 # Changelog
 
+### [v0.0.194](https://github.com/compasjs/compas/releases/tag/v0.0.194)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.7 to 7.17.8
+  ([#1665](https://github.com/compasjs/compas/pull/1665))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 38.0.4 to 38.0.6
+  ([#1664](https://github.com/compasjs/compas/pull/1664))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- fix(eslint-plugin): skip blocks outside functions in enforce-event-stop
+
 ### [v0.0.193](https://github.com/compasjs/compas/releases/tag/v0.0.193)
 
 ##### Changes
