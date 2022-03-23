@@ -4,6 +4,19 @@ editLink: false
 
 # Changelog
 
+### [v0.0.195](https://github.com/compasjs/compas/releases/tag/v0.0.195)
+
+##### Changes
+
+- build(deps): bump @types/node from 17.0.21 to 17.0.22
+  ([#1667](https://github.com/compasjs/compas/pull/1667))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump pino from 7.9.1 to 7.9.2
+  ([#1668](https://github.com/compasjs/compas/pull/1668))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- feat(code-gen): ensure route path trailing slash is correctly taken over from
+  OpenAPI import ([#1669](https://github.com/compasjs/compas/pull/1669))
+
 ### [v0.0.194](https://github.com/compasjs/compas/releases/tag/v0.0.194)
 
 ##### Changes
