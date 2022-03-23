@@ -142,6 +142,7 @@ function extractRoute(context, path, method) {
   let contentKey = "application/json";
   compasStruct.internalSettings = {
     requestBodyType: "json",
+    stripTrailingSlash: !path.endsWith("/"),
   };
 
   if (
