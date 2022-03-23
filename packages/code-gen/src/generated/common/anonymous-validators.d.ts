@@ -1186,12 +1186,13 @@ export function anonymousValidator2066419866(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"requestBodyType"?: undefined|"json"|"form-data", }>}
+ * @returns {EitherN<{"stripTrailingSlash"?: undefined|boolean, "requestBodyType"?: undefined|"json"|"form-data", }>}
  */
-export function anonymousValidator1139247391(
+export function anonymousValidator1023845888(
   value: any,
   propertyPath: string,
 ): EitherN<{
+  stripTrailingSlash?: undefined | boolean;
   requestBodyType?: undefined | "json" | "form-data";
 }>;
 /**
@@ -1328,7 +1329,7 @@ export function anonymousValidator1463282173(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, "invalidations": (import("./types").CodeGenRouteInvalidationType)[], }>}
+ * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"stripTrailingSlash"?: undefined|boolean, "requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, "invalidations": (import("./types").CodeGenRouteInvalidationType)[], }>}
  */
 export function anonymousValidator1390215584(
   value: any,
@@ -1350,6 +1351,7 @@ export function anonymousValidator1390215584(
       };
   validator: {};
   internalSettings: {
+    stripTrailingSlash?: undefined | boolean;
     requestBodyType?: undefined | "json" | "form-data";
   };
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";

@@ -312,7 +312,10 @@ export type CodeGenRouteType = {
     | undefined
     | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
   validator: {};
-  internalSettings: { requestBodyType?: undefined | "json" | "form-data" };
+  internalSettings: {
+    stripTrailingSlash?: undefined | boolean;
+    requestBodyType?: undefined | "json" | "form-data";
+  };
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
   idempotent: boolean;
   path: string;
@@ -776,7 +779,10 @@ export type CodeGenRouteTypeInput = {
   validator?: undefined | {};
   internalSettings?:
     | undefined
-    | { requestBodyType?: undefined | "json" | "form-data" };
+    | {
+        stripTrailingSlash?: undefined | boolean;
+        requestBodyType?: undefined | "json" | "form-data";
+      };
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
   idempotent?: undefined | boolean;
   path: string;

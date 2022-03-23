@@ -3881,11 +3881,11 @@ export function anonymousValidator2066419866(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"requestBodyType"?: undefined|"json"|"form-data", }>}
+ * @returns {EitherN<{"stripTrailingSlash"?: undefined|boolean, "requestBodyType"?: undefined|"json"|"form-data", }>}
  */
-export function anonymousValidator1139247391(value, propertyPath) {
+export function anonymousValidator1023845888(value, propertyPath) {
   if (isNil(value)) {
-    return { value: { requestBodyType: "json" } };
+    return { value: { stripTrailingSlash: false, requestBodyType: "json" } };
   }
   if (typeof value !== "object") {
     /** @type {{ errors: InternalError[] }} */
@@ -3904,7 +3904,10 @@ export function anonymousValidator1139247391(value, propertyPath) {
   /**
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
-  const validatorPairs = [["requestBodyType", anonymousValidator2066419866]];
+  const validatorPairs = [
+    ["stripTrailingSlash", anonymousValidator196147222],
+    ["requestBodyType", anonymousValidator2066419866],
+  ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
     if (validatorResult.errors) {
@@ -4392,7 +4395,7 @@ export function anonymousValidator1463282173(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, "invalidations": (import("./types").CodeGenRouteInvalidationType)[], }>}
+ * @returns {EitherN<{"type": "route", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"stripTrailingSlash"?: undefined|boolean, "requestBodyType"?: undefined|"json"|"form-data", }, "method": "GET"|"POST"|"PUT"|"DELETE"|"HEAD"|"PATCH", "idempotent": boolean, "path": string, "tags": (string)[], "query"?: undefined|import("./types").CodeGenType, "params"?: undefined|import("./types").CodeGenType, "body"?: undefined|import("./types").CodeGenType, "files"?: undefined|import("./types").CodeGenType, "response"?: undefined|import("./types").CodeGenType, "invalidations": (import("./types").CodeGenRouteInvalidationType)[], }>}
  */
 export function anonymousValidator1390215584(value, propertyPath) {
   if (isNil(value)) {
@@ -4434,7 +4437,7 @@ export function anonymousValidator1390215584(value, propertyPath) {
     ["name", anonymousValidator1443576836],
     ["sql", anonymousValidator368068670],
     ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1139247391],
+    ["internalSettings", anonymousValidator1023845888],
     ["method", anonymousValidator1056430884],
     ["idempotent", anonymousValidator1174857441],
     ["path", anonymousValidator186795873],

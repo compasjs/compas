@@ -433,10 +433,11 @@ function getTypes(T) {
     // `recursivelyRemoveInternalFields`
     internalSettings: T.object()
       .keys({
+        stripTrailingSlash: T.bool().optional(),
         requestBodyType: T.string().oneOf("json", "form-data").optional(),
       })
       .loose()
-      .default(`{ "requestBodyType": "json" }`),
+      .default(`{ "stripTrailingSlash": false, "requestBodyType": "json" }`),
   });
 
   const routeInvalidationType = T.object("routeInvalidationType").keys({

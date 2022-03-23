@@ -254,7 +254,7 @@ test("code-gen/e2e/openapi", async (t) => {
   t.test("assert that structure can be imported", async (t) => {
     const contents = JSON.parse(await readFile(outputFile, "utf-8"));
 
-    const { exitCode } = await codeGenToTemporaryDirectory(
+    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
       {
         extendWithOpenApi: [["server", contents]],
       },
@@ -266,6 +266,14 @@ test("code-gen/e2e/openapi", async (t) => {
     );
 
     t.equal(exitCode, 0);
+
+    // ensure stripTrailingSlash is correctly set
+    const {
+      structure: { group },
+    } = await import(
+      pathJoin(generatedDirectory, "../structure/common/structure.js")
+    );
+    t.equal(group.groupFullRoute.internalSettings.stripTrailingSlash, true);
   });
 
   t.test("regenerate does not contain old routes", async (t) => {
