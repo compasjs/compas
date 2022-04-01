@@ -57,7 +57,7 @@ test("cli/testing/runner", (t) => {
     await runTestsRecursively(state, false);
 
     t.ok(state.caughtException);
-    t.ok(state.caughtException.message.includes("enforceSingleAssertion"));
+    t.ok(state.caughtException.message.includes("at least a single"));
   });
 
   t.test(

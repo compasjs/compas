@@ -119,9 +119,6 @@ the defaults is below:
 // Individual test timeout, i.e. the function provided to `test` and `t.test`
 export const timeout = 2500;
 
-// Enforce that every test has at least a single subtest (i.e. t.test()) or an assertion (t.pass())
-export const enforceSingleAssertion = true;
-
 export async function setup() {
   // Global setup function
 }
@@ -262,8 +259,8 @@ test("willThrow really throws", (t) => {
 });
 ```
 
-When `enforceSingleAssertion` is set to `true` in the config, the above is more
-idiomatically written as:
+Since the test runner enforces that each `test` or `t.test` should either do an
+assertion or call `t.test`, the above is more idiomatically written as:
 
 ```js
 mainTestFn(import.meta);
@@ -320,11 +317,6 @@ When tests are executed, a config file attempted to be loaded from
 
 A configurable timeout in milliseconds. This is enforced for every callback
 provided to `test` or `t.test`. Defaults to 2.5 seconds.
-
-**enforceSingleAssertion**
-
-The runner enforces that every `test()` and `t.test()` call does at least a
-single assertion or creates at least a single subtest.
 
 **setup**
 

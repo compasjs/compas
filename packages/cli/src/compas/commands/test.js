@@ -38,7 +38,6 @@ Test files should be ordinary JavaScript files. By calling 'mainTestFn' at the t
   
 Global configuration can be applied to the test runners via a 'test/config.js' file.
 A global timeout can be configured by setting 'export const timeout = 2500;'. The value is specified in milliseconds.
-By default, every subtest should have at least a single assertion or register a subtest via 't.test()'. To disable this, you can set 'export const enforceSingleAssertion = false'.
 There is also a global 'setup' and 'teardown' function that can be exported from the 'test/config.js' file. They may return a Promise.
 
 To prevent flaky tests, '--randomize-rounds' can be used. This shuffles the order in which the tests are started. And prevents dependencies between test files. Making it easier to run a single test file via for examples 'compas run ./path/to/file.test.js'.
