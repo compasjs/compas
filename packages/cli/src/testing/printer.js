@@ -1,5 +1,5 @@
-import { inspect } from "util";
 import { AppError, isNil } from "@compas/stdlib";
+import { inspect } from "util";
 import { state, testLogger } from "./state.js";
 
 /**
@@ -104,16 +104,16 @@ export function printFailedResults(state, result, indentCount) {
   printTreeSummary(state, result, indentCount);
 
   if (!state.hasFailure) {
-    // No failures in this sub tree, so skip printing it's assertions, exceptions and children
+    // No failures in this sub tree, so skip printing it's assertions, exceptions and
+    // children
     return;
   }
 
-  if (!state.caughtException && failedAssertions.length === 0) {
+  if (!state.caughtException) {
     // Some child has a failure, loop through the children
     for (const child of state.children) {
       printFailedResults(child, result, indentCount + 1);
     }
-    return;
   }
 
   // Increase indent so error and assertion is nested in relation to the tree summary
