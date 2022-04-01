@@ -1,5 +1,5 @@
-import { AppError, isNil } from "@compas/stdlib";
 import { inspect } from "util";
+import { AppError, isNil } from "@compas/stdlib";
 import { state, testLogger } from "./state.js";
 
 /**
