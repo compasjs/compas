@@ -17,12 +17,6 @@ export function setTestLogger(logger: Logger): void;
  */
 export function setTestTimeout(value: any): void;
 /**
- * Set enforcement of an passing assertion in test callbacks
- *
- * @param {boolean} enforce
- */
-export function setEnforceSingleAssertion(enforce: boolean): void;
-/**
  * Only accepts the value if it is a function
  */
 export function setGlobalSetup(value: any): void;
@@ -69,10 +63,6 @@ export let areTestsRunning: boolean;
  * @type {number}
  */
 export let timeout: number;
-/**
- * @type {boolean}
- */
-export let enforceSingleAssertion: boolean;
 /**
  * @type {function(): (void|Promise<void>)}
  */

@@ -1,13 +1,7 @@
 import { AssertionError, deepStrictEqual } from "assert";
 import { url } from "inspector";
 import { isNil } from "@compas/stdlib";
-import {
-  enforceSingleAssertion,
-  setTestTimeout,
-  state,
-  testLogger,
-  timeout,
-} from "./state.js";
+import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**
  * @param {import("./state").TestState} testState
@@ -83,7 +77,6 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
   mutateRunnerEnablingWarnings(runner);
 
   if (
-    enforceSingleAssertion &&
     testState.children.length === 0 &&
     testState.assertions.length === 0 &&
     isNil(testState.caughtException)
@@ -91,7 +84,7 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
     // Only enforce an assertion when no child tests are registered, and when the
     // current test didn't exit with a 'caughtException'.
     testState.caughtException = new Error(
-      `Test did not execute any assertions. This is enforced via the 'enforceSingleAssertion' value in 'test/config.js'.`,
+      `Test did not execute any assertions. It should do at least a single assertion like 't.pass()' or register a subtest via 't.test()'.`,
     );
     delete testState.caughtException.stack;
   }
