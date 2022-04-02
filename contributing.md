@@ -47,9 +47,8 @@ If it is your first time doing this, start by checking out files in the
 be pretty straight forward to find a related function that is tested, and doing
 the same for the yet untested function. For new cases related to code
 generation, add the missing case in `gen/testing.js` and regenerate with
-`compas run generate && compas run types && compas lint`. Then run
-`compas test --coverage` again to see that the new case is not yet covered by
-tests.
+`compas generate`. Then run `compas test --coverage` again to see that the new
+case is not yet covered by tests.
 
 ### Debugging tests
 

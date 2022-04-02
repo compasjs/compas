@@ -1,3 +1,4 @@
+import { AppError, exec } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
@@ -65,4 +66,24 @@ export async function generateStore() {
     dumpApiStructure: false,
     dumpPostgres: true,
   });
+}
+
+export async function generateExamples() {
+  const results = await Promise.all([
+    exec("yarn compas run generate", {
+      cwd: "./examples/code-gen-basics",
+    }),
+    exec("yarn compas run generate", {
+      cwd: "./examples/session-handling",
+    }),
+  ]);
+
+  for (const result of results) {
+    if (result.exitCode !== 0) {
+      throw AppError.serverError({
+        message: "One of the examples failed to generate",
+        result,
+      });
+    }
+  }
 }

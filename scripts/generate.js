@@ -1,16 +1,57 @@
-import { mainFn } from "@compas/stdlib";
+import { spawn } from "@compas/stdlib";
 import {
   generateCli,
   generateCodeGen,
+  generateExamples,
   generateStore,
   generateTypes,
 } from "../src/generate.js";
 
-mainFn(import.meta, main);
+/**
+ * @type {CliCommandDefinitionInput}
+ */
+export const cliDefinition = {
+  name: "generate",
+  shortDescription: "Run internal code-gen and generate types",
+  watchSettings: {
+    extensions: ["js"],
+    ignorePatterns: ["generated"],
+  },
+  modifiers: {
+    isWatchable: true,
+  },
+  flags: [
+    {
+      name: "skipTypescript",
+      rawName: "--skip-tsc",
+      description: "Skip running Typescript",
+    },
+    {
+      name: "skipLint",
+      rawName: "--skip-lint",
+      description: "Skip running the linter",
+    },
+  ],
+  executor: cliExecutor,
+};
 
-async function main() {
+/**
+ *
+ * @param {Logger} logger
+ * @param {CliExecutorState} state
+ * @returns {Promise<CliResult>}
+ */
+async function cliExecutor(logger, state) {
   await generateCli();
   await generateCodeGen();
   await generateStore();
   await generateTypes();
+  await generateExamples();
+
+  if (state.flags.skipTypescript !== true) {
+    await spawn("compas", ["run", "types"]);
+  }
+  if (state.flags.skipLint !== true) {
+    await spawn("compas", ["lint"]);
+  }
 }
