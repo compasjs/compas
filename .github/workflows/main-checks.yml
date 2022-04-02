@@ -28,7 +28,7 @@ jobs:
         run: |
           yarn install
           yarn compas docker up
-          yarn compas run generate
+          yarn compas generate --skip-lint --skip-tsc
           yarn compas migrate
           yarn compas test
 
@@ -54,7 +54,7 @@ jobs:
         run: |
           yarn install
           yarn compas docker up
-          yarn compas run generate
+          yarn compas generate --skip-lint --skip-tsc
           yarn compas migrate
           yarn compas test --coverage
 
