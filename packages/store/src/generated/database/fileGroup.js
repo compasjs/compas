@@ -31,7 +31,6 @@ const fileGroupFieldSet = new Set([
   "parent",
   "createdAt",
   "updatedAt",
-  "deletedAt",
 ]);
 /**
  * Get all fields for fileGroup
@@ -46,11 +45,11 @@ export function fileGroupFields(tableName = "fg.", options = {}) {
   }
   if (options.excludePrimaryKey) {
     return query([
-      `${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+      `${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt"`,
     ]);
   }
   return query([
-    `${tableName}"id", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt", ${tableName}"deletedAt"`,
+    `${tableName}"id", ${tableName}"order", ${tableName}"file", ${tableName}"parent", ${tableName}"name", ${tableName}"meta", ${tableName}"createdAt", ${tableName}"updatedAt"`,
   ]);
 }
 /** @type {any} */
@@ -152,22 +151,6 @@ export const fileGroupWhereSpec = {
         { matcherKey: "updatedAtLowerThan", matcherType: "lowerThan" },
         { matcherKey: "updatedAtIsNull", matcherType: "isNull" },
         { matcherKey: "updatedAtIsNotNull", matcherType: "isNotNull" },
-      ],
-    },
-    {
-      tableKey: "deletedAt",
-      keyType: "timestamptz",
-      matchers: [
-        { matcherKey: "deletedAt", matcherType: "equal" },
-        { matcherKey: "deletedAtNotEqual", matcherType: "notEqual" },
-        { matcherKey: "deletedAtIn", matcherType: "in" },
-        { matcherKey: "deletedAtNotIn", matcherType: "notIn" },
-        { matcherKey: "deletedAtGreaterThan", matcherType: "greaterThan" },
-        { matcherKey: "deletedAtLowerThan", matcherType: "lowerThan" },
-        {
-          matcherKey: "deletedAtIncludeNotNull",
-          matcherType: "includeNotNull",
-        },
       ],
     },
     {
@@ -313,8 +296,6 @@ export function fileGroupInsertValues(insert, options = {}) {
     str.push(", ");
     args.push(it.updatedAt ?? new Date());
     str.push(", ");
-    args.push(it.deletedAt ?? null);
-    str.push(", ");
     // Fixup last comma & add undefined arg so strings are concatted correctly
     const lastStrIdx = str.length - 1;
     str[lastStrIdx] = str[lastStrIdx].substring(0, str[lastStrIdx].length - 2);
@@ -371,7 +352,6 @@ WHERE ${fileGroupWhere(where)}
  * @returns {Promise<void>}
  */
 async function fileGroupDelete(sql, where = {}) {
-  where.deletedAtIncludeNotNull = true;
   return await query`
 DELETE FROM "fileGroup" fg
 WHERE ${fileGroupWhere(where)}
@@ -440,7 +420,6 @@ export const fileGroupUpdateSpec = {
     "parent",
     "createdAt",
     "updatedAt",
-    "deletedAt",
   ],
   where: fileGroupWhereSpec,
   injectUpdatedAt: true,
@@ -456,7 +435,6 @@ export const fileGroupUpdateSpec = {
     parent: { type: "uuid", atomicUpdates: [] },
     createdAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
     updatedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
-    deletedAt: { type: "date", atomicUpdates: ["$add", "$subtract"] },
   },
 };
 /**
@@ -504,7 +482,6 @@ export const fileGroupQueryBuilderSpec = {
     "parent",
     "createdAt",
     "updatedAt",
-    "deletedAt",
   ],
   relations: [
     {
@@ -604,12 +581,6 @@ export function transformFileGroup(values, builder = {}) {
     }
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
-    }
-    if (value.deletedAt === null) {
-      value.deletedAt = undefined;
-    }
-    if (typeof value.deletedAt === "string") {
-      value.deletedAt = new Date(value.deletedAt);
     }
     if (value[builder.file?.as ?? "file"] === null) {
       value[builder.file?.as ?? "file"] = undefined;

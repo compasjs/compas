@@ -85,16 +85,7 @@ export function anonymousValidator1389014320(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|Date>}
- */
-export function anonymousValidator1988053796(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | Date>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
+ * @returns {EitherN<{"bucketName": string, "contentLength": number, "contentType": string, "name": string, "meta": StoreFileMeta, "id": string, "createdAt": Date, "updatedAt": Date, }>}
  */
 export function anonymousValidator599447075(
   value: any,
@@ -108,7 +99,6 @@ export function anonymousValidator599447075(
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt?: undefined | Date;
 }>;
 /**
  * @param {*} value
@@ -149,7 +139,7 @@ export function anonymousValidator1802076175(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, "deletedAt"?: undefined|Date, }>}
+ * @returns {EitherN<{"name"?: undefined|string, "order": number, "meta": StoreFileGroupMeta, "id": string, "file"?: undefined|string, "parent"?: undefined|string, "createdAt": Date, "updatedAt": Date, }>}
  */
 export function anonymousValidator2060025506(
   value: any,
@@ -163,7 +153,6 @@ export function anonymousValidator2060025506(
   parent?: undefined | string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt?: undefined | Date;
 }>;
 /**
  * @param {*} value
@@ -294,6 +283,15 @@ export function anonymousValidator430889951(
   minutes?: undefined | number;
   seconds?: undefined | number;
 }>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|Date>}
+ */
+export function anonymousValidator1988053796(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | Date>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -480,7 +478,7 @@ export function anonymousValidator1854593336(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "viaFile"?: undefined|{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaParent"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaChildren"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileGroupWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "order"?: undefined|number, "orderNotEqual"?: undefined|number, "orderIn"?: undefined|(number)[]|QueryPart<any>, "orderNotIn"?: undefined|(number)[]|QueryPart<any>, "orderGreaterThan"?: undefined|number, "orderLowerThan"?: undefined|number, "orderIsNull"?: undefined|boolean, "orderIsNotNull"?: undefined|boolean, "file"?: undefined|string, "fileNotEqual"?: undefined|string, "fileIn"?: undefined|(string)[]|QueryPart<any>, "fileNotIn"?: undefined|(string)[]|QueryPart<any>, "fileIsNull"?: undefined|boolean, "fileIsNotNull"?: undefined|boolean, "parent"?: undefined|string, "parentNotEqual"?: undefined|string, "parentIn"?: undefined|(string)[]|QueryPart<any>, "parentNotIn"?: undefined|(string)[]|QueryPart<any>, "parentIsNull"?: undefined|boolean, "parentIsNotNull"?: undefined|boolean, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "viaFile"?: undefined|{"where"?: undefined|StoreFileWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaParent"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "viaChildren"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "childrenNotExists"?: undefined|StoreFileGroupWhere, }>}
  */
 export function anonymousValidator153017499(
   value: any,
@@ -528,13 +526,6 @@ export function anonymousValidator153017499(
   updatedAtLowerThan?: undefined | Date;
   updatedAtIsNull?: undefined | boolean;
   updatedAtIsNotNull?: undefined | boolean;
-  deletedAt?: undefined | Date;
-  deletedAtNotEqual?: undefined | Date;
-  deletedAtIn?: undefined | Date[] | QueryPart<any>;
-  deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-  deletedAtGreaterThan?: undefined | Date;
-  deletedAtLowerThan?: undefined | Date;
-  deletedAtIncludeNotNull?: undefined | boolean;
   viaFile?:
     | undefined
     | {
@@ -586,7 +577,7 @@ export function anonymousValidator495895385(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "deletedAt"?: undefined|Date, "deletedAtNotEqual"?: undefined|Date, "deletedAtIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "deletedAtGreaterThan"?: undefined|Date, "deletedAtLowerThan"?: undefined|Date, "deletedAtIncludeNotNull"?: undefined|boolean, "viaGroup"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
+ * @returns {EitherN<{"$raw"?: undefined|QueryPart<any>, "$or"?: undefined|(StoreFileWhere)[], "id"?: undefined|string, "idNotEqual"?: undefined|string, "idIn"?: undefined|(string)[]|QueryPart<any>, "idNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketName"?: undefined|string, "bucketNameNotEqual"?: undefined|string, "bucketNameIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameNotIn"?: undefined|(string)[]|QueryPart<any>, "bucketNameLike"?: undefined|string, "bucketNameILike"?: undefined|string, "bucketNameNotLike"?: undefined|string, "createdAt"?: undefined|Date, "createdAtNotEqual"?: undefined|Date, "createdAtIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "createdAtGreaterThan"?: undefined|Date, "createdAtLowerThan"?: undefined|Date, "createdAtIsNull"?: undefined|boolean, "createdAtIsNotNull"?: undefined|boolean, "updatedAt"?: undefined|Date, "updatedAtNotEqual"?: undefined|Date, "updatedAtIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtNotIn"?: undefined|(Date)[]|QueryPart<any>, "updatedAtGreaterThan"?: undefined|Date, "updatedAtLowerThan"?: undefined|Date, "updatedAtIsNull"?: undefined|boolean, "updatedAtIsNotNull"?: undefined|boolean, "viaGroup"?: undefined|{"where"?: undefined|StoreFileGroupWhere, "limit"?: undefined|number, "offset"?: undefined|number, }, "groupNotExists"?: undefined|StoreFileGroupWhere, }>}
  */
 export function anonymousValidator2074494218(
   value: any,
@@ -621,13 +612,6 @@ export function anonymousValidator2074494218(
   updatedAtLowerThan?: undefined | Date;
   updatedAtIsNull?: undefined | boolean;
   updatedAtIsNotNull?: undefined | boolean;
-  deletedAt?: undefined | Date;
-  deletedAtNotEqual?: undefined | Date;
-  deletedAtIn?: undefined | Date[] | QueryPart<any>;
-  deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-  deletedAtGreaterThan?: undefined | Date;
-  deletedAtLowerThan?: undefined | Date;
-  deletedAtIncludeNotNull?: undefined | boolean;
   viaGroup?:
     | undefined
     | {
@@ -1162,35 +1146,7 @@ export function anonymousValidator1398947189(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|null|Date>}
- */
-export function anonymousValidator795383528(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | null | Date>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<undefined|null|Date|{"$add": string, }|{"$subtract": string, }>}
- */
-export function anonymousValidator1827465744(
-  value: any,
-  propertyPath: string,
-): EitherN<
-  | undefined
-  | null
-  | Date
-  | {
-      $add: string;
-    }
-  | {
-      $subtract: string;
-    }
->;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator617486747(
   value: any,
@@ -1264,16 +1220,6 @@ export function anonymousValidator617486747(
     | {
         $subtract: string;
       };
-  deletedAt?:
-    | undefined
-    | null
-    | Date
-    | {
-        $add: string;
-      }
-    | {
-        $subtract: string;
-      };
 }>;
 /**
  * @param {*} value
@@ -1305,9 +1251,9 @@ export function anonymousValidator358976960(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt"|"deletedAt">}
+ * @returns {EitherN<"bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt">}
  */
-export function anonymousValidator1484181211(
+export function anonymousValidator1543934225(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1319,14 +1265,13 @@ export function anonymousValidator1484181211(
   | "id"
   | "createdAt"
   | "updatedAt"
-  | "deletedAt"
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[]>}
  */
-export function anonymousValidator708521187(
+export function anonymousValidator1324726735(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1339,15 +1284,14 @@ export function anonymousValidator708521187(
     | "id"
     | "createdAt"
     | "updatedAt"
-    | "deletedAt"
   )[]
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|"*"|("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<undefined|"*"|("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[]>}
  */
-export function anonymousValidator1571337076(
+export function anonymousValidator538169824(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1362,13 +1306,12 @@ export function anonymousValidator1571337076(
       | "id"
       | "createdAt"
       | "updatedAt"
-      | "deletedAt"
     )[]
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"update": StoreFileUpdatePartial, "where": StoreFileWhere, "returning"?: undefined|"*"|("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt"|"deletedAt")[], }>}
+ * @returns {EitherN<{"update": StoreFileUpdatePartial, "where": StoreFileWhere, "returning"?: undefined|"*"|("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator165104378(
   value: any,
@@ -1388,7 +1331,6 @@ export function anonymousValidator165104378(
         | "id"
         | "createdAt"
         | "updatedAt"
-        | "deletedAt"
       )[];
 }>;
 /**
@@ -1514,7 +1456,7 @@ export function anonymousValidator1314728024(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"name"?: undefined|null|string|{"$append": string, }, "order"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "meta"?: undefined|{}|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "file"?: undefined|null|string, "parent"?: undefined|null|string, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "deletedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"name"?: undefined|null|string|{"$append": string, }, "order"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "meta"?: undefined|{}|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "file"?: undefined|null|string, "parent"?: undefined|null|string, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator761369354(
   value: any,
@@ -1576,16 +1518,6 @@ export function anonymousValidator761369354(
     | {
         $subtract: string;
       };
-  deletedAt?:
-    | undefined
-    | null
-    | Date
-    | {
-        $add: string;
-      }
-    | {
-        $subtract: string;
-      };
 }>;
 /**
  * @param {*} value
@@ -1608,9 +1540,9 @@ export function anonymousValidator306271549(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt">}
+ * @returns {EitherN<"name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt">}
  */
-export function anonymousValidator2003139400(
+export function anonymousValidator1402836700(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1622,14 +1554,13 @@ export function anonymousValidator2003139400(
   | "parent"
   | "createdAt"
   | "updatedAt"
-  | "deletedAt"
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt")[]>}
  */
-export function anonymousValidator766023098(
+export function anonymousValidator1565551910(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1642,15 +1573,14 @@ export function anonymousValidator766023098(
     | "parent"
     | "createdAt"
     | "updatedAt"
-    | "deletedAt"
   )[]
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|"*"|("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<undefined|"*"|("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt")[]>}
  */
-export function anonymousValidator163839689(
+export function anonymousValidator720221365(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1665,13 +1595,12 @@ export function anonymousValidator163839689(
       | "parent"
       | "createdAt"
       | "updatedAt"
-      | "deletedAt"
     )[]
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"update": StoreFileGroupUpdatePartial, "where": StoreFileGroupWhere, "returning"?: undefined|"*"|("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[], }>}
+ * @returns {EitherN<{"update": StoreFileGroupUpdatePartial, "where": StoreFileGroupWhere, "returning"?: undefined|"*"|("name"|"order"|"meta"|"id"|"file"|"parent"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator498490869(
   value: any,
@@ -1691,7 +1620,6 @@ export function anonymousValidator498490869(
         | "parent"
         | "createdAt"
         | "updatedAt"
-        | "deletedAt"
       )[];
 }>;
 /**
@@ -2138,6 +2066,34 @@ export function anonymousValidator321286861(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|null|Date>}
+ */
+export function anonymousValidator795383528(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | null | Date>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|null|Date|{"$add": string, }|{"$subtract": string, }>}
+ */
+export function anonymousValidator1827465744(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | null
+  | Date
+  | {
+      $add: string;
+    }
+  | {
+      $subtract: string;
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<{"data"?: undefined|any|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "checksum"?: undefined|string|{"$append": string, }, "revokedAt"?: undefined|null|Date|{"$add": string, }|{"$subtract": string, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator2102646924(
@@ -2488,32 +2444,31 @@ export function anonymousValidator62764704(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt">}
+ * @returns {EitherN<"id"|"bucketName"|"createdAt"|"updatedAt">}
  */
-export function anonymousValidator237896171(
+export function anonymousValidator988235265(
   value: any,
   propertyPath: string,
-): EitherN<"id" | "bucketName" | "createdAt" | "updatedAt" | "deletedAt">;
+): EitherN<"id" | "bucketName" | "createdAt" | "updatedAt">;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<("id"|"bucketName"|"createdAt"|"updatedAt")[]>}
  */
-export function anonymousValidator757309139(
+export function anonymousValidator1157993407(
   value: any,
   propertyPath: string,
-): EitherN<("id" | "bucketName" | "createdAt" | "updatedAt" | "deletedAt")[]>;
+): EitherN<("id" | "bucketName" | "createdAt" | "updatedAt")[]>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt"|"deletedAt")[]>}
+ * @returns {EitherN<QueryPart<any>|("id"|"bucketName"|"createdAt"|"updatedAt")[]>}
  */
 export function anonymousValidator1795948632(
   value: any,
   propertyPath: string,
 ): EitherN<
-  | QueryPart<any>
-  | ("id" | "bucketName" | "createdAt" | "updatedAt" | "deletedAt")[]
+  QueryPart<any> | ("id" | "bucketName" | "createdAt" | "updatedAt")[]
 >;
 /**
  * @param {*} value
@@ -2536,6 +2491,50 @@ export function anonymousValidator20803901(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ */
+export function anonymousValidator163358845(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  id?: undefined | CompasSqlOrderBy;
+  bucketName?: undefined | CompasSqlOrderBy;
+  createdAt?: undefined | CompasSqlOrderBy;
+  updatedAt?: undefined | CompasSqlOrderBy;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<"id"|"order"|"file"|"parent"|"createdAt"|"updatedAt">}
+ */
+export function anonymousValidator1310015426(
+  value: any,
+  propertyPath: string,
+): EitherN<"id" | "order" | "file" | "parent" | "createdAt" | "updatedAt">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator308080704(
+  value: any,
+  propertyPath: string,
+): EitherN<("id" | "order" | "file" | "parent" | "createdAt" | "updatedAt")[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator753972035(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | QueryPart<any>
+  | ("id" | "order" | "file" | "parent" | "createdAt" | "updatedAt")[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST">}
  */
 export function anonymousValidator572766398(
@@ -2554,72 +2553,7 @@ export function anonymousValidator198346889(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
- */
-export function anonymousValidator163358845(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  id?: undefined | CompasSqlOrderBy;
-  bucketName?: undefined | CompasSqlOrderBy;
-  createdAt?: undefined | CompasSqlOrderBy;
-  updatedAt?: undefined | CompasSqlOrderBy;
-  deletedAt?: undefined | CompasSqlOrderByOptionalField;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<"id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt">}
- */
-export function anonymousValidator1118242002(
-  value: any,
-  propertyPath: string,
-): EitherN<
-  "id" | "order" | "file" | "parent" | "createdAt" | "updatedAt" | "deletedAt"
->;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
-export function anonymousValidator938090836(
-  value: any,
-  propertyPath: string,
-): EitherN<
-  (
-    | "id"
-    | "order"
-    | "file"
-    | "parent"
-    | "createdAt"
-    | "updatedAt"
-    | "deletedAt"
-  )[]
->;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<QueryPart<any>|("id"|"order"|"file"|"parent"|"createdAt"|"updatedAt"|"deletedAt")[]>}
- */
-export function anonymousValidator753972035(
-  value: any,
-  propertyPath: string,
-): EitherN<
-  | QueryPart<any>
-  | (
-      | "id"
-      | "order"
-      | "file"
-      | "parent"
-      | "createdAt"
-      | "updatedAt"
-      | "deletedAt"
-    )[]
->;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, "deletedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "order"?: undefined|CompasSqlOrderByOptionalField, "file"?: undefined|CompasSqlOrderByOptionalField, "parent"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
  */
 export function anonymousValidator322356638(
   value: any,
@@ -2631,7 +2565,6 @@ export function anonymousValidator322356638(
   parent?: undefined | CompasSqlOrderByOptionalField;
   createdAt?: undefined | CompasSqlOrderBy;
   updatedAt?: undefined | CompasSqlOrderBy;
-  deletedAt?: undefined | CompasSqlOrderByOptionalField;
 }>;
 /**
  * @param {*} value

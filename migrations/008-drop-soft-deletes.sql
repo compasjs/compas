@@ -1,0 +1,2 @@
+ALTER TABLE "file" DROP COLUMN "deletedAt" CASCADE;
+ALTER TABLE "fileGroup" DROP COLUMN "deletedAt" CASCADE;
