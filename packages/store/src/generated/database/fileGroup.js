@@ -370,7 +370,7 @@ WHERE ${fileGroupWhere(where)}
  * @param {StoreFileGroupWhere} [where={}]
  * @returns {Promise<void>}
  */
-async function fileGroupDeletePermanent(sql, where = {}) {
+async function fileGroupDelete(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
   return await query`
 DELETE FROM "fileGroup" fg
@@ -483,32 +483,12 @@ const fileGroupUpdate = async (sql, input) => {
   // @ts-ignore
   return undefined;
 };
-/**
- * @param {Postgres} sql
- * @param {StoreFileGroupWhere} [where={}]
- * @param {{ skipCascade?: boolean }} [options={}]
- * @returns {Promise<void>}
- */
-async function fileGroupDelete(sql, where = {}, options = {}) {
-  const result = await query`
-UPDATE "fileGroup" fg
-SET "deletedAt" = now()
-WHERE ${fileGroupWhere(where)}
-RETURNING "id"
-`.exec(sql);
-  if (options.skipCascade || result.length === 0) {
-    return;
-  }
-  const ids = result.map((it) => it.id);
-  await Promise.all([fileGroupQueries.fileGroupDelete(sql, { parentIn: ids })]);
-}
 export const fileGroupQueries = {
   fileGroupCount,
   fileGroupDelete,
   fileGroupInsert,
   fileGroupUpsertOnId,
   fileGroupUpdate,
-  fileGroupDeletePermanent,
 };
 export const fileGroupQueryBuilderSpec = {
   name: "fileGroup",

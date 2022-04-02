@@ -185,7 +185,7 @@ test("store/files", async (t) => {
   });
 
   t.test("deleteFile", async (t) => {
-    await queries.fileDeletePermanent(sql, { id: storedFiles[0].id });
+    await queries.fileDelete(sql, { id: storedFiles[0].id });
     t.pass();
   });
 
