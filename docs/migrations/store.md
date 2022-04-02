@@ -26,11 +26,9 @@ CREATE TABLE "file"
   "meta"          jsonb            NOT NULL,
   "createdAt"     timestamptz      NOT NULL DEFAULT now(),
   "updatedAt"     timestamptz      NOT NULL DEFAULT now(),
-  "deletedAt"     timestamptz      NULL
 );
 
 CREATE INDEX "fileBucketNameIdx" ON "file" ("bucketName");
-CREATE INDEX "fileDeletedAtIdx" ON "file" ("deletedAt");
 
 CREATE TABLE "job"
 (
@@ -61,7 +59,6 @@ CREATE TABLE "fileGroup"
   "meta"      jsonb            NOT NULL,
   "createdAt" timestamptz      NOT NULL DEFAULT now(),
   "updatedAt" timestamptz      NOT NULL DEFAULT now(),
-  "deletedAt" timestamptz      NULL,
   -- Both file and parent fields are optional, since we expect either one of them to exists
   -- However we still want to cascade hard deletes
   CONSTRAINT "fileGroupFileFk" FOREIGN KEY ("file") REFERENCES "file" ("id") ON DELETE CASCADE,
@@ -70,7 +67,6 @@ CREATE TABLE "fileGroup"
 
 CREATE INDEX "fileGroupFileIdx" ON "fileGroup" ("file");
 CREATE INDEX "fileGroupParentIdx" ON "fileGroup" ("parent");
-CREATE INDEX "fileGroupDeletedAtIdx" ON "fileGroup" ("deletedAt");
 CREATE INDEX "fileGroupOrderIdx" ON "fileGroup" ("order");
 
 CREATE TABLE "sessionStore"

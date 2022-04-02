@@ -13,7 +13,6 @@ declare global {
     id: string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt?: undefined | Date;
   };
   // User definable, optional object to store whatever you want
   type StoreFileMeta = {
@@ -30,7 +29,6 @@ declare global {
     parent?: undefined | string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt?: undefined | Date;
   };
   // User definable, optional object to store whatever you want
   type StoreFileGroupMeta = {};
@@ -109,13 +107,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    deletedAt?: undefined | Date;
-    deletedAtNotEqual?: undefined | Date;
-    deletedAtIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtGreaterThan?: undefined | Date;
-    deletedAtLowerThan?: undefined | Date;
-    deletedAtIncludeNotNull?: undefined | boolean;
     viaGroup?:
       | undefined
       | {
@@ -168,13 +159,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    deletedAt?: undefined | Date;
-    deletedAtNotEqual?: undefined | Date;
-    deletedAtIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtGreaterThan?: undefined | Date;
-    deletedAtLowerThan?: undefined | Date;
-    deletedAtIncludeNotNull?: undefined | boolean;
     viaFile?:
       | undefined
       | {
@@ -343,7 +327,6 @@ declare global {
           | "id"
           | "createdAt"
           | "updatedAt"
-          | "deletedAt"
         )[];
   };
   type StoreFileUpdatePartial = {
@@ -367,12 +350,6 @@ declare global {
       | { $remove: { path: (number | string)[] } };
     createdAt?: undefined | Date | { $add: string } | { $subtract: string };
     updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
-    deletedAt?:
-      | undefined
-      | null
-      | Date
-      | { $add: string }
-      | { $subtract: string };
   };
   type StoreFileGroupUpdate = {
     update: StoreFileGroupUpdatePartial;
@@ -389,7 +366,6 @@ declare global {
           | "parent"
           | "createdAt"
           | "updatedAt"
-          | "deletedAt"
         )[];
   };
   type StoreFileGroupUpdatePartial = {
@@ -410,12 +386,6 @@ declare global {
     parent?: undefined | null | string;
     createdAt?: undefined | Date | { $add: string } | { $subtract: string };
     updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
-    deletedAt?:
-      | undefined
-      | null
-      | Date
-      | { $add: string }
-      | { $subtract: string };
   };
   type StoreJobUpdate = {
     update: StoreJobUpdatePartial;
@@ -530,31 +500,17 @@ declare global {
   };
   type StoreFileOrderBy =
     | QueryPart<any>
-    | ("id" | "bucketName" | "createdAt" | "updatedAt" | "deletedAt")[];
+    | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
   type StoreFileOrderBySpec = {
     id?: undefined | CompasSqlOrderBy;
     bucketName?: undefined | CompasSqlOrderBy;
     createdAt?: undefined | CompasSqlOrderBy;
     updatedAt?: undefined | CompasSqlOrderBy;
-    deletedAt?: undefined | CompasSqlOrderByOptionalField;
   };
   type CompasSqlOrderBy = "ASC" | "DESC";
-  type CompasSqlOrderByOptionalField =
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST";
   type StoreFileGroupOrderBy =
     | QueryPart<any>
-    | (
-        | "id"
-        | "order"
-        | "file"
-        | "parent"
-        | "createdAt"
-        | "updatedAt"
-        | "deletedAt"
-      )[];
+    | ("id" | "order" | "file" | "parent" | "createdAt" | "updatedAt")[];
   type StoreFileGroupOrderBySpec = {
     id?: undefined | CompasSqlOrderBy;
     order?: undefined | CompasSqlOrderByOptionalField;
@@ -562,8 +518,12 @@ declare global {
     parent?: undefined | CompasSqlOrderByOptionalField;
     createdAt?: undefined | CompasSqlOrderBy;
     updatedAt?: undefined | CompasSqlOrderBy;
-    deletedAt?: undefined | CompasSqlOrderByOptionalField;
   };
+  type CompasSqlOrderByOptionalField =
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST";
   type StoreJobOrderBy =
     | QueryPart<any>
     | (
@@ -614,7 +574,6 @@ declare global {
         };
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | null | Date;
   };
   type StoreFileGroupInsertPartial = {
     id?: undefined | string;
@@ -625,7 +584,6 @@ declare global {
     meta?: undefined | {};
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | null | Date;
   };
   type StoreJobInsertPartial = {
     id?: undefined | number;
@@ -712,7 +670,6 @@ declare global {
     id: string;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
   };
   type StoreFileMetaInput =
     | undefined
@@ -729,7 +686,6 @@ declare global {
     parent?: undefined | string;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
-    deletedAt?: undefined | Date;
   };
   type StoreFileGroupMetaInput = undefined | {};
   type StoreImageTransformOptionsInput = {
@@ -788,13 +744,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    deletedAt?: undefined | Date;
-    deletedAtNotEqual?: undefined | Date;
-    deletedAtIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtGreaterThan?: undefined | Date;
-    deletedAtLowerThan?: undefined | Date;
-    deletedAtIncludeNotNull?: undefined | boolean;
     viaGroup?:
       | undefined
       | {
@@ -847,13 +796,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    deletedAt?: undefined | Date;
-    deletedAtNotEqual?: undefined | Date;
-    deletedAtIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    deletedAtGreaterThan?: undefined | Date;
-    deletedAtLowerThan?: undefined | Date;
-    deletedAtIncludeNotNull?: undefined | boolean;
     viaFile?:
       | undefined
       | {
@@ -1023,7 +965,6 @@ declare global {
           | "id"
           | "createdAt"
           | "updatedAt"
-          | "deletedAt"
         )[];
   };
   type StoreFileUpdateFnInput = <I extends StoreFileUpdate>(
@@ -1047,7 +988,6 @@ declare global {
           | "parent"
           | "createdAt"
           | "updatedAt"
-          | "deletedAt"
         )[];
   };
   type StoreFileGroupUpdateFnInput = <I extends StoreFileGroupUpdate>(
@@ -1137,10 +1077,8 @@ declare global {
     bucketName?: undefined | CompasSqlOrderByInput;
     createdAt?: undefined | CompasSqlOrderByInput;
     updatedAt?: undefined | CompasSqlOrderByInput;
-    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
   };
   type CompasSqlOrderByInput = CompasSqlOrderBy;
-  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
   type StoreFileGroupOrderByInput = StoreFileGroupOrderBy;
   type StoreFileGroupOrderBySpecInput = {
     id?: undefined | CompasSqlOrderByInput;
@@ -1149,8 +1087,8 @@ declare global {
     parent?: undefined | CompasSqlOrderByOptionalFieldInput;
     createdAt?: undefined | CompasSqlOrderByInput;
     updatedAt?: undefined | CompasSqlOrderByInput;
-    deletedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
   };
+  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
   type StoreJobOrderByInput = StoreJobOrderBy;
   type StoreJobOrderBySpecInput = {
     id?: undefined | CompasSqlOrderByInput;

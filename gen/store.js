@@ -43,7 +43,7 @@ export function applyStoreStructure(app) {
           .default("{}")
           .docs("User definable, optional object to store whatever you want"),
       })
-      .enableQueries({ withSoftDeletes: true })
+      .enableQueries({ withDates: true })
       .relations(),
 
     T.object("fileGroup")
@@ -62,7 +62,7 @@ export function applyStoreStructure(app) {
           .default("{}")
           .docs("User definable, optional object to store whatever you want"),
       })
-      .enableQueries({ withSoftDeletes: true })
+      .enableQueries({ withDates: true })
       .relations(
         T.oneToOne("file", T.reference("store", "file"), "group").optional(),
         T.manyToOne(

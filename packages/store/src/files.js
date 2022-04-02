@@ -234,7 +234,6 @@ export async function syncDeletedFiles(sql, minio, bucketName) {
   const knownIds = await queryFile({
     where: {
       bucketName: bucketName,
-      deletedAtIncludeNotNull: true,
     },
   }).exec(sql);
 
