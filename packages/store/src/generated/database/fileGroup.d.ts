@@ -107,7 +107,6 @@ export namespace fileGroupQueries {
   export { fileGroupInsert };
   export { fileGroupUpsertOnId };
   export { fileGroupUpdate };
-  export { fileGroupDeletePermanent };
 }
 export const fileGroupQueryBuilderSpec: any;
 /**
@@ -122,17 +121,11 @@ declare function fileGroupCount(
 /**
  * @param {Postgres} sql
  * @param {StoreFileGroupWhere} [where={}]
- * @param {{ skipCascade?: boolean }} [options={}]
  * @returns {Promise<void>}
  */
 declare function fileGroupDelete(
   sql: Postgres,
   where?: StoreFileGroupWhere | undefined,
-  options?:
-    | {
-        skipCascade?: boolean | undefined;
-      }
-    | undefined,
 ): Promise<void>;
 /**
  * @param {Postgres} sql
@@ -166,14 +159,5 @@ declare function fileGroupUpsertOnId(
  * @type {StoreFileGroupUpdateFn}
  */
 declare const fileGroupUpdate: StoreFileGroupUpdateFn;
-/**
- * @param {Postgres} sql
- * @param {StoreFileGroupWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function fileGroupDeletePermanent(
-  sql: Postgres,
-  where?: StoreFileGroupWhere | undefined,
-): Promise<void>;
 export {};
 //# sourceMappingURL=fileGroup.d.ts.map

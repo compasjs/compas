@@ -117,11 +117,16 @@ const [authorOfPost] = await queryUser({
 await queries.userInsert(sql, { email: "bar@foo.com", name: "Compas " });
 
 // soft delete
-await queries.postDelete(sql, { id: "c532ac2a-4489-4b50-a061-12b2aa9a5df2" });
+await queries.postUpdate(sql, {
+  update: {
+    deletedAt: new Date(),
+  },
+  where: { id: "c532ac2a-4489-4b50-a061-12b2aa9a5df2" },
+});
 // Search include soft deleted posts
 await queryPost({ where: { deletedAtIncludeNotNull: true } });
 // permanent delete
-await queries.postDeletePermanent(sql, {
+await queries.postDelete(sql, {
   id: "c532ac2a-4489-4b50-a061-12b2aa9a5df2",
 });
 ```

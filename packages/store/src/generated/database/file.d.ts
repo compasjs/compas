@@ -105,7 +105,6 @@ export namespace fileQueries {
   export { fileInsert };
   export { fileUpsertOnId };
   export { fileUpdate };
-  export { fileDeletePermanent };
 }
 export namespace fileQueryBuilderSpec {
   export const name: string;
@@ -133,17 +132,11 @@ declare function fileCount(
 /**
  * @param {Postgres} sql
  * @param {StoreFileWhere} [where={}]
- * @param {{ skipCascade?: boolean }} [options={}]
  * @returns {Promise<void>}
  */
 declare function fileDelete(
   sql: Postgres,
   where?: StoreFileWhere | undefined,
-  options?:
-    | {
-        skipCascade?: boolean | undefined;
-      }
-    | undefined,
 ): Promise<void>;
 /**
  * @param {Postgres} sql
@@ -177,14 +170,5 @@ declare function fileUpsertOnId(
  * @type {StoreFileUpdateFn}
  */
 declare const fileUpdate: StoreFileUpdateFn;
-/**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function fileDeletePermanent(
-  sql: Postgres,
-  where?: StoreFileWhere | undefined,
-): Promise<void>;
 export {};
 //# sourceMappingURL=file.d.ts.map

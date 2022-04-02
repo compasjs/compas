@@ -9,7 +9,6 @@ import {
   validateStoreFileWhere,
 } from "../store/validators.js";
 import {
-  fileGroupQueries,
   fileGroupQueryBuilderSpec,
   fileGroupWhere,
   fileGroupWhereSpec,
@@ -321,7 +320,7 @@ WHERE ${fileWhere(where)}
  * @param {StoreFileWhere} [where={}]
  * @returns {Promise<void>}
  */
-async function fileDeletePermanent(sql, where = {}) {
+async function fileDelete(sql, where = {}) {
   where.deletedAtIncludeNotNull = true;
   return await query`
 DELETE FROM "file" f
@@ -429,32 +428,12 @@ const fileUpdate = async (sql, input) => {
   // @ts-ignore
   return undefined;
 };
-/**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where={}]
- * @param {{ skipCascade?: boolean }} [options={}]
- * @returns {Promise<void>}
- */
-async function fileDelete(sql, where = {}, options = {}) {
-  const result = await query`
-UPDATE "file" f
-SET "deletedAt" = now()
-WHERE ${fileWhere(where)}
-RETURNING "id"
-`.exec(sql);
-  if (options.skipCascade || result.length === 0) {
-    return;
-  }
-  const ids = result.map((it) => it.id);
-  await Promise.all([fileGroupQueries.fileGroupDelete(sql, { fileIn: ids })]);
-}
 export const fileQueries = {
   fileCount,
   fileDelete,
   fileInsert,
   fileUpsertOnId,
   fileUpdate,
-  fileDeletePermanent,
 };
 export const fileQueryBuilderSpec = {
   name: "file",

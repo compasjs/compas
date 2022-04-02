@@ -197,7 +197,7 @@ test("store/send-transformed-image", async (t) => {
   t.test("return webp if allowed - but remove original", async (t) => {
     const existingTransformForKey =
       five.meta.transforms[`compas-image-transform-webp1-w5-q60`];
-    await queries.fileDeletePermanent(sql, { id: existingTransformForKey });
+    await queries.fileDelete(sql, { id: existingTransformForKey });
 
     const response = await apiClient.request({
       method: "GET",

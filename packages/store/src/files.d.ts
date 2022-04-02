@@ -111,7 +111,7 @@ export function copyFile(
   targetBucket?: string | undefined,
 ): Promise<StoreFile>;
 /**
- * File deletes should be done via `queries.storeFileDeletePermanent()`. By calling this
+ * File deletes should be done via `queries.storeFileDelete()`. By calling this
  * function, all files that don't exist in the database will be removed from the S3
  * bucket.
  *

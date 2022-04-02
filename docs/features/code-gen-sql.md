@@ -570,8 +570,7 @@ await queries.userUpdate(sql, {
         value: false,
       },
     },
-  },
-  /* ... */
+  } /* ... */,
 });
 
 // Remove all subscriptions
@@ -582,8 +581,7 @@ await queries.userUpdate(sql, {
         path: ["subscriptions"],
       },
     },
-  },
-  /* ... */
+  } /* ... */,
 });
 ```
 
@@ -604,6 +602,50 @@ where-clauses. `T.date().timeOnly()` works almost the same and uses a
 To get this behaviour, Compas ensures that connections created via
 `newPostgresConnection` from @compas/store, disable any conversion to JavaScript
 Date objects for any `date` & `time` columns.
+
+## Soft deletes
+
+Compas also supports some form soft delete support via the `withSoftDeletes`
+option passed to `.enableQueries()`. This option also enables `withDates` and
+creates fields for `createdAt`, `updatedAt` and `deletedAt`. The generated
+queries by default prevent you from querying soft deleted rows. To include those
+you need to pass `deletedAtIncludeNotNull` in the where clause. Try to minimize
+the use of this future, as it can grow complex quite fast. Especially if
+multiple entities can be soft deleted apart from each other.
+
+```js
+// Create entity
+const [entity] = await queries.entityInsert(sq, {
+  /* ... */
+});
+const [selectedEntity] = await queryEntity({
+  where: { id: entity.id },
+}).exec(sql);
+
+// Soft delete entity
+// This also supports setting a date in the future, for when it should be soft deleted.
+// A soft delete can also be removed by providing `{ update: { deletedAt: null }, where: { id: entity.id, deletedAtIncludeNotNull } }`
+await queries.entityUpdate(sql, {
+  update: { deletedAt: new Date() },
+  where: { id: entity.id },
+});
+
+// No result, since it is soft deleted
+// If a `deletedAt` is set in the future, it will still be returned here, till the set date is passed.
+await queryEntity({
+  where: { id: entity.id },
+}).exec(sql);
+
+const [softDeletedEntity] = await queryEntity({
+  where: {
+    id: entity.id, // Supported everywhere, where a `where` is accepted.
+    deletedAtIncludeNotNull: true,
+  },
+}).exec(sql);
+
+// Hard deletes always add `where.deletedAtIncludeNotNull = true`
+await queries.entityDelete(sql, { id: entity.id });
+```
 
 ## Other constraints
 

@@ -79,11 +79,6 @@ export const queries: {
   fileDelete: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileWhere | undefined,
-    options?:
-      | {
-          skipCascade?: boolean | undefined;
-        }
-      | undefined,
   ) => Promise<void>;
   fileInsert: (
     sql: import("../../../types/advanced-types.js").Postgres,
@@ -100,10 +95,6 @@ export const queries: {
     options?: {} | undefined,
   ) => Promise<StoreFile[]>;
   fileUpdate: StoreFileUpdateFnInput;
-  fileDeletePermanent: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileWhere | undefined,
-  ) => Promise<void>;
   fileGroupCount: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileGroupWhere | undefined,
@@ -111,11 +102,6 @@ export const queries: {
   fileGroupDelete: (
     sql: import("../../../types/advanced-types.js").Postgres,
     where?: StoreFileGroupWhere | undefined,
-    options?:
-      | {
-          skipCascade?: boolean | undefined;
-        }
-      | undefined,
   ) => Promise<void>;
   fileGroupInsert: (
     sql: import("../../../types/advanced-types.js").Postgres,
@@ -132,9 +118,5 @@ export const queries: {
     options?: {} | undefined,
   ) => Promise<StoreFileGroup[]>;
   fileGroupUpdate: StoreFileGroupUpdateFnInput;
-  fileGroupDeletePermanent: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<void>;
 };
 //# sourceMappingURL=index.d.ts.map

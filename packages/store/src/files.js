@@ -213,7 +213,7 @@ export async function copyFile(
 }
 
 /**
- * File deletes should be done via `queries.storeFileDeletePermanent()`. By calling this
+ * File deletes should be done via `queries.storeFileDelete()`. By calling this
  * function, all files that don't exist in the database will be removed from the S3
  * bucket.
  *
@@ -226,9 +226,8 @@ export async function copyFile(
  */
 export async function syncDeletedFiles(sql, minio, bucketName) {
   // Delete transformed copies of deleted files
-  await queries.fileDeletePermanent(sql, {
+  await queries.fileDelete(sql, {
     $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (meta->>'transformedFromOriginal')::uuid)`,
-    deletedAtIncludeNotNull: true,
   });
 
   const minioObjectsPromise = listObjects(minio, bucketName);

@@ -427,7 +427,7 @@ test("code-gen/e2e/sql", async (t) => {
     t.deepEqual(upsert.createdAt, insert.createdAt);
     t.equal(upsert.email, "test2");
 
-    await queries.userDeletePermanent(sql, {
+    await queries.userDelete(sql, {
       id,
     });
   });
@@ -823,7 +823,12 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("soft delete post", async (t) => {
     const originalCount = await queries.postCount(sql);
-    await queries.postDelete(sql, { id: post.id });
+    await queries.postUpdate(sql, {
+      update: {
+        deletedAt: new Date(),
+      },
+      where: { id: post.id },
+    });
 
     const newCount = await queries.postCount(sql);
     const newCountWithDeleted = await queries.postCount(sql, {
@@ -835,13 +840,17 @@ test("code-gen/e2e/sql", async (t) => {
   });
 
   t.test("soft delete user", async (t) => {
-    await queries.userDelete(sql, { id: user.id });
+    await queries.userUpdate(sql, {
+      update: { deletedAt: new Date() },
+      where: { id: user.id },
+    });
+
+    await new Promise((r) => {
+      setTimeout(r, 10);
+    });
 
     const userCount = await queries.userCount(sql);
     t.equal(userCount, 0);
-
-    const postCount = await queries.postCount(sql);
-    t.equal(postCount, 0, "soft cascading deletes");
 
     const [dbUser] = await queryUser({
       where: {
