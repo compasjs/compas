@@ -3084,10 +3084,10 @@ postcss@^8.4.6:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postgres@2.0.0-beta.11:
-  version "2.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/postgres/-/postgres-2.0.0-beta.11.tgz#0ad0410e9d928d62658c225a5999c3ee4216285b"
-  integrity sha512-eJOrEIM2RtgrCcAjXhDN7S32SpHrPrXv/B9+gBX6bJFPZwSxBTszDj/Ot4BaEQJUVhf15fVrxIEFR4s0W0vlRA==
+postgres@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.0.3.tgz#f863e17e7b2be3b1c775593076d8bed7f67a9a53"
+  integrity sha512-uw6ZIR9LTJUT5f3Wz9JdT9L9U4GGlDjWYgGNSEbJPvqMsY+UUInaf16Oa94lJdjQaft6lhlr3LFl/iPZJoNlkg==
 
 preact@^10.0.0:
   version "10.6.4"
