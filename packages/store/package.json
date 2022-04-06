@@ -23,7 +23,7 @@
     "jws": "4.0.0",
     "minio": "7.0.26",
     "mime-types": "2.1.35",
-    "postgres": "2.0.0-beta.11",
+    "postgres": "3.0.4",
     "sharp": "0.30.3"
   },
   "maintainers": [
