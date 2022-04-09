@@ -18,6 +18,11 @@ module.exports = {
         activeMatch: "/getting-started|^/features/|^/migrations/|^/references/",
       },
       {
+        text: "Examples",
+        link: "/examples.html",
+        activeMatch: "/examples",
+      },
+      {
         text: "Changelog",
         link: "/changelog",
       },
