@@ -14,8 +14,8 @@ module.exports = {
     nav: [
       {
         text: "Docs",
-        link: "/",
-        activeMatch: "^/$|/getting-started|^/features/|^/migrations/",
+        link: "/getting-started.html",
+        activeMatch: "/getting-started|^/features/|^/migrations/|^/references/",
       },
       {
         text: "Changelog",
