@@ -19,19 +19,6 @@ declare global {
     transforms?: undefined | any;
     transformedFromOriginal?: undefined | string;
   };
-  // Create a 'folder' like structure referencing to 'file', with custom ordering support.
-  type StoreFileGroup = {
-    name?: undefined | string;
-    order: number;
-    meta: StoreFileGroupMeta;
-    id: string;
-    file?: undefined | string;
-    parent?: undefined | string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  // User definable, optional object to store whatever you want
-  type StoreFileGroupMeta = {};
   // Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
   type StoreImageTransformOptions = { q: number; w: number };
   // Postgres based job queue.
@@ -107,80 +94,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    viaGroup?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhere;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    groupNotExists?: undefined | StoreFileGroupWhere;
-  };
-  type StoreFileGroupWhere = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | StoreFileGroupWhere[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    order?: undefined | number;
-    orderNotEqual?: undefined | number;
-    orderIn?: undefined | number[] | QueryPart<any>;
-    orderNotIn?: undefined | number[] | QueryPart<any>;
-    orderGreaterThan?: undefined | number;
-    orderLowerThan?: undefined | number;
-    orderIsNull?: undefined | boolean;
-    orderIsNotNull?: undefined | boolean;
-    file?: undefined | string;
-    fileNotEqual?: undefined | string;
-    fileIn?: undefined | string[] | QueryPart<any>;
-    fileNotIn?: undefined | string[] | QueryPart<any>;
-    fileIsNull?: undefined | boolean;
-    fileIsNotNull?: undefined | boolean;
-    parent?: undefined | string;
-    parentNotEqual?: undefined | string;
-    parentIn?: undefined | string[] | QueryPart<any>;
-    parentNotIn?: undefined | string[] | QueryPart<any>;
-    parentIsNull?: undefined | boolean;
-    parentIsNotNull?: undefined | boolean;
-    createdAt?: undefined | Date;
-    createdAtNotEqual?: undefined | Date;
-    createdAtIn?: undefined | Date[] | QueryPart<any>;
-    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
-    createdAtGreaterThan?: undefined | Date;
-    createdAtLowerThan?: undefined | Date;
-    createdAtIsNull?: undefined | boolean;
-    createdAtIsNotNull?: undefined | boolean;
-    updatedAt?: undefined | Date;
-    updatedAtNotEqual?: undefined | Date;
-    updatedAtIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtGreaterThan?: undefined | Date;
-    updatedAtLowerThan?: undefined | Date;
-    updatedAtIsNull?: undefined | boolean;
-    updatedAtIsNotNull?: undefined | boolean;
-    viaFile?:
-      | undefined
-      | {
-          where?: undefined | StoreFileWhere;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    viaParent?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhere;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    viaChildren?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhere;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    childrenNotExists?: undefined | StoreFileGroupWhere;
   };
   type StoreJobWhere = {
     $raw?: undefined | QueryPart<any>;
@@ -351,42 +264,6 @@ declare global {
     createdAt?: undefined | Date | { $add: string } | { $subtract: string };
     updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
   };
-  type StoreFileGroupUpdate = {
-    update: StoreFileGroupUpdatePartial;
-    where: StoreFileGroupWhere;
-    returning?:
-      | undefined
-      | "*"
-      | (
-          | "name"
-          | "order"
-          | "meta"
-          | "id"
-          | "file"
-          | "parent"
-          | "createdAt"
-          | "updatedAt"
-        )[];
-  };
-  type StoreFileGroupUpdatePartial = {
-    name?: undefined | null | string | { $append: string };
-    order?:
-      | undefined
-      | number
-      | { $add: number }
-      | { $subtract: number }
-      | { $multiply: number }
-      | { $divide: number };
-    meta?:
-      | undefined
-      | {}
-      | { $set: { path: (number | string)[]; value: any } }
-      | { $remove: { path: (number | string)[] } };
-    file?: undefined | null | string;
-    parent?: undefined | null | string;
-    createdAt?: undefined | Date | { $add: string } | { $subtract: string };
-    updatedAt?: undefined | Date | { $add: string } | { $subtract: string };
-  };
   type StoreJobUpdate = {
     update: StoreJobUpdatePartial;
     where: StoreJobWhere;
@@ -508,22 +385,6 @@ declare global {
     updatedAt?: undefined | CompasSqlOrderBy;
   };
   type CompasSqlOrderBy = "ASC" | "DESC";
-  type StoreFileGroupOrderBy =
-    | QueryPart<any>
-    | ("id" | "order" | "file" | "parent" | "createdAt" | "updatedAt")[];
-  type StoreFileGroupOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    order?: undefined | CompasSqlOrderByOptionalField;
-    file?: undefined | CompasSqlOrderByOptionalField;
-    parent?: undefined | CompasSqlOrderByOptionalField;
-    createdAt?: undefined | CompasSqlOrderBy;
-    updatedAt?: undefined | CompasSqlOrderBy;
-  };
-  type CompasSqlOrderByOptionalField =
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST";
   type StoreJobOrderBy =
     | QueryPart<any>
     | (
@@ -542,6 +403,11 @@ declare global {
     createdAt?: undefined | CompasSqlOrderBy;
     updatedAt?: undefined | CompasSqlOrderBy;
   };
+  type CompasSqlOrderByOptionalField =
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST";
   type StoreSessionStoreOrderBy =
     | QueryPart<any>
     | ("id" | "createdAt" | "updatedAt")[];
@@ -572,16 +438,6 @@ declare global {
           transforms?: undefined | any;
           transformedFromOriginal?: undefined | string;
         };
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-  };
-  type StoreFileGroupInsertPartial = {
-    id?: undefined | string;
-    order?: undefined | number;
-    file?: undefined | null | string;
-    parent?: undefined | null | string;
-    name?: undefined | null | string;
-    meta?: undefined | {};
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
   };
@@ -620,18 +476,6 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
-    group?: undefined | StoreFileGroupQueryBuilder;
-  };
-  type StoreFileGroupQueryBuilder = {
-    where?: undefined | StoreFileGroupWhere;
-    orderBy?: undefined | StoreFileGroupOrderBy;
-    orderBySpec?: undefined | StoreFileGroupOrderBySpec;
-    as?: undefined | string;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    file?: undefined | StoreFileQueryBuilder;
-    parent?: undefined | StoreFileGroupQueryBuilder;
-    children?: undefined | StoreFileGroupQueryBuilder;
   };
   type StoreJobQueryBuilder = {
     where?: undefined | StoreJobWhere;
@@ -677,17 +521,6 @@ declare global {
         transforms?: undefined | any;
         transformedFromOriginal?: undefined | string;
       };
-  type StoreFileGroupInput = {
-    name?: undefined | string;
-    order?: undefined | number;
-    meta?: StoreFileGroupMetaInput;
-    id: string;
-    file?: undefined | string;
-    parent?: undefined | string;
-    createdAt?: undefined | Date;
-    updatedAt?: undefined | Date;
-  };
-  type StoreFileGroupMetaInput = undefined | {};
   type StoreImageTransformOptionsInput = {
     q?: undefined | number | string;
     w: number | string;
@@ -744,80 +577,6 @@ declare global {
     updatedAtLowerThan?: undefined | Date;
     updatedAtIsNull?: undefined | boolean;
     updatedAtIsNotNull?: undefined | boolean;
-    viaGroup?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhereInput;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    groupNotExists?: undefined | StoreFileGroupWhereInput;
-  };
-  type StoreFileGroupWhereInput = {
-    $raw?: undefined | QueryPart<any>;
-    $or?: undefined | StoreFileGroupWhereInput[];
-    id?: undefined | string;
-    idNotEqual?: undefined | string;
-    idIn?: undefined | string[] | QueryPart<any>;
-    idNotIn?: undefined | string[] | QueryPart<any>;
-    order?: undefined | number;
-    orderNotEqual?: undefined | number;
-    orderIn?: undefined | number[] | QueryPart<any>;
-    orderNotIn?: undefined | number[] | QueryPart<any>;
-    orderGreaterThan?: undefined | number;
-    orderLowerThan?: undefined | number;
-    orderIsNull?: undefined | boolean;
-    orderIsNotNull?: undefined | boolean;
-    file?: undefined | string;
-    fileNotEqual?: undefined | string;
-    fileIn?: undefined | string[] | QueryPart<any>;
-    fileNotIn?: undefined | string[] | QueryPart<any>;
-    fileIsNull?: undefined | boolean;
-    fileIsNotNull?: undefined | boolean;
-    parent?: undefined | string;
-    parentNotEqual?: undefined | string;
-    parentIn?: undefined | string[] | QueryPart<any>;
-    parentNotIn?: undefined | string[] | QueryPart<any>;
-    parentIsNull?: undefined | boolean;
-    parentIsNotNull?: undefined | boolean;
-    createdAt?: undefined | Date;
-    createdAtNotEqual?: undefined | Date;
-    createdAtIn?: undefined | Date[] | QueryPart<any>;
-    createdAtNotIn?: undefined | Date[] | QueryPart<any>;
-    createdAtGreaterThan?: undefined | Date;
-    createdAtLowerThan?: undefined | Date;
-    createdAtIsNull?: undefined | boolean;
-    createdAtIsNotNull?: undefined | boolean;
-    updatedAt?: undefined | Date;
-    updatedAtNotEqual?: undefined | Date;
-    updatedAtIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtNotIn?: undefined | Date[] | QueryPart<any>;
-    updatedAtGreaterThan?: undefined | Date;
-    updatedAtLowerThan?: undefined | Date;
-    updatedAtIsNull?: undefined | boolean;
-    updatedAtIsNotNull?: undefined | boolean;
-    viaFile?:
-      | undefined
-      | {
-          where?: undefined | StoreFileWhereInput;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    viaParent?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhereInput;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    viaChildren?:
-      | undefined
-      | {
-          where?: undefined | StoreFileGroupWhereInput;
-          limit?: undefined | number;
-          offset?: undefined | number;
-        };
-    childrenNotExists?: undefined | StoreFileGroupWhereInput;
   };
   type StoreJobWhereInput = {
     $raw?: undefined | QueryPart<any>;
@@ -972,31 +731,6 @@ declare global {
     input: I,
   ) => Promise<import("@compas/store").Returning<StoreFile, I["returning"]>>;
   type StoreFileUpdateFn = StoreFileUpdateFnInput;
-  type StoreFileGroupUpdatePartialInput = StoreFileGroupUpdatePartial;
-  type StoreFileGroupUpdateInput = {
-    update: StoreFileGroupUpdatePartialInput;
-    where: StoreFileGroupWhereInput;
-    returning?:
-      | undefined
-      | "*"
-      | (
-          | "name"
-          | "order"
-          | "meta"
-          | "id"
-          | "file"
-          | "parent"
-          | "createdAt"
-          | "updatedAt"
-        )[];
-  };
-  type StoreFileGroupUpdateFnInput = <I extends StoreFileGroupUpdate>(
-    sql: import("@compas/store").Postgres,
-    input: I,
-  ) => Promise<
-    import("@compas/store").Returning<StoreFileGroup, I["returning"]>
-  >;
-  type StoreFileGroupUpdateFn = StoreFileGroupUpdateFnInput;
   type StoreJobUpdatePartialInput = StoreJobUpdatePartial;
   type StoreJobUpdateInput = {
     update: StoreJobUpdatePartialInput;
@@ -1079,16 +813,6 @@ declare global {
     updatedAt?: undefined | CompasSqlOrderByInput;
   };
   type CompasSqlOrderByInput = CompasSqlOrderBy;
-  type StoreFileGroupOrderByInput = StoreFileGroupOrderBy;
-  type StoreFileGroupOrderBySpecInput = {
-    id?: undefined | CompasSqlOrderByInput;
-    order?: undefined | CompasSqlOrderByOptionalFieldInput;
-    file?: undefined | CompasSqlOrderByOptionalFieldInput;
-    parent?: undefined | CompasSqlOrderByOptionalFieldInput;
-    createdAt?: undefined | CompasSqlOrderByInput;
-    updatedAt?: undefined | CompasSqlOrderByInput;
-  };
-  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
   type StoreJobOrderByInput = StoreJobOrderBy;
   type StoreJobOrderBySpecInput = {
     id?: undefined | CompasSqlOrderByInput;
@@ -1098,6 +822,7 @@ declare global {
     createdAt?: undefined | CompasSqlOrderByInput;
     updatedAt?: undefined | CompasSqlOrderByInput;
   };
+  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
   type StoreSessionStoreOrderByInput = StoreSessionStoreOrderBy;
   type StoreSessionStoreOrderBySpecInput = {
     id?: undefined | CompasSqlOrderByInput;
@@ -1119,18 +844,6 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
-    group?: undefined | StoreFileGroupQueryBuilderInput;
-  };
-  type StoreFileGroupQueryBuilderInput = {
-    where?: undefined | StoreFileGroupWhereInput;
-    orderBy?: undefined | StoreFileGroupOrderByInput;
-    orderBySpec?: undefined | StoreFileGroupOrderBySpecInput;
-    as?: undefined | string;
-    limit?: undefined | number;
-    offset?: undefined | number;
-    file?: undefined | StoreFileQueryBuilderInput;
-    parent?: undefined | StoreFileGroupQueryBuilderInput;
-    children?: undefined | StoreFileGroupQueryBuilderInput;
   };
   type StoreJobQueryBuilderInput = {
     where?: undefined | StoreJobWhereInput;
@@ -1160,14 +873,7 @@ declare global {
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
   };
-  type QueryResultStoreFile = StoreFile & {
-    group?: QueryResultStoreFileGroup | string;
-  };
-  type QueryResultStoreFileGroup = StoreFileGroup & {
-    file?: QueryResultStoreFile | string;
-    parent?: QueryResultStoreFileGroup | string;
-    children?: QueryResultStoreFileGroup[];
-  };
+  type QueryResultStoreFile = StoreFile & {};
   type QueryResultStoreJob = StoreJob & {};
   type QueryResultStoreSessionStore = StoreSessionStore & {
     accessTokens?: QueryResultStoreSessionStoreToken[];

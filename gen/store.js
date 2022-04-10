@@ -46,33 +46,6 @@ export function applyStoreStructure(app) {
       .enableQueries({ withDates: true })
       .relations(),
 
-    T.object("fileGroup")
-      .docs(
-        `Create a 'folder' like structure referencing to 'file', with custom ordering support.`,
-      )
-      .keys({
-        name: T.string().optional(),
-
-        // Hack to get an increasing integer by default.
-        order: T.number()
-          .searchable()
-          .default("Math.floor(Date.now() / 1000000)"),
-        meta: T.object("fileGroupMeta")
-          .keys({})
-          .default("{}")
-          .docs("User definable, optional object to store whatever you want"),
-      })
-      .enableQueries({ withDates: true })
-      .relations(
-        T.oneToOne("file", T.reference("store", "file"), "group").optional(),
-        T.manyToOne(
-          "parent",
-          T.reference("store", "fileGroup"),
-          "children",
-        ).optional(),
-        T.oneToMany("children", T.reference("store", "fileGroup")),
-      ),
-
     T.object("sessionStore")
       .docs(`Session data store, used by 'sessionStore*' functions.`)
       .keys({

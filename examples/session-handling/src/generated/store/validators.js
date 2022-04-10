@@ -9,17 +9,13 @@ import {
   anonymousValidator1345595702,
   anonymousValidator1430489818,
   anonymousValidator1516794677,
-  anonymousValidator153017499,
   anonymousValidator163358845,
   anonymousValidator1645773533,
   anonymousValidator165104378,
   anonymousValidator1781782332,
   anonymousValidator1795948632,
   anonymousValidator1856722848,
-  anonymousValidator1862233461,
   anonymousValidator1864958291,
-  anonymousValidator1986614323,
-  anonymousValidator2060025506,
   anonymousValidator2074494218,
   anonymousValidator2086080888,
   anonymousValidator2093168415,
@@ -30,21 +26,16 @@ import {
   anonymousValidator286367525,
   anonymousValidator310044624,
   anonymousValidator321286861,
-  anonymousValidator322356638,
   anonymousValidator332315806,
   anonymousValidator343387919,
   anonymousValidator362930508,
   anonymousValidator376443596,
-  anonymousValidator420878393,
   anonymousValidator430889951,
-  anonymousValidator498490869,
   anonymousValidator503384244,
   anonymousValidator599447075,
   anonymousValidator600940900,
   anonymousValidator617486747,
   anonymousValidator685221527,
-  anonymousValidator753972035,
-  anonymousValidator761369354,
   anonymousValidator84897941,
 } from "../common/anonymous-validators.js";
 import { AppError, isNil } from "@compas/stdlib";
@@ -78,62 +69,6 @@ export function validateStoreFile(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreFile}} */
-  return { value: result.value };
-}
-/**
- * Create a 'folder' like structure referencing to 'file', with custom ordering support.
- *
- * @param {undefined|any|StoreFileGroupInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroup>}
- */
-export function validateStoreFileGroup(value, propertyPath = "$") {
-  const result = anonymousValidator2060025506(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroup}} */
-  return { value: result.value };
-}
-/**
- * User definable, optional object to store whatever you want
- *
- * @param {undefined|any|StoreFileGroupMetaInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupMeta>}
- */
-export function validateStoreFileGroupMeta(value, propertyPath = "$") {
-  const result = anonymousValidator420878393(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupMeta}} */
   return { value: result.value };
 }
 /**
@@ -334,32 +269,6 @@ export function validateStoreFileWhere(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any|StoreFileGroupWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupWhere>}
- */
-export function validateStoreFileGroupWhere(value, propertyPath = "$") {
-  const result = anonymousValidator153017499(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupWhere}} */
-  return { value: result.value };
-}
-/**
  * @param {undefined|any|StoreJobWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobWhere>}
@@ -513,84 +422,6 @@ export function validateStoreFileUpdateFn(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreFileUpdateFn}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any|StoreFileGroupUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdatePartial>}
- */
-export function validateStoreFileGroupUpdatePartial(value, propertyPath = "$") {
-  const result = anonymousValidator761369354(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupUpdatePartial}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any|StoreFileGroupUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdate>}
- */
-export function validateStoreFileGroupUpdate(value, propertyPath = "$") {
-  const result = anonymousValidator498490869(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupUpdate}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any|StoreFileGroupUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdateFn>}
- */
-export function validateStoreFileGroupUpdateFn(value, propertyPath = "$") {
-  const result = anonymousValidator1986614323(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupUpdateFn}} */
   return { value: result.value };
 }
 /**
@@ -892,58 +723,6 @@ export function validateStoreFileOrderBySpec(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * @param {undefined|any|StoreFileGroupOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupOrderBy>}
- */
-export function validateStoreFileGroupOrderBy(value, propertyPath = "$") {
-  const result = anonymousValidator753972035(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupOrderBy}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any|StoreFileGroupOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupOrderBySpec>}
- */
-export function validateStoreFileGroupOrderBySpec(value, propertyPath = "$") {
-  const result = anonymousValidator322356638(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupOrderBySpec}} */
-  return { value: result.value };
-}
-/**
  * @param {undefined|any|StoreJobOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobOrderBy>}
@@ -1132,32 +911,6 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreFileQueryBuilder}} */
-  return { value: result.value };
-}
-/**
- * @param {undefined|any|StoreFileGroupQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupQueryBuilder>}
- */
-export function validateStoreFileGroupQueryBuilder(value, propertyPath = "$") {
-  const result = anonymousValidator1862233461(value, propertyPath);
-  if (result.errors) {
-    const info = {};
-    for (const err of result.errors) {
-      if (isNil(info[err.propertyPath])) {
-        info[err.propertyPath] = err;
-      } else if (Array.isArray(info[err.propertyPath])) {
-        info[err.propertyPath].push(err);
-      } else {
-        info[err.propertyPath] = [info[err.propertyPath], err];
-      }
-    }
-    /** @type {{ error: AppError }} */
-    return {
-      error: AppError.validationError("validator.error", info),
-    };
-  }
-  /** @type {{ value: StoreFileGroupQueryBuilder}} */
   return { value: result.value };
 }
 /**

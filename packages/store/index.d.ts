@@ -53,10 +53,6 @@ export {
   fileVerifyAccessToken,
 } from "./src/files.js";
 export {
-  hoistChildrenToParent,
-  updateFileGroupOrder,
-} from "./src/file-group.js";
-export {
   JobQueueWorker,
   addEventToQueue,
   addJobToQueue,

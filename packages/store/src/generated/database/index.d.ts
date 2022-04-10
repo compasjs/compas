@@ -95,28 +95,5 @@ export const queries: {
     options?: {} | undefined,
   ) => Promise<StoreFile[]>;
   fileUpdate: StoreFileUpdateFnInput;
-  fileGroupCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<number>;
-  fileGroupDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    where?: StoreFileGroupWhere | undefined,
-  ) => Promise<void>;
-  fileGroupInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
-    options?:
-      | {
-          withPrimaryKey?: boolean | undefined;
-        }
-      | undefined,
-  ) => Promise<StoreFileGroup[]>;
-  fileGroupUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
-    insert: StoreFileGroupInsertPartial | StoreFileGroupInsertPartial[],
-    options?: {} | undefined,
-  ) => Promise<StoreFileGroup[]>;
-  fileGroupUpdate: StoreFileGroupUpdateFnInput;
 };
 //# sourceMappingURL=index.d.ts.map

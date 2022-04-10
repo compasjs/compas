@@ -1,0 +1,3 @@
+ALTER TABLE "postage" DROP COLUMN "images" CASCADE;
+
+DROP TABLE "fileGroup" CASCADE;

@@ -49,26 +49,6 @@ CREATE INDEX "jobNameIdx" ON "job" ("name");
 CREATE INDEX "jobScheduledAtIdx" ON "job" ("scheduledAt");
 CREATE INDEX IF NOT EXISTS "jobIsCompleteUpdatedAt" ON "job" ("isComplete", "updatedAt") WHERE "isComplete" IS TRUE;
 
-CREATE TABLE "fileGroup"
-(
-  "id"        uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
-  "order"     int              NOT NULL,
-  "file"      uuid             NULL,
-  "parent"    uuid             NULL,
-  "name"      varchar          NULL,
-  "meta"      jsonb            NOT NULL,
-  "createdAt" timestamptz      NOT NULL DEFAULT now(),
-  "updatedAt" timestamptz      NOT NULL DEFAULT now(),
-  -- Both file and parent fields are optional, since we expect either one of them to exists
-  -- However we still want to cascade hard deletes
-  CONSTRAINT "fileGroupFileFk" FOREIGN KEY ("file") REFERENCES "file" ("id") ON DELETE CASCADE,
-  CONSTRAINT "fileGroupParentFk" FOREIGN KEY ("parent") REFERENCES "fileGroup" ("id") ON DELETE CASCADE
-);
-
-CREATE INDEX "fileGroupFileIdx" ON "fileGroup" ("file");
-CREATE INDEX "fileGroupParentIdx" ON "fileGroup" ("parent");
-CREATE INDEX "fileGroupOrderIdx" ON "fileGroup" ("order");
-
 CREATE TABLE "sessionStore"
 (
   "id"        uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),

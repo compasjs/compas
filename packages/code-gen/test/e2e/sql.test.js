@@ -64,11 +64,6 @@ test("code-gen/e2e/sql", async (t) => {
           .enableQueries({ withSoftDeletes: true })
           .relations(
             T.manyToOne("post", T.reference("sql", "post"), "postages"),
-            T.oneToOne(
-              "images",
-              T.reference("store", "fileGroup"),
-              "postageImages",
-            ),
           ),
 
         // m-m join table
@@ -630,17 +625,11 @@ test("code-gen/e2e/sql", async (t) => {
   t.test("query builder calls", async (t) => {
     await queryPost({
       postages: {
-        images: {
-          file: {
-            group: {
-              postageImages: {},
-              children: {
-                file: {
-                  group: {
-                    parent: {},
-                  },
-                },
-              },
+        post: {
+          categories: {},
+          writer: {
+            posts: {
+              postages: {},
             },
           },
         },
