@@ -8,12 +8,6 @@ import {
   validateStoreFileUpdate,
   validateStoreFileWhere,
 } from "../store/validators.js";
-import {
-  fileGroupQueryBuilderSpec,
-  fileGroupWhere,
-  fileGroupWhereSpec,
-  transformFileGroup,
-} from "./fileGroup.js";
 import { AppError, isNil, isPlainObject, isStaging } from "@compas/stdlib";
 import {
   generatedQueryBuilderHelper,
@@ -104,34 +98,6 @@ export const fileWhereSpec = {
         { matcherKey: "updatedAtLowerThan", matcherType: "lowerThan" },
         { matcherKey: "updatedAtIsNull", matcherType: "isNull" },
         { matcherKey: "updatedAtIsNotNull", matcherType: "isNotNull" },
-      ],
-    },
-    {
-      tableKey: "group",
-      keyType: "undefined",
-      matchers: [
-        {
-          matcherKey: "viaGroup",
-          matcherType: "via",
-          relation: {
-            entityName: "fileGroup",
-            shortName: "fg",
-            entityKey: "file",
-            referencedKey: "id",
-            where: () => fileGroupWhereSpec,
-          },
-        },
-        {
-          matcherKey: "groupNotExists",
-          matcherType: "notExists",
-          relation: {
-            entityName: "fileGroup",
-            shortName: "fg",
-            entityKey: "file",
-            referencedKey: "id",
-            where: () => fileGroupWhereSpec,
-          },
-        },
       ],
     },
   ],
@@ -428,15 +394,7 @@ export const fileQueryBuilderSpec = {
     "createdAt",
     "updatedAt",
   ],
-  relations: [
-    {
-      builderKey: "group",
-      ownKey: "id",
-      referencedKey: "file",
-      returnsMany: false,
-      entityInformation: () => fileGroupQueryBuilderSpec,
-    },
-  ],
+  relations: [],
 };
 /**
  * Query Builder for file
@@ -499,14 +457,6 @@ export function transformFile(values, builder = {}) {
     }
     if (typeof value.updatedAt === "string") {
       value.updatedAt = new Date(value.updatedAt);
-    }
-    if (value[builder.group?.as ?? "group"] === null) {
-      value[builder.group?.as ?? "group"] = undefined;
-    }
-    if (isPlainObject(value[builder.group?.as ?? "group"])) {
-      let arr = [value[builder.group?.as ?? "group"]];
-      transformFileGroup(arr, builder.group);
-      value[builder.group?.as ?? "group"] = arr[0];
     }
   }
 }

@@ -14,28 +14,6 @@ export function validateStoreFile(
   propertyPath?: string | undefined,
 ): Either<StoreFile>;
 /**
- * Create a 'folder' like structure referencing to 'file', with custom ordering support.
- *
- * @param {undefined|any|StoreFileGroupInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroup>}
- */
-export function validateStoreFileGroup(
-  value: undefined | any | StoreFileGroupInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroup>;
-/**
- * User definable, optional object to store whatever you want
- *
- * @param {undefined|any|StoreFileGroupMetaInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupMeta>}
- */
-export function validateStoreFileGroupMeta(
-  value: undefined | any | StoreFileGroupMetaInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupMeta>;
-/**
  * User definable, optional object to store whatever you want
  *
  * @param {undefined|any|StoreFileMetaInput} value
@@ -114,15 +92,6 @@ export function validateStoreFileWhere(
   propertyPath?: string | undefined,
 ): Either<StoreFileWhere>;
 /**
- * @param {undefined|any|StoreFileGroupWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupWhere>}
- */
-export function validateStoreFileGroupWhere(
-  value: undefined | any | StoreFileGroupWhereInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupWhere>;
-/**
  * @param {undefined|any|StoreJobWhereInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobWhere>}
@@ -176,33 +145,6 @@ export function validateStoreFileUpdateFn(
   value: undefined | any | StoreFileUpdateFnInput,
   propertyPath?: string | undefined,
 ): Either<StoreFileUpdateFn>;
-/**
- * @param {undefined|any|StoreFileGroupUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdatePartial>}
- */
-export function validateStoreFileGroupUpdatePartial(
-  value: undefined | any | StoreFileGroupUpdatePartialInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupUpdatePartial>;
-/**
- * @param {undefined|any|StoreFileGroupUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdate>}
- */
-export function validateStoreFileGroupUpdate(
-  value: undefined | any | StoreFileGroupUpdateInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupUpdate>;
-/**
- * @param {undefined|any|StoreFileGroupUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupUpdateFn>}
- */
-export function validateStoreFileGroupUpdateFn(
-  value: undefined | any | StoreFileGroupUpdateFnInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupUpdateFn>;
 /**
  * @param {undefined|any|StoreJobUpdatePartialInput} value
  * @param {string|undefined} [propertyPath]
@@ -303,24 +245,6 @@ export function validateStoreFileOrderBySpec(
   propertyPath?: string | undefined,
 ): Either<StoreFileOrderBySpec>;
 /**
- * @param {undefined|any|StoreFileGroupOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupOrderBy>}
- */
-export function validateStoreFileGroupOrderBy(
-  value: undefined | any | StoreFileGroupOrderByInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupOrderBy>;
-/**
- * @param {undefined|any|StoreFileGroupOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupOrderBySpec>}
- */
-export function validateStoreFileGroupOrderBySpec(
-  value: undefined | any | StoreFileGroupOrderBySpecInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupOrderBySpec>;
-/**
  * @param {undefined|any|StoreJobOrderByInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobOrderBy>}
@@ -383,15 +307,6 @@ export function validateStoreFileQueryBuilder(
   value: undefined | any | StoreFileQueryBuilderInput,
   propertyPath?: string | undefined,
 ): Either<StoreFileQueryBuilder>;
-/**
- * @param {undefined|any|StoreFileGroupQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileGroupQueryBuilder>}
- */
-export function validateStoreFileGroupQueryBuilder(
-  value: undefined | any | StoreFileGroupQueryBuilderInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileGroupQueryBuilder>;
 /**
  * @param {undefined|any|StoreJobQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
