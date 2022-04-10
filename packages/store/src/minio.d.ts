@@ -4,11 +4,11 @@
  *
  * @since 0.1.0
  *
- * @param {minio.ClientOptions} opts
+ * @param {Partial<minio.ClientOptions>} opts
  * @returns {import("../types/advanced-types").MinioClient}
  */
 export function newMinioClient(
-  opts: minio.ClientOptions,
+  opts: Partial<minio.ClientOptions>,
 ): import("../types/advanced-types").MinioClient;
 /**
  * Make sure a bucket exists and if it doesn't create it.

@@ -7,7 +7,7 @@ import minio from "minio";
  *
  * @since 0.1.0
  *
- * @param {minio.ClientOptions} opts
+ * @param {Partial<minio.ClientOptions>} opts
  * @returns {import("../types/advanced-types").MinioClient}
  */
 export function newMinioClient(opts) {
