@@ -2,7 +2,7 @@
 
 import { rmSync } from "fs";
 import { pathToFileURL } from "url";
-import { isPlainObject, pathJoin } from "@compas/stdlib";
+import { isPlainObject, pathJoin, uuid } from "@compas/stdlib";
 import { generate, writeFiles } from "./generator/index.js";
 
 /**
@@ -198,7 +198,7 @@ async function validateAndReadStructureFiles(options) {
 
     // @ts-ignore
     const { structure, compasGenerateSettings: options } = await import(
-      pathToFileURL(structureFile)
+      `${pathToFileURL(structureFile)}?v=${uuid()}`
     );
 
     if (isPlainObject(structure) && isPlainObject(options)) {

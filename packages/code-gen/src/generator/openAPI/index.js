@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { pathToFileURL } from "url";
-import { isPlainObject } from "@compas/stdlib";
+import { isPlainObject, uuid } from "@compas/stdlib";
 import { addGroupsToGeneratorInput } from "../../generate.js";
 import { linkupReferencesInStructure } from "../linkup-references.js";
 import { generateOpenApiFile } from "./generator.js";
@@ -49,7 +49,7 @@ export async function generateOpenApi(logger, options) {
 
   const { compasApiStructureString } = await import(
     // @ts-ignore
-    pathToFileURL(options.inputPath)
+    `${pathToFileURL(options.inputPath)}?v=${uuid()}`
   );
 
   /**
