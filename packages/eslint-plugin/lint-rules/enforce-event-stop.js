@@ -23,6 +23,7 @@ module.exports = {
         parent: currentFunction,
         node,
         isAsyncEventFunction: node.async && node.params[0]?.name === "event",
+        hasEventStart: false,
         block: undefined,
       };
     }
@@ -40,6 +41,7 @@ module.exports = {
         node,
         parent: currentFunction.block,
         hasEventStop: currentFunction.block?.hasEventStop ?? false,
+        hasEventStart: currentFunction.block?.hasEventStart ?? false,
         returnStatement: undefined,
         children: [],
       };
@@ -56,7 +58,10 @@ module.exports = {
       const block = currentFunction.block;
       currentFunction.block = currentFunction.block?.parent;
 
-      if (!currentFunction.isAsyncEventFunction) {
+      if (
+        !currentFunction.isAsyncEventFunction ||
+        !currentFunction.hasEventStart
+      ) {
         return;
       }
 
@@ -115,7 +120,15 @@ module.exports = {
         if (currentFunction.block) {
           currentFunction.block.hasEventStop = true;
         }
-      }, // Check if block has return statement
+      }, // Check if eventStop is called
+      "CallExpression[callee.name='eventStart']"() {
+        if (currentFunction.block) {
+          currentFunction.hasEventStart = true;
+          currentFunction.block.hasEventStart = true;
+        }
+      },
+
+      // Check if block has return statement
       ReturnStatement(node) {
         if (currentFunction.block) {
           currentFunction.block.returnStatement = node;
@@ -124,7 +137,10 @@ module.exports = {
 
       // Edge cases for inline blocks
       "WhileStatement[body.type='ReturnStatement']"(node) {
-        if (!currentFunction.isAsyncEventFunction) {
+        if (
+          !currentFunction.isAsyncEventFunction ||
+          !currentFunction.hasEventStart
+        ) {
           return;
         }
 
@@ -147,7 +163,10 @@ module.exports = {
         });
       },
       "IfStatement[consequent.type='ReturnStatement']"(node) {
-        if (!currentFunction.isAsyncEventFunction) {
+        if (
+          !currentFunction.isAsyncEventFunction ||
+          !currentFunction.hasEventStart
+        ) {
           return;
         }
 
@@ -173,7 +192,10 @@ module.exports = {
         });
       },
       "IfStatement[alternate.type='ReturnStatement']"(node) {
-        if (!currentFunction.isAsyncEventFunction) {
+        if (
+          !currentFunction.isAsyncEventFunction ||
+          !currentFunction.hasEventStart
+        ) {
           return;
         }
 
