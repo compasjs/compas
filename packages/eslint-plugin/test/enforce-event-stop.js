@@ -28,11 +28,13 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function asyncFnWithEventStop(event, baz) {
+        eventStart(event);
         eventStop(event);
       }`,
     },
     {
       code: `async function noEventStopNoReturn(event, baz) {
+             eventStart(event);
         if (baz) {
          eventStop(event);
 
@@ -45,6 +47,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function noEventStopNoReturn(event, baz) {
+        eventStart(event);
         if (baz) {
          eventStop(event);
 
@@ -61,6 +64,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function asyncFnWithoutEventParam(baz) {
+        eventStart(event);
         if (baz) {
           eventStop(event);
         }
@@ -70,6 +74,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function tryCatchThrow(event) {
+        eventStart(event);
         try {
           foo();
 
@@ -82,6 +87,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function tryCatchReturn(event) {
+        eventStart(event);
         try {
           foo();
 
@@ -96,11 +102,12 @@ ruleTester.run("enforce-event-stop", rule, {
   ],
   invalid: [
     {
-      code: `async function asyncFnWithoutEventStop(event) {}`,
+      code: `async function asyncFnWithoutEventStop(event) { eventStart(event); }`,
       errors: [{ message: rule.meta.messages.missingEventStop }],
     },
     {
       code: `async function noEventStopInIfStatement(event, baz) {
+        eventStart(event);
         if (baz) {
           return baz;
         }
@@ -111,6 +118,8 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function noEventStopOutsideIfStatement(event, baz) {
+        eventStart(event);
+        
         if (baz) {
          eventStop(event);
 
@@ -125,6 +134,8 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function noEventStopNoReturn(event, baz) {
+        eventStart(event);
+        
         if (baz) {
          eventStop(event);
 
@@ -135,6 +146,8 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function noEventStopNoReturn(event, baz) {
+        eventStart(event);
+        
         if (baz) {
          eventStop(event);
 
@@ -147,6 +160,8 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function inlineReturn(event, baz) {
+        eventStart(event);
+        
         if (baz) return true;
 
         eventStop(event);
@@ -155,6 +170,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function tryCatchThrow(event) {
+        eventStart(event);
         try {
           foo();
 
@@ -167,6 +183,7 @@ ruleTester.run("enforce-event-stop", rule, {
     },
     {
       code: `async function tryCatchReturn(event) {
+        eventStart(event);
         try {
           foo();
 
