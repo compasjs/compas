@@ -3,7 +3,7 @@
 /** @type {import("eslint").Rule.RuleModule} */
 module.exports = {
   meta: {
-    type: "suggestion",
+    type: "problem",
     docs: {
       description: `Suggest that 'eventStop' is called in async functions that define 'event' as its first parameter.`,
     },
