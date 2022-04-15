@@ -17,7 +17,7 @@
     "@types/node": "17.0.24",
     "dotenv": "16.0.0",
     "lodash.merge": "4.6.2",
-    "pino": "7.9.2"
+    "pino": "7.10.0"
   },
   "maintainers": [
     {
