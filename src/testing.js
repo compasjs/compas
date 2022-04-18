@@ -21,6 +21,7 @@ export async function injectTestServices() {
   sql = await createTestPostgresDatabase();
 
   temporaryDirectory = `./test/tmp/${uuid()}/`;
+  await rm("./test/tmp", { force: true, recursive: true });
   await mkdir(temporaryDirectory, { recursive: true });
 }
 
@@ -31,6 +32,4 @@ export async function injectTestServices() {
  */
 export async function destroyTestServices() {
   await sql.end({});
-
-  await rm("./test/tmp", { force: true, recursive: true });
 }
