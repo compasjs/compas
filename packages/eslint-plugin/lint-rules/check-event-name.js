@@ -12,7 +12,7 @@ module.exports = {
     messages: {
       consistentEventName:
         "Use an event name that can be derived from the function name",
-      replaceEventName: `Replace eventName with {{value}}`,
+      replaceEventName: `Replace value with {{value}}`,
     },
   },
 
