@@ -101,6 +101,7 @@ function koaBody(opts = {}) {
           throw AppError.validationError("error.server.unsupportedBodyFormat", {
             name: parsingError.name,
             message: parsingError.message,
+
             // @ts-ignore
             rawBody: parsingError.body,
           });
@@ -158,7 +159,11 @@ function koaFormidable(opts = {}) {
         }
       });
       form.on("error", (err) => {
-        reject(AppError.serverError({ files }, err));
+        if (err.message?.includes("exceeded, received")) {
+          reject(AppError.validationError("error.server.maxFieldSize"));
+        } else {
+          reject(AppError.serverError({ files }, err));
+        }
       });
       form.on("end", () => {
         // @ts-ignore
