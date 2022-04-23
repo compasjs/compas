@@ -145,4 +145,14 @@ test("stdlib/error", (t) => {
     t.ok(Array.isArray(err.cause));
     t.equal(err.cause[1].key, "error.server.internal");
   });
+
+  t.test("AppError#format already formatted cause", (t) => {
+    const err = AppError.format(
+      AppError.validationError("foo", {}, AppError.format(new Error())),
+    );
+
+    t.equal(err.key, "foo");
+    t.equal(err.cause.name, "Error");
+    t.ok(Array.isArray(err.cause.stack));
+  });
 });

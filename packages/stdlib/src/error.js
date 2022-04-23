@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { inspect } from "util";
-import { isNil } from "./lodash.js";
+import { isNil, isPlainObject } from "./lodash.js";
 
 /**
  * Standard error to use. This contains a key, status code and info object.
@@ -93,7 +93,8 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
-   * @param {AppError | Error | undefined | null | {} | string | number | boolean | Function | unknown} [e]
+   * @param {AppError | Error | undefined | null | {} | string | number | boolean |
+   *   Function | unknown} [e]
    * @returns {Record<string, any>}
    */
   static format(e) {
@@ -131,13 +132,23 @@ export class AppError extends Error {
       };
     }
 
-    const stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
-    // Remove first element as this is the Error name
-    stack.shift();
+    let stack;
+    if (typeof (e?.stack ?? "") === "string") {
+      stack = (e?.stack ?? "").split("\n").map((it) => it.trim());
+      // Remove first item as this is the Error name
+      stack.shift();
+    } else if (Array.isArray(e?.stack)) {
+      stack = e?.stack;
+    }
 
     if (isNil(e)) {
       return e;
     } else if (AppError.instanceOf(e)) {
+      if (Array.isArray(e.stack)) {
+        // Already formatted error
+        return e;
+      }
+
       return {
         key: e.key,
         status: e.status,
@@ -149,7 +160,7 @@ export class AppError extends Error {
       return {
         name: e.name,
         message: e.message,
-        stack: stack,
+        stack,
         cause: e.errors?.map((it) => AppError.format(it)),
       };
     } else if (e.name === "PostgresError") {
@@ -181,6 +192,11 @@ export class AppError extends Error {
       const result = e.toJSON();
       result.stack = stack;
       return result;
+    } else if (isPlainObject(e)) {
+      if (isNil(e.stack)) {
+        e.stack = stack;
+      }
+      return e;
     }
 
     // Any unhandled case
