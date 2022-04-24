@@ -4,6 +4,133 @@ editLink: false
 
 # Changelog
 
+### [v0.0.196](https://github.com/compasjs/compas/releases/tag/v0.0.196)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.8 to 7.17.9
+  ([#1709](https://github.com/compasjs/compas/pull/1709))
+- build(deps): bump @types/minio from 7.0.12 to 7.0.13
+  ([#1724](https://github.com/compasjs/compas/pull/1724))
+- build(deps): bump @types/node from 17.0.22 to 17.0.25
+  ([#1670](https://github.com/compasjs/compas/pull/1670),
+  [#1730](https://github.com/compasjs/compas/pull/1730),
+  [#1737](https://github.com/compasjs/compas/pull/1737))
+- build(deps): bump actions/setup-node from 3.0.0 to 3.1.1
+  ([#1698](https://github.com/compasjs/compas/pull/1698),
+  [#1723](https://github.com/compasjs/compas/pull/1723))
+- build(deps): bump c8 from 7.11.0 to 7.11.2
+  ([#1742](https://github.com/compasjs/compas/pull/1742))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump codecov/codecov-action from 2.1.0 to 3
+  ([#1703](https://github.com/compasjs/compas/pull/1703))
+  - [Release notes](https://github.com/codecov/codecov-action/releases)
+- build(deps): bump crc from 4.1.0 to 4.1.1
+  ([#1718](https://github.com/compasjs/compas/pull/1718))
+- build(deps): bump eslint from 8.11.0 to 8.13.0
+  ([#1679](https://github.com/compasjs/compas/pull/1679),
+  [#1720](https://github.com/compasjs/compas/pull/1720))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-import from 2.25.4 to 2.26.0
+  ([#1701](https://github.com/compasjs/compas/pull/1701))
+- build(deps): bump eslint-plugin-jsdoc from 38.0.6 to 39.2.7
+  ([#1681](https://github.com/compasjs/compas/pull/1681),
+  [#1682](https://github.com/compasjs/compas/pull/1682),
+  [#1683](https://github.com/compasjs/compas/pull/1683),
+  [#1697](https://github.com/compasjs/compas/pull/1697),
+  [#1710](https://github.com/compasjs/compas/pull/1710),
+  [#1717](https://github.com/compasjs/compas/pull/1717),
+  [#1722](https://github.com/compasjs/compas/pull/1722),
+  [#1726](https://github.com/compasjs/compas/pull/1726),
+  [#1727](https://github.com/compasjs/compas/pull/1727),
+  [#1732](https://github.com/compasjs/compas/pull/1732),
+  [#1738](https://github.com/compasjs/compas/pull/1738),
+  [#1740](https://github.com/compasjs/compas/pull/1740),
+  [#1741](https://github.com/compasjs/compas/pull/1741),
+  [#1745](https://github.com/compasjs/compas/pull/1745))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump minimist from 1.2.5 to 1.2.6
+  ([#1672](https://github.com/compasjs/compas/pull/1672))
+  - [Release notes](https://github.com/substack/minimist/releases)
+- build(deps): bump pino from 7.9.2 to 7.10.0
+  ([#1716](https://github.com/compasjs/compas/pull/1716))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump prettier from 2.6.0 to 2.6.2
+  ([#1677](https://github.com/compasjs/compas/pull/1677),
+  [#1696](https://github.com/compasjs/compas/pull/1696))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump sharp from 0.30.3 to 0.30.4
+  ([#1736](https://github.com/compasjs/compas/pull/1736))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- chore(eslint-plugin): better suggestion message for check-event-name
+- chore(store): drop `fileGroup` support
+  ([#1714](https://github.com/compasjs/compas/pull/1714))
+  - Closes [#1705](https://github.com/compasjs/compas/pull/1705)
+- feat(cli): remove `enforceSingleAssertion` option from test config
+  ([#1690](https://github.com/compasjs/compas/pull/1690))
+- feat(code-gen): cleanup soft delete support
+  ([#1691](https://github.com/compasjs/compas/pull/1691))
+  - Closes [#1091](https://github.com/compasjs/compas/pull/1091)
+- feat(eslint-plugin): add check-event-name rule
+  ([#1734](https://github.com/compasjs/compas/pull/1734))
+  - Closes [#1713](https://github.com/compasjs/compas/pull/1713)
+- feat(server): handle file upload size limit errors
+  ([#1748](https://github.com/compasjs/compas/pull/1748))
+  - Closes [#1743](https://github.com/compasjs/compas/pull/1743)
+- feat(stdlib): supported already formatted error in AppError#format
+  ([#1749](https://github.com/compasjs/compas/pull/1749))
+  - Closes [#1747](https://github.com/compasjs/compas/pull/1747)
+- feat(store): drop soft deletes on file and file group
+  ([#1693](https://github.com/compasjs/compas/pull/1693))
+- fix(cli): include failing assertions of subtests in failing test
+  ([#1689](https://github.com/compasjs/compas/pull/1689))
+  - Closes [#1685](https://github.com/compasjs/compas/pull/1685)
+- fix(code-gen): import structure without cache in `generateTypes` and
+  `generateOpenAPI` ([#1715](https://github.com/compasjs/compas/pull/1715))
+  - Closes [#1699](https://github.com/compasjs/compas/pull/1699)
+- fix(eslint-plugin): only error enforce-event-stop if `eventStart` is called
+  ([#1729](https://github.com/compasjs/compas/pull/1729))
+  - Closes [#1706](https://github.com/compasjs/compas/pull/1706)
+- fix(eslint-plugin): register `enforce-event-stop` as the correct rule type
+- fix(store): correct type partial for `newMinioClient`
+  - Closes [#1712](https://github.com/compasjs/compas/pull/1712)
+
+##### Breaking changes
+
+- **deps**: bump eslint-plugin-jsdoc from 38.0.6 to 39.2.7
+  - Major version bump
+- **store**: drop soft deletes on file and file group
+  - File and fileGroup are no longer soft deletable. If you need this, you
+    should reference them via a custom entity that is soft deletable.
+  - To drop the columns, create the following migration:
+  ```sql
+  ALTER TABLE "file" DROP COLUMN "deletedAt" CASCADE;
+  ALTER TABLE "fileGroup" DROP COLUMN "deletedAt" CASCADE;
+  ```
+- **store**: drop `fileGroup` support
+  - Any reference to `fileGroup` should be removed. If you need the exact
+    behaviour that it had, please check the removed code via its pull request
+    link above. Most notably: `gen/store.js` and
+    `packages/store/src/file-group.js`.
+  - Run the following SQL in a migration:
+  ```sql
+  DROP TABLE "fileGroup" CASCADE;
+  ```
+- **cli**: remove `enforceSingleAssertion` option from test config
+  - All tests now require at least a single assertion or registration of a
+    subtest
+- **code-gen**: cleanup soft delete support
+  - Entities that use soft delete should use
+    `queries.entityUpdate(sql, { update: { deletedAt: new Date() }, where, })`
+    instead of `queries.entityDelete`
+  - The generated `queries.entityDeletePermanent` is removed, and instead
+    `queries.entityDelete` will always permanently delete a record, even if it
+    was soft deleted.
+- **eslint-plugin**: add check-event-name rule
+  - Enabled the `@compas/check-event-name` rule in `@compas/full` ESLint config.
+    It validates that the second argument passed to `eventStart` can be derived
+    from the function name.
+
 ### [v0.0.195](https://github.com/compasjs/compas/releases/tag/v0.0.195)
 
 ##### Changes
