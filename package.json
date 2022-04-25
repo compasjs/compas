@@ -11,7 +11,7 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "@types/node": "17.0.25",
+    "@types/node": "17.0.26",
     "@types/react": "18.0.6",
     "axios": "0.26.1",
     "fastest-validator": "1.12.0",
