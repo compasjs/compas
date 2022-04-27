@@ -33,6 +33,9 @@ const OPENAPI_SPEC_TEMPLATE = {
           status: {
             type: "number",
           },
+          requestId: {
+            type: "string",
+          },
         },
       },
     },

@@ -97,10 +97,12 @@ export function logMiddleware(app, options) {
 
   return async (ctx, next) => {
     const startTime = process.hrtime.bigint();
+    const requestId = uuid();
+    ctx.requestId = requestId;
     ctx.log = newLogger({
       ctx: {
         type: "http",
-        requestId: uuid(),
+        requestId,
       },
     });
 

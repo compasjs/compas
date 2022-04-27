@@ -1,4 +1,4 @@
-import { AppError, isStaging } from "@compas/stdlib";
+import { AppError } from "@compas/stdlib";
 
 /**
  * @type {NonNullable<import("../app").ErrorHandlerOptions["onError"]>}
@@ -10,7 +10,7 @@ const defaultOnError = () => false;
  * @type {NonNullable<import("../app").ErrorHandlerOptions["onAppError"]>}
  * Default onAppError handler that builds a simple object with key, message and info.
  */
-const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
+const defaultOnAppError = () => ({});
 
 /**
  * Handle any upstream errors
@@ -21,8 +21,6 @@ const defaultOnAppError = (ctx, key, info) => ({ key, message: key, info });
 export function errorHandler(opts) {
   const onAppError = opts.onAppError ?? defaultOnAppError;
   const onError = opts.onError ?? defaultOnError;
-  const leakError =
-    opts.leakError === true || (opts.leakError === undefined && isStaging());
 
   return async (ctx, next) => {
     try {
@@ -44,9 +42,14 @@ export function errorHandler(opts) {
 
       const formatted = AppError.format(err);
       formatted.type = "api_error";
+      formatted.requestId = ctx.requestId;
+
       log(formatted);
 
-      if (leakError && onAppError === defaultOnAppError) {
+      if (onAppError === defaultOnAppError) {
+        delete formatted.stack;
+        delete formatted.cause;
+
         ctx.body = formatted;
       } else {
         ctx.body = onAppError(ctx, err.key, err.info);
