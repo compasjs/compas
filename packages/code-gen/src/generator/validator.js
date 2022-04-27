@@ -48,7 +48,7 @@ export function generateValidatorFile(context) {
 
     context.outputFiles.push({
       contents: js`${imports.print()}
-                                  ${sources}`,
+                               ${sources}`,
       relativePath: `./${group}/validators${context.extension}`,
     });
   }
@@ -172,7 +172,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
             error: AppError.validationError("validator.error", info),
           };
         }
-        
+
         /** @type {{ value: ${
           context.context.options.declareGlobalTypes === false
             ? `import("../common/types").`
@@ -417,7 +417,7 @@ function anonymousValidatorAnyOf(context, imports, type) {
         )}
 
         if (result.errors) {
-          errors.push(...result.errors);
+          errors.push(result.errors[0]);
         } else {
           return result;
         }
@@ -425,11 +425,9 @@ function anonymousValidatorAnyOf(context, imports, type) {
     })}
 
     errors.unshift({
-      propertyPath,
-      key: "validator.anyOf",
-      info: {},
-                });
-    
+                     propertyPath, key: "validator.anyOf", info: {},
+                   });
+
     return {
       errors
     };
@@ -654,7 +652,7 @@ function anonymousValidatorDate(context, imports, type) {
 
   return js`
     ${head}
-    
+
     const date = new Date(value);
 
     if (isNaN(date.getTime())) {
@@ -1054,8 +1052,8 @@ function anonymousValidatorObject(context, imports, type) {
         });
       }}
     ];
-    
-    for (const [key, validator] of validatorPairs) {
+
+    for (const [ key, validator ] of validatorPairs) {
       const validatorResult = validator(value[key], \`$\{propertyPath}.$\{key}\`);
       if (validatorResult.errors) {
         errors.push(...validatorResult.errors);
