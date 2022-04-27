@@ -89,7 +89,7 @@ test("server/app", (t) => {
       await client.get("/wrap-500");
     } catch (e) {
       const formatted = AppError.format(e);
-      t.equal(formatted.name, "Error");
+      t.equal(formatted.name, "AxiosError");
       t.ok(isPlainObject(formatted.axios.responseHeaders));
       t.ok(isPlainObject(formatted.axios.responseBody));
       t.equal(formatted.axios.responseStatus, 500);
