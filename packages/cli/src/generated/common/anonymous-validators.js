@@ -1712,25 +1712,25 @@ export function anonymousValidator328829180(value, propertyPath) {
   let result = { errors: [] };
   result = anonymousValidator589626564(value, propertyPath);
   if (result.errors) {
-    errors.push(...result.errors);
+    errors.push(result.errors[0]);
   } else {
     return result;
   }
   result = anonymousValidator90605215(value, propertyPath);
   if (result.errors) {
-    errors.push(...result.errors);
+    errors.push(result.errors[0]);
   } else {
     return result;
   }
   result = anonymousValidator703944173(value, propertyPath);
   if (result.errors) {
-    errors.push(...result.errors);
+    errors.push(result.errors[0]);
   } else {
     return result;
   }
   result = anonymousValidator1437995341(value, propertyPath);
   if (result.errors) {
-    errors.push(...result.errors);
+    errors.push(result.errors[0]);
   } else {
     return result;
   }
