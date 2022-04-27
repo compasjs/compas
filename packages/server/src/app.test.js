@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
-import { AppError, isPlainObject } from "@compas/stdlib";
+import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
@@ -51,10 +51,15 @@ test("server/app", (t) => {
       t.fail("404, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 404);
+
+      t.ok(response.data.requestId);
+      delete response.data.requestId;
+
       t.deepEqual(response.data, {
         key: "error.server.notFound",
-        message: "error.server.notFound",
         info: {},
+        status: 404,
+        type: "api_error",
       });
     }
   });
@@ -65,10 +70,15 @@ test("server/app", (t) => {
       t.fail("500, so axios should have thrown");
     } catch ({ response }) {
       t.equal(response.status, 500);
+
+      t.ok(response.data.requestId);
+      delete response.data.requestId;
+
       t.deepEqual(response.data, {
         key: "error.server.internal",
-        message: "error.server.internal",
         info: { foo: true },
+        status: 500,
+        type: "api_error",
       });
     }
   });
@@ -80,7 +90,7 @@ test("server/app", (t) => {
       t.equal(response.status, 500);
       t.equal(response.data.key, response.data.key);
       t.equal(response.data.key, "error.server.internal");
-      t.ok(Array.isArray(response.data.stack));
+      t.ok(isNil(response.data.stack));
     }
   });
 

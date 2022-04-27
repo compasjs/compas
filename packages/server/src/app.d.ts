@@ -26,8 +26,6 @@
  * @property {((ctx: Koa.Context, err: Error) => boolean)|undefined} [onError] Called
  *   before any logic, to let the user handle errors. If 'true' is returned, no other
  *   logic is applied.
- * @property {boolean|undefined} [leakError] Adds the stacktrace and error cause to the
- *    response. Useful on development and staging environments.
  */
 /**
  * @typedef {object} HeaderOptions
@@ -108,11 +106,6 @@ export type ErrorHandlerOptions = {
    * logic is applied.
    */
   onError?: ((ctx: Koa.Context, err: Error) => boolean) | undefined;
-  /**
-   * Adds the stacktrace and error cause to the
-   * response. Useful on development and staging environments.
-   */
-  leakError?: boolean | undefined;
 };
 export type HeaderOptions = {
   /**
