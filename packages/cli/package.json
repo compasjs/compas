@@ -26,7 +26,7 @@
     "@compas/stdlib": "0.0.196",
     "c8": "7.11.2",
     "chokidar": "3.5.3",
-    "recast": "0.20.5",
+    "recast": "0.21.1",
     "tree-kill": "1.2.2"
   },
   "maintainers": [
