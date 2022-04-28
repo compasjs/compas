@@ -1,4 +1,4 @@
-import { isNil } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class StringType extends TypeBuilder {
@@ -46,6 +46,15 @@ export class StringType extends TypeBuilder {
    */
   oneOf(...values) {
     this.data.oneOf = values;
+
+    for (const value of values) {
+      if (isNil(value) || value.length === 0) {
+        throw AppError.serverError({
+          message:
+            "Values in 'oneOf' should be at least 1 character. Found 'null', 'undefined' or an empty string",
+        });
+      }
+    }
 
     return this;
   }
