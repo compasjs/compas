@@ -167,7 +167,7 @@ export async function queueWorkerAddJob(
  * is changed, it takes effect immediately. The system won't ever upgrade an existing
  * normal job to a cron job. Note that your job may not be executed on time. Use
  * `job.data.cronLastCompletedAt` and `job.data.cronExpression` to decide if you still
- * need to execute your logic.
+ * need to execute your logic. The provided `cronExpression` is evaluated in 'utc' mode.
  *
  * The default priority for these jobs is '4'.
  *
@@ -213,6 +213,9 @@ export async function queueWorkerRegisterCronJobs(event, sql, { jobs }) {
  * - {@link queueWorkerAddJob}: use the queue as background processing of defined units.
  * Like converting a file to different formats, sending async or scheduled notifications.
  * Jobs created will have a priority of '5'.
+ * - {@link queueWorkerRegisterCronJobs}: use the queue for scheduled recurring jobs
+ * based on the specific `cronExpression`. Jos created will have a default priority of
+ * '4'.
  *
  * Every job runs with a timeout. It is determined in the following order:
  * - Timeout of the specific job, via `handlerTimeout` property. Should be used
