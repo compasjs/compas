@@ -207,27 +207,15 @@ export function anonymousValidator1781782332(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|number>}
+ * @returns {EitherN<{"accessToken": string, "q": number, "w": number, }>}
  */
-export function anonymousValidator963028965(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | number>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }>}
- */
-export function anonymousValidator430889951(
+export function anonymousValidator1105075285(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  years?: undefined | number;
-  months?: undefined | number;
-  days?: undefined | number;
-  hours?: undefined | number;
-  minutes?: undefined | number;
-  seconds?: undefined | number;
+  accessToken: string;
+  q: number;
+  w: number;
 }>;
 /**
  * @param {*} value
@@ -532,6 +520,15 @@ export function anonymousValidator1582696858(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | StoreSessionStoreWhere>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|number>}
+ */
+export function anonymousValidator963028965(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | number>;
 /**
  * @param {*} value
  * @param {string} propertyPath

@@ -17,16 +17,16 @@ export function applyStoreStructure(app) {
       })
       .loose(),
 
-    T.object("jobInterval")
-      .docs(`Interval specification of 'addRecurringJobToQueue'.`)
+    T.object("secureImageTransformOptions")
+      .docs(
+        `Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.`,
+      )
       .keys({
-        years: T.number().optional(),
-        months: T.number().optional(),
-        days: T.number().optional(),
-        hours: T.number().optional(),
-        minutes: T.number().optional(),
-        seconds: T.number().optional(),
-      }),
+        accessToken: T.string(),
+        q: T.number().min(1).max(100).convert().default(75),
+        w: T.number().min(1).max(99999).convert(),
+      })
+      .loose(),
 
     T.object("file")
       .docs(`Postgres based file storage.`)
@@ -85,9 +85,8 @@ export function applyStoreStructure(app) {
       .docs(
         `
       Postgres based job queue.
-      Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
-      to insert new jobs in to the queue.
-      Use {@link JobQueueWorker} as a way to pick up jobs.
+      Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+      Use {@link queueWorkerCreate} as a way to pick up jobs.
       `,
       )
       .keys({

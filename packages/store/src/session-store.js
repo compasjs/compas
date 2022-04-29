@@ -12,7 +12,7 @@ import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
 import { query } from "./query.js";
-import { addJobToQueue } from "./queue.js";
+import { queueWorkerAddJob } from "./queue-worker.js";
 
 /**
  * @template T
@@ -30,6 +30,11 @@ import { addJobToQueue } from "./queue.js";
  * @type {number}
  */
 const REFRESH_TOKEN_GRACE_PERIOD_IN_MS = 15 * 1000;
+
+/**
+ * @type {string}
+ */
+export const SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME = `compas.sessionStore.potentialLeakedSession`;
 
 /**
  * Store a new session, and returns a access & refresh token pair
@@ -357,8 +362,7 @@ export async function sessionStoreRefreshTokens(
   const tokens = await sessionStoreCreateTokenPair(
     newEventFromEvent(event),
     sql,
-    sessionSettings,
-    // @ts-ignore
+    sessionSettings, // @ts-ignore
     storeToken.session,
   );
 
@@ -432,8 +436,6 @@ export async function sessionStoreReportAndRevokeLeakedSession(
 ) {
   eventStart(event, "sessionStore.reportAndRevokeLeakedSession");
 
-  const jobName = `compas.sessionStore.potentialLeakedSession`;
-
   const [session] = await querySessionStore({
     where: {
       id: sessionId,
@@ -461,19 +463,18 @@ export async function sessionStoreReportAndRevokeLeakedSession(
     // @ts-ignore
     report.session.tokens.push({
       // @ts-ignore
-      id: accessToken.id,
-      // @ts-ignore
-      createdAt: accessToken.createdAt,
-      // @ts-ignore
-      revokedAt: accessToken.revokedAt,
-      // @ts-ignore
+      id: accessToken.id, // @ts-ignore
+      createdAt: accessToken.createdAt, // @ts-ignore
+      revokedAt: accessToken.revokedAt, // @ts-ignore
       expiresAt: accessToken.expiresAt,
     });
   }
 
-  await addJobToQueue(sql, {
-    name: jobName,
-    data: { report },
+  await queueWorkerAddJob(sql, {
+    name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
+    data: {
+      report,
+    },
   });
 
   await sessionStoreInvalidate(newEventFromEvent(event), sql, session);

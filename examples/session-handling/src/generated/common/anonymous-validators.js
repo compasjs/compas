@@ -45,14 +45,6 @@ const objectKeys1781782332 = new Set([
   "createdAt",
   "updatedAt",
 ]);
-const objectKeys430889951 = new Set([
-  "years",
-  "months",
-  "days",
-  "hours",
-  "minutes",
-  "seconds",
-]);
 const objectKeys503384244 = new Set([
   "data",
   "checksum",
@@ -1950,70 +1942,9 @@ export function anonymousValidator1781782332(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|number>}
+ * @returns {EitherN<{"accessToken": string, "q": number, "w": number, }>}
  */
-export function anonymousValidator930071084(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (!Number.isInteger(value)) {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.integer",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value < -2147483647) {
-    const min = -2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.min",
-          info: { min },
-        },
-      ],
-    };
-  }
-  if (value > 2147483647) {
-    const max = 2147483647;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.number.max",
-          info: { max },
-        },
-      ],
-    };
-  }
-  return { value };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"years"?: undefined|number, "months"?: undefined|number, "days"?: undefined|number, "hours"?: undefined|number, "minutes"?: undefined|number, "seconds"?: undefined|number, }>}
- */
-export function anonymousValidator430889951(value, propertyPath) {
+export function anonymousValidator1105075285(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -2040,30 +1971,13 @@ export function anonymousValidator430889951(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  for (const key of Object.keys(value)) {
-    if (!objectKeys430889951.has(key)) {
-      /** @type {{ errors: InternalError[] }} */
-      return {
-        errors: [
-          {
-            propertyPath,
-            key: "validator.object.strict",
-            info: { extraKey: key },
-          },
-        ],
-      };
-    }
-  }
   /**
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["years", anonymousValidator930071084],
-    ["months", anonymousValidator930071084],
-    ["days", anonymousValidator930071084],
-    ["hours", anonymousValidator930071084],
-    ["minutes", anonymousValidator930071084],
-    ["seconds", anonymousValidator930071084],
+    ["accessToken", anonymousValidator1223600],
+    ["q", anonymousValidator854899802],
+    ["w", anonymousValidator1008399025],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -3701,6 +3615,67 @@ export function anonymousValidator2011937852(value, propertyPath) {
   return {
     errors,
   };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|number>}
+ */
+export function anonymousValidator930071084(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "number" || isNaN(value) || !isFinite(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (!Number.isInteger(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.integer",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value < -2147483647) {
+    const min = -2147483647;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  if (value > 2147483647) {
+    const max = 2147483647;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.number.max",
+          info: { max },
+        },
+      ],
+    };
+  }
+  return { value };
 }
 /**
  * @param {*} value
