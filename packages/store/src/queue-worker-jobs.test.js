@@ -7,7 +7,7 @@ import { jobQueueCleanup, jobQueueInsights } from "./queue-worker-jobs.js";
 
 mainTestFn(import.meta);
 
-test("store/queue-worker-jobs", async (t) => {
+test("store/queue-worker-jobs", (t) => {
   t.test("jobQueueCleanup", async (t) => {
     const twoDaysAgo = new Date();
     const fiveDaysAgo = new Date();
@@ -18,11 +18,18 @@ test("store/queue-worker-jobs", async (t) => {
     fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
     fiveDaysAgo.setHours(fiveDaysAgo.getHours() - 1);
 
-    const [ twoDaysAgoInsert, fiveDaysAgoInsert ] = await queries.jobInsert(sql, [
+    const [twoDaysAgoInsert, fiveDaysAgoInsert] = await queries.jobInsert(sql, [
       {
-        name: "test1", isComplete: true, scheduledAt: twoDaysAgo, updatedAt: twoDaysAgo,
-      }, {
-        name: "test1", isComplete: true, scheduledAt: fiveDaysAgo, updatedAt: fiveDaysAgo,
+        name: "test1",
+        isComplete: true,
+        scheduledAt: twoDaysAgo,
+        updatedAt: twoDaysAgo,
+      },
+      {
+        name: "test1",
+        isComplete: true,
+        scheduledAt: fiveDaysAgo,
+        updatedAt: fiveDaysAgo,
       },
     ]);
 
@@ -38,8 +45,8 @@ test("store/queue-worker-jobs", async (t) => {
 
     t.test("two days", async (t) => {
       const handler = jobQueueCleanup({
-                                        queueHistoryInDays: 2,
-                                      });
+        queueHistoryInDays: 2,
+      });
       await handler(newTestEvent(t), sql, {});
 
       const jobs = await queryJob().exec(sql);
@@ -52,25 +59,30 @@ test("store/queue-worker-jobs", async (t) => {
   t.test("jobQueueInsights", async (t) => {
     await queries.jobInsert(sql, [
       {
-        name: "test", scheduledAt: new Date(0), isComplete: false,
-      }, {
-        name: "test", scheduledAt: new Date(Date.now() + 1000000), isComplete: false,
+        name: "test",
+        scheduledAt: new Date(0),
+        isComplete: false,
+      },
+      {
+        name: "test",
+        scheduledAt: new Date(Date.now() + 1000000),
+        isComplete: false,
       },
     ]);
 
-    t.test("success", async t => {
+    t.test("success", async (t) => {
       const handler = jobQueueInsights();
       await handler(newTestEvent(t), sql, {});
 
       t.pass();
     });
 
-    t.test('teardown', async t => {
+    t.test("teardown", async (t) => {
       await queries.jobDelete(sql, {
-        $or: [ { isComplete: true }, { isComplete: false } ]
+        $or: [{ isComplete: true }, { isComplete: false }],
       });
 
       t.pass();
-    })
+    });
   });
 });
