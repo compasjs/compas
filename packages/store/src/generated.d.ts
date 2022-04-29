@@ -14,7 +14,8 @@ export function setStoreQueries(
   q: typeof import("./generated/database/index.js").queries,
 ): void;
 /**
- * @type {typeof import("./generated/database/index.js").queries}
+ * @type {typeof storeQueries}
  */
-export let queries: typeof import("./generated/database/index.js").queries;
+export let queries: typeof storeQueries;
+import { queries as storeQueries } from "./generated/database/index.js";
 //# sourceMappingURL=generated.d.ts.map

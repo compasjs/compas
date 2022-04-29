@@ -37,9 +37,8 @@ export function validateStoreImageTransformOptions(
 ): Either<StoreImageTransformOptions>;
 /**
  * Postgres based job queue.
- * Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
- * to insert new jobs in to the queue.
- * Use {@link JobQueueWorker} as a way to pick up jobs.
+ * Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+ * Use {@link queueWorkerCreate} as a way to pick up jobs.
  *
  * @param {undefined|any|StoreJobInput} value
  * @param {string|undefined} [propertyPath]
@@ -50,16 +49,16 @@ export function validateStoreJob(
   propertyPath?: string | undefined,
 ): Either<StoreJob>;
 /**
- * Interval specification of 'addRecurringJobToQueue'.
+ * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
  *
- * @param {undefined|any|StoreJobIntervalInput} value
+ * @param {undefined|any|StoreSecureImageTransformOptionsInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobInterval>}
+ * @returns {Either<StoreSecureImageTransformOptions>}
  */
-export function validateStoreJobInterval(
-  value: undefined | any | StoreJobIntervalInput,
+export function validateStoreSecureImageTransformOptions(
+  value: undefined | any | StoreSecureImageTransformOptionsInput,
   propertyPath?: string | undefined,
-): Either<StoreJobInterval>;
+): Either<StoreSecureImageTransformOptions>;
 /**
  * Session data store, used by 'sessionStore\*' functions.
  *

@@ -53,13 +53,11 @@ export {
   fileVerifyAccessToken,
 } from "./src/files.js";
 export {
-  JobQueueWorker,
-  addEventToQueue,
-  addJobToQueue,
-  addJobWithCustomTimeoutToQueue,
-  addRecurringJobToQueue,
-  getUncompletedJobsByName,
-} from "./src/queue.js";
+  queueWorkerAddJob,
+  queueWorkerRegisterCronJobs,
+  queueWorkerCreate,
+} from "./src/queue-worker.js";
+export { jobQueueInsights, jobQueueCleanup } from "./src/queue-worker-jobs.js";
 export {
   sessionStoreCreate,
   sessionStoreGet,

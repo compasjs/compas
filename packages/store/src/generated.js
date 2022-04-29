@@ -1,8 +1,9 @@
+import { queries as storeQueries } from "./generated/database/index.js";
+
 /**
- * @type {typeof import("./generated/database/index.js").queries}
+ * @type {typeof storeQueries}
  */
-// @ts-ignore
-export let queries = undefined;
+export let queries = storeQueries;
 
 /**
  * Overwrite used generated queries.

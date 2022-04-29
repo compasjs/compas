@@ -38,9 +38,8 @@ declare global {
   // Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
   type StoreImageTransformOptions = { q: number; w: number };
   // Postgres based job queue.
-  // Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
-  // to insert new jobs in to the queue.
-  // Use {@link JobQueueWorker} as a way to pick up jobs.
+  // Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+  // Use {@link queueWorkerCreate} as a way to pick up jobs.
   type StoreJob = {
     id: number;
     isComplete: boolean;
@@ -53,14 +52,11 @@ declare global {
     createdAt: Date;
     updatedAt: Date;
   };
-  // Interval specification of 'addRecurringJobToQueue'.
-  type StoreJobInterval = {
-    years?: undefined | number;
-    months?: undefined | number;
-    days?: undefined | number;
-    hours?: undefined | number;
-    minutes?: undefined | number;
-    seconds?: undefined | number;
+  // Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
+  type StoreSecureImageTransformOptions = {
+    accessToken: string;
+    q: number;
+    w: number;
   };
   // Session data store, used by 'sessionStore\*' functions.
   type StoreSessionStore = {
@@ -561,7 +557,11 @@ declare global {
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
   };
-  type StoreJobIntervalInput = StoreJobInterval;
+  type StoreSecureImageTransformOptionsInput = {
+    accessToken: string;
+    q?: undefined | number | string;
+    w: number | string;
+  };
   type StoreSessionStoreInput = {
     data?: undefined | any;
     checksum: string;

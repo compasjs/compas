@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import {
+  anonymousValidator1105075285,
   anonymousValidator1196685479,
   anonymousValidator1257773835,
   anonymousValidator1334934277,
@@ -30,7 +31,6 @@ import {
   anonymousValidator343387919,
   anonymousValidator362930508,
   anonymousValidator376443596,
-  anonymousValidator430889951,
   anonymousValidator503384244,
   anonymousValidator599447075,
   anonymousValidator600940900,
@@ -129,9 +129,8 @@ export function validateStoreImageTransformOptions(value, propertyPath = "$") {
 }
 /**
  * Postgres based job queue.
- * Use {@link addEventToQueue}, {@link addRecurringJobToQueue} and {@link addJobWithCustomTimeoutToQueue}
- * to insert new jobs in to the queue.
- * Use {@link JobQueueWorker} as a way to pick up jobs.
+ * Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+ * Use {@link queueWorkerCreate} as a way to pick up jobs.
  *
  * @param {undefined|any|StoreJobInput} value
  * @param {string|undefined} [propertyPath]
@@ -159,14 +158,17 @@ export function validateStoreJob(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
- * Interval specification of 'addRecurringJobToQueue'.
+ * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
  *
- * @param {undefined|any|StoreJobIntervalInput} value
+ * @param {undefined|any|StoreSecureImageTransformOptionsInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobInterval>}
+ * @returns {Either<StoreSecureImageTransformOptions>}
  */
-export function validateStoreJobInterval(value, propertyPath = "$") {
-  const result = anonymousValidator430889951(value, propertyPath);
+export function validateStoreSecureImageTransformOptions(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator1105075285(value, propertyPath);
   if (result.errors) {
     const info = {};
     for (const err of result.errors) {
@@ -183,7 +185,7 @@ export function validateStoreJobInterval(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: StoreJobInterval}} */
+  /** @type {{ value: StoreSecureImageTransformOptions}} */
   return { value: result.value };
 }
 /**

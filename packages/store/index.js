@@ -82,15 +82,14 @@ export {
 export { FileCache } from "./src/file-cache.js";
 
 export {
-  JobQueueWorker,
-  addEventToQueue,
-  addJobToQueue,
-  addJobWithCustomTimeoutToQueue,
-  addRecurringJobToQueue,
-  getUncompletedJobsByName,
-} from "./src/queue.js";
+  queueWorkerAddJob,
+  queueWorkerRegisterCronJobs,
+  queueWorkerCreate,
+} from "./src/queue-worker.js";
+export { jobQueueInsights, jobQueueCleanup } from "./src/queue-worker-jobs.js";
 
 export {
+  SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
   sessionStoreCreate,
   sessionStoreGet,
   sessionStoreUpdate,

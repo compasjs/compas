@@ -2,10 +2,11 @@ import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { isNil, uuid } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
 import { queries } from "./generated.js";
+import { queryJob } from "./generated/database/job.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
-import { getUncompletedJobsByName } from "./queue.js";
 import {
+  SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
   sessionStoreCleanupExpiredSessions,
   sessionStoreCreate,
   sessionStoreCreateJWT,
@@ -213,7 +214,8 @@ test("store/session-store", (t) => {
     });
 
     t.test("invalidSession", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
 
       await queries.sessionStoreDelete(sql, {
@@ -231,7 +233,8 @@ test("store/session-store", (t) => {
     });
 
     t.test("revokedToken", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
 
       await queries.sessionStoreTokenUpdate(sql, {
@@ -467,7 +470,8 @@ test("store/session-store", (t) => {
     });
 
     t.test("invalidSession", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
 
       await queries.sessionStoreDelete(sql, {
@@ -488,7 +492,8 @@ test("store/session-store", (t) => {
     });
 
     t.test("revokedToken - revoked session", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
 
       await queries.sessionStoreUpdate(sql, {
@@ -514,7 +519,8 @@ test("store/session-store", (t) => {
     });
 
     t.test("revokedToken - revoked token", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
       const revokedAt = new Date();
       revokedAt.setSeconds(revokedAt.getSeconds() - 30);
@@ -542,9 +548,15 @@ test("store/session-store", (t) => {
     });
 
     t.test("revokedToken - token leakage is reported", async (t) => {
-      // Just create a new session for this specific subtest, since we don't want to recover the mutations.
+      // Just create a new session for this specific subtest, since we don't want to
+      // recover the mutations.
       const customSessionInfo = await createSession();
-      const startJobs = await getUncompletedJobsByName(sql);
+      const existingJobs = await queryJob({
+        where: {
+          name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
+          isComplete: false,
+        },
+      }).exec(sql);
 
       const revokedAt = new Date();
       revokedAt.setDate(revokedAt.getDate() - 2);
@@ -570,16 +582,19 @@ test("store/session-store", (t) => {
         "sessionStore.refreshTokens.revokedToken",
       );
 
-      const endJobs = await getUncompletedJobsByName(sql);
+      const endJobs = await queryJob({
+        where: {
+          name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
+          isComplete: false,
+        },
+      }).exec(sql);
 
-      t.ok(
-        endJobs["compas.sessionStore.potentialLeakedSession"].length >
-          startJobs["compas.sessionStore.potentialLeakedSession"].length,
+      t.ok(endJobs.length > existingJobs.length);
+      const newJob = endJobs.find((it) =>
+        isNil(existingJobs.find((it2) => it2.id === it.id)),
       );
 
-      const lastJob =
-        endJobs["compas.sessionStore.potentialLeakedSession"].pop();
-      t.equal(lastJob.data.report.session.id, customSessionInfo.session.id);
+      t.equal(newJob.data.report.session.id, customSessionInfo.session.id);
     });
 
     t.test("success", async (t) => {
