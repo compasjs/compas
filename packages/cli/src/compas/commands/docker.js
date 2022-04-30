@@ -24,7 +24,7 @@ export const cliDefinition = {
 It can switch between multiple PostgreSQL versions (12, 13 and 14 are supported via --postgres-version), however only a single version can be 'up' at a time.
 
 PostgreSQL credentials:
-> postgresql://postgres:postgres@localhost:5432/postgres
+> postgresql://postgres:postgres@127.0.0.1:5432/postgres
 
 Minio credentials:
 - ACCESS_KEY: minio
