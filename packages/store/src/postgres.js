@@ -30,6 +30,14 @@ export function buildAndCheckOpts(opts) {
           serialize: (x) => x,
           parse: (x) => x,
         },
+
+        jsonb: {
+          // PG oid for jsonb
+          to: 3802,
+          from: [3802],
+          serialize: (value) => value,
+          parse: (x) => (x ? JSON.parse(x) : undefined),
+        },
       },
     },
     opts,
