@@ -52,11 +52,11 @@ following to you `.env` file:
 ```txt
 APP_NAME=compastodo
 # Postgres
-POSTGRES_HOST=localhost:5432
+POSTGRES_HOST=127.0.0.1:5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 # Minio
-MINIO_URI=localhost
+MINIO_URI=127.0.0.1
 MINIO_PORT=9000
 MINIO_ACCESS_KEY=minio
 MINIO_SECRET_KEY=minio123
