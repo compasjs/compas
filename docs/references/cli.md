@@ -92,7 +92,7 @@ a time.
 
 PostgreSQL credentials:
 
-> postgresql://postgres:postgres@localhost:5432/postgres
+> postgresql://postgres:postgres@127.0.0.1:5432/postgres
 
 Minio credentials:
 
