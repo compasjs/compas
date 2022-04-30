@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [16]
+        node: [16, 18]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [16, 17]
+        node: [16, 18]
         postgres_version: [12, 13]
     runs-on: ${{ matrix.os }}
     env:
@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [16]
+        node: [18]
     runs-on: ${{ matrix.os }}
     env:
       CI: true
