@@ -23,11 +23,12 @@
     "keygrip": "1.1.0",
     "koa": "2.13.4"
   },
-  "maintainers": [
-    {
-      "name": "Dirk de Visser",
-      "email": "dirkdev98@gmail.com"
-    },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "contributors": [
     {
       "name": "Daniël Hansen",
       "email": "hi@danielhansen.nl"

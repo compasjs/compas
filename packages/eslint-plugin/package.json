@@ -22,11 +22,12 @@
     "eslint-plugin-jsdoc": "39.2.9",
     "prettier": "2.6.2"
   },
-  "maintainers": [
-    {
-      "name": "Dirk de Visser",
-      "email": "dirkdev98@gmail.com"
-    },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "contributors": [
     {
       "name": "Daniël Hansen",
       "email": "hi@danielhansen.nl"

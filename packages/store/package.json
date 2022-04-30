@@ -27,11 +27,12 @@
     "postgres": "3.1.0",
     "sharp": "0.30.4"
   },
-  "maintainers": [
-    {
-      "name": "Dirk de Visser",
-      "email": "dirkdev98@gmail.com"
-    },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "contributors": [
     {
       "name": "Daniël Hansen",
       "email": "hi@danielhansen.nl"

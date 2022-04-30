@@ -19,11 +19,12 @@
     "lodash.merge": "4.6.2",
     "pino": "7.11.0"
   },
-  "maintainers": [
-    {
-      "name": "Dirk de Visser",
-      "email": "dirkdev98@gmail.com"
-    },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "contributors": [
     {
       "name": "Daniël Hansen",
       "email": "hi@danielhansen.nl"
