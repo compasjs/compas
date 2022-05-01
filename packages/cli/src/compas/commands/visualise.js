@@ -134,7 +134,7 @@ export async function cliExecutor(logger, state) {
   const codeGen = await getCodeGenExports();
   if (!codeGen) {
     logger.error(
-      `The visualiser needs @compas/code-gen to run. Please install it with 'yarn add -D -E @compas/code-gen'.`,
+      `The visualiser needs @compas/code-gen to run. Please install it with 'yarn add --exact --dev @compas/code-gen' or 'npm add --save-exact --save-dev @compas/code-gen'.`,
     );
 
     return {

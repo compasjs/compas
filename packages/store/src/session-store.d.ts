@@ -197,6 +197,10 @@ export function sessionStoreVerifyAndDecodeJWT(
     };
   }>
 >;
+/**
+ * @type {string}
+ */
+export const SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME: string;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 export type SessionStoreSettings = {
   accessTokenMaxAgeInSeconds: number;

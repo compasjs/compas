@@ -8,19 +8,15 @@ import { collectScripts } from "../../utils.js";
  */
 export const cliDefinition = {
   name: "run",
-  shortDescription:
-    "Run arbitrary JavaScript files, scripts defined in the package.json and scripts located in the scripts directory.",
+  shortDescription: "Run arbitrary JavaScript files, scripts defined in the package.json and scripts located in the scripts directory.",
   modifiers: {
     isCosmetic: true,
   },
   subCommands: [
     {
-      name: "script",
-      modifiers: {
-        isDynamic: true,
-        isWatchable: true,
-      },
-      dynamicValue: {
+      name: "script", modifiers: {
+        isDynamic: true, isWatchable: true,
+      }, dynamicValue: {
         validator: (value) => {
           const scriptCollection = collectScripts();
           const isValid = !isNil(scriptCollection[value]) || existsSync(value);
@@ -32,8 +28,7 @@ export const cliDefinition = {
           }
 
           return {
-            isValid,
-            error: {
+            isValid, error: {
               message: `Can run files from the following places:
 - Files located in the scripts directory.
 - Scripts defined in the package.json
@@ -41,15 +36,15 @@ export const cliDefinition = {
 
 Scripts directory:
 ${Object.entries(scriptCollection)
-  .filter(([, value]) => value.type === "user")
-  .map(([key]) => `  - ${key}`)
-  .join("\n")}
+        .filter(([ , value ]) => value.type === "user")
+        .map(([ key ]) => `  - ${key}`)
+        .join("\n")}
 
 Package.json scripts:
 ${Object.entries(scriptCollection)
-  .filter(([, value]) => value.type === "package")
-  .map(([key]) => `  - ${key}`)
-  .join("\n")}
+        .filter(([ , value ]) => value.type === "package")
+        .map(([ key ]) => `  - ${key}`)
+        .join("\n")}
 `,
             },
           };
@@ -65,8 +60,7 @@ ${Object.entries(scriptCollection)
             completions: [
               {
                 type: "file",
-              },
-              // @ts-ignore
+              }, // @ts-ignore
               ...Object.keys(scriptCollection).map((it) => {
                 const value = scriptCollection[it];
 
@@ -87,22 +81,16 @@ ${Object.entries(scriptCollection)
             ],
           };
         },
-      },
-      shortDescription: "The file or script to run.",
+      }, shortDescription: "The file or script to run.",
     },
   ],
   flags: [
     {
-      name: "scriptArguments",
-      rawName: "--script-args",
-      value: {
+      name: "scriptArguments", rawName: "--script-args", value: {
         specification: "string",
       },
-    },
-    {
-      name: "nodeArguments",
-      rawName: "--node-args",
-      value: {
+    }, {
+      name: "nodeArguments", rawName: "--node-args", value: {
         specification: "string",
       },
     },
@@ -128,7 +116,9 @@ export async function cliExecutor(logger, state) {
   const args = [];
 
   if (script && script.type === "package") {
-    cmd = "yarn";
+    // TODO determine npm vs yarn
+
+    cmd = existsSync("yarn.lock") ? "yarn" : "npm";
     args.push("run", script.name);
     if (state.flags.scriptArguments) {
       // @ts-ignore
@@ -138,8 +128,7 @@ export async function cliExecutor(logger, state) {
     // @ts-ignore
     if (state.flags.nodeArguments?.length > 0) {
       logger.error(
-        "Node arguments are not supported if the script is defined in the package.json",
-      );
+        "Node arguments are not supported if the script is defined in the package.json",);
     }
   } else {
     // @ts-ignore

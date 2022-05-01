@@ -18,7 +18,7 @@ export const cliDefinition = {
       name: "dumpGitignore",
       rawName: "--gitignore",
       description:
-        "Creates or overwrites the .gitignore, with defaults for IDE(s), Yarn and caches.",
+        "Creates or overwrites the .gitignore, with defaults for IDE(s), Yarn/NPM and caches.",
     },
     {
       name: "dumpJSConfig",

@@ -10,7 +10,7 @@ export async function executeLintConfigToEslintPlugin(logger) {
   await Promise.all([updatePackageJson(), updateEslintRc()]);
 
   logger.info(
-    "Updated all configuration files. Run 'yarn && yarn compas lint' to see if the newly applied rules report any issues.",
+    "Updated all configuration files. Run 'npm install && npx compas lint' to see if the newly applied rules report any issues.",
   );
 }
 

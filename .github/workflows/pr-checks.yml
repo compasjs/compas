@@ -21,12 +21,12 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Run lint
         run: |
-          yarn install
-          yarn compas lint
+          npm install
+          npx compas lint
 
   test:
     timeout-minutes: 15
@@ -46,15 +46,15 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Run tests
         run: |
-          yarn install
-          yarn compas docker up
-          yarn compas generate --skip-lint --skip-tsc
-          yarn compas migrate
-          yarn compas test
+          npm install
+          npx compas docker up
+          npx compas generate --skip-lint --skip-tsc
+          npx compas migrate
+          npx compas test
 
   coverage:
     timeout-minutes: 15
@@ -72,15 +72,15 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Run coverage
         run: |
-          yarn install
-          yarn compas docker up
-          yarn compas generate --skip-lint --skip-tsc
-          yarn compas migrate
-          yarn compas test --coverage
+          npm install
+          npx compas docker up
+          npx compas generate --skip-lint --skip-tsc
+          npx compas migrate
+          npx compas test --coverage
 
       - name: Comment test coverage
         uses: codecov/codecov-action@v3
@@ -104,11 +104,11 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Build and deploy
         run: |
-          yarn install
+          npm install
           echo 'VITE_USER_NODE_ENV=production' > ./docs/.env
-          yarn compas run syncMetadata
-          yarn compas run docs:build
+          npx compas run syncMetadata
+          npx compas run docs:build

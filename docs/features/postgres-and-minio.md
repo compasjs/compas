@@ -70,7 +70,9 @@ and the same for Minio.
 And lastly we need to install `@compas/store`:
 
 ```shell
-yarn add @compas/store --exact
+yarn add --exact @compas/store
+# OR
+npm add --save-exact @compas/store
 ```
 
 ## Connecting

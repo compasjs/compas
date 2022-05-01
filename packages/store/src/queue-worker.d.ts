@@ -35,7 +35,7 @@ export function queueWorkerAddJob(
  * is changed, it takes effect immediately. The system won't ever upgrade an existing
  * normal job to a cron job. Note that your job may not be executed on time. Use
  * `job.data.cronLastCompletedAt` and `job.data.cronExpression` to decide if you still
- * need to execute your logic.
+ * need to execute your logic. The provided `cronExpression` is evaluated in 'utc' mode.
  *
  * The default priority for these jobs is '4'.
  *
@@ -67,6 +67,9 @@ export function queueWorkerRegisterCronJobs(
  * - {@link queueWorkerAddJob}: use the queue as background processing of defined units.
  * Like converting a file to different formats, sending async or scheduled notifications.
  * Jobs created will have a priority of '5'.
+ * - {@link queueWorkerRegisterCronJobs}: use the queue for scheduled recurring jobs
+ * based on the specific `cronExpression`. Jos created will have a default priority of
+ * '4'.
  *
  * Every job runs with a timeout. It is determined in the following order:
  * - Timeout of the specific job, via `handlerTimeout` property. Should be used
@@ -94,62 +97,9 @@ export function queueWorkerCreate(
   sql: import("../types/advanced-types").Postgres,
   options: QueueWorkerOptions,
 ): {
-  workers: {
-    currentPromise: Promise<void>;
-  }[];
   start(): void;
   stop(): Promise<void>;
 };
-/**
- * @param {import("../types/advanced-types").Postgres} sql
- * @param {QueueWorkerCronOptions["jobs"]} jobs
- */
-export function queueWorkerRemoveUnknownCronJobs(
-  sql: import("../types/advanced-types").Postgres,
-  jobs: QueueWorkerCronOptions["jobs"],
-): Promise<void>;
-/**
- * Try to update a cron job with the new expression and priority. Creates a new job if no
- * record is updated.
- *
- * @param {import("../types/advanced-types").Postgres} sql
- * @param {QueueWorkerCronOptions["jobs"][0]} job
- * @returns {Promise<void>}
- */
-export function queueWorkerUpserCronJob(
-  sql: import("../types/advanced-types").Postgres,
-  job: QueueWorkerCronOptions["jobs"][0],
-): Promise<void>;
-/**
- * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types/advanced-types").Postgres} sql
- * @param {QueueWorkerInternalOptions} options
- * @param {StoreJobWhere} where
- * @param {import("../types/advanced-types").QueryPart|undefined} orderBy
- * @param {{currentPromise: Promise<void>}} worker
- */
-export function queueWorkerRun(
-  logger: import("@compas/stdlib").Logger,
-  sql: import("../types/advanced-types").Postgres,
-  options: QueueWorkerInternalOptions,
-  where: StoreJobWhere,
-  orderBy: import("../types/advanced-types").QueryPart | undefined,
-  worker: {
-    currentPromise: Promise<void>;
-  },
-): void;
-/**
- * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types/advanced-types").Postgres} sql
- * @param {QueueWorkerInternalOptions} options
- * @param {StoreJob} job
- */
-export function queueWorkerExecuteJob(
-  logger: import("@compas/stdlib").Logger,
-  sql: import("../types/advanced-types").Postgres,
-  options: QueueWorkerInternalOptions,
-  job: StoreJob,
-): Promise<void>;
 export type QueueWorkerHandler = (
   event: InsightEvent,
   sql: import("../types/advanced-types").Postgres,

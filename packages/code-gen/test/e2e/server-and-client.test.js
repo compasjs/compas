@@ -216,7 +216,7 @@ test("code-gen/e2e/server", async (t) => {
     );
 
     const { exitCode: transpileExitCode } = await spawn(
-      "yarn",
+      "npx",
       ["tsc", "-p", pathJoin(clientGeneratedDirectory, "../")],
       {},
     );

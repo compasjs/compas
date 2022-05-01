@@ -70,7 +70,7 @@ export async function generateStore() {
 
 export async function generateExamples() {
   const results = await Promise.all([
-    exec("yarn compas run generate", {
+    exec("compas run generate", {
       cwd: "./examples/session-handling",
     }),
   ]);

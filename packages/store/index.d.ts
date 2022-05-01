@@ -59,6 +59,7 @@ export {
 } from "./src/queue-worker.js";
 export { jobQueueInsights, jobQueueCleanup } from "./src/queue-worker-jobs.js";
 export {
+  SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
   sessionStoreCreate,
   sessionStoreGet,
   sessionStoreUpdate,
