@@ -1,13 +1,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { readdir } from "node:fs/promises";
-import {
-  dirnameForModule,
-  exec,
-  mainFn,
-  pathJoin,
-  spawn,
-} from "@compas/stdlib";
+import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
 import { syncCliReference } from "../src/cli-reference.js";
 
 mainFn(import.meta, main);
@@ -27,15 +21,15 @@ async function main(logger) {
   await syncDocExamples(logger);
 
   await syncCliReference(logger);
-  await syncExampleBasedOnMetadata();
 
-  logger.info("Running linter");
-  await spawn("compas", ["lint"], {
+  logger.info("Regenerating");
+  await spawn("compas", ["generate"], {
     env: {
       ...process.env,
       CI: "false",
     },
   });
+
   logger.info("Done");
 }
 
@@ -149,24 +143,4 @@ test files.
   }
 
   await writeFile(`./docs/examples.md`, source);
-}
-
-async function syncExampleBasedOnMetadata() {
-  for (const exampleName of await readdir("./examples", {
-    encoding: "utf-8",
-  })) {
-    if (exampleName.includes(".")) {
-      continue;
-    }
-
-    const { exampleMetadata } = JSON.parse(
-      await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
-    );
-
-    if (exampleMetadata?.includeGenerated) {
-      await exec(`compas run generate`, {
-        cwd: `./examples/${exampleName}`,
-      });
-    }
-  }
 }

@@ -105,7 +105,7 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
     SELECT pg_terminate_backend(pg_stat_activity.pid)
     FROM pg_stat_activity
     WHERE
-        pg_stat_activity.datname = ${connectionOptions.database}
+        pg_stat_activity.datname = ${connectionOptions.database ?? ""}
     AND pid <> pg_backend_pid()
   `;
 

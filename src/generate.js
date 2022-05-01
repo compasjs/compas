@@ -1,3 +1,5 @@
+import { readFile } from "fs/promises";
+import { readdir } from "node:fs/promises";
 import { AppError, exec } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
@@ -69,18 +71,33 @@ export async function generateStore() {
 }
 
 export async function generateExamples() {
-  const results = await Promise.all([
-    exec("compas run generate", {
-      cwd: "./examples/session-handling",
-    }),
-  ]);
+  await Promise.all(
+    (
+      await readdir("./examples", {
+        encoding: "utf-8",
+      })
+    ).map(async (exampleName) => {
+      if (exampleName.includes(".")) {
+        return;
+      }
 
-  for (const result of results) {
-    if (result.exitCode !== 0) {
-      throw AppError.serverError({
-        message: "One of the examples failed to generate",
-        result,
-      });
-    }
-  }
+      const { exampleMetadata } = JSON.parse(
+        await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
+      );
+
+      if (exampleMetadata?.includeGenerated) {
+        const result = await exec(`npx compas run generate`, {
+          cwd: `./examples/${exampleName}`,
+        });
+
+        if (result.exitCode !== 0) {
+          throw AppError.serverError({
+            message: "One of the examples failed to generate",
+            result,
+            exampleName,
+          });
+        }
+      }
+    }),
+  );
 }
