@@ -65,8 +65,7 @@ ${Object.entries(scriptCollection)
             completions: [
               {
                 type: "file",
-              },
-              // @ts-ignore
+              }, // @ts-ignore
               ...Object.keys(scriptCollection).map((it) => {
                 const value = scriptCollection[it];
 
@@ -128,7 +127,9 @@ export async function cliExecutor(logger, state) {
   const args = [];
 
   if (script && script.type === "package") {
-    cmd = "yarn";
+    // TODO determine npm vs yarn
+
+    cmd = existsSync("yarn.lock") ? "yarn" : "npm";
     args.push("run", script.name);
     if (state.flags.scriptArguments) {
       // @ts-ignore

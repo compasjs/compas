@@ -30,7 +30,7 @@ async function main(logger) {
   await syncExampleBasedOnMetadata();
 
   logger.info("Running linter");
-  await spawn("yarn", ["compas", "lint"], {
+  await spawn("compas", ["lint"], {
     env: {
       ...process.env,
       CI: "false",
@@ -164,7 +164,7 @@ async function syncExampleBasedOnMetadata() {
     );
 
     if (exampleMetadata?.includeGenerated) {
-      await exec(`yarn compas run generate`, {
+      await exec(`compas run generate`, {
         cwd: `./examples/${exampleName}`,
       });
     }

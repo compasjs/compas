@@ -15,6 +15,8 @@ commands related to things you could be working on:
 **General**:
 
 ```
+# Install dependencies
+npm install
 # Format with ESLint & Prettier
 compas lint
 # Run the tests
@@ -33,14 +35,14 @@ compas run syncMetadata
 **Code generation, @compas/store structure changes**:
 
 ```
-compas run generate && compas run types && compas lint
+compas generate
 ```
 
 ### Improving test coverage
 
-There are a bunch of things not covered by tests, there are a few ways to
-improve coverage, but let's start by running `compas test --coverage` and
-opening `file:///path/to/repo/coverage/lcov-report/index.html` in your browser.
+There are many things not covered by tests, there are a few ways to improve
+coverage, but let's start by running `compas test --coverage` and opening
+`file:///path/to/repo/coverage/lcov-report/index.html` in your browser.
 
 If it is your first time doing this, start by checking out files in the
 `generated` directory. Most of these files are partially covered, and it should

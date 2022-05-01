@@ -106,7 +106,7 @@ with caution.
 export async function cliExecutor(logger, state) {
   if (!(await checkStoreImport())) {
     logger.error(
-      "Could not load @compas/store. Install it via 'yarn add --exact @compas/store'.",
+      "Could not load @compas/store. Install it via 'yarn add --exact @compas/store' or 'npm add --save-exact @compas/store'.",
     );
     return { exitStatus: "failed" };
   }

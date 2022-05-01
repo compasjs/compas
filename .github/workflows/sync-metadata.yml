@@ -25,12 +25,12 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: "npm"
 
       - name: Run sync
         run: |
-          yarn install
-          yarn compas run syncMetadata
+          npm install
+          npx compas run syncMetadata
 
       - name: Commit and push
         uses: EndBug/add-and-commit@v9

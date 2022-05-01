@@ -13,7 +13,7 @@ export async function main() {
     return;
   }
 
-  await spawn("yarn", ["tsc", "-p", "./jsconfig.types.json"]);
+  await spawn("npx", ["tsc", "-p", "./jsconfig.types.json"]);
 }
 
 function cleanUpTypeDefinitionFiles() {
