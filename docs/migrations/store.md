@@ -1,6 +1,7 @@
 # Store
 
-This is the full current migration state of `@compas/store`:
+This is the current migration state of `@compas/store` and should be used as
+your first migration:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -25,7 +26,7 @@ CREATE TABLE "file"
   "name"          varchar          NOT NULL,
   "meta"          jsonb            NOT NULL,
   "createdAt"     timestamptz      NOT NULL DEFAULT now(),
-  "updatedAt"     timestamptz      NOT NULL DEFAULT now(),
+  "updatedAt"     timestamptz      NOT NULL DEFAULT now()
 );
 
 CREATE INDEX "fileBucketNameIdx" ON "file" ("bucketName");
