@@ -18,7 +18,7 @@
     "@types/koa": "2.13.4",
     "@types/minio": "7.0.13",
     "crc": "4.1.1",
-    "cron-parser": "^4.3.0",
+    "cron-parser": "^4.4.0",
     "file-type": "17.1.1",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
