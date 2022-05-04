@@ -31,7 +31,7 @@ export function exitOnErrorsOrReturn(context) {
   const formatArray = [""];
 
   for (let i = 0; i < context.errors.length; i++) {
-    /** @type {CodeGenCollectableError} */
+    /** @type {import("../generated/common/types").CodeGenCollectableError} */
     const error = context.errors[i];
     let str = `- (${i + 1}/${context.errors.length}): `;
 

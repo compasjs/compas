@@ -7,17 +7,11 @@ import { InsightEvent, Logger } from "@compas/stdlib";
 import { Next } from "@compas/server";
 import { Middleware } from "@compas/server";
 declare global {
-  type AuthLogin = undefined | any;
-  type AuthLogout = AuthLogin;
   type AuthLogoutResponse = { success: true };
-  type AuthMe = AuthLogin;
   type AuthMeResponse = { session: AuthSession };
   type AuthSession = { id: string; createdAt: Date };
-  type AuthRefreshTokens = AuthLogin;
   type AuthRefreshTokensBody = { refreshToken: string };
   type AuthTokenPair = { accessToken: string; refreshToken: string };
-  // Return the full generated structure as a json object.
-  type CompasStructure = AuthLogin;
   type CompasStructureResponse = any;
   // Postgres based file storage.
   type StoreFile = {

@@ -52,6 +52,10 @@ export function setupMemoizedTypes(context) {
   if (!context.options.isBrowser) {
     for (const group of Object.values(context.structure)) {
       for (const type of Object.values(group)) {
+        if (type.type === "route") {
+          continue;
+        }
+
         getTypeNameForType(context, type, "", {
           isTypeFile: true,
         });
@@ -131,20 +135,20 @@ export function generateTypeFile(context) {
       : !context.options.useTypescript;
 
   const typeFile = js`
-      ${[...context.types.rawImports]}
-      ${
-        context.options.useTypescript
-          ? "// An export soo all things work correctly with linters, ts, ...\n  export const __generated__ = true;"
-          : ""
-      }
-      
-      ${!declareGlobal ? "" : "declare global {"}
+    ${[...context.types.rawImports]}
+    ${
+      context.options.useTypescript
+        ? "// An export soo all things work correctly with linters, ts, ...\n  export const __generated__ = true;"
+        : ""
+    }
 
-      ${getMemoizedNamedTypes(context)}
-      
-      ${!declareGlobal ? "" : "}"}
+    ${!declareGlobal ? "" : "declare global {"}
 
-   `;
+    ${getMemoizedNamedTypes(context)}
+
+    ${!declareGlobal ? "" : "}"}
+
+  `;
 
   context.outputFiles.push({
     contents: typeFile,
