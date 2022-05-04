@@ -16,6 +16,7 @@ import {
   anonymousValidator17476225,
   anonymousValidator1836970168,
   anonymousValidator2019605291,
+  anonymousValidator2029084423,
   anonymousValidator20588538,
   anonymousValidator224332322,
   anonymousValidator243901689,
@@ -131,6 +132,32 @@ export function validateCodeGenBooleanType(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").CodeGenBooleanType}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").CodeGenCollectableErrorInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenCollectableError>}
+ */
+export function validateCodeGenCollectableError(value, propertyPath = "$") {
+  const result = anonymousValidator2029084423(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").CodeGenCollectableError}} */
   return { value: result.value };
 }
 /**

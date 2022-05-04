@@ -8,27 +8,32 @@ import { getHashForString } from "../utils.js";
  */
 export function exitOnErrorsOrReturn(context) {
   const errorHashes = new Set();
-  const errors = [];
+  const skippedErrors = [];
 
-  for (const err of context.errors) {
-    const hash = getHashForString(JSON.stringify(err));
+  for (let i = 0; i < context.errors.length; ++i) {
+    const hash = getHashForString(JSON.stringify(context.errors[i]));
     if (errorHashes.has(hash)) {
+      skippedErrors.push(i);
       continue;
     }
 
     errorHashes.add(hash);
-    errors.push(err);
   }
 
-  if (errors.length === 0) {
+  for (const removeIdx of skippedErrors.reverse()) {
+    context.errors.splice(removeIdx, 1);
+  }
+
+  if (context.errors.length === 0) {
     return;
   }
 
   const formatArray = [""];
 
-  for (let i = 0; i < errors.length; i++) {
-    const error = errors[i];
-    let str = `- (${i + 1}/${errors.length}): `;
+  for (let i = 0; i < context.errors.length; i++) {
+    /** @type {CodeGenCollectableError} */
+    const error = context.errors[i];
+    let str = `- (${i + 1}/${context.errors.length}): `;
 
     switch (error.key) {
       case "structureReservedGroupName":

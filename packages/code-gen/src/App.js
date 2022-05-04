@@ -415,7 +415,11 @@ export class App {
     }
 
     const result = await generate(this.logger, opts, generatorInput);
-    printProcessMemoryUsage(this.logger);
+
+    if (this.verbose) {
+      printProcessMemoryUsage(this.logger);
+    }
+
     return result;
   }
 

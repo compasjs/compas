@@ -1,7 +1,7 @@
 import { TypeCreator } from "@compas/code-gen";
 
 /**
- * @param app
+ * @param {App} app
  */
 export function applyCodeGenStructure(app) {
   const T = new TypeCreator("codeGen");
@@ -26,7 +26,7 @@ export function applyCodeGenStructure(app) {
       importExtension: T.string(),
       outputFiles: T.array().values(T.reference("codeGen", "file")),
       errors: [
-        T.anyOf().values(
+        T.anyOf("collectableError").values(
           {
             key: "structureReservedGroupName",
             groupName: T.string(),

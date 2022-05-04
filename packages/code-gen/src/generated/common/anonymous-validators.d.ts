@@ -1427,67 +1427,6 @@ export function anonymousValidator20588538(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("../../App").GenerateOpts>}
- */
-export function anonymousValidator634141747(
-  value: any,
-  propertyPath: string,
-): EitherN<import("../../App").GenerateOpts>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{ [ key: string]:{ [ key: string]:import("./types").CodeGenType}}>}
- */
-export function anonymousValidator1413365072(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  [key: string]: {
-    [key: string]: import("./types").CodeGenType;
-  };
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<import("./types").CodeGenStructure>}
- */
-export function anonymousValidator602578904(
-  value: any,
-  propertyPath: string,
-): EitherN<import("./types").CodeGenStructure>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<".js"|".ts">}
- */
-export function anonymousValidator1146021598(
-  value: any,
-  propertyPath: string,
-): EitherN<".js" | ".ts">;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"relativePath": string, "contents": string, }>}
- */
-export function anonymousValidator682118687(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  relativePath: string;
-  contents: string;
-}>;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<(import("./types").CodeGenFile)[]>}
- */
-export function anonymousValidator1979163207(
-  value: any,
-  propertyPath: string,
-): EitherN<import("./types").CodeGenFile[]>;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<"structureReservedGroupName">}
  */
 export function anonymousValidator193591563(
@@ -1817,7 +1756,7 @@ export function anonymousValidator860724709(
  * @param {string} propertyPath
  * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
  */
-export function anonymousValidator1417810181(
+export function anonymousValidator2029084423(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1902,96 +1841,77 @@ export function anonymousValidator1417810181(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[]>}
+ * @returns {EitherN<import("../../App").GenerateOpts>}
  */
-export function anonymousValidator788615357(
+export function anonymousValidator634141747(
   value: any,
   propertyPath: string,
-): EitherN<
-  (
-    | {
-        key: "structureReservedGroupName";
-        groupName: string;
-      }
-    | {
-        key: "structureUnknownOrEmptyGroup";
-        groupName: string;
-      }
-    | {
-        key: "sqlMissingPrimaryKey";
-        typeName: string;
-      }
-    | {
-        key: "sqlForgotEnableQueries";
-        typeName: string;
-        referencedByType: string;
-      }
-    | {
-        key: "sqlDuplicateRelationOwnKey";
-        type: string;
-        relationKey: string;
-      }
-    | {
-        key: "sqlDuplicateRelationReferencedKey";
-        type: string;
-        relationKey: string;
-      }
-    | {
-        key: "sqlMissingOneToMany";
-        referencedByGroup: string;
-        referencedByType: string;
-        typeName: string;
-        relationOwnKey: string;
-      }
-    | {
-        key: "sqlUnusedOneToMany";
-        type: string;
-        referencedType: string;
-        ownKey: string;
-      }
-    | {
-        key: "sqlEnableValidator";
-      }
-    | {
-        key: "sqlDuplicateShortName";
-        shortName: string;
-        firstName: string;
-        secondName: string;
-      }
-    | {
-        key: "sqlReservedObjectKey";
-        type: string;
-        reservedKey: string;
-      }
-    | {
-        key: "sqlReservedRelationKey";
-        type: string;
-        ownKey: string;
-      }
-    | {
-        key: "routerUnknownInvalidationTarget";
-        from: string;
-        target: {
-          group: string;
-          name?: undefined | string;
-        };
-      }
-    | {
-        key: "routerIncorrectlySpecifiedInvalidation";
-        from: string;
-        target: {
-          group: string;
-          name?: undefined | string;
-        };
-        sourcePropertyPath: string[];
-        targetPropertyPath: string[];
-      }
-  )[]
->;
+): EitherN<import("../../App").GenerateOpts>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": ({"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], })[], }>}
+ * @returns {EitherN<{ [ key: string]:{ [ key: string]:import("./types").CodeGenType}}>}
+ */
+export function anonymousValidator1413365072(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  [key: string]: {
+    [key: string]: import("./types").CodeGenType;
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").CodeGenStructure>}
+ */
+export function anonymousValidator602578904(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CodeGenStructure>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<".js"|".ts">}
+ */
+export function anonymousValidator1146021598(
+  value: any,
+  propertyPath: string,
+): EitherN<".js" | ".ts">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"relativePath": string, "contents": string, }>}
+ */
+export function anonymousValidator682118687(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  relativePath: string;
+  contents: string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CodeGenFile)[]>}
+ */
+export function anonymousValidator1979163207(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CodeGenFile[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CodeGenCollectableError)[]>}
+ */
+export function anonymousValidator226175071(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CodeGenCollectableError[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"options": import("../../App").GenerateOpts, "structure": import("./types").CodeGenStructure, "extension": ".js"|".ts", "importExtension": string, "outputFiles": (import("./types").CodeGenFile)[], "errors": (import("./types").CodeGenCollectableError)[], }>}
  */
 export function anonymousValidator980814292(
   value: any,
@@ -2002,85 +1922,7 @@ export function anonymousValidator980814292(
   extension: ".js" | ".ts";
   importExtension: string;
   outputFiles: import("./types").CodeGenFile[];
-  errors: (
-    | {
-        key: "structureReservedGroupName";
-        groupName: string;
-      }
-    | {
-        key: "structureUnknownOrEmptyGroup";
-        groupName: string;
-      }
-    | {
-        key: "sqlMissingPrimaryKey";
-        typeName: string;
-      }
-    | {
-        key: "sqlForgotEnableQueries";
-        typeName: string;
-        referencedByType: string;
-      }
-    | {
-        key: "sqlDuplicateRelationOwnKey";
-        type: string;
-        relationKey: string;
-      }
-    | {
-        key: "sqlDuplicateRelationReferencedKey";
-        type: string;
-        relationKey: string;
-      }
-    | {
-        key: "sqlMissingOneToMany";
-        referencedByGroup: string;
-        referencedByType: string;
-        typeName: string;
-        relationOwnKey: string;
-      }
-    | {
-        key: "sqlUnusedOneToMany";
-        type: string;
-        referencedType: string;
-        ownKey: string;
-      }
-    | {
-        key: "sqlEnableValidator";
-      }
-    | {
-        key: "sqlDuplicateShortName";
-        shortName: string;
-        firstName: string;
-        secondName: string;
-      }
-    | {
-        key: "sqlReservedObjectKey";
-        type: string;
-        reservedKey: string;
-      }
-    | {
-        key: "sqlReservedRelationKey";
-        type: string;
-        ownKey: string;
-      }
-    | {
-        key: "routerUnknownInvalidationTarget";
-        from: string;
-        target: {
-          group: string;
-          name?: undefined | string;
-        };
-      }
-    | {
-        key: "routerIncorrectlySpecifiedInvalidation";
-        from: string;
-        target: {
-          group: string;
-          name?: undefined | string;
-        };
-        sourcePropertyPath: string[];
-        targetPropertyPath: string[];
-      }
-  )[];
+  errors: import("./types").CodeGenCollectableError[];
 }>;
 /**
  * @param {*} value

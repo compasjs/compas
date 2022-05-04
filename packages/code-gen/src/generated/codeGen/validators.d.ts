@@ -39,6 +39,18 @@ export function validateCodeGenBooleanType(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenBooleanType>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenCollectableErrorInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenCollectableError>}
+ */
+export function validateCodeGenCollectableError(
+  value:
+    | undefined
+    | any
+    | import("../common/types").CodeGenCollectableErrorInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenCollectableError>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenContextInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenContext>}
