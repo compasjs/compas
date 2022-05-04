@@ -1,3 +1,5 @@
+import { AppError } from "@compas/stdlib";
+import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { AnyOfType } from "./AnyOfType.js";
 import { AnyType } from "./AnyType.js";
 import { ArrayType } from "./ArrayType.js";
@@ -28,6 +30,13 @@ export class TypeCreator {
       throw new Error(
         `The '.' is reserved for later use when creating nested groups`,
       );
+    }
+
+    const { error } = validateCodeGenNamePart(this.group);
+    if (error) {
+      throw AppError.serverError({
+        message: `Specified group name '${this.group}' is not valid. Expects only lowercase and uppercase characters.`,
+      });
     }
   }
 

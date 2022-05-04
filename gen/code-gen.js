@@ -8,13 +8,17 @@ export function applyCodeGenStructure(app) {
 
   const { baseTypes, extraTypes } = getTypes(T);
 
+  const namePart = T.string("namePart")
+    .min(1)
+    .pattern(/^[a-zA-Z]+$/g);
+
   app.add(T.anyOf("type").values(...baseTypes));
   app.add(...extraTypes);
   app.add(
     T.generic("structure")
-      .keys(T.string())
+      .keys(namePart)
       .values(
-        T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
+        T.generic().keys(namePart).values(T.reference("codeGen", "type")),
       ),
   );
 
