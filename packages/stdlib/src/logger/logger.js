@@ -1,5 +1,6 @@
 import { pino } from "pino";
 import { environment, isProduction } from "../env.js";
+import { AppError } from "../error.js";
 import { merge } from "../lodash.js";
 import { noop } from "../utils.js";
 import { writeGithubActions, writePretty } from "./writer.js";
@@ -95,12 +96,21 @@ export function newLogger(options) {
   const stream = options?.stream ?? process.stdout;
 
   const printer =
+    environment.COMPAS_LOG_PRINTER ??
     options?.printer ??
     (environment.GITHUB_ACTIONS !== "true"
       ? isProduction()
         ? "ndjson"
         : "pretty"
       : "github-actions");
+
+  if (!["ndjson", "pretty", "github-actions"].includes(printer)) {
+    throw AppError.serverError({
+      message:
+        "Invalid printer specified via either `options.printer` or via the `COMPAS_LOG_PRINTER` environment variable.",
+      allowedValues: ["ndjson", "pretty", "github-actions"],
+    });
+  }
 
   const context = merge({}, globalContext, options?.ctx ?? {});
 
