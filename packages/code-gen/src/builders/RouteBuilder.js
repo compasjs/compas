@@ -1,4 +1,5 @@
-import { isNil } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
+import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { lowerCaseFirst } from "../utils.js";
 import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
@@ -332,6 +333,12 @@ export class RouteCreator {
    * @returns {RouteCreator}
    */
   group(name, path) {
+    const { error } = validateCodeGenNamePart(name);
+    if (error) {
+      throw AppError.serverError({
+        message: `Specified group name '${name}' is not valid. Expects only lowercase and uppercase characters.`,
+      });
+    }
     return new RouteCreator(name, concatenateRoutePaths(this.data.path, path));
   }
 

@@ -96,6 +96,15 @@ export function validateCodeGenGenericType(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenGenericType>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenNamePartInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenNamePart>}
+ */
+export function validateCodeGenNamePart(
+  value: undefined | any | import("../common/types").CodeGenNamePartInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenNamePart>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenNumberTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenNumberType>}

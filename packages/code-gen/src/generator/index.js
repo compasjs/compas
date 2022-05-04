@@ -52,8 +52,16 @@ export function generate(logger, options, structure) {
         ? "isNode"
         : "isNodeServer"
       : "isBrowser",
-    enabledGenerators: options.enabledGenerators,
-    enabledGroups: options.enabledGroups,
+    ...(options.enabledGenerators?.length > 0
+      ? {
+          enabledGenerators: options.enabledGenerators,
+        }
+      : {}),
+    ...(options.enabledGroups?.length > 0
+      ? {
+          enabledGroups: options.enabledGroups,
+        }
+      : {}),
   });
 
   const isModule = shouldGenerateModules(logger);
@@ -80,8 +88,8 @@ export function generate(logger, options, structure) {
 
   // Don't execute any logic, we can just write the structure out only
   if (context.options.enabledGenerators.length > 0) {
-    // Linkup all references, so we don't necessarily have to worry about them in all other
-    // places.
+    // Linkup all references, so we don't necessarily have to worry about them in all
+    // other places.
     linkupReferencesInStructure(context);
     addFieldsOfRelations(context);
     formatDocStringsOfTypes(context);

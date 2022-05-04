@@ -1,5 +1,6 @@
 import { existsSync } from "fs";
 import {
+  AppError,
   isNil,
   merge,
   newLogger,
@@ -15,6 +16,7 @@ import {
   hoistNamedItems,
 } from "./generate.js";
 import {
+  validateCodeGenNamePart,
   validateCodeGenStructure,
   validateCodeGenType,
 } from "./generated/codeGen/validators.js";
@@ -242,6 +244,13 @@ export class App {
    * @returns {this}
    */
   extendWithOpenApi(defaultGroup, data) {
+    const { error } = validateCodeGenNamePart(defaultGroup);
+    if (error) {
+      throw AppError.serverError({
+        message: `Specified default group name '${defaultGroup}' is not valid. Expects only lowercase and uppercase characters.`,
+      });
+    }
+
     return this.extendInternal(loadFromOpenAPISpec(defaultGroup, data), true);
   }
 

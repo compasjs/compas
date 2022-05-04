@@ -18,6 +18,7 @@ import {
   anonymousValidator2019605291,
   anonymousValidator2029084423,
   anonymousValidator20588538,
+  anonymousValidator2067293249,
   anonymousValidator224332322,
   anonymousValidator243901689,
   anonymousValidator508679687,
@@ -288,6 +289,32 @@ export function validateCodeGenGenericType(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").CodeGenGenericType}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").CodeGenNamePartInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenNamePart>}
+ */
+export function validateCodeGenNamePart(value, propertyPath = "$") {
+  const result = anonymousValidator2067293249(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").CodeGenNamePart}} */
   return { value: result.value };
 }
 /**

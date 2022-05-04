@@ -1,4 +1,5 @@
-import { isNil, merge } from "@compas/stdlib";
+import { AppError, isNil, merge } from "@compas/stdlib";
+import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { lowerCaseFirst } from "../utils.js";
 
 export class TypeBuilder {
@@ -21,6 +22,24 @@ export class TypeBuilder {
    * @param {string|undefined} [name]
    */
   constructor(type, group, name) {
+    if (group) {
+      const groupValidatorResult = validateCodeGenNamePart(group);
+      if (groupValidatorResult.error) {
+        throw AppError.serverError({
+          message: `Specified group name '${group}' is not valid. Expects only lowercase and uppercase characters.`,
+        });
+      }
+    }
+
+    if (name) {
+      const nameValidatorResult = validateCodeGenNamePart(name);
+      if (nameValidatorResult.error) {
+        throw AppError.serverError({
+          message: `Specified type name '${name}' is not valid. Expects only lowercase and uppercase characters.`,
+        });
+      }
+    }
+
     this.data = {
       ...TypeBuilder.getBaseData(),
       type,

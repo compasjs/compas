@@ -1850,7 +1850,27 @@ export function anonymousValidator634141747(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{ [ key: string]:{ [ key: string]:import("./types").CodeGenType}}>}
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator2067293249(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{ [ key: import("./types").CodeGenNamePart]:import("./types").CodeGenType}>}
+ */
+export function anonymousValidator810836208(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  [key: string]: import("./types").CodeGenType;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{ [ key: import("./types").CodeGenNamePart]:{ [ key: import("./types").CodeGenNamePart]:import("./types").CodeGenType}}>}
  */
 export function anonymousValidator1413365072(
   value: any,

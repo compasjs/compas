@@ -397,8 +397,9 @@ export type CodeGenContext = {
   errors: CodeGenCollectableError[];
 };
 export type CodeGenStructure = {
-  [key: string]: { [key: string]: CodeGenType };
+  [key: CodeGenNamePart]: { [key: CodeGenNamePart]: CodeGenType };
 };
+export type CodeGenNamePart = string;
 export type CodeGenFile = { relativePath: string; contents: string };
 export type CodeGenTemplateState = { phase: "init" | "collect" | "finish" };
 export type CodeGenTypeSettings = {
@@ -820,10 +821,13 @@ export type CodeGenContextInput = {
   errors: import("./../common/types").CodeGenCollectableErrorInput[];
 };
 export type CodeGenStructureInput = {
-  [key: string]: {
-    [key: string]: import("./../common/types").CodeGenTypeInput;
+  [key: import("./../common/types").CodeGenNamePartInput]: {
+    [
+      key: import("./../common/types").CodeGenNamePartInput
+    ]: import("./../common/types").CodeGenTypeInput;
   };
 };
+export type CodeGenNamePartInput = CodeGenNamePart;
 export type CodeGenFileInput = CodeGenFile;
 export type CodeGenTemplateStateInput = CodeGenTemplateState;
 export type CodeGenTypeSettingsInput = CodeGenTypeSettings;
