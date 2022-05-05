@@ -19,10 +19,10 @@ import {
 import { generate } from "./generator/index.js";
 import { generateOpenApi } from "./generator/openAPI/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
-import { recursivelyRemoveInternalFields } from "./internal.js";
 import { loadFromOpenAPISpec } from "./loaders.js";
 import { structureAddType } from "./structure/structureAddType.js";
 import { structureHoistNamedItems } from "./structure/structureHoistNamedItems.js";
+import { structureRemoveInternalFields } from "./structure/structureRemoveInternalFields.js";
 import { lowerCaseFirst } from "./utils.js";
 
 /**
@@ -454,7 +454,7 @@ export class App {
     }
 
     if (!allowInternalProperties) {
-      recursivelyRemoveInternalFields(rawStructure);
+      structureRemoveInternalFields(rawStructure);
     }
 
     for (const groupData of Object.values(rawStructure)) {
