@@ -1,49 +1,33 @@
-import { isNil, isPlainObject } from "@compas/stdlib";
-import { ObjectType } from "./ObjectType.js";
+import { AppError, isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
 export class PickType extends TypeBuilder {
   static baseData = {
     keys: [],
+    validator: {
+      strict: true,
+    },
   };
 
   build() {
-    if (isNil(this.builder)) {
-      // Force an error
-      // @ts-ignore
-      this.object(undefined);
+    const result = super.build();
+
+    if (isNil(this.internalReference)) {
+      throw AppError.serverError({
+        message: `T.pick() should have a valid 'T.pick().object()`,
+      });
     }
 
-    const buildResult = buildOrInfer(this.builder);
+    result.reference = buildOrInfer(this.internalReference);
 
-    if (isNil(this.data.name) && !isNil(buildResult.name)) {
-      this.data.name = `${buildResult.name}Pick`;
-    }
-
-    const thisResult = super.build();
-
-    // Overwrite name, even if it may be undefined
-    buildResult.uniqueName = thisResult.uniqueName;
-    buildResult.group = thisResult.group;
-    buildResult.name = thisResult.name;
-
-    // also copy over default value, as that is most likely the expected behaviour
-    buildResult.defaultValue =
-      thisResult.defaultValue ?? buildResult.defaultValue;
-
-    const existingKeys = Object.keys(buildResult.keys);
-    for (const key of existingKeys) {
-      if (thisResult.keys.indexOf(key) === -1) {
-        delete buildResult.keys[key];
-      }
-    }
-
-    return buildResult;
+    return result;
   }
 
   constructor(group, name) {
     super("pick", group, name);
+
+    this.internalReference = undefined;
 
     this.data = {
       ...this.data,
@@ -52,20 +36,11 @@ export class PickType extends TypeBuilder {
   }
 
   /**
-   * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
+   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {PickType}
    */
   object(builder) {
-    if (
-      isNil(builder) ||
-      (!(builder instanceof ObjectType) && !isPlainObject(builder))
-    ) {
-      throw new TypeError(
-        `T.pick() expects a ObjectType or plain Javascript object as the first argument`,
-      );
-    }
-
-    this.builder = builder;
+    this.internalReference = builder;
 
     return this;
   }
@@ -76,6 +51,15 @@ export class PickType extends TypeBuilder {
    */
   keys(...keys) {
     this.data.keys.push(...keys);
+
+    return this;
+  }
+
+  /**
+   * @returns {PickType}
+   */
+  loose() {
+    this.data.validator.strict = false;
 
     return this;
   }

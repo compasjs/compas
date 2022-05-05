@@ -123,6 +123,24 @@ export function validateCodeGenObjectType(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenObjectType>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenOmitTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenOmitType>}
+ */
+export function validateCodeGenOmitType(
+  value: undefined | any | import("../common/types").CodeGenOmitTypeInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenOmitType>;
+/**
+ * @param {undefined|any|import("../common/types").CodeGenPickTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenPickType>}
+ */
+export function validateCodeGenPickType(
+  value: undefined | any | import("../common/types").CodeGenPickTypeInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenPickType>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenReferenceTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenReferenceType>}

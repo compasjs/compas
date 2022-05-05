@@ -76,6 +76,15 @@ export function stringifyType(type, includeSqlRelated = false) {
           ? type.relations.map((it) => stringifyType(it)).join(",")
           : "")
       );
+    case "omit":
+    case "pick":
+      return (
+        baseString +
+        type.keys.join(",") +
+        (type.reference.type === "reference"
+          ? type.reference.reference.uniqueName
+          : stringifyType(type.reference))
+      );
     case "reference":
       return baseString + type.reference.uniqueName;
     case "relation":

@@ -6,13 +6,13 @@ import { TypeCreator } from "@compas/code-gen";
 export function applyCodeGenStructure(app) {
   const T = new TypeCreator("codeGen");
 
-  const { baseTypes, extraTypes } = getTypes(T);
+  const { baseTypes, preProcessOnlyTypes, extraTypes } = getTypes(T);
 
   const namePart = T.string("namePart")
     .min(1)
     .pattern(/^[a-zA-Z]+$/g);
 
-  app.add(T.anyOf("type").values(...baseTypes));
+  app.add(T.anyOf("type").values(...baseTypes, ...preProcessOnlyTypes));
   app.add(...extraTypes);
   app.add(
     T.generic("structure")
@@ -473,6 +473,30 @@ function getTypes(T) {
       .loose(),
   });
 
+  const omitType = T.object("omitType").keys({
+    type: "omit",
+    ...typeBase,
+    validator: T.object()
+      .keys({
+        allowNull: T.bool().default(false),
+      })
+      .loose(),
+    keys: [T.string()],
+    reference: T.reference("codeGen", "type"),
+  });
+
+  const pickType = T.object("pickType").keys({
+    type: "pick",
+    ...typeBase,
+    validator: T.object()
+      .keys({
+        allowNull: T.bool().default(false),
+      })
+      .loose(),
+    keys: [T.string()],
+    reference: T.reference("codeGen", "type"),
+  });
+
   return {
     baseTypes: [
       anyType,
@@ -489,6 +513,7 @@ function getTypes(T) {
       uuidType,
       routeType,
     ].map((it) => it.loose()),
+    preProcessOnlyTypes: [omitType, pickType].map((it) => it.loose()),
     extraTypes: [relationType, routeInvalidationType].map((it) => it.loose()),
   };
 }

@@ -29,7 +29,9 @@ export type CodeGenType =
   | CodeGenReferenceType
   | CodeGenStringType
   | CodeGenUuidType
-  | CodeGenRouteType;
+  | CodeGenRouteType
+  | CodeGenOmitType
+  | CodeGenPickType;
 export type CodeGenAnyType = {
   type: "any";
   docString: string;
@@ -256,9 +258,9 @@ export type CodeGenReferenceType = {
   reference:
     | CodeGenType
     | {
-        uniqueName?: undefined | string;
         group?: undefined | string;
         name?: undefined | string;
+        uniqueName?: undefined | string;
       };
 };
 export type CodeGenStringType = {
@@ -338,6 +340,38 @@ export type CodeGenRouteInvalidationType = {
       query: { [key: string]: string[] };
     };
   };
+};
+export type CodeGenOmitType = {
+  type: "omit";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: { allowNull: boolean };
+  internalSettings: {};
+  keys: string[];
+  reference: CodeGenType;
+};
+export type CodeGenPickType = {
+  type: "pick";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: { allowNull: boolean };
+  internalSettings: {};
+  keys: string[];
+  reference: CodeGenType;
 };
 export type CodeGenCollectableError =
   | { key: "structureReservedGroupName"; groupName: string }
@@ -445,7 +479,9 @@ export type CodeGenTypeInput =
   | import("./../common/types").CodeGenReferenceTypeInput
   | import("./../common/types").CodeGenStringTypeInput
   | import("./../common/types").CodeGenUuidTypeInput
-  | import("./../common/types").CodeGenRouteTypeInput;
+  | import("./../common/types").CodeGenRouteTypeInput
+  | import("./../common/types").CodeGenOmitTypeInput
+  | import("./../common/types").CodeGenPickTypeInput;
 export type CodeGenAnyTypeInput = {
   type: "any";
   docString?: undefined | string;
@@ -710,9 +746,9 @@ export type CodeGenReferenceTypeInput = {
   reference:
     | import("./../common/types").CodeGenTypeInput
     | {
-        uniqueName?: undefined | string;
         group?: undefined | string;
         name?: undefined | string;
+        uniqueName?: undefined | string;
       };
 };
 export type CodeGenStringTypeInput = {
@@ -810,6 +846,46 @@ export type CodeGenRouteInvalidationTypeInput = {
           query?: undefined | { [key: string]: string[] };
         };
   };
+};
+export type CodeGenOmitTypeInput = {
+  type: "omit";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: { allowNull?: undefined | boolean };
+  internalSettings?: undefined | {};
+  keys: string[];
+  reference: import("./../common/types").CodeGenTypeInput;
+};
+export type CodeGenPickTypeInput = {
+  type: "pick";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator: { allowNull?: undefined | boolean };
+  internalSettings?: undefined | {};
+  keys: string[];
+  reference: import("./../common/types").CodeGenTypeInput;
 };
 export type CodeGenCollectableErrorInput = CodeGenCollectableError;
 export type CodeGenContextInput = {

@@ -45,6 +45,10 @@ export function recursivelyRemoveInternalFields(structure, value) {
         recursivelyRemoveInternalFields(undefined, item);
       }
       break;
+    case "omit":
+    case "pick":
+      recursivelyRemoveInternalFields(undefined, value.reference);
+      break;
     case "reference":
       if (value.reference?.type) {
         recursivelyRemoveInternalFields(undefined, value.reference);

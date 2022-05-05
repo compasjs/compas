@@ -3,16 +3,15 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { isNil, pathJoin } from "@compas/stdlib";
 import { copyAndSort } from "../generate.js";
+import { preprocessorsExecute } from "../preprocessors/index.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
-import { formatDocStringsOfTypes } from "./comments.js";
 import { generateCommonFiles } from "./common.js";
 import { exitOnErrorsOrReturn } from "./errors.js";
 import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { processRouteInvalidations } from "./router/invalidations.js";
-import { addFieldsOfRelations } from "./sql/add-fields.js";
 import { generateModelFiles } from "./sql/models.js";
 import { createOrderByTypes } from "./sql/order-by-type.js";
 import { createPartialTypes } from "./sql/partial-type.js";
@@ -91,8 +90,8 @@ export function generate(logger, options, structure) {
     // Linkup all references, so we don't necessarily have to worry about them in all
     // other places.
     linkupReferencesInStructure(context);
-    addFieldsOfRelations(context);
-    formatDocStringsOfTypes(context);
+
+    preprocessorsExecute(context);
 
     exitOnErrorsOrReturn(context);
 

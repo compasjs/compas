@@ -54,6 +54,10 @@ function recursivelyLinkupReferences(context, item) {
         recursivelyLinkupReferences(context, item.relations[i]);
       }
       break;
+    case "omit":
+    case "pick":
+      recursivelyLinkupReferences(context, item.reference);
+      break;
     case "reference": {
       let nestedRef = item.reference;
       while (nestedRef.reference && nestedRef.type === "reference") {

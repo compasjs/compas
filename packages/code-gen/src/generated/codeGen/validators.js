@@ -9,6 +9,7 @@ import {
   anonymousValidator1390215584,
   anonymousValidator1413365072,
   anonymousValidator1441913722,
+  anonymousValidator1474724230,
   anonymousValidator1519740867,
   anonymousValidator1664519436,
   anonymousValidator1672152398,
@@ -22,6 +23,7 @@ import {
   anonymousValidator224332322,
   anonymousValidator243901689,
   anonymousValidator508679687,
+  anonymousValidator512566754,
   anonymousValidator682118687,
   anonymousValidator682551261,
   anonymousValidator980814292,
@@ -367,6 +369,58 @@ export function validateCodeGenObjectType(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").CodeGenObjectType}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").CodeGenOmitTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenOmitType>}
+ */
+export function validateCodeGenOmitType(value, propertyPath = "$") {
+  const result = anonymousValidator1474724230(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").CodeGenOmitType}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").CodeGenPickTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenPickType>}
+ */
+export function validateCodeGenPickType(value, propertyPath = "$") {
+  const result = anonymousValidator512566754(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").CodeGenPickType}} */
   return { value: result.value };
 }
 /**
