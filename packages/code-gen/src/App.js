@@ -10,11 +10,7 @@ import {
 import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import { generateTypes } from "./generate-types.js";
-import {
-  addGroupsToGeneratorInput,
-  addToData,
-  hoistNamedItems,
-} from "./generate.js";
+import { addGroupsToGeneratorInput } from "./generate.js";
 import {
   validateCodeGenNamePart,
   validateCodeGenStructure,
@@ -25,6 +21,8 @@ import { generateOpenApi } from "./generator/openAPI/index.js";
 import { getInternalRoutes } from "./generator/router/index.js";
 import { recursivelyRemoveInternalFields } from "./internal.js";
 import { loadFromOpenAPISpec } from "./loaders.js";
+import { structureAddType } from "./structure/structureAddType.js";
+import { structureHoistNamedItems } from "./structure/structureHoistNamedItems.js";
 import { lowerCaseFirst } from "./utils.js";
 
 /**
@@ -370,7 +368,7 @@ export class App {
 
     this.processData();
 
-    hoistNamedItems(this.data, this.data);
+    structureHoistNamedItems(this.data);
 
     // Make sure to do the same case conversion here as well as to not confuse the user.
     // Other than that we don't mutate this array.
@@ -486,7 +484,7 @@ export class App {
    * @param item
    */
   addToData(item) {
-    addToData(this.data, item);
+    structureAddType(this.data, item);
   }
 }
 

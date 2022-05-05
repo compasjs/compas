@@ -3,7 +3,7 @@
 import { isNil } from "@compas/stdlib";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { TypeCreator } from "../../builders/TypeCreator.js";
-import { addToData } from "../../generate.js";
+import { structureAddType } from "../../structure/structureAddType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { formatDocString } from "../comments.js";
 import { js } from "../tag/tag.js";
@@ -69,7 +69,7 @@ export function createQueryBuilderTypes(context) {
       })
       .build();
 
-    addToData(context.structure, queryBuilderType);
+    structureAddType(context.structure, queryBuilderType);
 
     // Link reference manually
     queryBuilderType.keys.where.reference =
@@ -188,51 +188,50 @@ function queryBuilderForType(context, imports, type) {
   });
 
   return js`
-      ${dumpQueryBuilderSpec(context, imports, type)}
+    ${dumpQueryBuilderSpec(context, imports, type)}
 
-      /**
-       * Query Builder for ${type.name}
-       ${formatDocString(type.docString, { format: "jsdoc", indentSize: 7 })}
-       *
-       * @param {${type.queryBuilder.type}} [builder={}]
-       * @returns {{
-       *  then: () => void,
-       *  exec: (sql: Postgres) => Promise<QueryResult${type.uniqueName}[]>,
-       *  execRaw: (sql: Postgres) => Promise<any[]>,
-       *  queryPart: QueryPart<any>,
-       * }}
-       */
-      export function query${upperCaseFirst(type.name)}(builder = {}) {
-         const builderValidated = validate${
-           type.uniqueName
-         }QueryBuilder(builder, "$.${type.name}Builder");
-         
-         if (builderValidated.error){ 
-           throw builderValidated.error;
-         }
-         builder = builderValidated.value;
+    /**
+     * Query Builder for ${type.name}
+     ${formatDocString(type.docString, { format: "jsdoc", indentSize: 7 })}
+     *
+     * @param {${type.queryBuilder.type}} [builder={}]
+     * @returns {{
+     *  then: () => void,
+     *  exec: (sql: Postgres) => Promise<QueryResult${type.uniqueName}[]>,
+     *  execRaw: (sql: Postgres) => Promise<any[]>,
+     *  queryPart: QueryPart<any>,
+     * }}
+     */
+    export function query${upperCaseFirst(type.name)}(builder = {}) {
+      const builderValidated = validate${type.uniqueName}QueryBuilder(
+        builder, "$.${type.name}Builder");
 
-         const qb = generatedQueryBuilderHelper(${
-           type.name
-         }QueryBuilderSpec, builder, {});
-
-         return {
-            then: () => {
-               throw AppError.serverError({
-                                             message: "Awaited 'query${upperCaseFirst(
-                                               type.name,
-                                             )}' directly. Please use '.exec' or '.execRaw'."
-                                          });
-            }, execRaw: async (sql) => await qb.exec(sql), exec: async (sql) => {
-               const result = await qb.exec(sql);
-               transform${upperCaseFirst(type.name)}(result, builder);
-               return result;
-            }, get queryPart() {
-               return qb;
-            }
-         };
+      if (builderValidated.error) {
+        throw builderValidated.error;
       }
-   `;
+      builder = builderValidated.value;
+
+      const qb = generatedQueryBuilderHelper(${
+        type.name
+      }QueryBuilderSpec, builder, {});
+
+      return {
+        then: () => {
+          throw AppError.serverError({
+                                       message: "Awaited 'query${upperCaseFirst(
+                                         type.name,
+                                       )}' directly. Please use '.exec' or '.execRaw'."
+                                     });
+        }, execRaw: async (sql) => await qb.exec(sql), exec: async (sql) => {
+          const result = await qb.exec(sql);
+          transform${upperCaseFirst(type.name)}(result, builder);
+          return result;
+        }, get queryPart() {
+          return qb;
+        }
+      };
+    }
+  `;
 }
 
 /**
@@ -345,29 +344,29 @@ function transformerForType(context, imports, type) {
   }
 
   return js`
-      /**
-       * NOTE: At the moment only intended for internal use by the generated queries!
-       *
-       * Transform results from the query builder that adhere to the known structure
-       * of '${type.name}' and its relations.
-       *
-       * @param {any[]} values
-       * @param {${type.uniqueName}QueryBuilder} [builder={}]
-       */
-      export function transform${upperCaseFirst(
-        type.name,
-      )}(values, builder = {}) {
-         for (let i = 0; i < values.length; ++i) {
-            let value = values[i];
-            if (isPlainObject(value.result) && Object.keys(value).length === 1) {
-               values[i] = value.result;
-               value = value.result;
-            }
+    /**
+     * NOTE: At the moment only intended for internal use by the generated queries!
+     *
+     * Transform results from the query builder that adhere to the known structure
+     * of '${type.name}' and its relations.
+     *
+     * @param {any[]} values
+     * @param {${type.uniqueName}QueryBuilder} [builder={}]
+     */
+    export function transform${upperCaseFirst(
+      type.name,
+    )}(values, builder = {}) {
+      for (let i = 0; i < values.length; ++i) {
+        let value = values[i];
+        if (isPlainObject(value.result) && Object.keys(value).length === 1) {
+          values[i] = value.result;
+          value = value.result;
+        }
 
-            ${partials}
-         }
+        ${partials}
       }
-   `;
+    }
+  `;
 }
 
 /**
@@ -418,12 +417,12 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       );
       if (subPartials.length > 0) {
         partials.push(js`
-               if (Array.isArray(${path})) {
-                  for (let idx${depth} = 0; idx${depth} < ${path}.length; idx${depth}++) {
-                     ${subPartials}
-                  }
-               }
-            `);
+          if (Array.isArray(${path})) {
+            for (let idx${depth} = 0; idx${depth} < ${path}.length; idx${depth}++) {
+              ${subPartials}
+            }
+          }
+        `);
       }
       break;
     }
@@ -447,12 +446,12 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       );
       if (subPartials.length > 0) {
         partials.push(js`
-               if (isPlainObject(${path})) {
-                  for (const key${depth} of Object.keys(${path})) {
-                     ${subPartials}
-                  }
-               }
-            `);
+          if (isPlainObject(${path})) {
+            for (const key${depth} of Object.keys(${path})) {
+              ${subPartials}
+            }
+          }
+        `);
       }
       break;
     }
@@ -469,10 +468,10 @@ function traverseTypeForTransformer(type, path, partials, depth, stack) {
       }
       if (subPartials.length > 0) {
         partials.push(js`
-               if (isPlainObject(${path})) {
-                  ${subPartials}
-               }
-            `);
+          if (isPlainObject(${path})) {
+            ${subPartials}
+          }
+        `);
       }
 
       break;

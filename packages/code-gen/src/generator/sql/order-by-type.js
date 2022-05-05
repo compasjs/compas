@@ -7,7 +7,7 @@ import { ArrayType } from "../../builders/ArrayType.js";
 import { ObjectType } from "../../builders/ObjectType.js";
 import { ReferenceType } from "../../builders/ReferenceType.js";
 import { StringType } from "../../builders/StringType.js";
-import { addToData } from "../../generate.js";
+import { structureAddType } from "../../structure/structureAddType.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
 import { getPrimaryKeyWithType, getQueryEnabledObjects } from "./utils.js";
@@ -40,8 +40,8 @@ export function createOrderByTypes(context) {
     .optional()
     .build();
 
-  addToData(context.structure, orderByType);
-  addToData(context.structure, orderByOptionalField);
+  structureAddType(context.structure, orderByType);
+  structureAddType(context.structure, orderByOptionalField);
 
   for (const type of getQueryEnabledObjects(context)) {
     const fields = getSearchableFields(type);
@@ -110,8 +110,8 @@ export function createOrderByTypes(context) {
       });
     }
 
-    addToData(context.structure, orderByType);
-    addToData(context.structure, orderBySpecType);
+    structureAddType(context.structure, orderByType);
+    structureAddType(context.structure, orderBySpecType);
 
     type.orderBy = {
       type: getTypeNameForType(context, orderByType, "", {

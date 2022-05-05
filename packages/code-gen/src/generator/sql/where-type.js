@@ -10,7 +10,7 @@ import {
   ObjectType,
 } from "../../builders/index.js";
 import { ReferenceType } from "../../builders/ReferenceType.js";
-import { addToData } from "../../generate.js";
+import { structureAddType } from "../../structure/structureAddType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
@@ -138,7 +138,7 @@ export function createWhereTypes(context) {
       }
     }
 
-    addToData(context.structure, whereType);
+    structureAddType(context.structure, whereType);
 
     type.where = {
       type: "",
