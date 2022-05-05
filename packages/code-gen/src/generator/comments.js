@@ -1,5 +1,5 @@
 import { AppError } from "@compas/stdlib";
-import { traverseStructure } from "./structure-traverser.js";
+import { structureTraverseDepthFirst } from "../structure/structureTraverseDepthFirst.js";
 
 /**
  * Escape special chars and normalize indentation.
@@ -7,10 +7,12 @@ import { traverseStructure } from "./structure-traverser.js";
  * @param {import("../generated/common/types.js").CodeGenContext} context
  */
 export function formatDocStringsOfTypes(context) {
-  traverseStructure(context.structure, (type) => {
-    const src = (type.docString ?? "").replace(/([*\\])/gm, (v) => `\\${v}`);
+  structureTraverseDepthFirst(context.structure, (type) => {
+    if ("docString" in type && type.docString) {
+      const src = (type.docString ?? "").replace(/([*\\])/gm, (v) => `\\${v}`);
 
-    type.docString = normalizeIndentationAndTrim(src);
+      type.docString = normalizeIndentationAndTrim(src);
+    }
   });
 }
 
