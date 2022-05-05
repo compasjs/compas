@@ -330,7 +330,7 @@ async function getStructure(logger, codeGen, structureFile) {
   };
 
   try {
-    codeGen.linkupReferencesInStructure(context);
+    codeGen.preprocessorsExecute(context.structure);
     codeGen.addFieldsOfRelations(context);
     codeGen.doSqlChecks(context);
     codeGen.exitOnErrorsOrReturn(context);

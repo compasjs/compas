@@ -3,7 +3,6 @@ import { pathToFileURL } from "url";
 import { isPlainObject, uuid } from "@compas/stdlib";
 import { addGroupsToGeneratorInput } from "../../generate.js";
 import { preprocessorsExecute } from "../../preprocessors/index.js";
-import { linkupReferencesInStructure } from "../linkup-references.js";
 import { generateOpenApiFile } from "./generator.js";
 
 /**
@@ -107,10 +106,6 @@ export async function generateOpenApi(logger, options) {
     structure,
     options.enabledGroups,
   );
-
-  // resolve references within structure
-  // @ts-ignore
-  linkupReferencesInStructure({ structure });
 
   // @ts-expect-error
   preprocessorsExecute({ structure, errors: [] });
