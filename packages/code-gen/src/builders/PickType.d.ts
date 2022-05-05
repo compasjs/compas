@@ -1,25 +1,26 @@
 export class PickType extends TypeBuilder {
   static baseData: {
     keys: never[];
+    validator: {
+      strict: boolean;
+    };
   };
   constructor(group: any, name: any);
-  build(): any;
+  internalReference: any;
   /**
-   * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
+   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {PickType}
    */
-  object(
-    builder:
-      | ObjectType
-      | Record<string, import("../../types/advanced-types").TypeBuilderLike>,
-  ): PickType;
-  builder: ObjectType | Record<string, any> | undefined;
+  object(builder: any): PickType;
   /**
    * @param {...string} keys
    * @returns {PickType}
    */
   keys(...keys: string[]): PickType;
+  /**
+   * @returns {PickType}
+   */
+  loose(): PickType;
 }
 import { TypeBuilder } from "./TypeBuilder.js";
-import { ObjectType } from "./ObjectType.js";
 //# sourceMappingURL=PickType.d.ts.map

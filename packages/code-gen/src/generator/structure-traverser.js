@@ -77,6 +77,10 @@ export function traverseStructure(structure, callback) {
           stackPushSkipRefs(v);
         }
         break;
+      case "omit":
+      case "pick":
+        stackPushSkipRefs(item.reference);
+        break;
     }
   }
 }
@@ -156,6 +160,10 @@ export function traverseType(structure, type, callback) {
         for (const v of Object.values(item.keys)) {
           stackPushSkipHandled(v);
         }
+        break;
+      case "omit":
+      case "pick":
+        stackPushSkipHandled(item.reference);
         break;
     }
   }

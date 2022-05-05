@@ -1,46 +1,33 @@
-import { isNil, isPlainObject } from "@compas/stdlib";
-import { ObjectType } from "./ObjectType.js";
+import { AppError, isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
 export class OmitType extends TypeBuilder {
   static baseData = {
     keys: [],
+    validator: {
+      strict: true,
+    },
   };
 
   build() {
-    if (isNil(this.builder)) {
-      // Force an error
-      // @ts-ignore
-      this.object(undefined);
+    const result = super.build();
+
+    if (isNil(this.internalReference)) {
+      throw AppError.serverError({
+        message: `T.omit() should have a valid 'T.omit().object()`,
+      });
     }
 
-    const buildResult = buildOrInfer(this.builder);
+    result.reference = buildOrInfer(this.internalReference);
 
-    if (isNil(this.data.name) && !isNil(buildResult.name)) {
-      this.data.name = `${buildResult.name}Omit`;
-    }
-
-    const thisResult = super.build();
-
-    // Overwrite name, even if it may be undefined
-    buildResult.uniqueName = thisResult.uniqueName;
-    buildResult.group = thisResult.group;
-    buildResult.name = thisResult.name;
-
-    // also copy over default value, as that is most likely the expected behaviour
-    buildResult.defaultValue =
-      thisResult.defaultValue ?? buildResult.defaultValue;
-
-    for (const key of thisResult.keys) {
-      delete buildResult.keys[key];
-    }
-
-    return buildResult;
+    return result;
   }
 
   constructor(group, name) {
     super("omit", group, name);
+
+    this.internalReference = undefined;
 
     this.data = {
       ...this.data,
@@ -49,20 +36,11 @@ export class OmitType extends TypeBuilder {
   }
 
   /**
-   * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
+   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {OmitType}
    */
   object(builder) {
-    if (
-      isNil(builder) ||
-      (!(builder instanceof ObjectType) && !isPlainObject(builder))
-    ) {
-      throw new TypeError(
-        `T.omit() expects a ObjectType or plain Javascript object as the first argument`,
-      );
-    }
-
-    this.builder = builder;
+    this.internalReference = builder;
 
     return this;
   }
@@ -73,6 +51,15 @@ export class OmitType extends TypeBuilder {
    */
   keys(...keys) {
     this.data.keys.push(...keys);
+
+    return this;
+  }
+
+  /**
+   * @returns {OmitType}
+   */
+  loose() {
+    this.data.validator.strict = false;
 
     return this;
   }

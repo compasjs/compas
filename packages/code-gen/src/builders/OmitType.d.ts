@@ -1,25 +1,26 @@
 export class OmitType extends TypeBuilder {
   static baseData: {
     keys: never[];
+    validator: {
+      strict: boolean;
+    };
   };
   constructor(group: any, name: any);
-  build(): any;
+  internalReference: any;
   /**
-   * @param {ObjectType|Record<string, import("../../types/advanced-types").TypeBuilderLike>} builder
+   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {OmitType}
    */
-  object(
-    builder:
-      | ObjectType
-      | Record<string, import("../../types/advanced-types").TypeBuilderLike>,
-  ): OmitType;
-  builder: ObjectType | Record<string, any> | undefined;
+  object(builder: any): OmitType;
   /**
    * @param {...string} keys
    * @returns {OmitType}
    */
   keys(...keys: string[]): OmitType;
+  /**
+   * @returns {OmitType}
+   */
+  loose(): OmitType;
 }
 import { TypeBuilder } from "./TypeBuilder.js";
-import { ObjectType } from "./ObjectType.js";
 //# sourceMappingURL=OmitType.d.ts.map
