@@ -8,7 +8,6 @@ import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
 import { generateCommonFiles } from "./common.js";
 import { exitOnErrorsOrReturn } from "./errors.js";
-import { linkupReferencesInStructure } from "./linkup-references.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { processRouteInvalidations } from "./router/invalidations.js";
@@ -87,10 +86,6 @@ export function generate(logger, options, structure) {
 
   // Don't execute any logic, we can just write the structure out only
   if (context.options.enabledGenerators.length > 0) {
-    // Linkup all references, so we don't necessarily have to worry about them in all
-    // other places.
-    linkupReferencesInStructure(context);
-
     preprocessorsExecute(context);
 
     exitOnErrorsOrReturn(context);

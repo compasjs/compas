@@ -75,6 +75,15 @@ function traverseAssignProcess(structure, callback, type, metadata) {
           type.keys[key],
         );
       }
+
+      for (let i = 0; i < type.relations.length; ++i) {
+        type.relations[i] = traverseAssignProcess(
+          structure,
+          callback,
+          type.relations[i],
+        );
+      }
+
       return callback(type, metadata);
 
     case "omit":
