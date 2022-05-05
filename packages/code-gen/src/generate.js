@@ -1,11 +1,11 @@
 // @ts-nocheck
 
 import { AppError, isNil, isPlainObject } from "@compas/stdlib";
-import { isNamedTypeBuilderLike, TypeBuilder } from "./builders/index.js";
-import { upperCaseFirst } from "./utils.js";
+import { structureAddType } from "./structure/structureAddType.js";
 
 /**
- * Provided that input is empty
+ * Provided that input is empty, copy over all enabled groups from structure,
+ * automatically include references of groups that are not enabled.
  *
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} structure
@@ -38,7 +38,7 @@ export function includeReferenceTypes(structure, input) {
 
       // ensure ref does not already exits
       if (!isNil(structure[group]?.[name]) && isNil(input[group]?.[name])) {
-        addToData(input, structure[group][name]);
+        structureAddType(input, structure[group][name]);
 
         // Note that we need the full referenced object here, since
         // currentObject.reference only contains { group, name, uniqueName }
@@ -84,106 +84,4 @@ export function copyAndSort(input, copy) {
       copy[group][name] = input[group][name];
     }
   }
-}
-
-/**
- * Add item to correct group and add uniqueName
- *
- * @param {CodeGenStructure} dataStructure
- * @param {CodeGenType} item
- */
-export function addToData(dataStructure, item) {
-  if (!item.group || !item.name || !item.type) {
-    throw new Error(
-      `Can't process item. Missing either group, name or type. Found: ${JSON.stringify(
-        item,
-      )}`,
-    );
-  }
-
-  if (!dataStructure[item.group]) {
-    dataStructure[item.group] = {};
-  }
-  dataStructure[item.group][item.name] = item;
-
-  item.uniqueName = upperCaseFirst(item.group) + upperCaseFirst(item.name);
-}
-
-/**
- * @param root
- * @param structure
- */
-export function hoistNamedItems(root, structure) {
-  const history = new Set();
-
-  for (const group of Object.values(structure)) {
-    for (const item of Object.values(group)) {
-      hoistNamedItemsRecursive(history, root, item);
-    }
-  }
-}
-
-/**
- * @param {Set} history
- * @param root
- * @param value
- */
-function hoistNamedItemsRecursive(history, root, value) {
-  if (isNil(value) || (!isPlainObject(value) && !Array.isArray(value))) {
-    // Skip primitives & null / undefined
-    return;
-  }
-
-  if (history.has(value)) {
-    return;
-  }
-
-  history.add(value);
-
-  if (isNamedTypeBuilderLike(value)) {
-    // Most likely valid output from TypeBuilder
-    // Just overwrite it
-    addToData(root, value);
-  }
-
-  if (isPlainObject(value)) {
-    if (value.type === "reference" && !isNil(value.reference.type)) {
-      // Skip's a linked reference so it's created infinitely nested by the followed loop
-      return;
-    }
-
-    for (const key of Object.keys(value)) {
-      hoistNamedItemsRecursive(history, root, value[key]);
-      if (isNamedTypeBuilderLike(value[key])) {
-        // value[key] got a uniqueName when called with addToData()
-        value[key] = {
-          ...TypeBuilder.getBaseData(),
-          type: "reference",
-          reference: {
-            group: value[key].group,
-            name: value[key].name,
-            uniqueName: value[key].uniqueName,
-          },
-        };
-      }
-    }
-  } else if (Array.isArray(value)) {
-    for (let i = 0; i < value.length; ++i) {
-      hoistNamedItemsRecursive(history, root, value[i]);
-      if (isNamedTypeBuilderLike(value[i])) {
-        // value[i] got a uniqueName when called with addToData()
-        value[i] = {
-          ...TypeBuilder.getBaseData(),
-          type: "reference",
-          reference: {
-            group: value[i].group,
-            name: value[i].name,
-            uniqueName: value[i].uniqueName,
-          },
-        };
-      }
-    }
-  }
-
-  history.delete(value);
 }

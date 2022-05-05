@@ -11,7 +11,7 @@ import {
   StringType,
 } from "../../builders/index.js";
 import { ReferenceType } from "../../builders/ReferenceType.js";
-import { addToData } from "../../generate.js";
+import { structureAddType } from "../../structure/structureAddType.js";
 import { upperCaseFirst } from "../../utils.js";
 import { js } from "../tag/index.js";
 import { getTypeNameForType } from "../types.js";
@@ -135,7 +135,7 @@ export function createUpdateTypes(context) {
       }
     }
 
-    addToData(context.structure, updatePartialType);
+    structureAddType(context.structure, updatePartialType);
 
     updateType.keys.update = new ReferenceType(
       type.group,
@@ -161,7 +161,7 @@ export function createUpdateTypes(context) {
       .optional()
       .build();
 
-    addToData(context.structure, updateType);
+    structureAddType(context.structure, updateType);
     type.partial = type.partial ?? {};
     type.partial.updateType = getTypeNameForType(context, updateType, "", {
       useDefaults: false,
@@ -178,7 +178,7 @@ export function createUpdateTypes(context) {
       )
       .build();
     updateFnType.uniqueName = `${type.uniqueName}UpdateFn`;
-    addToData(context.structure, updateFnType);
+    structureAddType(context.structure, updateFnType);
   }
 }
 

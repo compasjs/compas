@@ -1,5 +1,6 @@
 /**
- * Provided that input is empty
+ * Provided that input is empty, copy over all enabled groups from structure,
+ * automatically include references of groups that are not enabled.
  *
  * @param {CodeGenStructure} input
  * @param {CodeGenStructure} structure
@@ -33,19 +34,4 @@ export function copyAndSort(
   input: CodeGenStructure,
   copy: CodeGenStructure,
 ): void;
-/**
- * Add item to correct group and add uniqueName
- *
- * @param {CodeGenStructure} dataStructure
- * @param {CodeGenType} item
- */
-export function addToData(
-  dataStructure: CodeGenStructure,
-  item: CodeGenType,
-): void;
-/**
- * @param root
- * @param structure
- */
-export function hoistNamedItems(root: any, structure: any): void;
 //# sourceMappingURL=generate.d.ts.map

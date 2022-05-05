@@ -1,8 +1,8 @@
 import { formatDocStringsOfTypes } from "../generator/comments.js";
 import { addFieldsOfRelations } from "../generator/sql/add-fields.js";
+import { structureTraverserAssign } from "../structure/structureTraverseAssign.js";
 import { preprocessOmit } from "./omit.js";
 import { preprocessPick } from "./pick.js";
-import { traversePreprocessor } from "./traverser.js";
 
 /**
  * Call all preprocessors, removing internal only types and adding the 'real' types
@@ -11,7 +11,7 @@ import { traversePreprocessor } from "./traverser.js";
  * @param {import("../generated/common/types").CodeGenContext} context
  */
 export function preprocessorsExecute(context) {
-  traversePreprocessor(context.structure, (type) => {
+  structureTraverserAssign(context.structure, (type) => {
     let result = preprocessOmit(context.structure, type);
     result = preprocessPick(context.structure, result);
 

@@ -1,4 +1,5 @@
-import { addToData, includeReferenceTypes } from "../generate.js";
+import { includeReferenceTypes } from "../generate.js";
+import { structureAddType } from "../structure/structureAddType.js";
 import { js } from "./tag/index.js";
 
 /**
@@ -47,7 +48,7 @@ export function generateStructureFile(context) {
         if (type.type !== "route") {
           continue;
         }
-        addToData(apiStructure, type);
+        structureAddType(apiStructure, type);
       }
     }
 
