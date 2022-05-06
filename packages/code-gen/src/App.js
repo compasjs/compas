@@ -22,6 +22,7 @@ import { getInternalRoutes } from "./generator/router/index.js";
 import { loadFromOpenAPISpec } from "./loaders.js";
 import { structureAddType } from "./structure/structureAddType.js";
 import { structureHoistNamedItems } from "./structure/structureHoistNamedItems.js";
+import { structureIteratorNamedTypes } from "./structure/structureIterators.js";
 import { structureRemoveInternalFields } from "./structure/structureRemoveInternalFields.js";
 import { lowerCaseFirst } from "./utils.js";
 
@@ -457,10 +458,8 @@ export class App {
       structureRemoveInternalFields(rawStructure);
     }
 
-    for (const groupData of Object.values(rawStructure)) {
-      for (const item of Object.values(groupData)) {
-        this.addToData(item);
-      }
+    for (const type of structureIteratorNamedTypes(rawStructure)) {
+      this.addToData(type);
     }
 
     return this;

@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { isNil } from "@compas/stdlib";
+import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { upperCaseFirst } from "../utils.js";
 import { js } from "./tag/index.js";
 
@@ -50,16 +51,14 @@ export function setupMemoizedTypes(context) {
   }
 
   if (!context.options.isBrowser) {
-    for (const group of Object.values(context.structure)) {
-      for (const type of Object.values(group)) {
-        if (type.type === "route") {
-          continue;
-        }
-
-        getTypeNameForType(context, type, "", {
-          isTypeFile: true,
-        });
+    for (const type of structureIteratorNamedTypes(context.structure)) {
+      if (type.type === "route") {
+        continue;
       }
+
+      getTypeNameForType(context, type, "", {
+        isTypeFile: true,
+      });
     }
   }
 }
@@ -400,11 +399,9 @@ function getMemoizedNamedTypes(context) {
     context.options.declareGlobalTypes === false ? false : !useTypescript;
   const uniqueNameDocsMap = {};
 
-  for (const group of Object.values(context.structure)) {
-    for (const value of Object.values(group)) {
-      if (value.docString && value.docString.length > 0) {
-        uniqueNameDocsMap[upperCaseFirst(value.uniqueName)] = value.docString;
-      }
+  for (const value of structureIteratorNamedTypes(context.structure)) {
+    if (value.docString && value.docString.length > 0) {
+      uniqueNameDocsMap[upperCaseFirst(value.uniqueName)] = value.docString;
     }
   }
 

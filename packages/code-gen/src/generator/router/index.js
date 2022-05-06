@@ -2,6 +2,7 @@
 
 import { dirnameForModule, isNil, pathJoin } from "@compas/stdlib";
 import { AnyType, ObjectType, TypeCreator } from "../../builders/index.js";
+import { structureIteratorNamedTypes } from "../../structure/structureIterators.js";
 import { compileTemplateDirectory, executeTemplate } from "../../template.js";
 import { getTypeNameForType } from "../types.js";
 import { buildTrie } from "./trie.js";
@@ -157,12 +158,10 @@ export function getInternalRoutes(options) {
 function buildRouteTags(data) {
   const set = new Set();
 
-  for (const group of Object.values(data)) {
-    for (const item of Object.values(group)) {
-      if (item.type === "route") {
-        for (const t of item.tags) {
-          set.add(t);
-        }
+  for (const item of structureIteratorNamedTypes(data)) {
+    if (item.type === "route" && "tags" in item) {
+      for (const t of item.tags) {
+        set.add(t);
       }
     }
   }

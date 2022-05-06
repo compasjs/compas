@@ -1,3 +1,5 @@
+import { structureIteratorNamedTypes } from "../../structure/structureIterators.js";
+
 const RoutePrio = {
   STATIC: 0,
   PARAM: 1,
@@ -7,17 +9,15 @@ const RoutePrio = {
 export const buildTrie = (data) => {
   const routeTrieInput = [];
 
-  for (const group of Object.values(data)) {
-    for (const item of Object.values(group)) {
-      if (item.type === "route") {
-        const fullPath = item.path.endsWith("/")
-          ? `${item.path}${item.method}`
-          : `${item.path}/${item.method}`;
-        routeTrieInput.push({
-          uniqueName: item.uniqueName,
-          fullPath,
-        });
-      }
+  for (const item of structureIteratorNamedTypes(data)) {
+    if (item.type === "route" && "path" in item) {
+      const fullPath = item.path.endsWith("/")
+        ? `${item.path}${item.method}`
+        : `${item.path}/${item.method}`;
+      routeTrieInput.push({
+        uniqueName: item.uniqueName,
+        fullPath,
+      });
     }
   }
 

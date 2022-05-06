@@ -3,6 +3,7 @@ import { pathToFileURL } from "url";
 import { isPlainObject, uuid } from "@compas/stdlib";
 import { addGroupsToGeneratorInput } from "../../generate.js";
 import { preprocessorsExecute } from "../../preprocessors/index.js";
+import { structureIteratorNamedTypes } from "../../structure/structureIterators.js";
 import { generateOpenApiFile } from "./generator.js";
 
 /**
@@ -53,7 +54,7 @@ export async function generateOpenApi(logger, options) {
   );
 
   /**
-   * @type {import("../../generated/common/types").CodeGenContext}
+   * @type {import("../../generated/common/types").CodeGenStructure}
    */
   const structure = JSON.parse(compasApiStructureString);
   if (!isPlainObject(structure)) {
@@ -79,11 +80,12 @@ export async function generateOpenApi(logger, options) {
   const routeExtensionsUniqueNames = new Set(
     Object.keys(options?.openApiRouteExtensions ?? {}),
   );
-  for (const group of Object.values(structure)) {
-    for (const type of Object.values(group)) {
-      routeExtensionsUniqueNames.delete(type.uniqueName);
-    }
+
+  for (const type of structureIteratorNamedTypes(structure)) {
+    // @ts-expect-error
+    routeExtensionsUniqueNames.delete(type.uniqueName);
   }
+
   if (routeExtensionsUniqueNames.size > 0) {
     throw new Error(
       `RouteExtension(s) provided for non existing uniqueName: ${Array.from(

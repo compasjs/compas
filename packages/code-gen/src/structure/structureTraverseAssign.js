@@ -1,4 +1,4 @@
-import { structureNamedTypes } from "./structureNamedTypes.js";
+import { structureIteratorNamedTypes } from "./structureIterators.js";
 
 /**
  * Traverses the structure bottom up, calling callback for each type and assigning it
@@ -8,7 +8,7 @@ import { structureNamedTypes } from "./structureNamedTypes.js";
  *   import("./types.js").TraverseMetadata) => any} callback
  */
 export function structureTraverserAssign(structure, callback) {
-  for (const type of structureNamedTypes(structure)) {
+  for (const type of structureIteratorNamedTypes(structure)) {
     // @ts-expect-error
     structure[type.group][type.name] = traverseAssignProcess(
       structure,

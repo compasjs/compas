@@ -1,5 +1,6 @@
 import { includeReferenceTypes } from "../generate.js";
 import { structureAddType } from "../structure/structureAddType.js";
+import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { js } from "./tag/index.js";
 
 /**
@@ -43,13 +44,11 @@ export function generateStructureFile(context) {
     /** @type {import("../generated/common/types").CodeGenStructure} */
     const apiStructure = {};
     // Create a new structure object with all routes
-    for (const groupValues of Object.values(context.structure)) {
-      for (const type of Object.values(groupValues)) {
-        if (type.type !== "route") {
-          continue;
-        }
-        structureAddType(apiStructure, type);
+    for (const type of structureIteratorNamedTypes(context.structure)) {
+      if (type.type !== "route") {
+        continue;
       }
+      structureAddType(apiStructure, type);
     }
 
     // Include recursive references that are used in route types

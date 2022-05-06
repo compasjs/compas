@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { isNil } from "@compas/stdlib";
+import { structureIteratorNamedTypes } from "../../structure/structureIterators.js";
 import { traverseType } from "../structure-traverser.js";
 import { atomicUpdateFieldsTable } from "./update-type.js";
 
@@ -47,19 +48,9 @@ export function addShortNamesToQueryEnabledObjects(context) {
  * @returns {CodeGenObjectType[]}
  */
 export function getQueryEnabledObjects(context) {
-  const result = [];
-
-  for (const group of Object.values(context.structure)) {
-    for (const type of Object.values(group)) {
-      if (type.type !== "object" || !type.enableQueries) {
-        continue;
-      }
-
-      result.push(type);
-    }
-  }
-
-  return result;
+  return structureIteratorNamedTypes(context.structure).filter(
+    (it) => it.type === "object" && "enableQueries" in it && it.enableQueries,
+  );
 }
 
 /**

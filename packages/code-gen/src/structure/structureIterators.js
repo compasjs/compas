@@ -4,7 +4,7 @@
  * @param {import("../generated/common/types.js").CodeGenStructure} structure
  * @returns {import("../generated/common/types.js").CodeGenType[]}
  */
-export function structureNamedTypes(structure) {
+export function structureIteratorNamedTypes(structure) {
   const result = [];
 
   for (const group of Object.values(structure)) {

@@ -1,4 +1,5 @@
 import { isNil } from "@compas/stdlib";
+import { structureIteratorNamedTypes } from "../../structure/structureIterators.js";
 
 /**
  * Validate all route invalidation specifications and work out usage of shared params and
@@ -7,19 +8,17 @@ import { isNil } from "@compas/stdlib";
  * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function processRouteInvalidations(context) {
-  for (const group of Object.keys(context.structure)) {
-    for (const key of Object.keys(context.structure[group])) {
-      /** @type {import("../../generated/common/types").CodeGenRouteType} */
-      // @ts-ignore
-      const route = context.structure[group][key];
+  for (const route of structureIteratorNamedTypes(context.structure)) {
+    if (
+      route.type !== "route" ||
+      !("invalidations" in route) ||
+      route.invalidations.length === 0
+    ) {
+      continue;
+    }
 
-      if (route.type !== "route" || route.invalidations.length === 0) {
-        continue;
-      }
-
-      for (const invalidation of route.invalidations) {
-        processInvalidation(context, route, invalidation);
-      }
+    for (const invalidation of route.invalidations) {
+      processInvalidation(context, route, invalidation);
     }
   }
 }

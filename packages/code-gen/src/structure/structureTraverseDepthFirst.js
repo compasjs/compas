@@ -1,4 +1,4 @@
-import { structureNamedTypes } from "./structureNamedTypes.js";
+import { structureIteratorNamedTypes } from "./structureIterators.js";
 
 /**
  * Traverse the structure depth first, executing the callback for each type.
@@ -8,7 +8,7 @@ import { structureNamedTypes } from "./structureNamedTypes.js";
  *  import("./types.js").TraverseMetadata) => any} callback
  */
 export function structureTraverseDepthFirst(structureOrType, callback) {
-  for (const type of structureNamedTypes(structureOrType)) {
+  for (const type of structureIteratorNamedTypes(structureOrType)) {
     traverseDepthFirstProcess(structureOrType, callback, type, {
       isNamedType: true,
     });
