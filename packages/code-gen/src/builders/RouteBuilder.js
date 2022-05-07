@@ -1,6 +1,6 @@
 import { AppError, isNil } from "@compas/stdlib";
 import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
-import { lowerCaseFirst } from "../utils.js";
+import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
 import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
@@ -179,6 +179,20 @@ export class RouteBuilder extends TypeBuilder {
 
     const pathParamKeys = collectPathParams(result.path);
 
+    if (new Set(pathParamKeys).size !== pathParamKeys.length) {
+      const set = new Set(pathParamKeys);
+      for (const pathParam of pathParamKeys) {
+        if (!set.has(pathParam)) {
+          throw AppError.serverError({
+            message: `Route ${upperCaseFirst(result.group)}${upperCaseFirst(
+              result.name,
+            )} has defined ':${pathParam}' multiple times. Remove or rename one of the occurrences.`,
+          });
+        }
+        set.delete(pathParam);
+      }
+    }
+
     if (this.paramsBuilder || pathParamKeys.length > 0) {
       const paramsResult = this.paramsBuilder
         ? buildOrInfer(this.paramsBuilder)
@@ -188,23 +202,31 @@ export class RouteBuilder extends TypeBuilder {
 
       for (const param of pathParamKeys) {
         if (isNil(paramsResult.keys?.[param])) {
-          throw new Error(
-            `Route ${result.group}->${result.name} is missing a type definition for '${param}' parameter.`,
-          );
+          throw AppError.serverError({
+            message: `Route ${upperCaseFirst(result.group)}${upperCaseFirst(
+              result.name,
+            )} is missing a type definition for '${param}' parameter.`,
+          });
         }
 
         if (paramsResult.keys[param].isOptional) {
-          throw new Error(
-            `Route ${result.group}->${result.name} is using an optional value for the '${param}' parameter. This is not supported.`,
-          );
+          throw AppError.serverError({
+            message: `Route ${upperCaseFirst(result.group)}${upperCaseFirst(
+              result.name,
+            )} is using an optional value for the '${param}' parameter. This is not supported.`,
+          });
         }
       }
 
       for (const key of Object.keys(paramsResult.keys ?? {})) {
         if (pathParamKeys.indexOf(key) === -1) {
-          throw new Error(
-            `Route ${result.group}->${result.name} has type definition for '${key}' but is not found in the path: ${result.path}`,
-          );
+          throw AppError.serverError({
+            message: `Route ${upperCaseFirst(result.group)}${upperCaseFirst(
+              result.name,
+            )} has type definition for '${key}' but is not found in the path: ${
+              result.path
+            }`,
+          });
         }
       }
 
