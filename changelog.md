@@ -4,6 +4,131 @@ editLink: false
 
 # Changelog
 
+### [v0.0.197](https://github.com/compasjs/compas/releases/tag/v0.0.197)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.9 to 7.17.10
+  ([#1780](https://github.com/compasjs/compas/pull/1780))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/formidable from 2.0.4 to 2.0.5
+  ([#1784](https://github.com/compasjs/compas/pull/1784))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @types/node from 17.0.25 to 17.0.31
+  ([#1754](https://github.com/compasjs/compas/pull/1754) ,
+  [#1762](https://github.com/compasjs/compas/pull/1762),
+  [#1768](https://github.com/compasjs/compas/pull/1768) ,
+  [#1774](https://github.com/compasjs/compas/pull/1774),
+  [#1782](https://github.com/compasjs/compas/pull/1782))
+- build(deps): bump cron-parser from 4.3.0 to 4.4.0
+  ([#1781](https://github.com/compasjs/compas/pull/1781))
+- build(deps): bump eslint from 8.13.0 to 8.15.0
+  ([#1753](https://github.com/compasjs/compas/pull/1753) ,
+  [#1794](https://github.com/compasjs/compas/pull/1794))
+- build(deps): bump eslint-plugin-jsdoc from 39.2.7 to 39.2.9
+  ([#1751](https://github.com/compasjs/compas/pull/1751) ,
+  [#1759](https://github.com/compasjs/compas/pull/1759))
+- build(deps): bump github/codeql-action from 1 to 2
+  ([#1763](https://github.com/compasjs/compas/pull/1763))
+- build(deps): bump minio from 7.0.26 to 7.0.28
+  ([#1760](https://github.com/compasjs/compas/pull/1760))
+- build(deps): bump pino from 7.10.0 to 7.11.0
+  ([#1766](https://github.com/compasjs/compas/pull/1766))
+- build(deps): bump postgres from 2.0.0-beta.11 to 3.1.0
+  ([#1750](https://github.com/compasjs/compas/pull/1750))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump recast from 0.20.5 to 0.21.1
+  ([#1772](https://github.com/compasjs/compas/pull/1772))
+- chore: migrate from Yarn to NPM workspaces
+  ([#1779](https://github.com/compasjs/compas/pull/1779))
+- chore: support Node.js 18
+  ([#1778](https://github.com/compasjs/compas/pull/1778))
+- chore: update author + contributor fields
+- chore(code-gen): refactor internal structure helpers
+  ([#1789](https://github.com/compasjs/compas/pull/1789)
+  ,[#1790](https://github.com/compasjs/compas/pull/1790),[#1791](https://github.com/compasjs/compas/pull/1791))
+- chore(code-gen): skip generating empty type for defined routes
+- feat(code-gen): add explicit error for empty `T.string().oneOf()` values
+  ([#1773](https://github.com/compasjs/compas/pull/1773))
+  - Closes [#1755](https://github.com/compasjs/compas/pull/1755)
+- feat(code-gen): explicit error on invalid group and type names
+  ([#1787](https://github.com/compasjs/compas/pull/1787))
+- feat(code-gen): hard error on duplicate route param
+  ([#1796](https://github.com/compasjs/compas/pull/1796))
+  - Closes [#1792](https://github.com/compasjs/compas/pull/1792)
+- feat(code-gen): only report first error in 'anyOf' validators
+  ([#1770](https://github.com/compasjs/compas/pull/1770))
+  - Closes [#1756](https://github.com/compasjs/compas/pull/1756)
+- feat(code-gen): support references in `T.pick` and `T.omit`
+  ([#1788](https://github.com/compasjs/compas/pull/1788))
+- feat(server): remove `leakError` support
+  ([#1769](https://github.com/compasjs/compas/pull/1769))
+  - Closes [#1757](https://github.com/compasjs/compas/pull/1757)
+- feat(stdlib): support `COMPAS_LOG_PRINTER` env variable to select a log
+  printer ([#1785](https://github.com/compasjs/compas/pull/1785))
+- feat(store): refactor job queue worker
+  ([#1776](https://github.com/compasjs/compas/pull/1776))
+  - Closes [#1095](https://github.com/compasjs/compas/pull/1095)
+  - Closes [#1704](https://github.com/compasjs/compas/pull/1704)
+- fix(docs): fix syntax error in initial migration
+
+##### Breaking changes
+
+- **deps**: bump postgres from 2.0.0-beta.11 to 3.1.0
+  - Major version bump
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- **all**: support Node.js 18
+  - `POSTGRES_HOST` and `MINIO_URI` should use `127.0.0.1` instead of
+    `localhost` when using Node.js 18+
+  - Axios will use the global `FormData`, resulting in a one time process
+    warning which is automatically logged as an error. Since Axios also includes
+    its own `form-data` package for older Node.js versions, you can remove the
+    explicit the dependency on it.
+- **code-gen**: move comment formatter and internal field remove to structure
+  helpers
+  - `type` is now a reserved group name
+- **code-gen**: support references in `T.pick` and `T.omit`
+  - `T.omit()` and `T.pick()` now only copy or remove object keys and further
+    use their own options for things like `.optional()`, `.default()` and
+    `.loose()`
+- **server**: remove `leakError` support
+  - The `stack` and `cause` properties are never sent to the client.
+  - Error responses should have a `requestId` property, referencing to the logs
+    for the `stack` and `cause` properties.
+- **store**: refactor job queue worker
+  - All of `addJobToQueue`, `addEventToQueue` and
+    `addJobWithCustomTimeoutToQueue` are replaced with
+    [queueWorkerAddJob](https://compasjs.com/features/background-jobs.html#queueWorkerAddJob)
+  - `new JobQueueWorker()` including the `start` & `stop` methods are replaced
+    by
+    [queueWorkerCreate](https://compasjs.com/features/background-jobs.html#queueWorkerCreate)
+  - `JobQueueWorker#clean` no longer exists, see
+    [jobQueueCleanup](https://compasjs.com/features/background-jobs.html#jobqueuecleanup)
+    for a replacement
+  - `JobQueueWorker#pendingQueueSize` no longer exists, see
+    [jobQueueInsights](https://compasjs.com/features/background-jobs.html#jobqueueinsights)
+  - `addRecurringJobToQueue` is removed, and replaced with cron based scheduler,
+    see
+    [queueWorkerRegisterCronJobs](https://compasjs.com/features/background-jobs.html#queueworkerregistercronjobs)
+  - Remove all existing recurring jobs and their created jobs with the following
+    migration:
+
+```sql
+WITH
+  recurring_jobs AS (
+    SELECT DISTINCT data ->> 'name' AS "recurringName" FROM "job" WHERE "name" = 'compas.job.recurring'
+  ),
+  removed_recurring_jobs AS (DELETE FROM "job" WHERE "name" = 'compas.job.recurring'
+  )
+DELETE
+FROM "job"
+WHERE
+    "name" IN (
+    SELECT "recurringName"
+    FROM recurring_jobs
+  );
+```
+
 ### [v0.0.196](https://github.com/compasjs/compas/releases/tag/v0.0.196)
 
 ##### Changes
