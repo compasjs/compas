@@ -4,6 +4,12 @@ editLink: false
 
 # Changelog
 
+### [v0.0.198](https://github.com/compasjs/compas/releases/tag/v0.0.198)
+
+##### Changes
+
+- feat(code-gen): remove `type` as a reserved group name
+
 ### [v0.0.197](https://github.com/compasjs/compas/releases/tag/v0.0.197)
 
 ##### Changes
