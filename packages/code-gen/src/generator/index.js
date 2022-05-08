@@ -306,7 +306,6 @@ function checkReservedGroupNames(context) {
     "yield",
     // Other reserved names
     "common",
-    "type",
   ];
 
   for (const group of Object.keys(context.structure)) {
