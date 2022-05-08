@@ -4,6 +4,12 @@ editLink: false
 
 # Changelog
 
+### [v0.0.199](https://github.com/compasjs/compas/releases/tag/v0.0.199)
+
+##### Changes
+
+- fix(cli): correctly use new code-gen structure helpers
+
 ### [v0.0.198](https://github.com/compasjs/compas/releases/tag/v0.0.198)
 
 ##### Changes
