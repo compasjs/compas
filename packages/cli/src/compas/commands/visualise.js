@@ -330,7 +330,7 @@ async function getStructure(logger, codeGen, structureFile) {
   };
 
   try {
-    codeGen.preprocessorsExecute(context.structure);
+    codeGen.preprocessorsExecute(context);
     codeGen.addFieldsOfRelations(context);
     codeGen.doSqlChecks(context);
     codeGen.exitOnErrorsOrReturn(context);
