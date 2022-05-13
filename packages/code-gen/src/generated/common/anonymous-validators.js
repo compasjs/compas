@@ -6975,7 +6975,7 @@ export function anonymousValidator2067293249(value, propertyPath) {
       ],
     };
   }
-  if (!/^[a-zA-Z]+$/g.test(value)) {
+  if (!/^[a-zA-Z][a-zA-Z\d]+$/g.test(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
       errors: [
