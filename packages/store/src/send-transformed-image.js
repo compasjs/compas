@@ -17,7 +17,16 @@ import { queryFile } from "./generated/database/file.js";
 
 /**
  * Wraps 'server'.sendFile, to include an image transformer compatible with Next.js image
- * loader. Only works if the input file is an image.
+ * loader. Only works if the input file is an image. It caches the results on in the
+ * file.meta.
+ *
+ * Supported extensions: image/png, image/jpeg, image/jpg, image/webp, image/avif,
+ * image/gif. It does not supported 'animated' versions of image/webp and image/gif and
+ * just sends those as is. See {@link FileType#mimeTypes} and {@link createOrUpdateFile}
+ * to enforce this on file upload.
+ *
+ * Prefers to transform the image to `image/webp` or `image/avif` if the client supports
+ * it.
  *
  * @param {typeof import("@compas/server").sendFile} sendFile
  * @param {import("koa").Context} ctx
@@ -45,8 +54,9 @@ export async function sendTransformedImage(
   // Always try to serve 'webp', else the original content type is used or defaults to
   // jpeg
   const acceptsWebp = !!ctx.accepts("image/webp");
-  const transformKey = `compas-image-transform-webp${
-    acceptsWebp ? 1 : 0
+  const acceptsAvif = !!ctx.accepts("image/avif");
+  const transformKey = `compas-image-transform-${
+    acceptsWebp ? "webp" : acceptsAvif ? "avif" : "none"
   }-w${w}-q${q}`;
 
   let loadedFile = file.meta?.transforms?.[transformKey];
@@ -98,12 +108,20 @@ export async function sendTransformedImage(
 
       // Transform with the expected quality
       if (acceptsWebp) {
-        sharpInstance.webp({ quality: q });
         contentType = "image/webp";
+        sharpInstance.webp({ quality: q });
+      } else if (acceptsAvif) {
+        contentType = "image/avif";
+        sharpInstance.avif({ quality: q });
       } else if (file.contentType === "image/png") {
         sharpInstance.png({ quality: q });
-      } else if (file.contentType === "image/jpeg") {
+      } else if (
+        file.contentType === "image/jpeg" ||
+        file.contentType === "image/jpg"
+      ) {
         sharpInstance.jpeg({ quality: q });
+      } else if (file.contentType === "image/gif") {
+        sharpInstance.gif({ quality: q });
       }
 
       const image = await createOrUpdateFile(

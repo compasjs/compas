@@ -38,6 +38,10 @@ const fileQueries = {
  * possible to validate the inferred content type. This also overwrites the passed in
  * content type.
  *
+ * You can set `allowedContentTypes` to `image/png, image/jpeg, image/jpg, image/webp,
+ * image/avif, image/gif` if you only want to accept files that can be sent by
+ * {@link sendTransformedImage}.
+ *
  * @since 0.1.0
  *
  * @param {import("../types/advanced-types").Postgres} sql
