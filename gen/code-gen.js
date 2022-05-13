@@ -10,7 +10,7 @@ export function applyCodeGenStructure(app) {
 
   const namePart = T.string("namePart")
     .min(1)
-    .pattern(/^[a-zA-Z]+$/g);
+    .pattern(/^[a-zA-Z][a-zA-Z\d]+$/g);
 
   app.add(T.anyOf("type").values(...baseTypes, ...preProcessOnlyTypes));
   app.add(...extraTypes);
