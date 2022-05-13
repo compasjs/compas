@@ -138,7 +138,7 @@ test("store/send-transformed-image", async (t) => {
 
     await reloadFileRecords();
 
-    t.ok(!isNil(five.meta.transforms[`compas-image-transform-webp0-w5-q75`]));
+    t.ok(!isNil(five.meta.transforms[`compas-image-transform-none-w5-q75`]));
   });
 
   t.test("reuse earlier transform", async (t) => {
@@ -153,7 +153,7 @@ test("store/send-transformed-image", async (t) => {
 
     await reloadFileRecords();
 
-    t.ok(!isNil(five.meta.transforms[`compas-image-transform-webp0-w5-q75`]));
+    t.ok(!isNil(five.meta.transforms[`compas-image-transform-none-w5-q75`]));
     t.equal(Object.keys(five.meta.transforms).length, 1);
   });
 
@@ -170,7 +170,7 @@ test("store/send-transformed-image", async (t) => {
     await reloadFileRecords();
 
     t.equal(response.headers["content-type"], "image/webp");
-    t.ok(!isNil(five.meta.transforms[`compas-image-transform-webp1-w5-q60`]));
+    t.ok(!isNil(five.meta.transforms[`compas-image-transform-webp-w5-q60`]));
   });
 
   t.test("return webp if allowed - reuse", async (t) => {
@@ -184,19 +184,19 @@ test("store/send-transformed-image", async (t) => {
     });
 
     const existingTransformForKey =
-      five.meta.transforms[`compas-image-transform-webp1-w5-q60`];
+      five.meta.transforms[`compas-image-transform-webp-w5-q60`];
     await reloadFileRecords();
 
     t.equal(response.headers["content-type"], "image/webp");
     t.equal(
-      five.meta.transforms[`compas-image-transform-webp1-w5-q60`],
+      five.meta.transforms[`compas-image-transform-webp-w5-q60`],
       existingTransformForKey,
     );
   });
 
   t.test("return webp if allowed - but remove original", async (t) => {
     const existingTransformForKey =
-      five.meta.transforms[`compas-image-transform-webp1-w5-q60`];
+      five.meta.transforms[`compas-image-transform-webp-w5-q60`];
     await queries.fileDelete(sql, { id: existingTransformForKey });
 
     const response = await apiClient.request({
@@ -212,7 +212,7 @@ test("store/send-transformed-image", async (t) => {
 
     t.equal(response.headers["content-type"], "image/webp");
     t.notEqual(
-      five.meta.transforms[`compas-image-transform-webp1-w5-q60`],
+      five.meta.transforms[`compas-image-transform-webp-w5-q60`],
       existingTransformForKey,
     );
   });
