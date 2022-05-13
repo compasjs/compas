@@ -207,8 +207,11 @@ function decorateCommits(commits) {
       commit.message = subjectMatch[3].trim();
     }
 
-    if (commit.body.includes("BREAKING CHANGE:")) {
-      let [, breakingChange] = commit.body.split("BREAKING CHANGE:");
+    if (
+      commit.body.includes("BREAKING CHANGE:") ||
+      commit.body.includes("BREAKING CHANGES:")
+    ) {
+      let [, breakingChange] = commit.body.split(/BREAKING CHANGES?:/i);
       breakingChange = breakingChange.trim();
 
       if (breakingChange.length > 0) {
@@ -233,12 +236,14 @@ function decorateCommits(commits) {
 
     // Handling of the various ways of notes
 
-    // We can have multiple 'Closes' or 'closes' in a commit
+    // We can have multiple 'Referneces' or 'references' in a commit
     if (
       commit.body.includes("References") ||
-      commit.body.includes("references")
+      commit.body.includes("references") ||
+      commit.body.includes("Reference") ||
+      commit.body.includes("reference")
     ) {
-      const refMatches = commit.body.matchAll(/References #(\d+)/gi);
+      const refMatches = commit.body.matchAll(/References? #(\d+)/gi);
 
       if (refMatches) {
         for (const match of refMatches) {
@@ -248,8 +253,13 @@ function decorateCommits(commits) {
     }
 
     // We can have multiple 'Closes' or 'closes' in a commit
-    if (commit.body.includes("Closes") || commit.body.includes("closes")) {
-      const closeMatches = commit.body.matchAll(/Closes #(\d+)/gi);
+    if (
+      commit.body.includes("Closes") ||
+      commit.body.includes("closes") ||
+      commit.body.includes("Close") ||
+      commit.body.includes("close")
+    ) {
+      const closeMatches = commit.body.matchAll(/Closes? #(\d+)/gi);
 
       if (closeMatches) {
         for (const match of closeMatches) {
