@@ -14,8 +14,9 @@
  * file.meta.
  *
  * Supported extensions: image/png, image/jpeg, image/jpg, image/webp, image/avif,
- * image/gif. See {@link FileType#mimeTypes} and {@link createOrUpdateFile} to enforce
- * this on file upload.
+ * image/gif. It does not supported 'animated' versions of image/webp and image/gif and
+ * just sends those as is. See {@link FileType#mimeTypes} and {@link createOrUpdateFile}
+ * to enforce this on file upload.
  *
  * Prefers to transform the image to `image/webp` or `image/avif` if the client supports
  * it.
