@@ -4,6 +4,32 @@ editLink: false
 
 # Changelog
 
+### [v0.0.200](https://github.com/compasjs/compas/releases/tag/v0.0.200)
+
+##### Changes
+
+- build(deps): bump @types/node from 17.0.31 to 17.0.33
+  ([#1798](https://github.com/compasjs/compas/pull/1798) ,
+  [#1802](https://github.com/compasjs/compas/pull/1802))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump c8 from 7.11.2 to 7.11.3
+  ([#1807](https://github.com/compasjs/compas/pull/1807))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump dotenv from 16.0.0 to 16.0.1
+  ([#1799](https://github.com/compasjs/compas/pull/1799))
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
+- build(deps): bump postgres from 3.1.0 to 3.2.2
+  ([#1806](https://github.com/compasjs/compas/pull/1806))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- chore(changelog): support keywords with and without trailing `S`
+  ([#1805](https://github.com/compasjs/compas/pull/1805))
+- feat(store,code-gen): support image/avif in `sendTransformedImage`
+  ([#1804](https://github.com/compasjs/compas/pull/1804))
+  - Closes [#1801](https://github.com/compasjs/compas/pull/1801)
+- fix(code-gen): support numbers in group names like before
+  ([#1803](https://github.com/compasjs/compas/pull/1803))
+  - Closes [#1800](https://github.com/compasjs/compas/pull/1800)
+
 ### [v0.0.199](https://github.com/compasjs/compas/releases/tag/v0.0.199)
 
 ##### Changes
