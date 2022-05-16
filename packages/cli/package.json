@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.0.199",
-    "c8": "7.11.2",
+    "c8": "7.11.3",
     "chokidar": "3.5.3",
     "recast": "0.21.1",
     "tree-kill": "1.2.2"
