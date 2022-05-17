@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.17.10",
+    "@babel/core": "7.17.12",
     "@babel/eslint-parser": "7.17.0",
     "@babel/plugin-syntax-class-properties": "7.12.13",
     "eslint": "8.15.0",
