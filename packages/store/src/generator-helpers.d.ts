@@ -167,14 +167,12 @@ export type EntityQueryBuilder = {
   shortName: string;
   columns: string[];
   orderBy: (
-    orderBy?: any[] | undefined,
+    orderBy?: any[],
     orderBySpec?: any,
-    shortName?: string | undefined,
-    options?:
-      | {
-          skipValidator?: boolean | undefined;
-        }
-      | undefined,
+    shortName?: string,
+    options?: {
+      skipValidator?: boolean | undefined;
+    },
   ) => import("../types/advanced-types").QueryPart;
   where: EntityWhere;
   relations: {

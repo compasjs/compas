@@ -20,7 +20,7 @@ export function compasGetCli(
     };
   },
 ): Promise<{
-  logger: import("@compas/stdlib/types/advanced-types").Logger;
+  logger: import("@compas/stdlib/types/advanced-types.js").Logger;
   cli: import("../cli/types").CliResolved;
 }>;
 /**

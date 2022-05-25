@@ -21,7 +21,7 @@ export function compileTemplateDirectory(
   dir: string,
   extension: string,
   opts?:
-    | import("@compas/stdlib/types/advanced-types").ProcessDirectoryOptions
+    | import("@compas/stdlib/types/advanced-types.js").ProcessDirectoryOptions
     | undefined,
 ): void;
 /**
