@@ -22,7 +22,7 @@ export function crudCallFunctionsForRoutes(functions, type, args) {
   if (type.routeOptions.updateRoute !== false) {
     functions.updateRoute(...args);
   }
-  
+
   if (type.routeOptions.deleteRoute !== false) {
     functions.deleteRoute(...args);
   }
