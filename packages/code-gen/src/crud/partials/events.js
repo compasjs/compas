@@ -1,3 +1,5 @@
+import { isPlainObject } from "@compas/stdlib";
+import { partialAsString } from "../../partials/helpers.js";
 import { upperCaseFirst } from "../../utils.js";
 
 /**
@@ -18,7 +20,7 @@ export const partialCrudCount = (data) => `
  * @param {${upperCaseFirst(data.crudName)}ListQuery} queryParams
  * @returns {Promise<{ total: number, where: ${data.entityUniqueName}Where }>}
  */
-async function ${data.crudName}Count(event, sql, builder, queryParams) {
+export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   eventStart(event, "${data.crudName}.count");
   
   const result  = await query${upperCaseFirst(
@@ -56,7 +58,7 @@ export const partialCrudList = (data) => `
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @returns {Promise<QueryResult${data.entityUniqueName}[]>}
  */
-async function ${data.crudName}List(event, sql, builder) {
+export async function ${data.crudName}List(event, sql, builder) {
   eventStart(event, "${data.crudName}.list");
   
   const result  = await query${upperCaseFirst(
@@ -86,7 +88,7 @@ export const partialCrudSingle = (data) => `
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @returns {Promise<QueryResult${data.entityUniqueName}>}
  */
-async function ${data.crudName}Single(event, sql, builder) {
+export async function ${data.crudName}Single(event, sql, builder) {
   eventStart(event, "${data.crudName}.single");
   
   const result  = await query${upperCaseFirst(
@@ -120,7 +122,7 @@ export const partialCrudCreate = (data) => `
  * @param {${upperCaseFirst(data.crudName)}CreateBody} body
  * @returns {Promise<QueryResult${data.entityUniqueName}>}
  */
-async function ${data.crudName}Create(event, sql, body) {
+export async function ${data.crudName}Create(event, sql, body) {
   eventStart(event, "${data.crudName}.create");
   
   // TODO: handle inline inserts
@@ -154,7 +156,7 @@ export const partialCrudUpdate = (data) => `
  * @param {${upperCaseFirst(data.crudName)}UpdateBody} body
  * @returns {Promise<void>}
  */
-async function ${data.crudName}Update(event, sql, entity, body) {
+export async function ${data.crudName}Update(event, sql, entity, body) {
   eventStart(event, "${data.crudName}.update");
   
   // TODO: handle inline inserts
@@ -169,6 +171,7 @@ async function ${data.crudName}Update(event, sql, entity, body) {
   eventStop(event);
 }
 `;
+
 /**
  * @param {{
  *   crudName: string,
@@ -186,7 +189,7 @@ export const partialCrudDelete = (data) => `
  * @param {QueryResult${data.entityUniqueName}} entity
  * @returns {Promise<void>}
  */
-async function ${data.crudName}Delete(event, sql, entity) {
+export async function ${data.crudName}Delete(event, sql, entity) {
   eventStart(event, "${data.crudName}.delete");
   
   await queries.${data.entityName}Delete(sql, {
@@ -196,3 +199,41 @@ async function ${data.crudName}Delete(event, sql, entity) {
   eventStop(event);
 }
 `;
+
+/**
+ * @param {{
+ *   crudName: string,
+ *   entityUniqueName: string,
+ *   entityName: string,
+ *   entity: Record<string, boolean|Record<string, boolean>>
+ * }} data
+ * @returns {string}
+ */
+export const partialCrudTransformer = (data) => `
+/**
+ * Transform ${data.entityName} entity to the response type 
+ *
+ * @param {QueryResult${data.entityUniqueName}} input
+ * @returns {${upperCaseFirst(data.crudName)}Item}
+ */
+export function ${data.crudName}Transform(input) {
+  return {
+    ${partialCrudFormatObject(data.entity, "input")}
+  }
+}
+`;
+
+const partialCrudFormatObject = (keys, source) =>
+  partialAsString(
+    Object.entries(keys).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return `${key}: ${source}.${key}.map(it => ({
+      ${partialCrudFormatObject(value[0], "it")}
+    })),`;
+      } else if (isPlainObject(value)) {
+        return partialCrudFormatObject(value, `${source}.${key}`);
+      }
+
+      return `${key}: ${source}.${key},`;
+    }),
+  );

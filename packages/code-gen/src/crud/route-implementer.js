@@ -8,6 +8,7 @@ import {
   partialCrudDelete,
   partialCrudList,
   partialCrudSingle,
+  partialCrudTransformer,
   partialCrudUpdate,
 } from "./partials/events.js";
 import { crudCreateName, crudResolveGroup } from "./resolvers.js";
@@ -61,6 +62,19 @@ function crudGenerateEventImplementationForType(
     type,
     [context, importer, sources, type],
   );
+
+  if (
+    type.routeOptions.listRoute !== false ||
+    type.routeOptions.singleRoute !== false ||
+    type.routeOptions.createRoute !== false
+  ) {
+    crudGenerateEventImplementationTransformer(
+      context,
+      importer,
+      sources,
+      type,
+    );
+  }
 
   // todo; transformer if list, single or create
 
@@ -232,4 +246,59 @@ function crudGenerateEventImplementationDeleteRoute(
   importer.destructureImport(`queries`, `../database/index.js`);
 
   sources.push(partialCrudDelete(data));
+}
+
+/**
+ * @param {import("../generated/common/types.js").CodeGenContext} context
+ * @param {import("../generator/utils.js").ImportCreator} importer
+ * @param {string[]} sources
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ */
+function crudGenerateEventImplementationTransformer(
+  context,
+  importer,
+  sources,
+  type,
+) {
+  const data = {
+    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
+    entityName: type.entity.reference.name,
+    entityUniqueName: type.entity.reference.uniqueName,
+    entity: crudBuildTransformEntity(type),
+  };
+
+  sources.push(partialCrudTransformer(data));
+}
+
+/**
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ */
+function crudBuildTransformEntity(type) {
+  let keys = Object.keys(type.entity.reference.keys);
+
+  if (type.fieldOptions?.readable?.$pick?.length > 0) {
+    keys = type.fieldOptions?.readable.$pick;
+  }
+
+  for (const omit of type.fieldOptions?.readable?.$omit ?? []) {
+    if (keys.indexOf(omit) !== -1) {
+      keys.splice(keys.indexOf(omit), 1);
+    }
+  }
+
+  const result = {};
+  for (const key of keys) {
+    result[key] = true;
+  }
+
+  for (const relation of type.inlineRelations) {
+    const nested = crudBuildTransformEntity(relation);
+
+    result[relation.fromParent.field] =
+      relation.internalSettings.usedRelation.subType === "oneToMany"
+        ? [nested]
+        : nested;
+  }
+
+  return result;
 }
