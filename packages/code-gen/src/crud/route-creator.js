@@ -2,7 +2,8 @@ import { TypeCreator } from "../builders/index.js";
 import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { structureAddType } from "../structure/structureAddType.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
-import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
+import { crudCreateName, crudResolveGroup } from "./resolvers.js";
+import { crudCallFunctionsForRoutes } from "./route-functions.js";
 
 /**
  * Create the necessary routes based on the available crud types
@@ -24,25 +25,17 @@ export function crudCreateRoutes(context) {
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
 function crudCreateRoutesForType(context, type) {
-  if (type.routeOptions.listRoute !== false) {
-    crudCreateListRoute(context, type);
-  }
-
-  if (type.routeOptions.singleRoute !== false) {
-    crudCreateSingleRoute(context, type);
-  }
-
-  if (type.routeOptions.createRoute !== false) {
-    crudCreateCreateRoute(context, type);
-  }
-
-  if (type.routeOptions.updateRoute !== false) {
-    crudCreateUpdateRoute(context, type);
-  }
-
-  if (type.routeOptions.deleteRoute !== false) {
-    crudCreateDeleteRoute(context, type);
-  }
+  crudCallFunctionsForRoutes(
+    {
+      listRoute: crudCreateListRoute,
+      singleRoute: crudCreateSingleRoute,
+      createRoute: crudCreateCreateRoute,
+      updateRoute: crudCreateUpdateRoute,
+      deleteRoute: crudCreateDeleteRoute,
+    },
+    type,
+    [context, type],
+  );
 
   for (const relation of type.nestedRelations) {
     crudCreateRoutesForType(context, relation);
@@ -447,25 +440,6 @@ function crudGetParamsObject(type, { includeSelf }) {
 /**
  *
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @param {string} suffix
- * @returns {string}
- */
-function crudCreateName(type, suffix) {
-  let result = lowerCaseFirst(suffix ?? "");
-
-  if (type.fromParent) {
-    // @ts-expect-error
-    result = type.fromParent.options.name + upperCaseFirst(result);
-    // @ts-expect-error
-    return crudCreateName(type.internalSettings.parent, result);
-  }
-
-  return result;
-}
-
-/**
- *
- * @param {import("../generated/common/types.js").CodeGenCrudType} type
  * @returns {string}
  */
 function crudCreateRouteParam(type) {
@@ -498,19 +472,4 @@ function crudCreateRoutePath(type, suffix) {
   }
 
   return path;
-}
-
-/**
- *
- * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @returns {string}
- */
-function crudResolveGroup(type) {
-  if (type.fromParent) {
-    // @ts-expect-error
-    return crudResolveGroup(type.internalSettings.parent);
-  }
-
-  // @ts-expect-error
-  return type.group;
 }
