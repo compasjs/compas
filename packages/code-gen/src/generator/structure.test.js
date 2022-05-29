@@ -1,10 +1,10 @@
 import { mainTestFn, test } from "@compas/cli";
-import { generateStructureFile } from "./structure.js";
+import { structureCreateFile } from "./structure.js";
 
 mainTestFn(import.meta);
 
 test("code-gen/generator/structure", (t) => {
-  t.test("generateStructureFile - dumpStructure: false", (t) => {
+  t.test("structureCreateFile - dumpStructure: false", (t) => {
     const context = {
       options: {
         dumpStructure: false,
@@ -16,12 +16,12 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFile(context);
+    structureCreateFile(context);
 
     t.equal(context.outputFiles.length, 1, "always dump structure options");
   });
 
-  t.test("generateStructureFile - dumpStructure: true", (t) => {
+  t.test("structureCreateFile - dumpStructure: true", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -34,13 +34,13 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFile(context);
+    structureCreateFile(context);
 
     t.equal(context.outputFiles.length, 1);
     t.equal(context.outputFiles[0].relativePath, "./common/structure.js");
   });
 
-  t.test("generateStructureFile - extension: ts", (t) => {
+  t.test("structureCreateFile - extension: ts", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -53,13 +53,13 @@ test("code-gen/generator/structure", (t) => {
       },
     };
 
-    generateStructureFile(context);
+    structureCreateFile(context);
 
     t.equal(context.outputFiles.length, 1);
     t.equal(context.outputFiles[0].relativePath, "./common/structure.ts");
   });
 
-  t.test("generateStructureFile - zero groups", (t) => {
+  t.test("structureCreateFile - zero groups", (t) => {
     const context = {
       options: {
         dumpStructure: true,
@@ -69,7 +69,7 @@ test("code-gen/generator/structure", (t) => {
       structure: {},
     };
 
-    generateStructureFile(context);
+    structureCreateFile(context);
 
     t.equal(context.outputFiles.length, 1);
     t.equal(

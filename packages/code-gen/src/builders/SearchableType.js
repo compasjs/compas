@@ -8,6 +8,7 @@ export class SearchableType extends TypeBuilder {
   build() {
     if (isNil(this.builder)) {
       // Force an error
+      // @ts-expect-error
       this.value(undefined);
     }
 

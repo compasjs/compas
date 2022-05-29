@@ -10,6 +10,13 @@ import { structureTraverserAssign } from "./structureTraverseAssign.js";
  */
 export function structureHoistNamedItems(structure) {
   structureTraverserAssign(structure, (type, metadata) => {
+    if ("type" in type && type.type === "reference") {
+      type.reference = {
+        name: type.reference.name,
+        group: type.reference.group,
+      };
+    }
+
     if (!isNamedTypeBuilderLike(type)) {
       return type;
     }

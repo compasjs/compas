@@ -52,7 +52,7 @@ export function setupMemoizedTypes(context) {
 
   if (!context.options.isBrowser) {
     for (const type of structureIteratorNamedTypes(context.structure)) {
-      if (type.type === "route") {
+      if (type.type === "route" || type.type === "crud") {
         continue;
       }
 

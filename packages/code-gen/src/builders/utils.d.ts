@@ -11,8 +11,8 @@ export function isNamedTypeBuilderLike(value: any): boolean;
  * - array
  * - object
  *
- * @param {TypeBuilderLike|undefined} value
- * @returns {*}
+ * @param {any} value
+ * @returns {Record<string, any>}
  */
-export function buildOrInfer(value: TypeBuilderLike | undefined): any;
+export function buildOrInfer(value: any): Record<string, any>;
 //# sourceMappingURL=utils.d.ts.map

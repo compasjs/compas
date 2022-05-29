@@ -35,7 +35,18 @@ export function exitOnErrorsOrReturn(context) {
     const error = context.errors[i];
     let str = `- (${i + 1}/${context.errors.length}): `;
 
+    // TODO(refactor)
     switch (error.key) {
+      case "crudEnableQueries":
+      case "crudSoftDeleteNotSupported":
+      case "crudStoreFileNotSupported":
+      case "crudFromParentNotResolved":
+        str = formatErrorString(error.value, {
+          i,
+          length: context.errors.length,
+        });
+        break;
+
       case "structureReservedGroupName":
         str += `Group '${error.groupName}' is a JavaScript or TypeScript reserved keyword. Please use another group name.`;
         break;
@@ -138,4 +149,23 @@ export function exitOnErrorsOrReturn(context) {
   // @ts-ignore
   context.logger.error(formatArray.join("\n"));
   process.exit(1);
+}
+
+function formatErrorString(str, { i, length }) {
+  const prefix = `- (${String(i + 1).padStart(
+    String(length).length,
+    " ",
+  )}/${length}): `;
+  const lines = str.split("\n").map((it) => it.trim());
+
+  lines[0] = prefix + lines[0];
+  for (let j = 0; j < lines.length; j++) {
+    if (j === 0) {
+      continue;
+    }
+
+    lines[j] = `  ${lines[j]}`;
+  }
+
+  return lines.join("\n");
 }

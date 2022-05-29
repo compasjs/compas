@@ -6,12 +6,16 @@ export class PickType extends TypeBuilder {
     };
   };
   constructor(group: any, name: any);
-  internalReference: any;
+  internalReference:
+    | import("../../types/advanced-types").TypeBuilderLike
+    | undefined;
   /**
    * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {PickType}
    */
-  object(builder: any): PickType;
+  object(
+    builder: import("../../types/advanced-types").TypeBuilderLike,
+  ): PickType;
   /**
    * @param {...string} keys
    * @returns {PickType}

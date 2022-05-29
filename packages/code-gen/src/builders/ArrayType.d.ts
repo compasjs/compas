@@ -7,12 +7,16 @@ export class ArrayType extends TypeBuilder {
     };
   };
   constructor(group: any, name: any);
-  internalValues: any;
+  internalValues:
+    | import("../../types/advanced-types").TypeBuilderLike
+    | undefined;
   /**
    * @param {import("../../types/advanced-types").TypeBuilderLike} [value]
    * @returns {ArrayType}
    */
-  values(value?: any): ArrayType;
+  values(
+    value?: import("../../types/advanced-types").TypeBuilderLike | undefined,
+  ): ArrayType;
   /**
    * @returns {ArrayType}
    */

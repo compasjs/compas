@@ -49,13 +49,21 @@ test("code-gen/e2e/openapi", async (t) => {
 
       testR
         .put("/:full/:color/route", "fullRoute")
-        .params({ full: T.string(), color: T.number().convert() })
+        .params({
+          full: T.string(),
+          color: T.number().convert(),
+        })
         .body({
           foo: T.anyOf().values(T.string()),
           bar: T.reference("server", "options"),
         })
         .response({
-          items: [{ foo: T.string(), bar: T.reference("server", "item") }],
+          items: [
+            {
+              foo: T.string(),
+              bar: T.reference("server", "item"),
+            },
+          ],
         }),
 
       T.string("options").oneOf("A", "B", "C"),
@@ -101,7 +109,9 @@ test("code-gen/e2e/openapi", async (t) => {
       R.patch("/patch", "patchTest").response({}),
 
       R.get("/file", "getFile")
-        .query({ throwError: T.bool().optional().convert() })
+        .query({
+          throwError: T.bool().optional().convert(),
+        })
         .response(T.file()),
 
       R.post("/file", "setFile").files({ myFile: T.file() }).response({
@@ -109,7 +119,9 @@ test("code-gen/e2e/openapi", async (t) => {
       }),
 
       R.post("/file/mime", "setMimeCheckedFile")
-        .files({ myFile: T.file().mimeTypes("application/json") })
+        .files({
+          myFile: T.file().mimeTypes("application/json"),
+        })
         .response({
           success: true,
         }),
@@ -445,7 +457,9 @@ test("code-gen/e2e/openapi", async (t) => {
 
     const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
       [
-        R.get("/single", "get").query({ title: T.string("titleFilter") }),
+        R.get("/single", "get").query({
+          title: T.string("titleFilter"),
+        }),
         R.get("/", "list").query({
           title: T.reference("app", "titleFilter").optional(),
         }),

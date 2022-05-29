@@ -1,11 +1,21 @@
 export class RouteBuilder extends TypeBuilder {
   constructor(method: any, group: any, name: any, path: any);
   invalidates: any[];
-  queryBuilder: any;
-  paramsBuilder: any;
-  bodyBuilder: any;
-  filesBuilder: any;
-  responseBuilder: any;
+  queryBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  paramsBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  bodyBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  filesBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  responseBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
   /**
    * @param {...string} values
    * @returns {RouteBuilder}
@@ -23,22 +33,22 @@ export class RouteBuilder extends TypeBuilder {
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
-  query(builder: any): RouteBuilder;
+  query(builder: import("../../index").TypeBuilderLike): RouteBuilder;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
-  params(builder: any): RouteBuilder;
+  params(builder: import("../../index").TypeBuilderLike): RouteBuilder;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
-  body(builder: any): RouteBuilder;
+  body(builder: import("../../index").TypeBuilderLike): RouteBuilder;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
-  files(builder: any): RouteBuilder;
+  files(builder: import("../../index").TypeBuilderLike): RouteBuilder;
   /**
    * Specify routes that can be invalidated when this route is called.
    *
@@ -52,7 +62,7 @@ export class RouteBuilder extends TypeBuilder {
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
-  response(builder: any): RouteBuilder;
+  response(builder: import("../../index").TypeBuilderLike): RouteBuilder;
 }
 export class RouteCreator {
   constructor(group: any, path: any);
@@ -62,11 +72,21 @@ export class RouteCreator {
   };
   /** @type {string[]} */
   defaultTags: string[];
-  queryBuilder: any;
-  paramsBuilder: any;
-  bodyBuilder: any;
-  filesBuilder: any;
-  responseBuilder: any;
+  queryBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  paramsBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  bodyBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  filesBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
+  responseBuilder:
+    | import("../../types/advanced-types.js").TypeBuilderLike
+    | undefined;
   /**
    * @param {...string} values
    * @returns {RouteCreator}
@@ -76,27 +96,27 @@ export class RouteCreator {
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
-  query(builder: any): RouteCreator;
+  query(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
-  params(builder: any): RouteCreator;
+  params(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
-  body(builder: any): RouteCreator;
+  body(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
-  files(builder: any): RouteCreator;
+  files(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
-  response(builder: any): RouteCreator;
+  response(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * Generate `queryClient.invalidateQueries` calls in the react-query generator, which
    * can be executed when the generated hook is called.

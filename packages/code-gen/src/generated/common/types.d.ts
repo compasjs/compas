@@ -31,7 +31,8 @@ export type CodeGenType =
   | CodeGenUuidType
   | CodeGenRouteType
   | CodeGenOmitType
-  | CodeGenPickType;
+  | CodeGenPickType
+  | CodeGenCrudType;
 export type CodeGenAnyType = {
   type: "any";
   docString: string;
@@ -373,7 +374,54 @@ export type CodeGenPickType = {
   keys: string[];
   reference: CodeGenType;
 };
+export type CodeGenCrudType = {
+  type: "crud";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: {};
+  internalSettings: {
+    usedRelation?: undefined | CodeGenRelationType;
+    parent?: undefined | CodeGenCrudType;
+  };
+  basePath?: undefined | string;
+  entity?: undefined | CodeGenType;
+  fromParent?:
+    | undefined
+    | { field: string; options?: undefined | { name?: undefined | string } };
+  routeOptions: {
+    listRoute?: undefined | boolean;
+    singleRoute?: undefined | boolean;
+    createRoute?: undefined | boolean;
+    updateRoute?: undefined | boolean;
+    deleteRoute?: undefined | boolean;
+  };
+  fieldOptions: {
+    readable?:
+      | undefined
+      | { $omit?: undefined | string[]; $pick?: undefined | string[] };
+    writable?:
+      | undefined
+      | { $omit?: undefined | string[]; $pick?: undefined | string[] };
+  };
+  inlineRelations: CodeGenCrudType[];
+  nestedRelations: CodeGenCrudType[];
+};
 export type CodeGenCollectableError =
+  | {
+      key:
+        | "crudEnableQueries"
+        | "crudSoftDeleteNotSupported"
+        | "crudStoreFileNotSupported"
+        | "crudFromParentNotResolved";
+      value: string;
+    }
   | { key: "structureReservedGroupName"; groupName: string }
   | { key: "structureUnknownOrEmptyGroup"; groupName: string }
   | { key: "sqlMissingPrimaryKey"; typeName: string }
@@ -481,7 +529,8 @@ export type CodeGenTypeInput =
   | import("./../common/types").CodeGenUuidTypeInput
   | import("./../common/types").CodeGenRouteTypeInput
   | import("./../common/types").CodeGenOmitTypeInput
-  | import("./../common/types").CodeGenPickTypeInput;
+  | import("./../common/types").CodeGenPickTypeInput
+  | import("./../common/types").CodeGenCrudTypeInput;
 export type CodeGenAnyTypeInput = {
   type: "any";
   docString?: undefined | string;
@@ -886,6 +935,53 @@ export type CodeGenPickTypeInput = {
   internalSettings?: undefined | {};
   keys: string[];
   reference: import("./../common/types").CodeGenTypeInput;
+};
+export type CodeGenCrudTypeInput = {
+  type: "crud";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?:
+    | undefined
+    | {
+        usedRelation?:
+          | undefined
+          | import("./../common/types").CodeGenRelationTypeInput;
+        parent?: undefined | import("./../common/types").CodeGenCrudTypeInput;
+      };
+  basePath?: undefined | string;
+  entity?: undefined | import("./../common/types").CodeGenTypeInput;
+  fromParent?:
+    | undefined
+    | { field: string; options?: undefined | { name?: undefined | string } };
+  routeOptions: {
+    listRoute?: undefined | boolean;
+    singleRoute?: undefined | boolean;
+    createRoute?: undefined | boolean;
+    updateRoute?: undefined | boolean;
+    deleteRoute?: undefined | boolean;
+  };
+  fieldOptions: {
+    readable?:
+      | undefined
+      | { $omit?: undefined | string[]; $pick?: undefined | string[] };
+    writable?:
+      | undefined
+      | { $omit?: undefined | string[]; $pick?: undefined | string[] };
+  };
+  inlineRelations: import("./../common/types").CodeGenCrudTypeInput[];
+  nestedRelations: import("./../common/types").CodeGenCrudTypeInput[];
 };
 export type CodeGenCollectableErrorInput = CodeGenCollectableError;
 export type CodeGenContextInput = {
