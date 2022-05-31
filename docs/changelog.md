@@ -4,6 +4,54 @@ editLink: false
 
 # Changelog
 
+### [v0.0.201](https://github.com/compasjs/compas/releases/tag/v0.0.201)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.17.10 to 7.18.2
+  ([#1809](https://github.com/compasjs/compas/pull/1809) ,
+  [#1812](https://github.com/compasjs/compas/pull/1812),
+  [#1821](https://github.com/compasjs/compas/pull/1821))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.17.0 to 7.18.2
+  ([#1819](https://github.com/compasjs/compas/pull/1819))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @types/node from 17.0.33 to 17.0.36
+  ([#1808](https://github.com/compasjs/compas/pull/1808) ,
+  [#1813](https://github.com/compasjs/compas/pull/1813),
+  [#1823](https://github.com/compasjs/compas/pull/1823))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.15.0 to 8.16.0
+  ([#1814](https://github.com/compasjs/compas/pull/1814))
+- build(deps): bump eslint-plugin-jsdoc from 39.2.9 to 39.3.2
+  ([#1811](https://github.com/compasjs/compas/pull/1811) ,
+  [#1817](https://github.com/compasjs/compas/pull/1817))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump postgres from 3.2.2 to 3.2.4
+  ([#1816](https://github.com/compasjs/compas/pull/1816) ,
+  [#1820](https://github.com/compasjs/compas/pull/1820))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump sharp from 0.30.4 to 0.30.6
+  ([#1815](https://github.com/compasjs/compas/pull/1815) ,
+  [#1826](https://github.com/compasjs/compas/pull/1826))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- feat(code-gen): remove `validator.anyOf` errors
+  ([#1829](https://github.com/compasjs/compas/pull/1829))
+  - Closes [#1827](https://github.com/compasjs/compas/pull/1827)
+- feat(code-gen): return `foundKeys` and `expectedKeys` in ` validator.o…
+  ([#1830](https://github.com/compasjs/compas/pull/1830))
+  - Closes [#1828](https://github.com/compasjs/compas/pull/1828)
+
+##### Breaking changes
+
+- **code-gen**: remove `validator.anyOf` errors
+  - `validator.anyOf` is not an error key anymore. See
+    [#1827](https://github.com/compasjs/compas/pull/1827) for more information.
+- **code-gen**: return `foundKeys` and `expectedKeys` in `validator.o…
+  - `info.extraKey` is replaced by `info.expectedKeys` and `info.foundKeys` in
+    `validator.object.strict` errors. See
+    [#1828](https://github.com/compasjs/compas/pull/1828) for more information.
+
 ### [v0.0.200](https://github.com/compasjs/compas/releases/tag/v0.0.200)
 
 ##### Changes
