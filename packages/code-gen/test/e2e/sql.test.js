@@ -866,7 +866,7 @@ test("code-gen/e2e/sql", async (t) => {
       t.ok(AppError.instanceOf(e));
       t.equal(e.key, `validator.error`);
       t.equal(e.info["$.userBuilder.where"].key, "validator.object.strict");
-      t.equal(e.info["$.userBuilder.where"].info.extraKey, "foo");
+      t.deepEqual(e.info["$.userBuilder.where"].info.foundKeys, ["foo"]);
     }
   });
 

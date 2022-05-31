@@ -1028,7 +1028,10 @@ function anonymousValidatorObject(context, imports, type) {
               return {
                 errors: [
                   {
-                    propertyPath, key: "validator.object.strict", info: { extraKey: key },
+                    propertyPath, key: "validator.object.strict", info: {
+                      expectedKeys: [ ...objectKeys${hash} ],
+                      foundKeys: [ ...Object.keys(value) ],
+                    },
                   }
                 ],
               };
