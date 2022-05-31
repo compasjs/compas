@@ -2447,7 +2447,10 @@ export function anonymousValidator1006716453(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1006716453],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5074,7 +5077,10 @@ export function anonymousValidator729128062(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys729128062],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5198,7 +5204,10 @@ export function anonymousValidator1592295867(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1592295867],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5322,7 +5331,10 @@ export function anonymousValidator1045315509(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1045315509],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5446,7 +5458,10 @@ export function anonymousValidator564383959(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys564383959],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5571,7 +5586,10 @@ export function anonymousValidator817949617(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys817949617],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5696,7 +5714,10 @@ export function anonymousValidator67350838(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys67350838],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5821,7 +5842,10 @@ export function anonymousValidator210116167(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys210116167],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -5948,7 +5972,10 @@ export function anonymousValidator1331366345(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1331366345],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6074,7 +6101,10 @@ export function anonymousValidator2008271825(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys2008271825],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6195,7 +6225,10 @@ export function anonymousValidator914281176(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys914281176],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6321,7 +6354,10 @@ export function anonymousValidator1152297043(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1152297043],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6446,7 +6482,10 @@ export function anonymousValidator40811832(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys40811832],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6571,7 +6610,10 @@ export function anonymousValidator825072268(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys825072268],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6637,7 +6679,10 @@ export function anonymousValidator398159942(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys398159942],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -6762,7 +6807,10 @@ export function anonymousValidator860724709(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys860724709],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -7211,7 +7259,10 @@ export function anonymousValidator682118687(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys682118687],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -7375,7 +7426,10 @@ export function anonymousValidator980814292(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys980814292],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -7503,7 +7557,10 @@ export function anonymousValidator1664519436(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1664519436],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -7624,7 +7681,10 @@ export function anonymousValidator1287070944(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1287070944],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };

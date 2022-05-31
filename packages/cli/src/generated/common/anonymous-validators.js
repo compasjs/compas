@@ -262,7 +262,10 @@ export function anonymousValidator229352914(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys229352914],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -366,7 +369,10 @@ export function anonymousValidator695211961(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys695211961],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -553,7 +559,10 @@ export function anonymousValidator385137474(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys385137474],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -763,7 +772,10 @@ export function anonymousValidator121992102(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys121992102],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -901,7 +913,10 @@ export function anonymousValidator596368827(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys596368827],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -968,7 +983,10 @@ export function anonymousValidator1885876481(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1885876481],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -1100,7 +1118,10 @@ export function anonymousValidator1833756126(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1833756126],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -1231,7 +1252,10 @@ export function anonymousValidator589626564(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys589626564],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -1352,7 +1376,10 @@ export function anonymousValidator90605215(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys90605215],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -1473,7 +1500,10 @@ export function anonymousValidator703944173(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys703944173],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
@@ -1661,7 +1691,10 @@ export function anonymousValidator1437995341(value, propertyPath) {
           {
             propertyPath,
             key: "validator.object.strict",
-            info: { extraKey: key },
+            info: {
+              expectedKeys: [...objectKeys1437995341],
+              foundKeys: [...Object.keys(value)],
+            },
           },
         ],
       };
