@@ -424,9 +424,9 @@ function anonymousValidatorAnyOf(context, imports, type) {
       `;
     })}
 
-    errors.unshift({
-                     propertyPath, key: "validator.anyOf", info: {},
-                   });
+    for (const err of errors) {
+      err.info.via = "validator.anyOf";
+    }
 
     return {
       errors

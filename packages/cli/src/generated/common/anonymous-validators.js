@@ -1734,11 +1734,9 @@ export function anonymousValidator328829180(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };

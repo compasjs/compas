@@ -373,11 +373,9 @@ export function anonymousValidator219305298(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -2510,11 +2508,9 @@ export function anonymousValidator1947892754(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4863,11 +4859,9 @@ export function anonymousValidator682551261(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6903,11 +6897,9 @@ export function anonymousValidator2029084423(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
