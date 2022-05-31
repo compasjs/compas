@@ -2360,11 +2360,9 @@ export function anonymousValidator888270707(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -2434,11 +2432,9 @@ export function anonymousValidator131623529(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -2548,11 +2544,9 @@ export function anonymousValidator764760480(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -2842,11 +2836,9 @@ export function anonymousValidator1247024978(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -2939,11 +2931,9 @@ export function anonymousValidator1053722775(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -3607,11 +3597,9 @@ export function anonymousValidator2011937852(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4042,11 +4030,9 @@ export function anonymousValidator222290681(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4085,11 +4071,9 @@ export function anonymousValidator2035392241(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4449,11 +4433,9 @@ export function anonymousValidator127301142(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4615,11 +4597,9 @@ export function anonymousValidator1398947189(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -4943,11 +4923,9 @@ export function anonymousValidator538169824(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5164,11 +5142,9 @@ export function anonymousValidator437126703(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5216,11 +5192,9 @@ export function anonymousValidator1285764902(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5256,11 +5230,9 @@ export function anonymousValidator618537896(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5308,11 +5280,9 @@ export function anonymousValidator58608997(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5408,11 +5378,9 @@ export function anonymousValidator1048226008(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5684,11 +5652,9 @@ export function anonymousValidator2017242205(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -5856,11 +5822,9 @@ export function anonymousValidator1827465744(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6120,11 +6084,9 @@ export function anonymousValidator1317514041(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6252,11 +6214,9 @@ export function anonymousValidator2131524087(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6291,11 +6251,9 @@ export function anonymousValidator1865468913(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6330,11 +6288,9 @@ export function anonymousValidator1314728024(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6594,11 +6550,9 @@ export function anonymousValidator17493427(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -6873,11 +6827,9 @@ export function anonymousValidator1795948632(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -7116,11 +7068,9 @@ export function anonymousValidator685221527(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -7347,11 +7297,9 @@ export function anonymousValidator1196685479(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
@@ -7570,11 +7518,9 @@ export function anonymousValidator2086080888(value, propertyPath) {
   } else {
     return result;
   }
-  errors.unshift({
-    propertyPath,
-    key: "validator.anyOf",
-    info: {},
-  });
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
   return {
     errors,
   };
