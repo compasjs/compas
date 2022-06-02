@@ -19,7 +19,7 @@
     "@types/minio": "7.0.13",
     "crc": "4.1.1",
     "cron-parser": "^4.4.0",
-    "file-type": "17.1.1",
+    "file-type": "17.1.2",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
     "minio": "7.0.28",
