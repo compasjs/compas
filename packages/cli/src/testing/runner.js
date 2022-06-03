@@ -162,7 +162,7 @@ function ok(state, value, message) {
     type: "ok",
     passed,
     meta: {
-      actual: passed,
+      actual: value,
       expected: true,
     },
     message,
@@ -181,7 +181,7 @@ function notOk(state, value, message) {
     type: "notOk",
     passed,
     meta: {
-      actual: passed,
+      actual: value,
       expected: false,
     },
     message,
