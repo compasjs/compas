@@ -1,6 +1,12 @@
 /* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
-import { AppError, isNil, isPlainObject } from "@compas/stdlib";
+import {
+  AppError,
+  environment,
+  isNil,
+  isPlainObject,
+  refreshEnvironmentCache,
+} from "@compas/stdlib";
 import Axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
@@ -54,6 +60,7 @@ test("server/app", (t) => {
 
       t.ok(response.data.requestId);
       delete response.data.requestId;
+      delete response.data.stack;
 
       t.deepEqual(response.data, {
         key: "error.server.notFound",
@@ -73,6 +80,7 @@ test("server/app", (t) => {
 
       t.ok(response.data.requestId);
       delete response.data.requestId;
+      delete response.data.stack;
 
       t.deepEqual(response.data, {
         key: "error.server.internal",
@@ -84,6 +92,8 @@ test("server/app", (t) => {
   });
 
   t.test("random error handling", async (t) => {
+    environment.NODE_ENV = "production";
+
     try {
       await client.get("/wrap-500");
     } catch ({ response }) {
@@ -92,6 +102,8 @@ test("server/app", (t) => {
       t.equal(response.data.key, "error.server.internal");
       t.ok(isNil(response.data.stack));
     }
+
+    refreshEnvironmentCache();
   });
 
   t.test("AppError format of Axios errors", async (t) => {
