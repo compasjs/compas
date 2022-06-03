@@ -1,4 +1,4 @@
-import { AppError } from "@compas/stdlib";
+import { AppError, isProduction } from "@compas/stdlib";
 
 /**
  * @type {NonNullable<import("../app").ErrorHandlerOptions["onError"]>}
@@ -47,8 +47,10 @@ export function errorHandler(opts) {
       log(formatted);
 
       if (onAppError === defaultOnAppError) {
-        delete formatted.stack;
-        delete formatted.cause;
+        if (isProduction()) {
+          delete formatted.stack;
+          delete formatted.cause;
+        }
 
         ctx.body = formatted;
       } else {
