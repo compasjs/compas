@@ -1,7 +1,12 @@
 import { existsSync } from "fs";
 import { pathToFileURL } from "url";
 import { pathJoin } from "@compas/stdlib";
-import { setGlobalSetup, setGlobalTeardown, setTestTimeout } from "./state.js";
+import {
+  ignoreDirectories,
+  setGlobalSetup,
+  setGlobalTeardown,
+  setTestTimeout,
+} from "./state.js";
 
 const configPath = pathJoin(process.cwd(), "test/config.js");
 
@@ -9,6 +14,7 @@ const configPath = pathJoin(process.cwd(), "test/config.js");
  * Config loader if available.
  * Loads the following:
  * - timeout, used as timeout per test case
+ * - ignored directories
  * - setup, function called once before tests run
  * - teardown, function called once after all tests run
  *
@@ -29,6 +35,16 @@ export async function loadTestConfig() {
       );
     }
     setTestTimeout(config.timeout);
+  }
+
+  if (Array.isArray(config.ignoreDirectories)) {
+    for (const dir of config.ignoreDirectories) {
+      if (dir.startsWith("/")) {
+        ignoreDirectories.push(dir);
+      } else {
+        ignoreDirectories.push(pathJoin(process.cwd(), dir));
+      }
+    }
   }
 
   setGlobalSetup(config?.setup);

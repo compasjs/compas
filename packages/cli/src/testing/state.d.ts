@@ -64,6 +64,10 @@ export let areTestsRunning: boolean;
  */
 export let timeout: number;
 /**
+ * @type {string[]}
+ */
+export const ignoreDirectories: string[];
+/**
  * @type {function(): (void|Promise<void>)}
  */
 export let globalSetup: () => void | Promise<void>;

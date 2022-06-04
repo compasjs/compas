@@ -22,7 +22,9 @@ export function mainTestFn(meta) {
     setTestLogger(logger);
     setAreTestRunning(true);
 
-    const exitCode = await runTestsInProcess({});
+    const exitCode = await runTestsInProcess({
+      singleFileMode: true,
+    });
 
     process.exit(exitCode);
   });

@@ -1,29 +1,19 @@
 import { url } from "inspector";
 import { cpus } from "os";
 import { isMainThread, Worker } from "worker_threads";
-import {
-  dirnameForModule,
-  filenameForModule,
-  isNil,
-  pathJoin,
-  processDirectoryRecursiveSync,
-  spawn,
-} from "@compas/stdlib";
+import { isNil, spawn } from "@compas/stdlib";
+import { loadTestConfig } from "../../testing/config.js";
 import { printTestResultsFromWorkers } from "../../testing/printer.js";
 import {
   setAreTestRunning,
   setTestLogger,
   testLogger,
 } from "../../testing/state.js";
-import { runTestsInProcess } from "../../testing/test-worker-internal.js";
-
-const __filename = filenameForModule(import.meta);
-const workerFile = new URL(
-  `file://${pathJoin(
-    dirnameForModule(import.meta),
-    "../../testing/test-worker.js",
-  )}`,
-);
+import {
+  listTestFiles,
+  runTestsInProcess,
+  workerFile,
+} from "../../testing/test-worker-internal.js";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
@@ -136,16 +126,17 @@ export async function cliExecutor(logger, state) {
   setAreTestRunning(true);
   setTestLogger(logger);
 
-  const files = listTestFiles();
-
   if (parallelCount === 1 && state.flags.randomizeRounds === 1) {
     // Run serial tests in the same process
-    const exitCode = await runTestsInProcess({ files });
+    const exitCode = await runTestsInProcess();
 
     return {
       exitStatus: exitCode === 0 ? "passed" : "failed",
     };
   }
+
+  await loadTestConfig();
+  const files = listTestFiles();
 
   // Almost does the same things as `mainTestFn`, however since tests are run by workers
   // instead of directly. We dispatch them, and then print the results.
@@ -267,28 +258,6 @@ async function runTests(workers, files) {
   await deferredPromise;
 
   return results;
-}
-
-/**
- * List all test files, skipping this file and the worker source file.
- *
- * @returns {string[]}
- */
-function listTestFiles() {
-  const files = [];
-  processDirectoryRecursiveSync(process.cwd(), (file) => {
-    if (file === __filename || file === workerFile.pathname) {
-      return;
-    }
-
-    if (!file.endsWith(".test.js")) {
-      return;
-    }
-
-    files.push(file);
-  });
-
-  return files;
 }
 
 /**

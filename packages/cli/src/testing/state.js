@@ -47,6 +47,11 @@ export let areTestsRunning = false;
 export let timeout = 2500;
 
 /**
+ * @type {string[]}
+ */
+export const ignoreDirectories = [];
+
+/**
  * @type {function(): (void|Promise<void>)}
  */
 export let globalSetup = noop;

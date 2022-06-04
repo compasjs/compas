@@ -119,6 +119,9 @@ the defaults is below:
 // Individual test timeout, i.e. the function provided to `test` and `t.test`
 export const timeout = 2500;
 
+// Relative or absolute directories that are ignored
+export const ignoreDirectories = [];
+
 export async function setup() {
   // Global setup function
 }
@@ -317,6 +320,13 @@ When tests are executed, a config file attempted to be loaded from
 
 A configurable timeout in milliseconds. This is enforced for every callback
 provided to `test` or `t.test`. Defaults to 2.5 seconds.
+
+**ignoreDirectories**
+
+An array of strings specifying directories that should be ignored when searching
+for test files. They can be absolute paths or relative to the project root. Test
+files in these directories can still be executed via for example
+`compas run ./ignored/directory/foo.test.js`
 
 **setup**
 
