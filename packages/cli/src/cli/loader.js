@@ -35,6 +35,10 @@ export async function cliLoaderLoadDirectories(event, options) {
         continue;
       }
 
+      if (f.endsWith(".test.js") || f.endsWith(".bench.js")) {
+        continue;
+      }
+
       const filePath = pathJoin(input.directory, f);
 
       try {
