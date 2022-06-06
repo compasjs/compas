@@ -169,14 +169,6 @@ export function getSortedKeysForType(type) {
  * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function doSqlChecks(context) {
-  if (context.options.enabledGenerators.indexOf("validator") === -1) {
-    context.errors.push({
-      key: "sqlEnableValidator",
-    });
-  }
-
-  // TODO: Handle validators
-
   const referencedKeySet = new Map();
 
   for (const type of getQueryEnabledObjects(context)) {

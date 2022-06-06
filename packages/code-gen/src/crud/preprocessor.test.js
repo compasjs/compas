@@ -1,0 +1,144 @@
+import { mainTestFn, test } from "@compas/cli";
+import { codeGenToTemporaryDirectory } from "../../test/utils.test.js";
+import { TypeCreator } from "../builders/index.js";
+
+mainTestFn(import.meta);
+
+test("code-gen/crud/preprocessor", (t) => {
+  t.test("validation", (t) => {
+    t.test("crudEnableQueries - unnamed object", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [T.crud("/bar").entity(T.object().enableQueries())],
+        {
+          enabledGenerators: ["type", "sql"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(
+        stdout.includes(
+          "Found a 'T.crud()' in the 'app' group which did not call '.entity()'",
+        ),
+      );
+    });
+
+    t.test("crudEnableQueries - not enabled queries", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [T.crud("/bar").entity(T.object("bar"))],
+        {
+          enabledGenerators: ["type", "sql"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(
+        stdout.includes(
+          "Found a 'T.crud()' in the 'app' group which did not call '.entity()'",
+        ),
+      );
+    });
+
+    t.test("crudSoftDeleteNotSupported", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [
+          T.crud("/bar").entity(
+            T.object("bar").enableQueries({ withSoftDeletes: true }),
+          ),
+        ],
+        {
+          enabledGenerators: ["type", "sql"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(stdout.includes("Replace 'withSoftDeletes' with 'withDates' "));
+    });
+
+    t.test("crudStoreFileNotSupported", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [
+          T.crud("/bar").entity(
+            new TypeCreator("store")
+              .object("file")
+              .enableQueries({ withDates: true }),
+          ),
+        ],
+        {
+          enabledGenerators: ["type", "sql"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(
+        stdout.includes(
+          "files, but it is used in a 'T.crud()' call in the 'app' group",
+        ),
+      );
+    });
+
+    t.test("crudStoreFileNotSupported - reference", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [
+          new TypeCreator("store")
+            .object("file")
+            .enableQueries({ withDates: true }),
+
+          T.object("post")
+            .enableQueries({ withDates: true })
+            .relations(
+              T.oneToOne("image", T.reference("store", "file"), "postImage"),
+            ),
+
+          T.crud("/bar").entity(T.reference("app", "post")),
+        ],
+        {
+          enabledGenerators: ["type"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(stdout.includes("files, but it is referenced by 'AppPost'"));
+    });
+
+    t.test("crudFromParentNotResolved", async (t) => {
+      const T = new TypeCreator("app");
+      const { stdout, exitCode } = await codeGenToTemporaryDirectory(
+        [
+          T.object("post")
+            .enableQueries({
+              withDates: true,
+            })
+            .relations(T.oneToMany("tags", T.reference("app", "postTag"))),
+
+          T.object("postTag")
+            .enableQueries({
+              withDates: true,
+            })
+            .relations(T.manyToOne("post", T.reference("app", "post"), "tags")),
+
+          T.crud("/bar")
+            .entity(T.reference("app", "post"))
+            .inlineRelations(
+              T.crud().fromParent("tags"),
+              T.crud().fromParent("images"),
+            ),
+        ],
+        {
+          enabledGenerators: ["type", "sql"],
+        },
+      );
+
+      t.equal(exitCode, 1);
+      t.ok(
+        stdout.includes(
+          "Relation in CRUD from 'AppPost' via 'images' could not be resolved",
+        ),
+      );
+    });
+  });
+});

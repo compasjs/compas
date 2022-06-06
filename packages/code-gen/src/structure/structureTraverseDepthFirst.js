@@ -86,5 +86,16 @@ function traverseDepthFirstProcess(structure, callback, type, metadata) {
 
       callback(type, metadata);
       break;
+
+    case "crud":
+      traverseDepthFirstProcess(structure, callback, type.entity);
+
+      for (const crud of type.inlineRelations) {
+        traverseDepthFirstProcess(structure, callback, crud);
+      }
+
+      for (const crud of type.nestedRelations) {
+        traverseDepthFirstProcess(structure, callback, crud);
+      }
   }
 }

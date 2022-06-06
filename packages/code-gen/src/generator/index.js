@@ -2,8 +2,13 @@
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { isNil, pathJoin } from "@compas/stdlib";
+import { crudGenerateEventImplementations } from "../crud/event-implementer.js";
+import { crudCreateRoutes } from "../crud/route-creator.js";
+import { crudGenerateRouteImplementations } from "../crud/route-implementer.js";
 import { copyAndSort } from "../generate.js";
 import { preprocessorsExecute } from "../preprocessors/index.js";
+import { structureHoistNamedItems } from "../structure/structureHoistNamedItems.js";
+import { structureLinkReferences } from "../structure/structureLinkReferences.js";
 import { templateContext } from "../template.js";
 import { generateApiClientFiles } from "./apiClient/index.js";
 import { generateCommonFiles } from "./common.js";
@@ -22,7 +27,10 @@ import {
   doSqlChecks,
 } from "./sql/utils.js";
 import { createWhereTypes } from "./sql/where-type.js";
-import { generateStructureFile } from "./structure.js";
+import {
+  structureAppendApiStructure,
+  structureCreateFile,
+} from "./structure.js";
 import {
   generateTypeFile,
   getTypeNameForType,
@@ -81,18 +89,20 @@ export function generate(logger, options, structure) {
   // The raw structure that is used to generate all the files.
   // This contains all information needed to generate again, even if different options
   // are needed.
-  generateStructureFile(context);
+  structureCreateFile(context);
   exitOnErrorsOrReturn(context);
 
   // Don't execute any logic, we can just write the structure out only
   if (context.options.enabledGenerators.length > 0) {
-    preprocessorsExecute(context);
-
+    structureLinkReferences(context.structure);
     exitOnErrorsOrReturn(context);
 
     const copy = {};
     copyAndSort(context.structure, copy);
     context.structure = copy;
+
+    preprocessorsExecute(context);
+    exitOnErrorsOrReturn(context);
 
     templateContext.globals.getTypeNameForType = getTypeNameForType.bind(
       undefined,
@@ -109,33 +119,25 @@ export function generate(logger, options, structure) {
     checkIfEnabledGroupsHaveTypes(context);
     exitOnErrorsOrReturn(context);
 
-    // Do initial sql checks and load in the types
-    // This way the validators are generated
-    if (context.options.enabledGenerators.indexOf("sql") !== -1) {
-      doSqlChecks(context);
-      exitOnErrorsOrReturn(context);
+    doSqlChecks(context);
+    exitOnErrorsOrReturn(context);
 
-      addShortNamesToQueryEnabledObjects(context);
-      exitOnErrorsOrReturn(context);
+    addShortNamesToQueryEnabledObjects(context);
+    exitOnErrorsOrReturn(context);
 
-      generateSqlStructure(context);
+    createWhereTypes(context);
+    createUpdateTypes(context);
+    createOrderByTypes(context);
+    createPartialTypes(context);
+    createQueryBuilderTypes(context);
 
-      createWhereTypes(context);
-      createUpdateTypes(context);
-      createOrderByTypes(context);
-      createPartialTypes(context);
-      createQueryBuilderTypes(context);
+    exitOnErrorsOrReturn(context);
 
-      exitOnErrorsOrReturn(context);
-    }
+    crudCreateRoutes(context);
+    exitOnErrorsOrReturn(context);
 
-    if (
-      context.options.enabledGenerators.includes("router") ||
-      context.options.enabledGenerators.includes("reactQuery")
-    ) {
-      processRouteInvalidations(context);
-      exitOnErrorsOrReturn(context);
-    }
+    processRouteInvalidations(context);
+    exitOnErrorsOrReturn(context);
 
     generateCommonFiles(context);
 
@@ -146,6 +148,10 @@ export function generate(logger, options, structure) {
 
     if (context.options.enabledGenerators.indexOf("router") !== -1) {
       generateRouterFiles(context);
+      exitOnErrorsOrReturn(context);
+
+      crudGenerateEventImplementations(context);
+      crudGenerateRouteImplementations(context);
       exitOnErrorsOrReturn(context);
     }
 
@@ -160,6 +166,13 @@ export function generate(logger, options, structure) {
     }
 
     if (context.options.enabledGenerators.indexOf("sql") !== -1) {
+      if (context.options.enabledGenerators.indexOf("validator") === -1) {
+        context.errors.push({
+          key: "sqlEnableValidator",
+        });
+      }
+
+      generateSqlStructure(context);
       generateModelFiles(context);
       exitOnErrorsOrReturn(context);
     }
@@ -167,7 +180,14 @@ export function generate(logger, options, structure) {
     if (context.options.enabledGenerators.indexOf("type") !== -1) {
       generateTypeFile(context);
     }
+
+    // Get structure in the same state as without generators, This way we can dump the
+    // api structure easily.
+    structureHoistNamedItems(context.structure);
   }
+
+  structureAppendApiStructure(context);
+
   // Add provided file headers to all files
   annotateFilesWithHeader(context);
 

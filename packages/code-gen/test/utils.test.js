@@ -1,5 +1,5 @@
 import { writeFile } from "fs/promises";
-import { exec, pathJoin, uuid } from "@compas/stdlib";
+import { environment, exec, pathJoin, spawn, uuid } from "@compas/stdlib";
 import { temporaryDirectory } from "../../../src/testing.js";
 import { App } from "../src/App.js";
 
@@ -91,6 +91,10 @@ async function main() {
   const generateFile = pathJoin(baseDirectory, `generate.js`);
 
   await writeFile(generateFile, genFile, "utf-8");
+
+  if (environment.DEBUG === "true") {
+    await spawn(`node`, [generateFile]);
+  }
   const { exitCode, stdout, stderr } = await exec(`node ${generateFile}`);
 
   return {

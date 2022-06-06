@@ -1,9 +1,7 @@
 export type TypeBuilderLike =
-  | boolean
-  | number
   | string
-  | TypeBuilderLikeObject
-  | TypeBuilderLike[]
-  | TypeBuilder;
-
-type TypeBuilderLikeObject = Record<string, TypeBuilderLike>;
+  | number
+  | boolean
+  | import("../src/builders/TypeBuilder.js").TypeBuilder
+  | { [property: string]: TypeBuilderLike }
+  | TypeBuilderLike[];

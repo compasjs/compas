@@ -94,6 +94,11 @@ export class TypeCreator {
    */
   router(path: string): RouteCreator;
   /**
+   * @param {string} [path]
+   * @returns {CrudType}
+   */
+  crud(path?: string | undefined): CrudType;
+  /**
    * @param {string} ownKey
    * @param {ReferenceType} reference
    * @returns {RelationType}
@@ -139,5 +144,6 @@ import { SearchableType } from "./SearchableType.js";
 import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
 import { RouteCreator } from "./RouteBuilder.js";
+import { CrudType } from "../crud/CrudType.js";
 import { RelationType } from "./RelationType.js";
 //# sourceMappingURL=TypeCreator.d.ts.map

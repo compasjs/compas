@@ -1457,7 +1457,206 @@ export function anonymousValidator512566754(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenOmitType|import("./types").CodeGenPickType>}
+ * @returns {EitherN<"crud">}
+ */
+export function anonymousValidator1173938076(
+  value: any,
+  propertyPath: string,
+): EitherN<"crud">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|import("./types").CodeGenRelationType>}
+ */
+export function anonymousValidator84237458(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | import("./types").CodeGenRelationType>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|import("./types").CodeGenCrudType>}
+ */
+export function anonymousValidator581222320(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | import("./types").CodeGenCrudType>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }>}
+ */
+export function anonymousValidator1536786940(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  usedRelation?: undefined | import("./types").CodeGenRelationType;
+  parent?: undefined | import("./types").CodeGenCrudType;
+  writeableTypeName?: undefined | string;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"name"?: undefined|string, }>}
+ */
+export function anonymousValidator1874431172(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      name?: undefined | string;
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }>}
+ */
+export function anonymousValidator234152904(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      field: string;
+      options?:
+        | undefined
+        | {
+            name?: undefined | string;
+          };
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }>}
+ */
+export function anonymousValidator1468771841(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  listRoute?: undefined | boolean;
+  singleRoute?: undefined | boolean;
+  createRoute?: undefined | boolean;
+  updateRoute?: undefined | boolean;
+  deleteRoute?: undefined | boolean;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }>}
+ */
+export function anonymousValidator921887009(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      $omit?: undefined | string[];
+      $pick?: undefined | string[];
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }>}
+ */
+export function anonymousValidator1186181590(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  readable?:
+    | undefined
+    | {
+        $omit?: undefined | string[];
+        $pick?: undefined | string[];
+      };
+  writable?:
+    | undefined
+    | {
+        $omit?: undefined | string[];
+        $pick?: undefined | string[];
+      };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<(import("./types").CodeGenCrudType)[]>}
+ */
+export function anonymousValidator581628245(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").CodeGenCrudType[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "crud", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }, "basePath"?: undefined|string, "entity"?: undefined|import("./types").CodeGenType, "fromParent"?: undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }, "routeOptions": {"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }, "fieldOptions": {"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }, "inlineRelations": (import("./types").CodeGenCrudType)[], "nestedRelations": (import("./types").CodeGenCrudType)[], }>}
+ */
+export function anonymousValidator1787806021(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "crud";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary: boolean;
+        searchable: boolean;
+        hasDefaultValue: boolean;
+      };
+  validator: {};
+  internalSettings: {
+    usedRelation?: undefined | import("./types").CodeGenRelationType;
+    parent?: undefined | import("./types").CodeGenCrudType;
+    writeableTypeName?: undefined | string;
+  };
+  basePath?: undefined | string;
+  entity?: undefined | import("./types").CodeGenType;
+  fromParent?:
+    | undefined
+    | {
+        field: string;
+        options?:
+          | undefined
+          | {
+              name?: undefined | string;
+            };
+      };
+  routeOptions: {
+    listRoute?: undefined | boolean;
+    singleRoute?: undefined | boolean;
+    createRoute?: undefined | boolean;
+    updateRoute?: undefined | boolean;
+    deleteRoute?: undefined | boolean;
+  };
+  fieldOptions: {
+    readable?:
+      | undefined
+      | {
+          $omit?: undefined | string[];
+          $pick?: undefined | string[];
+        };
+    writable?:
+      | undefined
+      | {
+          $omit?: undefined | string[];
+          $pick?: undefined | string[];
+        };
+  };
+  inlineRelations: import("./types").CodeGenCrudType[];
+  nestedRelations: import("./types").CodeGenCrudType[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").CodeGenAnyType|import("./types").CodeGenAnyOfType|import("./types").CodeGenArrayType|import("./types").CodeGenBooleanType|import("./types").CodeGenDateType|import("./types").CodeGenFileType|import("./types").CodeGenGenericType|import("./types").CodeGenNumberType|import("./types").CodeGenObjectType|import("./types").CodeGenReferenceType|import("./types").CodeGenStringType|import("./types").CodeGenUuidType|import("./types").CodeGenRouteType|import("./types").CodeGenOmitType|import("./types").CodeGenPickType|import("./types").CodeGenCrudType>}
  */
 export function anonymousValidator682551261(
   value: any,
@@ -1478,6 +1677,7 @@ export function anonymousValidator682551261(
   | import("./types").CodeGenRouteType
   | import("./types").CodeGenOmitType
   | import("./types").CodeGenPickType
+  | import("./types").CodeGenCrudType
 >;
 /**
  * @param {*} value
@@ -1514,6 +1714,36 @@ export function anonymousValidator20588538(
   validator: {};
   internalSettings: {};
   values: import("./types").CodeGenType[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<"crudEnableQueries"|"crudSoftDeleteNotSupported"|"crudStoreFileNotSupported"|"crudFromParentNotResolved">}
+ */
+export function anonymousValidator725375990(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | "crudEnableQueries"
+  | "crudSoftDeleteNotSupported"
+  | "crudStoreFileNotSupported"
+  | "crudFromParentNotResolved"
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"key": "crudEnableQueries"|"crudSoftDeleteNotSupported"|"crudStoreFileNotSupported"|"crudFromParentNotResolved", "value": string, }>}
+ */
+export function anonymousValidator367209652(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  key:
+    | "crudEnableQueries"
+    | "crudSoftDeleteNotSupported"
+    | "crudStoreFileNotSupported"
+    | "crudFromParentNotResolved";
+  value: string;
 }>;
 /**
  * @param {*} value
@@ -1845,12 +2075,20 @@ export function anonymousValidator860724709(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
+ * @returns {EitherN<{"key": "crudEnableQueries"|"crudSoftDeleteNotSupported"|"crudStoreFileNotSupported"|"crudFromParentNotResolved", "value": string, }|{"key": "structureReservedGroupName", "groupName": string, }|{"key": "structureUnknownOrEmptyGroup", "groupName": string, }|{"key": "sqlMissingPrimaryKey", "typeName": string, }|{"key": "sqlForgotEnableQueries", "typeName": string, "referencedByType": string, }|{"key": "sqlDuplicateRelationOwnKey", "type": string, "relationKey": string, }|{"key": "sqlDuplicateRelationReferencedKey", "type": string, "relationKey": string, }|{"key": "sqlMissingOneToMany", "referencedByGroup": string, "referencedByType": string, "typeName": string, "relationOwnKey": string, }|{"key": "sqlUnusedOneToMany", "type": string, "referencedType": string, "ownKey": string, }|{"key": "sqlEnableValidator", }|{"key": "sqlDuplicateShortName", "shortName": string, "firstName": string, "secondName": string, }|{"key": "sqlReservedObjectKey", "type": string, "reservedKey": string, }|{"key": "sqlReservedRelationKey", "type": string, "ownKey": string, }|{"key": "routerUnknownInvalidationTarget", "from": string, "target": {"group": string, "name"?: undefined|string, }, }|{"key": "routerIncorrectlySpecifiedInvalidation", "from": string, "target": {"group": string, "name"?: undefined|string, }, "sourcePropertyPath": (string)[], "targetPropertyPath": (string)[], }>}
  */
 export function anonymousValidator2029084423(
   value: any,
   propertyPath: string,
 ): EitherN<
+  | {
+      key:
+        | "crudEnableQueries"
+        | "crudSoftDeleteNotSupported"
+        | "crudStoreFileNotSupported"
+        | "crudFromParentNotResolved";
+      value: string;
+    }
   | {
       key: "structureReservedGroupName";
       groupName: string;

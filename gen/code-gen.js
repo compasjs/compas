@@ -32,6 +32,15 @@ export function applyCodeGenStructure(app) {
       errors: [
         T.anyOf("collectableError").values(
           {
+            key: T.string().oneOf(
+              "crudEnableQueries",
+              "crudSoftDeleteNotSupported",
+              "crudStoreFileNotSupported",
+              "crudFromParentNotResolved",
+            ),
+            value: T.string(),
+          },
+          {
             key: "structureReservedGroupName",
             groupName: T.string(),
           },
@@ -497,6 +506,66 @@ function getTypes(T) {
     reference: T.reference("codeGen", "type"),
   });
 
+  const crudType = T.object("crudType").keys({
+    type: "crud",
+    ...typeBase,
+
+    // Used while generating to store various
+    // properties about the type
+    internalSettings: T.object()
+      .keys({
+        usedRelation: T.reference("codeGen", "relationType").optional(),
+        parent: T.reference("codeGen", "crudType").optional(),
+        writeableTypeName: T.string().optional(),
+      })
+      .loose()
+      .default("{}"),
+
+    basePath: T.string().optional(),
+    entity: T.reference("codeGen", "type").optional(),
+    fromParent: T.object()
+      .keys({
+        field: T.string(),
+        options: T.object()
+          .keys({
+            name: T.string().optional(),
+          })
+          .optional()
+          .loose(),
+      })
+      .optional()
+      .loose(),
+    routeOptions: T.object()
+      .keys({
+        listRoute: T.bool().optional(),
+        singleRoute: T.bool().optional(),
+        createRoute: T.bool().optional(),
+        updateRoute: T.bool().optional(),
+        deleteRoute: T.bool().optional(),
+      })
+      .loose(),
+    fieldOptions: T.object()
+      .keys({
+        readable: T.object()
+          .keys({
+            $omit: T.array().values(T.string()).optional(),
+            $pick: T.array().values(T.string()).optional(),
+          })
+          .loose()
+          .optional(),
+        writable: T.object()
+          .keys({
+            $omit: T.array().values(T.string()).optional(),
+            $pick: T.array().values(T.string()).optional(),
+          })
+          .loose()
+          .optional(),
+      })
+      .loose(),
+    inlineRelations: [T.reference("codeGen", "crudType")],
+    nestedRelations: [T.reference("codeGen", "crudType")],
+  });
+
   return {
     baseTypes: [
       anyType,
@@ -513,7 +582,7 @@ function getTypes(T) {
       uuidType,
       routeType,
     ].map((it) => it.loose()),
-    preProcessOnlyTypes: [omitType, pickType].map((it) => it.loose()),
+    preProcessOnlyTypes: [omitType, pickType, crudType].map((it) => it.loose()),
     extraTypes: [relationType, routeInvalidationType].map((it) => it.loose()),
   };
 }

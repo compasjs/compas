@@ -97,7 +97,7 @@ function generateValidatorsForGroup(context, imports, anonymousImports, group) {
   for (const name of Object.keys(data)) {
     const type = data[name];
 
-    if (["route", "relation"].indexOf(type.type) !== -1) {
+    if (["route", "relation", "crud"].indexOf(type.type) !== -1) {
       continue;
     }
 

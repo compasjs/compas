@@ -1,4 +1,5 @@
 import { AppError } from "@compas/stdlib";
+import { CrudType } from "../crud/CrudType.js";
 import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { AnyOfType } from "./AnyOfType.js";
 import { AnyType } from "./AnyType.js";
@@ -39,8 +40,6 @@ export class TypeCreator {
       });
     }
   }
-
-  // Base and utils
 
   /**
    * @param {string} [name]
@@ -171,14 +170,20 @@ export class TypeCreator {
     return new UuidType(this.group, name);
   }
 
-  // Generator specific builders
-
   /**
    * @param {string} path
    * @returns {RouteCreator}
    */
   router(path) {
     return new RouteCreator(this.group, path);
+  }
+
+  /**
+   * @param {string} [path]
+   * @returns {CrudType}
+   */
+  crud(path) {
+    return new CrudType(this.group, path);
   }
 
   /**

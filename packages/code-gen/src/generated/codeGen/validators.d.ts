@@ -60,6 +60,15 @@ export function validateCodeGenContext(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenContext>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenCrudTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenCrudType>}
+ */
+export function validateCodeGenCrudType(
+  value: undefined | any | import("../common/types").CodeGenCrudTypeInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenCrudType>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenDateTypeInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenDateType>}

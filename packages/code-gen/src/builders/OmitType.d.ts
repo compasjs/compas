@@ -6,12 +6,16 @@ export class OmitType extends TypeBuilder {
     };
   };
   constructor(group: any, name: any);
-  internalReference: any;
+  internalReference:
+    | import("../../types/advanced-types").TypeBuilderLike
+    | undefined;
   /**
    * @param {import("../../types/advanced-types").TypeBuilderLike} builder
    * @returns {OmitType}
    */
-  object(builder: any): OmitType;
+  object(
+    builder: import("../../types/advanced-types").TypeBuilderLike,
+  ): OmitType;
   /**
    * @param {...string} keys
    * @returns {OmitType}

@@ -4,12 +4,13 @@ import { structureIteratorNamedTypes } from "../structure/structureIterators.js"
 import { js } from "./tag/index.js";
 
 /**
- * If `options.dumpStructure` and/or `options.dumpApiStructure` is true, create a
- * structure.js file with the structure payload
+ * Create a structure file with at least the generate options that are used.
+ * If 'dumpStructure' is true, dump the structure before any generator added types or
+ * something.
  *
  * @param {import("../generated/common/types").CodeGenContext} context
  */
-export function generateStructureFile(context) {
+export function structureCreateFile(context) {
   let structureSource = "";
 
   structureSource = `export const compasGenerateSettings = ${JSON.stringify(
@@ -40,6 +41,21 @@ export function generateStructureFile(context) {
     `;
   }
 
+  context.outputFiles.push({
+    contents: js`${structureSource}`,
+    relativePath: `./common/structure${context.extension}`,
+  });
+}
+
+/**
+ * Append the final api structure to the 'structure' source if 'dumpApiStructure' is
+ * true.
+ *
+ * @param {import("../generated/common/types").CodeGenContext} context
+ */
+export function structureAppendApiStructure(context) {
+  let structureSource = "";
+
   if (context.options.dumpApiStructure) {
     /** @type {import("../generated/common/types").CodeGenStructure} */
     const apiStructure = {};
@@ -48,6 +64,7 @@ export function generateStructureFile(context) {
       if (type.type !== "route") {
         continue;
       }
+
       structureAddType(apiStructure, type);
     }
 
@@ -66,7 +83,13 @@ export function generateStructureFile(context) {
     `;
   }
 
-  if (structureSource.length > 0) {
+  const file = context.outputFiles.find(
+    (it) => it.relativePath === `./common/structure${context.extension}`,
+  );
+
+  if (file) {
+    file.contents += structureSource;
+  } else {
     context.outputFiles.push({
       contents: js`${structureSource}`,
       relativePath: `./common/structure${context.extension}`,

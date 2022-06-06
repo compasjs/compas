@@ -1,3 +1,4 @@
+import { crudPreprocess } from "../crud/preprocessor.js";
 import { formatDocStringsOfTypes } from "../generator/comments.js";
 import { addFieldsOfRelations } from "../generator/sql/add-fields.js";
 import { structureLinkReferences } from "../structure/structureLinkReferences.js";
@@ -13,6 +14,7 @@ import { preprocessPick } from "./pick.js";
  */
 export function preprocessorsExecute(context) {
   structureLinkReferences(context.structure);
+  crudPreprocess(context);
 
   structureTraverserAssign(context.structure, (type) => {
     let result = preprocessOmit(context.structure, type);

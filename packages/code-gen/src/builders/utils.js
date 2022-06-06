@@ -1,4 +1,4 @@
-import { isPlainObject } from "@compas/stdlib";
+import { isNil, isPlainObject } from "@compas/stdlib";
 import { ArrayType } from "./ArrayType.js";
 import { BooleanType } from "./BooleanType.js";
 import { NumberType } from "./NumberType.js";
@@ -29,20 +29,22 @@ export function isNamedTypeBuilderLike(value) {
  * - array
  * - object
  *
- * @param {TypeBuilderLike|undefined} value
- * @returns {*}
+ * @param {any} value
+ * @returns {Record<string, any>}
  */
 export function buildOrInfer(value) {
-  if (value && value.build && typeof value.build === "function") {
-    return value.build();
-  }
-
   if (typeof value === "boolean") {
     return new BooleanType().oneOf(value).build();
   } else if (typeof value === "number") {
     return new NumberType().oneOf(value).build();
   } else if (typeof value === "string") {
     return new StringType().oneOf(value).build();
+  } else if (
+    !isNil(value) &&
+    "build" in value &&
+    typeof value.build === "function"
+  ) {
+    return value.build();
   } else if (isPlainObject(value)) {
     return new ObjectType().keys(value).build();
   } else if (Array.isArray(value) && value.length === 1) {
@@ -50,7 +52,7 @@ export function buildOrInfer(value) {
   } else if (typeof value === "function") {
     throw new Error(
       `Can't infer type of function. Did you forget to call '${
-        value.name ?? "anonymous"
+        value?.name ?? "anonymous"
       }'?`,
     );
   } else if (Array.isArray(value) && value.length !== 1) {

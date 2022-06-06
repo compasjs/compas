@@ -104,5 +104,26 @@ function traverseAssignProcess(structure, callback, type, metadata) {
       type.response = traverseAssignProcess(structure, callback, type.response);
 
       return callback(type, metadata);
+
+    case "crud":
+      type.entity = traverseAssignProcess(structure, callback, type.entity);
+
+      for (let i = 0; i < type.inlineRelations.length; ++i) {
+        type.inlineRelations[i] = traverseAssignProcess(
+          structure,
+          callback,
+          type.inlineRelations[i],
+        );
+      }
+
+      for (let i = 0; i < type.nestedRelations.length; ++i) {
+        type.nestedRelations[i] = traverseAssignProcess(
+          structure,
+          callback,
+          type.nestedRelations[i],
+        );
+      }
+
+      return callback(type, metadata);
   }
 }

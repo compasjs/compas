@@ -40,8 +40,12 @@ export function createOrderByTypes(context) {
     .optional()
     .build();
 
-  structureAddType(context.structure, orderByType);
-  structureAddType(context.structure, orderByOptionalField);
+  if (getQueryEnabledObjects(context).length > 0) {
+    // Since this parent function is hit even if no query enabled objects are provided,
+    // we only register them conditionally, since they are also only used conditionally
+    structureAddType(context.structure, orderByType);
+    structureAddType(context.structure, orderByOptionalField);
+  }
 
   for (const type of getQueryEnabledObjects(context)) {
     const fields = getSearchableFields(type);

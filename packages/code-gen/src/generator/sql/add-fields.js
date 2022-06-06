@@ -68,7 +68,7 @@ export function addFieldsForRelation(context, type, relation) {
     };
   } catch {
     context.errors.push({
-      key: "sqlMissingPrimaryKey", // @ts-ignore
+      key: "sqlMissingPrimaryKey",
       typeName: relation.reference.reference.name,
     });
   }
