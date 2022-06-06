@@ -142,6 +142,11 @@ function combineCommits(commits) {
     }
 
     const [, buildType, pkg, fromVersion, toVersion, pr] = execResult;
+
+    if (pkg === "@types/node") {
+      continue;
+    }
+
     if (isNil(combinable[pkg])) {
       combinable[pkg] = {
         buildType,
