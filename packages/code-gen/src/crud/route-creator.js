@@ -2,8 +2,12 @@ import { TypeCreator } from "../builders/index.js";
 import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { structureAddType } from "../structure/structureAddType.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
+import { upperCaseFirst } from "../utils.js";
 import { crudCreateName, crudResolveGroup } from "./resolvers.js";
-import { crudCallFunctionsForRoutes } from "./route-functions.js";
+import {
+  crudCallFunctionsForRoutes,
+  crudCreateRouteParam,
+} from "./route-functions.js";
 
 /**
  * Create the necessary routes based on the available crud types
@@ -310,6 +314,9 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
   // @ts-expect-error
   structureAddType(context.structure, itemType);
 
+  type.internalSettings.writeableTypeName =
+    upperCaseFirst(itemType.group) + upperCaseFirst(itemType.name);
+
   const ref = T.reference(itemType.group, itemType.name).build();
   ref.reference = itemType;
 
@@ -435,16 +442,6 @@ function crudGetParamsObject(type, { includeSelf }) {
   obj.keys = keys;
 
   return obj;
-}
-
-/**
- *
- * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @returns {string}
- */
-function crudCreateRouteParam(type) {
-  // @ts-expect-error
-  return `${type.entity.reference.name}Id`;
 }
 
 /**

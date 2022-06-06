@@ -208,6 +208,12 @@ export class CrudType extends TypeBuilder {
       });
     }
 
+    if (type === "inline" && Object.keys(it.data.routeOptions).length > 0) {
+      throw AppError.serverError({
+        message: `Inline CRUD can't specify 'routeOptions'.`,
+      });
+    }
+
     return build;
   }
 }

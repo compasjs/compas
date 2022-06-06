@@ -27,3 +27,13 @@ export function crudCallFunctionsForRoutes(functions, type, args) {
     functions.deleteRoute(...args);
   }
 }
+
+/**
+ *
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ * @returns {string}
+ */
+export function crudCreateRouteParam(type) {
+  // @ts-expect-error
+  return `${type.fromParent?.options?.name ?? type.entity.reference.name}Id`;
+}

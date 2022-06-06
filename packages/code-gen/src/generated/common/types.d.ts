@@ -389,6 +389,7 @@ export type CodeGenCrudType = {
   internalSettings: {
     usedRelation?: undefined | CodeGenRelationType;
     parent?: undefined | CodeGenCrudType;
+    writeableTypeName?: undefined | string;
   };
   basePath?: undefined | string;
   entity?: undefined | CodeGenType;
@@ -959,6 +960,7 @@ export type CodeGenCrudTypeInput = {
           | undefined
           | import("./../common/types").CodeGenRelationTypeInput;
         parent?: undefined | import("./../common/types").CodeGenCrudTypeInput;
+        writeableTypeName?: undefined | string;
       };
   basePath?: undefined | string;
   entity?: undefined | import("./../common/types").CodeGenTypeInput;

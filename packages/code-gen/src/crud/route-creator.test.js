@@ -5,7 +5,7 @@ import { TypeCreator } from "../builders/index.js";
 mainTestFn(import.meta);
 
 test("code-gen/crud/route-creator", (t) => {
-  t.test("temp", async (t) => {
+  t.test("can generate", async (t) => {
     const T = new TypeCreator("database");
     const Tpost = new TypeCreator("post");
 
@@ -30,6 +30,11 @@ test("code-gen/crud/route-creator", (t) => {
 
           Tpost.crud("/post")
             .entity(T.reference("database", "post"))
+            .fields({
+              readable: {
+                $omit: ["createdAt"],
+              },
+            })
             .inlineRelations(Tpost.crud().fromParent("tags", { name: "tag" }))
             .nestedRelations(
               Tpost.crud("/tag").fromParent("tags", { name: "tag" }),

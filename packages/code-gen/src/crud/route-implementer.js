@@ -1,25 +1,27 @@
+import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { importCreator } from "../generator/utils.js";
 import { partialAsString } from "../partials/helpers.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { upperCaseFirst } from "../utils.js";
 import {
-  partialCrudCount,
-  partialCrudCreate,
-  partialCrudDelete,
-  partialCrudList,
-  partialCrudSingle,
-  partialCrudTransformer,
-  partialCrudUpdate,
-} from "./partials/events.js";
+  crudPartialRouteCreate,
+  crudPartialRouteDelete,
+  crudPartialRouteList,
+  crudPartialRouteSingle,
+  crudPartialRouteUpdate,
+} from "./partials/routes.js";
 import { crudCreateName, crudResolveGroup } from "./resolvers.js";
-import { crudCallFunctionsForRoutes } from "./route-functions.js";
+import {
+  crudCallFunctionsForRoutes,
+  crudCreateRouteParam,
+} from "./route-functions.js";
 
 /**
- * Create the implementations of all generated routes
+ * Create the implementation of the controllers, including hooks
  *
  * @param {import("../generated/common/types.js").CodeGenContext} context
  */
-export function crudGenerateImplementations(context) {
+export function crudGenerateRouteImplementations(context) {
   for (const type of structureIteratorNamedTypes(context.structure)) {
     if (!("type" in type) || type.type !== "crud") {
       continue;
@@ -28,13 +30,29 @@ export function crudGenerateImplementations(context) {
     const importer = importCreator();
     const sources = [];
 
-    crudGenerateEventImplementationForType(context, importer, sources, type);
+    crudGenerateRouteImplementationForType(context, importer, sources, type);
 
+    sources.unshift(`
+/**
+ * Register controller implementations for the '${crudResolveGroup(
+   type,
+ )}' routes.
+ *
+ * This function accepts various optional hooks that will be called in the implementations.
+ *
+ * @param {{
+ *   sql: Postgres,
+ * }} options
+ */
+export function ${crudResolveGroup(type)}RegisterCrud({ sql }) {
+  
+`);
+    sources.push("}");
     sources.unshift(importer.print());
 
     context.outputFiles.push({
       contents: partialAsString(sources),
-      relativePath: `./${type.group}/events.js`,
+      relativePath: `./${type.group}/crud.js`,
     });
   }
 }
@@ -45,7 +63,7 @@ export function crudGenerateImplementations(context) {
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationForType(
+function crudGenerateRouteImplementationForType(
   context,
   importer,
   sources,
@@ -53,33 +71,18 @@ function crudGenerateEventImplementationForType(
 ) {
   crudCallFunctionsForRoutes(
     {
-      listRoute: crudGenerateEventImplementationListRoute,
-      singleRoute: crudGenerateEventImplementationSingleRoute,
-      createRoute: crudGenerateEventImplementationCreateRoute,
-      updateRoute: crudGenerateEventImplementationUpdateRoute,
-      deleteRoute: crudGenerateEventImplementationDeleteRoute,
+      listRoute: crudGenerateRouteImplementationListRoute,
+      singleRoute: crudGenerateRouteImplementationSingleRoute,
+      createRoute: crudGenerateRouteImplementationCreateRoute,
+      updateRoute: crudGenerateRouteImplementationUpdateRoute,
+      deleteRoute: crudGenerateRouteImplementationDeleteRoute,
     },
     type,
     [context, importer, sources, type],
   );
 
-  if (
-    type.routeOptions.listRoute !== false ||
-    type.routeOptions.singleRoute !== false ||
-    type.routeOptions.createRoute !== false
-  ) {
-    crudGenerateEventImplementationTransformer(
-      context,
-      importer,
-      sources,
-      type,
-    );
-  }
-
-  // todo; transformer if list, single or create
-
   for (const relation of type.nestedRelations) {
-    crudGenerateEventImplementationForType(
+    crudGenerateRouteImplementationForType(
       context,
       importer,
       sources,
@@ -94,26 +97,44 @@ function crudGenerateEventImplementationForType(
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationListRoute(
+function crudGenerateRouteImplementationListRoute(
   context,
   importer,
   sources,
   type,
 ) {
   const data = {
+    handlerName: `${crudResolveGroup(type)}Handlers.${crudCreateName(
+      type,
+      "list",
+    )}`,
     crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
+    countBuilder: crudFormatBuilder(
+      crudGetBuilder(type, {
+        includeOwnParam: false,
+        includeJoins: false,
+        traverseParents: true,
+      }),
+    ),
+    listBuilder: crudFormatBuilder(
+      crudGetBuilder(type, {
+        includeOwnParam: false,
+        includeJoins: true,
+        traverseParents: false,
+      }),
+    ),
   };
 
-  importer.destructureImport("eventStart", "@compas/stdlib");
-  importer.destructureImport("eventStop", "@compas/stdlib");
+  importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`${data.crudName}Count`, "./events.js");
+  importer.destructureImport(`${data.crudName}List`, "./events.js");
+  importer.destructureImport(`${data.crudName}Transform`, "./events.js");
   importer.destructureImport(
-    `query${upperCaseFirst(data.entityName)}`,
-    `../database/${data.entityName}.js`,
+    `${crudResolveGroup(type)}Handlers`,
+    "./controller.js",
   );
 
-  sources.push(partialCrudCount(data), partialCrudList(data));
+  sources.push(crudPartialRouteList(data));
 }
 
 /**
@@ -122,27 +143,36 @@ function crudGenerateEventImplementationListRoute(
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationSingleRoute(
+function crudGenerateRouteImplementationSingleRoute(
   context,
   importer,
   sources,
   type,
 ) {
   const data = {
+    handlerName: `${crudResolveGroup(type)}Handlers.${crudCreateName(
+      type,
+      "single",
+    )}`,
     crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
+    builder: crudFormatBuilder(
+      crudGetBuilder(type, {
+        includeOwnParam: true,
+        includeJoins: true,
+        traverseParents: true,
+      }),
+    ),
   };
 
-  importer.destructureImport("AppError", "@compas/stdlib");
-  importer.destructureImport("eventStart", "@compas/stdlib");
-  importer.destructureImport("eventStop", "@compas/stdlib");
+  importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`${data.crudName}Transform`, "./events.js");
+  importer.destructureImport(`${data.crudName}Single`, "./events.js");
   importer.destructureImport(
-    `query${upperCaseFirst(data.entityName)}`,
-    `../database/${data.entityName}.js`,
+    `${crudResolveGroup(type)}Handlers`,
+    "./controller.js",
   );
 
-  sources.push(partialCrudSingle(data));
+  sources.push(crudPartialRouteSingle(data));
 }
 
 /**
@@ -151,33 +181,29 @@ function crudGenerateEventImplementationSingleRoute(
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationCreateRoute(
+function crudGenerateRouteImplementationCreateRoute(
   context,
   importer,
   sources,
   type,
 ) {
   const data = {
-    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
-  };
-
-  if (type.routeOptions.singleRoute === false) {
-    crudGenerateEventImplementationSingleRoute(
-      context,
-      importer,
-      sources,
+    handlerName: `${crudResolveGroup(type)}Handlers.${crudCreateName(
       type,
-    );
-  }
+      "create",
+    )}`,
+    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
+  };
 
-  importer.destructureImport("eventStart", "@compas/stdlib");
-  importer.destructureImport("eventStop", "@compas/stdlib");
-  importer.destructureImport("newEventFromEvent", "@compas/stdlib");
-  importer.destructureImport(`queries`, `../database/index.js`);
+  importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`${data.crudName}Transform`, "./events.js");
+  importer.destructureImport(`${data.crudName}Create`, "./events.js");
+  importer.destructureImport(
+    `${crudResolveGroup(type)}Handlers`,
+    "./controller.js",
+  );
 
-  sources.push(partialCrudCreate(data));
+  sources.push(crudPartialRouteCreate(data));
 }
 
 /**
@@ -186,32 +212,36 @@ function crudGenerateEventImplementationCreateRoute(
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationUpdateRoute(
+function crudGenerateRouteImplementationUpdateRoute(
   context,
   importer,
   sources,
   type,
 ) {
   const data = {
-    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
-  };
-
-  if (type.routeOptions.singleRoute === false) {
-    crudGenerateEventImplementationSingleRoute(
-      context,
-      importer,
-      sources,
+    handlerName: `${crudResolveGroup(type)}Handlers.${crudCreateName(
       type,
-    );
-  }
+      "update",
+    )}`,
+    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
+    builder: crudFormatBuilder(
+      crudGetBuilder(type, {
+        includeOwnParam: true,
+        includeJoins: true,
+        traverseParents: true,
+      }),
+    ),
+  };
 
-  importer.destructureImport("eventStart", "@compas/stdlib");
-  importer.destructureImport("eventStop", "@compas/stdlib");
-  importer.destructureImport(`queries`, `../database/index.js`);
+  importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`${data.crudName}Update`, "./events.js");
+  importer.destructureImport(`${data.crudName}Single`, "./events.js");
+  importer.destructureImport(
+    `${crudResolveGroup(type)}Handlers`,
+    "./controller.js",
+  );
 
-  sources.push(partialCrudUpdate(data));
+  sources.push(crudPartialRouteUpdate(data));
 }
 
 /**
@@ -220,84 +250,89 @@ function crudGenerateEventImplementationUpdateRoute(
  * @param {string[]} sources
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  */
-function crudGenerateEventImplementationDeleteRoute(
+function crudGenerateRouteImplementationDeleteRoute(
   context,
   importer,
   sources,
   type,
 ) {
   const data = {
-    crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
-  };
-
-  if (type.routeOptions.singleRoute === false) {
-    crudGenerateEventImplementationSingleRoute(
-      context,
-      importer,
-      sources,
+    handlerName: `${crudResolveGroup(type)}Handlers.${crudCreateName(
       type,
-    );
-  }
-
-  importer.destructureImport("eventStart", "@compas/stdlib");
-  importer.destructureImport("eventStop", "@compas/stdlib");
-  importer.destructureImport(`queries`, `../database/index.js`);
-
-  sources.push(partialCrudDelete(data));
-}
-
-/**
- * @param {import("../generated/common/types.js").CodeGenContext} context
- * @param {import("../generator/utils.js").ImportCreator} importer
- * @param {string[]} sources
- * @param {import("../generated/common/types.js").CodeGenCrudType} type
- */
-function crudGenerateEventImplementationTransformer(
-  context,
-  importer,
-  sources,
-  type,
-) {
-  const data = {
+      "delete",
+    )}`,
     crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
-    entityName: type.entity.reference.name,
-    entityUniqueName: type.entity.reference.uniqueName,
-    entity: crudBuildTransformEntity(type),
+    builder: crudFormatBuilder(
+      crudGetBuilder(type, {
+        includeOwnParam: true,
+        includeJoins: false,
+        traverseParents: true,
+      }),
+    ),
   };
 
-  sources.push(partialCrudTransformer(data));
+  importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`${data.crudName}Delete`, "./events.js");
+  importer.destructureImport(`${data.crudName}Single`, "./events.js");
+  importer.destructureImport(
+    `${crudResolveGroup(type)}Handlers`,
+    "./controller.js",
+  );
+
+  sources.push(crudPartialRouteDelete(data));
 }
 
 /**
- * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ * @param {any} builder
+ * @returns {string}
  */
-function crudBuildTransformEntity(type) {
-  let keys = Object.keys(type.entity.reference.keys);
+export function crudFormatBuilder(builder) {
+  return JSON.stringify(builder, null, 2).replace(/"/gi, "");
+}
 
-  if (type.fieldOptions?.readable?.$pick?.length > 0) {
-    keys = type.fieldOptions?.readable.$pick;
-  }
+/**
+ *
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ * @param {{ includeOwnParam, includeJoins, traverseParents }} opts
+ * @returns {any}
+ */
+export function crudGetBuilder(
+  type,
+  { includeOwnParam, includeJoins, traverseParents },
+) {
+  const result = {
+    where: {},
+  };
 
-  for (const omit of type.fieldOptions?.readable?.$omit ?? []) {
-    if (keys.indexOf(omit) !== -1) {
-      keys.splice(keys.indexOf(omit), 1);
+  const crudType = type;
+
+  if (includeJoins) {
+    for (const relation of crudType.inlineRelations) {
+      // @ts-expect-error
+      result[relation.fromParent.field] = crudGetBuilder(relation, {
+        includeOwnParam: false,
+        includeJoins: true,
+        traverseParents: false,
+      });
     }
   }
 
-  const result = {};
-  for (const key of keys) {
-    result[key] = true;
+  if (includeOwnParam) {
+    // @ts-expect-error
+    const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
+    result.where[primaryKey.key] = `ctx.validatedParams.${crudCreateRouteParam(
+      crudType,
+    )}`;
   }
 
-  for (const relation of type.inlineRelations) {
-    const nested = crudBuildTransformEntity(relation);
-
-    result[relation.fromParent.field] =
-      relation.internalSettings.usedRelation.subType === "oneToMany"
-        ? [nested]
-        : nested;
+  if (traverseParents && type.internalSettings.parent) {
+    result[ // @ts-expect-error
+      `via${upperCaseFirst(type.internalSettings.usedRelation.referencedKey)}`
+    ] = crudGetBuilder(type.internalSettings.parent, {
+      includeOwnParam: true,
+      includeJoins: false,
+      traverseParents: true,
+    });
   }
 
   return result;

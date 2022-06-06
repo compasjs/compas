@@ -516,6 +516,7 @@ function getTypes(T) {
       .keys({
         usedRelation: T.reference("codeGen", "relationType").optional(),
         parent: T.reference("codeGen", "crudType").optional(),
+        writeableTypeName: T.string().optional(),
       })
       .loose()
       .default("{}"),

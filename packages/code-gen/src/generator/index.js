@@ -2,8 +2,9 @@
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { isNil, pathJoin } from "@compas/stdlib";
+import { crudGenerateEventImplementations } from "../crud/event-implementer.js";
 import { crudCreateRoutes } from "../crud/route-creator.js";
-import { crudGenerateImplementations } from "../crud/route-implementer.js";
+import { crudGenerateRouteImplementations } from "../crud/route-implementer.js";
 import { copyAndSort } from "../generate.js";
 import { preprocessorsExecute } from "../preprocessors/index.js";
 import { structureHoistNamedItems } from "../structure/structureHoistNamedItems.js";
@@ -149,7 +150,8 @@ export function generate(logger, options, structure) {
       generateRouterFiles(context);
       exitOnErrorsOrReturn(context);
 
-      crudGenerateImplementations(context);
+      crudGenerateEventImplementations(context);
+      crudGenerateRouteImplementations(context);
       exitOnErrorsOrReturn(context);
     }
 

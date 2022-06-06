@@ -10,7 +10,7 @@ import { upperCaseFirst } from "../../utils.js";
  * }} data
  * @returns {string}
  */
-export const partialCrudCount = (data) => `
+export const crudPartialEventCount = (data) => `
 /**
  * Count function, resolving pagination parameters
  *
@@ -49,7 +49,7 @@ export async function ${data.crudName}Count(event, sql, builder, queryParams) {
  * }} data
  * @returns {string}
  */
-export const partialCrudList = (data) => `
+export const crudPartialEventList = (data) => `
 /**
  * List ${data.crudName} entities
  *
@@ -79,7 +79,7 @@ export async function ${data.crudName}List(event, sql, builder) {
  * }} data
  * @returns {string}
  */
-export const partialCrudSingle = (data) => `
+export const crudPartialEventSingle = (data) => `
 /**
  * Find a single ${data.crudName} entity
  *
@@ -110,10 +110,18 @@ export async function ${data.crudName}Single(event, sql, builder) {
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
+ *   builder: string,
+ *   inlineRelations: {
+ *     name: string,
+ *     referencedKey: string,
+ *     entityName: string,
+ *     isInlineArray: boolean,
+ *     inlineRelations: any[],
+ *   }[]
  * }} data
  * @returns {string}
  */
-export const partialCrudCreate = (data) => `
+export const crudPartialEventCreate = (data) => `
 /**
  * Create a new ${data.crudName} entity
  *
@@ -125,16 +133,27 @@ export const partialCrudCreate = (data) => `
 export async function ${data.crudName}Create(event, sql, body) {
   eventStart(event, "${data.crudName}.create");
   
-  // TODO: handle inline inserts
+  ${partialAsString(
+    data.inlineRelations.map((it) => [
+      `let ${it.name} = [body.${it.name}];`,
+      `delete body.${it.name}`,
+    ]),
+  )}
   
-  const [{ id }] = await queries.${data.entityName}Insert(sql, body);
-  const result = await ${
+  
+  const result = await queries.${data.entityName}Insert(sql, body);
+  
+  ${crudPartialInlineRelationInserts(data.inlineRelations, "result")}
+  
+  const builder = ${data.builder};
+  builder.where.id = result[0].id;
+  const _item = await ${
     data.crudName
-  }Single(newEventFromEvent(event), sql, { where: { id } });
+  }Single(newEventFromEvent(event), sql, builder);
   
   eventStop(event);
   
-  return result;
+  return _item;
 }
 `;
 
@@ -143,10 +162,17 @@ export async function ${data.crudName}Create(event, sql, body) {
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
+ *   inlineRelations: {
+ *     name: string,
+ *     referencedKey: string,
+ *     entityName: string,
+ *     isInlineArray: boolean,
+ *     inlineRelations: any[],
+ *   }[]
  * }} data
  * @returns {string}
  */
-export const partialCrudUpdate = (data) => `
+export const crudPartialEventUpdate = (data) => `
 /**
  * Update a ${data.crudName} entity
  *
@@ -159,18 +185,96 @@ export const partialCrudUpdate = (data) => `
 export async function ${data.crudName}Update(event, sql, entity, body) {
   eventStart(event, "${data.crudName}.update");
   
-  // TODO: handle inline inserts
+  ${partialAsString(
+    data.inlineRelations.map((it) => [
+      `let ${it.name} = [body.${it.name}];`,
+      `delete body.${it.name}`,
+    ]),
+  )}
   
-  await queries.${data.entityName}Update(sql, {
+  const result = await queries.${data.entityName}Update(sql, {
     update: body,
     where: {
       id: entity.id,
-    }
+    },
+    returning: ["id"],
   });
+  
+  ${data.inlineRelations.length > 0 ? "await Promise.all([" : ""}
+  ${partialAsString(
+    data.inlineRelations.map(
+      (it) =>
+        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: id }),`,
+    ),
+  )}
+  ${data.inlineRelations.length > 0 ? "])" : ""}
+  
+  ${crudPartialInlineRelationInserts(data.inlineRelations, "result")}
   
   eventStop(event);
 }
 `;
+
+/**
+ * @param {{
+ *     name: string,
+ *     referencedKey: string,
+ *     entityName: string,
+ *     isInlineArray: boolean,
+ *     inlineRelations: any[],
+ *   }[]} relations
+ * @param {string} parentName
+ * @returns {string}
+ */
+export const crudPartialInlineRelationInserts = (relations, parentName) =>
+  partialAsString(
+    relations.map(
+      (relation) => `{
+      for (let i = 0; i < ${relation.name}.length; ++i) {
+        ${
+          relation.isInlineArray
+            ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].id)`
+            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id`
+        }
+      }
+      
+      ${
+        relation.isInlineArray
+          ? `${relation.name} = ${relation.name}.flat();`
+          : ``
+      }
+      
+      ${partialAsString(
+        relation.inlineRelations.map((it) => `let ${it.name} = [];`),
+      )}
+      
+      ${
+        relation.inlineRelations.length > 0
+          ? `
+        for (const it of ${relation.name}) {
+          ${partialAsString(
+            relation.inlineRelations.map((it) => [
+              `${it.name}.push(it.${it.name});`,
+              `delete it.${it.name};`,
+            ]),
+          )}
+        }
+      `
+          : ``
+      }
+      
+      ${relation.name} = await queries.${relation.entityName}Insert(sql, ${
+        relation.name
+      });
+      
+      ${crudPartialInlineRelationInserts(
+        relation.inlineRelations,
+        relation.name,
+      )}
+    }
+    `,
+    ),
+  );
 
 /**
  * @param {{
@@ -180,7 +284,7 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
  * }} data
  * @returns {string}
  */
-export const partialCrudDelete = (data) => `
+export const crudPartialEventDelete = (data) => `
 /**
  * Delete a ${data.crudName} entity
  *
@@ -209,7 +313,7 @@ export async function ${data.crudName}Delete(event, sql, entity) {
  * }} data
  * @returns {string}
  */
-export const partialCrudTransformer = (data) => `
+export const crudPartialEventTransformer = (data) => `
 /**
  * Transform ${data.entityName} entity to the response type 
  *
@@ -218,20 +322,20 @@ export const partialCrudTransformer = (data) => `
  */
 export function ${data.crudName}Transform(input) {
   return {
-    ${partialCrudFormatObject(data.entity, "input")}
+    ${crudPartialFormatObject(data.entity, "input")}
   }
 }
 `;
 
-const partialCrudFormatObject = (keys, source) =>
+const crudPartialFormatObject = (keys, source) =>
   partialAsString(
     Object.entries(keys).map(([key, value]) => {
       if (Array.isArray(value)) {
         return `${key}: ${source}.${key}.map(it => ({
-      ${partialCrudFormatObject(value[0], "it")}
+      ${crudPartialFormatObject(value[0], "it")}
     })),`;
       } else if (isPlainObject(value)) {
-        return partialCrudFormatObject(value, `${source}.${key}`);
+        return crudPartialFormatObject(value, `${source}.${key}`);
       }
 
       return `${key}: ${source}.${key},`;

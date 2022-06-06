@@ -14,6 +14,9 @@ export const partialAsString = (input) =>
   Array.isArray(input)
     ? input
         .flat(Infinity)
-        .map((it) => partialEndWithNewline(it))
+        .map((it) => {
+          // @ts-expect-error
+          return partialEndWithNewline(it);
+        })
         .join("")
     : partialEndWithNewline(input);
