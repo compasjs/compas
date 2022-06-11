@@ -159,6 +159,7 @@ function crudInlineRelationData(type) {
     entityName: it.entity.reference.name,
     isInlineArray: it.internalSettings.usedRelation.subType === "oneToMany",
     inlineRelations: crudInlineRelationData(it),
+    isOptional: it.isOptional,
   }));
 }
 

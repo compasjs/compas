@@ -229,14 +229,18 @@ function crudCreateReadableType(context, type, { suffix } = {}) {
 
     // @ts-expect-error
     itemType.keys[inline.fromParent.field] = T.array().values(true).build();
-    // @ts-expect-error
-    itemType.keys[inline.fromParent.field].values = crudCreateReadableType(
-      context,
-      inline,
-      {
-        suffix: suffix?.includes("inline") ? suffix : "inline",
-      },
-    );
+    const inlineType = crudCreateReadableType(context, inline, {
+      suffix: suffix?.includes("inline") ? suffix : "inline",
+    });
+
+    if (inline.internalSettings.usedRelation.subType === "oneToOneReverse") {
+      inlineType.isOptional = inline.isOptional;
+      // @ts-expect-error
+      itemType.keys[inline.fromParent.field] = inlineType;
+    } else {
+      // @ts-expect-error
+      itemType.keys[inline.fromParent.field].values = inlineType;
+    }
   }
 
   // @ts-expect-error
@@ -301,14 +305,18 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
 
     // @ts-expect-error
     itemType.keys[inline.fromParent.field] = T.array().values(true).build();
-    // @ts-expect-error
-    itemType.keys[inline.fromParent.field].values = crudCreateWriteableType(
-      context,
-      inline,
-      {
-        suffix: suffix?.includes("inline") ? suffix : "inline",
-      },
-    );
+    const inlineType = crudCreateWriteableType(context, inline, {
+      suffix: suffix?.includes("inline") ? suffix : "inline",
+    });
+
+    if (inline.internalSettings.usedRelation.subType === "oneToOneReverse") {
+      inlineType.isOptional = inline.isOptional;
+      // @ts-expect-error
+      itemType.keys[inline.fromParent.field] = inlineType;
+    } else {
+      // @ts-expect-error
+      itemType.keys[inline.fromParent.field].values = inlineType;
+    }
   }
 
   // @ts-expect-error
