@@ -44,6 +44,7 @@ export function crudPartialInlineRelationInserts(
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOptional: boolean;
     inlineRelations: any[];
   }[],
   parentName: string,
