@@ -239,12 +239,5 @@ test("code-gen/crud/e2e/basics", async (t) => {
     await closeTestApp(api);
 
     t.pass();
-    // process.exit(0);
   });
-
-  // list
-  // single
-  // create
-  // update
-  // delete
 });

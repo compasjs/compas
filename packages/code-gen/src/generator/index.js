@@ -3,6 +3,7 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { isNil, pathJoin } from "@compas/stdlib";
 import { crudGenerateEventImplementations } from "../crud/event-implementer.js";
+import { crudPreprocess } from "../crud/preprocessor.js";
 import { crudCreateRoutes } from "../crud/route-creator.js";
 import { crudGenerateRouteImplementations } from "../crud/route-implementer.js";
 import { copyAndSort } from "../generate.js";
@@ -124,6 +125,8 @@ export function generate(logger, options, structure) {
 
     addShortNamesToQueryEnabledObjects(context);
     exitOnErrorsOrReturn(context);
+
+    crudPreprocess(context);
 
     createWhereTypes(context);
     createUpdateTypes(context);

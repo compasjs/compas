@@ -202,7 +202,7 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
   ${partialAsString(
     data.inlineRelations.map(
       (it) =>
-        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: id }),`,
+        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: result[0].id }),`,
     ),
   )}
   ${data.inlineRelations.length > 0 ? "])" : ""}
@@ -219,6 +219,7 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOptional: boolean,
  *     inlineRelations: any[],
  *   }[]} relations
  * @param {string} parentName
@@ -231,8 +232,12 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
       for (let i = 0; i < ${relation.name}.length; ++i) {
         ${
           relation.isInlineArray
-            ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].id)`
-            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id`
+            ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].id);`
+            : relation.isOptional
+            ? `if (${relation.name}[i]) {
+             ${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id;
+            }`
+            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id;`
         }
       }
       
@@ -252,12 +257,20 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
         for (const it of ${relation.name}) {
           ${partialAsString(
             relation.inlineRelations.map((it) => [
+              relation.isOptional ? `if (it) {` : ``,
               `${it.name}.push(it.${it.name});`,
               `delete it.${it.name};`,
+              relation.isOptional ? `}` : ``,
             ]),
           )}
         }
       `
+          : ``
+      }
+      
+      ${
+        relation.isOptional
+          ? `${relation.name} = ${relation.name}.filter(it => it)`
           : ``
       }
       
@@ -333,7 +346,10 @@ const crudPartialFormatObject = (keys, source) =>
       ${crudPartialFormatObject(value[0], "it")}
     })),`;
       } else if (isPlainObject(value)) {
-        return crudPartialFormatObject(value, `${source}.${key}`);
+        return `${key}: ${source}.${key} ? { ${crudPartialFormatObject(
+          value,
+          `${source}.${key}`,
+        )} }  : undefined, `;
       }
 
       return `${key}: ${source}.${key},`;

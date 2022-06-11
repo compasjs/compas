@@ -2,6 +2,7 @@
 
 import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { structureAddType } from "./structure/structureAddType.js";
+import { upperCaseFirst } from "./utils.js";
 
 /**
  * Provided that input is empty, copy over all enabled groups from structure,
@@ -34,7 +35,7 @@ export function includeReferenceTypes(structure, input) {
 
     // handle values
     if (currentObject?.type === "reference") {
-      const { group, name, uniqueName } = currentObject.reference;
+      const { group, name } = currentObject.reference;
 
       // ensure ref does not already exits
       if (!isNil(structure[group]?.[name]) && isNil(input[group]?.[name])) {
@@ -47,7 +48,9 @@ export function includeReferenceTypes(structure, input) {
         continue;
       } else if (isNil(structure[group]?.[name])) {
         throw new AppError("codeGen.app.followReferences", 500, {
-          message: `Could not resolve reference '${uniqueName}'`,
+          message: `Could not resolve reference '${
+            upperCaseFirst(group) + upperCaseFirst(name)
+          }'`,
         });
       }
     }
