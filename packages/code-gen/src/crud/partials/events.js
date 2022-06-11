@@ -114,6 +114,7 @@ export async function ${data.crudName}Single(event, sql, builder) {
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOptional: boolean,
  *     inlineRelations: any[],
  *   }[]
  * }} data
@@ -165,6 +166,7 @@ export async function ${data.crudName}Create(event, sql, body) {
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOptional: boolean,
  *     inlineRelations: any[],
  *   }[]
  * }} data

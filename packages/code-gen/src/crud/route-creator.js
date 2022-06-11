@@ -233,6 +233,7 @@ function crudCreateReadableType(context, type, { suffix } = {}) {
       suffix: suffix?.includes("inline") ? suffix : "inline",
     });
 
+    // @ts-expect-error
     if (inline.internalSettings.usedRelation.subType === "oneToOneReverse") {
       inlineType.isOptional = inline.isOptional;
       // @ts-expect-error
@@ -309,6 +310,7 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
       suffix: suffix?.includes("inline") ? suffix : "inline",
     });
 
+    // @ts-expect-error
     if (inline.internalSettings.usedRelation.subType === "oneToOneReverse") {
       inlineType.isOptional = inline.isOptional;
       // @ts-expect-error

@@ -23,6 +23,7 @@ export function crudPartialEventCreate(data: {
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOptional: boolean;
     inlineRelations: any[];
   }[];
 }): string;
@@ -35,6 +36,7 @@ export function crudPartialEventUpdate(data: {
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOptional: boolean;
     inlineRelations: any[];
   }[];
 }): string;
