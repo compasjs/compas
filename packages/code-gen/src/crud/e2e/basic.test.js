@@ -207,7 +207,7 @@ test("code-gen/crud/e2e/basics", async (t) => {
     });
   });
 
-  t.test("apiTagDelete", async (t) => {
+  t.test("apiTagDelete", (t) => {
     t.test("tag.single.notFound", async (t) => {
       try {
         await apiTagDelete(axiosInstance, {
