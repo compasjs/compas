@@ -65,9 +65,9 @@ function crudGenerateEventImplementationForType(
   );
 
   if (
-    type.routeOptions.listRoute !== false ||
-    type.routeOptions.singleRoute !== false ||
-    type.routeOptions.createRoute !== false
+    type.routeOptions.listRoute ||
+    type.routeOptions.singleRoute ||
+    type.routeOptions.createRoute
   ) {
     crudGenerateEventImplementationTransformer(
       context,
@@ -192,7 +192,7 @@ function crudGenerateEventImplementationCreateRoute(
     ),
   };
 
-  if (type.routeOptions.singleRoute === false) {
+  if (!type.routeOptions.singleRoute) {
     crudGenerateEventImplementationSingleRoute(
       context,
       importer,
@@ -232,7 +232,7 @@ function crudGenerateEventImplementationUpdateRoute(
     inlineRelations: crudInlineRelationData(type),
   };
 
-  if (type.routeOptions.singleRoute === false) {
+  if (!type.routeOptions.singleRoute) {
     crudGenerateEventImplementationSingleRoute(
       context,
       importer,
@@ -270,7 +270,7 @@ function crudGenerateEventImplementationDeleteRoute(
     entityUniqueName: type.entity.reference.uniqueName,
   };
 
-  if (type.routeOptions.singleRoute === false) {
+  if (!type.routeOptions.singleRoute) {
     crudGenerateEventImplementationSingleRoute(
       context,
       importer,

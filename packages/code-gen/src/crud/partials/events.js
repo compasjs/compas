@@ -18,7 +18,7 @@ export const crudPartialEventCount = (data) => `
  * @param {Postgres} sql
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @param {${upperCaseFirst(data.crudName)}ListQuery} queryParams
- * @returns {Promise<{ total: number, where: ${data.entityUniqueName}Where }>}
+ * @returns {Promise<{ total: number, idIn: string[] }>}
  */
 export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   eventStart(event, "${data.crudName}.count");
@@ -34,9 +34,7 @@ export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   
   return { 
     total,
-    where: {
-     idIn: slice.map(it => it.id),
-    }
+    idIn: slice.map(it => it.id),
   };
 }
 `;

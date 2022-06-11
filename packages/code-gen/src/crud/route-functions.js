@@ -7,23 +7,23 @@
  * @param {Args} args
  */
 export function crudCallFunctionsForRoutes(functions, type, args) {
-  if (type.routeOptions.listRoute !== false) {
+  if (type.routeOptions.listRoute) {
     functions.listRoute(...args);
   }
 
-  if (type.routeOptions.singleRoute !== false) {
+  if (type.routeOptions.singleRoute) {
     functions.singleRoute(...args);
   }
 
-  if (type.routeOptions.createRoute !== false) {
+  if (type.routeOptions.createRoute) {
     functions.createRoute(...args);
   }
 
-  if (type.routeOptions.updateRoute !== false) {
+  if (type.routeOptions.updateRoute) {
     functions.updateRoute(...args);
   }
 
-  if (type.routeOptions.deleteRoute !== false) {
+  if (type.routeOptions.deleteRoute) {
     functions.deleteRoute(...args);
   }
 }

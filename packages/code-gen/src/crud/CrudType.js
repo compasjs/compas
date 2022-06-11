@@ -89,7 +89,7 @@ export class CrudType extends TypeBuilder {
   }
 
   /**
-   * Disable routes that should not be generated
+   * Enable routes that should be generated. Can not be used on inline relations
    *
    * @param {{
    *   listRoute?: boolean,
