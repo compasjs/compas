@@ -71,8 +71,8 @@ function crudCreateListRoute(context, type) {
     params: crudGetParamsObject(type, { includeSelf: false }),
     query: T.object()
       .keys({
-        offset: T.number().default(0),
-        limit: T.number().default(50),
+        offset: T.number().default(0).convert(),
+        limit: T.number().default(50).convert(),
       })
       .build(),
     body: T.object()
