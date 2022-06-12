@@ -5,7 +5,7 @@ import {
   createTestAppAndClient,
   getApp,
 } from "@compas/server";
-import { isNil, pathJoin } from "@compas/stdlib";
+import { pathJoin, uuid } from "@compas/stdlib";
 import axios from "axios";
 import { sql } from "../../../../../src/testing.js";
 import { codeGenToTemporaryDirectory } from "../../../test/utils.test.js";
@@ -13,7 +13,7 @@ import { TypeCreator } from "../../builders/index.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/crud/e2e/inline", async (t) => {
+test("code-gen/crud/e2e/nested", async (t) => {
   const Tdatabase = new TypeCreator("database");
   const T = new TypeCreator("role");
 
@@ -52,15 +52,26 @@ test("code-gen/crud/e2e/inline", async (t) => {
         T.crud("/role")
           .entity(T.reference("database", "role"))
           .routes({
-            singleRoute: true,
             createRoute: true,
-            updateRoute: true,
           })
-          .inlineRelations(
-            T.crud().fromParent("permissions", {
-              name: "permission",
+          .nestedRelations(
+            T.crud("/permission")
+              .fromParent("permissions", {
+                name: "permission",
+              })
+              .routes({
+                listRoute: true,
+                singleRoute: true,
+                createRoute: true,
+                updateRoute: true,
+                deleteRoute: true,
+              }),
+            T.crud("/info").fromParent("info", { name: "info" }).routes({
+              singleRoute: true,
+              createRoute: true,
+              updateRoute: true,
+              deleteRoute: true,
             }),
-            T.crud().fromParent("info", { name: "info" }).optional(),
           ),
       ],
       {
@@ -82,9 +93,15 @@ test("code-gen/crud/e2e/inline", async (t) => {
   const { roleRegisterCrud } = await import(
     pathJoin(generatedDirectory, "./role/crud.js")
   );
-  const { apiRoleSingle, apiRoleCreate, apiRoleUpdate } = await import(
-    pathJoin(generatedDirectory, "./role/apiClient.js")
-  );
+
+  const {
+    apiRoleCreate,
+    apiRolePermissionList,
+    apiRolePermissionSingle,
+    apiRolePermissionCreate,
+    apiRoleInfoSingle,
+    apiRoleInfoCreate,
+  } = await import(pathJoin(generatedDirectory, "./role/apiClient.js"));
 
   const api = getApp();
   setBodyParsers(createBodyParsers({}, {}));
@@ -120,99 +137,84 @@ test("code-gen/crud/e2e/inline", async (t) => {
     );
   `);
 
-  t.test("apiRoleCreate", (t) => {
-    t.test("success - without info", async (t) => {
-      const { item } = await apiRoleCreate(axiosInstance, {
-        identifier: "role 1",
-        permissions: [
-          {
-            identifier: "permission 1",
-          },
-        ],
-      });
+  const { item: role } = await apiRoleCreate(axiosInstance, {
+    identifier: "Role 1",
+  });
 
-      t.ok(item.id);
-      t.equal(item.permissions.length, 1);
-      t.equal(item.permissions[0].identifier, "permission 1");
-      t.ok(isNil(item.info));
+  t.test("apiRoleInfo", (t) => {
+    t.test("apiRoleInfoSingle - notFound", async (t) => {
+      try {
+        await apiRoleInfoSingle(axiosInstance, {
+          roleId: role.id,
+        });
+      } catch (e) {
+        t.equal(e.key, "roleInfo.single.notFound");
+      }
     });
 
-    t.test("success - without info", async (t) => {
-      const { item } = await apiRoleCreate(axiosInstance, {
-        identifier: "role 2",
-        permissions: [],
-        info: {
-          description: "Role 2 description",
+    t.test("apiRoleInfoCreate", async (t) => {
+      const { item } = await apiRoleInfoCreate(
+        axiosInstance,
+        {
+          roleId: role.id,
         },
+        {
+          description: "Foo bar baz",
+        },
+      );
+
+      t.equal(item.role, role.id);
+    });
+
+    t.test("apiRoleInfoSingle", async (t) => {
+      const { item } = await apiRoleInfoSingle(axiosInstance, {
+        roleId: role.id,
       });
 
-      t.ok(item.id);
-      t.equal(item.permissions.length, 0);
-      t.equal(item.info.description, "Role 2 description");
+      t.ok(item);
     });
   });
 
-  t.test("apiRoleUpdate", async (t) => {
-    const { item } = await apiRoleCreate(axiosInstance, {
-      identifier: "role 3",
-      permissions: [
-        {
-          identifier: "permission 3",
-        },
-      ],
-      info: {
-        description: "role 3 description",
-      },
+  t.test("apiRolePermission", (t) => {
+    t.test("apiRolePermissionSingle - notFound", async (t) => {
+      try {
+        await apiRolePermissionSingle(axiosInstance, {
+          roleId: role.id,
+          permissionId: uuid(),
+        });
+      } catch (e) {
+        t.equal(e.key, "rolePermission.single.notFound");
+      }
     });
 
-    t.test("success - remove inline", async (t) => {
-      await apiRoleUpdate(
+    t.test("apiRolePermissionCreate", async (t) => {
+      const { item } = await apiRolePermissionCreate(
         axiosInstance,
         {
-          roleId: item.id,
+          roleId: role.id,
         },
         {
-          identifier: item.identifier,
-          permissions: [],
+          identifier: "Permission",
         },
       );
 
-      const result = await apiRoleSingle(axiosInstance, {
-        roleId: item.id,
-      });
-
-      t.equal(result.item.id, item.id);
-      t.equal(result.item.permissions.length, 0);
-      t.ok(isNil(result.item.info));
+      t.equal(item.role, role.id);
     });
 
-    t.test("success - add inline", async (t) => {
-      await apiRoleUpdate(
+    t.test("apiRolePermissionList", async (t) => {
+      const { list, total } = await apiRolePermissionList(
         axiosInstance,
         {
-          roleId: item.id,
+          roleId: role.id,
         },
+        {},
         {
-          identifier: item.identifier,
-          permissions: [
-            {
-              identifier: "permission 5",
-            },
-          ],
-          info: {
-            description: "description",
-          },
+          filters: {},
         },
       );
 
-      const result = await apiRoleSingle(axiosInstance, {
-        roleId: item.id,
-      });
-
-      t.equal(result.item.id, item.id);
-      t.equal(result.item.permissions.length, 1);
-      t.equal(result.item.permissions[0].identifier, "permission 5");
-      t.equal(result.item.info.description, "description");
+      t.equal(total, 1);
+      t.equal(list.length, 1);
     });
   });
 

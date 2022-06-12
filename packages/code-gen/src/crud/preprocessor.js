@@ -76,6 +76,15 @@ function crudValidateType(context, type) {
     });
   }
 
+  if (
+    type.fromParent &&
+    type.internalSettings.usedRelation.subType === "oneToOneReverse"
+  ) {
+    // This is the easiest way to disable the list route on oneToOne relations.
+    // We also remove the unnecessary params being used.
+    type.routeOptions.listRoute = false;
+  }
+
   if (type.basePath && !type.basePath.startsWith("/")) {
     type.basePath = `/${type.basePath}`;
   }

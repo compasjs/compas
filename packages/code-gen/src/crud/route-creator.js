@@ -103,7 +103,12 @@ function crudCreateSingleRoute(context, type) {
     group: crudResolveGroup(type),
     name: crudCreateName(type, "single"),
     idempotent: false,
-    path: crudCreateRoutePath(type, `/:${crudCreateRouteParam(type)}/single`),
+    path: crudCreateRoutePath(
+      type,
+      type.internalSettings?.usedRelation?.subType === "oneToOneReverse"
+        ? `/single`
+        : `/:${crudCreateRouteParam(type)}/single`,
+    ),
     method: "GET",
     params: crudGetParamsObject(type, { includeSelf: true }),
     response: responseType,
@@ -152,7 +157,12 @@ function crudCreateUpdateRoute(context, type) {
     group: crudResolveGroup(type),
     name: crudCreateName(type, "update"),
     idempotent: false,
-    path: crudCreateRoutePath(type, `/:${crudCreateRouteParam(type)}/update`),
+    path: crudCreateRoutePath(
+      type,
+      type.internalSettings?.usedRelation?.subType === "oneToOneReverse"
+        ? `/update`
+        : `/:${crudCreateRouteParam(type)}/update`,
+    ),
     method: "PUT",
     params: crudGetParamsObject(type, { includeSelf: true }),
     body: bodyType,
@@ -175,7 +185,12 @@ function crudCreateDeleteRoute(context, type) {
     group: crudResolveGroup(type),
     name: crudCreateName(type, "delete"),
     idempotent: false,
-    path: crudCreateRoutePath(type, `/:${crudCreateRouteParam(type)}/delete`),
+    path: crudCreateRoutePath(
+      type,
+      type.internalSettings?.usedRelation?.subType === "oneToOneReverse"
+        ? `/delete`
+        : `/:${crudCreateRouteParam(type)}/delete`,
+    ),
     method: "DELETE",
     params: crudGetParamsObject(type, { includeSelf: true }),
     response: T.object()
@@ -285,6 +300,15 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
         delete itemType.keys[key];
       }
     }
+  }
+
+  type.fieldOptions.writable = type.fieldOptions.writable ?? {};
+  type.fieldOptions.writable.$omit = type.fieldOptions.writable.$omit ?? [];
+
+  if (type.fromParent) {
+    type.fieldOptions.writable.$omit.push(
+      type.internalSettings.usedRelation.referencedKey,
+    );
   }
 
   if (Array.isArray(type.fieldOptions?.writable?.$omit)) {
@@ -436,10 +460,13 @@ function crudGetParamsObject(type, { includeSelf }) {
   let crudType = includeSelf ? type : type.internalSettings.parent;
 
   while (crudType) {
-    // @ts-expect-error
-    const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
-
-    keys[crudCreateRouteParam(crudType)] = primaryKey.field;
+    if (
+      crudType.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
+    ) {
+      // @ts-expect-error
+      const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
+      keys[crudCreateRouteParam(crudType)] = primaryKey.field;
+    }
 
     crudType = crudType.internalSettings.parent;
   }
@@ -456,7 +483,7 @@ function crudGetParamsObject(type, { includeSelf }) {
 
 /**
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @param {string|undefined} suffix
+ * @param {string|undefined} [suffix]
  * @returns {string}
  */
 function crudCreateRoutePath(type, suffix) {
@@ -469,6 +496,16 @@ function crudCreateRoutePath(type, suffix) {
   const path = type.basePath + suffix;
 
   if (type.fromParent) {
+    if (
+      type.internalSettings.parent.internalSettings?.usedRelation?.subType ===
+      "oneToOneReverse"
+    ) {
+      return crudCreateRoutePath(
+        // @ts-expect-error
+        type.internalSettings.parent,
+        path,
+      );
+    }
     return crudCreateRoutePath(
       // @ts-expect-error
       type.internalSettings.parent,

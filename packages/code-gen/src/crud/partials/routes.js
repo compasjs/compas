@@ -50,12 +50,24 @@ ${data.handlerName} = async (ctx, next) => {
  * @param {{
  *   handlerName: string,
  *   crudName: string,
+ *   applyParams?: {
+ *     bodyKey: string,
+ *     paramsKey: string,
+ *   },
  * }} data
  * @returns {string}
  */
 export const crudPartialRouteCreate = (data) => `
 ${data.handlerName} = async (ctx, next) => {
-  const item = await sql.begin(sql => ${data.crudName}Create(newEventFromEvent(ctx.event), sql, ctx.validatedBody));
+  ${
+    data.applyParams
+      ? `ctx.validatedBody.${data.applyParams.bodyKey} = ctx.validatedParams.${data.applyParams.paramsKey};`
+      : ``
+  }
+  
+  const item = await sql.begin(sql => ${
+    data.crudName
+  }Create(newEventFromEvent(ctx.event), sql, ctx.validatedBody));
   
   ctx.body = {
     item: ${data.crudName}Transform(item),
