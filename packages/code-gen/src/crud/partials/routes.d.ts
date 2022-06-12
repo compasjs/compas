@@ -12,6 +12,10 @@ export function crudPartialRouteSingle(data: {
 export function crudPartialRouteCreate(data: {
   handlerName: string;
   crudName: string;
+  applyParams?: {
+    bodyKey: string;
+    paramsKey: string;
+  };
 }): string;
 export function crudPartialRouteUpdate(data: {
   handlerName: string;
