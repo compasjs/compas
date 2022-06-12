@@ -208,6 +208,12 @@ export class CrudType extends TypeBuilder {
       });
     }
 
+    if (type === "nested" && it.data.isOptional) {
+      throw AppError.serverError({
+        message: `T.crud()'s provided in 'nestedRelations' can't be '.optional()'`,
+      });
+    }
+
     if (type === "inline" && Object.keys(it.data.routeOptions).length > 0) {
       throw AppError.serverError({
         message: `Inline CRUD can't specify 'routeOptions'.`,

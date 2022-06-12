@@ -193,6 +193,12 @@ function crudGenerateRouteImplementationCreateRoute(
       "create",
     )}`,
     crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
+    applyParams: type.fromParent
+      ? {
+          bodyKey: type.internalSettings.usedRelation.referencedKey,
+          paramsKey: crudCreateRouteParam(type.internalSettings.parent),
+        }
+      : undefined,
   };
 
   importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
@@ -317,7 +323,10 @@ export function crudGetBuilder(
     }
   }
 
-  if (includeOwnParam) {
+  if (
+    includeOwnParam &&
+    type.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
+  ) {
     // @ts-expect-error
     const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
     result.where[primaryKey.key] = `ctx.validatedParams.${crudCreateRouteParam(
@@ -326,7 +335,7 @@ export function crudGetBuilder(
   }
 
   if (traverseParents && type.internalSettings.parent) {
-    result[ // @ts-expect-error
+    result.where[ // @ts-expect-error
       `via${upperCaseFirst(type.internalSettings.usedRelation.referencedKey)}`
     ] = crudGetBuilder(type.internalSettings.parent, {
       includeOwnParam: true,
