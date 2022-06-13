@@ -345,7 +345,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
       );
       t.ok(
         sourceWithoutNewLines.includes(
-          `queryClient.invalidateQueries(["app","get",{ id: variables.params.id},]);`,
+          `queryClient.invalidateQueries(["app","get",{ id: variables.params.id,},]);`,
         ),
       );
     });

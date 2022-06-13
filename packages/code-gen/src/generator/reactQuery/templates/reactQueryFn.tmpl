@@ -172,7 +172,7 @@ export function {{= funcName }}(
         {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.params).length > 0) { }}
           {{ paramsObject += "{ "; }}
           {{ for (const [key, value] of Object.entries(invalidation.properties.specification.params)) { }}
-            {{ paramsObject += key + ": " + "variables." + value.join("."); }}
+            {{ paramsObject += key + ": " + "variables." + value.join(".") + ","; }}
           {{ } }}
           {{ paramsObject += "}"; }}
         {{ } }}
@@ -180,7 +180,7 @@ export function {{= funcName }}(
         {{ if (invalidation.target.name && Object.keys(invalidation.properties.specification.query).length > 0) { }}
           {{ queryObject += "{ "; }}
           {{ for (const [key, value] of Object.entries(invalidation.properties.specification.query)) { }}
-            {{ queryObject += key + ": " + "variables." + value.join("."); }}
+            {{ queryObject += key + ": " + "variables." + value.join(".") + ","; }}
           {{ } }}
           {{ queryObject += "}"; }}
         {{ } }}
