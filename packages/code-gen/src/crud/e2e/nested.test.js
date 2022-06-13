@@ -103,6 +103,10 @@ test("code-gen/crud/e2e/nested", async (t) => {
     apiRoleInfoCreate,
   } = await import(pathJoin(generatedDirectory, "./role/apiClient.js"));
 
+  const { apiCompasStructure } = await import(
+    pathJoin(generatedDirectory, "./compas/apiClient.js")
+  );
+
   const api = getApp();
   setBodyParsers(createBodyParsers({}, {}));
   api.use(router);
@@ -139,6 +143,24 @@ test("code-gen/crud/e2e/nested", async (t) => {
 
   const { item: role } = await apiRoleCreate(axiosInstance, {
     identifier: "Role 1",
+  });
+
+  t.test("generate frontend", async (t) => {
+    const structure = await apiCompasStructure(axiosInstance);
+    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
+      {
+        extend: [[structure]],
+      },
+      {
+        isBrowser: true,
+      },
+    );
+
+    t.equal(exitCode, 0);
+
+    if (exitCode !== 0) {
+      t.log.error(stdout);
+    }
   });
 
   t.test("apiRoleInfo", (t) => {
