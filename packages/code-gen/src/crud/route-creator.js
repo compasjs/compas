@@ -141,6 +141,9 @@ function crudCreateCreateRoute(context, type) {
     params: crudGetParamsObject(type, { includeSelf: false }),
     body: bodyType,
     response: responseType,
+    invalidations: crudCreateInvalidations(type, {
+      skipSingleRoute: true,
+    }),
   });
 }
 
@@ -171,6 +174,7 @@ function crudCreateUpdateRoute(context, type) {
         success: true,
       })
       .build(),
+    invalidations: crudCreateInvalidations(type),
   });
 }
 
@@ -198,6 +202,7 @@ function crudCreateDeleteRoute(context, type) {
         success: true,
       })
       .build(),
+    invalidations: crudCreateInvalidations(type),
   });
 }
 
@@ -355,6 +360,60 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
   ref.reference = itemType;
 
   return ref;
+}
+
+/**
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ * @param {{ skipSingleRoute: boolean}} [options]
+ * @returns {import("../generated/common/types.js").CodeGenRouteInvalidationType[]}
+ */
+function crudCreateInvalidations(type, options = {}) {
+  /** @type {import("../generated/common/types.js").CodeGenRouteInvalidationType[]} */
+  const invalidations = [];
+
+  if (type.routeOptions.listRoute) {
+    invalidations.push({
+      type: "routeInvalidation",
+      target: {
+        group: crudResolveGroup(type),
+        name: crudCreateName(type, "list"),
+      },
+      properties: {
+        useSharedParams: true,
+        useSharedQuery: false,
+        specification: {
+          params: {},
+          query: {},
+        },
+      },
+    });
+  }
+
+  if (type.routeOptions.singleRoute && !options.skipSingleRoute) {
+    invalidations.push({
+      type: "routeInvalidation",
+      target: {
+        group: crudResolveGroup(type),
+        name: crudCreateName(type, "single"),
+      },
+      properties: {
+        useSharedParams: true,
+        useSharedQuery: false,
+        specification: {
+          params: {},
+          query: {},
+        },
+      },
+    });
+  }
+
+  if (type.fromParent) {
+    invalidations.push(
+      ...crudCreateInvalidations(type.internalSettings.parent, {}),
+    );
+  }
+
+  return invalidations;
 }
 
 /**
