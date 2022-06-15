@@ -1,4 +1,5 @@
-import { TypeCreator } from "../builders/index.js";
+import { ReferenceType, TypeCreator } from "../builders/index.js";
+import { getSearchableFields } from "../generator/sql/where-type.js";
 import { structureAddType } from "../structure/structureAddType.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { upperCaseFirst } from "../utils.js";
@@ -76,7 +77,42 @@ function crudCreateListRoute(context, type) {
       .build(),
     body: T.object()
       .keys({
-        filters: {},
+        where: T.object().keys({}).optional(),
+        orderBy: T.array()
+          .values(
+            T.string().oneOf(
+              ...Object.keys(getSearchableFields(type.entity.reference)),
+            ),
+          )
+          .optional(),
+        orderBySpec: T.object()
+          .keys(
+            Object.fromEntries(
+              Object.entries(getSearchableFields(type.entity.reference)).map(
+                ([key, field]) => {
+                  let subType = new ReferenceType("compas", "orderBy");
+
+                  if (
+                    field.isOptional &&
+                    ((key !== "createdAt" && key !== "updatedAt") ||
+                      (!type.entity.reference.queryOptions?.withSoftDeletes &&
+                        !type.entity.reference.queryOptions?.withDates))
+                  ) {
+                    subType = new ReferenceType("compas", "orderByOptional");
+                  }
+
+                  subType.optional(),
+                    (subType.data.reference =
+                      context.structure[subType.data.reference.group][
+                        subType.data.reference.name
+                      ]);
+
+                  return [key, subType];
+                },
+              ),
+            ),
+          )
+          .optional(),
       })
       .build(),
     response: responseType,
