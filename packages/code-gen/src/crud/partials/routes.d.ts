@@ -3,6 +3,7 @@ export function crudPartialRouteList(data: {
   crudName: string;
   countBuilder: string;
   listBuilder: string;
+  primaryKey: string;
 }): string;
 export function crudPartialRouteSingle(data: {
   handlerName: string;

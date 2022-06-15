@@ -2,6 +2,8 @@ export function crudPartialEventCount(data: {
   crudName: string;
   entityUniqueName: string;
   entityName: string;
+  primaryKey: string;
+  primaryKeyType: string;
 }): string;
 export function crudPartialEventList(data: {
   crudName: string;
@@ -18,12 +20,14 @@ export function crudPartialEventCreate(data: {
   entityUniqueName: string;
   entityName: string;
   builder: string;
+  primaryKey: string;
   inlineRelations: {
     name: string;
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
     isOptional: boolean;
+    parentPrimaryKey: string;
     inlineRelations: any[];
   }[];
 }): string;
@@ -31,12 +35,14 @@ export function crudPartialEventUpdate(data: {
   crudName: string;
   entityUniqueName: string;
   entityName: string;
+  primaryKey: string;
   inlineRelations: {
     name: string;
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
     isOptional: boolean;
+    parentPrimaryKey: string;
     inlineRelations: any[];
   }[];
 }): string;
@@ -47,6 +53,7 @@ export function crudPartialInlineRelationInserts(
     entityName: string;
     isInlineArray: boolean;
     isOptional: boolean;
+    parentPrimaryKey: string;
     inlineRelations: any[];
   }[],
   parentName: string,
@@ -55,6 +62,7 @@ export function crudPartialEventDelete(data: {
   crudName: string;
   entityUniqueName: string;
   entityName: string;
+  primaryKey: string;
 }): string;
 export function crudPartialEventTransformer(data: {
   crudName: string;
