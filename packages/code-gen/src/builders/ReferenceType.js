@@ -18,7 +18,7 @@ export class ReferenceType extends TypeBuilder {
       (isNil(this.data.reference.group) || isNil(this.data.reference.name))
     ) {
       throw new Error(
-        "Call T.relation() with either a named TypeBuilder or a valid group and name",
+        "Call T.reference() with either a named TypeBuilder or a valid group and name",
       );
     }
 

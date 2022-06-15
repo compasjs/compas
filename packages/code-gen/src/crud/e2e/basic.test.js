@@ -90,6 +90,7 @@ test("code-gen/crud/e2e/basics", async (t) => {
         {
           key: `Key${idx}`,
           value: `Tag value ${idx}`,
+          createdAt: new Date(Date.now() + idx),
         },
       ])
       .flat(),
@@ -97,13 +98,7 @@ test("code-gen/crud/e2e/basics", async (t) => {
 
   t.test("apiTagList", (t) => {
     t.test("success", async (t) => {
-      const result = await apiTagList(
-        axiosInstance,
-        {},
-        {
-          filters: {},
-        },
-      );
+      const result = await apiTagList(axiosInstance, {}, {});
 
       t.ok(result.total > 0);
     });
@@ -115,13 +110,29 @@ test("code-gen/crud/e2e/basics", async (t) => {
           offset: 1,
           limit: 1,
         },
-        {
-          filters: {},
-        },
+        {},
       );
 
       t.ok(result.total > result.list.length);
       t.equal(result.list.length, 1);
+    });
+
+    t.test("orderBy", async (t) => {
+      const { list: normalSorted } = await apiTagList(axiosInstance, {}, {});
+
+      const { list: inverseSorted } = await apiTagList(
+        axiosInstance,
+        {},
+        {
+          orderBy: ["createdAt"],
+          orderBySpec: {
+            createdAt: "DESC",
+          },
+        },
+      );
+
+      t.equal(normalSorted[0].id, inverseSorted.at(-1).id);
+      t.equal(normalSorted[4].id, inverseSorted.at(-5).id);
     });
   });
 

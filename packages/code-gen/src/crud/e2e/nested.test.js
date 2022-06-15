@@ -230,9 +230,7 @@ test("code-gen/crud/e2e/nested", async (t) => {
           roleId: role.id,
         },
         {},
-        {
-          filters: {},
-        },
+        {},
       );
 
       t.equal(total, 1);
