@@ -6334,7 +6334,7 @@ export function anonymousValidator1795948632(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"ASC"|"DESC">}
  */
-export function anonymousValidator446238440(value, propertyPath) {
+export function anonymousValidator80886428(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -6390,18 +6390,18 @@ export function anonymousValidator446238440(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderBy>}
+ * @returns {EitherN<undefined|CompasOrderBy>}
  */
-export function anonymousValidator20803901(value, propertyPath) {
+export function anonymousValidator704118887(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  return anonymousValidator446238440(value, propertyPath);
+  return anonymousValidator80886428(value, propertyPath);
 }
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "bucketName"?: undefined|CompasOrderBy, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator163358845(value, propertyPath) {
   if (isNil(value)) {
@@ -6451,10 +6451,10 @@ export function anonymousValidator163358845(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["bucketName", anonymousValidator20803901],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
+    ["id", anonymousValidator704118887],
+    ["bucketName", anonymousValidator704118887],
+    ["createdAt", anonymousValidator704118887],
+    ["updatedAt", anonymousValidator704118887],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -6636,7 +6636,7 @@ export function anonymousValidator685221527(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST">}
  */
-export function anonymousValidator572766398(value, propertyPath) {
+export function anonymousValidator293130468(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -6697,18 +6697,18 @@ export function anonymousValidator572766398(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderByOptionalField>}
+ * @returns {EitherN<undefined|CompasOrderByOptional>}
  */
-export function anonymousValidator198346889(value, propertyPath) {
+export function anonymousValidator1515977191(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
-  return anonymousValidator572766398(value, propertyPath);
+  return anonymousValidator293130468(value, propertyPath);
 }
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "isComplete"?: undefined|CompasOrderByOptional, "name"?: undefined|CompasOrderBy, "scheduledAt"?: undefined|CompasOrderByOptional, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator280827708(value, propertyPath) {
   if (isNil(value)) {
@@ -6758,12 +6758,12 @@ export function anonymousValidator280827708(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["isComplete", anonymousValidator198346889],
-    ["name", anonymousValidator20803901],
-    ["scheduledAt", anonymousValidator198346889],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
+    ["id", anonymousValidator704118887],
+    ["isComplete", anonymousValidator1515977191],
+    ["name", anonymousValidator704118887],
+    ["scheduledAt", anonymousValidator1515977191],
+    ["createdAt", anonymousValidator704118887],
+    ["updatedAt", anonymousValidator704118887],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -6929,7 +6929,7 @@ export function anonymousValidator1196685479(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator362930508(value, propertyPath) {
   if (isNil(value)) {
@@ -6979,9 +6979,9 @@ export function anonymousValidator362930508(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["createdAt", anonymousValidator20803901],
-    ["updatedAt", anonymousValidator20803901],
+    ["id", anonymousValidator704118887],
+    ["createdAt", anonymousValidator704118887],
+    ["updatedAt", anonymousValidator704118887],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -7153,7 +7153,7 @@ export function anonymousValidator2086080888(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "session"?: undefined|CompasSqlOrderBy, "expiresAt"?: undefined|CompasSqlOrderBy, "refreshToken"?: undefined|CompasSqlOrderByOptionalField, "revokedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "session"?: undefined|CompasOrderBy, "expiresAt"?: undefined|CompasOrderBy, "refreshToken"?: undefined|CompasOrderByOptional, "revokedAt"?: undefined|CompasOrderByOptional, }>}
  */
 export function anonymousValidator1864958291(value, propertyPath) {
   if (isNil(value)) {
@@ -7203,11 +7203,11 @@ export function anonymousValidator1864958291(value, propertyPath) {
    * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
    */
   const validatorPairs = [
-    ["id", anonymousValidator20803901],
-    ["session", anonymousValidator20803901],
-    ["expiresAt", anonymousValidator20803901],
-    ["refreshToken", anonymousValidator198346889],
-    ["revokedAt", anonymousValidator198346889],
+    ["id", anonymousValidator704118887],
+    ["session", anonymousValidator704118887],
+    ["expiresAt", anonymousValidator704118887],
+    ["refreshToken", anonymousValidator1515977191],
+    ["revokedAt", anonymousValidator1515977191],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);

@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 
 import {
-  anonymousValidator446238440,
-  anonymousValidator572766398,
+  anonymousValidator293130468,
+  anonymousValidator80886428,
 } from "../common/anonymous-validators.js";
 import { AppError, isNil } from "@compas/stdlib";
 /**
@@ -11,12 +11,12 @@ import { AppError, isNil } from "@compas/stdlib";
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any|CompasSqlOrderByInput} value
+ * @param {undefined|any|CompasOrderByInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderBy>}
+ * @returns {Either<CompasOrderBy>}
  */
-export function validateCompasSqlOrderBy(value, propertyPath = "$") {
-  const result = anonymousValidator446238440(value, propertyPath);
+export function validateCompasOrderBy(value, propertyPath = "$") {
+  const result = anonymousValidator80886428(value, propertyPath);
   if (result.errors) {
     const info = {};
     for (const err of result.errors) {
@@ -33,19 +33,16 @@ export function validateCompasSqlOrderBy(value, propertyPath = "$") {
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CompasSqlOrderBy}} */
+  /** @type {{ value: CompasOrderBy}} */
   return { value: result.value };
 }
 /**
- * @param {undefined|any|CompasSqlOrderByOptionalFieldInput} value
+ * @param {undefined|any|CompasOrderByOptionalInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderByOptionalField>}
+ * @returns {Either<CompasOrderByOptional>}
  */
-export function validateCompasSqlOrderByOptionalField(
-  value,
-  propertyPath = "$",
-) {
-  const result = anonymousValidator572766398(value, propertyPath);
+export function validateCompasOrderByOptional(value, propertyPath = "$") {
+  const result = anonymousValidator293130468(value, propertyPath);
   if (result.errors) {
     const info = {};
     for (const err of result.errors) {
@@ -62,6 +59,6 @@ export function validateCompasSqlOrderByOptionalField(
       error: AppError.validationError("validator.error", info),
     };
   }
-  /** @type {{ value: CompasSqlOrderByOptionalField}} */
+  /** @type {{ value: CompasOrderByOptional}} */
   return { value: result.value };
 }

@@ -3,23 +3,23 @@
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
- * @param {undefined|any|CompasSqlOrderByInput} value
+ * @param {undefined|any|CompasOrderByInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderBy>}
+ * @returns {Either<CompasOrderBy>}
  */
-export function validateCompasSqlOrderBy(
-  value: undefined | any | CompasSqlOrderByInput,
+export function validateCompasOrderBy(
+  value: undefined | any | CompasOrderByInput,
   propertyPath?: string | undefined,
-): Either<CompasSqlOrderBy>;
+): Either<CompasOrderBy>;
 /**
- * @param {undefined|any|CompasSqlOrderByOptionalFieldInput} value
+ * @param {undefined|any|CompasOrderByOptionalInput} value
  * @param {string|undefined} [propertyPath]
- * @returns {Either<CompasSqlOrderByOptionalField>}
+ * @returns {Either<CompasOrderByOptional>}
  */
-export function validateCompasSqlOrderByOptionalField(
-  value: undefined | any | CompasSqlOrderByOptionalFieldInput,
+export function validateCompasOrderByOptional(
+  value: undefined | any | CompasOrderByOptionalInput,
   propertyPath?: string | undefined,
-): Either<CompasSqlOrderByOptionalField>;
+): Either<CompasOrderByOptional>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map

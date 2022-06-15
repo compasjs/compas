@@ -19,23 +19,20 @@ import { getSearchableFields } from "./where-type.js";
  * @param {import("../../generated/common/types").CodeGenContext} context
  */
 export function createOrderByTypes(context) {
-  const orderByType = new StringType("compas", "sqlOrderBy")
+  const orderByType = new StringType("compas", "orderBy")
     .oneOf("ASC", "DESC")
     .build();
 
-  const orderByOptionalField = new StringType(
-    "compas",
-    "sqlOrderByOptionalField",
-  )
+  const orderByOptionalField = new StringType("compas", "orderByOptional")
     .oneOf("ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST")
     .build();
 
-  const orderByReference = new ReferenceType("compas", "sqlOrderBy")
+  const orderByReference = new ReferenceType("compas", "orderBy")
     .optional()
     .build();
   const orderByOptionalFieldReference = new ReferenceType(
     "compas",
-    "sqlOrderByOptionalField",
+    "orderByOptional",
   )
     .optional()
     .build();

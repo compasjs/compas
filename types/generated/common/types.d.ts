@@ -375,12 +375,12 @@ declare global {
     | QueryPart<any>
     | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
   type StoreFileOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    bucketName?: undefined | CompasSqlOrderBy;
-    createdAt?: undefined | CompasSqlOrderBy;
-    updatedAt?: undefined | CompasSqlOrderBy;
+    id?: undefined | CompasOrderBy;
+    bucketName?: undefined | CompasOrderBy;
+    createdAt?: undefined | CompasOrderBy;
+    updatedAt?: undefined | CompasOrderBy;
   };
-  type CompasSqlOrderBy = "ASC" | "DESC";
+  type CompasOrderBy = "ASC" | "DESC";
   type StoreJobOrderBy =
     | QueryPart<any>
     | (
@@ -392,14 +392,14 @@ declare global {
         | "updatedAt"
       )[];
   type StoreJobOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    isComplete?: undefined | CompasSqlOrderByOptionalField;
-    name?: undefined | CompasSqlOrderBy;
-    scheduledAt?: undefined | CompasSqlOrderByOptionalField;
-    createdAt?: undefined | CompasSqlOrderBy;
-    updatedAt?: undefined | CompasSqlOrderBy;
+    id?: undefined | CompasOrderBy;
+    isComplete?: undefined | CompasOrderByOptional;
+    name?: undefined | CompasOrderBy;
+    scheduledAt?: undefined | CompasOrderByOptional;
+    createdAt?: undefined | CompasOrderBy;
+    updatedAt?: undefined | CompasOrderBy;
   };
-  type CompasSqlOrderByOptionalField =
+  type CompasOrderByOptional =
     | "ASC"
     | "DESC"
     | "ASC NULLS FIRST"
@@ -408,19 +408,19 @@ declare global {
     | QueryPart<any>
     | ("id" | "createdAt" | "updatedAt")[];
   type StoreSessionStoreOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    createdAt?: undefined | CompasSqlOrderBy;
-    updatedAt?: undefined | CompasSqlOrderBy;
+    id?: undefined | CompasOrderBy;
+    createdAt?: undefined | CompasOrderBy;
+    updatedAt?: undefined | CompasOrderBy;
   };
   type StoreSessionStoreTokenOrderBy =
     | QueryPart<any>
     | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
   type StoreSessionStoreTokenOrderBySpec = {
-    id?: undefined | CompasSqlOrderBy;
-    session?: undefined | CompasSqlOrderBy;
-    expiresAt?: undefined | CompasSqlOrderBy;
-    refreshToken?: undefined | CompasSqlOrderByOptionalField;
-    revokedAt?: undefined | CompasSqlOrderByOptionalField;
+    id?: undefined | CompasOrderBy;
+    session?: undefined | CompasOrderBy;
+    expiresAt?: undefined | CompasOrderBy;
+    refreshToken?: undefined | CompasOrderByOptional;
+    revokedAt?: undefined | CompasOrderByOptional;
   };
   type StoreFileInsertPartial = {
     id?: undefined | string;
@@ -807,35 +807,35 @@ declare global {
   type StoreSessionStoreTokenUpdateFn = StoreSessionStoreTokenUpdateFnInput;
   type StoreFileOrderByInput = StoreFileOrderBy;
   type StoreFileOrderBySpecInput = {
-    id?: undefined | CompasSqlOrderByInput;
-    bucketName?: undefined | CompasSqlOrderByInput;
-    createdAt?: undefined | CompasSqlOrderByInput;
-    updatedAt?: undefined | CompasSqlOrderByInput;
+    id?: undefined | CompasOrderByInput;
+    bucketName?: undefined | CompasOrderByInput;
+    createdAt?: undefined | CompasOrderByInput;
+    updatedAt?: undefined | CompasOrderByInput;
   };
-  type CompasSqlOrderByInput = CompasSqlOrderBy;
+  type CompasOrderByInput = CompasOrderBy;
   type StoreJobOrderByInput = StoreJobOrderBy;
   type StoreJobOrderBySpecInput = {
-    id?: undefined | CompasSqlOrderByInput;
-    isComplete?: undefined | CompasSqlOrderByOptionalFieldInput;
-    name?: undefined | CompasSqlOrderByInput;
-    scheduledAt?: undefined | CompasSqlOrderByOptionalFieldInput;
-    createdAt?: undefined | CompasSqlOrderByInput;
-    updatedAt?: undefined | CompasSqlOrderByInput;
+    id?: undefined | CompasOrderByInput;
+    isComplete?: undefined | CompasOrderByOptionalInput;
+    name?: undefined | CompasOrderByInput;
+    scheduledAt?: undefined | CompasOrderByOptionalInput;
+    createdAt?: undefined | CompasOrderByInput;
+    updatedAt?: undefined | CompasOrderByInput;
   };
-  type CompasSqlOrderByOptionalFieldInput = CompasSqlOrderByOptionalField;
+  type CompasOrderByOptionalInput = CompasOrderByOptional;
   type StoreSessionStoreOrderByInput = StoreSessionStoreOrderBy;
   type StoreSessionStoreOrderBySpecInput = {
-    id?: undefined | CompasSqlOrderByInput;
-    createdAt?: undefined | CompasSqlOrderByInput;
-    updatedAt?: undefined | CompasSqlOrderByInput;
+    id?: undefined | CompasOrderByInput;
+    createdAt?: undefined | CompasOrderByInput;
+    updatedAt?: undefined | CompasOrderByInput;
   };
   type StoreSessionStoreTokenOrderByInput = StoreSessionStoreTokenOrderBy;
   type StoreSessionStoreTokenOrderBySpecInput = {
-    id?: undefined | CompasSqlOrderByInput;
-    session?: undefined | CompasSqlOrderByInput;
-    expiresAt?: undefined | CompasSqlOrderByInput;
-    refreshToken?: undefined | CompasSqlOrderByOptionalFieldInput;
-    revokedAt?: undefined | CompasSqlOrderByOptionalFieldInput;
+    id?: undefined | CompasOrderByInput;
+    session?: undefined | CompasOrderByInput;
+    expiresAt?: undefined | CompasOrderByInput;
+    refreshToken?: undefined | CompasOrderByOptionalInput;
+    revokedAt?: undefined | CompasOrderByOptionalInput;
   };
   type StoreFileQueryBuilderInput = {
     where?: undefined | StoreFileWhereInput;

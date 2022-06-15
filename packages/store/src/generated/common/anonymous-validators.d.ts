@@ -1994,32 +1994,32 @@ export function anonymousValidator1795948632(
  * @param {string} propertyPath
  * @returns {EitherN<"ASC"|"DESC">}
  */
-export function anonymousValidator446238440(
+export function anonymousValidator80886428(
   value: any,
   propertyPath: string,
 ): EitherN<"ASC" | "DESC">;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderBy>}
+ * @returns {EitherN<undefined|CompasOrderBy>}
  */
-export function anonymousValidator20803901(
+export function anonymousValidator704118887(
   value: any,
   propertyPath: string,
-): EitherN<undefined | CompasSqlOrderBy>;
+): EitherN<undefined | CompasOrderBy>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "bucketName"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "bucketName"?: undefined|CompasOrderBy, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator163358845(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  id?: undefined | CompasSqlOrderBy;
-  bucketName?: undefined | CompasSqlOrderBy;
-  createdAt?: undefined | CompasSqlOrderBy;
-  updatedAt?: undefined | CompasSqlOrderBy;
+  id?: undefined | CompasOrderBy;
+  bucketName?: undefined | CompasOrderBy;
+  createdAt?: undefined | CompasOrderBy;
+  updatedAt?: undefined | CompasOrderBy;
 }>;
 /**
  * @param {*} value
@@ -2060,34 +2060,34 @@ export function anonymousValidator685221527(
  * @param {string} propertyPath
  * @returns {EitherN<"ASC"|"DESC"|"ASC NULLS FIRST"|"DESC NULLS LAST">}
  */
-export function anonymousValidator572766398(
+export function anonymousValidator293130468(
   value: any,
   propertyPath: string,
 ): EitherN<"ASC" | "DESC" | "ASC NULLS FIRST" | "DESC NULLS LAST">;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|CompasSqlOrderByOptionalField>}
+ * @returns {EitherN<undefined|CompasOrderByOptional>}
  */
-export function anonymousValidator198346889(
+export function anonymousValidator1515977191(
   value: any,
   propertyPath: string,
-): EitherN<undefined | CompasSqlOrderByOptionalField>;
+): EitherN<undefined | CompasOrderByOptional>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "isComplete"?: undefined|CompasSqlOrderByOptionalField, "name"?: undefined|CompasSqlOrderBy, "scheduledAt"?: undefined|CompasSqlOrderByOptionalField, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "isComplete"?: undefined|CompasOrderByOptional, "name"?: undefined|CompasOrderBy, "scheduledAt"?: undefined|CompasOrderByOptional, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator280827708(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  id?: undefined | CompasSqlOrderBy;
-  isComplete?: undefined | CompasSqlOrderByOptionalField;
-  name?: undefined | CompasSqlOrderBy;
-  scheduledAt?: undefined | CompasSqlOrderByOptionalField;
-  createdAt?: undefined | CompasSqlOrderBy;
-  updatedAt?: undefined | CompasSqlOrderBy;
+  id?: undefined | CompasOrderBy;
+  isComplete?: undefined | CompasOrderByOptional;
+  name?: undefined | CompasOrderBy;
+  scheduledAt?: undefined | CompasOrderByOptional;
+  createdAt?: undefined | CompasOrderBy;
+  updatedAt?: undefined | CompasOrderBy;
 }>;
 /**
  * @param {*} value
@@ -2119,15 +2119,15 @@ export function anonymousValidator1196685479(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "createdAt"?: undefined|CompasSqlOrderBy, "updatedAt"?: undefined|CompasSqlOrderBy, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "createdAt"?: undefined|CompasOrderBy, "updatedAt"?: undefined|CompasOrderBy, }>}
  */
 export function anonymousValidator362930508(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  id?: undefined | CompasSqlOrderBy;
-  createdAt?: undefined | CompasSqlOrderBy;
-  updatedAt?: undefined | CompasSqlOrderBy;
+  id?: undefined | CompasOrderBy;
+  createdAt?: undefined | CompasOrderBy;
+  updatedAt?: undefined | CompasOrderBy;
 }>;
 /**
  * @param {*} value
@@ -2162,17 +2162,17 @@ export function anonymousValidator2086080888(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"id"?: undefined|CompasSqlOrderBy, "session"?: undefined|CompasSqlOrderBy, "expiresAt"?: undefined|CompasSqlOrderBy, "refreshToken"?: undefined|CompasSqlOrderByOptionalField, "revokedAt"?: undefined|CompasSqlOrderByOptionalField, }>}
+ * @returns {EitherN<{"id"?: undefined|CompasOrderBy, "session"?: undefined|CompasOrderBy, "expiresAt"?: undefined|CompasOrderBy, "refreshToken"?: undefined|CompasOrderByOptional, "revokedAt"?: undefined|CompasOrderByOptional, }>}
  */
 export function anonymousValidator1864958291(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  id?: undefined | CompasSqlOrderBy;
-  session?: undefined | CompasSqlOrderBy;
-  expiresAt?: undefined | CompasSqlOrderBy;
-  refreshToken?: undefined | CompasSqlOrderByOptionalField;
-  revokedAt?: undefined | CompasSqlOrderByOptionalField;
+  id?: undefined | CompasOrderBy;
+  session?: undefined | CompasOrderBy;
+  expiresAt?: undefined | CompasOrderBy;
+  refreshToken?: undefined | CompasOrderByOptional;
+  revokedAt?: undefined | CompasOrderByOptional;
 }>;
 /**
  * @param {*} value
