@@ -81,6 +81,7 @@ function crudCreateListRoute(context, type) {
         orderBy: T.array()
           .values(
             T.string().oneOf(
+              // @ts-expect-error
               ...Object.keys(getSearchableFields(type.entity.reference)),
             ),
           )
@@ -88,6 +89,7 @@ function crudCreateListRoute(context, type) {
         orderBySpec: T.object()
           .keys(
             Object.fromEntries(
+              // @ts-expect-error
               Object.entries(getSearchableFields(type.entity.reference)).map(
                 ([key, field]) => {
                   let subType = new ReferenceType("compas", "orderBy");
@@ -95,17 +97,19 @@ function crudCreateListRoute(context, type) {
                   if (
                     field.isOptional &&
                     ((key !== "createdAt" && key !== "updatedAt") ||
+                      // @ts-expect-error
                       (!type.entity.reference.queryOptions?.withSoftDeletes &&
+                        // @ts-expect-error
                         !type.entity.reference.queryOptions?.withDates))
                   ) {
                     subType = new ReferenceType("compas", "orderByOptional");
                   }
 
-                  subType.optional(),
-                    (subType.data.reference =
-                      context.structure[subType.data.reference.group][
-                        subType.data.reference.name
-                      ]);
+                  subType.optional();
+                  subType.data.reference =
+                    context.structure[subType.data.reference.group][
+                      subType.data.reference.name
+                    ];
 
                   return [key, subType];
                 },
