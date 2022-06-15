@@ -390,6 +390,7 @@ export type CodeGenCrudType = {
     usedRelation?: undefined | CodeGenRelationType;
     parent?: undefined | CodeGenCrudType;
     writeableTypeName?: undefined | string;
+    primaryKey?: undefined | { key: string; field: CodeGenType };
   };
   basePath?: undefined | string;
   entity?: undefined | CodeGenType;
@@ -961,6 +962,12 @@ export type CodeGenCrudTypeInput = {
           | import("./../common/types").CodeGenRelationTypeInput;
         parent?: undefined | import("./../common/types").CodeGenCrudTypeInput;
         writeableTypeName?: undefined | string;
+        primaryKey?:
+          | undefined
+          | {
+              key: string;
+              field: import("./../common/types").CodeGenTypeInput;
+            };
       };
   basePath?: undefined | string;
   entity?: undefined | import("./../common/types").CodeGenTypeInput;

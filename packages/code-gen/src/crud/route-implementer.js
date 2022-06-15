@@ -1,4 +1,3 @@
-import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { importCreator } from "../generator/utils.js";
 import { partialAsString } from "../partials/helpers.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
@@ -123,6 +122,7 @@ function crudGenerateRouteImplementationListRoute(
         traverseParents: false,
       }),
     ),
+    primaryKey: type.internalSettings.primaryKey.key,
   };
 
   importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
@@ -328,10 +328,9 @@ export function crudGetBuilder(
     type.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
   ) {
     // @ts-expect-error
-    const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
-    result.where[primaryKey.key] = `ctx.validatedParams.${crudCreateRouteParam(
-      crudType,
-    )}`;
+    result.where[
+      crudType.internalSettings.primaryKey.key
+    ] = `ctx.validatedParams.${crudCreateRouteParam(crudType)}`;
   }
 
   if (traverseParents && type.internalSettings.parent) {

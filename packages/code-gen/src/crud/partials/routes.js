@@ -4,16 +4,17 @@
  *   crudName: string,
  *   countBuilder: string,
  *   listBuilder: string,
+ *   primaryKey: string,
  * }} data
  * @returns {string}
  */
 export const crudPartialRouteList = (data) => `
 ${data.handlerName} = async (ctx, next) => {
   const countBuilder = ${data.countBuilder};
-  const { total, idIn } = await ${data.crudName}Count(newEventFromEvent(ctx.event), sql, countBuilder, ctx.validatedQuery);
+  const { total, ${data.primaryKey}In } = await ${data.crudName}Count(newEventFromEvent(ctx.event), sql, countBuilder, ctx.validatedQuery);
   
   const listBuilder = ${data.listBuilder};
-  listBuilder.where.idIn = idIn;
+  listBuilder.where.${data.primaryKey}In = ${data.primaryKey}In;
   const result = await ${data.crudName}List(newEventFromEvent(ctx.event), sql, listBuilder);
   
   ctx.body = {
