@@ -6,6 +6,8 @@
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
  * @param {Args} args
  */
+import { upperCaseFirst } from "../utils.js";
+
 export function crudCallFunctionsForRoutes(functions, type, args) {
   if (type.routeOptions.listRoute) {
     functions.listRoute(...args);
@@ -35,5 +37,7 @@ export function crudCallFunctionsForRoutes(functions, type, args) {
  */
 export function crudCreateRouteParam(type) {
   // @ts-expect-error
-  return `${type.fromParent?.options?.name ?? type.entity.reference.name}Id`;
+  return `${
+    type.fromParent?.options?.name ?? type.entity.reference.name
+  }${upperCaseFirst(type.internalSettings.primaryKey.key)}`;
 }

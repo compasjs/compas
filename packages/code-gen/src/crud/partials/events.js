@@ -7,6 +7,8 @@ import { upperCaseFirst } from "../../utils.js";
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
+ *   primaryKey: string,
+ *   primaryKeyType: string,
  * }} data
  * @returns {string}
  */
@@ -18,7 +20,9 @@ export const crudPartialEventCount = (data) => `
  * @param {Postgres} sql
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @param {${upperCaseFirst(data.crudName)}ListQuery} queryParams
- * @returns {Promise<{ total: number, idIn: string[] }>}
+ * @returns {Promise<{ total: number, ${data.primaryKey}In: ${
+  data.primaryKeyType
+}[] }>}
  */
 export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   eventStart(event, "${data.crudName}.count");
@@ -34,7 +38,7 @@ export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   
   return { 
     total,
-    idIn: slice.map(it => it.id),
+    ${data.primaryKey}In: slice.map(it => it.${data.primaryKey}),
   };
 }
 `;
@@ -109,12 +113,14 @@ export async function ${data.crudName}Single(event, sql, builder) {
  *   entityUniqueName: string,
  *   entityName: string,
  *   builder: string,
+ *   primaryKey: string,
  *   inlineRelations: {
  *     name: string,
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
  *     isOptional: boolean,
+ *     parentPrimaryKey: string,
  *     inlineRelations: any[],
  *   }[]
  * }} data
@@ -145,7 +151,7 @@ export async function ${data.crudName}Create(event, sql, body) {
   ${crudPartialInlineRelationInserts(data.inlineRelations, "result")}
   
   const builder = ${data.builder};
-  builder.where.id = result[0].id;
+  builder.where.${data.primaryKey} = result[0].${data.primaryKey};
   const _item = await ${
     data.crudName
   }Single(newEventFromEvent(event), sql, builder);
@@ -161,12 +167,14 @@ export async function ${data.crudName}Create(event, sql, body) {
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
+ *   primaryKey: string,
  *   inlineRelations: {
  *     name: string,
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
  *     isOptional: boolean,
+ *     parentPrimaryKey: string,
  *     inlineRelations: any[],
  *   }[]
  * }} data
@@ -197,14 +205,14 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
     where: {
       id: entity.id,
     },
-    returning: ["id"],
+    returning: ["${data.primaryKey}"],
   });
   
   ${data.inlineRelations.length > 0 ? "await Promise.all([" : ""}
   ${partialAsString(
     data.inlineRelations.map(
       (it) =>
-        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: result[0].id }),`,
+        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: result[0].${data.primaryKey} }),`,
     ),
   )}
   ${data.inlineRelations.length > 0 ? "])" : ""}
@@ -222,6 +230,7 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
  *     entityName: string,
  *     isInlineArray: boolean,
  *     isOptional: boolean,
+ *     parentPrimaryKey: string,
  *     inlineRelations: any[],
  *   }[]} relations
  * @param {string} parentName
@@ -234,12 +243,12 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
       for (let i = 0; i < ${relation.name}.length; ++i) {
         ${
           relation.isInlineArray
-            ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].id);`
+            ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey});`
             : relation.isOptional
             ? `if (${relation.name}[i]) {
-             ${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id;
+             ${relation.name}[i].${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey};
             }`
-            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].id;`
+            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey};`
         }
       }
       
@@ -294,6 +303,7 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
+ *   primaryKey: string,
  * }} data
  * @returns {string}
  */
@@ -310,7 +320,7 @@ export async function ${data.crudName}Delete(event, sql, entity) {
   eventStart(event, "${data.crudName}.delete");
   
   await queries.${data.entityName}Delete(sql, {
-    id: entity.id,
+    ${data.primaryKey}: entity.${data.primaryKey},
   });
   
   eventStop(event);

@@ -1484,15 +1484,36 @@ export function anonymousValidator581222320(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }>}
+ * @returns {EitherN<undefined|{"key": string, "field": import("./types").CodeGenType, }>}
  */
-export function anonymousValidator1536786940(
+export function anonymousValidator35698685(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      key: string;
+      field: import("./types").CodeGenType;
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, "primaryKey"?: undefined|{"key": string, "field": import("./types").CodeGenType, }, }>}
+ */
+export function anonymousValidator468818986(
   value: any,
   propertyPath: string,
 ): EitherN<{
   usedRelation?: undefined | import("./types").CodeGenRelationType;
   parent?: undefined | import("./types").CodeGenCrudType;
   writeableTypeName?: undefined | string;
+  primaryKey?:
+    | undefined
+    | {
+        key: string;
+        field: import("./types").CodeGenType;
+      };
 }>;
 /**
  * @param {*} value
@@ -1591,7 +1612,7 @@ export function anonymousValidator581628245(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "crud", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }, "basePath"?: undefined|string, "entity"?: undefined|import("./types").CodeGenType, "fromParent"?: undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }, "routeOptions": {"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }, "fieldOptions": {"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }, "inlineRelations": (import("./types").CodeGenCrudType)[], "nestedRelations": (import("./types").CodeGenCrudType)[], }>}
+ * @returns {EitherN<{"type": "crud", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, "primaryKey"?: undefined|{"key": string, "field": import("./types").CodeGenType, }, }, "basePath"?: undefined|string, "entity"?: undefined|import("./types").CodeGenType, "fromParent"?: undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }, "routeOptions": {"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }, "fieldOptions": {"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }, "inlineRelations": (import("./types").CodeGenCrudType)[], "nestedRelations": (import("./types").CodeGenCrudType)[], }>}
  */
 export function anonymousValidator1787806021(
   value: any,
@@ -1616,6 +1637,12 @@ export function anonymousValidator1787806021(
     usedRelation?: undefined | import("./types").CodeGenRelationType;
     parent?: undefined | import("./types").CodeGenCrudType;
     writeableTypeName?: undefined | string;
+    primaryKey?:
+      | undefined
+      | {
+          key: string;
+          field: import("./types").CodeGenType;
+        };
   };
   basePath?: undefined | string;
   entity?: undefined | import("./types").CodeGenType;

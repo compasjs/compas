@@ -17,6 +17,7 @@ import { isNil } from "@compas/stdlib";
  */
 
 const objectKeys1006716453 = new Set(["group", "name", "uniqueName"]);
+const objectKeys35698685 = new Set(["key", "field"]);
 const objectKeys367209652 = new Set(["key", "value"]);
 const objectKeys729128062 = new Set(["key", "groupName"]);
 const objectKeys1592295867 = new Set(["key", "groupName"]);
@@ -4834,9 +4835,69 @@ export function anonymousValidator581222320(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }>}
+ * @returns {EitherN<undefined|{"key": string, "field": import("./types").CodeGenType, }>}
  */
-export function anonymousValidator1536786940(value, propertyPath) {
+export function anonymousValidator35698685(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys35698685.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys35698685],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  /**
+   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
+   */
+  const validatorPairs = [
+    ["key", anonymousValidator186795873],
+    ["field", anonymousValidator169184843],
+  ];
+  for (const [key, validator] of validatorPairs) {
+    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result[key] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, "primaryKey"?: undefined|{"key": string, "field": import("./types").CodeGenType, }, }>}
+ */
+export function anonymousValidator468818986(value, propertyPath) {
   if (isNil(value)) {
     return { value: {} };
   }
@@ -4861,6 +4922,7 @@ export function anonymousValidator1536786940(value, propertyPath) {
     ["usedRelation", anonymousValidator84237458],
     ["parent", anonymousValidator581222320],
     ["writeableTypeName", anonymousValidator1443576836],
+    ["primaryKey", anonymousValidator35698685],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -5160,7 +5222,7 @@ export function anonymousValidator581628245(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "crud", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, }, "basePath"?: undefined|string, "entity"?: undefined|import("./types").CodeGenType, "fromParent"?: undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }, "routeOptions": {"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }, "fieldOptions": {"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }, "inlineRelations": (import("./types").CodeGenCrudType)[], "nestedRelations": (import("./types").CodeGenCrudType)[], }>}
+ * @returns {EitherN<{"type": "crud", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {"usedRelation"?: undefined|import("./types").CodeGenRelationType, "parent"?: undefined|import("./types").CodeGenCrudType, "writeableTypeName"?: undefined|string, "primaryKey"?: undefined|{"key": string, "field": import("./types").CodeGenType, }, }, "basePath"?: undefined|string, "entity"?: undefined|import("./types").CodeGenType, "fromParent"?: undefined|{"field": string, "options"?: undefined|{"name"?: undefined|string, }, }, "routeOptions": {"listRoute"?: undefined|boolean, "singleRoute"?: undefined|boolean, "createRoute"?: undefined|boolean, "updateRoute"?: undefined|boolean, "deleteRoute"?: undefined|boolean, }, "fieldOptions": {"readable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, "writable"?: undefined|{"$omit"?: undefined|(string)[], "$pick"?: undefined|(string)[], }, }, "inlineRelations": (import("./types").CodeGenCrudType)[], "nestedRelations": (import("./types").CodeGenCrudType)[], }>}
  */
 export function anonymousValidator1787806021(value, propertyPath) {
   if (isNil(value)) {
@@ -5202,7 +5264,7 @@ export function anonymousValidator1787806021(value, propertyPath) {
     ["name", anonymousValidator1443576836],
     ["sql", anonymousValidator368068670],
     ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1536786940],
+    ["internalSettings", anonymousValidator468818986],
     ["basePath", anonymousValidator1443576836],
     ["entity", anonymousValidator708039854],
     ["fromParent", anonymousValidator234152904],

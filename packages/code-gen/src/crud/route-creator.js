@@ -1,5 +1,4 @@
 import { TypeCreator } from "../builders/index.js";
-import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { structureAddType } from "../structure/structureAddType.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { upperCaseFirst } from "../utils.js";
@@ -289,8 +288,7 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
   itemType.keys = { ...type.entity.reference.keys };
 
   // @ts-expect-error
-  const primaryKey = getPrimaryKeyWithType(type.entity.reference);
-  delete itemType.keys[primaryKey.key];
+  delete itemType.keys[type.internalSettings.primaryKey.key];
 
   // @ts-expect-error
   if (type.entity.reference.queryOptions?.withDates) {
@@ -522,9 +520,8 @@ function crudGetParamsObject(type, { includeSelf }) {
     if (
       crudType.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
     ) {
-      // @ts-expect-error
-      const primaryKey = getPrimaryKeyWithType(crudType.entity.reference);
-      keys[crudCreateRouteParam(crudType)] = primaryKey.field;
+      keys[crudCreateRouteParam(crudType)] =
+        crudType.internalSettings.primaryKey.field;
     }
 
     crudType = crudType.internalSettings.parent;

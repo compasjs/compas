@@ -1,3 +1,4 @@
+import { generateTypeDefinition } from "../generator/types.js";
 import { importCreator } from "../generator/utils.js";
 import { partialAsString } from "../partials/helpers.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
@@ -107,6 +108,14 @@ function crudGenerateEventImplementationListRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+    primaryKey: type.internalSettings.primaryKey.key,
+    primaryKeyType: generateTypeDefinition(
+      context,
+      type.internalSettings.primaryKey.field,
+      {
+        useDefaults: true,
+      },
+    ),
   };
 
   importer.destructureImport("eventStart", "@compas/stdlib");
@@ -160,6 +169,7 @@ function crudInlineRelationData(type) {
     isInlineArray: it.internalSettings.usedRelation.subType === "oneToMany",
     inlineRelations: crudInlineRelationData(it),
     isOptional: it.isOptional,
+    parentPrimaryKey: type.internalSettings.primaryKey.key,
   }));
 }
 
@@ -183,6 +193,7 @@ function crudGenerateEventImplementationCreateRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+    primaryKey: type.internalSettings.primaryKey.key,
     inlineRelations: crudInlineRelationData(type),
     builder: crudFormatBuilder(
       crudGetBuilder(type, {
@@ -230,6 +241,7 @@ function crudGenerateEventImplementationUpdateRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+    primaryKey: type.internalSettings.primaryKey.key,
     inlineRelations: crudInlineRelationData(type),
   };
 
@@ -269,6 +281,7 @@ function crudGenerateEventImplementationDeleteRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+    primaryKey: type.internalSettings.primaryKey.key,
   };
 
   if (!type.routeOptions.singleRoute) {

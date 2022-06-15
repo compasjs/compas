@@ -1,3 +1,4 @@
+import { getPrimaryKeyWithType } from "../generator/sql/utils.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 
 /**
@@ -88,6 +89,10 @@ function crudValidateType(context, type) {
   if (type.basePath && !type.basePath.startsWith("/")) {
     type.basePath = `/${type.basePath}`;
   }
+
+  type.internalSettings.primaryKey = getPrimaryKeyWithType(
+    type.entity.reference,
+  );
 
   for (const relation of type.inlineRelations) {
     crudResolveRelation(context, type, relation);
