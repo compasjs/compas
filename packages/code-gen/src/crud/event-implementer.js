@@ -108,9 +108,12 @@ function crudGenerateEventImplementationListRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+
+    // @ts-expect-error
     primaryKey: type.internalSettings.primaryKey.key,
+
     primaryKeyType: generateTypeDefinition(
-      context,
+      context, // @ts-expect-error
       type.internalSettings.primaryKey.field,
       {
         useDefaults: true,
@@ -193,7 +196,10 @@ function crudGenerateEventImplementationCreateRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+
+    // @ts-expect-error
     primaryKey: type.internalSettings.primaryKey.key,
+
     inlineRelations: crudInlineRelationData(type),
     builder: crudFormatBuilder(
       crudGetBuilder(type, {
@@ -241,6 +247,8 @@ function crudGenerateEventImplementationUpdateRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+
+    // @ts-expect-error
     primaryKey: type.internalSettings.primaryKey.key,
     inlineRelations: crudInlineRelationData(type),
   };
@@ -281,6 +289,8 @@ function crudGenerateEventImplementationDeleteRoute(
 
     // @ts-expect-error
     entityUniqueName: type.entity.reference.uniqueName,
+
+    // @ts-expect-error
     primaryKey: type.internalSettings.primaryKey.key,
   };
 

@@ -106,7 +106,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
-      - name: Build and deploy
+      - name: Build docs
         run: |
           npm install
           echo 'VITE_USER_NODE_ENV=production' > ./docs/.env

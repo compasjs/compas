@@ -13,7 +13,13 @@ export async function main() {
     return;
   }
 
-  await spawn("npx", ["tsc", "-p", "./jsconfig.types.json"]);
+  const { exitCode } = await spawn("npx", [
+    "tsc",
+    "-p",
+    "./jsconfig.types.json",
+  ]);
+
+  process.exit(exitCode);
 }
 
 function cleanUpTypeDefinitionFiles() {

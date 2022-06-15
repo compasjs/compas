@@ -122,6 +122,8 @@ function crudGenerateRouteImplementationListRoute(
         traverseParents: false,
       }),
     ),
+
+    // @ts-expect-error
     primaryKey: type.internalSettings.primaryKey.key,
   };
 
@@ -195,7 +197,10 @@ function crudGenerateRouteImplementationCreateRoute(
     crudName: crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, "")),
     applyParams: type.fromParent
       ? {
+          // @ts-expect-error
           bodyKey: type.internalSettings.usedRelation.referencedKey,
+
+          // @ts-expect-error
           paramsKey: crudCreateRouteParam(type.internalSettings.parent),
         }
       : undefined,
@@ -209,6 +214,7 @@ function crudGenerateRouteImplementationCreateRoute(
     "./controller.js",
   );
 
+  // @ts-expect-error
   sources.push(crudPartialRouteCreate(data));
 }
 
@@ -327,8 +333,7 @@ export function crudGetBuilder(
     includeOwnParam &&
     type.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
   ) {
-    // @ts-expect-error
-    result.where[
+    result.where[ // @ts-expect-error
       crudType.internalSettings.primaryKey.key
     ] = `ctx.validatedParams.${crudCreateRouteParam(crudType)}`;
   }

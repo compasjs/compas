@@ -310,12 +310,12 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
 
   if (type.fromParent) {
     type.fieldOptions.writable.$omit.push(
+      // @ts-expect-error
       type.internalSettings.usedRelation.referencedKey,
     );
   }
 
   if (Array.isArray(type.fieldOptions?.writable?.$omit)) {
-    // @ts-expect-error
     for (const key of type.fieldOptions.writable.$omit) {
       delete itemType.keys[key];
     }
@@ -365,7 +365,12 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
  * @param {{ skipSingleRoute: boolean}} [options]
  * @returns {import("../generated/common/types.js").CodeGenRouteInvalidationType[]}
  */
-function crudCreateInvalidations(type, options = {}) {
+function crudCreateInvalidations(
+  type,
+  options = {
+    skipSingleRoute: false,
+  },
+) {
   /** @type {import("../generated/common/types.js").CodeGenRouteInvalidationType[]} */
   const invalidations = [];
 
@@ -407,6 +412,7 @@ function crudCreateInvalidations(type, options = {}) {
 
   if (type.fromParent) {
     invalidations.push(
+      // @ts-expect-error
       ...crudCreateInvalidations(type.internalSettings.parent, {}),
     );
   }
@@ -520,7 +526,7 @@ function crudGetParamsObject(type, { includeSelf }) {
     if (
       crudType.internalSettings?.usedRelation?.subType !== "oneToOneReverse"
     ) {
-      keys[crudCreateRouteParam(crudType)] =
+      keys[crudCreateRouteParam(crudType)] = // @ts-expect-error
         crudType.internalSettings.primaryKey.field;
     }
 
@@ -553,6 +559,7 @@ function crudCreateRoutePath(type, suffix) {
 
   if (type.fromParent) {
     if (
+      // @ts-expect-error
       type.internalSettings.parent.internalSettings?.usedRelation?.subType ===
       "oneToOneReverse"
     ) {

@@ -36,8 +36,11 @@ export function crudCallFunctionsForRoutes(functions, type, args) {
  * @returns {string}
  */
 export function crudCreateRouteParam(type) {
-  // @ts-expect-error
   return `${
+    // @ts-expect-error
     type.fromParent?.options?.name ?? type.entity.reference.name
-  }${upperCaseFirst(type.internalSettings.primaryKey.key)}`;
+  }${
+    // @ts-expect-error
+    upperCaseFirst(type.internalSettings.primaryKey.key)
+  }`;
 }
