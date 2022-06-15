@@ -109,6 +109,10 @@ function getHomeSidebar() {
           link: "/features/code-gen-sql.html",
         },
         {
+          text: "Code generation CRUD",
+          link: "/features/code-gen-crud.html",
+        },
+        {
           text: "Postgres migrations",
           link: "/features/migrations.html",
         },
