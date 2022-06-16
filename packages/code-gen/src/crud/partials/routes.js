@@ -62,6 +62,9 @@ ${data.handlerName} = async (ctx, next) => {
  *     bodyKey: string,
  *     paramsKey: string,
  *   },
+ *   oneToOneChecks?: {
+ *     builder: string,
+ *   }
  * }} data
  * @returns {string}
  */
@@ -70,6 +73,23 @@ ${data.handlerName} = async (ctx, next) => {
   ${
     data.applyParams
       ? `ctx.validatedBody.${data.applyParams.bodyKey} = ctx.validatedParams.${data.applyParams.paramsKey};`
+      : ``
+  }
+  ${
+    data.oneToOneChecks
+      ? `
+  try {
+    const builder = ${data.oneToOneChecks.builder};
+    const exists = await ${data.crudName}Single(newEventFromEvent(ctx.event), sql, builder);
+    if (exists) {
+      throw AppError.validationError("${data.crudName}.create.alreadyExists");
+    }
+  } catch (e) {
+    if (e.key === "${data.crudName}.create.alreadyExists") {
+      throw e;
+    }
+  }
+`
       : ``
   }
   
