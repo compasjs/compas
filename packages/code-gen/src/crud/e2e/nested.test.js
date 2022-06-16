@@ -174,18 +174,36 @@ test("code-gen/crud/e2e/nested", async (t) => {
       }
     });
 
-    t.test("apiRoleInfoCreate", async (t) => {
-      const { item } = await apiRoleInfoCreate(
-        axiosInstance,
-        {
-          roleId: role.id,
-        },
-        {
-          description: "Foo bar baz",
-        },
-      );
+    t.test("apiRoleInfoCreate", (t) => {
+      t.test("success", async (t) => {
+        const { item } = await apiRoleInfoCreate(
+          axiosInstance,
+          {
+            roleId: role.id,
+          },
+          {
+            description: "Foo bar baz",
+          },
+        );
 
-      t.equal(item.role, role.id);
+        t.equal(item.role, role.id);
+      });
+
+      t.test("fails - second time", async (t) => {
+        try {
+          await apiRoleInfoCreate(
+            axiosInstance,
+            {
+              roleId: role.id,
+            },
+            {
+              description: "Foo bar baz",
+            },
+          );
+        } catch (e) {
+          t.equal(e.key, "roleInfo.create.alreadyExists");
+        }
+      });
     });
 
     t.test("apiRoleInfoSingle", async (t) => {

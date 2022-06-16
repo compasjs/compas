@@ -204,9 +204,22 @@ function crudGenerateRouteImplementationCreateRoute(
           paramsKey: crudCreateRouteParam(type.internalSettings.parent),
         }
       : undefined,
+    oneToOneChecks:
+      type.internalSettings.usedRelation?.subType === "oneToOneReverse"
+        ? {
+            builder: crudFormatBuilder(
+              crudGetBuilder(type, {
+                includeOwnParam: true,
+                includeJoins: false,
+                traverseParents: true,
+              }),
+            ),
+          }
+        : undefined,
   };
 
   importer.destructureImport(`newEventFromEvent`, "@compas/stdlib");
+  importer.destructureImport(`AppError`, "@compas/stdlib");
   importer.destructureImport(`${data.crudName}Transform`, "./events.js");
   importer.destructureImport(`${data.crudName}Create`, "./events.js");
   importer.destructureImport(
