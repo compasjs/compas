@@ -17,6 +17,9 @@ export function crudPartialRouteCreate(data: {
     bodyKey: string;
     paramsKey: string;
   };
+  oneToOneChecks?: {
+    builder: string;
+  };
 }): string;
 export function crudPartialRouteUpdate(data: {
   handlerName: string;
