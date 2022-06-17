@@ -30,6 +30,10 @@ export function crudGenerateRouteImplementations(context) {
     const sources = [];
 
     crudGenerateRouteImplementationForType(context, importer, sources, type);
+    const { modifierJSDoc, modifierDestructure } = crudResolveModifiersForType(
+      context,
+      type,
+    );
 
     sources.unshift(`
 /**
@@ -41,9 +45,12 @@ export function crudGenerateRouteImplementations(context) {
  *
  * @param {{
  *   sql: Postgres,
+ *   ${modifierJSDoc}
  * }} options
  */
-export function ${crudResolveGroup(type)}RegisterCrud({ sql }) {
+export function ${crudResolveGroup(
+      type,
+    )}RegisterCrud({ sql, ${modifierDestructure} }) {
   
 `);
     sources.push("}");
@@ -88,6 +95,70 @@ function crudGenerateRouteImplementationForType(
       relation,
     );
   }
+}
+
+/**
+ * @param {import("../generated/common/types.js").CodeGenContext} context
+ * @param {import("../generated/common/types.js").CodeGenCrudType} type
+ * @returns {{
+ *   modifierJSDoc: string,
+ *   modifierDestructure: string,
+ * }}
+ */
+function crudResolveModifiersForType(context, type) {
+  let modifierJSDoc = "";
+  let modifierDestructure = "";
+
+  const crudName =
+    crudResolveGroup(type) + upperCaseFirst(crudCreateName(type, ""));
+  const upperCrudName = upperCaseFirst(crudName);
+
+  if (type.routeOptions.listRoute) {
+    // @ts-expect-error
+    modifierJSDoc += `${crudName}ListPreModifier?: (event: InsightEvent, ctx: ${upperCrudName}ListCtx, countBuilder: ${type.entity.reference.uniqueName}QueryBuilder, listBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierDestructure += `${crudName}ListPreModifier,\n`;
+  }
+
+  if (type.routeOptions.singleRoute) {
+    // @ts-expect-error
+    modifierJSDoc += `${crudName}SinglePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierDestructure += `${crudName}SinglePreModifier,\n`;
+  }
+
+  if (type.routeOptions.createRoute) {
+    modifierJSDoc += `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx ${
+      type.internalSettings.usedRelation?.subType === "oneToOneReverse"
+        ? `, singleBuilder: ${
+            // @ts-expect-error
+            type.entity.reference.uniqueName
+          }QueryBuilder`
+        : ""
+    }) => void|Promise<void>,\n`;
+    modifierDestructure += `${crudName}CreatePreModifier,\n`;
+  }
+
+  if (type.routeOptions.updateRoute) {
+    // @ts-expect-error
+    modifierJSDoc += `${crudName}UpdatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierDestructure += `${crudName}UpdatePreModifier,\n`;
+  }
+
+  if (type.routeOptions.deleteRoute) {
+    // @ts-expect-error
+    modifierJSDoc += `${crudName}DeletePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierDestructure += `${crudName}DeletePreModifier,\n`;
+  }
+
+  for (const relation of type.nestedRelations) {
+    const result = crudResolveModifiersForType(context, relation);
+    modifierJSDoc += result.modifierJSDoc;
+    modifierDestructure += result.modifierDestructure;
+  }
+
+  return {
+    modifierDestructure,
+    modifierJSDoc,
+  };
 }
 
 /**
