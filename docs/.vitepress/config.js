@@ -97,11 +97,11 @@ function getHomeSidebar() {
           link: "/features/code-gen-validators.html",
         },
         {
-          text: "Code generation HTTP api",
+          text: "Code generation API",
           link: "/features/code-gen-api.html",
         },
         {
-          text: "Code generation api client",
+          text: "Code generation API client",
           link: "/features/code-gen-api-client.html",
         },
         {

@@ -14,7 +14,7 @@ to be installed.
 
 ## The features
 
-CRUD generation supports quiet a variety of features and combinations there of.
+CRUD generation supports quite a variety of features and combinations there of.
 Let's break them all down;
 
 ### Route selection:
@@ -164,7 +164,8 @@ This generates the following routes:
 Appropriate route invalidations for react-query generator are automatically
 added in all cases. In case a nested relation is used with a `oneToOne`
 relation, the `list` route is automatically disabled, and the extra route params
-are removed.
+are removed. So `/post/:postId/author/:authorId/single` is shortened to
+`/post/:postId/author/single`.
 
 ### Modifiers
 

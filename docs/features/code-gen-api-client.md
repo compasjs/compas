@@ -1,4 +1,4 @@
-# Code gen api client
+# Code generator API client
 
 ::: tip
 
