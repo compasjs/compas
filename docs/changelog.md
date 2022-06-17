@@ -4,6 +4,84 @@ editLink: false
 
 # Changelog
 
+### [v0.0.202](https://github.com/compasjs/compas/releases/tag/v0.0.202)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.18.2 to 7.18.5
+  ([#1852](https://github.com/compasjs/compas/pull/1852))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump actions/setup-node from 3.2.0 to 3.3.0
+  ([#1844](https://github.com/compasjs/compas/pull/1844))
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): bump eslint from 8.16.0 to 8.17.0
+  ([#1841](https://github.com/compasjs/compas/pull/1841))
+- build(deps): bump file-type from 17.1.1 to 17.1.2
+  ([#1834](https://github.com/compasjs/compas/pull/1834))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 7.11.0 to 8.0.0
+  ([#1833](https://github.com/compasjs/compas/pull/1833))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump prettier from 2.6.2 to 2.7.1
+  ([#1854](https://github.com/compasjs/compas/pull/1854) ,
+  [#1860](https://github.com/compasjs/compas/pull/1860))
+- chore(changelog): ignore `@types/node` updates
+- feat(code-gen): implement `T.crud()`
+  ([#1824](https://github.com/compasjs/compas/pull/1824))
+  - Closes [#1099](https://github.com/compasjs/compas/pull/1099)
+- chore(code-gen): add e2e tests for basic crud generation
+  ([#1846](https://github.com/compasjs/compas/pull/1846))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- chore(code-gen): test crud inline + various fixes
+  ([#1847](https://github.com/compasjs/compas/pull/1847))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- chore(code-gen): test crud nested + various fixes
+  ([#1848](https://github.com/compasjs/compas/pull/1848))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): add check to prevent double `oneToOne` creation in crud
+  ([#1859](https://github.com/compasjs/compas/pull/1859))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): add crud order by support
+  ([#1857](https://github.com/compasjs/compas/pull/1857))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): add route invalidations to crud routes in a single group
+  ([#1850](https://github.com/compasjs/compas/pull/1850))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): full dynamic primary key support in the crud generator
+  ([#1856](https://github.com/compasjs/compas/pull/1856))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): support crud modifiers
+  ([#1862](https://github.com/compasjs/compas/pull/1862))
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(docs): add CRUD docs
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
+- chore(types): fix type issues, let CI fail on the types
+- feat(cli): improve printing of 'actual' values in `t.ok` and `t.notOk`
+  ([#1837](https://github.com/compasjs/compas/pull/1837))
+  - Closes [#1836](https://github.com/compasjs/compas/pull/1836)
+- feat(cli): support `ignoreDirectories` in the loaded `test/config.js`
+- feat(code-gen): generalize compas order by types
+- feat(server): return `stack` and `cause` of errors when not in production
+  ([#1838](https://github.com/compasjs/compas/pull/1838))
+  - Closes [#1835](https://github.com/compasjs/compas/pull/1835)
+- fix(cli): don't load `.test.js` files when resolving CLI commands
+- fix(code-gen): correctly output invalidations using multiple params
+  ([#1851](https://github.com/compasjs/compas/pull/1851))
+- fix(code-gen): satisfy tsc
+
+##### Breaking changes
+
+- **deps**: bump pino from 7.11.0 to 8.0.0
+  - Major version bump
+- **code-gen**: generalize compas order by types
+  - `CompasSqlOrderBy` and `CompasSqlOrderByOptionalField` are respectively
+    named `CompasOrderBy` and `CompasOrderByOptional`
+
+##### Documentation updates
+
+- Added a new page describing the
+  [CRUD generator features](https://compasjs.com/features/code-gen-crud.html)
+
 ### [v0.0.201](https://github.com/compasjs/compas/releases/tag/v0.0.201)
 
 ##### Changes

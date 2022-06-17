@@ -10,60 +10,60 @@ editLink: false
 
 - build(deps): bump @babel/core from 7.18.2 to 7.18.5
   ([#1852](https://github.com/compasjs/compas/pull/1852))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump actions/setup-node from 3.2.0 to 3.3.0
   ([#1844](https://github.com/compasjs/compas/pull/1844))
-    - [Release notes](https://github.com/actions/setup-node/releases)
+  - [Release notes](https://github.com/actions/setup-node/releases)
 - build(deps): bump eslint from 8.16.0 to 8.17.0
   ([#1841](https://github.com/compasjs/compas/pull/1841))
 - build(deps): bump file-type from 17.1.1 to 17.1.2
   ([#1834](https://github.com/compasjs/compas/pull/1834))
-    - [Release notes](https://github.com/sindresorhus/file-type/releases)
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
 - build(deps): bump pino from 7.11.0 to 8.0.0
   ([#1833](https://github.com/compasjs/compas/pull/1833))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - build(deps): bump prettier from 2.6.2 to 2.7.1
   ([#1854](https://github.com/compasjs/compas/pull/1854) ,
   [#1860](https://github.com/compasjs/compas/pull/1860))
 - chore(changelog): ignore `@types/node` updates
 - feat(code-gen): implement `T.crud()`
   ([#1824](https://github.com/compasjs/compas/pull/1824))
-    - Closes [#1099](https://github.com/compasjs/compas/pull/1099)
+  - Closes [#1099](https://github.com/compasjs/compas/pull/1099)
 - chore(code-gen): add e2e tests for basic crud generation
   ([#1846](https://github.com/compasjs/compas/pull/1846))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - chore(code-gen): test crud inline + various fixes
   ([#1847](https://github.com/compasjs/compas/pull/1847))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - chore(code-gen): test crud nested + various fixes
   ([#1848](https://github.com/compasjs/compas/pull/1848))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(code-gen): add check to prevent double `oneToOne` creation in crud
   ([#1859](https://github.com/compasjs/compas/pull/1859))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(code-gen): add crud order by support
   ([#1857](https://github.com/compasjs/compas/pull/1857))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(code-gen): add route invalidations to crud routes in a single group
   ([#1850](https://github.com/compasjs/compas/pull/1850))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(code-gen): full dynamic primary key support in the crud generator
   ([#1856](https://github.com/compasjs/compas/pull/1856))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(code-gen): support crud modifiers
   ([#1862](https://github.com/compasjs/compas/pull/1862))
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - feat(docs): add CRUD docs
-    - References [#1843](https://github.com/compasjs/compas/pull/1843)
+  - References [#1843](https://github.com/compasjs/compas/pull/1843)
 - chore(types): fix type issues, let CI fail on the types
 - feat(cli): improve printing of 'actual' values in `t.ok` and `t.notOk`
   ([#1837](https://github.com/compasjs/compas/pull/1837))
-    - Closes [#1836](https://github.com/compasjs/compas/pull/1836)
+  - Closes [#1836](https://github.com/compasjs/compas/pull/1836)
 - feat(cli): support `ignoreDirectories` in the loaded `test/config.js`
 - feat(code-gen): generalize compas order by types
 - feat(server): return `stack` and `cause` of errors when not in production
   ([#1838](https://github.com/compasjs/compas/pull/1838))
-    - Closes [#1835](https://github.com/compasjs/compas/pull/1835)
+  - Closes [#1835](https://github.com/compasjs/compas/pull/1835)
 - fix(cli): don't load `.test.js` files when resolving CLI commands
 - fix(code-gen): correctly output invalidations using multiple params
   ([#1851](https://github.com/compasjs/compas/pull/1851))
@@ -72,10 +72,10 @@ editLink: false
 ##### Breaking changes
 
 - **deps**: bump pino from 7.11.0 to 8.0.0
-    - Major version bump
+  - Major version bump
 - **code-gen**: generalize compas order by types
-    - `CompasSqlOrderBy` and `CompasSqlOrderByOptionalField` are respectively
-      named `CompasOrderBy` and `CompasOrderByOptional`
+  - `CompasSqlOrderBy` and `CompasSqlOrderByOptionalField` are respectively
+    named `CompasOrderBy` and `CompasOrderByOptional`
 
 ##### Documentation updates
 
@@ -90,45 +90,45 @@ editLink: false
   ([#1809](https://github.com/compasjs/compas/pull/1809) ,
   [#1812](https://github.com/compasjs/compas/pull/1812),
   [#1821](https://github.com/compasjs/compas/pull/1821))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @babel/eslint-parser from 7.17.0 to 7.18.2
   ([#1819](https://github.com/compasjs/compas/pull/1819))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 17.0.33 to 17.0.36
   ([#1808](https://github.com/compasjs/compas/pull/1808) ,
   [#1813](https://github.com/compasjs/compas/pull/1813),
   [#1823](https://github.com/compasjs/compas/pull/1823))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 8.15.0 to 8.16.0
   ([#1814](https://github.com/compasjs/compas/pull/1814))
 - build(deps): bump eslint-plugin-jsdoc from 39.2.9 to 39.3.2
   ([#1811](https://github.com/compasjs/compas/pull/1811) ,
   [#1817](https://github.com/compasjs/compas/pull/1817))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump postgres from 3.2.2 to 3.2.4
   ([#1816](https://github.com/compasjs/compas/pull/1816) ,
   [#1820](https://github.com/compasjs/compas/pull/1820))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - build(deps): bump sharp from 0.30.4 to 0.30.6
   ([#1815](https://github.com/compasjs/compas/pull/1815) ,
   [#1826](https://github.com/compasjs/compas/pull/1826))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - feat(code-gen): remove `validator.anyOf` errors
   ([#1829](https://github.com/compasjs/compas/pull/1829))
-    - Closes [#1827](https://github.com/compasjs/compas/pull/1827)
+  - Closes [#1827](https://github.com/compasjs/compas/pull/1827)
 - feat(code-gen): return `foundKeys` and `expectedKeys` in ` validator.o…
   ([#1830](https://github.com/compasjs/compas/pull/1830))
-    - Closes [#1828](https://github.com/compasjs/compas/pull/1828)
+  - Closes [#1828](https://github.com/compasjs/compas/pull/1828)
 
 ##### Breaking changes
 
 - **code-gen**: remove `validator.anyOf` errors
-    - `validator.anyOf` is not an error key anymore. See
-      [#1827](https://github.com/compasjs/compas/pull/1827) for more information.
+  - `validator.anyOf` is not an error key anymore. See
+    [#1827](https://github.com/compasjs/compas/pull/1827) for more information.
 - **code-gen**: return `foundKeys` and `expectedKeys` in `validator.o…
-    - `info.extraKey` is replaced by `info.expectedKeys` and `info.foundKeys` in
-      `validator.object.strict` errors. See
-      [#1828](https://github.com/compasjs/compas/pull/1828) for more information.
+  - `info.extraKey` is replaced by `info.expectedKeys` and `info.foundKeys` in
+    `validator.object.strict` errors. See
+    [#1828](https://github.com/compasjs/compas/pull/1828) for more information.
 
 ### [v0.0.200](https://github.com/compasjs/compas/releases/tag/v0.0.200)
 
@@ -137,24 +137,24 @@ editLink: false
 - build(deps): bump @types/node from 17.0.31 to 17.0.33
   ([#1798](https://github.com/compasjs/compas/pull/1798) ,
   [#1802](https://github.com/compasjs/compas/pull/1802))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump c8 from 7.11.2 to 7.11.3
   ([#1807](https://github.com/compasjs/compas/pull/1807))
-    - [Release notes](https://github.com/bcoe/c8/releases)
+  - [Release notes](https://github.com/bcoe/c8/releases)
 - build(deps): bump dotenv from 16.0.0 to 16.0.1
   ([#1799](https://github.com/compasjs/compas/pull/1799))
-    - [Release notes](https://github.com/motdotla/dotenv/releases)
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
 - build(deps): bump postgres from 3.1.0 to 3.2.2
   ([#1806](https://github.com/compasjs/compas/pull/1806))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - chore(changelog): support keywords with and without trailing `S`
   ([#1805](https://github.com/compasjs/compas/pull/1805))
 - feat(store,code-gen): support image/avif in `sendTransformedImage`
   ([#1804](https://github.com/compasjs/compas/pull/1804))
-    - Closes [#1801](https://github.com/compasjs/compas/pull/1801)
+  - Closes [#1801](https://github.com/compasjs/compas/pull/1801)
 - fix(code-gen): support numbers in group names like before
   ([#1803](https://github.com/compasjs/compas/pull/1803))
-    - Closes [#1800](https://github.com/compasjs/compas/pull/1800)
+  - Closes [#1800](https://github.com/compasjs/compas/pull/1800)
 
 ### [v0.0.199](https://github.com/compasjs/compas/releases/tag/v0.0.199)
 
@@ -174,10 +174,10 @@ editLink: false
 
 - build(deps): bump @babel/core from 7.17.9 to 7.17.10
   ([#1780](https://github.com/compasjs/compas/pull/1780))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/formidable from 2.0.4 to 2.0.5
   ([#1784](https://github.com/compasjs/compas/pull/1784))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 17.0.25 to 17.0.31
   ([#1754](https://github.com/compasjs/compas/pull/1754) ,
   [#1762](https://github.com/compasjs/compas/pull/1762),
@@ -200,7 +200,7 @@ editLink: false
   ([#1766](https://github.com/compasjs/compas/pull/1766))
 - build(deps): bump postgres from 2.0.0-beta.11 to 3.1.0
   ([#1750](https://github.com/compasjs/compas/pull/1750))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - build(deps): bump recast from 0.20.5 to 0.21.1
   ([#1772](https://github.com/compasjs/compas/pull/1772))
 - chore: migrate from Yarn to NPM workspaces
@@ -214,68 +214,68 @@ editLink: false
 - chore(code-gen): skip generating empty type for defined routes
 - feat(code-gen): add explicit error for empty `T.string().oneOf()` values
   ([#1773](https://github.com/compasjs/compas/pull/1773))
-    - Closes [#1755](https://github.com/compasjs/compas/pull/1755)
+  - Closes [#1755](https://github.com/compasjs/compas/pull/1755)
 - feat(code-gen): explicit error on invalid group and type names
   ([#1787](https://github.com/compasjs/compas/pull/1787))
 - feat(code-gen): hard error on duplicate route param
   ([#1796](https://github.com/compasjs/compas/pull/1796))
-    - Closes [#1792](https://github.com/compasjs/compas/pull/1792)
+  - Closes [#1792](https://github.com/compasjs/compas/pull/1792)
 - feat(code-gen): only report first error in 'anyOf' validators
   ([#1770](https://github.com/compasjs/compas/pull/1770))
-    - Closes [#1756](https://github.com/compasjs/compas/pull/1756)
+  - Closes [#1756](https://github.com/compasjs/compas/pull/1756)
 - feat(code-gen): support references in `T.pick` and `T.omit`
   ([#1788](https://github.com/compasjs/compas/pull/1788))
 - feat(server): remove `leakError` support
   ([#1769](https://github.com/compasjs/compas/pull/1769))
-    - Closes [#1757](https://github.com/compasjs/compas/pull/1757)
+  - Closes [#1757](https://github.com/compasjs/compas/pull/1757)
 - feat(stdlib): support `COMPAS_LOG_PRINTER` env variable to select a log
   printer ([#1785](https://github.com/compasjs/compas/pull/1785))
 - feat(store): refactor job queue worker
   ([#1776](https://github.com/compasjs/compas/pull/1776))
-    - Closes [#1095](https://github.com/compasjs/compas/pull/1095)
-    - Closes [#1704](https://github.com/compasjs/compas/pull/1704)
+  - Closes [#1095](https://github.com/compasjs/compas/pull/1095)
+  - Closes [#1704](https://github.com/compasjs/compas/pull/1704)
 - fix(docs): fix syntax error in initial migration
 
 ##### Breaking changes
 
 - **deps**: bump postgres from 2.0.0-beta.11 to 3.1.0
-    - Major version bump
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - Major version bump
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - **all**: support Node.js 18
-    - `POSTGRES_HOST` and `MINIO_URI` should use `127.0.0.1` instead of
-      `localhost` when using Node.js 18+
-    - Axios will use the global `FormData`, resulting in a one time process
-      warning which is automatically logged as an error. Since Axios also includes
-      its own `form-data` package for older Node.js versions, you can remove the
-      explicit the dependency on it.
+  - `POSTGRES_HOST` and `MINIO_URI` should use `127.0.0.1` instead of
+    `localhost` when using Node.js 18+
+  - Axios will use the global `FormData`, resulting in a one time process
+    warning which is automatically logged as an error. Since Axios also includes
+    its own `form-data` package for older Node.js versions, you can remove the
+    explicit the dependency on it.
 - **code-gen**: move comment formatter and internal field remove to structure
   helpers
-    - `type` is now a reserved group name
+  - `type` is now a reserved group name
 - **code-gen**: support references in `T.pick` and `T.omit`
-    - `T.omit()` and `T.pick()` now only copy or remove object keys and further
-      use their own options for things like `.optional()`, `.default()` and
-      `.loose()`
+  - `T.omit()` and `T.pick()` now only copy or remove object keys and further
+    use their own options for things like `.optional()`, `.default()` and
+    `.loose()`
 - **server**: remove `leakError` support
-    - The `stack` and `cause` properties are never sent to the client.
-    - Error responses should have a `requestId` property, referencing to the logs
-      for the `stack` and `cause` properties.
+  - The `stack` and `cause` properties are never sent to the client.
+  - Error responses should have a `requestId` property, referencing to the logs
+    for the `stack` and `cause` properties.
 - **store**: refactor job queue worker
-    - All of `addJobToQueue`, `addEventToQueue` and
-      `addJobWithCustomTimeoutToQueue` are replaced with
-      [queueWorkerAddJob](https://compasjs.com/features/background-jobs.html#queueWorkerAddJob)
-    - `new JobQueueWorker()` including the `start` & `stop` methods are replaced
-      by
-      [queueWorkerCreate](https://compasjs.com/features/background-jobs.html#queueWorkerCreate)
-    - `JobQueueWorker#clean` no longer exists, see
-      [jobQueueCleanup](https://compasjs.com/features/background-jobs.html#jobqueuecleanup)
-      for a replacement
-    - `JobQueueWorker#pendingQueueSize` no longer exists, see
-      [jobQueueInsights](https://compasjs.com/features/background-jobs.html#jobqueueinsights)
-    - `addRecurringJobToQueue` is removed, and replaced with cron based scheduler,
-      see
-      [queueWorkerRegisterCronJobs](https://compasjs.com/features/background-jobs.html#queueworkerregistercronjobs)
-    - Remove all existing recurring jobs and their created jobs with the following
-      migration:
+  - All of `addJobToQueue`, `addEventToQueue` and
+    `addJobWithCustomTimeoutToQueue` are replaced with
+    [queueWorkerAddJob](https://compasjs.com/features/background-jobs.html#queueWorkerAddJob)
+  - `new JobQueueWorker()` including the `start` & `stop` methods are replaced
+    by
+    [queueWorkerCreate](https://compasjs.com/features/background-jobs.html#queueWorkerCreate)
+  - `JobQueueWorker#clean` no longer exists, see
+    [jobQueueCleanup](https://compasjs.com/features/background-jobs.html#jobqueuecleanup)
+    for a replacement
+  - `JobQueueWorker#pendingQueueSize` no longer exists, see
+    [jobQueueInsights](https://compasjs.com/features/background-jobs.html#jobqueueinsights)
+  - `addRecurringJobToQueue` is removed, and replaced with cron based scheduler,
+    see
+    [queueWorkerRegisterCronJobs](https://compasjs.com/features/background-jobs.html#queueworkerregistercronjobs)
+  - Remove all existing recurring jobs and their created jobs with the following
+    migration:
 
 ```sql
 WITH
@@ -310,16 +310,16 @@ WHERE
   [#1723](https://github.com/compasjs/compas/pull/1723))
 - build(deps): bump c8 from 7.11.0 to 7.11.2
   ([#1742](https://github.com/compasjs/compas/pull/1742))
-    - [Release notes](https://github.com/bcoe/c8/releases)
+  - [Release notes](https://github.com/bcoe/c8/releases)
 - build(deps): bump codecov/codecov-action from 2.1.0 to 3
   ([#1703](https://github.com/compasjs/compas/pull/1703))
-    - [Release notes](https://github.com/codecov/codecov-action/releases)
+  - [Release notes](https://github.com/codecov/codecov-action/releases)
 - build(deps): bump crc from 4.1.0 to 4.1.1
   ([#1718](https://github.com/compasjs/compas/pull/1718))
 - build(deps): bump eslint from 8.11.0 to 8.13.0
   ([#1679](https://github.com/compasjs/compas/pull/1679),
   [#1720](https://github.com/compasjs/compas/pull/1720))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-import from 2.25.4 to 2.26.0
   ([#1701](https://github.com/compasjs/compas/pull/1701))
 - build(deps): bump eslint-plugin-jsdoc from 38.0.6 to 39.2.7
@@ -337,88 +337,88 @@ WHERE
   [#1740](https://github.com/compasjs/compas/pull/1740),
   [#1741](https://github.com/compasjs/compas/pull/1741),
   [#1745](https://github.com/compasjs/compas/pull/1745))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump minimist from 1.2.5 to 1.2.6
   ([#1672](https://github.com/compasjs/compas/pull/1672))
-    - [Release notes](https://github.com/substack/minimist/releases)
+  - [Release notes](https://github.com/substack/minimist/releases)
 - build(deps): bump pino from 7.9.2 to 7.10.0
   ([#1716](https://github.com/compasjs/compas/pull/1716))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - build(deps): bump prettier from 2.6.0 to 2.6.2
   ([#1677](https://github.com/compasjs/compas/pull/1677),
   [#1696](https://github.com/compasjs/compas/pull/1696))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - build(deps): bump sharp from 0.30.3 to 0.30.4
   ([#1736](https://github.com/compasjs/compas/pull/1736))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - chore(eslint-plugin): better suggestion message for check-event-name
 - chore(store): drop `fileGroup` support
   ([#1714](https://github.com/compasjs/compas/pull/1714))
-    - Closes [#1705](https://github.com/compasjs/compas/pull/1705)
+  - Closes [#1705](https://github.com/compasjs/compas/pull/1705)
 - feat(cli): remove `enforceSingleAssertion` option from test config
   ([#1690](https://github.com/compasjs/compas/pull/1690))
 - feat(code-gen): cleanup soft delete support
   ([#1691](https://github.com/compasjs/compas/pull/1691))
-    - Closes [#1091](https://github.com/compasjs/compas/pull/1091)
+  - Closes [#1091](https://github.com/compasjs/compas/pull/1091)
 - feat(eslint-plugin): add check-event-name rule
   ([#1734](https://github.com/compasjs/compas/pull/1734))
-    - Closes [#1713](https://github.com/compasjs/compas/pull/1713)
+  - Closes [#1713](https://github.com/compasjs/compas/pull/1713)
 - feat(server): handle file upload size limit errors
   ([#1748](https://github.com/compasjs/compas/pull/1748))
-    - Closes [#1743](https://github.com/compasjs/compas/pull/1743)
+  - Closes [#1743](https://github.com/compasjs/compas/pull/1743)
 - feat(stdlib): supported already formatted error in AppError#format
   ([#1749](https://github.com/compasjs/compas/pull/1749))
-    - Closes [#1747](https://github.com/compasjs/compas/pull/1747)
+  - Closes [#1747](https://github.com/compasjs/compas/pull/1747)
 - feat(store): drop soft deletes on file and file group
   ([#1693](https://github.com/compasjs/compas/pull/1693))
 - fix(cli): include failing assertions of subtests in failing test
   ([#1689](https://github.com/compasjs/compas/pull/1689))
-    - Closes [#1685](https://github.com/compasjs/compas/pull/1685)
+  - Closes [#1685](https://github.com/compasjs/compas/pull/1685)
 - fix(code-gen): import structure without cache in `generateTypes` and
   `generateOpenAPI` ([#1715](https://github.com/compasjs/compas/pull/1715))
-    - Closes [#1699](https://github.com/compasjs/compas/pull/1699)
+  - Closes [#1699](https://github.com/compasjs/compas/pull/1699)
 - fix(eslint-plugin): only error enforce-event-stop if `eventStart` is called
   ([#1729](https://github.com/compasjs/compas/pull/1729))
-    - Closes [#1706](https://github.com/compasjs/compas/pull/1706)
+  - Closes [#1706](https://github.com/compasjs/compas/pull/1706)
 - fix(eslint-plugin): register `enforce-event-stop` as the correct rule type
 - fix(store): correct type partial for `newMinioClient`
-    - Closes [#1712](https://github.com/compasjs/compas/pull/1712)
+  - Closes [#1712](https://github.com/compasjs/compas/pull/1712)
 
 ##### Breaking changes
 
 - **deps**: bump eslint-plugin-jsdoc from 38.0.6 to 39.2.7
-    - Major version bump
+  - Major version bump
 - **store**: drop soft deletes on file and file group
-    - File and fileGroup are no longer soft deletable. If you need this, you
-      should reference them via a custom entity that is soft deletable.
-    - To drop the columns, create the following migration:
+  - File and fileGroup are no longer soft deletable. If you need this, you
+    should reference them via a custom entity that is soft deletable.
+  - To drop the columns, create the following migration:
   ```sql
   ALTER TABLE "file" DROP COLUMN "deletedAt" CASCADE;
   ALTER TABLE "fileGroup" DROP COLUMN "deletedAt" CASCADE;
   ```
 - **store**: drop `fileGroup` support
-    - Any reference to `fileGroup` should be removed. If you need the exact
-      behaviour that it had, please check the removed code via its pull request
-      link above. Most notably: `gen/store.js` and
-      `packages/store/src/file-group.js`.
-    - Run the following SQL in a migration:
+  - Any reference to `fileGroup` should be removed. If you need the exact
+    behaviour that it had, please check the removed code via its pull request
+    link above. Most notably: `gen/store.js` and
+    `packages/store/src/file-group.js`.
+  - Run the following SQL in a migration:
   ```sql
   DROP TABLE "fileGroup" CASCADE;
   ```
 - **cli**: remove `enforceSingleAssertion` option from test config
-    - All tests now require at least a single assertion or registration of a
-      subtest
+  - All tests now require at least a single assertion or registration of a
+    subtest
 - **code-gen**: cleanup soft delete support
-    - Entities that use soft delete should use
-      `queries.entityUpdate(sql, { update: { deletedAt: new Date() }, where, })`
-      instead of `queries.entityDelete`
-    - The generated `queries.entityDeletePermanent` is removed, and instead
-      `queries.entityDelete` will always permanently delete a record, even if it
-      was soft deleted.
+  - Entities that use soft delete should use
+    `queries.entityUpdate(sql, { update: { deletedAt: new Date() }, where, })`
+    instead of `queries.entityDelete`
+  - The generated `queries.entityDeletePermanent` is removed, and instead
+    `queries.entityDelete` will always permanently delete a record, even if it
+    was soft deleted.
 - **eslint-plugin**: add check-event-name rule
-    - Enabled the `@compas/check-event-name` rule in `@compas/full` ESLint config.
-      It validates that the second argument passed to `eventStart` can be derived
-      from the function name.
+  - Enabled the `@compas/check-event-name` rule in `@compas/full` ESLint config.
+    It validates that the second argument passed to `eventStart` can be derived
+    from the function name.
 
 ### [v0.0.195](https://github.com/compasjs/compas/releases/tag/v0.0.195)
 
@@ -426,10 +426,10 @@ WHERE
 
 - build(deps): bump @types/node from 17.0.21 to 17.0.22
   ([#1667](https://github.com/compasjs/compas/pull/1667))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump pino from 7.9.1 to 7.9.2
   ([#1668](https://github.com/compasjs/compas/pull/1668))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - feat(code-gen): ensure route path trailing slash is correctly taken over from
   OpenAPI import ([#1669](https://github.com/compasjs/compas/pull/1669))
 
@@ -439,10 +439,10 @@ WHERE
 
 - build(deps): bump @babel/core from 7.17.7 to 7.17.8
   ([#1665](https://github.com/compasjs/compas/pull/1665))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump eslint-plugin-jsdoc from 38.0.4 to 38.0.6
   ([#1664](https://github.com/compasjs/compas/pull/1664))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - fix(eslint-plugin): skip blocks outside functions in enforce-event-stop
 
 ### [v0.0.193](https://github.com/compasjs/compas/releases/tag/v0.0.193)
@@ -451,7 +451,7 @@ WHERE
 
 - fix(eslint-plugin): don't suggest enforce-event-stop after code paths that can
   leave a function ([#1663](https://github.com/compasjs/compas/pull/1663))
-    - Closes [#1662](https://github.com/compasjs/compas/pull/1662)
+  - Closes [#1662](https://github.com/compasjs/compas/pull/1662)
 
 ### [v0.0.192](https://github.com/compasjs/compas/releases/tag/v0.0.192)
 
@@ -459,12 +459,12 @@ WHERE
 
 - build(deps): bump @babel/core from 7.17.5 to 7.17.7
   ([#1655](https://github.com/compasjs/compas/pull/1655))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump actions/checkout from 2 to 3
   ([#1639](https://github.com/compasjs/compas/pull/1639))
 - build(deps): bump EndBug/add-and-commit from 8 to 9
   ([#1651](https://github.com/compasjs/compas/pull/1651))
-    - [Release notes](https://github.com/EndBug/add-and-commit/releases)
+  - [Release notes](https://github.com/EndBug/add-and-commit/releases)
 - build(deps): bump eslint from 8.10.0 to 8.11.0
   ([#1649](https://github.com/compasjs/compas/pull/1649))
 - build(deps): bump eslint-config-prettier from 8.4.0 to 8.5.0
@@ -476,13 +476,13 @@ WHERE
   [#1647](https://github.com/compasjs/compas/pull/1647),
   [#1650](https://github.com/compasjs/compas/pull/1650),
   [#1653](https://github.com/compasjs/compas/pull/1653))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump mime-types from 2.1.34 to 2.1.35
   ([#1648](https://github.com/compasjs/compas/pull/1648))
 - build(deps): bump pino from 7.8.0 to 7.9.1
   ([#1645](https://github.com/compasjs/compas/pull/1645),
   [#1658](https://github.com/compasjs/compas/pull/1658))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - build(deps): bump prettier from 2.5.1 to 2.6.0
   ([#1657](https://github.com/compasjs/compas/pull/1657))
 - build(deps): bump sharp from 0.30.1 to 0.30.3
@@ -490,13 +490,13 @@ WHERE
   [#1654](https://github.com/compasjs/compas/pull/1654))
 - chore: add LICENSE to packages
   ([#1656](https://github.com/compasjs/compas/pull/1656))
-    - Closes [#1640](https://github.com/compasjs/compas/pull/1640)
+  - Closes [#1640](https://github.com/compasjs/compas/pull/1640)
 - example(session-handling-frontend): minor fixes from real project usage
 - feat(cli): add lint-config-to-eslint-plugin code-mod
   ([#1660](https://github.com/compasjs/compas/pull/1660))
 - feat(eslint-plugin): turn lint-config into working eslint-plugin
   ([#1659](https://github.com/compasjs/compas/pull/1659))
-    - Closes [#1308](https://github.com/compasjs/compas/pull/1308)
+  - Closes [#1308](https://github.com/compasjs/compas/pull/1308)
 - fix(cli): export correct command definition type
 - fix(code-gen): correctly shake out unused types in dumped api structure
   ([#1652](https://github.com/compasjs/compas/pull/1652))
@@ -504,15 +504,15 @@ WHERE
 ##### Breaking changes
 
 - **deps**: bump eslint-plugin-jsdoc from 37.9.4 to 38.0.4
-    - Major version bump
+  - Major version bump
 - **eslint-plugin**: turn lint-config into working eslint-plugin
-    - Removed the @compas/lint-config package. Use
-      `compas code-mod exec --name lint-config-to-eslint-plugin` to fix your
-      configurations.
-    - Added a default rule to enforce calling `eventStop` in async functions that
-      accept `event` as their first parameter. This can be disabled via
-      `rules: { "@compas/enforce-event-stop": "off" }` in your eslint
-      configuration.
+  - Removed the @compas/lint-config package. Use
+    `compas code-mod exec --name lint-config-to-eslint-plugin` to fix your
+    configurations.
+  - Added a default rule to enforce calling `eventStop` in async functions that
+    accept `event` as their first parameter. This can be disabled via
+    `rules: { "@compas/enforce-event-stop": "off" }` in your eslint
+    configuration.
 
 ### [v0.0.191](https://github.com/compasjs/compas/releases/tag/v0.0.191)
 
@@ -520,10 +520,10 @@ WHERE
 
 - build(deps): bump eslint from 8.9.0 to 8.10.0
   ([#1635](https://github.com/compasjs/compas/pull/1635))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump prismjs from 1.25.0 to 1.27.0
   ([#1629](https://github.com/compasjs/compas/pull/1629))
-    - [Release notes](https://github.com/PrismJS/prism/releases)
+  - [Release notes](https://github.com/PrismJS/prism/releases)
 - chore: add initial example and sync job for docs
   ([#1630](https://github.com/compasjs/compas/pull/1630))
 - example(session-handling-frontend): cleanup function signatures
@@ -535,17 +535,17 @@ WHERE
   ([#1633](https://github.com/compasjs/compas/pull/1633))
 - feat(store): add support for file access tokens
   ([#1631](https://github.com/compasjs/compas/pull/1631))
-    - References [#1307](https://github.com/compasjs/compas/pull/1307)
+  - References [#1307](https://github.com/compasjs/compas/pull/1307)
 
 ##### Breaking changes
 
 - **cli,stdlib,store**: remove cookie and proxy support
-    - Remove the `compas proxy` command
-    - Remove `calculateCorsUrlFromAppUrl` and `calculateCookieUrlFromAppUrl` from
-      @compas/stdlib
-    - Remove cookie support from `sessionTransport*` functions. Including the
-      options on `sessionTransportOptions` and
-      `sessionTransportAddAsCookiesToContext`
+  - Remove the `compas proxy` command
+  - Remove `calculateCorsUrlFromAppUrl` and `calculateCookieUrlFromAppUrl` from
+    @compas/stdlib
+  - Remove cookie support from `sessionTransport*` functions. Including the
+    options on `sessionTransportOptions` and
+    `sessionTransportAddAsCookiesToContext`
 
 ##### Documentation updates
 
@@ -567,10 +567,10 @@ WHERE
 
 - build(deps): bump @types/node from 17.0.19 to 17.0.21
   ([#1627](https://github.com/compasjs/compas/pull/1627))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump actions/setup-node from 2 to 3.0.0
   ([#1628](https://github.com/compasjs/compas/pull/1628))
-    - [Release notes](https://github.com/actions/setup-node/releases)
+  - [Release notes](https://github.com/actions/setup-node/releases)
 - fix(store): set cookie on origin 'host' instead of 'hostname' in the
   session-transport
 
@@ -606,53 +606,53 @@ WHERE
 - build(deps): bump @types/node from 17.0.16 to 17.0.18
   ([#1598](https://github.com/compasjs/compas/pull/1598),
   [#1609](https://github.com/compasjs/compas/pull/1609))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 8.8.0 to 8.9.0
   ([#1605](https://github.com/compasjs/compas/pull/1605))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.8.0 to 37.9.4
   ([#1596](https://github.com/compasjs/compas/pull/1596),
   [#1607](https://github.com/compasjs/compas/pull/1607),
   [#1613](https://github.com/compasjs/compas/pull/1613),
   [#1614](https://github.com/compasjs/compas/pull/1614),
   [#1617](https://github.com/compasjs/compas/pull/1617))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump follow-redirects from 1.14.7 to 1.14.8
   ([#1603](https://github.com/compasjs/compas/pull/1603))
-    - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+  - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
 - build(deps): bump pino from 7.6.5 to 7.8.0
   ([#1611](https://github.com/compasjs/compas/pull/1611))
 - build(deps): bump sharp from 0.30.0 to 0.30.1
   ([#1597](https://github.com/compasjs/compas/pull/1597))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - chore(types): remove a bunch of file global type imports
   ([#1618](https://github.com/compasjs/compas/pull/1618))
 - feat(code-gen): support atomic updates and dynamic return types in generated
   update queries ([#1601](https://github.com/compasjs/compas/pull/1601))
-    - Closes [#383](https://github.com/compasjs/compas/pull/383)
+  - Closes [#383](https://github.com/compasjs/compas/pull/383)
 - fix(cli): make sure that `--serial` runs tests without worker threads
   ([#1599](https://github.com/compasjs/compas/pull/1599))
-    - Closes [#1586](https://github.com/compasjs/compas/pull/1586)
+  - Closes [#1586](https://github.com/compasjs/compas/pull/1586)
 - test(code-gen): jsonb null insert behavior
   ([#1602](https://github.com/compasjs/compas/pull/1602))
-    - Closes [#1600](https://github.com/compasjs/compas/pull/1600)
+  - Closes [#1600](https://github.com/compasjs/compas/pull/1600)
 
 ##### Breaking changes
 
 - **code-gen**: support atomic updates and dynamic return types in generated
   update queries
-    - Various keys starting with `$` are recursively reserved in `T.object()`
-      types with `.enableQueries()`.
-    - Updated signature for `queries.entityUpdate`. Providing better intent and
-      less prone to bugs by naming the keys. See `compas code-mod list` for the
-      `update-queries-signature-change` code-mod which can automatically fix most
-      cases. Note that it may add some extra whitespace, this needs to be cleaned
-      up manually.
-    - `queries.entityUpdate` by default does not return any values anymore. See
-      the [docs](https://compasjs.com/features/code-gen-sql.html#crud) for more
-      information.
-    - Removed `xxxUpdateSet` functions from the generator output.
-    - Stricter checks on update queries if both `where` and `update` are specified
+  - Various keys starting with `$` are recursively reserved in `T.object()`
+    types with `.enableQueries()`.
+  - Updated signature for `queries.entityUpdate`. Providing better intent and
+    less prone to bugs by naming the keys. See `compas code-mod list` for the
+    `update-queries-signature-change` code-mod which can automatically fix most
+    cases. Note that it may add some extra whitespace, this needs to be cleaned
+    up manually.
+  - `queries.entityUpdate` by default does not return any values anymore. See
+    the [docs](https://compasjs.com/features/code-gen-sql.html#crud) for more
+    information.
+  - Removed `xxxUpdateSet` functions from the generator output.
+  - Stricter checks on update queries if both `where` and `update` are specified
 
 ##### Documentation updates
 
@@ -666,19 +666,19 @@ WHERE
 
 - build(deps): bump @babel/core from 7.17.0 to 7.17.2
   ([#1592](https://github.com/compasjs/compas/pull/1592))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 17.0.14 to 17.0.16
   ([#1582](https://github.com/compasjs/compas/pull/1582) ,
   [#1589](https://github.com/compasjs/compas/pull/1589))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.7.1 to 37.8.0
   ([#1590](https://github.com/compasjs/compas/pull/1590))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - chore(dependabot): add default reviewer
   ([#1583](https://github.com/compasjs/compas/pull/1583))
 - feat(cli): add `compas watch [..sub-commands]` and `--watch`
   ([#1587](https://github.com/compasjs/compas/pull/1587))
-    - Closes [#1509](https://github.com/compasjs/compas/pull/1509)
+  - Closes [#1509](https://github.com/compasjs/compas/pull/1509)
 - feat(code-gen): support for reference types in query and params in openApi
   exporter ([#1580](https://github.com/compasjs/compas/pull/1580))
 - feat(lint-config): disable labels and optional function parameters should be
@@ -687,7 +687,7 @@ WHERE
   ([#1585](https://github.com/compasjs/compas/pull/1585))
 - fix(cli): remove error log if command directory is not found
   ([#1593](https://github.com/compasjs/compas/pull/1593))
-    - Closes [#1591](https://github.com/compasjs/compas/pull/1591)
+  - Closes [#1591](https://github.com/compasjs/compas/pull/1591)
 - fix(test): catch errors from global setup and teardown
   ([#1594](https://github.com/compasjs/compas/pull/1594))
 
@@ -695,8 +695,8 @@ WHERE
 
 - **lint-config**: disable labels and optional functionn parameters last
 - **store**: disable labels and optional functionn parameters last
-    - Changed parameter order of `createTestPostgresDatabase`, and nested
-      `verboseSql` in to an object.
+  - Changed parameter order of `createTestPostgresDatabase`, and nested
+    `verboseSql` in to an object.
 
 ##### Documentation updates
 
@@ -714,63 +714,63 @@ WHERE
   [#1569](https://github.com/compasjs/compas/pull/1569))
 - build(deps): bump @babel/eslint-parser from 7.16.5 to 7.17.0
   ([#1571](https://github.com/compasjs/compas/pull/1571))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/formidable from 2.0.3 to 2.0.4
   ([#1560](https://github.com/compasjs/compas/pull/1560))
 - build(deps): bump @types/minio from 7.0.11 to 7.0.12
   ([#1558](https://github.com/compasjs/compas/pull/1558))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 17.0.10 to 17.0.14
   ([#1554](https://github.com/compasjs/compas/pull/1554),
   [#1559](https://github.com/compasjs/compas/pull/1559),
   [#1567](https://github.com/compasjs/compas/pull/1567))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump dotenv from 14.2.0 to 16.0.0
   ([#1552](https://github.com/compasjs/compas/pull/1552),
   [#1556](https://github.com/compasjs/compas/pull/1556),
   [#1566](https://github.com/compasjs/compas/pull/1566),
   [#1570](https://github.com/compasjs/compas/pull/1570))
-    - [Release notes](https://github.com/motdotla/dotenv/releases)
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
 - build(deps): bump eslint from 8.7.0 to 8.8.0
   ([#1564](https://github.com/compasjs/compas/pull/1564))
 - build(deps): bump eslint-plugin-jsdoc from 37.6.3 to 37.7.1
   ([#1557](https://github.com/compasjs/compas/pull/1557),
   [#1576](https://github.com/compasjs/compas/pull/1576))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump pino from 7.6.4 to 7.6.5
   ([#1565](https://github.com/compasjs/compas/pull/1565))
 - build(deps): bump sharp from 0.29.3 to 0.30.0
   ([#1568](https://github.com/compasjs/compas/pull/1568))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - build(deps): bump simple-get from 4.0.0 to 4.0.1
   ([#1561](https://github.com/compasjs/compas/pull/1561))
-    - [Release notes](https://github.com/feross/simple-get/releases)
+  - [Release notes](https://github.com/feross/simple-get/releases)
 - feat(cli): improve lint performance
   ([#1579](https://github.com/compasjs/compas/pull/1579))
-    - Closes [#1578](https://github.com/compasjs/compas/pull/1578)
+  - Closes [#1578](https://github.com/compasjs/compas/pull/1578)
 - feat(code-gen): print docs consistently
   ([#1563](https://github.com/compasjs/compas/pull/1563))
-    - References [#1562](https://github.com/compasjs/compas/pull/1562)
+  - References [#1562](https://github.com/compasjs/compas/pull/1562)
 - fix(cli): add '--lint-config' to '--all'
 - fix(cli): migrate keep-alive should use connection-settings
   ([#1574](https://github.com/compasjs/compas/pull/1574))
-    - Closes [#1572](https://github.com/compasjs/compas/pull/1572)
+  - Closes [#1572](https://github.com/compasjs/compas/pull/1572)
 - fix(server): update docs on 'disableHeaders'
-    - Closes [#1555](https://github.com/compasjs/compas/pull/1555)
+  - Closes [#1555](https://github.com/compasjs/compas/pull/1555)
 - test(store): fix flaky session-store tests
   ([#1573](https://github.com/compasjs/compas/pull/1573))
 
 ##### Breaking changes
 
 - **deps**: bump dotenv from 14.2.0 to 16.0.0
-    - Major version bump
+  - Major version bump
 - **deps**: bump sharp from 0.29.3 to 0.30.0
-    - Major version bump
+  - Major version bump
 - **cli**: improve lint performance
-    - `node_modules` are not automatically ignored by ESLint, but should be added
-      to your `.eslintignore`
-    - The default `.eslintignore` has been changed to ignore files in `generated`
-      directories. Run `compas init --lint-config` to update the file.
+  - `node_modules` are not automatically ignored by ESLint, but should be added
+    to your `.eslintignore`
+  - The default `.eslintignore` has been changed to ignore files in `generated`
+    directories. Run `compas init --lint-config` to update the file.
 
 ### [v0.0.183](https://github.com/compasjs/compas/releases/tag/v0.0.183)
 
@@ -778,41 +778,41 @@ WHERE
 
 - build(deps): bump @babel/core from 7.16.7 to 7.16.10
   ([#1538](https://github.com/compasjs/compas/pull/1538))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 17.0.9 to 17.0.10
   ([#1537](https://github.com/compasjs/compas/pull/1537))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.6.1 to 37.6.3
   ([#1542](https://github.com/compasjs/compas/pull/1542),
   [#1546](https://github.com/compasjs/compas/pull/1546))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump nanoid from 3.1.30 to 3.2.0
   ([#1544](https://github.com/compasjs/compas/pull/1544))
-    - [Release notes](https://github.com/ai/nanoid/releases)
+  - [Release notes](https://github.com/ai/nanoid/releases)
 - build(deps): bump pino from 7.6.3 to 7.6.4
   ([#1541](https://github.com/compasjs/compas/pull/1541))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - feat(cli): add `compas completions`
   ([#1526](https://github.com/compasjs/compas/pull/1526))
-    - Closes [#1508](https://github.com/compasjs/compas/pull/1508)
+  - Closes [#1508](https://github.com/compasjs/compas/pull/1508)
 - feat(code-gen): generate errors on too much inserts
   ([#1547](https://github.com/compasjs/compas/pull/1547))
-    - Closes [#1543](https://github.com/compasjs/compas/pull/1543)
+  - Closes [#1543](https://github.com/compasjs/compas/pull/1543)
 - feat(lint-config): add preferredTypes for primitives, objects and records
   ([#1548](https://github.com/compasjs/compas/pull/1548))
 - feat(stdlib): add `setGlobalLoggerOptions` and `extendGlobalLoggerContext`
   ([#1549](https://github.com/compasjs/compas/pull/1549))
-    - Closes [#1539](https://github.com/compasjs/compas/pull/1539)
+  - Closes [#1539](https://github.com/compasjs/compas/pull/1539)
 
 ##### Breaking changes
 
 - **lint-config**: add preferredTypes for primitives, objects and records
-    - Linter prefers `object` over `Object`, `boolean` over `Boolean`,
-      `Record<string,number>[]` over `Array<Object<string, number>>` etc. The
-      linter will try to autofix this, but may require multiple runs.
+  - Linter prefers `object` over `Object`, `boolean` over `Boolean`,
+    `Record<string,number>[]` over `Array<Object<string, number>>` etc. The
+    linter will try to autofix this, but may require multiple runs.
 - **stdlib**: add `setGlobalLoggerOptions` and 'extendGlobalLoggerContext'
-    - Removed support for `pinoOption` via `newLogger`. Pass these to
-      `setGlobalLoggerOptions` as `pinoTransport` and `pinoDestination`.
+  - Removed support for `pinoOption` via `newLogger`. Pass these to
+    `setGlobalLoggerOptions` as `pinoTransport` and `pinoDestination`.
 
 ### [v0.0.182](https://github.com/compasjs/compas/releases/tag/v0.0.182)
 
@@ -824,33 +824,33 @@ WHERE
   ([#1514](https://github.com/compasjs/compas/pull/1514),
   [#1527](https://github.com/compasjs/compas/pull/1527),
   [#1533](https://github.com/compasjs/compas/pull/1533))
-    - [Release notes](https://github.com/motdotla/dotenv/releases)
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
 - build(deps): bump eslint from 8.6.0 to 8.7.0
   ([#1529](https://github.com/compasjs/compas/pull/1529))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump follow-redirects from 1.14.6 to 1.14.7
   ([#1521](https://github.com/compasjs/compas/pull/1521))
-    - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+  - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
 - build(deps): bump is-animated from 2.0.1 to 2.0.2
   ([#1522](https://github.com/compasjs/compas/pull/1522))
-    - [Release notes](https://github.com/qzb/is-animated/releases)
+  - [Release notes](https://github.com/qzb/is-animated/releases)
 - build(deps): bump minio from 7.0.25 to 7.0.26
   ([#1519](https://github.com/compasjs/compas/pull/1519))
-    - [Release notes](https://github.com/minio/minio-js/releases)
+  - [Release notes](https://github.com/minio/minio-js/releases)
 - build(deps): bump pino from 7.6.2 to 7.6.3
   ([#1513](https://github.com/compasjs/compas/pull/1513))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - docs(route-invalidation): add route-invalidation documentation
   ([#1531](https://github.com/compasjs/compas/pull/1531))
 - feat(cli): add `--gitignore` and `--all` support to `compas init`
   ([#1530](https://github.com/compasjs/compas/pull/1530))
-    - Closes [#1525](https://github.com/compasjs/compas/pull/1525)
+  - Closes [#1525](https://github.com/compasjs/compas/pull/1525)
 - feat(cli): add informational logs to lint output
   ([#1524](https://github.com/compasjs/compas/pull/1524))
-    - Closes [#1516](https://github.com/compasjs/compas/pull/1516)
+  - Closes [#1516](https://github.com/compasjs/compas/pull/1516)
 - feat(code-gen): openApi generator more strict and extend
   ([#1523](https://github.com/compasjs/compas/pull/1523))
-    - Closes [#1520](https://github.com/compasjs/compas/pull/1520)
+  - Closes [#1520](https://github.com/compasjs/compas/pull/1520)
 - feat(code-gen): support route invalidations
   ([#1515](https://github.com/compasjs/compas/pull/1515),
   [#1534](https://github.com/compasjs/compas/pull/1534))
@@ -858,10 +858,10 @@ WHERE
 ##### Breaking changes
 
 - **deps**: bump dotenv from 10.0.0 to 14.2.0
-    - Major version bump
+  - Major version bump
 - **code-gen**: openApi generator more strict and extend
-    - `app.generateOpenApi` accepts `openApiExtensions` and `routeExtensions`
-      instead of `openApiOptions`
+  - `app.generateOpenApi` accepts `openApiExtensions` and `routeExtensions`
+    instead of `openApiOptions`
 
 ### [v0.0.181](https://github.com/compasjs/compas/releases/tag/v0.0.181)
 
@@ -869,21 +869,21 @@ WHERE
 
 - build(deps): bump eslint-plugin-jsdoc from 37.5.1 to 37.6.1
   ([#1511](https://github.com/compasjs/compas/pull/1511))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - chore(create-release): fix cliDefinition
 - feat(cli): use ESLint cache, default enable JSDoc rules for `compas lint`
   ([#1510](https://github.com/compasjs/compas/pull/1510))
-    - Closes [#1429](https://github.com/compasjs/compas/pull/1429)
+  - Closes [#1429](https://github.com/compasjs/compas/pull/1429)
 - fix(cli): catch import errors when loading project level commands
   ([#1512](https://github.com/compasjs/compas/pull/1512))
 
 ##### Breaking changes
 
 - **cli**: use ESLint cache, default enable JSDoc rules for `compas lint`
-    - JSDoc related ESLint rules are enabled by default locally now, they were
-      already enabled on `CI=true` (which is set by most CI platforms).
-    - Add `.cache` to your `.gitignore`. Or specify another ESLint cache directory
-      via `--eslint-cache-location`.
+  - JSDoc related ESLint rules are enabled by default locally now, they were
+    already enabled on `CI=true` (which is set by most CI platforms).
+  - Add `.cache` to your `.gitignore`. Or specify another ESLint cache directory
+    via `--eslint-cache-location`.
 
 ### [v0.0.180](https://github.com/compasjs/compas/releases/tag/v0.0.180)
 
@@ -892,15 +892,15 @@ WHERE
 - build(deps): bump @babel/core from 7.16.0 to 7.16.7
   ([#1418](https://github.com/compasjs/compas/pull/1418) ,
   [#1482](https://github.com/compasjs/compas/pull/1482))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @babel/eslint-parser from 7.16.3 to 7.16.5
   ([#1417](https://github.com/compasjs/compas/pull/1417))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/formidable from 2.0.0 to 2.0.3
   ([#1455](https://github.com/compasjs/compas/pull/1455) ,
   [#1475](https://github.com/compasjs/compas/pull/1475),
   [#1494](https://github.com/compasjs/compas/pull/1494))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 16.11.12 to 17.0.8
   ([#1427](https://github.com/compasjs/compas/pull/1427) ,
   [#1430](https://github.com/compasjs/compas/pull/1430),
@@ -914,18 +914,18 @@ WHERE
   [#1498](https://github.com/compasjs/compas/pull/1498))
 - build(deps): bump c8 from 7.10.0 to 7.11.0
   ([#1481](https://github.com/compasjs/compas/pull/1481))
-    - [Release notes](https://github.com/bcoe/c8/releases)
+  - [Release notes](https://github.com/bcoe/c8/releases)
 - build(deps): bump crc from 3.8.0 to 4.1.0
   ([#1449](https://github.com/compasjs/compas/pull/1449) ,
   [#1491](https://github.com/compasjs/compas/pull/1491))
-    - [Release notes](https://github.com/alexgorbatchev/node-crc/releases)
+  - [Release notes](https://github.com/alexgorbatchev/node-crc/releases)
 - build(deps): bump eslint from 8.4.1 to 8.6.0
   ([#1439](https://github.com/compasjs/compas/pull/1439) ,
   [#1492](https://github.com/compasjs/compas/pull/1492))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-import from 2.25.3 to 2.25.4
   ([#1493](https://github.com/compasjs/compas/pull/1493))
-    - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.2.0 to 37.5.1
   ([#1423](https://github.com/compasjs/compas/pull/1423) ,
   [#1431](https://github.com/compasjs/compas/pull/1431),
@@ -968,51 +968,51 @@ WHERE
   [#1484](https://github.com/compasjs/compas/pull/1484))
   [#1485](https://github.com/compasjs/compas/pull/1485))
   [#1486](https://github.com/compasjs/compas/pull/1486))
-    - Closes [#1306](https://github.com/compasjs/compas/pull/1306)
+  - Closes [#1306](https://github.com/compasjs/compas/pull/1306)
 - feat(cli): add '--lint-config' to compas init
   ([#1490](https://github.com/compasjs/compas/pull/1490))
-    - Closes [#1478](https://github.com/compasjs/compas/pull/1478)
+  - Closes [#1478](https://github.com/compasjs/compas/pull/1478)
 - feat(cli): add 'compas check-env' command
   ([#1483](https://github.com/compasjs/compas/pull/1483))
 - feat(code-gen,store): migrate query builder to generator helper
   ([#1499](https://github.com/compasjs/compas/pull/1499))
-    - Closes [#1465](https://github.com/compasjs/compas/pull/1465)
+  - Closes [#1465](https://github.com/compasjs/compas/pull/1465)
 - feat(code-gen): add check to unique relation references
   ([#1442](https://github.com/compasjs/compas/pull/1442))
-    - Closes [#1437](https://github.com/compasjs/compas/pull/1437)
+  - Closes [#1437](https://github.com/compasjs/compas/pull/1437)
 - feat(code-gen): make reactQuery generator compatible with react-query@v4
   ([#1435](https://github.com/compasjs/compas/pull/1435))
-    - Closes [#1422](https://github.com/compasjs/compas/pull/1422)
+  - Closes [#1422](https://github.com/compasjs/compas/pull/1422)
 - feat(code-gen): support date / time only types
   ([#1500](https://github.com/compasjs/compas/pull/1500))
-    - Closes [#1421](https://github.com/compasjs/compas/pull/1421)
+  - Closes [#1421](https://github.com/compasjs/compas/pull/1421)
 - feat(code-gen): use primary key type in query-result union types
   ([#1506](https://github.com/compasjs/compas/pull/1506))
 - feat(docs): add CLI reference to the docs
   ([#1489](https://github.com/compasjs/compas/pull/1489))
-    - Closes [#1462](https://github.com/compasjs/compas/pull/1462)
+  - Closes [#1462](https://github.com/compasjs/compas/pull/1462)
 - feat(server): add options to log middleware to log event name, query and param
   objects ([#1488](https://github.com/compasjs/compas/pull/1488))
-    - Closes [#1463](https://github.com/compasjs/compas/pull/1463)
+  - Closes [#1463](https://github.com/compasjs/compas/pull/1463)
 - fix(store): sendTransformedImage requires width higher than zero
   ([#1434](https://github.com/compasjs/compas/pull/1434))
-    - Closes [#1428](https://github.com/compasjs/compas/pull/1428)
+  - Closes [#1428](https://github.com/compasjs/compas/pull/1428)
 - fix(store): short circuit image transformer on empty files
   ([#1420](https://github.com/compasjs/compas/pull/1420))
 
 ##### Breaking changes
 
 - **deps**: bump @types/node from 16.11.12 to 17.0.8
-    - Major version bump
+  - Major version bump
 - **deps**: bump crc from 3.8.0 to 4.1.0
-    - Major version bump
+  - Major version bump
 - **cli**: promote new cli to be used
-    - See the release notes for more information
+  - See the release notes for more information
 - **code-gen,store**: migrate query builder to generator helper
-    - `queryXxx().execRaw` has some output differences, verify your usages.
+  - `queryXxx().execRaw` has some output differences, verify your usages.
 - **code-gen**: make reactQuery generator compatible with react-query@v4
-    - The `useFooBar.baseKey()` functions now returns an array, and is spread when
-      used in `useFooBar.queryKey()`
+  - The `useFooBar.baseKey()` functions now returns an array, and is spread when
+    used in `useFooBar.queryKey()`
 
 For a detailed description and more details about this release, please read the
 [release notes](https://compasjs.com/releases/0.0.180.html).
@@ -1023,25 +1023,25 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/node from 16.11.11 to 16.11.12
   ([#1407](https://github.com/compasjs/compas/pull/1407))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 8.3.0 to 8.4.1
   ([#1400](https://github.com/compasjs/compas/pull/1400),
   [#1403](https://github.com/compasjs/compas/pull/1403))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.1.0 to 37.2.0
   ([#1410](https://github.com/compasjs/compas/pull/1410))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump minio from 7.0.18 to 7.0.25
   ([#1406](https://github.com/compasjs/compas/pull/1406))
-    - [Release notes](https://github.com/minio/minio-js/releases)
+  - [Release notes](https://github.com/minio/minio-js/releases)
 - build(deps): bump prettier from 2.5.0 to 2.5.1
   ([#1399](https://github.com/compasjs/compas/pull/1399))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - chore(server): remove koa-session as dependency
-    - Closes [#1398](https://github.com/compasjs/compas/pull/1398)
+  - Closes [#1398](https://github.com/compasjs/compas/pull/1398)
 - feat(stdlib): add config loader
   ([#1415](https://github.com/compasjs/compas/pull/1415))
-    - Closes [#1414](https://github.com/compasjs/compas/pull/1414)
+  - Closes [#1414](https://github.com/compasjs/compas/pull/1414)
 - feat(store): skip `eventStop` on Compas internal handled jobs
   ([#1411](https://github.com/compasjs/compas/pull/1411))
 - fix(store): fix spacing of 'where' generator helper when working with 'via'.
@@ -1054,43 +1054,43 @@ For a detailed description and more details about this release, please read the
 - chore(changelog): fix matcher for subject and message
 - chore(ci): remove bench action from PR's
 - chore(cli,server,store): remove old session setup
-    - Closes [#1281](https://github.com/compasjs/compas/pull/1281)
+  - Closes [#1281](https://github.com/compasjs/compas/pull/1281)
 - chore(code-gen): remove @compas/cli as a dependency
 - feat(code-gen,store): remove generated `where.exists`
   ([#1396](https://github.com/compasjs/compas/pull/1396))
-    - Closes [#1393](https://github.com/compasjs/compas/pull/1393)
+  - Closes [#1393](https://github.com/compasjs/compas/pull/1393)
 - feat(code-gen,store): support viaXxx in where clause
   ([#1395](https://github.com/compasjs/compas/pull/1395))
-    - Closes [#703](https://github.com/compasjs/compas/pull/703)
+  - Closes [#703](https://github.com/compasjs/compas/pull/703)
 - feat(code-gen): remove 'via' traversers from the query builders
   ([#1397](https://github.com/compasjs/compas/pull/1397))
-    - Closes [#1394](https://github.com/compasjs/compas/pull/1394)
+  - Closes [#1394](https://github.com/compasjs/compas/pull/1394)
 - feat(store): infer and validate content-type support in createOrUpdateFile
   ([#1392](https://github.com/compasjs/compas/pull/1392))
-    - Closes [#1352](https://github.com/compasjs/compas/pull/1352)
+  - Closes [#1352](https://github.com/compasjs/compas/pull/1352)
 
 ##### Breaking changes
 
 - **cli,server,store**: remove old session setup
-    - Removed both the `session` middleware and `newSessionStore`. And should be
-      replaced with the new session-store and session-transport. See the
-      [docs](https://compasjs.com/features/session-handling.html) for more
-      information.
-    - Create the following migration to clean up the old table:
+  - Removed both the `session` middleware and `newSessionStore`. And should be
+    replaced with the new session-store and session-transport. See the
+    [docs](https://compasjs.com/features/session-handling.html) for more
+    information.
+  - Create the following migration to clean up the old table:
   ```sql
   DROP TABLE IF EXISTS "session" CASCADE;
   ```
 - **code-gen,store**: remove generated `where.exists`
-    - Removed `xxxExists` from being generated with the sql where clause
-      generator. They can be replaced with `viaXxx` now available in the where
-      clause generator.
+  - Removed `xxxExists` from being generated with the sql where clause
+    generator. They can be replaced with `viaXxx` now available in the where
+    clause generator.
 - **code-gen**: remove 'via' traversers from the query builders
-    - This should be done in the new `where.viaXxx`. Giving more flexibility by
-      combining it with `where.$or` and allowed usage in update and delete
-      queries.
-    - Note that the query builder functions validate their inputs, so if you have
-      decent test coverage, your tests should be able to catch most of your usages
-      for you.
+  - This should be done in the new `where.viaXxx`. Giving more flexibility by
+    combining it with `where.$or` and allowed usage in update and delete
+    queries.
+  - Note that the query builder functions validate their inputs, so if you have
+    decent test coverage, your tests should be able to catch most of your usages
+    for you.
 
 ### [v0.0.177](https://github.com/compasjs/compas/releases/tag/v0.0.177)
 
@@ -1098,14 +1098,14 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/node from 16.11.10 to 16.11.11
   ([#1385](https://github.com/compasjs/compas/pull/1385))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-jsdoc from 37.0.3 to 37.1.0
   ([#1390](https://github.com/compasjs/compas/pull/1390))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump pino from 7.4.1 to 7.5.1
   ([#1384](https://github.com/compasjs/compas/pull/1384),
   [#1388](https://github.com/compasjs/compas/pull/1388))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - docs(session-handling): mention default of 'enableCookieTransport'
 - feat(code-gen): add `SessionTransportSettings` to `dumpCompasTypes`
 - feat(code-gen): validate `defaultGroup` when extending with OpenAPI
@@ -1121,33 +1121,33 @@ For a detailed description and more details about this release, please read the
   ([#1362](https://github.com/compasjs/compas/pull/1362),
   [#1369](https://github.com/compasjs/compas/pull/1369),
   [#1375](https://github.com/compasjs/compas/pull/1375))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 8.2.0 to 8.3.0
   ([#1371](https://github.com/compasjs/compas/pull/1371))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump pino from 7.2.0 to 7.4.1
   ([#1363](https://github.com/compasjs/compas/pull/1363),
   [#1374](https://github.com/compasjs/compas/pull/1374),
   [#1377](https://github.com/compasjs/compas/pull/1377))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - build(deps): bump postgres from 2.0.0-beta.10 to 2.0.0-beta.11
   ([#1358](https://github.com/compasjs/compas/pull/1358))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - build(deps): bump prettier from 2.4.1 to 2.5.0
   ([#1381](https://github.com/compasjs/compas/pull/1381))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - chore(code-gen): remove unnecessary logs in react-query generator
   ([#1364](https://github.com/compasjs/compas/pull/1364))
 - feat(code-gen): rename `loadFromRemote` to `loadApiStructureFromRemote`
   ([#1365](https://github.com/compasjs/compas/pull/1365))
-    - Closes [#1351](https://github.com/compasjs/compas/pull/1351)
+  - Closes [#1351](https://github.com/compasjs/compas/pull/1351)
 - feat(code-gen): support `declareGlobalTypes: false` as generate option for
   packages ([#1367](https://github.com/compasjs/compas/pull/1367))
 - feat(store): add session transports
   ([#1380](https://github.com/compasjs/compas/pull/1380))
 - fix(code-gen): fix types of validated files in the router
   ([#1366](https://github.com/compasjs/compas/pull/1366))
-    - Closes [#1350](https://github.com/compasjs/compas/pull/1350)
+  - Closes [#1350](https://github.com/compasjs/compas/pull/1350)
 - fix(code-gen): openapi exporter support for multiple methods within the same
   path ([#1361](https://github.com/compasjs/compas/pull/1361))
 - fix(code-gen): pickType error typo fix
@@ -1177,21 +1177,21 @@ Thanks to @tjonger and @kaliumxyz for their contributions!
 
 - build(deps): bump sharp from 0.29.2 to 0.29.3
   ([#1349](https://github.com/compasjs/compas/pull/1349))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - feat(store): add `JobQueueWorker.clean()` method
   ([#1347](https://github.com/compasjs/compas/pull/1347))
 - feat(store): add `unsafeIgnoreSorting` as a queue worker option
   ([#1345](https://github.com/compasjs/compas/pull/1345))
-    - References [#1344](https://github.com/compasjs/compas/pull/1344)
+  - References [#1344](https://github.com/compasjs/compas/pull/1344)
 - feat(store): add index on `job.updatedAt`
-    - Closes [#1344](https://github.com/compasjs/compas/pull/1344)
+  - Closes [#1344](https://github.com/compasjs/compas/pull/1344)
 - feat(store): remove `averageTimeToCompletion` from `JobQueueWorker`
   ([#1346](https://github.com/compasjs/compas/pull/1346))
 
 ##### Breaking changes
 
 - **store**: add index on `job.updatedAt`
-    - Add the following index in a sql migration:
+  - Add the following index in a sql migration:
   ```sql
   CREATE INDEX IF NOT EXISTS "jobIsCompleteUpdatedAt" ON "job" ("isComplete", "updatedAt") WHERE "isComplete" IS TRUE;
   ```
@@ -1203,20 +1203,20 @@ Thanks to @tjonger and @kaliumxyz for their contributions!
 
 - build(deps): bump @babel/eslint-parser from 7.16.0 to 7.16.3
   ([#1340](https://github.com/compasjs/compas/pull/1340))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 16.11.6 to 16.11.7
   ([#1339](https://github.com/compasjs/compas/pull/1339))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-import from 2.25.2 to 2.25.3
   ([#1342](https://github.com/compasjs/compas/pull/1342))
-    - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
 - build(deps): bump pino from 7.1.0 to 7.2.0
   ([#1341](https://github.com/compasjs/compas/pull/1341))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - chore(docs): add release v0.0.172 to the sidebar
 - fix(store): saving of transforms in `sendTransformedImage`
   ([#1343](https://github.com/compasjs/compas/pull/1343))
-    - Closes [#1338](https://github.com/compasjs/compas/pull/1338)
+  - Closes [#1338](https://github.com/compasjs/compas/pull/1338)
 
 ### [v0.0.172](https://github.com/compasjs/compas/releases/tag/v0.0.172)
 
@@ -1224,13 +1224,13 @@ Thanks to @tjonger and @kaliumxyz for their contributions!
 
 - build(deps): bump @types/formidable from 1.2.4 to 2.0.0
   ([#1332](https://github.com/compasjs/compas/pull/1332))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 8.1.0 to 8.2.0
   ([#1331](https://github.com/compasjs/compas/pull/1331))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump pino from 7.0.5 to 7.1.0
   ([#1329](https://github.com/compasjs/compas/pull/1329))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - code-gen: replace `includeReferenceTypes` with non recursive one
   ([#1327](https://github.com/compasjs/compas/pull/1327))
 - docs(migrations): add session store to store migrations
@@ -1238,7 +1238,7 @@ Thanks to @tjonger and @kaliumxyz for their contributions!
   ([#1333](https://github.com/compasjs/compas/pull/1333))
 - feat(stdlib): support formatting Aggregate errors
   ([#1334](https://github.com/compasjs/compas/pull/1334))
-    - Closes [#1205](https://github.com/compasjs/compas/pull/1205)
+  - Closes [#1205](https://github.com/compasjs/compas/pull/1205)
 - feat(store): add JWT based session store support
   ([#1302](https://github.com/compasjs/compas/pull/1302))
 - fix(store): fix types of session-store functions
@@ -1247,13 +1247,13 @@ Thanks to @tjonger and @kaliumxyz for their contributions!
 ##### Breaking changes
 
 - **deps**: bump @types/formidable from 1.2.4 to 2.0.0
-    - Major version bump
+  - Major version bump
 - **stdlib**: support formatting Aggregate errors
-    - Renamed `AppError#originalError` to `AppError#cause`
-    - Format also uses `cause` as the key when formatting `AppError` instead of
-      `originalError`
+  - Renamed `AppError#originalError` to `AppError#cause`
+  - Format also uses `cause` as the key when formatting `AppError` instead of
+    `originalError`
 - **store**: add JWT based session store support
-    - Includes a migration, see the release notes
+  - Includes a migration, see the release notes
 
 For a detailed description and more details about this release, please read the
 [release notes](https://compasjs.com/releases/0.0.172.html).
@@ -1264,28 +1264,28 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @babel/core from 7.15.8 to 7.16.0
   ([#1314](https://github.com/compasjs/compas/pull/1314))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @babel/eslint-parser from 7.15.8 to 7.16.0
   ([#1315](https://github.com/compasjs/compas/pull/1315))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 16.11.1 to 16.11.6
   ([#1285](https://github.com/compasjs/compas/pull/1285) ,
   [#1291](https://github.com/compasjs/compas/pull/1291),
   [#1299](https://github.com/compasjs/compas/pull/1299))
 - build(deps): bump eslint from 8.0.1 to 8.1.0
   ([#1292](https://github.com/compasjs/compas/pull/1292))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-jsdoc from 36.1.1 to 37.0.3
   ([#1290](https://github.com/compasjs/compas/pull/1290) ,
   [#1298](https://github.com/compasjs/compas/pull/1298),
   [#1303](https://github.com/compasjs/compas/pull/1303))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump formidable from 2.0.0-canary.20200504.1 to 2.0.1
   ([#1318](https://github.com/compasjs/compas/pull/1318))
-    - Closes [#1317](https://github.com/compasjs/compas/pull/1317)
+  - Closes [#1317](https://github.com/compasjs/compas/pull/1317)
 - build(deps): bump pino from 7.0.3 to 7.0.5
   ([#1297](https://github.com/compasjs/compas/pull/1297))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - build(deps): bump sharp from 0.29.1 to 0.29.2
   ([#1284](https://github.com/compasjs/compas/pull/1284))
 - chore(ci): run tests on Node.js 17
@@ -1297,36 +1297,36 @@ For a detailed description and more details about this release, please read the
   ([#1283](https://github.com/compasjs/compas/pull/1283))
 - feat(code-gen): throw error on unused group name
   ([#1288](https://github.com/compasjs/compas/pull/1288))
-    - Closes [#1286](https://github.com/compasjs/compas/pull/1286)
+  - Closes [#1286](https://github.com/compasjs/compas/pull/1286)
 - feat(code-gen): use abort signal in api clients
   ([#1319](https://github.com/compasjs/compas/pull/1319))
 - feat(stdlib): add AppError#format support for various primitives
   ([#1325](https://github.com/compasjs/compas/pull/1325))
-    - Closes [#1323](https://github.com/compasjs/compas/pull/1323)
+  - Closes [#1323](https://github.com/compasjs/compas/pull/1323)
 - fix(code-gen): add React import to reactQuery template
   ([#1320](https://github.com/compasjs/compas/pull/1320))
 - fix(code-gen): handle optional object values that are references
   ([#1311](https://github.com/compasjs/compas/pull/1311))
-    - Closes [#1309](https://github.com/compasjs/compas/pull/1309)
+  - Closes [#1309](https://github.com/compasjs/compas/pull/1309)
 - fix(code-gen): throw early error on missing arguments to T.reference()
   ([#1310](https://github.com/compasjs/compas/pull/1310))
-    - Closes [#1305](https://github.com/compasjs/compas/pull/1305)
+  - Closes [#1305](https://github.com/compasjs/compas/pull/1305)
 - fix(stdlib): fix TS error on logger destination usage
 
 ##### Breaking changes
 
 - **deps**: bump eslint-plugin-jsdoc from 36.1.1 to 37.0.3
-    - Major version bump
+  - Major version bump
 - **deps**: bump formidable from 2.0.0-canary.20200504.1 to 2.0.1
-    - Renamed properties on `ctx.validatedFiles`.
-    - `ctx.validatedFiles.xxx.path` -> `ctx.validatedFiles.xxx.filepath`
-    - `ctx.validatedFiles.xxx.name` -> `ctx.validatedFiles.xxx.originalFilename`
-    - `ctx.validatedFiles.xxx.type` -> `ctx.validatedFiles.xxx.mimetype`
+  - Renamed properties on `ctx.validatedFiles`.
+  - `ctx.validatedFiles.xxx.path` -> `ctx.validatedFiles.xxx.filepath`
+  - `ctx.validatedFiles.xxx.name` -> `ctx.validatedFiles.xxx.originalFilename`
+  - `ctx.validatedFiles.xxx.type` -> `ctx.validatedFiles.xxx.mimetype`
 - **code-gen**: use abort signal in api clients
-    - Removed the `cancelToken` support that where passed via react-query options.
-    - Generated hooks automatically pass the react-query based signal to the api
-      client functions.
-    - Requires react-query 3.30.0 or higher
+  - Removed the `cancelToken` support that where passed via react-query options.
+  - Generated hooks automatically pass the react-query based signal to the api
+    client functions.
+  - Requires react-query 3.30.0 or higher
 
 For a detailed description and more details about this release, please read the
 [release notes](https://compasjs.com/releases/0.0.171.html).
@@ -1341,10 +1341,10 @@ Thanks to @tjonger and @bjarn for their contributions!
   ([#1277](https://github.com/compasjs/compas/pull/1277))
 - build(deps): bump koa from 2.13.3 to 2.13.4
   ([#1279](https://github.com/compasjs/compas/pull/1279))
-    - [Release notes](https://github.com/koajs/koa/releases)
+  - [Release notes](https://github.com/koajs/koa/releases)
 - build(deps): bump pino from 7.0.2 to 7.0.3
   ([#1278](https://github.com/compasjs/compas/pull/1278))
-    - [Release notes](https://github.com/pinojs/pino/releases)
+  - [Release notes](https://github.com/pinojs/pino/releases)
 - fix(store): matcher name for iLike was incorrect in where generator
 
 ### [v0.0.169](https://github.com/compasjs/compas/releases/tag/v0.0.169)
@@ -1369,46 +1369,46 @@ Thanks to @tjonger and @bjarn for their contributions!
   [#1266](https://github.com/compasjs/compas/pull/1266),
   [#1268](https://github.com/compasjs/compas/pull/1268),
   [#1272](https://github.com/compasjs/compas/pull/1272))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump c8 from 7.9.0 to 7.10.0
   ([#1248](https://github.com/compasjs/compas/pull/1248))
 - build(deps): bump eslint from 7.32.0 to 8.0.1
   ([#1265](https://github.com/compasjs/compas/pull/1265))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-import from 2.24.2 to 2.25.2
   ([#1263](https://github.com/compasjs/compas/pull/1263))
-    - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
 - build(deps): bump eslint-plugin-jsdoc from 36.1.0 to 36.1.1
   ([#1252](https://github.com/compasjs/compas/pull/1252))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - chore(changelog): fix matcher on multiple git commit subjects
 - feat(code-gen,store): use a runtime helper to build the where clause
   ([#1273](https://github.com/compasjs/compas/pull/1273))
 - feat(docs): add router & api client generator documents
   ([#1254](https://github.com/compasjs/compas/pull/1254))
-    - References [#1138](https://github.com/compasjs/compas/pull/1138)
-    - Closes [#1140](https://github.com/compasjs/compas/pull/1140)
+  - References [#1138](https://github.com/compasjs/compas/pull/1138)
+  - Closes [#1140](https://github.com/compasjs/compas/pull/1140)
 - feat(docs): add some more body to the code-gen api doc.
 - feat(stdlib): use Pino as ndjson logger
   ([#1274](https://github.com/compasjs/compas/pull/1274))
-    - Closes [#1271](https://github.com/compasjs/compas/pull/1271)
+  - Closes [#1271](https://github.com/compasjs/compas/pull/1271)
 - fix(code-gen): limit `body()` usage on `R.delete()`
   ([#1256](https://github.com/compasjs/compas/pull/1256))
-    - Closes [#1246](https://github.com/compasjs/compas/pull/1246)
+  - Closes [#1246](https://github.com/compasjs/compas/pull/1246)
 - fix(server): redo leakError in de error handler middleware
   ([#1267](https://github.com/compasjs/compas/pull/1267))
-    - Closes [#1257](https://github.com/compasjs/compas/pull/1257)
+  - Closes [#1257](https://github.com/compasjs/compas/pull/1257)
 
 ##### Breaking changes
 
 - **deps**: bump eslint from 7.32.0 to 8.0.1
-    - Major version bump
+  - Major version bump
 - **stdlib**: use Pino as ndjson logger
-    - The production log writer is replaced.
-    - `ndjson` log lines contain a `time` field with milliseconds since epoch
-      instead of a `timestamp` field with an ISO-8601 string.
+  - The production log writer is replaced.
+  - `ndjson` log lines contain a `time` field with milliseconds since epoch
+    instead of a `timestamp` field with an ISO-8601 string.
 - **server**: redo leakError in de error handler middleware
-    - `leakError: true` is ignored if a custom `onAppError` is provided
+  - `leakError: true` is ignored if a custom `onAppError` is provided
 
 ### [v0.0.167](https://github.com/compasjs/compas/releases/tag/v0.0.167)
 
@@ -1416,7 +1416,7 @@ Thanks to @tjonger and @bjarn for their contributions!
 
 - feat(code-gen): make date validator more flexible
   ([#1241](https://github.com/compasjs/compas/pull/1241))
-    - Closes [#1229](https://github.com/compasjs/compas/pull/1229)
+  - Closes [#1229](https://github.com/compasjs/compas/pull/1229)
 - feat(server): log middleware also handles Koa error events
   ([#1239](https://github.com/compasjs/compas/pull/1239))
 - test(server): add more e2e tests for sendFile
@@ -1428,19 +1428,19 @@ Thanks to @tjonger and @bjarn for their contributions!
 
 - build(deps): bump @types/node from 16.10.1 to 16.10.2
   ([#1233](https://github.com/compasjs/compas/pull/1233))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump postgres from 2.0.0-beta.9 to 2.0.0-beta.10
   ([#1232](https://github.com/compasjs/compas/pull/1232))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - chore(deps): revert minio from 7.0.19 to 7.0.18
-    - Closes [#1197](https://github.com/compasjs/compas/pull/1197)
+  - Closes [#1197](https://github.com/compasjs/compas/pull/1197)
 - feat(code-gen,server): change requestId behaviour
   ([#1235](https://github.com/compasjs/compas/pull/1235))
 
 ##### Breaking changes
 
 - **code-gen**: change requestId behaviour
-    - Removed `addRequestIdInterceptors` from `$generatedDir/common/apiClient`
+  - Removed `addRequestIdInterceptors` from `$generatedDir/common/apiClient`
 
 ### [v0.0.165](https://github.com/compasjs/compas/releases/tag/v0.0.165)
 
@@ -1448,44 +1448,44 @@ Thanks to @tjonger and @bjarn for their contributions!
 
 - build(deps): bump @babel/eslint-parser from 7.15.4 to 7.15.7
   ([#1210](https://github.com/compasjs/compas/pull/1210))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 16.9.1 to 16.10.1
   ([#1203](https://github.com/compasjs/compas/pull/1203),
   [#1213](https://github.com/compasjs/compas/pull/1213),
   [#1217](https://github.com/compasjs/compas/pull/1217),
   [#1228](https://github.com/compasjs/compas/pull/1228))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump koa from 2.13.1 to 2.13.3
   ([#1222](https://github.com/compasjs/compas/pull/1222),
   [#1227](https://github.com/compasjs/compas/pull/1227))
-    - [Release notes](https://github.com/koajs/koa/releases)
+  - [Release notes](https://github.com/koajs/koa/releases)
 - build(deps): bump postgres from 2.0.0-beta.8 to 2.0.0-beta.9
   ([#1214](https://github.com/compasjs/compas/pull/1214))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - build(deps): bump prettier from 2.4.0 to 2.4.1
   ([#1204](https://github.com/compasjs/compas/pull/1204))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - feat(cli): also print passed test assertions around the failed assertion
   ([#1224](https://github.com/compasjs/compas/pull/1224))
-    - Closes [#1220](https://github.com/compasjs/compas/pull/1220)
+  - Closes [#1220](https://github.com/compasjs/compas/pull/1220)
 - feat(docs): add code-gen setup and validators
   ([#1211](https://github.com/compasjs/compas/pull/1211))
-    - Closes [#1137](https://github.com/compasjs/compas/pull/1137)
+  - Closes [#1137](https://github.com/compasjs/compas/pull/1137)
 - feat(stdlib): support formatting Error#clause in AppError#format
   ([#1208](https://github.com/compasjs/compas/pull/1208))
-    - Closes [#1181](https://github.com/compasjs/compas/pull/1181)
+  - Closes [#1181](https://github.com/compasjs/compas/pull/1181)
 - feat(store): add job name filter to JobQueueWorker
   ([#1225](https://github.com/compasjs/compas/pull/1225))
-    - Closes [#1223](https://github.com/compasjs/compas/pull/1223)
+  - Closes [#1223](https://github.com/compasjs/compas/pull/1223)
 - fix(cli): ensure visualise output directory exists
   ([#1207](https://github.com/compasjs/compas/pull/1207))
-    - Closes [#1206](https://github.com/compasjs/compas/pull/1206)
+  - Closes [#1206](https://github.com/compasjs/compas/pull/1206)
 
 ##### Breaking changes
 
 - **store**: add job name filter to JobQueueWorker
-    - Removed support for specifying a specific job name in the `JobQueueWorker`
-      constructor. Please migrate to the `{ includedNames: ["job.name"] }` syntax.
+  - Removed support for specifying a specific job name in the `JobQueueWorker`
+    constructor. Please migrate to the `{ includedNames: ["job.name"] }` syntax.
 
 ### [v0.0.164](https://github.com/compasjs/compas/releases/tag/v0.0.164)
 
@@ -1500,7 +1500,7 @@ Thanks to @tjonger and @bjarn for their contributions!
 
 - build(deps): bump @types/formidable from 1.2.3 to 1.2.4
   ([#1195](https://github.com/compasjs/compas/pull/1195))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - fix(code-gen): correct reuse of any validators
   ([#1199](https://github.com/compasjs/compas/pull/1199))
 
@@ -1512,32 +1512,32 @@ Thanks to @tjonger and @bjarn for their contributions!
   ([#1173](https://github.com/compasjs/compas/pull/1173),
   [#1179](https://github.com/compasjs/compas/pull/1179),
   [#1186](https://github.com/compasjs/compas/pull/1186))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump c8 from 7.8.0 to 7.9.0
   ([#1187](https://github.com/compasjs/compas/pull/1187))
-    - [Release notes](https://github.com/bcoe/c8/releases)
+  - [Release notes](https://github.com/bcoe/c8/releases)
 - build(deps): bump eslint-plugin-jsdoc from 36.0.8 to 36.1.0
   ([#1174](https://github.com/compasjs/compas/pull/1174))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump prettier from 2.3.2 to 2.4.0
   ([#1184](https://github.com/compasjs/compas/pull/1184))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - build(deps): bump sharp from 0.29.0 to 0.29.1
   ([#1171](https://github.com/compasjs/compas/pull/1171))
-    - [Release notes](https://github.com/lovell/sharp/releases)
+  - [Release notes](https://github.com/lovell/sharp/releases)
 - feat(code-gen): don't output params & data if not used in the api client
   ([#1193](https://github.com/compasjs/compas/pull/1193))
-    - Closes [#1188](https://github.com/compasjs/compas/pull/1188)
+  - Closes [#1188](https://github.com/compasjs/compas/pull/1188)
 - feat(code-gen): redo options.enabled of react-query generator
   ([#1194](https://github.com/compasjs/compas/pull/1194))
-    - Closes [#1189](https://github.com/compasjs/compas/pull/1189)
-    - Closes [#1190](https://github.com/compasjs/compas/pull/1190)
+  - Closes [#1189](https://github.com/compasjs/compas/pull/1189)
+  - Closes [#1190](https://github.com/compasjs/compas/pull/1190)
 - fix(code-gen): error when multiple relations use the same ownKey
   ([#1192](https://github.com/compasjs/compas/pull/1192))
-    - Closes [#1177](https://github.com/compasjs/compas/pull/1177)
+  - Closes [#1177](https://github.com/compasjs/compas/pull/1177)
 - fix(code-gen): throw explicit error on empty sql update clause
   ([#1191](https://github.com/compasjs/compas/pull/1191))
-    - Closes [#1175](https://github.com/compasjs/compas/pull/1175)
+  - Closes [#1175](https://github.com/compasjs/compas/pull/1175)
 - fix(docs): typo in session handling
 - fix(store): syncDeletedFiles permanently delete transformed
   ([#1182](https://github.com/compasjs/compas/pull/1182))
@@ -1575,25 +1575,25 @@ Thanks to @tjonger and @bjarn for their contributions!
   ([#1159](https://github.com/compasjs/compas/pull/1159))
 - build(deps): bump @types/minio from 7.0.9 to 7.0.10
   ([#1121](https://github.com/compasjs/compas/pull/1121))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 16.6.0 to 16.7.10
   ([#1104](https://github.com/compasjs/compas/pull/1104),
   [#1122](https://github.com/compasjs/compas/pull/1122),
   [#1127](https://github.com/compasjs/compas/pull/1127),
   [#1152](https://github.com/compasjs/compas/pull/1152),
   [#1156](https://github.com/compasjs/compas/pull/1156))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-import from 2.24.0 to 2.24.2
   ([#1112](https://github.com/compasjs/compas/pull/1112),
   [#1117](https://github.com/compasjs/compas/pull/1117))
 - build(deps): bump eslint-plugin-jsdoc from 36.0.7 to 36.0.8
   ([#1118](https://github.com/compasjs/compas/pull/1118))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump minio from 7.0.18 to 7.0.19
   ([#1114](https://github.com/compasjs/compas/pull/1114))
 - build(deps): bump postgres from 2.0.0-beta.6 to 2.0.0-beta.8
   ([#1107](https://github.com/compasjs/compas/pull/1107),[#1123](https://github.com/compasjs/compas/pull/1123))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - build(deps): bump sharp from 0.28.3 to 0.29.0
   ([#1108](https://github.com/compasjs/compas/pull/1108))
 - chore: fix issues after Typescript 4.4 update
@@ -1602,54 +1602,54 @@ Thanks to @tjonger and @bjarn for their contributions!
   ([#1154](https://github.com/compasjs/compas/pull/1154))
 - docs: revamp docs in to more feature based
   ([#1151](https://github.com/compasjs/compas/pull/1151))
-    - References [#1131](https://github.com/compasjs/compas/pull/1131)
-    - Closes [#1141](https://github.com/compasjs/compas/pull/1141)
-    - Closes [#1142](https://github.com/compasjs/compas/pull/1142)
-    - Closes [#1143](https://github.com/compasjs/compas/pull/1143)
-    - Closes [#1149](https://github.com/compasjs/compas/pull/1149)
-    - Closes [#1150](https://github.com/compasjs/compas/pull/1150)
+  - References [#1131](https://github.com/compasjs/compas/pull/1131)
+  - Closes [#1141](https://github.com/compasjs/compas/pull/1141)
+  - Closes [#1142](https://github.com/compasjs/compas/pull/1142)
+  - Closes [#1143](https://github.com/compasjs/compas/pull/1143)
+  - Closes [#1149](https://github.com/compasjs/compas/pull/1149)
+  - Closes [#1150](https://github.com/compasjs/compas/pull/1150)
 - feat(all): support and recommend using the Typescript language server
   ([#1055](https://github.com/compasjs/compas/pull/1055))
 - feat(code-gen): add support for Postgres default values
   ([#1130](https://github.com/compasjs/compas/pull/1130))
-    - Closes [#1098](https://github.com/compasjs/compas/pull/1098)
+  - Closes [#1098](https://github.com/compasjs/compas/pull/1098)
 - feat(code-gen): always collect as much validator issues as possible
   ([#1161](https://github.com/compasjs/compas/pull/1161))
-    - Closes [#1158](https://github.com/compasjs/compas/pull/1158)
+  - Closes [#1158](https://github.com/compasjs/compas/pull/1158)
 - feat(code-gen): sort imports in generated files before writing
   ([#1125](https://github.com/compasjs/compas/pull/1125))
-    - Closes [#1110](https://github.com/compasjs/compas/pull/1110)
+  - Closes [#1110](https://github.com/compasjs/compas/pull/1110)
 - feat(docs): add http server document
   ([#1157](https://github.com/compasjs/compas/pull/1157))
-    - Closes [#1134](https://github.com/compasjs/compas/pull/1134)
+  - Closes [#1134](https://github.com/compasjs/compas/pull/1134)
 - feat(docs): add TS setup & logger and events
   ([#1153](https://github.com/compasjs/compas/pull/1153))
-    - Closes [#1132](https://github.com/compasjs/compas/pull/1132)
-    - Closes [#1133](https://github.com/compasjs/compas/pull/1133)
+  - Closes [#1132](https://github.com/compasjs/compas/pull/1132)
+  - Closes [#1133](https://github.com/compasjs/compas/pull/1133)
 - feat(docs): queue, migration, postgres, session and test docs
-    - Closes [#1135](https://github.com/compasjs/compas/pull/1135)
-    - Closes [#1136](https://github.com/compasjs/compas/pull/1136)
-    - Closes [#1144](https://github.com/compasjs/compas/pull/1144)
-    - Closes [#1147](https://github.com/compasjs/compas/pull/1147)
-    - Closes [#1148](https://github.com/compasjs/compas/pull/1148)
+  - Closes [#1135](https://github.com/compasjs/compas/pull/1135)
+  - Closes [#1136](https://github.com/compasjs/compas/pull/1136)
+  - Closes [#1144](https://github.com/compasjs/compas/pull/1144)
+  - Closes [#1147](https://github.com/compasjs/compas/pull/1147)
+  - Closes [#1148](https://github.com/compasjs/compas/pull/1148)
 - fix(code-gen): allow searchable on references
   ([#1128](https://github.com/compasjs/compas/pull/1128))
-    - Closes [#1109](https://github.com/compasjs/compas/pull/1109)
+  - Closes [#1109](https://github.com/compasjs/compas/pull/1109)
 - fix(code-gen): nullable types on sql insert partials
   ([#1129](https://github.com/compasjs/compas/pull/1129))
-    - References [#1098](https://github.com/compasjs/compas/pull/1098)
+  - References [#1098](https://github.com/compasjs/compas/pull/1098)
 
 ##### Breaking changes
 
 - **deps**: bump sharp from 0.28.3 to 0.29.0
-    - Major version bump
+  - Major version bump
 - **code-gen**: always collect as much validator issues as possible
-    - No TypeScript file support anymore in the 'validator' generator
-    - Removed the 'throwingValidator' option, every validator returns a
-      `{ error }|{, value }` result, where the error is an `AppError` or the value
-      key containing the validation result
-    - The `AppError` key is now always `validator.error`. Errors by path are now
-      put on `error.info["$.xxx"].key`
+  - No TypeScript file support anymore in the 'validator' generator
+  - Removed the 'throwingValidator' option, every validator returns a
+    `{ error }|{, value }` result, where the error is an `AppError` or the value
+    key containing the validation result
+  - The `AppError` key is now always `validator.error`. Errors by path are now
+    put on `error.info["$.xxx"].key`
 
 For a detailed description and more details about this release, please read the
 [release notes](https://compasjs.com/releases/0.0.158.html).
@@ -1660,28 +1660,28 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/node from 16.4.13 to 16.6.0
   ([#1101](https://github.com/compasjs/compas/pull/1101))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-import from 2.23.4 to 2.24.0
   ([#1088](https://github.com/compasjs/compas/pull/1088))
 - build(deps): bump eslint-plugin-jsdoc from 36.0.6 to 36.0.7
   ([#1102](https://github.com/compasjs/compas/pull/1102))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - feat(code-gen): support 'schema' in 'queryOptions'
   ([#1103](https://github.com/compasjs/compas/pull/1103))
-    - Closes [#1090](https://github.com/compasjs/compas/pull/1090)
+  - Closes [#1090](https://github.com/compasjs/compas/pull/1090)
 - feat(store): add support for JS migration files
   ([#1097](https://github.com/compasjs/compas/pull/1097))
-    - Closes [#1092](https://github.com/compasjs/compas/pull/1092)
+  - Closes [#1092](https://github.com/compasjs/compas/pull/1092)
 - feat(store): better PG connection handling
   ([#1096](https://github.com/compasjs/compas/pull/1096))
-    - Closes [#1089](https://github.com/compasjs/compas/pull/1089)
+  - Closes [#1089](https://github.com/compasjs/compas/pull/1089)
 
 ##### Breaking changes
 
 - **store**: better PG connection handling
 
-    - `setPostgresDatabaseTemplate` requires a connection created by
-      `createTestPostgresDatabase`
+  - `setPostgresDatabaseTemplate` requires a connection created by
+    `createTestPostgresDatabase`
 
   ```js
   // test/config.js
@@ -1696,12 +1696,12 @@ For a detailed description and more details about this release, please read the
   }
   ```
 
-    - `cleanupTestPostgresDatabase` is not guaranteed to delete the provided
-      database.
-    - Changed logic around checking options passed to `newPostgresConnection`.
-      This shouldn't affect any existing usage, but is more flexible when
-      connecting to many databases.
-    - Default connection pool is 15 instead of unspecified.
+  - `cleanupTestPostgresDatabase` is not guaranteed to delete the provided
+    database.
+  - Changed logic around checking options passed to `newPostgresConnection`.
+    This shouldn't affect any existing usage, but is more flexible when
+    connecting to many databases.
+  - Default connection pool is 15 instead of unspecified.
 
 ### [v0.0.156](https://github.com/compasjs/compas/releases/tag/v0.0.156)
 
@@ -1709,20 +1709,20 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @babel/core from 7.14.8 to 7.15.0
   ([#1083](https://github.com/compasjs/compas/pull/1083))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @babel/eslint-parser from 7.14.7 to 7.15.0
   ([#1077](https://github.com/compasjs/compas/pull/1077),
   [#1082](https://github.com/compasjs/compas/pull/1082))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 16.4.8 to 16.4.13
   ([#1081](https://github.com/compasjs/compas/pull/1081),
   [#1084](https://github.com/compasjs/compas/pull/1084),
   [#1076](https://github.com/compasjs/compas/pull/1076),
   [#1079](https://github.com/compasjs/compas/pull/1079))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - feat(code-gen): add sql upsert on primary key support
   ([#1087](https://github.com/compasjs/compas/pull/1087))
-    - Closes [#1080](https://github.com/compasjs/compas/pull/1080)
+  - Closes [#1080](https://github.com/compasjs/compas/pull/1080)
 - feat(store): add sendTransformedImage compatible with Next.js image loaders
   ([#1078](https://github.com/compasjs/compas/pull/1078))
 
@@ -1732,10 +1732,10 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/node from 16.4.6 to 16.4.8
   ([#1074](https://github.com/compasjs/compas/pull/1074))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 7.31.0 to 7.32.0
   ([#1075](https://github.com/compasjs/compas/pull/1075))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - chore(release): fix release script
 - chore: lint JSDoc blocks
 - chore(release): fix release of code-gen and linting
@@ -1746,14 +1746,14 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/minio from 7.0.8 to 7.0.9
   ([#1057](https://github.com/compasjs/compas/pull/1057))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 16.4.0 to 16.4.6
   ([#1050](https://github.com/compasjs/compas/pull/1050),
   [#1059](https://github.com/compasjs/compas/pull/1059),
   [#1061](https://github.com/compasjs/compas/pull/1061),
   [#1065](https://github.com/compasjs/compas/pull/1065),
   [#1069](https://github.com/compasjs/compas/pull/1069))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump c8 from 7.7.3 to 7.8.0
   ([#1067](https://github.com/compasjs/compas/pull/1067))
 - build(deps): bump eslint-plugin-jsdoc from 35.5.0 to 36.0.6
@@ -1762,24 +1762,24 @@ For a detailed description and more details about this release, please read the
   [#1063](https://github.com/compasjs/compas/pull/1063),
   [#1064](https://github.com/compasjs/compas/pull/1064),
   [#1068](https://github.com/compasjs/compas/pull/1068))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - build(deps): bump recast from 0.20.4 to 0.20.5
   ([#1051](https://github.com/compasjs/compas/pull/1051))
-    - [Release notes](https://github.com/benjamn/recast/releases)
+  - [Release notes](https://github.com/benjamn/recast/releases)
 - chore: drop lerna, create custom release script
   ([#1072](https://github.com/compasjs/compas/pull/1072))
-    - Closes [#1053](https://github.com/compasjs/compas/pull/1053)
+  - Closes [#1053](https://github.com/compasjs/compas/pull/1053)
 - fix(code-gen): throw on unknown type in validators
   ([#1071](https://github.com/compasjs/compas/pull/1071))
-    - Closes [#1062](https://github.com/compasjs/compas/pull/1062)
+  - Closes [#1062](https://github.com/compasjs/compas/pull/1062)
 - fix(store): use connection defaults when creating postgres database
   ([#1070](https://github.com/compasjs/compas/pull/1070))
-    - Closes [#1066](https://github.com/compasjs/compas/pull/1066)
+  - Closes [#1066](https://github.com/compasjs/compas/pull/1066)
 
 ##### Breaking changes
 
 - **deps**: bump eslint-plugin-jsdoc from 35.5.0 to 36.0.6
-    - Major version bump
+  - Major version bump
 
 ### [v0.0.153](https://github.com/compasjs/compas/releases/tag/v0.0.153)
 
@@ -1787,44 +1787,44 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @babel/core from 7.14.6 to 7.14.8
   ([#1044](https://github.com/compasjs/compas/pull/1044))
-    - [Release notes](https://github.com/babel/babel/releases)
+  - [Release notes](https://github.com/babel/babel/releases)
 - build(deps): bump @types/node from 16.3.1 to 16.4.0
   ([#1033](https://github.com/compasjs/compas/pull/1033),
   [#1041](https://github.com/compasjs/compas/pull/1041),
   [#1043](https://github.com/compasjs/compas/pull/1043))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 7.30.0 to 7.31.0
   ([#1039](https://github.com/compasjs/compas/pull/1039))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump eslint-plugin-jsdoc from 35.4.3 to 35.5.0
   ([#1038](https://github.com/compasjs/compas/pull/1038),
   [#1045](https://github.com/compasjs/compas/pull/1045))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - feat(cli): remove `newTestEvent` options
   ([#1031](https://github.com/compasjs/compas/pull/1031))
-    - Closes [#1030](https://github.com/compasjs/compas/pull/1030)
+  - Closes [#1030](https://github.com/compasjs/compas/pull/1030)
 - feat(docs): integrate docs from compasjs/docs and move to Vitepress
   ([#1036](https://github.com/compasjs/compas/pull/1036))
-    - Closes [#1029](https://github.com/compasjs/compas/pull/1029)
+  - Closes [#1029](https://github.com/compasjs/compas/pull/1029)
 - fix(code-gen): fix jsdoc return type for query builders
   ([#1034](https://github.com/compasjs/compas/pull/1034))
 - fix(code-gen): handle convert when generating types.
   ([#1048](https://github.com/compasjs/compas/pull/1048))
-    - Closes [#1047](https://github.com/compasjs/compas/pull/1047)
+  - Closes [#1047](https://github.com/compasjs/compas/pull/1047)
 - fix(store): add Buffer to types of source for createOrUpdateFile
   ([#1049](https://github.com/compasjs/compas/pull/1049))
-    - Closes [#1046](https://github.com/compasjs/compas/pull/1046)
+  - Closes [#1046](https://github.com/compasjs/compas/pull/1046)
 - test(code-gen): add e2e tests for handled errors
   ([#1032](https://github.com/compasjs/compas/pull/1032))
-    - Closes [#1021](https://github.com/compasjs/compas/pull/1021)
+  - Closes [#1021](https://github.com/compasjs/compas/pull/1021)
 - test(store): fix flaky tests by increasing timeouts
   ([#1037](https://github.com/compasjs/compas/pull/1037))
 
 ##### Breaking changes
 
 - **cli**: remove `newTestEvent` options
-    - Removed the `options` argument on `newTestEvent`. This was more confusing
-      than a few extra logs in the test output.
+  - Removed the `options` argument on `newTestEvent`. This was more confusing
+    than a few extra logs in the test output.
 
 ### [v0.0.152](https://github.com/compasjs/compas/releases/tag/v0.0.152)
 
@@ -1833,18 +1833,18 @@ For a detailed description and more details about this release, please read the
 - build(deps): bump @types/node from 16.0.1 to 16.3.1
   ([#1018](https://github.com/compasjs/compas/pull/1018),
   [#1026](https://github.com/compasjs/compas/pull/1026))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint-plugin-jsdoc from 35.4.1 to 35.4.3
   ([#1019](https://github.com/compasjs/compas/pull/1019),
   [#1025](https://github.com/compasjs/compas/pull/1025))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - chore(ci): disable setup-node auto cache for sync-docs
 - chore(codecov): make patch informational as well
 - feat(cli): change default worker count of test to 4 instead of number of cpus
-    - Closes [#1023](https://github.com/compasjs/compas/pull/1023)
+  - Closes [#1023](https://github.com/compasjs/compas/pull/1023)
 - feat(cli): run tests in parallel by default while collecting coverage
   ([#1024](https://github.com/compasjs/compas/pull/1024))
-    - Closes [#1022](https://github.com/compasjs/compas/pull/1022)
+  - Closes [#1022](https://github.com/compasjs/compas/pull/1022)
 - feat(code-gen): error when relation key is a reserved query builder key
   ([#1020](https://github.com/compasjs/compas/pull/1020))
 - feat(code-gen): add 'as' and 'limit' as reserved query builder keys
@@ -1852,11 +1852,11 @@ For a detailed description and more details about this release, please read the
 ##### Breaking changes
 
 - **cli**: run tests in parallel by default while collecting coverage
-    - `compas coverage` by defaults executes tests with the default settings
-      (parallel)
-    - `compas coverage` now also accepts all arguments of `compas test` like
-      `--serial` and `--parallel-count`. To get the old behaviour run
-      `compas coverage --serial`
+  - `compas coverage` by defaults executes tests with the default settings
+    (parallel)
+  - `compas coverage` now also accepts all arguments of `compas test` like
+    `--serial` and `--parallel-count`. To get the old behaviour run
+    `compas coverage --serial`
 
 ### [v0.0.151](https://github.com/compasjs/compas/releases/tag/v0.0.151)
 
@@ -1864,18 +1864,18 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/minio from 7.0.7 to 7.0.8
   ([#1012](https://github.com/compasjs/compas/pull/1012))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump @types/node from 15.12.5 to 16.0.1
   ([#1008](https://github.com/compasjs/compas/pull/1008),
   [#1010](https://github.com/compasjs/compas/pull/1010),
   [#1014](https://github.com/compasjs/compas/pull/1014))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump eslint from 7.29.0 to 7.30.0
   ([#1011](https://github.com/compasjs/compas/pull/1011))
-    - [Release notes](https://github.com/eslint/eslint/releases)
+  - [Release notes](https://github.com/eslint/eslint/releases)
 - build(deps): bump postgres from 2.0.0-beta.5 to 2.0.0-beta.6
   ([#1015](https://github.com/compasjs/compas/pull/1015))
-    - [Release notes](https://github.com/porsager/postgres/releases)
+  - [Release notes](https://github.com/porsager/postgres/releases)
 - chore: only support Node.js v16 and higher
 - chore(ci): disable auto-merge of dependabot PR's
 - chore(ci): use setup-node@v2 with built-in cache support
@@ -1887,10 +1887,10 @@ For a detailed description and more details about this release, please read the
 ##### Breaking changes
 
 - **deps**: bump @types/node from 15.12.5 to 16.0.1
-    - Major version bump
+  - Major version bump
 - **all**: only support Node.js v16 and higher
-    - Bump your local project to use Node.js v16, which should go in to LTS in a
-      few months
+  - Bump your local project to use Node.js v16, which should go in to LTS in a
+    few months
 
 ### [v0.0.150](https://github.com/compasjs/compas/releases/tag/v0.0.150)
 
@@ -1898,20 +1898,20 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump eslint-plugin-jsdoc from 35.4.0 to 35.4.1
   ([#1006](https://github.com/compasjs/compas/pull/1006))
-    - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
 - chore(create-release): fix changelog parsing
 - feat(server): sendFile support If-Modified-Since
   ([#1003](https://github.com/compasjs/compas/pull/1003))
-    - Closes [#1002](https://github.com/compasjs/compas/pull/1002)
+  - Closes [#1002](https://github.com/compasjs/compas/pull/1002)
 - feat(store): add must-revalidate to default cacheControlHeader in FileCache
   ([#1004](https://github.com/compasjs/compas/pull/1004))
 
 ##### Breaking changes
 
 - **store**: add must-revalidate to default cacheControlHeader in FileCache
-    - The default cache-control value has changed from `max-age=1200` to
-      `max-age=120, must-revalidate`. Provide your own as the last argument of
-      `new FileCache()` if necessary.
+  - The default cache-control value has changed from `max-age=1200` to
+    `max-age=120, must-revalidate`. Provide your own as the last argument of
+    `new FileCache()` if necessary.
 
 ### [v0.0.149](https://github.com/compasjs/compas/releases/tag/v0.0.149)
 
@@ -1919,22 +1919,22 @@ For a detailed description and more details about this release, please read the
 
 - build(deps): bump @types/node from 15.12.4 to 15.12.5
   ([#998](https://github.com/compasjs/compas/pull/998))
-    - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - build(deps): bump prettier from 2.3.1 to 2.3.2
   ([#999](https://github.com/compasjs/compas/pull/999))
-    - [Release notes](https://github.com/prettier/prettier/releases)
+  - [Release notes](https://github.com/prettier/prettier/releases)
 - chore(changelog): improve changelog with breaking change handling
   ([#1000](https://github.com/compasjs/compas/pull/1000))
 - feat(store): remove file group view
   ([#1001](https://github.com/compasjs/compas/pull/1001))
-    - Closes [#901](https://github.com/compasjs/compas/pull/901)
+  - Closes [#901](https://github.com/compasjs/compas/pull/901)
 
 ##### Breaking changes
 
 - **store**: remove file group view
-    - Removed usages and code generation of `fileGroupView`. Replace with
-      `queryFileGroup` calls.
-    - Add the following migration:
+  - Removed usages and code generation of `fileGroupView`. Replace with
+    `queryFileGroup` calls.
+  - Add the following migration:
   ```sql
   DROP VIEW IF EXISTS "fileGroupView" CASCADE;
   ```
@@ -3784,18 +3784,18 @@ Tape is replace by a custom test runner.
 - Set minimum Node.js version to Node.js 14
 - @lbu/cli: Refactored
 
-    - Improved argument parser, logging and reload handling
-    - Supports arguments and passing arguments to Node.js
+  - Improved argument parser, logging and reload handling
+  - Supports arguments and passing arguments to Node.js
 
 - @lbu/code-gen: Refactored
 
-    - Moved to a double plugin structure with Generators and Types plugins
-    - Generator plugins replace the previous store and generator plugins
-    - Type plugins implement TypeBuilding, and code generation for specific types.
-      All type plugins support the core generators
-    - All plugins except Models are now operating on a group based way of
-      generating. This ensures that auto-completion stays relevant to the context
-      that you are working in
+  - Moved to a double plugin structure with Generators and Types plugins
+  - Generator plugins replace the previous store and generator plugins
+  - Type plugins implement TypeBuilding, and code generation for specific types.
+    All type plugins support the core generators
+  - All plugins except Models are now operating on a group based way of
+    generating. This ensures that auto-completion stays relevant to the context
+    that you are working in
 
 - @lbu/insight: removed global state from log parser
 - @lbu/insight: support `arrayBuffers` when printing memory usage
