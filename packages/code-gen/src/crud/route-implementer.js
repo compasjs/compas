@@ -45,7 +45,7 @@ export function crudGenerateRouteImplementations(context) {
  *
  * @param {{
  *   sql: Postgres,
- *   ${modifierJSDoc}
+${modifierJSDoc}
  * }} options
  */
 export function ${crudResolveGroup(
@@ -115,18 +115,18 @@ function crudResolveModifiersForType(context, type) {
 
   if (type.routeOptions.listRoute) {
     // @ts-expect-error
-    modifierJSDoc += `${crudName}ListPreModifier?: (event: InsightEvent, ctx: ${upperCrudName}ListCtx, countBuilder: ${type.entity.reference.uniqueName}QueryBuilder, listBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierJSDoc += ` *   ${crudName}ListPreModifier?: (event: InsightEvent, ctx: ${upperCrudName}ListCtx, countBuilder: ${type.entity.reference.uniqueName}QueryBuilder, listBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
     modifierDestructure += `${crudName}ListPreModifier,\n`;
   }
 
   if (type.routeOptions.singleRoute) {
     // @ts-expect-error
-    modifierJSDoc += `${crudName}SinglePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierJSDoc += ` *   ${crudName}SinglePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
     modifierDestructure += `${crudName}SinglePreModifier,\n`;
   }
 
   if (type.routeOptions.createRoute) {
-    modifierJSDoc += `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx ${
+    modifierJSDoc += ` *   ${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx ${
       type.internalSettings.usedRelation?.subType === "oneToOneReverse"
         ? `, singleBuilder: ${
             // @ts-expect-error
@@ -139,13 +139,13 @@ function crudResolveModifiersForType(context, type) {
 
   if (type.routeOptions.updateRoute) {
     // @ts-expect-error
-    modifierJSDoc += `${crudName}UpdatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierJSDoc += ` *   ${crudName}UpdatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
     modifierDestructure += `${crudName}UpdatePreModifier,\n`;
   }
 
   if (type.routeOptions.deleteRoute) {
     // @ts-expect-error
-    modifierJSDoc += `${crudName}DeletePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
+    modifierJSDoc += ` *   ${crudName}DeletePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${type.entity.reference.uniqueName}QueryBuilder) => void|Promise<void>,\n`;
     modifierDestructure += `${crudName}DeletePreModifier,\n`;
   }
 

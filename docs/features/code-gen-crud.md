@@ -170,8 +170,8 @@ are removed.
 
 While calling `groupRegisterCrud` from the generated `crud.js` you can pass in
 various 'modifiers'. These modifiers are all optional and can mutate the passed
-in context, resolve a user, determine access control and edit the provided '
-builders'. They are called after the static validation of params, query and
+in context, resolve a user, determine access control and edit the provided
+'builders'. They are called after the static validation of params, query and
 body, but before executing any other logic.
 
 All modifier functions can be async, getting an `event` as the first argument
