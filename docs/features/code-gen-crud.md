@@ -166,7 +166,29 @@ added in all cases. In case a nested relation is used with a `oneToOne`
 relation, the `list` route is automatically disabled, and the extra route params
 are removed.
 
+### Modifiers
+
+While calling `groupRegisterCrud` from the generated `crud.js` you can pass in
+various 'modifiers'. These modifiers are all optional and can mutate the passed
+in context, resolve a user, determine access control and edit the provided
+'builders'. They are called after the static validation of params, query and
+body, but before executing any other logic.
+
+All modifier functions can be async, getting an `event` as the first argument
+and the request `ctx` as the second. The `single`, `update` and `delete` routes
+also provide the used `builder` as the third argument. This way you can mutate
+the executed where clause to prevent unauthorized access.
+
+The `list` route modifier passes in a `countBuilder` and a `listBuilder` as the
+third and fourth argument respectively. By mutating both, the total stays in
+sync with the returned values. Note that the result of the `count` event is used
+to mutate the `listBuilder` afterwards to only select the results of the current
+pagination result.
+
+Another edge case is the `create` event for a nested `oneToOne` relation. It's
+third argument is the same builder as used in the `single` routes, for checking
+if the relation already the `oneToOne` field.
+
 ## TODO
 
-- hooks
 - fields readable, writable
