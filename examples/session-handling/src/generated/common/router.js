@@ -4,8 +4,8 @@
 import { compose } from "@compas/server";
 import { AppError, eventRename } from "@compas/stdlib";
 import { authHandlers } from "../auth/controller.js";
-import * as authValidators from "../auth/validators.js";
 import { compasHandlers } from "../compas/controller.js";
+import * as authValidators from "../auth/validators.js";
 import * as compasValidators from "../compas/validators.js";
 import { compasApiStructureString } from "./structure.js";
 

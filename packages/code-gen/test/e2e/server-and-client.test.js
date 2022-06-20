@@ -23,15 +23,22 @@ import { codeGenToTemporaryDirectory } from "../utils.test.js";
 mainTestFn(import.meta);
 
 test("code-gen/e2e/server", async (t) => {
+  const Tstore = new TypeCreator("store");
   const T = new TypeCreator("server");
   const R = T.router("/");
   const testR = R.group("group", "/group");
 
   const {
     exitCode: serverExitCode,
+    stdout: serverStdout,
     generatedDirectory: serverGeneratedDirectory,
   } = await codeGenToTemporaryDirectory(
     [
+      Tstore.object("imageTransformOptions").keys({
+        width: T.number().convert(),
+        quality: T.number().default(75).convert(),
+      }),
+
       T.object("item").keys({
         A: T.string(),
         B: T.number(),
@@ -41,6 +48,12 @@ test("code-gen/e2e/server", async (t) => {
       }),
 
       T.number("input").convert().docs("WITH DOCS"),
+
+      R.get("/route-with-referenced-query", "routeWithReferencedQuery")
+        .query(T.reference("store", "imageTransformOptions"))
+        .response({
+          success: true,
+        }),
 
       testR
         .post("/file", "upload")
@@ -160,6 +173,9 @@ test("code-gen/e2e/server", async (t) => {
   );
 
   t.equal(serverExitCode, 0);
+  if (serverExitCode !== 0) {
+    t.log.info(serverStdout);
+  }
 
   const { structure: serverStructure } = await import(
     pathToFileURL(
@@ -168,6 +184,7 @@ test("code-gen/e2e/server", async (t) => {
   );
   const {
     exitCode: clientExitCode,
+    stdout: clientStdout,
     generatedDirectory: clientGeneratedDirectory,
   } = await codeGenToTemporaryDirectory(
     {
@@ -180,6 +197,10 @@ test("code-gen/e2e/server", async (t) => {
   );
 
   t.equal(clientExitCode, 0);
+
+  if (clientExitCode !== 0) {
+    t.log.info(clientStdout);
+  }
 
   t.timeout = 20000;
 
@@ -275,6 +296,21 @@ test("code-gen/e2e/server", async (t) => {
     );
 
     t.deepEqual(result, { foo: false });
+  });
+
+  t.test("server - routeWithReferencedQuery", async (t) => {
+    const response = await axiosInstance.get(
+      "/route-with-referenced-query?width=10",
+    );
+
+    await clientApiClientImport.apiServerRouteWithReferencedQuery(
+      axiosInstance,
+      {
+        width: 75,
+      },
+    );
+
+    t.ok(response.data.success);
   });
 
   t.test("server - GET /:id param decoding", async (t) => {
@@ -506,6 +542,14 @@ async function buildTestApp(importDir) {
   });
   app.use(commonImport.router);
   commonImport.setBodyParsers(createBodyParsers({}));
+
+  controllerImport.serverHandlers.routeWithReferencedQuery = (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
+
+    return next();
+  };
 
   controllerImport.serverHandlers.getId = (ctx, next) => {
     const { id } = ctx.validatedParams;
