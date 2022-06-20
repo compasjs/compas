@@ -4,6 +4,20 @@ editLink: false
 
 # Changelog
 
+### [v0.0.203](https://github.com/compasjs/compas/releases/tag/v0.0.203)
+
+##### Changes
+
+- build(deps): bump eslint from 8.17.0 to 8.18.0
+  ([#1863](https://github.com/compasjs/compas/pull/1863))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.3.2 to 39.3.3
+  ([#1864](https://github.com/compasjs/compas/pull/1864))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- chore(docs): fix small nits related to crud
+- fix(code-gen): resolve out of group refs in router generator
+  ([#1866](https://github.com/compasjs/compas/pull/1866))
+
 ### [v0.0.202](https://github.com/compasjs/compas/releases/tag/v0.0.202)
 
 ##### Changes
