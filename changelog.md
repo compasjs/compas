@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.204](https://github.com/compasjs/compas/releases/tag/v0.0.204)
+
+##### Changes
+
+- fix(code-gen): import and use correct response validator
+  ([#1867](https://github.com/compasjs/compas/pull/1867))
+
 ### [v0.0.203](https://github.com/compasjs/compas/releases/tag/v0.0.203)
 
 ##### Changes
