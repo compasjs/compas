@@ -9,8 +9,15 @@ import { AxiosInstance } from "axios";
 {{ } }}
 
 {{ if (options.isNodeServer) { }}
-import * as validators from "./validators{{= importExtension }}";
 import { handleError } from "../common/apiClient{{= importExtension }}";
+{{ const importSet = new Set(); }}
+{{ for (const type of Object.values(groupStructure)) { }}
+    {{ if (type.type !== "route" || !type.response) { continue; } }}
+    {{ importSet.add(type.response.reference.group); }}
+{{ } }}
+{{ for (const group of importSet) { }}
+  import * as {{= group }}Validators from "../{{= group }}/validators{{= importExtension }}";
+{{ } }}
 ((newline))
 {{ } }}
 

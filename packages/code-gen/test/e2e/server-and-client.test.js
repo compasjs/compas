@@ -49,11 +49,9 @@ test("code-gen/e2e/server", async (t) => {
 
       T.number("input").convert().docs("WITH DOCS"),
 
-      R.get("/route-with-referenced-query", "routeWithReferencedQuery")
+      R.get("/route-with-referenced-types", "routeWithReferencedTypes")
         .query(T.reference("store", "imageTransformOptions"))
-        .response({
-          success: true,
-        }),
+        .response(T.reference("store", "imageTransformOptions")),
 
       testR
         .post("/file", "upload")
@@ -298,19 +296,15 @@ test("code-gen/e2e/server", async (t) => {
     t.deepEqual(result, { foo: false });
   });
 
-  t.test("server - routeWithReferencedQuery", async (t) => {
-    const response = await axiosInstance.get(
-      "/route-with-referenced-query?width=10",
-    );
-
-    await clientApiClientImport.apiServerRouteWithReferencedQuery(
+  t.test("server - routeWithReferencedTypes", async (t) => {
+    await clientApiClientImport.apiServerRouteWithReferencedTypes(
       axiosInstance,
       {
         width: 75,
       },
     );
 
-    t.ok(response.data.success);
+    t.pass();
   });
 
   t.test("server - GET /:id param decoding", async (t) => {
@@ -543,10 +537,8 @@ async function buildTestApp(importDir) {
   app.use(commonImport.router);
   commonImport.setBodyParsers(createBodyParsers({}));
 
-  controllerImport.serverHandlers.routeWithReferencedQuery = (ctx, next) => {
-    ctx.body = {
-      success: true,
-    };
+  controllerImport.serverHandlers.routeWithReferencedTypes = (ctx, next) => {
+    ctx.body = ctx.validatedQuery;
 
     return next();
   };
