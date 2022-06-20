@@ -1,9 +1,23 @@
 import { compose } from "@compas/server";
 import { AppError, eventRename } from "@compas/stdlib";
+{{ const importControllerSet = new Set(); }}
+{{ const importValidatorSet = new Set(); }}
 {{ for (const group of Object.keys(structure)) { }}
     {{ const hasRouteObject = Object.values(structure[group]).find(it => it.type === "route"); }}
     {{ if (hasRouteObject === undefined) { continue; } }}
+    {{ importControllerSet.add(group); }}
+    {{ importValidatorSet.add(group); }}
+    {{ for (const r of Object.values(structure[group])) { }}
+      {{ if (r.params) { importValidatorSet.add(r.params.reference.group); } }}
+      {{ if (r.query) { importValidatorSet.add(r.query.reference.group); } }}
+      {{ if (r.body) { importValidatorSet.add(r.body.reference.group); } }}
+      {{ if (r.files) { importValidatorSet.add(r.files.reference.group); } }}
+    {{ } }}
+{{ } }}
+{{ for (const group of importControllerSet) { }}
     import { {{= group }}Handlers } from "../{{=group }}/controller{{= importExtension }}";
+{{ } }}
+{{ for (const group of importValidatorSet) { }}
     import * as {{= group }}Validators from "../{{= group }}/validators{{= importExtension }}";
 {{ } }}
 
