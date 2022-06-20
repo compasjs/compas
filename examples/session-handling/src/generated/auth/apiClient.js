@@ -3,8 +3,8 @@
 
 import FormData from "form-data";
 import { isPlainObject } from "@compas/stdlib";
-import * as validators from "./validators.js";
 import { handleError } from "../common/apiClient.js";
+import * as authValidators from "../auth/validators.js";
 
 /**
  *
@@ -20,7 +20,7 @@ export async function apiAuthLogin(instance, requestConfig = {}) {
       method: "post",
       ...requestConfig,
     });
-    const { error } = validators.validateAuthTokenPair(response.data);
+    const { error } = authValidators.validateAuthTokenPair(response.data);
     if (error) {
       throw error;
     }
@@ -44,7 +44,7 @@ export async function apiAuthLogout(instance, requestConfig = {}) {
       method: "post",
       ...requestConfig,
     });
-    const { error } = validators.validateAuthLogoutResponse(response.data);
+    const { error } = authValidators.validateAuthLogoutResponse(response.data);
     if (error) {
       throw error;
     }
@@ -68,7 +68,7 @@ export async function apiAuthMe(instance, requestConfig = {}) {
       method: "get",
       ...requestConfig,
     });
-    const { error } = validators.validateAuthMeResponse(response.data);
+    const { error } = authValidators.validateAuthMeResponse(response.data);
     if (error) {
       throw error;
     }
@@ -95,7 +95,7 @@ export async function apiAuthRefreshTokens(instance, body, requestConfig = {}) {
       data,
       ...requestConfig,
     });
-    const { error } = validators.validateAuthTokenPair(response.data);
+    const { error } = authValidators.validateAuthTokenPair(response.data);
     if (error) {
       throw error;
     }

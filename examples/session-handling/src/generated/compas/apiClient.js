@@ -3,8 +3,8 @@
 
 import FormData from "form-data";
 import { isPlainObject } from "@compas/stdlib";
-import * as validators from "./validators.js";
 import { handleError } from "../common/apiClient.js";
+import * as compasValidators from "../compas/validators.js";
 
 /**
  * Return the full generated structure as a json object.
@@ -22,7 +22,9 @@ export async function apiCompasStructure(instance, requestConfig = {}) {
       method: "get",
       ...requestConfig,
     });
-    const { error } = validators.validateCompasStructureResponse(response.data);
+    const { error } = compasValidators.validateCompasStructureResponse(
+      response.data,
+    );
     if (error) {
       throw error;
     }
