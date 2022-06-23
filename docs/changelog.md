@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.206](https://github.com/compasjs/compas/releases/tag/v0.0.206)
+
+##### Changes
+
+- fix(server): check correct err status
+  ([#1872](https://github.com/compasjs/compas/pull/1872))
+
 ### [v0.0.205](https://github.com/compasjs/compas/releases/tag/v0.0.205)
 
 ##### Changes
