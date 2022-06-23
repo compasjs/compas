@@ -33,11 +33,11 @@ export function errorHandler(opts) {
       let err = error;
       let log = ctx.log.info;
 
-      if (!AppError.instanceOf(error)) {
-        err = AppError.serverError({}, error);
+      if (!AppError.instanceOf(err)) {
+        err = AppError.serverError({}, err);
       }
 
-      if (error.status >= 500) {
+      if (err.status >= 500) {
         log = ctx.log.error;
       }
 
