@@ -4,6 +4,21 @@ editLink: false
 
 # Changelog
 
+### [v0.0.205](https://github.com/compasjs/compas/releases/tag/v0.0.205)
+
+##### Changes
+
+- build(deps): bump pino from 8.0.0 to 8.1.0
+  ([#1870](https://github.com/compasjs/compas/pull/1870))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump sharp from 0.30.6 to 0.30.7
+  ([#1869](https://github.com/compasjs/compas/pull/1869))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- fix(server): ensure log level is inherited from AppError
+  ([#1868](https://github.com/compasjs/compas/pull/1868))
+- fix(server): more explicit conversion to `AppError.serverError` on unknown
+  errors ([#1871](https://github.com/compasjs/compas/pull/1871))
+
 ### [v0.0.204](https://github.com/compasjs/compas/releases/tag/v0.0.204)
 
 ##### Changes
