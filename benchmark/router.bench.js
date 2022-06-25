@@ -6,48 +6,49 @@ import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
 import { createBodyParsers } from "@compas/server";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
-import { codeGenToTemporaryDirectory } from "../utils.test.js";
+import { codeGenToTemporaryDirectory } from "../packages/code-gen/test/utils.test.js";
 
 mainFn(import.meta, main);
 
 async function main() {
-  const githubApiFixture = pathJoin(
-    process.cwd(),
-    "__fixtures__/code-gen/githubapi.json",
+  const githubApiFixture = pathJoin(process.cwd(),
+                                    "__fixtures__/code-gen/githubapi.json",
   );
 
-  const { exitCode, stdout, stderr, generatedDirectory } =
-    await codeGenToTemporaryDirectory(
-      {
-        extendWithOpenApi: [
-          ["githubApi", JSON.parse(readFileSync(githubApiFixture, "utf-8"))],
-        ],
-      },
-      {
-        isNodeServer: true,
-        enabledGenerators: ["validator", "router"],
-        dumpStructure: true,
-      },
-    );
+  const {
+    exitCode,
+    stdout,
+    stderr,
+    generatedDirectory,
+  } = await codeGenToTemporaryDirectory({
+                                          extendWithOpenApi: [
+                                            [ "githubApi",
+                                              JSON.parse(
+                                                readFileSync(githubApiFixture, "utf-8")),
+                                            ],
+                                          ],
+                                        }, {
+                                          isNodeServer: true,
+                                          enabledGenerators: [ "validator", "router" ],
+                                          dumpStructure: true,
+                                        });
 
   if (exitCode !== 0) {
     throw AppError.serverError({
-      exitCode,
-      stdout,
-      stderr,
-    });
+                                 exitCode, stdout, stderr,
+                               });
   }
 
   const { router, setBodyParsers } = await import(
     pathToFileURL(pathJoin(generatedDirectory, "common/router.js"))
-  );
+    );
   const { reposHandlers } = await import(
     pathToFileURL(pathJoin(generatedDirectory, "repos/controller.js"))
-  );
+    );
 
   const { activityHandlers } = await import(
     pathToFileURL(pathJoin(generatedDirectory, "activity/controller.js"))
-  );
+    );
 
   bench("router - github static path", async (b) => {
     reposHandlers.reposListForAuthenticatedUser = (ctx, next) => {
@@ -56,10 +57,7 @@ async function main() {
     };
     setBodyParsers(createBodyParsers());
     const callCtx = {
-      callCount: 0,
-      method: "GET",
-      path: "/user/repos/",
-      request: {
+      callCount: 0, method: "GET", path: "/user/repos/", request: {
         query: {},
       },
     };
@@ -82,10 +80,7 @@ async function main() {
     };
     setBodyParsers(createBodyParsers());
     const callCtx = {
-      callCount: 0,
-      method: "GET",
-      path: "/repos/compasjs/compas/stargazers",
-      request: {
+      callCount: 0, method: "GET", path: "/repos/compasjs/compas/stargazers", request: {
         query: {},
       },
     };

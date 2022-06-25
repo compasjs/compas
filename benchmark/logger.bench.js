@@ -1,17 +1,18 @@
 import { bench, mainBenchFn } from "@compas/cli";
+import { newLogger, setGlobalLoggerOptions } from "@compas/stdlib";
 import pino from "pino";
-import { newLogger } from "./logger.js";
 
 mainBenchFn(import.meta);
+
+setGlobalLoggerOptions({
+  pinoDestination: {
+    write() {},
+  },
+});
 
 bench("logger - strings", (b) => {
   const logger = newLogger({
     printer: "ndjson",
-    pinoOptions: {
-      destination: {
-        write: () => {},
-      },
-    },
   });
 
   for (let i = 0; i < b.N; ++i) {
@@ -35,11 +36,6 @@ bench("pino - default - strings", (b) => {
 bench("logger - objects", (b) => {
   const logger = newLogger({
     printer: "ndjson",
-    pinoOptions: {
-      destination: {
-        write: () => {},
-      },
-    },
   });
 
   for (let i = 0; i < b.N; ++i) {
@@ -71,11 +67,6 @@ bench("pino - default - objects", (b) => {
 bench("logger - deep objects", (b) => {
   const logger = newLogger({
     printer: "ndjson",
-    pinoOptions: {
-      destination: {
-        write: () => {},
-      },
-    },
   });
 
   for (let i = 0; i < b.N; ++i) {

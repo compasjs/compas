@@ -1,11 +1,11 @@
-import { bench, mainBenchFn } from "../../cli/index.js";
+import { bench, mainBenchFn } from "@compas/cli";
 import {
   eventStart,
   eventStop,
   newEvent,
   newEventFromEvent,
-} from "./events.js";
-import { newLogger } from "./logger/logger.js";
+  newLogger,
+} from "@compas/stdlib";
 
 mainBenchFn(import.meta);
 

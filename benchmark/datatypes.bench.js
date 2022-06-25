@@ -1,5 +1,5 @@
 import { bench, mainBenchFn } from "@compas/cli";
-import { uuid } from "./datatypes.js";
+import { uuid } from "@compas/stdlib";
 
 mainBenchFn(import.meta);
 
