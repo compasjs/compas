@@ -171,7 +171,8 @@ export function generate(logger, options, structure) {
     if (context.options.enabledGenerators.indexOf("sql") !== -1) {
       if (context.options.enabledGenerators.indexOf("validator") === -1) {
         context.errors.push({
-          key: "sqlEnableValidator",
+          errorString: `Validator generator not enabled. The sql generator requires this.
+  Please add 'validator' to the 'App.generate({ enabledGenerators: ["sql"] })' array.`,
         });
       }
 
@@ -334,8 +335,7 @@ function checkReservedGroupNames(context) {
   for (const group of Object.keys(context.structure)) {
     if (keywords.indexOf(group.toLowerCase()) !== -1) {
       context.errors.push({
-        key: "structureReservedGroupName",
-        groupName: group,
+        errorString: `Group '${group}' is a JavaScript or TypeScript reserved keyword. Please use another group name.`,
       });
     }
   }
@@ -359,8 +359,7 @@ function checkIfEnabledGroupsHaveTypes(context) {
       Object.keys(context.structure[group]).length === 0
     ) {
       context.errors.push({
-        key: "structureUnknownOrEmptyGroup",
-        groupName: group,
+        errorString: `Group '${group}' is provided in 'enabledGenerators' but does not exist or does not contain any type.`,
       });
     }
   }

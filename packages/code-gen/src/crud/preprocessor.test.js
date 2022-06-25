@@ -6,7 +6,7 @@ mainTestFn(import.meta);
 
 test("code-gen/crud/preprocessor", (t) => {
   t.test("validation", (t) => {
-    t.test("crudEnableQueries - unnamed object", async (t) => {
+    t.test("error - unnamed object", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [T.crud("/bar").entity(T.object().enableQueries())],
@@ -23,7 +23,7 @@ test("code-gen/crud/preprocessor", (t) => {
       );
     });
 
-    t.test("crudEnableQueries - not enabled queries", async (t) => {
+    t.test("error - not enabled queries", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [T.crud("/bar").entity(T.object("bar"))],
@@ -40,7 +40,7 @@ test("code-gen/crud/preprocessor", (t) => {
       );
     });
 
-    t.test("crudSoftDeleteNotSupported", async (t) => {
+    t.test("error soft delete not supported", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [
@@ -57,7 +57,7 @@ test("code-gen/crud/preprocessor", (t) => {
       t.ok(stdout.includes("Replace 'withSoftDeletes' with 'withDates' "));
     });
 
-    t.test("crudStoreFileNotSupported", async (t) => {
+    t.test("error - store file not supported", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [
@@ -80,7 +80,7 @@ test("code-gen/crud/preprocessor", (t) => {
       );
     });
 
-    t.test("crudStoreFileNotSupported - reference", async (t) => {
+    t.test("error - store file reference", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [
@@ -105,7 +105,7 @@ test("code-gen/crud/preprocessor", (t) => {
       t.ok(stdout.includes("files, but it is referenced by 'AppPost'"));
     });
 
-    t.test("crudFromParentNotResolved", async (t) => {
+    t.test("error - unknown from parent", async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
         [

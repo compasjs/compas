@@ -68,8 +68,8 @@ export function addFieldsForRelation(context, type, relation) {
     };
   } catch {
     context.errors.push({
-      key: "sqlMissingPrimaryKey",
-      typeName: relation.reference.reference.name,
+      errorString: `Type '${relation.reference.reference.name}' is missing a primary key.
+  Either remove 'withPrimaryKey' from the options passed to 'enableQueries()' or add 'T.uuid().primary()' / 'T.number().primary()' to your type.`,
     });
   }
 }

@@ -415,63 +415,7 @@ export type CodeGenCrudType = {
   inlineRelations: CodeGenCrudType[];
   nestedRelations: CodeGenCrudType[];
 };
-export type CodeGenCollectableError =
-  | {
-      key:
-        | "crudEnableQueries"
-        | "crudSoftDeleteNotSupported"
-        | "crudStoreFileNotSupported"
-        | "crudFromParentNotResolved";
-      value: string;
-    }
-  | { key: "structureReservedGroupName"; groupName: string }
-  | { key: "structureUnknownOrEmptyGroup"; groupName: string }
-  | { key: "sqlMissingPrimaryKey"; typeName: string }
-  | {
-      key: "sqlForgotEnableQueries";
-      typeName: string;
-      referencedByType: string;
-    }
-  | { key: "sqlDuplicateRelationOwnKey"; type: string; relationKey: string }
-  | {
-      key: "sqlDuplicateRelationReferencedKey";
-      type: string;
-      relationKey: string;
-    }
-  | {
-      key: "sqlMissingOneToMany";
-      referencedByGroup: string;
-      referencedByType: string;
-      typeName: string;
-      relationOwnKey: string;
-    }
-  | {
-      key: "sqlUnusedOneToMany";
-      type: string;
-      referencedType: string;
-      ownKey: string;
-    }
-  | { key: "sqlEnableValidator" }
-  | {
-      key: "sqlDuplicateShortName";
-      shortName: string;
-      firstName: string;
-      secondName: string;
-    }
-  | { key: "sqlReservedObjectKey"; type: string; reservedKey: string }
-  | { key: "sqlReservedRelationKey"; type: string; ownKey: string }
-  | {
-      key: "routerUnknownInvalidationTarget";
-      from: string;
-      target: { group: string; name?: undefined | string };
-    }
-  | {
-      key: "routerIncorrectlySpecifiedInvalidation";
-      from: string;
-      target: { group: string; name?: undefined | string };
-      sourcePropertyPath: string[];
-      targetPropertyPath: string[];
-    };
+export type CodeGenCollectableError = { errorString: string };
 export type CodeGenContext = {
   options: import("../../App").GenerateOpts;
   structure: CodeGenStructure;

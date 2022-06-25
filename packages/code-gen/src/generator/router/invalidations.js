@@ -33,9 +33,12 @@ function processInvalidation(context, route, invalidation) {
 
   if (isNil(targetGroup)) {
     context.errors.push({
-      key: "routerUnknownInvalidationTarget",
-      from: route.uniqueName ?? "",
-      target: invalidation.target,
+      errorString: `Invalidation from '${
+        route.uniqueName ?? ""
+      }' specifies an invalid target (group: '${invalidation.target.group}'${
+        invalidation.target.name ? `, name: '${invalidation.target.name}'` : ""
+      }).
+  Valid targets are 'R.get()' and 'R.post().idempotent()' routes.`,
     });
     return;
   }
@@ -57,9 +60,12 @@ function processInvalidation(context, route, invalidation) {
       !(targetRoute.method === "POST" && targetRoute.idempotent))
   ) {
     context.errors.push({
-      key: "routerUnknownInvalidationTarget",
-      from: route.uniqueName ?? "",
-      target: invalidation.target,
+      errorString: `Invalidation from '${
+        route.uniqueName ?? ""
+      }' specifies an invalid target (group: '${invalidation.target.group}'${
+        invalidation.target.name ? `, name: '${invalidation.target.name}'` : ""
+      }).
+  Valid targets are 'R.get()' and 'R.post().idempotent()' routes.`,
     });
 
     return;
@@ -146,12 +152,21 @@ function processInvalidation(context, route, invalidation) {
         // Since we sort of have a valid match, we collect all specification errors and
         // don't early return.
         context.errors.push({
-          key: "routerIncorrectlySpecifiedInvalidation",
-          from: route.uniqueName ?? "",
-          target: invalidation.target,
-          sourcePropertyPath:
-            invalidation.properties.specification[specificationKey][key],
-          targetPropertyPath: ["specification", specificationKey, key],
+          errorString: `Invalidation from '${
+            route.uniqueName ?? ""
+          }' to '(group: '${invalidation.target.group}'${
+            invalidation.target.name
+              ? `, name: '${invalidation.target.name}'`
+              : ""
+          })' has an invalid specification.
+  The specified source ([${invalidation.properties.specification[
+    specificationKey
+  ][key].join(", ")}]) or target ('${[
+            "specification",
+            specificationKey,
+            key,
+          ].join(".")}') does not exist.
+  Both should be defined on their appropriate routes. See the docs for the constraints.`,
         });
         continue;
       }
@@ -190,12 +205,21 @@ function processInvalidation(context, route, invalidation) {
 
       if (isIncorrect) {
         context.errors.push({
-          key: "routerIncorrectlySpecifiedInvalidation",
-          from: route.uniqueName ?? "",
-          target: invalidation.target,
-          sourcePropertyPath:
-            invalidation.properties.specification[specificationKey][key],
-          targetPropertyPath: ["specification", specificationKey, key],
+          errorString: `Invalidation from '${
+            route.uniqueName ?? ""
+          }' to '(group: '${invalidation.target.group}'${
+            invalidation.target.name
+              ? `, name: '${invalidation.target.name}'`
+              : ""
+          })' has an invalid specification.
+  The specified source ([${invalidation.properties.specification[
+    specificationKey
+  ][key].join(", ")}]) or target ('${[
+            "specification",
+            specificationKey,
+            key,
+          ].join(".")}') does not exist.
+  Both should be defined on their appropriate routes. See the docs for the constraints.`,
         });
       }
     }
