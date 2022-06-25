@@ -6,7 +6,7 @@ import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
 import { createBodyParsers } from "@compas/server";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
-import { codeGenToTemporaryDirectory } from "../utils.test.js";
+import { codeGenToTemporaryDirectory } from "../packages/code-gen/test/utils.test.js";
 
 mainFn(import.meta, main);
 

@@ -1,11 +1,12 @@
 /* eslint-disable import/no-unresolved */
+
 import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
+import { TypeCreator } from "@compas/code-gen";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
 import FastestValidator from "fastest-validator";
 import * as yup from "yup";
-import { TypeCreator } from "../../src/builders/index.js";
-import { codeGenToTemporaryDirectory } from "../utils.test.js";
+import { codeGenToTemporaryDirectory } from "../packages/code-gen/test/utils.test.js";
 
 const simpleInput = {
   foo: true,

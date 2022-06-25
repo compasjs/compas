@@ -1,6 +1,6 @@
 import { bench, mainBenchFn } from "@compas/cli";
 import { uuid } from "@compas/stdlib";
-import { query } from "./query.js";
+import { query } from "@compas/store";
 
 mainBenchFn(import.meta);
 
@@ -30,14 +30,15 @@ bench("query - append with parameter and exec", (b) => {
 });
 
 bench("query - append empty where clause and exec", async (b) => {
-  await import("./generated/database/index.js");
-  const { fileWhere } = await import("./generated/database/file.js");
+  await import("../packages/store/src/generated/database/index.js");
+  const { sessionStoreWhere } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
   b.resetTime();
 
   for (let i = 0; i < b.N; ++i) {
-    const q = query``.append(
-      query`foo ${fileWhere({}, "f.", { skipValidator: true })}`,
-    );
+    const q = query``.append(query`foo
+    ${sessionStoreWhere({}, "ss.", { skipValidator: true })}`);
 
     q.exec({
       // eslint-disable-next-line no-unused-vars
@@ -49,23 +50,24 @@ bench("query - append empty where clause and exec", async (b) => {
 });
 
 bench("query - append where clause and exec", async (b) => {
-  await import("./generated/database/index.js");
-  const { fileWhere } = await import("./generated/database/file.js");
+  await import("../packages/store/src/generated/database/index.js");
+  const { sessionStoreWhere } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
 
   const uuid1 = uuid();
   const uuid2 = uuid();
   b.resetTime();
 
   for (let i = 0; i < b.N; ++i) {
-    const q = query``.append(
-      query`foo ${fileWhere(
-        {
-          idIn: [uuid1, uuid2],
-        },
-        "f.",
-        { skipValidator: true },
-      )}`,
-    );
+    const q = query``.append(query`foo
+    ${sessionStoreWhere(
+      {
+        idIn: [uuid1, uuid2],
+      },
+      "ss.",
+      { skipValidator: true },
+    )}`);
 
     q.exec({
       // eslint-disable-next-line no-unused-vars
@@ -76,13 +78,15 @@ bench("query - append where clause and exec", async (b) => {
   }
 });
 
-bench("query - queryFile ", async (b) => {
-  await import("./generated/database/index.js");
-  const { queryFile } = await import("./generated/database/file.js");
+bench("query - querySessionStore ", async (b) => {
+  await import("../packages/store/src/generated/database/index.js");
+  const { querySessionStore } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
   b.resetTime();
 
   for (let i = 0; i < b.N; ++i) {
-    const q = queryFile({});
+    const q = querySessionStore({});
 
     q.queryPart.exec({
       // eslint-disable-next-line no-unused-vars
@@ -93,16 +97,16 @@ bench("query - queryFile ", async (b) => {
   }
 });
 
-bench("query - queryFile with where ", async (b) => {
-  await import("./generated/database/index.js");
-  const { queryFile } = await import("./generated/database/file.js");
+bench("query - querySessionStore with where ", async (b) => {
+  await import("../packages/store/src/generated/database/index.js");
+  const { querySessionStore } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
   b.resetTime();
 
   for (let i = 0; i < b.N; ++i) {
-    const q = queryFile({
-      where: {
-        deletedAtIncludeNotNull: true,
-      },
+    const q = querySessionStore({
+      where: {},
     });
 
     q.queryPart.exec({
@@ -114,17 +118,17 @@ bench("query - queryFile with where ", async (b) => {
   }
 });
 
-bench("query - queryFile nested ", async (b) => {
-  await import("./generated/database/index.js");
-  const { queryFile } = await import("./generated/database/file.js");
+bench("query - querySessionStore nested ", async (b) => {
+  await import("../packages/store/src/generated/database/index.js");
+  const { querySessionStore } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
   b.resetTime();
 
   for (let i = 0; i < b.N; ++i) {
-    const q = queryFile({
-      where: {
-        deletedAtIncludeNotNull: true,
-      },
-      group: {},
+    const q = querySessionStore({
+      where: {},
+      accessTokens: {},
     });
 
     q.queryPart.exec({

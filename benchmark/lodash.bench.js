@@ -1,5 +1,5 @@
 import { bench, mainBenchFn } from "@compas/cli";
-import { isNil, isPlainObject } from "./lodash.js";
+import { isNil, isPlainObject } from "@compas/stdlib";
 
 mainBenchFn(import.meta);
 
