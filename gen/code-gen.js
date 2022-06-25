@@ -30,94 +30,9 @@ export function applyCodeGenStructure(app) {
       importExtension: T.string(),
       outputFiles: T.array().values(T.reference("codeGen", "file")),
       errors: [
-        T.anyOf("collectableError").values(
-          {
-            key: T.string().oneOf(
-              "crudEnableQueries",
-              "crudSoftDeleteNotSupported",
-              "crudStoreFileNotSupported",
-              "crudFromParentNotResolved",
-            ),
-            value: T.string(),
-          },
-          {
-            key: "structureReservedGroupName",
-            groupName: T.string(),
-          },
-          {
-            key: "structureUnknownOrEmptyGroup",
-            groupName: T.string(),
-          },
-          {
-            key: "sqlMissingPrimaryKey",
-            typeName: T.string(),
-          },
-          {
-            key: "sqlForgotEnableQueries",
-            typeName: T.string(),
-            referencedByType: T.string(),
-          },
-          {
-            key: "sqlDuplicateRelationOwnKey",
-            type: T.string(),
-            relationKey: T.string(),
-          },
-          {
-            key: "sqlDuplicateRelationReferencedKey",
-            type: T.string(),
-            relationKey: T.string(),
-          },
-          {
-            key: "sqlMissingOneToMany",
-            referencedByGroup: T.string(),
-            referencedByType: T.string(),
-            typeName: T.string(),
-            relationOwnKey: T.string(),
-          },
-          {
-            key: "sqlUnusedOneToMany",
-            type: T.string(),
-            referencedType: T.string(),
-            ownKey: T.string(),
-          },
-          {
-            key: "sqlEnableValidator",
-          },
-          {
-            key: "sqlDuplicateShortName",
-            shortName: T.string(),
-            firstName: T.string(),
-            secondName: T.string(),
-          },
-          {
-            key: "sqlReservedObjectKey",
-            type: T.string(),
-            reservedKey: T.string(),
-          },
-          {
-            key: "sqlReservedRelationKey",
-            type: T.string(),
-            ownKey: T.string(),
-          },
-          {
-            key: "routerUnknownInvalidationTarget",
-            from: T.string(),
-            target: {
-              group: T.string(),
-              name: T.string().optional(),
-            },
-          },
-          {
-            key: "routerIncorrectlySpecifiedInvalidation",
-            from: T.string(),
-            target: {
-              group: T.string(),
-              name: T.string().optional(),
-            },
-            sourcePropertyPath: [T.string()],
-            targetPropertyPath: [T.string()],
-          },
-        ),
+        T.object("collectableError").keys({
+          errorString: T.string(),
+        }),
       ],
     }),
     T.object("file").keys({

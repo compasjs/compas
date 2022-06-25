@@ -5,7 +5,7 @@ import { TypeCreator } from "../builders/TypeCreator.js";
 mainTestFn(import.meta);
 
 test("code-gen/errors", (t) => {
-  t.test("structureReservedGroupName", async (t) => {
+  t.test("error - reserved group", async (t) => {
     const T = new TypeCreator("static");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
@@ -18,7 +18,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Group 'static' is a JavaScript or TypeScript"));
   });
 
-  t.test("structureUnknownOrEmptyGroup", async (t) => {
+  t.test("error - empty / unknown group", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
@@ -33,7 +33,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Group 'bar' is provided in"));
   });
 
-  t.test("sqlEnableValidator", async (t) => {
+  t.test("error - sql requires validator generator", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [T.object("foo").keys({}).enableQueries()],
@@ -46,7 +46,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Validator generator not enabled"));
   });
 
-  t.test("sqlMissingPrimaryKey", async (t) => {
+  t.test("error - entity without primary key", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -64,7 +64,7 @@ test("code-gen/errors", (t) => {
   });
 
   t.test(
-    "sqlMissingPrimaryKey - via reference that has no queries enabled",
+    "error - no primary key via reference that has no queries enabled",
     async (t) => {
       const T = new TypeCreator("app");
       const { stdout, exitCode } = await codeGenToTemporaryDirectory(
@@ -86,7 +86,7 @@ test("code-gen/errors", (t) => {
     },
   );
 
-  t.test("sqlForgotEnableQueries", async (t) => {
+  t.test("error - missing enableQueries", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -95,7 +95,11 @@ test("code-gen/errors", (t) => {
           .enableQueries({})
           .relations(T.oneToOne("bar", T.reference("app", "bar"), "foo")),
 
-        // Needs a primary key, else a missing primary key error will be thrown
+        // Needs a primary
+        // key, else a
+        // missing primary
+        // key error will be
+        // thrown
         T.object("bar").keys({
           id: T.uuid().primary(),
         }),
@@ -109,7 +113,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Type 'bar' did not call 'enableQueries'"));
   });
 
-  t.test("sqlDuplicateRelationOwnKey", async (t) => {
+  t.test("error - unique own key", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -135,7 +139,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("multiple relations with the same own key 'baz'"));
   });
 
-  t.test("sqlDuplicateRelationReferencedKey", async (t) => {
+  t.test("error - duplicate relation", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -161,7 +165,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("multiple relations to 'AppBar'.'baz'"));
   });
 
-  t.test("sqlMissingOneToMany", async (t) => {
+  t.test("errror - missing oneToMany", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -185,7 +189,7 @@ test("code-gen/errors", (t) => {
     );
   });
 
-  t.test("sqlUnusedOneToMany", async (t) => {
+  t.test("error - unused oneToMany", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -205,7 +209,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Relation defined for 'bar', referencing 'foo'"));
   });
 
-  t.test("sqlDuplicateShortName", async (t) => {
+  t.test("error - duplicate shortName", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -222,7 +226,7 @@ test("code-gen/errors", (t) => {
     t.ok(stdout.includes("Short name 'test' is used by both"));
   });
 
-  t.test("sqlReservedObjectKey", async (t) => {
+  t.test("error - reserved key", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [
@@ -259,7 +263,7 @@ test("code-gen/errors", (t) => {
     );
   });
 
-  t.test("sqlReservedRelationKey", async (t) => {
+  t.test("error - reserved relation key", async (t) => {
     const T = new TypeCreator("app");
     const { stdout, exitCode } = await codeGenToTemporaryDirectory(
       [

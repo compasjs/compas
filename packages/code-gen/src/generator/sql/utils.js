@@ -24,10 +24,10 @@ export function addShortNamesToQueryEnabledObjects(context) {
 
     if (knownShortNames[type.shortName]) {
       context.errors.push({
-        key: "sqlDuplicateShortName",
-        shortName: type.shortName,
-        firstName: type.name,
-        secondName: knownShortNames[type.shortName],
+        errorString: `Short name '${type.shortName}' is used by both '${
+          type.name
+        }' and '${knownShortNames[type.shortName]}'.
+  These short name values should be unique. Please call '.shortName()' on one or both of these types to set a custom value.`,
       });
     } else {
       knownShortNames[type.shortName] = type.name;
@@ -68,8 +68,8 @@ export function staticCheckPrimaryKey(context, type) {
 
   if (isNil(entry)) {
     context.errors.push({
-      key: "sqlMissingPrimaryKey",
-      typeName: type.name,
+      errorString: `Type '${type.name}' is missing a primary key.
+  Either remove 'withPrimaryKey' from the options passed to 'enableQueries()' or add 'T.uuid().primary()' / 'T.number().primary()' to your type.`,
     });
   }
 }
@@ -187,9 +187,8 @@ export function doSqlChecks(context) {
 
       if (ownKeySet.has(relation.ownKey)) {
         context.errors.push({
-          key: "sqlDuplicateRelationOwnKey",
-          type: type.uniqueName,
-          relationKey: relation.ownKey,
+          errorString: `Type '${type.uniqueName}' has multiple relations with the same own key '${relation.ownKey}'.
+  Please use unique own keys.`,
         });
       }
 
@@ -200,9 +199,8 @@ export function doSqlChecks(context) {
             .has(relation.referencedKey)
         ) {
           context.errors.push({
-            key: "sqlDuplicateRelationReferencedKey",
-            type: relation.reference.reference.uniqueName,
-            relationKey: relation.referencedKey,
+            errorString: `There are multiple relations to '${relation.reference.reference.uniqueName}'.'${relation.referencedKey}'.
+  Make sure that they all have their own unique referenced key.`,
           });
         }
       }
@@ -230,9 +228,8 @@ function staticCheckRelation(context, type, relation) {
     const { name } = relation.reference.reference;
 
     context.errors.push({
-      key: "sqlForgotEnableQueries",
-      typeName: name,
-      referencedByType: type.name,
+      errorString: `Type '${name}' did not call 'enableQueries' but '${type.name}' has a relation to it.
+  Call 'enableQueries()' on '${name}' or remove the relation from '${type.name}'.`,
     });
   }
 
@@ -252,11 +249,8 @@ function staticCheckRelation(context, type, relation) {
     if (!found) {
       const { name } = relation.reference.reference;
       context.errors.push({
-        key: "sqlMissingOneToMany",
-        referencedByGroup: type.group,
-        referencedByType: type.name,
-        typeName: name,
-        relationOwnKey: relation.referencedKey,
+        errorString: `Relation from '${type.name}' is missing the inverse 'T.oneToMany()' on '${name}'.
+  Add 'T.oneToMany("${relation.referencedKey}", T.reference("${type.group}", "${type.name}"))' to the 'relations()' call on '${name}'.`,
       });
     }
   } else if (relation.subType === "oneToMany") {
@@ -274,10 +268,8 @@ function staticCheckRelation(context, type, relation) {
     if (!found) {
       const { name } = relation.reference.reference;
       context.errors.push({
-        key: "sqlUnusedOneToMany",
-        type: type.name,
-        referencedType: name,
-        ownKey: relation.ownKey,
+        errorString: `Relation defined for '${type.name}', referencing '${name}' via '${relation.ownKey}' is unnecessary.
+  Remove it or add the corresponding 'T.manyToOne()' call to '${name}'.`,
       });
     }
   }
@@ -335,9 +327,10 @@ function checkReservedObjectKeys(context, type) {
     for (const key of Object.keys(objectType.keys)) {
       if (reservedKeys.includes(key)) {
         context.errors.push({
-          key: "sqlReservedObjectKey",
-          type: objectType.uniqueName ?? type.uniqueName,
-          reservedKey: key,
+          errorString: `Type '${
+            objectType.uniqueName ?? type.uniqueName
+          }' recursively uses the reserved key '${key}'.
+          Use '${key.substring(1)}' instead.`,
         });
       }
     }
@@ -365,9 +358,7 @@ function checkReservedRelationNames(context, type, relation) {
 
   if (reservedRelationNames.includes(relation.ownKey)) {
     context.errors.push({
-      key: "sqlReservedRelationKey",
-      type: type.name,
-      ownKey: relation.ownKey,
+      errorString: `Relation name '${relation.ownKey}' from type '${type.name}' is a reserved keyword. Use another relation name.`,
     });
   }
 }

@@ -38,8 +38,7 @@ function crudValidateType(context, type) {
 
   if (!ref?.enableQueries || !ref?.uniqueName || ref?.type !== "object") {
     context.errors.push({
-      key: "crudEnableQueries",
-      value: `CRUD generation only supports references to named objects that have called '.enableQueries'.
+      errorString: `CRUD generation only supports references to named objects that have called '.enableQueries'.
       Found a 'T.crud()' in the '${type.group}' group which did not call '.entity()' or called '.entity()' with an invalid value.`,
     });
 
@@ -48,16 +47,14 @@ function crudValidateType(context, type) {
 
   if (ref.queryOptions?.withSoftDeletes) {
     context.errors.push({
-      key: "crudSoftDeleteNotSupported",
-      value: `CRUD generation does not yet support soft deletes, but '${ref.uniqueName}' is used in either 'T.crud().entity()' or 'T.crud().nestedRelations' on the '${type.group}' group.
+      errorString: `CRUD generation does not yet support soft deletes, but '${ref.uniqueName}' is used in either 'T.crud().entity()' or 'T.crud().nestedRelations' on the '${type.group}' group.
                           Replace 'withSoftDeletes' with 'withDates' or manually create and implement the CRUD routes.`,
     });
   }
 
   if (ref.uniqueName === "StoreFile") {
     context.errors.push({
-      key: "crudStoreFileNotSupported",
-      value: `CRUD generation does not yet support files, but it is used in a 'T.crud()' call in the '${type.group}' group.
+      errorString: `CRUD generation does not yet support files, but it is used in a 'T.crud()' call in the '${type.group}' group.
        Support will be added later.`,
     });
   }
@@ -71,8 +68,7 @@ function crudValidateType(context, type) {
     // then should be documented as such.
 
     context.errors.push({
-      key: "crudStoreFileNotSupported",
-      value: `CRUD generation does not yet support files, but it is referenced by '${ref.uniqueName}' through the 'T.crud()' call on '${type.group}' group.
+      errorString: `CRUD generation does not yet support files, but it is referenced by '${ref.uniqueName}' through the 'T.crud()' call on '${type.group}' group.
        Support will be added later.`,
     });
   }
@@ -130,8 +126,7 @@ function crudResolveRelation(context, type, relation) {
 
   if (!usedRelation) {
     context.errors.push({
-      key: "crudFromParentNotResolved",
-      value: `Relation in CRUD from '${ref.uniqueName}' via '${relation.fromParent?.field}' could not be resolved in a 'T.crud()' call on the '${type.group}' group.
+      errorString: `Relation in CRUD from '${ref.uniqueName}' via '${relation.fromParent?.field}' could not be resolved in a 'T.crud()' call on the '${type.group}' group.
       There should be a 'T.oneToMany("${relation.fromParent?.field}", ...)' defined on '${ref.uniqueName}'. 
       Or a 'T.oneToOne("...", T.reference("${ref.group}", "${ref.name}"), "${relation.fromParent?.field}")' on the owning side of the relation.
       CRUD can't be generated from the owning side to referenced side.`,
