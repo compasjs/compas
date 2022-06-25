@@ -39,7 +39,7 @@ copying and pasting things around, this project was born.
 - Run the linter
 - A Compas based boilerplate
 - Test runner
-- Benchmark runner
+- Benchmark utilities
 - Necessary Docker container management
 - Visualise the known database structure of @compas/code-gen
 
@@ -91,6 +91,7 @@ copying and pasting things around, this project was born.
   - Axios based api client
   - TypeScript or JSDoc types
   - react-query hooks
+  - CRUD implementations with support for inline updates and nested routes
 - An extendable set of types:
   - boolean, number, string;
   - object, array, any;

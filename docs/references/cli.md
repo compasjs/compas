@@ -28,15 +28,6 @@ Configure shell auto-complete for this CLI.
 | ---------- | -------------------------------------------------------- |
 | -h, --help | Display information about the current command. (boolean) |
 
-## `compas bench`
-
-Run all '.bench.js' files in this project.
-
-| Option     | Description                                                                                                      |
-| ---------- | ---------------------------------------------------------------------------------------------------------------- |
-| --watch    | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean) |
-| -h, --help | Display information about the current command. (boolean)                                                         |
-
 ## `compas check-env`
 
 Various checks helping with a better Compas experience.
