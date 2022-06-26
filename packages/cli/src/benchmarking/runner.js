@@ -42,8 +42,12 @@ export async function runBenchmarks(state) {
  * @returns {void}
  */
 export function bench(name, callback) {
-  // @ts-ignore
-  state.push({ name, callback });
+  // @ts-expect-error
+  state.push({
+    name,
+    callback,
+    executionTimesNs: [],
+  });
 }
 
 class InternalRunner {
@@ -93,6 +97,7 @@ class InternalRunner {
       }
 
       const diff = process.hrtime.bigint() - this.start;
+      this.state.executionTimesNs.push(Number(diff) / this.N);
       if (diff >= 1_000_000_000 || i === InternalRunner.iterations.length - 1) {
         this.state.N = this.N;
         this.state.operationTimeNs = (Number(diff) / this.N).toFixed(0);

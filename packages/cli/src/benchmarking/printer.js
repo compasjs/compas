@@ -30,6 +30,36 @@ export function printBenchResults() {
     state.filter((it) => !isNil(it.caughtException)),
   );
 
+  let hasFlakyResults = false;
+  for (const stateItem of state) {
+    // The run should have been done with at least 6 different `N` values. Most of the
+    // time V8 has reached a stable optimization point at the 4th run.
+    if (stateItem.executionTimesNs.length >= 6) {
+      const [thirdLast, secondLast, last] = stateItem.executionTimesNs.slice(
+        stateItem.executionTimesNs.length - 3,
+      );
+
+      const lowest = Math.min(last, secondLast, thirdLast);
+      const highest = Math.max(last, secondLast, thirdLast);
+      const percentage = (lowest / highest) * 100;
+
+      // Allow 7% diff between the results
+      if (percentage < 93) {
+        if (!hasFlakyResults) {
+          result.push(`-----------`);
+          result.push(`Potential invalid result:`);
+          hasFlakyResults = true;
+        }
+
+        result.push(
+          `${stateItem.name}: ${(100 - percentage).toFixed(
+            2,
+          )}% (${lowest.toFixed(2)}ns..${highest.toFixed(2)}ns)`,
+        );
+      }
+    }
+  }
+
   let exitCode = 0;
   let logFn = benchLogger.info;
 

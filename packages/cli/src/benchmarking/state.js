@@ -16,6 +16,7 @@
  * @property {string} name
  * @property {number} N
  * @property {string} operationTimeNs
+ * @property {number[]} executionTimesNs
  * @property {BenchCallback} callback
  * @property {Error|undefined} [caughtException]
  */

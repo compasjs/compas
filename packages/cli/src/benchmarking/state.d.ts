@@ -26,6 +26,7 @@ export function setBenchLogger(logger: Logger): void;
  * @property {string} name
  * @property {number} N
  * @property {string} operationTimeNs
+ * @property {number[]} executionTimesNs
  * @property {BenchCallback} callback
  * @property {Error|undefined} [caughtException]
  */
@@ -60,6 +61,7 @@ export type BenchState = {
   name: string;
   N: number;
   operationTimeNs: string;
+  executionTimesNs: number[];
   callback: BenchCallback;
   caughtException?: Error | undefined;
 };
