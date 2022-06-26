@@ -66,6 +66,10 @@ export function createQueryBuilderTypes(context) {
         as: T.string().optional(),
         limit: T.number().optional(),
         offset: T.number().optional(),
+        select: T.array()
+          .values(T.string().oneOf(...Object.keys(type.keys)))
+          .min(1)
+          .default(`["${Object.keys(type.keys).join(`", "`)}"]`),
       })
       .build();
 
