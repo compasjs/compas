@@ -1,6 +1,5 @@
-import { writeFileSync } from "fs";
 import { inspect } from "util";
-import { AppError, environment, isNil, pathJoin } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { benchLogger, state } from "./state.js";
 
 export function printBenchResults() {
@@ -69,17 +68,6 @@ export function printBenchResults() {
   }
 
   logFn(result.join("\n"));
-
-  if (environment.CI === "true") {
-    // Write output to a file so it can be used in other actions
-    // Add some point we may want to do some pretty printing to format as a table or
-    // something
-    writeFileSync(
-      pathJoin(process.cwd(), "benchmark_output.txt"),
-      result.join("\n").trim(),
-      "utf8",
-    );
-  }
 
   return exitCode;
 }
