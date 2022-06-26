@@ -66,7 +66,9 @@ test("code-gen/e2e/sql", async (t) => {
             T.manyToOne("post", T.reference("sql", "post"), "postages"),
           ),
 
-        // m-m join table
+        // m-m
+        // join
+        // table
         T.object("postCategory")
           .keys({})
           .enableQueries({ withDates: true })
@@ -75,7 +77,8 @@ test("code-gen/e2e/sql", async (t) => {
             T.manyToOne("category", T.reference("sql", "category"), "posts"),
           ),
 
-        // 1-1 test
+        // 1-1
+        // test
         T.object("categoryMeta")
           .keys({
             postCount: T.number(),
@@ -87,7 +90,11 @@ test("code-gen/e2e/sql", async (t) => {
             T.oneToOne("category", T.reference("sql", "category"), "meta"),
           ),
 
-        // Reference to number primary key
+        // Reference
+        // to
+        // number
+        // primary
+        // key
         T.object("jobStatusAggregate")
           .keys({})
           .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
@@ -351,6 +358,32 @@ test("code-gen/e2e/sql", async (t) => {
     t.equal(typeof result[0].createdAt, "object");
     t.equal(typeof result[0].updatedAt, "object");
     t.notEqual(result[0].deletedAt, null, "deletedAt is undefined");
+  });
+
+  t.test("queryBuilder - select & nested usage", async (t) => {
+    const result = await queryPost({
+      select: ["id", "writer"],
+      writer: {
+        select: ["id"],
+      },
+    }).exec(sql);
+
+    t.ok(isNil(result[0].createdAt));
+    t.ok(result[0].id);
+    t.ok(result[0].writer);
+    t.ok(result[0].writer.id);
+    t.ok(isNil(result[0].writer.nickName));
+  });
+
+  t.test("queryBuilder - select error", async (t) => {
+    try {
+      await queryPost({
+        select: ["bar"],
+      }).exec(sql);
+    } catch (e) {
+      t.equal(e.key, "validator.error");
+      t.equal(e.info["$.postBuilder.select[0]"].key, "validator.string.oneOf");
+    }
   });
 
   t.test("update user nick name", async (t) => {

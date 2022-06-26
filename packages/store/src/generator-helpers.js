@@ -434,8 +434,9 @@ export function generatedQueryBuilderHelper(
   const strings = [];
   const args = [];
 
-  // select all columns that are not overwritten by a joined relation.
-  const tableColumns = entity.columns.filter((it) => isNil(builder[it]));
+  // Filter fields to select from the builder.select that are not overwritten by a joined
+  // relation.
+  const tableColumns = builder.select.filter((it) => isNil(builder[it]));
   strings.push(
     ` SELECT ${tableColumns.map((it) => `${shortName}."${it}"`).join(", ")} `,
   );
@@ -448,6 +449,7 @@ export function generatedQueryBuilderHelper(
     }
 
     const subEntity = relation.entityInformation();
+    const subBuilder = builder[relation.builderKey];
 
     // Use a `shortName2` if it is the same table. This way we can work with shadowed
     // variables, without keeping track of them, since for joins we only need to know
@@ -463,24 +465,23 @@ export function generatedQueryBuilderHelper(
     // to return a single column result.
     const columnObj = {};
 
-    for (const column of subEntity.columns) {
-      if (!isNil(builder[relation.builderKey][column])) {
+    for (const column of subBuilder.select) {
+      if (!isNil(subBuilder[column])) {
+        // column is used is a joined relation
         continue;
       }
       columnObj[column] = `j${nestedIndex}."${column}"`;
     }
 
     for (const subRelation of subEntity.relations) {
-      if (isNil(builder[relation.builderKey][subRelation.builderKey])) {
+      if (isNil(subBuilder[subRelation.builderKey])) {
         continue;
       }
 
       columnObj[
-        builder[relation.builderKey][subRelation.builderKey].as ??
-          subRelation.builderKey
+        subBuilder[subRelation.builderKey].as ?? subRelation.builderKey
       ] = `j${nestedIndex}."${
-        builder[relation.builderKey][subRelation.builderKey].as ??
-        subRelation.builderKey
+        subBuilder[subRelation.builderKey].as ?? subRelation.builderKey
       }"`;
     }
 
@@ -494,12 +495,10 @@ export function generatedQueryBuilderHelper(
       // because sub queries need to return single column, single row result.
       strings.push(
         `, (select array(select jsonb_build_object(${columns}) FROM (`,
-        `) j${nestedIndex})) as "${
-          builder[relation.builderKey].as ?? relation.builderKey
-        }"`,
+        `) j${nestedIndex})) as "${subBuilder.as ?? relation.builderKey}"`,
       );
       args.push(
-        generatedQueryBuilderHelper(subEntity, builder[relation.builderKey], {
+        generatedQueryBuilderHelper(subEntity, subBuilder, {
           shortName: otherShortName,
           wherePart: ` ${shortName}."${relation.ownKey}" = ${otherShortName}."${relation.referencedKey}" `,
           nestedIndex: nestedIndex + 1,
@@ -512,12 +511,10 @@ export function generatedQueryBuilderHelper(
 
       strings.push(
         `, (select jsonb_build_object(${columns}) as "result" FROM (`,
-        `) j${nestedIndex}) as "${
-          builder[relation.builderKey].as ?? relation.builderKey
-        }" `,
+        `) j${nestedIndex}) as "${subBuilder.as ?? relation.builderKey}" `,
       );
       args.push(
-        generatedQueryBuilderHelper(subEntity, builder[relation.builderKey], {
+        generatedQueryBuilderHelper(subEntity, subBuilder, {
           shortName: otherShortName,
           wherePart: ` ${shortName}."${relation.ownKey}" = ${otherShortName}."${relation.referencedKey}" `,
           nestedIndex: nestedIndex + 1,

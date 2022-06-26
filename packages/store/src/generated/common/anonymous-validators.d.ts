@@ -2204,7 +2204,27 @@ export function anonymousValidator1745737810(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ * @returns {EitherN<("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator1532767426(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  (
+    | "bucketName"
+    | "contentLength"
+    | "contentType"
+    | "name"
+    | "meta"
+    | "id"
+    | "createdAt"
+    | "updatedAt"
+  )[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator310044624(
   value: any,
@@ -2216,6 +2236,16 @@ export function anonymousValidator310044624(
   as?: undefined | string;
   limit?: undefined | number;
   offset?: undefined | number;
+  select: (
+    | "bucketName"
+    | "contentLength"
+    | "contentType"
+    | "name"
+    | "meta"
+    | "id"
+    | "createdAt"
+    | "updatedAt"
+  )[];
 }>;
 /**
  * @param {*} value
@@ -2247,7 +2277,29 @@ export function anonymousValidator608966855(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ * @returns {EitherN<("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator582777968(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  (
+    | "id"
+    | "isComplete"
+    | "priority"
+    | "scheduledAt"
+    | "name"
+    | "data"
+    | "retryCount"
+    | "handlerTimeout"
+    | "createdAt"
+    | "updatedAt"
+  )[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator343387919(
   value: any,
@@ -2259,6 +2311,18 @@ export function anonymousValidator343387919(
   as?: undefined | string;
   limit?: undefined | number;
   offset?: undefined | number;
+  select: (
+    | "id"
+    | "isComplete"
+    | "priority"
+    | "scheduledAt"
+    | "name"
+    | "data"
+    | "retryCount"
+    | "handlerTimeout"
+    | "createdAt"
+    | "updatedAt"
+  )[];
 }>;
 /**
  * @param {*} value
@@ -2281,6 +2345,17 @@ export function anonymousValidator2142999519(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator1791620536(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  ("data" | "checksum" | "revokedAt" | "id" | "createdAt" | "updatedAt")[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreSessionStoreTokenOrderBy>}
  */
 export function anonymousValidator1834466899(
@@ -2299,6 +2374,24 @@ export function anonymousValidator1672671480(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[]>}
+ */
+export function anonymousValidator1139804596(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  (
+    | "expiresAt"
+    | "revokedAt"
+    | "createdAt"
+    | "id"
+    | "session"
+    | "refreshToken"
+  )[]
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreSessionStoreQueryBuilder>}
  */
 export function anonymousValidator1827379372(
@@ -2308,7 +2401,7 @@ export function anonymousValidator1827379372(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator1856722848(
   value: any,
@@ -2320,6 +2413,14 @@ export function anonymousValidator1856722848(
   as?: undefined | string;
   limit?: undefined | number;
   offset?: undefined | number;
+  select: (
+    | "expiresAt"
+    | "revokedAt"
+    | "createdAt"
+    | "id"
+    | "session"
+    | "refreshToken"
+  )[];
   session?: undefined | StoreSessionStoreQueryBuilder;
   refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
   accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
@@ -2336,7 +2437,7 @@ export function anonymousValidator145903947(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator2093168415(
   value: any,
@@ -2348,6 +2449,14 @@ export function anonymousValidator2093168415(
   as?: undefined | string;
   limit?: undefined | number;
   offset?: undefined | number;
+  select: (
+    | "data"
+    | "checksum"
+    | "revokedAt"
+    | "id"
+    | "createdAt"
+    | "updatedAt"
+  )[];
   accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
 }>;
 export type InternalError = {

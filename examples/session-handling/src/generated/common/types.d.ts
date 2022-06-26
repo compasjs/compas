@@ -482,6 +482,18 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "bucketName"
+          | "contentLength"
+          | "contentType"
+          | "name"
+          | "meta"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
   };
   type StoreJobQueryBuilder = {
     where?: undefined | StoreJobWhere;
@@ -490,6 +502,20 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "id"
+          | "isComplete"
+          | "priority"
+          | "scheduledAt"
+          | "name"
+          | "data"
+          | "retryCount"
+          | "handlerTimeout"
+          | "createdAt"
+          | "updatedAt"
+        )[];
   };
   type StoreSessionStoreQueryBuilder = {
     where?: undefined | StoreSessionStoreWhere;
@@ -498,6 +524,16 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "data"
+          | "checksum"
+          | "revokedAt"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
     accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
   };
   type StoreSessionStoreTokenQueryBuilder = {
@@ -507,6 +543,16 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "expiresAt"
+          | "revokedAt"
+          | "createdAt"
+          | "id"
+          | "session"
+          | "refreshToken"
+        )[];
     session?: undefined | StoreSessionStoreQueryBuilder;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
@@ -860,6 +906,18 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "bucketName"
+          | "contentLength"
+          | "contentType"
+          | "name"
+          | "meta"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
   };
   type StoreJobQueryBuilderInput = {
     where?: undefined | StoreJobWhereInput;
@@ -868,6 +926,20 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "id"
+          | "isComplete"
+          | "priority"
+          | "scheduledAt"
+          | "name"
+          | "data"
+          | "retryCount"
+          | "handlerTimeout"
+          | "createdAt"
+          | "updatedAt"
+        )[];
   };
   type StoreSessionStoreQueryBuilderInput = {
     where?: undefined | StoreSessionStoreWhereInput;
@@ -876,6 +948,16 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "data"
+          | "checksum"
+          | "revokedAt"
+          | "id"
+          | "createdAt"
+          | "updatedAt"
+        )[];
     accessTokens?: undefined | StoreSessionStoreTokenQueryBuilderInput;
   };
   type StoreSessionStoreTokenQueryBuilderInput = {
@@ -885,6 +967,16 @@ declare global {
     as?: undefined | string;
     limit?: undefined | number;
     offset?: undefined | number;
+    select?:
+      | undefined
+      | (
+          | "expiresAt"
+          | "revokedAt"
+          | "createdAt"
+          | "id"
+          | "session"
+          | "refreshToken"
+        )[];
     session?: undefined | StoreSessionStoreQueryBuilderInput;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;

@@ -279,6 +279,7 @@ const objectKeys310044624 = new Set([
   "as",
   "limit",
   "offset",
+  "select",
 ]);
 const objectKeys343387919 = new Set([
   "where",
@@ -287,6 +288,7 @@ const objectKeys343387919 = new Set([
   "as",
   "limit",
   "offset",
+  "select",
 ]);
 const objectKeys2093168415 = new Set([
   "where",
@@ -295,6 +297,7 @@ const objectKeys2093168415 = new Set([
   "as",
   "limit",
   "offset",
+  "select",
   "accessTokens",
 ]);
 const objectKeys1856722848 = new Set([
@@ -304,6 +307,7 @@ const objectKeys1856722848 = new Set([
   "as",
   "limit",
   "offset",
+  "select",
   "session",
   "refreshToken",
   "accessToken",
@@ -7791,7 +7795,71 @@ export function anonymousValidator1443576836(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ * @returns {EitherN<("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator1532767426(value, propertyPath) {
+  if (isNil(value)) {
+    return {
+      value: [
+        "bucketName",
+        "contentLength",
+        "contentType",
+        "name",
+        "meta",
+        "id",
+        "createdAt",
+        "updatedAt",
+      ],
+    };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator1543934225(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator310044624(value, propertyPath) {
   if (isNil(value)) {
@@ -7847,6 +7915,7 @@ export function anonymousValidator310044624(value, propertyPath) {
     ["as", anonymousValidator1443576836],
     ["limit", anonymousValidator963028965],
     ["offset", anonymousValidator963028965],
+    ["select", anonymousValidator1532767426],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -7897,7 +7966,73 @@ export function anonymousValidator608966855(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, }>}
+ * @returns {EitherN<("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator582777968(value, propertyPath) {
+  if (isNil(value)) {
+    return {
+      value: [
+        "id",
+        "isComplete",
+        "priority",
+        "scheduledAt",
+        "name",
+        "data",
+        "retryCount",
+        "handlerTimeout",
+        "createdAt",
+        "updatedAt",
+      ],
+    };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator1079091822(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], }>}
  */
 export function anonymousValidator343387919(value, propertyPath) {
   if (isNil(value)) {
@@ -7953,6 +8088,7 @@ export function anonymousValidator343387919(value, propertyPath) {
     ["as", anonymousValidator1443576836],
     ["limit", anonymousValidator963028965],
     ["offset", anonymousValidator963028965],
+    ["select", anonymousValidator582777968],
   ];
   for (const [key, validator] of validatorPairs) {
     const validatorResult = validator(value[key], `${propertyPath}.${key}`);
@@ -7992,6 +8128,61 @@ export function anonymousValidator2142999519(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[]>}
+ */
+export function anonymousValidator1791620536(value, propertyPath) {
+  if (isNil(value)) {
+    return {
+      value: ["data", "checksum", "revokedAt", "id", "createdAt", "updatedAt"],
+    };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator1972584104(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreSessionStoreTokenOrderBy>}
  */
 export function anonymousValidator1834466899(value, propertyPath) {
@@ -8014,6 +8205,68 @@ export function anonymousValidator1672671480(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[]>}
+ */
+export function anonymousValidator1139804596(value, propertyPath) {
+  if (isNil(value)) {
+    return {
+      value: [
+        "expiresAt",
+        "revokedAt",
+        "createdAt",
+        "id",
+        "session",
+        "refreshToken",
+      ],
+    };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length < 1) {
+    const min = 1;
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.min",
+          info: { min },
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator1022399486(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|StoreSessionStoreQueryBuilder>}
  */
 export function anonymousValidator1827379372(value, propertyPath) {
@@ -8025,7 +8278,7 @@ export function anonymousValidator1827379372(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator1856722848(value, propertyPath) {
   if (isNil(value)) {
@@ -8081,6 +8334,7 @@ export function anonymousValidator1856722848(value, propertyPath) {
     ["as", anonymousValidator1443576836],
     ["limit", anonymousValidator963028965],
     ["offset", anonymousValidator963028965],
+    ["select", anonymousValidator1139804596],
     ["session", anonymousValidator1827379372],
     ["refreshToken", anonymousValidator145903947],
     ["accessToken", anonymousValidator145903947],
@@ -8112,7 +8366,7 @@ export function anonymousValidator145903947(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator2093168415(value, propertyPath) {
   if (isNil(value)) {
@@ -8168,6 +8422,7 @@ export function anonymousValidator2093168415(value, propertyPath) {
     ["as", anonymousValidator1443576836],
     ["limit", anonymousValidator963028965],
     ["offset", anonymousValidator963028965],
+    ["select", anonymousValidator1791620536],
     ["accessTokens", anonymousValidator145903947],
   ];
   for (const [key, validator] of validatorPairs) {
