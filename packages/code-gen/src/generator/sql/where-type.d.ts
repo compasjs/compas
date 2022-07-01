@@ -26,4 +26,11 @@ export function getWherePartial(
 export function getSearchableFields(
   type: CodeGenObjectType,
 ): Record<string, CodeGenType>;
+export namespace whereTypeTable {
+  const number: string[];
+  const date: string[];
+  const uuid: string[];
+  const string: string[];
+  const boolean: string[];
+}
 //# sourceMappingURL=where-type.d.ts.map

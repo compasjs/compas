@@ -20,7 +20,7 @@ import {
   getSortedKeysForType,
 } from "./utils.js";
 
-const whereTypeTable = {
+export const whereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   date: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   uuid: ["equal", "notEqual", "in", "notIn"],

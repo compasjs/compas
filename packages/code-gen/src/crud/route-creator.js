@@ -1,5 +1,9 @@
+import { isNil } from "@compas/stdlib";
 import { ReferenceType, TypeCreator } from "../builders/index.js";
-import { getSearchableFields } from "../generator/sql/where-type.js";
+import {
+  getSearchableFields,
+  whereTypeTable,
+} from "../generator/sql/where-type.js";
 import { structureAddType } from "../structure/structureAddType.js";
 import { structureIteratorNamedTypes } from "../structure/structureIterators.js";
 import { upperCaseFirst } from "../utils.js";
@@ -53,6 +57,53 @@ function crudCreateRoutesForType(context, type) {
 function crudCreateListRoute(context, type) {
   const T = new TypeCreator(type.group);
 
+  const bodyType = T.object()
+    .keys({
+      where: T.object().keys({}).optional(),
+      orderBy: T.array()
+        .values(
+          T.string().oneOf(
+            // @ts-expect-error
+            ...Object.keys(getSearchableFields(type.entity.reference)),
+          ),
+        )
+        .optional(),
+      orderBySpec: T.object()
+        .keys(
+          Object.fromEntries(
+            // @ts-expect-error
+            Object.entries(getSearchableFields(type.entity.reference)).map(
+              ([key, field]) => {
+                let subType = new ReferenceType("compas", "orderBy");
+
+                if (
+                  field.isOptional &&
+                  ((key !== "createdAt" && key !== "updatedAt") ||
+                    // @ts-expect-error
+                    (!type.entity.reference.queryOptions?.withSoftDeletes &&
+                      // @ts-expect-error
+                      !type.entity.reference.queryOptions?.withDates))
+                ) {
+                  subType = new ReferenceType("compas", "orderByOptional");
+                }
+
+                subType.optional();
+                subType.data.reference =
+                  context.structure[subType.data.reference.group][
+                    subType.data.reference.name
+                  ];
+
+                return [key, subType];
+              },
+            ),
+          ),
+        )
+        .optional(),
+    })
+    .build();
+
+  bodyType.keys.where.keys = crudGetListWhere(context, type);
+
   const responseType = T.object()
     .keys({
       list: [true],
@@ -75,50 +126,7 @@ function crudCreateListRoute(context, type) {
         limit: T.number().default(50).convert(),
       })
       .build(),
-    body: T.object()
-      .keys({
-        where: T.object().keys({}).optional(),
-        orderBy: T.array()
-          .values(
-            T.string().oneOf(
-              // @ts-expect-error
-              ...Object.keys(getSearchableFields(type.entity.reference)),
-            ),
-          )
-          .optional(),
-        orderBySpec: T.object()
-          .keys(
-            Object.fromEntries(
-              // @ts-expect-error
-              Object.entries(getSearchableFields(type.entity.reference)).map(
-                ([key, field]) => {
-                  let subType = new ReferenceType("compas", "orderBy");
-
-                  if (
-                    field.isOptional &&
-                    ((key !== "createdAt" && key !== "updatedAt") ||
-                      // @ts-expect-error
-                      (!type.entity.reference.queryOptions?.withSoftDeletes &&
-                        // @ts-expect-error
-                        !type.entity.reference.queryOptions?.withDates))
-                  ) {
-                    subType = new ReferenceType("compas", "orderByOptional");
-                  }
-
-                  subType.optional();
-                  subType.data.reference =
-                    context.structure[subType.data.reference.group][
-                      subType.data.reference.name
-                    ];
-
-                  return [key, subType];
-                },
-              ),
-            ),
-          )
-          .optional(),
-      })
-      .build(),
+    body: bodyType,
     response: responseType,
   });
 }
@@ -619,4 +627,80 @@ function crudCreateRoutePath(type, suffix) {
   }
 
   return path;
+}
+
+/**
+ *
+ * @param {import("../generated/common/types").CodeGenContext} context
+ * @param {import("../generated/common/types").CodeGenCrudType} type
+ * @returns {import("../../types/advanced-types.js").TypeBuilderLike}
+ */
+function crudGetListWhere(context, type) {
+  const T = new TypeCreator();
+  const defaultType = {
+    name: undefined,
+    group: undefined,
+    uniqueName: undefined,
+    defaultValue: undefined,
+    isOptional: true,
+  };
+  const result = {};
+
+  // @ts-expect-error
+  const entity = type.entity.reference;
+  const fields = getSearchableFields(entity);
+
+  for (const key of Object.keys(fields)) {
+    const fieldType = fields[key];
+
+    if (isNil(whereTypeTable[fieldType.type])) {
+      continue;
+    }
+
+    if (type.fieldOptions?.readable?.$omit?.includes(key)) {
+      continue;
+    }
+
+    if (
+      Array.isArray(type.fieldOptions?.readable?.$pick) && // @ts-expect-error
+      !type.fieldOptions.readable.$pick.includes(key)
+    ) {
+      continue;
+    }
+
+    const variants = [...whereTypeTable[fieldType.type]];
+
+    if (fieldType.isOptional) {
+      variants.push("isNull", "isNotNull");
+    }
+
+    for (const variant of variants) {
+      const name =
+        variant === "equal" ? key : `${key}${upperCaseFirst(variant)}`;
+
+      if (["in", "notIn"].includes(variant)) {
+        // Accept an array with the original type, except not optional
+        result[name] = {
+          ...T.array().values(true).optional().build(),
+          values: {
+            ...fieldType,
+            ...defaultType,
+            isOptional: false,
+          },
+        };
+      } else if (["isNull", "isNotNull"].includes(variant)) {
+        // Accept booleans
+        result[name] = T.bool().optional().build();
+      } else {
+        // For all other cases we accept the type as is
+        result[name] = {
+          ...fieldType,
+          ...defaultType,
+        };
+      }
+    }
+  }
+
+  // @ts-expect-error
+  return result;
 }
