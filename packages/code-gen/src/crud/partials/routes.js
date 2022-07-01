@@ -12,6 +12,10 @@ export const crudPartialRouteList = (data) => `
 ${data.handlerName} = async (ctx, next) => {
   const countBuilder = ${data.countBuilder};
   
+  countBuilder.where = {
+    ...ctx.validatedBody.where,
+    ...(countBuilder.where ?? {}),
+  };
   countBuilder.orderBy = ctx.validatedBody.orderBy;
   countBuilder.orderBySpec = ctx.validatedBody.orderBySpec;
   

@@ -134,6 +134,39 @@ test("code-gen/crud/e2e/basics", async (t) => {
       t.equal(normalSorted[0].id, inverseSorted.at(-1).id);
       t.equal(normalSorted[4].id, inverseSorted.at(-5).id);
     });
+
+    t.test("where", (t) => {
+      t.test("can't search on value", async (t) => {
+        try {
+          await apiTagList(
+            axiosInstance,
+            {},
+            {
+              where: {
+                value: "foo",
+              },
+            },
+          );
+        } catch (e) {
+          t.equal(e.info["$.where"].key, "validator.object.strict");
+        }
+      });
+
+      t.test("search on the key field", async (t) => {
+        const { list, total } = await apiTagList(
+          axiosInstance,
+          {},
+          {
+            where: {
+              key: "Key1",
+            },
+          },
+        );
+
+        t.equal(total, 1);
+        t.equal(list[0].key, "Key1");
+      });
+    });
   });
 
   t.test("apiTagSingle", (t) => {
