@@ -44,6 +44,7 @@ async function cliExecutor(logger, state) {
     "code-gen",
     "server",
     "store",
+    "compas",
   ];
 
   checkVersionFormat(state.flags.version);

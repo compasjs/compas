@@ -1,0 +1,42 @@
+{
+  "name": "compas",
+  "version": "0.0.206",
+  "description": "Unified backend tooling",
+  "main": "./index.js",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "type": "module",
+  "keywords": [
+    "compas",
+    "stdlib",
+    "cli",
+    "session",
+    "job",
+    "code-gen"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@compas/cli": "0.0.206",
+    "@compas/code-gen": "0.0.206",
+    "@compas/server": "0.0.206",
+    "@compas/stdlib": "0.0.206",
+    "@compas/store": "0.0.206"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "homepage": "https://compasjs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/compasjs/compas.git",
+    "directory": "packages/compas"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

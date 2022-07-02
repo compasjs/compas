@@ -90,7 +90,12 @@ function syncReadmes(logger) {
  * @param {string} readmeSource
  */
 function buildReadmeSource(pkgName, readmeSource) {
-  return `# @compas/${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=@compas/${pkgName})](https://packagephobia.com/result?p=@compas/${pkgName})${readmeSource}\n`;
+  if (pkgName !== "compas") {
+    pkgName = `@compas/${pkgName}`;
+  } else {
+    pkgName = "Compas";
+  }
+  return `# ${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=${pkgName})](https://packagephobia.com/result?p=${pkgName})${readmeSource}\n`;
 }
 
 function getReadmeSource() {
