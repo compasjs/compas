@@ -1,6 +1,6 @@
-# @compas/stdlib
+# Compas
 
-[![install size @compas/stdlib](https://packagephobia.com/badge?p=@compas/stdlib)](https://packagephobia.com/result?p=@compas/stdlib)
+[![install size Compas](https://packagephobia.com/badge?p=Compas)](https://packagephobia.com/result?p=Compas)
 ![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
 [![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
 

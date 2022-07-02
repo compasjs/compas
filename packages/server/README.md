@@ -1,6 +1,6 @@
 # @compas/server
 
-[![install size server](https://packagephobia.com/badge?p=@compas/server)](https://packagephobia.com/result?p=@compas/server)
+[![install size @compas/server](https://packagephobia.com/badge?p=@compas/server)](https://packagephobia.com/result?p=@compas/server)
 ![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
 [![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
 
@@ -8,17 +8,17 @@ Unified backend tooling
 
 ---
 
+All common components for creating backends, tooling and more in opinionated
+packages; from describing the api structure to testing the end result.
+
 ## Features
 
-- Minimal project boilerplate
-- Script runner, can watch & reload almost anything
-- Test and benchmark runner
-- Flexible code generators supporting routers, validators, api clients, CRUD
-  queries and more in the future.
-- Opinionated structured logging
-- Common Koa middleware wrapped in a single function
-- Various utilities like loading .env files, executing other processes and a
-  basic string templating system
+- Code generators for routers, validators, SQL queries, API clients and more
+- Logging, body parser and error handling out of the box
+- Persistence layer with Postgres for files, jobs and sessions
+- An extendable CLI that comes with a test runner and is able to run your
+  database migrations.
+- Structured logging all throughout, giving you insight in the running system.
 
 ## Requirements
 
@@ -27,87 +27,10 @@ Unified backend tooling
 
 ## Why
 
-My work involved doing many small projects. I had a hard time back porting
-incremental fixes to existing projects. To facilitate my needs more and to stop
-copying and pasting things around, this project was born.
-
-## Features breakdown
-
-**@compas/cli**:
-
-- Run user scripts (in watch mode)
-- Run the linter
-- A Compas based boilerplate
-- Test runner
-- Benchmark utilities
-- Necessary Docker container management
-- Visualise the known database structure of @compas/code-gen
-
-**@compas/eslint-plugin**:
-
-- All necessary ESLint and Prettier dependencies
-- Default configuration for ESLint and Prettier
-- Handy rules for things like the event system from @compas/stdlib
-
-**@compas/stdlib**:
-
-- Various lodash inspired utilities (isNil, isPlainObject, ...)
-- Wrappers for child_process execution and spawning
-- A `mainFn` wrapper that reads `.env` and calls the provided function if the
-  file is the process entrypoint
-- Replacements for CommonJS `__dirname` and `__filename`
-- A structured logger
-  - Writing newline delimited JSON in production
-  - Pretty printing for development
-- Various utilities to get insight in the running process
-- A manual event system
-
-**@compas/server**:
-
-- Wrapper around Koa instance creation
-- 404 en error handling
-- Handle CORS
-- Send file helper
-
-**@compas/store**:
-
-- Wrapper around the Minio S3 client
-- Wrapper around Postgres connection
-- Session support via JSON Web tokens
-- Utilities for providing temporary databases in a test environment
-- Postgres migrations
-- Postgres and S3 combined for file storage
-- Caching files from S3 in memory or on local disk
-- Postgres powered queue implementation
-  - Supports priority, scheduling, multiple async workers and recurring jobs
-- koa-session compatible SessionStore backed by Postgres
-
-**@compas/code-gen**:
-
-- Code generators for the following:
-  - router, with wildcard and path parameter support
-  - validators, pure JavaScript implementation
-  - sql, CRUD Postgres queries and nested result support
-  - Axios based api client
-  - TypeScript or JSDoc types
-  - react-query hooks
-  - CRUD implementations with support for inline updates and nested routes
-- An extendable set of types:
-  - boolean, number, string;
-  - object, array, any;
-  - date, uuid;
-  - generic, anyOf, reference;
-- Remote structure loader
-- OpenAPI to Compas structure converter
-
-## Docs and development
-
-See [the website](https://compasjs.com) for the changelog, all available APIs
-and various guides.
-
-For contributing see [contributing.md](https://compasjs.com/contributing.html).
-
-## New features
+I had a time when I was mostly creating small backends and tools back to back.
+Always trying to improve them by choosing packages that align better with my
+views, new features or more opinionated defaults. To capture this flow and
+making those backends and tools easier to maintain, Compas was created.
 
 New features added should fall under the following categories:
 
@@ -121,3 +44,11 @@ Although some parts heavily rely on conventions set by the packages, we
 currently aim not to be a framework. We aim to provide a good developer
 experience, useful abstractions around the basics, and a stable backend <->
 client interface.
+
+## Docs and development
+
+See [the website](https://compasjs.com) for the
+[changelog](https://compasjs.com/changelog.html), all available APIs and various
+guides.
+
+For contributing see [contributing.md](https://compasjs.com/contributing.html).
