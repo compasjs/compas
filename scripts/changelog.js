@@ -32,14 +32,22 @@ async function main(logger) {
     currentVersion,
   );
 
-  const commits = combineCommits(commitsSinceLastVersion);
+  const commits = combineCommits(
+    commitsSinceLastVersion.filter((it) => {
+      return (
+        !it.title.includes("@types/node") &&
+        !it.title.includes("sync generated doc files")
+      );
+    }),
+  );
   decorateCommits(commits);
 
+  const proposedVersion = proposeVersionBump(currentVersion, commits);
   const changelogPath = pathJoin(process.cwd(), "changelog.md");
   const changelog = await readFile(changelogPath, "utf8");
   const { header, source } = getChangelogHeaderAndSource(changelog);
   const trimmedChangelog = stripChangelogOfUnreleased(source);
-  const unreleasedChangelog = makeChangelog(logger, commits);
+  const unreleasedChangelog = makeChangelog(logger, commits, proposedVersion);
 
   await writeFile(
     changelogPath,
@@ -142,10 +150,6 @@ function combineCommits(commits) {
     }
 
     const [, buildType, pkg, fromVersion, toVersion, pr] = execResult;
-
-    if (pkg === "@types/node") {
-      continue;
-    }
 
     if (isNil(combinable[pkg])) {
       combinable[pkg] = {
@@ -310,11 +314,12 @@ function decorateCommits(commits) {
  *
  * @param {Logger} logger
  * @param {ChangelogCommit[]} commits
+ * @param {string} version
  * @returns {string}
  */
-function makeChangelog(logger, commits) {
+function makeChangelog(logger, commits, version) {
   const result = [
-    `### [vx.x.x](https://github.com/compasjs/compas/releases/tag/vx.x.x)`,
+    `### [v${version}](https://github.com/compasjs/compas/releases/tag/v${version})`,
     ``,
     `##### Changes`,
     ``,
@@ -346,10 +351,49 @@ function makeChangelog(logger, commits) {
 
   result.push(
     "",
-    "For a detailed description and more details about this release,\nplease read the [release notes](https://compasjs.com/releases/x.x.x.html).",
+    `For a detailed description and more details about this release,\nplease read the [release notes](https://compasjs.com/releases/${version}.html).`,
   );
 
   return result.join("\n");
+}
+
+/**
+ * Propose a new version based on the analyzed commits
+ *
+ * @param {string} version
+ * @param {ChangelogCommit[]} commits
+ * @returns {string}
+ */
+function proposeVersionBump(version, commits) {
+  const hasBreakingChanges = commits.find((it) => it.breakingChange);
+  const hasFeat = commits.find((it) => it.title.startsWith("feat"));
+
+  const type = hasBreakingChanges ? "major" : hasFeat ? "minor" : "patch";
+  let [major, minor, patch] = version.split(".").map((it) => Number(it));
+
+  if (type === "patch") {
+    patch += 1;
+  } else if (type === "minor") {
+    if (major === 0 && minor === 0) {
+      patch += 1;
+    } else {
+      minor += 1;
+      patch = 0;
+    }
+  } else if (type === "major") {
+    if (major === 0 && minor === 0) {
+      patch += 1;
+    } else if (major === 0) {
+      minor += 1;
+      patch = 0;
+    } else {
+      major += 1;
+      minor = 0;
+      patch = 0;
+    }
+  }
+
+  return [major, minor, patch].join(".");
 }
 
 /**
