@@ -185,6 +185,7 @@ function crudGenerateRouteImplementationListRoute(
         includeJoins: false,
         traverseParents: true,
         partial: {
+          // @ts-expect-error
           select: [`'${type.internalSettings.primaryKey.key}'`],
           orderBy: "ctx.validatedBody.orderBy",
           orderBySpec: "ctx.validatedBody.orderBySpec",
@@ -402,7 +403,7 @@ export function crudFormatBuilder(builder) {
  *   includeOwnParam: boolean,
  *   includeJoins: boolean,
  *   traverseParents: boolean,
- *   partial: any }} opts
+ *   partial?: any }} opts
  * @returns {any}
  */
 export function crudGetBuilder(

@@ -18,7 +18,7 @@ export function crudFormatBuilder(builder: any): string;
  *   includeOwnParam: boolean,
  *   includeJoins: boolean,
  *   traverseParents: boolean,
- *   partial: any }} opts
+ *   partial?: any }} opts
  * @returns {any}
  */
 export function crudGetBuilder(
@@ -32,7 +32,7 @@ export function crudGetBuilder(
     includeOwnParam: boolean;
     includeJoins: boolean;
     traverseParents: boolean;
-    partial: any;
+    partial?: any;
   },
 ): any;
 //# sourceMappingURL=route-implementer.d.ts.map
