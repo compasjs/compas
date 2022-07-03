@@ -1,7 +1,6 @@
 import { pino } from "pino";
 import { environment, isProduction } from "../env.js";
 import { AppError } from "../error.js";
-import { merge } from "../lodash.js";
 import { noop } from "../utils.js";
 import { writeGithubActions, writePretty } from "./writer.js";
 
@@ -112,7 +111,10 @@ export function newLogger(options) {
     });
   }
 
-  const context = merge({}, globalContext, options?.ctx ?? {});
+  const context = {
+    ...globalContext,
+    ...(options?.ctx ?? {}),
+  };
 
   if (printer === "ndjson") {
     const pinoLogger = globalPino.child({ context });
