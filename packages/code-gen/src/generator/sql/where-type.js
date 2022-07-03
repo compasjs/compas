@@ -336,12 +336,24 @@ export function getWherePartial(context, imports, type) {
  * @returns {Record<string, CodeGenType>}
  */
 export function getSearchableFields(type) {
-  return /** @type {Record<string, CodeGenType>} */ getSortedKeysForType(type)
-    .map((it) => [it, type.keys[it]])
-    .filter((it) => it[1].sql?.searchable || it[1].reference?.sql?.searchable)
-    .reduce((acc, [key, value]) => {
-      // @ts-ignore
-      acc[key] = value.reference ?? value;
-      return acc;
-    }, {});
+  if (type?.internalSettings?._searchableFields) {
+    return type.internalSettings._searchableFields;
+  }
+  const result =
+    /** @type {Record<string, CodeGenType>} */ getSortedKeysForType(type)
+      .map((it) => [it, type.keys[it]])
+      .filter((it) => it[1].sql?.searchable || it[1].reference?.sql?.searchable)
+      .reduce((acc, [key, value]) => {
+        // @ts-ignore
+        acc[key] = value.reference ?? value;
+        return acc;
+      }, {});
+
+  if (!type.internalSettings) {
+    type.internalSettings = {};
+  }
+
+  type.internalSettings._searchableFields = result;
+
+  return result;
 }

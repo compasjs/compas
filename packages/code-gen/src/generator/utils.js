@@ -77,9 +77,7 @@ export function importCreator() {
       // At some point a hard to reproduce / unverifiable bug in eslint-plugin import
       // popups up, which results in a non auto-fixable import sort. By sorting this pre
       // writing, we prevent the issue all together.
-      for (const key of Object.keys(state.destructureImport).sort((a, b) => {
-        return a.localeCompare(b, ["en-US"]);
-      })) {
+      for (const key of Object.keys(state.destructureImport).sort()) {
         const joinString =
           state.destructureImport[key].size > 3 ? ",\n  " : ", ";
         result.push(

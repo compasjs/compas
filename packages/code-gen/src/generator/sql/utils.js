@@ -103,6 +103,10 @@ export function getPrimaryKeyWithType(type) {
  * @returns {string[]}
  */
 export function getSortedKeysForType(type) {
+  if (type?.internalSettings?._sortedKeys) {
+    return type.internalSettings._sortedKeys;
+  }
+
   const typeOrder = {
     boolean: 0,
     number: 1,
@@ -159,6 +163,11 @@ export function getSortedKeysForType(type) {
   if (type.keys["deletedAt"]) {
     result.push("deletedAt");
   }
+
+  if (isNil(type.internalSettings)) {
+    type.internalSettings = {};
+  }
+  type.internalSettings._sortedKeys = result;
 
   return result;
 }
