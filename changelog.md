@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.0.207](https://github.com/compasjs/compas/releases/tag/v0.0.207)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.18.5 to 7.18.6
+  ([#1877](https://github.com/compasjs/compas/pull/1877))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump cron-parser from 4.4.0 to 4.5.0
+  ([#1878](https://github.com/compasjs/compas/pull/1878))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- chore: update README's
+- chore(cli): remove bench command
+  ([#1874](https://github.com/compasjs/compas/pull/1874))
+- feat(bench): detect flaky bench results
+  - Closes [#1616](https://github.com/compasjs/compas/pull/1616)
+- feat(bench): remove support for writing bench results to a file
+- feat(code-gen): add support for filters on crud list routes
+  ([#1880](https://github.com/compasjs/compas/pull/1880))
+  - Closes [#1843](https://github.com/compasjs/compas/pull/1843)
+- feat(code-gen): only select primary key in CRUD count builder
+  ([#1882](https://github.com/compasjs/compas/pull/1882))
+- feat(code-gen): support selecting a set of fields in the query builder
+  ([#1876](https://github.com/compasjs/compas/pull/1876))
+  - Closes [#1875](https://github.com/compasjs/compas/pull/1875)
+- feat(compas): initialize Compas package
+- perf(cli): only import chokidar and axios when used
+- perf(code-gen): improve performance of generated string and object validators
+- perf(code-gen): small speedups while generating
+- perf(stdlib): skip context merge for the logger
+- refactor(code-gen): format error strings inline
+  ([#1873](https://github.com/compasjs/compas/pull/1873))
+
+##### Breaking changes
+
+- **cli**: remove bench command
+  - Removed `compas bench`, use `compas run ./path/to/file.bench.js` to run your
+    benchmarks.
+- **bench**: remove support for writing bench results to a file
+  - The `benchmark_output.txt` is not created anymore when running benchmarks on
+    CI.
+- **stdlib**: skip context merge for the logger
+  - The `ctx` provided to `newLogger` and the values passed to
+    `extendGlobalLoggerContext` are now longer deeply merged, but are shallowly
+    merged.
+
 ### [v0.0.206](https://github.com/compasjs/compas/releases/tag/v0.0.206)
 
 ##### Changes
