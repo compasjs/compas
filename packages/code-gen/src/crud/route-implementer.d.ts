@@ -14,7 +14,11 @@ export function crudFormatBuilder(builder: any): string;
 /**
  *
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @param {{ includeOwnParam, includeJoins, traverseParents }} opts
+ * @param {{
+ *   includeOwnParam: boolean,
+ *   includeJoins: boolean,
+ *   traverseParents: boolean,
+ *   partial: any }} opts
  * @returns {any}
  */
 export function crudGetBuilder(
@@ -23,10 +27,12 @@ export function crudGetBuilder(
     includeOwnParam,
     includeJoins,
     traverseParents,
+    partial,
   }: {
-    includeOwnParam;
-    includeJoins;
-    traverseParents;
+    includeOwnParam: boolean;
+    includeJoins: boolean;
+    traverseParents: boolean;
+    partial: any;
   },
 ): any;
 //# sourceMappingURL=route-implementer.d.ts.map
