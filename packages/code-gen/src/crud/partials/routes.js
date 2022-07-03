@@ -16,14 +16,9 @@ ${data.handlerName} = async (ctx, next) => {
     ...ctx.validatedBody.where,
     ...(countBuilder.where ?? {}),
   };
-  countBuilder.orderBy = ctx.validatedBody.orderBy;
-  countBuilder.orderBySpec = ctx.validatedBody.orderBySpec;
   
   const listBuilder = ${data.listBuilder};
-  
-  listBuilder.orderBy = ctx.validatedBody.orderBy;
-  listBuilder.orderBySpec = ctx.validatedBody.orderBySpec;
-  
+    
   ${data.crudName}ListPreModifier && await ${data.crudName}ListPreModifier(newEventFromEvent(ctx.event), ctx, countBuilder, listBuilder);
 
   const { total, ${data.primaryKey}In } = await ${data.crudName}Count(newEventFromEvent(ctx.event), sql, countBuilder, ctx.validatedQuery);
