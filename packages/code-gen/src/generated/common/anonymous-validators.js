@@ -122,19 +122,6 @@ export function anonymousValidator2115758866(value, propertyPath) {
   if (value.length === 0) {
     return { value: "" };
   }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
   return { value };
 }
 /**
@@ -371,19 +358,6 @@ export function anonymousValidator1443576836(value, propertyPath) {
       value: undefined,
     };
   }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
   return { value };
 }
 /**
@@ -409,20 +383,37 @@ export function anonymousValidator368068670(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["primary", anonymousValidator1174857441],
-    ["searchable", anonymousValidator1174857441],
-    ["hasDefaultValue", anonymousValidator1174857441],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["primary"],
+      `${propertyPath}.primary`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["primary"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["searchable"],
+      `${propertyPath}.searchable`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["searchable"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["hasDefaultValue"],
+      `${propertyPath}.hasDefaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["hasDefaultValue"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -453,18 +444,6 @@ export function anonymousValidator1963780689(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result[key] = validatorResult.value;
-    }
-  }
   if (errors.length > 0) {
     return { errors };
   }
@@ -551,16 +530,15 @@ export function anonymousValidator942201043(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["allowNull", anonymousValidator1174857441]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["allowNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -591,19 +569,26 @@ export function anonymousValidator1282254259(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["javaScript", anonymousValidator1443576836],
-    ["typeScript", anonymousValidator1443576836],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["javaScript"],
+      `${propertyPath}.javaScript`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["javaScript"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["typeScript"],
+      `${propertyPath}.typeScript`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["typeScript"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -643,31 +628,158 @@ export function anonymousValidator1519740867(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1269951810],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator942201043],
-    ["internalSettings", anonymousValidator1963780689],
-    ["rawValue", anonymousValidator1443576836],
-    ["rawValueImport", anonymousValidator1282254259],
-    ["rawValidator", anonymousValidator1443576836],
-    ["rawValidatorImport", anonymousValidator1282254259],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1269951810(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator942201043(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["rawValue"],
+      `${propertyPath}.rawValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["rawValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1282254259(
+      value["rawValueImport"],
+      `${propertyPath}.rawValueImport`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["rawValueImport"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["rawValidator"],
+      `${propertyPath}.rawValidator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["rawValidator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1282254259(
+      value["rawValidatorImport"],
+      `${propertyPath}.rawValidatorImport`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["rawValidatorImport"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -826,20 +938,37 @@ export function anonymousValidator914179656(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["convert", anonymousValidator1174857441],
-    ["min", anonymousValidator963028965],
-    ["max", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["convert"],
+      `${propertyPath}.convert`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["convert"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["min"],
+      `${propertyPath}.min`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["min"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["max"],
+      `${propertyPath}.max`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["max"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -899,28 +1028,125 @@ export function anonymousValidator1312175728(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1539402447],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator914179656],
-    ["internalSettings", anonymousValidator1963780689],
-    ["values", anonymousValidator169184843],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1539402447(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator914179656(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["values"],
+      `${propertyPath}.values`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["values"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1018,19 +1244,26 @@ export function anonymousValidator1064911095(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["convert", anonymousValidator1174857441],
-    ["allowNull", anonymousValidator1174857441],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["convert"],
+      `${propertyPath}.convert`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["convert"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["allowNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1093,28 +1326,125 @@ export function anonymousValidator17476225(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1240956158],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1064911095],
-    ["internalSettings", anonymousValidator1963780689],
-    ["oneOf", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1240956158(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1064911095(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["oneOf"],
+      `${propertyPath}.oneOf`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["oneOf"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1243,22 +1573,59 @@ export function anonymousValidator517837192(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["allowNull", anonymousValidator1174857441],
-    ["min", anonymousValidator1988053796],
-    ["max", anonymousValidator1988053796],
-    ["inFuture", anonymousValidator196147222],
-    ["inPast", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["allowNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["min"],
+      `${propertyPath}.min`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["min"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["max"],
+      `${propertyPath}.max`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["max"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["inFuture"],
+      `${propertyPath}.inFuture`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["inFuture"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["inPast"],
+      `${propertyPath}.inPast`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["inPast"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1290,19 +1657,6 @@ export function anonymousValidator38390704(value, propertyPath) {
   if (value.length === 0) {
     return {
       value: undefined,
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
     };
   }
   if (value !== "dateOnly" && value !== "timeOnly") {
@@ -1352,28 +1706,125 @@ export function anonymousValidator2019605291(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1573852460],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator517837192],
-    ["internalSettings", anonymousValidator1963780689],
-    ["specifier", anonymousValidator38390704],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1573852460(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator517837192(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator38390704(
+      value["specifier"],
+      `${propertyPath}.specifier`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["specifier"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1547,16 +1998,15 @@ export function anonymousValidator889761232(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["mimeTypes", anonymousValidator890105892]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator890105892(
+      value["mimeTypes"],
+      `${propertyPath}.mimeTypes`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["mimeTypes"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1596,27 +2046,114 @@ export function anonymousValidator508679687(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator724462434],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator889761232],
-    ["internalSettings", anonymousValidator1963780689],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator724462434(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator889761232(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1714,29 +2251,136 @@ export function anonymousValidator1377926226(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator315010317],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1963780689],
-    ["keys", anonymousValidator169184843],
-    ["values", anonymousValidator169184843],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator315010317(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["keys"],
+      `${propertyPath}.keys`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["keys"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["values"],
+      `${propertyPath}.values`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["values"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1834,22 +2478,59 @@ export function anonymousValidator1608555242(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["convert", anonymousValidator1174857441],
-    ["floatingPoint", anonymousValidator1174857441],
-    ["min", anonymousValidator963028965],
-    ["max", anonymousValidator963028965],
-    ["allowNull", anonymousValidator1174857441],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["convert"],
+      `${propertyPath}.convert`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["convert"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["floatingPoint"],
+      `${propertyPath}.floatingPoint`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["floatingPoint"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["min"],
+      `${propertyPath}.min`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["min"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["max"],
+      `${propertyPath}.max`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["max"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["allowNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1929,28 +2610,125 @@ export function anonymousValidator1441913722(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1695510095],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1608555242],
-    ["internalSettings", anonymousValidator1963780689],
-    ["oneOf", anonymousValidator1370653763],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1695510095(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1608555242(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1370653763(
+      value["oneOf"],
+      `${propertyPath}.oneOf`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["oneOf"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2071,19 +2849,26 @@ export function anonymousValidator438930840(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["allowNull", anonymousValidator1174857441],
-    ["strict", anonymousValidator801301862],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["allowNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator801301862(
+      value["strict"],
+      `${propertyPath}.strict`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["strict"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2170,22 +2955,59 @@ export function anonymousValidator1454543746(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["withSoftDeletes", anonymousValidator1174857441],
-    ["withDates", anonymousValidator1174857441],
-    ["withPrimaryKey", anonymousValidator801301862],
-    ["isView", anonymousValidator1174857441],
-    ["schema", anonymousValidator2115758866],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["withSoftDeletes"],
+      `${propertyPath}.withSoftDeletes`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["withSoftDeletes"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["withDates"],
+      `${propertyPath}.withDates`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["withDates"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator801301862(
+      value["withPrimaryKey"],
+      `${propertyPath}.withPrimaryKey`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["withPrimaryKey"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isView"],
+      `${propertyPath}.isView`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isView"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["schema"],
+      `${propertyPath}.schema`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["schema"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2421,20 +3243,37 @@ export function anonymousValidator1006716453(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["uniqueName", anonymousValidator1443576836],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2515,28 +3354,125 @@ export function anonymousValidator127554530(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator2034870015],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1963780689],
-    ["reference", anonymousValidator1947892754],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2034870015(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1947892754(
+      value["reference"],
+      `${propertyPath}.reference`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["reference"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2596,23 +3532,70 @@ export function anonymousValidator243901689(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1035049954],
-    ["subType", anonymousValidator664918956],
-    ["reference", anonymousValidator1480613130],
-    ["ownKey", anonymousValidator186795873],
-    ["referencedKey", anonymousValidator1443576836],
-    ["isOptional", anonymousValidator1174857441],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1035049954(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator664918956(
+      value["subType"],
+      `${propertyPath}.subType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["subType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1480613130(
+      value["reference"],
+      `${propertyPath}.reference`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["reference"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["ownKey"],
+      `${propertyPath}.ownKey`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["ownKey"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["referencedKey"],
+      `${propertyPath}.referencedKey`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["referencedKey"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2800,21 +3783,48 @@ export function anonymousValidator726016308(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["key", anonymousValidator186795873],
-    ["name", anonymousValidator186795873],
-    ["isRelation", anonymousValidator1174857441],
-    ["variant", anonymousValidator538147770],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["key"],
+      `${propertyPath}.key`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["key"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isRelation"],
+      `${propertyPath}.isRelation`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isRelation"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator538147770(
+      value["variant"],
+      `${propertyPath}.variant`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["variant"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2894,20 +3904,37 @@ export function anonymousValidator1907823387(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator186795873],
-    ["rawType", anonymousValidator1913140908],
-    ["fields", anonymousValidator718135986],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1913140908(
+      value["rawType"],
+      `${propertyPath}.rawType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["rawType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator718135986(
+      value["fields"],
+      `${propertyPath}.fields`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fields"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2947,19 +3974,26 @@ export function anonymousValidator244788999(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["key", anonymousValidator186795873],
-    ["optional", anonymousValidator2047524467],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["key"],
+      `${propertyPath}.key`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["key"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2047524467(
+      value["optional"],
+      `${propertyPath}.optional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["optional"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3039,20 +4073,37 @@ export function anonymousValidator1449958994(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator186795873],
-    ["specType", anonymousValidator186795873],
-    ["fields", anonymousValidator273243195],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["specType"],
+      `${propertyPath}.specType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["specType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator273243195(
+      value["fields"],
+      `${propertyPath}.fields`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fields"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3092,21 +4143,48 @@ export function anonymousValidator1218262237(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["key", anonymousValidator186795873],
-    ["defaultValue", anonymousValidator1443576836],
-    ["hasSqlDefault", anonymousValidator1174857441],
-    ["isJsonb", anonymousValidator1174857441],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["key"],
+      `${propertyPath}.key`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["key"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["hasSqlDefault"],
+      `${propertyPath}.hasSqlDefault`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["hasSqlDefault"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isJsonb"],
+      `${propertyPath}.isJsonb`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isJsonb"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3186,20 +4264,37 @@ export function anonymousValidator1837423837(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["insertType", anonymousValidator186795873],
-    ["updateType", anonymousValidator186795873],
-    ["fields", anonymousValidator1906374053],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["insertType"],
+      `${propertyPath}.insertType`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["insertType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["updateType"],
+      `${propertyPath}.updateType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updateType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1906374053(
+      value["fields"],
+      `${propertyPath}.fields`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fields"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3239,35 +4334,202 @@ export function anonymousValidator17105276(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator540066309],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator438930840],
-    ["internalSettings", anonymousValidator1963780689],
-    ["shortName", anonymousValidator1443576836],
-    ["keys", anonymousValidator1529527338],
-    ["enableQueries", anonymousValidator1174857441],
-    ["queryOptions", anonymousValidator1454543746],
-    ["relations", anonymousValidator1064092154],
-    ["where", anonymousValidator1907823387],
-    ["orderBy", anonymousValidator1449958994],
-    ["partial", anonymousValidator1837423837],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator540066309(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator438930840(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["shortName"],
+      `${propertyPath}.shortName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["shortName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1529527338(
+      value["keys"],
+      `${propertyPath}.keys`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["keys"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["enableQueries"],
+      `${propertyPath}.enableQueries`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["enableQueries"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1454543746(
+      value["queryOptions"],
+      `${propertyPath}.queryOptions`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["queryOptions"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1064092154(
+      value["relations"],
+      `${propertyPath}.relations`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["relations"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1907823387(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1449958994(
+      value["orderBy"],
+      `${propertyPath}.orderBy`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBy"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1837423837(
+      value["partial"],
+      `${propertyPath}.partial`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["partial"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3524,26 +4786,103 @@ export function anonymousValidator981840544(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["convert", anonymousValidator1174857441],
-    ["trim", anonymousValidator1174857441],
-    ["lowerCase", anonymousValidator1174857441],
-    ["upperCase", anonymousValidator1174857441],
-    ["min", anonymousValidator731977090],
-    ["max", anonymousValidator963028965],
-    ["pattern", anonymousValidator1443576836],
-    ["allowNull", anonymousValidator1174857441],
-    ["disallowedCharacters", anonymousValidator623734288],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["convert"],
+      `${propertyPath}.convert`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["convert"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["trim"],
+      `${propertyPath}.trim`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["trim"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["lowerCase"],
+      `${propertyPath}.lowerCase`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["lowerCase"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["upperCase"],
+      `${propertyPath}.upperCase`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["upperCase"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator731977090(
+      value["min"],
+      `${propertyPath}.min`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["min"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["max"],
+      `${propertyPath}.max`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["max"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["pattern"],
+      `${propertyPath}.pattern`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["pattern"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["allowNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator623734288(
+      value["disallowedCharacters"],
+      `${propertyPath}.disallowedCharacters`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["disallowedCharacters"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3583,28 +4922,125 @@ export function anonymousValidator1672152398(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator760248297],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator981840544],
-    ["internalSettings", anonymousValidator1963780689],
-    ["oneOf", anonymousValidator890105892],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator760248297(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator981840544(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator890105892(
+      value["oneOf"],
+      `${propertyPath}.oneOf`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["oneOf"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3702,27 +5138,114 @@ export function anonymousValidator1836970168(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator43940351],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator942201043],
-    ["internalSettings", anonymousValidator1963780689],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator43940351(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator942201043(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3814,19 +5337,6 @@ export function anonymousValidator2066419866(value, propertyPath) {
       value: undefined,
     };
   }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
   if (value !== "json" && value !== "form-data") {
     const oneOf = ["json", "form-data"];
     /** @type {{ errors: InternalError[] }} */
@@ -3865,19 +5375,26 @@ export function anonymousValidator1023845888(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["stripTrailingSlash", anonymousValidator196147222],
-    ["requestBodyType", anonymousValidator2066419866],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["stripTrailingSlash"],
+      `${propertyPath}.stripTrailingSlash`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["stripTrailingSlash"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2066419866(
+      value["requestBodyType"],
+      `${propertyPath}.requestBodyType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["requestBodyType"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4100,19 +5617,26 @@ export function anonymousValidator146110107(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["group", anonymousValidator186795873],
-    ["name", anonymousValidator1443576836],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["group"],
+      `${propertyPath}.group`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4190,19 +5714,26 @@ export function anonymousValidator1719563809(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["params", anonymousValidator1711070661],
-    ["query", anonymousValidator1711070661],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1711070661(
+      value["params"],
+      `${propertyPath}.params`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["params"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1711070661(
+      value["query"],
+      `${propertyPath}.query`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["query"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4242,20 +5773,37 @@ export function anonymousValidator1005870638(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["useSharedParams", anonymousValidator1174857441],
-    ["useSharedQuery", anonymousValidator1174857441],
-    ["specification", anonymousValidator1719563809],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["useSharedParams"],
+      `${propertyPath}.useSharedParams`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["useSharedParams"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["useSharedQuery"],
+      `${propertyPath}.useSharedQuery`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["useSharedQuery"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1719563809(
+      value["specification"],
+      `${propertyPath}.specification`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["specification"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4295,20 +5843,37 @@ export function anonymousValidator224332322(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator719331197],
-    ["target", anonymousValidator146110107],
-    ["properties", anonymousValidator1005870638],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator719331197(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator146110107(
+      value["target"],
+      `${propertyPath}.target`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["target"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1005870638(
+      value["properties"],
+      `${propertyPath}.properties`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["properties"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4388,37 +5953,224 @@ export function anonymousValidator1390215584(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator241103039],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1023845888],
-    ["method", anonymousValidator1056430884],
-    ["idempotent", anonymousValidator1174857441],
-    ["path", anonymousValidator186795873],
-    ["tags", anonymousValidator1898391521],
-    ["query", anonymousValidator708039854],
-    ["params", anonymousValidator708039854],
-    ["body", anonymousValidator708039854],
-    ["files", anonymousValidator708039854],
-    ["response", anonymousValidator708039854],
-    ["invalidations", anonymousValidator1463282173],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator241103039(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1023845888(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1056430884(
+      value["method"],
+      `${propertyPath}.method`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["method"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["idempotent"],
+      `${propertyPath}.idempotent`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idempotent"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["path"],
+      `${propertyPath}.path`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["path"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1898391521(
+      value["tags"],
+      `${propertyPath}.tags`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["tags"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["query"],
+      `${propertyPath}.query`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["query"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["params"],
+      `${propertyPath}.params`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["params"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["body"],
+      `${propertyPath}.body`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["body"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["files"],
+      `${propertyPath}.files`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["files"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["response"],
+      `${propertyPath}.response`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["response"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1463282173(
+      value["invalidations"],
+      `${propertyPath}.invalidations`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["invalidations"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4516,16 +6268,15 @@ export function anonymousValidator599748167(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["allowNull", anonymousValidator1174857441]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["allowNull"],
+      `${propertyPath}.allowNull`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["allowNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4565,29 +6316,136 @@ export function anonymousValidator1474724230(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1214670991],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator599748167],
-    ["internalSettings", anonymousValidator1963780689],
-    ["keys", anonymousValidator1898391521],
-    ["reference", anonymousValidator169184843],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1214670991(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator599748167(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1898391521(
+      value["keys"],
+      `${propertyPath}.keys`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["keys"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["reference"],
+      `${propertyPath}.reference`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["reference"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4685,29 +6543,136 @@ export function anonymousValidator512566754(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator447493159],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator599748167],
-    ["internalSettings", anonymousValidator1963780689],
-    ["keys", anonymousValidator1898391521],
-    ["reference", anonymousValidator169184843],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator447493159(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator599748167(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1898391521(
+      value["keys"],
+      `${propertyPath}.keys`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["keys"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["reference"],
+      `${propertyPath}.reference`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["reference"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4835,19 +6800,26 @@ export function anonymousValidator35698685(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["key", anonymousValidator186795873],
-    ["field", anonymousValidator169184843],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["key"],
+      `${propertyPath}.key`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["key"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator169184843(
+      value["field"],
+      `${propertyPath}.field`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["field"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4878,21 +6850,48 @@ export function anonymousValidator468818986(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["usedRelation", anonymousValidator84237458],
-    ["parent", anonymousValidator581222320],
-    ["writeableTypeName", anonymousValidator1443576836],
-    ["primaryKey", anonymousValidator35698685],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator84237458(
+      value["usedRelation"],
+      `${propertyPath}.usedRelation`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["usedRelation"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator581222320(
+      value["parent"],
+      `${propertyPath}.parent`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["parent"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["writeableTypeName"],
+      `${propertyPath}.writeableTypeName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["writeableTypeName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator35698685(
+      value["primaryKey"],
+      `${propertyPath}.primaryKey`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["primaryKey"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4923,16 +6922,15 @@ export function anonymousValidator1874431172(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["name", anonymousValidator1443576836]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["name"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4963,19 +6961,26 @@ export function anonymousValidator234152904(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["field", anonymousValidator186795873],
-    ["options", anonymousValidator1874431172],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["field"],
+      `${propertyPath}.field`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["field"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1874431172(
+      value["options"],
+      `${propertyPath}.options`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["options"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5015,22 +7020,59 @@ export function anonymousValidator1468771841(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["listRoute", anonymousValidator196147222],
-    ["singleRoute", anonymousValidator196147222],
-    ["createRoute", anonymousValidator196147222],
-    ["updateRoute", anonymousValidator196147222],
-    ["deleteRoute", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["listRoute"],
+      `${propertyPath}.listRoute`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["listRoute"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["singleRoute"],
+      `${propertyPath}.singleRoute`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["singleRoute"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createRoute"],
+      `${propertyPath}.createRoute`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createRoute"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updateRoute"],
+      `${propertyPath}.updateRoute`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updateRoute"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["deleteRoute"],
+      `${propertyPath}.deleteRoute`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["deleteRoute"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5061,19 +7103,26 @@ export function anonymousValidator921887009(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$omit", anonymousValidator890105892],
-    ["$pick", anonymousValidator890105892],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator890105892(
+      value["$omit"],
+      `${propertyPath}.$omit`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$omit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator890105892(
+      value["$pick"],
+      `${propertyPath}.$pick`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["$pick"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5113,19 +7162,26 @@ export function anonymousValidator1186181590(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["readable", anonymousValidator921887009],
-    ["writable", anonymousValidator921887009],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator921887009(
+      value["readable"],
+      `${propertyPath}.readable`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["readable"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator921887009(
+      value["writable"],
+      `${propertyPath}.writable`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["writable"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5214,34 +7270,191 @@ export function anonymousValidator1787806021(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator1173938076],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator468818986],
-    ["basePath", anonymousValidator1443576836],
-    ["entity", anonymousValidator708039854],
-    ["fromParent", anonymousValidator234152904],
-    ["routeOptions", anonymousValidator1468771841],
-    ["fieldOptions", anonymousValidator1186181590],
-    ["inlineRelations", anonymousValidator581628245],
-    ["nestedRelations", anonymousValidator581628245],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1173938076(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator468818986(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["basePath"],
+      `${propertyPath}.basePath`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["basePath"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator708039854(
+      value["entity"],
+      `${propertyPath}.entity`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["entity"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator234152904(
+      value["fromParent"],
+      `${propertyPath}.fromParent`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fromParent"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1468771841(
+      value["routeOptions"],
+      `${propertyPath}.routeOptions`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["routeOptions"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1186181590(
+      value["fieldOptions"],
+      `${propertyPath}.fieldOptions`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fieldOptions"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator581628245(
+      value["inlineRelations"],
+      `${propertyPath}.inlineRelations`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["inlineRelations"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator581628245(
+      value["nestedRelations"],
+      `${propertyPath}.nestedRelations`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nestedRelations"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5455,28 +7668,125 @@ export function anonymousValidator20588538(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["type", anonymousValidator611235225],
-    ["docString", anonymousValidator2115758866],
-    ["isOptional", anonymousValidator1174857441],
-    ["defaultValue", anonymousValidator219305298],
-    ["uniqueName", anonymousValidator1443576836],
-    ["group", anonymousValidator1443576836],
-    ["name", anonymousValidator1443576836],
-    ["sql", anonymousValidator368068670],
-    ["validator", anonymousValidator1963780689],
-    ["internalSettings", anonymousValidator1963780689],
-    ["values", anonymousValidator1978730633],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator611235225(
+      value["type"],
+      `${propertyPath}.type`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["type"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2115758866(
+      value["docString"],
+      `${propertyPath}.docString`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["docString"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isOptional"],
+      `${propertyPath}.isOptional`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isOptional"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator219305298(
+      value["defaultValue"],
+      `${propertyPath}.defaultValue`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["defaultValue"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["uniqueName"],
+      `${propertyPath}.uniqueName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["uniqueName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["group"],
+      `${propertyPath}.group`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["group"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator368068670(
+      value["sql"],
+      `${propertyPath}.sql`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sql"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["validator"],
+      `${propertyPath}.validator`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["validator"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1963780689(
+      value["internalSettings"],
+      `${propertyPath}.internalSettings`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["internalSettings"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1978730633(
+      value["values"],
+      `${propertyPath}.values`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["values"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5533,16 +7843,15 @@ export function anonymousValidator2029084423(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["errorString", anonymousValidator186795873]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["errorString"],
+      `${propertyPath}.errorString`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["errorString"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5866,19 +8175,26 @@ export function anonymousValidator682118687(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["relativePath", anonymousValidator186795873],
-    ["contents", anonymousValidator186795873],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["relativePath"],
+      `${propertyPath}.relativePath`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["relativePath"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["contents"],
+      `${propertyPath}.contents`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contents"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6033,23 +8349,70 @@ export function anonymousValidator980814292(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["options", anonymousValidator634141747],
-    ["structure", anonymousValidator602578904],
-    ["extension", anonymousValidator1146021598],
-    ["importExtension", anonymousValidator186795873],
-    ["outputFiles", anonymousValidator1979163207],
-    ["errors", anonymousValidator226175071],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator634141747(
+      value["options"],
+      `${propertyPath}.options`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["options"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator602578904(
+      value["structure"],
+      `${propertyPath}.structure`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["structure"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1146021598(
+      value["extension"],
+      `${propertyPath}.extension`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["extension"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["importExtension"],
+      `${propertyPath}.importExtension`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["importExtension"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1979163207(
+      value["outputFiles"],
+      `${propertyPath}.outputFiles`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["outputFiles"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator226175071(
+      value["errors"],
+      `${propertyPath}.errors`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["errors"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6164,16 +8527,15 @@ export function anonymousValidator1664519436(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["phase", anonymousValidator2078657473]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2078657473(
+      value["phase"],
+      `${propertyPath}.phase`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["phase"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6205,19 +8567,6 @@ export function anonymousValidator1836086405(value, propertyPath) {
   if (value.length === 0) {
     return {
       value: undefined,
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
     };
   }
   if (
@@ -6288,26 +8637,103 @@ export function anonymousValidator1287070944(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["isJSON", anonymousValidator196147222],
-    ["useDefaults", anonymousValidator196147222],
-    ["useTypescript", anonymousValidator196147222],
-    ["isNode", anonymousValidator196147222],
-    ["isBrowser", anonymousValidator196147222],
-    ["suffix", anonymousValidator1443576836],
-    ["isCommonFile", anonymousValidator196147222],
-    ["isTypeFile", anonymousValidator196147222],
-    ["fileTypeIO", anonymousValidator1836086405],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isJSON"],
+      `${propertyPath}.isJSON`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["isJSON"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["useDefaults"],
+      `${propertyPath}.useDefaults`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["useDefaults"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["useTypescript"],
+      `${propertyPath}.useTypescript`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["useTypescript"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isNode"],
+      `${propertyPath}.isNode`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isNode"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isBrowser"],
+      `${propertyPath}.isBrowser`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isBrowser"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["suffix"],
+      `${propertyPath}.suffix`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["suffix"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isCommonFile"],
+      `${propertyPath}.isCommonFile`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isCommonFile"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isTypeFile"],
+      `${propertyPath}.isTypeFile`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isTypeFile"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1836086405(
+      value["fileTypeIO"],
+      `${propertyPath}.fileTypeIO`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["fileTypeIO"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {

@@ -459,19 +459,6 @@ export function anonymousValidator1443576836(value, propertyPath) {
       value: undefined,
     };
   }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
-    };
-  }
   return { value };
 }
 /**
@@ -514,19 +501,26 @@ export function anonymousValidator2144828802(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["transforms", anonymousValidator926956431],
-    ["transformedFromOriginal", anonymousValidator1443576836],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator926956431(
+      value["transforms"],
+      `${propertyPath}.transforms`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["transforms"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["transformedFromOriginal"],
+      `${propertyPath}.transformedFromOriginal`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["transformedFromOriginal"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -730,25 +724,92 @@ export function anonymousValidator599447075(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["bucketName", anonymousValidator186795873],
-    ["contentLength", anonymousValidator293751998],
-    ["contentType", anonymousValidator186795873],
-    ["name", anonymousValidator186795873],
-    ["meta", anonymousValidator329780902],
-    ["id", anonymousValidator56355924],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["bucketName"],
+      `${propertyPath}.bucketName`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["bucketName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator293751998(
+      value["contentLength"],
+      `${propertyPath}.contentLength`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contentLength"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["contentType"],
+      `${propertyPath}.contentType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contentType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator329780902(
+      value["meta"],
+      `${propertyPath}.meta`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["meta"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator56355924(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -925,19 +986,26 @@ export function anonymousValidator376443596(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["q", anonymousValidator760095765],
-    ["w", anonymousValidator2089226208],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator760095765(
+      value["q"],
+      `${propertyPath}.q`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["q"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2089226208(
+      value["w"],
+      `${propertyPath}.w`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["w"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1258,27 +1326,114 @@ export function anonymousValidator1781782332(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator1483765921],
-    ["isComplete", anonymousValidator1174857441],
-    ["priority", anonymousValidator326842456],
-    ["scheduledAt", anonymousValidator1389014320],
-    ["name", anonymousValidator186795873],
-    ["data", anonymousValidator1462196493],
-    ["retryCount", anonymousValidator1103865757],
-    ["handlerTimeout", anonymousValidator1065942849],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1483765921(
+      value["id"],
+      `${propertyPath}.id`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1174857441(
+      value["isComplete"],
+      `${propertyPath}.isComplete`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isComplete"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator326842456(
+      value["priority"],
+      `${propertyPath}.priority`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["priority"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["scheduledAt"],
+      `${propertyPath}.scheduledAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1462196493(
+      value["data"],
+      `${propertyPath}.data`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["data"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1103865757(
+      value["retryCount"],
+      `${propertyPath}.retryCount`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["retryCount"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1065942849(
+      value["handlerTimeout"],
+      `${propertyPath}.handlerTimeout`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["handlerTimeout"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1318,20 +1473,37 @@ export function anonymousValidator1105075285(value, propertyPath) {
   }
   const result = Object.create(null);
   let errors = [];
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["accessToken", anonymousValidator186795873],
-    ["q", anonymousValidator760095765],
-    ["w", anonymousValidator2089226208],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["accessToken"],
+      `${propertyPath}.accessToken`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["accessToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator760095765(
+      value["q"],
+      `${propertyPath}.q`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["q"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2089226208(
+      value["w"],
+      `${propertyPath}.w`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["w"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1428,23 +1600,70 @@ export function anonymousValidator503384244(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["data", anonymousValidator1462196493],
-    ["checksum", anonymousValidator186795873],
-    ["revokedAt", anonymousValidator1988053796],
-    ["id", anonymousValidator56355924],
-    ["createdAt", anonymousValidator1389014320],
-    ["updatedAt", anonymousValidator1389014320],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1462196493(
+      value["data"],
+      `${propertyPath}.data`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["data"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["checksum"],
+      `${propertyPath}.checksum`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["checksum"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator56355924(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1389014320(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1581,23 +1800,70 @@ export function anonymousValidator1337490931(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["expiresAt", anonymousValidator448481401],
-    ["revokedAt", anonymousValidator1988053796],
-    ["createdAt", anonymousValidator448481401],
-    ["id", anonymousValidator56355924],
-    ["session", anonymousValidator546012715],
-    ["refreshToken", anonymousValidator1802076175],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator448481401(
+      value["expiresAt"],
+      `${propertyPath}.expiresAt`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["expiresAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator448481401(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator56355924(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator546012715(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -1956,46 +2222,323 @@ export function anonymousValidator2074494218(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator1804070323],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["bucketName", anonymousValidator1443576836],
-    ["bucketNameNotEqual", anonymousValidator1443576836],
-    ["bucketNameIn", anonymousValidator869204168],
-    ["bucketNameNotIn", anonymousValidator869204168],
-    ["bucketNameLike", anonymousValidator1443576836],
-    ["bucketNameILike", anonymousValidator1443576836],
-    ["bucketNameNotLike", anonymousValidator1443576836],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1930640707(
+      value["$raw"],
+      `${propertyPath}.$raw`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$raw"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1804070323(
+      value["$or"],
+      `${propertyPath}.$or`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["$or"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["idNotEqual"],
+      `${propertyPath}.idNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idIn"],
+      `${propertyPath}.idIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idNotIn"],
+      `${propertyPath}.idNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["bucketName"],
+      `${propertyPath}.bucketName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["bucketNameNotEqual"],
+      `${propertyPath}.bucketNameNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator869204168(
+      value["bucketNameIn"],
+      `${propertyPath}.bucketNameIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator869204168(
+      value["bucketNameNotIn"],
+      `${propertyPath}.bucketNameNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["bucketNameLike"],
+      `${propertyPath}.bucketNameLike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameLike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["bucketNameILike"],
+      `${propertyPath}.bucketNameILike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameILike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["bucketNameNotLike"],
+      `${propertyPath}.bucketNameNotLike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketNameNotLike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtNotEqual"],
+      `${propertyPath}.createdAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtIn"],
+      `${propertyPath}.createdAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtNotIn"],
+      `${propertyPath}.createdAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtGreaterThan"],
+      `${propertyPath}.createdAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtLowerThan"],
+      `${propertyPath}.createdAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNull"],
+      `${propertyPath}.createdAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNotNull"],
+      `${propertyPath}.createdAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtNotEqual"],
+      `${propertyPath}.updatedAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtIn"],
+      `${propertyPath}.updatedAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtNotIn"],
+      `${propertyPath}.updatedAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtGreaterThan"],
+      `${propertyPath}.updatedAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtLowerThan"],
+      `${propertyPath}.updatedAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNull"],
+      `${propertyPath}.updatedAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNotNull"],
+      `${propertyPath}.updatedAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNotNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2228,59 +2771,466 @@ export function anonymousValidator1257773835(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator807003800],
-    ["id", anonymousValidator1108665246],
-    ["idNotEqual", anonymousValidator1108665246],
-    ["idIn", anonymousValidator2059610435],
-    ["idNotIn", anonymousValidator2059610435],
-    ["idGreaterThan", anonymousValidator1108665246],
-    ["idLowerThan", anonymousValidator1108665246],
-    ["isComplete", anonymousValidator196147222],
-    ["isCompleteIsNull", anonymousValidator196147222],
-    ["isCompleteIsNotNull", anonymousValidator196147222],
-    ["name", anonymousValidator1443576836],
-    ["nameNotEqual", anonymousValidator1443576836],
-    ["nameIn", anonymousValidator869204168],
-    ["nameNotIn", anonymousValidator869204168],
-    ["nameLike", anonymousValidator1443576836],
-    ["nameILike", anonymousValidator1443576836],
-    ["nameNotLike", anonymousValidator1443576836],
-    ["scheduledAt", anonymousValidator1988053796],
-    ["scheduledAtNotEqual", anonymousValidator1988053796],
-    ["scheduledAtIn", anonymousValidator764760480],
-    ["scheduledAtNotIn", anonymousValidator764760480],
-    ["scheduledAtGreaterThan", anonymousValidator1988053796],
-    ["scheduledAtLowerThan", anonymousValidator1988053796],
-    ["scheduledAtIsNull", anonymousValidator196147222],
-    ["scheduledAtIsNotNull", anonymousValidator196147222],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1930640707(
+      value["$raw"],
+      `${propertyPath}.$raw`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$raw"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator807003800(
+      value["$or"],
+      `${propertyPath}.$or`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["$or"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1108665246(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1108665246(
+      value["idNotEqual"],
+      `${propertyPath}.idNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2059610435(
+      value["idIn"],
+      `${propertyPath}.idIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2059610435(
+      value["idNotIn"],
+      `${propertyPath}.idNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1108665246(
+      value["idGreaterThan"],
+      `${propertyPath}.idGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1108665246(
+      value["idLowerThan"],
+      `${propertyPath}.idLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isComplete"],
+      `${propertyPath}.isComplete`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isComplete"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isCompleteIsNull"],
+      `${propertyPath}.isCompleteIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isCompleteIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["isCompleteIsNotNull"],
+      `${propertyPath}.isCompleteIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isCompleteIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["nameNotEqual"],
+      `${propertyPath}.nameNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator869204168(
+      value["nameIn"],
+      `${propertyPath}.nameIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator869204168(
+      value["nameNotIn"],
+      `${propertyPath}.nameNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["nameLike"],
+      `${propertyPath}.nameLike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameLike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["nameILike"],
+      `${propertyPath}.nameILike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameILike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["nameNotLike"],
+      `${propertyPath}.nameNotLike`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["nameNotLike"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["scheduledAt"],
+      `${propertyPath}.scheduledAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["scheduledAtNotEqual"],
+      `${propertyPath}.scheduledAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["scheduledAtIn"],
+      `${propertyPath}.scheduledAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["scheduledAtNotIn"],
+      `${propertyPath}.scheduledAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["scheduledAtGreaterThan"],
+      `${propertyPath}.scheduledAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["scheduledAtLowerThan"],
+      `${propertyPath}.scheduledAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["scheduledAtIsNull"],
+      `${propertyPath}.scheduledAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["scheduledAtIsNotNull"],
+      `${propertyPath}.scheduledAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtNotEqual"],
+      `${propertyPath}.createdAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtIn"],
+      `${propertyPath}.createdAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtNotIn"],
+      `${propertyPath}.createdAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtGreaterThan"],
+      `${propertyPath}.createdAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtLowerThan"],
+      `${propertyPath}.createdAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNull"],
+      `${propertyPath}.createdAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNotNull"],
+      `${propertyPath}.createdAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtNotEqual"],
+      `${propertyPath}.updatedAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtIn"],
+      `${propertyPath}.updatedAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtNotIn"],
+      `${propertyPath}.updatedAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtGreaterThan"],
+      `${propertyPath}.updatedAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtLowerThan"],
+      `${propertyPath}.updatedAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNull"],
+      `${propertyPath}.updatedAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNotNull"],
+      `${propertyPath}.updatedAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNotNull"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2480,20 +3430,37 @@ export function anonymousValidator1577551207(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator1582696858],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1582696858(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2550,51 +3517,378 @@ export function anonymousValidator1430489818(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator1886215561],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["session", anonymousValidator1802076175],
-    ["sessionNotEqual", anonymousValidator1802076175],
-    ["sessionIn", anonymousValidator888270707],
-    ["sessionNotIn", anonymousValidator888270707],
-    ["expiresAt", anonymousValidator1988053796],
-    ["expiresAtNotEqual", anonymousValidator1988053796],
-    ["expiresAtIn", anonymousValidator764760480],
-    ["expiresAtNotIn", anonymousValidator764760480],
-    ["expiresAtGreaterThan", anonymousValidator1988053796],
-    ["expiresAtLowerThan", anonymousValidator1988053796],
-    ["refreshToken", anonymousValidator1802076175],
-    ["refreshTokenNotEqual", anonymousValidator1802076175],
-    ["refreshTokenIn", anonymousValidator888270707],
-    ["refreshTokenNotIn", anonymousValidator888270707],
-    ["refreshTokenIsNull", anonymousValidator196147222],
-    ["refreshTokenIsNotNull", anonymousValidator196147222],
-    ["revokedAt", anonymousValidator1988053796],
-    ["revokedAtNotEqual", anonymousValidator1988053796],
-    ["revokedAtIn", anonymousValidator764760480],
-    ["revokedAtNotIn", anonymousValidator764760480],
-    ["revokedAtGreaterThan", anonymousValidator1988053796],
-    ["revokedAtLowerThan", anonymousValidator1988053796],
-    ["revokedAtIsNull", anonymousValidator196147222],
-    ["revokedAtIsNotNull", anonymousValidator196147222],
-    ["viaSession", anonymousValidator1577551207],
-    ["viaRefreshToken", anonymousValidator600974204],
-    ["viaAccessToken", anonymousValidator600974204],
-    ["accessTokenNotExists", anonymousValidator2065515599],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1930640707(
+      value["$raw"],
+      `${propertyPath}.$raw`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$raw"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1886215561(
+      value["$or"],
+      `${propertyPath}.$or`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["$or"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["idNotEqual"],
+      `${propertyPath}.idNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idIn"],
+      `${propertyPath}.idIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idNotIn"],
+      `${propertyPath}.idNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["sessionNotEqual"],
+      `${propertyPath}.sessionNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sessionNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["sessionIn"],
+      `${propertyPath}.sessionIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sessionIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["sessionNotIn"],
+      `${propertyPath}.sessionNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["sessionNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["expiresAt"],
+      `${propertyPath}.expiresAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["expiresAtNotEqual"],
+      `${propertyPath}.expiresAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["expiresAtIn"],
+      `${propertyPath}.expiresAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["expiresAtNotIn"],
+      `${propertyPath}.expiresAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["expiresAtGreaterThan"],
+      `${propertyPath}.expiresAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["expiresAtLowerThan"],
+      `${propertyPath}.expiresAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["refreshTokenNotEqual"],
+      `${propertyPath}.refreshTokenNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshTokenNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["refreshTokenIn"],
+      `${propertyPath}.refreshTokenIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshTokenIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["refreshTokenNotIn"],
+      `${propertyPath}.refreshTokenNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshTokenNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["refreshTokenIsNull"],
+      `${propertyPath}.refreshTokenIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshTokenIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["refreshTokenIsNotNull"],
+      `${propertyPath}.refreshTokenIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshTokenIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAtNotEqual"],
+      `${propertyPath}.revokedAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["revokedAtIn"],
+      `${propertyPath}.revokedAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["revokedAtNotIn"],
+      `${propertyPath}.revokedAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAtGreaterThan"],
+      `${propertyPath}.revokedAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["revokedAtLowerThan"],
+      `${propertyPath}.revokedAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["revokedAtIsNull"],
+      `${propertyPath}.revokedAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["revokedAtIsNotNull"],
+      `${propertyPath}.revokedAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1577551207(
+      value["viaSession"],
+      `${propertyPath}.viaSession`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["viaSession"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator600974204(
+      value["viaRefreshToken"],
+      `${propertyPath}.viaRefreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["viaRefreshToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator600974204(
+      value["viaAccessToken"],
+      `${propertyPath}.viaAccessToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["viaAccessToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2065515599(
+      value["accessTokenNotExists"],
+      `${propertyPath}.accessTokenNotExists`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessTokenNotExists"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2653,20 +3947,37 @@ export function anonymousValidator600974204(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator2065515599],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2065515599(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2723,41 +4034,268 @@ export function anonymousValidator1334934277(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["$raw", anonymousValidator1930640707],
-    ["$or", anonymousValidator51142462],
-    ["id", anonymousValidator1802076175],
-    ["idNotEqual", anonymousValidator1802076175],
-    ["idIn", anonymousValidator888270707],
-    ["idNotIn", anonymousValidator888270707],
-    ["createdAt", anonymousValidator1988053796],
-    ["createdAtNotEqual", anonymousValidator1988053796],
-    ["createdAtIn", anonymousValidator764760480],
-    ["createdAtNotIn", anonymousValidator764760480],
-    ["createdAtGreaterThan", anonymousValidator1988053796],
-    ["createdAtLowerThan", anonymousValidator1988053796],
-    ["createdAtIsNull", anonymousValidator196147222],
-    ["createdAtIsNotNull", anonymousValidator196147222],
-    ["updatedAt", anonymousValidator1988053796],
-    ["updatedAtNotEqual", anonymousValidator1988053796],
-    ["updatedAtIn", anonymousValidator764760480],
-    ["updatedAtNotIn", anonymousValidator764760480],
-    ["updatedAtGreaterThan", anonymousValidator1988053796],
-    ["updatedAtLowerThan", anonymousValidator1988053796],
-    ["updatedAtIsNull", anonymousValidator196147222],
-    ["updatedAtIsNotNull", anonymousValidator196147222],
-    ["viaAccessTokens", anonymousValidator600974204],
-    ["accessTokensNotExists", anonymousValidator2065515599],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1930640707(
+      value["$raw"],
+      `${propertyPath}.$raw`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$raw"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator51142462(
+      value["$or"],
+      `${propertyPath}.$or`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["$or"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1802076175(
+      value["idNotEqual"],
+      `${propertyPath}.idNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idIn"],
+      `${propertyPath}.idIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator888270707(
+      value["idNotIn"],
+      `${propertyPath}.idNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["idNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtNotEqual"],
+      `${propertyPath}.createdAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtIn"],
+      `${propertyPath}.createdAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["createdAtNotIn"],
+      `${propertyPath}.createdAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtGreaterThan"],
+      `${propertyPath}.createdAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["createdAtLowerThan"],
+      `${propertyPath}.createdAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNull"],
+      `${propertyPath}.createdAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["createdAtIsNotNull"],
+      `${propertyPath}.createdAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtNotEqual"],
+      `${propertyPath}.updatedAtNotEqual`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotEqual"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtIn"],
+      `${propertyPath}.updatedAtIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator764760480(
+      value["updatedAtNotIn"],
+      `${propertyPath}.updatedAtNotIn`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtNotIn"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtGreaterThan"],
+      `${propertyPath}.updatedAtGreaterThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtGreaterThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1988053796(
+      value["updatedAtLowerThan"],
+      `${propertyPath}.updatedAtLowerThan`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtLowerThan"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNull"],
+      `${propertyPath}.updatedAtIsNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator196147222(
+      value["updatedAtIsNotNull"],
+      `${propertyPath}.updatedAtIsNotNull`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAtIsNotNull"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator600974204(
+      value["viaAccessTokens"],
+      `${propertyPath}.viaAccessTokens`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["viaAccessTokens"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2065515599(
+      value["accessTokensNotExists"],
+      `${propertyPath}.accessTokensNotExists`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessTokensNotExists"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -2789,19 +4327,6 @@ export function anonymousValidator1182955981(value, propertyPath) {
   if (value.length === 0) {
     return {
       value: undefined,
-    };
-  }
-  if (value.length < 1) {
-    const min = 1;
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.min",
-          info: { min },
-        },
-      ],
     };
   }
   return { value };
@@ -2855,16 +4380,15 @@ export function anonymousValidator2007164840(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$append", anonymousValidator186795873]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["$append"],
+      `${propertyPath}.$append`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$append"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3014,16 +4538,15 @@ export function anonymousValidator1511542790(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$add", anonymousValidator293751998]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator293751998(
+      value["$add"],
+      `${propertyPath}.$add`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$add"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3080,16 +4603,15 @@ export function anonymousValidator1442950861(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$subtract", anonymousValidator293751998]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator293751998(
+      value["$subtract"],
+      `${propertyPath}.$subtract`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$subtract"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3146,16 +4668,15 @@ export function anonymousValidator553023933(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$multiply", anonymousValidator293751998]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator293751998(
+      value["$multiply"],
+      `${propertyPath}.$multiply`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$multiply"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3212,16 +4733,15 @@ export function anonymousValidator661036808(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$divide", anonymousValidator293751998]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator293751998(
+      value["$divide"],
+      `${propertyPath}.$divide`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$divide"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3438,19 +4958,26 @@ export function anonymousValidator1925201648(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["path", anonymousValidator418417331],
-    ["value", anonymousValidator1027346252],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator418417331(
+      value["path"],
+      `${propertyPath}.path`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["path"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1027346252(
+      value["value"],
+      `${propertyPath}.value`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["value"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3507,16 +5034,15 @@ export function anonymousValidator1476139765(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$set", anonymousValidator1925201648]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1925201648(
+      value["$set"],
+      `${propertyPath}.$set`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$set"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3573,16 +5099,15 @@ export function anonymousValidator1247704095(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["path", anonymousValidator418417331]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator418417331(
+      value["path"],
+      `${propertyPath}.path`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["path"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3639,16 +5164,15 @@ export function anonymousValidator1462381984(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$remove", anonymousValidator1247704095]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1247704095(
+      value["$remove"],
+      `${propertyPath}.$remove`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$remove"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3783,16 +5307,15 @@ export function anonymousValidator1992090661(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$add", anonymousValidator186795873]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["$add"],
+      `${propertyPath}.$add`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$add"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3849,16 +5372,15 @@ export function anonymousValidator962402990(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$subtract", anonymousValidator186795873]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["$subtract"],
+      `${propertyPath}.$subtract`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$subtract"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -3953,24 +5475,81 @@ export function anonymousValidator617486747(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["bucketName", anonymousValidator2011937852],
-    ["contentLength", anonymousValidator222290681],
-    ["contentType", anonymousValidator2011937852],
-    ["name", anonymousValidator2011937852],
-    ["meta", anonymousValidator127301142],
-    ["createdAt", anonymousValidator1398947189],
-    ["updatedAt", anonymousValidator1398947189],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2011937852(
+      value["bucketName"],
+      `${propertyPath}.bucketName`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["bucketName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator222290681(
+      value["contentLength"],
+      `${propertyPath}.contentLength`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contentLength"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2011937852(
+      value["contentType"],
+      `${propertyPath}.contentType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contentType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2011937852(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator127301142(
+      value["meta"],
+      `${propertyPath}.meta`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["meta"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4282,20 +5861,37 @@ export function anonymousValidator165104378(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["update", anonymousValidator468289341],
-    ["where", anonymousValidator1623962574],
-    ["returning", anonymousValidator538169824],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator468289341(
+      value["update"],
+      `${propertyPath}.update`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["update"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1623962574(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator538169824(
+      value["returning"],
+      `${propertyPath}.returning`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["returning"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4432,16 +6028,15 @@ export function anonymousValidator1802084014(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [["$negate", anonymousValidator2047524467]];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2047524467(
+      value["$negate"],
+      `${propertyPath}.$negate`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["$negate"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -4886,26 +6481,103 @@ export function anonymousValidator600940900(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["isComplete", anonymousValidator437126703],
-    ["priority", anonymousValidator1285764902],
-    ["scheduledAt", anonymousValidator1398947189],
-    ["name", anonymousValidator2011937852],
-    ["data", anonymousValidator618537896],
-    ["retryCount", anonymousValidator58608997],
-    ["handlerTimeout", anonymousValidator1048226008],
-    ["createdAt", anonymousValidator1398947189],
-    ["updatedAt", anonymousValidator1398947189],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator437126703(
+      value["isComplete"],
+      `${propertyPath}.isComplete`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["isComplete"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1285764902(
+      value["priority"],
+      `${propertyPath}.priority`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["priority"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["scheduledAt"],
+      `${propertyPath}.scheduledAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2011937852(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator618537896(
+      value["data"],
+      `${propertyPath}.data`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["data"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator58608997(
+      value["retryCount"],
+      `${propertyPath}.retryCount`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["retryCount"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1048226008(
+      value["handlerTimeout"],
+      `${propertyPath}.handlerTimeout`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["handlerTimeout"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5163,20 +6835,37 @@ export function anonymousValidator286367525(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["update", anonymousValidator1605797260],
-    ["where", anonymousValidator1216835869],
-    ["returning", anonymousValidator2017242205],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1605797260(
+      value["update"],
+      `${propertyPath}.update`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["update"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1216835869(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2017242205(
+      value["returning"],
+      `${propertyPath}.returning`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["returning"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5336,22 +7025,59 @@ export function anonymousValidator2102646924(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["data", anonymousValidator618537896],
-    ["checksum", anonymousValidator2011937852],
-    ["revokedAt", anonymousValidator1827465744],
-    ["createdAt", anonymousValidator1398947189],
-    ["updatedAt", anonymousValidator1398947189],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator618537896(
+      value["data"],
+      `${propertyPath}.data`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["data"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2011937852(
+      value["checksum"],
+      `${propertyPath}.checksum`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["checksum"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1827465744(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1398947189(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5601,20 +7327,37 @@ export function anonymousValidator1516794677(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["update", anonymousValidator75403188],
-    ["where", anonymousValidator1874256931],
-    ["returning", anonymousValidator1317514041],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator75403188(
+      value["update"],
+      `${propertyPath}.update`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["update"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1874256931(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1317514041(
+      value["returning"],
+      `${propertyPath}.returning`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["returning"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5837,22 +7580,59 @@ export function anonymousValidator84897941(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["expiresAt", anonymousValidator2131524087],
-    ["revokedAt", anonymousValidator1827465744],
-    ["createdAt", anonymousValidator2131524087],
-    ["session", anonymousValidator1883545524],
-    ["refreshToken", anonymousValidator1314728024],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2131524087(
+      value["expiresAt"],
+      `${propertyPath}.expiresAt`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["expiresAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1827465744(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2131524087(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1883545524(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1314728024(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6102,20 +7882,37 @@ export function anonymousValidator1345595702(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["update", anonymousValidator383643325],
-    ["where", anonymousValidator1134585010],
-    ["returning", anonymousValidator17493427],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator383643325(
+      value["update"],
+      `${propertyPath}.update`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["update"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1134585010(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator17493427(
+      value["returning"],
+      `${propertyPath}.returning`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["returning"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6451,21 +8248,48 @@ export function anonymousValidator163358845(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator704118887],
-    ["bucketName", anonymousValidator704118887],
-    ["createdAt", anonymousValidator704118887],
-    ["updatedAt", anonymousValidator704118887],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["id"],
+      `${propertyPath}.id`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["bucketName"],
+      `${propertyPath}.bucketName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["bucketName"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6758,23 +8582,70 @@ export function anonymousValidator280827708(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator704118887],
-    ["isComplete", anonymousValidator1515977191],
-    ["name", anonymousValidator704118887],
-    ["scheduledAt", anonymousValidator1515977191],
-    ["createdAt", anonymousValidator704118887],
-    ["updatedAt", anonymousValidator704118887],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["id"],
+      `${propertyPath}.id`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1515977191(
+      value["isComplete"],
+      `${propertyPath}.isComplete`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["isComplete"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1515977191(
+      value["scheduledAt"],
+      `${propertyPath}.scheduledAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["scheduledAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -6979,20 +8850,37 @@ export function anonymousValidator362930508(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator704118887],
-    ["createdAt", anonymousValidator704118887],
-    ["updatedAt", anonymousValidator704118887],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["id"],
+      `${propertyPath}.id`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["createdAt"],
+      `${propertyPath}.createdAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["createdAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["updatedAt"],
+      `${propertyPath}.updatedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["updatedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7203,22 +9091,59 @@ export function anonymousValidator1864958291(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["id", anonymousValidator704118887],
-    ["session", anonymousValidator704118887],
-    ["expiresAt", anonymousValidator704118887],
-    ["refreshToken", anonymousValidator1515977191],
-    ["revokedAt", anonymousValidator1515977191],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["id"],
+      `${propertyPath}.id`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator704118887(
+      value["expiresAt"],
+      `${propertyPath}.expiresAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["expiresAt"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1515977191(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1515977191(
+      value["revokedAt"],
+      `${propertyPath}.revokedAt`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["revokedAt"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7372,24 +9297,81 @@ export function anonymousValidator310044624(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator65842827],
-    ["orderBy", anonymousValidator1370514093],
-    ["orderBySpec", anonymousValidator1745737810],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["select", anonymousValidator1532767426],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator65842827(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1370514093(
+      value["orderBy"],
+      `${propertyPath}.orderBy`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBy"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1745737810(
+      value["orderBySpec"],
+      `${propertyPath}.orderBySpec`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBySpec"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["as"],
+      `${propertyPath}.as`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["as"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1532767426(
+      value["select"],
+      `${propertyPath}.select`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["select"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7545,24 +9527,81 @@ export function anonymousValidator343387919(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator634541376],
-    ["orderBy", anonymousValidator1683806814],
-    ["orderBySpec", anonymousValidator608966855],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["select", anonymousValidator582777968],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator634541376(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1683806814(
+      value["orderBy"],
+      `${propertyPath}.orderBy`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBy"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator608966855(
+      value["orderBySpec"],
+      `${propertyPath}.orderBySpec`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBySpec"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["as"],
+      `${propertyPath}.as`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["as"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator582777968(
+      value["select"],
+      `${propertyPath}.select`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["select"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7791,27 +9830,114 @@ export function anonymousValidator1856722848(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator2065515599],
-    ["orderBy", anonymousValidator1834466899],
-    ["orderBySpec", anonymousValidator1672671480],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["select", anonymousValidator1139804596],
-    ["session", anonymousValidator1827379372],
-    ["refreshToken", anonymousValidator145903947],
-    ["accessToken", anonymousValidator145903947],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator2065515599(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1834466899(
+      value["orderBy"],
+      `${propertyPath}.orderBy`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBy"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1672671480(
+      value["orderBySpec"],
+      `${propertyPath}.orderBySpec`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBySpec"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["as"],
+      `${propertyPath}.as`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["as"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1139804596(
+      value["select"],
+      `${propertyPath}.select`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["select"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1827379372(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator145903947(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator145903947(
+      value["accessToken"],
+      `${propertyPath}.accessToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessToken"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7879,25 +10005,92 @@ export function anonymousValidator2093168415(value, propertyPath) {
       };
     }
   }
-  /**
-   * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-   */
-  const validatorPairs = [
-    ["where", anonymousValidator1582696858],
-    ["orderBy", anonymousValidator1221642756],
-    ["orderBySpec", anonymousValidator2142999519],
-    ["as", anonymousValidator1443576836],
-    ["limit", anonymousValidator963028965],
-    ["offset", anonymousValidator963028965],
-    ["select", anonymousValidator1791620536],
-    ["accessTokens", anonymousValidator145903947],
-  ];
-  for (const [key, validator] of validatorPairs) {
-    const validatorResult = validator(value[key], `${propertyPath}.${key}`);
+  {
+    const validatorResult = anonymousValidator1582696858(
+      value["where"],
+      `${propertyPath}.where`,
+    );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result[key] = validatorResult.value;
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1221642756(
+      value["orderBy"],
+      `${propertyPath}.orderBy`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBy"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2142999519(
+      value["orderBySpec"],
+      `${propertyPath}.orderBySpec`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["orderBySpec"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["as"],
+      `${propertyPath}.as`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["as"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["limit"],
+      `${propertyPath}.limit`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["limit"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator963028965(
+      value["offset"],
+      `${propertyPath}.offset`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["offset"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1791620536(
+      value["select"],
+      `${propertyPath}.select`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["select"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator145903947(
+      value["accessTokens"],
+      `${propertyPath}.accessTokens`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessTokens"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {

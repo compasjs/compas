@@ -1041,29 +1041,26 @@ function anonymousValidatorObject(context, imports, type) {
       }
     }}
 
-    /**
-     * @type {[string, (value: *, propertyPath: string) => EitherN<*>][]}
-     */
-    const validatorPairs = [
-      ${() => {
-        return Object.keys(type.keys).map((it) => {
-          return `["${it}",  ${createOrUseAnonymousFunction(
-            context,
-            imports,
-            type.keys[it],
-          )}],`;
-        });
-      }}
-    ];
+    ${Object.keys(type.keys)
+      .map((it) => {
+        const fn = createOrUseAnonymousFunction(
+          context,
+          imports,
+          type.keys[it],
+        );
 
-    for (const [ key, validator ] of validatorPairs) {
-      const validatorResult = validator(value[key], \`$\{propertyPath}.$\{key}\`);
-      if (validatorResult.errors) {
-        errors.push(...validatorResult.errors);
-      } else {
-        result[key] = validatorResult.value;
+        return `
+      {
+        const validatorResult = ${fn}(value["${it}"], \`$\{propertyPath}.${it}\`);
+        if (validatorResult.errors) {
+          errors.push(...validatorResult.errors);
+        } else {
+          result["${it}"] = validatorResult.value;
+        }
       }
-    }
+      `;
+      })
+      .join("\n")}
 
     if (errors.length > 0) {
       return { errors };
@@ -1145,7 +1142,10 @@ function anonymousValidatorString(context, imports, type) {
     }}
 
     ${() => {
-      if (!isNil(type.validator.min)) {
+      if (
+        !isNil(type.validator.min) &&
+        (!type.isOptional || type.validator.min !== 1)
+      ) {
         return js`
           if (value.length < ${type.validator.min}) {
             const min = ${type.validator.min};
