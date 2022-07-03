@@ -184,6 +184,11 @@ function crudGenerateRouteImplementationListRoute(
         includeOwnParam: false,
         includeJoins: false,
         traverseParents: true,
+        partial: {
+          select: [`'${type.internalSettings.primaryKey.key}'`],
+          orderBy: "ctx.validatedBody.orderBy",
+          orderBySpec: "ctx.validatedBody.orderBySpec",
+        },
       }),
     ),
     listBuilder: crudFormatBuilder(
@@ -191,6 +196,10 @@ function crudGenerateRouteImplementationListRoute(
         includeOwnParam: false,
         includeJoins: true,
         traverseParents: false,
+        partial: {
+          orderBy: "ctx.validatedBody.orderBy",
+          orderBySpec: "ctx.validatedBody.orderBySpec",
+        },
       }),
     ),
 
@@ -389,16 +398,24 @@ export function crudFormatBuilder(builder) {
 /**
  *
  * @param {import("../generated/common/types.js").CodeGenCrudType} type
- * @param {{ includeOwnParam, includeJoins, traverseParents }} opts
+ * @param {{
+ *   includeOwnParam: boolean,
+ *   includeJoins: boolean,
+ *   traverseParents: boolean,
+ *   partial: any }} opts
  * @returns {any}
  */
 export function crudGetBuilder(
   type,
-  { includeOwnParam, includeJoins, traverseParents },
+  { includeOwnParam, includeJoins, traverseParents, partial },
 ) {
   const result = {
-    where: {},
+    ...partial,
   };
+
+  if (!result.where) {
+    result.where = {};
+  }
 
   const crudType = type;
 
