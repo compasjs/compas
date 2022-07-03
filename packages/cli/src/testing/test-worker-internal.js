@@ -1,7 +1,7 @@
 import {
   dirnameForModule,
   pathJoin,
-  processDirectoryRecursiveSync,
+  processDirectoryRecursive,
 } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
@@ -20,11 +20,11 @@ export const workerFile = new URL(
 /**
  * List available test files
  *
- * @returns {string[]}
+ * @returns {Promise<string[]>}
  */
-export function listTestFiles() {
+export async function listTestFiles() {
   const files = [];
-  processDirectoryRecursiveSync(process.cwd(), (file) => {
+  await processDirectoryRecursive(process.cwd(), (file) => {
     if (file === workerFile.pathname) {
       return;
     }
@@ -53,7 +53,7 @@ export function listTestFiles() {
  */
 export async function runTestsInProcess(options) {
   await loadTestConfig();
-  const files = listTestFiles();
+  const files = await listTestFiles();
 
   if (!options?.singleFileMode && Array.isArray(files)) {
     for (const file of files) {

@@ -14,31 +14,31 @@ export function watcherKillProcess(
  * Run watcher with the provided chokidar options, calling the hooks
  *
  * @param {{
- *   chokidarOptions: chokidar.WatchOptions,
+ *   chokidarOptions: import("chokidar").WatchOptions,
  *   hooks: {
  *     onRestart: () => void,
  *   }
  * }} options
- * @returns {{ closeWatcher: () => Promise<void> }}
+ * @returns {Promise<{ closeWatcher: () => Promise<void> }>}
  */
 export function watcherRun({
   chokidarOptions,
   hooks,
 }: {
-  chokidarOptions: chokidar.WatchOptions;
+  chokidarOptions: import("chokidar").WatchOptions;
   hooks: {
     onRestart: () => void;
   };
-}): {
+}): Promise<{
   closeWatcher: () => Promise<void>;
-};
+}>;
 /**
  * Run watcher run & wrap around child process spawn.
  * Makes sure the instance is fully killed, before starting up again.
  *
  * @param {Logger} logger
  * @param {{
- *   chokidarOptions: chokidar.WatchOptions,
+ *   chokidarOptions: import("chokidar").WatchOptions,
  *   spawnArguments: [
  *     string,
  *     ReadonlyArray<string>,
@@ -49,13 +49,12 @@ export function watcherRun({
 export function watcherRunWithSpawn(
   logger: Logger,
   options: {
-    chokidarOptions: chokidar.WatchOptions;
+    chokidarOptions: import("chokidar").WatchOptions;
     spawnArguments: [
       string,
       ReadonlyArray<string>,
       import("child_process").SpawnOptions,
     ];
   },
-): void;
-import chokidar from "chokidar";
+): Promise<void>;
 //# sourceMappingURL=index.d.ts.map

@@ -1,6 +1,5 @@
 import { spawn as cpSpawn } from "child_process";
 import { AppError } from "@compas/stdlib";
-import chokidar from "chokidar";
 import treeKill from "tree-kill";
 
 /**
@@ -40,14 +39,14 @@ export function watcherKillProcess(process, signal) {
  * Run watcher with the provided chokidar options, calling the hooks
  *
  * @param {{
- *   chokidarOptions: chokidar.WatchOptions,
+ *   chokidarOptions: import("chokidar").WatchOptions,
  *   hooks: {
  *     onRestart: () => void,
  *   }
  * }} options
- * @returns {{ closeWatcher: () => Promise<void> }}
+ * @returns {Promise<{ closeWatcher: () => Promise<void> }>}
  */
-export function watcherRun({ chokidarOptions, hooks }) {
+export async function watcherRun({ chokidarOptions, hooks }) {
   const stdinCallback = (data) => {
     const input = data.toString().trim().toLowerCase();
 
@@ -69,6 +68,7 @@ export function watcherRun({ chokidarOptions, hooks }) {
 
   let timeout = undefined;
 
+  const chokidar = await import("chokidar");
   const watcher = chokidar.watch(".", chokidarOptions);
 
   watcher.on("change", () => {
@@ -118,7 +118,7 @@ export function watcherRun({ chokidarOptions, hooks }) {
  *
  * @param {Logger} logger
  * @param {{
- *   chokidarOptions: chokidar.WatchOptions,
+ *   chokidarOptions: import("chokidar").WatchOptions,
  *   spawnArguments: [
  *     string,
  *     ReadonlyArray<string>,
@@ -126,12 +126,12 @@ export function watcherRun({ chokidarOptions, hooks }) {
  *   ],
  * }} options
  */
-export function watcherRunWithSpawn(logger, options) {
+export async function watcherRunWithSpawn(logger, options) {
   let instance = undefined;
   let instanceKilled = false;
 
   // @ts-ignore
-  watcherRun({
+  await watcherRun({
     chokidarOptions: options.chokidarOptions,
     hooks: {
       onRestart: killAndStart,

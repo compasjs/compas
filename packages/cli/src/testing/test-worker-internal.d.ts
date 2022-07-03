@@ -2,9 +2,9 @@
 /**
  * List available test files
  *
- * @returns {string[]}
+ * @returns {Promise<string[]>}
  */
-export function listTestFiles(): string[];
+export function listTestFiles(): Promise<string[]>;
 /**
  * @param {{
  *   singleFileMode: boolean

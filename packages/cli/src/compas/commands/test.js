@@ -136,7 +136,7 @@ export async function cliExecutor(logger, state) {
   }
 
   await loadTestConfig();
-  const files = listTestFiles();
+  const files = await listTestFiles();
 
   // Almost does the same things as `mainTestFn`, however since tests are run by workers
   // instead of directly. We dispatch them, and then print the results.

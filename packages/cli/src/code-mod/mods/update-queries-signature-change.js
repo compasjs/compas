@@ -2,7 +2,6 @@
 
 import { readFile, writeFile } from "fs/promises";
 import { AppError, processDirectoryRecursive } from "@compas/stdlib";
-import * as recast from "recast";
 import { PARALLEL_COUNT } from "../constants.js";
 
 /**
@@ -97,6 +96,7 @@ async function listAllJavaScriptFiles(generatedFiles) {
  *   string[] }>}
  */
 async function modTheFiles(fileList) {
+  const recast = await import("recast");
   const builders = recast.types.builders;
 
   const filesToWrite = {};
@@ -247,6 +247,7 @@ async function parseFile(file, contents) {
     });
   }
 
+  const recast = await import("recast");
   const babelOpts = await import("recast/parsers/_babel_options.js");
   const opts = babelOpts.default.default();
 
