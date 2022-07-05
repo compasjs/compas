@@ -42,7 +42,7 @@ as a command.
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {
   // `compas todo`
-  // requireed
+  // required
   name: "todo",
 
   // Description that is printed in line in the command list

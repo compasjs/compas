@@ -38,8 +38,6 @@ test("code-gen/structure/structureHoistNamedItems", (t) => {
       isOptional: true,
     };
 
-    t.log.info(structure);
-
     structureHoistNamedItems(structure);
 
     t.equal(structure.group2.bar.isOptional, false);
