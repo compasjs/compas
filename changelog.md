@@ -4,6 +4,15 @@ editLink: false
 
 # Changelog
 
+### [v0.0.208](https://github.com/compasjs/compas/releases/tag/v0.0.208)
+
+##### Changes
+
+- build(deps): bump eslint from 8.18.0 to 8.19.0
+  ([#1883](https://github.com/compasjs/compas/pull/1883))
+- fix(code-gen): correctly prioritze existing named items in the structure
+  ([#1885](https://github.com/compasjs/compas/pull/1885))
+
 ### [v0.0.207](https://github.com/compasjs/compas/releases/tag/v0.0.207)
 
 ##### Changes
