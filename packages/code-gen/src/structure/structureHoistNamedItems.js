@@ -21,10 +21,12 @@ export function structureHoistNamedItems(structure) {
       return type;
     }
 
-    structureAddType(structure, type);
-
-    if (metadata.isNamedType) {
+    // @ts-expect-error
+    if (metadata.isNamedType && structure[type.group]?.[type.name]) {
       return type;
+      // @ts-expect-error
+    } else if (!structure[type.group]?.[type.name]) {
+      structureAddType(structure, type);
     }
 
     // @ts-expect-error
