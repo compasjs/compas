@@ -132,7 +132,7 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
   queryPart.exec(
     /** @type {any} */ {
       unsafe(queryString, parameters) {
-        sql = queryString.trim();
+        sql = queryString.trim().replaceAll(/\s+/g, " ");
         params = /** @type {any[]} */ parameters;
       },
     },
@@ -151,8 +151,11 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
 
     if (typeof value === "string") {
       return `'${value}'`;
+    } else if (value instanceof Date) {
+      return `'${value.toISOString()}'`;
     }
-    return params[idx - 1];
+
+    return value;
   });
 }
 
