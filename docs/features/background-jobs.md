@@ -116,3 +116,14 @@ does that.
   daily at 2 AM.
 - In your handler object:
   `{ "compas.file.cleanup": jobFileCleanup(minio, "bucketName"), }`
+
+### jobSessionStoreCleanup
+
+Revoked and expired sessions of the session store are not automatically removed.
+This job does exactly that.
+
+- In `queueWorkerRegisterCronJobs`:
+  `{ name: "compas.sessionStore.cleanup", cronExpression: "0 2 * * *" }` to run
+  this job daily at 2 AM.
+- In your handler object:
+  `{ "compas.sessionStore.cleanup": jobSessionStoreCleanup({ maxRevokedAgeInDays: 14 }), }`
