@@ -102,3 +102,17 @@ use this job is the following:
   `{ name: "compas.queue.insights", cronExpression: "0 * * * *" }` to run this
   job every hour.
 - In your handler object: `{ "compas.queue.insights": jobQueueInsights(), }`
+
+## Other @compas/store jobs
+
+### jobFileCleanup
+
+When you delete a file via `queries.fileDelete` the file is not removed from the
+underlying bucket. To do this `syncDeletedFiles` is necessary. This This job
+does that.
+
+- In `queueWorkerRegisterCronJobs`:
+  `{ name: "compas.file.cleanup", cronExpression: "0 2 * * *" }` to run this job
+  daily at 2 AM.
+- In your handler object:
+  `{ "compas.file.cleanup": jobFileCleanup(minio, "bucketName"), }`

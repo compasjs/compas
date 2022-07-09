@@ -78,6 +78,7 @@ export {
   fileSignAccessToken,
   fileVerifyAccessToken,
 } from "./src/files.js";
+export { jobFileCleanup } from "./src/files-jobs.js";
 
 export { FileCache } from "./src/file-cache.js";
 
