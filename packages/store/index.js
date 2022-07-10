@@ -98,7 +98,10 @@ export {
   sessionStoreRefreshTokens,
   sessionStoreCleanupExpiredSessions,
 } from "./src/session-store.js";
-export { jobSessionStoreCleanup } from "./src/session-store-jobs.js";
+export {
+  jobSessionStoreCleanup,
+  jobSessionStoreProcessLeakedSession,
+} from "./src/session-store-jobs.js";
 
 export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 
