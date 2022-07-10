@@ -112,9 +112,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [16]
-    runs-on: ${{ matrix.os }}
+        node: [16, 18]
+    runs-on: ubuntu-latest
     env:
       CI: true
     steps:
