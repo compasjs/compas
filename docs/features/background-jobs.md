@@ -127,3 +127,14 @@ This job does exactly that.
   this job daily at 2 AM.
 - In your handler object:
   `{ "compas.sessionStore.cleanup": jobSessionStoreCleanup({ maxRevokedAgeInDays: 14 }), }`
+
+### jobSessionStoreProcessLeakedSession
+
+Process reported leaked sessions. These jobs occur when the session store finds
+that refresh token is used multiple times. The job is able to either process the
+leaked session in to a report and log it via
+`type: "sessionStore.leakedSession.report"` or is able to dump the raw session
+information via `type: "sessionStore.leakedSession.dump"`
+
+- In your handler object:
+  `{ "compas.sessionStore.potentialLeakedSession": jobSessionStoreCleanup({ maxRevokedAgeInDays: 14 }), }`
