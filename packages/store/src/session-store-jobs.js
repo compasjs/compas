@@ -50,7 +50,7 @@ export function jobSessionStoreProcessLeakedSession(options) {
    * @param {import("@compas/stdlib").InsightEvent} event
    * @param {import("../types/advanced-types").Postgres} sql
    * @param {StoreJob} job
-   * @returns {Promise<void>}
+   * @returns {void}
    */
   return function jobSessionStoreProcessLeakedSession(event, sql, job) {
     eventStart(event, "job.sessionStoreProcessLeakedSession");
