@@ -1,4 +1,5 @@
 import {  useApi, AppErrorResponse } from "../common/reactQuery";
+import { AxiosInstance } from "axios";
 import {
   QueryKey,
   UseMutationOptions,
@@ -8,6 +9,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  QueryClient,
 } from "react-query";
 import * as T from "../common/types";
 import {
