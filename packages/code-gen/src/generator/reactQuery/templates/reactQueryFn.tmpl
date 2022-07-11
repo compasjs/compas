@@ -1,6 +1,10 @@
 {{ /* Keep in sync with apiClientFn */ }}
 {{ const funcName = "use" + upperCaseFirst(item.uniqueName); }}
 {{ const responseType = item.response ? `T.${getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient" })}` : `any`; }}
+{{ const paramsType = item.params ? `T.${getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, })}` : `unknown`; }}
+{{ const queryType = item.query ? `T.${getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, })}` : `unknown`; }}
+{{ const bodyType = item.body ? `T.${getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, })}` : `unknown`; }}
+
 
 {{ if (item.method === "GET" || item.idempotent) { }}
 
@@ -9,15 +13,9 @@
 {{= formatDocString(item.docString + (item.tags.length === 0 ? "" : "\n\nTags: " + item.tags.join(", ")), { format: "jsdoc", }) }}
  */
 export function {{= funcName }}<TData = {{= responseType }}>({{= item.params || item.query || item.body ? "opts:" : "opts?:" }} {
-{{ if (item.params) { }}
-params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
-{{ if (item.query) { }}
-query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
-{{ if (item.body) { }}
-body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
 options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefined,
 }{{= item.params || item.query || item.body ? "" : "|undefined" }}) {
   const axiosInstance = useApi();
@@ -74,15 +72,9 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
   {{ } }}
 
   return useQuery({{= funcName }}.queryKey(
-    {{ if (item.params) { }}
-    opts.params,
-    {{ } }}
-    {{ if (item.query) { }}
-    opts.query,
-    {{ } }}
-    {{ if (item.body) { }}
-    opts.body,
-    {{ } }}
+    {{= item.params ? `opts.params,` : "" }}
+    {{= item.query ? `opts.query,` : "" }}
+    {{= item.body ? `opts.body,` : "" }}
     ),
     ({ signal }) => {
       return api{{= item.uniqueName }}(
@@ -108,42 +100,115 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
  * Query key used by {{= funcName }}
  */
 {{= funcName }}.queryKey = (
-{{ if (item.params) { }}
-params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
-{{ if (item.query) { }}
-query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
-{{ if (item.body) { }}
-body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }},
-{{ } }}
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
 ): QueryKey => [
   ...{{= funcName }}.baseKey(),
- {{ if (item.params) { }}
- params,
- {{ } }}
- {{ if (item.query) { }}
- query,
- {{ } }}
- {{ if (item.body) { }}
- body,
- {{ } }}
+  {{= item.params ? `params,` : "" }}
+  {{= item.query ? `query,` : "" }}
+  {{= item.body ? `body,` : "" }}
 ];
+
+((newline))
+/**
+ * Fetch {{= funcName }} via the queryClient and return the result
+ */
+{{= funcName }}.fetch = (
+queryClient: QueryClient,
+axiosInstance: AxiosInstance,
+{{ if (item.params || item.query || item.body) { }}
+data: {
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
+}
+{{ } }}
+) => queryClient.fetchQuery({{= funcName }}.queryKey(
+    {{ if (item.params) { }} data.params, {{ } }}
+    {{ if (item.query) { }} data.query, {{ } }}
+    {{ if (item.body) { }} data.body, {{ } }}
+), () => api{{= item.uniqueName }}(
+     axiosInstance,
+     {{= item.params ? "data.params, " : ""}}
+     {{= item.query ? "data.query, " : "" }}
+     {{= item.body ? "data.body, " : "" }}
+));
+
+((newline))
+/**
+ * Prefetch {{= funcName }} via the queryClient
+ */
+{{= funcName }}.prefetch = (
+queryClient: QueryClient,
+axiosInstance: AxiosInstance,
+{{ if (item.params || item.query || item.body) { }}
+data: {
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
+}
+{{ } }}
+) => queryClient.prefetchQuery({{= funcName }}.queryKey(
+    {{ if (item.params) { }} data.params, {{ } }}
+    {{ if (item.query) { }} data.query, {{ } }}
+    {{ if (item.body) { }} data.body, {{ } }}
+), () => api{{= item.uniqueName }}(
+     axiosInstance,
+     {{= item.params ? "data.params, " : ""}}
+     {{= item.query ? "data.query, " : "" }}
+     {{= item.body ? "data.body, " : "" }}
+));
+
+((newline))
+/**
+ * Invalidate {{= funcName }} via the queryClient
+ */
+{{= funcName }}.invalidate = (
+queryClient: QueryClient,
+axiosInstance: AxiosInstance,
+{{ if (item.params || item.query || item.body) { }}
+keyInput: {
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
+},
+{{ } }}
+) => queryClient.invalidateQueries({{= funcName }}.queryKey(
+    {{ if (item.params) { }} keyInput.params, {{ } }}
+    {{ if (item.query) { }} keyInput.query, {{ } }}
+    {{ if (item.body) { }} keyInput.body, {{ } }}
+));
+
+
+((newline))
+/**
+ * Set data for {{= funcName }} on the queryClient
+ */
+{{= funcName }}.setQueryData = (
+queryClient: QueryClient,
+{{ if (item.params || item.query || item.body) { }}
+queryKey: {
+{{= item.params ? `params: ${paramsType},` : "" }}
+{{= item.query ? `query: ${queryType},` : "" }}
+{{= item.body ? `body: ${bodyType},` : "" }}
+},
+{{ } }}
+data: {{= responseType }},
+) => queryClient.setQueryData({{= funcName }}.queryKey(
+    {{= item.params ? `queryKey.params,` : "" }}
+    {{= item.query ? `queryKey.query,` : "" }}
+    {{= item.body ? `queryKey.body,` : "" }}
+), data);
 
 {{ } else { }}
 
 {{ const hasInvalidations = item.invalidations.length > 0; }}
 
 interface {{= upperCaseFirst(funcName) }}Props {
-   {{ if (item.params) { }}
-   params: T.{{= getTypeNameForType(item.params.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
-   {{ } }}
-   {{ if (item.query) { }}
-    query: T.{{= getTypeNameForType(item.query.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
-   {{ } }}
-   {{ if (item.body) { }}
-   body: T.{{= getTypeNameForType(item.body.reference, typeSuffix.apiInput, { useDefaults: false, useConvert: true, }) }};
-   {{ } }}
+   {{= item.params ? `params: ${paramsType},` : "" }}
+   {{= item.query ? `query: ${queryType},` : "" }}
+   {{= item.body ? `body: ${bodyType},` : "" }}
    {{ if (item.files) { }}
    files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input" }) }};
    {{ } }}
