@@ -22,7 +22,7 @@
     "file-type": "17.1.2",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
-    "minio": "7.0.28",
+    "minio": "7.0.29",
     "mime-types": "2.1.35",
     "postgres": "3.2.4",
     "sharp": "0.30.7"
