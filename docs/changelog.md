@@ -4,6 +4,35 @@ editLink: false
 
 # Changelog
 
+### [v0.0.209](https://github.com/compasjs/compas/releases/tag/v0.0.209)
+
+##### Changes
+
+- build(deps): bump @types/koa from 2.13.4 to 2.13.5
+  ([#1903](https://github.com/compasjs/compas/pull/1903))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump minio from 7.0.28 to 7.0.29
+  ([#1900](https://github.com/compasjs/compas/pull/1900))
+  - [Release notes](https://github.com/minio/minio-js/releases)
+- chore(ci): expand on matrix combinations for test and coverage runs
+  ([#1898](https://github.com/compasjs/compas/pull/1898))
+  - Closes [#1895](https://github.com/compasjs/compas/pull/1895)
+- feat(code-gen): create `fetch`, `prefetch`, etc extension on generated hooks
+  ([#1901](https://github.com/compasjs/compas/pull/1901))
+  - Closes [#1879](https://github.com/compasjs/compas/pull/1879)
+- feat(store): add `jobFileCleanup`
+  ([#1896](https://github.com/compasjs/compas/pull/1896))
+  - Closes [#1892](https://github.com/compasjs/compas/pull/1892)
+- feat(store): add `jobSessionStoreCleanup`
+  ([#1897](https://github.com/compasjs/compas/pull/1897))
+  - Closes [#1893](https://github.com/compasjs/compas/pull/1893)
+- feat(store): add `jobSessionStoreProcessLeakedSession`
+  ([#1899](https://github.com/compasjs/compas/pull/1899))
+  - Closes [#1894](https://github.com/compasjs/compas/pull/1894)
+- feat(store): support interpolating dates in `stringifyQueryPart`
+  ([#1890](https://github.com/compasjs/compas/pull/1890))
+  - Closes [#1888](https://github.com/compasjs/compas/pull/1888)
+
 ### [v0.0.208](https://github.com/compasjs/compas/releases/tag/v0.0.208)
 
 ##### Changes
