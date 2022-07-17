@@ -2,8 +2,13 @@
   "name": "compas",
   "version": "0.0.209",
   "description": "Unified backend tooling",
-  "main": "./index.js",
-  "exports": "./index.js",
+  "exports": {
+    "./cli": "./src/exports/cli.js",
+    "./code-gen": "./src/exports/code-gen.js",
+    "./server": "./src/exports/server.js",
+    "./stdlib": "./src/exports/stdlib.js",
+    "./store": "./src/exports/store.js"
+  },
   "types": "./index.d.ts",
   "type": "module",
   "keywords": [
