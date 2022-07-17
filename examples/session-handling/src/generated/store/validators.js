@@ -8,6 +8,7 @@ import {
   anonymousValidator1334934277,
   anonymousValidator1337490931,
   anonymousValidator1345595702,
+  anonymousValidator1414433474,
   anonymousValidator1430489818,
   anonymousValidator1516794677,
   anonymousValidator163358845,
@@ -97,6 +98,32 @@ export function validateStoreFileMeta(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreFileMeta}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreFileResponseInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileResponse>}
+ */
+export function validateStoreFileResponse(value, propertyPath = "$") {
+  const result = anonymousValidator1414433474(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileResponse}} */
   return { value: result.value };
 }
 /**

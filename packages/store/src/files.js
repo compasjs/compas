@@ -11,6 +11,8 @@ import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
 import { listObjects } from "./minio.js";
 import { query } from "./query.js";
+import { queueWorkerAddJob } from "./queue-worker.js";
+import { TRANSFORMED_CONTENT_TYPES } from "./send-transformed-image.js";
 
 const fileQueries = {
   copyFile: (sql, targetId, targetBucket, sourceId, sourceBucket) => sql`
@@ -52,21 +54,18 @@ const fileQueries = {
  *  bucketName?: string;
  *  contentType: string;
  *  name: string;
- *  meta?:
- *    | undefined
- *    | {
- *        transforms?: undefined | any;
- *        transformedFromOriginal?: undefined | string;
- *      }
- *    | object;
+ *  meta?: StoreFileMeta;
  *  createdAt?: undefined | Date;
  *  updatedAt?: undefined | Date;
  *  deletedAt?: undefined | Date;
  * }} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
- * @param {{
- *   allowedContentTypes?: string[]
- * }} [options]
+ * @param {object} [options] Various options for runtime checks and compatible features
+ * @param {string[]} [options.allowedContentTypes] If provided, verifies that the
+ *   inferred file type is one of the provided content types
+ * @param {boolean} [options.schedulePlaceholderImageJob] If the file type starts with
+ *   `image/`, inserts a `compas.file.generatePlaceholder` job which can be handled with
+ *   {@link jobFileGeneratePlaceholderImage}
  * @returns {Promise<StoreFile>}
  */
 export async function createOrUpdateFile(
@@ -75,7 +74,7 @@ export async function createOrUpdateFile(
   bucketName,
   props,
   source,
-  { allowedContentTypes } = {},
+  { allowedContentTypes, schedulePlaceholderImageJob } = {},
 ) {
   if (!props.name) {
     throw AppError.validationError("store.createOrUpdateFile.invalidName");
@@ -146,6 +145,18 @@ export async function createOrUpdateFile(
   // @ts-ignore
   const [result] = await queries.fileUpsertOnId(sql, props);
 
+  if (
+    schedulePlaceholderImageJob &&
+    TRANSFORMED_CONTENT_TYPES.includes(result.contentType)
+  ) {
+    await queueWorkerAddJob(sql, {
+      name: "compas.file.generatePlaceholderImage",
+      data: {
+        fileId: result.id,
+      },
+    });
+  }
+
   return result;
 }
 
@@ -214,6 +225,45 @@ export async function copyFile(
   }).exec(sql);
 
   return result;
+}
+
+/**
+ * Format a StoreFile, so it can be used in the response.
+ *
+ * @param {StoreFile} file
+ * @param {object} options
+ * @param {string} options.url
+ * @param {{
+ *   signingKey: string,
+ *   maxAgeInSeconds: number,
+ * }} [options.signAccessToken]
+ * @returns {StoreFileResponse}
+ */
+export function fileFormatResponse(file, options) {
+  if (!options.url) {
+    throw AppError.serverError({
+      message: `'fileFormatResponse' requires that the url is provided.`,
+    });
+  }
+
+  if (options.signAccessToken) {
+    options.url += `?accessToken=${fileSignAccessToken({
+      fileId: file.id,
+      maxAgeInSeconds: options.signAccessToken.maxAgeInSeconds,
+      signingKey: options.signAccessToken.signingKey,
+    })}`;
+  } else {
+    options.url += `?v=${file.id}`;
+  }
+
+  return {
+    id: file.id,
+    name: file.name,
+    contentType: file.contentType,
+    altText: file.meta?.altText,
+    placeholderImage: file.meta?.placeholderImage,
+    url: options.url,
+  };
 }
 
 /**

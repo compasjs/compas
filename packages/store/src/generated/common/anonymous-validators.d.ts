@@ -37,7 +37,7 @@ export function anonymousValidator1443576836(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }>}
+ * @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }>}
  */
 export function anonymousValidator2144828802(
   value: any,
@@ -45,6 +45,8 @@ export function anonymousValidator2144828802(
 ): EitherN<{
   transforms?: undefined | any;
   transformedFromOriginal?: undefined | string;
+  placeholderImage?: undefined | string;
+  altText?: undefined | string;
 }>;
 /**
  * @param {*} value
@@ -99,6 +101,22 @@ export function anonymousValidator599447075(
   id: string;
   createdAt: Date;
   updatedAt: Date;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"id": string, "name": string, "contentType": string, "url": string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }>}
+ */
+export function anonymousValidator1414433474(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  id: string;
+  name: string;
+  contentType: string;
+  url: string;
+  placeholderImage?: undefined | string;
+  altText?: undefined | string;
 }>;
 /**
  * @param {*} value
@@ -864,7 +882,7 @@ export function anonymousValidator1462381984(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
+ * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
  */
 export function anonymousValidator127301142(
   value: any,
@@ -874,6 +892,8 @@ export function anonymousValidator127301142(
   | {
       transforms?: undefined | any;
       transformedFromOriginal?: undefined | string;
+      placeholderImage?: undefined | string;
+      altText?: undefined | string;
     }
   | {
       $set: {
@@ -939,7 +959,7 @@ export function anonymousValidator1398947189(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator617486747(
   value: any,
@@ -983,6 +1003,8 @@ export function anonymousValidator617486747(
     | {
         transforms?: undefined | any;
         transformedFromOriginal?: undefined | string;
+        placeholderImage?: undefined | string;
+        altText?: undefined | string;
       }
     | {
         $set: {

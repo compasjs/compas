@@ -25,6 +25,15 @@ export function validateStoreFileMeta(
   propertyPath?: string | undefined,
 ): Either<StoreFileMeta>;
 /**
+ * @param {undefined|any|StoreFileResponseInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileResponse>}
+ */
+export function validateStoreFileResponse(
+  value: undefined | any | StoreFileResponseInput,
+  propertyPath?: string | undefined,
+): Either<StoreFileResponse>;
+/**
  * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
  *
  * @param {undefined|any|StoreImageTransformOptionsInput} value

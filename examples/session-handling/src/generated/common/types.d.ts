@@ -28,6 +28,16 @@ declare global {
   type StoreFileMeta = {
     transforms?: undefined | any;
     transformedFromOriginal?: undefined | string;
+    placeholderImage?: undefined | string;
+    altText?: undefined | string;
+  };
+  type StoreFileResponse = {
+    id: string;
+    name: string;
+    contentType: string;
+    url: string;
+    placeholderImage?: undefined | string;
+    altText?: undefined | string;
   };
   // Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
   type StoreImageTransformOptions = { q: number; w: number };
@@ -264,6 +274,8 @@ declare global {
       | {
           transforms?: undefined | any;
           transformedFromOriginal?: undefined | string;
+          placeholderImage?: undefined | string;
+          altText?: undefined | string;
         }
       | { $set: { path: (number | string)[]; value: any } }
       | { $remove: { path: (number | string)[] } };
@@ -443,6 +455,8 @@ declare global {
       | {
           transforms?: undefined | any;
           transformedFromOriginal?: undefined | string;
+          placeholderImage?: undefined | string;
+          altText?: undefined | string;
         };
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
@@ -580,7 +594,10 @@ declare global {
     | {
         transforms?: undefined | any;
         transformedFromOriginal?: undefined | string;
+        placeholderImage?: undefined | string;
+        altText?: undefined | string;
       };
+  type StoreFileResponseInput = StoreFileResponse;
   type StoreImageTransformOptionsInput = {
     q?: undefined | number | string;
     w: number | string;
