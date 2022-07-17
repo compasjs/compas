@@ -126,6 +126,19 @@ export type GenerateOpts = {
   isNode?: boolean | undefined;
   isNodeServer?: boolean | undefined;
   /**
+   * Options for conforming the output based on the
+   * specified environment and runtime.
+   */
+  environment?:
+    | {
+        /**
+         * Switch api client
+         * generation and corresponding types based on the available globals.
+         */
+        clientRuntime?: "browser" | "react-native" | undefined;
+      }
+    | undefined;
+  /**
    * Enabling specific generators.
    */
   enabledGenerators?:

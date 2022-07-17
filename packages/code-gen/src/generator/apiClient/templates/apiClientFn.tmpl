@@ -63,7 +63,11 @@ export async function api{{= item.uniqueName }}(
         {{= options.useTypescript ? `// @ts-ignore` : "" }}
         const keyFiles = Array.isArray(files[key]) ? files[key] : [files[key]];
         for (const file of keyFiles) {
-          data.append(key, file.data, file.name);
+          {{ if (options.environment.clientRuntime === "react-native") { }}
+            data.append(key, file);
+          {{ } else { }}
+            data.append(key, file.data, file.name);
+          {{ } }}
         }
       }
     {{ } else if (item.body) { }}

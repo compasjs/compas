@@ -35,6 +35,10 @@ import { lowerCaseFirst } from "./utils.js";
  * @property {boolean|undefined} [isBrowser]
  * @property {boolean|undefined} [isNode]
  * @property {boolean|undefined} [isNodeServer]
+ * @property {object} [environment] Options for conforming the output based on the
+ *   specified environment and runtime.
+ * @property {"browser"|"react-native"} [environment.clientRuntime] Switch api client
+ *   generation and corresponding types based on the available globals.
  * @property {(
  *   "type"|
  *   "validator"|
@@ -65,6 +69,9 @@ const defaultGenerateOptionsBrowser = {
   isNodeServer: false,
   isNode: false,
   enabledGenerators: ["type", "apiClient", "reactQuery"],
+  environment: {
+    clientRuntime: "browser",
+  },
   useTypescript: true,
   dumpStructure: false,
   dumpApiStructure: false,
@@ -79,6 +86,7 @@ const defaultGenerateOptionsNodeServer = {
   isNodeServer: true,
   isNode: true,
   enabledGenerators: ["type", "validator", "sql", "router", "apiClient"],
+  environment: {},
   useTypescript: false,
   dumpStructure: false,
   dumpApiStructure: true,
@@ -93,6 +101,7 @@ const defaultGenerateOptionsNode = {
   isNodeServer: false,
   isNode: true,
   enabledGenerators: ["type", "validator"],
+  environment: {},
   useTypescript: false,
   dumpStructure: false,
   dumpApiStructure: false,
@@ -354,6 +363,13 @@ export class App {
       options.enabledGenerators.length > 0
         ? options.enabledGenerators
         : opts.enabledGenerators ?? [];
+
+    if (options.environment) {
+      opts.environment = {
+        ...(opts.environment ?? {}),
+        ...options.environment,
+      };
+    }
 
     // Quick hack so we can test if we have generated
     // before running the tests.

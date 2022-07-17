@@ -284,7 +284,13 @@ export function generateTypeDefinition(
       break;
     case "file":
       if (fileTypeIO === "input" && isBrowser) {
-        result += `{ name?: string, data: Blob }`;
+        if (context.options.environment.clientRuntime === "browser") {
+          result += `{ name?: string, data: Blob }`;
+        } else if (
+          context.options.environment.clientRuntime === "react-native"
+        ) {
+          result += `(string | {name?: string, type?: string, uri: string })`;
+        }
       } else if (fileTypeIO === "input" && isNode) {
         result += `{ name?: string, data: ReadableStream }`;
       } else if (fileTypeIO === "outputRouter") {
