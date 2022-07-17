@@ -1,7 +1,6 @@
 export { structure as storeStructure } from "./src/generated/common/structure.js";
 export { queries as storeQueries } from "./src/generated/database/index.js";
 export { setStoreQueries } from "./src/generated.js";
-export { jobFileCleanup } from "./src/files-jobs.js";
 export { FileCache } from "./src/file-cache.js";
 export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 export { postgresTableSizes } from "./src/insight.js";
@@ -47,12 +46,17 @@ export {
 } from "./src/migrations.js";
 export {
   createOrUpdateFile,
+  fileFormatResponse,
   copyFile,
   getFileStream,
   syncDeletedFiles,
   fileSignAccessToken,
   fileVerifyAccessToken,
 } from "./src/files.js";
+export {
+  jobFileCleanup,
+  jobFileGeneratePlaceholderImage,
+} from "./src/files-jobs.js";
 export {
   queueWorkerAddJob,
   queueWorkerRegisterCronJobs,
