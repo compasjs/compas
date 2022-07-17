@@ -5,6 +5,7 @@ export namespace compasGenerateSettings {
   const isNodeServer: boolean;
   const isNode: boolean;
   const enabledGenerators: string[];
+  const environment: {};
   const useTypescript: boolean;
   const dumpStructure: boolean;
   const dumpApiStructure: boolean;
