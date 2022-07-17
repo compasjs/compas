@@ -117,6 +117,16 @@ does that.
 - In your handler object:
   `{ "compas.file.cleanup": jobFileCleanup(minio, "bucketName"), }`
 
+### jobFileGeneratePlaceholderImage
+
+When you create a file via `createOrUpdateFile` you have to the option to let it
+create a job to generate a placeholder image. This is a 10px wide JPEG that is
+stored on the file object, to support things like
+[Next.js Image `blurDataUrl`](https://nextjs.org/docs/api-reference/next/image#blurdataurl).
+
+- In your handler object:
+  `{ "compas.file.generatePlaceholderImage": jobFileGeneratePlaceholderImage(minio, "bucketName"), }`
+
 ### jobSessionStoreCleanup
 
 Revoked and expired sessions of the session store are not automatically removed.
@@ -130,7 +140,7 @@ This job does exactly that.
 
 ### jobSessionStoreProcessLeakedSession
 
-Process reported leaked sessions. These jobs occur when the session store finds
+Process re ported leaked sessions. These jobs occur when the session store finds
 that refresh token is used multiple times. The job is able to either process the
 leaked session in to a report and log it via
 `type: "sessionStore.leakedSession.report"` or is able to dump the raw session

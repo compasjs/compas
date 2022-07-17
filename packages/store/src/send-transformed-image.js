@@ -4,6 +4,15 @@ import sharp from "sharp";
 import { createOrUpdateFile } from "./files.js";
 import { queryFile } from "./generated/database/file.js";
 
+export const TRANSFORMED_CONTENT_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+];
+
 /**
  * @typedef {(
  *   file: StoreFile,

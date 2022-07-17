@@ -21,21 +21,18 @@
  *  bucketName?: string;
  *  contentType: string;
  *  name: string;
- *  meta?:
- *    | undefined
- *    | {
- *        transforms?: undefined | any;
- *        transformedFromOriginal?: undefined | string;
- *      }
- *    | object;
+ *  meta?: StoreFileMeta;
  *  createdAt?: undefined | Date;
  *  updatedAt?: undefined | Date;
  *  deletedAt?: undefined | Date;
  * }} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
- * @param {{
- *   allowedContentTypes?: string[]
- * }} [options]
+ * @param {object} [options] Various options for runtime checks and compatible features
+ * @param {string[]} [options.allowedContentTypes] If provided, verifies that the
+ *   inferred file type is one of the provided content types
+ * @param {boolean} [options.schedulePlaceholderImageJob] If the file type starts with
+ *   `image/`, inserts a `compas.file.generatePlaceholder` job which can be handled with
+ *   {@link jobFileGeneratePlaceholderImage}
  * @returns {Promise<StoreFile>}
  */
 export function createOrUpdateFile(
@@ -48,13 +45,7 @@ export function createOrUpdateFile(
     bucketName?: string;
     contentType: string;
     name: string;
-    meta?:
-      | undefined
-      | {
-          transforms?: undefined | any;
-          transformedFromOriginal?: undefined | string;
-        }
-      | object;
+    meta?: StoreFileMeta;
     createdAt?: undefined | Date;
     updatedAt?: undefined | Date;
     deletedAt?: undefined | Date;
@@ -62,9 +53,11 @@ export function createOrUpdateFile(
   source: NodeJS.ReadableStream | string | Buffer,
   {
     allowedContentTypes,
+    schedulePlaceholderImageJob,
   }?:
     | {
         allowedContentTypes?: string[] | undefined;
+        schedulePlaceholderImageJob?: boolean | undefined;
       }
     | undefined,
 ): Promise<StoreFile>;
@@ -114,6 +107,30 @@ export function copyFile(
   id: string,
   targetBucket?: string | undefined,
 ): Promise<StoreFile>;
+/**
+ * Format a StoreFile, so it can be used in the response.
+ *
+ * @param {StoreFile} file
+ * @param {object} options
+ * @param {string} options.url
+ * @param {{
+ *   signingKey: string,
+ *   maxAgeInSeconds: number,
+ * }} [options.signAccessToken]
+ * @returns {StoreFileResponse}
+ */
+export function fileFormatResponse(
+  file: StoreFile,
+  options: {
+    url: string;
+    signAccessToken?:
+      | {
+          signingKey: string;
+          maxAgeInSeconds: number;
+        }
+      | undefined;
+  },
+): StoreFileResponse;
 /**
  * File deletes should be done via `queries.storeFileDelete()`. By calling this
  * function, all files that don't exist in the database will be removed from the S3

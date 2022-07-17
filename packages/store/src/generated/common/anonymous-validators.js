@@ -27,7 +27,20 @@ const objectKeys599447075 = new Set([
   "createdAt",
   "updatedAt",
 ]);
-const objectKeys2144828802 = new Set(["transforms", "transformedFromOriginal"]);
+const objectKeys2144828802 = new Set([
+  "transforms",
+  "transformedFromOriginal",
+  "placeholderImage",
+  "altText",
+]);
+const objectKeys1414433474 = new Set([
+  "id",
+  "name",
+  "contentType",
+  "url",
+  "placeholderImage",
+  "altText",
+]);
 const objectKeys1781782332 = new Set([
   "id",
   "isComplete",
@@ -464,7 +477,7 @@ export function anonymousValidator1443576836(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }>}
+ * @returns {EitherN<{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }>}
  */
 export function anonymousValidator2144828802(value, propertyPath) {
   if (isNil(value)) {
@@ -521,6 +534,28 @@ export function anonymousValidator2144828802(value, propertyPath) {
       errors.push(...validatorResult.errors);
     } else {
       result["transformedFromOriginal"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["placeholderImage"],
+      `${propertyPath}.placeholderImage`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["placeholderImage"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["altText"],
+      `${propertyPath}.altText`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["altText"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -810,6 +845,126 @@ export function anonymousValidator599447075(value, propertyPath) {
       errors.push(...validatorResult.errors);
     } else {
       result["updatedAt"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"id": string, "name": string, "contentType": string, "url": string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }>}
+ */
+export function anonymousValidator1414433474(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1414433474.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1414433474],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator56355924(
+      value["id"],
+      `${propertyPath}.id`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["id"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["name"],
+      `${propertyPath}.name`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["name"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["contentType"],
+      `${propertyPath}.contentType`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["contentType"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator186795873(
+      value["url"],
+      `${propertyPath}.url`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["url"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["placeholderImage"],
+      `${propertyPath}.placeholderImage`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["placeholderImage"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1443576836(
+      value["altText"],
+      `${propertyPath}.altText`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["altText"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -5183,7 +5338,7 @@ export function anonymousValidator1462381984(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
+ * @returns {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>}
  */
 export function anonymousValidator127301142(value, propertyPath) {
   if (isNil(value)) {
@@ -5191,7 +5346,7 @@ export function anonymousValidator127301142(value, propertyPath) {
   }
   /** @type {InternalError[]} */
   let errors = [];
-  /** @type {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>} */
+  /** @type {EitherN<undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }>} */
   let result = { errors: [] };
   result = anonymousValidator2144828802(value, propertyPath);
   if (result.errors) {
@@ -5429,7 +5584,7 @@ export function anonymousValidator1398947189(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
+ * @returns {EitherN<{"bucketName"?: undefined|string|{"$append": string, }, "contentLength"?: undefined|number|{"$add": number, }|{"$subtract": number, }|{"$multiply": number, }|{"$divide": number, }, "contentType"?: undefined|string|{"$append": string, }, "name"?: undefined|string|{"$append": string, }, "meta"?: undefined|{"transforms"?: undefined|any, "transformedFromOriginal"?: undefined|string, "placeholderImage"?: undefined|string, "altText"?: undefined|string, }|{"$set": {"path": (number|string)[], "value": any, }, }|{"$remove": {"path": (number|string)[], }, }, "createdAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, "updatedAt"?: undefined|Date|{"$add": string, }|{"$subtract": string, }, }>}
  */
 export function anonymousValidator617486747(value, propertyPath) {
   if (isNil(value)) {

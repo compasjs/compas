@@ -28,6 +28,15 @@ export function applyStoreStructure(app) {
       })
       .loose(),
 
+    T.object("fileResponse").keys({
+      id: T.uuid(),
+      name: T.string(),
+      contentType: T.string(),
+      url: T.string(),
+      placeholderImage: T.string().optional(),
+      altText: T.string().optional(),
+    }),
+
     T.object("file")
       .docs(`Postgres based file storage.`)
       .keys({
@@ -39,6 +48,8 @@ export function applyStoreStructure(app) {
           .keys({
             transforms: T.any().optional(),
             transformedFromOriginal: T.string().optional(),
+            placeholderImage: T.string().optional(),
+            altText: T.string().optional(),
           })
           .default("{}")
           .docs("User definable, optional object to store whatever you want"),

@@ -37,6 +37,7 @@ export function sendTransformedImage(
   file: StoreFile,
   getStreamFn: GetStreamFn,
 ): Promise<void>;
+export const TRANSFORMED_CONTENT_TYPES: string[];
 export type GetStreamFn = (
   file: StoreFile,
   start?: number | undefined,

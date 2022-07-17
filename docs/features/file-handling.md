@@ -62,6 +62,7 @@ export async function appSaveFile(event, files) {
     files.uploadedFile.filepath,
     {
       allowedContentTypes: ["image/png", "application/x-sql"],
+      schedulePlaceholderImageJob: true,
     },
   );
 
@@ -163,3 +164,11 @@ requirement there are two options;
 
 - Keep a blacklist of tokens somewhere
 - Regenerate the `signingKey`, rendering all tokens invalid.
+
+## Unified file responses
+
+For a more complete metadata object to return from your api's, you can use
+`StoreFileResponse`. It contains various properties, like the content type,
+name, and if applicable, the image placeholder. To format this response object,
+you could call `fileFormatResponse`. It allows for formatting a secure file url
+as well via its accepted options.
