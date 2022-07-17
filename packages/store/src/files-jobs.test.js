@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { dirnameForModule, pathJoin } from "@compas/stdlib";
 import { minioClient, testBucketName, sql } from "../../../src/testing.js";
@@ -26,11 +25,6 @@ test("store/files-jobs", (t) => {
       dirnameForModule(import.meta),
       `../__fixtures__/50.png`,
     );
-    const fixturePath = pathJoin(
-      dirnameForModule(import.meta),
-      `../__fixtures__/placeholder-image.txt`,
-    );
-    const placeholderFixture = (await readFile(fixturePath, "utf-8")).trim();
 
     const file = await createOrUpdateFile(
       sql,
@@ -74,6 +68,12 @@ test("store/files-jobs", (t) => {
     }).exec(sql);
 
     t.ok(reloadedFile.meta.placeholderImage);
-    t.equal(reloadedFile.meta.placeholderImage, placeholderFixture);
+    t.ok(
+      reloadedFile.meta.placeholderImage.startsWith("data:image/jpeg;base64,"),
+    );
+
+    // This increases response sizes, so not sure what we should do about that.
+    // It's currently a 400(ish) character long string.
+    t.ok(reloadedFile.meta.placeholderImage.length < 500);
   });
 });
