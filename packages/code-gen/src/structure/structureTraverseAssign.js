@@ -79,6 +79,23 @@ function traverseAssignProcess(structure, callback, type, metadata) {
 
       return callback(type, metadata);
 
+    case "extend":
+      for (const key of Object.keys(type.keys)) {
+        type.keys[key] = traverseAssignProcess(
+          structure,
+          callback,
+          type.keys[key],
+        );
+      }
+
+      type.reference = traverseAssignProcess(
+        structure,
+        callback,
+        type.reference,
+      );
+
+      return callback(type, metadata);
+
     case "omit":
     case "pick":
       type.reference = traverseAssignProcess(

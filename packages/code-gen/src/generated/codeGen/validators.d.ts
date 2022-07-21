@@ -78,6 +78,15 @@ export function validateCodeGenDateType(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").CodeGenDateType>;
 /**
+ * @param {undefined|any|import("../common/types").CodeGenExtendTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenExtendType>}
+ */
+export function validateCodeGenExtendType(
+  value: undefined | any | import("../common/types").CodeGenExtendTypeInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").CodeGenExtendType>;
+/**
  * @param {undefined|any|import("../common/types").CodeGenFileInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").CodeGenFile>}

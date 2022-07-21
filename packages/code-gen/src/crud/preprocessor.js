@@ -32,6 +32,8 @@ function crudValidateType(context, type) {
     return;
   }
 
+  type.internalSettings = type.internalSettings ?? {};
+
   /** @type {import("../generated/common/types.js").CodeGenObjectType} */
   // @ts-expect-error
   const ref = type.entity.reference;

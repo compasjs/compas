@@ -30,6 +30,7 @@ export type CodeGenType =
   | CodeGenStringType
   | CodeGenUuidType
   | CodeGenRouteType
+  | CodeGenExtendType
   | CodeGenOmitType
   | CodeGenPickType
   | CodeGenCrudType;
@@ -342,6 +343,22 @@ export type CodeGenRouteInvalidationType = {
     };
   };
 };
+export type CodeGenExtendType = {
+  type: "extend";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: {};
+  internalSettings: {};
+  keys: { [key: string]: CodeGenType };
+  reference: CodeGenReferenceType;
+};
 export type CodeGenOmitType = {
   type: "omit";
   docString: string;
@@ -474,6 +491,7 @@ export type CodeGenTypeInput =
   | import("./../common/types").CodeGenStringTypeInput
   | import("./../common/types").CodeGenUuidTypeInput
   | import("./../common/types").CodeGenRouteTypeInput
+  | import("./../common/types").CodeGenExtendTypeInput
   | import("./../common/types").CodeGenOmitTypeInput
   | import("./../common/types").CodeGenPickTypeInput
   | import("./../common/types").CodeGenCrudTypeInput;
@@ -841,6 +859,26 @@ export type CodeGenRouteInvalidationTypeInput = {
           query?: undefined | { [key: string]: string[] };
         };
   };
+};
+export type CodeGenExtendTypeInput = {
+  type: "extend";
+  docString?: undefined | string;
+  isOptional?: undefined | boolean;
+  defaultValue?: undefined | string | boolean | number;
+  uniqueName?: undefined | string;
+  group?: undefined | string;
+  name?: undefined | string;
+  sql?:
+    | undefined
+    | {
+        primary?: undefined | boolean;
+        searchable?: undefined | boolean;
+        hasDefaultValue?: undefined | boolean;
+      };
+  validator?: undefined | {};
+  internalSettings?: undefined | {};
+  keys: { [key: string]: import("./../common/types").CodeGenTypeInput };
+  reference: import("./../common/types").CodeGenReferenceTypeInput;
 };
 export type CodeGenOmitTypeInput = {
   type: "omit";

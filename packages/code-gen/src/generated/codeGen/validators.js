@@ -8,6 +8,7 @@ import {
   anonymousValidator1377926226,
   anonymousValidator1390215584,
   anonymousValidator1413365072,
+  anonymousValidator1421326295,
   anonymousValidator1441913722,
   anonymousValidator1474724230,
   anonymousValidator1519740867,
@@ -240,6 +241,32 @@ export function validateCodeGenDateType(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").CodeGenDateType}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").CodeGenExtendTypeInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").CodeGenExtendType>}
+ */
+export function validateCodeGenExtendType(value, propertyPath = "$") {
+  const result = anonymousValidator1421326295(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").CodeGenExtendType}} */
   return { value: result.value };
 }
 /**

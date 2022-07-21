@@ -6,6 +6,7 @@ import { AnyType } from "./AnyType.js";
 import { ArrayType } from "./ArrayType.js";
 import { BooleanType } from "./BooleanType.js";
 import { DateType } from "./DateType.js";
+import { ExtendType } from "./ExtendType.js";
 import { FileType } from "./FileType.js";
 import { GenericType } from "./GenericType.js";
 import { NumberType } from "./NumberType.js";
@@ -135,6 +136,14 @@ export class TypeCreator {
    */
   pick(name) {
     return new PickType(this.group, name);
+  }
+
+  /**
+   * @param {ReferenceType} reference
+   * @returns {ExtendType}
+   */
+  extendNamedObject(reference) {
+    return new ExtendType(this.group, reference);
   }
 
   /**
