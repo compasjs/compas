@@ -397,6 +397,13 @@ function getTypes(T) {
       .loose(),
   });
 
+  const extendType = T.object("extendType").keys({
+    type: "extend",
+    ...typeBase,
+    keys: T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
+    reference: T.reference("codeGen", "referenceType"),
+  });
+
   const omitType = T.object("omitType").keys({
     type: "omit",
     ...typeBase,
@@ -503,7 +510,9 @@ function getTypes(T) {
       uuidType,
       routeType,
     ].map((it) => it.loose()),
-    preProcessOnlyTypes: [omitType, pickType, crudType].map((it) => it.loose()),
+    preProcessOnlyTypes: [extendType, omitType, pickType, crudType].map((it) =>
+      it.loose(),
+    ),
     extraTypes: [relationType, routeInvalidationType].map((it) => it.loose()),
   };
 }

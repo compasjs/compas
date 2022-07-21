@@ -65,6 +65,11 @@ export class TypeCreator {
    */
   pick(name?: string | undefined): PickType;
   /**
+   * @param {ReferenceType} reference
+   * @returns {ExtendType}
+   */
+  extend(reference: ReferenceType): ExtendType;
+  /**
    * @param {string|TypeBuilder} groupOrOther
    * @param {string} [name]
    * @returns {ReferenceType}
@@ -140,6 +145,7 @@ import { OmitType } from "./OmitType.js";
 import { OptionalType } from "./OptionalType.js";
 import { PickType } from "./PickType.js";
 import { ReferenceType } from "./ReferenceType.js";
+import { ExtendType } from "./ExtendType.js";
 import { SearchableType } from "./SearchableType.js";
 import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";

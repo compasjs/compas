@@ -66,6 +66,15 @@ function traverseDepthFirstProcess(structure, callback, type, metadata) {
       callback(type, metadata);
       break;
 
+    case "extend":
+      for (const key of Object.keys(type.keys)) {
+        traverseDepthFirstProcess(structure, callback, type.keys[key]);
+      }
+
+      traverseDepthFirstProcess(structure, callback, type.reference);
+      callback(type, metadata);
+      break;
+
     case "omit":
     case "pick":
       traverseDepthFirstProcess(structure, callback, type.reference);

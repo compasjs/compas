@@ -3,6 +3,7 @@ export { AnyOfType } from "./AnyOfType.js";
 export { ArrayType } from "./ArrayType.js";
 export { BooleanType } from "./BooleanType.js";
 export { DateType } from "./DateType.js";
+export { ExtendType } from "./ExtendType.js";
 export { FileType } from "./FileType.js";
 export { GenericType } from "./GenericType.js";
 export { NumberType } from "./NumberType.js";
