@@ -4,6 +4,50 @@ editLink: false
 
 # Changelog
 
+### [v0.0.210](https://github.com/compasjs/compas/releases/tag/v0.0.210)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.18.6 to 7.18.9
+  ([#1916](https://github.com/compasjs/compas/pull/1916))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.18.2 to 7.18.9
+  ([#1918](https://github.com/compasjs/compas/pull/1918))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump c8 from 7.11.3 to 7.12.0
+  ([#1920](https://github.com/compasjs/compas/pull/1920))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump eslint from 8.19.0 to 8.20.0
+  ([#1915](https://github.com/compasjs/compas/pull/1915))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 8.1.0 to 8.2.0
+  ([#1917](https://github.com/compasjs/compas/pull/1917))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- chore(deps): update to @tanstack/react-query v4 and rename import references
+  ([#1924](https://github.com/compasjs/compas/pull/1924))
+- feat: add package.json exports
+  ([#1922](https://github.com/compasjs/compas/pull/1922))
+  - Closes [#1921](https://github.com/compasjs/compas/pull/1921)
+- feat(code-gen): add `T.extendNamedObject()` to add fields to named objects
+  ([#1923](https://github.com/compasjs/compas/pull/1923))
+  - Closes [#1911](https://github.com/compasjs/compas/pull/1911)
+- feat(compas): use sub entrypoints (`compas/cli`) instead of a single
+  entrypoint ([#1909](https://github.com/compasjs/compas/pull/1909))
+- feat(store): add placeholder image support & response type `StoreFileResponse`
+  ([#1912](https://github.com/compasjs/compas/pull/1912))
+  - Closes [#1891](https://github.com/compasjs/compas/pull/1891)
+- fix(code-gen): correctly generate types and api client for file uploads via
+  React Native ([#1910](https://github.com/compasjs/compas/pull/1910))
+  - Closes [#1908](https://github.com/compasjs/compas/pull/1908)
+
+##### Breaking changes
+
+- **deps**: update to @tanstack/react-query v4 and rename import references
+  - Dropped support for `react-query`, please install and update your usages
+    with `@tanstack/react-query`.
+- **compas**: use sub entrypoints
+  - Change any direct `compas` import to `compas/pkg` or `@compas/pkg`.
+
 ### [v0.0.209](https://github.com/compasjs/compas/releases/tag/v0.0.209)
 
 ##### Changes
