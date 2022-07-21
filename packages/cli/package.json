@@ -3,7 +3,10 @@
   "version": "0.0.209",
   "description": "CLI containing utilities and simple script runner",
   "main": "./index.js",
-  "exports": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
   "types": "./index.d.ts",
   "type": "module",
   "bin": {
