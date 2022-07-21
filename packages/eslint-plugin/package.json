@@ -3,6 +3,12 @@
   "version": "0.0.209",
   "description": "ESLint plugin",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./prettierrc": "./prettierrc.js",
+    "./prettierrc.js": "./prettierrc.js"
+  },
   "keywords": [
     "compas",
     "lint",

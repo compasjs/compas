@@ -3,7 +3,10 @@
   "version": "0.0.209",
   "description": "Postgres & S3-compatible wrappers for common things",
   "main": "./index.js",
-  "exports": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
   "types": "./index.d.ts",
   "type": "module",
   "keywords": [
