@@ -68,7 +68,7 @@ export class TypeCreator {
    * @param {ReferenceType} reference
    * @returns {ExtendType}
    */
-  extend(reference: ReferenceType): ExtendType;
+  extendNamedObject(reference: ReferenceType): ExtendType;
   /**
    * @param {string|TypeBuilder} groupOrOther
    * @param {string} [name]

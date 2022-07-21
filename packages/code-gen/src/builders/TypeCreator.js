@@ -142,7 +142,7 @@ export class TypeCreator {
    * @param {ReferenceType} reference
    * @returns {ExtendType}
    */
-  extend(reference) {
+  extendNamedObject(reference) {
     return new ExtendType(this.group, reference);
   }
 

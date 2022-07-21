@@ -17,7 +17,7 @@ test("code-gen/preprocessors/extend", async (t) => {
           quix: T.bool(),
         }),
 
-        T.extend(T.reference("app", "base")).keys({
+        T.extendNamedObject(T.reference("app", "base")).keys({
           fox: T.number(),
         }),
       ],
