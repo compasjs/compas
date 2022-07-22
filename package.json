@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/node": "18.0.6",
     "@types/react": "18.0.15",
-    "@tanstack/react-query": "4.0.9",
+    "@tanstack/react-query": "4.0.10",
     "axios": "0.27.2",
     "fastest-validator": "1.12.0",
     "meriyah": "4.2.1",
