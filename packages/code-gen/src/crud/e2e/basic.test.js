@@ -17,7 +17,7 @@ test("code-gen/crud/e2e/basics", async (t) => {
   const Tdatabase = new TypeCreator("database");
   const T = new TypeCreator("tag");
 
-  const { exitCode, stdout, generatedDirectory } =
+  const { exitCode, stdout, generatedDirectory, cleanupGeneratedDirectory } =
     await codeGenToTemporaryDirectory(
       [
         Tdatabase.object("tag")
@@ -281,6 +281,7 @@ test("code-gen/crud/e2e/basics", async (t) => {
 
   t.test("teardown", async (t) => {
     await closeTestApp(api);
+    await cleanupGeneratedDirectory();
 
     t.pass();
   });

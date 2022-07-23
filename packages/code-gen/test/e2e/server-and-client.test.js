@@ -32,6 +32,7 @@ test("code-gen/e2e/server", async (t) => {
     exitCode: serverExitCode,
     stdout: serverStdout,
     generatedDirectory: serverGeneratedDirectory,
+    cleanupGeneratedDirectory: serverCleanupGeneratedDirectory,
   } = await codeGenToTemporaryDirectory(
     [
       Tstore.object("imageTransformOptions").keys({
@@ -184,6 +185,7 @@ test("code-gen/e2e/server", async (t) => {
     exitCode: clientExitCode,
     stdout: clientStdout,
     generatedDirectory: clientGeneratedDirectory,
+    cleanupGeneratedDirectory: clientCleanupGeneratedDirectory,
   } = await codeGenToTemporaryDirectory(
     {
       extend: [[serverStructure]],
@@ -512,6 +514,9 @@ test("code-gen/e2e/server", async (t) => {
 
   t.test("teardown", async (t) => {
     await closeTestApp(app);
+    await serverCleanupGeneratedDirectory();
+    await clientCleanupGeneratedDirectory();
+
     t.pass();
   });
 });

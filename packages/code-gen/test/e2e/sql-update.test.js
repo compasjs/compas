@@ -12,7 +12,7 @@ test("code-gen/e2e/sql-update", (t) => {
   const T = new TypeCreator();
 
   t.test("types", async (t) => {
-    const { exitCode, generatedDirectory, stdout } =
+    const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           T.object("settings")
@@ -84,10 +84,16 @@ test("code-gen/e2e/sql-update", (t) => {
       );
       t.ok(updateFnLine);
     });
+
+    t.test("teardown", async (t) => {
+      await cleanupGeneratedDirectory();
+
+      t.pass();
+    });
   });
 
   t.test("validator", async (t) => {
-    const { exitCode, generatedDirectory, stdout } =
+    const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           T.object("settings")
@@ -245,10 +251,16 @@ test("code-gen/e2e/sql-update", (t) => {
         t.ok(isNil(error));
       });
     });
+
+    t.test("teardown", async (t) => {
+      await cleanupGeneratedDirectory();
+
+      t.pass();
+    });
   });
 
   t.test("runtime", async (t) => {
-    const { exitCode, generatedDirectory, stdout } =
+    const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           T.object("settings")
@@ -717,6 +729,7 @@ test("code-gen/e2e/sql-update", (t) => {
 
     t.test("teardown", async (t) => {
       await sql`DROP TABLE "settings";`;
+      await cleanupGeneratedDirectory();
 
       t.pass();
     });

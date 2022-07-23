@@ -15,111 +15,114 @@ mainTestFn(import.meta);
 
 test("code-gen/e2e/sql", async (t) => {
   const T = new TypeCreator("sql");
-  const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-    {
-      add: [
-        T.string("coolString").oneOf("true", "false").optional(),
+  const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+    await codeGenToTemporaryDirectory(
+      {
+        add: [
+          T.string("coolString").oneOf("true", "false").optional(),
 
-        T.object("user")
-          .keys({
-            nickName: T.string(),
-            email: T.string().searchable(),
-            authKey: T.string(),
-            isCool: T.reference("sql", "coolString").searchable(),
-          })
-          .enableQueries({
-            withSoftDeletes: true,
-            schema: "public",
-          })
-          .relations(T.oneToMany("posts", T.reference("sql", "post"))),
+          T.object("user")
+            .keys({
+              nickName: T.string(),
+              email: T.string().searchable(),
+              authKey: T.string(),
+              isCool: T.reference("sql", "coolString").searchable(),
+            })
+            .enableQueries({
+              withSoftDeletes: true,
+              schema: "public",
+            })
+            .relations(T.oneToMany("posts", T.reference("sql", "post"))),
 
-        T.object("category")
-          .keys({
-            id: T.uuid().primary(),
-            label: T.string().searchable(),
-          })
-          .enableQueries({ withDates: true })
-          .relations(T.oneToMany("posts", T.reference("sql", "postCategory"))),
+          T.object("category")
+            .keys({
+              id: T.uuid().primary(),
+              label: T.string().searchable(),
+            })
+            .enableQueries({ withDates: true })
+            .relations(
+              T.oneToMany("posts", T.reference("sql", "postCategory")),
+            ),
 
-        T.object("post")
-          .docs("Store a 'user' post.")
-          .keys({
-            title: T.string().searchable(),
-            body: T.string(),
-          })
-          .enableQueries({ withSoftDeletes: true })
-          .relations(
-            T.manyToOne("writer", T.reference("sql", "user"), "posts"),
+          T.object("post")
+            .docs("Store a 'user' post.")
+            .keys({
+              title: T.string().searchable(),
+              body: T.string(),
+            })
+            .enableQueries({ withSoftDeletes: true })
+            .relations(
+              T.manyToOne("writer", T.reference("sql", "user"), "posts"),
 
-            T.oneToMany("categories", T.reference("sql", "postCategory")),
-            T.oneToMany("postages", T.reference("sql", "postage")),
-          ),
+              T.oneToMany("categories", T.reference("sql", "postCategory")),
+              T.oneToMany("postages", T.reference("sql", "postage")),
+            ),
 
-        T.object("postage")
-          .shortName("pst")
-          .docs("o.0")
-          .keys({
-            value: T.number(),
-          })
-          .enableQueries({ withSoftDeletes: true })
-          .relations(
-            T.manyToOne("post", T.reference("sql", "post"), "postages"),
-          ),
+          T.object("postage")
+            .shortName("pst")
+            .docs("o.0")
+            .keys({
+              value: T.number(),
+            })
+            .enableQueries({ withSoftDeletes: true })
+            .relations(
+              T.manyToOne("post", T.reference("sql", "post"), "postages"),
+            ),
 
-        // m-m
-        // join
-        // table
-        T.object("postCategory")
-          .keys({})
-          .enableQueries({ withDates: true })
-          .relations(
-            T.manyToOne("post", T.reference("sql", "post"), "categories"),
-            T.manyToOne("category", T.reference("sql", "category"), "posts"),
-          ),
+          // m-m
+          // join
+          // table
+          T.object("postCategory")
+            .keys({})
+            .enableQueries({ withDates: true })
+            .relations(
+              T.manyToOne("post", T.reference("sql", "post"), "categories"),
+              T.manyToOne("category", T.reference("sql", "category"), "posts"),
+            ),
 
-        // 1-1
-        // test
-        T.object("categoryMeta")
-          .keys({
-            postCount: T.number(),
-            isHighlighted: T.bool().optional().searchable(),
-            isNew: T.bool().sqlDefault(),
-          })
-          .enableQueries()
-          .relations(
-            T.oneToOne("category", T.reference("sql", "category"), "meta"),
-          ),
+          // 1-1
+          // test
+          T.object("categoryMeta")
+            .keys({
+              postCount: T.number(),
+              isHighlighted: T.bool().optional().searchable(),
+              isNew: T.bool().sqlDefault(),
+            })
+            .enableQueries()
+            .relations(
+              T.oneToOne("category", T.reference("sql", "category"), "meta"),
+            ),
 
-        // Reference
-        // to
-        // number
-        // primary
-        // key
-        T.object("jobStatusAggregate")
-          .keys({})
-          .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
-          .enableQueries(),
+          // Reference
+          // to
+          // number
+          // primary
+          // key
+          T.object("jobStatusAggregate")
+            .keys({})
+            .relations(T.oneToOne("job", T.reference("store", "job"), "status"))
+            .enableQueries(),
 
-        T.object("settings")
-          .keys({
-            toggles: T.object()
-              .keys({
-                darkMode: T.bool(),
-              })
-              .optional()
-              .searchable(),
-          })
-          .enableQueries(),
-      ],
-      extend: [[storeStructure]],
-    },
-    {
-      enabledGenerators: ["sql", "validator"],
-      isNodeServer: true,
-      dumpApiStructure: false,
-      dumpStructure: true,
-    },
-  );
+          T.object("settings")
+            .keys({
+              toggles: T.object()
+                .keys({
+                  darkMode: T.bool(),
+                })
+                .optional()
+                .searchable(),
+            })
+            .enableQueries(),
+        ],
+        extend: [[storeStructure]],
+      },
+      {
+        enabledGenerators: ["sql", "validator"],
+        isNodeServer: true,
+        dumpApiStructure: false,
+        dumpStructure: true,
+      },
+    );
 
   t.equal(exitCode, 0);
 
@@ -1039,8 +1042,10 @@ test("code-gen/e2e/sql", async (t) => {
     }
   });
 
-  t.test("destroy test db", async (t) => {
+  t.test("teardown", async (t) => {
     await cleanupTestPostgresDatabase(sql);
+    await cleanupGeneratedDirectory();
+
     t.ok(true);
   });
 });

@@ -9,7 +9,7 @@ test("code-gen/crud/route-creator", (t) => {
     const T = new TypeCreator("database");
     const Tpost = new TypeCreator("post");
 
-    const { stdout, exitCode, generatedDirectory } =
+    const { exitCode, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           T.object("post")
@@ -51,11 +51,8 @@ test("code-gen/crud/route-creator", (t) => {
         },
       );
 
+    await cleanupGeneratedDirectory();
+
     t.equal(exitCode, 0);
-    t.log.info({
-      exitCode,
-      stdout,
-      generatedDirectory,
-    });
   });
 });

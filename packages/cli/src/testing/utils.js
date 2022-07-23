@@ -1,6 +1,6 @@
 import { mainFn } from "@compas/stdlib";
 import { areTestsRunning, setAreTestRunning, setTestLogger } from "./state.js";
-import { runTestsInProcess } from "./test-worker-internal.js";
+import { runTestsInProcess } from "./worker-internal.js";
 
 /**
  * Wraps `mainFn` and starts the test runner if not already started.
