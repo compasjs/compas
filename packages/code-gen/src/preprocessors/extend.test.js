@@ -8,25 +8,30 @@ mainTestFn(import.meta);
 
 test("code-gen/preprocessors/extend", async (t) => {
   const T = new TypeCreator();
-  const { generatedDirectory, exitCode, stderr, stdout } =
-    await codeGenToTemporaryDirectory(
-      [
-        T.object("base").keys({
-          bar: T.number(),
-          baz: T.bool(),
-          quix: T.bool(),
-        }),
+  const {
+    generatedDirectory,
+    exitCode,
+    stderr,
+    stdout,
+    cleanupGeneratedDirectory,
+  } = await codeGenToTemporaryDirectory(
+    [
+      T.object("base").keys({
+        bar: T.number(),
+        baz: T.bool(),
+        quix: T.bool(),
+      }),
 
-        T.extendNamedObject(T.reference("app", "base")).keys({
-          fox: T.number(),
-        }),
-      ],
-      {
-        enabledGenerators: ["type", "validator"],
-        isNodeServer: true,
-        declareGlobalTypes: false,
-      },
-    );
+      T.extendNamedObject(T.reference("app", "base")).keys({
+        fox: T.number(),
+      }),
+    ],
+    {
+      enabledGenerators: ["type", "validator"],
+      isNodeServer: true,
+      declareGlobalTypes: false,
+    },
+  );
 
   t.equal(exitCode, 0);
   if (exitCode !== 0) {
@@ -53,5 +58,11 @@ test("code-gen/preprocessors/extend", async (t) => {
     if (error) {
       throw error;
     }
+  });
+
+  t.test("teardown", async (t) => {
+    await cleanupGeneratedDirectory();
+
+    t.pass();
   });
 });

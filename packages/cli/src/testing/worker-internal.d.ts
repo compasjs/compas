@@ -19,4 +19,4 @@ export function runTestsInProcess(
     | undefined,
 ): Promise<number>;
 export const workerFile: import("url").URL;
-//# sourceMappingURL=test-worker-internal.d.ts.map
+//# sourceMappingURL=worker-internal.d.ts.map

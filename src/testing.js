@@ -1,4 +1,3 @@
-import { mkdir, rm } from "node:fs/promises";
 import { uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
@@ -22,11 +21,6 @@ export let minioClient;
 export const testBucketName = uuid();
 
 /**
- * @type {string}
- */
-export let temporaryDirectory;
-
-/**
  * Inject services that can be used in tests across this repo.
  *
  * @returns {Promise<void>}
@@ -36,10 +30,6 @@ export async function injectTestServices() {
   minioClient = newMinioClient({});
 
   await ensureBucket(minioClient, testBucketName, "eu-central-1");
-
-  temporaryDirectory = `./test/tmp/${uuid()}/`;
-  await rm("./test/tmp", { force: true, recursive: true });
-  await mkdir(temporaryDirectory, { recursive: true });
 }
 
 /**

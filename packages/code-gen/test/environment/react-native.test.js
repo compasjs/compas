@@ -10,7 +10,7 @@ test("code-gen/environment/react-native", async (t) => {
   const T = new TypeCreator("app");
   const R = T.router("/app");
 
-  const { exitCode, generatedDirectory, stdout } =
+  const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
     await codeGenToTemporaryDirectory(
       [
         R.post("/file", "file").files({
@@ -36,6 +36,8 @@ test("code-gen/environment/react-native", async (t) => {
 
   const typesPath = pathJoin(generatedDirectory, "common/types.ts");
   const typesSource = await readFile(typesPath, "utf-8");
+
+  await cleanupGeneratedDirectory();
 
   // FormData.append has a different signature compared to Node.js FormData and Browser
   // FormData;

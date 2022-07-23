@@ -14,7 +14,7 @@ import {
 } from "./state.js";
 
 export const workerFile = new URL(
-  `file://${pathJoin(dirnameForModule(import.meta), "./test-worker.js")}`,
+  `file://${pathJoin(dirnameForModule(import.meta), "./worker-thread.js")}`,
 );
 
 /**

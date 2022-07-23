@@ -1,6 +1,5 @@
-import { writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import { environment, exec, pathJoin, spawn, uuid } from "@compas/stdlib";
-import { temporaryDirectory } from "../../../src/testing.js";
 import { App } from "../src/App.js";
 
 /**
@@ -23,18 +22,28 @@ import { App } from "../src/App.js";
  *   stdout: string,
  *   stderr?: string,
  *   exitCode: number,
- *   generatedDirectory: string
+ *   generatedDirectory: string,
+ *   cleanupGeneratedDirectory: () => Promise<void>,
  *  }>}
  */
 export async function codeGenToTemporaryDirectory(input, opts = {}) {
-  const randomDir = uuid();
-  const baseDirectory = pathJoin(
-    process.cwd(),
-    temporaryDirectory ?? `./test/tmp/${randomDir}`,
-    randomDir,
-  );
+  const baseDirectory = pathJoin(process.cwd(), ".cache/test-output", uuid());
   const structureDirectory = pathJoin(baseDirectory, "/structure");
   const generatedDirectory = pathJoin(baseDirectory, "/generated");
+
+  await mkdir(baseDirectory, { recursive: true });
+  await writeFile(
+    pathJoin(baseDirectory, "package.json"),
+    JSON.stringify(
+      {
+        type: "module",
+        private: true,
+      },
+      null,
+      2,
+    ),
+    "utf-8",
+  );
 
   const app = new App();
 
@@ -72,7 +81,7 @@ export async function codeGenToTemporaryDirectory(input, opts = {}) {
   const genFile = `
 import { mainFn } from "@compas/stdlib";
 import { App } from "@compas/code-gen";
-import { structure } from "${structureDirectory}/common/structure.js";
+import { structure } from "./structure/common/structure.js";
 
 mainFn(import.meta, main);
 
@@ -97,10 +106,15 @@ async function main() {
   }
   const { exitCode, stdout, stderr } = await exec(`node ${generateFile}`);
 
+  const cleanupGeneratedDirectory = async () => {
+    await rm(baseDirectory, { recursive: true, force: true });
+  };
+
   return {
     generatedDirectory,
     stdout,
     stderr,
     exitCode,
+    cleanupGeneratedDirectory,
   };
 }

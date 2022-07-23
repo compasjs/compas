@@ -8,31 +8,36 @@ mainTestFn(import.meta);
 
 test("code-gen/preprocessors/omit", async (t) => {
   const T = new TypeCreator();
-  const { generatedDirectory, exitCode, stderr, stdout } =
-    await codeGenToTemporaryDirectory(
-      [
-        T.object("base").keys({
-          bar: T.number(),
-          baz: T.bool(),
-          quix: T.bool(),
-        }),
+  const {
+    generatedDirectory,
+    exitCode,
+    stderr,
+    stdout,
+    cleanupGeneratedDirectory,
+  } = await codeGenToTemporaryDirectory(
+    [
+      T.object("base").keys({
+        bar: T.number(),
+        baz: T.bool(),
+        quix: T.bool(),
+      }),
 
-        T.omit("omit").object(T.reference("app", "base")).keys("bar"),
-        T.object("nestedOmit").keys({
-          foo: T.omit()
-            .object({
-              bar: T.number(),
-              baz: T.bool(),
-            })
-            .keys("bar"),
-        }),
-      ],
-      {
-        enabledGenerators: ["type", "validator"],
-        isNodeServer: true,
-        declareGlobalTypes: false,
-      },
-    );
+      T.omit("omit").object(T.reference("app", "base")).keys("bar"),
+      T.object("nestedOmit").keys({
+        foo: T.omit()
+          .object({
+            bar: T.number(),
+            baz: T.bool(),
+          })
+          .keys("bar"),
+      }),
+    ],
+    {
+      enabledGenerators: ["type", "validator"],
+      isNodeServer: true,
+      declareGlobalTypes: false,
+    },
+  );
 
   t.equal(exitCode, 0);
   if (exitCode !== 0) {
@@ -63,5 +68,11 @@ test("code-gen/preprocessors/omit", async (t) => {
     });
 
     t.ok(isNil(error));
+  });
+
+  t.test("teardown", async (t) => {
+    await cleanupGeneratedDirectory();
+
+    t.pass();
   });
 });

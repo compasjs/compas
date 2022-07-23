@@ -11,7 +11,13 @@ mainTestFn(import.meta);
 test("code-gen/e2e/date-time", async (t) => {
   const T = new TypeCreator("app");
 
-  const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
+  const {
+    exitCode,
+    generatedDirectory,
+    stdout,
+    stderr,
+    cleanupGeneratedDirectory,
+  } = await codeGenToTemporaryDirectory(
     [
       T.object("codeGenDateTime")
         .keys({
@@ -30,6 +36,12 @@ test("code-gen/e2e/date-time", async (t) => {
   );
 
   t.equal(exitCode, 0);
+
+  if (exitCode !== 0) {
+    t.log.error(stdout);
+    t.log.error(stderr);
+    return;
+  }
 
   t.test("structure.sql", async (t) => {
     const structureFile = await readFile(
@@ -259,5 +271,11 @@ test("code-gen/e2e/date-time", async (t) => {
         ),
       );
     });
+  });
+
+  t.test("teardown", async (t) => {
+    await cleanupGeneratedDirectory();
+
+    t.pass();
   });
 });

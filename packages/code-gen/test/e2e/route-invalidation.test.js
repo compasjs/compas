@@ -11,33 +11,39 @@ test("code-gen/e2e/route-invalidation", (t) => {
   const R = T.router("/app");
 
   t.test("no error without invalidations", async (t) => {
-    const { exitCode } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/list", "list").response({}),
+    const { exitCode, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.get("/list", "list").response({}),
 
-        R.get("/:id", "get").params({
-          id: T.uuid(),
-        }),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+          R.get("/:id", "get").params({
+            id: T.uuid(),
+          }),
+        ],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 0);
   });
 
   t.test("error with unknown group", async (t) => {
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [R.post("/").invalidations(R.invalidates("unknown"))],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, stdout, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [R.post("/").invalidations(R.invalidates("unknown"))],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 1);
     t.ok(
@@ -48,14 +54,17 @@ test("code-gen/e2e/route-invalidation", (t) => {
   });
 
   t.test("error with unknown name", async (t) => {
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [R.post("/").invalidations(R.invalidates("app", "unknown"))],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, stdout, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [R.post("/").invalidations(R.invalidates("app", "unknown"))],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 1);
     t.ok(
@@ -66,17 +75,22 @@ test("code-gen/e2e/route-invalidation", (t) => {
   });
 
   t.test("error target should be a get route", async (t) => {
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [
-        R.post("/", "list").response({}),
-        R.post("/update", "update").invalidations(R.invalidates("app", "list")),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, stdout, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.post("/", "list").response({}),
+          R.post("/update", "update").invalidations(
+            R.invalidates("app", "list"),
+          ),
+        ],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 1);
     t.ok(
@@ -87,38 +101,13 @@ test("code-gen/e2e/route-invalidation", (t) => {
   });
 
   t.test("no error on post idempotent", async (t) => {
-    const { exitCode } = await codeGenToTemporaryDirectory(
-      [
-        R.post("/", "list").idempotent().response({}),
-        R.post("/update", "update").invalidations(R.invalidates("app", "list")),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
-
-    t.equal(exitCode, 0);
-  });
-
-  t.test(
-    "no error with empty 'useSharedParams' and 'useSharedQuery'",
-    async (t) => {
-      const { exitCode } = await codeGenToTemporaryDirectory(
+    const { exitCode, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
         [
-          R.get("/", "list").response({}),
-
-          R.post("/:id/update", "update")
-            .params({
-              id: T.uuid(),
-            })
-            .invalidations(
-              R.invalidates("app", "list", {
-                useSharedParams: true,
-                useSharedQuery: true,
-              }),
-            ),
+          R.post("/", "list").idempotent().response({}),
+          R.post("/update", "update").invalidations(
+            R.invalidates("app", "list"),
+          ),
         ],
         {
           enabledGenerators: ["validator", "router", "type"],
@@ -127,6 +116,39 @@ test("code-gen/e2e/route-invalidation", (t) => {
         },
       );
 
+    await cleanupGeneratedDirectory();
+
+    t.equal(exitCode, 0);
+  });
+
+  t.test(
+    "no error with empty 'useSharedParams' and 'useSharedQuery'",
+    async (t) => {
+      const { exitCode, cleanupGeneratedDirectory } =
+        await codeGenToTemporaryDirectory(
+          [
+            R.get("/", "list").response({}),
+
+            R.post("/:id/update", "update")
+              .params({
+                id: T.uuid(),
+              })
+              .invalidations(
+                R.invalidates("app", "list", {
+                  useSharedParams: true,
+                  useSharedQuery: true,
+                }),
+              ),
+          ],
+          {
+            enabledGenerators: ["validator", "router", "type"],
+            isNodeServer: true,
+            dumpStructure: true,
+          },
+        );
+
+      await cleanupGeneratedDirectory();
+
       t.equal(exitCode, 0);
     },
   );
@@ -134,7 +156,49 @@ test("code-gen/e2e/route-invalidation", (t) => {
   t.test(
     "no error with 'useSharedParams' and partial 'useSharedQuery'",
     async (t) => {
-      const { exitCode } = await codeGenToTemporaryDirectory(
+      const { exitCode, cleanupGeneratedDirectory } =
+        await codeGenToTemporaryDirectory(
+          [
+            R.get("/:id", "get")
+              .params({
+                id: T.uuid(),
+              })
+              .query({
+                startDate: T.date().optional(),
+                endDate: T.date().optional(),
+              })
+              .response({}),
+
+            R.post("/:id/update", "update")
+              .params({
+                id: T.uuid(),
+              })
+              .query({
+                endDate: T.date().optional(),
+              })
+              .invalidations(
+                R.invalidates("app", "get", {
+                  useSharedParams: true,
+                  useSharedQuery: true,
+                }),
+              ),
+          ],
+          {
+            enabledGenerators: ["validator", "router", "type"],
+            isNodeServer: true,
+            dumpStructure: true,
+          },
+        );
+
+      await cleanupGeneratedDirectory();
+
+      t.equal(exitCode, 0);
+    },
+  );
+
+  t.test("no error with specification same properties", async (t) => {
+    const { exitCode, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
         [
           R.get("/:id", "get")
             .params({
@@ -155,8 +219,14 @@ test("code-gen/e2e/route-invalidation", (t) => {
             })
             .invalidations(
               R.invalidates("app", "get", {
-                useSharedParams: true,
-                useSharedQuery: true,
+                specification: {
+                  params: {
+                    id: ["params", "id"],
+                  },
+                  query: {
+                    startDate: ["query", "endDate"],
+                  },
+                },
               }),
             ),
         ],
@@ -167,78 +237,39 @@ test("code-gen/e2e/route-invalidation", (t) => {
         },
       );
 
-      t.equal(exitCode, 0);
-    },
-  );
-
-  t.test("no error with specification same properties", async (t) => {
-    const { exitCode } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/:id", "get")
-          .params({
-            id: T.uuid(),
-          })
-          .query({
-            startDate: T.date().optional(),
-            endDate: T.date().optional(),
-          })
-          .response({}),
-
-        R.post("/:id/update", "update")
-          .params({
-            id: T.uuid(),
-          })
-          .query({
-            endDate: T.date().optional(),
-          })
-          .invalidations(
-            R.invalidates("app", "get", {
-              specification: {
-                params: {
-                  id: ["params", "id"],
-                },
-                query: {
-                  startDate: ["query", "endDate"],
-                },
-              },
-            }),
-          ),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 0);
   });
 
   t.test("error on unknown own specification", async (t) => {
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/:id", "get")
-          .params({
-            id: T.uuid(),
-          })
-          .response({}),
+    const { exitCode, stdout, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.get("/:id", "get")
+            .params({
+              id: T.uuid(),
+            })
+            .response({}),
 
-        R.post("/update", "update").invalidations(
-          R.invalidates("app", "get", {
-            specification: {
-              params: {
-                id: ["params", "id"],
+          R.post("/update", "update").invalidations(
+            R.invalidates("app", "get", {
+              specification: {
+                params: {
+                  id: ["params", "id"],
+                },
               },
-            },
-          }),
-        ),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+            }),
+          ),
+        ],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 1);
     t.ok(
@@ -254,30 +285,33 @@ test("code-gen/e2e/route-invalidation", (t) => {
   });
 
   t.test("error on unknown target specification", async (t) => {
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/", "list").response({}),
+    const { exitCode, stdout, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.get("/", "list").response({}),
 
-        R.post("/:id/update", "update")
-          .params({
-            id: T.uuid(),
-          })
-          .invalidations(
-            R.invalidates("app", "list", {
-              specification: {
-                query: {
-                  id: ["params", "id"],
+          R.post("/:id/update", "update")
+            .params({
+              id: T.uuid(),
+            })
+            .invalidations(
+              R.invalidates("app", "list", {
+                specification: {
+                  query: {
+                    id: ["params", "id"],
+                  },
                 },
-              },
-            }),
-          ),
-      ],
-      {
-        enabledGenerators: ["validator", "router", "type"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+              }),
+            ),
+        ],
+        {
+          enabledGenerators: ["validator", "router", "type"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 1);
     t.ok(
@@ -293,7 +327,7 @@ test("code-gen/e2e/route-invalidation", (t) => {
   });
 
   t.test("react-query generator", async (t) => {
-    const { exitCode, stdout, generatedDirectory } =
+    const { exitCode, stdout, generatedDirectory, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           R.post("/", "list").idempotent().response({}),
@@ -348,6 +382,12 @@ test("code-gen/e2e/route-invalidation", (t) => {
           `queryClient.invalidateQueries(["app","get",{ id: variables.params.id,},]);`,
         ),
       );
+    });
+
+    t.test("teardown", async (t) => {
+      await cleanupGeneratedDirectory();
+
+      t.pass();
     });
   });
 });

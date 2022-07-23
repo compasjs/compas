@@ -17,7 +17,7 @@ test("code-gen/crud/e2e/nested", async (t) => {
   const Tdatabase = new TypeCreator("database");
   const T = new TypeCreator("role");
 
-  const { exitCode, stdout, generatedDirectory } =
+  const { exitCode, stdout, generatedDirectory, cleanupGeneratedDirectory } =
     await codeGenToTemporaryDirectory(
       [
         Tdatabase.object("role")
@@ -147,20 +147,19 @@ test("code-gen/crud/e2e/nested", async (t) => {
 
   t.test("generate frontend", async (t) => {
     const structure = await apiCompasStructure(axiosInstance);
-    const { exitCode, stdout } = await codeGenToTemporaryDirectory(
-      {
-        extend: [[structure]],
-      },
-      {
-        isBrowser: true,
-      },
-    );
+    const { exitCode, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        {
+          extend: [[structure]],
+        },
+        {
+          isBrowser: true,
+        },
+      );
+
+    await cleanupGeneratedDirectory();
 
     t.equal(exitCode, 0);
-
-    if (exitCode !== 0) {
-      t.log.error(stdout);
-    }
   });
 
   t.test("apiRoleInfo", (t) => {
@@ -258,6 +257,7 @@ test("code-gen/crud/e2e/nested", async (t) => {
 
   t.test("teardown", async (t) => {
     await closeTestApp(api);
+    await cleanupGeneratedDirectory();
 
     t.pass();
   });

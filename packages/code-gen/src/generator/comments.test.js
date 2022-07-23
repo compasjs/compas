@@ -94,7 +94,7 @@ test("code-gen/comments", (t) => {
   t.test("apiClient", async (t) => {
     const T = new TypeCreator();
     const R = T.router("/");
-    const { exitCode, generatedDirectory, stdout } =
+    const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           R.get("/route-without-docs", "routeWithoutDocs").response({}),
@@ -154,12 +154,18 @@ export async function apiAppRouteWithDocs(`),
 export async function apiAppRouteWithDocsAndTags(`),
       );
     });
+
+    t.test("teardown", async (t) => {
+      await cleanupGeneratedDirectory();
+
+      t.pass();
+    });
   });
 
   t.test("reactQuery", async (t) => {
     const T = new TypeCreator();
     const R = T.router("/");
-    const { exitCode, generatedDirectory, stdout } =
+    const { exitCode, generatedDirectory, stdout, cleanupGeneratedDirectory } =
       await codeGenToTemporaryDirectory(
         [
           R.get("/route-without-docs", "routeWithoutDocs").response({}),
@@ -215,6 +221,12 @@ export function useAppRouteWithDocs`),
 */
 export function useAppRouteWithDocsAndTags`),
       );
+    });
+
+    t.test("teardown", async (t) => {
+      await cleanupGeneratedDirectory();
+
+      t.pass();
     });
   });
 });

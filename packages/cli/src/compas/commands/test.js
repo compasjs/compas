@@ -13,7 +13,7 @@ import {
   listTestFiles,
   runTestsInProcess,
   workerFile,
-} from "../../testing/test-worker-internal.js";
+} from "../../testing/worker-internal.js";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}

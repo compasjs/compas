@@ -1,7 +1,6 @@
-import { readFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, pathJoin, uuid } from "@compas/stdlib";
-import { temporaryDirectory } from "../../../../src/testing.js";
 import { App } from "../../src/App.js";
 import { TypeCreator } from "../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
@@ -16,6 +15,7 @@ test("code-gen/e2e/openapi", async (t) => {
   const {
     exitCode: serverExitCode,
     generatedDirectory: serverGeneratedDirectory,
+    cleanupGeneratedDirectory,
   } = await codeGenToTemporaryDirectory(
     [
       T.object("item").keys({
@@ -147,7 +147,12 @@ test("code-gen/e2e/openapi", async (t) => {
 
   t.equal(serverExitCode, 0);
 
-  const outputFile = pathJoin(temporaryDirectory, uuid(), "openapi.json");
+  const outputFile = pathJoin(
+    process.cwd(),
+    ".cache/test-output",
+    uuid(),
+    "openapi.json",
+  );
 
   t.test("generate spec", async (t) => {
     const app = new App();
@@ -266,16 +271,17 @@ test("code-gen/e2e/openapi", async (t) => {
   t.test("assert that structure can be imported", async (t) => {
     const contents = JSON.parse(await readFile(outputFile, "utf-8"));
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      {
-        extendWithOpenApi: [["server", contents]],
-      },
-      {
-        enabledGenerators: ["apiClient", "router", "validator"],
-        isNodeServer: true,
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        {
+          extendWithOpenApi: [["server", contents]],
+        },
+        {
+          enabledGenerators: ["apiClient", "router", "validator"],
+          isNodeServer: true,
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -285,6 +291,9 @@ test("code-gen/e2e/openapi", async (t) => {
     } = await import(
       pathJoin(generatedDirectory, "../structure/common/structure.js")
     );
+
+    await cleanupGeneratedDirectory();
+
     t.equal(group.groupFullRoute.internalSettings.stripTrailingSlash, true);
   });
 
@@ -292,18 +301,19 @@ test("code-gen/e2e/openapi", async (t) => {
     const T = new TypeCreator("app");
     const R = T.router("/app");
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/user", "user").response({
-          foo: T.bool(),
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: [],
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.get("/user", "user").response({
+            foo: T.bool(),
+          }),
+        ],
+        {
+          isNodeServer: true,
+          enabledGenerators: [],
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -317,6 +327,8 @@ test("code-gen/e2e/openapi", async (t) => {
     });
 
     const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    await cleanupGeneratedDirectory();
 
     t.ok(!isNil(source.paths["/app/user"]));
     t.equal(Object.keys(source.paths).length, 1);
@@ -328,28 +340,29 @@ test("code-gen/e2e/openapi", async (t) => {
 
     const Tuser = new TypeCreator("user");
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      [
-        T.string("houseNumber").min(1),
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          T.string("houseNumber").min(1),
 
-        Tuser.object("user").keys({
-          address: T.reference("user", "address"),
-        }),
-        Tuser.object("address").keys({
-          city: T.string(),
-          houseNumber: T.reference("app", "houseNumber"),
-        }),
+          Tuser.object("user").keys({
+            address: T.reference("user", "address"),
+          }),
+          Tuser.object("address").keys({
+            city: T.string(),
+            houseNumber: T.reference("app", "houseNumber"),
+          }),
 
-        R.get("/user", "user").response({
-          user: T.reference("user", "user"),
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: [],
-        dumpStructure: true,
-      },
-    );
+          R.get("/user", "user").response({
+            user: T.reference("user", "user"),
+          }),
+        ],
+        {
+          isNodeServer: true,
+          enabledGenerators: [],
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -363,6 +376,8 @@ test("code-gen/e2e/openapi", async (t) => {
     });
 
     const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    await cleanupGeneratedDirectory();
 
     t.ok(!isNil(source.components.schemas.AppHouseNumber));
   });
@@ -373,27 +388,28 @@ test("code-gen/e2e/openapi", async (t) => {
 
     const Tuser = new TypeCreator("user");
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      [
-        T.string("houseNumber").min(1),
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          T.string("houseNumber").min(1),
 
-        Tuser.object("user").keys({
-          address: T.reference("user", "address"),
-        }),
-        Tuser.object("address").keys({
-          city: T.string(),
-        }),
+          Tuser.object("user").keys({
+            address: T.reference("user", "address"),
+          }),
+          Tuser.object("address").keys({
+            city: T.string(),
+          }),
 
-        R.get("/user", "user").response({
-          user: T.reference("user", "user"),
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: [],
-        dumpStructure: true,
-      },
-    );
+          R.get("/user", "user").response({
+            user: T.reference("user", "user"),
+          }),
+        ],
+        {
+          isNodeServer: true,
+          enabledGenerators: [],
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -407,6 +423,8 @@ test("code-gen/e2e/openapi", async (t) => {
     });
 
     const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    await cleanupGeneratedDirectory();
 
     t.ok(isNil(source.components.schemas.AppHouseNumber));
   });
@@ -415,24 +433,25 @@ test("code-gen/e2e/openapi", async (t) => {
     const T = new TypeCreator("app");
     const R = T.router("/app");
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      [
-        T.object("recursive").keys({
-          property: T.object("recursiveNested").keys({
-            nested: T.reference("app", "recursive").optional(),
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          T.object("recursive").keys({
+            property: T.object("recursiveNested").keys({
+              nested: T.reference("app", "recursive").optional(),
+            }),
           }),
-        }),
 
-        R.get("/user", "user").response({
-          recursive: T.reference("app", "recursive"),
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: [],
-        dumpStructure: true,
-      },
-    );
+          R.get("/user", "user").response({
+            recursive: T.reference("app", "recursive"),
+          }),
+        ],
+        {
+          isNodeServer: true,
+          enabledGenerators: [],
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -446,6 +465,8 @@ test("code-gen/e2e/openapi", async (t) => {
     });
 
     const source = JSON.parse(await readFile(outputFile, "utf-8"));
+
+    await cleanupGeneratedDirectory();
 
     t.ok(!isNil(source.components.schemas.AppRecursive));
     t.ok(!isNil(source.components.schemas.AppRecursiveNested));
@@ -455,21 +476,22 @@ test("code-gen/e2e/openapi", async (t) => {
     const T = new TypeCreator("app");
     const R = T.router("/app");
 
-    const { exitCode, generatedDirectory } = await codeGenToTemporaryDirectory(
-      [
-        R.get("/single", "get").query({
-          title: T.string("titleFilter"),
-        }),
-        R.get("/", "list").query({
-          title: T.reference("app", "titleFilter").optional(),
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: [],
-        dumpStructure: true,
-      },
-    );
+    const { exitCode, generatedDirectory, cleanupGeneratedDirectory } =
+      await codeGenToTemporaryDirectory(
+        [
+          R.get("/single", "get").query({
+            title: T.string("titleFilter"),
+          }),
+          R.get("/", "list").query({
+            title: T.reference("app", "titleFilter").optional(),
+          }),
+        ],
+        {
+          isNodeServer: true,
+          enabledGenerators: [],
+          dumpStructure: true,
+        },
+      );
 
     t.equal(exitCode, 0);
 
@@ -484,9 +506,21 @@ test("code-gen/e2e/openapi", async (t) => {
 
     const source = JSON.parse(await readFile(outputFile, "utf-8"));
 
+    await cleanupGeneratedDirectory();
+
     t.equal(source.paths["/app/single"].get.parameters[0].required, true);
     t.equal(source.paths["/app"].get.parameters[0].required, false);
 
     t.ok(!isNil(source.components.schemas.AppTitleFilter));
+  });
+
+  t.test("teardown", async (t) => {
+    await cleanupGeneratedDirectory();
+    await rm(outputFile.split("/").slice(0, -1).join("/"), {
+      recursive: true,
+      force: true,
+    });
+
+    t.pass();
   });
 });
