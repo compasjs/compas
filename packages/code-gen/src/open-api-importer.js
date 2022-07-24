@@ -54,7 +54,11 @@ export function convertOpenAPISpec(defaultGroup, data) {
    * openAPIReferences to resolve $ref's in the document
    */
   const context = {
-    logger: newLogger(),
+    logger: newLogger({
+      ctx: {
+        type: "code_gen",
+      },
+    }),
     result,
     defaultGroup: lowerCaseFirst(defaultGroup),
     data,

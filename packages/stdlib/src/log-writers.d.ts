@@ -6,7 +6,7 @@
  * @param {*} message
  * @returns {void}
  */
-export function writePretty(
+export function loggerWritePretty(
   stream: NodeJS.WritableStream,
   level: string,
   timestamp: Date,
@@ -21,7 +21,7 @@ export function writePretty(
  * @param {*} message
  * @returns {void}
  */
-export function writeGithubActions(
+export function loggerWriteGithubActions(
   stream: NodeJS.WritableStream,
   level: string,
   timestamp: Date,
@@ -35,10 +35,10 @@ export function writeGithubActions(
  * @param {*} message
  * @returns {string}
  */
-export function formatPretty(
+export function loggerFormatPretty(
   level: string | undefined,
   timestamp: Date,
   context: string | any,
   message: any,
 ): string;
-//# sourceMappingURL=writer.d.ts.map
+//# sourceMappingURL=log-writers.d.ts.map

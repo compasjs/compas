@@ -3,13 +3,13 @@
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").Logger} logger Logger should have a
+ * @param {import("./logger.js").Logger} logger Logger should have a
  *   context, like the default `ctx.log`
  * @param {AbortSignal|undefined} [signal]
  * @returns {import("../types/advanced-types.js").InsightEvent}
  */
 export function newEvent(
-  logger: import("../types/advanced-types.js").Logger,
+  logger: import("./logger.js").Logger,
   signal?: AbortSignal | undefined,
 ): import("../types/advanced-types.js").InsightEvent;
 /**

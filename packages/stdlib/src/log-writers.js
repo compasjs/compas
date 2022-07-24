@@ -10,8 +10,8 @@ import { inspect } from "util";
  * @param {*} message
  * @returns {void}
  */
-export function writePretty(stream, level, timestamp, context, message) {
-  stream.write(`${formatPretty(level, timestamp, context, message)}\n`);
+export function loggerWritePretty(stream, level, timestamp, context, message) {
+  stream.write(`${loggerFormatPretty(level, timestamp, context, message)}\n`);
 }
 
 /**
@@ -22,15 +22,21 @@ export function writePretty(stream, level, timestamp, context, message) {
  * @param {*} message
  * @returns {void}
  */
-export function writeGithubActions(stream, level, timestamp, context, message) {
+export function loggerWriteGithubActions(
+  stream,
+  level,
+  timestamp,
+  context,
+  message,
+) {
   if (level === "error") {
     // file=app.js,line=10,col=15
-    const { relativePath, column, line } = getErrorLogCaller();
+    const { relativePath, column, line } = loggerGetCaller();
 
     // See https://github.com/actions/toolkit/issues/193#issuecomment-605394935 for the
     // replace hack
     stream.write(
-      `::error file=${relativePath},line=${line},col=${column}::${formatPretty(
+      `::error file=${relativePath},line=${line},col=${column}::${loggerFormatPretty(
         undefined, // Always an error
         timestamp,
         context,
@@ -43,7 +49,7 @@ export function writeGithubActions(stream, level, timestamp, context, message) {
         .replace(/\u001b\[.*?m/g, "")}\n`,
     );
   } else {
-    writePretty(stream, level, timestamp, context, message);
+    loggerWritePretty(stream, level, timestamp, context, message);
   }
 }
 
@@ -54,28 +60,20 @@ export function writeGithubActions(stream, level, timestamp, context, message) {
  * @param {*} message
  * @returns {string}
  */
-export function formatPretty(level, timestamp, context, message) {
+export function loggerFormatPretty(level, timestamp, context, message) {
   let prefix = level
-    ? `${formatDate(timestamp)} ${formatLevelAndType(level, context?.type)} `
+    ? `${loggerFormatDate(timestamp)} ${loggerFormatLevel(
+        level,
+        context?.type,
+      )} `
     : "";
 
+  if (Object.keys(context).length > (context?.type ? 1 : 0)) {
+    prefix += `${loggerFormatMessagePretty(context)} `;
+  }
+
   if (message) {
-    if (Array.isArray(message)) {
-      return `${
-        prefix + message.map((it) => formatMessagePretty(it)).join(", ")
-      }`;
-    }
-    let keyCount = 0;
-    if (context?.type) {
-      // Dynamic conditional for context writing
-      keyCount = 1;
-    }
-
-    if (Object.keys(context).length > keyCount) {
-      prefix += `${formatMessagePretty(context)} `;
-    }
-
-    return `${prefix + formatMessagePretty(message)}`;
+    return `${prefix + loggerFormatMessagePretty(message)}`;
   }
 
   return prefix;
@@ -85,7 +83,7 @@ export function formatPretty(level, timestamp, context, message) {
  * @param {*} value
  * @returns {string}
  */
-function formatMessagePretty(value) {
+function loggerFormatMessagePretty(value) {
   if (
     typeof value === "boolean" ||
     typeof value === "string" ||
@@ -93,6 +91,7 @@ function formatMessagePretty(value) {
   ) {
     return String(value);
   }
+
   return inspect(value, {
     colors: true,
     depth: null,
@@ -103,7 +102,7 @@ function formatMessagePretty(value) {
  * @param {Date} date
  * @returns {string}
  */
-function formatDate(date) {
+function loggerFormatDate(date) {
   const h = date.getHours().toString(10).padStart(2, "0");
   const m = date.getMinutes().toString(10).padStart(2, "0");
   const s = date.getSeconds().toString(10).padStart(2, "0");
@@ -117,7 +116,7 @@ function formatDate(date) {
  * @param {string} type
  * @returns {string}
  */
-function formatLevelAndType(level, type) {
+function loggerFormatLevel(level, type) {
   const str =
     typeof type === "string" && type.length > 0 ? `${level}[${type}]` : level;
 
@@ -135,26 +134,20 @@ function formatLevelAndType(level, type) {
  *    column: number,
  * }}
  */
-function getErrorLogCaller() {
+function loggerGetCaller() {
   const err = {};
   Error.captureStackTrace(err);
 
-  // Input:
-  // [0] Error title
-  // [1] writeXxx
-  // [2] error fn
-  // [3] wrapWriter
-  // [4] caller
-  // at main (file:///home/dirk/projects/compas/scripts/brr.js:11:7)
   const stackLines = err.stack.split("\n").slice(1);
 
   let callerStackLine = stackLines[0].trim();
   for (const line of stackLines) {
     if (
-      line.includes("getErrorLogCaller") ||
-      line.includes("writeGithubActions") ||
-      line.includes("wrapWriter") ||
-      line.includes("Object.error")
+      line.includes("loggerGetCaller") ||
+      line.includes("loggerWriteGithubActions") ||
+      line.includes("Object.write") ||
+      line.includes("Object.error") ||
+      line.includes("Pino.")
     ) {
       continue;
     }

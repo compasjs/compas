@@ -23,8 +23,7 @@ export interface UuidFunc {
 
   /**
    * Return a new uuid v4
-   */
-  (options?: RandomUUIDOptions): string;
+   */ (options?: RandomUUIDOptions): string;
 }
 
 /**
@@ -73,62 +72,6 @@ export interface InsightEvent {
   name?: string;
 
   callStack: InsightEventCall[];
-}
-
-/**
- * The logger only has two severities:
- * - info
- * - error
- *
- * Either a log line is innocent enough and only provides debug information if needed, or
- *   someone should be paged because something goes wrong. For example handled 400 errors
- *   don't need any ones attention, but unhandled 500 errors do.
- *
- * The log functions {@ee Logger#info} only accepts a single parameter. This prevents magic
- * outputs like automatic concatenating strings in to a single message, or always having a top
- * level array as a message.
- */
-export interface Logger {
-  info(arg: any): void;
-
-  error(arg: any): void;
-}
-
-/**
- * Context that should be logged in all log lines. e.g
- *   a common request id.
- */
-interface LoggerContext {
-  type?: string;
-}
-
-export interface LoggerOptions<T extends LoggerContext> {
-  /**
-   * Replaces log.info with a 'noop'.Defaults to 'false'.
-   */
-  disableInfoLogger?: true | undefined;
-
-  /**
-   * Replaces log.error with a 'noop'.Defaults to 'false'.
-   */
-  disableErrorLogger?: true | undefined;
-
-  /**
-   * Set the printer to be used. Defaults to "pretty" when 'NODE_ENV===development',
-   * "github-actions" when 'GITHUB_ACTIONS===true' and "ndjson" by default.
-   */
-  printer?: "pretty" | "ndjson" | "github-actions" | undefined;
-
-  /**
-   * The stream to write the logs to, is not used for the 'ndjson' printer
-   */
-  stream?: NodeJS.WriteStream;
-
-  /**
-   * Context that should be logged in all log lines. e.g
-   *   a common request id.
-   */
-  ctx?: T;
 }
 
 /**

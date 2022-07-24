@@ -11,7 +11,7 @@
  */
 
 /**
- * @typedef {import("./types/advanced-types").Logger} Logger
+ * @typedef {import("./src/logger.js").Logger} Logger
  */
 
 /**
@@ -27,7 +27,8 @@
  */
 
 /**
- * @typedef {import("./types/advanced-types.js").ProcessDirectoryOptions} ProcessDirectoryOptions
+ * @typedef {import("./types/advanced-types.js").ProcessDirectoryOptions}
+ *   ProcessDirectoryOptions
  */
 
 export {
@@ -75,9 +76,10 @@ export {
 
 export {
   newLogger,
-  extendGlobalLoggerContext,
-  setGlobalLoggerOptions,
-} from "./src/logger/logger.js";
+  loggerSetGlobalDestination,
+  loggerGetPrettyPrinter,
+  loggerExtendGlobalContext,
+} from "./src/logger.js";
 
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
 
