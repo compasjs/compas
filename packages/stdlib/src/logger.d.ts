@@ -16,9 +16,27 @@ export function loggerExtendGlobalContext(context: Record<string, any>): void;
  *
  * @param {import("pino").DestinationStream} destination
  */
-export function loggerSetDestination(
+export function loggerSetGlobalDestination(
   destination: import("pino").DestinationStream,
 ): void;
+/**
+ * Set the global root pino instance. We use a single instance, so the same destination
+ * will be used for all sub loggers.
+ *
+ * @param {import("pino").DestinationStream} destination
+ */
+export function loggerBuildRootInstance(
+  destination: import("pino").DestinationStream,
+): import("pino").Logger<{
+  formatters: {
+    level: (label: string) => {
+      level: string;
+    };
+    bindings: () => {};
+  };
+  serializers: {};
+  base: {};
+}>;
 /**
  * Create a new logger instance. The provided `ctx` will shallowly overwrite the global
  * context that is set via {@see loggerExtendGlobalContext}.

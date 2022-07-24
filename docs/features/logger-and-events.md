@@ -17,21 +17,16 @@ Provided by `@compas/stdlib`
 
 #### newLogger
 
-This function constructs a new logger. The logger supports a log context and
-pretty printing when asked.
+This function constructs a new logger. It accepts an optional context object
+that is included in each log line for that logger. A log formatter is
+automatically configured based on the environment that your application is
+running in. If `NODE_ENV` is set to `development` a pretty printer will be used
+else it defaults to newline delimited json. Which boils down to a single
+stringified json object per log call.
 
 Parameters:
 
 - `options`:
-  - `disableInfoLogger` (boolean): Replaces log.info with a 'noop'. Defaults to
-    'false'.
-  - `disableErrorLogger` (boolean): Replaces log.error with a 'noop'. Defaults
-    to 'false'.
-  - `printer` (`"pretty"|"ndjson"|"github-actions"|undefined`): The log printer
-    to use. Automatically inferred from the env variables.
-  - `stream` (Stream): The stream to write to, defaults to `process.stdout`.
-    This is the intended use case. Although streams to files may work, this is
-    not supported. This option is ignored if the printer is `ndjson`.
   - `ctx` (object): Any context to add to log lines. This value is copied
     immediately on logger creation, so changes made via a reference, will not be
     reflected.
@@ -43,28 +38,27 @@ development so log lines are readable.
 
 :::
 
-A logger is a plain JavaScript object with 3 functions:
+A logger is a plain JavaScript object with 2 functions:
 
 **info** and **error**:
 
 The info and error function accept a single argument that is logged. This
 happens in a single `write` call when pretty printing or not.
 
-### setGlobalLogOptions
-
-There is also some global log configuration that can be set. For now these
-options only apply to the 'ndjson' logger. You can specify a custom Pino
-transport or destination that is used for all loggers created after calling this
-function. See the [Pino docs](https://getpino.io) for more information on what
-you can pass in.
-
-### extendGlobalLoggerContext
+### loggerExtendGlobalContext
 
 An application is able to gradually add more information to the shared context
 used by loggers. All properties added via this function will end up in each log
-line like the 'ctx' option of 'newLogger'. You can still overwrite values via
+line like the `ctx` option of `newLogger`. You can still overwrite values via
 the `ctx` option of `newLogger`. The added properties will only show up in
 loggers created after calling this function.
+
+### loggerSetGlobalDestination
+
+The logger uses [Pino](https://getpino.io) under the hood, and thus is able to
+use its [`destination`](https://getpino.io/#/docs/api?id=destination) and
+[`transport`](https://getpino.io/#/docs/api?id=pino-transport) system. This
+affects all loggers created via `newLogger` after setting a new destination.
 
 ### On log levels and processing
 

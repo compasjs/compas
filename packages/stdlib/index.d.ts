@@ -46,7 +46,7 @@ export {
 } from "./src/utils.js";
 export {
   newLogger,
-  loggerSetDestination,
+  loggerSetGlobalDestination,
   loggerGetPrettyPrinter,
   loggerExtendGlobalContext,
 } from "./src/logger.js";
