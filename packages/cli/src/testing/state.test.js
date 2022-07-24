@@ -12,7 +12,7 @@ test("cli/test/state", (t) => {
   });
 
   t.test("config loaded", (t) => {
-    t.equal(timeout, 2000);
+    t.equal(timeout, 3000);
   });
 
   t.test("test logger is available", (t) => {
