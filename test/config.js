@@ -5,7 +5,7 @@ import {
 } from "@compas/store";
 import { destroyTestServices, injectTestServices } from "../src/testing.js";
 
-export const timeout = 2000;
+export const timeout = 3000;
 
 export async function setup() {
   const sql = await createTestPostgresDatabase();
