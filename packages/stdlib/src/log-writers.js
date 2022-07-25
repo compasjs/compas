@@ -156,7 +156,8 @@ function loggerGetCaller() {
     break;
   }
 
-  const rawLocation = callerStackLine.split(" ")[2];
+  const rawLocation =
+    callerStackLine.split(" ")[callerStackLine.includes(" async ") ? 3 : 2];
 
   if (callerStackLine.length === 0 || (rawLocation?.length ?? 0) < 5) {
     return {

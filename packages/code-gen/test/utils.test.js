@@ -1,5 +1,5 @@
-import { mkdir, rm, writeFile } from "fs/promises";
-import { environment, exec, pathJoin, spawn, uuid } from "@compas/stdlib";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { exec, pathJoin, uuid } from "@compas/stdlib";
 import { App } from "../src/App.js";
 
 /**
@@ -94,16 +94,13 @@ async function main() {
     ...JSON.parse('${JSON.stringify(opts)}'),
     outputDirectory: "${generatedDirectory}",
   });
+  process.exit(0);
 }
   `;
 
   const generateFile = pathJoin(baseDirectory, `generate.js`);
-
   await writeFile(generateFile, genFile, "utf-8");
 
-  if (environment.DEBUG === "true") {
-    await spawn(`node`, [generateFile]);
-  }
   const { exitCode, stdout, stderr } = await exec(`node ${generateFile}`);
 
   const cleanupGeneratedDirectory = async () => {
