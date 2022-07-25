@@ -1,6 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
-import pino from "pino";
-import { newLogger, setGlobalLoggerOptions } from "./logger.js";
+import { loggerBuildRootInstance } from "./logger.js";
 
 mainTestFn(import.meta);
 
@@ -8,17 +7,22 @@ test("stdlib/logger", (t) => {
   const getLogInstanceWithMockedWrite = () => {
     const logLines = [];
 
-    setGlobalLoggerOptions({
-      pinoDestination: {
-        write(line) {
-          logLines.push(JSON.parse(line));
-        },
+    const pinoInstance = loggerBuildRootInstance({
+      write(line) {
+        logLines.push(JSON.parse(line));
       },
+    }).child({
+      context: {},
     });
 
-    const logger = newLogger({
-      printer: "ndjson",
-    });
+    const logger = {
+      info: (message) => {
+        pinoInstance.info({ message });
+      },
+      error: (message) => {
+        pinoInstance.error({ message });
+      },
+    };
 
     return { logger, logLines };
   };
@@ -66,10 +70,5 @@ test("stdlib/logger", (t) => {
     t.equal(logLines[1].message, 5);
     t.equal(logLines[2].message, "foo");
     t.deepEqual(logLines[3].message, { foo: "bar" });
-  });
-
-  t.test("teardown", (t) => {
-    setGlobalLoggerOptions({ pinoDestination: pino.destination(1) });
-    t.pass();
   });
 });

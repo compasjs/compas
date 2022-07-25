@@ -30,14 +30,12 @@ export function gc(): void;
  * @summary Process entrypoint executor
  *
  * @param {ImportMeta} meta
- * @param {(logger: import("../types/advanced-types.js").Logger) => void|Promise<void>} cb
+ * @param {(logger: import("./logger.js").Logger) => void|Promise<void>} cb
  * @returns {void}
  */
 export function mainFn(
   meta: ImportMeta,
-  cb: (
-    logger: import("../types/advanced-types.js").Logger,
-  ) => void | Promise<void>,
+  cb: (logger: import("./logger.js").Logger) => void | Promise<void>,
 ): void;
 /**
  * ES module compatibility counterpart of the CommonJS __filename

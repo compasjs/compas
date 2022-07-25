@@ -34,7 +34,7 @@ export function bytesToHumanReadable(bytes) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").Logger} logger
+ * @param {import("./logger.js").Logger} logger
  * @returns {void}
  */
 export function printProcessMemoryUsage(logger) {

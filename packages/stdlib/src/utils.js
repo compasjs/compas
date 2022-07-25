@@ -7,7 +7,11 @@ import dotenv from "dotenv";
 import { environment, isProduction, refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
-import { extendGlobalLoggerContext, newLogger } from "./logger/logger.js";
+import {
+  loggerDetermineDefaultDestination,
+  newLogger,
+  loggerExtendGlobalContext,
+} from "./logger.js";
 
 /**
  * Get the number of seconds since Unix epoch (1-1-1970).
@@ -61,7 +65,7 @@ export function gc() {
  * @summary Process entrypoint executor
  *
  * @param {ImportMeta} meta
- * @param {(logger: import("../types/advanced-types.js").Logger) => void|Promise<void>} cb
+ * @param {(logger: import("./logger.js").Logger) => void|Promise<void>} cb
  * @returns {void}
  */
 export function mainFn(meta, cb) {
@@ -77,10 +81,12 @@ export function mainFn(meta, cb) {
   refreshEnvironmentCache();
 
   if (isProduction() && environment.APP_NAME) {
-    extendGlobalLoggerContext({
+    loggerExtendGlobalContext({
       application: environment.APP_NAME,
     });
   }
+
+  loggerDetermineDefaultDestination();
 
   const logger = newLogger({
     ctx: { type: name },

@@ -2,7 +2,7 @@ export { uuid } from "./src/datatypes.js";
 export { AppError } from "./src/error.js";
 export type Either<T, E> = import("./types/advanced-types").Either<T, E>;
 export type EitherN<T, E> = import("./types/advanced-types").EitherN<T, E>;
-export type Logger = import("./types/advanced-types").Logger;
+export type Logger = import("./src/logger.js").Logger;
 export type ConfigLoaderOptions =
   import("./src/config-loader").ConfigLoaderOptions;
 export type ConfigLoaderResult =
@@ -46,9 +46,10 @@ export {
 } from "./src/utils.js";
 export {
   newLogger,
-  extendGlobalLoggerContext,
-  setGlobalLoggerOptions,
-} from "./src/logger/logger.js";
+  loggerSetGlobalDestination,
+  loggerGetPrettyPrinter,
+  loggerExtendGlobalContext,
+} from "./src/logger.js";
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
 export {
   newEvent,

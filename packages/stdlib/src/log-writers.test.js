@@ -1,10 +1,10 @@
 import { mainTestFn, test } from "@compas/cli";
-import { writePretty } from "./writer.js";
+import { loggerWritePretty } from "./log-writers.js";
 
 mainTestFn(import.meta);
 
-test("stdlib/logger/writer", (t) => {
-  t.test("writePretty", (t) => {
+test("stdlib/log-writers", (t) => {
+  t.test("loggerWritePretty", (t) => {
     const now = new Date();
     let result = [];
     const mock = /** @type {WritableStream} */ {
@@ -13,7 +13,7 @@ test("stdlib/logger/writer", (t) => {
       },
     };
 
-    writePretty(mock, "info", now, {}, {});
+    loggerWritePretty(mock, "info", now, {}, {});
 
     t.equal(result.length, 1);
 
@@ -23,7 +23,7 @@ test("stdlib/logger/writer", (t) => {
     t.ok(level.indexOf("info") !== -1, "print level");
 
     result = [];
-    writePretty(
+    loggerWritePretty(
       mock,
       "info",
       now,

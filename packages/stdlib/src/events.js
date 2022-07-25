@@ -4,7 +4,7 @@ import { isNil } from "./lodash.js";
 
 /**
  *
- * @param {import("../types/advanced-types.js").Logger} logger
+ * @param {import("./logger.js").Logger} logger
  * @param {AbortSignal|undefined} [signal]
  * @returns {InsightEventConstructor}
  */
@@ -15,7 +15,7 @@ function InsightEventConstructor(logger, signal) {
 
   const _this = this;
 
-  /**  @type {import("../types/advanced-types.js").Logger} */
+  /**  @type {import("./logger.js").Logger} */
   this.log = logger;
   /**  @type {AbortSignal|undefined} */
   this.signal = signal;
@@ -63,7 +63,7 @@ function InsightEventConstructor(logger, signal) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").Logger} logger Logger should have a
+ * @param {import("./logger.js").Logger} logger Logger should have a
  *   context, like the default `ctx.log`
  * @param {AbortSignal|undefined} [signal]
  * @returns {import("../types/advanced-types.js").InsightEvent}

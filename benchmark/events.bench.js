@@ -2,18 +2,19 @@ import { bench, mainBenchFn } from "@compas/cli";
 import {
   eventStart,
   eventStop,
+  loggerSetDestination,
   newEvent,
   newEventFromEvent,
   newLogger,
 } from "@compas/stdlib";
 
+loggerSetDestination({
+  write() {},
+});
 mainBenchFn(import.meta);
 
 bench("event - start", (b) => {
-  const logger = newLogger({
-    disableInfoLogger: true,
-    disableErrorLogger: true,
-  });
+  const logger = newLogger();
 
   for (let i = 0; i < b.N; ++i) {
     const e = newEvent(logger);
@@ -22,10 +23,7 @@ bench("event - start", (b) => {
 });
 
 bench("event - start/stop", (b) => {
-  const logger = newLogger({
-    disableInfoLogger: true,
-    disableErrorLogger: true,
-  });
+  const logger = newLogger();
 
   for (let i = 0; i < b.N; ++i) {
     const e = newEvent(logger);
@@ -35,10 +33,7 @@ bench("event - start/stop", (b) => {
 });
 
 bench("event - eventFromEvent", (b) => {
-  const logger = newLogger({
-    disableInfoLogger: true,
-    disableErrorLogger: true,
-  });
+  const logger = newLogger();
 
   for (let i = 0; i < b.N; ++i) {
     const e = newEvent(logger);

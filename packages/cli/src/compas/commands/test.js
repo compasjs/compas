@@ -2,6 +2,7 @@ import { url } from "inspector";
 import { cpus } from "os";
 import { isMainThread, Worker } from "worker_threads";
 import { isNil, spawn } from "@compas/stdlib";
+import treeKill from "tree-kill";
 import { loadTestConfig } from "../../testing/config.js";
 import { printTestResultsFromWorkers } from "../../testing/printer.js";
 import {
@@ -130,6 +131,12 @@ export async function cliExecutor(logger, state) {
     // Run serial tests in the same process
     const exitCode = await runTestsInProcess();
 
+    if (exitCode !== 0) {
+      return new Promise((r) => {
+        treeKill(process.pid, exitCode, r);
+      });
+    }
+
     return {
       exitStatus: exitCode === 0 ? "passed" : "failed",
     };
@@ -159,6 +166,10 @@ export async function cliExecutor(logger, state) {
     const hasFailure = testResult.find((it) => it.isFailed);
     if (hasFailure) {
       const exitCode = printTestResultsFromWorkers(testResult);
+
+      await new Promise((r) => {
+        treeKill(process.pid, exitCode, r);
+      });
       process.exit(exitCode);
     }
 
@@ -173,6 +184,12 @@ export async function cliExecutor(logger, state) {
 
   // @ts-ignore
   const exitCode = printTestResultsFromWorkers(results);
+
+  if (exitCode !== 0) {
+    await new Promise((r) => {
+      treeKill(process.pid, exitCode, r);
+    });
+  }
 
   return {
     exitStatus: exitCode === 0 ? "passed" : "failed",
