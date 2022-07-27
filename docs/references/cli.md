@@ -284,6 +284,7 @@ https://www.npmjs.com/package/c8 for more information.
 | --parallel-count   | The number of workers to use, when running in parallel. Defaulting to (the number of CPU cores - 1) or 4, whichever is lower. (number) |
 | --randomize-rounds | Runs test the specified amount of times, shuffling the test file order between runs. (number)                                          |
 | --coverage         | Collect coverage information while running the tests. (boolean)                                                                        |
+| --with-logs        | Enable output of application loggers in the tests. (boolean)                                                                           |
 | --watch            | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean)                       |
 | -h, --help         | Display information about the current command. (boolean)                                                                               |
 
