@@ -13,11 +13,17 @@ export function buildAndCheckOpts(opts) {
       },
       no_prepare: true,
       ssl: isProduction() ? "require" : "prefer",
-      database: environment.POSTGRES_DATABASE ?? environment.APP_NAME,
-      user: environment.POSTGRES_USER,
-      password: environment.POSTGRES_PASSWORD,
-      host: environment.POSTGRES_HOST,
-      port: environment.POSTGRES_PORT,
+      database:
+        environment.POSTGRES_DATABASE ??
+        environment.PGDATABASE ??
+        environment.APP_NAME,
+      user:
+        environment.POSTGRES_USER ??
+        environment.PGUSERNAME ??
+        environment.PGUSER,
+      password: environment.POSTGRES_PASSWORD ?? environment.PGPASSWORD,
+      host: environment.POSTGRES_HOST ?? environment.PGHOST,
+      port: environment.POSTGRES_PORT ?? environment.PGPORT,
       max: 15,
       types: {
         // Used by
