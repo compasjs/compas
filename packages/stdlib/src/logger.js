@@ -29,9 +29,9 @@ import { loggerWriteGithubActions, loggerWritePretty } from "./log-writers.js";
 const globalContext = {};
 
 /**
- * @type {boolean}
+ * @type {import("pino").DestinationStream|undefined}
  */
-let didSetLogger = false;
+let globalDestination = undefined;
 
 /**
  * @type {import("pino").Logger}
@@ -66,8 +66,21 @@ export function loggerExtendGlobalContext(context) {
  * @param {import("pino").DestinationStream} destination
  */
 export function loggerSetGlobalDestination(destination) {
-  didSetLogger = true;
+  globalDestination = destination;
   rootInstance = loggerBuildRootInstance(destination);
+}
+
+/**
+ * Returns the current pino destination.
+ *
+ * This can be used to temporarily set a different destination for the newly created
+ * loggers and then reusing the destination for the rest of your application.
+ *
+ * @returns {import("pino").DestinationStream}
+ */
+export function loggerGetGlobalDestination() {
+  // @ts-expect-error
+  return globalDestination;
 }
 
 /**
@@ -125,11 +138,9 @@ export function newLogger(options) {
  * 'ndjson', 'github-actions'.
  */
 export function loggerDetermineDefaultDestination() {
-  if (didSetLogger) {
+  if (globalDestination) {
     return;
   }
-
-  didSetLogger = true;
 
   const isProd = isProduction();
   const isGitHubActions = environment.GITHUB_ACTIONS === "true";

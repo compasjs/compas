@@ -1,8 +1,7 @@
 import { url } from "inspector";
 import { cpus } from "os";
 import { isMainThread, Worker } from "worker_threads";
-import { isNil, spawn } from "@compas/stdlib";
-import treeKill from "tree-kill";
+import { isNil, refreshEnvironmentCache, spawn } from "@compas/stdlib";
 import { loadTestConfig } from "../../testing/config.js";
 import { printTestResultsFromWorkers } from "../../testing/printer.js";
 import {
@@ -68,6 +67,11 @@ Collecting and processing coverage information is done using C8. Use one of the 
       rawName: "--coverage",
       description: "Collect coverage information while running the tests.",
     },
+    {
+      name: "withLogs",
+      rawName: "--with-logs",
+      description: "Enable output of application loggers in the tests.",
+    },
   ],
   executor: cliExecutor,
 };
@@ -123,6 +127,11 @@ export async function cliExecutor(logger, state) {
 
   state.flags.randomizeRounds = state.flags.randomizeRounds ?? 1;
 
+  state.flags.withLogs = state.flags.withLogs ?? false;
+
+  process.env._COMPAS_TEST_WITH_LOGS = String(state.flags.withLogs);
+  refreshEnvironmentCache();
+
   // Make sure to set tests running, so `mainTestFn` is 'disabled'.
   setAreTestRunning(true);
   setTestLogger(logger);
@@ -130,12 +139,6 @@ export async function cliExecutor(logger, state) {
   if (parallelCount === 1 && state.flags.randomizeRounds === 1) {
     // Run serial tests in the same process
     const exitCode = await runTestsInProcess();
-
-    if (exitCode !== 0) {
-      return new Promise((r) => {
-        treeKill(process.pid, exitCode, r);
-      });
-    }
 
     return {
       exitStatus: exitCode === 0 ? "passed" : "failed",
@@ -167,9 +170,6 @@ export async function cliExecutor(logger, state) {
     if (hasFailure) {
       const exitCode = printTestResultsFromWorkers(testResult);
 
-      await new Promise((r) => {
-        treeKill(process.pid, exitCode, r);
-      });
       process.exit(exitCode);
     }
 
@@ -184,12 +184,6 @@ export async function cliExecutor(logger, state) {
 
   // @ts-ignore
   const exitCode = printTestResultsFromWorkers(results);
-
-  if (exitCode !== 0) {
-    await new Promise((r) => {
-      treeKill(process.pid, exitCode, r);
-    });
-  }
 
   return {
     exitStatus: exitCode === 0 ? "passed" : "failed",

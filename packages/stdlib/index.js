@@ -76,6 +76,7 @@ export {
 
 export {
   newLogger,
+  loggerGetGlobalDestination,
   loggerSetGlobalDestination,
   loggerGetPrettyPrinter,
   loggerExtendGlobalContext,

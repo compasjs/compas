@@ -33,9 +33,11 @@ test("my test", (t) => {
 ### Running tests
 
 There are two ways to run tests. The short way is to use `compas test` which
-will run all test files in your project. There is also the option to run a test
-file directly like `node ./file.test.js` or `compas run ./file.test.js`.
-However, to do this you need to add the following to your test file:
+will run all test files in your project. It supports various flags like
+`--with-logs` to enable all info-logs in your project. By default, the test
+runner only logs errors. There is also the option to run a test file directly
+like `node ./file.test.js` or `compas run ./file.test.js`. However, to do this,
+you need to add the following to your test file:
 
 ```js
 import { mainTestFn } from "@compas/cli";
@@ -44,7 +46,8 @@ mainTestFn(import.meta);
 ```
 
 It works based on `mainFn` as explained in the
-[cli page](/features/cli.html#mainfn).
+[cli page](/features/cli.html#mainfn). Running your test file like this, will
+also enable all your logs.
 
 ### Setup and teardown per test file
 

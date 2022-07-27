@@ -20,6 +20,15 @@ export function loggerSetGlobalDestination(
   destination: import("pino").DestinationStream,
 ): void;
 /**
+ * Returns the current pino destination.
+ *
+ * This can be used to temporarily set a different destination for the newly created
+ * loggers and then reusing the destination for the rest of your application.
+ *
+ * @returns {import("pino").DestinationStream}
+ */
+export function loggerGetGlobalDestination(): import("pino").DestinationStream;
+/**
  * Set the global root pino instance. We use a single instance, so the same destination
  * will be used for all sub loggers.
  *

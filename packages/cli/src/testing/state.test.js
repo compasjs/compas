@@ -1,5 +1,5 @@
 import { test } from "./runner.js";
-import { areTestsRunning, testLogger, timeout } from "./state.js";
+import { areTestsRunning, timeout } from "./state.js";
 import { mainTestFn } from "./utils.js";
 
 mainTestFn(import.meta);
@@ -16,7 +16,8 @@ test("cli/test/state", (t) => {
   });
 
   t.test("test logger is available", (t) => {
-    t.equal(t.log, testLogger);
+    t.equal(typeof t.log.info, "function");
+    t.equal(typeof t.log.error, "function");
   });
 
   t.test("set timeout of child test", (t) => {

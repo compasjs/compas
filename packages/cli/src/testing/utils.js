@@ -1,5 +1,4 @@
 import { mainFn } from "@compas/stdlib";
-import treeKill from "tree-kill";
 import { areTestsRunning, setAreTestRunning, setTestLogger } from "./state.js";
 import { runTestsInProcess } from "./worker-internal.js";
 
@@ -26,12 +25,6 @@ export function mainTestFn(meta) {
     const exitCode = await runTestsInProcess({
       singleFileMode: true,
     });
-
-    if (exitCode !== 0) {
-      return new Promise((r) => {
-        treeKill(process.pid, exitCode, r);
-      });
-    }
 
     process.exit(exitCode);
   });
