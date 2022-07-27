@@ -21,52 +21,43 @@ mainTestFn(import.meta);
 
 test("store/session-store", (t) => {
   const sessionSettings = {
-    accessTokenMaxAgeInSeconds: 5,
-    refreshTokenMaxAgeInSeconds: 10,
-    signingKey: uuid(),
+    accessTokenMaxAgeInSeconds: 5, refreshTokenMaxAgeInSeconds: 10, signingKey: uuid(),
   };
 
   const createSession = async () => {
-    const tokenResult = await sessionStoreCreate(
-      newTestEvent(t),
-      sql,
-      sessionSettings,
-      {},
+    const tokenResult = await sessionStoreCreate(newTestEvent(t), sql, sessionSettings,
+                                                 {},
     );
 
     if (tokenResult.error) {
       throw tokenResult.error;
     }
 
-    const accessTokenResult = await sessionStoreVerifyAndDecodeJWT(
-      newTestEvent(t),
-      sessionSettings,
-      tokenResult.value.accessToken,
+    const accessTokenResult = await sessionStoreVerifyAndDecodeJWT(newTestEvent(t),
+                                                                   sessionSettings,
+                                                                   tokenResult.value.accessToken,
     );
 
     if (accessTokenResult.error) {
       throw accessTokenResult.error;
     }
 
-    const [session] = await querySessionStore({
-      where: {
-        viaAccessTokens: {
-          where: {
-            id: accessTokenResult.value.payload.compasSessionAccessToken,
-          },
-        },
-      },
-      accessTokens: {
+    const [ session ] = await querySessionStore({
+                                                  where: {
+                                                    viaAccessTokens: {
+                                                      where: {
+                                                        id: accessTokenResult.value.payload.compasSessionAccessToken,
+                                                      },
+                                                    },
+                                                  }, accessTokens: {
         where: {
           refreshTokenIsNotNull: true,
-        },
-        refreshToken: {},
+        }, refreshToken: {},
       },
-    }).exec(sql);
+                                                }).exec(sql);
 
     return {
-      session,
-      tokens: tokenResult.value,
+      session, tokens: tokenResult.value,
     };
   };
 
@@ -74,20 +65,13 @@ test("store/session-store", (t) => {
     // No error case, or some unexpected issue with jws, which we can't really test
 
     t.test("validator", async (t) => {
-      const result = await sessionStoreCreate(
-        newTestEvent(t),
-        sql,
-        {
-          accessTokenMaxAgeInSeconds: 5,
-          signingKey: uuid(),
-        },
-        {},
-      );
+      const result = await sessionStoreCreate(newTestEvent(t), sql, {
+        accessTokenMaxAgeInSeconds: 5, signingKey: uuid(),
+      }, {},);
 
       t.ok(result.error);
       t.equal(
-        result.error.info["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"]
-          ?.key,
+        result.error.info["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"]?.key,
         "validator.number.type",
       );
     });
@@ -97,36 +81,31 @@ test("store/session-store", (t) => {
         foo: uuid(),
       };
 
-      const result = await sessionStoreCreate(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        data,
+      const result = await sessionStoreCreate(newTestEvent(t), sql, sessionSettings,
+                                              data,
       );
 
       t.ok(isNil(result.error));
       t.ok(result.value?.accessToken);
       t.ok(result.value?.refreshToken);
 
-      const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(
-        newTestEvent(t),
-        sessionSettings,
-        result.value.accessToken,
+      const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(newTestEvent(t),
+                                                                      sessionSettings,
+                                                                      result.value.accessToken,
       );
       t.ok(isNil(accessTokenPayload.error));
 
-      const [session] = await querySessionStore({
-        where: {
-          viaAccessTokens: {
-            where: {
-              id: accessTokenPayload.value.payload.compasSessionAccessToken,
-            },
-          },
-        },
-        accessTokens: {
+      const [ session ] = await querySessionStore({
+                                                    where: {
+                                                      viaAccessTokens: {
+                                                        where: {
+                                                          id: accessTokenPayload.value.payload.compasSessionAccessToken,
+                                                        },
+                                                      },
+                                                    }, accessTokens: {
           refreshToken: {},
         },
-      }).exec(sql);
+                                                  }).exec(sql);
 
       t.equal(session.accessTokens.length, 2);
       t.equal(session.data.foo, data.foo);
@@ -137,37 +116,28 @@ test("store/session-store", (t) => {
     const sessionInfo = await createSession();
 
     t.test("validator", async (t) => {
-      const result = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        {
-          refreshTokenMaxAgeInSeconds: 5,
-          signingKey: uuid(),
-        },
-        "",
-      );
+      const result = await sessionStoreGet(newTestEvent(t), sql, {
+        refreshTokenMaxAgeInSeconds: 5, signingKey: uuid(),
+      }, "",);
 
       t.ok(result.error);
       t.equal(
-        result.error.info["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"]
-          ?.key,
+        result.error.info["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"]?.key,
         "validator.number.type",
       );
     });
 
     t.test("invalidToken", async (t) => {
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.accessToken.substring(
-          0,
-          sessionInfo.tokens.accessToken.length - 2,
-        ),
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     sessionInfo.tokens.accessToken.substring(
+                                                       0,
+                                                       sessionInfo.tokens.accessToken.length -
+                                                         2,
+                                                     ),
       );
-      t.equal(
-        sessionGetResult.error?.key,
-        "sessionStore.verifyAndDecodeJWT.invalidToken",
+      t.equal(sessionGetResult.error?.key,
+              "sessionStore.verifyAndDecodeJWT.invalidToken",
       );
     });
 
@@ -175,42 +145,33 @@ test("store/session-store", (t) => {
       const expiresAt = new Date();
       expiresAt.setSeconds(expiresAt.getSeconds() - 20);
 
-      const accessTokenString = await sessionStoreCreateJWT(
-        newTestEvent(t),
-        sessionSettings,
-        "compasSessionAccessToken",
-        sessionInfo.session.accessTokens[0].id,
-        expiresAt,
+      const accessTokenString = await sessionStoreCreateJWT(newTestEvent(t),
+                                                            sessionSettings,
+                                                            "compasSessionAccessToken",
+                                                            sessionInfo.session.accessTokens[0].id,
+                                                            expiresAt,
       );
       if (accessTokenString.error) {
         throw accessTokenString.error;
       }
 
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        accessTokenString.value,
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     accessTokenString.value,
       );
 
-      t.equal(
-        sessionGetResult.error?.key,
-        "sessionStore.verifyAndDecodeJWT.expiredToken",
+      t.equal(sessionGetResult.error?.key,
+              "sessionStore.verifyAndDecodeJWT.expiredToken",
       );
     });
 
     t.test("invalidAccessToken", async (t) => {
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.refreshToken,
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     sessionInfo.tokens.refreshToken,
       );
 
-      t.equal(
-        sessionGetResult.error?.key,
-        "sessionStore.get.invalidAccessToken",
-      );
+      t.equal(sessionGetResult.error?.key, "sessionStore.get.invalidAccessToken",);
     });
 
     t.test("invalidSession", async (t) => {
@@ -222,11 +183,9 @@ test("store/session-store", (t) => {
         id: customSessionInfo.session.id,
       });
 
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.accessToken,
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     customSessionInfo.tokens.accessToken,
       );
 
       t.equal(sessionGetResult.error?.key, "sessionStore.get.invalidSession");
@@ -240,28 +199,23 @@ test("store/session-store", (t) => {
       await queries.sessionStoreTokenUpdate(sql, {
         update: {
           revokedAt: new Date(),
-        },
-        where: {
+        }, where: {
           session: customSessionInfo.session.id,
         },
       });
 
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.accessToken,
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     customSessionInfo.tokens.accessToken,
       );
 
       t.equal(sessionGetResult.error?.key, "sessionStore.get.revokedToken");
     });
 
     t.test("success", async (t) => {
-      const sessionGetResult = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.accessToken,
+      const sessionGetResult = await sessionStoreGet(newTestEvent(t), sql,
+                                                     sessionSettings,
+                                                     sessionInfo.tokens.accessToken,
       );
 
       t.ok(isNil(sessionGetResult.error));
@@ -273,77 +227,53 @@ test("store/session-store", (t) => {
     const sessionInfo = await createSession();
 
     t.test("invalidSession - missing id", async (t) => {
-      const sessionUpdateResult = await sessionStoreUpdate(
-        newTestEvent(t),
-        sql,
-        {
-          checksum: "foobar",
-        },
-      );
+      const sessionUpdateResult = await sessionStoreUpdate(newTestEvent(t), sql, {
+        checksum: "foobar",
+      },);
 
-      t.equal(
-        sessionUpdateResult.error?.key,
-        "sessionStore.update.invalidSession",
-      );
+      t.equal(sessionUpdateResult.error?.key, "sessionStore.update.invalidSession",);
     });
 
     t.test("invalidSession - missing checksum", async (t) => {
-      const sessionUpdateResult = await sessionStoreUpdate(
-        newTestEvent(t),
-        sql,
-        {
-          id: uuid(),
-        },
-      );
+      const sessionUpdateResult = await sessionStoreUpdate(newTestEvent(t), sql, {
+        id: uuid(),
+      },);
 
-      t.equal(
-        sessionUpdateResult.error?.key,
-        "sessionStore.update.invalidSession",
-      );
+      t.equal(sessionUpdateResult.error?.key, "sessionStore.update.invalidSession",);
     });
 
     t.test("success - no update via checksum check", async (t) => {
-      const sessionUpdateResult = await sessionStoreUpdate(
-        newTestEvent(t),
-        sql,
-        {
-          id: sessionInfo.session.id,
-          data: sessionInfo.session.data,
-          checksum: sessionInfo.session.checksum,
-        },
-      );
+      const sessionUpdateResult = await sessionStoreUpdate(newTestEvent(t), sql, {
+        id: sessionInfo.session.id,
+        data: sessionInfo.session.data,
+        checksum: sessionInfo.session.checksum,
+      },);
 
       t.ok(isNil(sessionUpdateResult.error));
 
-      const [refetchedSession] = await querySessionStore({
-        where: {
-          id: sessionInfo.session.id,
-        },
-      }).exec(sql);
+      const [ refetchedSession ] = await querySessionStore({
+                                                             where: {
+                                                               id: sessionInfo.session.id,
+                                                             },
+                                                           }).exec(sql);
 
       t.deepEqual(sessionInfo.session.updatedAt, refetchedSession.updatedAt);
     });
 
     t.test("success", async (t) => {
-      const sessionUpdateResult = await sessionStoreUpdate(
-        newTestEvent(t),
-        sql,
-        {
-          id: sessionInfo.session.id,
-          data: {
-            foo: {},
-          },
-          checksum: sessionInfo.session.checksum,
-        },
-      );
+      const sessionUpdateResult = await sessionStoreUpdate(newTestEvent(t), sql, {
+        id: sessionInfo.session.id, data: {
+          foo: {},
+        }, checksum: sessionInfo.session.checksum,
+      },);
 
       t.ok(isNil(sessionUpdateResult.error));
 
-      const [refetchedSession] = await querySessionStore({
-        where: {
-          id: sessionInfo.session.id,
-        },
-      }).exec(sql);
+      const [ refetchedSession ] = await querySessionStore({
+                                                             where: {
+                                                               id: sessionInfo.session.id,
+                                                             },
+                                                           }).exec(sql);
 
       t.ok(refetchedSession.data.foo);
     });
@@ -353,35 +283,27 @@ test("store/session-store", (t) => {
     const sessionInfo = await createSession();
 
     t.test("invalidSession", async (t) => {
-      const sessionInvalidateResult = await sessionStoreInvalidate(
-        newTestEvent(t),
-        sql,
-        {},
+      const sessionInvalidateResult = await sessionStoreInvalidate(newTestEvent(t), sql,
+                                                                   {},
       );
 
-      t.equal(
-        sessionInvalidateResult.error?.key,
-        "sessionStore.invalidate.invalidSession",
+      t.equal(sessionInvalidateResult.error?.key,
+              "sessionStore.invalidate.invalidSession",
       );
     });
 
     t.test("success", async (t) => {
-      const sessionUpdateResult = await sessionStoreInvalidate(
-        newTestEvent(t),
-        sql,
-        {
-          id: sessionInfo.session.id,
-        },
-      );
+      const sessionUpdateResult = await sessionStoreInvalidate(newTestEvent(t), sql, {
+        id: sessionInfo.session.id,
+      },);
 
       t.ok(isNil(sessionUpdateResult.error));
 
-      const [refetchedSession] = await querySessionStore({
-        where: {
-          id: sessionInfo.session.id,
-        },
-        accessTokens: {},
-      }).exec(sql);
+      const [ refetchedSession ] = await querySessionStore({
+                                                             where: {
+                                                               id: sessionInfo.session.id,
+                                                             }, accessTokens: {},
+                                                           }).exec(sql);
 
       t.ok(refetchedSession.revokedAt);
       for (const token of refetchedSession.accessTokens) {
@@ -394,15 +316,9 @@ test("store/session-store", (t) => {
     const sessionInfo = await createSession();
 
     t.test("validator", async (t) => {
-      const result = await sessionStoreGet(
-        newTestEvent(t),
-        sql,
-        {
-          accessTokenMaxAgeInSeconds: 5,
-          refreshTokenMaxAgeInSeconds: 5,
-        },
-        "",
-      );
+      const result = await sessionStoreGet(newTestEvent(t), sql, {
+        accessTokenMaxAgeInSeconds: 5, refreshTokenMaxAgeInSeconds: 5,
+      }, "",);
 
       t.ok(result.error);
       t.equal(
@@ -411,19 +327,31 @@ test("store/session-store", (t) => {
       );
     });
 
-    t.test("invalidToken", async (t) => {
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.refreshToken.substring(
-          0,
-          sessionInfo.tokens.refreshToken.length - 2,
-        ),
-      );
+    t.test("validator - signingKey.min", async (t) => {
+      const result = await sessionStoreGet(newTestEvent(t), sql, {
+        accessTokenMaxAgeInSeconds: 5,
+        refreshTokenMaxAgeInSeconds: 5,
+        signingKey: "foo bar",
+      }, "",);
+
+      t.ok(result.error);
       t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.verifyAndDecodeJWT.invalidToken",
+        result.error.info["$.sessionStoreSettings.signingKey"]?.key,
+        "validator.string.min",
+      );
+    });
+
+    t.test("invalidToken", async (t) => {
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   sessionInfo.tokens.refreshToken.substring(
+                                                                     0,
+                                                                     sessionInfo.tokens.refreshToken.length -
+                                                                       2,
+                                                                   ),
+      );
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.verifyAndDecodeJWT.invalidToken",
       );
     });
 
@@ -431,41 +359,34 @@ test("store/session-store", (t) => {
       const expiresAt = new Date();
       expiresAt.setSeconds(expiresAt.getSeconds() - 20);
 
-      const refreshTokenString = await sessionStoreCreateJWT(
-        newTestEvent(t),
-        sessionSettings,
-        "compasSessionRefreshToken",
-        sessionInfo.session.accessTokens[0].id,
-        expiresAt,
+      const refreshTokenString = await sessionStoreCreateJWT(newTestEvent(t),
+                                                             sessionSettings,
+                                                             "compasSessionRefreshToken",
+                                                             sessionInfo.session.accessTokens[0].id,
+                                                             expiresAt,
       );
       if (refreshTokenString.error) {
         throw refreshTokenString.error;
       }
 
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        refreshTokenString.value,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   refreshTokenString.value,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.verifyAndDecodeJWT.expiredToken",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.verifyAndDecodeJWT.expiredToken",
       );
     });
 
     t.test("invalidRefreshToken", async (t) => {
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.accessToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   sessionInfo.tokens.accessToken,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.refreshTokens.invalidRefreshToken",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.refreshTokens.invalidRefreshToken",
       );
     });
 
@@ -478,16 +399,13 @@ test("store/session-store", (t) => {
         id: customSessionInfo.session.id,
       });
 
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.refreshToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   customSessionInfo.tokens.refreshToken,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.refreshTokens.invalidSession",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.refreshTokens.invalidSession",
       );
     });
 
@@ -499,22 +417,18 @@ test("store/session-store", (t) => {
       await queries.sessionStoreUpdate(sql, {
         update: {
           revokedAt: new Date(),
-        },
-        where: {
+        }, where: {
           id: customSessionInfo.session.id,
         },
       });
 
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.refreshToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   customSessionInfo.tokens.refreshToken,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.refreshTokens.revokedToken",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.refreshTokens.revokedToken",
       );
     });
 
@@ -528,22 +442,18 @@ test("store/session-store", (t) => {
       await queries.sessionStoreTokenUpdate(sql, {
         update: {
           revokedAt,
-        },
-        where: {
+        }, where: {
           session: customSessionInfo.session.id,
         },
       });
 
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.refreshToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   customSessionInfo.tokens.refreshToken,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.refreshTokens.revokedToken",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.refreshTokens.revokedToken",
       );
     });
 
@@ -552,11 +462,11 @@ test("store/session-store", (t) => {
       // recover the mutations.
       const customSessionInfo = await createSession();
       const existingJobs = await queryJob({
-        where: {
-          name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
-          isComplete: false,
-        },
-      }).exec(sql);
+                                            where: {
+                                              name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
+                                              isComplete: false,
+                                            },
+                                          }).exec(sql);
 
       const revokedAt = new Date();
       revokedAt.setDate(revokedAt.getDate() - 2);
@@ -564,45 +474,38 @@ test("store/session-store", (t) => {
       await queries.sessionStoreTokenUpdate(sql, {
         update: {
           revokedAt,
-        },
-        where: {
+        }, where: {
           id: customSessionInfo.session.accessTokens[0].refreshToken.id,
         },
       });
 
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        customSessionInfo.tokens.refreshToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   customSessionInfo.tokens.refreshToken,
       );
 
-      t.equal(
-        sessionRefreshResult.error?.key,
-        "sessionStore.refreshTokens.revokedToken",
+      t.equal(sessionRefreshResult.error?.key,
+              "sessionStore.refreshTokens.revokedToken",
       );
 
       const endJobs = await queryJob({
-        where: {
-          name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
-          isComplete: false,
-        },
-      }).exec(sql);
+                                       where: {
+                                         name: SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
+                                         isComplete: false,
+                                       },
+                                     }).exec(sql);
 
       t.ok(endJobs.length > existingJobs.length);
-      const newJob = endJobs.find((it) =>
-        isNil(existingJobs.find((it2) => it2.id === it.id)),
-      );
+      const newJob = endJobs.find(
+        (it) => isNil(existingJobs.find((it2) => it2.id === it.id)),);
 
       t.equal(newJob.data.report.session.id, customSessionInfo.session.id);
     });
 
     t.test("success", async (t) => {
-      const sessionRefreshResult = await sessionStoreRefreshTokens(
-        newTestEvent(t),
-        sql,
-        sessionSettings,
-        sessionInfo.tokens.refreshToken,
+      const sessionRefreshResult = await sessionStoreRefreshTokens(newTestEvent(t), sql,
+                                                                   sessionSettings,
+                                                                   sessionInfo.tokens.refreshToken,
       );
 
       t.ok(isNil(sessionRefreshResult.error));
@@ -610,34 +513,30 @@ test("store/session-store", (t) => {
       t.ok(sessionRefreshResult.value?.accessToken);
       t.ok(sessionRefreshResult.value?.refreshToken);
 
-      const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(
-        newTestEvent(t),
-        sessionSettings,
-        sessionRefreshResult.value.accessToken,
+      const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(newTestEvent(t),
+                                                                      sessionSettings,
+                                                                      sessionRefreshResult.value.accessToken,
       );
       t.ok(isNil(accessTokenPayload.error));
 
-      const [session] = await querySessionStore({
-        where: {
-          viaAccessTokens: {
-            where: {
-              id: accessTokenPayload.value.payload.compasSessionAccessToken,
-            },
-          },
-        },
-        accessTokens: {
+      const [ session ] = await querySessionStore({
+                                                    where: {
+                                                      viaAccessTokens: {
+                                                        where: {
+                                                          id: accessTokenPayload.value.payload.compasSessionAccessToken,
+                                                        },
+                                                      },
+                                                    }, accessTokens: {
           refreshToken: {},
         },
-      }).exec(sql);
+                                                  }).exec(sql);
 
       t.equal(session.accessTokens.length, 4);
 
       const oldAccessToken = session.accessTokens.find(
-        (it) => it.id === sessionInfo.session.accessTokens[0].id,
-      );
+        (it) => it.id === sessionInfo.session.accessTokens[0].id,);
       const oldRefreshToken = session.accessTokens.find(
-        (it) => it.id === sessionInfo.session.accessTokens[0].refreshToken.id,
-      );
+        (it) => it.id === sessionInfo.session.accessTokens[0].refreshToken.id,);
 
       t.ok(!isNil(oldAccessToken.revokedAt));
       t.ok(!isNil(oldRefreshToken.revokedAt));
@@ -646,46 +545,38 @@ test("store/session-store", (t) => {
 
   t.test("sessionStoreCleanupExpiredSessions", async (t) => {
     const longLivedSession = await createSession();
-    const [session] = await queries.sessionStoreInsert(sql, [
+    const [ session ] = await queries.sessionStoreInsert(sql, [
       {
-        data: {},
-        checksum: "foo",
-        revokedAt: new Date(),
+        data: {}, checksum: "foo", revokedAt: new Date(),
       },
     ]);
 
-    const [tokenId1, tokenId2, tokenId3] = [uuid(), uuid(), uuid()];
+    const [ tokenId1, tokenId2, tokenId3 ] = [ uuid(), uuid(), uuid() ];
     const tenDaysInTheFuture = new Date();
     tenDaysInTheFuture.setDate(tenDaysInTheFuture.getDate() + 10);
 
-    await queries.sessionStoreTokenInsert(
-      sql,
-      [
-        {
-          id: tokenId1,
-          session: session.id,
-          expiresAt: new Date(2020, 1, 1),
-          createdAt: new Date(),
-        },
-        {
-          id: tokenId2,
-          session: session.id,
-          expiresAt: new Date(tenDaysInTheFuture),
-          createdAt: new Date(),
-          refreshToken: tokenId3,
-        },
-        {
-          id: tokenId3,
-          session: session.id,
-          expiresAt: new Date(tenDaysInTheFuture),
-          revokedAt: new Date(),
-          createdAt: new Date(),
-        },
-      ],
+    await queries.sessionStoreTokenInsert(sql, [
       {
-        withPrimaryKey: true,
+        id: tokenId1,
+        session: session.id,
+        expiresAt: new Date(2020, 1, 1),
+        createdAt: new Date(),
+      }, {
+        id: tokenId2,
+        session: session.id,
+        expiresAt: new Date(tenDaysInTheFuture),
+        createdAt: new Date(),
+        refreshToken: tokenId3,
+      }, {
+        id: tokenId3,
+        session: session.id,
+        expiresAt: new Date(tenDaysInTheFuture),
+        revokedAt: new Date(),
+        createdAt: new Date(),
       },
-    );
+    ], {
+                                            withPrimaryKey: true,
+                                          },);
 
     t.test("uses maxRevokeAgeInDays", async (t) => {
       await sessionStoreCleanupExpiredSessions(newTestEvent(t), sql, 1);
@@ -694,36 +585,25 @@ test("store/session-store", (t) => {
       const tokensAfterCleanup = await querySessionStoreToken({}).exec(sql);
 
       t.ok(sessionsAfterCleanup.find((it) => it.id === session.id));
-      t.ok(
-        sessionsAfterCleanup.find(
-          (it) => it.id === longLivedSession.session.id,
-        ),
-      );
+      t.ok(sessionsAfterCleanup.find((it) => it.id === longLivedSession.session.id,),);
 
       t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId1)));
       t.ok(tokensAfterCleanup.find((it) => it.id === tokenId2));
       t.ok(tokensAfterCleanup.find((it) => it.id === tokenId3));
     });
 
-    t.test(
-      "expired tokens are cleaned, sessions without tokens removed",
-      async (t) => {
-        await sessionStoreCleanupExpiredSessions(newTestEvent(t), sql, 0);
+    t.test("expired tokens are cleaned, sessions without tokens removed", async (t) => {
+      await sessionStoreCleanupExpiredSessions(newTestEvent(t), sql, 0);
 
-        const sessionsAfterCleanup = await querySessionStore({}).exec(sql);
-        const tokensAfterCleanup = await querySessionStoreToken({}).exec(sql);
+      const sessionsAfterCleanup = await querySessionStore({}).exec(sql);
+      const tokensAfterCleanup = await querySessionStoreToken({}).exec(sql);
 
-        t.ok(isNil(sessionsAfterCleanup.find((it) => it.id === session.id)));
-        t.ok(
-          sessionsAfterCleanup.find(
-            (it) => it.id === longLivedSession.session.id,
-          ),
-        );
+      t.ok(isNil(sessionsAfterCleanup.find((it) => it.id === session.id)));
+      t.ok(sessionsAfterCleanup.find((it) => it.id === longLivedSession.session.id,),);
 
-        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId1)));
-        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId2)));
-        t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId3)));
-      },
-    );
+      t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId1)));
+      t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId2)));
+      t.ok(isNil(tokensAfterCleanup.find((it) => it.id === tokenId3)));
+    },);
   });
 });

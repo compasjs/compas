@@ -731,9 +731,17 @@ function validateSessionStoreSettings(input) {
       key: "validator.number.type",
     };
   }
-  if (typeof input.signingKey !== "string" || input.signingKey.length < 20) {
+
+  if (typeof input.signingKey !== "string") {
     errObject["$.sessionStoreSettings.signingKey"] = {
       key: "validator.string.type",
+    };
+  } else if (input.signingKey.length < 20) {
+    errObject["$.sessionStoreSettings.signingKey"] = {
+      key: "validator.string.min",
+      info: {
+        min: 20,
+      },
     };
   }
 
