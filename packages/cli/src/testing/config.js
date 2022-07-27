@@ -1,6 +1,11 @@
 import { existsSync } from "fs";
 import { pathToFileURL } from "url";
-import { pathJoin } from "@compas/stdlib";
+import {
+  environment,
+  loggerGetGlobalDestination,
+  loggerSetGlobalDestination,
+  pathJoin,
+} from "@compas/stdlib";
 import {
   ignoreDirectories,
   setGlobalSetup,
@@ -23,6 +28,17 @@ const configPath = pathJoin(process.cwd(), "test/config.js");
 export async function loadTestConfig() {
   if (!existsSync(configPath)) {
     return;
+  }
+
+  if (environment._COMPAS_TEST_WITH_LOGS === "false") {
+    const destination = loggerGetGlobalDestination();
+    loggerSetGlobalDestination({
+      write(msg) {
+        if (msg.includes(` error[`) || msg.includes(`"level":"error"`)) {
+          destination.write(msg);
+        }
+      },
+    });
   }
 
   // @ts-ignore

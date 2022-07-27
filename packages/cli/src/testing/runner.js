@@ -1,6 +1,6 @@
 import { AssertionError, deepStrictEqual } from "assert";
 import { url } from "inspector";
-import { isNil } from "@compas/stdlib";
+import { isNil, newLogger } from "@compas/stdlib";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**
@@ -107,7 +107,11 @@ export const test = subTest.bind(undefined, state);
 
 function createRunnerForState(testState, abortSignal) {
   return {
-    log: testLogger,
+    log: newLogger({
+      ctx: {
+        name: testState.name,
+      },
+    }),
     signal: abortSignal,
     ok: ok.bind(undefined, testState),
     notOk: notOk.bind(undefined, testState),

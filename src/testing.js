@@ -26,7 +26,9 @@ export const testBucketName = uuid();
  * @returns {Promise<void>}
  */
 export async function injectTestServices() {
-  sql = await createTestPostgresDatabase();
+  sql = await createTestPostgresDatabase({
+    onnotice: () => {},
+  });
   minioClient = newMinioClient({});
 
   await ensureBucket(minioClient, testBucketName, "eu-central-1");
