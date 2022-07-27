@@ -1,5 +1,5 @@
 import { test } from "./runner.js";
-import { areTestsRunning, testLogger, timeout } from "./state.js";
+import { areTestsRunning, timeout } from "./state.js";
 import { mainTestFn } from "./utils.js";
 
 mainTestFn(import.meta);
