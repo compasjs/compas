@@ -411,6 +411,25 @@ test("store/session-store", (t) => {
       );
     });
 
+    t.test("validator - signingKey.min", async (t) => {
+      const result = await sessionStoreGet(
+        newTestEvent(t),
+        sql,
+        {
+          accessTokenMaxAgeInSeconds: 5,
+          refreshTokenMaxAgeInSeconds: 5,
+          signingKey: "foo bar",
+        },
+        "",
+      );
+
+      t.ok(result.error);
+      t.equal(
+        result.error.info["$.sessionStoreSettings.signingKey"]?.key,
+        "validator.string.min",
+      );
+    });
+
     t.test("invalidToken", async (t) => {
       const sessionRefreshResult = await sessionStoreRefreshTokens(
         newTestEvent(t),
