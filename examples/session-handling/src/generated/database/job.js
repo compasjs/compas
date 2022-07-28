@@ -438,7 +438,7 @@ export const jobQueryBuilderSpec = {
     "createdAt",
     "updatedAt",
   ],
-  relations: [],
+  relations: {},
 };
 /**
  * Query Builder for job

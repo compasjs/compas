@@ -112,7 +112,7 @@ export namespace fileQueryBuilderSpec {
   export { fileOrderBy as orderBy };
   export { fileWhereSpec as where };
   export const columns: string[];
-  export const relations: never[];
+  export const relations: {};
 }
 /**
  * @param {Postgres} sql

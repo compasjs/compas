@@ -78,7 +78,7 @@ bench("query - append where clause and exec", async (b) => {
   }
 });
 
-bench("query - querySessionStore ", async (b) => {
+bench("query - querySessionStore", async (b) => {
   await import("../packages/store/src/generated/database/index.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
@@ -97,7 +97,7 @@ bench("query - querySessionStore ", async (b) => {
   }
 });
 
-bench("query - querySessionStore with where ", async (b) => {
+bench("query - querySessionStore with where", async (b) => {
   await import("../packages/store/src/generated/database/index.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
@@ -118,7 +118,7 @@ bench("query - querySessionStore with where ", async (b) => {
   }
 });
 
-bench("query - querySessionStore nested ", async (b) => {
+bench("query - querySessionStore nested", async (b) => {
   await import("../packages/store/src/generated/database/index.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
@@ -129,6 +129,68 @@ bench("query - querySessionStore nested ", async (b) => {
     const q = querySessionStore({
       where: {},
       accessTokens: {},
+    });
+
+    q.queryPart.exec({
+      // eslint-disable-next-line no-unused-vars
+      unsafe(query, parameters) {
+        // Don't do any work here
+      },
+    });
+  }
+});
+
+bench("query - querySessionStore joins", async (b) => {
+  await import("../packages/store/src/generated/database/index.js");
+  const { querySessionStore } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
+  b.resetTime();
+
+  for (let i = 0; i < b.N; ++i) {
+    const q = querySessionStore({
+      leftJoin: {
+        accessTokens: {
+          shortName: "at",
+          innerJoin: {
+            refreshToken: {
+              shortName: "rt",
+            },
+          },
+        },
+      },
+    });
+
+    q.queryPart.exec({
+      // eslint-disable-next-line no-unused-vars
+      unsafe(query, parameters) {
+        // Don't do any work here
+      },
+    });
+  }
+});
+
+bench("query - querySessionStore joins + nested", async (b) => {
+  await import("../packages/store/src/generated/database/index.js");
+  const { querySessionStore } = await import(
+    "../packages/store/src/generated/database/sessionStore.js"
+  );
+  b.resetTime();
+
+  for (let i = 0; i < b.N; ++i) {
+    const q = querySessionStore({
+      where: {},
+      accessTokens: {},
+      leftJoin: {
+        accessTokens: {
+          shortName: "at",
+          innerJoin: {
+            refreshToken: {
+              shortName: "rt",
+            },
+          },
+        },
+      },
     });
 
     q.queryPart.exec({

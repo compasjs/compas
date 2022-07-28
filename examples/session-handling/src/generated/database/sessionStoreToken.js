@@ -466,29 +466,29 @@ export const sessionStoreTokenQueryBuilderSpec = {
     "session",
     "refreshToken",
   ],
-  relations: [
-    {
+  relations: {
+    session: {
       builderKey: "session",
       ownKey: "session",
       referencedKey: "id",
       returnsMany: false,
       entityInformation: () => sessionStoreQueryBuilderSpec,
     },
-    {
+    refreshToken: {
       builderKey: "refreshToken",
       ownKey: "refreshToken",
       referencedKey: "id",
       returnsMany: false,
       entityInformation: () => sessionStoreTokenQueryBuilderSpec,
     },
-    {
+    accessToken: {
       builderKey: "accessToken",
       ownKey: "id",
       referencedKey: "refreshToken",
       returnsMany: false,
       entityInformation: () => sessionStoreTokenQueryBuilderSpec,
     },
-  ],
+  },
 };
 /**
  * Query Builder for sessionStoreToken

@@ -114,13 +114,59 @@ export namespace sessionStoreQueryBuilderSpec {
   export { sessionStoreOrderBy as orderBy };
   export { sessionStoreWhereSpec as where };
   export const columns: string[];
-  export const relations: {
-    builderKey: string;
-    ownKey: string;
-    referencedKey: string;
-    returnsMany: boolean;
-    entityInformation: () => any;
-  }[];
+  export namespace relations {
+    namespace accessTokens {
+      const builderKey: string;
+      const ownKey: string;
+      const referencedKey: string;
+      const returnsMany: boolean;
+      function entityInformation(): {
+        name: string;
+        shortName: string;
+        orderBy: typeof import("./sessionStoreToken.js").sessionStoreTokenOrderBy;
+        where: any;
+        columns: string[];
+        relations: {
+          session: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => {
+              name: string;
+              shortName: string;
+              orderBy: typeof sessionStoreOrderBy;
+              where: any;
+              columns: string[];
+              relations: {
+                accessTokens: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+              };
+            };
+          };
+          refreshToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+          accessToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+        };
+      };
+    }
+  }
 }
 /**
  * @param {Postgres} sql

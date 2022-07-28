@@ -316,6 +316,15 @@ export function validateStoreFileQueryBuilder(
   propertyPath?: string | undefined,
 ): Either<StoreFileQueryBuilder>;
 /**
+ * @param {undefined|any|StoreFileJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileJoins>}
+ */
+export function validateStoreFileJoins(
+  value: undefined | any | StoreFileJoinsInput,
+  propertyPath?: string | undefined,
+): Either<StoreFileJoins>;
+/**
  * @param {undefined|any|StoreJobQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobQueryBuilder>}
@@ -324,6 +333,15 @@ export function validateStoreJobQueryBuilder(
   value: undefined | any | StoreJobQueryBuilderInput,
   propertyPath?: string | undefined,
 ): Either<StoreJobQueryBuilder>;
+/**
+ * @param {undefined|any|StoreJobJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobJoins>}
+ */
+export function validateStoreJobJoins(
+  value: undefined | any | StoreJobJoinsInput,
+  propertyPath?: string | undefined,
+): Either<StoreJobJoins>;
 /**
  * @param {undefined|any|StoreSessionStoreQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
@@ -334,6 +352,15 @@ export function validateStoreSessionStoreQueryBuilder(
   propertyPath?: string | undefined,
 ): Either<StoreSessionStoreQueryBuilder>;
 /**
+ * @param {undefined|any|StoreSessionStoreJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreJoins>}
+ */
+export function validateStoreSessionStoreJoins(
+  value: undefined | any | StoreSessionStoreJoinsInput,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreJoins>;
+/**
  * @param {undefined|any|StoreSessionStoreTokenQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
@@ -342,6 +369,15 @@ export function validateStoreSessionStoreTokenQueryBuilder(
   value: undefined | any | StoreSessionStoreTokenQueryBuilderInput,
   propertyPath?: string | undefined,
 ): Either<StoreSessionStoreTokenQueryBuilder>;
+/**
+ * @param {undefined|any|StoreSessionStoreTokenJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenJoins>}
+ */
+export function validateStoreSessionStoreTokenJoins(
+  value: undefined | any | StoreSessionStoreTokenJoinsInput,
+  propertyPath?: string | undefined,
+): Either<StoreSessionStoreTokenJoins>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map

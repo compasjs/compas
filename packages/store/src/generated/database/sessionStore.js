@@ -397,15 +397,15 @@ export const sessionStoreQueryBuilderSpec = {
   orderBy: sessionStoreOrderBy,
   where: sessionStoreWhereSpec,
   columns: ["data", "checksum", "revokedAt", "id", "createdAt", "updatedAt"],
-  relations: [
-    {
+  relations: {
+    accessTokens: {
       builderKey: "accessTokens",
       ownKey: "id",
       referencedKey: "session",
       returnsMany: true,
       entityInformation: () => sessionStoreTokenQueryBuilderSpec,
     },
-  ],
+  },
 };
 /**
  * Query Builder for sessionStore

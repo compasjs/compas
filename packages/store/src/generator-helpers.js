@@ -50,13 +50,13 @@ import { isQueryPart, query } from "./query.js";
  *   options?: { skipValidator?: boolean|undefined },
  *   ) => import("../types/advanced-types").QueryPart} orderBy
  * @property {EntityWhere} where
- * @property {{
+ * @property {Record<string,{
  *   builderKey: string,
  *   ownKey: string,
  *   referencedKey: string,
  *   returnsMany: boolean,
  *   entityInformation: () => EntityQueryBuilder,
- * }[]} relations
+ * }>} relations
  */
 
 /**
@@ -443,8 +443,12 @@ export function generatedQueryBuilderHelper(
   args.push(undefined);
 
   // Add sub selects for each relation that should be included
-  for (const relation of entity.relations) {
-    if (isNil(builder[relation.builderKey])) {
+  for (const key of Object.keys(builder)) {
+    const relation = entity.relations[key];
+
+    // Since the builder comes via validator, all keys exists, so we have to abort if we
+    // have an undefined value.
+    if (isNil(relation) || isNil(builder[key])) {
       continue;
     }
 
@@ -473,8 +477,12 @@ export function generatedQueryBuilderHelper(
       columnObj[column] = `j${nestedIndex}."${column}"`;
     }
 
-    for (const subRelation of subEntity.relations) {
-      if (isNil(subBuilder[subRelation.builderKey])) {
+    for (const subKey of Object.keys(subBuilder)) {
+      const subRelation = subEntity.relations[subKey];
+
+      // Since the builder comes via validator, all keys exists, so we have to abort if we
+      // have an undefined value.
+      if (isNil(subRelation) || isNil(subBuilder[subKey])) {
         continue;
       }
 
@@ -527,6 +535,10 @@ export function generatedQueryBuilderHelper(
   strings.push(` FROM "${entity.name}" ${shortName} `);
   args.push(undefined);
 
+  const joinResult = generatedJoinsHelper(entity, builder, { shortName });
+  strings.push(...joinResult.strings);
+  args.push(...joinResult.args);
+
   strings.push(` WHERE `);
   args.push(
     generatedWhereBuilderHelper(
@@ -560,4 +572,110 @@ export function generatedQueryBuilderHelper(
   strings.push("");
 
   return query(strings, ...args);
+}
+
+/**
+ * Helper to recursively resolve the joins for a query builder.
+ *
+ * @param {EntityQueryBuilder} entity
+ * @param {*} builder
+ * @param {{
+ *   shortName?: string,
+ * }} options
+ * @returns {{ strings: string[], args: *[] }}
+ */
+export function generatedJoinsHelper(entity, builder, { shortName }) {
+  const strings = [];
+  const args = [];
+
+  if (isNil(builder.innerJoin) && isNil(!builder.leftJoin)) {
+    return { strings, args };
+  }
+
+  for (const key of Object.keys(builder.leftJoin ?? {})) {
+    const relation = entity.relations[key];
+
+    // Since the builder comes via validator, all keys exists, so we have to abort if we
+    // have an undefined value.
+    if (isNil(relation) || isNil(builder.leftJoin[key])) {
+      continue;
+    }
+
+    const subEntity = relation.entityInformation();
+
+    const joinArguments = builder.leftJoin[relation.builderKey];
+
+    strings.push(
+      ` LEFT JOIN "${subEntity.name}" ${joinArguments.shortName} ON ${shortName}."${relation.ownKey}" = ${joinArguments.shortName}."${relation.referencedKey}" `,
+    );
+
+    if (joinArguments.where) {
+      strings.push(` AND `);
+      args.push(
+        undefined,
+        generatedWhereBuilderHelper(
+          entity.where,
+          joinArguments.where ?? {},
+          `${joinArguments.shortName}.`,
+        ),
+      );
+    } else {
+      args.push(undefined);
+    }
+
+    if (!isNil(joinArguments.leftJoin) || !isNil(joinArguments.innerJoin)) {
+      const subJoin = generatedJoinsHelper(subEntity, joinArguments, {
+        shortName: joinArguments.shortName,
+      });
+
+      strings.push(...subJoin.strings);
+      args.push(...subJoin.args);
+    }
+  }
+
+  for (const key of Object.keys(builder.innerJoin ?? {})) {
+    const relation = entity.relations[key];
+
+    // Since the builder comes via validator, all keys exists, so we have to abort if we
+    // have an undefined value.
+    if (isNil(relation) || isNil(builder.innerJoin[key])) {
+      continue;
+    }
+
+    const subEntity = relation.entityInformation();
+
+    const joinArguments = builder.innerJoin[relation.builderKey];
+
+    strings.push(
+      ` INNER JOIN "${subEntity.name}" ${joinArguments.shortName} ON ${shortName}."${relation.ownKey}" = ${joinArguments.shortName}."${relation.referencedKey}" `,
+    );
+
+    if (joinArguments.where) {
+      strings.push(` AND `);
+      args.push(
+        undefined,
+        generatedWhereBuilderHelper(
+          entity.where,
+          joinArguments.where ?? {},
+          `${joinArguments.shortName}.`,
+        ),
+      );
+    } else {
+      args.push(undefined);
+    }
+
+    if (!isNil(joinArguments.leftJoin) || !isNil(joinArguments.innerJoin)) {
+      const subJoin = generatedJoinsHelper(subEntity, joinArguments, {
+        shortName: joinArguments.shortName,
+      });
+
+      strings.push(...subJoin.strings);
+      args.push(...subJoin.args);
+    }
+  }
+
+  return {
+    strings,
+    args,
+  };
 }

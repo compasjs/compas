@@ -293,7 +293,10 @@ const objectKeys310044624 = new Set([
   "limit",
   "offset",
   "select",
+  "leftJoin",
+  "innerJoin",
 ]);
+const objectKeys2062700716 = new Set([""]);
 const objectKeys343387919 = new Set([
   "where",
   "orderBy",
@@ -302,7 +305,10 @@ const objectKeys343387919 = new Set([
   "limit",
   "offset",
   "select",
+  "leftJoin",
+  "innerJoin",
 ]);
+const objectKeys1245980333 = new Set([""]);
 const objectKeys2093168415 = new Set([
   "where",
   "orderBy",
@@ -311,7 +317,27 @@ const objectKeys2093168415 = new Set([
   "limit",
   "offset",
   "select",
+  "leftJoin",
+  "innerJoin",
   "accessTokens",
+]);
+const objectKeys1346727779 = new Set(["accessTokens"]);
+const objectKeys588258860 = new Set([
+  "innerJoin",
+  "leftJoin",
+  "where",
+  "shortName",
+]);
+const objectKeys1418696316 = new Set([
+  "session",
+  "refreshToken",
+  "accessToken",
+]);
+const objectKeys927057687 = new Set([
+  "innerJoin",
+  "leftJoin",
+  "where",
+  "shortName",
 ]);
 const objectKeys1856722848 = new Set([
   "where",
@@ -321,6 +347,8 @@ const objectKeys1856722848 = new Set([
   "limit",
   "offset",
   "select",
+  "leftJoin",
+  "innerJoin",
   "session",
   "refreshToken",
   "accessToken",
@@ -9970,7 +9998,72 @@ export function anonymousValidator1532767426(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], }>}
+ * @returns {EitherN<{}>}
+ */
+export function anonymousValidator2062700716(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys2062700716.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys2062700716],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreFileJoins>}
+ */
+export function anonymousValidator77636329(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator2062700716(value, propertyPath);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreFileJoins, "innerJoin"?: undefined|StoreFileJoins, }>}
  */
 export function anonymousValidator310044624(value, propertyPath) {
   if (isNil(value)) {
@@ -10093,6 +10186,28 @@ export function anonymousValidator310044624(value, propertyPath) {
       result["select"] = validatorResult.value;
     }
   }
+  {
+    const validatorResult = anonymousValidator77636329(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator77636329(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
+    }
+  }
   if (errors.length > 0) {
     return { errors };
   }
@@ -10200,7 +10315,72 @@ export function anonymousValidator582777968(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], }>}
+ * @returns {EitherN<{}>}
+ */
+export function anonymousValidator1245980333(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1245980333.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1245980333],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreJobJoins>}
+ */
+export function anonymousValidator622747874(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator1245980333(value, propertyPath);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreJobJoins, "innerJoin"?: undefined|StoreJobJoins, }>}
  */
 export function anonymousValidator343387919(value, propertyPath) {
   if (isNil(value)) {
@@ -10323,6 +10503,28 @@ export function anonymousValidator343387919(value, propertyPath) {
       result["select"] = validatorResult.value;
     }
   }
+  {
+    const validatorResult = anonymousValidator622747874(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator622747874(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
+    }
+  }
   if (errors.length > 0) {
     return { errors };
   }
@@ -10404,6 +10606,410 @@ export function anonymousValidator1791620536(value, propertyPath) {
     return { errors };
   }
   return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator929307826(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: "ss" };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length === 0) {
+    return { value: "ss" };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"innerJoin"?: undefined|StoreSessionStoreJoins, "leftJoin"?: undefined|StoreSessionStoreJoins, "where"?: undefined|StoreSessionStoreWhere, "shortName": string, }>}
+ */
+export function anonymousValidator927057687(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys927057687.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys927057687],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1594490360(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1594490360(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1582696858(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator929307826(
+      value["shortName"],
+      `${propertyPath}.shortName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["shortName"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"session"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreJoins, "leftJoin"?: undefined|StoreSessionStoreJoins, "where"?: undefined|StoreSessionStoreWhere, "shortName": string, }, "refreshToken"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, "accessToken"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, }>}
+ */
+export function anonymousValidator1418696316(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1418696316.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1418696316],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator927057687(
+      value["session"],
+      `${propertyPath}.session`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["session"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator588258860(
+      value["refreshToken"],
+      `${propertyPath}.refreshToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["refreshToken"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator588258860(
+      value["accessToken"],
+      `${propertyPath}.accessToken`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessToken"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenJoins>}
+ */
+export function anonymousValidator2053722097(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator1418696316(value, propertyPath);
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator1905115744(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: "sst" };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length === 0) {
+    return { value: "sst" };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }>}
+ */
+export function anonymousValidator588258860(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys588258860.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys588258860],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2053722097(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2053722097(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2065515599(
+      value["where"],
+      `${propertyPath}.where`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["where"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1905115744(
+      value["shortName"],
+      `${propertyPath}.shortName`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["shortName"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"accessTokens"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, }>}
+ */
+export function anonymousValidator1346727779(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1346727779.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1346727779],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator588258860(
+      value["accessTokens"],
+      `${propertyPath}.accessTokens`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["accessTokens"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreJoins>}
+ */
+export function anonymousValidator1594490360(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  return anonymousValidator1346727779(value, propertyPath);
 }
 /**
  * @param {*} value
@@ -10503,7 +11109,7 @@ export function anonymousValidator1827379372(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "innerJoin"?: undefined|StoreSessionStoreTokenJoins, "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator1856722848(value, propertyPath) {
   if (isNil(value)) {
@@ -10627,6 +11233,28 @@ export function anonymousValidator1856722848(value, propertyPath) {
     }
   }
   {
+    const validatorResult = anonymousValidator2053722097(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2053722097(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
+    }
+  }
+  {
     const validatorResult = anonymousValidator1827379372(
       value["session"],
       `${propertyPath}.session`,
@@ -10678,7 +11306,7 @@ export function anonymousValidator145903947(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreSessionStoreJoins, "innerJoin"?: undefined|StoreSessionStoreJoins, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator2093168415(value, propertyPath) {
   if (isNil(value)) {
@@ -10799,6 +11427,28 @@ export function anonymousValidator2093168415(value, propertyPath) {
       errors.push(...validatorResult.errors);
     } else {
       result["select"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1594490360(
+      value["leftJoin"],
+      `${propertyPath}.leftJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["leftJoin"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1594490360(
+      value["innerJoin"],
+      `${propertyPath}.innerJoin`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["innerJoin"] = validatorResult.value;
     }
   }
   {

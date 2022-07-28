@@ -49,9 +49,6 @@ export function createQueryBuilderTypes(context) {
 
   // Short loop to setup the types
   for (const type of getQueryEnabledObjects(context)) {
-    // We use quick hacks with the AnyType, to use reuse the Where and QueryBuilder
-    // types. This is necessary, since we don't add these types to the structure.
-
     const queryBuilderType = new ObjectType(
       type.group,
       `${type.name}QueryBuilder`,
@@ -70,12 +67,19 @@ export function createQueryBuilderTypes(context) {
           .values(T.string().oneOf(...Object.keys(type.keys)))
           .min(1)
           .default(`["${Object.keys(type.keys).join(`", "`)}"]`),
+        leftJoin: T.reference(type.group, `${type.name}Joins`).optional(),
+        innerJoin: T.reference(type.group, `${type.name}Joins`).optional(),
       })
       .build();
 
-    structureAddType(context.structure, queryBuilderType);
+    const joinType = new ObjectType(type.group, `${type.name}Joins`)
+      .keys({})
+      .build();
 
-    // Link reference manually
+    structureAddType(context.structure, queryBuilderType);
+    structureAddType(context.structure, joinType);
+
+    // Link reference manually for the query builder
     queryBuilderType.keys.where.reference =
       context.structure[type.group][`${type.name}Where`];
 
@@ -83,6 +87,11 @@ export function createQueryBuilderTypes(context) {
       context.structure[type.group][`${type.name}OrderBy`];
     queryBuilderType.keys.orderBySpec.reference =
       context.structure[type.group][`${type.name}OrderBySpec`];
+
+    queryBuilderType.keys.innerJoin.reference =
+      context.structure[type.group][`${type.name}Joins`];
+    queryBuilderType.keys.leftJoin.reference =
+      context.structure[type.group][`${type.name}Joins`];
   }
 
   // Longer loop that fills the type with the fields
@@ -90,6 +99,7 @@ export function createQueryBuilderTypes(context) {
   for (const type of getQueryEnabledObjects(context)) {
     const queryBuilderType =
       context.structure[type.group][`${type.name}QueryBuilder`];
+    const joinType = context.structure[type.group][`${type.name}Joins`];
 
     const relations = {};
 
@@ -114,6 +124,33 @@ export function createQueryBuilderTypes(context) {
         reference:
           context.structure[otherSide.group][`${otherSide.name}QueryBuilder`],
       };
+
+      joinType.keys[relation.ownKey] = T.object()
+        .keys({
+          innerJoin: T.reference(
+            otherSide.group,
+            `${otherSide.name}Joins`,
+          ).optional(),
+          leftJoin: T.reference(
+            otherSide.group,
+            `${otherSide.name}Joins`,
+          ).optional(),
+          where: T.reference(
+            otherSide.group,
+            `${otherSide.name}Where`,
+          ).optional(),
+          shortName: T.string().default(`"${otherSide.shortName}"`),
+        })
+        .optional()
+        .build();
+
+      // Resolve the join type references
+      joinType.keys[relation.ownKey].keys.innerJoin.reference =
+        context.structure[otherSide.group][`${otherSide.name}Joins`];
+      joinType.keys[relation.ownKey].keys.leftJoin.reference =
+        context.structure[otherSide.group][`${otherSide.name}Joins`];
+      joinType.keys[relation.ownKey].keys.where.reference =
+        context.structure[otherSide.group][`${otherSide.name}Where`];
 
       const joinKey = `${type.shortName}_${otherSide.shortName}`;
       if (!joinKeyMapping.has(joinKey)) {
@@ -259,7 +296,7 @@ function dumpQueryBuilderSpec(context, imports, type) {
   columns: [${Object.keys(type.keys)
     .map((it) => `"${it}"`)
     .join(", ")}],
-  relations: [
+  relations: {
 `;
 
   for (const relationKey of Object.keys(type.queryBuilder.relations)) {
@@ -273,7 +310,7 @@ function dumpQueryBuilderSpec(context, imports, type) {
       );
     }
 
-    str += `{
+    str += `${relationKey}: {
       builderKey: "${relationKey}",
       ownKey: "${ownKey}",
       referencedKey: "${referencedKey}",
@@ -282,7 +319,7 @@ function dumpQueryBuilderSpec(context, imports, type) {
     },`;
   }
 
-  str += "],};";
+  str += "},};";
 
   return str;
 }

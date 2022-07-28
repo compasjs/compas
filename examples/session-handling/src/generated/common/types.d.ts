@@ -508,7 +508,10 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreFileJoins;
+    innerJoin?: undefined | StoreFileJoins;
   };
+  type StoreFileJoins = {};
   type StoreJobQueryBuilder = {
     where?: undefined | StoreJobWhere;
     orderBy?: undefined | StoreJobOrderBy;
@@ -530,7 +533,10 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreJobJoins;
+    innerJoin?: undefined | StoreJobJoins;
   };
+  type StoreJobJoins = StoreFileJoins;
   type StoreSessionStoreQueryBuilder = {
     where?: undefined | StoreSessionStoreWhere;
     orderBy?: undefined | StoreSessionStoreOrderBy;
@@ -548,7 +554,45 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreSessionStoreJoins;
+    innerJoin?: undefined | StoreSessionStoreJoins;
     accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
+  };
+  type StoreSessionStoreJoins = {
+    accessTokens?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoins;
+          leftJoin?: undefined | StoreSessionStoreTokenJoins;
+          where?: undefined | StoreSessionStoreTokenWhere;
+          shortName?: undefined | string;
+        };
+  };
+  type StoreSessionStoreTokenJoins = {
+    session?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreJoins;
+          leftJoin?: undefined | StoreSessionStoreJoins;
+          where?: undefined | StoreSessionStoreWhere;
+          shortName?: undefined | string;
+        };
+    refreshToken?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoins;
+          leftJoin?: undefined | StoreSessionStoreTokenJoins;
+          where?: undefined | StoreSessionStoreTokenWhere;
+          shortName?: undefined | string;
+        };
+    accessToken?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoins;
+          leftJoin?: undefined | StoreSessionStoreTokenJoins;
+          where?: undefined | StoreSessionStoreTokenWhere;
+          shortName?: undefined | string;
+        };
   };
   type StoreSessionStoreTokenQueryBuilder = {
     where?: undefined | StoreSessionStoreTokenWhere;
@@ -567,6 +611,8 @@ declare global {
           | "session"
           | "refreshToken"
         )[];
+    leftJoin?: undefined | StoreSessionStoreTokenJoins;
+    innerJoin?: undefined | StoreSessionStoreTokenJoins;
     session?: undefined | StoreSessionStoreQueryBuilder;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
@@ -935,7 +981,10 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreFileJoinsInput;
+    innerJoin?: undefined | StoreFileJoinsInput;
   };
+  type StoreFileJoinsInput = StoreFileJoins;
   type StoreJobQueryBuilderInput = {
     where?: undefined | StoreJobWhereInput;
     orderBy?: undefined | StoreJobOrderByInput;
@@ -957,7 +1006,10 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreJobJoinsInput;
+    innerJoin?: undefined | StoreJobJoinsInput;
   };
+  type StoreJobJoinsInput = StoreFileJoins;
   type StoreSessionStoreQueryBuilderInput = {
     where?: undefined | StoreSessionStoreWhereInput;
     orderBy?: undefined | StoreSessionStoreOrderByInput;
@@ -975,7 +1027,45 @@ declare global {
           | "createdAt"
           | "updatedAt"
         )[];
+    leftJoin?: undefined | StoreSessionStoreJoinsInput;
+    innerJoin?: undefined | StoreSessionStoreJoinsInput;
     accessTokens?: undefined | StoreSessionStoreTokenQueryBuilderInput;
+  };
+  type StoreSessionStoreJoinsInput = {
+    accessTokens?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          leftJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          shortName?: undefined | string;
+        };
+  };
+  type StoreSessionStoreTokenJoinsInput = {
+    session?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreJoinsInput;
+          leftJoin?: undefined | StoreSessionStoreJoinsInput;
+          where?: undefined | StoreSessionStoreWhereInput;
+          shortName?: undefined | string;
+        };
+    refreshToken?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          leftJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          shortName?: undefined | string;
+        };
+    accessToken?:
+      | undefined
+      | {
+          innerJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          leftJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+          where?: undefined | StoreSessionStoreTokenWhereInput;
+          shortName?: undefined | string;
+        };
   };
   type StoreSessionStoreTokenQueryBuilderInput = {
     where?: undefined | StoreSessionStoreTokenWhereInput;
@@ -994,6 +1084,8 @@ declare global {
           | "session"
           | "refreshToken"
         )[];
+    leftJoin?: undefined | StoreSessionStoreTokenJoinsInput;
+    innerJoin?: undefined | StoreSessionStoreTokenJoinsInput;
     session?: undefined | StoreSessionStoreQueryBuilderInput;
     refreshToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;
     accessToken?: undefined | StoreSessionStoreTokenQueryBuilderInput;

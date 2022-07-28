@@ -394,7 +394,7 @@ export const fileQueryBuilderSpec = {
     "createdAt",
     "updatedAt",
   ],
-  relations: [],
+  relations: {},
 };
 /**
  * Query Builder for file

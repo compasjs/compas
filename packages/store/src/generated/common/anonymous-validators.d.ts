@@ -2246,7 +2246,25 @@ export function anonymousValidator1532767426(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], }>}
+ * @returns {EitherN<{}>}
+ */
+export function anonymousValidator2062700716(
+  value: any,
+  propertyPath: string,
+): EitherN<{}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreFileJoins>}
+ */
+export function anonymousValidator77636329(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreFileJoins>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreFileWhere, "orderBy"?: undefined|StoreFileOrderBy, "orderBySpec"?: undefined|StoreFileOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("bucketName"|"contentLength"|"contentType"|"name"|"meta"|"id"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreFileJoins, "innerJoin"?: undefined|StoreFileJoins, }>}
  */
 export function anonymousValidator310044624(
   value: any,
@@ -2268,6 +2286,8 @@ export function anonymousValidator310044624(
     | "createdAt"
     | "updatedAt"
   )[];
+  leftJoin?: undefined | StoreFileJoins;
+  innerJoin?: undefined | StoreFileJoins;
 }>;
 /**
  * @param {*} value
@@ -2321,7 +2341,25 @@ export function anonymousValidator582777968(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], }>}
+ * @returns {EitherN<{}>}
+ */
+export function anonymousValidator1245980333(
+  value: any,
+  propertyPath: string,
+): EitherN<{}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreJobJoins>}
+ */
+export function anonymousValidator622747874(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreJobJoins>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"where"?: undefined|StoreJobWhere, "orderBy"?: undefined|StoreJobOrderBy, "orderBySpec"?: undefined|StoreJobOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("id"|"isComplete"|"priority"|"scheduledAt"|"name"|"data"|"retryCount"|"handlerTimeout"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreJobJoins, "innerJoin"?: undefined|StoreJobJoins, }>}
  */
 export function anonymousValidator343387919(
   value: any,
@@ -2345,6 +2383,8 @@ export function anonymousValidator343387919(
     | "createdAt"
     | "updatedAt"
   )[];
+  leftJoin?: undefined | StoreJobJoins;
+  innerJoin?: undefined | StoreJobJoins;
 }>;
 /**
  * @param {*} value
@@ -2375,6 +2415,128 @@ export function anonymousValidator1791620536(
 ): EitherN<
   ("data" | "checksum" | "revokedAt" | "id" | "createdAt" | "updatedAt")[]
 >;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator929307826(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"innerJoin"?: undefined|StoreSessionStoreJoins, "leftJoin"?: undefined|StoreSessionStoreJoins, "where"?: undefined|StoreSessionStoreWhere, "shortName": string, }>}
+ */
+export function anonymousValidator927057687(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      innerJoin?: undefined | StoreSessionStoreJoins;
+      leftJoin?: undefined | StoreSessionStoreJoins;
+      where?: undefined | StoreSessionStoreWhere;
+      shortName: string;
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"session"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreJoins, "leftJoin"?: undefined|StoreSessionStoreJoins, "where"?: undefined|StoreSessionStoreWhere, "shortName": string, }, "refreshToken"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, "accessToken"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, }>}
+ */
+export function anonymousValidator1418696316(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  session?:
+    | undefined
+    | {
+        innerJoin?: undefined | StoreSessionStoreJoins;
+        leftJoin?: undefined | StoreSessionStoreJoins;
+        where?: undefined | StoreSessionStoreWhere;
+        shortName: string;
+      };
+  refreshToken?:
+    | undefined
+    | {
+        innerJoin?: undefined | StoreSessionStoreTokenJoins;
+        leftJoin?: undefined | StoreSessionStoreTokenJoins;
+        where?: undefined | StoreSessionStoreTokenWhere;
+        shortName: string;
+      };
+  accessToken?:
+    | undefined
+    | {
+        innerJoin?: undefined | StoreSessionStoreTokenJoins;
+        leftJoin?: undefined | StoreSessionStoreTokenJoins;
+        where?: undefined | StoreSessionStoreTokenWhere;
+        shortName: string;
+      };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreTokenJoins>}
+ */
+export function anonymousValidator2053722097(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreTokenJoins>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator1905115744(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }>}
+ */
+export function anonymousValidator588258860(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | undefined
+  | {
+      innerJoin?: undefined | StoreSessionStoreTokenJoins;
+      leftJoin?: undefined | StoreSessionStoreTokenJoins;
+      where?: undefined | StoreSessionStoreTokenWhere;
+      shortName: string;
+    }
+>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"accessTokens"?: undefined|{"innerJoin"?: undefined|StoreSessionStoreTokenJoins, "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "where"?: undefined|StoreSessionStoreTokenWhere, "shortName": string, }, }>}
+ */
+export function anonymousValidator1346727779(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  accessTokens?:
+    | undefined
+    | {
+        innerJoin?: undefined | StoreSessionStoreTokenJoins;
+        leftJoin?: undefined | StoreSessionStoreTokenJoins;
+        where?: undefined | StoreSessionStoreTokenWhere;
+        shortName: string;
+      };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|StoreSessionStoreJoins>}
+ */
+export function anonymousValidator1594490360(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | StoreSessionStoreJoins>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -2423,7 +2585,7 @@ export function anonymousValidator1827379372(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreTokenWhere, "orderBy"?: undefined|StoreSessionStoreTokenOrderBy, "orderBySpec"?: undefined|StoreSessionStoreTokenOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("expiresAt"|"revokedAt"|"createdAt"|"id"|"session"|"refreshToken")[], "leftJoin"?: undefined|StoreSessionStoreTokenJoins, "innerJoin"?: undefined|StoreSessionStoreTokenJoins, "session"?: undefined|StoreSessionStoreQueryBuilder, "refreshToken"?: undefined|StoreSessionStoreTokenQueryBuilder, "accessToken"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator1856722848(
   value: any,
@@ -2443,6 +2605,8 @@ export function anonymousValidator1856722848(
     | "session"
     | "refreshToken"
   )[];
+  leftJoin?: undefined | StoreSessionStoreTokenJoins;
+  innerJoin?: undefined | StoreSessionStoreTokenJoins;
   session?: undefined | StoreSessionStoreQueryBuilder;
   refreshToken?: undefined | StoreSessionStoreTokenQueryBuilder;
   accessToken?: undefined | StoreSessionStoreTokenQueryBuilder;
@@ -2459,7 +2623,7 @@ export function anonymousValidator145903947(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
+ * @returns {EitherN<{"where"?: undefined|StoreSessionStoreWhere, "orderBy"?: undefined|StoreSessionStoreOrderBy, "orderBySpec"?: undefined|StoreSessionStoreOrderBySpec, "as"?: undefined|string, "limit"?: undefined|number, "offset"?: undefined|number, "select": ("data"|"checksum"|"revokedAt"|"id"|"createdAt"|"updatedAt")[], "leftJoin"?: undefined|StoreSessionStoreJoins, "innerJoin"?: undefined|StoreSessionStoreJoins, "accessTokens"?: undefined|StoreSessionStoreTokenQueryBuilder, }>}
  */
 export function anonymousValidator2093168415(
   value: any,
@@ -2479,6 +2643,8 @@ export function anonymousValidator2093168415(
     | "createdAt"
     | "updatedAt"
   )[];
+  leftJoin?: undefined | StoreSessionStoreJoins;
+  innerJoin?: undefined | StoreSessionStoreJoins;
   accessTokens?: undefined | StoreSessionStoreTokenQueryBuilder;
 }>;
 export type InternalError = {

@@ -114,7 +114,7 @@ export namespace jobQueryBuilderSpec {
   export { jobOrderBy as orderBy };
   export { jobWhereSpec as where };
   export const columns: string[];
-  export const relations: never[];
+  export const relations: {};
 }
 /**
  * @param {Postgres} sql

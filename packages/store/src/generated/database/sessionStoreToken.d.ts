@@ -110,7 +110,178 @@ export namespace sessionStoreTokenQueries {
   export { sessionStoreTokenUpsertOnId };
   export { sessionStoreTokenUpdate };
 }
-export const sessionStoreTokenQueryBuilderSpec: any;
+export namespace sessionStoreTokenQueryBuilderSpec {
+  export const name: string;
+  export const shortName: string;
+  export { sessionStoreTokenOrderBy as orderBy };
+  export { sessionStoreTokenWhereSpec as where };
+  export const columns: string[];
+  export namespace relations {
+    namespace session {
+      const builderKey: string;
+      const ownKey: string;
+      const referencedKey: string;
+      const returnsMany: boolean;
+      function entityInformation(): {
+        name: string;
+        shortName: string;
+        orderBy: typeof import("./sessionStore.js").sessionStoreOrderBy;
+        where: any;
+        columns: string[];
+        relations: {
+          accessTokens: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => {
+              name: string;
+              shortName: string;
+              orderBy: typeof sessionStoreTokenOrderBy;
+              where: any;
+              columns: string[];
+              relations: {
+                session: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+                refreshToken: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+                accessToken: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+              };
+            };
+          };
+        };
+      };
+    }
+    namespace refreshToken {
+      const builderKey_1: string;
+      export { builderKey_1 as builderKey };
+      const ownKey_1: string;
+      export { ownKey_1 as ownKey };
+      const referencedKey_1: string;
+      export { referencedKey_1 as referencedKey };
+      const returnsMany_1: boolean;
+      export { returnsMany_1 as returnsMany };
+      export function entityInformation_1(): {
+        name: string;
+        shortName: string;
+        orderBy: typeof sessionStoreTokenOrderBy;
+        where: any;
+        columns: string[];
+        relations: {
+          session: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => {
+              name: string;
+              shortName: string;
+              orderBy: typeof import("./sessionStore.js").sessionStoreOrderBy;
+              where: any;
+              columns: string[];
+              relations: {
+                accessTokens: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+              };
+            };
+          };
+          refreshToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+          accessToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+        };
+      };
+      export { entityInformation_1 as entityInformation };
+    }
+    namespace accessToken {
+      const builderKey_2: string;
+      export { builderKey_2 as builderKey };
+      const ownKey_2: string;
+      export { ownKey_2 as ownKey };
+      const referencedKey_2: string;
+      export { referencedKey_2 as referencedKey };
+      const returnsMany_2: boolean;
+      export { returnsMany_2 as returnsMany };
+      export function entityInformation_2(): {
+        name: string;
+        shortName: string;
+        orderBy: typeof sessionStoreTokenOrderBy;
+        where: any;
+        columns: string[];
+        relations: {
+          session: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => {
+              name: string;
+              shortName: string;
+              orderBy: typeof import("./sessionStore.js").sessionStoreOrderBy;
+              where: any;
+              columns: string[];
+              relations: {
+                accessTokens: {
+                  builderKey: string;
+                  ownKey: string;
+                  referencedKey: string;
+                  returnsMany: boolean;
+                  entityInformation: () => any;
+                };
+              };
+            };
+          };
+          refreshToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+          accessToken: {
+            builderKey: string;
+            ownKey: string;
+            referencedKey: string;
+            returnsMany: boolean;
+            entityInformation: () => any;
+          };
+        };
+      };
+      export { entityInformation_2 as entityInformation };
+    }
+  }
+}
 /**
  * @param {Postgres} sql
  * @param {StoreSessionStoreTokenWhere} [where]

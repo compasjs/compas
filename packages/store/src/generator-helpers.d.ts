@@ -45,13 +45,13 @@
  *   options?: { skipValidator?: boolean|undefined },
  *   ) => import("../types/advanced-types").QueryPart} orderBy
  * @property {EntityWhere} where
- * @property {{
+ * @property {Record<string,{
  *   builderKey: string,
  *   ownKey: string,
  *   referencedKey: string,
  *   returnsMany: boolean,
  *   entityInformation: () => EntityQueryBuilder,
- * }[]} relations
+ * }>} relations
  */
 /**
  * Builds a where clause based on the generated 'where' information.
@@ -106,6 +106,28 @@ export function generatedQueryBuilderHelper(
     nestedIndex?: number;
   },
 ): import("../types/advanced-types").QueryPart<any[]>;
+/**
+ * Helper to recursively resolve the joins for a query builder.
+ *
+ * @param {EntityQueryBuilder} entity
+ * @param {*} builder
+ * @param {{
+ *   shortName?: string,
+ * }} options
+ * @returns {{ strings: string[], args: *[] }}
+ */
+export function generatedJoinsHelper(
+  entity: EntityQueryBuilder,
+  builder: any,
+  {
+    shortName,
+  }: {
+    shortName?: string;
+  },
+): {
+  strings: string[];
+  args: any[];
+};
 export type EntityWhere = {
   fieldSpecification: {
     tableKey: string;
@@ -175,12 +197,15 @@ export type EntityQueryBuilder = {
     },
   ) => import("../types/advanced-types").QueryPart;
   where: EntityWhere;
-  relations: {
-    builderKey: string;
-    ownKey: string;
-    referencedKey: string;
-    returnsMany: boolean;
-    entityInformation: () => EntityQueryBuilder;
-  }[];
+  relations: Record<
+    string,
+    {
+      builderKey: string;
+      ownKey: string;
+      referencedKey: string;
+      returnsMany: boolean;
+      entityInformation: () => EntityQueryBuilder;
+    }
+  >;
 };
 //# sourceMappingURL=generator-helpers.d.ts.map

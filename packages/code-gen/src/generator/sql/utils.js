@@ -363,6 +363,8 @@ function checkReservedRelationNames(context, type, relation) {
     "orderBySpec",
     "select",
     "where",
+    "innerJoin",
+    "leftJoin",
   ];
 
   if (reservedRelationNames.includes(relation.ownKey)) {

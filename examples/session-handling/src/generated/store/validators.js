@@ -4,11 +4,14 @@
 import {
   anonymousValidator1105075285,
   anonymousValidator1196685479,
+  anonymousValidator1245980333,
   anonymousValidator1257773835,
   anonymousValidator1334934277,
   anonymousValidator1337490931,
   anonymousValidator1345595702,
+  anonymousValidator1346727779,
   anonymousValidator1414433474,
+  anonymousValidator1418696316,
   anonymousValidator1430489818,
   anonymousValidator1516794677,
   anonymousValidator163358845,
@@ -18,6 +21,7 @@ import {
   anonymousValidator1795948632,
   anonymousValidator1856722848,
   anonymousValidator1864958291,
+  anonymousValidator2062700716,
   anonymousValidator2074494218,
   anonymousValidator2086080888,
   anonymousValidator2093168415,
@@ -943,6 +947,32 @@ export function validateStoreFileQueryBuilder(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|StoreFileJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreFileJoins>}
+ */
+export function validateStoreFileJoins(value, propertyPath = "$") {
+  const result = anonymousValidator2062700716(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreFileJoins}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|StoreJobQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreJobQueryBuilder>}
@@ -966,6 +996,32 @@ export function validateStoreJobQueryBuilder(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: StoreJobQueryBuilder}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreJobJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreJobJoins>}
+ */
+export function validateStoreJobJoins(value, propertyPath = "$") {
+  const result = anonymousValidator1245980333(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreJobJoins}} */
   return { value: result.value };
 }
 /**
@@ -998,6 +1054,32 @@ export function validateStoreSessionStoreQueryBuilder(
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|StoreSessionStoreJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreJoins>}
+ */
+export function validateStoreSessionStoreJoins(value, propertyPath = "$") {
+  const result = anonymousValidator1346727779(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreJoins}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|StoreSessionStoreTokenQueryBuilderInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
@@ -1024,5 +1106,31 @@ export function validateStoreSessionStoreTokenQueryBuilder(
     };
   }
   /** @type {{ value: StoreSessionStoreTokenQueryBuilder}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|StoreSessionStoreTokenJoinsInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<StoreSessionStoreTokenJoins>}
+ */
+export function validateStoreSessionStoreTokenJoins(value, propertyPath = "$") {
+  const result = anonymousValidator1418696316(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: StoreSessionStoreTokenJoins}} */
   return { value: result.value };
 }
