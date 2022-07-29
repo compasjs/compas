@@ -4,6 +4,57 @@ editLink: false
 
 # Changelog
 
+### [v0.0.211](https://github.com/compasjs/compas/releases/tag/v0.0.211)
+
+##### Changes
+
+- build(deps): bump file-type from 17.1.2 to 17.1.4
+  ([#1927](https://github.com/compasjs/compas/pull/1927) ,
+  [#1936](https://github.com/compasjs/compas/pull/1936))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 8.2.0 to 8.3.1
+  ([#1925](https://github.com/compasjs/compas/pull/1925) ,
+  [#1941](https://github.com/compasjs/compas/pull/1941))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- feat(cli): suppress info logs by default while running `compas test`.
+  ([#1937](https://github.com/compasjs/compas/pull/1937))
+  - Closes [#1930](https://github.com/compasjs/compas/pull/1930)
+- feat(stdlib): cleanup logger, more transparently use pino transports and
+  destination ([#1933](https://github.com/compasjs/compas/pull/1933))
+  - References [#1930](https://github.com/compasjs/compas/pull/1930)
+- feat(store): improve sessionStore signingKey validation error
+  ([#1938](https://github.com/compasjs/compas/pull/1938))
+  - Closes [#1935](https://github.com/compasjs/compas/pull/1935)
+- feat(store): support Postgres native environment variables
+  ([#1939](https://github.com/compasjs/compas/pull/1939))
+  - Closes [#1928](https://github.com/compasjs/compas/pull/1928)
+
+##### Breaking changes
+
+- **cli**: suppress info logs by default.
+  - When tests are executed via `compas test`, the info logs are suppressed by
+    default. To enable all info logs, either use `compas test --with-logs` or
+    run a specific test file with `mainTestFn` via `compas run ./file.test.js` .
+- **stdlib**: cleanup logger, more transparently use pino transports and
+  destination
+  - `newLogger` now only accepts a `ctx`. For `stream`, `disableInfoLogger` and
+    `disableErrorLogger` please use `loggerSetGlobalDestination`.
+  - `printer` can't be passed to `newLogger`, either use `COMPAS_LOG_PRINTER` to
+    force one of the build-in printers, or use a custom destination via
+    `loggerSetGlobalDestination`.
+  - `extendGlobalLoggerContext` is renamed to `loggerExtendGlobalContext`.
+  - `setGlobalLoggerOptions` is replaced with `loggerSetGlobalDestination`. This
+    can be called before `mainFn` to make sure that even the initial logger is
+    using your custom destination. Note that before `mainFn`, the `.env` files
+    are not loaded yet.
+  - `mainFn` will now determine the default printer (or destination) to be used
+    if none is set already. It uses `COMPAS_LOG_PRINTER`, `NODE_ENV` and
+    `GITHUB_ACTIONS` environment variables to switch between `ndjson` and
+    `pretty` modes.
+- **store**: support Postgres native environment variables
+  - `process.env.PGDATABASE` is used before `process.env.APP_NAME` as the
+    database name for Postgres connections
+
 ### [v0.0.210](https://github.com/compasjs/compas/releases/tag/v0.0.210)
 
 ##### Changes
