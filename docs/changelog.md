@@ -53,7 +53,7 @@ editLink: false
     `pretty` modes.
 - **store**: support Postgres native environment variables
   - `process.env.PGDATABASE` is used before `process.env.APP_NAME` as the
-    database name for Postgres connections
+    database name for Postgres connections.
 
 ### [v0.0.210](https://github.com/compasjs/compas/releases/tag/v0.0.210)
 
