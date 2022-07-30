@@ -97,6 +97,11 @@ export async function api{{= item.uniqueName }}(
       {{ if (item.body || item.files) { }}
       data,
       {{ } }}
+      {{ if (options.environment.clientRuntime === "react-native" && item.files) { }}
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      {{ } }}
       {{ if ((item.files || item.internalSettings?.requestBodyType === "form-data") && options.isNode) { }}
       headers: typeof data?.getHeaders === "function" ? data.getHeaders() : {},
       {{ } }}
