@@ -96,13 +96,8 @@ function buildReadmeSource(pkgName, readmeSource) {
     pkgName = "Compas";
   }
 
-  return `<p align="center">
-  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
-</p>
-<p align="center">
-<h2>${pkgName}</h2>
-</p>
-<p align="center">
+  return `# ${pkgName}
+<p>
   <a href="https://packagephobia.com/result?p=${pkgName}" target="_blank">
     <img src="https://packagephobia.com/badge?p=${pkgName}" alt="Install size">
   </a>

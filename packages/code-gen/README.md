@@ -1,10 +1,6 @@
-<p align="center">
-  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
-</p>
-<p align="center">
-<h2>@compas/code-gen</h2>
-</p>
-<p align="center">
+# @compas/code-gen
+
+<p>
   <a href="https://packagephobia.com/result?p=@compas/code-gen" target="_blank">
     <img src="https://packagephobia.com/badge?p=@compas/code-gen" alt="Install size">
   </a>

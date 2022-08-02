@@ -1,10 +1,6 @@
-<p align="center">
-  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
-</p>
-<p align="center">
-<h2>@compas/eslint-plugin</h2>
-</p>
-<p align="center">
+# @compas/eslint-plugin
+
+<p>
   <a href="https://packagephobia.com/result?p=@compas/eslint-plugin" target="_blank">
     <img src="https://packagephobia.com/badge?p=@compas/eslint-plugin" alt="Install size">
   </a>

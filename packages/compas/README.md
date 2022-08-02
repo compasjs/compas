@@ -1,10 +1,6 @@
-<p align="center">
-  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
-</p>
-<p align="center">
-<h2>Compas</h2>
-</p>
-<p align="center">
+# Compas
+
+<p>
   <a href="https://packagephobia.com/result?p=Compas" target="_blank">
     <img src="https://packagephobia.com/badge?p=Compas" alt="Install size">
   </a>
