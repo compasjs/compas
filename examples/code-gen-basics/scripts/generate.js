@@ -14,4 +14,6 @@ async function main() {
     enabledGenerators: ["type", "validator", "router"],
     outputDirectory: "./src/generated",
   });
+
+  process.exit(0);
 }

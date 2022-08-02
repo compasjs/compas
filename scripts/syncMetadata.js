@@ -95,13 +95,25 @@ function buildReadmeSource(pkgName, readmeSource) {
   } else {
     pkgName = "Compas";
   }
-  return `# ${pkgName}\n[![install size ${pkgName}](https://packagephobia.com/badge?p=${pkgName})](https://packagephobia.com/result?p=${pkgName})${readmeSource}\n`;
+
+  return `<p align="center">
+  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
+</p>
+<p align="center">
+<h2>${pkgName}</h2>
+</p>
+<p align="center">
+  <a href="https://packagephobia.com/result?p=${pkgName}" target="_blank">
+    <img src="https://packagephobia.com/badge?p=${pkgName}" alt="Install size">
+  </a>
+${readmeSource}
+`;
 }
 
 function getReadmeSource() {
   const src = readFileSync(pathJoin(process.cwd(), "README.md"), "utf-8");
 
-  return src.split("\n").slice(1).join("\n");
+  return src.split(`<p align="center">`).slice(3).join(`<p align="center">`);
 }
 
 async function syncDocExamples() {

@@ -1,4 +1,4 @@
-name: Checks on the main branch
+name: Checks
 on:
   push:
     branches: [main]
