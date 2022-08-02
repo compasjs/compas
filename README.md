@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Tailwind CSS" height="117">
+  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
 </p>
 <p align="center">
   Unified backend tooling
