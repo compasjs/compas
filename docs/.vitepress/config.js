@@ -29,7 +29,6 @@ module.exports = {
         href: "/favicon/favicon-32x32.png",
       },
     ],
-    ["link", { rel: "manifest", href: "/favicon/site.webmanifest" }],
     ["link", { rel: "shortcut icon", href: "/favicon/favicon.ico" }],
     ["meta", { name: "theme-color", content: "#3EAF7C" }],
   ],
