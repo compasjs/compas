@@ -1,4 +1,4 @@
-# @compas/\*
+![compas](https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true)
 
 ![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
 [![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
