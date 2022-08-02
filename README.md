@@ -1,9 +1,15 @@
-![compas](https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true)
-
-![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
-[![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
-
-Unified backend tooling
+<p align="center">
+  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
+</p>
+<p align="center">
+  Unified backend tooling
+</p>
+<p align="center">
+  <img src="https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg">
+  <a href="https://codecov.io/gh/compasjs/compas" target="_blank">
+    <img src="https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U">
+  </a>
+</p>
 
 ---
 
