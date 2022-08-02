@@ -1,10 +1,21 @@
-# @compas/code-gen
+<p align="center">
+  <img src="https://github.com/compasjs/compas/blob/main/docs/public/banner.svg?raw=true" alt="Compas.js" height="117">
+</p>
+<p align="center">
+<h2>@compas/code-gen</h2>
+</p>
+<p align="center">
+  <a href="https://packagephobia.com/result?p=@compas/code-gen" target="_blank">
+    <img src="https://packagephobia.com/badge?p=@compas/code-gen" alt="Install size">
+  </a>
 
-[![install size @compas/code-gen](https://packagephobia.com/badge?p=@compas/code-gen)](https://packagephobia.com/result?p=@compas/code-gen)
-![lint-build-test](https://github.com/compasjs/compas/workflows/lint-build-test/badge.svg)
-[![codecov](https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U)](https://codecov.io/gh/compasjs/compas)
-
-Unified backend tooling
+  <a href="https://github.com/compasjs/compas/actions/workflows/main-checks.yml" target="_blank">
+    <img src="https://github.com/compasjs/compas/actions/workflows/main-checks.yml/badge.svg" alt="CI status badge">
+  </a>
+  <a href="https://codecov.io/gh/compasjs/compas" target="_blank">
+    <img src="https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U" alt="Codecov status">
+  </a>
+</p>
 
 ---
 
