@@ -29,7 +29,7 @@
     "@compas/stdlib": "0.0.211",
     "c8": "7.12.0",
     "chokidar": "3.5.3",
-    "recast": "0.21.1",
+    "recast": "0.21.2",
     "tree-kill": "1.2.2"
   },
   "author": {
