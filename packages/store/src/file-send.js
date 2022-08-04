@@ -24,8 +24,11 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
     options.cacheControlHeader ?? "max-age=120, must-revalidate";
 
   ctx.set("Accept-Ranges", "bytes");
-  ctx.set("Last-Modified",
-          typeof file.updatedAt === "string" ? file.updatedAt : file.updatedAt.toString(),
+  ctx.set(
+    "Last-Modified",
+    typeof file.updatedAt === "string"
+      ? file.updatedAt
+      : file.updatedAt.toString(),
   );
   ctx.set("Cache-Control", options.cacheControlHeader);
   ctx.set("Content-Type", file.contentType);
@@ -74,8 +77,11 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
       ctx.set("Content-Range", `bytes ${start}-${end}/${file.contentLength}`);
 
       ctx.body = await objectStorageGetObjectStream(s3Client, {
-        bucketName: file.bucketName, objectKey: file.id, range: {
-          start, end,
+        bucketName: file.bucketName,
+        objectKey: file.id,
+        range: {
+          start,
+          end,
         },
       });
     } catch {
@@ -84,14 +90,16 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
       ctx.set("Content-Range", `bytes */${file.contentLength}`);
 
       ctx.body = await objectStorageGetObjectStream(s3Client, {
-        bucketName: file.bucketName, objectKey: file.id,
+        bucketName: file.bucketName,
+        objectKey: file.id,
       });
     }
   } else {
     ctx.set("Content-Length", String(file.contentLength));
 
     ctx.body = await objectStorageGetObjectStream(s3Client, {
-      bucketName: file.bucketName, objectKey: file.id,
+      bucketName: file.bucketName,
+      objectKey: file.id,
     });
   }
 }
@@ -118,11 +126,12 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
  * }} [options]
  * @returns {Promise<void>}
  */
-export async function fileSendTransformedImageResponse(sql,
-                                                       s3Client,
-                                                       ctx,
-                                                       file,
-                                                       options,
+export async function fileSendTransformedImageResponse(
+  sql,
+  s3Client,
+  ctx,
+  file,
+  options,
 ) {
   options = options ?? {};
   options.cacheControlHeader =
@@ -131,17 +140,17 @@ export async function fileSendTransformedImageResponse(sql,
   const { w, q } = ctx.validatedQuery ?? {};
   if (isNil(w) || isNil(q)) {
     throw AppError.serverError({
-                                 message: `'fileSendTransformedImageResponse' is used, but 'T.reference("store", "imageTransformOptions")' is not referenced in the '.query()' call of this route definition.`,
-                               });
+      message: `'fileSendTransformedImageResponse' is used, but 'T.reference("store", "imageTransformOptions")' is not referenced in the '.query()' call of this route definition.`,
+    });
   }
 
   // Always try to serve 'webp', else the original content type is used or defaults to
   // jpeg
   const acceptsWebp = !!ctx.accepts("image/webp");
   const acceptsAvif = !!ctx.accepts("image/avif");
-  const transformKey = `compas-image-transform-${acceptsWebp ? "webp" : acceptsAvif
-                                                                        ? "avif"
-                                                                        : "none"}-w${w}-q${q}`;
+  const transformKey = `compas-image-transform-${
+    acceptsWebp ? "webp" : acceptsAvif ? "avif" : "none"
+  }-w${w}-q${q}`;
 
   let loadedFile = file.meta?.transforms?.[transformKey];
 
@@ -160,10 +169,15 @@ export async function fileSendTransformedImageResponse(sql,
     } else if (file.contentType === "image/svg+xml") {
       // SVG's are not transformed, so use the original file id here.
       file.meta.transforms[transformKey] = file.id;
-    } else if ([ "image/webp", "image/png", "image/gif" ].includes(file.contentType)) {
-      buffer = await streamToBuffer(await objectStorageGetObjectStream(s3Client, {
-        bucketName: file.bucketName, objectKey: file.id,
-      }),);
+    } else if (
+      ["image/webp", "image/png", "image/gif"].includes(file.contentType)
+    ) {
+      buffer = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
 
       if (isAnimated(buffer)) {
         // Don't transform animated gifs and the like
@@ -174,9 +188,12 @@ export async function fileSendTransformedImageResponse(sql,
     if (isNil(file.meta.transforms[transformKey])) {
       if (isNil(buffer)) {
         // We only read the stream once, except when the original file is returned :)
-        buffer = await streamToBuffer(await objectStorageGetObjectStream(s3Client, {
-          bucketName: file.bucketName, objectKey: file.id,
-        }),);
+        buffer = await streamToBuffer(
+          await objectStorageGetObjectStream(s3Client, {
+            bucketName: file.bucketName,
+            objectKey: file.id,
+          }),
+        );
       }
 
       const sharpInstance = sharp(buffer);
@@ -201,19 +218,30 @@ export async function fileSendTransformedImageResponse(sql,
         sharpInstance.avif({ quality: q });
       } else if (file.contentType === "image/png") {
         sharpInstance.png({ quality: q });
-      } else if (file.contentType === "image/jpeg" || file.contentType === "image/jpg") {
+      } else if (
+        file.contentType === "image/jpeg" ||
+        file.contentType === "image/jpg"
+      ) {
         sharpInstance.jpeg({ quality: q });
       } else if (file.contentType === "image/gif") {
         sharpInstance.gif({ quality: q });
       }
 
-      const image = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: file.bucketName,
-      }, {
-                                               name: transformKey, contentType, meta: {
-          transformedFromOriginal: file.id,
+      const image = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: file.bucketName,
         },
-                                             }, await sharpInstance.toBuffer(),);
+        {
+          name: transformKey,
+          contentType,
+          meta: {
+            transformedFromOriginal: file.id,
+          },
+        },
+        await sharpInstance.toBuffer(),
+      );
 
       file.meta.transforms[transformKey] = image.id;
       createdFile = image;
@@ -223,7 +251,8 @@ export async function fileSendTransformedImageResponse(sql,
     loadedFile = file.meta.transforms[transformKey];
 
     // Atomic update transforms object
-    await sql.unsafe(`UPDATE "file"
+    await sql.unsafe(
+      `UPDATE "file"
                       SET
                         "meta" = jsonb_set(CASE
                                              WHEN coalesce(meta, '{}'::jsonb) ? 'transforms'
@@ -232,7 +261,9 @@ export async function fileSendTransformedImageResponse(sql,
                                            '{transforms,${transformKey}}',
                                            '${JSON.stringify(loadedFile)}')
                       WHERE
-                        id = $1`, [ file.id ],);
+                        id = $1`,
+      [file.id],
+    );
   }
 
   // Short circuit the known id's
@@ -242,21 +273,24 @@ export async function fileSendTransformedImageResponse(sql,
     return fileSendResponse(s3Client, ctx, createdFile, options);
   }
 
-  const [ alreadyTransformedFile ] = await queryFile({
-                                                       where: {
-                                                         id: loadedFile,
-                                                       },
-                                                     }).exec(sql);
+  const [alreadyTransformedFile] = await queryFile({
+    where: {
+      id: loadedFile,
+    },
+  }).exec(sql);
 
   if (!alreadyTransformedFile) {
     // File does not exist for some reason, so recursively try again.
     // To be sure that we don't try with the same transformKey again, we atomically
     // delete it from the database as well
-    await sql.unsafe(`UPDATE "file"
+    await sql.unsafe(
+      `UPDATE "file"
                       SET
                         "meta" = "meta" #- '{transforms,${transformKey}}'
                       WHERE
-                        id = $1`, [ file.id ],);
+                        id = $1`,
+      [file.id],
+    );
 
     // Since we pass the in memory file again, we also need to remove the key from memory.
     delete file.meta.transforms[transformKey];

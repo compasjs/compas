@@ -38,20 +38,26 @@ function createKoaContext(req, res, app) {
 
 test("store/file-send", async (t) => {
   const imagePath = "./docs/public/favicon/favicon-16x16.png";
-  let file = await fileCreateOrUpdate(sql, s3Client, {
-    bucketName: testBucketName,
-  }, {
-                                        name: "image.png",
-                                      }, imagePath,);
+  let file = await fileCreateOrUpdate(
+    sql,
+    s3Client,
+    {
+      bucketName: testBucketName,
+    },
+    {
+      name: "image.png",
+    },
+    imagePath,
+  );
 
   // These functions operator on the in memory file object, so make sure to reload before
   // each test case.
   const reloadFile = async () => {
-    const [ refetched ] = await queryFile({
-                                            where: {
-                                              id: file.id,
-                                            },
-                                          }).exec(sql);
+    const [refetched] = await queryFile({
+      where: {
+        id: file.id,
+      },
+    }).exec(sql);
 
     file = refetched;
   };
@@ -62,7 +68,10 @@ test("store/file-send", async (t) => {
       await fileSendResponse(s3Client, ctx, file);
 
       t.equal(ctx.res.getHeader("Accept-Ranges"), "bytes");
-      t.equal(ctx.res.getHeader("Cache-Control"), "max-age=120, must-revalidate",);
+      t.equal(
+        ctx.res.getHeader("Cache-Control"),
+        "max-age=120, must-revalidate",
+      );
       t.equal(ctx.res.getHeader("Content-Type"), "image/png");
 
       // Weak validation, ignores milliseconds.
@@ -91,7 +100,10 @@ test("store/file-send", async (t) => {
       await fileSendResponse(s3Client, ctx, file);
 
       t.equal(ctx.res.getHeader("Content-Length"), "11");
-      t.equal(ctx.res.getHeader("Content-Range"), `bytes 0-10/${file.contentLength}`,);
+      t.equal(
+        ctx.res.getHeader("Content-Range"),
+        `bytes 0-10/${file.contentLength}`,
+      );
     });
 
     t.test("overwrite cache-control", async (t) => {
@@ -105,14 +117,18 @@ test("store/file-send", async (t) => {
     });
   });
 
-  t.test("fileSendTransformedImageResponse", async (t) => {
+  t.test("fileSendTransformedImageResponse", (t) => {
     t.test("requires validatedQuery", async (t) => {
       const ctx = createKoaContext();
 
       try {
         await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
       } catch (e) {
-        t.ok(e.info.message.includes(`T.reference("store", "imageTransformOptions")`,),);
+        t.ok(
+          e.info.message.includes(
+            `T.reference("store", "imageTransformOptions")`,
+          ),
+        );
       }
     });
 
@@ -121,7 +137,8 @@ test("store/file-send", async (t) => {
       const ctx = createKoaContext();
 
       ctx.validatedQuery = {
-        w: 10, q: 75
+        w: 10,
+        q: 75,
       };
       ctx.req.headers["accept"] = "*/*";
 
@@ -137,7 +154,8 @@ test("store/file-send", async (t) => {
       const ctx = createKoaContext();
 
       ctx.validatedQuery = {
-        w: 10, q: 75
+        w: 10,
+        q: 75,
       };
       ctx.req.headers["accept"] = "image/avif";
 
@@ -146,7 +164,6 @@ test("store/file-send", async (t) => {
 
       t.equal(ctx.res.getHeader("Content-Type"), "image/avif");
       t.ok(file.meta.transforms["compas-image-transform-avif-w10-q75"]);
-
     });
 
     t.test("caches response", async (t) => {
@@ -154,7 +171,8 @@ test("store/file-send", async (t) => {
       const ctx = createKoaContext();
 
       ctx.validatedQuery = {
-        w: 8, q: 75
+        w: 8,
+        q: 75,
       };
       ctx.req.headers["accept"] = "*/*";
 
@@ -167,7 +185,6 @@ test("store/file-send", async (t) => {
       await reloadFile();
 
       const secondLastModified = new Date(ctx.res.getHeader("Last-Modified"));
-
 
       t.deepEqual(firstLastModified, secondLastModified);
     });

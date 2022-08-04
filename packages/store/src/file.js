@@ -2,7 +2,11 @@ import { createReadStream } from "fs";
 import { DeleteObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { AppError, isNil, uuid } from "@compas/stdlib";
-import { fileTypeFromBuffer, fileTypeFromFile, fileTypeStream } from "file-type";
+import {
+  fileTypeFromBuffer,
+  fileTypeFromFile,
+  fileTypeStream,
+} from "file-type";
 import { decode, sign, verify } from "jws";
 import mime from "mime-types";
 import { queries } from "./generated.js";

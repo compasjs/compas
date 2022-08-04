@@ -30,9 +30,15 @@ test("store/file", (t) => {
   t.test("fileCreateOrUpdateFile", (t) => {
     t.test("validator props.name", async (t) => {
       try {
-        await fileCreateOrUpdate(sql, s3Client, {
-          bucketName: testBucketName,
-        }, {}, "",);
+        await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {},
+          "",
+        );
       } catch (e) {
         t.equal(e.key, `file.createOrUpdate.invalidName`);
       }
@@ -40,26 +46,40 @@ test("store/file", (t) => {
 
     t.test("validator source", async (t) => {
       try {
-        await fileCreateOrUpdate(sql, s3Client, {
-          bucketName: testBucketName,
-        }, {
-                                   name: "foo.txt",
-                                 },);
+        await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "foo.txt",
+          },
+        );
       } catch (e) {
         t.equal(e.key, `file.createOrUpdate.missingSource`);
       }
     });
 
     t.test("create", async (t) => {
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                              name: "foo.txt",
-                                            }, Buffer.from("foo"),);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          name: "foo.txt",
+        },
+        Buffer.from("foo"),
+      );
 
-      const buffer = await streamToBuffer(await objectStorageGetObjectStream(s3Client, {
-        bucketName: testBucketName, objectKey: file.id,
-      }),);
+      const buffer = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: testBucketName,
+          objectKey: file.id,
+        }),
+      );
 
       t.equal(buffer.toString("utf-8"), "foo");
     });
@@ -67,53 +87,87 @@ test("store/file", (t) => {
     t.test("create with id", async (t) => {
       const id = uuid();
 
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                              id, name: "foo.txt",
-                                            }, Buffer.from("foo"),);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          id,
+          name: "foo.txt",
+        },
+        Buffer.from("foo"),
+      );
 
       t.equal(file.id, id);
     });
 
     t.test("update", async (t) => {
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                              name: "foo.txt",
-                                            }, Buffer.from("foo"),);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          name: "foo.txt",
+        },
+        Buffer.from("foo"),
+      );
 
-      await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                 id: file.id, name: "foo.txt",
-                               }, Buffer.from("updated"),);
+      await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          id: file.id,
+          name: "foo.txt",
+        },
+        Buffer.from("updated"),
+      );
 
-      const buffer = await streamToBuffer(await objectStorageGetObjectStream(s3Client, {
-        bucketName: testBucketName, objectKey: file.id,
-      }),);
+      const buffer = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: testBucketName,
+          objectKey: file.id,
+        }),
+      );
 
       t.equal(buffer.toString("utf-8"), "updated");
     });
 
     t.test("source type file path", async (t) => {
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                              name: "file.test.js",
-                                            }, filenameForModule(import.meta),);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          name: "file.test.js",
+        },
+        filenameForModule(import.meta),
+      );
 
       t.equal(file.contentType, "application/javascript");
       t.ok(file.contentLength > 100);
     });
 
     t.test("source type stream", async (t) => {
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-      }, {
-                                              name: "file.test.js",
-                                            }, createReadStream(
-        filenameForModule(import.meta)),);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
+        {
+          name: "file.test.js",
+        },
+        createReadStream(filenameForModule(import.meta)),
+      );
 
       t.equal(file.contentType, "application/javascript");
       t.ok(file.contentLength > 100);
@@ -122,42 +176,63 @@ test("store/file", (t) => {
     t.test("allowedContentTypes", (t) => {
       t.test("fail", async (t) => {
         try {
-          await fileCreateOrUpdate(sql, s3Client, {
-            bucketName: testBucketName, allowedContentTypes: [ "image/jpeg" ],
-          }, {
-                                     name: "image.jpg",
-                                   }, imagePath,);
+          await fileCreateOrUpdate(
+            sql,
+            s3Client,
+            {
+              bucketName: testBucketName,
+              allowedContentTypes: ["image/jpeg"],
+            },
+            {
+              name: "image.jpg",
+            },
+            imagePath,
+          );
         } catch (e) {
           t.equal(e.key, "file.createOrUpdate.invalidContentType");
         }
       });
 
       t.test("succes", async (t) => {
-        const file = await fileCreateOrUpdate(sql, s3Client, {
-          bucketName: testBucketName, allowedContentTypes: [ "image/png" ],
-        }, {
-                                                name: "image.png",
-                                              }, imagePath,);
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+            allowedContentTypes: ["image/png"],
+          },
+          {
+            name: "image.png",
+          },
+          imagePath,
+        );
 
         t.equal(file.contentType, "image/png");
       });
     });
 
     t.test("schedulePlaceholderImageJob", async (t) => {
-      const file = await fileCreateOrUpdate(sql, s3Client, {
-        bucketName: testBucketName,
-        allowedContentTypes: [ "image/png" ],
-        schedulePlaceholderImageJob: true,
-      }, {
-                                              name: "image.png",
-                                            }, imagePath,);
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+          allowedContentTypes: ["image/png"],
+          schedulePlaceholderImageJob: true,
+        },
+        {
+          name: "image.png",
+        },
+        imagePath,
+      );
 
-      const [ job ] = await queryJob({
-                                       where: {
-                                         isComplete: false, $raw: query`data->>'fileId' =
+      const [job] = await queryJob({
+        where: {
+          isComplete: false,
+          $raw: query`data->>'fileId' =
                                          ${file.id}`,
-                                       },
-                                     }).exec(sql);
+        },
+      }).exec(sql);
 
       t.equal(job.name, "compas.file.generatePlaceholderImage");
     });
@@ -167,13 +242,18 @@ test("store/file", (t) => {
     const id = uuid();
 
     t.test("setup", async (t) => {
-      await fileCreateOrUpdate(sql, s3Client, {
-                                 bucketName: testBucketName,
-                               },
+      await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+        },
 
-                               {
-                                 id, name: "image.png",
-                               }, imagePath,
+        {
+          id,
+          name: "image.png",
+        },
+        imagePath,
       );
 
       await queries.fileDelete(sql, {
@@ -189,9 +269,12 @@ test("store/file", (t) => {
       });
 
       try {
-        await s3Client.send(new HeadObjectCommand({
-                                                    Key: id, Bucket: testBucketName,
-                                                  }),);
+        await s3Client.send(
+          new HeadObjectCommand({
+            Key: id,
+            Bucket: testBucketName,
+          }),
+        );
       } catch (e) {
         t.equal(e.name, "NotFound");
       }
@@ -208,24 +291,25 @@ test("store/file", (t) => {
     });
 
     t.test("success", (t) => {
-      const result = fileFormatMetadata({
-                                          id: uuid(),
-                                          name: "foo.txt",
-                                          contentType: "image/png",
-                                          meta: {
-                                            altText: "hi",
-                                          },
-                                        }, {
-                                          url: "http://localhost:8080",
-                                        },);
+      const result = fileFormatMetadata(
+        {
+          id: uuid(),
+          name: "foo.txt",
+          contentType: "image/png",
+          meta: {
+            altText: "hi",
+          },
+        },
+        {
+          url: "http://localhost:8080",
+        },
+      );
 
       const validateResult = validateStoreFileResponse(result);
-
 
       t.ok(validateResult.value);
       t.equal(result.altText, "hi");
       t.equal(result.name, "foo.txt");
-
     });
   });
 
@@ -233,8 +317,9 @@ test("store/file", (t) => {
     t.test("all options are mandatory", (t) => {
       try {
         fileSignAccessToken({
-                              fileId: uuid(), signingKey: 5,
-                            });
+          fileId: uuid(),
+          signingKey: 5,
+        });
       } catch (e) {
         t.ok(AppError.instanceOf(e));
         t.equal(e.status, 500);
@@ -242,8 +327,9 @@ test("store/file", (t) => {
 
       try {
         fileSignAccessToken({
-                              signingKey: uuid(), maxAgeInSeconds: 5,
-                            });
+          signingKey: uuid(),
+          maxAgeInSeconds: 5,
+        });
       } catch (e) {
         t.ok(AppError.instanceOf(e));
         t.equal(e.status, 500);
@@ -252,10 +338,10 @@ test("store/file", (t) => {
 
     t.test("returns string", (t) => {
       const result = fileSignAccessToken({
-                                           fileId: uuid(),
-                                           signingKey: uuid(),
-                                           maxAgeInSeconds: 5,
-                                         });
+        fileId: uuid(),
+        signingKey: uuid(),
+        maxAgeInSeconds: 5,
+      });
 
       const decoded = decode(result);
 
@@ -268,8 +354,9 @@ test("store/file", (t) => {
     t.test("all options are mandatory", (t) => {
       try {
         fileVerifyAccessToken({
-                                fileAccessToken: uuid(), expectedFileId: uuid(),
-                              });
+          fileAccessToken: uuid(),
+          expectedFileId: uuid(),
+        });
       } catch (e) {
         t.ok(AppError.instanceOf(e));
         t.equal(e.status, 500);
@@ -277,8 +364,8 @@ test("store/file", (t) => {
 
       try {
         fileVerifyAccessToken({
-                                signingKey: uuid(),
-                              });
+          signingKey: uuid(),
+        });
       } catch (e) {
         t.ok(AppError.instanceOf(e));
         t.equal(e.status, 500);
@@ -287,17 +374,17 @@ test("store/file", (t) => {
 
     t.test("handles unknown signingKey", (t) => {
       const accessToken = fileSignAccessToken({
-                                                fileId: uuid(),
-                                                signingKey: uuid(),
-                                                maxAgeInSeconds: 5,
-                                              });
+        fileId: uuid(),
+        signingKey: uuid(),
+        maxAgeInSeconds: 5,
+      });
 
       try {
         fileVerifyAccessToken({
-                                fileAccessToken: accessToken,
-                                signingKey: uuid(),
-                                expectedFileId: uuid(),
-                              });
+          fileAccessToken: accessToken,
+          signingKey: uuid(),
+          expectedFileId: uuid(),
+        });
       } catch (e) {
         t.equal(typeof accessToken, "string");
         t.ok(AppError.instanceOf(e));
@@ -309,17 +396,17 @@ test("store/file", (t) => {
     t.test("handles expired token", (t) => {
       const signingKey = uuid();
       const accessToken = fileSignAccessToken({
-                                                fileId: uuid(),
-                                                signingKey,
-                                                maxAgeInSeconds: -5,
-                                              });
+        fileId: uuid(),
+        signingKey,
+        maxAgeInSeconds: -5,
+      });
 
       try {
         fileVerifyAccessToken({
-                                fileAccessToken: accessToken,
-                                signingKey,
-                                expectedFileId: uuid(),
-                              });
+          fileAccessToken: accessToken,
+          signingKey,
+          expectedFileId: uuid(),
+        });
       } catch (e) {
         t.equal(typeof accessToken, "string");
         t.ok(AppError.instanceOf(e));
@@ -332,15 +419,17 @@ test("store/file", (t) => {
       const fileId = uuid();
       const signingKey = uuid();
       const accessToken = fileSignAccessToken({
-                                                fileId, signingKey, maxAgeInSeconds: 5,
-                                              });
+        fileId,
+        signingKey,
+        maxAgeInSeconds: 5,
+      });
 
       try {
         fileVerifyAccessToken({
-                                fileAccessToken: accessToken,
-                                signingKey,
-                                expectedFileId: uuid(),
-                              });
+          fileAccessToken: accessToken,
+          signingKey,
+          expectedFileId: uuid(),
+        });
       } catch (e) {
         t.equal(e.status, 400);
         t.ok(e.key.includes("invalidToken"));
@@ -353,14 +442,16 @@ test("store/file", (t) => {
       const fileId = uuid();
       const signingKey = uuid();
       const accessToken = fileSignAccessToken({
-                                                fileId, signingKey, maxAgeInSeconds: 5,
-                                              });
+        fileId,
+        signingKey,
+        maxAgeInSeconds: 5,
+      });
 
       fileVerifyAccessToken({
-                              fileAccessToken: accessToken,
-                              signingKey,
-                              expectedFileId: fileId,
-                            });
+        fileAccessToken: accessToken,
+        signingKey,
+        expectedFileId: fileId,
+      });
 
       t.pass();
     });
