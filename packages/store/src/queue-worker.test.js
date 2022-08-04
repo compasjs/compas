@@ -193,6 +193,7 @@ test("store/queue-worker", (t) => {
 
       await queueWorkerAddJob(sql, {
         name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
       });
 
       qw.start();
@@ -215,6 +216,7 @@ test("store/queue-worker", (t) => {
 
       await queueWorkerAddJob(sql, {
         name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
       });
 
       qw.start();
@@ -254,6 +256,7 @@ test("store/queue-worker", (t) => {
 
       await queueWorkerAddJob(sql, {
         name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
       });
 
       qw.start();
@@ -282,6 +285,7 @@ test("store/queue-worker", (t) => {
 
       await queueWorkerAddJob(sql, {
         name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
       });
 
       qw.start();

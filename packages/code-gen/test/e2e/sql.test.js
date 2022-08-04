@@ -8,6 +8,7 @@ import {
   query,
   storeStructure,
 } from "@compas/store";
+import { sql as rootSql } from "../../../../src/testing.js";
 import { TypeCreator } from "../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
@@ -850,7 +851,7 @@ test("code-gen/e2e/sql", async (t) => {
     const originalCount = await queries.postCount(sql);
     await queries.postUpdate(sql, {
       update: {
-        deletedAt: new Date(),
+        deletedAt: new Date(new Date().getTime() - rootSql.systemTimeOffset),
       },
       where: { id: post.id },
     });
@@ -866,7 +867,9 @@ test("code-gen/e2e/sql", async (t) => {
 
   t.test("soft delete user", async (t) => {
     await queries.userUpdate(sql, {
-      update: { deletedAt: new Date() },
+      update: {
+        deletedAt: new Date(new Date().getTime() - rootSql.systemTimeOffset),
+      },
       where: { id: user.id },
     });
 
