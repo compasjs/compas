@@ -132,16 +132,12 @@ export async function generateTypes(logger, options) {
                 | { value: never; errors: E[] };
           `;
       } else if (generator === "store") {
-        // TODO: remove unused;
         contents += `
           type Postgres = store.Postgres;
           type S3Client = store.S3Client;
           type QueryPart<T = any> = store.QueryPart<T>;
           type QueryPartArg = store.QueryPartArg;
           type Returning<Type, Selector extends undefined | "*" | string[]> = store.Returning<Type, Selector>;
-          type MinioClient = store.MinioClient;
-          type GetStreamFn = store.GetStreamFn;
-          type FileCache = store.FileCache;
           type SessionStoreSettings = store.SessionStoreSettings;
           type SessionTransportSettings = store.SessionTransportSettings;
           `;

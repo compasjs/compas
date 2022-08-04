@@ -1,11 +1,11 @@
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { dirnameForModule, pathJoin } from "@compas/stdlib";
-import { minioClient, testBucketName, sql } from "../../../src/testing.js";
+import { s3Client, sql, testBucketName } from "../../../src/testing.js";
+import { fileCreateOrUpdate } from "./file.js";
 import {
   jobFileCleanup,
   jobFileGeneratePlaceholderImage,
 } from "./files-jobs.js";
-import { createOrUpdateFile } from "./files.js";
 import { queryFile } from "./generated/database/file.js";
 import { queryJob } from "./generated/database/job.js";
 
@@ -13,7 +13,7 @@ mainTestFn(import.meta);
 
 test("store/files-jobs", (t) => {
   t.test("jobFileCleanup", async (t) => {
-    const job = jobFileCleanup(minioClient, testBucketName);
+    const job = jobFileCleanup(s3Client, testBucketName);
 
     await job(newTestEvent(t), sql, {});
 
@@ -26,18 +26,18 @@ test("store/files-jobs", (t) => {
       `../__fixtures__/50.png`,
     );
 
-    const file = await createOrUpdateFile(
+    const file = await fileCreateOrUpdate(
       sql,
-      minioClient,
-      testBucketName,
+      s3Client,
+      {
+        bucketName: testBucketName,
+        allowedContentTypes: ["image/png"],
+        schedulePlaceholderImageJob: true,
+      },
       {
         name: "test.png",
       },
       fileInputPath,
-      {
-        allowedContentTypes: ["image/png"],
-        schedulePlaceholderImageJob: true,
-      },
     );
 
     const [job] = await queryJob({
@@ -55,7 +55,7 @@ test("store/files-jobs", (t) => {
     t.ok(job);
     t.equal(job.data.fileId, file.id);
 
-    await jobFileGeneratePlaceholderImage(minioClient, testBucketName)(
+    await jobFileGeneratePlaceholderImage(s3Client, testBucketName)(
       newTestEvent(t),
       sql,
       job,

@@ -1,7 +1,6 @@
 import { uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
-  newMinioClient,
   objectStorageCreateClient,
   objectStorageEnsureBucket,
   objectStorageGetDevelopmentConfig,
@@ -19,11 +18,6 @@ export let sql;
 export let s3Client;
 
 /**
- * @type {import("@compas/store").MinioClient}
- */
-export let minioClient;
-
-/**
  * @type {string}
  */
 export const testBucketName = uuid();
@@ -39,7 +33,6 @@ export async function injectTestServices() {
   });
 
   s3Client = objectStorageCreateClient(objectStorageGetDevelopmentConfig());
-  minioClient = newMinioClient({});
 
   await objectStorageEnsureBucket(s3Client, {
     bucketName: testBucketName,

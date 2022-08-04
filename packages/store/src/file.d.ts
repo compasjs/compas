@@ -53,24 +53,6 @@ export function fileSyncDeletedWithObjectStorage(
   },
 ): Promise<void>;
 /**
- * Generate a signed string, based on the file id and the max age that it is allowed ot
- * be accessed.
- *
- * @see {fileVerifyAccessToken}
- *
- * @param {{
- *   fileId: string,
- *   signingKey: string,
- *   maxAgeInSeconds: number,
- * }} options
- * @returns {string}
- */
-export function fileSignAccessToken(options: {
-  fileId: string;
-  signingKey: string;
-  maxAgeInSeconds: number;
-}): string;
-/**
  * Format a StoreFile, so it can be used in the response.
  *
  * @param {StoreFile} file
@@ -95,6 +77,24 @@ export function fileFormatMetadata(
   },
 ): StoreFileResponse;
 /**
+ * Generate a signed string, based on the file id and the max age that it is allowed ot
+ * be accessed.
+ *
+ * @see {fileVerifyAccessToken}
+ *
+ * @param {{
+ *   fileId: string,
+ *   signingKey: string,
+ *   maxAgeInSeconds: number,
+ * }} options
+ * @returns {string}
+ */
+export function fileSignAccessToken(options: {
+  fileId: string;
+  signingKey: string;
+  maxAgeInSeconds: number;
+}): string;
+/**
  * Verify and decode the fileAccessToken returning the fileId that it was signed for.
  * Returns an Either<fileId: string, AppError>
  *
@@ -112,4 +112,5 @@ export function fileVerifyAccessToken(options: {
   signingKey: string;
   expectedFileId: string;
 }): void;
+export const TRANSFORMED_CONTENT_TYPES: string[];
 //# sourceMappingURL=file.d.ts.map

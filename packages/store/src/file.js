@@ -14,7 +14,15 @@ import { queryFile } from "./generated/database/file.js";
 import { objectStorageListObjects } from "./object-storage.js";
 import { query } from "./query.js";
 import { queueWorkerAddJob } from "./queue-worker.js";
-import { TRANSFORMED_CONTENT_TYPES } from "./send-transformed-image.js";
+
+export const TRANSFORMED_CONTENT_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+];
 
 /**
  * Create or update a file. The file store is backed by a Postgres table and S3 object.
@@ -27,7 +35,7 @@ import { TRANSFORMED_CONTENT_TYPES } from "./send-transformed-image.js";
  *
  * You can set `allowedContentTypes` to `image/png, image/jpeg, image/jpg, image/webp,
  * image/avif, image/gif` if you only want to accept files that can be sent by
- * {@link sendTransformedImage}.
+ * {@link fileSendTransformedImageResponse}.
  *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
