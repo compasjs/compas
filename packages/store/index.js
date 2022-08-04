@@ -3,6 +3,10 @@
  */
 
 /**
+ * @typedef {import("@aws-sdk/client-s3").S3Client} S3Client
+ */
+
+/**
  * @typedef {import("./types/advanced-types.js").MinioClient} MinioClient
  */
 
@@ -56,6 +60,29 @@ export {
 } from "./src/minio.js";
 
 export { newPostgresConnection, postgres } from "./src/postgres.js";
+
+export {
+  objectStorageGetDevelopmentConfig,
+  objectStorageCreateClient,
+  objectStorageEnsureBucket,
+  objectStorageRemoveBucket,
+  objectStorageListObjects,
+  objectStorageGetObjectStream,
+} from "./src/object-storage.js";
+
+export {
+  fileCreateOrUpdate,
+  fileFormatMetadata,
+
+  // fileVerifyAccessToken,
+  // fileSignAccessToken,
+  fileSyncDeletedWithObjectStorage,
+} from "./src/file.js";
+
+export {
+  fileSendResponse,
+  fileSendTransformedImageResponse,
+} from "./src/file-send.js";
 
 export {
   cleanupTestPostgresDatabase,

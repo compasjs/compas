@@ -6,6 +6,7 @@ export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 export { postgresTableSizes } from "./src/insight.js";
 export { sendTransformedImage } from "./src/send-transformed-image.js";
 export type Postgres = import("./types/advanced-types.js").Postgres;
+export type S3Client = import("@aws-sdk/client-s3").S3Client;
 export type MinioClient = import("./types/advanced-types.js").MinioClient;
 export type QueryPart<T> = import("./types/advanced-types.js").QueryPart<T>;
 export type QueryPartArg = import("./types/advanced-types.js").QueryPartArg;
@@ -33,6 +34,23 @@ export {
   copyAllObjects,
 } from "./src/minio.js";
 export { newPostgresConnection, postgres } from "./src/postgres.js";
+export {
+  objectStorageGetDevelopmentConfig,
+  objectStorageCreateClient,
+  objectStorageEnsureBucket,
+  objectStorageRemoveBucket,
+  objectStorageListObjects,
+  objectStorageGetObjectStream,
+} from "./src/object-storage.js";
+export {
+  fileCreateOrUpdate,
+  fileFormatMetadata,
+  fileSyncDeletedWithObjectStorage,
+} from "./src/file.js";
+export {
+  fileSendResponse,
+  fileSendTransformedImageResponse,
+} from "./src/file-send.js";
 export {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
