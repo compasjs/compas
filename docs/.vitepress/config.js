@@ -121,8 +121,8 @@ function getHomeSidebar() {
           link: "/features/http-server.html",
         },
         {
-          text: "Postgres and Minio",
-          link: "/features/postgres-and-minio.html",
+          text: "Postgres and S3",
+          link: "/features/postgres-and-s3.html",
         },
         {
           text: "Code generation",

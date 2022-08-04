@@ -9,7 +9,7 @@
  *
  * You can set `allowedContentTypes` to `image/png, image/jpeg, image/jpg, image/webp,
  * image/avif, image/gif` if you only want to accept files that can be sent by
- * {@link sendTransformedImage}.
+ * {@link fileSendTransformedImageResponse}.
  *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client

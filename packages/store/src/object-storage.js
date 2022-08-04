@@ -25,6 +25,7 @@ export function objectStorageGetDevelopmentConfig() {
     },
     endpoint: "http://127.0.0.1:9000",
     forcePathStyle: true,
+    region: "eu-central-1",
   };
 }
 

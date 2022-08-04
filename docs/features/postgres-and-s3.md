@@ -1,4 +1,4 @@
-# Postgres and Minio
+# Postgres and S3
 
 ::: tip
 
@@ -12,7 +12,7 @@ providing a PostgreSQL client and some utilities around setting up a database.
 ## Starting PostgreSQL
 
 First that we need to make sure we have a running PostgreSQL instance. Compas
-helps here, by managing a Docker based PostgreSQL server. Previously you have
+helps here, by managing a Docker-based PostgreSQL server. Previously you have
 already installed `@compas/cli`, which contains the necessary commands.
 
 ```shell
@@ -30,16 +30,16 @@ Some other docker commands provided by `@compas/cli`:
 compas docker down
 # Remove all created Docker containers and volumes
 compas docker clean
+# Cleanup project specific databases
+compas docker clean --project [name]
 ```
 
 ## Setup @compas/store
 
-The `@compas/store` packages provides a few abstractions over PostgreSQL and
-Minio:
+The `@compas/store` packages provides a few abstractions over PostgreSQL and S3:
 
 - Schema migration runner
 - Persistent file storage
-- Cache files on local disk
 - Job queue implementation, supporting priority, recurring jobs, scheduled jobs
   and multiple workers
 - Session store compatible with the `session` middleware exported by
@@ -55,17 +55,18 @@ APP_NAME=compastodo
 POSTGRES_HOST=127.0.0.1:5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
-# Minio
-MINIO_URI=127.0.0.1
-MINIO_PORT=9000
-MINIO_ACCESS_KEY=minio
-MINIO_SECRET_KEY=minio123
+
+# S3
+# None are needed for development
 ```
 
 Let's break it down a bit. `APP_NAME` is used in various places, but most
 importantly it is the default name for your database, file bucket and logs. Then
-we have some PostgreSQL connection configuration, kept as simple as possible,
-and the same for Minio.
+we have some PostgreSQL connection configuration, kept as simple as possible.
+For the S3 connection to Minio we don't need to configure anything. Compas
+provides a function to use the default connection settings in development. For
+production you should use one of the recommended ways as per the
+[AWS SDK docs](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html).
 
 And lastly we need to install `@compas/store`:
 
@@ -75,7 +76,7 @@ yarn add --exact @compas/store
 npm add --save-exact @compas/store
 ```
 
-## Connecting
+## Connecting to PostgreSQL
 
 Now that we have everything setup, let's see if we can make a connection to
 PostgreSQL. Create a file at `scripts/database.js` with the following contents:
@@ -110,3 +111,28 @@ compas database
 # or
 node ./scripts/database.js
 ```
+
+## Connecting to S3
+
+Connecting to our local Minio instance requires just a big one-liner;
+
+```js
+const s3Client = objectStorageCreateClient(
+  isProduction()
+    ? {
+        /* Use AWS docs for recommended credentials usage */
+      }
+    : objectStorageGetDevelopmentConfig(),
+);
+```
+
+A client is no good without a bucket, so let's create one;
+
+```js
+await objectStorageEnsureBucket(s3Client, {
+  bucketName: "my-bucket",
+  locationConstraint: "eu-central-1",
+});
+```
+
+Now we are ready to roll.

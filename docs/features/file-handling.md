@@ -30,15 +30,14 @@ the context. And allow for setting custom file parsing options
 
 ## Saving files
 
-`@compas/store` comes with
-[Postgres and minio](/features/postgres-and-minio.html) which we let work
-together in the various utilities for files.
+`@compas/store` comes with [Postgres and S3](/features/postgres-and-s3.html)
+which we combine in the various utilities for working with files.
 
-### `createOrUpdateFile`
+### `fileCreateOrUpdate`
 
-Creates a new file and stores it in both Postgres and Minio (S3). If an existing
-`id` is provided the file is overwritten. This function only requires a file
-name and the source and is able to infer `contentType` and `contentLength`. If
+Creates a new file and stores it in both Postgres and S3. If an existing `id` is
+provided the file is overwritten. This function only requires a file name and
+the source and is able to infer `contentType` and `contentLength`. If
 `allowedContentTypes` is provided, an error will be thrown if the inferred
 content type is not one of the allowed content types.
 
@@ -54,27 +53,31 @@ content type is not one of the allowed content types.
 export async function appSaveFile(event, files) {
   eventStart(event, "app.saveFile");
 
-  await createOrUpdateFile(
+  await fileCreateOrUpdate(
     sql,
-    minio,
-    "myBucket",
-    { name: files.uploadedFile.originalFilename },
-    files.uploadedFile.filepath,
+    s3Client,
     {
+      bucketName: "my-bucket",
       allowedContentTypes: ["image/png", "application/x-sql"],
       schedulePlaceholderImageJob: true,
     },
+    { name: files.uploadedFile.originalFilename },
+    files.uploadedFile.filepath,
   );
 
   eventStop(event);
 }
 ```
 
+For placeholder image generation, the
+[jobFileGeneratePlaceholderImage](/features/background-jobs.html#jobfilegenerateplaceholderimage)
+needs to be used.
+
 **Errors**:
 
-- `store.createOrUpdateFile.invalidName` -> When name is not specified.
-- `store.createOrUpdateFile.invalidContentType` -> When the content type is not
-  one of `allowedContentTypes`.
+- `file.createOrUpdate.invalidName` -> When name is not specified.
+- `file.createOrUpdate.invalidContentType` -> When the content type is not one
+  of `allowedContentTypes`.
 
 ## Securing file downloads
 
@@ -115,21 +118,35 @@ R.get("/product/private-avatar", "privateAvatar")
 
 ```js
 // For the example :)
-const publicImageId = uuid();
-const privateAvatarId = uuid();
+const publicImage = (
+  await queryFile({
+    where: {
+      id: uuid(),
+    },
+  }).exec(sql)
+)[0];
+const privateImage = (
+  await queryFile({
+    where: {
+      id: uuid(),
+    },
+  }).exec(sql)
+)[0];
 
 appController.getProduct = (ctx, next) => {
   // Do user checks here, so see if the privateAvatarUrl should be added.
 
   ctx.body = {
-    publicImageUrl: "https://example.com/product/public-image",
-    privateAvatarUrl: `https://example.com/product/private-avatar?accessToken=${fileSignAccessToken(
-      {
-        fileId: privateAvatarId,
+    publicImage: fileFormatMetadata(publicImage, {
+      url: "https://example.com/product/public-image",
+    }),
+    privateImage: fileFormatMetadata(privateImage, {
+      url: "https://example.com/product/private-image",
+      signAccessToken: {
         signingKey: "secure key loaded from secure place",
         maxAgeInSeconds: 2 * 60, // User should load the image in 2 minutes
       },
-    )}`,
+    }),
   };
 
   return next();
@@ -138,7 +155,7 @@ appController.getProduct = (ctx, next) => {
 appController.publicImage = async (ctx, next) => {
   const file = await queryFile({ where: { id: publicImageId } }).exec(sql);
 
-  await sendFile(ctx, file /* ... */);
+  await fileSendResponse(s3Client, ctx, file);
 
   return next();
 };
@@ -153,7 +170,7 @@ appController.privateAvatar = async (ctx, next) => {
     fileAccessToken: ctx.validatedQuery.accessToken,
   });
 
-  await sendFile(ctx, file /* ... */);
+  await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
 
   return next();
 };
@@ -170,5 +187,5 @@ requirement there are two options;
 For a more complete metadata object to return from your api's, you can use
 `StoreFileResponse`. It contains various properties, like the content type,
 name, and if applicable, the image placeholder. To format this response object,
-you could call `fileFormatResponse`. It allows for formatting a secure file url
+you could call `fileFormatMetadata`. It allows for formatting a secure file url
 as well via its accepted options.
