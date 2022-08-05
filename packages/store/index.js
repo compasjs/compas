@@ -3,7 +3,7 @@
  */
 
 /**
- * @typedef {import("./types/advanced-types.js").MinioClient} MinioClient
+ * @typedef {import("@aws-sdk/client-s3").S3Client} S3Client
  */
 
 /**
@@ -19,10 +19,6 @@
  * @template Type
  * @template {undefined | "*" | string[]} Selector
  * @typedef {import("./types/advanced-types.js").Returning<Type, Selector>} Returning
- */
-
-/**
- * @typedef {import("./src/send-transformed-image").GetStreamFn} GetStreamFn
  */
 
 /**
@@ -45,17 +41,29 @@ export {
   generatedQueryBuilderHelper,
 } from "./src/generator-helpers.js";
 
-export {
-  newMinioClient,
-  minio,
-  ensureBucket,
-  removeBucket,
-  listObjects,
-  removeBucketAndObjectsInBucket,
-  copyAllObjects,
-} from "./src/minio.js";
-
 export { newPostgresConnection, postgres } from "./src/postgres.js";
+
+export {
+  objectStorageGetDevelopmentConfig,
+  objectStorageCreateClient,
+  objectStorageEnsureBucket,
+  objectStorageRemoveBucket,
+  objectStorageListObjects,
+  objectStorageGetObjectStream,
+} from "./src/object-storage.js";
+
+export {
+  fileCreateOrUpdate,
+  fileFormatMetadata,
+  fileVerifyAccessToken,
+  fileSignAccessToken,
+  fileSyncDeletedWithObjectStorage,
+} from "./src/file.js";
+
+export {
+  fileSendResponse,
+  fileSendTransformedImageResponse,
+} from "./src/file-send.js";
 
 export {
   cleanupTestPostgresDatabase,
@@ -71,20 +79,9 @@ export {
 } from "./src/migrations.js";
 
 export {
-  createOrUpdateFile,
-  fileFormatResponse,
-  copyFile,
-  getFileStream,
-  syncDeletedFiles,
-  fileSignAccessToken,
-  fileVerifyAccessToken,
-} from "./src/files.js";
-export {
   jobFileCleanup,
   jobFileGeneratePlaceholderImage,
 } from "./src/files-jobs.js";
-
-export { FileCache } from "./src/file-cache.js";
 
 export {
   queueWorkerAddJob,
@@ -117,5 +114,3 @@ export {
 } from "./src/query.js";
 
 export { postgresTableSizes } from "./src/insight.js";
-
-export { sendTransformedImage } from "./src/send-transformed-image.js";

@@ -1,4 +1,3 @@
-import * as minioVendor from "minio";
 import type { Options, PendingQuery, Sql } from "postgres";
 
 export type Postgres = Sql<{}> & {
@@ -24,8 +23,6 @@ export interface QueryPart<T = any> {
 
   exec(sql: Postgres): PendingQuery<T>;
 }
-
-export type MinioClient = minioVendor.Client;
 
 export type Returning<
   Type,

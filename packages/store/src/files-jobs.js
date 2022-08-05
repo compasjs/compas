@@ -1,23 +1,26 @@
 import { eventStart, eventStop, streamToBuffer } from "@compas/stdlib";
 import isAnimated from "is-animated";
 import sharp from "sharp";
-import { getFileStream, syncDeletedFiles } from "./files.js";
+import {
+  fileSyncDeletedWithObjectStorage,
+  TRANSFORMED_CONTENT_TYPES,
+} from "./file.js";
 import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
-import { TRANSFORMED_CONTENT_TYPES } from "./send-transformed-image.js";
+import { objectStorageGetObjectStream } from "./object-storage.js";
 
 /**
  * Returns a {@link QueueWorkerHandler} that syncs the deleted files from Postgres to
- * Minio. via {@link syncDeletedFiles}.
+ * S3. via {@link fileSyncDeletedWithObjectStorage}.
  *
  * Recommended interval: daily
  * Recommended cronExpression: 0 2 * * *
  *
- * @param {import("../types/advanced-types.js").MinioClient} minioClient
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {string} bucketName
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
  */
-export function jobFileCleanup(minioClient, bucketName) {
+export function jobFileCleanup(s3Client, bucketName) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
    * @param {import("../types/advanced-types").Postgres} sql
@@ -26,8 +29,10 @@ export function jobFileCleanup(minioClient, bucketName) {
   return async function jobFileCleanup(event, sql) {
     eventStart(event, "job.fileCleanup");
 
-    await syncDeletedFiles(sql, minioClient, bucketName);
-
+    // @ts-expect-error TODO: fix with Postgres type cleanup
+    await fileSyncDeletedWithObjectStorage(sql, s3Client, {
+      bucketName,
+    });
     eventStop(event);
   };
 }
@@ -38,11 +43,11 @@ export function jobFileCleanup(minioClient, bucketName) {
  * `createOrUpdateFile` is provided with the `schedulePlaceholderImageJob` option.
  *
  *
- * @param {import("../types/advanced-types.js").MinioClient} minioClient
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {string} bucketName
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
  */
-export function jobFileGeneratePlaceholderImage(minioClient, bucketName) {
+export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
    * @param {import("../types/advanced-types").Postgres} sql
@@ -65,7 +70,10 @@ export function jobFileGeneratePlaceholderImage(minioClient, bucketName) {
     }
 
     const buffer = await streamToBuffer(
-      await getFileStream(minioClient, bucketName, file.id),
+      await objectStorageGetObjectStream(s3Client, {
+        bucketName,
+        objectKey: file.id,
+      }),
     );
 
     if (isAnimated(buffer)) {

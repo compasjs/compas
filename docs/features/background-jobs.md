@@ -108,14 +108,14 @@ use this job is the following:
 ### jobFileCleanup
 
 When you delete a file via `queries.fileDelete` the file is not removed from the
-underlying bucket. To do this `syncDeletedFiles` is necessary. This This job
-does that.
+underlying bucket. To do this `syncDeletedFiles` is necessary. This job does
+that.
 
 - In `queueWorkerRegisterCronJobs`:
   `{ name: "compas.file.cleanup", cronExpression: "0 2 * * *" }` to run this job
   daily at 2 AM.
 - In your handler object:
-  `{ "compas.file.cleanup": jobFileCleanup(minio, "bucketName"), }`
+  `{ "compas.file.cleanup": jobFileCleanup(s3Client, "bucketName"), }`
 
 ### jobFileGeneratePlaceholderImage
 
@@ -125,7 +125,7 @@ stored on the file object, to support things like
 [Next.js Image `blurDataUrl`](https://nextjs.org/docs/api-reference/next/image#blurdataurl).
 
 - In your handler object:
-  `{ "compas.file.generatePlaceholderImage": jobFileGeneratePlaceholderImage(minio, "bucketName"), }`
+  `{ "compas.file.generatePlaceholderImage": jobFileGeneratePlaceholderImage(s3Client, "bucketName"), }`
 
 ### jobSessionStoreCleanup
 

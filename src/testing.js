@@ -1,8 +1,10 @@
 import { uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
-  ensureBucket,
-  newMinioClient,
+  objectStorageCreateClient,
+  objectStorageEnsureBucket,
+  objectStorageGetDevelopmentConfig,
+  objectStorageRemoveBucket,
 } from "@compas/store";
 
 /**
@@ -11,9 +13,9 @@ import {
 export let sql;
 
 /**
- * @type {import("@compas/store").MinioClient}
+ * @type {import("@compas/store").S3Client}
  */
-export let minioClient;
+export let s3Client;
 
 /**
  * @type {string}
@@ -29,9 +31,13 @@ export async function injectTestServices() {
   sql = await createTestPostgresDatabase({
     onnotice: () => {},
   });
-  minioClient = newMinioClient({});
 
-  await ensureBucket(minioClient, testBucketName, "eu-central-1");
+  s3Client = objectStorageCreateClient(objectStorageGetDevelopmentConfig());
+
+  await objectStorageEnsureBucket(s3Client, {
+    bucketName: testBucketName,
+    locationConstraint: "eu-central-1",
+  });
 
   // Check the offset between system time and Postgres (Docker VM) time.
   // sql.systemTimeOffset is the amount of milliseconds system is ahead of Docker
@@ -48,4 +54,8 @@ export async function injectTestServices() {
  */
 export async function destroyTestServices() {
   await sql.end({});
+  await objectStorageRemoveBucket(s3Client, {
+    bucketName: testBucketName,
+    includeAllObjects: true,
+  });
 }

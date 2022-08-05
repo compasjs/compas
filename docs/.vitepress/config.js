@@ -121,8 +121,8 @@ function getHomeSidebar() {
           link: "/features/http-server.html",
         },
         {
-          text: "Postgres and Minio",
-          link: "/features/postgres-and-minio.html",
+          text: "Postgres and S3",
+          link: "/features/postgres-and-s3.html",
         },
         {
           text: "Code generation",
@@ -205,6 +205,7 @@ function getHomeSidebar() {
 
 function getReleaseNotesSidebar() {
   return [
+    { text: "Release v0.0.212", link: "/releases/0.0.212.html" },
     { text: "Release v0.0.180", link: "/releases/0.0.180.html" },
     { text: "Release v0.0.172", link: "/releases/0.0.172.html" },
     { text: "Release v0.0.171", link: "/releases/0.0.171.html" },

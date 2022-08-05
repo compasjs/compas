@@ -1,62 +1,146 @@
 import { AppError, isNil, streamToBuffer } from "@compas/stdlib";
 import isAnimated from "is-animated";
 import sharp from "sharp";
-import { createOrUpdateFile } from "./files.js";
+import { fileCreateOrUpdate } from "./file.js";
 import { queryFile } from "./generated/database/file.js";
-
-export const TRANSFORMED_CONTENT_TYPES = [
-  "image/png",
-  "image/jpeg",
-  "image/jpg",
-  "image/webp",
-  "image/avif",
-  "image/gif",
-];
+import { objectStorageGetObjectStream } from "./object-storage.js";
 
 /**
- * @typedef {(
- *   file: StoreFile,
- *   start?: number | undefined,
- *   end?: number | undefined
- *   ) => Promise<{
- *     stream: NodeJS.ReadableStream,
- *     cacheControl: string,
- *   }>} GetStreamFn
+ * Send a `StoreFile` instance as a `ctx` response.
+ * Handles byte range requests as well. May need some improvements to set some better
+ * cache headers.
+ *
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
+ * @param {import("koa").Context} ctx
+ * @param {StoreFile} file
+ * @param {{
+ *   cacheControlHeader?: string,
+ * }} [options]
+ * @returns {Promise<void>}
  */
+export async function fileSendResponse(s3Client, ctx, file, options) {
+  options = options ?? {};
+  options.cacheControlHeader =
+    options.cacheControlHeader ?? "max-age=120, must-revalidate";
+
+  ctx.set("Accept-Ranges", "bytes");
+  ctx.set(
+    "Last-Modified",
+    typeof file.updatedAt === "string"
+      ? file.updatedAt
+      : file.updatedAt.toString(),
+  );
+  ctx.set("Cache-Control", options.cacheControlHeader);
+  ctx.set("Content-Type", file.contentType);
+
+  // @ts-ignore
+  if (ctx.headers["if-modified-since"]?.length > 0) {
+    // @ts-ignore
+    const dateValue = new Date(ctx.headers["if-modified-since"]);
+    // @ts-ignore
+    const currentDate = new Date(file.updatedAt);
+
+    // Weak validation ignores the milli-seconds part, hence 'weak'.
+    currentDate.setMilliseconds(0);
+
+    if (dateValue.getTime() === currentDate.getTime()) {
+      // File is not modified
+      ctx.status = 304;
+      return;
+    }
+  }
+
+  if (ctx.headers.range) {
+    try {
+      const rangeHeader = ctx.headers.range;
+      const range = /=(\d*)-(\d*)$/.exec(rangeHeader);
+
+      // @ts-ignore
+      let start = range[1] ? parseInt(range[1]) : undefined;
+      // @ts-ignore
+      let end = range[2] ? parseInt(range[2]) : file.contentLength;
+
+      if (end > file.contentLength) {
+        end = file.contentLength - 1;
+      }
+
+      if (isNil(start) || start > file.contentLength) {
+        // '-500' results in the last 500 bytes send
+        start = file.contentLength - end;
+        end = file.contentLength - 1;
+      }
+
+      const chunkSize = end - start + 1;
+
+      ctx.status = 206;
+      ctx.set("Content-Length", String(chunkSize));
+      ctx.set("Content-Range", `bytes ${start}-${end}/${file.contentLength}`);
+
+      ctx.body = await objectStorageGetObjectStream(s3Client, {
+        bucketName: file.bucketName,
+        objectKey: file.id,
+        range: {
+          start,
+          end,
+        },
+      });
+    } catch {
+      ctx.status = 416;
+      ctx.set("Content-Length", String(file.contentLength));
+      ctx.set("Content-Range", `bytes */${file.contentLength}`);
+
+      ctx.body = await objectStorageGetObjectStream(s3Client, {
+        bucketName: file.bucketName,
+        objectKey: file.id,
+      });
+    }
+  } else {
+    ctx.set("Content-Length", String(file.contentLength));
+
+    ctx.body = await objectStorageGetObjectStream(s3Client, {
+      bucketName: file.bucketName,
+      objectKey: file.id,
+    });
+  }
+}
 
 /**
- * Wraps 'server'.sendFile, to include an image transformer compatible with Next.js image
- * loader. Only works if the input file is an image. It caches the results on in the
- * file.meta.
+ * Wraps {@link fileSendResponse}, to include an image transformer compatible with Next.js
+ * image loader. Only works if the input file is an image. It caches the results on in
+ * the file.meta.
  *
  * Supported extensions: image/png, image/jpeg, image/jpg, image/webp, image/avif,
  * image/gif. It does not supported 'animated' versions of image/webp and image/gif and
- * just sends those as is. See {@link FileType#mimeTypes} and {@link createOrUpdateFile}
+ * just sends those as is. See {@link FileType#mimeTypes} and {@link fileCreateOrUpdate}
  * to enforce this on file upload.
  *
  * Prefers to transform the image to `image/webp` or `image/avif` if the client supports
  * it.
  *
- * @param {typeof import("@compas/server").sendFile} sendFile
+ * @param {import("postgres").Sql} sql
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
- * @param {import("../types/advanced-types").Postgres} sql
- * @param {import("../types/advanced-types").MinioClient} minio
  * @param {StoreFile} file
- * @param {GetStreamFn} getStreamFn
+ * @param {{
+ *   cacheControlHeader?: string,
+ * }} [options]
  * @returns {Promise<void>}
  */
-export async function sendTransformedImage(
-  sendFile,
-  ctx,
+export async function fileSendTransformedImageResponse(
   sql,
-  minio,
+  s3Client,
+  ctx,
   file,
-  getStreamFn,
+  options,
 ) {
+  options = options ?? {};
+  options.cacheControlHeader =
+    options.cacheControlHeader ?? "max-age=120, must-revalidate";
+
   const { w, q } = ctx.validatedQuery ?? {};
   if (isNil(w) || isNil(q)) {
     throw AppError.serverError({
-      message: `'sendTransformedImage' is used, but 'T.reference("store", "imageTransformOptions")' is not referenced in the '.query()' call of this route definition.`,
+      message: `'fileSendTransformedImageResponse' is used, but 'T.reference("store", "imageTransformOptions")' is not referenced in the '.query()' call of this route definition.`,
     });
   }
 
@@ -88,7 +172,12 @@ export async function sendTransformedImage(
     } else if (
       ["image/webp", "image/png", "image/gif"].includes(file.contentType)
     ) {
-      buffer = await streamToBuffer((await getStreamFn(file)).stream);
+      buffer = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
 
       if (isAnimated(buffer)) {
         // Don't transform animated gifs and the like
@@ -99,7 +188,12 @@ export async function sendTransformedImage(
     if (isNil(file.meta.transforms[transformKey])) {
       if (isNil(buffer)) {
         // We only read the stream once, except when the original file is returned :)
-        buffer = await streamToBuffer((await getStreamFn(file)).stream);
+        buffer = await streamToBuffer(
+          await objectStorageGetObjectStream(s3Client, {
+            bucketName: file.bucketName,
+            objectKey: file.id,
+          }),
+        );
       }
 
       const sharpInstance = sharp(buffer);
@@ -133,10 +227,12 @@ export async function sendTransformedImage(
         sharpInstance.gif({ quality: q });
       }
 
-      const image = await createOrUpdateFile(
+      const image = await fileCreateOrUpdate(
         sql,
-        minio,
-        file.bucketName,
+        s3Client,
+        {
+          bucketName: file.bucketName,
+        },
         {
           name: transformKey,
           contentType,
@@ -172,11 +268,11 @@ export async function sendTransformedImage(
 
   // Short circuit the known id's
   if (loadedFile === file.id) {
-    return sendFile(ctx, file, getStreamFn);
-  } else if (loadedFile === createdFile?.id) {
-    // @ts-ignore
-    return sendFile(ctx, createdFile, getStreamFn);
+    return fileSendResponse(s3Client, ctx, file, options);
+  } else if (createdFile && loadedFile === createdFile?.id) {
+    return fileSendResponse(s3Client, ctx, createdFile, options);
   }
+
   const [alreadyTransformedFile] = await queryFile({
     where: {
       id: loadedFile,
@@ -195,9 +291,11 @@ export async function sendTransformedImage(
                         id = $1`,
       [file.id],
     );
+
+    // Since we pass the in memory file again, we also need to remove the key from memory.
     delete file.meta.transforms[transformKey];
-    return sendTransformedImage(sendFile, ctx, sql, minio, file, getStreamFn);
+    return fileSendTransformedImageResponse(sql, s3Client, ctx, file, options);
   }
 
-  return sendFile(ctx, alreadyTransformedFile, getStreamFn);
+  return fileSendResponse(s3Client, ctx, alreadyTransformedFile, options);
 }

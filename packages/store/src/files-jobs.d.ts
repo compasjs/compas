@@ -1,16 +1,16 @@
 /**
  * Returns a {@link QueueWorkerHandler} that syncs the deleted files from Postgres to
- * Minio. via {@link syncDeletedFiles}.
+ * S3. via {@link fileSyncDeletedWithObjectStorage}.
  *
  * Recommended interval: daily
  * Recommended cronExpression: 0 2 * * *
  *
- * @param {import("../types/advanced-types.js").MinioClient} minioClient
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {string} bucketName
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
  */
 export function jobFileCleanup(
-  minioClient: import("../types/advanced-types.js").MinioClient,
+  s3Client: import("@aws-sdk/client-s3").S3Client,
   bucketName: string,
 ): import("./queue-worker.js").QueueWorkerHandler;
 /**
@@ -19,12 +19,12 @@ export function jobFileCleanup(
  * `createOrUpdateFile` is provided with the `schedulePlaceholderImageJob` option.
  *
  *
- * @param {import("../types/advanced-types.js").MinioClient} minioClient
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {string} bucketName
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
  */
 export function jobFileGeneratePlaceholderImage(
-  minioClient: import("../types/advanced-types.js").MinioClient,
+  s3Client: import("@aws-sdk/client-s3").S3Client,
   bucketName: string,
 ): import("./queue-worker.js").QueueWorkerHandler;
 //# sourceMappingURL=files-jobs.d.ts.map

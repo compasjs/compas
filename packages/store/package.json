@@ -17,15 +17,14 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-s3": "3.142.0",
+    "@aws-sdk/lib-storage": "3.142.0",
     "@compas/stdlib": "0.0.211",
-    "@types/koa": "2.13.5",
-    "@types/minio": "7.0.13",
     "crc": "4.1.1",
     "cron-parser": "^4.6.0",
     "file-type": "17.1.6",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
-    "minio": "7.0.29",
     "mime-types": "2.1.35",
     "postgres": "3.2.4",
     "sharp": "0.30.7"
