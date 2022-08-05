@@ -39,12 +39,6 @@ export async function injectTestServices() {
     await sql`SELECT now() AS db, ${new Date()}::timestamptz AS js`;
   sql.systemTimeOffset =
     new Date(result.js).getTime() - new Date(result.db).getTime();
-
-  if (sql.systemTimeOffset > 0) {
-    sql.systemTimeOffset += 5;
-  } else {
-    sql.systemTimeOffset -= 5;
-  }
 }
 
 /**
