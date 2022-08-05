@@ -17,7 +17,7 @@ import { sessionStoreCleanupExpiredSessions } from "./session-store.js";
 export function jobSessionStoreCleanup(options) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @returns {Promise<void>}
    */
   return async function jobSessionStoreCleanup(event, sql) {
@@ -48,7 +48,7 @@ export function jobSessionStoreCleanup(options) {
 export function jobSessionStoreProcessLeakedSession(options) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @param {StoreJob} job
    * @returns {void}
    */

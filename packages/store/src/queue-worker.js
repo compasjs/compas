@@ -15,7 +15,7 @@ import { query } from "./query.js";
 /**
  * @typedef {(
  *   event: InsightEvent,
- *   sql: import("../types/advanced-types").Postgres,
+ *   sql: import("postgres").Sql<{}>,
  *   job: StoreJob,
  * ) => (void | Promise<void>)} QueueWorkerHandler
  */
@@ -112,7 +112,7 @@ const JOB_TYPE_CRON = "compas.queue.cronJob";
  * the behavior of the queue. Use {@link queueWorkerRegisterCronJobs} to specify
  * recurring jobs.
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {{
  *   name: string,
  *   priority?: number,
@@ -176,7 +176,7 @@ export async function queueWorkerAddJob(
  * {@link queueWorkerAddJob} manually in your job handler.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerCronOptions} options
  * @returns {Promise<void>}
  */
@@ -236,7 +236,7 @@ export async function queueWorkerRegisterCronJobs(event, sql, { jobs }) {
  * If a job fails, by throwing an error, other jobs may run first before
  * any retries happen, based on the above ordering.
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerOptions} options
  */
 export function queueWorkerCreate(sql, options) {
@@ -297,7 +297,7 @@ export function queueWorkerCreate(sql, options) {
 }
 
 /**
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerCronOptions["jobs"]} jobs
  */
 async function queueWorkerRemoveUnknownCronJobs(sql, jobs) {
@@ -313,7 +313,7 @@ async function queueWorkerRemoveUnknownCronJobs(sql, jobs) {
  * Try to update a cron job with the new expression and priority. Creates a new job if no
  * record is updated.
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerCronOptions["jobs"][0]} job
  * @returns {Promise<void>}
  */
@@ -360,7 +360,7 @@ async function queueWorkerUpserCronJob(sql, job) {
 
 /**
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
  * @param {StoreJobWhere} where
  * @param {import("../types/advanced-types").QueryPart|undefined} orderBy
@@ -408,7 +408,7 @@ function queueWorkerRun(logger, sql, options, where, orderBy, worker) {
 
 /**
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
  * @param {StoreJob} job
  */

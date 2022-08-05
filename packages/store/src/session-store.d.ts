@@ -2,7 +2,7 @@
  * Store a new session, and returns a access & refresh token pair
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
@@ -12,7 +12,7 @@
  */
 export function sessionStoreCreate(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
   sessionData: any,
 ): Promise<
@@ -25,14 +25,14 @@ export function sessionStoreCreate(
  * Get a session from the provided access token string
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionStoreGet(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
   accessTokenString: string,
 ): Promise<
@@ -45,26 +45,26 @@ export function sessionStoreGet(
  * If the hash of the data is the same as `hash`, this function call is ignored.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreUpdate(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   session: QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
  * Revoke all tokens related to the session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreInvalidate(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   session: QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
@@ -75,7 +75,7 @@ export function sessionStoreInvalidate(
  * and an `compas.store.sessionHijackDetected` event is created.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
@@ -85,7 +85,7 @@ export function sessionStoreInvalidate(
  */
 export function sessionStoreRefreshTokens(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
   refreshTokenString: string,
 ): Promise<
@@ -101,13 +101,13 @@ export function sessionStoreRefreshTokens(
  * hints on session stealing. A good default may be 45 days.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {number} maxRevokedAgeInDays
  * @returns {Promise<void>}
  */
 export function sessionStoreCleanupExpiredSessions(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   maxRevokedAgeInDays: number,
 ): Promise<void>;
 /**
@@ -119,20 +119,20 @@ export function sessionStoreCleanupExpiredSessions(
  * condition, the backend doesn't trip over it.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {string} sessionId
  * @returns {Promise<void>}
  */
 export function sessionStoreReportAndRevokeLeakedSession(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   sessionId: string,
 ): Promise<void>;
 /**
  * Create a new token pair for the provided session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
@@ -142,7 +142,7 @@ export function sessionStoreReportAndRevokeLeakedSession(
  */
 export function sessionStoreCreateTokenPair(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
   session: QueryResultStoreSessionStore,
 ): Promise<

@@ -3,7 +3,7 @@ export { queries as storeQueries } from "./src/generated/database/index.js";
 export { setStoreQueries } from "./src/generated.js";
 export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 export { postgresTableSizes } from "./src/insight.js";
-export type Postgres = import("./types/advanced-types.js").Postgres;
+export type Postgres = import("postgres").Sql<{}>;
 export type S3Client = import("@aws-sdk/client-s3").S3Client;
 export type QueryPart<T> = import("./types/advanced-types.js").QueryPart<T>;
 export type QueryPartArg = import("./types/advanced-types.js").QueryPartArg;

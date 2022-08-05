@@ -18,7 +18,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
 /**
  * @typedef {object} MigrateContext
  * @property {MigrationFile[]} files
- * @property {import("../types/advanced-types").Postgres} sql
+ * @property {import("postgres").Sql<{}>} sql
  * @property {any|undefined} [rebuild]
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
@@ -31,7 +31,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
@@ -224,7 +224,7 @@ function filterMigrationsToBeApplied(mc) {
 }
 
 /**
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {MigrationFile} migration
  * @returns {Promise<void>}
  */
@@ -271,7 +271,7 @@ async function runMigration(sql, migration) {
 }
 
 /**
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {MigrationFile} migration
  */
 function runInsert(sql, migration) {
@@ -321,7 +321,7 @@ async function syncWithSchemaState(mc) {
 }
 
 /**
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  */
 async function acquireLock(sql) {
   // Should be automatically released by Postgres once this connection ends.

@@ -40,7 +40,7 @@ export const SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME = `compas.sessionSt
  * Store a new session, and returns a access & refresh token pair
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
@@ -83,7 +83,7 @@ export async function sessionStoreCreate(
  * Get a session from the provided access token string
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
@@ -168,7 +168,7 @@ export async function sessionStoreGet(
  * If the hash of the data is the same as `hash`, this function call is ignored.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -213,7 +213,7 @@ export async function sessionStoreUpdate(event, sql, session) {
  * Revoke all tokens related to the session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -265,7 +265,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * and an `compas.store.sessionHijackDetected` event is created.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} refreshTokenString
  * @returns {Promise<Either<{
@@ -378,7 +378,7 @@ export async function sessionStoreRefreshTokens(
  * hints on session stealing. A good default may be 45 days.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {number} maxRevokedAgeInDays
  * @returns {Promise<void>}
  */
@@ -425,7 +425,7 @@ export async function sessionStoreCleanupExpiredSessions(
  * condition, the backend doesn't trip over it.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {string} sessionId
  * @returns {Promise<void>}
  */
@@ -486,7 +486,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
  * Create a new token pair for the provided session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{

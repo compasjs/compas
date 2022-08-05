@@ -6,12 +6,10 @@
  * @since 0.1.0
  * @summary Get the estimated disk size and row count for all tables
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @returns {Promise<Record<string, { diskSize: number, rowCount: number }>>}
  */
-export function postgresTableSizes(
-  sql: import("../types/advanced-types").Postgres,
-): Promise<
+export function postgresTableSizes(sql: import("postgres").Sql<{}>): Promise<
   Record<
     string,
     {

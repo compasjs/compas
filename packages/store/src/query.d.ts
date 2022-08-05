@@ -66,13 +66,13 @@ export function stringifyQueryPart(
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {import("../types/advanced-types").QueryPart<any>} queryItem
  * @param {{ jsonResult?: boolean }} [options={}]
  * @returns {Promise<string|object>}
  */
 export function explainAnalyzeQuery(
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   queryItem: import("../types/advanced-types").QueryPart<any>,
   {
     jsonResult,

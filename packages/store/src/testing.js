@@ -19,12 +19,12 @@ let testDatabase = undefined;
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} connection
+ * @param {import("postgres").Sql<{}>} connection
  * @returns {void}
  */
 export function setPostgresDatabaseTemplate(connection) {
   if (
-    isPlainObject(connection.connectionOptions) &&
+    isPlainObject(connection.options) &&
     typeof connection.options.database === "string"
   ) {
     testDatabase = connection;
@@ -56,7 +56,7 @@ export async function cleanupPostgresDatabaseTemplate() {
  *
  * @since 0.1.0
  *
- * @param {Postgres["connectionOptions"]} [rawOpts]
+ * @param {import("postgres").Options} [rawOpts]
  * @param {{
  *   verboseSql?: boolean
  * }} [options] If verboseSql is true, creates a new logger and prints all
@@ -84,9 +84,6 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
 
     // Initialize new connection and kill old connection
     await Promise.all([creationSql.end(), sql`SELECT 1 + 1 AS sum`]);
-
-    // Save options so we can cleanup the created database.
-    sql.connectionOptions = connectionOptions;
 
     return sql;
   }
@@ -123,9 +120,6 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
     database: name,
   });
 
-  // Save options so we can cleanup the created database.
-  sql.connectionOptions = connectionOptions;
-
   // Cleanup all tables, except migrations
   const tables = await sql`
     SELECT table_name
@@ -153,14 +147,19 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @returns {Promise<void>}
  */
 export async function cleanupTestPostgresDatabase(sql) {
   await sql.end();
 
-  if (sql?.connectionOptions) {
-    const deletionSql = await newPostgresConnection(sql.connectionOptions);
+  if (sql.options?.database) {
+    // @ts-expect-error sql.options is already resolved, but is still accepted by the
+    // Postgres lib
+    const deletionSql = await newPostgresConnection({
+      ...sql.options,
+      database: undefined,
+    });
     await deletionSql.unsafe(`DROP DATABASE ${sql.options.database}`);
     await deletionSql.end();
   }
