@@ -17,14 +17,14 @@
  * Load the session from the authorization header.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
  */
 export function sessionTransportLoadFromContext(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   ctx: import("koa").Context,
   settings: SessionTransportSettings,
 ): Promise<

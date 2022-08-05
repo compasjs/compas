@@ -69,7 +69,7 @@ export function query(strings, ...values) {
   }
 
   /**
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @returns {Promise<import("postgres").PendingQuery<T>>}
    */
   async function exec(sql) {
@@ -169,7 +169,7 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {import("../types/advanced-types").QueryPart<any>} queryItem
  * @param {{ jsonResult?: boolean }} [options={}]
  * @returns {Promise<string|object>}

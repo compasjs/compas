@@ -1,5 +1,5 @@
 /**
- * @typedef {import("./types/advanced-types.js").Postgres} Postgres
+ * @typedef {import("postgres").Sql<{}>} Postgres
  */
 
 /**

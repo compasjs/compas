@@ -20,7 +20,7 @@ export function jobQueueCleanup(options) {
 
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @returns {Promise<void>}
    */
   return async function jobQueueCleanup(event, sql) {
@@ -57,7 +57,7 @@ export function jobQueueCleanup(options) {
 export function jobQueueInsights() {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @returns {Promise<void>}
    */
   return async function jobQueueInsights(event, sql) {

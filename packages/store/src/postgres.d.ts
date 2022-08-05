@@ -1,12 +1,10 @@
 /**
- * @param {import("../types/advanced-types.js").Postgres["connectionOptions"]} opts
- * @returns {NonNullable<import("../types/advanced-types.js").Postgres["connectionOptions"]>}
+ * @param {import("postgres").Options|undefined} opts
+ * @returns {import("postgres").Options}
  */
 export function buildAndCheckOpts(
-  opts: import("../types/advanced-types.js").Postgres["connectionOptions"],
-): NonNullable<
-  import("../types/advanced-types.js").Postgres["connectionOptions"]
->;
+  opts: postgres.Options<any> | undefined,
+): postgres.Options<any>;
 /**
  * Create a new postgres connection, using the default environment variables.
  * A database may be created using the provided credentials.
@@ -17,25 +15,31 @@ export function buildAndCheckOpts(
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").Postgres["connectionOptions"]} [opts]
- * @returns {Promise<import("../types/advanced-types.js").Postgres>}
+ * @param {import("postgres").Options & {
+ *   createIfNotExists?: boolean,
+ * }} [opts]
+ * @returns {Promise<import("postgres").Sql<{}>>}
  */
 export function newPostgresConnection(
-  opts?: import("../types/advanced-types.js").Postgres["connectionOptions"],
-): Promise<import("../types/advanced-types.js").Postgres>;
+  opts?:
+    | (postgres.Options<any> & {
+        createIfNotExists?: boolean | undefined;
+      })
+    | undefined,
+): Promise<import("postgres").Sql<{}>>;
 /**
  * @param sql
  * @param databaseName
  * @param template
  * @param connectionOptions
- * @returns {Promise<import("../types/advanced-types.js").Postgres>}
+ * @returns {Promise<import("postgres").Sql<{}>>}
  */
 export function createDatabaseIfNotExists(
   sql: any,
   databaseName: any,
   template: any,
   connectionOptions: any,
-): Promise<import("../types/advanced-types.js").Postgres>;
+): Promise<import("postgres").Sql<{}>>;
 export { postgres };
 import postgres from "postgres";
 //# sourceMappingURL=postgres.d.ts.map

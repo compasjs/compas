@@ -11,7 +11,7 @@
 /**
  * @typedef {object} MigrateContext
  * @property {MigrationFile[]} files
- * @property {import("../types/advanced-types").Postgres} sql
+ * @property {import("postgres").Sql<{}>} sql
  * @property {any|undefined} [rebuild]
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
@@ -23,12 +23,12 @@
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {string} migrationDirectory
  * @returns {Promise<MigrateContext>}
  */
 export function newMigrateContext(
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   migrationDirectory?: string,
 ): Promise<MigrateContext>;
 /**
@@ -91,7 +91,7 @@ export type MigrationFile = {
 };
 export type MigrateContext = {
   files: MigrationFile[];
-  sql: import("../types/advanced-types").Postgres;
+  sql: import("postgres").Sql<{}>;
   rebuild?: any | undefined;
   info?: any | undefined;
   do?: any | undefined;

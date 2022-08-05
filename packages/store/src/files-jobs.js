@@ -23,13 +23,12 @@ import { objectStorageGetObjectStream } from "./object-storage.js";
 export function jobFileCleanup(s3Client, bucketName) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @returns {Promise<void>}
    */
   return async function jobFileCleanup(event, sql) {
     eventStart(event, "job.fileCleanup");
 
-    // @ts-expect-error TODO: fix with Postgres type cleanup
     await fileSyncDeletedWithObjectStorage(sql, s3Client, {
       bucketName,
     });
@@ -50,7 +49,7 @@ export function jobFileCleanup(s3Client, bucketName) {
 export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
-   * @param {import("../types/advanced-types").Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @param {StoreJob} job
    * @returns {Promise<void>}
    */

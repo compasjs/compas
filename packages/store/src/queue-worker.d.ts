@@ -3,7 +3,7 @@
  * the behavior of the queue. Use {@link queueWorkerRegisterCronJobs} to specify
  * recurring jobs.
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {{
  *   name: string,
  *   priority?: number,
@@ -14,7 +14,7 @@
  * @returns {Promise<number>}
  */
 export function queueWorkerAddJob(
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   {
     name,
     priority,
@@ -44,13 +44,13 @@ export function queueWorkerAddJob(
  * {@link queueWorkerAddJob} manually in your job handler.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerCronOptions} options
  * @returns {Promise<void>}
  */
 export function queueWorkerRegisterCronJobs(
   event: import("@compas/stdlib").InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   { jobs }: QueueWorkerCronOptions,
 ): Promise<void>;
 /**
@@ -90,11 +90,11 @@ export function queueWorkerRegisterCronJobs(
  * If a job fails, by throwing an error, other jobs may run first before
  * any retries happen, based on the above ordering.
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerOptions} options
  */
 export function queueWorkerCreate(
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   options: QueueWorkerOptions,
 ): {
   start(): void;
@@ -102,7 +102,7 @@ export function queueWorkerCreate(
 };
 export type QueueWorkerHandler = (
   event: InsightEvent,
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
   job: StoreJob,
 ) => void | Promise<void>;
 export type QueueWorkerOptions = {

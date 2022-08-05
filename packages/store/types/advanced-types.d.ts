@@ -1,8 +1,4 @@
-import type { Options, PendingQuery, Sql } from "postgres";
-
-export type Postgres = Sql<{}> & {
-  connectionOptions?: Options<{}> & { createIfNotExists?: true };
-};
+import type { PendingQuery } from "postgres";
 
 export type QueryPartArg =
   | string

@@ -1,14 +1,14 @@
 export const queries: {
   sessionStoreTokenCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreSessionStoreTokenWhere | undefined,
   ) => Promise<number>;
   sessionStoreTokenDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreSessionStoreTokenWhere | undefined,
   ) => Promise<void>;
   sessionStoreTokenInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert:
       | StoreSessionStoreTokenInsertPartial
       | StoreSessionStoreTokenInsertPartial[],
@@ -19,7 +19,7 @@ export const queries: {
       | undefined,
   ) => Promise<StoreSessionStoreToken[]>;
   sessionStoreTokenUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert:
       | StoreSessionStoreTokenInsertPartial
       | StoreSessionStoreTokenInsertPartial[],
@@ -27,15 +27,15 @@ export const queries: {
   ) => Promise<StoreSessionStoreToken[]>;
   sessionStoreTokenUpdate: StoreSessionStoreTokenUpdateFnInput;
   sessionStoreCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreSessionStoreWhere | undefined,
   ) => Promise<number>;
   sessionStoreDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreSessionStoreWhere | undefined,
   ) => Promise<void>;
   sessionStoreInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
     options?:
       | {
@@ -44,21 +44,21 @@ export const queries: {
       | undefined,
   ) => Promise<StoreSessionStore[]>;
   sessionStoreUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreSessionStore[]>;
   sessionStoreUpdate: StoreSessionStoreUpdateFnInput;
   jobCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreJobWhere | undefined,
   ) => Promise<number>;
   jobDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreJobWhere | undefined,
   ) => Promise<void>;
   jobInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreJobInsertPartial | StoreJobInsertPartial[],
     options?:
       | {
@@ -67,21 +67,21 @@ export const queries: {
       | undefined,
   ) => Promise<StoreJob[]>;
   jobUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreJobInsertPartial | StoreJobInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreJob[]>;
   jobUpdate: StoreJobUpdateFnInput;
   fileCount: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreFileWhere | undefined,
   ) => Promise<number>;
   fileDelete: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     where?: StoreFileWhere | undefined,
   ) => Promise<void>;
   fileInsert: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreFileInsertPartial | StoreFileInsertPartial[],
     options?:
       | {
@@ -90,7 +90,7 @@ export const queries: {
       | undefined,
   ) => Promise<StoreFile[]>;
   fileUpsertOnId: (
-    sql: import("../../../types/advanced-types.js").Postgres,
+    sql: import("postgres").Sql<{}>,
     insert: StoreFileInsertPartial | StoreFileInsertPartial[],
     options?: {} | undefined,
   ) => Promise<StoreFile[]>;

@@ -5,11 +5,11 @@
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} connection
+ * @param {import("postgres").Sql<{}>} connection
  * @returns {void}
  */
 export function setPostgresDatabaseTemplate(
-  connection: import("../types/advanced-types").Postgres,
+  connection: import("postgres").Sql<{}>,
 ): void;
 /**
  * Cleanup the test template database.
@@ -27,7 +27,7 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  *
  * @since 0.1.0
  *
- * @param {Postgres["connectionOptions"]} [rawOpts]
+ * @param {import("postgres").Options} [rawOpts]
  * @param {{
  *   verboseSql?: boolean
  * }} [options] If verboseSql is true, creates a new logger and prints all
@@ -35,7 +35,7 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  * @returns {Promise<Postgres>}
  */
 export function createTestPostgresDatabase(
-  rawOpts?: Postgres["connectionOptions"],
+  rawOpts?: import("postgres").Options<any> | undefined,
   {
     verboseSql,
   }?:
@@ -43,17 +43,17 @@ export function createTestPostgresDatabase(
         verboseSql?: boolean | undefined;
       }
     | undefined,
-): Promise<Postgres>;
+): Promise<import("postgres").Sql<{}>>;
 /**
  * Try to remove a test database. Can only happen if the connection is created by
  * 'createTestPostgresDatabase'.
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").Postgres} sql
+ * @param {import("postgres").Sql<{}>} sql
  * @returns {Promise<void>}
  */
 export function cleanupTestPostgresDatabase(
-  sql: import("../types/advanced-types").Postgres,
+  sql: import("postgres").Sql<{}>,
 ): Promise<void>;
 //# sourceMappingURL=testing.d.ts.map
