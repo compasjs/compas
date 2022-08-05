@@ -1,9 +1,5 @@
 import { uuid } from "@compas/stdlib";
-import {
-  createTestPostgresDatabase,
-  ensureBucket,
-  newMinioClient,
-} from "@compas/store";
+import { createTestPostgresDatabase, ensureBucket, newMinioClient } from "@compas/store";
 
 /**
  * @type {import("@compas/store").Postgres}
@@ -40,11 +36,11 @@ export async function injectTestServices() {
   sql.systemTimeOffset =
     new Date(result.js).getTime() - new Date(result.db).getTime();
 
-  if (sql.systemTimeOffset > 0) {
-    sql.systemTimeOffset += 5;
-  } else {
-    sql.systemTimeOffset -= 5;
-  }
+  // if (sql.systemTimeOffset > 0) {
+  //   sql.systemTimeOffset += 5;
+  // } else {
+  //   sql.systemTimeOffset -= 5;
+  // }
 }
 
 /**
