@@ -1,0 +1,37 @@
+{
+  "name": "create-compas",
+  "version": "0.0.211",
+  "description": "Create compas based applications",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "bin": {
+    "create-compas": "src/create-compas.js"
+  },
+  "keywords": [
+    "compas",
+    "create"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@compas/stdlib": "0.0.211"
+  },
+  "author": {
+    "name": "Dirk de Visser",
+    "email": "npm@dirkdevisser.nl",
+    "url": "https://dirkdevisser.com"
+  },
+  "homepage": "https://compasjs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/compasjs/compas.git",
+    "directory": "packages/create-compas"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

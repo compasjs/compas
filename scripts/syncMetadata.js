@@ -90,10 +90,12 @@ function syncReadmes(logger) {
  * @param {string} readmeSource
  */
 function buildReadmeSource(pkgName, readmeSource) {
-  if (pkgName !== "compas") {
-    pkgName = `@compas/${pkgName}`;
-  } else {
+  if (pkgName === "compas") {
     pkgName = "Compas";
+  } else if (pkgName === "create-compas") {
+    // ignore;
+  } else {
+    pkgName = `@compas/${pkgName}`;
   }
 
   return `# ${pkgName}
