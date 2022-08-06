@@ -13,3 +13,7 @@ test files.
 
 - [session-handling](https://github.com/compasjs/compas/tree/main/examples/session-handling)
 - [session-handling-frontend](https://github.com/compasjs/compas/tree/main/examples/session-handling-frontend)
+
+## Other
+
+- [default](https://github.com/compasjs/compas/tree/main/examples/default)
