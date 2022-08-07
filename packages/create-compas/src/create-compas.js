@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 
+import { existsSync, readdirSync } from "fs";
 import { readFile } from "fs/promises";
 import { dirnameForModule, mainFn, pathJoin } from "@compas/stdlib";
 import {
@@ -35,12 +36,69 @@ async function main(logger) {
 
   if (validatedArgs.help) {
     helpPrintCreateCompasHelp(logger, validatedArgs.message);
-    return;
+    return process.exit(validatedArgs.message ? 1 : 0);
+  }
+
+  validatedArgs.outputDirectory =
+    validatedArgs.outputDirectory ?? process.cwd();
+  const dirReadyForUsage = canDirectoryBeUsed(validatedArgs.outputDirectory);
+  if (dirReadyForUsage !== true) {
+    logger.error(
+      `The directory '${validatedArgs.outputDirectory}' can't be used, since it contains files that may get overwritten.`,
+    );
+
+    return process.exit(1);
   }
 
   logger.info(`
 Create Compas based projects from the examples or custom templates.
+
 Resolved template url: 'https://github.com/${validatedArgs.template.repository}/tree/${validatedArgs.template.ref}/${validatedArgs.template.path}'
+Output directory: '${validatedArgs.outputDirectory}'
 
 This package is a work in progress. Follow https://github.com/compasjs/compas/issues/1907 for updates.`);
+}
+
+/**
+ * Check if the provided directory can be used. Ignoring some existing configuration
+ * files.
+ *
+ * @param {string} dir
+ * @returns {boolean}
+ */
+export function canDirectoryBeUsed(dir) {
+  // Source:
+  // https://github.com/vercel/next.js/blob/canary/packages/create-next-app/helpers/is-folder-empty.ts#L7
+  const ignore = [
+    ".DS_Store",
+    ".git",
+    ".gitattributes",
+    ".gitignore",
+    ".gitkeep",
+    ".gitlab-ci.yml",
+    ".hg",
+    ".hgcheck",
+    ".hgignore",
+    ".idea",
+    ".npmignore",
+    "LICENSE",
+    "Thumbs.db",
+    "npm-debug.log",
+    "yarn-debug.log",
+    "yarn-error.log",
+  ];
+
+  if (!existsSync(dir)) {
+    return true;
+  }
+
+  const dirContents = readdirSync(dir);
+
+  for (const existingItem of dirContents) {
+    if (!ignore.includes(existingItem)) {
+      return false;
+    }
+  }
+
+  return true;
 }
