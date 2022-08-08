@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { exec } from "@compas/stdlib";
+import { environment, exec } from "@compas/stdlib";
 
 mainTestFn(import.meta);
 
@@ -38,8 +38,13 @@ test("compas/examples", async (t) => {
             parts[0] = "../../node_modules/.bin/compas";
           }
 
-          const { exitCode, stdout } = await exec(parts.join(" "), {
+          const { exitCode, stdout, stderr } = await exec(parts.join(" "), {
             cwd: config.exampleMetadata.path,
+            env: {
+              PATH: environment.PATH,
+              CI: environment.CI,
+              GITHUB_ACTIONS: environment.GITHUB_ACTIONS,
+            },
           });
 
           t.equal(exitCode, 0);
@@ -49,6 +54,7 @@ test("compas/examples", async (t) => {
               config,
               cmd,
               stdout,
+              stderr,
             });
           }
         });
