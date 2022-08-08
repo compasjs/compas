@@ -2,17 +2,15 @@ import { isNil } from "@compas/stdlib";
 
 /**
  * @typedef {{
- *   help: true,
+ *   help: boolean,
  *   message?: string,
- * }|{
- *   help: false,
  *   template: {
  *     provider: "github",
  *     repository: string,
  *     ref?: string,
  *     path?: string,
  *   },
- *   outputDirectory?: string,
+ *   outputDirectory: string,
  * }} CreateCompasArgs
  */
 
@@ -147,6 +145,7 @@ export function argParserParse(availableFlags, flagArgs) {
  */
 export function argParserValidate(input, defaultRef) {
   if (input.help) {
+    // @ts-expect-error
     return {
       help: true,
     };
@@ -155,6 +154,7 @@ export function argParserValidate(input, defaultRef) {
   /**
    * @type {CreateCompasArgs}
    */
+  // @ts-expect-error
   const result = {
     help: false,
     template: {
@@ -170,6 +170,7 @@ export function argParserValidate(input, defaultRef) {
       !input.template.includes("/")) &&
     !isNil(input.templatePath)
   ) {
+    // @ts-expect-error
     return {
       help: true,
       message: `'--template' is required and cannot be a Compas provided template when '--template-path'  is specified`,
@@ -182,6 +183,7 @@ export function argParserValidate(input, defaultRef) {
     const templateParts = input.template.split(":");
 
     if (templateParts.length === 1 && templateParts[0].includes("/")) {
+      // @ts-expect-error
       return {
         help: true,
         message: `Custom repositories need to be prefixed with 'github:', like 'github:compasjs/compas'.`,
@@ -205,6 +207,16 @@ export function argParserValidate(input, defaultRef) {
 
   if (input.outputDirectory) {
     result.outputDirectory = input.outputDirectory;
+  }
+
+  if (result.template.path && result.template.path.endsWith("/")) {
+    result.template.path = result.template.path.substring(
+      0,
+      result.template.path.length - 1,
+    );
+    if (result.template.path.length === 0) {
+      result.template.path = undefined;
+    }
   }
 
   return result;

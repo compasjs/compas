@@ -222,5 +222,17 @@ test("create-compas/arg-parser", (t) => {
       t.equal(result.outputDirectory, "./foo");
       t.equal(result.template.repository, "compasjs/template");
     });
+
+    t.test("strip template path - trailing slash", (t) => {
+      const result = argParserValidate(
+        {
+          template: "github:compasjs/template",
+          templatePath: "./foo/bar/",
+        },
+        "main",
+      );
+
+      t.equal(result.template.path, "./foo/bar");
+    });
   });
 });

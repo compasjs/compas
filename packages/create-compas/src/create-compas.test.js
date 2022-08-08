@@ -1,14 +1,35 @@
+import { existsSync } from "fs";
+import { rm } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { exec } from "@compas/stdlib";
+import { exec, pathJoin, uuid } from "@compas/stdlib";
 
 mainTestFn(import.meta);
 
-test("create-compas", async (t) => {
-  const { exitCode, stdout } = await exec(
-    "create-compas --output-directory ./compas-project",
-  );
+test("create-compas", (t) => {
+  const outputDirectory = `./.cache/test-output/${uuid()}`;
 
-  t.equal(exitCode, 0);
+  t.timeout = 5000;
 
-  t.ok(stdout.includes("1907"));
+  t.test("run", async (t) => {
+    const { exitCode, stdout } = await exec(
+      `create-compas --output-directory ${outputDirectory} --template-ref main`,
+    );
+
+    t.equal(exitCode, 0);
+    t.ok(existsSync(outputDirectory));
+    t.ok(existsSync(pathJoin(outputDirectory, "./package.json")));
+
+    if (exitCode !== 0) {
+      t.log.error({
+        message: "create-compas-error",
+        stdout,
+      });
+    }
+  });
+
+  t.test("teardown", async (t) => {
+    await rm(outputDirectory, { force: true, recursive: true });
+    
+    t.pass();
+  });
 });
