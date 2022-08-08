@@ -46,9 +46,10 @@ async function cliExecutor(logger, state) {
   await generateCodeGen();
   await generateStore();
   await generateTypes();
-  await generateExamples();
+  await generateExamples(logger);
 
   if (state.flags.skipTypescript !== true) {
+    logger.info("Running tsc...");
     await spawn("compas", ["run", "types"]);
   }
   if (state.flags.skipLint !== true) {

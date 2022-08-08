@@ -1,19 +1,17 @@
 # Compas examples
 
-Examples of how to do various tasks with Compas. The sources are contained as
-much as possible. However, the tests may need some changes to work outside the
-Compas monorepo. If that is the case, there will be a note in the appropriate
-test files.
+Examples of how to do various tasks with Compas. These examples can be used via
+with `create-compas` to quickly start a new project.
 
-## Code gen
+```shell
+# Via NPM
+npx create-compas@latest
+# Or with Yarn
+yarn create compas
+```
 
-- [code-gen-basics](https://github.com/compasjs/compas/tree/main/examples/code-gen-basics)
+## Templates
 
-## Server
-
-- [session-handling](https://github.com/compasjs/compas/tree/main/examples/session-handling)
-- [session-handling-frontend](https://github.com/compasjs/compas/tree/main/examples/session-handling-frontend)
-
-## Other
-
-- [default](https://github.com/compasjs/compas/tree/main/examples/default)
+- **[default](https://github.com/compasjs/compas/tree/main/examples/default):**
+  This is the default template that is used. It contains boilerplate and
+  conventions to create your api's.

@@ -108,7 +108,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
 
-  build-docs:
+  build-docs-check-diff:
     timeout-minutes: 15
     strategy:
       matrix:
@@ -131,3 +131,14 @@ jobs:
           echo 'VITE_USER_NODE_ENV=production' > ./docs/.env
           npx compas run syncMetadata
           npx compas run docs:build
+          rm ./docs/.env
+
+      - name: Check if there are changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.11
+
+      - name: Fail if there are uncommited changes
+        if: steps.changes.outputs.changes == 1
+        run: |
+          git status
+          exit 1
