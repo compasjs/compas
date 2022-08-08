@@ -30,17 +30,15 @@ export function argParserValidate(
 ): CreateCompasArgs;
 /**
  * @typedef {{
- *   help: true,
+ *   help: boolean,
  *   message?: string,
- * }|{
- *   help: false,
  *   template: {
  *     provider: "github",
  *     repository: string,
  *     ref?: string,
  *     path?: string,
  *   },
- *   outputDirectory?: string,
+ *   outputDirectory: string,
  * }} CreateCompasArgs
  */
 export const createCompasFlags: Map<
@@ -50,19 +48,15 @@ export const createCompasFlags: Map<
     name: string;
   }
 >;
-export type CreateCompasArgs =
-  | {
-      help: true;
-      message?: string;
-    }
-  | {
-      help: false;
-      template: {
-        provider: "github";
-        repository: string;
-        ref?: string;
-        path?: string;
-      };
-      outputDirectory?: string;
-    };
+export type CreateCompasArgs = {
+  help: boolean;
+  message?: string;
+  template: {
+    provider: "github";
+    repository: string;
+    ref?: string;
+    path?: string;
+  };
+  outputDirectory: string;
+};
 //# sourceMappingURL=arg-parser.d.ts.map

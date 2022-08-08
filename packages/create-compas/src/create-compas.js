@@ -9,6 +9,10 @@ import {
   createCompasFlags,
 } from "./arg-parser.js";
 import { helpPrintCreateCompasHelp } from "./help.js";
+import {
+  templateGetAndExtractStream,
+  templatePostProcess,
+} from "./template.js";
 
 mainFn(import.meta, main);
 
@@ -41,6 +45,7 @@ async function main(logger) {
 
   validatedArgs.outputDirectory =
     validatedArgs.outputDirectory ?? process.cwd();
+
   const dirReadyForUsage = canDirectoryBeUsed(validatedArgs.outputDirectory);
   if (dirReadyForUsage !== true) {
     logger.error(
@@ -50,13 +55,18 @@ async function main(logger) {
     return process.exit(1);
   }
 
-  logger.info(`
-Create Compas based projects from the examples or custom templates.
+  logger.info(`Experimental!`);
+  logger.info(
+    `Resolved template url: 'https://github.com/${
+      validatedArgs.template.repository
+    }/tree/${validatedArgs.template.ref ?? "main"}/${
+      validatedArgs.template.path
+    }'`,
+  );
+  logger.info(`Output directory: '${validatedArgs.outputDirectory}'`);
 
-Resolved template url: 'https://github.com/${validatedArgs.template.repository}/tree/${validatedArgs.template.ref}/${validatedArgs.template.path}'
-Output directory: '${validatedArgs.outputDirectory}'
-
-This package is a work in progress. Follow https://github.com/compasjs/compas/issues/1907 for updates.`);
+  await templateGetAndExtractStream(logger, validatedArgs);
+  await templatePostProcess(logger, validatedArgs, createCompasVersion);
 }
 
 /**
