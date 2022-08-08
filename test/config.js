@@ -7,6 +7,8 @@ import { destroyTestServices, injectTestServices } from "../src/testing.js";
 
 export const timeout = 2000;
 
+export const ignoreDirectories = ["./examples"];
+
 export async function setup() {
   const sql = await createTestPostgresDatabase();
   await setPostgresDatabaseTemplate(sql);

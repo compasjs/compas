@@ -21,14 +21,12 @@ npm install
 compas lint
 # Run the tests
 compas test (--coverage)
-# Update type definition files
-compas run types
 ```
 
 **Documentation**:
 
 ```
-# Sync README's, changelog, contributing and regenerate API reference
+# Sync CLI api reference and regenerate
 compas run syncMetadata
 ```
 

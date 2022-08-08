@@ -70,34 +70,52 @@ export async function generateStore() {
   });
 }
 
-export async function generateExamples() {
-  await Promise.all(
-    (
-      await readdir("./examples", {
-        encoding: "utf-8",
-      })
-    ).map(async (exampleName) => {
-      if (exampleName.includes(".")) {
-        return;
-      }
+/**
+ * @param {import("@compas/stdlib").Logger} logger
+ * @returns {Promise<void>}
+ */
+export async function generateExamples(logger) {
+  logger.info("Collecting examples to regenerate...");
+  const examples = await readdir("./examples");
 
-      const { exampleMetadata } = JSON.parse(
-        await readFile(`./examples/${exampleName}/package.json`, "utf-8"),
-      );
+  const configs = (
+    await Promise.all(
+      examples.map(async (example) => {
+        const packageJson = JSON.parse(
+          await readFile(`./examples/${example}/package.json`, "utf-8"),
+        );
 
-      if (exampleMetadata?.includeGenerated) {
-        const result = await exec(`npx compas run generate`, {
-          cwd: `./examples/${exampleName}`,
-        });
+        packageJson.exampleMetadata = packageJson.exampleMetadata ?? {};
+        packageJson.exampleMetadata.path = `./examples/${example}`;
 
-        if (result.exitCode !== 0) {
-          throw AppError.serverError({
-            message: "One of the examples failed to generate",
-            result,
-            exampleName,
-          });
+        if (!packageJson.exampleMetadata.generating) {
+          return undefined;
         }
-      }
-    }),
-  );
+
+        return packageJson;
+      }),
+    )
+  ).filter((it) => !!it);
+
+  logger.info(`Regenerating ${configs.length} examples...`);
+
+  for (const config of configs) {
+    const cmd = config.exampleMetadata.generating;
+    const parts = cmd.split(" ");
+    if (parts[0] === "compas") {
+      parts[0] = "../../node_modules/.bin/compas";
+    }
+
+    const { exitCode, stdout } = await exec(parts.join(" "), {
+      cwd: config.exampleMetadata.path,
+    });
+
+    if (exitCode !== 0) {
+      throw AppError.serverError({
+        message: "One of the examples failed to generate",
+        stdout,
+        path: config.exampleMetadata.path,
+      });
+    }
+  }
 }

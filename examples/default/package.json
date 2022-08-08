@@ -1,9 +1,25 @@
 {
-  "name": "@compas-example/default",
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "dependencies": {
+    "@compas/cli": "*",
+    "@compas/server": "*",
+    "@compas/stdlib": "*",
+    "@compas/store": "*"
+  },
+  "devDependencies": {
+    "@compas/code-gen": "*",
+    "@compas/eslint-plugin": "*"
+  },
+  "prettier": "@compas/eslint-plugin/prettierrc",
   "exampleMetadata": {
+    "generating": "compas version",
+    "testing": [
+      "compas docker up",
+      "compas migrate",
+      "compas test"
+    ],
     "initMessage": "Whoot! This is the init message from default template."
   }
 }
