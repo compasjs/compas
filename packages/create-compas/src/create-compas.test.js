@@ -29,7 +29,7 @@ test("create-compas", (t) => {
 
   t.test("teardown", async (t) => {
     await rm(outputDirectory, { force: true, recursive: true });
-    
+
     t.pass();
   });
 });
