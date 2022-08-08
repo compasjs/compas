@@ -1,1 +1,1 @@
-/Users/dirk/projects/compas/changelog.md
+../changelog.md

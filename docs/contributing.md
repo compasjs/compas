@@ -1,1 +1,1 @@
-/Users/dirk/projects/compas/contributing.md
+../contributing.md
