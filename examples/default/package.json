@@ -16,8 +16,6 @@
   "exampleMetadata": {
     "generating": "compas version",
     "testing": [
-      "compas docker up",
-      "compas migrate",
       "compas test"
     ],
     "initMessage": "Whoot! This is the init message from default template."
