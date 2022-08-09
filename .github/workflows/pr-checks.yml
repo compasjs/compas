@@ -135,7 +135,7 @@ jobs:
 
       - name: Check if there are changes
         id: changes
-        uses: UnicornGlobal/has-changes-action@v1.0.11
+        uses: UnicornGlobal/has-changes-action@v1.0.12
 
       - name: Fail if there are uncommited changes
         if: steps.changes.outputs.changes == 1
