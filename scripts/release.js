@@ -45,6 +45,7 @@ async function cliExecutor(logger, state) {
     "server",
     "store",
     "compas",
+    "create-compas",
   ];
 
   checkVersionFormat(state.flags.version);
