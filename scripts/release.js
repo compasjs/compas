@@ -56,6 +56,8 @@ async function cliExecutor(logger, state) {
     await bumpPackageJson(pkg, state.flags.version.substring(1));
   }
 
+  await spawn("npm", ["i"]);
+
   await spawn("git", ["commit", "-m", `${state.flags.version}`]);
   await spawn("git", [
     "tag",
