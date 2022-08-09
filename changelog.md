@@ -4,6 +4,74 @@ editLink: false
 
 # Changelog
 
+### [v0.0.212](https://github.com/compasjs/compas/releases/tag/v0.0.212)
+
+##### Changes
+
+- build(deps): bump @babel/core from 7.18.9 to 7.18.10
+  ([#1950](https://github.com/compasjs/compas/pull/1950))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump cron-parser from 4.5.0 to 4.6.0
+  ([#1955](https://github.com/compasjs/compas/pull/1955))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump eslint from 8.20.0 to 8.21.0
+  ([#1949](https://github.com/compasjs/compas/pull/1949))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.3.3 to 39.3.6
+  ([#1947](https://github.com/compasjs/compas/pull/1947),
+  [#1975](https://github.com/compasjs/compas/pull/1975))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump file-type from 17.1.4 to 17.1.6
+  ([#1954](https://github.com/compasjs/compas/pull/1954))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 8.3.1 to 8.4.0
+  ([#1958](https://github.com/compasjs/compas/pull/1958))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump recast from 0.21.1 to 0.21.2
+  ([#1956](https://github.com/compasjs/compas/pull/1956))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- chore: various housekeeping tasks
+  ([#1974](https://github.com/compasjs/compas/pull/1974))
+- chore(tests): improve stability of SQL time-based tests
+- chore(tests): remove unnecessary offset added to sql time offset
+  ([#1959](https://github.com/compasjs/compas/pull/1959))
+- feat(create-compas): init package
+  ([#1963](https://github.com/compasjs/compas/pull/1963))
+  - References [#1907](https://github.com/compasjs/compas/pull/1907)
+- feat(create-compas): add args parser
+  ([#1970](https://github.com/compasjs/compas/pull/1970))
+  - Closes [#1965](https://github.com/compasjs/compas/pull/1965)
+- feat(create-compas): determine and check the output directory
+  ([#1971](https://github.com/compasjs/compas/pull/1971))
+  - Closes [#1966](https://github.com/compasjs/compas/pull/1966)
+- feat(create-compas): download github repo support
+  ([#1973](https://github.com/compasjs/compas/pull/1973))
+  - Closes [#1968](https://github.com/compasjs/compas/pull/1968)
+- feat(docs): add Compas visuals
+  ([#1948](https://github.com/compasjs/compas/pull/1948))
+  - Closes [#1945](https://github.com/compasjs/compas/pull/1945)
+- feat(docs): readme visual update
+  ([#1952](https://github.com/compasjs/compas/pull/1952))
+- feat(store): replace `minio` with `objectStorage` and refactor `file`
+  ([#1951](https://github.com/compasjs/compas/pull/1951))
+  - Closes [#1906](https://github.com/compasjs/compas/pull/1906)
+- fix(code-gen): add content type headers for react native when uploading files
+  ([#1944](https://github.com/compasjs/compas/pull/1944))
+  - Closes [#1943](https://github.com/compasjs/compas/pull/1943)
+- internal(store): simplify postgres type usage
+  ([#1960](https://github.com/compasjs/compas/pull/1960))
+
+##### Breaking changes
+
+- **store**: replace `minio` with `objectStorage` and refactor `file`
+  - The Minio SDK is switched for the AWS SDK. All deployments using S3
+    compatible storage must be revalidated.
+  - See the [release notes](https://compasjs.com/releases/0.0.212.html) for a
+    comprehensive list of breaking changes.
+
+For a detailed description and more details about this release, please read the
+[release notes](https://compasjs.com/releases/0.0.212.html).
+
 ### [v0.0.211](https://github.com/compasjs/compas/releases/tag/v0.0.211)
 
 ##### Changes
