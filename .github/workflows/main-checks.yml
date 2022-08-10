@@ -5,18 +5,19 @@ on:
 
 jobs:
   test:
+    permissions:
+      contents: read
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
         node: [16, 18]
-        postgres_version: [12, 13]
-    runs-on: ${{ matrix.os }}
+        postgresVersion: [12, 13, 14]
+    runs-on: ubuntu-latest
     env:
       CI: true
-      POSTGRES_VERSION: ${{ matrix.postgres_version }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.4.1
@@ -24,25 +25,34 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
-      - name: Run tests
+      - name: Install dependencies
         run: |
-          npm install
-          npx compas docker up
-          npx compas generate --skip-lint --skip-tsc
+          npm ci
+
+      - name: Generate and migrate
+        run: |
+          npx compas docker up --postgres-version ${{ matrix.postgresVersion }}
+          npx compas generate --skip-tsc --skip-lint
           npx compas migrate
+
+      - name: Run compas test
+        run: |
           npx compas test
 
   coverage:
+    permissions:
+      contents: read
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [16]
-    runs-on: ${{ matrix.os }}
+        node: [18]
+        postgresVersion: [14]
+    runs-on: ubuntu-latest
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.4.1
@@ -50,31 +60,41 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
-      - name: Run coverage
+      - name: Install dependencies
         run: |
-          npm install
-          npx compas docker up
-          npx compas generate --skip-lint --skip-tsc
+          npm ci
+
+      - name: Generate and migrate
+        run: |
+          npx compas docker up --postgres-version ${{ matrix.postgresVersion }}
+          npx compas generate --skip-tsc --skip-lint
           npx compas migrate
+
+      - name: Run compas test --coverage
+        run: |
           npx compas test --coverage
 
-      - name: Comment test coverage
+      - name: Upload coverage
+        if: matrix.node == '18'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
 
   sync-website:
+    permissions:
+      contents: read
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [16]
-    runs-on: ${{ matrix.os }}
+        node: [18]
+        postgresVersion: [14]
+    runs-on: ubuntu-latest
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3.4.1
@@ -82,9 +102,12 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
+      - name: Install dependencies
+        run: |
+          npm ci
+
       - name: Build and deploy
         run: |
-          npm install
           echo 'VITE_USER_NODE_ENV=production' > ./docs/.env
           npx compas run docs:build
           cd ./docs/.vitepress/dist
@@ -100,19 +123,16 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-
     permissions:
       security-events: write
       actions: read
       contents: read
-
     strategy:
       fail-fast: false
       matrix:
         language: ["javascript"]
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Initialize CodeQL
