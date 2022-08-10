@@ -8,6 +8,7 @@ import { TypeCreator } from "@compas/code-gen";
 
 export function extendWithPost(app) {
   const T = new TypeCreator("post");
+  const R = T.router("/post");
 
   app.add(
     T.crud("/post").entity(T.reference("database", "post")).routes({
@@ -15,5 +16,20 @@ export function extendWithPost(app) {
       singleRoute: true,
       createRoute: true,
     }),
+
+    R.post("/:postId/update", "update")
+      .params({
+        postId: T.uuid(),
+      })
+      .body({
+        text: T.string().min(10),
+      })
+      .response({
+        success: true,
+      })
+      .invalidations(
+        R.invalidates("post", "list"),
+        R.invalidates("post", "single", { useSharedParams: true }),
+      ),
   );
 }
