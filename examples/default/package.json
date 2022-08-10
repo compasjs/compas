@@ -17,7 +17,7 @@
     "generating": "compas generate",
     "testing": [
       "compas migrate",
-      "compas test"
+      "compas test --serial"
     ],
     "initMessage": "Whoot! This is the init message from default template."
   }
