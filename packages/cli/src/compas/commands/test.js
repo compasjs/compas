@@ -111,8 +111,8 @@ export async function cliExecutor(logger, state) {
     : state.flags.parallelCount ?? Math.min(4, cpus().length - 1);
 
   if (state.flags.coverage) {
-    const { exitCode } = await spawn(`node`, [
-      "./node_modules/.bin/c8",
+    const { exitCode } = await spawn(`npx`, [
+      "c8",
       "node",
       process.argv[1],
       "test",
