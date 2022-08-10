@@ -143,6 +143,13 @@ export async function templatePostProcess(logger, options, compasVersion) {
     cwd: options.outputDirectory,
   });
 
+  if (metadata?.generating) {
+    logger.info("Generating...");
+    await spawn("npx", metadata.generating.split(" "), {
+      cwd: options.outputDirectory,
+    });
+  }
+
   logger.info(`Done!`);
   if (metadata?.initMessage) {
     logger.info(metadata.initMessage);
