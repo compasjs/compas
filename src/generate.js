@@ -72,9 +72,10 @@ export async function generateStore() {
 
 /**
  * @param {import("@compas/stdlib").Logger} logger
+ * @param {CliExecutorState} state
  * @returns {Promise<void>}
  */
-export async function generateExamples(logger) {
+export async function generateExamples(logger, state) {
   logger.info("Collecting examples to regenerate...");
   const examples = await readdir("./examples");
 
@@ -104,6 +105,10 @@ export async function generateExamples(logger) {
     const parts = cmd.split(" ");
     if (parts[0] === "compas") {
       parts[0] = "../../node_modules/.bin/compas";
+    }
+
+    if (state.flags.skipLint) {
+      parts.push("--skip-lint");
     }
 
     const { exitCode, stdout } = await exec(parts.join(" "), {

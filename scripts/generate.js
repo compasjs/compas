@@ -1,10 +1,6 @@
 import { spawn } from "@compas/stdlib";
 import {
-  generateCli,
-  generateCodeGen,
-  generateExamples,
-  generateStore,
-  generateTypes,
+  generateCli, generateCodeGen, generateExamples, generateStore, generateTypes,
 } from "../src/generate.js";
 
 /**
@@ -46,7 +42,7 @@ async function cliExecutor(logger, state) {
   await generateCodeGen();
   await generateStore();
   await generateTypes();
-  await generateExamples(logger);
+  await generateExamples(logger, state);
 
   if (state.flags.skipTypescript !== true) {
     logger.info("Running tsc...");

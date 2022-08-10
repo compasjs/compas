@@ -18,6 +18,13 @@ export const cliDefinition = {
       shortDescription: "Generate repo specific types",
     },
   ],
+  flags: [
+    {
+      name: "skipLint",
+      rawName: "--skip-lint",
+      description: "Skip running the linter",
+    },
+  ],
   executor: cliExecutor,
 };
 
@@ -30,7 +37,11 @@ async function cliExecutor(logger, state) {
   // No subcommand given, so we generate all targets
   const generateAllTargets = state.command.at(-1) === "generate";
 
-  const steps = [generateTypes, executeLinter];
+  const steps = [generateTypes];
+
+  if (state.flags.skipLint !== true) {
+    steps.push(executeLinter);
+  }
 
   if (generateAllTargets) {
     steps.unshift(generateApplication /* add other generate targets here */);
