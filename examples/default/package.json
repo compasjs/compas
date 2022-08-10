@@ -14,7 +14,7 @@
   },
   "prettier": "@compas/eslint-plugin/prettierrc",
   "exampleMetadata": {
-    "generating": "compas version",
+    "generating": "compas generate",
     "testing": [
       "compas migrate",
       "compas test"

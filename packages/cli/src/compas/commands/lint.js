@@ -54,7 +54,8 @@ export async function cliExecutor(logger, state) {
     // @ts-ignore
     const cacheLocation = state.flags.eslintCacheLocation ?? "./.cache/eslint/";
 
-    const { exitCode: lint } = await spawn("./node_modules/.bin/eslint", [
+    const { exitCode: lint } = await spawn("npx", [
+      "eslint",
       "./**/*.js",
       ...(environment.CI === "true" ? [] : ["--fix"]),
       "--no-error-on-unmatched-pattern",
@@ -74,7 +75,8 @@ export async function cliExecutor(logger, state) {
     const prettierCommand =
       environment.CI === "true" ? ["--check"] : ["--write", "--list-different"];
 
-    const { exitCode: pretty } = await spawn("./node_modules/.bin/prettier", [
+    const { exitCode: pretty } = await spawn("npx", [
+      "prettier",
       ...prettierCommand,
       "--ignore-unknown",
       "--no-error-on-unmatched-pattern",

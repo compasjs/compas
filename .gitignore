@@ -45,4 +45,4 @@ coverage
 
 # Examples
 # Ignore any generated output of examples
-examples/**/generated
+examples/**/generated/*
