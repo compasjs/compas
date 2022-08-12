@@ -7,12 +7,22 @@ Let's start by checking the system and project requirements;
 - Yarn or NPM installed
 - Using ES Modules by adding `{ type: "module" }` in your package.json
 
-To add Compas to your project, install the following most used packages:
+To initialize a new Compas project, execute one of the following command in a
+new directory
 
 ```shell
-yarn add --exact @compas/cli @compas/stdlib
-# OR
-npm add --save-exact @compas/cli @compas/stdlib
+# Via NPM
+npx create-compas@latest
+
+# Or with Yarn
+yarn create compas
 ```
+
+:::tip
+
+Run `npx create-compas@latest --help` / `yarn create compas --help` for all the
+available options.
+
+:::
 
 Let's explore Compas starting with the [CLI](/features/cli.md)
