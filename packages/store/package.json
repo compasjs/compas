@@ -22,7 +22,7 @@
     "@compas/stdlib": "0.0.212",
     "crc": "4.1.1",
     "cron-parser": "^4.6.0",
-    "file-type": "17.1.6",
+    "file-type": "18.0.0",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
     "mime-types": "2.1.35",
