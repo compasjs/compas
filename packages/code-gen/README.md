@@ -15,47 +15,69 @@
 
 ---
 
-All common components for creating backends, tooling and more in opinionated
-packages; from describing the api structure to testing the end result.
+Code generators for routers, validators, SQL queries, API clients and more. Take
+a look at the [documentation](https://compasjs.com/getting-started.html).
 
-## Features
+## As a server
 
-- Code generators for routers, validators, SQL queries, API clients and more
-- Logging, body parser and error handling out of the box
-- Persistence layer with Postgres for files, jobs and sessions
-- An extendable CLI that comes with a test runner and is able to run your
-  database migrations.
-- Structured logging all throughout, giving you insight in the running system.
+```js
+mainFn(import.meta, main);
 
-## Requirements
+async function main() {
+  const app = new App();
 
-- Node.js >= 16
-- Yarn 1.x.x / NPM
+  const T = new TypeCreator("post");
+  const R = T.router("/post");
 
-## Why
+  app.add(
+    new TypeCreator("database")
+      .object("post")
+      .keys({
+        title: T.string().searchable(),
+        body: T.string(),
+      })
+      .enableQueries({ withDates: true }),
 
-I had a time when I was mostly creating small backends and tools back to back.
-Always trying to improve them by choosing packages that align better with my
-views, new features or more opinionated defaults. To capture this flow and
-making those backends and tools easier to maintain, Compas was created.
+    T.crud("/post").entity(T.reference("database", "post")).routes({
+      listRoute: true,
+      singleRoute: true,
+      createRoute: true,
+      updateRoute: true,
+      deleteRoute: true,
+    }),
+  );
 
-New features added should fall under the following categories:
+  await app.generate({
+    outputDirectory: "./src/generated/application",
+    dumpStructure: true,
+    dumpApiStructure: true,
+    dumpPostgres: true,
+    enabledGenerators: ["validator", "router", "sql", "apiClient"],
+  });
+}
+```
 
-- It improves the interface between api and client in some way. An example may
-  be to support websockets in @compas/code-gen
-- It improves the developer experience one way or another while developing an
-  api For example the `compas docker` commands or various utilities provided by
-  @compas/stdlib
+## As a client
 
-Although some parts heavily rely on conventions set by the packages, we
-currently aim not to be a framework. We aim to provide a good developer
-experience, useful abstractions around the basics, and a stable backend <->
-client interface.
+```js
+mainFn(import.meta, main);
 
-## Docs and development
+async function main() {
+  const app = new App({ verbose: true });
 
-See [the website](https://compasjs.com) for the
-[changelog](https://compasjs.com/changelog.html), all available APIs and various
-guides.
+  let fromRemote = await loadApiStructureFromRemote(
+    Axios,
+    "https://some.compas.powered.backend",
+  );
 
-For contributing see [contributing.md](https://compasjs.com/contributing.html).
+  app.extend(fromRemote);
+
+  await app.generate({
+    outputDirectory: "./src/generated",
+    isBrowser: true,
+    enabledGenerators: ["type", "apiClient", "reactQuery"],
+  });
+
+  await spawn("yarn", ["format"]);
+}
+```
