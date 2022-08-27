@@ -11,13 +11,13 @@ export class App {
    *
    * @param {{ verbose?: boolean }} [options={}]
    */
-  constructor({
-    verbose,
-  }?:
-    | {
-        verbose?: boolean | undefined;
-      }
-    | undefined);
+  constructor(
+    options?:
+      | {
+          verbose?: boolean | undefined;
+        }
+      | undefined,
+  );
   /**
    * @private
    * @type {string}

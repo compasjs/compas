@@ -63,7 +63,7 @@ export async function cleanupPostgresDatabaseTemplate() {
  *   queries.
  * @returns {Promise<Postgres>}
  */
-export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
+export async function createTestPostgresDatabase(rawOpts, options = {}) {
   const connectionOptions = buildAndCheckOpts(rawOpts);
   const name = connectionOptions.database + uuid().substring(0, 7);
 
@@ -79,7 +79,9 @@ export async function createTestPostgresDatabase(rawOpts, { verboseSql } = {}) {
     const sql = await newPostgresConnection({
       ...connectionOptions,
       database: name,
-      debug: verboseSql ? newLogger({ ctx: { type: "sql" } }).error : undefined,
+      debug: options?.verboseSql
+        ? newLogger({ ctx: { type: "sql" } }).error
+        : undefined,
     });
 
     // Initialize new connection and kill old connection

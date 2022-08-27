@@ -122,7 +122,7 @@ export class App {
    *
    * @param {{ verbose?: boolean }} [options={}]
    */
-  constructor({ verbose } = {}) {
+  constructor(options = {}) {
     /**
      * @private
      * @type {string}
@@ -132,7 +132,7 @@ export class App {
     /**
      * @type {boolean}
      */
-    this.verbose = verbose || false;
+    this.verbose = options?.verbose ?? false;
 
     /**
      * @type {Logger}

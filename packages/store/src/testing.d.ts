@@ -36,9 +36,7 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  */
 export function createTestPostgresDatabase(
   rawOpts?: import("postgres").Options<any> | undefined,
-  {
-    verboseSql,
-  }?:
+  options?:
     | {
         verboseSql?: boolean | undefined;
       }
