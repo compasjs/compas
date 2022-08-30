@@ -120,6 +120,7 @@ export async function api{{= item.uniqueName }}(
             {{ /* Validates response, but does not use the validated result. This implies that dates will be ISO strings, and objects don't have a 'null' prototype. */ }}
             const { error } = {{= group }}Validators.validate{{= uniqueName }}(response.data);
             if (error) {
+                error.info.response = response.data;
                 throw error;
             }
         {{ } }}
