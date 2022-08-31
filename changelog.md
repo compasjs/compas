@@ -4,6 +4,59 @@ editLink: false
 
 # Changelog
 
+### [v0.0.213](https://github.com/compasjs/compas/releases/tag/v0.0.213)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.145.0 to 3.161.0
+- build(deps): bump @aws-sdk/lib-storage from 3.145.0 to 3.161.0
+- build(deps): bump @babel/core from 7.18.10 to 7.18.13
+  ([#2003](https://github.com/compasjs/compas/pull/2003))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump dotenv from 16.0.1 to 16.0.2
+  ([#2025](https://github.com/compasjs/compas/pull/2025))
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
+- build(deps): bump eslint from 8.21.0 to 8.23.0
+  ([#1991](https://github.com/compasjs/compas/pull/1991),
+  [#2013](https://github.com/compasjs/compas/pull/2013))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump file-type from 17.1.6 to 18.0.0
+  ([#2007](https://github.com/compasjs/compas/pull/2007))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 8.4.0 to 8.4.2
+  ([#1988](https://github.com/compasjs/compas/pull/1988),
+  [#2000](https://github.com/compasjs/compas/pull/2000))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump vite from 2.9.8 to 2.9.15
+  ([#2022](https://github.com/compasjs/compas/pull/2022))
+  - [Release notes](https://github.com/vitejs/vite/releases)
+- chore: fix type issues after Typescript bump
+- chore: update package-lock.json
+- docs: simplify the README's of all the packages
+- docs(getting-started): use create-compas
+- examples(default): add code-gen setup
+  ([#1982](https://github.com/compasjs/compas/pull/1982))
+  - References [#1967](https://github.com/compasjs/compas/pull/1967)
+- examples(default): add migrations, services, entrypoints, tests
+  ([#1984](https://github.com/compasjs/compas/pull/1984))
+- examples(default): update README.md
+- feat(cli): add threadId to test runner logs
+  ([#2029](https://github.com/compasjs/compas/pull/2029))
+  - Closes [#2028](https://github.com/compasjs/compas/pull/2028)
+- feat(code-gen): add response data to response validator errors
+  ([#2021](https://github.com/compasjs/compas/pull/2021))
+  - Closes [#2020](https://github.com/compasjs/compas/pull/2020)
+- feat(code-gen): add user input to oneOf errors
+  - Closes [#2019](https://github.com/compasjs/compas/pull/2019)
+- feat(create-compas): generate on template init
+  ([#1983](https://github.com/compasjs/compas/pull/1983))
+- feat(store): disable notices by default in test database connections
+
+##### Breaking changes
+
+- **deps**: bump file-type from 17.1.6 to 18.0.0
+  - Major version bump
+
 ### [v0.0.212](https://github.com/compasjs/compas/releases/tag/v0.0.212)
 
 ##### Changes
