@@ -1,5 +1,5 @@
-import { readFile, writeFile } from "fs/promises";
 import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
+import { readFile, writeFile } from "fs/promises";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {
@@ -57,6 +57,7 @@ async function cliExecutor(logger, state) {
   }
 
   await spawn("npm", ["i"]);
+  await spawn("git", ["add", "./package-lock.json"]);
 
   await spawn("git", ["commit", "-m", `${state.flags.version}`]);
   await spawn("git", [
