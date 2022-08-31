@@ -1,6 +1,8 @@
 import { isNil, isPlainObject, newLogger, uuid } from "@compas/stdlib";
 import {
-  buildAndCheckOpts, createDatabaseIfNotExists, newPostgresConnection,
+  buildAndCheckOpts,
+  createDatabaseIfNotExists,
+  newPostgresConnection,
 } from "./postgres.js";
 
 /**

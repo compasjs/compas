@@ -1,7 +1,7 @@
-import { AppError, mainFn, newLogger } from "@compas/stdlib";
 import { setTimeout } from "timers/promises";
 import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
+import { AppError, mainFn, newLogger } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import {
   markTestFailuresRecursively,
