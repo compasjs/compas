@@ -11,6 +11,7 @@ import {
   globalTeardown,
   ignoreDirectories,
   state,
+  testLogger,
 } from "./state.js";
 
 export const workerFile = new URL(
@@ -67,8 +68,10 @@ export async function runTestsInProcess(options) {
     });
   }
 
+  testLogger.info(`Running setup`);
   await globalSetup();
   await runTestsRecursively(state);
+  testLogger.info(`Running teardown`);
   await globalTeardown();
 
   return printTestResults();
