@@ -28,9 +28,7 @@ export const testBucketName = uuid();
  * @returns {Promise<void>}
  */
 export async function injectTestServices() {
-  sql = await createTestPostgresDatabase({
-    onnotice: () => {},
-  });
+  sql = await createTestPostgresDatabase({});
 
   s3Client = objectStorageCreateClient(objectStorageGetDevelopmentConfig());
 

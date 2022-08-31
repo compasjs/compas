@@ -1,8 +1,6 @@
 import { isNil, isPlainObject, newLogger, uuid } from "@compas/stdlib";
 import {
-  buildAndCheckOpts,
-  createDatabaseIfNotExists,
-  newPostgresConnection,
+  buildAndCheckOpts, createDatabaseIfNotExists, newPostgresConnection,
 } from "./postgres.js";
 
 /**
@@ -66,6 +64,10 @@ export async function cleanupPostgresDatabaseTemplate() {
 export async function createTestPostgresDatabase(rawOpts, options = {}) {
   const connectionOptions = buildAndCheckOpts(rawOpts);
   const name = connectionOptions.database + uuid().substring(0, 7);
+
+  if (!options?.verboseSql) {
+    connectionOptions.onnotice = () => {};
+  }
 
   if (!isNil(testDatabase?.options?.database)) {
     // Real database creation
