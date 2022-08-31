@@ -1,7 +1,7 @@
+import { AppError, mainFn, newLogger } from "@compas/stdlib";
 import { setTimeout } from "timers/promises";
 import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
-import { AppError, mainFn } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import {
   markTestFailuresRecursively,
@@ -15,6 +15,7 @@ import {
   setAreTestRunning,
   setTestLogger,
   state,
+  testLogger,
 } from "./state.js";
 
 mainFn(import.meta, main);
@@ -27,11 +28,18 @@ async function main(logger) {
 
   // Make sure `mainTestFn` is disabled
   setAreTestRunning(true);
-  setTestLogger(logger);
+  setTestLogger(
+    newLogger({
+      ctx: {
+        type: `worker-thread(${threadId})`,
+      },
+    }),
+  );
 
   await loadTestConfig();
 
   try {
+    testLogger.info(`Running setup`);
     await globalSetup();
   } catch (e) {
     logger.error({
@@ -46,6 +54,7 @@ async function main(logger) {
 
   const teardown = async () => {
     try {
+      testLogger.info(`Running teardown`);
       await globalTeardown();
       await setTimeout(5);
       process.exit(0);
