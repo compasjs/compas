@@ -1,4 +1,16 @@
 /**
+ * Try to resolve the template, this way we can explicitly error instead of an extraction
+ * error because of a 40x response.
+ *
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("./arg-parser.js").CreateCompasArgs} options
+ * @returns {Promise<void>}
+ */
+export function templateCheckIfExists(
+  logger: import("@compas/stdlib").Logger,
+  options: import("./arg-parser.js").CreateCompasArgs,
+): Promise<void>;
+/**
  * Download and extract the template repository.
  * Does not do any post-processing.
  *

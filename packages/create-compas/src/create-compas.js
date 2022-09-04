@@ -10,10 +10,13 @@ import {
 } from "./arg-parser.js";
 import { helpPrintCreateCompasHelp } from "./help.js";
 import {
+  templateCheckIfExists,
   templateGetAndExtractStream,
   templatePostProcess,
 } from "./template.js";
 
+// Force use of Compas pretty printer.s
+process.env.COMPAS_LOG_PRINTER = "pretty";
 mainFn(import.meta, main);
 
 async function main(logger) {
@@ -65,6 +68,7 @@ async function main(logger) {
   );
   logger.info(`Output directory: '${validatedArgs.outputDirectory}'`);
 
+  await templateCheckIfExists(logger, validatedArgs);
   await templateGetAndExtractStream(logger, validatedArgs);
   await templatePostProcess(logger, validatedArgs, createCompasVersion);
 }
