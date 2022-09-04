@@ -7,6 +7,65 @@ import { AppError, environment, pathJoin, spawn } from "@compas/stdlib";
 import tar from "tar";
 
 /**
+ * Try to resolve the template, this way we can explicitly error instead of an extraction
+ * error because of a 40x response.
+ *
+ * @param {import("@compas/stdlib").Logger} logger
+ * @param {import("./arg-parser.js").CreateCompasArgs} options
+ * @returns {Promise<void>}
+ */
+export async function templateCheckIfExists(logger, options) {
+  if (options.help) {
+    return;
+  }
+
+  const errorMessage = `The template could not be resolved, see 'create-compas --help'.
+  If you used a Compas provided template, make sure it exists at 'https://github.com/compasjs/compas/tree/${
+    options.template.ref ?? "main"
+  }/examples/'.`;
+
+  if (options.template.provider === "github") {
+    try {
+      await new Promise((resolve, reject) => {
+        const req = https.request(
+          `https://github.com/${options.template.repository}/blob/${
+            options.template.ref ? options.template.ref : "-"
+          }/${
+            options.template.path
+              ? `${options.template.path}/package.json`
+              : "package.json"
+          }`,
+          {
+            method: "HEAD",
+          },
+          (res) => {
+            res.on("error", reject);
+
+            if ((res?.statusCode ?? 500) > 399) {
+              reject(new Error());
+            } else {
+              // @ts-expect-error
+              resolve();
+            }
+          },
+        );
+
+        req.on("error", reject);
+        req.end();
+      });
+    } catch {
+      logger.error(errorMessage);
+
+      return process.exit(1);
+    }
+  } else {
+    logger.error(errorMessage);
+
+    return process.exit(1);
+  }
+}
+
+/**
  * Download and extract the template repository.
  * Does not do any post-processing.
  *
