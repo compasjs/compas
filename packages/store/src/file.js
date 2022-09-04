@@ -340,7 +340,8 @@ export function fileVerifyAccessToken(options) {
   if (
     typeof options.fileAccessToken !== "string" ||
     typeof options.signingKey !== "string" ||
-    typeof options.expectedFileId !== "string"
+    typeof options.expectedFileId !== "string" ||
+    !options.fileAccessToken
   ) {
     throw AppError.serverError({
       message:

@@ -1,5 +1,5 @@
-import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
 import { readFile, writeFile } from "fs/promises";
+import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {
