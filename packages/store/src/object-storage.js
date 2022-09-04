@@ -215,5 +215,6 @@ export async function objectStorageGetObjectStream(s3Client, options) {
     }),
   );
 
+  // @ts-expect-error this could be a Blob as well
   return getObjectResult.Body;
 }

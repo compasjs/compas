@@ -861,7 +861,7 @@ export function anonymousValidator1672956483(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };
@@ -1345,7 +1345,7 @@ export function anonymousValidator629941091(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };
@@ -1468,7 +1468,7 @@ export function anonymousValidator724462434(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };
@@ -1591,7 +1591,7 @@ export function anonymousValidator1666023486(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };
@@ -1736,7 +1736,7 @@ export function anonymousValidator1656684775(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };
@@ -1799,7 +1799,7 @@ export function anonymousValidator1682559082(value, propertyPath) {
         {
           propertyPath,
           key: "validator.string.oneOf",
-          info: { oneOf },
+          info: { oneOf, value },
         },
       ],
     };

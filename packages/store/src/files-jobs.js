@@ -39,7 +39,7 @@ export function jobFileCleanup(s3Client, bucketName) {
 /**
  * Returns a {@link QueueWorkerHandler} that generates a `meta.placeholderImage` for the
  * provided `fileId`. The `compas.file.generatePlaceholderImage` job is inserted when
- * `createOrUpdateFile` is provided with the `schedulePlaceholderImageJob` option.
+ * `fileCreateOrUpdate` is provided with the `schedulePlaceholderImageJob` option.
  *
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
