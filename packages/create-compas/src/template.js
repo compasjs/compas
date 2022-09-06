@@ -209,6 +209,11 @@ export async function templatePostProcess(logger, options, compasVersion) {
     });
   }
 
+  logger.info("Collecting environment info...");
+  await spawn(`npx`, ["compas", "check-env"], {
+    cwd: options.outputDirectory,
+  });
+
   logger.info(`Done!`);
   if (metadata?.initMessage) {
     logger.info(metadata.initMessage);

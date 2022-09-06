@@ -32,7 +32,10 @@ export async function cliExecutor(logger) {
     ),
   );
 
-  logger.info(`Versions:
+  logger.info(`
+Running 'compas check-env':
+
+Versions:
 - Compas:   v${compasVersion}
 - Node.js:  ${process.version}
 `);
