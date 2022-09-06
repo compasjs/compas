@@ -1,11 +1,7 @@
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import {
-  dirnameForModule,
-  exec,
-  isNil,
-  pathJoin,
-  processDirectoryRecursive,
+  dirnameForModule, exec, isNil, pathJoin, processDirectoryRecursive,
 } from "@compas/stdlib";
 
 /**
@@ -18,6 +14,7 @@ export const cliDefinition = {
   
 - Checks if the '.env.local' is in the .gitignore if it exists
 - Checks if all Compas packages are the same version
+- Checks if graphviz is available
 `,
   executor: cliExecutor,
 };
@@ -40,24 +37,32 @@ export async function cliExecutor(logger) {
 - Node.js:  ${process.version}
 `);
 
-  const versionResult = await areOtherCompasVersionsInstalled(compasVersion);
-  const envLocalResult = await isEnvLocalNotIgnored();
+  const results = (
+    await Promise.all([
+      areOtherCompasVersionsInstalled(compasVersion),
+      isEnvLocalNotIgnored(),
+      isDockerInstalled(),
+      isGraphvizInstalled(),
+    ])
+  ).filter((it) => it.failed);
 
-  logger.info(`Checks:
-${versionResult.message}
-${envLocalResult.message}
+  if (results.length) {
+    logger.info(`Setup checks:
+${results.map((it) => it.message ?? "").join("\n")}
 `);
+  } else {
+    logger.info("Static setup checks passed!\n");
+  }
 
   return {
-    exitStatus:
-      versionResult.failed || envLocalResult.failed ? "failed" : "passed",
+    exitStatus: results.length ? "failed" : "passed",
   };
 }
 
 /**
  * If a `.env.local` exists, it should be ignored
  *
- * @returns {Promise<{ failed: boolean, message: string }>}
+ * @returns {Promise<{ failed: boolean, message?: string }>}
  */
 async function isEnvLocalNotIgnored() {
   let result;
@@ -72,7 +77,6 @@ async function isEnvLocalNotIgnored() {
   if (!result) {
     return {
       failed: false,
-      message: "- '.env.local' not found or correctly git ignored.",
     };
   }
 
@@ -88,7 +92,7 @@ async function isEnvLocalNotIgnored() {
  * leads to weird behaviour. So warn if that is happening.
  *
  * @param {string} compasVersion
- * @returns {Promise<{ failed: boolean, message: string }>}
+ * @returns {Promise<{ failed: boolean, message?: string }>}
  */
 async function areOtherCompasVersionsInstalled(compasVersion) {
   const foundVersions = [];
@@ -127,6 +131,44 @@ async function areOtherCompasVersionsInstalled(compasVersion) {
 
   return {
     failed: false,
-    message: `- Only found a single @compas/stdlib version installed, which is preferred.`,
   };
+}
+
+/**
+ * Graphviz is necessary for `compas visualise
+ *
+ * @returns {Promise<{ failed: boolean, message?: string }>}
+ */
+async function isGraphvizInstalled() {
+  try {
+    await exec("dot -V");
+    return {
+      failed: false,
+    };
+  } catch {
+    return {
+      failed: true,
+      message: `Could not locate a local 'dot' executable. This is necessary for the 'compas visualise' commands.
+  This can be installed via the 'graphviz' package via your systems package manager.`,
+    };
+  }
+}
+
+/**
+ * Docker is necessary for `compas docker` usage
+ *
+ * @returns {Promise<{ failed: boolean, message?: string }>}
+ */
+async function isDockerInstalled() {
+  try {
+    await exec("docker -v");
+    return {
+      failed: false,
+    };
+  } catch {
+    return {
+      failed: true,
+      message: `Could not locate a local 'docker' executable. This is necessary for the 'compas docker' commands.`,
+    };
+  }
 }
