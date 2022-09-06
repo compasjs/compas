@@ -3,7 +3,7 @@ import https from "https";
 import { normalize } from "path";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
-import { AppError, environment, pathJoin, spawn } from "@compas/stdlib";
+import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
 import tar from "tar";
 
 /**
@@ -204,7 +204,7 @@ export async function templatePostProcess(logger, options, compasVersion) {
 
   if (metadata?.generating) {
     logger.info("Generating...");
-    await spawn("npx", metadata.generating.split(" "), {
+    await exec(`npx ${metadata.generating}`, {
       cwd: options.outputDirectory,
     });
   }
