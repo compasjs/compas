@@ -4,6 +4,47 @@ editLink: false
 
 # Changelog
 
+### [v0.0.214](https://github.com/compasjs/compas/releases/tag/v0.0.214)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.161.0 to 3.163.0
+  ([#2030](https://github.com/compasjs/compas/pull/2030),
+  [#2034](https://github.com/compasjs/compas/pull/2034))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.161.0 to 3.163.0
+  ([#2031](https://github.com/compasjs/compas/pull/2031),
+  [#2033](https://github.com/compasjs/compas/pull/2033))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.18.13 to 7.19.0
+  ([#2043](https://github.com/compasjs/compas/pull/2043))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump pino from 8.4.2 to 8.5.0
+  ([#2038](https://github.com/compasjs/compas/pull/2038))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump sharp from 0.30.7 to 0.31.0
+  ([#2040](https://github.com/compasjs/compas/pull/2040))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- chore(release): add package-lock to commit
+- feat(cli): add docker and graphviz checks to 'compas check-env'
+  ([#2044](https://github.com/compasjs/compas/pull/2044))
+  - References [#2042](https://github.com/compasjs/compas/pull/2042)
+- feat(create-compas): check template existence, always use pretty logger
+  ([#2037](https://github.com/compasjs/compas/pull/2037))
+  - Closes [#2032](https://github.com/compasjs/compas/pull/2032)
+- feat(create-compas): disable output of initial generate
+  - Closes [#2041](https://github.com/compasjs/compas/pull/2041)
+- feat(create-compas): run 'compas check-env' when creating a project
+  - Closes [#2042](https://github.com/compasjs/compas/pull/2042)
+- fix(store): explicit error on empty access token in `fileVerifyAccessToken`
+  ([#2036](https://github.com/compasjs/compas/pull/2036))
+  - Closes [#2035](https://github.com/compasjs/compas/pull/2035)
+
+##### Breaking changes
+
+- **deps**: bump sharp from 0.30.7 to 0.31.0
+  - Major version bump
+
 ### [v0.0.213](https://github.com/compasjs/compas/releases/tag/v0.0.213)
 
 ##### Changes
