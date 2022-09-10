@@ -6,7 +6,8 @@
     "@compas/cli": "*",
     "@compas/server": "*",
     "@compas/stdlib": "*",
-    "@compas/store": "*"
+    "@compas/store": "*",
+    "bcrypt": "5.0.1"
   },
   "devDependencies": {
     "@compas/code-gen": "*",
@@ -19,6 +20,6 @@
       "compas migrate",
       "compas test --serial"
     ],
-    "initMessage": "Started a new project with the 'default' template. See the README.md for how to get started."
+    "initMessage": "Started a new project with the 'with-auth' template. See the README.md for how to get started."
   }
 }

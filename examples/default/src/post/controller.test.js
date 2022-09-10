@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
-import { createTestAppAndClient } from "@compas/server";
+import { closeTestApp, createTestAppAndClient } from "@compas/server";
 import { uuid } from "@compas/stdlib";
 import axios from "axios";
 import {
@@ -60,5 +60,14 @@ test("post/controller", async (t) => {
 
       t.equal(updatedPost.text, "my updated post text");
     });
+  });
+
+  t.test("teardown", async (t) => {
+    // Since subtests run in the order they are registered, we can always do some
+    // teardown in the last subtest.
+
+    await closeTestApp(app);
+
+    t.pass();
   });
 });
