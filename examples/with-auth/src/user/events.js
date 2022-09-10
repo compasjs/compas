@@ -2,6 +2,7 @@ import {
   AppError,
   eventStart,
   eventStop,
+  isProduction,
   newEventFromEvent,
   uuid,
 } from "@compas/stdlib";
@@ -19,9 +20,16 @@ import { queries } from "../generated/application/database/index.js";
 import { queryUser } from "../generated/application/database/user.js";
 import { sql } from "../services/core.js";
 
-// See https://www.npmjs.com/package/bcrypt 'A note on rounds' for more information
-// about the amount of rounds to use.
-const BCRYPT_SALT_ROUNDS = 12;
+/**
+ * See https://www.npmjs.com/package/bcrypt 'A note on rounds' for more information about
+ * the amount of rounds to use.
+ *
+ * @returns {number}
+ */
+function getBcryptSaltRounds() {
+  // We use a low value for rounds in development to speed up testing.
+  return isProduction() ? 13 : 2;
+}
 
 /**
  * Resolve the session based on the incoming request.
@@ -92,7 +100,7 @@ export async function userRegister(event, sql, body) {
     throw AppError.validationError(`${event.name}.emailAlreadyInUse`);
   }
 
-  const hashedPassword = await hash(body.password, BCRYPT_SALT_ROUNDS);
+  const hashedPassword = await hash(body.password, getBcryptSaltRounds());
 
   await queries.userInsert(sql, {
     email: body.email,
@@ -130,7 +138,7 @@ export async function userLogin(event, sql, body) {
     // incorrect.
     await compare(
       uuid(),
-      `$2b$${BCRYPT_SALT_ROUNDS}$R/hhUgEclsHjleite3asjuwR/mKU0kq72ZfE0crgkVMnkISPJAxCC`,
+      `$2b$${getBcryptSaltRounds()}$R/hhUgEclsHjleite3asjuwR/mKU0kq72ZfE0crgkVMnkISPJAxCC`,
     );
 
     throw AppError.validationError(`${event.name}.invalidCombination`);
