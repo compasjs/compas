@@ -5,7 +5,6 @@ import { TypeCreator } from "@compas/code-gen";
  *
  * @param {App} app
  */
-
 export function extendWithPost(app) {
   const T = new TypeCreator("post");
   const R = T.router("/post");

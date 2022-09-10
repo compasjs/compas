@@ -1,7 +1,11 @@
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import {
-  dirnameForModule, exec, isNil, pathJoin, processDirectoryRecursive,
+  dirnameForModule,
+  exec,
+  isNil,
+  pathJoin,
+  processDirectoryRecursive,
 } from "@compas/stdlib";
 
 /**
