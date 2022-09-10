@@ -7,6 +7,8 @@ mainTestFn(import.meta);
 test("compas/examples", async (t) => {
   const examples = await readdir("./examples");
 
+  t.timeout = 5000;
+
   const configs = (
     await Promise.all(
       examples.map(async (example) => {
