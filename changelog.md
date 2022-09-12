@@ -4,6 +4,23 @@ editLink: false
 
 # Changelog
 
+### [v0.0.215](https://github.com/compasjs/compas/releases/tag/v0.0.215)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.163.0 to 3.168.0
+  ([#2051](https://github.com/compasjs/compas/pull/2051))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.163.0 to 3.168.0
+  ([#2045](https://github.com/compasjs/compas/pull/2045) ,
+  [#2053](https://github.com/compasjs/compas/pull/2053))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- examples(with-auth): create with-auth example
+  ([#2050](https://github.com/compasjs/compas/pull/2050))
+  - Closes [#2049](https://github.com/compasjs/compas/pull/2049)
+- feat(code-gen): openAPI import fixes for file uploads and string types
+  ([#2056](https://github.com/compasjs/compas/pull/2056))
+
 ### [v0.0.214](https://github.com/compasjs/compas/releases/tag/v0.0.214)
 
 ##### Changes
