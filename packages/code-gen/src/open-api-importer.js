@@ -157,12 +157,19 @@ function extractRoute(context, path, method) {
     compasStruct.internalSettings.requestBodyType = "form-data";
   }
 
-  compasStruct.body = transformBody(
+  const body = transformBody(
     context,
     contentKey,
     item.requestBody,
     compasStruct,
   );
+
+  if (body && JSON.stringify(body).includes(`type":"file"`)) {
+    compasStruct.files = body;
+  } else {
+    compasStruct.body = body;
+  }
+
   compasStruct.response = transformResponse(
     context,
     item.responses?.["200"] ?? item.responses?.["201"],
@@ -266,7 +273,6 @@ function transformBody(context, contentKey, input, compasStruct) {
   item.group = compasStruct.group;
   item.name = `${compasStruct.name}Body`;
   item.docString = input.description || "";
-  item.isOptional = !input.required;
 
   return item;
 }
@@ -456,11 +462,14 @@ function convertSchema(context, schema) {
     assignBaseData();
   } else if (schema.type === "string") {
     result.type = "string";
-    if (result.format === "uuid") {
+    if (schema.format === "uuid") {
       result.type = "uuid";
       assignBaseData();
-    } else if (result.format === "date" || result.format === "date-time") {
+    } else if (schema.format === "date" || schema.format === "date-time") {
       result.type = "date";
+      assignBaseData();
+    } else if (schema.format === "binary") {
+      result.type = "file";
       assignBaseData();
     } else {
       assignBaseData();
