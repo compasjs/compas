@@ -2,6 +2,7 @@ import { readFile } from "fs/promises";
 import { readdir } from "node:fs/promises";
 import { AppError, exec } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
+import { extendWithCodeGenExperimental } from "../gen/code-gen-experimental.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
 import { App } from "../packages/code-gen/index.js";
@@ -47,6 +48,20 @@ export async function generateCodeGen() {
     enabledGroups: ["codeGen"],
     isNode: true,
     enabledGenerators: ["validator", "type"],
+    dumpStructure: true,
+    declareGlobalTypes: false,
+  });
+
+  const app2 = new App({
+    verbose: true,
+  });
+
+  extendWithCodeGenExperimental(app2);
+
+  await app2.generate({
+    outputDirectory: `packages/code-gen/src/experimental/generated`,
+    isNode: true,
+    enabledGenerators: ["type"],
     dumpStructure: true,
     declareGlobalTypes: false,
   });

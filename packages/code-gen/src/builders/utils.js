@@ -7,7 +7,10 @@ import { StringType } from "./StringType.js";
 
 /**
  * @param value
- * @returns {boolean}
+ * @returns {value is
+ *   Omit<import("../experimental/generated/common/types").ExperimentalNamedTypeDefinition,
+ *   "name"|"group"> & { name: string, group: string,
+ *   }}
  */
 export function isNamedTypeBuilderLike(value) {
   if (!isPlainObject(value)) {
