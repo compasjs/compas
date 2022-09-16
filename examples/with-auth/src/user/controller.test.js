@@ -140,15 +140,16 @@ test("user/controller", async (t) => {
     });
 
     t.test("logged in", async (t) => {
-      axiosInstance.defaults.headers.common.Authorization = `Bearer ${loginTokens.accessToken}`;
-      await apiUserLogout(axiosInstance);
+      await apiUserLogout(axiosInstance, {
+        headers: {
+          Authorization: `Bearer ${loginTokens.accessToken}`,
+        },
+      });
 
       t.pass();
     });
 
     t.test("without session", async (t) => {
-      delete axiosInstance.defaults.headers.common.Authorization;
-
       await apiUserLogout(axiosInstance);
 
       t.pass();
@@ -157,8 +158,7 @@ test("user/controller", async (t) => {
 
   t.test("apiUserMe", async (t) => {
     // At some point you may want to add an abstraction for creating test users and how
-    // they login, so you don't have to repeat the logic for setting the tokens on your
-    // axios instance.
+    // they login, so you don't have to add the accessToken to each api call.
 
     const email = `${uuid()}@example.com`;
     const password = uuid();
@@ -173,13 +173,13 @@ test("user/controller", async (t) => {
       password,
     });
 
-    axiosInstance.defaults.headers.common.Authorization = `Bearer ${loginTokens.accessToken}`;
-
-    const response = await apiUserMe(axiosInstance);
+    const response = await apiUserMe(axiosInstance, {
+      headers: {
+        Authorization: `Bearer ${loginTokens.accessToken}`,
+      },
+    });
 
     t.equal(response.email, email);
-
-    delete axiosInstance.defaults.headers.common.Authorization;
   });
 
   t.test("teardown", async (t) => {
