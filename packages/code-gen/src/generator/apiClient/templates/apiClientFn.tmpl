@@ -17,7 +17,7 @@
     {{ if (item.files) { }}
      * @param { {{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }} } files
     {{ } }}
-     * @param { { signal?: AbortSignal | undefined } } [requestConfig]
+     * @param {AxiosRequestConfig} [requestConfig]
     {{ if (item.response) { }}
      * @returns {Promise<{{= getTypeNameForType(item.response.reference, typeSuffix.apiResponse, { isJSON: true, fileTypeIO: "outputClient", }) }}>}
     {{ } }}
@@ -38,7 +38,7 @@ export async function api{{= item.uniqueName }}(
     {{ if (item.files) { }}
     files: T.{{= getTypeNameForType(item.files.reference, typeSuffix.apiInput, { useDefaults: false, fileTypeIO: "input", }) }},
     {{ } }}
-    requestConfig: { signal?: AbortSignal|undefined } = {},
+    requestConfig: AxiosRequestConfig = {},
 {{ } else { }}
     instance,
     {{ if (item.params) { }}
