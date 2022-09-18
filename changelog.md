@@ -4,6 +4,31 @@ editLink: false
 
 # Changelog
 
+### [v0.0.216](https://github.com/compasjs/compas/releases/tag/v0.0.216)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.168.0 to 3.171.0
+  ([#2067](https://github.com/compasjs/compas/pull/2067))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.168.0 to 3.171.0
+  ([#2065](https://github.com/compasjs/compas/pull/2065))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.19.0 to 7.19.1
+  ([#2068](https://github.com/compasjs/compas/pull/2068))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.18.9 to 7.19.1
+  ([#2066](https://github.com/compasjs/compas/pull/2066))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.23.0 to 8.23.1
+  ([#2060](https://github.com/compasjs/compas/pull/2060))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- feat(code-gen): accept full axios config in api client
+  ([#2070](https://github.com/compasjs/compas/pull/2070))
+  - Closes [#2069](https://github.com/compasjs/compas/pull/2069)
+- fix(store): swallow fileVerifyAccessToken validation errors and always return
+  'invalidToken'.
+
 ### [v0.0.215](https://github.com/compasjs/compas/releases/tag/v0.0.215)
 
 ##### Changes
