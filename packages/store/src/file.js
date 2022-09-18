@@ -341,7 +341,8 @@ export function fileVerifyAccessToken(options) {
     typeof options.fileAccessToken !== "string" ||
     typeof options.signingKey !== "string" ||
     typeof options.expectedFileId !== "string" ||
-    !options.fileAccessToken
+    !options.fileAccessToken ||
+    !options.signingKey
   ) {
     throw AppError.serverError({
       message:
@@ -349,7 +350,12 @@ export function fileVerifyAccessToken(options) {
     });
   }
 
-  const isValid = verify(options.fileAccessToken, "HS256", options.signingKey);
+  let isValid;
+  try {
+    isValid = verify(options.fileAccessToken, "HS256", options.signingKey);
+  } catch {
+    isValid = false;
+  }
 
   if (!isValid) {
     throw AppError.validationError(
