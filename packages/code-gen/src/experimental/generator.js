@@ -1,12 +1,11 @@
 import { readFileSync } from "fs";
 import { pathJoin } from "@compas/stdlib";
 import { buildOrInfer } from "../builders/index.js";
+import { generateExecute } from "./generate.js";
 import {
   structureAddType,
-  structureCopyAndSort,
   structureExtractGroups,
   structureNamedTypes,
-  structureValidateReferences,
 } from "./structure.js";
 
 export class Generator {
@@ -15,13 +14,11 @@ export class Generator {
    */
   constructor(logger) {
     /**
-     * @private
      * @type {import("@compas/stdlib").Logger}
      */
     this.logger = logger;
 
     /**
-     * @private
      * @type {import("./generated/common/types").ExperimentalStructure}
      */
     this.initialStructure = {};
@@ -108,29 +105,9 @@ export class Generator {
    * Generate based on the structure that is known to this generator
    *
    * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
-   * @returns {*[]}
+   * @returns {import("./generate").GenerateContext["outputFiles"]}
    */
   generate(options) {
-    // TODO: validate generate options
-    // TODO: support generate presets
-    // TODO: write migration docs between old and new code gen
-    // TODO: statically validate structure
-
-    // TODO: start with infrastructure
-    //  - general checks and structure behaviour like expanding CRUD, resolving relations
-    //    etc.
-    //  - per generator logic
-    //  - per generator writers for different languages, runtimes, libraries
-    //  - Error handling
-    //  - File collection
-    //  - Context pattern? I guess that it works, but not sure if it is thef way to go.
-    structureValidateReferences(this.initialStructure);
-    const structure = structureCopyAndSort(this.initialStructure);
-    // TODO: execute structure dump if enabled (include options that are used for
-    //  generating
-
-    // TODO: pick up from preprocessors
-
-    return [];
+    return generateExecute(this, options);
   }
 }

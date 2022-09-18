@@ -4,15 +4,13 @@ export class Generator {
    */
   constructor(logger: import("@compas/stdlib").Logger);
   /**
-   * @private
    * @type {import("@compas/stdlib").Logger}
    */
-  private logger;
+  logger: import("@compas/stdlib").Logger;
   /**
-   * @private
    * @type {import("./generated/common/types").ExperimentalStructure}
    */
-  private initialStructure;
+  initialStructure: import("./generated/common/types").ExperimentalStructure;
   /**
    * @private
    * @type {import("./generated/common/types").ExperimentalStructure[]}
@@ -52,10 +50,10 @@ export class Generator {
    * Generate based on the structure that is known to this generator
    *
    * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
-   * @returns {*[]}
+   * @returns {import("./generate").GenerateContext["outputFiles"]}
    */
   generate(
     options: import("./generated/common/types").ExperimentalGenerateOptions,
-  ): any[];
+  ): import("./generate").GenerateContext["outputFiles"];
 }
 //# sourceMappingURL=generator.d.ts.map

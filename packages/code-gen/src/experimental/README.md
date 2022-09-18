@@ -148,3 +148,12 @@ This probably won't land in a single Compas release, so we may want to use
     `errorThrowCombinedError`. See its docs for other supported properties in
     the info object.
   - Low level filesystem errors are thrown as is.
+- Context;
+  - The full generator path is called unconditionally. This means that we may do
+    extra function calls when not necessary. Each called function should check
+    if it should do something.
+  - The context is used to provide the structure, options and collected
+    outputFiles to each function.
+- Options;
+  - If an output directory is provided, files are written. They are always
+    returned to the caller.
