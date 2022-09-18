@@ -3,8 +3,10 @@ import { pathJoin } from "@compas/stdlib";
 import { buildOrInfer } from "../builders/index.js";
 import {
   structureAddType,
+  structureCopyAndSort,
   structureExtractGroups,
   structureNamedTypes,
+  structureValidateReferences,
 } from "./structure.js";
 
 export class Generator {
@@ -78,7 +80,7 @@ export class Generator {
     const newStructure = this.structures.at(-1) ?? {};
     for (const namedDefinition of structureNamedTypes(newStructure)) {
       structureAddType(this.initialStructure, namedDefinition, {
-        skipReferencesCheck: true,
+        skipReferenceExtraction: true,
       });
     }
 
@@ -109,6 +111,26 @@ export class Generator {
    * @returns {*[]}
    */
   generate(options) {
+    // TODO: validate generate options
+    // TODO: support generate presets
+    // TODO: write migration docs between old and new code gen
+    // TODO: statically validate structure
+
+    // TODO: start with infrastructure
+    //  - general checks and structure behaviour like expanding CRUD, resolving relations
+    //    etc.
+    //  - per generator logic
+    //  - per generator writers for different languages, runtimes, libraries
+    //  - Error handling
+    //  - File collection
+    //  - Context pattern? I guess that it works, but not sure if it is thef way to go.
+    structureValidateReferences(this.initialStructure);
+    const structure = structureCopyAndSort(this.initialStructure);
+    // TODO: execute structure dump if enabled (include options that are used for
+    //  generating
+
+    // TODO: pick up from preprocessors
+
     return [];
   }
 }

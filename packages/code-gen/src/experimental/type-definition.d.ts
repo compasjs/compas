@@ -1,20 +1,71 @@
 /**
- * @typedef {object} TypeDefinitionHelper
- * @property {import("./structure").structureExtractReferences} structureExtractReferences
- * @property {import("./structure").structureIncludeReferences} structureIncludeReferences
+ * @type {{
+ *   bool: {
+ *     structureExtractReferences: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *     ) => void,
+ *     structureIncludeReferences: (
+ *        fullStructure: import("./generated/common/types").ExperimentalStructure,
+ *        newStructure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *     ) => void,
+ *     structureValidateReferenceForType: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *        parentTypeStack: string[],
+ *     ) => void,
+ *   },
+ *   reference: {
+ *     structureExtractReferences: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *     ) => void,
+ *     structureIncludeReferences: (
+ *        fullStructure: import("./generated/common/types").ExperimentalStructure,
+ *        newStructure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *     ) => void,
+ *     structureValidateReferenceForType: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *        parentTypeStack: string[],
+ *     ) => void,
+ *   },
+ * }}
  */
-/**
- * @type {Record<
- *   import("./generated/common/types").ExperimentalTypeDefinition["type"],
- *   TypeDefinitionHelper
- * >}
- */
-export const typeDefinitionHelpers: Record<
-  import("./generated/common/types").ExperimentalTypeDefinition["type"],
-  TypeDefinitionHelper
->;
-export type TypeDefinitionHelper = {
-  structureExtractReferences: typeof import("./structure.js").structureExtractReferences;
-  structureIncludeReferences: typeof import("./structure.js").structureIncludeReferences;
+export const typeDefinitionHelpers: {
+  bool: {
+    structureExtractReferences: (
+      structure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalBooleanDefinition,
+    ) => void;
+    structureIncludeReferences: (
+      fullStructure: import("./generated/common/types").ExperimentalStructure,
+      newStructure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalBooleanDefinition,
+    ) => void;
+    structureValidateReferenceForType: (
+      structure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalBooleanDefinition,
+      parentTypeStack: string[],
+    ) => void;
+  };
+  reference: {
+    structureExtractReferences: (
+      structure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalReferenceDefinition,
+    ) => void;
+    structureIncludeReferences: (
+      fullStructure: import("./generated/common/types").ExperimentalStructure,
+      newStructure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalReferenceDefinition,
+    ) => void;
+    structureValidateReferenceForType: (
+      structure: import("./generated/common/types").ExperimentalStructure,
+      type: import("./generated/common/types").ExperimentalReferenceDefinition,
+      parentTypeStack: string[],
+    ) => void;
+  };
 };
 //# sourceMappingURL=type-definition.d.ts.map

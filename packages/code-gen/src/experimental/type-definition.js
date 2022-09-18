@@ -1,21 +1,48 @@
-import { isNil } from "@compas/stdlib";
-import { structureAddType } from "./structure.js";
-/**
- * @typedef {object} TypeDefinitionHelper
- * @property {import("./structure").structureExtractReferences} structureExtractReferences
- * @property {import("./structure").structureIncludeReferences} structureIncludeReferences
- */
+import { AppError, isNil } from "@compas/stdlib";
+import { stringFormatNameForError } from "./string-format.js";
+import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
- * @type {Record<
- *   import("./generated/common/types").ExperimentalTypeDefinition["type"],
- *   TypeDefinitionHelper
- * >}
+ * @type {{
+ *   bool: {
+ *     structureExtractReferences: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *     ) => void,
+ *     structureIncludeReferences: (
+ *        fullStructure: import("./generated/common/types").ExperimentalStructure,
+ *        newStructure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *     ) => void,
+ *     structureValidateReferenceForType: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
+ *        parentTypeStack: string[],
+ *     ) => void,
+ *   },
+ *   reference: {
+ *     structureExtractReferences: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *     ) => void,
+ *     structureIncludeReferences: (
+ *        fullStructure: import("./generated/common/types").ExperimentalStructure,
+ *        newStructure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *     ) => void,
+ *     structureValidateReferenceForType: (
+ *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        type: import("./generated/common/types").ExperimentalReferenceDefinition,
+ *        parentTypeStack: string[],
+ *     ) => void,
+ *   },
+ * }}
  */
 export const typeDefinitionHelpers = {
   bool: {
     structureExtractReferences() {},
     structureIncludeReferences() {},
+    structureValidateReferenceForType() {},
   },
   reference: {
     structureExtractReferences(structure, type) {
@@ -48,8 +75,19 @@ export const typeDefinitionHelpers = {
       }
 
       structureAddType(newStructure, referencedType, {
-        skipReferencesCheck: true,
+        skipReferenceExtraction: true,
       });
+    },
+    structureValidateReferenceForType(structure, type, parentTypeStack) {
+      try {
+        structureResolveReference(structure, type);
+      } catch {
+        throw AppError.serverError({
+          message: `Could not resolve reference to ${stringFormatNameForError(
+            type.reference,
+          )} via ${parentTypeStack.join(" -> ")}`,
+        });
+      }
     },
   },
 };
