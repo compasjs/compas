@@ -3,6 +3,12 @@ import { stringFormatNameForError } from "./string-format.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
+ * Implementations for structure behaviors per type.
+ * This is optimized for adding new types without altering many files, it will grow in to
+ * a pretty decent file, but should be pretty stable.
+ *
+ * These are not tested directly, but via their callers.
+ *
  * @type {{
  *   bool: {
  *     structureExtractReferences: (

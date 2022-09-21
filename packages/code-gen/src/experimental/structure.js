@@ -97,7 +97,9 @@ export function structureValidateReferences(structure) {
 export function structureResolveReference(structure, reference) {
   if (reference.type !== "reference") {
     throw AppError.serverError({
-      message: `Expected 'reference', found '${reference.type ?? "undefined"}`,
+      message: `Expected 'reference', found ${stringFormatNameForError({
+        type: reference.type,
+      })}`,
       reference,
     });
   }
@@ -131,6 +133,10 @@ export function structureCopyAndSort(structure) {
 
   const groups = Object.keys(structure).sort();
   for (const group of groups) {
+    // This makes sure that an empty group is copied over as well, may have semantic
+    // meaning sometime down the road.
+    newStructure[group] = {};
+
     const typeNames = Object.keys(structure[group]).sort();
 
     for (const name of typeNames) {
