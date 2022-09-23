@@ -1,5 +1,5 @@
 import { AppError, isNil } from "@compas/stdlib";
-import { stringFormatNameForError } from "./string-format.js";
+import { stringFormatNameForError } from "../string-format.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
@@ -12,7 +12,7 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  * @type {{
  *   bool: {
  *     structureExtractReferences: (
- *        structure: import("./generated/common/types").ExperimentalStructure,
+ *        structure: import("../generated/common/types.js").ExperimentalStructure,
  *        type: import("./generated/common/types").ExperimentalBooleanDefinition,
  *     ) => void,
  *     structureIncludeReferences: (

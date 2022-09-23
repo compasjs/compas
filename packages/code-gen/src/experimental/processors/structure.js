@@ -1,14 +1,14 @@
 import { AppError, isNil } from "@compas/stdlib";
-import { isNamedTypeBuilderLike } from "../builders/index.js";
-import { errorsThrowCombinedError } from "./errors.js";
-import { stringFormatNameForError } from "./string-format.js";
+import { isNamedTypeBuilderLike } from "../../builders/index.js";
+import { errorsThrowCombinedError } from "../errors.js";
+import { stringFormatNameForError } from "../string-format.js";
 import { typeDefinitionHelpers } from "./type-definition.js";
 
 /**
  * Add a specific type to the structure
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @param {import("./generated/common/types").ExperimentalNamedTypeDefinition} type
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalNamedTypeDefinition} type
  * @param {{ skipReferenceExtraction: boolean }} options
  */
 export function structureAddType(structure, type, options) {
@@ -33,8 +33,8 @@ export function structureAddType(structure, type, options) {
 /**
  * Returns an array of all the named types in the provided structure
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @returns {import("./generated/common/types").ExperimentalNamedTypeDefinition[]}
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition[]}
  */
 export function structureNamedTypes(structure) {
   return Object.values(structure)
@@ -44,9 +44,9 @@ export function structureNamedTypes(structure) {
 
 /**
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
  * @param {string[]} groups
- * @returns {import("./generated/common/types").ExperimentalStructure}
+ * @returns {import("../generated/common/types").ExperimentalStructure}
  */
 export function structureExtractGroups(structure, groups) {
   /** @type {import("./generated/common/types").ExperimentalStructure} */
@@ -68,7 +68,7 @@ export function structureExtractGroups(structure, groups) {
 /**
  * Check if all references in the current structure resolve
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
  */
 export function structureValidateReferences(structure) {
   /** @type {import("@compas/stdlib").AppError[]} */
@@ -90,9 +90,9 @@ export function structureValidateReferences(structure) {
 /**
  * Resolve the provided reference
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @param {import("./generated/common/types").ExperimentalTypeDefinition} reference
- * @returns {import("./generated/common/types").ExperimentalNamedTypeDefinition}
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} reference
+ * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition}
  */
 export function structureResolveReference(structure, reference) {
   if (reference.type !== "reference") {
@@ -124,11 +124,11 @@ export function structureResolveReference(structure, reference) {
  * - The JS iterators in Node.js are based on object insertion order, so this ensures
  * that our output is stable.
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @returns {import("./generated/common/types").ExperimentalStructure}
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @returns {import("../generated/common/types").ExperimentalStructure}
  */
 export function structureCopyAndSort(structure) {
-  /** @type {import("./generated/common/types").ExperimentalStructure} */
+  /** @type {import("../generated/common/types").ExperimentalStructure} */
   const newStructure = {};
 
   const groups = Object.keys(structure).sort();
@@ -154,8 +154,8 @@ export function structureCopyAndSort(structure) {
  * code-gen we prefer to keep references as much as possible and resolve them on the fly
  * while generating if necessary.
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @param {import("./generated/common/types").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureExtractReferences(structure, type) {
   // @ts-expect-error
@@ -165,9 +165,9 @@ export function structureExtractReferences(structure, type) {
 /**
  * Include all references referenced by type in to the new structure.
  *
- * @param {import("./generated/common/types").ExperimentalStructure} fullStructure
- * @param {import("./generated/common/types").ExperimentalStructure} newStructure
- * @param {import("./generated/common/types").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types").ExperimentalStructure} fullStructure
+ * @param {import("../generated/common/types").ExperimentalStructure} newStructure
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureIncludeReferences(fullStructure, newStructure, type) {
   typeDefinitionHelpers[type.type].structureIncludeReferences(
@@ -182,8 +182,8 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
 /**
  * Recursively check if all references used by the provided type can be resolved.
  *
- * @param {import("./generated/common/types").ExperimentalStructure} structure
- * @param {import("./generated/common/types").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types").ExperimentalStructure} structure
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  * @param {string[]} parentTypeStack
  */
 export function structureValidateReferenceForType(

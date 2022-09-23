@@ -3,7 +3,7 @@ import { isNil, pathJoin } from "@compas/stdlib";
 import {
   structureCopyAndSort,
   structureValidateReferences,
-} from "./structure.js";
+} from "./processors/structure.js";
 import { structureGenerator } from "./structure/generator.js";
 
 /**
