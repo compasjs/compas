@@ -3,9 +3,14 @@
 
 export type ExperimentalBooleanDefinition = {
   type: "bool";
-  isOptional: boolean;
   group?: undefined | string;
   name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: { convert: boolean; allowNull: boolean };
+  oneOf?: undefined | boolean;
 };
 export type ExperimentalGenerateOptions = {
   targetLanguage: "js" | "ts";
@@ -44,7 +49,11 @@ export type ExperimentalNamePart = string;
 export type ExperimentalNamedTypeDefinition = ExperimentalBooleanDefinition;
 export type ExperimentalReferenceDefinition = {
   type: "reference";
+  docString: string;
   isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: { primary: boolean; searchable: boolean; hasDefaultValue: boolean };
+  validator: {};
   reference: { group: ExperimentalNamePart; name: ExperimentalNamePart };
 };
 export type ExperimentalStructure = {

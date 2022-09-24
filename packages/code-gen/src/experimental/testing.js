@@ -21,13 +21,46 @@ export function testExperimentalGenerateContext(t, options, structure) {
  * @returns {import("./generated/common/types").ExperimentalStructure}
  */
 function getDefaultStructure() {
+  const sql = { primary: false, searchable: false, hasDefaultValue: false };
+
   return {
     basic: {
-      requiredBoolean: {
+      boolRequired: {
         type: "bool",
         group: "basic",
-        name: "requiredBoolean",
+        name: "boolRequired",
+        docString: "",
         isOptional: false,
+        validator: {
+          allowNull: false,
+          convert: false,
+        },
+        sql,
+      },
+      boolOptional: {
+        type: "bool",
+        group: "basic",
+        name: "boolOptional",
+        docString: "",
+        isOptional: true,
+        validator: {
+          allowNull: false,
+          convert: false,
+        },
+        sql,
+      },
+      boolDefault: {
+        type: "bool",
+        group: "basic",
+        name: "boolDefault",
+        docString: "",
+        isOptional: true,
+        defaultValue: true,
+        validator: {
+          allowNull: false,
+          convert: false,
+        },
+        sql,
       },
     },
   };

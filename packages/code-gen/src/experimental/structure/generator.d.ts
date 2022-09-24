@@ -9,8 +9,10 @@ export function structureGenerator(
 /**
  * Check if we should dump the structure
  *
- * @param {import("./generate").GenerateContext} ctx
+ * @param {import("../generate").GenerateContext} ctx
  * @returns {boolean}
  */
-export function structureIsEnabled(ctx: any): boolean;
+export function structureIsEnabled(
+  ctx: import("../generate").GenerateContext,
+): boolean;
 //# sourceMappingURL=generator.d.ts.map

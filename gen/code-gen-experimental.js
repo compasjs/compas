@@ -12,6 +12,29 @@ export function extendWithCodeGenExperimental(app) {
     .min(1)
     .pattern(/^[a-zA-Z$][a-zA-Z\d]+$/g);
 
+  const typeDefinitionBase = {
+    docString: T.string().default(`""`),
+    isOptional: T.bool().default(false),
+    defaultValue: T.anyOf()
+      .values(T.string().min(1), T.bool(), T.number())
+      .optional(),
+    sql: T.object()
+      .keys({
+        primary: T.bool().default(false),
+        searchable: T.bool().default(false),
+        hasDefaultValue: T.bool().default(false),
+      })
+      .default(`{ primary: false, searchable: false, hasDefaultValue: false, }`)
+      .loose(),
+    validator: T.object().loose().default("{}"),
+  };
+
+  const namedTypeDefinitionBase = {
+    group: T.string().optional(),
+    name: T.string().optional(),
+    ...typeDefinitionBase,
+  };
+
   app.add(
     T.generic("structure")
       .keys(namePart)
@@ -163,7 +186,7 @@ export function extendWithCodeGenExperimental(app) {
     T.object("referenceDefinition")
       .keys({
         type: "reference",
-        isOptional: T.bool().default(false),
+        ...typeDefinitionBase,
         reference: T.object()
           .keys({
             group: namePart,
@@ -176,9 +199,14 @@ export function extendWithCodeGenExperimental(app) {
     T.object("booleanDefinition")
       .keys({
         type: "bool",
-        isOptional: T.bool().default(false),
-        group: T.string().optional(),
-        name: T.string().optional(),
+        ...namedTypeDefinitionBase,
+        oneOf: T.bool().optional(),
+        validator: T.object()
+          .keys({
+            convert: T.bool().default(false),
+            allowNull: T.bool().default(false),
+          })
+          .loose(),
       })
       .loose(),
   );

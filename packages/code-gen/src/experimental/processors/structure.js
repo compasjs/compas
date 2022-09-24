@@ -49,7 +49,7 @@ export function structureNamedTypes(structure) {
  * @returns {import("../generated/common/types").ExperimentalStructure}
  */
 export function structureExtractGroups(structure, groups) {
-  /** @type {import("./generated/common/types").ExperimentalStructure} */
+  /** @type {import("../generated/common/types").ExperimentalStructure} */
   const newStructure = {};
 
   for (const group of groups) {
