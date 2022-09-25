@@ -10,7 +10,7 @@ export function testExperimentalGenerateContext(
   t: Parameters<
     [
       name: string,
-      callback: import("@compas/cli/src/testing/state").TestCallback,
+      callback: import("@compas/cli/src/testing/state.js").TestCallback,
     ][1]
   >[0],
   options: import("./generated/common/types").ExperimentalGenerateOptions,

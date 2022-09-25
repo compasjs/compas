@@ -1,5 +1,9 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
-import { isNil, pathJoin } from "@compas/stdlib";
+import { AppError, isNil, pathJoin } from "@compas/stdlib";
+import {
+  validateExperimentalGenerateOptions,
+  validateExperimentalStructure,
+} from "./generated/experimental/validators.js";
 import {
   structureCopyAndSort,
   structureValidateReferences,
@@ -25,7 +29,32 @@ import { structureGenerator } from "./structure/generator.js";
  * @returns {GenerateContext["outputFiles"]}
  */
 export function generateExecute(generator, options) {
-  // TODO: validate generate options
+  // TODO: migrate to new validators
+  const validationResultOptions = validateExperimentalGenerateOptions(options);
+  const validationResultStructure = validateExperimentalStructure(
+    generator.initialStructure,
+  );
+
+  if (validationResultOptions.error) {
+    throw AppError.serverError(
+      {
+        message: "Static validation failed for the provided options.",
+      },
+      validationResultOptions.error,
+    );
+  }
+
+  if (validationResultStructure.error) {
+    throw AppError.serverError(
+      {
+        message: "Static validation on the structure failed",
+      },
+      validationResultStructure.error,
+    );
+  }
+
+  options = validationResultOptions.value;
+
   // TODO: support generate presets
   // TODO: write migration docs between old and new code gen
   // TODO: statically validate structure

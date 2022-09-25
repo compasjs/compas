@@ -3,6 +3,7 @@ export class NumberType extends TypeBuilder {
     oneOf: undefined;
     validator: {
       convert: boolean;
+      allowNull: boolean;
       floatingPoint: boolean;
       min: undefined;
       max: undefined;

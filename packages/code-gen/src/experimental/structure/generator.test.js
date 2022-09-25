@@ -61,7 +61,7 @@ test("code-gen/experimental/structure/generator", (t) => {
 
       const contents = JSON.parse(context.outputFiles[0].contents);
 
-      t.equal(contents.basic.boolRequired.type, "bool");
+      t.equal(contents.basic.boolRequired.type, "boolean");
     });
   });
 

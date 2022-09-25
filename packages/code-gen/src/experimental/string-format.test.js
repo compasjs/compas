@@ -16,10 +16,10 @@ test("code-gen/experimental/string-format", (t) => {
 
     t.test("format type property", (t) => {
       const result = stringFormatNameForError({
-        type: "bool",
+        type: "boolean",
       });
 
-      t.equal(result, "(bool)");
+      t.equal(result, "(boolean)");
     });
 
     t.test("default to anonymous", (t) => {

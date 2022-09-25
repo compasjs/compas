@@ -5,6 +5,7 @@ export class BooleanType extends TypeBuilder {
     oneOf: undefined,
     validator: {
       convert: false,
+      allowNull: false,
     },
   };
 

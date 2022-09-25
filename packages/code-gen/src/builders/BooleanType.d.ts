@@ -3,6 +3,7 @@ export class BooleanType extends TypeBuilder {
     oneOf: undefined;
     validator: {
       convert: boolean;
+      allowNull: boolean;
     };
   };
   constructor(group: any, name: any);

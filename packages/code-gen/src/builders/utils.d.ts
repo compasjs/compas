@@ -6,7 +6,7 @@
  *   }}
  */
 export function isNamedTypeBuilderLike(value: any): value is Omit<
-  import("../experimental/generated/common/types").ExperimentalBooleanDefinition,
+  import("../experimental/generated/common/types").ExperimentalNamedTypeDefinition,
   "name" | "group"
 > & {
   name: string;

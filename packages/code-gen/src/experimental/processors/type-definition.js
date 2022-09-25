@@ -10,7 +10,7 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  * These are not tested directly, but via their callers.
  *
  * @type {{
- *   bool: {
+ *   boolean: {
  *     structureExtractReferences: (
  *        structure: import("../generated/common/types.js").ExperimentalStructure,
  *        type: import("../generated/common/types").ExperimentalBooleanDefinition,
@@ -23,6 +23,22 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  *     structureValidateReferenceForType: (
  *        structure: import("../generated/common/types").ExperimentalStructure,
  *        type: import("../generated/common/types").ExperimentalBooleanDefinition,
+ *        parentTypeStack: string[],
+ *     ) => void,
+ *   },
+ *   number: {
+ *     structureExtractReferences: (
+ *        structure: import("../generated/common/types.js").ExperimentalStructure,
+ *        type: import("../generated/common/types").ExperimentalNumberDefinition,
+ *     ) => void,
+ *     structureIncludeReferences: (
+ *        fullStructure: import("../generated/common/types").ExperimentalStructure,
+ *        newStructure: import("../generated/common/types").ExperimentalStructure,
+ *        type: import("../generated/common/types").ExperimentalNumberDefinition,
+ *     ) => void,
+ *     structureValidateReferenceForType: (
+ *        structure: import("../generated/common/types").ExperimentalStructure,
+ *        type: import("../generated/common/types").ExperimentalNumberDefinition,
  *        parentTypeStack: string[],
  *     ) => void,
  *   },
@@ -45,7 +61,12 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  * }}
  */
 export const typeDefinitionHelpers = {
-  bool: {
+  boolean: {
+    structureExtractReferences() {},
+    structureIncludeReferences() {},
+    structureValidateReferenceForType() {},
+  },
+  number: {
     structureExtractReferences() {},
     structureIncludeReferences() {},
     structureValidateReferenceForType() {},

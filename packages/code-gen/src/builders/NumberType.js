@@ -6,6 +6,7 @@ export class NumberType extends TypeBuilder {
     oneOf: undefined,
     validator: {
       convert: false,
+      allowNull: false,
       floatingPoint: false,
       min: undefined,
       max: undefined,

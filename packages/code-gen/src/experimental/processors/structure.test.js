@@ -14,7 +14,7 @@ import {
 
 mainTestFn(import.meta);
 
-test("code-gen/experimental/structure", (t) => {
+test("code-gen/experimental/processors/structure", (t) => {
   t.test("structureAddType", (t) => {
     t.test("only accepts named type definitions", (t) => {
       try {
@@ -34,7 +34,7 @@ test("code-gen/experimental/structure", (t) => {
       structureAddType(
         structure,
         {
-          type: "bool",
+          type: "boolean",
           group: "foo",
           name: "bar",
         },
@@ -51,7 +51,7 @@ test("code-gen/experimental/structure", (t) => {
       structureAddType(
         structure,
         {
-          type: "bool",
+          type: "boolean",
           group: "foo",
           name: "bar",
         },
@@ -71,7 +71,7 @@ test("code-gen/experimental/structure", (t) => {
           group: "foo",
           name: "bar",
           reference: {
-            type: "bool",
+            type: "boolean",
             group: "bar",
             name: "foo",
           },
@@ -131,7 +131,7 @@ test("code-gen/experimental/structure", (t) => {
         {
           foo: {
             bar: {
-              type: "bool",
+              type: "boolean",
               group: "foo",
               name: "bar",
             },
@@ -148,7 +148,7 @@ test("code-gen/experimental/structure", (t) => {
         {
           foo: {
             bar: {
-              type: "bool",
+              type: "boolean",
               group: "foo",
               name: "bar",
             },
@@ -178,7 +178,7 @@ test("code-gen/experimental/structure", (t) => {
       structureValidateReferences({
         foo: {
           bar: {
-            type: "bool",
+            type: "boolean",
             group: "foo",
             name: "bar",
           },
@@ -217,9 +217,9 @@ test("code-gen/experimental/structure", (t) => {
   t.test("structureResolveReference", (t) => {
     t.test("throws when an invalid type is passed", (t) => {
       try {
-        structureResolveReference({}, { type: "bool", isOptional: true });
+        structureResolveReference({}, { type: "boolean", isOptional: true });
       } catch (e) {
-        t.equal(e.info.message, "Expected 'reference', found (bool)");
+        t.equal(e.info.message, "Expected 'reference', found (boolean)");
       }
     });
 
@@ -244,7 +244,7 @@ test("code-gen/experimental/structure", (t) => {
       const structure = {
         foo: {
           bar: {
-            type: "bool",
+            type: "boolean",
             group: "foo",
             name: "bar",
           },
@@ -278,7 +278,7 @@ test("code-gen/experimental/structure", (t) => {
       const structure = {
         foo: {
           bar: {
-            type: "bool",
+            type: "boolean",
             group: "foo",
             name: "bar",
           },
@@ -305,12 +305,12 @@ test("code-gen/experimental/structure", (t) => {
         const result = structureCopyAndSort({
           foo: {
             quix: {
-              type: "bool",
+              type: "boolean",
               group: "foo",
               name: "quix",
             },
             baz: {
-              type: "bool",
+              type: "boolean",
               group: "foo",
               name: "baz",
             },
@@ -325,7 +325,26 @@ test("code-gen/experimental/structure", (t) => {
   });
 
   t.test("structureExtractReferences", (t) => {
-    t.test("bool", (t) => {
+    t.test("boolean", (t) => {
+      structureExtractReferences(
+        {},
+        {
+          type: "boolean",
+        },
+      );
+
+      // This is a noop currently
+      t.pass();
+    });
+
+    t.test("number", (t) => {
+      structureExtractReferences(
+        {},
+        {
+          type: "number",
+        },
+      );
+
       // This is a noop currently
       t.pass();
     });
@@ -334,7 +353,7 @@ test("code-gen/experimental/structure", (t) => {
       t.test("noop when not a reference", (t) => {
         const structure = {};
         const reference = {
-          type: "bool",
+          type: "boolean",
         };
 
         structureExtractReferences(structure, reference);
@@ -347,7 +366,7 @@ test("code-gen/experimental/structure", (t) => {
         const reference = {
           type: "reference",
           reference: {
-            type: "bool",
+            type: "boolean",
             group: "foo",
             name: "bar",
           },
@@ -356,7 +375,7 @@ test("code-gen/experimental/structure", (t) => {
         structureExtractReferences(structure, reference);
 
         // We can't check for equal object here, since we modify the reference
-        t.equal(structure.foo.bar.type, "bool");
+        t.equal(structure.foo.bar.type, "boolean");
       });
 
       t.test("reference is simplified", (t) => {
@@ -364,7 +383,7 @@ test("code-gen/experimental/structure", (t) => {
         const reference = {
           type: "reference",
           reference: {
-            type: "bool",
+            type: "boolean",
             group: "foo",
             name: "bar",
           },
@@ -400,7 +419,28 @@ test("code-gen/experimental/structure", (t) => {
   });
 
   t.test("structureIncludeReferences", (t) => {
-    t.test("bool", (t) => {
+    t.test("boolean", (t) => {
+      structureIncludeReferences(
+        {},
+        {},
+        {
+          type: "boolean",
+        },
+      );
+
+      // This is a noop currently
+      t.pass();
+    });
+
+    t.test("number", (t) => {
+      structureIncludeReferences(
+        {},
+        {},
+        {
+          type: "number",
+        },
+      );
+
       // This is a noop currently
       t.pass();
     });
@@ -410,7 +450,7 @@ test("code-gen/experimental/structure", (t) => {
         const fullStructure = {};
         const newStructure = {};
         const reference = {
-          type: "bool",
+          type: "boolean",
         };
 
         structureIncludeReferences(fullStructure, newStructure, reference);
@@ -464,7 +504,28 @@ test("code-gen/experimental/structure", (t) => {
   });
 
   t.test("structureValidateReferenceForType", (t) => {
-    t.test("bool", (t) => {
+    t.test("boolean", (t) => {
+      structureValidateReferenceForType(
+        {},
+        {
+          type: "boolean",
+        },
+        [],
+      );
+
+      // This is a noop currently
+      t.pass();
+    });
+
+    t.test("number", (t) => {
+      structureValidateReferenceForType(
+        {},
+        {
+          type: "number",
+        },
+        [],
+      );
+
       // This is a noop currently
       t.pass();
     });
@@ -472,7 +533,7 @@ test("code-gen/experimental/structure", (t) => {
     t.test("reference", (t) => {
       t.test("correct reference is ignored", (t) => {
         const structure = {
-          foo: { bar: { type: "bool" } },
+          foo: { bar: { type: "boolean" } },
         };
         const reference = {
           type: "reference",

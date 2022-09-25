@@ -13,20 +13,19 @@ export function extendWithCodeGenExperimental(app) {
     .pattern(/^[a-zA-Z$][a-zA-Z\d]+$/g);
 
   const typeDefinitionBase = {
-    docString: T.string().default(`""`),
-    isOptional: T.bool().default(false),
+    docString: T.string().min(0),
+    isOptional: T.bool(),
     defaultValue: T.anyOf()
       .values(T.string().min(1), T.bool(), T.number())
       .optional(),
     sql: T.object()
       .keys({
-        primary: T.bool().default(false),
-        searchable: T.bool().default(false),
-        hasDefaultValue: T.bool().default(false),
+        primary: T.bool().optional(),
+        searchable: T.bool().optional(),
+        hasDefaultValue: T.bool().optional(),
       })
-      .default(`{ primary: false, searchable: false, hasDefaultValue: false, }`)
       .loose(),
-    validator: T.object().loose().default("{}"),
+    validator: T.object().loose(),
   };
 
   const namedTypeDefinitionBase = {
@@ -174,14 +173,50 @@ export function extendWithCodeGenExperimental(app) {
       })
       .loose(),
 
+    // NOTE:
+    // These types shouldn't use defaults, since we shouldn't alter the input structure.
+    // These defaults should be applied in the builders or later on in some processor.
+
     T.anyOf("namedTypeDefinition").values(
       T.reference("experimental", "booleanDefinition"),
+      T.reference("experimental", "numberDefinition"),
     ),
 
     T.anyOf("typeDefinition").values(
       T.reference("experimental", "namedTypeDefinition"),
       T.reference("experimental", "referenceDefinition"),
     ),
+
+    T.object("booleanDefinition")
+      .keys({
+        type: "boolean",
+        ...namedTypeDefinitionBase,
+        oneOf: T.bool().optional(),
+        validator: T.object()
+          .keys({
+            convert: T.bool(),
+            allowNull: T.bool(),
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("numberDefinition")
+      .keys({
+        type: "number",
+        ...namedTypeDefinitionBase,
+        oneOf: T.array().values(T.number()).optional(),
+        validator: T.object()
+          .keys({
+            convert: T.bool(),
+            floatingPoint: T.bool(),
+            min: T.number().optional(),
+            max: T.number().optional(),
+            allowNull: T.bool(),
+          })
+          .loose(),
+      })
+      .loose(),
 
     T.object("referenceDefinition")
       .keys({
@@ -191,20 +226,6 @@ export function extendWithCodeGenExperimental(app) {
           .keys({
             group: namePart,
             name: namePart,
-          })
-          .loose(),
-      })
-      .loose(),
-
-    T.object("booleanDefinition")
-      .keys({
-        type: "bool",
-        ...namedTypeDefinitionBase,
-        oneOf: T.bool().optional(),
-        validator: T.object()
-          .keys({
-            convert: T.bool().default(false),
-            allowNull: T.bool().default(false),
           })
           .loose(),
       })

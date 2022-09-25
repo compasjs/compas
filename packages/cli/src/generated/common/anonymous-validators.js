@@ -27,7 +27,7 @@ const objectKeys1833756126 = new Set([
   "flags",
   "executor",
 ]);
-const objectKeys229352914 = new Set(["isDynamic", "isCosmetic", "isWatchable"]);
+const objectKeys560329661 = new Set(["isDynamic", "isCosmetic", "isWatchable"]);
 const objectKeys695211961 = new Set(["validator", "completions"]);
 const objectKeys385137474 = new Set(["extensions", "ignorePatterns"]);
 const objectKeys1885876481 = new Set([
@@ -37,7 +37,7 @@ const objectKeys1885876481 = new Set([
   "modifiers",
   "value",
 ]);
-const objectKeys121992102 = new Set([
+const objectKeys116853049 = new Set([
   "isRepeatable",
   "isRequired",
   "isInternal",
@@ -198,7 +198,7 @@ export function anonymousValidator1443576836(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<boolean>}
  */
-export function anonymousValidator1174857441(value, propertyPath) {
+export function anonymousValidator897743470(value, propertyPath) {
   if (isNil(value)) {
     return { value: false };
   }
@@ -221,7 +221,7 @@ export function anonymousValidator1174857441(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }>}
  */
-export function anonymousValidator229352914(value, propertyPath) {
+export function anonymousValidator560329661(value, propertyPath) {
   if (isNil(value)) {
     return {
       value: { isDynamic: false, isCosmetic: false, isWatchable: false },
@@ -242,7 +242,7 @@ export function anonymousValidator229352914(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys229352914.has(key)) {
+    if (!objectKeys560329661.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -250,7 +250,7 @@ export function anonymousValidator229352914(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys229352914],
+              expectedKeys: [...objectKeys560329661],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -259,7 +259,7 @@ export function anonymousValidator229352914(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isDynamic"],
       `${propertyPath}.isDynamic`,
     );
@@ -270,7 +270,7 @@ export function anonymousValidator229352914(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isCosmetic"],
       `${propertyPath}.isCosmetic`,
     );
@@ -281,7 +281,7 @@ export function anonymousValidator229352914(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isWatchable"],
       `${propertyPath}.isWatchable`,
     );
@@ -749,7 +749,7 @@ export function anonymousValidator287762602(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"isRepeatable": boolean, "isRequired": boolean, "isInternal": boolean, }>}
  */
-export function anonymousValidator121992102(value, propertyPath) {
+export function anonymousValidator116853049(value, propertyPath) {
   if (isNil(value)) {
     return {
       value: { isRepeatable: false, isRequired: false, isInternal: false },
@@ -770,7 +770,7 @@ export function anonymousValidator121992102(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys121992102.has(key)) {
+    if (!objectKeys116853049.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -778,7 +778,7 @@ export function anonymousValidator121992102(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys121992102],
+              expectedKeys: [...objectKeys116853049],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -787,7 +787,7 @@ export function anonymousValidator121992102(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isRepeatable"],
       `${propertyPath}.isRepeatable`,
     );
@@ -798,7 +798,7 @@ export function anonymousValidator121992102(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isRequired"],
       `${propertyPath}.isRequired`,
     );
@@ -809,7 +809,7 @@ export function anonymousValidator121992102(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1174857441(
+    const validatorResult = anonymousValidator897743470(
       value["isInternal"],
       `${propertyPath}.isInternal`,
     );
@@ -1052,7 +1052,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator121992102(
+    const validatorResult = anonymousValidator116853049(
       value["modifiers"],
       `${propertyPath}.modifiers`,
     );
@@ -1224,7 +1224,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator229352914(
+    const validatorResult = anonymousValidator560329661(
       value["modifiers"],
       `${propertyPath}.modifiers`,
     );

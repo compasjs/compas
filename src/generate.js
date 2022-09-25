@@ -61,7 +61,7 @@ export async function generateCodeGen() {
   await app2.generate({
     outputDirectory: `packages/code-gen/src/experimental/generated`,
     isNode: true,
-    enabledGenerators: ["type"],
+    enabledGenerators: ["type", "validator"],
     dumpStructure: true,
     declareGlobalTypes: false,
   });

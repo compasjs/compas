@@ -14,6 +14,7 @@ export class TypeBuilder {
     isOptional: false,
     defaultValue: undefined,
     validator: {},
+    sql: {},
   };
 
   /**

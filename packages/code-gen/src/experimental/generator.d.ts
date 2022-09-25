@@ -19,11 +19,11 @@ export class Generator {
   /**
    * Add new type definitions to this generator
    *
-   * @param {...import("../../types/advanced-types").TypeBuilderLike} types
+   * @param {...import("../../types/advanced-types").TypeBuilderLike} builders
    * @returns {Generator}
    */
   add(
-    ...types: import("../../types/advanced-types").TypeBuilderLike[]
+    ...builders: import("../../types/advanced-types").TypeBuilderLike[]
   ): Generator;
   /**
    * Add an existing structure to this generator.

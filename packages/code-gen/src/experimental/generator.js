@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { pathJoin } from "@compas/stdlib";
+import { AppError, pathJoin } from "@compas/stdlib";
 import { buildOrInfer } from "../builders/index.js";
 import { generateExecute } from "./generate.js";
 import {
@@ -33,15 +33,27 @@ export class Generator {
   /**
    * Add new type definitions to this generator
    *
-   * @param {...import("../../types/advanced-types").TypeBuilderLike} types
+   * @param {...import("../../types/advanced-types").TypeBuilderLike} builders
    * @returns {Generator}
    */
-  add(...types) {
-    for (const t of types) {
-      // @ts-expect-error we probably won't ever type this.
-      structureAddType(this.initialStructure, buildOrInfer(t), {
-        skipReferencesCheck: false,
-      });
+  add(...builders) {
+    for (let i = 0; i < builders.length; i++) {
+      const builder = builders[i];
+      try {
+        // @ts-expect-error we probably won't ever type this.
+        structureAddType(this.initialStructure, buildOrInfer(builder), {
+          skipReferencesCheck: false,
+        });
+      } catch (/** @type {any} */ e) {
+        throw AppError.serverError(
+          {
+            message: `Could not add builder to the structure`,
+            index: i,
+            builder,
+          },
+          e,
+        );
+      }
     }
 
     return this;
