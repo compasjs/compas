@@ -72,6 +72,18 @@ export function validateExperimentalReferenceDefinition(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").ExperimentalReferenceDefinition>;
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalStringDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalStringDefinition>}
+ */
+export function validateExperimentalStringDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalStringDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalStringDefinition>;
+/**
  * @param {undefined|any|import("../common/types").ExperimentalStructureInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalStructure>}

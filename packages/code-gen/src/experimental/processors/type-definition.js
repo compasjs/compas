@@ -9,56 +9,25 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  *
  * These are not tested directly, but via their callers.
  *
- * @type {{
- *   boolean: {
+ * @type {Record<
+ *   import("").ExperimentalTypeDefinition["type"],
+ *   {
  *     structureExtractReferences: (
  *        structure: import("../generated/common/types.js").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalBooleanDefinition,
+ *        type: import("../generated/common/types").ExperimentalTypeDefinition,
  *     ) => void,
  *     structureIncludeReferences: (
  *        fullStructure: import("../generated/common/types").ExperimentalStructure,
  *        newStructure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalBooleanDefinition,
+ *        type: import("../generated/common/types").ExperimentalTypeDefinition,
  *     ) => void,
  *     structureValidateReferenceForType: (
  *        structure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalBooleanDefinition,
+ *        type: import("../generated/common/types").ExperimentalTypeDefinition,
  *        parentTypeStack: string[],
  *     ) => void,
- *   },
- *   number: {
- *     structureExtractReferences: (
- *        structure: import("../generated/common/types.js").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalNumberDefinition,
- *     ) => void,
- *     structureIncludeReferences: (
- *        fullStructure: import("../generated/common/types").ExperimentalStructure,
- *        newStructure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalNumberDefinition,
- *     ) => void,
- *     structureValidateReferenceForType: (
- *        structure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalNumberDefinition,
- *        parentTypeStack: string[],
- *     ) => void,
- *   },
- *   reference: {
- *     structureExtractReferences: (
- *        structure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalReferenceDefinition,
- *     ) => void,
- *     structureIncludeReferences: (
- *        fullStructure: import("../generated/common/types").ExperimentalStructure,
- *        newStructure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalReferenceDefinition,
- *     ) => void,
- *     structureValidateReferenceForType: (
- *        structure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalReferenceDefinition,
- *        parentTypeStack: string[],
- *     ) => void,
- *   },
- * }}
+ *   }
+ * >}
  */
 export const typeDefinitionHelpers = {
   boolean: {
@@ -116,5 +85,10 @@ export const typeDefinitionHelpers = {
         });
       }
     },
+  },
+  string: {
+    structureExtractReferences() {},
+    structureIncludeReferences() {},
+    structureValidateReferenceForType() {},
   },
 };

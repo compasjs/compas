@@ -416,6 +416,18 @@ test("code-gen/experimental/processors/structure", (t) => {
         });
       });
     });
+
+    t.test("string", (t) => {
+      structureExtractReferences(
+        {},
+        {
+          type: "string",
+        },
+      );
+
+      // This is a noop currently
+      t.pass();
+    });
   });
 
   t.test("structureIncludeReferences", (t) => {
@@ -501,6 +513,19 @@ test("code-gen/experimental/processors/structure", (t) => {
         t.equal(fullStructure.foo.bar, newStructure.foo.bar);
       });
     });
+
+    t.test("string", (t) => {
+      structureIncludeReferences(
+        {},
+        {},
+        {
+          type: "string",
+        },
+      );
+
+      // This is a noop currently
+      t.pass();
+    });
   });
 
   t.test("structureValidateReferenceForType", (t) => {
@@ -570,6 +595,19 @@ test("code-gen/experimental/processors/structure", (t) => {
           );
         }
       });
+    });
+
+    t.test("string", (t) => {
+      structureValidateReferenceForType(
+        {},
+        {
+          type: "string",
+        },
+        [],
+      );
+
+      // This is a noop currently
+      t.pass();
     });
   });
 });

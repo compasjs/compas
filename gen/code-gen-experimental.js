@@ -180,6 +180,7 @@ export function extendWithCodeGenExperimental(app) {
     T.anyOf("namedTypeDefinition").values(
       T.reference("experimental", "booleanDefinition"),
       T.reference("experimental", "numberDefinition"),
+      T.reference("experimental", "stringDefinition"),
     ),
 
     T.anyOf("typeDefinition").values(
@@ -230,5 +231,26 @@ export function extendWithCodeGenExperimental(app) {
           .loose(),
       })
       .loose(),
+
+    T.object("stringDefinition").keys({
+      type: "string",
+      ...namedTypeDefinitionBase,
+      oneOf: T.array().values(T.string()).optional(),
+      validator: T.object()
+        .keys({
+          convert: T.bool(),
+          trim: T.bool(),
+          lowerCase: T.bool(),
+          upperCase: T.bool(),
+          min: T.number().default(1),
+          max: T.number().optional(),
+          pattern: T.string().optional(),
+          allowNull: T.bool(),
+          disallowedCharacters: T.optional()
+            .value([T.string().min(1).max(2)])
+            .optional(),
+        })
+        .loose(),
+    }),
   );
 }

@@ -3,7 +3,7 @@
  * @param {string} propertyPath
  * @returns {EitherN<"boolean">}
  */
-export function anonymousValidator1240956158(
+export function anonymousValidator2039173551(
   value: any,
   propertyPath: string,
 ): EitherN<"boolean">;
@@ -12,7 +12,7 @@ export function anonymousValidator1240956158(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|string>}
  */
-export function anonymousValidator1443576836(
+export function anonymousValidator714133621(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | string>;
@@ -21,7 +21,7 @@ export function anonymousValidator1443576836(
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator657675998(
+export function anonymousValidator1051394131(
   value: any,
   propertyPath: string,
 ): EitherN<string>;
@@ -39,7 +39,7 @@ export function anonymousValidator2029691740(
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator186795873(
+export function anonymousValidator1895866002(
   value: any,
   propertyPath: string,
 ): EitherN<string>;
@@ -57,7 +57,7 @@ export function anonymousValidator1415318131(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|string|boolean|number>}
  */
-export function anonymousValidator1211147635(
+export function anonymousValidator1725939044(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | string | boolean | number>;
@@ -126,7 +126,7 @@ export function anonymousValidator55094131(
  * @param {string} propertyPath
  * @returns {EitherN<"js"|"ts">}
  */
-export function anonymousValidator1076507780(
+export function anonymousValidator1874725173(
   value: any,
   propertyPath: string,
 ): EitherN<"js" | "ts">;
@@ -135,7 +135,7 @@ export function anonymousValidator1076507780(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|"node.js"|"browser"|"react-native">}
  */
-export function anonymousValidator1499013307(
+export function anonymousValidator1801875478(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | "node.js" | "browser" | "react-native">;
@@ -177,7 +177,7 @@ export function anonymousValidator732293323(
  * @param {string} propertyPath
  * @returns {EitherN<"koa">}
  */
-export function anonymousValidator983451763(
+export function anonymousValidator1332878756(
   value: any,
   propertyPath: string,
 ): EitherN<"koa">;
@@ -195,7 +195,7 @@ export function anonymousValidator897743470(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }>}
  */
-export function anonymousValidator859832946(
+export function anonymousValidator1665774335(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -210,7 +210,7 @@ export function anonymousValidator859832946(
  * @param {string} propertyPath
  * @returns {EitherN<"postgresql">}
  */
-export function anonymousValidator658385350(
+export function anonymousValidator2097018857(
   value: any,
   propertyPath: string,
 ): EitherN<"postgresql">;
@@ -219,7 +219,7 @@ export function anonymousValidator658385350(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|{"targetDialect": "postgresql", }>}
  */
-export function anonymousValidator1988571631(
+export function anonymousValidator230273118(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -247,7 +247,7 @@ export function anonymousValidator444717756(
  * @param {string} propertyPath
  * @returns {EitherN<"axios">}
  */
-export function anonymousValidator754259468(
+export function anonymousValidator1546150653(
   value: any,
   propertyPath: string,
 ): EitherN<"axios">;
@@ -256,7 +256,7 @@ export function anonymousValidator754259468(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|"react-query">}
  */
-export function anonymousValidator604855117(
+export function anonymousValidator145869276(
   value: any,
   propertyPath: string,
 ): EitherN<undefined | "react-query">;
@@ -265,7 +265,7 @@ export function anonymousValidator604855117(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }>}
  */
-export function anonymousValidator1542363354(
+export function anonymousValidator1630667140(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -282,7 +282,7 @@ export function anonymousValidator1542363354(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }>}
  */
-export function anonymousValidator834047106(
+export function anonymousValidator165952883(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -299,7 +299,7 @@ export function anonymousValidator834047106(
  * @param {string} propertyPath
  * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }, "database"?: undefined|{"targetDialect": "postgresql", }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
  */
-export function anonymousValidator585679527(
+export function anonymousValidator1622444584(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -411,7 +411,7 @@ export function anonymousValidator1868684730(
  * @param {string} propertyPath
  * @returns {EitherN<"number">}
  */
-export function anonymousValidator1695510095(
+export function anonymousValidator474333054(
   value: any,
   propertyPath: string,
 ): EitherN<"number">;
@@ -480,7 +480,104 @@ export function anonymousValidator1256944988(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").ExperimentalBooleanDefinition|import("./types").ExperimentalNumberDefinition>}
+ * @returns {EitherN<"string">}
+ */
+export function anonymousValidator1981425338(
+  value: any,
+  propertyPath: string,
+): EitherN<"string">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<number>}
+ */
+export function anonymousValidator1293129041(
+  value: any,
+  propertyPath: string,
+): EitherN<number>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<string>}
+ */
+export function anonymousValidator249951578(
+  value: any,
+  propertyPath: string,
+): EitherN<string>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|(string)[]>}
+ */
+export function anonymousValidator1530060641(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | string[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, "disallowedCharacters"?: undefined|(string)[], }>}
+ */
+export function anonymousValidator1025386375(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  convert: boolean;
+  trim: boolean;
+  lowerCase: boolean;
+  upperCase: boolean;
+  min: number;
+  max?: undefined | number;
+  pattern?: undefined | string;
+  allowNull: boolean;
+  disallowedCharacters?: undefined | string[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|(string)[]>}
+ */
+export function anonymousValidator1749769805(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | string[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "string", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"convert": boolean, "trim": boolean, "lowerCase": boolean, "upperCase": boolean, "min": number, "max"?: undefined|number, "pattern"?: undefined|string, "allowNull": boolean, "disallowedCharacters"?: undefined|(string)[], }, "oneOf"?: undefined|(string)[], }>}
+ */
+export function anonymousValidator1855474324(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "string";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    convert: boolean;
+    trim: boolean;
+    lowerCase: boolean;
+    upperCase: boolean;
+    min: number;
+    max?: undefined | number;
+    pattern?: undefined | string;
+    allowNull: boolean;
+    disallowedCharacters?: undefined | string[];
+  };
+  oneOf?: undefined | string[];
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").ExperimentalBooleanDefinition|import("./types").ExperimentalNumberDefinition|import("./types").ExperimentalStringDefinition>}
  */
 export function anonymousValidator527504798(
   value: any,
@@ -488,13 +585,14 @@ export function anonymousValidator527504798(
 ): EitherN<
   | import("./types").ExperimentalBooleanDefinition
   | import("./types").ExperimentalNumberDefinition
+  | import("./types").ExperimentalStringDefinition
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
  * @returns {EitherN<"reference">}
  */
-export function anonymousValidator2034870015(
+export function anonymousValidator547865970(
   value: any,
   propertyPath: string,
 ): EitherN<"reference">;

@@ -6,6 +6,7 @@ export class StringType extends TypeBuilder {
     oneOf: undefined,
     validator: {
       convert: false,
+      allowNull: false,
       trim: false,
       lowerCase: false,
       upperCase: false,

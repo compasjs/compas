@@ -29,7 +29,7 @@ const objectKeys1833756126 = new Set([
 ]);
 const objectKeys560329661 = new Set(["isDynamic", "isCosmetic", "isWatchable"]);
 const objectKeys695211961 = new Set(["validator", "completions"]);
-const objectKeys385137474 = new Set(["extensions", "ignorePatterns"]);
+const objectKeys420227420 = new Set(["extensions", "ignorePatterns"]);
 const objectKeys1885876481 = new Set([
   "name",
   "rawName",
@@ -42,21 +42,21 @@ const objectKeys116853049 = new Set([
   "isRequired",
   "isInternal",
 ]);
-const objectKeys596368827 = new Set([
+const objectKeys1708605066 = new Set([
   "specification",
   "validator",
   "completions",
 ]);
-const objectKeys589626564 = new Set(["type"]);
-const objectKeys90605215 = new Set(["type"]);
-const objectKeys703944173 = new Set(["type", "name", "description"]);
-const objectKeys1437995341 = new Set(["type", "specification", "description"]);
+const objectKeys511626507 = new Set(["type"]);
+const objectKeys523135120 = new Set(["type"]);
+const objectKeys2097333630 = new Set(["type", "name", "description"]);
+const objectKeys291508638 = new Set(["type", "specification", "description"]);
 /**
  * @param {*} value
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator2102379298(value, propertyPath) {
+export function anonymousValidator141209293(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -113,7 +113,7 @@ export function anonymousValidator2102379298(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator1987407853(value, propertyPath) {
+export function anonymousValidator63970852(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -170,7 +170,7 @@ export function anonymousValidator1987407853(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|string>}
  */
-export function anonymousValidator1443576836(value, propertyPath) {
+export function anonymousValidator714133621(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -414,7 +414,7 @@ export function anonymousValidator695211961(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator186795873(value, propertyPath) {
+export function anonymousValidator1895866002(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -459,7 +459,7 @@ export function anonymousValidator186795873(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<(string)[]>}
  */
-export function anonymousValidator546555051(value, propertyPath) {
+export function anonymousValidator432472698(value, propertyPath) {
   if (isNil(value)) {
     return { value: ["js", "json"] };
   }
@@ -478,7 +478,7 @@ export function anonymousValidator546555051(value, propertyPath) {
   const result = Array.from({ length: value.length });
   let errors = [];
   for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator186795873(
+    const arrVar = anonymousValidator1895866002(
       value[i],
       propertyPath + "[" + i + "]",
     );
@@ -499,7 +499,7 @@ export function anonymousValidator546555051(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<(string)[]>}
  */
-export function anonymousValidator1532809334(value, propertyPath) {
+export function anonymousValidator56700539(value, propertyPath) {
   if (isNil(value)) {
     return { value: [".cache", "coverage", "node_modules"] };
   }
@@ -518,7 +518,7 @@ export function anonymousValidator1532809334(value, propertyPath) {
   const result = Array.from({ length: value.length });
   let errors = [];
   for (let i = 0; i < value.length; ++i) {
-    const arrVar = anonymousValidator186795873(
+    const arrVar = anonymousValidator1895866002(
       value[i],
       propertyPath + "[" + i + "]",
     );
@@ -539,7 +539,7 @@ export function anonymousValidator1532809334(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"extensions": (string)[], "ignorePatterns": (string)[], }>}
  */
-export function anonymousValidator385137474(value, propertyPath) {
+export function anonymousValidator420227420(value, propertyPath) {
   if (isNil(value)) {
     return {
       value: {
@@ -563,7 +563,7 @@ export function anonymousValidator385137474(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys385137474.has(key)) {
+    if (!objectKeys420227420.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -571,7 +571,7 @@ export function anonymousValidator385137474(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys385137474],
+              expectedKeys: [...objectKeys420227420],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -580,7 +580,7 @@ export function anonymousValidator385137474(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator546555051(
+    const validatorResult = anonymousValidator432472698(
       value["extensions"],
       `${propertyPath}.extensions`,
     );
@@ -591,7 +591,7 @@ export function anonymousValidator385137474(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1532809334(
+    const validatorResult = anonymousValidator56700539(
       value["ignorePatterns"],
       `${propertyPath}.ignorePatterns`,
     );
@@ -651,7 +651,7 @@ export function anonymousValidator1489856765(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<string>}
  */
-export function anonymousValidator918642030(value, propertyPath) {
+export function anonymousValidator1943706623(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -709,7 +709,7 @@ export function anonymousValidator918642030(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<undefined|string>}
  */
-export function anonymousValidator287762602(value, propertyPath) {
+export function anonymousValidator1631421785(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -829,7 +829,7 @@ export function anonymousValidator116853049(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"boolean"|"number"|"string"|"booleanOrString">}
  */
-export function anonymousValidator1672956483(value, propertyPath) {
+export function anonymousValidator1531300050(value, propertyPath) {
   if (isNil(value)) {
     return { value: "boolean" };
   }
@@ -896,7 +896,7 @@ export function anonymousValidator126524240(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }>}
  */
-export function anonymousValidator596368827(value, propertyPath) {
+export function anonymousValidator1708605066(value, propertyPath) {
   if (isNil(value)) {
     return { value: { specification: "boolean" } };
   }
@@ -915,7 +915,7 @@ export function anonymousValidator596368827(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys596368827.has(key)) {
+    if (!objectKeys1708605066.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -923,7 +923,7 @@ export function anonymousValidator596368827(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys596368827],
+              expectedKeys: [...objectKeys1708605066],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -932,7 +932,7 @@ export function anonymousValidator596368827(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1672956483(
+    const validatorResult = anonymousValidator1531300050(
       value["specification"],
       `${propertyPath}.specification`,
     );
@@ -1019,7 +1019,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator186795873(
+    const validatorResult = anonymousValidator1895866002(
       value["name"],
       `${propertyPath}.name`,
     );
@@ -1030,7 +1030,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator918642030(
+    const validatorResult = anonymousValidator1943706623(
       value["rawName"],
       `${propertyPath}.rawName`,
     );
@@ -1041,7 +1041,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator287762602(
+    const validatorResult = anonymousValidator1631421785(
       value["description"],
       `${propertyPath}.description`,
     );
@@ -1063,7 +1063,7 @@ export function anonymousValidator1885876481(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator596368827(
+    const validatorResult = anonymousValidator1708605066(
       value["value"],
       `${propertyPath}.value`,
     );
@@ -1191,7 +1191,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator2102379298(
+    const validatorResult = anonymousValidator141209293(
       value["name"],
       `${propertyPath}.name`,
     );
@@ -1202,7 +1202,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1987407853(
+    const validatorResult = anonymousValidator63970852(
       value["shortDescription"],
       `${propertyPath}.shortDescription`,
     );
@@ -1213,7 +1213,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1443576836(
+    const validatorResult = anonymousValidator714133621(
       value["longDescription"],
       `${propertyPath}.longDescription`,
     );
@@ -1246,7 +1246,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator385137474(
+    const validatorResult = anonymousValidator420227420(
       value["watchSettings"],
       `${propertyPath}.watchSettings`,
     );
@@ -1299,7 +1299,7 @@ export function anonymousValidator1833756126(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"directory">}
  */
-export function anonymousValidator629941091(value, propertyPath) {
+export function anonymousValidator1082290220(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1357,7 +1357,7 @@ export function anonymousValidator629941091(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "directory", }>}
  */
-export function anonymousValidator589626564(value, propertyPath) {
+export function anonymousValidator511626507(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1385,7 +1385,7 @@ export function anonymousValidator589626564(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys589626564.has(key)) {
+    if (!objectKeys511626507.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -1393,7 +1393,7 @@ export function anonymousValidator589626564(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys589626564],
+              expectedKeys: [...objectKeys511626507],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -1402,7 +1402,7 @@ export function anonymousValidator589626564(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator629941091(
+    const validatorResult = anonymousValidator1082290220(
       value["type"],
       `${propertyPath}.type`,
     );
@@ -1422,7 +1422,7 @@ export function anonymousValidator589626564(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"file">}
  */
-export function anonymousValidator724462434(value, propertyPath) {
+export function anonymousValidator1328202671(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1480,7 +1480,7 @@ export function anonymousValidator724462434(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "file", }>}
  */
-export function anonymousValidator90605215(value, propertyPath) {
+export function anonymousValidator523135120(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1508,7 +1508,7 @@ export function anonymousValidator90605215(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys90605215.has(key)) {
+    if (!objectKeys523135120.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -1516,7 +1516,7 @@ export function anonymousValidator90605215(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys90605215],
+              expectedKeys: [...objectKeys523135120],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -1525,7 +1525,7 @@ export function anonymousValidator90605215(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator724462434(
+    const validatorResult = anonymousValidator1328202671(
       value["type"],
       `${propertyPath}.type`,
     );
@@ -1545,7 +1545,7 @@ export function anonymousValidator90605215(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"completion">}
  */
-export function anonymousValidator1666023486(value, propertyPath) {
+export function anonymousValidator1089380721(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1603,7 +1603,7 @@ export function anonymousValidator1666023486(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "completion", "name": string, "description"?: undefined|string, }>}
  */
-export function anonymousValidator703944173(value, propertyPath) {
+export function anonymousValidator2097333630(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1631,7 +1631,7 @@ export function anonymousValidator703944173(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys703944173.has(key)) {
+    if (!objectKeys2097333630.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -1639,7 +1639,7 @@ export function anonymousValidator703944173(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys703944173],
+              expectedKeys: [...objectKeys2097333630],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -1648,7 +1648,7 @@ export function anonymousValidator703944173(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1666023486(
+    const validatorResult = anonymousValidator1089380721(
       value["type"],
       `${propertyPath}.type`,
     );
@@ -1659,7 +1659,7 @@ export function anonymousValidator703944173(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator186795873(
+    const validatorResult = anonymousValidator1895866002(
       value["name"],
       `${propertyPath}.name`,
     );
@@ -1670,7 +1670,7 @@ export function anonymousValidator703944173(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1443576836(
+    const validatorResult = anonymousValidator714133621(
       value["description"],
       `${propertyPath}.description`,
     );
@@ -1690,7 +1690,7 @@ export function anonymousValidator703944173(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"value">}
  */
-export function anonymousValidator1656684775(value, propertyPath) {
+export function anonymousValidator1846391336(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1748,7 +1748,7 @@ export function anonymousValidator1656684775(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<"boolean"|"number"|"string"|"booleanOrString">}
  */
-export function anonymousValidator1682559082(value, propertyPath) {
+export function anonymousValidator411885723(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1811,7 +1811,7 @@ export function anonymousValidator1682559082(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "value", "specification": "boolean"|"number"|"string"|"booleanOrString", "description"?: undefined|string, }>}
  */
-export function anonymousValidator1437995341(value, propertyPath) {
+export function anonymousValidator291508638(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -1839,7 +1839,7 @@ export function anonymousValidator1437995341(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys1437995341.has(key)) {
+    if (!objectKeys291508638.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -1847,7 +1847,7 @@ export function anonymousValidator1437995341(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys1437995341],
+              expectedKeys: [...objectKeys291508638],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -1856,7 +1856,7 @@ export function anonymousValidator1437995341(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1656684775(
+    const validatorResult = anonymousValidator1846391336(
       value["type"],
       `${propertyPath}.type`,
     );
@@ -1867,7 +1867,7 @@ export function anonymousValidator1437995341(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1682559082(
+    const validatorResult = anonymousValidator411885723(
       value["specification"],
       `${propertyPath}.specification`,
     );
@@ -1878,7 +1878,7 @@ export function anonymousValidator1437995341(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1443576836(
+    const validatorResult = anonymousValidator714133621(
       value["description"],
       `${propertyPath}.description`,
     );
@@ -1915,25 +1915,25 @@ export function anonymousValidator328829180(value, propertyPath) {
   let errors = [];
   /** @type {EitherN<{"type": "directory", }|{"type": "file", }|{"type": "completion", "name": string, "description"?: undefined|string, }|{"type": "value", "specification": "boolean"|"number"|"string"|"booleanOrString", "description"?: undefined|string, }>} */
   let result = { errors: [] };
-  result = anonymousValidator589626564(value, propertyPath);
+  result = anonymousValidator511626507(value, propertyPath);
   if (result.errors) {
     errors.push(result.errors[0]);
   } else {
     return result;
   }
-  result = anonymousValidator90605215(value, propertyPath);
+  result = anonymousValidator523135120(value, propertyPath);
   if (result.errors) {
     errors.push(result.errors[0]);
   } else {
     return result;
   }
-  result = anonymousValidator703944173(value, propertyPath);
+  result = anonymousValidator2097333630(value, propertyPath);
   if (result.errors) {
     errors.push(result.errors[0]);
   } else {
     return result;
   }
-  result = anonymousValidator1437995341(value, propertyPath);
+  result = anonymousValidator291508638(value, propertyPath);
   if (result.errors) {
     errors.push(result.errors[0]);
   } else {

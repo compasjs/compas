@@ -52,7 +52,8 @@ export type ExperimentalGenerateOptions = {
 export type ExperimentalNamePart = string;
 export type ExperimentalNamedTypeDefinition =
   | ExperimentalBooleanDefinition
-  | ExperimentalNumberDefinition;
+  | ExperimentalNumberDefinition
+  | ExperimentalStringDefinition;
 export type ExperimentalNumberDefinition = {
   type: "number";
   group?: undefined | string;
@@ -73,6 +74,31 @@ export type ExperimentalNumberDefinition = {
     allowNull: boolean;
   };
   oneOf?: undefined | number[];
+};
+export type ExperimentalStringDefinition = {
+  type: "string";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    convert: boolean;
+    trim: boolean;
+    lowerCase: boolean;
+    upperCase: boolean;
+    min: number;
+    max?: undefined | number;
+    pattern?: undefined | string;
+    allowNull: boolean;
+    disallowedCharacters?: undefined | string[];
+  };
+  oneOf?: undefined | string[];
 };
 export type ExperimentalReferenceDefinition = {
   type: "reference";
@@ -134,8 +160,34 @@ export type ExperimentalGenerateOptionsInput = {
 export type ExperimentalNamePartInput = ExperimentalNamePart;
 export type ExperimentalNamedTypeDefinitionInput =
   | import("./../common/types").ExperimentalBooleanDefinitionInput
-  | import("./../common/types").ExperimentalNumberDefinitionInput;
+  | import("./../common/types").ExperimentalNumberDefinitionInput
+  | import("./../common/types").ExperimentalStringDefinitionInput;
 export type ExperimentalNumberDefinitionInput = ExperimentalNumberDefinition;
+export type ExperimentalStringDefinitionInput = {
+  type: "string";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    convert: boolean;
+    trim: boolean;
+    lowerCase: boolean;
+    upperCase: boolean;
+    min?: undefined | number;
+    max?: undefined | number;
+    pattern?: undefined | string;
+    allowNull: boolean;
+    disallowedCharacters?: undefined | string[];
+  };
+  oneOf?: undefined | string[];
+};
 export type ExperimentalReferenceDefinitionInput = {
   type: "reference";
   docString: string;

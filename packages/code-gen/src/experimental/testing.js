@@ -47,6 +47,22 @@ function getDefaultStructure() {
     T.number("numberFloat").float(),
     T.number("numberMin").min(5),
     T.number("numberMax").max(5),
+
+    T.string("stringRequired"),
+    T.string("stringOptional").optional(),
+    T.string("stringOptionalAllowNull").allowNull(),
+    T.string("stringDefault").default(`"north"`),
+    T.string("stringOneOf").oneOf("north", "east", "south", "west"),
+    T.string("stringConvert").convert(),
+    T.string("stringMin").min(5),
+    T.string("stringMax").max(5),
+    T.string("stringLowercase").lowerCase(),
+    T.string("stringUppercase").upperCase(),
+    T.string("stringDisallowCharacters")
+      .max(10)
+      .disallowCharacters(["-", "\n"]),
+    T.string("stringTrim").trim(),
+    T.string("stringPattern").pattern(/^north$/gi),
   );
 
   const outputFiles = generator.generate({
