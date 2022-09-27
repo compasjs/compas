@@ -53,6 +53,7 @@ export type ExperimentalNamePart = string;
 export type ExperimentalNamedTypeDefinition =
   | ExperimentalBooleanDefinition
   | ExperimentalNumberDefinition
+  | ExperimentalObjectDefinition
   | ExperimentalStringDefinition;
 export type ExperimentalNumberDefinition = {
   type: "number";
@@ -74,6 +75,49 @@ export type ExperimentalNumberDefinition = {
     allowNull: boolean;
   };
   oneOf?: undefined | number[];
+};
+export type ExperimentalObjectDefinition = {
+  type: "object";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: { allowNull: boolean; strict: boolean };
+  shortName?: undefined | string;
+  keys: { [key: string]: ExperimentalTypeDefinition };
+  enableQueries?: undefined | boolean;
+  queryOptions?:
+    | undefined
+    | {
+        withSoftDeletes?: undefined | boolean;
+        withDates?: undefined | boolean;
+        withPrimaryKey: boolean;
+        isView?: undefined | boolean;
+        schema?: undefined | string;
+      };
+  relations: ExperimentalTypeDefinition[];
+};
+export type ExperimentalTypeDefinition =
+  | ExperimentalNamedTypeDefinition
+  | ExperimentalReferenceDefinition;
+export type ExperimentalReferenceDefinition = {
+  type: "reference";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {};
+  reference: { group: ExperimentalNamePart; name: ExperimentalNamePart };
 };
 export type ExperimentalStringDefinition = {
   type: "string";
@@ -100,27 +144,11 @@ export type ExperimentalStringDefinition = {
   };
   oneOf?: undefined | string[];
 };
-export type ExperimentalReferenceDefinition = {
-  type: "reference";
-  docString: string;
-  isOptional: boolean;
-  defaultValue?: undefined | string | boolean | number;
-  sql: {
-    primary?: undefined | boolean;
-    searchable?: undefined | boolean;
-    hasDefaultValue?: undefined | boolean;
-  };
-  validator: {};
-  reference: { group: ExperimentalNamePart; name: ExperimentalNamePart };
-};
 export type ExperimentalStructure = {
   [key: ExperimentalNamePart]: {
     [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinition;
   };
 };
-export type ExperimentalTypeDefinition =
-  | ExperimentalNamedTypeDefinition
-  | ExperimentalReferenceDefinition;
 export type ExperimentalBooleanDefinitionInput = ExperimentalBooleanDefinition;
 export type ExperimentalGenerateOptionsInput = {
   targetLanguage: "js" | "ts";
@@ -161,8 +189,57 @@ export type ExperimentalNamePartInput = ExperimentalNamePart;
 export type ExperimentalNamedTypeDefinitionInput =
   | import("./../common/types").ExperimentalBooleanDefinitionInput
   | import("./../common/types").ExperimentalNumberDefinitionInput
+  | import("./../common/types").ExperimentalObjectDefinitionInput
   | import("./../common/types").ExperimentalStringDefinitionInput;
 export type ExperimentalNumberDefinitionInput = ExperimentalNumberDefinition;
+export type ExperimentalObjectDefinitionInput = {
+  type: "object";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: { allowNull: boolean; strict: boolean };
+  shortName?: undefined | string;
+  keys: {
+    [key: string]: import("./../common/types").ExperimentalTypeDefinitionInput;
+  };
+  enableQueries?: undefined | boolean;
+  queryOptions?:
+    | undefined
+    | {
+        withSoftDeletes?: undefined | boolean;
+        withDates?: undefined | boolean;
+        withPrimaryKey: boolean;
+        isView?: undefined | boolean;
+        schema?: undefined | string;
+      };
+  relations: import("./../common/types").ExperimentalTypeDefinitionInput[];
+};
+export type ExperimentalTypeDefinitionInput =
+  | import("./../common/types").ExperimentalNamedTypeDefinitionInput
+  | import("./../common/types").ExperimentalReferenceDefinitionInput;
+export type ExperimentalReferenceDefinitionInput = {
+  type: "reference";
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {};
+  reference: {
+    group: import("./../common/types").ExperimentalNamePartInput;
+    name: import("./../common/types").ExperimentalNamePartInput;
+  };
+};
 export type ExperimentalStringDefinitionInput = {
   type: "string";
   group?: undefined | string;
@@ -188,22 +265,6 @@ export type ExperimentalStringDefinitionInput = {
   };
   oneOf?: undefined | string[];
 };
-export type ExperimentalReferenceDefinitionInput = {
-  type: "reference";
-  docString: string;
-  isOptional: boolean;
-  defaultValue?: undefined | string | boolean | number;
-  sql: {
-    primary?: undefined | boolean;
-    searchable?: undefined | boolean;
-    hasDefaultValue?: undefined | boolean;
-  };
-  validator: {};
-  reference: {
-    group: import("./../common/types").ExperimentalNamePartInput;
-    name: import("./../common/types").ExperimentalNamePartInput;
-  };
-};
 export type ExperimentalStructureInput = {
   [key: import("./../common/types").ExperimentalNamePartInput]: {
     [
@@ -211,6 +272,3 @@ export type ExperimentalStructureInput = {
     ]: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
   };
 };
-export type ExperimentalTypeDefinitionInput =
-  | import("./../common/types").ExperimentalNamedTypeDefinitionInput
-  | import("./../common/types").ExperimentalReferenceDefinitionInput;

@@ -60,6 +60,18 @@ export function validateExperimentalNumberDefinition(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").ExperimentalNumberDefinition>;
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalObjectDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalObjectDefinition>}
+ */
+export function validateExperimentalObjectDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalObjectDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalObjectDefinition>;
+/**
  * @param {undefined|any|import("../common/types").ExperimentalReferenceDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalReferenceDefinition>}

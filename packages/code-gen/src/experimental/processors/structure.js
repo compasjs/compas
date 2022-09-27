@@ -158,7 +158,6 @@ export function structureCopyAndSort(structure) {
  * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureExtractReferences(structure, type) {
-  // @ts-expect-error
   typeDefinitionHelpers[type.type].structureExtractReferences(structure, type);
 }
 
@@ -173,8 +172,6 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
   typeDefinitionHelpers[type.type].structureIncludeReferences(
     fullStructure,
     newStructure,
-
-    // @ts-expect-error
     type,
   );
 }
@@ -193,8 +190,6 @@ export function structureValidateReferenceForType(
 ) {
   typeDefinitionHelpers[type.type].structureValidateReferenceForType(
     structure,
-
-    // @ts-expect-error
     type,
     parentTypeStack,
   );

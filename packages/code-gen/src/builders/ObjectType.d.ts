@@ -1,6 +1,7 @@
 export class ObjectType extends TypeBuilder {
   static baseData: {
     validator: {
+      allowNull: boolean;
       strict: boolean;
     };
     shortName: undefined;

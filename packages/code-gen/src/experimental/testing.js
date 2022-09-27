@@ -63,6 +63,17 @@ function getDefaultStructure() {
       .disallowCharacters(["-", "\n"]),
     T.string("stringTrim").trim(),
     T.string("stringPattern").pattern(/^north$/gi),
+
+    T.object("objectEmpty"),
+    T.object("objectLoose").loose(),
+    T.object("objectOptional").optional(),
+    T.object("objectOptionalAllowNull").allowNull(),
+    T.object("objectDefault").default(`{ region: "north" }`),
+    T.object("objectKeys").keys({
+      region: "north",
+      isBusy: true,
+      uplinkInGB: 40,
+    }),
   );
 
   const outputFiles = generator.generate({

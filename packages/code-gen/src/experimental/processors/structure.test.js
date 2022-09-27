@@ -349,6 +349,44 @@ test("code-gen/experimental/processors/structure", (t) => {
       t.pass();
     });
 
+    t.test("object", (t) => {
+      t.test("noop when not an object", (t) => {
+        const structure = {};
+        const object = {
+          type: "boolean",
+        };
+
+        structureExtractReferences(structure, object);
+
+        t.deepEqual(structure, {});
+      });
+
+      t.test("named key type is added to the structure", (t) => {
+        const structure = {};
+        const object = {
+          type: "object",
+          keys: {
+            foo: {
+              type: "reference",
+              reference: {
+                type: "boolean",
+                group: "foo",
+                name: "bar",
+              },
+            },
+          },
+        };
+
+        structureExtractReferences(structure, object);
+
+        t.equal(structure.foo.bar.type, "boolean");
+        t.deepEqual(object.keys.foo.reference, {
+          group: "foo",
+          name: "bar",
+        });
+      });
+    });
+
     t.test("reference", (t) => {
       t.test("noop when not a reference", (t) => {
         const structure = {};
@@ -457,6 +495,51 @@ test("code-gen/experimental/processors/structure", (t) => {
       t.pass();
     });
 
+    t.test("object", (t) => {
+      t.test("noop when not an object", (t) => {
+        const fullStructure = {};
+        const newStructure = {};
+        const object = {
+          type: "boolean",
+        };
+
+        structureIncludeReferences(fullStructure, newStructure, object);
+
+        t.deepEqual(fullStructure, {});
+        t.deepEqual(newStructure, {});
+      });
+
+      t.test("references on keys are included", (t) => {
+        const fullStructure = {
+          foo: {
+            bar: {
+              type: "boolean",
+              group: "foo",
+              name: "bar",
+            },
+          },
+        };
+        const newStructure = {};
+        const object = {
+          type: "object",
+          keys: {
+            bool: {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          },
+        };
+
+        structureIncludeReferences(fullStructure, newStructure, object);
+
+        t.deepEqual(fullStructure, newStructure);
+        t.equal(fullStructure.foo.bar, newStructure.foo.bar);
+      });
+    });
+
     t.test("reference", (t) => {
       t.test("noop when not a reference", (t) => {
         const fullStructure = {};
@@ -553,6 +636,59 @@ test("code-gen/experimental/processors/structure", (t) => {
 
       // This is a noop currently
       t.pass();
+    });
+
+    t.test("object", (t) => {
+      t.test("correct reference is ignored", (t) => {
+        const structure = {
+          foo: {
+            bar: {
+              type: "boolean",
+            },
+          },
+        };
+        const object = {
+          type: "object",
+          keys: {
+            foo: {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          },
+        };
+
+        structureValidateReferenceForType(structure, object, []);
+
+        t.pass();
+      });
+
+      t.test("throws on invalid reference", (t) => {
+        const structure = {};
+        const object = {
+          type: "object",
+          keys: {
+            foo: {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          },
+        };
+
+        try {
+          structureValidateReferenceForType(structure, object, []);
+        } catch (e) {
+          t.equal(
+            e.info.message,
+            "Could not resolve reference to ('foo', 'bar') via (object)",
+          );
+        }
+      });
     });
 
     t.test("reference", (t) => {

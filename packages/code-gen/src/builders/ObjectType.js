@@ -6,6 +6,7 @@ import { buildOrInfer } from "./utils.js";
 export class ObjectType extends TypeBuilder {
   static baseData = {
     validator: {
+      allowNull: false,
       strict: true,
     },
     shortName: undefined,

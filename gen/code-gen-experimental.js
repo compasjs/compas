@@ -180,6 +180,7 @@ export function extendWithCodeGenExperimental(app) {
     T.anyOf("namedTypeDefinition").values(
       T.reference("experimental", "booleanDefinition"),
       T.reference("experimental", "numberDefinition"),
+      T.reference("experimental", "objectDefinition"),
       T.reference("experimental", "stringDefinition"),
     ),
 
@@ -218,6 +219,37 @@ export function extendWithCodeGenExperimental(app) {
           .loose(),
       })
       .loose(),
+
+    T.object("objectDefinition").keys({
+      type: "object",
+      ...namedTypeDefinitionBase,
+      shortName: T.string().optional(),
+      validator: T.object()
+        .keys({
+          allowNull: T.bool(),
+          strict: T.bool(),
+        })
+        .loose(),
+      keys: T.generic()
+        .keys(T.string())
+        .values(T.reference("experimental", "typeDefinition")),
+      enableQueries: T.bool().optional(),
+      queryOptions: T.object()
+        .keys({
+          withSoftDeletes: T.bool().optional(),
+          withDates: T.bool().optional(),
+          withPrimaryKey: T.bool(),
+          isView: T.bool().optional(),
+          schema: T.string().optional(),
+        })
+        .optional()
+        .loose(),
+
+      // TODO: Simplify to relation type only
+      relations: T.array().values(
+        T.reference("experimental", "typeDefinition"),
+      ),
+    }),
 
     T.object("referenceDefinition")
       .keys({

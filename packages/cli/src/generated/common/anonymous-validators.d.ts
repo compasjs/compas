@@ -39,7 +39,7 @@ export function anonymousValidator897743470(
  * @param {string} propertyPath
  * @returns {EitherN<{"isDynamic": boolean, "isCosmetic": boolean, "isWatchable": boolean, }>}
  */
-export function anonymousValidator560329661(
+export function anonymousValidator1028163054(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -94,7 +94,7 @@ export function anonymousValidator249660009(
  * @param {string} propertyPath
  * @returns {EitherN<{"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }>}
  */
-export function anonymousValidator695211961(
+export function anonymousValidator1516319222(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -155,7 +155,7 @@ export function anonymousValidator56700539(
  * @param {string} propertyPath
  * @returns {EitherN<{"extensions": (string)[], "ignorePatterns": (string)[], }>}
  */
-export function anonymousValidator420227420(
+export function anonymousValidator1466094677(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -194,7 +194,7 @@ export function anonymousValidator1631421785(
  * @param {string} propertyPath
  * @returns {EitherN<{"isRepeatable": boolean, "isRequired": boolean, "isInternal": boolean, }>}
  */
-export function anonymousValidator116853049(
+export function anonymousValidator1858319786(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -240,7 +240,7 @@ export function anonymousValidator126524240(
  * @param {string} propertyPath
  * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }>}
  */
-export function anonymousValidator1708605066(
+export function anonymousValidator848050843(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -409,7 +409,7 @@ export function anonymousValidator1082290220(
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "directory", }>}
  */
-export function anonymousValidator511626507(
+export function anonymousValidator2037807654(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -429,7 +429,7 @@ export function anonymousValidator1328202671(
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "file", }>}
  */
-export function anonymousValidator523135120(
+export function anonymousValidator2130467137(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -449,7 +449,7 @@ export function anonymousValidator1089380721(
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "completion", "name": string, "description"?: undefined|string, }>}
  */
-export function anonymousValidator2097333630(
+export function anonymousValidator1426287021(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -480,7 +480,7 @@ export function anonymousValidator411885723(
  * @param {string} propertyPath
  * @returns {EitherN<{"type": "value", "specification": "boolean"|"number"|"string"|"booleanOrString", "description"?: undefined|string, }>}
  */
-export function anonymousValidator291508638(
+export function anonymousValidator2144021837(
   value: any,
   propertyPath: string,
 ): EitherN<{

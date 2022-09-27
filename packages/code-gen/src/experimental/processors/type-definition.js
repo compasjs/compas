@@ -1,6 +1,12 @@
 import { AppError, isNil } from "@compas/stdlib";
 import { stringFormatNameForError } from "../string-format.js";
-import { structureAddType, structureResolveReference } from "./structure.js";
+import {
+  structureAddType,
+  structureExtractReferences,
+  structureIncludeReferences,
+  structureResolveReference,
+  structureValidateReferenceForType,
+} from "./structure.js";
 
 /**
  * Implementations for structure behaviors per type.
@@ -10,10 +16,10 @@ import { structureAddType, structureResolveReference } from "./structure.js";
  * These are not tested directly, but via their callers.
  *
  * @type {Record<
- *   import("").ExperimentalTypeDefinition["type"],
+ *   import("../generated/common/types").ExperimentalTypeDefinition["type"],
  *   {
  *     structureExtractReferences: (
- *        structure: import("../generated/common/types.js").ExperimentalStructure,
+ *        structure: import("../generated/common/types").ExperimentalStructure,
  *        type: import("../generated/common/types").ExperimentalTypeDefinition,
  *     ) => void,
  *     structureIncludeReferences: (
@@ -39,6 +45,51 @@ export const typeDefinitionHelpers = {
     structureExtractReferences() {},
     structureIncludeReferences() {},
     structureValidateReferenceForType() {},
+  },
+  object: {
+    structureExtractReferences(structure, type) {
+      if (type.type !== "object") {
+        return;
+      }
+
+      for (const key of Object.keys(type.keys)) {
+        structureExtractReferences(structure, type.keys[key]);
+      }
+
+      for (const relation of type.relations ?? []) {
+        structureExtractReferences(structure, relation);
+      }
+    },
+    structureIncludeReferences(fullStructure, newStructure, type) {
+      if (type.type !== "object") {
+        return;
+      }
+
+      for (const key of Object.keys(type.keys)) {
+        structureIncludeReferences(fullStructure, newStructure, type.keys[key]);
+      }
+
+      for (const relation of type.relations ?? []) {
+        structureIncludeReferences(fullStructure, newStructure, relation);
+      }
+    },
+    structureValidateReferenceForType(structure, type, parentTypeStack) {
+      if (type.type !== "object") {
+        return;
+      }
+
+      const typeStack = [...parentTypeStack, stringFormatNameForError(type)];
+
+      for (const key of Object.keys(type.keys)) {
+        structureValidateReferenceForType(structure, type.keys[key], [
+          ...typeStack,
+        ]);
+      }
+
+      for (const relation of type.relations ?? []) {
+        structureValidateReferenceForType(structure, relation, [...typeStack]);
+      }
+    },
   },
   reference: {
     structureExtractReferences(structure, type) {
@@ -75,6 +126,10 @@ export const typeDefinitionHelpers = {
       });
     },
     structureValidateReferenceForType(structure, type, parentTypeStack) {
+      if (type.type !== "reference") {
+        return;
+      }
+
       try {
         structureResolveReference(structure, type);
       } catch {
