@@ -38,6 +38,16 @@ function getDefaultStructure() {
     T.bool("boolOneOf").oneOf(true),
     T.bool("boolConvert").convert(),
 
+    T.date("dateRequired"),
+    T.date("dateOptional").optional(),
+    T.date("dateOptionalAllowNull").allowNull(),
+    T.date("dateDefault").default("new Date(0)"),
+    T.date("dateDefaultToNow").defaultToNow(),
+    T.date("dateMin").min("2020-01-01"),
+    T.date("dateMax").max("2020-01-01"),
+    T.date("dateInFuture").inTheFuture(),
+    T.date("dateInPast").inThePast(),
+
     T.number("numberRequired"),
     T.number("numberOptional").optional(),
     T.number("numberOptionalAllowNull").allowNull(),
@@ -47,6 +57,22 @@ function getDefaultStructure() {
     T.number("numberFloat").float(),
     T.number("numberMin").min(5),
     T.number("numberMax").max(5),
+
+    T.object("objectEmpty"),
+    T.object("objectLoose").loose(),
+    T.object("objectOptional").optional(),
+    T.object("objectOptionalAllowNull").allowNull(),
+    T.object("objectDefault").default(`{ region: "north" }`),
+    T.object("objectKeys").keys({
+      region: "north",
+      isBusy: true,
+      uplinkInGB: 40,
+    }),
+    T.object("objectNested").keys({
+      object: {
+        foo: "bar",
+      },
+    }),
 
     T.string("stringRequired"),
     T.string("stringOptional").optional(),
@@ -64,17 +90,39 @@ function getDefaultStructure() {
     T.string("stringTrim").trim(),
     T.string("stringPattern").pattern(/^north$/gi),
 
-    T.object("objectEmpty"),
-    T.object("objectLoose").loose(),
-    T.object("objectOptional").optional(),
-    T.object("objectOptionalAllowNull").allowNull(),
-    T.object("objectDefault").default(`{ region: "north" }`),
-    T.object("objectKeys").keys({
-      region: "north",
-      isBusy: true,
-      uplinkInGB: 40,
-    }),
+    T.uuid("uuidRequired"),
+    T.uuid("uuidOptional").optional(),
+    T.uuid("uuidOptionalAllowNull").allowNull(),
+    T.uuid("uuidDefault").default(`434ed696-e71d-49fa-b962-7e8c7b15a9e1`),
   );
+
+  {
+    const T = new TypeCreator("references");
+    // References
+    generator.add(
+      T.bool("target"),
+
+      T.object("simple").keys({
+        target: T.reference("references", "target"),
+      }),
+      T.object("optional").keys({
+        target: T.reference("references", "target").optional(),
+      }),
+      T.object("allowNull").keys({
+        target: T.reference("references", "target").allowNull(),
+      }),
+      T.object("default").keys({
+        target: T.reference("references", "target").default(true),
+      }),
+
+      T.object("nested").keys({
+        referencing: T.reference("references", "simple"),
+      }),
+      T.object("targetRecursive").keys({
+        referencing: T.reference("references", "targetRecursive").optional(),
+      }),
+    );
+  }
 
   const outputFiles = generator.generate({
     targetLanguage: "js",

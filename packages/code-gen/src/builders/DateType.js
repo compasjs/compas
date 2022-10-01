@@ -2,7 +2,11 @@ import { isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class DateType extends TypeBuilder {
-  static baseData = {};
+  static baseData = {
+    validator: {
+      allowNull: false,
+    },
+  };
 
   constructor(group, name) {
     super("date", group, name);

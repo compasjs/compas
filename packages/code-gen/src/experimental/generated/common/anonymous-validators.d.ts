@@ -124,6 +124,77 @@ export function anonymousValidator55094131(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<"date">}
+ */
+export function anonymousValidator668449731(
+  value: any,
+  propertyPath: string,
+): EitherN<"date">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|Date>}
+ */
+export function anonymousValidator685440859(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | Date>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }>}
+ */
+export function anonymousValidator937834768(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  allowNull: boolean;
+  min?: undefined | Date;
+  max?: undefined | Date;
+  inFuture?: undefined | boolean;
+  inPast?: undefined | boolean;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|"dateOnly"|"timeOnly">}
+ */
+export function anonymousValidator1020934975(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | "dateOnly" | "timeOnly">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "date", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "min"?: undefined|Date, "max"?: undefined|Date, "inFuture"?: undefined|boolean, "inPast"?: undefined|boolean, }, "specifier"?: undefined|"dateOnly"|"timeOnly", }>}
+ */
+export function anonymousValidator184766153(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "date";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    allowNull: boolean;
+    min?: undefined | Date;
+    max?: undefined | Date;
+    inFuture?: undefined | boolean;
+    inPast?: undefined | boolean;
+  };
+  specifier?: undefined | "dateOnly" | "timeOnly";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<"js"|"ts">}
  */
 export function anonymousValidator1874725173(
@@ -751,16 +822,62 @@ export function anonymousValidator1855474324(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").ExperimentalBooleanDefinition|import("./types").ExperimentalNumberDefinition|import("./types").ExperimentalObjectDefinition|import("./types").ExperimentalStringDefinition>}
+ * @returns {EitherN<"uuid">}
+ */
+export function anonymousValidator2096605456(
+  value: any,
+  propertyPath: string,
+): EitherN<"uuid">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"allowNull": boolean, }>}
+ */
+export function anonymousValidator269204563(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  allowNull: boolean;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "uuid", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, }, }>}
+ */
+export function anonymousValidator1015847274(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "uuid";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    allowNull: boolean;
+  };
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").ExperimentalBooleanDefinition|import("./types").ExperimentalDateDefinition|import("./types").ExperimentalNumberDefinition|import("./types").ExperimentalObjectDefinition|import("./types").ExperimentalStringDefinition|import("./types").ExperimentalUuidDefinition>}
  */
 export function anonymousValidator527504798(
   value: any,
   propertyPath: string,
 ): EitherN<
   | import("./types").ExperimentalBooleanDefinition
+  | import("./types").ExperimentalDateDefinition
   | import("./types").ExperimentalNumberDefinition
   | import("./types").ExperimentalObjectDefinition
   | import("./types").ExperimentalStringDefinition
+  | import("./types").ExperimentalUuidDefinition
 >;
 /**
  * @param {*} value

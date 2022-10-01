@@ -2,10 +2,12 @@
 /* eslint-disable no-unused-vars */
 
 import {
+  anonymousValidator1015847274,
   anonymousValidator1125369163,
   anonymousValidator1256944988,
   anonymousValidator1671053633,
   anonymousValidator1717694293,
+  anonymousValidator184766153,
   anonymousValidator1855474324,
   anonymousValidator1868684730,
   anonymousValidator2043713750,
@@ -45,6 +47,32 @@ export function validateExperimentalBooleanDefinition(
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalBooleanDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalDateDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalDateDefinition>}
+ */
+export function validateExperimentalDateDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator184766153(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalDateDefinition}} */
   return { value: result.value };
 }
 /**
@@ -294,5 +322,31 @@ export function validateExperimentalTypeDefinition(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalTypeDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalUuidDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalUuidDefinition>}
+ */
+export function validateExperimentalUuidDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1015847274(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalUuidDefinition}} */
   return { value: result.value };
 }

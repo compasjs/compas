@@ -41,6 +41,11 @@ export const typeDefinitionHelpers = {
     structureIncludeReferences() {},
     structureValidateReferenceForType() {},
   },
+  date: {
+    structureExtractReferences() {},
+    structureIncludeReferences() {},
+    structureValidateReferenceForType() {},
+  },
   number: {
     structureExtractReferences() {},
     structureIncludeReferences() {},
@@ -142,6 +147,11 @@ export const typeDefinitionHelpers = {
     },
   },
   string: {
+    structureExtractReferences() {},
+    structureIncludeReferences() {},
+    structureValidateReferenceForType() {},
+  },
+  uuid: {
     structureExtractReferences() {},
     structureIncludeReferences() {},
     structureValidateReferenceForType() {},

@@ -3,6 +3,50 @@
 Experimental redesign and reimplementation of the code-generators. See
 https://github.com/compasjs/compas/issues/2010 for the created issue.
 
+## TODO
+
+- [ ] Add all type definitions to experimental
+  - Add definition to `gen/code-gen-experimental.js`
+  - Remove `.default` from these definitions and add where necessary to the
+    `builder#baseData`
+  - Add various mutations for this type in `experimental/testing.js`
+  - Implement the neccessary methods in
+    `experimental/processors/type-definition.js`
+  - Test the `type-definition.js` changes in
+    `experimental/processors/structure.test.js`
+  - [x] Update `T.reference()`
+  - [x] Add `T.uuid()`
+  - [x] Add `T.date()`
+  - [ ] Add `T.array()`
+  - [ ] Add `T.any()`
+  - [ ] Add `T.anyOf()`
+  - [ ] Add `T.file()`
+  - [ ] Add `T.generic()`
+  - [ ] Add `T.route()`
+  - [ ] Add `T.relation()`
+  - [ ] Add `T.routeInvalidation()`
+  - [ ] Add `T.extend()`
+  - [ ] Add `T.pick()`
+  - [ ] Add `T.omit()`
+  - [ ] Add `T.crud()`
+- [ ] Group name checks
+  - See `checkIfEnabledGroupsHaveTypes`
+- [ ] `extend`, `omit` and `pick` expansion
+  - See `preprocessorsExecute`
+- [ ] `enableQueries` and `relations` expansion
+  - See `addFieldsOfRelations`
+- [ ] SQL related checks
+  - See `doSqlChecks`
+- [ ] `crud` checks
+  - See `crudPreprocess`
+- [ ] Create sql types to the structure
+  - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
+    `createPartialTypes` and `createQueryBuilderTypes`
+- [ ] `crud` route expansion
+  - See `crudCreateRoutes`
+- [ ] Validate route invalidations
+  - See `processRouteInvalidations`
+
 ## Issue
 
 As started with the recent #1908 we should redo some generating based on the

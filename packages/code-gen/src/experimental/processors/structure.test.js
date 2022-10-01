@@ -325,30 +325,6 @@ test("code-gen/experimental/processors/structure", (t) => {
   });
 
   t.test("structureExtractReferences", (t) => {
-    t.test("boolean", (t) => {
-      structureExtractReferences(
-        {},
-        {
-          type: "boolean",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
-    t.test("number", (t) => {
-      structureExtractReferences(
-        {},
-        {
-          type: "number",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
     t.test("object", (t) => {
       t.test("noop when not an object", (t) => {
         const structure = {};
@@ -454,47 +430,9 @@ test("code-gen/experimental/processors/structure", (t) => {
         });
       });
     });
-
-    t.test("string", (t) => {
-      structureExtractReferences(
-        {},
-        {
-          type: "string",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
   });
 
   t.test("structureIncludeReferences", (t) => {
-    t.test("boolean", (t) => {
-      structureIncludeReferences(
-        {},
-        {},
-        {
-          type: "boolean",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
-    t.test("number", (t) => {
-      structureIncludeReferences(
-        {},
-        {},
-        {
-          type: "number",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
     t.test("object", (t) => {
       t.test("noop when not an object", (t) => {
         const fullStructure = {};
@@ -596,48 +534,9 @@ test("code-gen/experimental/processors/structure", (t) => {
         t.equal(fullStructure.foo.bar, newStructure.foo.bar);
       });
     });
-
-    t.test("string", (t) => {
-      structureIncludeReferences(
-        {},
-        {},
-        {
-          type: "string",
-        },
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
   });
 
   t.test("structureValidateReferenceForType", (t) => {
-    t.test("boolean", (t) => {
-      structureValidateReferenceForType(
-        {},
-        {
-          type: "boolean",
-        },
-        [],
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
-    t.test("number", (t) => {
-      structureValidateReferenceForType(
-        {},
-        {
-          type: "number",
-        },
-        [],
-      );
-
-      // This is a noop currently
-      t.pass();
-    });
-
     t.test("object", (t) => {
       t.test("correct reference is ignored", (t) => {
         const structure = {
@@ -731,19 +630,6 @@ test("code-gen/experimental/processors/structure", (t) => {
           );
         }
       });
-    });
-
-    t.test("string", (t) => {
-      structureValidateReferenceForType(
-        {},
-        {
-          type: "string",
-        },
-        [],
-      );
-
-      // This is a noop currently
-      t.pass();
     });
   });
 });

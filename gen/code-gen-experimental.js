@@ -179,9 +179,11 @@ export function extendWithCodeGenExperimental(app) {
 
     T.anyOf("namedTypeDefinition").values(
       T.reference("experimental", "booleanDefinition"),
+      T.reference("experimental", "dateDefinition"),
       T.reference("experimental", "numberDefinition"),
       T.reference("experimental", "objectDefinition"),
       T.reference("experimental", "stringDefinition"),
+      T.reference("experimental", "uuidDefinition"),
     ),
 
     T.anyOf("typeDefinition").values(
@@ -198,6 +200,23 @@ export function extendWithCodeGenExperimental(app) {
           .keys({
             convert: T.bool(),
             allowNull: T.bool(),
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("dateDefinition")
+      .keys({
+        type: "date",
+        ...namedTypeDefinitionBase,
+        specifier: T.string().oneOf("dateOnly", "timeOnly").optional(),
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+            min: T.date().optional(),
+            max: T.date().optional(),
+            inFuture: T.bool().optional(),
+            inPast: T.bool().optional(),
           })
           .loose(),
       })
@@ -220,36 +239,38 @@ export function extendWithCodeGenExperimental(app) {
       })
       .loose(),
 
-    T.object("objectDefinition").keys({
-      type: "object",
-      ...namedTypeDefinitionBase,
-      shortName: T.string().optional(),
-      validator: T.object()
-        .keys({
-          allowNull: T.bool(),
-          strict: T.bool(),
-        })
-        .loose(),
-      keys: T.generic()
-        .keys(T.string())
-        .values(T.reference("experimental", "typeDefinition")),
-      enableQueries: T.bool().optional(),
-      queryOptions: T.object()
-        .keys({
-          withSoftDeletes: T.bool().optional(),
-          withDates: T.bool().optional(),
-          withPrimaryKey: T.bool(),
-          isView: T.bool().optional(),
-          schema: T.string().optional(),
-        })
-        .optional()
-        .loose(),
+    T.object("objectDefinition")
+      .keys({
+        type: "object",
+        ...namedTypeDefinitionBase,
+        shortName: T.string().optional(),
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+            strict: T.bool(),
+          })
+          .loose(),
+        keys: T.generic()
+          .keys(T.string())
+          .values(T.reference("experimental", "typeDefinition")),
+        enableQueries: T.bool().optional(),
+        queryOptions: T.object()
+          .keys({
+            withSoftDeletes: T.bool().optional(),
+            withDates: T.bool().optional(),
+            withPrimaryKey: T.bool(),
+            isView: T.bool().optional(),
+            schema: T.string().optional(),
+          })
+          .optional()
+          .loose(),
 
-      // TODO: Simplify to relation type only
-      relations: T.array().values(
-        T.reference("experimental", "typeDefinition"),
-      ),
-    }),
+        // TODO: Simplify to relation type only
+        relations: T.array().values(
+          T.reference("experimental", "typeDefinition"),
+        ),
+      })
+      .loose(),
 
     T.object("referenceDefinition")
       .keys({
@@ -264,25 +285,39 @@ export function extendWithCodeGenExperimental(app) {
       })
       .loose(),
 
-    T.object("stringDefinition").keys({
-      type: "string",
-      ...namedTypeDefinitionBase,
-      oneOf: T.array().values(T.string()).optional(),
-      validator: T.object()
-        .keys({
-          convert: T.bool(),
-          trim: T.bool(),
-          lowerCase: T.bool(),
-          upperCase: T.bool(),
-          min: T.number().default(1),
-          max: T.number().optional(),
-          pattern: T.string().optional(),
-          allowNull: T.bool(),
-          disallowedCharacters: T.optional()
-            .value([T.string().min(1).max(2)])
-            .optional(),
-        })
-        .loose(),
-    }),
+    T.object("stringDefinition")
+      .keys({
+        type: "string",
+        ...namedTypeDefinitionBase,
+        oneOf: T.array().values(T.string()).optional(),
+        validator: T.object()
+          .keys({
+            convert: T.bool(),
+            trim: T.bool(),
+            lowerCase: T.bool(),
+            upperCase: T.bool(),
+            min: T.number().default(1),
+            max: T.number().optional(),
+            pattern: T.string().optional(),
+            allowNull: T.bool(),
+            disallowedCharacters: T.optional()
+              .value([T.string().min(1).max(2)])
+              .optional(),
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("uuidDefinition")
+      .keys({
+        type: "uuid",
+        ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+          })
+          .loose(),
+      })
+      .loose(),
   );
 }

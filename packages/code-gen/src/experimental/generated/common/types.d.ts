@@ -16,6 +16,27 @@ export type ExperimentalBooleanDefinition = {
   validator: { convert: boolean; allowNull: boolean };
   oneOf?: undefined | boolean;
 };
+export type ExperimentalDateDefinition = {
+  type: "date";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {
+    allowNull: boolean;
+    min?: undefined | Date;
+    max?: undefined | Date;
+    inFuture?: undefined | boolean;
+    inPast?: undefined | boolean;
+  };
+  specifier?: undefined | "dateOnly" | "timeOnly";
+};
 export type ExperimentalGenerateOptions = {
   targetLanguage: "js" | "ts";
   targetRuntime?: undefined | "node.js" | "browser" | "react-native";
@@ -52,9 +73,11 @@ export type ExperimentalGenerateOptions = {
 export type ExperimentalNamePart = string;
 export type ExperimentalNamedTypeDefinition =
   | ExperimentalBooleanDefinition
+  | ExperimentalDateDefinition
   | ExperimentalNumberDefinition
   | ExperimentalObjectDefinition
-  | ExperimentalStringDefinition;
+  | ExperimentalStringDefinition
+  | ExperimentalUuidDefinition;
 export type ExperimentalNumberDefinition = {
   type: "number";
   group?: undefined | string;
@@ -144,12 +167,27 @@ export type ExperimentalStringDefinition = {
   };
   oneOf?: undefined | string[];
 };
+export type ExperimentalUuidDefinition = {
+  type: "uuid";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: { allowNull: boolean };
+};
 export type ExperimentalStructure = {
   [key: ExperimentalNamePart]: {
     [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinition;
   };
 };
 export type ExperimentalBooleanDefinitionInput = ExperimentalBooleanDefinition;
+export type ExperimentalDateDefinitionInput = ExperimentalDateDefinition;
 export type ExperimentalGenerateOptionsInput = {
   targetLanguage: "js" | "ts";
   targetRuntime?: undefined | "node.js" | "browser" | "react-native";
@@ -188,9 +226,11 @@ export type ExperimentalGenerateOptionsInput = {
 export type ExperimentalNamePartInput = ExperimentalNamePart;
 export type ExperimentalNamedTypeDefinitionInput =
   | import("./../common/types").ExperimentalBooleanDefinitionInput
+  | import("./../common/types").ExperimentalDateDefinitionInput
   | import("./../common/types").ExperimentalNumberDefinitionInput
   | import("./../common/types").ExperimentalObjectDefinitionInput
-  | import("./../common/types").ExperimentalStringDefinitionInput;
+  | import("./../common/types").ExperimentalStringDefinitionInput
+  | import("./../common/types").ExperimentalUuidDefinitionInput;
 export type ExperimentalNumberDefinitionInput = ExperimentalNumberDefinition;
 export type ExperimentalObjectDefinitionInput = {
   type: "object";
@@ -265,6 +305,7 @@ export type ExperimentalStringDefinitionInput = {
   };
   oneOf?: undefined | string[];
 };
+export type ExperimentalUuidDefinitionInput = ExperimentalUuidDefinition;
 export type ExperimentalStructureInput = {
   [key: import("./../common/types").ExperimentalNamePartInput]: {
     [

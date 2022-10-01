@@ -26,7 +26,7 @@
  * >}
  */
 export const typeDefinitionHelpers: Record<
-  "string" | "number" | "boolean" | "object" | "reference",
+  "string" | "number" | "boolean" | "object" | "reference" | "date" | "uuid",
   {
     structureExtractReferences: (
       structure: import("../generated/common/types").ExperimentalStructure,

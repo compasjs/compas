@@ -1,5 +1,9 @@
 export class DateType extends TypeBuilder {
-  static baseData: {};
+  static baseData: {
+    validator: {
+      allowNull: boolean;
+    };
+  };
   constructor(group: any, name: any);
   /**
    * Make it a date only type.

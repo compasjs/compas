@@ -15,6 +15,18 @@ export function validateExperimentalBooleanDefinition(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").ExperimentalBooleanDefinition>;
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalDateDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalDateDefinition>}
+ */
+export function validateExperimentalDateDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalDateDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalDateDefinition>;
+/**
  * @param {undefined|any|import("../common/types").ExperimentalGenerateOptionsInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalGenerateOptions>}
@@ -116,6 +128,18 @@ export function validateExperimentalTypeDefinition(
     | import("../common/types").ExperimentalTypeDefinitionInput,
   propertyPath?: string | undefined,
 ): Either<import("../common/types").ExperimentalTypeDefinition>;
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalUuidDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalUuidDefinition>}
+ */
+export function validateExperimentalUuidDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalUuidDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalUuidDefinition>;
 export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
 import { AppError } from "@compas/stdlib";
 //# sourceMappingURL=validators.d.ts.map
