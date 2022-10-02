@@ -32,6 +32,8 @@ export const typeDefinitionHelpers: Record<
   | "object"
   | "array"
   | "reference"
+  | "any"
+  | "anyOf"
   | "date"
   | "uuid",
   {

@@ -2,9 +2,11 @@
 /* eslint-disable no-unused-vars */
 
 import {
+  anonymousValidator1003855982,
   anonymousValidator1015847274,
   anonymousValidator1125369163,
   anonymousValidator1256944988,
+  anonymousValidator1281032137,
   anonymousValidator1671053633,
   anonymousValidator1717694293,
   anonymousValidator184766153,
@@ -21,6 +23,58 @@ import { AppError, isNil } from "@compas/stdlib";
  * @template T
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalAnyDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalAnyDefinition>}
+ */
+export function validateExperimentalAnyDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1281032137(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalAnyDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalAnyOfDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalAnyOfDefinition>}
+ */
+export function validateExperimentalAnyOfDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1003855982(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalAnyOfDefinition}} */
+  return { value: result.value };
+}
 /**
  * @param {undefined|any|import("../common/types").ExperimentalArrayDefinitionInput} value
  * @param {string|undefined} [propertyPath]

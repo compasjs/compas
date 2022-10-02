@@ -31,8 +31,24 @@ function getDefaultStructure() {
 
   // Basic
   generator.add(
+    T.any("anyRequired"),
+    T.any("anyOptional").optional(),
+    T.any("anyOptionalAllowNull"),
+    T.any("anyRawValue").raw("(string)"),
+    T.any("anyRawValueImport").raw("QueryPart", {
+      javaScript: `import("@compas/store").QueryPart`,
+      typeScript: `import { QueryPart } from "@compas/store";`,
+    }),
+
+    T.anyOf("anyOfRequired").values(T.bool()),
+    T.anyOf("anyOfOptional").values(T.bool()).optional(),
+    T.anyOf("anyOfNestedOptional").values(T.string(), T.bool().optional()),
+    T.anyOf("anyOfMultipleValues").values(T.bool(), T.number()),
+    T.anyOf("anyOfNestedOptional").values(T.string(), T.bool().optional()),
+
     T.array("arrayRequired").values(T.bool()),
     T.array("arrayOptional").values(T.bool()).optional(),
+    T.array("arrayOptionalAllowNull").values(T.bool()).allowNull(),
     T.array("arrayConvert").values(T.bool()),
     T.array("arrayMin").values(T.bool()).min(2),
     T.array("arrayMax").values(T.bool()).max(2),

@@ -52,7 +52,7 @@ export function anonymousValidator1028163054(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)>}
  */
-export function anonymousValidator193358577(
+export function anonymousValidator1897646832(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -76,7 +76,7 @@ export function anonymousValidator193358577(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })>}
  */
-export function anonymousValidator249660009(
+export function anonymousValidator309603318(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -94,7 +94,7 @@ export function anonymousValidator249660009(
  * @param {string} propertyPath
  * @returns {EitherN<{"validator"?: undefined|((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }>}
  */
-export function anonymousValidator1516319222(
+export function anonymousValidator673089758(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -216,7 +216,7 @@ export function anonymousValidator1531300050(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)>}
  */
-export function anonymousValidator126524240(
+export function anonymousValidator992928495(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -240,7 +240,7 @@ export function anonymousValidator126524240(
  * @param {string} propertyPath
  * @returns {EitherN<{"specification": "boolean"|"number"|"string"|"booleanOrString", "validator"?: undefined|((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>), "completions"?: undefined|(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] }), }>}
  */
-export function anonymousValidator848050843(
+export function anonymousValidator1734665425(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -329,7 +329,7 @@ export function anonymousValidator1259325376(
  * @param {string} propertyPath
  * @returns {EitherN<undefined|((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))>}
  */
-export function anonymousValidator779701095(
+export function anonymousValidator1005594440(
   value: any,
   propertyPath: string,
 ): EitherN<

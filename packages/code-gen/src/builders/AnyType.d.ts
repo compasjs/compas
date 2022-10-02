@@ -1,5 +1,8 @@
 export class AnyType extends TypeBuilder {
   static baseData: {
+    validator: {
+      allowNull: boolean;
+    };
     rawValue: undefined;
     rawValueImport: {
       javaScript: undefined;

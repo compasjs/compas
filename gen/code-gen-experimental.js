@@ -178,6 +178,8 @@ export function extendWithCodeGenExperimental(app) {
     // These defaults should be applied in the builders or later on in some processor.
 
     T.anyOf("namedTypeDefinition").values(
+      T.reference("experimental", "anyDefinition"),
+      T.reference("experimental", "anyOfDefinition"),
       T.reference("experimental", "arrayDefinition"),
       T.reference("experimental", "booleanDefinition"),
       T.reference("experimental", "dateDefinition"),
@@ -191,6 +193,44 @@ export function extendWithCodeGenExperimental(app) {
       T.reference("experimental", "namedTypeDefinition"),
       T.reference("experimental", "referenceDefinition"),
     ),
+
+    T.object("anyDefinition")
+      .keys({
+        type: "any",
+        ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+          })
+          .loose(),
+
+        // TODO: align with new targetLanguage & runtime setup.
+        rawValue: T.string().optional(),
+        rawValueImport: T.object()
+          .keys({
+            javaScript: T.string().optional(),
+            typeScript: T.string().optional(),
+          })
+          .loose(),
+        rawValidator: T.string().optional(),
+        rawValidatorImport: T.object()
+          .keys({
+            javaScript: T.string().optional(),
+            typeScript: T.string().optional(),
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("anyOfDefinition")
+      .keys({
+        type: "anyOf",
+        ...namedTypeDefinitionBase,
+        values: T.array()
+          .min(1)
+          .values(T.reference("experimental", "typeDefinition")),
+      })
+      .loose(),
 
     T.object("arrayDefinition")
       .keys({

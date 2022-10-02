@@ -324,6 +324,144 @@ test("code-gen/experimental/processors/structure", (t) => {
     );
   });
 
+  t.test("anyOf", (t) => {
+    t.test("structureExtractReferences", (t) => {
+      t.test("noop when not an anyOf", (t) => {
+        const structure = {};
+        const anyOf = {
+          type: "boolean",
+        };
+
+        structureExtractReferences(structure, anyOf);
+
+        t.deepEqual(structure, {});
+      });
+
+      t.test("named values type is added to the structure", (t) => {
+        const structure = {};
+        const anyOf = {
+          type: "anyOf",
+          values: [
+            {
+              type: "reference",
+              reference: {
+                type: "boolean",
+                group: "foo",
+                name: "bar",
+              },
+            },
+          ],
+        };
+
+        structureExtractReferences(structure, anyOf);
+
+        t.equal(structure.foo.bar.type, "boolean");
+        t.deepEqual(anyOf.values[0].reference, {
+          group: "foo",
+          name: "bar",
+        });
+      });
+    });
+
+    t.test("structureIncludeReferences", (t) => {
+      t.test("noop when not an anyOf", (t) => {
+        const fullStructure = {};
+        const newStructure = {};
+        const anyOf = {
+          type: "boolean",
+        };
+
+        structureIncludeReferences(fullStructure, newStructure, anyOf);
+
+        t.deepEqual(fullStructure, {});
+        t.deepEqual(newStructure, {});
+      });
+
+      t.test("reference on values is included", (t) => {
+        const fullStructure = {
+          foo: {
+            bar: {
+              type: "boolean",
+              group: "foo",
+              name: "bar",
+            },
+          },
+        };
+        const newStructure = {};
+        const anyOf = {
+          type: "anyOf",
+          values: [
+            {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          ],
+        };
+
+        structureIncludeReferences(fullStructure, newStructure, anyOf);
+
+        t.deepEqual(fullStructure, newStructure);
+        t.equal(fullStructure.foo.bar, newStructure.foo.bar);
+      });
+    });
+
+    t.test("structureValidateReferenceForType", (t) => {
+      t.test("correct reference is ignored", (t) => {
+        const structure = {
+          foo: {
+            bar: {
+              type: "boolean",
+            },
+          },
+        };
+        const anyOf = {
+          type: "anyOf",
+          values: [
+            {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          ],
+        };
+
+        structureValidateReferenceForType(structure, anyOf, []);
+
+        t.pass();
+      });
+
+      t.test("throws on invalid reference", (t) => {
+        const structure = {};
+        const anyOf = {
+          type: "anyOf",
+          values: [
+            {
+              type: "reference",
+              reference: {
+                group: "foo",
+                name: "bar",
+              },
+            },
+          ],
+        };
+
+        try {
+          structureValidateReferenceForType(structure, anyOf, []);
+        } catch (e) {
+          t.equal(
+            e.info.message,
+            "Could not resolve reference to ('foo', 'bar') via (anyOf)",
+          );
+        }
+      });
+    });
+  });
+
   t.test("array", (t) => {
     t.test("structureExtractReferences", (t) => {
       t.test("noop when not an array", (t) => {

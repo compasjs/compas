@@ -2,6 +2,9 @@ import { TypeBuilder } from "./TypeBuilder.js";
 
 export class AnyType extends TypeBuilder {
   static baseData = {
+    validator: {
+      allowNull: false,
+    },
     rawValue: undefined,
     rawValueImport: {
       javaScript: undefined,

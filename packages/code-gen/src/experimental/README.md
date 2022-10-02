@@ -17,9 +17,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Update `T.reference()`
   - [x] Add `T.uuid()`
   - [x] Add `T.date()`
-  - [ ] Add `T.array()`
-  - [ ] Add `T.any()`
-  - [ ] Add `T.anyOf()`
+  - [x] Add `T.array()`
+  - [x] Add `T.any()`
+  - [x] Add `T.anyOf()`
   - [ ] Add `T.file()`
   - [ ] Add `T.generic()`
   - [ ] Add `T.route()`
