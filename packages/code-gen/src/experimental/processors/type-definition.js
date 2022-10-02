@@ -36,6 +36,31 @@ import {
  * >}
  */
 export const typeDefinitionHelpers = {
+  array: {
+    structureExtractReferences(structure, type) {
+      if (type.type !== "array") {
+        return;
+      }
+
+      structureExtractReferences(structure, type.values);
+    },
+    structureIncludeReferences(fullStructure, newStructure, type) {
+      if (type.type !== "array") {
+        return;
+      }
+
+      structureIncludeReferences(fullStructure, newStructure, type.values);
+    },
+    structureValidateReferenceForType(structure, type, parentTypeStack) {
+      if (type.type !== "array") {
+        return;
+      }
+
+      const typeStack = [...parentTypeStack, stringFormatNameForError(type)];
+
+      structureValidateReferenceForType(structure, type.values, typeStack);
+    },
+  },
   boolean: {
     structureExtractReferences() {},
     structureIncludeReferences() {},

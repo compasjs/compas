@@ -31,6 +31,13 @@ function getDefaultStructure() {
 
   // Basic
   generator.add(
+    T.array("arrayRequired").values(T.bool()),
+    T.array("arrayOptional").values(T.bool()).optional(),
+    T.array("arrayConvert").values(T.bool()),
+    T.array("arrayMin").values(T.bool()).min(2),
+    T.array("arrayMax").values(T.bool()).max(2),
+    T.array("arrayConvert").values(T.bool()).convert(),
+
     T.bool("boolRequired"),
     T.bool("boolOptional").optional(),
     T.bool("boolOptionalAllowNull").allowNull(),

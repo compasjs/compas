@@ -178,6 +178,7 @@ export function extendWithCodeGenExperimental(app) {
     // These defaults should be applied in the builders or later on in some processor.
 
     T.anyOf("namedTypeDefinition").values(
+      T.reference("experimental", "arrayDefinition"),
       T.reference("experimental", "booleanDefinition"),
       T.reference("experimental", "dateDefinition"),
       T.reference("experimental", "numberDefinition"),
@@ -190,6 +191,21 @@ export function extendWithCodeGenExperimental(app) {
       T.reference("experimental", "namedTypeDefinition"),
       T.reference("experimental", "referenceDefinition"),
     ),
+
+    T.object("arrayDefinition")
+      .keys({
+        type: "array",
+        ...namedTypeDefinitionBase,
+        values: T.reference("experimental", "typeDefinition"),
+        validator: T.object()
+          .keys({
+            convert: T.bool(),
+            min: T.number().optional(),
+            max: T.number().optional(),
+          })
+          .loose(),
+      })
+      .loose(),
 
     T.object("booleanDefinition")
       .keys({

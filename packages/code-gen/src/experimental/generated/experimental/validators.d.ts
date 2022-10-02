@@ -3,6 +3,18 @@
  * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
  */
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalArrayDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalArrayDefinition>}
+ */
+export function validateExperimentalArrayDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalArrayDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalArrayDefinition>;
+/**
  * @param {undefined|any|import("../common/types").ExperimentalBooleanDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalBooleanDefinition>}
