@@ -6,7 +6,7 @@ import {
   structureAddType,
   structureExtractGroups,
   structureNamedTypes,
-} from "./processors/structure.js";
+} from "./processors/01-structure.js";
 
 export class Generator {
   /**

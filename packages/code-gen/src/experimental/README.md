@@ -11,8 +11,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     `builder#baseData`
   - Add various mutations for this type in `experimental/testing.js`
   - Implement the neccessary methods in
-    `experimental/processors/type-definition.js`
-  - Test the `type-definition.js` changes in
+    `experimental/processors/00-type-definition.js`
+  - Test the `00-type-definition.js` changes in
     `experimental/processors/structure.test.js`
   - [x] Update `T.reference()`
   - [x] Add `T.uuid()`
@@ -46,6 +46,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - See `crudCreateRoutes`
 - [ ] Validate route invalidations
   - See `processRouteInvalidations`
+- [ ] Support extracting a few types;
+  - Like `Generator#selectGroups`
 
 ## Issue
 

@@ -2,7 +2,7 @@ import { AppError, isNil } from "@compas/stdlib";
 import { isNamedTypeBuilderLike } from "../../builders/index.js";
 import { errorsThrowCombinedError } from "../errors.js";
 import { stringFormatNameForError } from "../string-format.js";
-import { typeDefinitionHelpers } from "./type-definition.js";
+import { typeDefinitionHelpers } from "./00-type-definition.js";
 
 /**
  * Add a specific type to the structure

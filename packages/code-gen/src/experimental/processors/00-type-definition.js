@@ -6,7 +6,7 @@ import {
   structureIncludeReferences,
   structureResolveReference,
   structureValidateReferenceForType,
-} from "./structure.js";
+} from "./01-structure.js";
 
 /**
  * Implementations for structure behaviors per type.
