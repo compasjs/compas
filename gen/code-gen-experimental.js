@@ -182,9 +182,16 @@ export function extendWithCodeGenExperimental(app) {
       T.reference("experimental", "anyOfDefinition"),
       T.reference("experimental", "arrayDefinition"),
       T.reference("experimental", "booleanDefinition"),
+      T.reference("experimental", "crudDefinition"),
       T.reference("experimental", "dateDefinition"),
+      T.reference("experimental", "extendDefinition"),
+      T.reference("experimental", "fileDefinition"),
+      T.reference("experimental", "genericDefinition"),
       T.reference("experimental", "numberDefinition"),
       T.reference("experimental", "objectDefinition"),
+      T.reference("experimental", "omitDefinition"),
+      T.reference("experimental", "pickDefinition"),
+      T.reference("experimental", "routeDefinition"),
       T.reference("experimental", "stringDefinition"),
       T.reference("experimental", "uuidDefinition"),
     ),
@@ -192,6 +199,8 @@ export function extendWithCodeGenExperimental(app) {
     T.anyOf("typeDefinition").values(
       T.reference("experimental", "namedTypeDefinition"),
       T.reference("experimental", "referenceDefinition"),
+      T.reference("experimental", "relationDefinition"),
+      T.reference("experimental", "routeInvalidationDefinition"),
     ),
 
     T.object("anyDefinition")
@@ -261,6 +270,56 @@ export function extendWithCodeGenExperimental(app) {
       })
       .loose(),
 
+    T.object("crudDefinition")
+      .keys({
+        type: "crud",
+        ...namedTypeDefinitionBase,
+        basePath: T.string().optional(),
+        entity: T.reference("experimental", "referenceDefinition").optional(),
+        fromParent: T.object()
+          .keys({
+            field: T.string(),
+            options: T.object()
+              .keys({
+                name: T.string().optional(),
+              })
+              .optional()
+              .loose(),
+          })
+          .optional()
+          .loose(),
+        routeOptions: T.object()
+          .keys({
+            listRoute: T.bool().optional(),
+            singleRoute: T.bool().optional(),
+            createRoute: T.bool().optional(),
+            updateRoute: T.bool().optional(),
+            deleteRoute: T.bool().optional(),
+          })
+          .loose(),
+        fieldOptions: T.object()
+          .keys({
+            readable: T.object()
+              .keys({
+                $omit: T.array().values(T.string()).optional(),
+                $pick: T.array().values(T.string()).optional(),
+              })
+              .loose()
+              .optional(),
+            writable: T.object()
+              .keys({
+                $omit: T.array().values(T.string()).optional(),
+                $pick: T.array().values(T.string()).optional(),
+              })
+              .loose()
+              .optional(),
+          })
+          .loose(),
+        inlineRelations: [T.reference("experimental", "crudDefinition")],
+        nestedRelations: [T.reference("experimental", "crudDefinition")],
+      })
+      .loose(),
+
     T.object("dateDefinition")
       .keys({
         type: "date",
@@ -275,6 +334,38 @@ export function extendWithCodeGenExperimental(app) {
             inPast: T.bool().optional(),
           })
           .loose(),
+      })
+      .loose(),
+
+    T.object("extendDefinition")
+      .keys({
+        type: "extend",
+        ...namedTypeDefinitionBase,
+        keys: T.generic()
+          .keys(T.string())
+          .values(T.reference("experimental", "typeDefinition")),
+        reference: T.reference("experimental", "referenceDefinition"),
+      })
+      .loose(),
+
+    T.object("fileDefinition")
+      .keys({
+        type: "file",
+        ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            mimeTypes: T.array().values(T.string()).optional(),
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("genericDefinition")
+      .keys({
+        type: "generic",
+        ...namedTypeDefinitionBase,
+        keys: T.reference("experimental", "typeDefinition"),
+        values: T.reference("experimental", "typeDefinition"),
       })
       .loose(),
 
@@ -320,11 +411,39 @@ export function extendWithCodeGenExperimental(app) {
           })
           .optional()
           .loose(),
-
-        // TODO: Simplify to relation type only
         relations: T.array().values(
-          T.reference("experimental", "typeDefinition"),
+          T.reference("experimental", "relationDefinition"),
         ),
+      })
+      .loose(),
+
+    T.object("omitDefinition")
+      .keys({
+        type: "omit",
+        ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+            strict: T.bool(),
+          })
+          .loose(),
+        keys: [T.string()],
+        reference: T.reference("experimental", "referenceDefinition"),
+      })
+      .loose(),
+
+    T.object("pickDefinition")
+      .keys({
+        type: "pick",
+        ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            allowNull: T.bool(),
+            strict: T.bool(),
+          })
+          .loose(),
+        keys: [T.string()],
+        reference: T.reference("experimental", "referenceDefinition"),
       })
       .loose(),
 
@@ -336,6 +455,80 @@ export function extendWithCodeGenExperimental(app) {
           .keys({
             group: namePart,
             name: namePart,
+          })
+          .loose(),
+      })
+      .loose(),
+
+    T.object("relationDefinition")
+      .keys({
+        type: "relation",
+        subType: T.string().oneOf(
+          "manyToOne",
+          "oneToMany",
+          "oneToOne",
+          "oneToOneReverse",
+        ),
+        reference: T.reference("experimental", "referenceDefinition"),
+        ownKey: T.string(),
+        referencedKey: T.string().optional(),
+        isOptional: T.bool(),
+      })
+      .loose(),
+
+    T.object("routeDefinition")
+      .keys({
+        type: "route",
+        ...namedTypeDefinitionBase,
+        method: T.string().oneOf(
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "HEAD",
+          "PATCH",
+        ),
+        idempotent: T.bool(),
+        path: T.string(),
+        tags: [T.string()],
+        query: T.reference("experimental", "referenceDefinition").optional(),
+        params: T.reference("experimental", "referenceDefinition").optional(),
+        body: T.reference("experimental", "referenceDefinition").optional(),
+        files: T.reference("experimental", "referenceDefinition").optional(),
+        response: T.reference("experimental", "referenceDefinition").optional(),
+        invalidations: [
+          T.reference("experimental", "routeInvalidationDefinition"),
+        ],
+        metadata: T.object()
+          .keys({
+            stripTrailingSlash: T.bool().optional(),
+            requestBodyType: T.string().oneOf("json", "form-data").optional(),
+          })
+          .loose()
+          .optional(),
+      })
+      .loose(),
+
+    T.object("routeInvalidationDefinition")
+      .keys({
+        type: "routeInvalidation",
+        target: T.object()
+          .keys({
+            group: namePart,
+            name: T.optional().value(namePart),
+          })
+          .loose(),
+        properties: T.object()
+          .keys({
+            useSharedParams: T.bool().optional(),
+            useSharedQuery: T.bool().optional(),
+            specification: T.object()
+              .keys({
+                params: T.generic().keys(T.string()).values([T.string()]),
+                query: T.generic().keys(T.string()).values([T.string()]),
+              })
+              .loose()
+              .optional(),
           })
           .loose(),
       })

@@ -1,4 +1,9 @@
 export class RouteBuilder extends TypeBuilder {
+  static baseData: {
+    tags: never[];
+    idempotent: boolean;
+    invalidates: never[];
+  };
   constructor(method: any, group: any, name: any, path: any);
   invalidates: any[];
   queryBuilder:

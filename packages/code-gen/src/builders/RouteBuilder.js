@@ -6,6 +6,12 @@ import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
 export class RouteBuilder extends TypeBuilder {
+  static baseData = {
+    tags: [],
+    idempotent: false,
+    invalidates: [],
+  };
+
   constructor(method, group, name, path) {
     super("route", group, name);
 

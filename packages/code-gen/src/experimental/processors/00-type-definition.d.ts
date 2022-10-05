@@ -30,12 +30,21 @@ export const typeDefinitionHelpers: Record<
   | "number"
   | "boolean"
   | "object"
+  | "file"
   | "array"
+  | "relation"
   | "reference"
+  | "crud"
   | "any"
   | "anyOf"
   | "date"
-  | "uuid",
+  | "generic"
+  | "uuid"
+  | "route"
+  | "extend"
+  | "omit"
+  | "pick"
+  | "routeInvalidation",
   {
     structureExtractReferences: (
       structure: import("../generated/common/types").ExperimentalStructure,
@@ -53,7 +62,7 @@ export const typeDefinitionHelpers: Record<
     ) => void;
   }
 >;
-import { structureExtractReferences } from "./structure.js";
-import { structureIncludeReferences } from "./structure.js";
-import { structureValidateReferenceForType } from "./structure.js";
-//# sourceMappingURL=type-definition.d.ts.map
+import { structureExtractReferences } from "./01-structure.js";
+import { structureIncludeReferences } from "./01-structure.js";
+import { structureValidateReferenceForType } from "./01-structure.js";
+//# sourceMappingURL=00-type-definition.d.ts.map

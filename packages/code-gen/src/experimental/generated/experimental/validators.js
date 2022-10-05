@@ -7,16 +7,26 @@ import {
   anonymousValidator1125369163,
   anonymousValidator1256944988,
   anonymousValidator1281032137,
+  anonymousValidator1288229946,
+  anonymousValidator1383310564,
+  anonymousValidator1598800594,
   anonymousValidator1671053633,
   anonymousValidator1717694293,
   anonymousValidator184766153,
   anonymousValidator1855474324,
   anonymousValidator1868684730,
+  anonymousValidator1923475033,
   anonymousValidator2043713750,
+  anonymousValidator269560700,
+  anonymousValidator304308939,
+  anonymousValidator486436268,
+  anonymousValidator494503017,
   anonymousValidator527504798,
   anonymousValidator55094131,
   anonymousValidator718373276,
   anonymousValidator733173530,
+  anonymousValidator878459490,
+  anonymousValidator88730391,
 } from "../common/anonymous-validators.js";
 import { AppError, isNil } from "@compas/stdlib";
 /**
@@ -131,6 +141,32 @@ export function validateExperimentalBooleanDefinition(
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalCrudDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalCrudDefinition>}
+ */
+export function validateExperimentalCrudDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1923475033(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalCrudDefinition}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|import("../common/types").ExperimentalDateDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalDateDefinition>}
@@ -154,6 +190,61 @@ export function validateExperimentalDateDefinition(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalDateDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalExtendDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalExtendDefinition>}
+ */
+export function validateExperimentalExtendDefinition(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator304308939(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalExtendDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalFileDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalFileDefinition>}
+ */
+export function validateExperimentalFileDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator88730391(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalFileDefinition}} */
   return { value: result.value };
 }
 /**
@@ -183,6 +274,35 @@ export function validateExperimentalGenerateOptions(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalGenericDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalGenericDefinition>}
+ */
+export function validateExperimentalGenericDefinition(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator878459490(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalGenericDefinition}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|import("../common/types").ExperimentalNamePartInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalNamePart>}
@@ -206,6 +326,35 @@ export function validateExperimentalNamePart(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalNamePart}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalNamePartOptionalInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalNamePartOptional>}
+ */
+export function validateExperimentalNamePartOptional(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator1288229946(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalNamePartOptional}} */
   return { value: result.value };
 }
 /**
@@ -296,6 +445,58 @@ export function validateExperimentalObjectDefinition(
   return { value: result.value };
 }
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalOmitDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalOmitDefinition>}
+ */
+export function validateExperimentalOmitDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator1383310564(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalOmitDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalPickDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalPickDefinition>}
+ */
+export function validateExperimentalPickDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator269560700(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalPickDefinition}} */
+  return { value: result.value };
+}
+/**
  * @param {undefined|any|import("../common/types").ExperimentalReferenceDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalReferenceDefinition>}
@@ -322,6 +523,90 @@ export function validateExperimentalReferenceDefinition(
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalReferenceDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalRelationDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalRelationDefinition>}
+ */
+export function validateExperimentalRelationDefinition(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator494503017(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalRelationDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalRouteDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalRouteDefinition>}
+ */
+export function validateExperimentalRouteDefinition(value, propertyPath = "$") {
+  const result = anonymousValidator486436268(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalRouteDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalRouteInvalidationDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalRouteInvalidationDefinition>}
+ */
+export function validateExperimentalRouteInvalidationDefinition(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator1598800594(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalRouteInvalidationDefinition}} */
   return { value: result.value };
 }
 /**

@@ -1,10 +1,12 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import {
-  validateExperimentalGenerateOptions, validateExperimentalStructure,
+  validateExperimentalGenerateOptions,
+  validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
 import {
-  structureCopyAndSort, structureValidateReferences,
+  structureCopyAndSort,
+  structureValidateReferences,
 } from "./processors/01-structure.js";
 import { structureGenerator } from "./structure/generator.js";
 

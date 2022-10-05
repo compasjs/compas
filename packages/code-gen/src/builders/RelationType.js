@@ -8,6 +8,7 @@ export class RelationType {
       subType,
       ownKey,
       referencedKey,
+      isOptional: false,
     };
 
     this.reference = reference;

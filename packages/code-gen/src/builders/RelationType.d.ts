@@ -5,6 +5,7 @@ export class RelationType {
     subType: any;
     ownKey: any;
     referencedKey: any;
+    isOptional: boolean;
   };
   reference: any;
   /**

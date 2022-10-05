@@ -6,6 +6,7 @@ export class OmitType extends TypeBuilder {
   static baseData = {
     keys: [],
     validator: {
+      allowNull: false,
       strict: true,
     },
   };

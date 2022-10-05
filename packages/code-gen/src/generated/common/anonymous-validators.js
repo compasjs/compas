@@ -16,7 +16,7 @@ import { isNil } from "@compas/stdlib";
  * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
  */
 
-const objectKeys486337964 = new Set(["group", "name", "uniqueName"]);
+const objectKeys1083503971 = new Set(["group", "name", "uniqueName"]);
 const objectKeys360864099 = new Set(["key", "field"]);
 const objectKeys2029084423 = new Set(["errorString"]);
 const objectKeys980814292 = new Set([
@@ -3199,7 +3199,7 @@ export function anonymousValidator547865970(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<{"group"?: undefined|string, "name"?: undefined|string, "uniqueName"?: undefined|string, }>}
  */
-export function anonymousValidator486337964(value, propertyPath) {
+export function anonymousValidator1083503971(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -3227,7 +3227,7 @@ export function anonymousValidator486337964(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys486337964.has(key)) {
+    if (!objectKeys1083503971.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -3235,7 +3235,7 @@ export function anonymousValidator486337964(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys486337964],
+              expectedKeys: [...objectKeys1083503971],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -3286,7 +3286,7 @@ export function anonymousValidator486337964(value, propertyPath) {
  * @param {string} propertyPath
  * @returns {EitherN<import("./types").CodeGenType|{"group"?: undefined|string, "name"?: undefined|string, "uniqueName"?: undefined|string, }>}
  */
-export function anonymousValidator1802403677(value, propertyPath) {
+export function anonymousValidator1792840236(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -3309,7 +3309,7 @@ export function anonymousValidator1802403677(value, propertyPath) {
   } else {
     return result;
   }
-  result = anonymousValidator486337964(value, propertyPath);
+  result = anonymousValidator1083503971(value, propertyPath);
   if (result.errors) {
     errors.push(result.errors[0]);
   } else {
@@ -3465,7 +3465,7 @@ export function anonymousValidator127554530(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1802403677(
+    const validatorResult = anonymousValidator1792840236(
       value["reference"],
       `${propertyPath}.reference`,
     );

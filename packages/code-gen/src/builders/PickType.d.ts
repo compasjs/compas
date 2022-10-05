@@ -2,6 +2,7 @@ export class PickType extends TypeBuilder {
   static baseData: {
     keys: never[];
     validator: {
+      allowNull: boolean;
       strict: boolean;
     };
   };

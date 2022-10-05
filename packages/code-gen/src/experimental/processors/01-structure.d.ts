@@ -98,4 +98,4 @@ export function structureValidateReferenceForType(
   type: import("../generated/common/types").ExperimentalTypeDefinition,
   parentTypeStack: string[],
 ): void;
-//# sourceMappingURL=structure.d.ts.map
+//# sourceMappingURL=01-structure.d.ts.map

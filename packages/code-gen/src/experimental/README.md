@@ -13,22 +13,26 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Implement the neccessary methods in
     `experimental/processors/00-type-definition.js`
   - Test the `00-type-definition.js` changes in
-    `experimental/processors/structure.test.js`
+    `experimental/processors/00-type-definition.test.js`
   - [x] Update `T.reference()`
   - [x] Add `T.uuid()`
   - [x] Add `T.date()`
   - [x] Add `T.array()`
   - [x] Add `T.any()`
   - [x] Add `T.anyOf()`
-  - [ ] Add `T.file()`
-  - [ ] Add `T.generic()`
-  - [ ] Add `T.route()`
-  - [ ] Add `T.relation()`
-  - [ ] Add `T.routeInvalidation()`
-  - [ ] Add `T.extend()`
-  - [ ] Add `T.pick()`
-  - [ ] Add `T.omit()`
-  - [ ] Add `T.crud()`
+  - [x] Sync `gen/code-gen-experimental.js`
+  - [x] Update `builds/`
+  - [ ] Add various mutations in `experimental/testing.js`
+  - [ ] Update `00-type-definition.js` and `00-type-definition.test.js`
+    - Add `T.file()`
+    - Add `T.generic()`
+    - Add `T.route()`
+    - Add `T.relation()`
+    - Add `T.routeInvalidation()`
+    - Add `T.extend()`
+    - Add `T.pick()`
+    - Add `T.omit()`
+    - Add `T.crud()`
 - [ ] Group name checks
   - See `checkIfEnabledGroupsHaveTypes`
 - [ ] `extend`, `omit` and `pick` expansion
