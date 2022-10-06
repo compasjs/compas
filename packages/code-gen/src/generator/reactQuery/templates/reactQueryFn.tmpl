@@ -166,7 +166,6 @@ data: {
  */
 {{= funcName }}.invalidate = (
 queryClient: QueryClient,
-axiosInstance: AxiosInstance,
 {{ if (item.params || item.query || item.body) { }}
 keyInput: {
 {{= item.params ? `params: ${paramsType},` : "" }}
