@@ -375,7 +375,8 @@ async function cleanContainers(logger, state, context) {
     } new empty database(s).`,
   );
 
-  let pgCommand = "";
+  let pgCommand =
+    "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid();";
   for (const command of stdout.split("\n")) {
     if (command.trim().startsWith("DROP DATABASE")) {
       pgCommand += `${command.trim()};`;
@@ -386,12 +387,17 @@ async function cleanContainers(logger, state, context) {
     pgCommand += `CREATE DATABASE ${project};`;
   }
 
-  await exec(
+  const { exitCode, ...dockerLogs } = await exec(
     `echo "${pgCommand}" | docker exec -i ${postgresContainer} psql --user postgres`,
   );
 
+  if (exitCode !== 0) {
+    logger.error("Could not drop and recreate the selected databases.");
+    logger.error(dockerLogs);
+  }
+
   return {
-    exitStatus: "passed",
+    exitStatus: exitCode === 0 ? "passed" : "failed",
   };
 }
 
