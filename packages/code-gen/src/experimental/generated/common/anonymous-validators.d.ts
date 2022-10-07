@@ -1395,15 +1395,6 @@ export function anonymousValidator1874725173(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|"node.js"|"browser"|"react-native">}
- */
-export function anonymousValidator1801875478(
-  value: any,
-  propertyPath: string,
-): EitherN<undefined | "node.js" | "browser" | "react-native">;
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<undefined|{}>}
  */
 export function anonymousValidator519466533(
@@ -1446,6 +1437,28 @@ export function anonymousValidator1332878756(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<{"library": "koa", }>}
+ */
+export function anonymousValidator1597555367(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  library: "koa";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"library": "koa", }>}
+ */
+export function anonymousValidator994729753(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  library: "koa";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<boolean>}
  */
 export function anonymousValidator897743470(
@@ -1455,39 +1468,65 @@ export function anonymousValidator897743470(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }>}
+ * @returns {EitherN<undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }>}
  */
-export function anonymousValidator1583829842(
+export function anonymousValidator2039235894(
   value: any,
   propertyPath: string,
 ): EitherN<
   | undefined
   | {
-      targetLibrary: "koa";
+      target: {
+        library: "koa";
+      };
       exposeApiStructure: boolean;
     }
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"postgresql">}
+ * @returns {EitherN<"postgres">}
  */
-export function anonymousValidator2097018857(
+export function anonymousValidator2093876206(
   value: any,
   propertyPath: string,
-): EitherN<"postgresql">;
+): EitherN<"postgres">;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetDialect": "postgresql", }>}
+ * @returns {EitherN<{"dialect": "postgres", }>}
  */
-export function anonymousValidator1082866575(
+export function anonymousValidator1620931104(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  dialect: "postgres";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"dialect": "postgres", }>}
+ */
+export function anonymousValidator1236368352(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  dialect: "postgres";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"target": {"dialect": "postgres", }, }>}
+ */
+export function anonymousValidator22329228(
   value: any,
   propertyPath: string,
 ): EitherN<
   | undefined
   | {
-      targetDialect: "postgresql";
+      target: {
+        dialect: "postgres";
+      };
     }
 >;
 /**
@@ -1516,6 +1555,15 @@ export function anonymousValidator1546150653(
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|"node.js"|"browser"|"react-native">}
+ */
+export function anonymousValidator1801875478(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | "node.js" | "browser" | "react-native">;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|"react-query">}
  */
 export function anonymousValidator145869276(
@@ -1525,18 +1573,47 @@ export function anonymousValidator145869276(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }>}
+ * @returns {EitherN<{"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }>}
  */
-export function anonymousValidator879529387(
+export function anonymousValidator1318726936(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  library: "axios";
+  targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+  includeWrapper?: undefined | "react-query";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }>}
+ */
+export function anonymousValidator673173800(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  library: "axios";
+  targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+  includeWrapper?: undefined | "react-query";
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }>}
+ */
+export function anonymousValidator1219105170(
   value: any,
   propertyPath: string,
 ): EitherN<
   | undefined
   | {
-      targetLibrary: "axios";
+      target: {
+        library: "axios";
+        targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+        includeWrapper?: undefined | "react-query";
+      };
       validateResponses: boolean;
       globalClient: boolean;
-      includeWrapper?: undefined | "react-query";
     }
 >;
 /**
@@ -1559,9 +1636,9 @@ export function anonymousValidator325217692(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }, "database"?: undefined|{"targetDialect": "postgresql", }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
+ * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
  */
-export function anonymousValidator475174540(
+export function anonymousValidator838158026(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -1575,13 +1652,17 @@ export function anonymousValidator475174540(
   router?:
     | undefined
     | {
-        targetLibrary: "koa";
+        target: {
+          library: "koa";
+        };
         exposeApiStructure: boolean;
       };
   database?:
     | undefined
     | {
-        targetDialect: "postgresql";
+        target: {
+          dialect: "postgres";
+        };
       };
   validators?:
     | undefined
@@ -1591,10 +1672,13 @@ export function anonymousValidator475174540(
   apiClient?:
     | undefined
     | {
-        targetLibrary: "axios";
+        target: {
+          library: "axios";
+          targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+          includeWrapper?: undefined | "react-query";
+        };
         validateResponses: boolean;
         globalClient: boolean;
-        includeWrapper?: undefined | "react-query";
       };
   types?:
     | undefined
@@ -1608,14 +1692,13 @@ export function anonymousValidator475174540(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"targetLanguage": "js"|"ts", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }, "database"?: undefined|{"targetDialect": "postgresql", }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
+ * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
  */
 export function anonymousValidator1671053633(
   value: any,
   propertyPath: string,
 ): EitherN<{
   targetLanguage: "js" | "ts";
-  targetRuntime?: undefined | "node.js" | "browser" | "react-native";
   outputDirectory?: undefined | string;
   generators: {
     structure?: undefined | {};
@@ -1628,13 +1711,17 @@ export function anonymousValidator1671053633(
     router?:
       | undefined
       | {
-          targetLibrary: "koa";
+          target: {
+            library: "koa";
+          };
           exposeApiStructure: boolean;
         };
     database?:
       | undefined
       | {
-          targetDialect: "postgresql";
+          target: {
+            dialect: "postgres";
+          };
         };
     validators?:
       | undefined
@@ -1644,10 +1731,13 @@ export function anonymousValidator1671053633(
     apiClient?:
       | undefined
       | {
-          targetLibrary: "axios";
+          target: {
+            library: "axios";
+            targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+            includeWrapper?: undefined | "react-query";
+          };
           validateResponses: boolean;
           globalClient: boolean;
-          includeWrapper?: undefined | "react-query";
         };
     types?:
       | undefined

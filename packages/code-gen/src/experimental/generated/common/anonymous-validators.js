@@ -16,7 +16,7 @@ import { isNil } from "@compas/stdlib";
  * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
  */
 
-const objectKeys475174540 = new Set([
+const objectKeys838158026 = new Set([
   "structure",
   "openApi",
   "router",
@@ -30,13 +30,19 @@ const objectKeys807373232 = new Set([
   "openApiExtensions",
   "openApiRouteExtensions",
 ]);
-const objectKeys1583829842 = new Set(["targetLibrary", "exposeApiStructure"]);
-const objectKeys1082866575 = new Set(["targetDialect"]);
+const objectKeys2039235894 = new Set(["target", "exposeApiStructure"]);
+const objectKeys1597555367 = new Set(["library"]);
+const objectKeys22329228 = new Set(["target"]);
+const objectKeys1620931104 = new Set(["dialect"]);
 const objectKeys328211283 = new Set(["includeBaseTypes"]);
-const objectKeys879529387 = new Set([
-  "targetLibrary",
+const objectKeys1219105170 = new Set([
+  "target",
   "validateResponses",
   "globalClient",
+]);
+const objectKeys1318726936 = new Set([
+  "library",
+  "targetRuntime",
   "includeWrapper",
 ]);
 const objectKeys325217692 = new Set([
@@ -6935,47 +6941,6 @@ export function anonymousValidator1874725173(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|"node.js"|"browser"|"react-native">}
- */
-export function anonymousValidator1801875478(value, propertyPath) {
-  if (isNil(value)) {
-    return { value: undefined };
-  }
-  if (typeof value !== "string") {
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.type",
-          info: {},
-        },
-      ],
-    };
-  }
-  if (value.length === 0) {
-    return {
-      value: undefined,
-    };
-  }
-  if (value !== "node.js" && value !== "browser" && value !== "react-native") {
-    const oneOf = ["node.js", "browser", "react-native"];
-    /** @type {{ errors: InternalError[] }} */
-    return {
-      errors: [
-        {
-          propertyPath,
-          key: "validator.string.oneOf",
-          info: { oneOf, value },
-        },
-      ],
-    };
-  }
-  return { value };
-}
-/**
- * @param {*} value
- * @param {string} propertyPath
  * @returns {EitherN<undefined|{}>}
  */
 export function anonymousValidator519466533(value, propertyPath) {
@@ -7157,6 +7122,106 @@ export function anonymousValidator1332878756(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<{"library": "koa", }>}
+ */
+export function anonymousValidator1597555367(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1597555367.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1597555367],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1332878756(
+      value["library"],
+      `${propertyPath}.library`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["library"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"library": "koa", }>}
+ */
+export function anonymousValidator994729753(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.anyOf.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  /** @type {InternalError[]} */
+  let errors = [];
+  /** @type {EitherN<{"library": "koa", }>} */
+  let result = { errors: [] };
+  result = anonymousValidator1597555367(value, propertyPath);
+  if (result.errors) {
+    errors.push(result.errors[0]);
+  } else {
+    return result;
+  }
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
+  return {
+    errors,
+  };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<boolean>}
  */
 export function anonymousValidator897743470(value, propertyPath) {
@@ -7180,9 +7245,9 @@ export function anonymousValidator897743470(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }>}
+ * @returns {EitherN<undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }>}
  */
-export function anonymousValidator1583829842(value, propertyPath) {
+export function anonymousValidator2039235894(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -7201,7 +7266,7 @@ export function anonymousValidator1583829842(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys1583829842.has(key)) {
+    if (!objectKeys2039235894.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -7209,7 +7274,7 @@ export function anonymousValidator1583829842(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys1583829842],
+              expectedKeys: [...objectKeys2039235894],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -7218,14 +7283,14 @@ export function anonymousValidator1583829842(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1332878756(
-      value["targetLibrary"],
-      `${propertyPath}.targetLibrary`,
+    const validatorResult = anonymousValidator994729753(
+      value["target"],
+      `${propertyPath}.target`,
     );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result["targetLibrary"] = validatorResult.value;
+      result["target"] = validatorResult.value;
     }
   }
   {
@@ -7247,9 +7312,9 @@ export function anonymousValidator1583829842(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<"postgresql">}
+ * @returns {EitherN<"postgres">}
  */
-export function anonymousValidator2097018857(value, propertyPath) {
+export function anonymousValidator2093876206(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -7287,8 +7352,8 @@ export function anonymousValidator2097018857(value, propertyPath) {
       ],
     };
   }
-  if (value !== "postgresql") {
-    const oneOf = ["postgresql"];
+  if (value !== "postgres") {
+    const oneOf = ["postgres"];
     /** @type {{ errors: InternalError[] }} */
     return {
       errors: [
@@ -7305,9 +7370,109 @@ export function anonymousValidator2097018857(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetDialect": "postgresql", }>}
+ * @returns {EitherN<{"dialect": "postgres", }>}
  */
-export function anonymousValidator1082866575(value, propertyPath) {
+export function anonymousValidator1620931104(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1620931104.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1620931104],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator2093876206(
+      value["dialect"],
+      `${propertyPath}.dialect`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["dialect"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"dialect": "postgres", }>}
+ */
+export function anonymousValidator1236368352(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.anyOf.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  /** @type {InternalError[]} */
+  let errors = [];
+  /** @type {EitherN<{"dialect": "postgres", }>} */
+  let result = { errors: [] };
+  result = anonymousValidator1620931104(value, propertyPath);
+  if (result.errors) {
+    errors.push(result.errors[0]);
+  } else {
+    return result;
+  }
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
+  return {
+    errors,
+  };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"target": {"dialect": "postgres", }, }>}
+ */
+export function anonymousValidator22329228(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -7326,7 +7491,7 @@ export function anonymousValidator1082866575(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys1082866575.has(key)) {
+    if (!objectKeys22329228.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -7334,7 +7499,7 @@ export function anonymousValidator1082866575(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys1082866575],
+              expectedKeys: [...objectKeys22329228],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -7343,14 +7508,14 @@ export function anonymousValidator1082866575(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator2097018857(
-      value["targetDialect"],
-      `${propertyPath}.targetDialect`,
+    const validatorResult = anonymousValidator1236368352(
+      value["target"],
+      `${propertyPath}.target`,
     );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result["targetDialect"] = validatorResult.value;
+      result["target"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7475,6 +7640,47 @@ export function anonymousValidator1546150653(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
+ * @returns {EitherN<undefined|"node.js"|"browser"|"react-native">}
+ */
+export function anonymousValidator1801875478(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (typeof value !== "string") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (value.length === 0) {
+    return {
+      value: undefined,
+    };
+  }
+  if (value !== "node.js" && value !== "browser" && value !== "react-native") {
+    const oneOf = ["node.js", "browser", "react-native"];
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.string.oneOf",
+          info: { oneOf, value },
+        },
+      ],
+    };
+  }
+  return { value };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
  * @returns {EitherN<undefined|"react-query">}
  */
 export function anonymousValidator145869276(value, propertyPath) {
@@ -7516,9 +7722,131 @@ export function anonymousValidator145869276(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }>}
+ * @returns {EitherN<{"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }>}
  */
-export function anonymousValidator879529387(value, propertyPath) {
+export function anonymousValidator1318726936(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  if (typeof value !== "object") {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.object.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Object.create(null);
+  let errors = [];
+  for (const key of Object.keys(value)) {
+    if (!objectKeys1318726936.has(key)) {
+      /** @type {{ errors: InternalError[] }} */
+      return {
+        errors: [
+          {
+            propertyPath,
+            key: "validator.object.strict",
+            info: {
+              expectedKeys: [...objectKeys1318726936],
+              foundKeys: [...Object.keys(value)],
+            },
+          },
+        ],
+      };
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1546150653(
+      value["library"],
+      `${propertyPath}.library`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["library"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator1801875478(
+      value["targetRuntime"],
+      `${propertyPath}.targetRuntime`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["targetRuntime"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator145869276(
+      value["includeWrapper"],
+      `${propertyPath}.includeWrapper`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["includeWrapper"] = validatorResult.value;
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }>}
+ */
+export function anonymousValidator673173800(value, propertyPath) {
+  if (isNil(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.anyOf.undefined",
+          info: {},
+        },
+      ],
+    };
+  }
+  /** @type {InternalError[]} */
+  let errors = [];
+  /** @type {EitherN<{"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }>} */
+  let result = { errors: [] };
+  result = anonymousValidator1318726936(value, propertyPath);
+  if (result.errors) {
+    errors.push(result.errors[0]);
+  } else {
+    return result;
+  }
+  for (const err of errors) {
+    err.info.via = "validator.anyOf";
+  }
+  return {
+    errors,
+  };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }>}
+ */
+export function anonymousValidator1219105170(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -7537,7 +7865,7 @@ export function anonymousValidator879529387(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys879529387.has(key)) {
+    if (!objectKeys1219105170.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -7545,7 +7873,7 @@ export function anonymousValidator879529387(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys879529387],
+              expectedKeys: [...objectKeys1219105170],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -7554,14 +7882,14 @@ export function anonymousValidator879529387(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1546150653(
-      value["targetLibrary"],
-      `${propertyPath}.targetLibrary`,
+    const validatorResult = anonymousValidator673173800(
+      value["target"],
+      `${propertyPath}.target`,
     );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result["targetLibrary"] = validatorResult.value;
+      result["target"] = validatorResult.value;
     }
   }
   {
@@ -7584,17 +7912,6 @@ export function anonymousValidator879529387(value, propertyPath) {
       errors.push(...validatorResult.errors);
     } else {
       result["globalClient"] = validatorResult.value;
-    }
-  }
-  {
-    const validatorResult = anonymousValidator145869276(
-      value["includeWrapper"],
-      `${propertyPath}.includeWrapper`,
-    );
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result["includeWrapper"] = validatorResult.value;
     }
   }
   if (errors.length > 0) {
@@ -7694,9 +8011,9 @@ export function anonymousValidator325217692(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }, "database"?: undefined|{"targetDialect": "postgresql", }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
+ * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
  */
-export function anonymousValidator475174540(value, propertyPath) {
+export function anonymousValidator838158026(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -7724,7 +8041,7 @@ export function anonymousValidator475174540(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys475174540.has(key)) {
+    if (!objectKeys838158026.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -7732,7 +8049,7 @@ export function anonymousValidator475174540(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys475174540],
+              expectedKeys: [...objectKeys838158026],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -7763,7 +8080,7 @@ export function anonymousValidator475174540(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1583829842(
+    const validatorResult = anonymousValidator2039235894(
       value["router"],
       `${propertyPath}.router`,
     );
@@ -7774,7 +8091,7 @@ export function anonymousValidator475174540(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1082866575(
+    const validatorResult = anonymousValidator22329228(
       value["database"],
       `${propertyPath}.database`,
     );
@@ -7796,7 +8113,7 @@ export function anonymousValidator475174540(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator879529387(
+    const validatorResult = anonymousValidator1219105170(
       value["apiClient"],
       `${propertyPath}.apiClient`,
     );
@@ -7825,7 +8142,7 @@ export function anonymousValidator475174540(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"targetLanguage": "js"|"ts", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"targetLibrary": "koa", "exposeApiStructure": boolean, }, "database"?: undefined|{"targetDialect": "postgresql", }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"targetLibrary": "axios", "validateResponses": boolean, "globalClient": boolean, "includeWrapper"?: undefined|"react-query", }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
+ * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime"?: undefined|"node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
  */
 export function anonymousValidator1671053633(value, propertyPath) {
   if (isNil(value)) {
@@ -7866,17 +8183,6 @@ export function anonymousValidator1671053633(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1801875478(
-      value["targetRuntime"],
-      `${propertyPath}.targetRuntime`,
-    );
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result["targetRuntime"] = validatorResult.value;
-    }
-  }
-  {
     const validatorResult = anonymousValidator714133621(
       value["outputDirectory"],
       `${propertyPath}.outputDirectory`,
@@ -7888,7 +8194,7 @@ export function anonymousValidator1671053633(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator475174540(
+    const validatorResult = anonymousValidator838158026(
       value["generators"],
       `${propertyPath}.generators`,
     );

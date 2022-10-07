@@ -47,12 +47,7 @@ export function extendWithCodeGenExperimental(app) {
       .keys({
         // TODO: Add link to docs with compatibility between language and runtime.
         targetLanguage: T.string().oneOf("js", "ts"),
-        targetRuntime: T.string()
-          .optional()
-          .oneOf("node.js", "browser", "react-native")
-          .docs(
-            "Only applicable if your 'targetLanguage' is set to 'js' or 'ts'.",
-          ),
+
         outputDirectory: T.string().optional(),
 
         // This will most likely be the only strictly validated object of the bunch.
@@ -74,8 +69,10 @@ export function extendWithCodeGenExperimental(app) {
             .keys({
               // TODO: Add link to docs with compatibility between
               //  language and target library.
-              targetLibrary: T.string()
-                .oneOf("koa")
+              target: T.anyOf()
+                .values({
+                  library: "koa",
+                })
                 .docs(
                   "Select one of the supported libraries to generate a router for.",
                 ),
@@ -93,8 +90,10 @@ export function extendWithCodeGenExperimental(app) {
             .keys({
               // TODO: Add link to docs with compatibility between
               //  language and target dialect / target library.
-              targetDialect: T.string()
-                .oneOf("postgresql")
+              target: T.anyOf()
+                .values({
+                  dialect: "postgres",
+                })
                 .docs(
                   "Select one of the supported dialects to generate queries for.",
                 ),
@@ -117,8 +116,25 @@ export function extendWithCodeGenExperimental(app) {
             .keys({
               // TODO: Add link to docs with compatibility between
               //  language and target library.
-              targetLibrary: T.string()
-                .oneOf("axios")
+              target: T.anyOf()
+                .values({
+                  library: "axios",
+                  targetRuntime: T.string().oneOf(
+                    "node.js",
+                    "browser",
+                    "react-native",
+                  ),
+
+                  // TODO: Add link to docs with
+                  //  compatibility between  language
+                  //  and target library.
+                  includeWrapper: T.string()
+                    .oneOf("react-query")
+                    .optional()
+                    .docs(
+                      "Include an API client wrapper to use the api easier with your user interface library.",
+                    ),
+                })
                 .docs("Select your HTTP client of choice."),
               validateResponses: T.bool()
                 .default(false)
@@ -129,15 +145,6 @@ export function extendWithCodeGenExperimental(app) {
                 .default(false)
                 .docs(
                   "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
-                ),
-
-              // TODO: Add link to docs with compatibility between
-              //  language and target library.
-              includeWrapper: T.string()
-                .oneOf("react-query")
-                .optional()
-                .docs(
-                  "Include an API client wrapper to use the api easier with your user interface library.",
                 ),
             })
             .optional()

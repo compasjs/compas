@@ -387,7 +387,6 @@ export type ExperimentalUuidDefinition = {
 };
 export type ExperimentalGenerateOptions = {
   targetLanguage: "js" | "ts";
-  targetRuntime?: undefined | "node.js" | "browser" | "react-native";
   outputDirectory?: undefined | string;
   generators: {
     structure?: undefined | {};
@@ -397,16 +396,21 @@ export type ExperimentalGenerateOptions = {
           openApiExtensions?: undefined | any;
           openApiRouteExtensions?: undefined | any;
         };
-    router?: undefined | { targetLibrary: "koa"; exposeApiStructure: boolean };
-    database?: undefined | { targetDialect: "postgresql" };
+    router?:
+      | undefined
+      | { target: { library: "koa" }; exposeApiStructure: boolean };
+    database?: undefined | { target: { dialect: "postgres" } };
     validators?: undefined | { includeBaseTypes: boolean };
     apiClient?:
       | undefined
       | {
-          targetLibrary: "axios";
+          target: {
+            library: "axios";
+            targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+            includeWrapper?: undefined | "react-query";
+          };
           validateResponses: boolean;
           globalClient: boolean;
-          includeWrapper?: undefined | "react-query";
         };
     types?:
       | undefined
@@ -728,7 +732,6 @@ export type ExperimentalStringDefinitionInput = {
 export type ExperimentalUuidDefinitionInput = ExperimentalUuidDefinition;
 export type ExperimentalGenerateOptionsInput = {
   targetLanguage: "js" | "ts";
-  targetRuntime?: undefined | "node.js" | "browser" | "react-native";
   outputDirectory?: undefined | string;
   generators: {
     structure?: undefined | {};
@@ -740,16 +743,22 @@ export type ExperimentalGenerateOptionsInput = {
         };
     router?:
       | undefined
-      | { targetLibrary: "koa"; exposeApiStructure?: undefined | boolean };
-    database?: undefined | { targetDialect: "postgresql" };
+      | {
+          target: { library: "koa" };
+          exposeApiStructure?: undefined | boolean;
+        };
+    database?: undefined | { target: { dialect: "postgres" } };
     validators?: undefined | { includeBaseTypes?: undefined | boolean };
     apiClient?:
       | undefined
       | {
-          targetLibrary: "axios";
+          target: {
+            library: "axios";
+            targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+            includeWrapper?: undefined | "react-query";
+          };
           validateResponses?: undefined | boolean;
           globalClient?: undefined | boolean;
-          includeWrapper?: undefined | "react-query";
         };
     types?:
       | undefined
