@@ -4,11 +4,11 @@ import {
   structureExtractReferences,
   structureIncludeReferences,
   structureValidateReferenceForType,
-} from "./01-structure.js";
+} from "./structure.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/experimental/processors/00-type-definition", (t) => {
+test("code-gen/experimental/processors/type-definition", (t) => {
   t.test("array", (t) => {
     t.test("structureExtractReferences", (t) => {
       t.test("noop when not an array", (t) => {

@@ -1,9 +1,9 @@
 /**
- * Implementations for structure behaviors per type.
- * This is optimized for adding new types without altering many files, it will grow in to
- * a pretty decent file, but should be pretty stable.
+ * Implementations for structure behaviors per type. It should be used in stead of
+ * switching per type. Adding support for new behavior is then limited to this file only.
  *
- * These are not tested directly, but via their callers.
+ * Not all types need to support each operation, these will still be written out with
+ * empty functions.
  *
  * @type {Record<
  *   import("../generated/common/types").ExperimentalTypeDefinition["type"],
@@ -11,7 +11,7 @@
  *     structureExtractReferences: (
  *        structure: import("../generated/common/types").ExperimentalStructure,
  *        type: import("../generated/common/types").ExperimentalTypeDefinition,
- *     ) => void,
+ *     ) => import("../generated/common/types").ExperimentalTypeDefinition|undefined,
  *     structureIncludeReferences: (
  *        fullStructure: import("../generated/common/types").ExperimentalStructure,
  *        newStructure: import("../generated/common/types").ExperimentalStructure,
@@ -19,7 +19,7 @@
  *     ) => void,
  *     structureValidateReferenceForType: (
  *        structure: import("../generated/common/types").ExperimentalStructure,
- *        type: import("../generated/common/types").ExperimentalTypeDefinition,
+ *        type: import("../generated/common/types").ExperimentalTypeDefinition|undefined,
  *        parentTypeStack: string[],
  *     ) => void,
  *   }
@@ -49,7 +49,9 @@ export const typeDefinitionHelpers: Record<
     structureExtractReferences: (
       structure: import("../generated/common/types").ExperimentalStructure,
       type: import("../generated/common/types").ExperimentalTypeDefinition,
-    ) => void;
+    ) =>
+      | import("../generated/common/types").ExperimentalTypeDefinition
+      | undefined;
     structureIncludeReferences: (
       fullStructure: import("../generated/common/types").ExperimentalStructure,
       newStructure: import("../generated/common/types").ExperimentalStructure,
@@ -57,12 +59,14 @@ export const typeDefinitionHelpers: Record<
     ) => void;
     structureValidateReferenceForType: (
       structure: import("../generated/common/types").ExperimentalStructure,
-      type: import("../generated/common/types").ExperimentalTypeDefinition,
+      type:
+        | import("../generated/common/types").ExperimentalTypeDefinition
+        | undefined,
       parentTypeStack: string[],
     ) => void;
   }
 >;
-import { structureExtractReferences } from "./01-structure.js";
-import { structureIncludeReferences } from "./01-structure.js";
-import { structureValidateReferenceForType } from "./01-structure.js";
-//# sourceMappingURL=00-type-definition.d.ts.map
+import { structureExtractReferences } from "./structure.js";
+import { structureIncludeReferences } from "./structure.js";
+import { structureValidateReferenceForType } from "./structure.js";
+//# sourceMappingURL=type-definition.d.ts.map

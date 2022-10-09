@@ -10,11 +10,11 @@ import {
   structureResolveReference,
   structureValidateReferenceForType,
   structureValidateReferences,
-} from "./01-structure.js";
+} from "./structure.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/experimental/processors/01-structure", (t) => {
+test("code-gen/experimental/processors/structure", (t) => {
   t.test("structureAddType", (t) => {
     t.test("only accepts named type definitions", (t) => {
       try {

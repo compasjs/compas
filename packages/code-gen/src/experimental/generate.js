@@ -7,7 +7,7 @@ import {
 import {
   structureCopyAndSort,
   structureValidateReferences,
-} from "./processors/01-structure.js";
+} from "./processors/structure.js";
 import { structureGenerator } from "./structure/generator.js";
 
 /**
@@ -57,7 +57,6 @@ export function generateExecute(generator, options) {
 
   // TODO: support generate presets
   // TODO: write migration docs between old and new code gen
-  // TODO: statically validate structure
 
   // TODO: start with infrastructure
   //  - general checks and structure behaviour like expanding CRUD, resolving relations

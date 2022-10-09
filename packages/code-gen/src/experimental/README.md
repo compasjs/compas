@@ -5,7 +5,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ## TODO
 
-- [ ] Add all type definitions to experimental
+- [x] Add all type definitions to experimental
   - Add definition to `gen/code-gen-experimental.js`
   - Remove `.default` from these definitions and add where necessary to the
     `builder#baseData`
@@ -22,14 +22,14 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Add `T.anyOf()`
   - [x] Sync `gen/code-gen-experimental.js`
   - [x] Update `builds/`
-  - [ ] Add various mutations in `experimental/testing.js`
-  - [ ] Update `00-type-definition.js` and `00-type-definition.test.js`
+  - [x] Add various mutations in `experimental/testing.js`
+  - [x] Update `00-type-definition.js` and `00-type-definition.test.js`
+    - Add `T.extend()`
     - Add `T.file()`
     - Add `T.generic()`
-    - Add `T.route()`
     - Add `T.relation()`
+    - Add `T.route()`
     - Add `T.routeInvalidation()`
-    - Add `T.extend()`
     - Add `T.pick()`
     - Add `T.omit()`
     - Add `T.crud()`

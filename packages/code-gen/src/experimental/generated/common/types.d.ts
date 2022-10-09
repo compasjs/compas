@@ -406,7 +406,7 @@ export type ExperimentalGenerateOptions = {
       | {
           target: {
             library: "axios";
-            targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+            targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
           validateResponses: boolean;
@@ -754,7 +754,7 @@ export type ExperimentalGenerateOptionsInput = {
       | {
           target: {
             library: "axios";
-            targetRuntime?: undefined | "node.js" | "browser" | "react-native";
+            targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
           validateResponses?: undefined | boolean;
