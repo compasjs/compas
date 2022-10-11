@@ -21,7 +21,7 @@ export function isNamedTypeBuilderLike(value: any): value is Omit<
  * - object
  *
  * @param {any} value
- * @returns {Record<string, any>}
+ * @returns {any}
  */
-export function buildOrInfer(value: any): Record<string, any>;
+export function buildOrInfer(value: any): any;
 //# sourceMappingURL=utils.d.ts.map

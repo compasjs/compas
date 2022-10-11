@@ -4,7 +4,7 @@
  * Early returns if an empty array is provided.
  *
  * Other supported properties:
- * -
+ * - messages: expected to be a string[]
  *
  * @param {import("@compas/stdlib").AppError[]} errors
  * @returns {void}

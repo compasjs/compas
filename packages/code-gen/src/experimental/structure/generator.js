@@ -12,7 +12,10 @@ export function structureGenerator(ctx) {
 
   ctx.structure.compas = ctx.structure.compas ?? {};
 
-  // @ts-expect-error the options are not a valid type definition.
+  // @ts-expect-error
+  //
+  // The provided options are not a valid type definition, but we need to keep them in
+  // the structure, so we just force assign it.
   ctx.structure.compas.$options = ctx.options;
 
   ctx.outputFiles.push({

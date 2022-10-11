@@ -100,61 +100,47 @@ export function structureCopyAndSort(
   structure: import("../generated/common/types").ExperimentalStructure,
 ): import("../generated/common/types").ExperimentalStructure;
 /**
- * Recursively extract references from the provided type. It is expected that the
- * specific type implementations call this again with their nested types, resulting in a
- * pre-order depth first traversal of the tree, reassigning with references when a named
- * type is hit.
+ * Recursively extract references from the provided type.
  *
  * Unlike the previous versions of code-gen we prefer to keep references as much as
  * possible and resolve them on the fly. This prevents weird recursion errors and should
  * simplify conditional logic down in the generators.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition} [type]
- * @returns {import("../generated/common/types").ExperimentalTypeDefinition}
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
+ * @returns {void}
  */
 export function structureExtractReferences(
   structure: import("../generated/common/types").ExperimentalStructure,
-  type?:
-    | import("../generated/common/types").ExperimentalTypeDefinition
-    | undefined,
-): import("../generated/common/types").ExperimentalTypeDefinition;
+  type: import("../generated/common/types").ExperimentalTypeDefinition,
+): void;
 /**
  * Recursively add references that are necessary in the newStructure from the
- * fullStructure. It is expected that the specific type implementations call this again
- * with their nested types, resulting in a pre-order depth first traversal of the tree.
+ * fullStructure.
  *
  * This is used when extracting groups or specific types from the structure in to a new
  * structure.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} fullStructure
  * @param {import("../generated/common/types").ExperimentalStructure} newStructure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition} [type]
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureIncludeReferences(
   fullStructure: import("../generated/common/types").ExperimentalStructure,
   newStructure: import("../generated/common/types").ExperimentalStructure,
-  type?:
-    | import("../generated/common/types").ExperimentalTypeDefinition
-    | undefined,
+  type: import("../generated/common/types").ExperimentalTypeDefinition,
 ): void;
 /**
- * Recursively validate references for the provided type. It is expected that the
- * specific type implementations call this again with their nested types, resulting in a
- * pre-order depth first traversal of the tree.
+ * Recursively validate references for the provided type.
  *
  * We do this early in the generation process to check the user input, and expect that
  * processors don't create invalid references.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} type
- * @param {string[]} parentTypeStack
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureValidateReferenceForType(
   structure: import("../generated/common/types").ExperimentalStructure,
-  type:
-    | import("../generated/common/types").ExperimentalTypeDefinition
-    | undefined,
-  parentTypeStack: string[],
+  type: import("../generated/common/types").ExperimentalTypeDefinition,
 ): void;
 //# sourceMappingURL=structure.d.ts.map

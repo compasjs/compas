@@ -33,7 +33,7 @@ export function isNamedTypeBuilderLike(value) {
  * - object
  *
  * @param {any} value
- * @returns {Record<string, any>}
+ * @returns {any}
  */
 export function buildOrInfer(value) {
   if (typeof value === "boolean") {

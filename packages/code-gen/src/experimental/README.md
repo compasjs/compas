@@ -33,8 +33,10 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - Add `T.pick()`
     - Add `T.omit()`
     - Add `T.crud()`
-- [ ] Group name checks
+- [x] Structure name checks
   - See `checkIfEnabledGroupsHaveTypes`
+- Fix all current docs + add tests
+  - It's a mess (A), no it isn't but not tested lol
 - [ ] `extend`, `omit` and `pick` expansion
   - See `preprocessorsExecute`
 - [ ] `enableQueries` and `relations` expansion
@@ -207,3 +209,49 @@ This probably won't land in a single Compas release, so we may want to use
 - Options;
   - If an output directory is provided, files are written. They are always
     returned to the caller.
+
+### Structure traversal
+
+- Exec function on each type
+  - ie. finding all query enabled objects or finding all routes
+  - Keeping state for structureValidateReferences
+- Exec function on each type, replacing the value
+  - ie when extracting references or expanding omit & pick
+
+Traversing the structure is a complicated choice with various trade-offs. We
+want to optimize for the following cases;
+
+- Speed
+  - Less function calls -> more faster
+- Places to edit
+  - It should be easy to add a new nested type and shouldn't require knowledge
+    of the whole codebase
+- Semantics
+  - The semantics of the provided traversal helpers should be easy to understand
+
+See implementation of `typeDefinitionTraverse`
+
+## Templating and code-gen
+
+See
+https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/amazon/smithy/utils/AbstractCodeWriter.java
+
+- Probably want to go with 'OOP' here;
+  - Base writer
+    - Manages files
+    - Internally strings
+    - Newlines
+    - Scopes
+    - Indentation
+  - Language specific writers
+    - Docblocks
+    - Functions
+    - control flow
+    - imports
+  - Generator specific writer extending language writers
+    - Generator specific constructs
+    - Each language specific implementation of a generator should have the same
+      API
+- Support strict language implementation;
+  - No dangling constants
+  - Typescript strict mode

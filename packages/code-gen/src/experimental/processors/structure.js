@@ -2,7 +2,7 @@ import { AppError, isNil } from "@compas/stdlib";
 import { isNamedTypeBuilderLike } from "../../builders/index.js";
 import { errorsThrowCombinedError } from "../errors.js";
 import { stringFormatNameForError } from "../string-format.js";
-import { typeDefinitionHelpers } from "./type-definition.js";
+import { typeDefinitionTraverse } from "./type-definition-traverse.js";
 
 /**
  * Add a specific type to the structure. By default, directly normalizes references and
@@ -99,9 +99,7 @@ export function structureValidateReferences(structure) {
 
   for (const namedType of structureNamedTypes(structure)) {
     try {
-      structureValidateReferenceForType(structure, namedType, [
-        stringFormatNameForError(namedType),
-      ]);
+      structureValidateReferenceForType(structure, namedType);
     } catch (/** @type {any} */ e) {
       errors.push(e);
     }
@@ -197,83 +195,144 @@ export function structureCopyAndSort(structure) {
 }
 
 /**
- * Recursively extract references from the provided type. It is expected that the
- * specific type implementations call this again with their nested types, resulting in a
- * pre-order depth first traversal of the tree, reassigning with references when a named
- * type is hit.
+ * Recursively extract references from the provided type.
  *
  * Unlike the previous versions of code-gen we prefer to keep references as much as
  * possible and resolve them on the fly. This prevents weird recursion errors and should
  * simplify conditional logic down in the generators.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition} [type]
- * @returns {import("../generated/common/types").ExperimentalTypeDefinition}
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
+ * @returns {void}
  */
 export function structureExtractReferences(structure, type) {
-  if (isNil(type)) {
-    // This early return, makes it much easier for callers, and doesn't affect the result
-    // for them.
-
-    // @ts-expect-error
-    return;
-  }
-
-  // @ts-expect-error
-  return typeDefinitionHelpers[type.type].structureExtractReferences(
-    structure,
+  typeDefinitionTraverse(
     type,
+    (type, callback) => {
+      if (type.type === "reference") {
+        // @ts-expect-error
+        //
+        // A reference can be constructed via `T.reference(T.bool('foo'))` resulting in a
+        // nested type definition, which we need to extract here.
+        if (type.reference.type) {
+          // @ts-expect-error
+          //
+          // A reference can be constructed via `T.reference(T.bool('foo'))` resulting in a
+          // nested type definition, which we need to extract here.
+          structureAddType(structure, type.reference, {
+            skipReferenceExtraction: true,
+          });
+
+          // @ts-expect-error
+          //
+          // A reference can be constructed via `T.reference(T.bool('foo'))` resulting in a
+          // nested type definition, which we need to extract here.
+          callback(type.reference);
+
+          type.reference = {
+            group: type.reference.group,
+            name: type.reference.name,
+          };
+        }
+
+        return type;
+      }
+
+      callback(type);
+
+      if (isNamedTypeBuilderLike(type)) {
+        structureAddType(structure, type, {
+          skipReferenceExtraction: true,
+        });
+
+        return structureCreateReference(type.group, type.name);
+      }
+
+      return type;
+    },
+    {
+      isInitialType: true,
+      assignResult: true,
+    },
   );
 }
 
 /**
  * Recursively add references that are necessary in the newStructure from the
- * fullStructure. It is expected that the specific type implementations call this again
- * with their nested types, resulting in a pre-order depth first traversal of the tree.
+ * fullStructure.
  *
  * This is used when extracting groups or specific types from the structure in to a new
  * structure.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} fullStructure
  * @param {import("../generated/common/types").ExperimentalStructure} newStructure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition} [type]
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureIncludeReferences(fullStructure, newStructure, type) {
-  if (isNil(type)) {
-    return;
-  }
-
-  typeDefinitionHelpers[type.type].structureIncludeReferences(
-    fullStructure,
-    newStructure,
+  typeDefinitionTraverse(
     type,
+    (type, callback) => {
+      if (type.type === "reference") {
+        const referencedType =
+          fullStructure[type.reference.group]?.[type.reference.name];
+        if (isNil(referencedType)) {
+          return;
+        }
+
+        structureAddType(newStructure, referencedType, {
+          skipReferenceExtraction: true,
+        });
+
+        callback(referencedType);
+      } else {
+        callback(type);
+      }
+    },
+    {
+      isInitialType: true,
+      assignResult: false,
+    },
   );
 }
 
 /**
- * Recursively validate references for the provided type. It is expected that the
- * specific type implementations call this again with their nested types, resulting in a
- * pre-order depth first traversal of the tree.
+ * Recursively validate references for the provided type.
  *
  * We do this early in the generation process to check the user input, and expect that
  * processors don't create invalid references.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} type
- * @param {string[]} parentTypeStack
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
-export function structureValidateReferenceForType(
-  structure,
-  type,
-  parentTypeStack,
-) {
-  if (isNil(type)) {
-    return;
-  }
+export function structureValidateReferenceForType(structure, type) {
+  const typeStack = [];
 
-  typeDefinitionHelpers[type.type].structureValidateReferenceForType(
-    structure,
+  typeDefinitionTraverse(
     type,
-    parentTypeStack,
+    (type, callback) => {
+      if (type.type === "reference") {
+        try {
+          structureResolveReference(structure, type);
+        } catch {
+          throw AppError.serverError({
+            message: `Could not resolve reference to ${stringFormatNameForError(
+              type.reference,
+            )} via ${typeStack.join(" -> ")}`,
+          });
+        }
+      } else {
+        callback(type);
+      }
+    },
+    {
+      isInitialType: true,
+      assignResult: false,
+      beforeTraversal: (type) => {
+        typeStack.push(stringFormatNameForError(type));
+      },
+      afterTraversal: () => {
+        typeStack.pop();
+      },
+    },
   );
 }

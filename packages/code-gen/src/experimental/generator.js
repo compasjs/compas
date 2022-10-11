@@ -40,9 +40,8 @@ export class Generator {
     for (let i = 0; i < builders.length; i++) {
       const builder = builders[i];
       try {
-        // @ts-expect-error we probably won't ever type this.
         structureAddType(this.initialStructure, buildOrInfer(builder), {
-          skipReferencesCheck: false,
+          skipReferenceExtraction: false,
         });
       } catch (/** @type {any} */ e) {
         throw AppError.serverError(

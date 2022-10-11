@@ -4,6 +4,7 @@ import {
   validateExperimentalGenerateOptions,
   validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
+import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
   structureValidateReferences,
@@ -74,6 +75,7 @@ export function generateExecute(generator, options) {
   };
 
   structureGenerator(ctx);
+  structureNameChecks(ctx);
 
   // TODO: pick up from preprocessors
 

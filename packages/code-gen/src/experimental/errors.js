@@ -6,7 +6,7 @@ import { AppError } from "@compas/stdlib";
  * Early returns if an empty array is provided.
  *
  * Other supported properties:
- * -
+ * - messages: expected to be a string[]
  *
  * @param {import("@compas/stdlib").AppError[]} errors
  * @returns {void}
@@ -21,6 +21,10 @@ export function errorsThrowCombinedError(errors) {
   for (const err of errors) {
     if (err.info.message) {
       messages.push(err.info.message);
+    }
+
+    if (err.info.messages) {
+      messages.push(...err.info.messages);
     }
   }
 
