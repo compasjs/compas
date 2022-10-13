@@ -165,7 +165,8 @@ export function structureCreateReference(group, name) {
 
 /**
  * Copy and sort the structure. We do this for 2 reasons;
- * - It allows multiple generate calls within the same 'Generator'
+ * - It allows multiple generate calls within the same 'Generator', since we don't mutate
+ * the original structure
  * - The JS iterators in Node.js are based on object insertion order, so this ensures
  * that our output is stable.
  *
@@ -240,8 +241,15 @@ export function structureExtractReferences(structure, type) {
 
       callback(type);
 
+      // Someone inline defined something like:
+      //
+      // `T.anyOf("namedAnyOf").values(T.bool("namedBool"))`
+
+      // The first one is already on the structure, the second one should be added to the
+      // structure and be replaced by a reference.
       if (isNamedTypeBuilderLike(type)) {
         structureAddType(structure, type, {
+          // We are already doing this above when calling the callback.
           skipReferenceExtraction: true,
         });
 
@@ -262,7 +270,7 @@ export function structureExtractReferences(structure, type) {
  * fullStructure.
  *
  * This is used when extracting groups or specific types from the structure in to a new
- * structure.
+ * structure. By resolving out of group references a valid structure is created.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} fullStructure
  * @param {import("../generated/common/types").ExperimentalStructure} newStructure
@@ -272,10 +280,20 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
   typeDefinitionTraverse(
     type,
     (type, callback) => {
+      // Only references can point out of the current group
       if (type.type === "reference") {
         const referencedType =
           fullStructure[type.reference.group]?.[type.reference.name];
+
+        // We currently silently ignore this, since correct values may be added by the
+        // user. We will throw when generating with this specific structure.
         if (isNil(referencedType)) {
+          return;
+        }
+
+        if (newStructure[type.reference.group]?.[type.reference.name]) {
+          // Type is already present on the new structure, and all references will be
+          // included already
           return;
         }
 
@@ -283,6 +301,8 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
           skipReferenceExtraction: true,
         });
 
+        // Recurse in to the referenced type, so if it contains other out of group
+        // references we include those as well.
         callback(referencedType);
       } else {
         callback(type);
@@ -305,6 +325,7 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
  * @param {import("../generated/common/types").ExperimentalTypeDefinition} type
  */
 export function structureValidateReferenceForType(structure, type) {
+  // Keep a type stack so we can give the user pointers where this happened.
   const typeStack = [];
 
   typeDefinitionTraverse(
@@ -314,6 +335,8 @@ export function structureValidateReferenceForType(structure, type) {
         try {
           structureResolveReference(structure, type);
         } catch {
+          // We throw an internal error in `structureResolveReference`, this is however a
+          // human error, so should have a better error message.
           throw AppError.serverError({
             message: `Could not resolve reference to ${stringFormatNameForError(
               type.reference,

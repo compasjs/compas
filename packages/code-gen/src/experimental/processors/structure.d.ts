@@ -89,7 +89,8 @@ export function structureCreateReference(
 ): import("../generated/common/types").ExperimentalReferenceDefinition;
 /**
  * Copy and sort the structure. We do this for 2 reasons;
- * - It allows multiple generate calls within the same 'Generator'
+ * - It allows multiple generate calls within the same 'Generator', since we don't mutate
+ * the original structure
  * - The JS iterators in Node.js are based on object insertion order, so this ensures
  * that our output is stable.
  *
@@ -119,7 +120,7 @@ export function structureExtractReferences(
  * fullStructure.
  *
  * This is used when extracting groups or specific types from the structure in to a new
- * structure.
+ * structure. By resolving out of group references a valid structure is created.
  *
  * @param {import("../generated/common/types").ExperimentalStructure} fullStructure
  * @param {import("../generated/common/types").ExperimentalStructure} newStructure

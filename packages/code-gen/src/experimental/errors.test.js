@@ -41,5 +41,19 @@ test("code-gen/experimental/errors", (t) => {
         t.deepEqual(e.info.messages, ["1"]);
       }
     });
+
+    t.test("includes 'messages' property", (t) => {
+      try {
+        errorsThrowCombinedError([
+          AppError.serverError({
+            messages: ["1", "2"],
+          }),
+          AppError.serverError({}),
+        ]);
+      } catch (e) {
+        t.ok(AppError.instanceOf(e));
+        t.deepEqual(e.info.messages, ["1", "2"]);
+      }
+    });
   });
 });

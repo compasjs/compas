@@ -1,7 +1,12 @@
 import { isNil } from "@compas/stdlib";
 
 /**
- * A collection of all traversal paths per type
+ * A collection of all traversal paths per type.
+ *
+ * There are two traversal methods possible;
+ * - single: the provided key directly points to a typeDefinition
+ * - many: the provided key points to an array or object. The values of the array or
+ * object are all typeDefiniton.
  *
  * @type {Record<
  *   import("../generated/common/types").ExperimentalTypeDefinition["type"],
@@ -131,7 +136,9 @@ export const typeDefinitionTraversePaths = {
  * - When all traversal paths are exhausted / the nested callback is not called again.
  * `options.afterTraversal` is called when provided.
  *
- * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} type
+ * This function is tested indirectly by all its users.
+ *
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} typeToTraverse
  * @param {(
  *   type: import("../generated/common/types").ExperimentalTypeDefinition,
  *   callback: (
@@ -149,54 +156,65 @@ export const typeDefinitionTraversePaths = {
  *   ) => void,
  * }} options
  */
-export function typeDefinitionTraverse(type, callback, options) {
-  if (isNil(type)) {
+export function typeDefinitionTraverse(typeToTraverse, callback, options) {
+  // Skip traversal if the provided value is undefined
+  if (isNil(typeToTraverse)) {
     return;
   }
 
-  const nestedCallback = (nestedType) => {
-    if (isNil(nestedType)) {
+  const nestedCallback = (currentType) => {
+    // Skip traversal if the provided value is undefined.
+    if (isNil(currentType)) {
       return;
     }
 
     if (options.isInitialType) {
+      // Initial call, this one doesn't call any of the provided hooks, we expect that
+      // the caller did the necessary setup if needed.
       options.isInitialType = false;
 
-      callback(nestedType, nestedCallback);
+      callback(currentType, nestedCallback);
     } else {
-      options?.beforeTraversal && options.beforeTraversal(nestedType);
+      options?.beforeTraversal && options.beforeTraversal(currentType);
 
-      const pathSpecs = typeDefinitionTraversePaths[type.type];
+      const pathSpecs = typeDefinitionTraversePaths[currentType.type];
 
       for (const spec of pathSpecs) {
-        if (spec.amount === "single") {
-          const nestedResult = callback(type[spec.key], nestedCallback);
+        if (spec.amount === "single" && !isNil(currentType[spec.key])) {
+          const nestedResult = callback(currentType[spec.key], nestedCallback);
 
           if (nestedResult && options.assignResult) {
-            type[spec.key] = nestedResult;
+            currentType[spec.key] = nestedResult;
           }
-        } else if (Array.isArray(type[spec.key])) {
-          for (let i = 0; i < type[spec.key]; ++i) {
-            const nestedResult = callback(type[spec.key][i], nestedCallback);
+        } else if (Array.isArray(currentType[spec.key])) {
+          for (let i = 0; i < currentType[spec.key].length; ++i) {
+            const nestedResult = callback(
+              currentType[spec.key][i],
+              nestedCallback,
+            );
 
             if (nestedResult && options.assignResult) {
-              type[spec.key][i] = nestedResult;
+              currentType[spec.key][i] = nestedResult;
             }
           }
         } else {
-          for (const key of Object.keys(type[spec.key])) {
-            const nestedResult = callback(type[spec.key][key], nestedCallback);
+          for (const key of Object.keys(currentType[spec.key] ?? {})) {
+            const nestedResult = callback(
+              currentType[spec.key][key],
+              nestedCallback,
+            );
 
             if (nestedResult && options.assignResult) {
-              type[spec.key][key] = nestedResult;
+              currentType[spec.key][key] = nestedResult;
             }
           }
         }
       }
 
-      options?.afterTraversal && options.afterTraversal(nestedType);
+      options?.afterTraversal && options.afterTraversal(currentType);
     }
   };
 
-  nestedCallback(type);
+  // Kickstart!
+  nestedCallback(typeToTraverse);
 }

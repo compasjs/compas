@@ -11,6 +11,8 @@
  * - When all traversal paths are exhausted / the nested callback is not called again.
  * `options.afterTraversal` is called when provided.
  *
+ * This function is tested indirectly by all it's users.
+ *
  * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} type
  * @param {(
  *   type: import("../generated/common/types").ExperimentalTypeDefinition,
@@ -55,7 +57,12 @@ export function typeDefinitionTraverse(
   },
 ): void;
 /**
- * A collection of all traversal paths per type
+ * A collection of all traversal paths per type.
+ *
+ * There are two traversal methods possible;
+ * - single: the provided key directly points to a typeDefinition
+ * - many: the provided key points to an array or object. The values of the array or
+ * object are all typeDefiniton.
  *
  * @type {Record<
  *   import("../generated/common/types").ExperimentalTypeDefinition["type"],

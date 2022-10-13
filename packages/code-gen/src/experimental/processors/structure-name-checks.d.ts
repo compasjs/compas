@@ -11,13 +11,16 @@ export function structureNameChecks(
   ctx: import("../generate").GenerateContext,
 ): void;
 /**
- * Execute the check on the provided type.
+ * Execute the group name check on the provided name.
  *
  * @param {string} group
  */
 export function structureNameCheckForGroup(group: string): void;
 /**
- * Execute the check on this object keys
+ * Execute the check on this object keys.
+ *
+ * Objects shouldn't use reserved keys, since that breaks the atomic database updates
+ * that we support.
  *
  * @param {import("../generated/common/types").ExperimentalObjectDefinition} type
  * @param {string[]} typeStack

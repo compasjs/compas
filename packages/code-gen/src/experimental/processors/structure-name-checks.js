@@ -85,13 +85,15 @@ const reservedObjectKeys = [
  * new target language, it could be a breaking change for users of other targets. This
  * is done so a valid structure can be generated to all supported targets.
  *
- * @param {import("../generate").GenerateContext} ctx
+ * @param {import("../generate").GenerateContext} generateContext
  */
-export function structureNameChecks(ctx) {
+export function structureNameChecks(generateContext) {
   /** @type {import("@compas/stdlib").AppError[]} */
   const errors = [];
 
-  for (const group of Object.keys(ctx.structure)) {
+  // Check all groups names, when these are conflicting we can't generate things like;
+  // `const ${group} = {}`
+  for (const group of Object.keys(generateContext.structure)) {
     try {
       structureNameCheckForGroup(group);
     } catch (/** @type {any} */ e) {
@@ -99,8 +101,11 @@ export function structureNameChecks(ctx) {
     }
   }
 
-  for (const namedType of structureNamedTypes(ctx.structure)) {
+  for (const namedType of structureNamedTypes(generateContext.structure)) {
+    // We keep a callstack with `beforeTraversal` and `afterTraversal` to improve the
+    // error messages.
     const typeStack = [];
+
     typeDefinitionTraverse(
       namedType,
       (type, callback) => {
@@ -131,7 +136,7 @@ export function structureNameChecks(ctx) {
 }
 
 /**
- * Execute the check on the provided type.
+ * Execute the group name check on the provided name.
  *
  * @param {string} group
  */
@@ -144,7 +149,10 @@ export function structureNameCheckForGroup(group) {
 }
 
 /**
- * Execute the check on this object keys
+ * Execute the check on this object keys.
+ *
+ * Objects shouldn't use reserved keys, since that breaks the atomic database updates
+ * that we support.
  *
  * @param {import("../generated/common/types").ExperimentalObjectDefinition} type
  * @param {string[]} typeStack

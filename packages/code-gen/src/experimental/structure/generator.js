@@ -3,35 +3,35 @@ import { isNil } from "@compas/stdlib";
 /**
  * Run the structure generator.
  *
- * @param {import("../generate").GenerateContext} ctx
+ * @param {import("../generate").GenerateContext} generateContext
  */
-export function structureGenerator(ctx) {
-  if (!structureIsEnabled(ctx)) {
+export function structureGenerator(generateContext) {
+  if (!structureIsEnabled(generateContext)) {
     return;
   }
 
-  ctx.structure.compas = ctx.structure.compas ?? {};
+  generateContext.structure.compas = generateContext.structure.compas ?? {};
 
   // @ts-expect-error
   //
   // The provided options are not a valid type definition, but we need to keep them in
   // the structure, so we just force assign it.
-  ctx.structure.compas.$options = ctx.options;
+  generateContext.structure.compas.$options = generateContext.options;
 
-  ctx.outputFiles.push({
-    contents: JSON.stringify(ctx.structure, null, 2),
+  generateContext.outputFiles.push({
+    contents: JSON.stringify(generateContext.structure, null, 2),
     relativePath: "common/structure.json",
   });
 
-  delete ctx.structure.compas.$options;
+  delete generateContext.structure.compas.$options;
 }
 
 /**
  * Check if we should dump the structure
  *
- * @param {import("../generate").GenerateContext} ctx
+ * @param {import("../generate").GenerateContext} generateContext
  * @returns {boolean}
  */
-export function structureIsEnabled(ctx) {
-  return !isNil(ctx.options.generators.structure);
+export function structureIsEnabled(generateContext) {
+  return !isNil(generateContext.options.generators.structure);
 }
