@@ -68,26 +68,6 @@ test("code-gen/experimental/processors/structure-name-checks", (t) => {
 
   t.test("structureNameChecksForObject", (t) => {
     t.test("formats typeStack", (t) => {
-      const generateContext = testExperimentalGenerateContext(
-        t,
-        {
-          generators: {},
-          targetLanguage: "js",
-        },
-        {
-          foo: {
-            bar: {
-              type: "object",
-              keys: {
-                $append: {
-                  type: "boolean",
-                },
-              },
-            },
-          },
-        },
-      );
-
       try {
         structureNameChecksForObject(
           {

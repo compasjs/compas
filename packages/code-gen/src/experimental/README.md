@@ -35,9 +35,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - Add `T.crud()`
 - [x] Structure name checks
   - See `checkIfEnabledGroupsHaveTypes`
-- Fix all current docs + add tests
+- [x] Fix all current docs + add tests
   - It's a mess (A), no it isn't but not tested lol
-- [ ] `extend`, `omit` and `pick` expansion
+- [x] `extend`, `omit` and `pick` expansion
   - See `preprocessorsExecute`
 - [ ] `enableQueries` and `relations` expansion
   - See `addFieldsOfRelations`

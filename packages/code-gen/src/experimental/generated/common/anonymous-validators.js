@@ -4560,7 +4560,7 @@ export function anonymousValidator782744528(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalReferenceDefinition, }>}
+ * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
  */
 export function anonymousValidator1383310564(value, propertyPath) {
   if (isNil(value)) {
@@ -4689,7 +4689,7 @@ export function anonymousValidator1383310564(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator671299922(
+    const validatorResult = anonymousValidator2123790973(
       value["reference"],
       `${propertyPath}.reference`,
     );
@@ -4765,7 +4765,7 @@ export function anonymousValidator1605171946(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalReferenceDefinition, }>}
+ * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
  */
 export function anonymousValidator269560700(value, propertyPath) {
   if (isNil(value)) {
@@ -4894,7 +4894,7 @@ export function anonymousValidator269560700(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator671299922(
+    const validatorResult = anonymousValidator2123790973(
       value["reference"],
       `${propertyPath}.reference`,
     );

@@ -118,10 +118,26 @@ function getDefaultStructure() {
         }),
       )
       .keys("bar"),
+    T.omit("omitInlineFields")
+      .object(
+        T.object().keys({
+          foo: T.bool(),
+          bar: "baz",
+        }),
+      )
+      .keys("bar"),
 
     T.pick("pickFields")
       .object(
         T.object("pickBaseObject").keys({
+          foo: T.bool(),
+          bar: "baz",
+        }),
+      )
+      .keys("foo"),
+    T.omit("pickInlineFields")
+      .object(
+        T.object().keys({
           foo: T.bool(),
           bar: "baz",
         }),

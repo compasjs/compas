@@ -22,9 +22,11 @@ export function generateExecute(
 /**
  * Write output files if an output directory is provided
  *
- * @param {GenerateContext} ctx
+ * @param {GenerateContext} generateContext
  */
-export function generateWriteOutputFiles(ctx: GenerateContext): void;
+export function generateWriteOutputFiles(
+  generateContext: GenerateContext,
+): void;
 export type GenerateContext = {
   log: import("@compas/stdlib").Logger;
   options: import("./generated/common/types.js").ExperimentalGenerateOptions;

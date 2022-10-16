@@ -435,7 +435,7 @@ export function extendWithCodeGenExperimental(app) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "referenceDefinition"),
+        reference: T.reference("experimental", "typeDefinition"),
       })
       .loose(),
 
@@ -450,7 +450,7 @@ export function extendWithCodeGenExperimental(app) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "referenceDefinition"),
+        reference: T.reference("experimental", "typeDefinition"),
       })
       .loose(),
 

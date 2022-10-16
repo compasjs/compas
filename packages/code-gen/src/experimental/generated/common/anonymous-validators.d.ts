@@ -921,7 +921,7 @@ export function anonymousValidator782744528(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalReferenceDefinition, }>}
+ * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
  */
 export function anonymousValidator1383310564(
   value: any,
@@ -943,7 +943,7 @@ export function anonymousValidator1383310564(
     strict: boolean;
   };
   keys: string[];
-  reference: import("./types").ExperimentalReferenceDefinition;
+  reference: import("./types").ExperimentalTypeDefinition;
 }>;
 /**
  * @param {*} value
@@ -957,7 +957,7 @@ export function anonymousValidator1605171946(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalReferenceDefinition, }>}
+ * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
  */
 export function anonymousValidator269560700(
   value: any,
@@ -979,7 +979,7 @@ export function anonymousValidator269560700(
     strict: boolean;
   };
   keys: string[];
-  reference: import("./types").ExperimentalReferenceDefinition;
+  reference: import("./types").ExperimentalTypeDefinition;
 }>;
 /**
  * @param {*} value

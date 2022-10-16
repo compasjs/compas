@@ -283,7 +283,7 @@ export type ExperimentalOmitDefinition = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: ExperimentalReferenceDefinition;
+  reference: ExperimentalTypeDefinition;
 };
 export type ExperimentalPickDefinition = {
   type: "pick";
@@ -299,7 +299,7 @@ export type ExperimentalPickDefinition = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: ExperimentalReferenceDefinition;
+  reference: ExperimentalTypeDefinition;
 };
 export type ExperimentalRouteDefinition = {
   type: "route";
@@ -628,7 +628,7 @@ export type ExperimentalOmitDefinitionInput = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: import("./../common/types").ExperimentalReferenceDefinitionInput;
+  reference: import("./../common/types").ExperimentalTypeDefinitionInput;
 };
 export type ExperimentalPickDefinitionInput = {
   type: "pick";
@@ -644,7 +644,7 @@ export type ExperimentalPickDefinitionInput = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: import("./../common/types").ExperimentalReferenceDefinitionInput;
+  reference: import("./../common/types").ExperimentalTypeDefinitionInput;
 };
 export type ExperimentalRouteDefinitionInput = {
   type: "route";

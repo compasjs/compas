@@ -5,10 +5,10 @@
  * new target language, it could be a breaking change for users of other targets. This
  * is done so a valid structure can be generated to all supported targets.
  *
- * @param {import("../generate").GenerateContext} ctx
+ * @param {import("../generate").GenerateContext} generateContext
  */
 export function structureNameChecks(
-  ctx: import("../generate").GenerateContext,
+  generateContext: import("../generate").GenerateContext,
 ): void;
 /**
  * Execute the group name check on the provided name.

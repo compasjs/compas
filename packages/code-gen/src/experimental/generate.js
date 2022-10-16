@@ -4,6 +4,7 @@ import {
   validateExperimentalGenerateOptions,
   validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
+import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
@@ -59,57 +60,54 @@ export function generateExecute(generator, options) {
   // TODO: support generate presets
   // TODO: write migration docs between old and new code gen
 
-  // TODO: start with infrastructure
-  //  - general checks and structure behaviour like expanding CRUD, resolving relations
-  //    etc.
-  //  - per generator logic
-  //  - per generator writers for different languages, runtimes, libraries
   structureValidateReferences(generator.initialStructure);
   const structure = structureCopyAndSort(generator.initialStructure);
 
-  const ctx = {
+  const generateContext = {
     log: generator.logger,
     options: options,
     structure,
     outputFiles: [],
   };
 
-  structureGenerator(ctx);
-  structureNameChecks(ctx);
+  structureGenerator(generateContext);
 
-  // TODO: pick up from preprocessors
+  structureNameChecks(generateContext);
+  objectExpansionExecute(generateContext);
 
-  generateWriteOutputFiles(ctx);
+  generateWriteOutputFiles(generateContext);
 
-  return ctx.outputFiles;
+  return generateContext.outputFiles;
 }
 
 /**
  * Write output files if an output directory is provided
  *
- * @param {GenerateContext} ctx
+ * @param {GenerateContext} generateContext
  */
-export function generateWriteOutputFiles(ctx) {
-  if (isNil(ctx.options.outputDirectory)) {
+export function generateWriteOutputFiles(generateContext) {
+  if (isNil(generateContext.options.outputDirectory)) {
     return;
   }
 
-  rmSync(ctx.options.outputDirectory, {
+  rmSync(generateContext.options.outputDirectory, {
     recursive: true,
     force: true,
   });
 
-  mkdirSync(ctx.options.outputDirectory);
+  mkdirSync(generateContext.options.outputDirectory);
 
-  for (const file of ctx.outputFiles) {
+  for (const file of generateContext.outputFiles) {
     if (file.relativePath.includes("/")) {
       const subDirectory = file.relativePath.split("/").slice(0, -1).join("/");
 
-      mkdirSync(pathJoin(ctx.options.outputDirectory, subDirectory));
+      mkdirSync(
+        pathJoin(generateContext.options.outputDirectory, subDirectory),
+      );
     }
 
     writeFileSync(
-      pathJoin(ctx.options.outputDirectory, file.relativePath),
+      pathJoin(generateContext.options.outputDirectory, file.relativePath),
       file.contents,
       "utf-8",
     );

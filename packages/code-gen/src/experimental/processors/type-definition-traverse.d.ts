@@ -11,9 +11,9 @@
  * - When all traversal paths are exhausted / the nested callback is not called again.
  * `options.afterTraversal` is called when provided.
  *
- * This function is tested indirectly by all it's users.
+ * This function is tested indirectly by all its users.
  *
- * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} type
+ * @param {import("../generated/common/types").ExperimentalTypeDefinition|undefined} typeToTraverse
  * @param {(
  *   type: import("../generated/common/types").ExperimentalTypeDefinition,
  *   callback: (
@@ -32,7 +32,7 @@
  * }} options
  */
 export function typeDefinitionTraverse(
-  type:
+  typeToTraverse:
     | import("../generated/common/types").ExperimentalTypeDefinition
     | undefined,
   callback: (
