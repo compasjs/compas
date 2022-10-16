@@ -311,7 +311,6 @@ function crudCreateReadableType(context, type, { suffix } = {}) {
     }
   }
 
-  // @ts-expect-error
   structureAddType(context.structure, itemType);
 
   const ref = T.reference(itemType.group, itemType.name).build();
@@ -396,7 +395,6 @@ function crudCreateWriteableType(context, type, { suffix } = {}) {
     }
   }
 
-  // @ts-expect-error
   structureAddType(context.structure, itemType);
 
   type.internalSettings.writeableTypeName =

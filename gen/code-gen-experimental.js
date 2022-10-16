@@ -184,31 +184,60 @@ export function extendWithCodeGenExperimental(app) {
     // These types shouldn't use defaults, since we shouldn't alter the input structure.
     // These defaults should be applied in the builders or later on in some processor.
 
-    T.anyOf("namedTypeDefinition").values(
-      T.reference("experimental", "anyDefinition"),
-      T.reference("experimental", "anyOfDefinition"),
-      T.reference("experimental", "arrayDefinition"),
-      T.reference("experimental", "booleanDefinition"),
-      T.reference("experimental", "crudDefinition"),
-      T.reference("experimental", "dateDefinition"),
-      T.reference("experimental", "extendDefinition"),
-      T.reference("experimental", "fileDefinition"),
-      T.reference("experimental", "genericDefinition"),
-      T.reference("experimental", "numberDefinition"),
-      T.reference("experimental", "objectDefinition"),
-      T.reference("experimental", "omitDefinition"),
-      T.reference("experimental", "pickDefinition"),
-      T.reference("experimental", "routeDefinition"),
-      T.reference("experimental", "stringDefinition"),
-      T.reference("experimental", "uuidDefinition"),
-    ),
+    T.anyOf("namedTypeDefinition")
+      .docs(
+        "This contains all types that can be added top level to the structure.",
+      )
+      .values(
+        T.reference("experimental", "anyDefinition"),
+        T.reference("experimental", "anyOfDefinition"),
+        T.reference("experimental", "arrayDefinition"),
+        T.reference("experimental", "booleanDefinition"),
+        T.reference("experimental", "crudDefinition"),
+        T.reference("experimental", "dateDefinition"),
+        T.reference("experimental", "extendDefinition"),
+        T.reference("experimental", "fileDefinition"),
+        T.reference("experimental", "genericDefinition"),
+        T.reference("experimental", "numberDefinition"),
+        T.reference("experimental", "objectDefinition"),
+        T.reference("experimental", "omitDefinition"),
+        T.reference("experimental", "pickDefinition"),
+        T.reference("experimental", "routeDefinition"),
+        T.reference("experimental", "stringDefinition"),
+        T.reference("experimental", "uuidDefinition"),
+      ),
 
-    T.anyOf("typeDefinition").values(
-      T.reference("experimental", "namedTypeDefinition"),
-      T.reference("experimental", "referenceDefinition"),
-      T.reference("experimental", "relationDefinition"),
-      T.reference("experimental", "routeInvalidationDefinition"),
-    ),
+    T.anyOf("typeDefinition")
+      .docs("This contains all known type definitions.")
+      .values(
+        T.reference("experimental", "namedTypeDefinition"),
+        T.reference("experimental", "referenceDefinition"),
+        T.reference("experimental", "relationDefinition"),
+        T.reference("experimental", "routeInvalidationDefinition"),
+      ),
+
+    T.anyOf("typeSystemDefinition")
+      .docs(
+        "All type definitions that can be used inside other types, like object keys.",
+      )
+      .values(
+        T.reference("experimental", "anyDefinition"),
+        T.reference("experimental", "anyOfDefinition"),
+        T.reference("experimental", "arrayDefinition"),
+        T.reference("experimental", "booleanDefinition"),
+        T.reference("experimental", "crudDefinition"),
+        T.reference("experimental", "dateDefinition"),
+        T.reference("experimental", "extendDefinition"),
+        T.reference("experimental", "fileDefinition"),
+        T.reference("experimental", "genericDefinition"),
+        T.reference("experimental", "numberDefinition"),
+        T.reference("experimental", "objectDefinition"),
+        T.reference("experimental", "omitDefinition"),
+        T.reference("experimental", "pickDefinition"),
+        T.reference("experimental", "referenceDefinition"),
+        T.reference("experimental", "stringDefinition"),
+        T.reference("experimental", "uuidDefinition"),
+      ),
 
     T.object("anyDefinition")
       .keys({
@@ -244,7 +273,7 @@ export function extendWithCodeGenExperimental(app) {
         ...namedTypeDefinitionBase,
         values: T.array()
           .min(1)
-          .values(T.reference("experimental", "typeDefinition")),
+          .values(T.reference("experimental", "typeSystemDefinition")),
       })
       .loose(),
 
@@ -252,7 +281,7 @@ export function extendWithCodeGenExperimental(app) {
       .keys({
         type: "array",
         ...namedTypeDefinitionBase,
-        values: T.reference("experimental", "typeDefinition"),
+        values: T.reference("experimental", "typeSystemDefinition"),
         validator: T.object()
           .keys({
             convert: T.bool(),
@@ -350,7 +379,7 @@ export function extendWithCodeGenExperimental(app) {
         ...namedTypeDefinitionBase,
         keys: T.generic()
           .keys(T.string())
-          .values(T.reference("experimental", "typeDefinition")),
+          .values(T.reference("experimental", "typeSystemDefinition")),
         reference: T.reference("experimental", "referenceDefinition"),
       })
       .loose(),
@@ -371,8 +400,8 @@ export function extendWithCodeGenExperimental(app) {
       .keys({
         type: "generic",
         ...namedTypeDefinitionBase,
-        keys: T.reference("experimental", "typeDefinition"),
-        values: T.reference("experimental", "typeDefinition"),
+        keys: T.reference("experimental", "namedTypeDefinition"),
+        values: T.reference("experimental", "namedTypeDefinition"),
       })
       .loose(),
 
@@ -406,7 +435,7 @@ export function extendWithCodeGenExperimental(app) {
           .loose(),
         keys: T.generic()
           .keys(T.string())
-          .values(T.reference("experimental", "typeDefinition")),
+          .values(T.reference("experimental", "typeSystemDefinition")),
         enableQueries: T.bool().optional(),
         queryOptions: T.object()
           .keys({
@@ -435,7 +464,7 @@ export function extendWithCodeGenExperimental(app) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "typeDefinition"),
+        reference: T.reference("experimental", "typeSystemDefinition"),
       })
       .loose(),
 
@@ -450,7 +479,7 @@ export function extendWithCodeGenExperimental(app) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "typeDefinition"),
+        reference: T.reference("experimental", "typeSystemDefinition"),
       })
       .loose(),
 

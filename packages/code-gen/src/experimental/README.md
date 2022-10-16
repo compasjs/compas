@@ -39,8 +39,13 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - It's a mess (A), no it isn't but not tested lol
 - [x] `extend`, `omit` and `pick` expansion
   - See `preprocessorsExecute`
-- [ ] `enableQueries` and `relations` expansion
+- [x] Add primary and date fields to query enabled objects
   - See `addFieldsOfRelations`
+- [ ] Add relations fields of query enabled objects
+  - See `addFieldsOfRelations`
+- [ ] Sort keys of query enabled objects
+  - We do this for the same reason as resorting the structure, we need a stable
+    output and don't want to sort too often.
 - [ ] SQL related checks
   - See `doSqlChecks`
 - [ ] `crud` checks
@@ -236,7 +241,8 @@ See implementation of `typeDefinitionTraverse`
 See
 https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/amazon/smithy/utils/AbstractCodeWriter.java
 
-- Probably want to go with 'OOP' here;
+- Probably want to go with 'OOP' here; or decide how we can minimize params
+  passed to the writers in such a way to have decent convenient internal API.
   - Base writer
     - Manages files
     - Internally strings
@@ -244,14 +250,20 @@ https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/
     - Scopes
     - Indentation
   - Language specific writers
-    - Docblocks
+    - Documentation blocks
     - Functions
     - control flow
     - imports
-  - Generator specific writer extending language writers
-    - Generator specific constructs
-    - Each language specific implementation of a generator should have the same
+  - Generator-specific writer extending language writers
+    - Generator-specific constructs
+    - Each language-specific implementation of a generator should have the same
       API
-- Support strict language implementation;
-  - No dangling constants
-  - Typescript strict mode
+- Outputfiles in the generate context may become something like:
+  - `Map<path, { contents: string[] }>`
+  - This results in not having to a generate each file in one pass, but instead
+    provide some API's to `getAndCreate`, `checkIfExists`, etc.
+- Support strict language implementation. We want to pass strict compile / lint
+  checks for each target language / runtime / library.
+  - Determine, document and test the strict Typescript & typescript-eslint
+    settings that are supported
+  - Determine, document and test the strict ESLint settings that are supported

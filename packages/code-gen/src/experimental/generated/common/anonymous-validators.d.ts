@@ -192,16 +192,16 @@ export function anonymousValidator1908335458(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").ExperimentalTypeDefinition>}
+ * @returns {EitherN<import("./types").ExperimentalTypeSystemDefinition>}
  */
-export function anonymousValidator2123790973(
+export function anonymousValidator957944460(
   value: any,
   propertyPath: string,
-): EitherN<import("./types").ExperimentalTypeDefinition>;
+): EitherN<import("./types").ExperimentalTypeSystemDefinition>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "array", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"convert": boolean, "min"?: undefined|number, "max"?: undefined|number, }, "values": import("./types").ExperimentalTypeDefinition, }>}
+ * @returns {EitherN<{"type": "array", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"convert": boolean, "min"?: undefined|number, "max"?: undefined|number, }, "values": import("./types").ExperimentalTypeSystemDefinition, }>}
  */
 export function anonymousValidator718373276(
   value: any,
@@ -223,7 +223,7 @@ export function anonymousValidator718373276(
     min?: undefined | number;
     max?: undefined | number;
   };
-  values: import("./types").ExperimentalTypeDefinition;
+  values: import("./types").ExperimentalTypeSystemDefinition;
 }>;
 /**
  * @param {*} value
@@ -596,13 +596,13 @@ export function anonymousValidator1557692177(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{ [ key: string]:import("./types").ExperimentalTypeDefinition}>}
+ * @returns {EitherN<{ [ key: string]:import("./types").ExperimentalTypeSystemDefinition}>}
  */
-export function anonymousValidator2098458825(
+export function anonymousValidator1932964806(
   value: any,
   propertyPath: string,
 ): EitherN<{
-  [key: string]: import("./types").ExperimentalTypeDefinition;
+  [key: string]: import("./types").ExperimentalTypeSystemDefinition;
 }>;
 /**
  * @param {*} value
@@ -616,7 +616,7 @@ export function anonymousValidator671299922(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "extend", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "keys": { [ key: string]:import("./types").ExperimentalTypeDefinition}, "reference": import("./types").ExperimentalReferenceDefinition, }>}
+ * @returns {EitherN<{"type": "extend", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "keys": { [ key: string]:import("./types").ExperimentalTypeSystemDefinition}, "reference": import("./types").ExperimentalReferenceDefinition, }>}
  */
 export function anonymousValidator304308939(
   value: any,
@@ -635,7 +635,7 @@ export function anonymousValidator304308939(
   };
   validator: {};
   keys: {
-    [key: string]: import("./types").ExperimentalTypeDefinition;
+    [key: string]: import("./types").ExperimentalTypeSystemDefinition;
   };
   reference: import("./types").ExperimentalReferenceDefinition;
 }>;
@@ -692,30 +692,6 @@ export function anonymousValidator1113227710(
   value: any,
   propertyPath: string,
 ): EitherN<"generic">;
-/**
- * @param {*} value
- * @param {string} propertyPath
- * @returns {EitherN<{"type": "generic", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "keys": import("./types").ExperimentalTypeDefinition, "values": import("./types").ExperimentalTypeDefinition, }>}
- */
-export function anonymousValidator878459490(
-  value: any,
-  propertyPath: string,
-): EitherN<{
-  type: "generic";
-  group?: undefined | string;
-  name?: undefined | string;
-  docString: string;
-  isOptional: boolean;
-  defaultValue?: undefined | string | boolean | number;
-  sql: {
-    primary?: undefined | boolean;
-    searchable?: undefined | boolean;
-    hasDefaultValue?: undefined | boolean;
-  };
-  validator: {};
-  keys: import("./types").ExperimentalTypeDefinition;
-  values: import("./types").ExperimentalTypeDefinition;
-}>;
 /**
  * @param {*} value
  * @param {string} propertyPath
@@ -863,7 +839,7 @@ export function anonymousValidator403767741(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "object", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "shortName"?: undefined|string, "keys": { [ key: string]:import("./types").ExperimentalTypeDefinition}, "enableQueries"?: undefined|boolean, "queryOptions"?: undefined|{"withSoftDeletes"?: undefined|boolean, "withDates"?: undefined|boolean, "withPrimaryKey": boolean, "isView"?: undefined|boolean, "schema"?: undefined|string, }, "relations": (import("./types").ExperimentalRelationDefinition)[], }>}
+ * @returns {EitherN<{"type": "object", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "shortName"?: undefined|string, "keys": { [ key: string]:import("./types").ExperimentalTypeSystemDefinition}, "enableQueries"?: undefined|boolean, "queryOptions"?: undefined|{"withSoftDeletes"?: undefined|boolean, "withDates"?: undefined|boolean, "withPrimaryKey": boolean, "isView"?: undefined|boolean, "schema"?: undefined|string, }, "relations": (import("./types").ExperimentalRelationDefinition)[], }>}
  */
 export function anonymousValidator733173530(
   value: any,
@@ -886,7 +862,7 @@ export function anonymousValidator733173530(
   };
   shortName?: undefined | string;
   keys: {
-    [key: string]: import("./types").ExperimentalTypeDefinition;
+    [key: string]: import("./types").ExperimentalTypeSystemDefinition;
   };
   enableQueries?: undefined | boolean;
   queryOptions?:
@@ -921,7 +897,7 @@ export function anonymousValidator782744528(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
+ * @returns {EitherN<{"type": "omit", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeSystemDefinition, }>}
  */
 export function anonymousValidator1383310564(
   value: any,
@@ -943,7 +919,7 @@ export function anonymousValidator1383310564(
     strict: boolean;
   };
   keys: string[];
-  reference: import("./types").ExperimentalTypeDefinition;
+  reference: import("./types").ExperimentalTypeSystemDefinition;
 }>;
 /**
  * @param {*} value
@@ -957,7 +933,7 @@ export function anonymousValidator1605171946(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeDefinition, }>}
+ * @returns {EitherN<{"type": "pick", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {"allowNull": boolean, "strict": boolean, }, "keys": (string)[], "reference": import("./types").ExperimentalTypeSystemDefinition, }>}
  */
 export function anonymousValidator269560700(
   value: any,
@@ -979,7 +955,7 @@ export function anonymousValidator269560700(
     strict: boolean;
   };
   keys: string[];
-  reference: import("./types").ExperimentalTypeDefinition;
+  reference: import("./types").ExperimentalTypeSystemDefinition;
 }>;
 /**
  * @param {*} value
@@ -1340,30 +1316,75 @@ export function anonymousValidator527504798(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<import("./types").ExperimentalNamedTypeDefinition|import("./types").ExperimentalReferenceDefinition|import("./types").ExperimentalRelationDefinition|import("./types").ExperimentalRouteInvalidationDefinition>}
+ * @returns {EitherN<import("./types").ExperimentalNamedTypeDefinition>}
  */
-export function anonymousValidator1717694293(
+export function anonymousValidator2107458422(
+  value: any,
+  propertyPath: string,
+): EitherN<import("./types").ExperimentalNamedTypeDefinition>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "generic", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "keys": import("./types").ExperimentalNamedTypeDefinition, "values": import("./types").ExperimentalNamedTypeDefinition, }>}
+ */
+export function anonymousValidator878459490(
+  value: any,
+  propertyPath: string,
+): EitherN<{
+  type: "generic";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {};
+  keys: import("./types").ExperimentalNamedTypeDefinition;
+  values: import("./types").ExperimentalNamedTypeDefinition;
+}>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").ExperimentalAnyDefinition|import("./types").ExperimentalAnyOfDefinition|import("./types").ExperimentalArrayDefinition|import("./types").ExperimentalBooleanDefinition|import("./types").ExperimentalCrudDefinition|import("./types").ExperimentalDateDefinition|import("./types").ExperimentalExtendDefinition|import("./types").ExperimentalFileDefinition|import("./types").ExperimentalGenericDefinition|import("./types").ExperimentalNumberDefinition|import("./types").ExperimentalObjectDefinition|import("./types").ExperimentalOmitDefinition|import("./types").ExperimentalPickDefinition|import("./types").ExperimentalReferenceDefinition|import("./types").ExperimentalStringDefinition|import("./types").ExperimentalUuidDefinition>}
+ */
+export function anonymousValidator775977628(
   value: any,
   propertyPath: string,
 ): EitherN<
-  | import("./types").ExperimentalNamedTypeDefinition
+  | import("./types").ExperimentalAnyDefinition
+  | import("./types").ExperimentalAnyOfDefinition
+  | import("./types").ExperimentalArrayDefinition
+  | import("./types").ExperimentalBooleanDefinition
+  | import("./types").ExperimentalCrudDefinition
+  | import("./types").ExperimentalDateDefinition
+  | import("./types").ExperimentalExtendDefinition
+  | import("./types").ExperimentalFileDefinition
+  | import("./types").ExperimentalGenericDefinition
+  | import("./types").ExperimentalNumberDefinition
+  | import("./types").ExperimentalObjectDefinition
+  | import("./types").ExperimentalOmitDefinition
+  | import("./types").ExperimentalPickDefinition
   | import("./types").ExperimentalReferenceDefinition
-  | import("./types").ExperimentalRelationDefinition
-  | import("./types").ExperimentalRouteInvalidationDefinition
+  | import("./types").ExperimentalStringDefinition
+  | import("./types").ExperimentalUuidDefinition
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<(import("./types").ExperimentalTypeDefinition)[]>}
+ * @returns {EitherN<(import("./types").ExperimentalTypeSystemDefinition)[]>}
  */
-export function anonymousValidator87553826(
+export function anonymousValidator861629395(
   value: any,
   propertyPath: string,
-): EitherN<import("./types").ExperimentalTypeDefinition[]>;
+): EitherN<import("./types").ExperimentalTypeSystemDefinition[]>;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "anyOf", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "values": (import("./types").ExperimentalTypeDefinition)[], }>}
+ * @returns {EitherN<{"type": "anyOf", "group"?: undefined|string, "name"?: undefined|string, "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "sql": {"primary"?: undefined|boolean, "searchable"?: undefined|boolean, "hasDefaultValue"?: undefined|boolean, }, "validator": {}, "values": (import("./types").ExperimentalTypeSystemDefinition)[], }>}
  */
 export function anonymousValidator1003855982(
   value: any,
@@ -1381,7 +1402,7 @@ export function anonymousValidator1003855982(
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  values: import("./types").ExperimentalTypeDefinition[];
+  values: import("./types").ExperimentalTypeSystemDefinition[];
 }>;
 /**
  * @param {*} value
@@ -1773,6 +1794,20 @@ export function anonymousValidator1125369163(
     [key: string]: import("./types").ExperimentalNamedTypeDefinition;
   };
 }>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<import("./types").ExperimentalNamedTypeDefinition|import("./types").ExperimentalReferenceDefinition|import("./types").ExperimentalRelationDefinition|import("./types").ExperimentalRouteInvalidationDefinition>}
+ */
+export function anonymousValidator1717694293(
+  value: any,
+  propertyPath: string,
+): EitherN<
+  | import("./types").ExperimentalNamedTypeDefinition
+  | import("./types").ExperimentalReferenceDefinition
+  | import("./types").ExperimentalRelationDefinition
+  | import("./types").ExperimentalRouteInvalidationDefinition
+>;
 export type InternalError = {
   propertyPath: string;
   key: string;

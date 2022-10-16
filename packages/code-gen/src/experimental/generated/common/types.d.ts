@@ -38,14 +38,9 @@ export type ExperimentalAnyOfDefinition = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  values: ExperimentalTypeDefinition[];
+  values: ExperimentalTypeSystemDefinition[];
 };
-export type ExperimentalTypeDefinition =
-  | ExperimentalNamedTypeDefinition
-  | ExperimentalReferenceDefinition
-  | ExperimentalRelationDefinition
-  | ExperimentalRouteInvalidationDefinition;
-export type ExperimentalNamedTypeDefinition =
+export type ExperimentalTypeSystemDefinition =
   | ExperimentalAnyDefinition
   | ExperimentalAnyOfDefinition
   | ExperimentalArrayDefinition
@@ -59,7 +54,7 @@ export type ExperimentalNamedTypeDefinition =
   | ExperimentalObjectDefinition
   | ExperimentalOmitDefinition
   | ExperimentalPickDefinition
-  | ExperimentalRouteDefinition
+  | ExperimentalReferenceDefinition
   | ExperimentalStringDefinition
   | ExperimentalUuidDefinition;
 export type ExperimentalArrayDefinition = {
@@ -79,7 +74,7 @@ export type ExperimentalArrayDefinition = {
     min?: undefined | number;
     max?: undefined | number;
   };
-  values: ExperimentalTypeDefinition;
+  values: ExperimentalTypeSystemDefinition;
 };
 export type ExperimentalBooleanDefinition = {
   type: "boolean";
@@ -180,7 +175,7 @@ export type ExperimentalExtendDefinition = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  keys: { [key: string]: ExperimentalTypeDefinition };
+  keys: { [key: string]: ExperimentalTypeSystemDefinition };
   reference: ExperimentalReferenceDefinition;
 };
 export type ExperimentalFileDefinition = {
@@ -210,9 +205,26 @@ export type ExperimentalGenericDefinition = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  keys: ExperimentalTypeDefinition;
-  values: ExperimentalTypeDefinition;
+  keys: ExperimentalNamedTypeDefinition;
+  values: ExperimentalNamedTypeDefinition;
 };
+export type ExperimentalNamedTypeDefinition =
+  | ExperimentalAnyDefinition
+  | ExperimentalAnyOfDefinition
+  | ExperimentalArrayDefinition
+  | ExperimentalBooleanDefinition
+  | ExperimentalCrudDefinition
+  | ExperimentalDateDefinition
+  | ExperimentalExtendDefinition
+  | ExperimentalFileDefinition
+  | ExperimentalGenericDefinition
+  | ExperimentalNumberDefinition
+  | ExperimentalObjectDefinition
+  | ExperimentalOmitDefinition
+  | ExperimentalPickDefinition
+  | ExperimentalRouteDefinition
+  | ExperimentalStringDefinition
+  | ExperimentalUuidDefinition;
 export type ExperimentalNumberDefinition = {
   type: "number";
   group?: undefined | string;
@@ -248,7 +260,7 @@ export type ExperimentalObjectDefinition = {
   };
   validator: { allowNull: boolean; strict: boolean };
   shortName?: undefined | string;
-  keys: { [key: string]: ExperimentalTypeDefinition };
+  keys: { [key: string]: ExperimentalTypeSystemDefinition };
   enableQueries?: undefined | boolean;
   queryOptions?:
     | undefined
@@ -283,7 +295,7 @@ export type ExperimentalOmitDefinition = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: ExperimentalTypeDefinition;
+  reference: ExperimentalTypeSystemDefinition;
 };
 export type ExperimentalPickDefinition = {
   type: "pick";
@@ -299,7 +311,7 @@ export type ExperimentalPickDefinition = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: ExperimentalTypeDefinition;
+  reference: ExperimentalTypeSystemDefinition;
 };
 export type ExperimentalRouteDefinition = {
   type: "route";
@@ -427,6 +439,11 @@ export type ExperimentalStructure = {
     [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinition;
   };
 };
+export type ExperimentalTypeDefinition =
+  | ExperimentalNamedTypeDefinition
+  | ExperimentalReferenceDefinition
+  | ExperimentalRelationDefinition
+  | ExperimentalRouteInvalidationDefinition;
 export type ExperimentalAnyDefinitionInput = ExperimentalAnyDefinition;
 export type ExperimentalAnyOfDefinitionInput = {
   type: "anyOf";
@@ -441,14 +458,9 @@ export type ExperimentalAnyOfDefinitionInput = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  values: import("./../common/types").ExperimentalTypeDefinitionInput[];
+  values: import("./../common/types").ExperimentalTypeSystemDefinitionInput[];
 };
-export type ExperimentalTypeDefinitionInput =
-  | import("./../common/types").ExperimentalNamedTypeDefinitionInput
-  | import("./../common/types").ExperimentalReferenceDefinitionInput
-  | import("./../common/types").ExperimentalRelationDefinitionInput
-  | import("./../common/types").ExperimentalRouteInvalidationDefinitionInput;
-export type ExperimentalNamedTypeDefinitionInput =
+export type ExperimentalTypeSystemDefinitionInput =
   | import("./../common/types").ExperimentalAnyDefinitionInput
   | import("./../common/types").ExperimentalAnyOfDefinitionInput
   | import("./../common/types").ExperimentalArrayDefinitionInput
@@ -462,7 +474,7 @@ export type ExperimentalNamedTypeDefinitionInput =
   | import("./../common/types").ExperimentalObjectDefinitionInput
   | import("./../common/types").ExperimentalOmitDefinitionInput
   | import("./../common/types").ExperimentalPickDefinitionInput
-  | import("./../common/types").ExperimentalRouteDefinitionInput
+  | import("./../common/types").ExperimentalReferenceDefinitionInput
   | import("./../common/types").ExperimentalStringDefinitionInput
   | import("./../common/types").ExperimentalUuidDefinitionInput;
 export type ExperimentalArrayDefinitionInput = {
@@ -482,7 +494,7 @@ export type ExperimentalArrayDefinitionInput = {
     min?: undefined | number;
     max?: undefined | number;
   };
-  values: import("./../common/types").ExperimentalTypeDefinitionInput;
+  values: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
 };
 export type ExperimentalBooleanDefinitionInput = ExperimentalBooleanDefinition;
 export type ExperimentalCrudDefinitionInput = {
@@ -555,7 +567,9 @@ export type ExperimentalExtendDefinitionInput = {
   };
   validator: {};
   keys: {
-    [key: string]: import("./../common/types").ExperimentalTypeDefinitionInput;
+    [
+      key: string
+    ]: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
   };
   reference: import("./../common/types").ExperimentalReferenceDefinitionInput;
 };
@@ -573,9 +587,26 @@ export type ExperimentalGenericDefinitionInput = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  keys: import("./../common/types").ExperimentalTypeDefinitionInput;
-  values: import("./../common/types").ExperimentalTypeDefinitionInput;
+  keys: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
+  values: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
 };
+export type ExperimentalNamedTypeDefinitionInput =
+  | import("./../common/types").ExperimentalAnyDefinitionInput
+  | import("./../common/types").ExperimentalAnyOfDefinitionInput
+  | import("./../common/types").ExperimentalArrayDefinitionInput
+  | import("./../common/types").ExperimentalBooleanDefinitionInput
+  | import("./../common/types").ExperimentalCrudDefinitionInput
+  | import("./../common/types").ExperimentalDateDefinitionInput
+  | import("./../common/types").ExperimentalExtendDefinitionInput
+  | import("./../common/types").ExperimentalFileDefinitionInput
+  | import("./../common/types").ExperimentalGenericDefinitionInput
+  | import("./../common/types").ExperimentalNumberDefinitionInput
+  | import("./../common/types").ExperimentalObjectDefinitionInput
+  | import("./../common/types").ExperimentalOmitDefinitionInput
+  | import("./../common/types").ExperimentalPickDefinitionInput
+  | import("./../common/types").ExperimentalRouteDefinitionInput
+  | import("./../common/types").ExperimentalStringDefinitionInput
+  | import("./../common/types").ExperimentalUuidDefinitionInput;
 export type ExperimentalNumberDefinitionInput = ExperimentalNumberDefinition;
 export type ExperimentalObjectDefinitionInput = {
   type: "object";
@@ -592,7 +623,9 @@ export type ExperimentalObjectDefinitionInput = {
   validator: { allowNull: boolean; strict: boolean };
   shortName?: undefined | string;
   keys: {
-    [key: string]: import("./../common/types").ExperimentalTypeDefinitionInput;
+    [
+      key: string
+    ]: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
   };
   enableQueries?: undefined | boolean;
   queryOptions?:
@@ -628,7 +661,7 @@ export type ExperimentalOmitDefinitionInput = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: import("./../common/types").ExperimentalTypeDefinitionInput;
+  reference: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
 };
 export type ExperimentalPickDefinitionInput = {
   type: "pick";
@@ -644,7 +677,7 @@ export type ExperimentalPickDefinitionInput = {
   };
   validator: { allowNull: boolean; strict: boolean };
   keys: string[];
-  reference: import("./../common/types").ExperimentalTypeDefinitionInput;
+  reference: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
 };
 export type ExperimentalRouteDefinitionInput = {
   type: "route";
@@ -777,3 +810,8 @@ export type ExperimentalStructureInput = {
     ]: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
   };
 };
+export type ExperimentalTypeDefinitionInput =
+  | import("./../common/types").ExperimentalNamedTypeDefinitionInput
+  | import("./../common/types").ExperimentalReferenceDefinitionInput
+  | import("./../common/types").ExperimentalRelationDefinitionInput
+  | import("./../common/types").ExperimentalRouteInvalidationDefinitionInput;

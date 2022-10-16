@@ -133,7 +133,7 @@ export class TypeBuilder {
   }
 
   /**
-   * @returns {Record<string, any>}
+   * @returns {any}
    */
   build() {
     if (isNil(this.data.name)) {

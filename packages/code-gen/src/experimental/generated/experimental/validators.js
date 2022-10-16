@@ -25,6 +25,7 @@ import {
   anonymousValidator55094131,
   anonymousValidator718373276,
   anonymousValidator733173530,
+  anonymousValidator775977628,
   anonymousValidator878459490,
   anonymousValidator88730391,
 } from "../common/anonymous-validators.js";
@@ -688,6 +689,35 @@ export function validateExperimentalTypeDefinition(value, propertyPath = "$") {
     };
   }
   /** @type {{ value: import("../common/types").ExperimentalTypeDefinition}} */
+  return { value: result.value };
+}
+/**
+ * @param {undefined|any|import("../common/types").ExperimentalTypeSystemDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition>}
+ */
+export function validateExperimentalTypeSystemDefinition(
+  value,
+  propertyPath = "$",
+) {
+  const result = anonymousValidator775977628(value, propertyPath);
+  if (result.errors) {
+    const info = {};
+    for (const err of result.errors) {
+      if (isNil(info[err.propertyPath])) {
+        info[err.propertyPath] = err;
+      } else if (Array.isArray(info[err.propertyPath])) {
+        info[err.propertyPath].push(err);
+      } else {
+        info[err.propertyPath] = [info[err.propertyPath], err];
+      }
+    }
+    /** @type {{ error: AppError }} */
+    return {
+      error: AppError.validationError("validator.error", info),
+    };
+  }
+  /** @type {{ value: import("../common/types").ExperimentalTypeSystemDefinition}} */
   return { value: result.value };
 }
 /**

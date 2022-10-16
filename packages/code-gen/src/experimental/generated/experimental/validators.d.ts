@@ -285,6 +285,18 @@ export function validateExperimentalTypeDefinition(
   propertyPath?: string | undefined,
 ): Either<import("../common/types").ExperimentalTypeDefinition>;
 /**
+ * @param {undefined|any|import("../common/types").ExperimentalTypeSystemDefinitionInput} value
+ * @param {string|undefined} [propertyPath]
+ * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition>}
+ */
+export function validateExperimentalTypeSystemDefinition(
+  value:
+    | undefined
+    | any
+    | import("../common/types").ExperimentalTypeSystemDefinitionInput,
+  propertyPath?: string | undefined,
+): Either<import("../common/types").ExperimentalTypeSystemDefinition>;
+/**
  * @param {undefined|any|import("../common/types").ExperimentalUuidDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalUuidDefinition>}

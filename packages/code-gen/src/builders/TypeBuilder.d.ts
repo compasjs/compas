@@ -46,8 +46,8 @@ export class TypeBuilder {
    */
   sqlDefault(): this;
   /**
-   * @returns {Record<string, any>}
+   * @returns {any}
    */
-  build(): Record<string, any>;
+  build(): any;
 }
 //# sourceMappingURL=TypeBuilder.d.ts.map
