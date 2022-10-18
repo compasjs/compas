@@ -4,6 +4,72 @@ editLink: false
 
 # Changelog
 
+### [v0.0.217](https://github.com/compasjs/compas/releases/tag/v0.0.217)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.171.0 to 3.188.0
+  ([#2099](https://github.com/compasjs/compas/pull/2099),
+  [#2113](https://github.com/compasjs/compas/pull/2113),
+  [#2125](https://github.com/compasjs/compas/pull/2125),
+  [#2135](https://github.com/compasjs/compas/pull/2135))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.171.0 to 3.188.0
+  ([#2101](https://github.com/compasjs/compas/pull/2101),
+  [#2110](https://github.com/compasjs/compas/pull/2110),
+  [#2123](https://github.com/compasjs/compas/pull/2123),
+  [#2134](https://github.com/compasjs/compas/pull/2134))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.19.1 to 7.19.3
+  ([#2090](https://github.com/compasjs/compas/pull/2090))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump actions/setup-node from 3.4.1 to 3.5.1
+  ([#2094](https://github.com/compasjs/compas/pull/2094),
+  [#2136](https://github.com/compasjs/compas/pull/2136))
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): bump dotenv from 16.0.2 to 16.0.3
+  ([#2097](https://github.com/compasjs/compas/pull/2097))
+  - [Release notes](https://github.com/motdotla/dotenv/releases)
+- build(deps): bump eslint from 8.23.1 to 8.25.0
+  ([#2078](https://github.com/compasjs/compas/pull/2078),
+  [#2129](https://github.com/compasjs/compas/pull/2129))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 8.5.0 to 8.6.1
+  ([#2074](https://github.com/compasjs/compas/pull/2074),
+  [#2095](https://github.com/compasjs/compas/pull/2095))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump postgres from 3.2.4 to 3.3.1
+  ([#2103](https://github.com/compasjs/compas/pull/2103),
+  [#2112](https://github.com/compasjs/compas/pull/2112))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump recast from 0.21.2 to 0.21.5
+  ([#2093](https://github.com/compasjs/compas/pull/2093))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump sharp from 0.31.0 to 0.31.1
+  ([#2098](https://github.com/compasjs/compas/pull/2098))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- docs(file-handling): example correctness
+  - Closes [#2132](https://github.com/compasjs/compas/pull/2132)
+- feat(cli): `docker clean --project` tries to kill all open connections before
+  cleaning ([#2121](https://github.com/compasjs/compas/pull/2121))
+  - Closes [#2087](https://github.com/compasjs/compas/pull/2087)
+- fix(code-gen): remove axiosInstance as param on `useFooBar.invalidate` calls
+  ([#2120](https://github.com/compasjs/compas/pull/2120))
+  - Closes [#2114](https://github.com/compasjs/compas/pull/2114)
+- fix(create-compas): write template tar to temp directory before extracting
+  ([#2144](https://github.com/compasjs/compas/pull/2144))
+  - Closes [#2105](https://github.com/compasjs/compas/pull/2105)
+- fix(docs): small typo fix in index docs
+  ([#2127](https://github.com/compasjs/compas/pull/2127))
+- fix(examples): with-auth added axios as dev package
+  ([#2107](https://github.com/compasjs/compas/pull/2107))
+  - Closes [#2106](https://github.com/compasjs/compas/pull/2106)
+
+##### Breaking changes
+
+- **code-gen**: remove axiosInstance as param on `useFooBar.invalidate` calls
+  - `useFooBar.invalidate()` does not accept an `AxiosInstance` anymore.
+
 ### [v0.0.216](https://github.com/compasjs/compas/releases/tag/v0.0.216)
 
 ##### Changes
