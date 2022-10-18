@@ -1,9 +1,11 @@
+import { createWriteStream } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import https from "https";
+import os from "os";
 import { normalize } from "path";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
-import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
+import { AppError, environment, exec, pathJoin, spawn, uuid } from "@compas/stdlib";
 import tar from "tar";
 
 /**
@@ -80,18 +82,22 @@ export async function templateGetAndExtractStream(logger, options) {
 
   await mkdir(options.outputDirectory, { recursive: true });
 
-  let stream = Readable.from(Buffer.from(""));
+  const tmpFile = pathJoin(os.tmpdir(), `create-compas-${uuid()}`);
+  let httpStream = Readable.from(Buffer.from(""));
 
   if (options.template.provider === "github") {
     logger.info(`Resolving remote template...`);
 
     // @ts-expect-error
-    stream = await templateGetHttpStream(
+    httpStream = await templateGetHttpStream(
       `https://codeload.github.com/${options.template.repository}/tar.gz${
         options.template.ref ? `/${options.template.ref}` : ""
       }`,
     );
   }
+
+  logger.info("Downloading template...");
+  await pipeline(httpStream, createWriteStream(tmpFile));
 
   let dirToExtract = options.template.path;
 
@@ -113,19 +119,17 @@ export async function templateGetAndExtractStream(logger, options) {
     }
   }
 
-  logger.info(`Downloading and extracting template...`);
+  logger.info(`Extracting template...`);
 
-  await pipeline(
-    stream,
-    tar.extract(
-      {
-        cwd: options.outputDirectory,
-        strip: options.template.path
-          ? normalize(options.template.path).split("/").length + 1
-          : 1,
-      },
-      [dirToExtract],
-    ),
+  await tar.extract(
+    {
+      file: tmpFile,
+      cwd: options.outputDirectory,
+      strip: options.template.path
+        ? normalize(options.template.path).split("/").length + 1
+        : 1,
+    },
+    [dirToExtract],
   );
 }
 
