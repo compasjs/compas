@@ -101,11 +101,7 @@ R.get("/product", "getProduct").response({
   privateAvatarUrl: T.string(),
 });
 
-R.get("/product/public-image", "publicImage")
-  .params({
-    id: T.uuid(),
-  })
-  .response(T.file());
+R.get("/product/public-image", "publicImage").response(T.file());
 
 R.get("/product/private-avatar", "privateAvatar")
   .query({
@@ -118,14 +114,14 @@ R.get("/product/private-avatar", "privateAvatar")
 
 ```js
 // For the example :)
-const publicImage = (
+const [publicImage] = (
   await queryFile({
     where: {
       id: uuid(),
     },
   }).exec(sql)
 )[0];
-const privateImage = (
+const [privateImage] = (
   await queryFile({
     where: {
       id: uuid(),
@@ -153,7 +149,7 @@ appController.getProduct = (ctx, next) => {
 };
 
 appController.publicImage = async (ctx, next) => {
-  const file = await queryFile({ where: { id: publicImageId } }).exec(sql);
+  const file = await queryFile({ where: { id: publicImage.id } }).exec(sql);
 
   await fileSendResponse(s3Client, ctx, file);
 
@@ -161,7 +157,7 @@ appController.publicImage = async (ctx, next) => {
 };
 
 appController.privateAvatar = async (ctx, next) => {
-  const file = await queryFile({ where: { id: privateAvatarId } }).exec(sql);
+  const file = await queryFile({ where: { id: privateAvatar.id } }).exec(sql);
 
   // Throws if expired or invalid
   fileVerifyAccessToken({
