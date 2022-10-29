@@ -4,7 +4,7 @@
  * @param {import("../generate").GenerateContext} generateContext
  * @returns {import("../generated/common/types").ExperimentalObjectDefinition[]}
  */
-export function queryEnabledObjects(
+export function structureModels(
   generateContext: import("../generate").GenerateContext,
 ): import("../generated/common/types").ExperimentalObjectDefinition[];
-//# sourceMappingURL=query-enabled-objects.d.ts.map
+//# sourceMappingURL=models.d.ts.map

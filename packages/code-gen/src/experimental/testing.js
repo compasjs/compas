@@ -308,7 +308,10 @@ function getDefaultStructure() {
             "locations",
           ).optional(),
 
-          T.oneToMany("preferredLocationFor", T.reference("database", "pet")),
+          T.oneToMany(
+            "preferredLocationFor",
+            T.reference("database", "petPreferredLocation"),
+          ),
         ),
 
       T.object("locationInformation")
@@ -337,7 +340,10 @@ function getDefaultStructure() {
         .relations(
           T.manyToOne("owner", T.reference("database", "user"), "pets"),
 
-          T.oneToMany("preferredLocations", T.reference("database", "pet")),
+          T.oneToMany(
+            "preferredLocations",
+            T.reference("database", "petPreferredLocation"),
+          ),
         ),
 
       T.object("petPreferredLocation")
@@ -347,7 +353,7 @@ function getDefaultStructure() {
           T.manyToOne(
             "location",
             T.reference("database", "location"),
-            "preferredLocationBy",
+            "preferredLocationFor",
           ),
           T.manyToOne(
             "pet",

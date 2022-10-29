@@ -1,15 +1,23 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import {
-  validateExperimentalGenerateOptions, validateExperimentalStructure,
+  validateExperimentalGenerateOptions,
+  validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
 import {
-  databaseFieldsAddDateFields, databaseFieldsAddPrimaryKey,
-} from "./processors/database-fields.js";
+  modelKeyAddDateKeys,
+  modelKeyAddPrimary,
+} from "./processors/model-keys.js";
+import {
+  modelRelationAddKeys,
+  modelRelationCheckAllRelations,
+  modelRelationBuildRelationInformationCache,
+} from "./processors/model-relation.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
-  structureCopyAndSort, structureValidateReferences,
+  structureCopyAndSort,
+  structureValidateReferences,
 } from "./processors/structure.js";
 import { structureGenerator } from "./structure/generator.js";
 
@@ -76,8 +84,12 @@ export function generateExecute(generator, options) {
   structureNameChecks(generateContext);
   objectExpansionExecute(generateContext);
 
-  databaseFieldsAddPrimaryKey(generateContext);
-  databaseFieldsAddDateFields(generateContext);
+  modelKeyAddPrimary(generateContext);
+  modelKeyAddDateKeys(generateContext);
+
+  modelRelationCheckAllRelations(generateContext);
+  modelRelationAddKeys(generateContext);
+  modelRelationBuildRelationInformationCache(generateContext);
 
   generateWriteOutputFiles(generateContext);
 

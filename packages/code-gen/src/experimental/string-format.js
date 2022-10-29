@@ -15,3 +15,16 @@ export function stringFormatNameForError(type) {
 
   return `(anonymous)`;
 }
+
+/**
+ * Format a full relation name
+ *
+ * @param {string} ownName
+ * @param {string} inverseName
+ * @param {string} ownKey
+ * @param {string} inverseKey
+ * @returns {string}
+ */
+export function stringFormatRelation(ownName, inverseName, ownKey, inverseKey) {
+  return `from '${ownName}' to '${inverseName}' via '${ownName}#${ownKey}' to '${inverseName}#${inverseKey}'`;
+}

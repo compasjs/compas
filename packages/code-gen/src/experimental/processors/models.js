@@ -6,7 +6,7 @@ import { structureNamedTypes } from "./structure.js";
  * @param {import("../generate").GenerateContext} generateContext
  * @returns {import("../generated/common/types").ExperimentalObjectDefinition[]}
  */
-export function queryEnabledObjects(generateContext) {
+export function structureModels(generateContext) {
   /**
    * @type {import("../generated/common/types").ExperimentalObjectDefinition[]}
    */

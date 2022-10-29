@@ -359,6 +359,8 @@ export function validateExperimentalNamePartOptional(
   return { value: result.value };
 }
 /**
+ * This contains all types that can be added top level to the structure.
+ *
  * @param {undefined|any|import("../common/types").ExperimentalNamedTypeDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalNamedTypeDefinition>}
@@ -666,6 +668,8 @@ export function validateExperimentalStructure(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * This contains all known type definitions.
+ *
  * @param {undefined|any|import("../common/types").ExperimentalTypeDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalTypeDefinition>}
@@ -692,6 +696,8 @@ export function validateExperimentalTypeDefinition(value, propertyPath = "$") {
   return { value: result.value };
 }
 /**
+ * All type definitions that can be used inside other types, like object keys.
+ *
  * @param {undefined|any|import("../common/types").ExperimentalTypeSystemDefinitionInput} value
  * @param {string|undefined} [propertyPath]
  * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition>}

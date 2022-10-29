@@ -119,6 +119,9 @@ export class TypeBuilder {
     this.data.sql.searchable = true;
     this.data.sql.primary = true;
 
+    // TODO: Auto set `sql.hasDefaultValue -> true` and remove options around
+    //  'withPrimaryKey'.
+
     return this;
   }
 

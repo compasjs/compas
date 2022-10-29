@@ -1,4 +1,4 @@
-import { merge } from "@compas/stdlib";
+import { isNil, merge } from "@compas/stdlib";
 import { RelationType } from "./RelationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
@@ -102,6 +102,12 @@ export class ObjectType extends TypeBuilder {
           "Only accepts relations created via T.oneToMany, T.manyToOne and T.oneToOne.",
         );
       }
+    }
+
+    if (isNil(this.data.name)) {
+      throw new Error(
+        `Can't call '.relations()' when 'T.object([name])' is called without a name.`,
+      );
     }
 
     return this;

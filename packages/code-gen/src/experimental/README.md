@@ -41,13 +41,15 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - See `preprocessorsExecute`
 - [x] Add primary and date fields to query enabled objects
   - See `addFieldsOfRelations`
-- [ ] Add relations fields of query enabled objects
+- [x] Add relations fields of query enabled objects
   - See `addFieldsOfRelations`
+- [x] SQL related checks
+  - See `doSqlChecks`
 - [ ] Sort keys of query enabled objects
   - We do this for the same reason as resorting the structure, we need a stable
     output and don't want to sort too often.
-- [ ] SQL related checks
-  - See `doSqlChecks`
+  - Also sort relations so we resolve them in the same way each time, we already
+    have this, but sorting them may give a better output.
 - [ ] `crud` checks
   - See `crudPreprocess`
 - [ ] Create sql types to the structure
@@ -94,48 +96,49 @@ export class Generator {
   add(...types: TypeBuilderLike[]): this {}
 
   // Add a way to add an existing structure, so it can be generated with different options.
-  // This should include the options used for generating somehow. This way we can support consolidating types in to a single output
+  // This should include the options used for generating somehow. This way we can support
+  // consolidating types in to a single output
   addStructure(structureOrDirectory: string | Structure): this {}
 
-  // Create a new generator with a subselection of groups, which have their references resolved.
+  // Create a new generator with a subselection of groups, which have their references
+  // resolved.
   selectGroups(groups: string[]): Generator {}
 
   generate(options: {
-    targetLanguage?: "js" | "ts";
-    targetRuntime?: "node.js" | "browser" | "react-native";
-    outputDirectory?: string;
+    targetLanguage: "js" | "ts";
+    outputDirectory?: undefined | string;
     generators: {
-      structure?: {
-        // Enable a structure dump
-      };
-      openApi?: {
-        openApiExtensions?: OpenApiExtensions | undefined;
-        openApiRouteExtensions?: Record<string, any> | undefined;
-      };
-      router?: {
-        targetLibrary: "koa";
-        dumpApiStructure?: boolean;
-      };
-      database?: {
-        targetDialect: "postgres";
-        dumpDDL?: boolean;
-      };
-      validators?: {
-        // Enable generating validators for the base types, some generators will include validators automatically
-      };
-      types?: {
-        useGlobalTypes?: boolean; // Only applicable when using "js" or "ts"
-        importPath?: string; // Import types from deduped types
-      };
-      dedupedTypes?: {
-        useGlobalTypes?: boolean;
-      };
-      apiClient?: {
-        targetLibrary?: "axios";
-        validateResponses?: boolean;
-        globalClients?: boolean;
-        withReactHooks?: "react-query";
-      };
+      structure?: undefined | {};
+      openApi?:
+        | undefined
+        | {
+            openApiExtensions?: undefined | any;
+            openApiRouteExtensions?: undefined | any;
+          };
+      router?:
+        | undefined
+        | { target: { library: "koa" }; exposeApiStructure: boolean };
+      database?: undefined | { target: { dialect: "postgres" } };
+      validators?: undefined | { includeBaseTypes: boolean };
+      apiClient?:
+        | undefined
+        | {
+            target: {
+              library: "axios";
+              targetRuntime: "node.js" | "browser" | "react-native";
+              includeWrapper?: undefined | "react-query";
+            };
+            validateResponses: boolean;
+            globalClient: boolean;
+          };
+      types?:
+        | undefined
+        | {
+            useGlobalTypes: boolean;
+            useGlobalCompasTypes: boolean;
+            generateDeduplicatedTypes: boolean;
+            useDeduplicatedTypesPath?: undefined | string;
+          };
     };
   }): OutputFile[] {}
 }
@@ -192,6 +195,13 @@ types.generate({
 
 This probably won't land in a single Compas release, so we may want to use
 `@compas/code-gen/experimental` for the new exports.
+
+## Terminologie
+
+- Flow; a collection of routes in a single group
+- Model; `T.object().enableQueries()` / query enabled objects. Has keys and not
+  fields.
+- Relation; relation between structureModels with an owning and inverse side
 
 ## Design
 

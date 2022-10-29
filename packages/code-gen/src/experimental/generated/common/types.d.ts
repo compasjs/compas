@@ -40,6 +40,7 @@ export type ExperimentalAnyOfDefinition = {
   validator: {};
   values: ExperimentalTypeSystemDefinition[];
 };
+// All type definitions that can be used inside other types, like object keys.
 export type ExperimentalTypeSystemDefinition =
   | ExperimentalAnyDefinition
   | ExperimentalAnyOfDefinition
@@ -208,6 +209,7 @@ export type ExperimentalGenericDefinition = {
   keys: ExperimentalNamedTypeDefinition;
   values: ExperimentalNamedTypeDefinition;
 };
+// This contains all types that can be added top level to the structure.
 export type ExperimentalNamedTypeDefinition =
   | ExperimentalAnyDefinition
   | ExperimentalAnyOfDefinition
@@ -439,6 +441,7 @@ export type ExperimentalStructure = {
     [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinition;
   };
 };
+// This contains all known type definitions.
 export type ExperimentalTypeDefinition =
   | ExperimentalNamedTypeDefinition
   | ExperimentalReferenceDefinition
