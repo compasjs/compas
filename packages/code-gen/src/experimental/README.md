@@ -45,16 +45,16 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - See `addFieldsOfRelations`
 - [x] SQL related checks
   - See `doSqlChecks`
-- [ ] Sort keys of query enabled objects
+- [x] Sort keys of query enabled objects
   - We do this for the same reason as resorting the structure, we need a stable
     output and don't want to sort too often.
   - Also sort relations so we resolve them in the same way each time, we already
     have this, but sorting them may give a better output.
-- [ ] `crud` checks
-  - See `crudPreprocess`
 - [ ] Create sql types to the structure
   - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
     `createPartialTypes` and `createQueryBuilderTypes`
+- [ ] `crud` checks
+  - See `crudPreprocess`
 - [ ] `crud` route expansion
   - See `crudCreateRoutes`
 - [ ] Validate route invalidations

@@ -7,7 +7,7 @@
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function modelAddPrimaryKey(
+export function modelKeyAddPrimary(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
@@ -17,22 +17,25 @@ export function modelAddPrimaryKey(
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function modelAddDateKeys(
+export function modelKeyAddDateKeys(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
- * Get the primary key information of model.
+ * Get the primary key information of a model.
+ *
+ * The result is cached and early returned in the next call with the same model.
  *
  * @param {import("../generated/common/types").ExperimentalObjectDefinition} model
  * @returns {{
  *   primaryKeyName: string,
- *   primaryKeyDefinition: import("../generated/common/types").ExperimentalTypeDefinition
+ *   primaryKeyDefinition:
+ *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * }}
  */
-export function modelGetPrimaryKey(
+export function modelKeyGetPrimary(
   model: import("../generated/common/types").ExperimentalObjectDefinition,
 ): {
   primaryKeyName: string;
-  primaryKeyDefinition: import("../generated/common/types").ExperimentalTypeDefinition;
+  primaryKeyDefinition: import("../generated/common/types").ExperimentalTypeSystemDefinition;
 };
 //# sourceMappingURL=model-keys.d.ts.map

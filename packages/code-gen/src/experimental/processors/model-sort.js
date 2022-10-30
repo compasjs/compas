@@ -50,6 +50,8 @@ export function modelSortAllRelations(generateContext) {
       if (bType === "oneToMany") {
         return 1;
       }
+
+      return -1;
     });
   }
 }

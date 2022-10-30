@@ -53,9 +53,12 @@ export function structureAddType(structure, type, options) {
  * ```
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition[]}
+ * @returns {(import("../types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
  */
 export function structureNamedTypes(structure) {
+  // @ts-expect-error
+  //
+  // All top level types here are named
   return Object.values(structure)
     .map((it) => Object.values(it))
     .flat();
@@ -116,7 +119,7 @@ export function structureValidateReferences(structure) {
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
  * @param {import("../generated/common/types").ExperimentalTypeDefinition} reference
- * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition}
+ * @returns {import("../types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
  */
 export function structureResolveReference(structure, reference) {
   if (reference.type !== "reference") {
@@ -139,6 +142,7 @@ export function structureResolveReference(structure, reference) {
     });
   }
 
+  // @ts-expect-error
   return result;
 }
 

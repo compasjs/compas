@@ -16,9 +16,9 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
  *   modelInverse:
  *   import("../generated/common/types").ExperimentalObjectDefinition,
  *   relationOwn:
- *   import("../generated/common/types").ExperimentalObjectDefinition,
+ *   import("../generated/common/types").ExperimentalRelationDefinition,
  *   relationInverse:
- *   import("../generated/common/types").ExperimentalObjectDefinition,
+ *   import("../generated/common/types").ExperimentalRelationDefinition,
  *   keyNameOwn: string,
  *   keyDefinitionOwn:
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
@@ -160,7 +160,7 @@ export function modelRelationCheckAllRelations(generateContext) {
   // relation
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetOwn(model)) {
-      /** @type { import("../generated/common/types").ExperimentalObjectDefinition} */
+      /** @type {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
       // @ts-expect-error
       const inverseModel = structureResolveReference(
         generateContext.structure,
@@ -171,6 +171,7 @@ export function modelRelationCheckAllRelations(generateContext) {
       // at it.
       if (relation.subType === "oneToOne") {
         inverseModel.relations.push(
+          // @ts-expect-error
           new RelationType(
             "oneToOneReverse",
             relation.referencedKey,
@@ -191,6 +192,11 @@ export function modelRelationCheckAllRelations(generateContext) {
               model.name,
               inverseModel.name,
               relation.ownKey,
+
+              // @ts-expect-error
+              //
+              // We set the referenced key earlier in the
+              // processors
               relation.referencedKey,
             )} can not be found on ${stringFormatNameForError(
               inverseModel,
@@ -208,6 +214,11 @@ export function modelRelationCheckAllRelations(generateContext) {
               model.name,
               inverseModel.name,
               relation.ownKey,
+
+              // @ts-expect-error
+              //
+              // We set the referenced key earlier in the
+              // processors
               relation.referencedKey,
             )} resolves to many inverse relations on ${stringFormatNameForError(
               inverseModel,
@@ -314,19 +325,13 @@ export function modelRelationAddKeys(generateContext) {
       // We allow the user to define their own key for this relation, however it should
       // have the same type as the referenced primary key.
       if (model.keys[relation.ownKey]) {
-        /** @type { import("../generated/common/types").ExperimentalObjectDefinition} */
+        /** @type {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
         // @ts-expect-error
         const modelInverse = structureResolveReference(
           generateContext.structure,
           relation.reference,
         );
 
-        // @ts-expect-error
-        //
-        // The return value from structureResolveReference is always a valid model
-        // type.
-        // We also can't use 'modelRelationGetInformation' yet, since the cache has not
-        // built yet.
         const { primaryKeyDefinition } = modelKeyGetPrimary(modelInverse);
 
         if (model.keys[relation.ownKey].type !== primaryKeyDefinition.type) {
@@ -336,6 +341,11 @@ export function modelRelationAddKeys(generateContext) {
                 model.name,
                 modelInverse.name,
                 relation.ownKey,
+
+                // @ts-expect-error
+                //
+                // Referenced key is set earlier in the
+                // process
                 relation.referencedKey,
               )} uses a user defined type for '${relation.ownKey}' ('${
                 model.keys[relation.ownKey].type
@@ -353,13 +363,16 @@ export function modelRelationAddKeys(generateContext) {
       } else {
         // The inverse field doesn't exist yet, create it.
 
-        // @ts-expect-error
-        //
-        // The return value from structureResolveReference is always a valid model
-        // type.
-        // We also can't use 'modelRelationGetInformation' yet, since the cache has not
-        // built yet.
         const { primaryKeyDefinition } = modelKeyGetPrimary(
+          // @ts-expect-error
+          //
+          // The return value from
+          // structureResolveReference
+          // is always a valid model
+          // type. We also can't use
+          // 'modelRelationGetInformation'
+          // yet, since the cache has
+          // not built yet.
           structureResolveReference(
             generateContext.structure,
             relation.reference,
@@ -410,6 +423,10 @@ export function modelRelationBuildRelationInformationCache(generateContext) {
         modelOwn: model,
         modelInverse,
         relationOwn: relation,
+
+        // @ts-expect-error
+        //
+        // Relation is for sure found, we validated that earlier in the processors.
         relationInverse,
         keyNameOwn: relation.ownKey,
         keyDefinitionOwn: model.keys[relation.ownKey],
@@ -438,10 +455,18 @@ export function modelRelationBuildRelationInformationCache(generateContext) {
       relationCache.set(relation, {
         modelOwn: modelOwn,
         modelInverse: model,
+
+        // @ts-expect-error
+        //
+        // Relation is for sure found, we validated that earlier in the processors
         relationOwn: relationOwn,
         relationInverse: relation,
+
+        // @ts-expect-error
+        //
+        // Referenced key is already resolved here.
         keyNameOwn: relation.referencedKey,
-        keyDefinitionOwn: modelOwn.keys[relation.referencedKey],
+        keyDefinitionOwn: modelOwn.keys[relation.referencedKey ?? ""],
         primaryKeyNameInverse: primaryKeyName,
         primaryKeyDefinitionInverse: primaryKeyDefinition,
       });

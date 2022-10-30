@@ -4,11 +4,11 @@ import { structureNamedTypes } from "./structure.js";
  * Get a list of query enabled objects in the structure.
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {import("../generated/common/types").ExperimentalObjectDefinition[]}
+ * @returns {(import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>)[]}
  */
 export function structureModels(generateContext) {
   /**
-   * @type {import("../generated/common/types").ExperimentalObjectDefinition[]}
+   * @type {(import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>)[]}
    */
   const result = [];
 

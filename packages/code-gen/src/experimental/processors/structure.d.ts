@@ -35,11 +35,13 @@ export function structureAddType(
  * ```
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
- * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition[]}
+ * @returns {(import("../types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
  */
 export function structureNamedTypes(
   structure: import("../generated/common/types").ExperimentalStructure,
-): import("../generated/common/types").ExperimentalNamedTypeDefinition[];
+): import("../types").NamedType<
+  import("../generated/common/types").ExperimentalNamedTypeDefinition
+>[];
 /**
  * Extract a selection of groups from the provided structure. This function resolves
  * references that point to not included groups and will try to include them.
@@ -70,12 +72,14 @@ export function structureValidateReferences(
  *
  * @param {import("../generated/common/types").ExperimentalStructure} structure
  * @param {import("../generated/common/types").ExperimentalTypeDefinition} reference
- * @returns {import("../generated/common/types").ExperimentalNamedTypeDefinition}
+ * @returns {import("../types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
  */
 export function structureResolveReference(
   structure: import("../generated/common/types").ExperimentalStructure,
   reference: import("../generated/common/types").ExperimentalTypeDefinition,
-): import("../generated/common/types").ExperimentalNamedTypeDefinition;
+): import("../types").NamedType<
+  import("../generated/common/types").ExperimentalNamedTypeDefinition
+>;
 /**
  * Create a new reference to the provided group and name.
  *

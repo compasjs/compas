@@ -1,19 +1,27 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import {
-  validateExperimentalGenerateOptions, validateExperimentalStructure,
+  validateExperimentalGenerateOptions,
+  validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
-import { modelKeyAddDateKeys, modelKeyAddPrimary } from "./processors/model-keys.js";
+import {
+  modelKeyAddDateKeys,
+  modelKeyAddPrimary,
+} from "./processors/model-keys.js";
 import {
   modelRelationAddKeys,
   modelRelationBuildRelationInformationCache,
   modelRelationCheckAllRelations,
 } from "./processors/model-relation.js";
-import { modelSortAllKeys, modelSortAllRelations } from "./processors/model-sort.js";
+import {
+  modelSortAllKeys,
+  modelSortAllRelations,
+} from "./processors/model-sort.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
-  structureCopyAndSort, structureValidateReferences,
+  structureCopyAndSort,
+  structureValidateReferences,
 } from "./processors/structure.js";
 import { structureGenerator } from "./structure/generator.js";
 
