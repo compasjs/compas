@@ -70,7 +70,7 @@ export function cors(options = {}) {
   ) {
     // Use CORS_URL array provided via environment variables
     const allowedOrigins = (environment.CORS_URL || "").split(",");
-    const localhostRegex = /^http:\/\/localhost:\d{1,6}$/gi;
+    const localhostRegex = /^http:\/\/localhost:\d{1,6}$/i;
 
     if (isStaging()) {
       // Allow all localhost origins
