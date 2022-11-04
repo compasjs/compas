@@ -236,7 +236,7 @@ function transformQueryOrParams(context, inputList, compasStruct, filter) {
     }
 
     obj[input.name] = {
-      ...convertSchema(context, input.schema),
+      ...convertSchema(context, input.schema, { queryOrParam: true }),
       isOptional: !input.required,
       docString: input.description || "",
     };
@@ -347,10 +347,11 @@ function resolveReference(context, refString) {
  *
  * @param context
  * @param schema
+ * @param {{queryOrParam?: boolean}} [options]
  * @returns {{defaultValue: any, name: any, docString: string, isOptional: boolean, type:
  *   string, group: any}}
  */
-function convertSchema(context, schema) {
+function convertSchema(context, schema, options = {}) {
   /** @type {CodeGenType} */
   const result = {
     ...TypeBuilder.getBaseData(),
@@ -460,6 +461,9 @@ function convertSchema(context, schema) {
   } else if (schema.type === "boolean") {
     result.type = "boolean";
     assignBaseData();
+    if (options.queryOrParam) {
+      result.validator.convert = true;
+    }
   } else if (schema.type === "string") {
     result.type = "string";
     if (schema.format === "uuid") {
@@ -487,6 +491,9 @@ function convertSchema(context, schema) {
   } else if (schema.type === "number" || schema.type === "integer") {
     result.type = "number";
     assignBaseData();
+    if (options.queryOrParam) {
+      result.validator.convert = true;
+    }
     result.validator.floatingPoint = schema.type !== "integer";
     if (!isNil(schema.minimum)) {
       result.validator.min = schema.minimum;
