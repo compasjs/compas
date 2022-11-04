@@ -108,7 +108,9 @@ With queries like the following:
 const [user] = await queryUser({ where: { email: "foo@bar.com" } }).exec(sql);
 const usersWithPosts = await queryUser({ posts: {} }).exec(sql);
 
-const postsForAuthor = await queryPost({ where: { author: user.id } }).exec(sql);
+const postsForAuthor = await queryPost({ where: { author: user.id } }).exec(
+  sql,
+);
 const [authorOfPost] = await queryUser({
   viaPosts: { where: { id: postsForAuthor[0].id } },
 }).exec(sql);

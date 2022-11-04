@@ -80,10 +80,8 @@ export function querySessionStore(
   builder?: StoreSessionStoreQueryBuilder | undefined,
 ): {
   then: () => void;
-  exec: (
-    sql: import("postgres").Sql<{}>,
-  ) => Promise<QueryResultStoreSessionStore[]>;
-  execRaw: (sql: import("postgres").Sql<{}>) => Promise<any[]>;
+  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStore[]>;
+  execRaw: (sql: Postgres) => Promise<any[]>;
   queryPart: QueryPart<any>;
 };
 /**
@@ -130,7 +128,7 @@ export namespace sessionStoreQueryBuilderSpec {
  * @returns {Promise<number>}
  */
 declare function sessionStoreCount(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreSessionStoreWhere | undefined,
 ): Promise<number>;
 /**
@@ -139,7 +137,7 @@ declare function sessionStoreCount(
  * @returns {Promise<void>}
  */
 declare function sessionStoreDelete(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreSessionStoreWhere | undefined,
 ): Promise<void>;
 /**
@@ -149,7 +147,7 @@ declare function sessionStoreDelete(
  * @returns {Promise<StoreSessionStore[]>}
  */
 declare function sessionStoreInsert(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
   options?:
     | {
@@ -164,7 +162,7 @@ declare function sessionStoreInsert(
  * @returns {Promise<StoreSessionStore[]>}
  */
 declare function sessionStoreUpsertOnId(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
   options?: {} | undefined,
 ): Promise<StoreSessionStore[]>;

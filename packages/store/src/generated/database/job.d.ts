@@ -80,8 +80,8 @@ export function jobInsertValues(
  */
 export function queryJob(builder?: StoreJobQueryBuilder | undefined): {
   then: () => void;
-  exec: (sql: import("postgres").Sql<{}>) => Promise<QueryResultStoreJob[]>;
-  execRaw: (sql: import("postgres").Sql<{}>) => Promise<any[]>;
+  exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>;
+  execRaw: (sql: Postgres) => Promise<any[]>;
   queryPart: QueryPart<any>;
 };
 /**
@@ -122,7 +122,7 @@ export namespace jobQueryBuilderSpec {
  * @returns {Promise<number>}
  */
 declare function jobCount(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreJobWhere | undefined,
 ): Promise<number>;
 /**
@@ -131,7 +131,7 @@ declare function jobCount(
  * @returns {Promise<void>}
  */
 declare function jobDelete(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreJobWhere | undefined,
 ): Promise<void>;
 /**
@@ -141,7 +141,7 @@ declare function jobDelete(
  * @returns {Promise<StoreJob[]>}
  */
 declare function jobInsert(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreJobInsertPartial | StoreJobInsertPartial[],
   options?:
     | {
@@ -156,7 +156,7 @@ declare function jobInsert(
  * @returns {Promise<StoreJob[]>}
  */
 declare function jobUpsertOnId(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreJobInsertPartial | StoreJobInsertPartial[],
   options?: {} | undefined,
 ): Promise<StoreJob[]>;

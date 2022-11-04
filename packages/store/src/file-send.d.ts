@@ -44,7 +44,7 @@ export function fileSendResponse(
  * @returns {Promise<void>}
  */
 export function fileSendTransformedImageResponse(
-  sql: import("postgres").Sql<any>,
+  sql: import("postgres").Sql,
   s3Client: import("@aws-sdk/client-s3").S3Client,
   ctx: import("koa").Context,
   file: StoreFile,

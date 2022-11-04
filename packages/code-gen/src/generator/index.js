@@ -17,6 +17,7 @@ import { exitOnErrorsOrReturn } from "./errors.js";
 import { generateReactQueryFiles } from "./reactQuery/index.js";
 import { generateRouterFiles } from "./router/index.js";
 import { processRouteInvalidations } from "./router/invalidations.js";
+import { processRouteQueryParams } from "./router/params.js";
 import { generateModelFiles } from "./sql/models.js";
 import { createOrderByTypes } from "./sql/order-by-type.js";
 import { createPartialTypes } from "./sql/partial-type.js";
@@ -137,6 +138,9 @@ export function generate(logger, options, structure) {
     exitOnErrorsOrReturn(context);
 
     crudCreateRoutes(context);
+    exitOnErrorsOrReturn(context);
+
+    processRouteQueryParams(context);
     exitOnErrorsOrReturn(context);
 
     processRouteInvalidations(context);

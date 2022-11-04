@@ -78,8 +78,8 @@ export function fileInsertValues(
  */
 export function queryFile(builder?: StoreFileQueryBuilder | undefined): {
   then: () => void;
-  exec: (sql: import("postgres").Sql<{}>) => Promise<QueryResultStoreFile[]>;
-  execRaw: (sql: import("postgres").Sql<{}>) => Promise<any[]>;
+  exec: (sql: Postgres) => Promise<QueryResultStoreFile[]>;
+  execRaw: (sql: Postgres) => Promise<any[]>;
   queryPart: QueryPart<any>;
 };
 /**
@@ -120,7 +120,7 @@ export namespace fileQueryBuilderSpec {
  * @returns {Promise<number>}
  */
 declare function fileCount(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreFileWhere | undefined,
 ): Promise<number>;
 /**
@@ -129,7 +129,7 @@ declare function fileCount(
  * @returns {Promise<void>}
  */
 declare function fileDelete(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreFileWhere | undefined,
 ): Promise<void>;
 /**
@@ -139,7 +139,7 @@ declare function fileDelete(
  * @returns {Promise<StoreFile[]>}
  */
 declare function fileInsert(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreFileInsertPartial | StoreFileInsertPartial[],
   options?:
     | {
@@ -154,7 +154,7 @@ declare function fileInsert(
  * @returns {Promise<StoreFile[]>}
  */
 declare function fileUpsertOnId(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert: StoreFileInsertPartial | StoreFileInsertPartial[],
   options?: {} | undefined,
 ): Promise<StoreFile[]>;
