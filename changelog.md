@@ -4,6 +4,41 @@ editLink: false
 
 # Changelog
 
+### [v0.0.218](https://github.com/compasjs/compas/releases/tag/v0.0.218)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.188.0 to 3.202.0
+  ([#2191](https://github.com/compasjs/compas/pull/2191))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.188.0 to 3.202.0
+  ([#2190](https://github.com/compasjs/compas/pull/2190))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.19.3 to 7.19.6
+  ([#2152](https://github.com/compasjs/compas/pull/2152))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.25.0 to 8.26.0
+  ([#2155](https://github.com/compasjs/compas/pull/2155))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.3.6 to 39.6.2
+  ([#2163](https://github.com/compasjs/compas/pull/2163),
+  [#2177](https://github.com/compasjs/compas/pull/2177),
+  [#2142](https://github.com/compasjs/compas/pull/2142),
+  [#2189](https://github.com/compasjs/compas/pull/2189),
+  [#2192](https://github.com/compasjs/compas/pull/2192))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump pino from 8.6.1 to 8.7.0
+  ([#2151](https://github.com/compasjs/compas/pull/2151))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- chore(docs): add with-auth template to the docs
+- feat(code-gen): throw error on missing convert statements for query and params
+  ([#2193](https://github.com/compasjs/compas/pull/2193))
+- feat(visuals): updated logo files to v2
+  ([#2181](https://github.com/compasjs/compas/pull/2181))
+- fix(server): ensure staging localhost CORS headers are present in response
+  ([#2183](https://github.com/compasjs/compas/pull/2183))
+  - Closes [#2182](https://github.com/compasjs/compas/pull/2182)
+
 ### [v0.0.217](https://github.com/compasjs/compas/releases/tag/v0.0.217)
 
 ##### Changes
