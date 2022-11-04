@@ -41,7 +41,7 @@ export function createTestPostgresDatabase(
         verboseSql?: boolean | undefined;
       }
     | undefined,
-): Promise<import("postgres").Sql<{}>>;
+): Promise<Postgres>;
 /**
  * Try to remove a test database. Can only happen if the connection is created by
  * 'createTestPostgresDatabase'.

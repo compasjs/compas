@@ -82,10 +82,8 @@ export function querySessionStoreToken(
   builder?: StoreSessionStoreTokenQueryBuilder | undefined,
 ): {
   then: () => void;
-  exec: (
-    sql: import("postgres").Sql<{}>,
-  ) => Promise<QueryResultStoreSessionStoreToken[]>;
-  execRaw: (sql: import("postgres").Sql<{}>) => Promise<any[]>;
+  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStoreToken[]>;
+  execRaw: (sql: Postgres) => Promise<any[]>;
   queryPart: QueryPart<any>;
 };
 /**
@@ -119,7 +117,7 @@ export const sessionStoreTokenQueryBuilderSpec: any;
  * @returns {Promise<number>}
  */
 declare function sessionStoreTokenCount(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreSessionStoreTokenWhere | undefined,
 ): Promise<number>;
 /**
@@ -128,7 +126,7 @@ declare function sessionStoreTokenCount(
  * @returns {Promise<void>}
  */
 declare function sessionStoreTokenDelete(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   where?: StoreSessionStoreTokenWhere | undefined,
 ): Promise<void>;
 /**
@@ -138,7 +136,7 @@ declare function sessionStoreTokenDelete(
  * @returns {Promise<StoreSessionStoreToken[]>}
  */
 declare function sessionStoreTokenInsert(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert:
     | StoreSessionStoreTokenInsertPartial
     | StoreSessionStoreTokenInsertPartial[],
@@ -155,7 +153,7 @@ declare function sessionStoreTokenInsert(
  * @returns {Promise<StoreSessionStoreToken[]>}
  */
 declare function sessionStoreTokenUpsertOnId(
-  sql: import("postgres").Sql<{}>,
+  sql: Postgres,
   insert:
     | StoreSessionStoreTokenInsertPartial
     | StoreSessionStoreTokenInsertPartial[],

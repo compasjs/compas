@@ -23,7 +23,7 @@
  * @returns {Promise<StoreFile>}
  */
 export function fileCreateOrUpdate(
-  sql: import("postgres").Sql<any>,
+  sql: import("postgres").Sql,
   s3Client: import("@aws-sdk/client-s3").S3Client,
   options: {
     bucketName: string;
@@ -46,7 +46,7 @@ export function fileCreateOrUpdate(
  * @returns {Promise<void>}
  */
 export function fileSyncDeletedWithObjectStorage(
-  sql: import("postgres").Sql<any>,
+  sql: import("postgres").Sql,
   s3Client: import("@aws-sdk/client-s3").S3Client,
   options: {
     bucketName: string;

@@ -5,7 +5,14 @@ import os from "os";
 import { normalize } from "path";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
-import { AppError, environment, exec, pathJoin, spawn, uuid } from "@compas/stdlib";
+import {
+  AppError,
+  environment,
+  exec,
+  pathJoin,
+  spawn,
+  uuid,
+} from "@compas/stdlib";
 import tar from "tar";
 
 /**
