@@ -1,4 +1,8 @@
 import { mainTestFn, test } from "@compas/cli";
+import {
+  fileContextFinalizeGenerateFile,
+  fileContextGet,
+} from "../file/context.js";
 import { testExperimentalGenerateContext } from "../testing.js";
 import { structureGenerator, structureIsEnabled } from "./generator.js";
 
@@ -14,7 +18,7 @@ test("code-gen/experimental/structure/generator", (t) => {
 
       structureGenerator(generateContext);
 
-      t.equal(generateContext.outputFiles.length, 0);
+      t.equal(generateContext.files.size, 0);
     });
 
     t.test("creates a file if enabled", (t) => {
@@ -27,11 +31,8 @@ test("code-gen/experimental/structure/generator", (t) => {
 
       structureGenerator(generateContext);
 
-      t.equal(generateContext.outputFiles.length, 1);
-      t.equal(
-        generateContext.outputFiles[0].relativePath,
-        "common/structure.json",
-      );
+      t.equal(generateContext.files.size, 1);
+      t.ok(fileContextGet(generateContext, "common/structure.json"));
     });
 
     t.test("includes the provided options in the output", (t) => {
@@ -47,9 +48,14 @@ test("code-gen/experimental/structure/generator", (t) => {
 
       structureGenerator(generateContext);
 
-      const contents = JSON.parse(generateContext.outputFiles[0].contents);
+      const file = fileContextGet(generateContext, "common/structure.json");
+      const contents = fileContextFinalizeGenerateFile(file);
+      const parsedContents = JSON.parse(contents);
 
-      t.equal(contents.compas.$options.generators.types.useGlobalTypes, true);
+      t.equal(
+        parsedContents.compas.$options.generators.types.useGlobalTypes,
+        true,
+      );
     });
 
     t.test("dumps the structure", (t) => {
@@ -62,9 +68,11 @@ test("code-gen/experimental/structure/generator", (t) => {
 
       structureGenerator(generateContext);
 
-      const contents = JSON.parse(generateContext.outputFiles[0].contents);
+      const file = fileContextGet(generateContext, "common/structure.json");
+      const contents = fileContextFinalizeGenerateFile(file);
+      const parsedContents = JSON.parse(contents);
 
-      t.equal(contents.basic.boolRequired.type, "boolean");
+      t.equal(parsedContents.basic.boolRequired.type, "boolean");
     });
   });
 

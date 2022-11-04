@@ -116,7 +116,7 @@ export class Generator {
    * Generate based on the structure that is known to this generator
    *
    * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
-   * @returns {import("./generate").GenerateContext["outputFiles"]}
+   * @returns {import("./generate").OutputFile[]}
    */
   generate(options) {
     return generateExecute(this, options);

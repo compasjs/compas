@@ -13,8 +13,8 @@ import { Generator } from "./generator.js";
 export function testExperimentalGenerateContext(t, options, structure) {
   return {
     log: t.log,
-    outputFiles: [],
     options,
+    files: new Map(),
     structure: structure ?? getDefaultStructure(),
   };
 }

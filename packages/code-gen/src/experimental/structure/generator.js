@@ -1,4 +1,6 @@
 import { isNil } from "@compas/stdlib";
+import { fileContextCreateGeneric } from "../file/context.js";
+import { fileWriteRaw } from "../file/write.js";
 
 /**
  * Run the structure generator.
@@ -18,10 +20,15 @@ export function structureGenerator(generateContext) {
   // the structure, so we just force assign it.
   generateContext.structure.compas.$options = generateContext.options;
 
-  generateContext.outputFiles.push({
-    contents: JSON.stringify(generateContext.structure, null, 2),
-    relativePath: "common/structure.json",
-  });
+  const file = fileContextCreateGeneric(
+    generateContext,
+    "common/structure.json",
+    {
+      addGeneratedByComment: false,
+    },
+  );
+
+  fileWriteRaw(file, JSON.stringify(generateContext.structure, null, 2));
 
   delete generateContext.structure.compas.$options;
 }

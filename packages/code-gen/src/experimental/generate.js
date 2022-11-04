@@ -1,5 +1,6 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
+import { fileContextConvertToOutputFiles } from "./file/context.js";
 import {
   validateExperimentalGenerateOptions,
   validateExperimentalStructure,
@@ -26,14 +27,17 @@ import {
 import { structureGenerator } from "./structure/generator.js";
 
 /**
+ * @typedef {object} OutputFile
+ * @property {string} contents
+ * @property {string} relativePath
+ */
+
+/**
  * @typedef {object} GenerateContext
  * @property {import("@compas/stdlib").Logger} log
  * @property {import("./generated/common/types.js").ExperimentalGenerateOptions} options
  * @property {import("./generated/common/types.js").ExperimentalStructure} structure
- * @property {{
- *   contents: string,
- *   relativePath: string,
- * }[]} outputFiles
+ * @property {import("./file/context").GenerateFileMap} files
  */
 
 /**
@@ -41,7 +45,7 @@ import { structureGenerator } from "./structure/generator.js";
  *
  * @param {import("./generator").Generator} generator
  * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
- * @returns {GenerateContext["outputFiles"]}
+ * @returns {OutputFile[]}
  */
 export function generateExecute(generator, options) {
   // TODO: migrate to new validators
@@ -80,7 +84,7 @@ export function generateExecute(generator, options) {
     log: generator.logger,
     options: options,
     structure,
-    outputFiles: [],
+    files: new Map(),
   };
 
   structureGenerator(generateContext);
@@ -98,17 +102,19 @@ export function generateExecute(generator, options) {
   modelSortAllRelations(generateContext);
   modelSortAllKeys(generateContext);
 
-  generateWriteOutputFiles(generateContext);
+  const outputFiles = fileContextConvertToOutputFiles(generateContext);
+  generateWriteOutputFiles(generateContext, outputFiles);
 
-  return generateContext.outputFiles;
+  return outputFiles;
 }
 
 /**
  * Write output files if an output directory is provided
  *
  * @param {GenerateContext} generateContext
+ * @param {OutputFile[]} outputFiles
  */
-export function generateWriteOutputFiles(generateContext) {
+export function generateWriteOutputFiles(generateContext, outputFiles) {
   if (isNil(generateContext.options.outputDirectory)) {
     return;
   }
@@ -120,7 +126,7 @@ export function generateWriteOutputFiles(generateContext) {
 
   mkdirSync(generateContext.options.outputDirectory);
 
-  for (const file of generateContext.outputFiles) {
+  for (const file of outputFiles) {
     if (file.relativePath.includes("/")) {
       const subDirectory = file.relativePath.split("/").slice(0, -1).join("/");
 
