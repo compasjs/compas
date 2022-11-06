@@ -413,7 +413,9 @@ export type ExperimentalGenerateOptions = {
     router?:
       | undefined
       | { target: { library: "koa" }; exposeApiStructure: boolean };
-    database?: undefined | { target: { dialect: "postgres" } };
+    database?:
+      | undefined
+      | { target: { dialect: "postgres" }; skipValidatorGeneration: boolean };
     validators?: undefined | { includeBaseTypes: boolean };
     apiClient?:
       | undefined
@@ -423,14 +425,15 @@ export type ExperimentalGenerateOptions = {
             targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
-          validateResponses: boolean;
+          skipValidatorGeneration: boolean;
           globalClient: boolean;
         };
     types?:
       | undefined
       | {
-          useGlobalTypes: boolean;
-          useGlobalCompasTypes: boolean;
+          includeBaseTypes: boolean;
+          declareGlobalTypes: boolean;
+          declareGlobalCompasTypes: boolean;
           generateDeduplicatedTypes: boolean;
           useDeduplicatedTypesPath?: undefined | string;
         };
@@ -783,7 +786,12 @@ export type ExperimentalGenerateOptionsInput = {
           target: { library: "koa" };
           exposeApiStructure?: undefined | boolean;
         };
-    database?: undefined | { target: { dialect: "postgres" } };
+    database?:
+      | undefined
+      | {
+          target: { dialect: "postgres" };
+          skipValidatorGeneration?: undefined | boolean;
+        };
     validators?: undefined | { includeBaseTypes?: undefined | boolean };
     apiClient?:
       | undefined
@@ -793,14 +801,15 @@ export type ExperimentalGenerateOptionsInput = {
             targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
-          validateResponses?: undefined | boolean;
+          skipValidatorGeneration?: undefined | boolean;
           globalClient?: undefined | boolean;
         };
     types?:
       | undefined
       | {
-          useGlobalTypes?: undefined | boolean;
-          useGlobalCompasTypes?: undefined | boolean;
+          includeBaseTypes?: undefined | boolean;
+          declareGlobalTypes?: undefined | boolean;
+          declareGlobalCompasTypes?: undefined | boolean;
           generateDeduplicatedTypes?: undefined | boolean;
           useDeduplicatedTypesPath?: undefined | string;
         };

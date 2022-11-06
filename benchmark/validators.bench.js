@@ -31,6 +31,44 @@ const nestedInput = {
   ],
 };
 
+const nestedInput100 = {
+  foo: true,
+  bar: 5,
+  nest: Array.from({ length: 50 })
+    .map(() => [
+      {
+        foo: true,
+        bar: 15,
+        baz: "Yes ",
+      },
+      {
+        foo: true,
+        bar: 15,
+        baz: "Yes ",
+      },
+    ])
+    .flat(),
+};
+
+const nestedInput1000 = {
+  foo: true,
+  bar: 5,
+  nest: Array.from({ length: 500 })
+    .map(() => [
+      {
+        foo: true,
+        bar: 15,
+        baz: "Yes ",
+      },
+      {
+        foo: true,
+        bar: 15,
+        baz: "Yes ",
+      },
+    ])
+    .flat(),
+};
+
 const yupSimple = yup.object().shape({
   foo: yup.bool().required(),
   bar: yup.number().required().integer(),
@@ -172,6 +210,58 @@ async function main() {
     for (let i = 0; i < b.N; ++i) {
       // eslint-disable-next-line no-unused-vars
       y = fastestValidatorNested(nestedInput);
+    }
+  });
+
+  bench("compas validator nested - 100 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = validateBenchNested(nestedInput100);
+    }
+  });
+
+  bench("yup validator nested - 100 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = yupNested.validateSync(nestedInput100, {
+        stripUnknown: true,
+      });
+    }
+  });
+
+  bench("fastest-validator validator nested - 100 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = fastestValidatorNested(nestedInput100);
+    }
+  });
+
+  bench("compas validator nested - 1000 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = validateBenchNested(nestedInput1000);
+    }
+  });
+
+  bench("yup validator nested - 1000 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = yupNested.validateSync(nestedInput1000, {
+        stripUnknown: true,
+      });
+    }
+  });
+
+  bench("fastest-validator validator nested - 1000 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = fastestValidatorNested(nestedInput1000);
     }
   });
 

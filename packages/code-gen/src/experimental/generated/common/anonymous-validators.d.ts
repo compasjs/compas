@@ -1537,9 +1537,9 @@ export function anonymousValidator1236368352(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"target": {"dialect": "postgres", }, }>}
+ * @returns {EitherN<undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }>}
  */
-export function anonymousValidator22329228(
+export function anonymousValidator126976955(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1548,6 +1548,7 @@ export function anonymousValidator22329228(
       target: {
         dialect: "postgres";
       };
+      skipValidatorGeneration: boolean;
     }
 >;
 /**
@@ -1620,9 +1621,9 @@ export function anonymousValidator185103205(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }>}
+ * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }>}
  */
-export function anonymousValidator867729959(
+export function anonymousValidator1929114870(
   value: any,
   propertyPath: string,
 ): EitherN<
@@ -1633,23 +1634,24 @@ export function anonymousValidator867729959(
         targetRuntime: "node.js" | "browser" | "react-native";
         includeWrapper?: undefined | "react-query";
       };
-      validateResponses: boolean;
+      skipValidatorGeneration: boolean;
       globalClient: boolean;
     }
 >;
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }>}
+ * @returns {EitherN<undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }>}
  */
-export function anonymousValidator325217692(
+export function anonymousValidator484090628(
   value: any,
   propertyPath: string,
 ): EitherN<
   | undefined
   | {
-      useGlobalTypes: boolean;
-      useGlobalCompasTypes: boolean;
+      includeBaseTypes: boolean;
+      declareGlobalTypes: boolean;
+      declareGlobalCompasTypes: boolean;
       generateDeduplicatedTypes: boolean;
       useDeduplicatedTypesPath?: undefined | string;
     }
@@ -1657,9 +1659,9 @@ export function anonymousValidator325217692(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
+ * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
  */
-export function anonymousValidator1157196291(
+export function anonymousValidator108705303(
   value: any,
   propertyPath: string,
 ): EitherN<{
@@ -1684,6 +1686,7 @@ export function anonymousValidator1157196291(
         target: {
           dialect: "postgres";
         };
+        skipValidatorGeneration: boolean;
       };
   validators?:
     | undefined
@@ -1698,14 +1701,15 @@ export function anonymousValidator1157196291(
           targetRuntime: "node.js" | "browser" | "react-native";
           includeWrapper?: undefined | "react-query";
         };
-        validateResponses: boolean;
+        skipValidatorGeneration: boolean;
         globalClient: boolean;
       };
   types?:
     | undefined
     | {
-        useGlobalTypes: boolean;
-        useGlobalCompasTypes: boolean;
+        includeBaseTypes: boolean;
+        declareGlobalTypes: boolean;
+        declareGlobalCompasTypes: boolean;
         generateDeduplicatedTypes: boolean;
         useDeduplicatedTypesPath?: undefined | string;
       };
@@ -1713,7 +1717,7 @@ export function anonymousValidator1157196291(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "validateResponses": boolean, "globalClient": boolean, }, "types"?: undefined|{"useGlobalTypes": boolean, "useGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
+ * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
  */
 export function anonymousValidator1671053633(
   value: any,
@@ -1743,6 +1747,7 @@ export function anonymousValidator1671053633(
           target: {
             dialect: "postgres";
           };
+          skipValidatorGeneration: boolean;
         };
     validators?:
       | undefined
@@ -1757,14 +1762,15 @@ export function anonymousValidator1671053633(
             targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
-          validateResponses: boolean;
+          skipValidatorGeneration: boolean;
           globalClient: boolean;
         };
     types?:
       | undefined
       | {
-          useGlobalTypes: boolean;
-          useGlobalCompasTypes: boolean;
+          includeBaseTypes: boolean;
+          declareGlobalTypes: boolean;
+          declareGlobalCompasTypes: boolean;
           generateDeduplicatedTypes: boolean;
           useDeduplicatedTypesPath?: undefined | string;
         };

@@ -57,7 +57,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - See `crudPreprocess`
 - [ ] `crud` route expansion
   - See `crudCreateRoutes`
-- [ ] Validate route invalidations
+- [ ] Validate route invalidations + query & param converts
   - See `processRouteInvalidations`
 - [ ] Support extracting a few types;
   - Like `Generator#selectGroups`
@@ -277,3 +277,41 @@ https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/
   - Determine, document and test the strict Typescript & typescript-eslint
     settings that are supported
   - Determine, document and test the strict ESLint settings that are supported
+
+### Types & validators
+
+- The legacy code-gen generates a lot of types that are unused. When only the
+  api client is used only the validator input types are needed, but the
+  validated variant is always included as well. In cases where the router is
+  used as well, we need both input & output types. As a result we should apply
+  the following steps:
+  - Always run the `router` generator before the `apiClient` generator. This
+    generator should first register the validated type and then the validator
+    input types
+  - We don't generate types and validators for unused types. To enable this
+    `type.includeBaseTypes` and `validator.includeBaseTypes` should be used. In
+    most cases this is not necessary, except when you use the generators without
+    `databaase`, `router` or `apiClient` settings.
+- Generating a type should allow at least the following options:
+  - `scenario: "validatorInput" | "validatorOutput"`
+  - `typeOverrides: { file: "ReadableStream" }|{ file: "Blob" }|{ file: "FormData" }"`
+  - Validators always convert `boolean`,`number`, `date` fields to their native
+    type if a string or number is passed
+- Validators are always included for `database` and `apiClient`. They can be
+  disabled via `$generator.skipValidatorGeneration`.
+  - The current query builder is already generating correct structures to just
+    pass through.
+  - The performance of an object with array({ length: 1000 }) takes `1/6` of a
+    millisecond. Which shouldn't be a major concern.
+  - API client response validation ensures a more expected result. And is
+    stricter when the api is not tested. We may want to soft fail here instead,
+    not sure yet.
+- The validator generator is always(!) enabled and can be used on demand.
+
+Necessary API's:
+
+- `$langCreateInlineType(typeDefinition, { scenario, typeOverrides }): string`
+- `$langCreateRegisteredType(context, typeDefinition, { scenario, typeOverrides, nameSuffix, usedInRelativePath }): string`
+  - Should return import path?
+  - Should return named type.
+- `$langRegisterValidator(context, typeDefinition, { typeOverrides })`
