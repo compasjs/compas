@@ -292,11 +292,12 @@ https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/
     `type.includeBaseTypes` and `validator.includeBaseTypes` should be used. In
     most cases this is not necessary, except when you use the generators without
     `databaase`, `router` or `apiClient` settings.
-- Generating a type should allow at least the following options:
+- Generating a type should expect at least the following options:
   - `scenario: "validatorInput" | "validatorOutput"`
   - `typeOverrides: { file: "ReadableStream" }|{ file: "Blob" }|{ file: "FormData" }"`
-  - Validators always convert `boolean`,`number`, `date` fields to their native
-    type if a string or number is passed
+  - `suffix: string`
+- Validators always convert `boolean`,`number`, `date` fields to their native
+  type if a string or number is passed.
 - Validators are always included for `database` and `apiClient`. They can be
   disabled via `$generator.skipValidatorGeneration`.
   - The current query builder is already generating correct structures to just
@@ -307,6 +308,13 @@ https://github.com/awslabs/smithy/blob/main/smithy-utils/src/main/java/software/
     stricter when the api is not tested. We may want to soft fail here instead,
     not sure yet.
 - The validator generator is always(!) enabled and can be used on demand.
+- Global deduped types are only a hack used for the TS in the JSDoc case where
+  types can be used globally. Importing the types gives a better IDE experience,
+  but a worse end user experience. I think we can get away by not deduping
+  anything. Currently, if types are needed in different variants but with the
+  same name, the deduper isn't always able to solve that. So just generating
+  moore `declare global` types and using a correct jsconfig/tsconfig, should be
+  a better experience.
 
 Necessary API's:
 
@@ -315,3 +323,36 @@ Necessary API's:
   - Should return import path?
   - Should return named type.
 - `$langRegisterValidator(context, typeDefinition, { typeOverrides })`
+
+#### Refs
+
+**TSConfig**
+
+```json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["esnext"],
+    "module": "NodeNext",
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": false,
+    "maxNodeModuleJsDepth": 0,
+    "baseUrl": "./",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "extendedDiagnostics": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "include": ["packages/**/*.js", "packages/**/*.d.ts", "types/**/*.d.ts"],
+  "exclude": ["packages/eslint-plugin/**/*", "**/*.test.js", "**/*.bench.js"]
+}
+```

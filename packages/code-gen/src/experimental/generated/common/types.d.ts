@@ -425,7 +425,7 @@ export type ExperimentalGenerateOptions = {
             targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
-          skipValidatorGeneration: boolean;
+          skipResponseValidation: boolean;
           globalClient: boolean;
         };
     types?:
@@ -434,8 +434,6 @@ export type ExperimentalGenerateOptions = {
           includeBaseTypes: boolean;
           declareGlobalTypes: boolean;
           declareGlobalCompasTypes: boolean;
-          generateDeduplicatedTypes: boolean;
-          useDeduplicatedTypesPath?: undefined | string;
         };
   };
 };
@@ -801,7 +799,7 @@ export type ExperimentalGenerateOptionsInput = {
             targetRuntime: "node.js" | "browser" | "react-native";
             includeWrapper?: undefined | "react-query";
           };
-          skipValidatorGeneration?: undefined | boolean;
+          skipResponseValidation?: undefined | boolean;
           globalClient?: undefined | boolean;
         };
     types?:
@@ -810,8 +808,6 @@ export type ExperimentalGenerateOptionsInput = {
           includeBaseTypes?: undefined | boolean;
           declareGlobalTypes?: undefined | boolean;
           declareGlobalCompasTypes?: undefined | boolean;
-          generateDeduplicatedTypes?: undefined | boolean;
-          useDeduplicatedTypesPath?: undefined | string;
         };
   };
 };

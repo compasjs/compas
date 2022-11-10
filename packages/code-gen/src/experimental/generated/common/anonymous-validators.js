@@ -16,7 +16,7 @@ import { isNil } from "@compas/stdlib";
  * @typedef {import("@compas/stdlib").EitherN<T, InternalError>} EitherN
  */
 
-const objectKeys108705303 = new Set([
+const objectKeys2074712839 = new Set([
   "structure",
   "openApi",
   "router",
@@ -35,9 +35,9 @@ const objectKeys1597555367 = new Set(["library"]);
 const objectKeys126976955 = new Set(["target", "skipValidatorGeneration"]);
 const objectKeys1620931104 = new Set(["dialect"]);
 const objectKeys328211283 = new Set(["includeBaseTypes"]);
-const objectKeys1929114870 = new Set([
+const objectKeys1817660202 = new Set([
   "target",
-  "skipValidatorGeneration",
+  "skipResponseValidation",
   "globalClient",
 ]);
 const objectKeys1804483877 = new Set([
@@ -45,12 +45,10 @@ const objectKeys1804483877 = new Set([
   "targetRuntime",
   "includeWrapper",
 ]);
-const objectKeys484090628 = new Set([
+const objectKeys876151968 = new Set([
   "includeBaseTypes",
   "declareGlobalTypes",
   "declareGlobalCompasTypes",
-  "generateDeduplicatedTypes",
-  "useDeduplicatedTypesPath",
 ]);
 /**
  * @param {*} value
@@ -7965,9 +7963,9 @@ export function anonymousValidator185103205(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }>}
+ * @returns {EitherN<undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipResponseValidation": boolean, "globalClient": boolean, }>}
  */
-export function anonymousValidator1929114870(value, propertyPath) {
+export function anonymousValidator1817660202(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -7986,7 +7984,7 @@ export function anonymousValidator1929114870(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys1929114870.has(key)) {
+    if (!objectKeys1817660202.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -7994,7 +7992,7 @@ export function anonymousValidator1929114870(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys1929114870],
+              expectedKeys: [...objectKeys1817660202],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -8015,13 +8013,13 @@ export function anonymousValidator1929114870(value, propertyPath) {
   }
   {
     const validatorResult = anonymousValidator897743470(
-      value["skipValidatorGeneration"],
-      `${propertyPath}.skipValidatorGeneration`,
+      value["skipResponseValidation"],
+      `${propertyPath}.skipResponseValidation`,
     );
     if (validatorResult.errors) {
       errors.push(...validatorResult.errors);
     } else {
-      result["skipValidatorGeneration"] = validatorResult.value;
+      result["skipResponseValidation"] = validatorResult.value;
     }
   }
   {
@@ -8043,9 +8041,9 @@ export function anonymousValidator1929114870(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }>}
+ * @returns {EitherN<undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, }>}
  */
-export function anonymousValidator484090628(value, propertyPath) {
+export function anonymousValidator876151968(value, propertyPath) {
   if (isNil(value)) {
     return { value: undefined };
   }
@@ -8064,7 +8062,7 @@ export function anonymousValidator484090628(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys484090628.has(key)) {
+    if (!objectKeys876151968.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -8072,7 +8070,7 @@ export function anonymousValidator484090628(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys484090628],
+              expectedKeys: [...objectKeys876151968],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -8113,28 +8111,6 @@ export function anonymousValidator484090628(value, propertyPath) {
       result["declareGlobalCompasTypes"] = validatorResult.value;
     }
   }
-  {
-    const validatorResult = anonymousValidator897743470(
-      value["generateDeduplicatedTypes"],
-      `${propertyPath}.generateDeduplicatedTypes`,
-    );
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result["generateDeduplicatedTypes"] = validatorResult.value;
-    }
-  }
-  {
-    const validatorResult = anonymousValidator714133621(
-      value["useDeduplicatedTypesPath"],
-      `${propertyPath}.useDeduplicatedTypesPath`,
-    );
-    if (validatorResult.errors) {
-      errors.push(...validatorResult.errors);
-    } else {
-      result["useDeduplicatedTypesPath"] = validatorResult.value;
-    }
-  }
   if (errors.length > 0) {
     return { errors };
   }
@@ -8143,9 +8119,9 @@ export function anonymousValidator484090628(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }>}
+ * @returns {EitherN<{"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipResponseValidation": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, }, }>}
  */
-export function anonymousValidator108705303(value, propertyPath) {
+export function anonymousValidator2074712839(value, propertyPath) {
   if (isNil(value)) {
     /** @type {{ errors: InternalError[] }} */
     return {
@@ -8173,7 +8149,7 @@ export function anonymousValidator108705303(value, propertyPath) {
   const result = Object.create(null);
   let errors = [];
   for (const key of Object.keys(value)) {
-    if (!objectKeys108705303.has(key)) {
+    if (!objectKeys2074712839.has(key)) {
       /** @type {{ errors: InternalError[] }} */
       return {
         errors: [
@@ -8181,7 +8157,7 @@ export function anonymousValidator108705303(value, propertyPath) {
             propertyPath,
             key: "validator.object.strict",
             info: {
-              expectedKeys: [...objectKeys108705303],
+              expectedKeys: [...objectKeys2074712839],
               foundKeys: [...Object.keys(value)],
             },
           },
@@ -8245,7 +8221,7 @@ export function anonymousValidator108705303(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator1929114870(
+    const validatorResult = anonymousValidator1817660202(
       value["apiClient"],
       `${propertyPath}.apiClient`,
     );
@@ -8256,7 +8232,7 @@ export function anonymousValidator108705303(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator484090628(
+    const validatorResult = anonymousValidator876151968(
       value["types"],
       `${propertyPath}.types`,
     );
@@ -8274,7 +8250,7 @@ export function anonymousValidator108705303(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipValidatorGeneration": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, "generateDeduplicatedTypes": boolean, "useDeduplicatedTypesPath"?: undefined|string, }, }, }>}
+ * @returns {EitherN<{"targetLanguage": "js"|"ts", "outputDirectory"?: undefined|string, "generators": {"structure"?: undefined|{}, "openApi"?: undefined|{"openApiExtensions"?: undefined|any, "openApiRouteExtensions"?: undefined|any, }, "router"?: undefined|{"target": {"library": "koa", }, "exposeApiStructure": boolean, }, "database"?: undefined|{"target": {"dialect": "postgres", }, "skipValidatorGeneration": boolean, }, "validators"?: undefined|{"includeBaseTypes": boolean, }, "apiClient"?: undefined|{"target": {"library": "axios", "targetRuntime": "node.js"|"browser"|"react-native", "includeWrapper"?: undefined|"react-query", }, "skipResponseValidation": boolean, "globalClient": boolean, }, "types"?: undefined|{"includeBaseTypes": boolean, "declareGlobalTypes": boolean, "declareGlobalCompasTypes": boolean, }, }, }>}
  */
 export function anonymousValidator1671053633(value, propertyPath) {
   if (isNil(value)) {
@@ -8326,7 +8302,7 @@ export function anonymousValidator1671053633(value, propertyPath) {
     }
   }
   {
-    const validatorResult = anonymousValidator108705303(
+    const validatorResult = anonymousValidator2074712839(
       value["generators"],
       `${propertyPath}.generators`,
     );
