@@ -50,6 +50,14 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     output and don't want to sort too often.
   - Also sort relations so we resolve them in the same way each time, we already
     have this, but sorting them may give a better output.
+- [x] Setup writers
+- [x] Setup target switchers
+- [x] Write typescript types
+- [ ] Cleanup doc blocks
+- [ ] Setup validator generators
+- [ ] Come up with intermediate language for them
+- [ ] Generate base validators
+- [ ] Setup import system in the generate files
 - [ ] Create sql types to the structure
   - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
     `createPartialTypes` and `createQueryBuilderTypes`

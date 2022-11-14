@@ -206,27 +206,9 @@ export type ExperimentalGenericDefinition = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  keys: ExperimentalNamedTypeDefinition;
-  values: ExperimentalNamedTypeDefinition;
+  keys: ExperimentalTypeSystemDefinition;
+  values: ExperimentalTypeSystemDefinition;
 };
-// This contains all types that can be added top level to the structure.
-export type ExperimentalNamedTypeDefinition =
-  | ExperimentalAnyDefinition
-  | ExperimentalAnyOfDefinition
-  | ExperimentalArrayDefinition
-  | ExperimentalBooleanDefinition
-  | ExperimentalCrudDefinition
-  | ExperimentalDateDefinition
-  | ExperimentalExtendDefinition
-  | ExperimentalFileDefinition
-  | ExperimentalGenericDefinition
-  | ExperimentalNumberDefinition
-  | ExperimentalObjectDefinition
-  | ExperimentalOmitDefinition
-  | ExperimentalPickDefinition
-  | ExperimentalRouteDefinition
-  | ExperimentalStringDefinition
-  | ExperimentalUuidDefinition;
 export type ExperimentalNumberDefinition = {
   type: "number";
   group?: undefined | string;
@@ -315,51 +297,6 @@ export type ExperimentalPickDefinition = {
   keys: string[];
   reference: ExperimentalTypeSystemDefinition;
 };
-export type ExperimentalRouteDefinition = {
-  type: "route";
-  group?: undefined | string;
-  name?: undefined | string;
-  docString: string;
-  isOptional: boolean;
-  defaultValue?: undefined | string | boolean | number;
-  sql: {
-    primary?: undefined | boolean;
-    searchable?: undefined | boolean;
-    hasDefaultValue?: undefined | boolean;
-  };
-  validator: {};
-  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
-  idempotent: boolean;
-  path: string;
-  tags: string[];
-  query?: undefined | ExperimentalReferenceDefinition;
-  params?: undefined | ExperimentalReferenceDefinition;
-  body?: undefined | ExperimentalReferenceDefinition;
-  files?: undefined | ExperimentalReferenceDefinition;
-  response?: undefined | ExperimentalReferenceDefinition;
-  invalidations: ExperimentalRouteInvalidationDefinition[];
-  metadata?:
-    | undefined
-    | {
-        stripTrailingSlash?: undefined | boolean;
-        requestBodyType?: undefined | "json" | "form-data";
-      };
-};
-export type ExperimentalRouteInvalidationDefinition = {
-  type: "routeInvalidation";
-  target: { group: ExperimentalNamePart; name?: ExperimentalNamePartOptional };
-  properties: {
-    useSharedParams?: undefined | boolean;
-    useSharedQuery?: undefined | boolean;
-    specification?:
-      | undefined
-      | {
-          params: { [key: string]: string[] };
-          query: { [key: string]: string[] };
-        };
-  };
-};
-export type ExperimentalNamePartOptional = undefined | string;
 export type ExperimentalStringDefinition = {
   type: "string";
   group?: undefined | string;
@@ -434,6 +371,69 @@ export type ExperimentalGenerateOptions = {
           includeBaseTypes: boolean;
           declareGlobalTypes: boolean;
           declareGlobalCompasTypes: boolean;
+        };
+  };
+};
+export type ExperimentalNamePartOptional = undefined | string;
+// This contains all types that can be added top level to the structure.
+export type ExperimentalNamedTypeDefinition =
+  | ExperimentalAnyDefinition
+  | ExperimentalAnyOfDefinition
+  | ExperimentalArrayDefinition
+  | ExperimentalBooleanDefinition
+  | ExperimentalCrudDefinition
+  | ExperimentalDateDefinition
+  | ExperimentalExtendDefinition
+  | ExperimentalFileDefinition
+  | ExperimentalGenericDefinition
+  | ExperimentalNumberDefinition
+  | ExperimentalObjectDefinition
+  | ExperimentalOmitDefinition
+  | ExperimentalPickDefinition
+  | ExperimentalRouteDefinition
+  | ExperimentalStringDefinition
+  | ExperimentalUuidDefinition;
+export type ExperimentalRouteDefinition = {
+  type: "route";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {};
+  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
+  idempotent: boolean;
+  path: string;
+  tags: string[];
+  query?: undefined | ExperimentalReferenceDefinition;
+  params?: undefined | ExperimentalReferenceDefinition;
+  body?: undefined | ExperimentalReferenceDefinition;
+  files?: undefined | ExperimentalReferenceDefinition;
+  response?: undefined | ExperimentalReferenceDefinition;
+  invalidations: ExperimentalRouteInvalidationDefinition[];
+  metadata?:
+    | undefined
+    | {
+        stripTrailingSlash?: undefined | boolean;
+        requestBodyType?: undefined | "json" | "form-data";
+      };
+};
+export type ExperimentalRouteInvalidationDefinition = {
+  type: "routeInvalidation";
+  target: { group: ExperimentalNamePart; name?: ExperimentalNamePartOptional };
+  properties: {
+    useSharedParams?: undefined | boolean;
+    useSharedQuery?: undefined | boolean;
+    specification?:
+      | undefined
+      | {
+          params: { [key: string]: string[] };
+          query: { [key: string]: string[] };
         };
   };
 };
@@ -591,26 +591,9 @@ export type ExperimentalGenericDefinitionInput = {
     hasDefaultValue?: undefined | boolean;
   };
   validator: {};
-  keys: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
-  values: import("./../common/types").ExperimentalNamedTypeDefinitionInput;
+  keys: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
+  values: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
 };
-export type ExperimentalNamedTypeDefinitionInput =
-  | import("./../common/types").ExperimentalAnyDefinitionInput
-  | import("./../common/types").ExperimentalAnyOfDefinitionInput
-  | import("./../common/types").ExperimentalArrayDefinitionInput
-  | import("./../common/types").ExperimentalBooleanDefinitionInput
-  | import("./../common/types").ExperimentalCrudDefinitionInput
-  | import("./../common/types").ExperimentalDateDefinitionInput
-  | import("./../common/types").ExperimentalExtendDefinitionInput
-  | import("./../common/types").ExperimentalFileDefinitionInput
-  | import("./../common/types").ExperimentalGenericDefinitionInput
-  | import("./../common/types").ExperimentalNumberDefinitionInput
-  | import("./../common/types").ExperimentalObjectDefinitionInput
-  | import("./../common/types").ExperimentalOmitDefinitionInput
-  | import("./../common/types").ExperimentalPickDefinitionInput
-  | import("./../common/types").ExperimentalRouteDefinitionInput
-  | import("./../common/types").ExperimentalStringDefinitionInput
-  | import("./../common/types").ExperimentalUuidDefinitionInput;
 export type ExperimentalNumberDefinitionInput = ExperimentalNumberDefinition;
 export type ExperimentalObjectDefinitionInput = {
   type: "object";
@@ -683,64 +666,6 @@ export type ExperimentalPickDefinitionInput = {
   keys: string[];
   reference: import("./../common/types").ExperimentalTypeSystemDefinitionInput;
 };
-export type ExperimentalRouteDefinitionInput = {
-  type: "route";
-  group?: undefined | string;
-  name?: undefined | string;
-  docString: string;
-  isOptional: boolean;
-  defaultValue?: undefined | string | boolean | number;
-  sql: {
-    primary?: undefined | boolean;
-    searchable?: undefined | boolean;
-    hasDefaultValue?: undefined | boolean;
-  };
-  validator: {};
-  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
-  idempotent: boolean;
-  path: string;
-  tags: string[];
-  query?:
-    | undefined
-    | import("./../common/types").ExperimentalReferenceDefinitionInput;
-  params?:
-    | undefined
-    | import("./../common/types").ExperimentalReferenceDefinitionInput;
-  body?:
-    | undefined
-    | import("./../common/types").ExperimentalReferenceDefinitionInput;
-  files?:
-    | undefined
-    | import("./../common/types").ExperimentalReferenceDefinitionInput;
-  response?:
-    | undefined
-    | import("./../common/types").ExperimentalReferenceDefinitionInput;
-  invalidations: import("./../common/types").ExperimentalRouteInvalidationDefinitionInput[];
-  metadata?:
-    | undefined
-    | {
-        stripTrailingSlash?: undefined | boolean;
-        requestBodyType?: undefined | "json" | "form-data";
-      };
-};
-export type ExperimentalRouteInvalidationDefinitionInput = {
-  type: "routeInvalidation";
-  target: {
-    group: import("./../common/types").ExperimentalNamePartInput;
-    name?: import("./../common/types").ExperimentalNamePartOptionalInput;
-  };
-  properties: {
-    useSharedParams?: undefined | boolean;
-    useSharedQuery?: undefined | boolean;
-    specification?:
-      | undefined
-      | {
-          params: { [key: string]: string[] };
-          query: { [key: string]: string[] };
-        };
-  };
-};
-export type ExperimentalNamePartOptionalInput = ExperimentalNamePartOptional;
 export type ExperimentalStringDefinitionInput = {
   type: "string";
   group?: undefined | string;
@@ -808,6 +733,81 @@ export type ExperimentalGenerateOptionsInput = {
           includeBaseTypes?: undefined | boolean;
           declareGlobalTypes?: undefined | boolean;
           declareGlobalCompasTypes?: undefined | boolean;
+        };
+  };
+};
+export type ExperimentalNamePartOptionalInput = ExperimentalNamePartOptional;
+export type ExperimentalNamedTypeDefinitionInput =
+  | import("./../common/types").ExperimentalAnyDefinitionInput
+  | import("./../common/types").ExperimentalAnyOfDefinitionInput
+  | import("./../common/types").ExperimentalArrayDefinitionInput
+  | import("./../common/types").ExperimentalBooleanDefinitionInput
+  | import("./../common/types").ExperimentalCrudDefinitionInput
+  | import("./../common/types").ExperimentalDateDefinitionInput
+  | import("./../common/types").ExperimentalExtendDefinitionInput
+  | import("./../common/types").ExperimentalFileDefinitionInput
+  | import("./../common/types").ExperimentalGenericDefinitionInput
+  | import("./../common/types").ExperimentalNumberDefinitionInput
+  | import("./../common/types").ExperimentalObjectDefinitionInput
+  | import("./../common/types").ExperimentalOmitDefinitionInput
+  | import("./../common/types").ExperimentalPickDefinitionInput
+  | import("./../common/types").ExperimentalRouteDefinitionInput
+  | import("./../common/types").ExperimentalStringDefinitionInput
+  | import("./../common/types").ExperimentalUuidDefinitionInput;
+export type ExperimentalRouteDefinitionInput = {
+  type: "route";
+  group?: undefined | string;
+  name?: undefined | string;
+  docString: string;
+  isOptional: boolean;
+  defaultValue?: undefined | string | boolean | number;
+  sql: {
+    primary?: undefined | boolean;
+    searchable?: undefined | boolean;
+    hasDefaultValue?: undefined | boolean;
+  };
+  validator: {};
+  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
+  idempotent: boolean;
+  path: string;
+  tags: string[];
+  query?:
+    | undefined
+    | import("./../common/types").ExperimentalReferenceDefinitionInput;
+  params?:
+    | undefined
+    | import("./../common/types").ExperimentalReferenceDefinitionInput;
+  body?:
+    | undefined
+    | import("./../common/types").ExperimentalReferenceDefinitionInput;
+  files?:
+    | undefined
+    | import("./../common/types").ExperimentalReferenceDefinitionInput;
+  response?:
+    | undefined
+    | import("./../common/types").ExperimentalReferenceDefinitionInput;
+  invalidations: import("./../common/types").ExperimentalRouteInvalidationDefinitionInput[];
+  metadata?:
+    | undefined
+    | {
+        stripTrailingSlash?: undefined | boolean;
+        requestBodyType?: undefined | "json" | "form-data";
+      };
+};
+export type ExperimentalRouteInvalidationDefinitionInput = {
+  type: "routeInvalidation";
+  target: {
+    group: import("./../common/types").ExperimentalNamePartInput;
+    name?: import("./../common/types").ExperimentalNamePartOptionalInput;
+  };
+  properties: {
+    useSharedParams?: undefined | boolean;
+    useSharedQuery?: undefined | boolean;
+    specification?:
+      | undefined
+      | {
+          params: { [key: string]: string[] };
+          query: { [key: string]: string[] };
         };
   };
 };

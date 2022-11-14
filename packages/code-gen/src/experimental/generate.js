@@ -25,6 +25,10 @@ import {
   structureValidateReferences,
 } from "./processors/structure.js";
 import { structureGenerator } from "./structure/generator.js";
+import {
+  typesGeneratorFinalize,
+  typesGeneratorInit,
+} from "./types/generator.js";
 
 /**
  * @typedef {object} OutputFile
@@ -101,6 +105,12 @@ export function generateExecute(generator, options) {
 
   modelSortAllRelations(generateContext);
   modelSortAllKeys(generateContext);
+
+  typesGeneratorInit(generateContext);
+
+  // All other logic should be between here (A)
+
+  typesGeneratorFinalize(generateContext);
 
   const outputFiles = fileContextConvertToOutputFiles(generateContext);
   generateWriteOutputFiles(generateContext, outputFiles);

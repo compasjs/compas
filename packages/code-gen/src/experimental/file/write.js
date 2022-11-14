@@ -6,9 +6,35 @@
  * @param {import("./context").GenerateFile} file
  * @param {string} contents
  */
-
 export function fileWriteRaw(file, contents) {
   file.contents += contents;
+}
+
+/**
+ * Append indentation to the file. It makes sure that this is only added once on a single
+ * line.
+ *
+ * It does not check if it is called as the first thing on a new line.
+ *
+ * @param {import("./context").GenerateFile} file
+ */
+export function fileWriteIndent(file) {
+  if (file.currentLine.hasIndent) {
+    return;
+  }
+
+  file.currentLine.hasIndent = true;
+  fileWriteRaw(file, file.indentationValue.repeat(file.indentationLevel));
+}
+
+/**
+ * Set writer to a new line, resetting currentLine values.
+ *
+ * @param {import("./context").GenerateFile} file
+ */
+export function fileWriteNewLine(file) {
+  file.currentLine.hasIndent = false;
+  fileWriteRaw(file, "\n");
 }
 
 /**
@@ -23,8 +49,20 @@ export function fileWriteRaw(file, contents) {
  */
 export function fileWrite(file, contents) {
   for (const line of contents.split("\n")) {
-    file.contents += `${file.indentationValue.repeat(
-      file.indentationLevel,
-    )}${line}\n`;
+    fileWriteIndent(file);
+    fileWriteRaw(file, line);
+    fileWriteNewLine(file);
   }
+}
+
+/**
+ * Write contents inline. Does not have a special handling of newline characters.
+ *
+ *
+ * @param {import("./context").GenerateFile} file
+ * @param {string} contents
+ */
+export function fileWriteInline(file, contents) {
+  fileWriteIndent(file);
+  fileWriteRaw(file, contents);
 }

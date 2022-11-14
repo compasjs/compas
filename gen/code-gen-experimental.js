@@ -414,8 +414,8 @@ export function extendWithCodeGenExperimental(app) {
       .keys({
         type: "generic",
         ...namedTypeDefinitionBase,
-        keys: T.reference("experimental", "namedTypeDefinition"),
-        values: T.reference("experimental", "namedTypeDefinition"),
+        keys: T.reference("experimental", "typeSystemDefinition"),
+        values: T.reference("experimental", "typeSystemDefinition"),
       })
       .loose(),
 
