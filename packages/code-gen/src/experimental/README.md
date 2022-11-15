@@ -53,7 +53,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Setup writers
 - [x] Setup target switchers
 - [x] Write typescript types
-- [ ] Cleanup doc blocks
+- [x] Cleanup doc blocks
 - [ ] Setup validator generators
 - [ ] Come up with intermediate language for them
 - [ ] Generate base validators

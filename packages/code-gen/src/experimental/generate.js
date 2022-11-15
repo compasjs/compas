@@ -5,6 +5,7 @@ import {
   validateExperimentalGenerateOptions,
   validateExperimentalStructure,
 } from "./generated/experimental/validators.js";
+import { docStringCleanup } from "./processors/doc-string.js";
 import {
   modelKeyAddDateKeys,
   modelKeyAddPrimary,
@@ -105,6 +106,8 @@ export function generateExecute(generator, options) {
 
   modelSortAllRelations(generateContext);
   modelSortAllKeys(generateContext);
+
+  docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
 
