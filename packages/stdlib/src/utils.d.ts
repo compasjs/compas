@@ -6,12 +6,6 @@
  * @returns {number}
  */
 export function getSecondsSinceEpoch(): number;
-/**
- * A function that returns 'undefined'.
- *
- * @since 0.1.0
- * @type {import("../types/advanced-types").NoopFn}
- */
 export function noop(): void;
 /**
  * HACKY

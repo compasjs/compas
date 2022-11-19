@@ -78,7 +78,7 @@ function normalizeIndentationAndTrim(input) {
     cleanedLines.shift();
   }
 
-  if (cleanedLines.at(-1).length === 0) {
+  if (cleanedLines.at(-1)?.length === 0) {
     cleanedLines.pop();
   }
 
