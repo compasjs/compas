@@ -1,0 +1,5 @@
+# https://thanks.dev/p/gh/compasjs
+
+# Max depth for package.json files
+# This applies to both `packages/*/package.json` as well as `examples/*/package.json`
+maxDepth: 3
