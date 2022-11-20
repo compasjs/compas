@@ -12,7 +12,32 @@ test("code-gen/experimental/types/generator", (t) => {
         generators: {
           structure: {},
           types: {
-            useGlobalTypes: true,
+            declareGlobalTypes: true,
+            includeBaseTypes: true,
+          },
+        },
+        targetLanguage: "js",
+      });
+
+      typesGeneratorInit(generateContext);
+      typesGeneratorFinalize(generateContext);
+
+      // for (const entry of generateContext.files.entries()) {
+      //   t.log.error({
+      //     entry,
+      //   });
+      // }
+
+      t.pass();
+    });
+
+    t.test("test", (t) => {
+      // TODO: more tests
+      const generateContext = testExperimentalGenerateContext(t, {
+        generators: {
+          structure: {},
+          types: {
+            declareGlobalTypes: false,
             includeBaseTypes: true,
           },
         },

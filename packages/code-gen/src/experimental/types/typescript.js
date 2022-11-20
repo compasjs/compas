@@ -8,7 +8,7 @@ import {
 import { fileFormatInlineComment } from "../file/format.js";
 import {
   fileWrite,
-  fileWriteIndent,
+  fileWriteLinePrefix,
   fileWriteInline,
   fileWriteNewLine,
   fileWriteRaw,
@@ -66,8 +66,8 @@ export function typesTypescriptStartDeclareGlobal(generateContext, file) {
  */
 export function typesTypescriptEndDeclareGlobal(generateContext, file) {
   if (generateContext.options.generators.types?.declareGlobalTypes) {
-    fileWrite(file, `}`);
     fileContextSetIndent(file, -1);
+    fileWrite(file, `}`);
   }
 }
 
@@ -150,7 +150,7 @@ export function typesTypescriptGenerateNamedType(
     fileWrite(file, fileFormatInlineComment(file, type.docString));
   }
 
-  fileWriteIndent(file);
+  fileWriteLinePrefix(file);
 
   if (generateContext.options.generators.types?.declareGlobalTypes) {
     fileWriteRaw(file, `type ${name} = `);

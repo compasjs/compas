@@ -18,13 +18,13 @@ export function fileWriteRaw(file, contents) {
  *
  * @param {import("./context").GenerateFile} file
  */
-export function fileWriteIndent(file) {
-  if (file.currentLine.hasIndent) {
+export function fileWriteLinePrefix(file) {
+  if (file.lineState.hasWrittenLinePrefix) {
     return;
   }
 
-  file.currentLine.hasIndent = true;
-  fileWriteRaw(file, file.indentationValue.repeat(file.indentationLevel));
+  file.lineState.hasWrittenLinePrefix = true;
+  fileWriteRaw(file, file.calculatedLinePrefix);
 }
 
 /**
@@ -33,7 +33,7 @@ export function fileWriteIndent(file) {
  * @param {import("./context").GenerateFile} file
  */
 export function fileWriteNewLine(file) {
-  file.currentLine.hasIndent = false;
+  file.lineState.hasWrittenLinePrefix = false;
   fileWriteRaw(file, "\n");
 }
 
@@ -49,7 +49,7 @@ export function fileWriteNewLine(file) {
  */
 export function fileWrite(file, contents) {
   for (const line of contents.split("\n")) {
-    fileWriteIndent(file);
+    fileWriteLinePrefix(file);
     fileWriteRaw(file, line);
     fileWriteNewLine(file);
   }
@@ -63,6 +63,6 @@ export function fileWrite(file, contents) {
  * @param {string} contents
  */
 export function fileWriteInline(file, contents) {
-  fileWriteIndent(file);
+  fileWriteLinePrefix(file);
   fileWriteRaw(file, contents);
 }

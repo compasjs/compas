@@ -18,7 +18,9 @@ export function fileWriteRaw(
  *
  * @param {import("./context").GenerateFile} file
  */
-export function fileWriteIndent(file: import("./context").GenerateFile): void;
+export function fileWriteLinePrefix(
+  file: import("./context").GenerateFile,
+): void;
 /**
  * Set writer to a new line, resetting currentLine values.
  *
