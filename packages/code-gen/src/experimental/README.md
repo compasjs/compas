@@ -57,7 +57,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Setup validator generators
 - [ ] Come up with intermediate language for them
 - [ ] Generate base validators
-- [ ] Setup import system in the generate files
+- [x] Setup import system in the generate files
 - [ ] Create sql types to the structure
   - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
     `createPartialTypes` and `createQueryBuilderTypes`

@@ -15,6 +15,7 @@ import {
 } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { typeDefinitionTraverse } from "../processors/type-definition-traverse.js";
+import { TypescriptImportCollector } from "../target/typescript.js";
 import {
   typesCacheAdd,
   typesCacheGet,
@@ -40,7 +41,9 @@ export function typesTypescriptResolveFile(generateContext) {
  * @returns {import("../file/context").GenerateFile}
  */
 export function typesTypescriptInitFile(generateContext) {
-  return fileContextCreateGeneric(generateContext, "common/types.d.ts", {});
+  return fileContextCreateGeneric(generateContext, "common/types.d.ts", {
+    importCollector: new TypescriptImportCollector(),
+  });
 }
 
 /**

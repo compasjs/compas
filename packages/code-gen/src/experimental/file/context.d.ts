@@ -94,6 +94,11 @@ export function fileContextFinalizeGenerateFile(
  *   to '// '. If your file format does not support inline comments, you should
  *   make sure that no comment creation function is called.
  *
+ * @property {{ toString(): string }} [importCollector] Each language could provide their
+ *   own imports implementation. If this property is set, {@link
+ *   fileContextCreateGeneric} will reserve a spot for the imports and call `toString()`
+ *   when the file is finalized.
+ *
  * @property {string} calculatedLinePrefix The accumulated prefix to write on new lines.
  *   Can be mutated via {@link fileContextSetIndent}, {@link fileContextAddLinePrefix}
  *   and {@link fileContextRemoveLinePrefix}
@@ -106,7 +111,7 @@ export function fileContextFinalizeGenerateFile(
  * @typedef {Map<string, GenerateFile>} GenerateFileMap
  */
 /**
- * Use this constant to reset {@link GenerateFile.indentationLevel} via
+ * Use this constant to reset {@link GenerateFile.calculatedLinePrefix} via
  * {@link fileContextSetIndent}
  *
  * @type {number}
@@ -139,6 +144,16 @@ export type GenerateFile = {
    * make sure that no comment creation function is called.
    */
   inlineCommentPrefix: string;
+  /**
+   * Each language could provide their
+   * own imports implementation. If this property is set, {@link  *   fileContextCreateGeneric} will reserve a spot for the imports and call `toString()`
+   * when the file is finalized.
+   */
+  importCollector?:
+    | {
+        toString(): string;
+      }
+    | undefined;
   /**
    * The accumulated prefix to write on new lines.
    * Can be mutated via {@link fileContextSetIndent }, {@link fileContextAddLinePrefix }
