@@ -71,6 +71,10 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
     connectionOptions.onnotice = () => {};
   }
 
+  if (isNil(options.debug)) {
+    options.debug = true;
+  }
+
   if (!isNil(testDatabase?.options?.database)) {
     // Real database creation
     const creationSql = await createDatabaseIfNotExists(
