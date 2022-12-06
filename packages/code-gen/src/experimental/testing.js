@@ -1,5 +1,6 @@
 import { newLogger } from "@compas/stdlib";
 import { TypeCreator } from "../builders/index.js";
+import { generateExecute } from "./generate.js";
 import { Generator } from "./generator.js";
 
 /**
@@ -17,6 +18,23 @@ export function testExperimentalGenerateContext(t, options, structure) {
     files: new Map(),
     structure: structure ?? getDefaultStructure(),
   };
+}
+
+/**
+ * Fully run the generators and return the output files
+ *
+ * @param {Parameters<Parameters<typeof import("@compas/cli").test>[1]>[0]} t
+ * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
+ * @param {import("./generated/common/types").ExperimentalStructure} [structure]
+ * @returns {import("./generate").OutputFile[]}
+ */
+export function testExperimentalGenerateFiles(t, options, structure) {
+  const context = testExperimentalGenerateContext(t, options, structure);
+
+  return generateExecute(
+    new Generator(t.log).addStructure(context.structure),
+    options,
+  );
 }
 
 /**
@@ -70,6 +88,8 @@ function getDefaultStructure() {
     T.date("dateMax").max("2020-01-01"),
     T.date("dateInFuture").inTheFuture(),
     T.date("dateInPast").inThePast(),
+    T.date("dateSpecifierDate").dateOnly(),
+    T.date("dateSpecifierTime").timeOnly(),
 
     T.file("fileRequired"),
     T.file("fileOptional").optional(),
@@ -163,7 +183,7 @@ function getDefaultStructure() {
     T.uuid("uuidRequired"),
     T.uuid("uuidOptional").optional(),
     T.uuid("uuidOptionalAllowNull").allowNull(),
-    T.uuid("uuidDefault").default(`434ed696-e71d-49fa-b962-7e8c7b15a9e1`),
+    T.uuid("uuidDefault").default(`"434ed696-e71d-49fa-b962-7e8c7b15a9e1"`),
   );
 
   {

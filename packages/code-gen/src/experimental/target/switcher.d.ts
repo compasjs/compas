@@ -4,13 +4,14 @@
  * @template {(...args: any) => any} F
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @param {Record<import("../generated/common/types").ExperimentalGenerateOptions["targetLanguage"], F>} functions
+ * @param {Record<import("../generated/common/types").ExperimentalGenerateOptions["targetLanguage"], F|(() =>
+ *   void)>} functions
  * @param {[...Parameters<F>]} args
  * @returns {ReturnType<F>|undefined}
  */
 export function targetLanguageSwitch<F extends (...args: any) => any>(
   generateContext: import("../generate").GenerateContext,
-  functions: Record<"js" | "ts", F>,
+  functions: Record<"js" | "ts", F | (() => void)>,
   args: [...Parameters<F>],
 ): ReturnType<F> | undefined;
 //# sourceMappingURL=switcher.d.ts.map

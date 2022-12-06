@@ -3,6 +3,7 @@
 import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
 import { TypeCreator } from "@compas/code-gen";
+import { Generator } from "@compas/code-gen/experimental";
 import { AppError, isNil, mainFn, pathJoin } from "@compas/stdlib";
 import FastestValidator from "fastest-validator";
 import * as yup from "yup";
@@ -138,29 +139,45 @@ const fastestValidatorNested = fastestValidator.compile({
 
 mainFn(import.meta, main);
 
-async function main() {
+async function main(logger) {
   const T = new TypeCreator("bench");
+  const types = [
+    T.object("simple").keys({
+      foo: T.bool(),
+      bar: T.number(),
+      baz: T.string().trim().lowerCase(),
+    }),
+    T.object("nested").keys({
+      foo: true,
+      bar: 5,
+      nest: [T.reference("bench", "simple")],
+    }),
+  ];
 
   const { exitCode, stdout, stderr, generatedDirectory } =
-    await codeGenToTemporaryDirectory(
-      [
-        T.object("simple").keys({
-          foo: T.bool(),
-          bar: T.number(),
-          baz: T.string().trim().lowerCase(),
-        }),
-        T.object("nested").keys({
-          foo: true,
-          bar: 5,
-          nest: [T.reference("bench", "simple")],
-        }),
-      ],
-      {
-        isNodeServer: true,
-        enabledGenerators: ["validator"],
-        dumpStructure: true,
+    await codeGenToTemporaryDirectory([...types], {
+      isNodeServer: true,
+      enabledGenerators: ["validator"],
+      dumpStructure: true,
+    });
+
+  const generator = new Generator(logger);
+  generator.add(...types);
+  generator.generate({
+    targetLanguage: "js",
+    outputDirectory: `./.cache/test-output/brrrr/`,
+    generators: {
+      validators: {
+        includeBaseTypes: true,
       },
-    );
+    },
+  });
+
+  const experimentalValidators = await import(
+    pathToFileURL(
+      pathJoin("./.cache/test-output/brrrr/", "bench/validators.js"),
+    )
+  );
 
   if (exitCode !== 0) {
     throw AppError.serverError({
@@ -179,6 +196,14 @@ async function main() {
     for (let i = 0; i < b.N; ++i) {
       // eslint-disable-next-line no-unused-vars
       y = validateBenchSimple(simpleInput);
+    }
+  });
+
+  bench("compas/experimental validator simple", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = experimentalValidators.validateBenchSimple(simpleInput);
     }
   });
 
@@ -208,6 +233,14 @@ async function main() {
     }
   });
 
+  bench("compas/experimental validator nest", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = experimentalValidators.validateBenchNested(nestedInput);
+    }
+  });
+
   bench("yup validator nested", (b) => {
     let y;
     for (let i = 0; i < b.N; ++i) {
@@ -231,6 +264,14 @@ async function main() {
     for (let i = 0; i < b.N; ++i) {
       // eslint-disable-next-line no-unused-vars
       y = validateBenchNested(nestedInput100);
+    }
+  });
+
+  bench("compas/experimental validator nested - 100 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = experimentalValidators.validateBenchNested(nestedInput100);
     }
   });
 
@@ -269,6 +310,13 @@ async function main() {
     for (let i = 0; i < b.N; ++i) {
       // eslint-disable-next-line no-unused-vars
       y = validateBenchNested(nestedInput1000);
+    }
+  });
+  bench("compas/experimental validator nested - 1000 results", (b) => {
+    let y;
+    for (let i = 0; i < b.N; ++i) {
+      // eslint-disable-next-line no-unused-vars
+      y = experimentalValidators.validateBenchNested(nestedInput1000);
     }
   });
 

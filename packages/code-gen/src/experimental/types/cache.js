@@ -56,7 +56,7 @@ export function typesCacheGet(type, options) {
 export function typesCacheGetUsedNames(type) {
   const subCache = typeCache.get(type);
 
-  return Object.keys(subCache ?? {});
+  return Object.values(subCache ?? {});
 }
 
 /**

@@ -71,7 +71,9 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
     connectionOptions.onnotice = () => {};
   }
 
+  // @ts-ignore-error
   if (isNil(options.debug)) {
+    // @ts-ignore-error
     options.debug = true;
   }
 

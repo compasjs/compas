@@ -4,7 +4,8 @@
  * @template {(...args: any) => any} F
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @param {Record<import("../generated/common/types").ExperimentalGenerateOptions["targetLanguage"], F>} functions
+ * @param {Record<import("../generated/common/types").ExperimentalGenerateOptions["targetLanguage"], F|(() =>
+ *   void)>} functions
  * @param {[...Parameters<F>]} args
  * @returns {ReturnType<F>|undefined}
  */

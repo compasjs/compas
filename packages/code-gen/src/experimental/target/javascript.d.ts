@@ -11,10 +11,23 @@ export class JavascriptImportCollector {
   static getImportCollector(
     file: import("../file/context").GenerateFile,
   ): JavascriptImportCollector;
-  /** @type {Map<string, Set<string>>} */
-  destructuredImports: Map<string, Set<string>>;
-  /** @type {Set<string>} */
-  rawImports: Set<string>;
+  /**
+   * @private
+   * @type {Map<string, Set<string>>}
+   */
+  private destructuredImports;
+  /**
+   * @private
+   * @type {Set<string>}
+   */
+  private rawImports;
+  /**
+   * Use a destructure import
+   *
+   * @param {string} path
+   * @param {string} symbol
+   */
+  destructure(path: string, symbol: string): void;
   toString(): string;
 }
 //# sourceMappingURL=javascript.d.ts.map

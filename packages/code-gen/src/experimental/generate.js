@@ -30,6 +30,7 @@ import {
   typesGeneratorFinalize,
   typesGeneratorInit,
 } from "./types/generator.js";
+import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
 
 /**
  * @typedef {object} OutputFile
@@ -110,6 +111,7 @@ export function generateExecute(generator, options) {
   docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
+  validatorGeneratorGenerateBaseTypes(generateContext);
 
   // All other logic should be between here (A)
 
@@ -145,6 +147,9 @@ export function generateWriteOutputFiles(generateContext, outputFiles) {
 
       mkdirSync(
         pathJoin(generateContext.options.outputDirectory, subDirectory),
+        {
+          recursive: true,
+        },
       );
     }
 

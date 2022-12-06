@@ -12,6 +12,7 @@ import {
  *
  * @typedef {object} GenerateFile
  *
+ * @property {string} relativePath The relative file path.
  * @property {string} contents The file contents the final file always has a trailing
  *   newline, and optionally an initial comment added via
  *   {@link GenerateFile.addGeneratedByComment}.
@@ -75,6 +76,7 @@ export function fileContextCreateGeneric(
     ...options,
 
     // Always start with empty contents
+    relativePath,
     contents: "",
     calculatedLinePrefix: "",
     lineState: {
@@ -106,6 +108,18 @@ export function fileContextGet(generateContext, relativePath) {
   }
 
   return file;
+}
+
+/**
+ * Get a file by relative path from the context, returns undefined if no file is created
+ * yet.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {string} relativePath
+ * @returns {GenerateFile|undefined}
+ */
+export function fileContextGetOptional(generateContext, relativePath) {
+  return generateContext.files.get(relativePath);
 }
 
 /**

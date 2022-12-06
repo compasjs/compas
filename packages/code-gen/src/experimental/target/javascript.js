@@ -24,11 +24,31 @@ export class JavascriptImportCollector {
   }
 
   constructor() {
-    /** @type {Map<string, Set<string>>} */
+    /**
+     * @private
+     * @type {Map<string, Set<string>>}
+     */
     this.destructuredImports = new Map();
 
-    /** @type {Set<string>} */
+    /**
+     * @private
+     * @type {Set<string>}
+     */
     this.rawImports = new Set();
+  }
+
+  /**
+   * Use a destructure import
+   *
+   * @param {string} path
+   * @param {string} symbol
+   */
+  destructure(path, symbol) {
+    if (!this.destructuredImports.has(path)) {
+      this.destructuredImports.set(path, new Set());
+    }
+
+    this.destructuredImports.get(path)?.add(symbol);
   }
 
   toString() {

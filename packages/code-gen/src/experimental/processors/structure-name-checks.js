@@ -76,6 +76,8 @@ const reservedObjectKeys = [
   "$append",
   "$set",
   "$remove",
+  "__proto__",
+  "constructor",
 ];
 
 /**

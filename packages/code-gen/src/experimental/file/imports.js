@@ -25,6 +25,9 @@ export function fileImportsAddPlaceholder(file) {
  */
 export function fileImportsStringifyImports(file) {
   if (file.importCollector) {
-    file.contents.replace(importsPlaceholder, file.importCollector.toString());
+    file.contents = file.contents.replace(
+      importsPlaceholder,
+      file.importCollector.toString(),
+    );
   }
 }

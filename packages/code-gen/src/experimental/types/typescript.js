@@ -8,8 +8,8 @@ import {
 import { fileFormatInlineComment } from "../file/format.js";
 import {
   fileWrite,
-  fileWriteLinePrefix,
   fileWriteInline,
+  fileWriteLinePrefix,
   fileWriteNewLine,
   fileWriteRaw,
 } from "../file/write.js";
@@ -85,11 +85,7 @@ export function typesTypescriptHasDeclaredTypes(file) {
     return false;
   }
 
-  if (file.contents.trim().length === 0) {
-    return false;
-  }
-
-  return true;
+  return file.contents.trim().length !== 0;
 }
 
 /**
@@ -119,35 +115,42 @@ export function typesTypescriptGenerateNamedType(
 
   // Make sure that nested references exists before we generate this type.
   // TODO: check if we should move this logic up in to the generator
-  typeDefinitionTraverse(type, () => {}, {
-    isInitialType: true,
-    assignResult: false,
-    afterTraversal: (nestedType) => {
-      if (nestedType.type !== "reference") {
-        return;
-      }
-
-      // By resolving the type after reversal, all it's dependent
-      // types are already resolved.
-      const resolvedReference = structureResolveReference(
-        generateContext.structure,
-        type,
-      );
-
-      if (resolvedReference === type) {
-        // A type references itself, so we can ignore it.
-        return;
-      }
-
-      typesTypescriptGenerateNamedType(
-        generateContext,
-
-        // @ts-expect-error
-        resolvedReference,
-        options,
-      );
+  typeDefinitionTraverse(
+    type,
+    (type, callback) => {
+      callback(type);
     },
-  });
+    {
+      isInitialType: true,
+      assignResult: false,
+      beforeTraversal: () => {},
+      afterTraversal: (nestedType) => {
+        if (nestedType.type !== "reference") {
+          return;
+        }
+
+        // By resolving the type after reversal, all its dependent
+        // types are already resolved.
+        const resolvedReference = structureResolveReference(
+          generateContext.structure,
+          nestedType,
+        );
+
+        if (resolvedReference === type) {
+          // A type references itself, so we can ignore it.
+          return;
+        }
+
+        typesTypescriptGenerateNamedType(
+          generateContext,
+
+          // @ts-expect-error
+          resolvedReference,
+          options,
+        );
+      },
+    },
+  );
 
   if (type.docString) {
     fileWrite(file, fileFormatInlineComment(file, type.docString));
@@ -249,22 +252,18 @@ export function typesTypescriptFormatType(
 
     fileContextSetIndent(file, -1);
   } else if (type.type === "array") {
-    if (isOptional) {
-      fileWriteInline(file, `(`);
-    }
+    fileWriteInline(file, `(`);
 
     typesTypescriptFormatType(generateContext, file, type.values, options);
+    fileWriteInline(file, `)`);
     fileWriteInline(file, `[]`);
-
-    if (isOptional) {
-      fileWriteInline(file, `)`);
-      fileWriteInline(file, optionalStr);
-    }
 
     if (options.validatorState === "input") {
       fileWriteInline(file, "|");
       typesTypescriptFormatType(generateContext, file, type.values, options);
     }
+
+    fileWriteInline(file, optionalStr);
   } else if (type.type === "boolean") {
     if (!isNil(type.oneOf)) {
       fileWriteInline(file, `${type.oneOf}`);
@@ -348,6 +347,7 @@ export function typesTypescriptFormatType(
     for (const key of Object.keys(type.keys)) {
       fileWriteNewLine(file);
       if (type.keys[key].docString) {
+        fileWrite(file, "");
         fileWrite(
           file,
           fileFormatInlineComment(file, type.keys[key].docString),
@@ -445,4 +445,23 @@ function typesTypescriptFormatTypeName(type, options) {
 
     numberedSuffix += 1;
   }
+}
+
+/**
+ * Use the provided name in Typescript
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {string} name
+ * @returns {string}
+ */
+export function typesTypescriptUseTypeName(generateContext, file, name) {
+  if (generateContext.options.generators.types?.declareGlobalTypes) {
+    return name;
+  }
+
+  const importCollector = TypescriptImportCollector.getImportCollector(file);
+  importCollector.destructure(`../common/types`, name);
+
+  return name;
 }

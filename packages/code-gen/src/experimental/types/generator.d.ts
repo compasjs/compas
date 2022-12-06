@@ -36,13 +36,28 @@ export function typesGeneratorFinalize(
  * @param {import("../types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
+ * @param {GenerateTypeOptions} options
  */
 export function typesGeneratorGenerateNamedType(
   generateContext: import("../generate").GenerateContext,
   type: import("../types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
+  options: GenerateTypeOptions,
 ): void;
+/**
+ * Use the provided type name in the provided file
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {string} name
+ * @returns {string}
+ */
+export function typesGeneratorUseTypeName(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  name: string,
+): string;
 /**
  * Check if the provided type should be generated as an optional type.
  * When {@link options.validatorState} is set to 'output', we expect that defaults are

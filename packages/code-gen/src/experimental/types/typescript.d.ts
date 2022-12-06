@@ -82,4 +82,17 @@ export function typesTypescriptFormatType(
   type: import("../generated/common/types").ExperimentalTypeSystemDefinition,
   options: import("./generator").GenerateTypeOptions,
 ): void;
+/**
+ * Use the provided name in Typescript
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {string} name
+ * @returns {string}
+ */
+export function typesTypescriptUseTypeName(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  name: string,
+): string;
 //# sourceMappingURL=typescript.d.ts.map

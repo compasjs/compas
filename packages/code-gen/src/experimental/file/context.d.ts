@@ -24,6 +24,18 @@ export function fileContextGet(
   relativePath: string,
 ): GenerateFile;
 /**
+ * Get a file by relative path from the context, returns undefined if no file is created
+ * yet.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {string} relativePath
+ * @returns {GenerateFile|undefined}
+ */
+export function fileContextGetOptional(
+  generateContext: import("../generate").GenerateContext,
+  relativePath: string,
+): GenerateFile | undefined;
+/**
  * Add or remove indentation for the next lines. A positive delta adds new levels of
  * indentation. A negative delta removes indentation. Note that removing indentation may
  * conflict with other utilities that use the {@link GenerateFile.calculatedLinePrefix}.
@@ -81,6 +93,7 @@ export function fileContextFinalizeGenerateFile(
  *
  * @typedef {object} GenerateFile
  *
+ * @property {string} relativePath The relative file path.
  * @property {string} contents The file contents the final file always has a trailing
  *   newline, and optionally an initial comment added via
  *   {@link GenerateFile.addGeneratedByComment}.
@@ -123,6 +136,10 @@ export const FILE_INDENT_RESET: number;
  * and have defaults that align more with JavaScript like languages.
  */
 export type GenerateFile = {
+  /**
+   * The relative file path.
+   */
+  relativePath: string;
   /**
    * The file contents the final file always has a trailing
    * newline, and optionally an initial comment added via

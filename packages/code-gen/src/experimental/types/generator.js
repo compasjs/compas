@@ -1,10 +1,9 @@
 import { AppError } from "@compas/stdlib";
-import {
-  structureNamedTypes,
-  structureResolveReference,
-} from "../processors/structure.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
+import { structureNamedTypes } from "../processors/structure.js";
 import { targetLanguageSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "./cache.js";
+import { typesJavascriptUseTypeName } from "./javascript.js";
 import {
   typesTypescriptEndDeclareGlobal,
   typesTypescriptGenerateNamedType,
@@ -12,6 +11,7 @@ import {
   typesTypescriptInitFile,
   typesTypescriptResolveFile,
   typesTypescriptStartDeclareGlobal,
+  typesTypescriptUseTypeName,
 } from "./typescript.js";
 
 /**
@@ -131,7 +131,11 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
       continue;
     }
 
-    typesGeneratorGenerateNamedType(generateContext, type);
+    typesGeneratorGenerateNamedType(generateContext, type, {
+      validatorState: "output",
+      typeOverrides: {},
+      nameSuffix: "",
+    });
   }
 }
 
@@ -145,16 +149,13 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
  * @param {import("../types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
+ * @param {GenerateTypeOptions} options
  */
-export function typesGeneratorGenerateNamedType(generateContext, type) {
-  // TODO: accept options argument
-  /** @type {GenerateTypeOptions} */
-  const options = {
-    validatorState: "output",
-    typeOverrides: {},
-    nameSuffix: "",
-  };
-
+export function typesGeneratorGenerateNamedType(
+  generateContext,
+  type,
+  options,
+) {
   if (typesCacheGet(type, options)) {
     return;
   }
@@ -170,6 +171,27 @@ export function typesGeneratorGenerateNamedType(generateContext, type) {
 }
 
 /**
+ * Use the provided type name in the provided file
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {string} name
+ * @returns {string}
+ */
+export function typesGeneratorUseTypeName(generateContext, file, name) {
+  return (
+    targetLanguageSwitch(
+      generateContext,
+      {
+        js: typesJavascriptUseTypeName,
+        ts: typesTypescriptUseTypeName,
+      },
+      [generateContext, file, name],
+    ) ?? name
+  );
+}
+
+/**
  * Check if the provided type should be generated as an optional type.
  * When {@link options.validatorState} is set to 'output', we expect that defaults are
  * applied.
@@ -180,22 +202,27 @@ export function typesGeneratorGenerateNamedType(generateContext, type) {
  * @returns {boolean}
  */
 export function typesGeneratorIsOptional(generateContext, type, options) {
-  const referencedType =
-    type.type === "reference"
-      ? structureResolveReference(generateContext.structure, type)
-      : undefined;
-
   if (options.validatorState === "input") {
-    return type.isOptional || (referencedType?.isOptional ?? false);
+    return referenceUtilsGetProperty(
+      generateContext,
+      type,
+      ["isOptional"],
+      false,
+    );
   } else if (options.validatorState === "output") {
     if (
-      (type.isOptional || (referencedType?.isOptional ?? false)) &&
-      (type.defaultValue || referencedType?.defaultValue)
+      referenceUtilsGetProperty(generateContext, type, ["isOptional"], false) &&
+      referenceUtilsGetProperty(generateContext, type, ["defaultValue"], false)
     ) {
       return false;
     }
 
-    return type.isOptional || (referencedType?.isOptional ?? false);
+    return referenceUtilsGetProperty(
+      generateContext,
+      type,
+      ["isOptional"],
+      false,
+    );
   }
 
   return false;

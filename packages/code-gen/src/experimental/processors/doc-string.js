@@ -11,7 +11,7 @@ export function docStringCleanup(generateContext) {
   for (const namedType of structureNamedTypes(generateContext.structure)) {
     typeDefinitionTraverse(
       namedType,
-      (type) => {
+      (type, callback) => {
         if ("docString" in type && type.docString) {
           const src = (type.docString ?? "").replace(
             /([*\\])/gm,
@@ -19,6 +19,8 @@ export function docStringCleanup(generateContext) {
           );
 
           type.docString = normalizeIndentationAndTrim(src);
+
+          callback(type);
         }
       },
       {
