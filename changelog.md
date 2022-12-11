@@ -4,6 +4,63 @@ editLink: false
 
 # Changelog
 
+### [v0.0.219](https://github.com/compasjs/compas/releases/tag/v0.0.219)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.202.0 to 3.226.0
+  ([#2224](https://github.com/compasjs/compas/pull/2224),
+  [#2253](https://github.com/compasjs/compas/pull/2253))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.202.0 to 3.226.0
+  ([#2225](https://github.com/compasjs/compas/pull/2225),
+  [#2251](https://github.com/compasjs/compas/pull/2251))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.19.6 to 7.20.5
+  ([#2199](https://github.com/compasjs/compas/pull/2199),
+  [#2231](https://github.com/compasjs/compas/pull/2231))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump cron-parser from 4.6.0 to 4.7.0
+  ([#2214](https://github.com/compasjs/compas/pull/2214))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump eslint from 8.26.0 to 8.29.0
+  ([#2200](https://github.com/compasjs/compas/pull/2200),
+  [#2220](https://github.com/compasjs/compas/pull/2220),
+  [#2241](https://github.com/compasjs/compas/pull/2241))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.6.2 to 39.6.4
+  ([#2228](https://github.com/compasjs/compas/pull/2228))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump formidable from 2.0.1 to 2.1.1
+  ([#2237](https://github.com/compasjs/compas/pull/2237))
+  - [Release notes](https://github.com/node-formidable/formidable/releases)
+- build(deps): bump koa from 2.13.4 to 2.14.1
+  ([#2252](https://github.com/compasjs/compas/pull/2252))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump postgres from 3.3.1 to 3.3.2
+  ([#2217](https://github.com/compasjs/compas/pull/2217))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump prettier from 2.8.0 to 2.8.1
+  ([#2249](https://github.com/compasjs/compas/pull/2249))
+- build(deps): bump sharp from 0.31.1 to 0.31.2
+  ([#2195](https://github.com/compasjs/compas/pull/2195))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump tar from 6.1.11 to 6.1.13
+  ([#2186](https://github.com/compasjs/compas/pull/2186),
+  [#2250](https://github.com/compasjs/compas/pull/2250))
+  - [Release notes](https://github.com/npm/node-tar/releases)
+- feat(cli,eslint-plugin): bump Prettier
+  ([#2226](https://github.com/compasjs/compas/pull/2226))
+- feat(store): enable Postgres library debug mode for test databases
+  ([#2227](https://github.com/compasjs/compas/pull/2227))
+
+This release also includes a bunch of work for `@compas/code-gen/experimental`.
+This is not yet in a usable state. For progress, see
+[#2010](https://github.com/compasjs/compas/pull/2010),
+[`code-gen/src/experimental/README.md`](https://github.com/compasjs/compas/blob/main/packages/code-gen/src/experimental/README.md)
+and
+[this series of blog posts](https://dirkdevisser.com/series/refactoring-code-gen).
+
 ### [v0.0.218](https://github.com/compasjs/compas/releases/tag/v0.0.218)
 
 ##### Changes
