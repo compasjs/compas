@@ -5,6 +5,7 @@ import { generateExecute } from "./generate.js";
 import {
   structureAddType,
   structureExtractGroups,
+  structureIncludeReferences,
   structureNamedTypes,
 } from "./processors/structure.js";
 
@@ -99,6 +100,41 @@ export class Generator {
       this.internalStructure,
       groups,
     );
+
+    return nextGenerator;
+  }
+
+  /**
+   * Select a subset of types from this generator and set them on a new generator.
+   * This includes all references that are used in these types.
+   *
+   * @param {{group: string, name: string}[]} typeNames
+   * @returns {Generator}
+   */
+  selectTypes(typeNames) {
+    const nextGenerator = new Generator(this.logger);
+
+    for (const typeName of typeNames) {
+      const namedType = this.internalStructure[typeName.group]?.[typeName.name];
+
+      if (!namedType) {
+        throw AppError.serverError({
+          message:
+            "Could not select the type from this generator, as it is not known.",
+          typeName,
+        });
+      }
+
+      structureAddType(nextGenerator.internalStructure, namedType, {
+        skipReferenceExtraction: true,
+      });
+
+      structureIncludeReferences(
+        this.internalStructure,
+        nextGenerator.internalStructure,
+        namedType,
+      );
+    }
 
     return nextGenerator;
   }

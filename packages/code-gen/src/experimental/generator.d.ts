@@ -42,6 +42,19 @@ export class Generator {
    */
   selectGroups(groups: string[]): Generator;
   /**
+   * Select a subset of types from this generator and set them on a new generator.
+   * This includes all references that are used in these types.
+   *
+   * @param {{group: string, name: string}[]} typeNames
+   * @returns {Generator}
+   */
+  selectTypes(
+    typeNames: {
+      group: string;
+      name: string;
+    }[],
+  ): Generator;
+  /**
    * Generate based on the structure that is known to this generator
    *
    * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
