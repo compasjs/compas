@@ -753,24 +753,37 @@ export function validatorJavascriptObject(file, type, validatorState) {
   const errorKey = formatErrorKey(validatorState);
 
   if (type.validator.strict) {
-    fileWrite(
-      file,
-      `if (Object.keys(${valuePath}).length !== ${
-        Object.keys(type.keys).length
-      }) {`,
-    );
+    const setVariable = `knownKeys${validatorState.reusedVariableIndex++}`;
+
+    fileWrite(file, `const ${setVariable} = new Set([`);
     fileContextSetIndent(file, 1);
+    for (const key of Object.keys(type.keys)) {
+      fileWrite(file, `"${key}",`);
+    }
+    fileContextSetIndent(file, -1);
+    fileWrite(file, `]);`);
+
+    fileWrite(file, `for (const key of Object.keys(${valuePath})) {`);
+    fileContextSetIndent(file, 1);
+    fileWrite(file, `if (!${setVariable}.has(key)) {`);
+    fileContextSetIndent(file, 1);
+
     fileWrite(
       file,
       `${errorKey} = {
   key: "validator.keys",
-  expectedKeys: "${Object.keys(type.keys).join(", ")}",
-  foundKeys: Object.keys(${valuePath}).join(", "),
+  expectedKeys: [...${setVariable}],
+  foundKeys: Object.keys(${valuePath}),
 };`,
     );
+    fileWrite(file, `break;`);
 
     fileContextSetIndent(file, -1);
     fileWrite(file, "}");
+    fileContextSetIndent(file, -1);
+    fileWrite(file, "}");
+
+    validatorState.reusedVariableIndex--;
   }
 
   fileWrite(file, `${resultPath} = Object.create(null);\n`);
